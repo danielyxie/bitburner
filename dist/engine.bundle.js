@@ -173,12 +173,12 @@
 /* harmony import */ var _Crimes__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Crimes */ 31);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./engine */ 6);
 /* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Faction */ 12);
-/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Gang */ 40);
+/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Gang */ 41);
 /* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Location */ 4);
 /* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./NetscriptFunctions */ 34);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Server */ 9);
 /* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./SpecialServerIps */ 19);
-/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./SourceFile */ 47);
+/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./SourceFile */ 46);
 /* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! decimal.js */ 26);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 13);
@@ -283,7 +283,6 @@ function PlayerObject() {
     this.currentServer          = ""; //IP address of Server currently being accessed through terminal
     this.purchasedServers       = []; //IP Addresses of purchased servers
     this.hacknetNodes           = [];
-    this.hacknetNodeWrappers    = [];
     this.totalHacknetNodeProduction = 0;
 
     //Factions
@@ -2781,8 +2780,7 @@ let CONSTANTS = {
     ScriptGetServerRamCost:         0.1,
     ScriptFileExistsRamCost:        0.1,
     ScriptIsRunningRamCost:         0.1,
-    ScriptPurchaseHacknetRamCost:   1.5,
-    ScriptHacknetNodesRamCost:      4.0, //Base cost for accessing hacknet nodes array
+    ScriptHacknetNodesRamCost:      4.0, //Base cost for accessing Hacknet Node API
     ScriptHNUpgLevelRamCost:        0.4,
     ScriptHNUpgRamRamCost:          0.6,
     ScriptHNUpgCoreRamCost:         0.8,
@@ -3205,8 +3203,10 @@ let CONSTANTS = {
 
     LatestUpdate:
     "v0.40.0<br>"  +
+    "* Added getCurrentAction() to Bladeburner API<br>" +
+    "* getSkillLevel() in Bladeburner API now returns an error if no argument is passed in (as opposed to an object with all skill levels). This may break scripts<br>" +
     "* Minimum Netscript execution time reduced from 15ms to 10ms (configurable in Options)<br>" +
-    "* HP is now reset (restored) when Augmenting<br>" + 
+    "* HP is now reset (restored) when Augmenting<br>" +
     "* Bug Fix: Infiltration buttons can no longer be clicked through NetscriptJS<br>"
 }
 
@@ -5648,7 +5648,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 3);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 41);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 42);
 /* harmony import */ var numeral_min_numeral_min__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! numeral/min/numeral.min */ 15);
 /* harmony import */ var numeral_min_numeral_min__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(numeral_min_numeral_min__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 1);
@@ -5664,24 +5664,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Constants */ 2);
 /* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./CreateProgram */ 21);
 /* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Faction */ 12);
-/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Fconf */ 37);
+/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Fconf */ 38);
 /* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Location */ 4);
-/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./Gang */ 40);
-/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./HacknetNode */ 44);
+/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./Gang */ 41);
+/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./HacknetNode */ 47);
 /* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./InteractiveTutorial */ 28);
 /* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./Literature */ 61);
 /* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./Message */ 33);
-/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./Missions */ 38);
+/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./Missions */ 39);
 /* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./NetscriptFunctions */ 34);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./NetscriptWorker */ 23);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./Prestige */ 64);
-/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./RedPill */ 46);
+/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./RedPill */ 45);
 /* harmony import */ var _SaveObject__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./SaveObject */ 56);
 /* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./Script */ 30);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./Server */ 9);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./Settings */ 22);
-/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./SourceFile */ 47);
+/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./SourceFile */ 46);
 /* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./SpecialServerIps */ 19);
 /* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./StockMarket */ 24);
 /* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./Terminal */ 25);
@@ -5974,7 +5974,7 @@ let Engine = {
     loadHacknetNodesContent: function() {
         Engine.hideAllContent();
         Engine.Display.hacknetNodesContent.style.display = "block";
-        Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_22__[/* displayHacknetNodesContent */ "c"])();
+        Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_22__[/* displayHacknetNodesContent */ "b"])();
         Engine.currentPage = Engine.Page.HacknetNodes;
         document.getElementById("hacknet-nodes-menu-link").classList.add("active");
     },
@@ -6653,7 +6653,7 @@ let Engine = {
         Object(_NetscriptWorker__WEBPACK_IMPORTED_MODULE_28__[/* updateOnlineScriptTimes */ "g"])(numCycles);
 
         //Hacknet Nodes
-        Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_22__[/* processAllHacknetNodeEarnings */ "e"])(numCycles);
+        Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_22__[/* processAllHacknetNodeEarnings */ "d"])(numCycles);
     },
 
     //Counters for the main event loop. Represent the number of game cycles are required
@@ -6717,7 +6717,7 @@ let Engine = {
             if (Engine.currentPage == Engine.Page.CharacterInfo) {
                 Engine.displayCharacterInfo();
             }  else if (Engine.currentPage == Engine.Page.HacknetNodes) {
-                Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_22__[/* updateHacknetNodesContent */ "g"])();
+                Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_22__[/* updateHacknetNodesContent */ "f"])();
             } else if (Engine.currentPage == Engine.Page.CreateProgram) {
                 Object(_CreateProgram__WEBPACK_IMPORTED_MODULE_17__[/* displayCreateProgramContent */ "b"])();
             }
@@ -6990,7 +6990,7 @@ let Engine = {
             }
 
             //Hacknet Nodes offline progress
-            var offlineProductionFromHacknetNodes = Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_22__[/* processAllHacknetNodeEarnings */ "e"])(numCyclesOffline);
+            var offlineProductionFromHacknetNodes = Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_22__[/* processAllHacknetNodeEarnings */ "d"])(numCyclesOffline);
 
             //Passive faction rep gain offline
             Object(_Faction__WEBPACK_IMPORTED_MODULE_18__[/* processPassiveFactionRepGain */ "j"])(numCyclesOffline);
@@ -7761,9 +7761,9 @@ window.onload = function() {
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Server */ 9);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Settings */ 22);
 /* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Script */ 30);
-/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/acorn */ 43);
+/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/acorn */ 37);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 39);
+/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 40);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/helpers/isValidIPAddress */ 63);
 /* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_10__);
@@ -7783,7 +7783,7 @@ window.onload = function() {
 
 
 
-var Promise = __webpack_require__(/*! bluebird */ 131);
+var Promise = __webpack_require__(/*! bluebird */ 130);
 
 Promise.config({
     warnings: false,
@@ -11091,7 +11091,7 @@ function getJobRequirementText(company, pos, tooltiptext=false) {
 /* harmony import */ var _FactionInfo__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./FactionInfo */ 84);
 /* harmony import */ var _FactionInfo__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_FactionInfo__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Location */ 4);
-/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Missions */ 38);
+/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Missions */ 39);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Settings */ 22);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
@@ -12523,7 +12523,7 @@ function ipExists(ip) {
 /* harmony import */ var _SaveObject__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./SaveObject */ 56);
 /* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Script */ 30);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Server */ 9);
-/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./SourceFile */ 47);
+/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./SourceFile */ 46);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
 /* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 57);
 /* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_13__);
@@ -15610,12 +15610,12 @@ function setSettingsLabels() {
 /* harmony import */ var _NetscriptPort__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./NetscriptPort */ 55);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Server */ 9);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Settings */ 22);
-/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/acorn */ 43);
+/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/acorn */ 37);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
 /* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/helpers/compareArrays */ 67);
 /* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 39);
+/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 40);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_14__);
 /* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 66);
 /* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_15__);
@@ -17478,7 +17478,7 @@ function updateStockOrderList(stock) {
 /* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CreateProgram */ 21);
 /* harmony import */ var _DarkWeb__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./DarkWeb */ 60);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./engine */ 6);
-/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Fconf */ 37);
+/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Fconf */ 38);
 /* harmony import */ var _HelpText__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./HelpText */ 73);
 /* harmony import */ var _HelpText__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_HelpText__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./InteractiveTutorial */ 28);
@@ -17489,7 +17489,7 @@ function updateStockOrderList(stock) {
 /* harmony import */ var numeral_min_numeral_min__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! numeral/min/numeral.min */ 15);
 /* harmony import */ var numeral_min_numeral_min__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(numeral_min_numeral_min__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./RedPill */ 46);
+/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./RedPill */ 45);
 /* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Script */ 30);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Server */ 9);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Settings */ 22);
@@ -17498,11 +17498,11 @@ function updateStockOrderList(stock) {
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_TextFile__WEBPACK_IMPORTED_MODULE_19__);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 1);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_20__);
-/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 42);
+/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 43);
 /* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_21__);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/helpers/isString */ 32);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_22__);
-/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 39);
+/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 40);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_23__);
 /* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../utils/LogBox */ 59);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/YesNoBox */ 14);
@@ -20295,7 +20295,7 @@ function iTutorialSetText(txt) {
 /* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Faction */ 12);
 /* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Location */ 4);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./RedPill */ 46);
+/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./RedPill */ 45);
 /* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Terminal */ 25);
 /* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/createProgressBarText */ 68);
 /* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_9__);
@@ -20305,9 +20305,9 @@ function iTutorialSetText(txt) {
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/JSONReviver */ 10);
 /* harmony import */ var numeral_min_numeral_min__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! numeral/min/numeral.min */ 15);
 /* harmony import */ var numeral_min_numeral_min__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(numeral_min_numeral_min__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 42);
+/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 43);
 /* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/uiHelpers/appendLineBreaks */ 45);
+/* harmony import */ var _utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/uiHelpers/appendLineBreaks */ 44);
 /* harmony import */ var _utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/helpers/clearObject */ 58);
 /* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_16__);
@@ -20315,7 +20315,7 @@ function iTutorialSetText(txt) {
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_17__);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 36);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 41);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 42);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 1);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_20__);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 5);
@@ -23583,20 +23583,38 @@ Bladeburner.prototype.getActionIdFromTypeAndName = function(type="", name="") {
         switch (convertedName) {
             case "training":
                 action.type = ActionTypes["Training"];
+                action.name = "Training";
                 break;
             case "recruitment":
             case "recruit":
                 action.type = ActionTypes["Recruitment"];
+                action.name = "Recruitment";
                 break;
             case "field analysis":
             case "fieldanalysis":
                 action.type = ActionTypes["Field Analysis"];
+                action.name = "Field Analysis";
                 break;
             default:
                 return null;
         }
         return action;
     }
+}
+
+Bladeburner.prototype.getTypeAndNameFromActionId = function(actionId) {
+    var res = {};
+    let types = Object.keys(ActionTypes);
+    for (let i = 0; i < types.length; ++i) {
+        if (actionId.type === ActionTypes[types[i]]) {
+            res.type = types[i];
+            break;
+        }
+    }
+    if (res.type == null) {res.type = "Idle";}
+
+    res.name = actionId.name != null ? actionId.name : "Idle";
+    return res;
 }
 
 Bladeburner.prototype.getContractNamesNetscriptFn = function() {
@@ -23748,9 +23766,7 @@ Bladeburner.prototype.getSkillLevelNetscriptFn = function(skillName, workerScrip
                        skillName + ". Note that the name of the skill is case-sensitive";
 
     if (skillName === "") {
-        //If skill name isn't specified, return an object with all of the player's skill levels
-        let copy = Object.assign({}, this.Skills);
-        return copy;
+        return -1;
     }
 
     if (!Skills.hasOwnProperty(skillName)) {
@@ -24410,7 +24426,7 @@ function initBladeburner() {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return isScriptFilename; });
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Constants */ 2);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./engine */ 6);
-/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Fconf */ 37);
+/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Fconf */ 38);
 /* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./InteractiveTutorial */ 28);
 /* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptEvaluator */ 7);
 /* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./NetscriptFunctions */ 34);
@@ -24421,7 +24437,7 @@ function initBladeburner() {
 /* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Terminal */ 25);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./TextFile */ 50);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_TextFile__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/acorn */ 43);
+/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/acorn */ 37);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/JSONReviver */ 10);
@@ -24433,24 +24449,24 @@ function initBladeburner() {
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_17__);
 /* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 66);
 /* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_18__);
-var ace = __webpack_require__(/*! brace */ 177);
-var beautify = __webpack_require__(/*! js-beautify */ 176).js_beautify;
-__webpack_require__(/*! brace/mode/javascript */ 175);
+var ace = __webpack_require__(/*! brace */ 176);
+var beautify = __webpack_require__(/*! js-beautify */ 175).js_beautify;
+__webpack_require__(/*! brace/mode/javascript */ 174);
 __webpack_require__(/*! ../netscript */ 118);
-__webpack_require__(/*! brace/theme/chaos */ 174);
-__webpack_require__(/*! brace/theme/chrome */ 173);
-__webpack_require__(/*! brace/theme/monokai */ 172);
-__webpack_require__(/*! brace/theme/solarized_dark */ 171);
-__webpack_require__(/*! brace/theme/solarized_light */ 170);
-__webpack_require__(/*! brace/theme/terminal */ 169);
-__webpack_require__(/*! brace/theme/twilight */ 168);
-__webpack_require__(/*! brace/theme/xcode */ 167);
-__webpack_require__(/*! brace/keybinding/vim */ 166);
-__webpack_require__(/*! brace/keybinding/emacs */ 165);
-__webpack_require__(/*! brace/ext/language_tools */ 164);
+__webpack_require__(/*! brace/theme/chaos */ 173);
+__webpack_require__(/*! brace/theme/chrome */ 172);
+__webpack_require__(/*! brace/theme/monokai */ 171);
+__webpack_require__(/*! brace/theme/solarized_dark */ 170);
+__webpack_require__(/*! brace/theme/solarized_light */ 169);
+__webpack_require__(/*! brace/theme/terminal */ 168);
+__webpack_require__(/*! brace/theme/twilight */ 167);
+__webpack_require__(/*! brace/theme/xcode */ 166);
+__webpack_require__(/*! brace/keybinding/vim */ 165);
+__webpack_require__(/*! brace/keybinding/emacs */ 164);
+__webpack_require__(/*! brace/ext/language_tools */ 163);
 
 // Importing this doesn't work for some reason.
-const walk = __webpack_require__(/*! acorn/dist/walk */ 163);
+const walk = __webpack_require__(/*! acorn/dist/walk */ 162);
 
 
 
@@ -24643,12 +24659,25 @@ function scriptEditorInit() {
             if (prefix.length === 0) {callback(null, []); return;}
             var words = [];
             var fns = Object(_NetscriptFunctions__WEBPACK_IMPORTED_MODULE_5__[/* NetscriptFunctions */ "a"])(null);
-            for (var name in fns) {
+            for (let name in fns) {
                 if (fns.hasOwnProperty(name)) {
                     words.push({
-                                name: name,
-                                value: name,
-                               });
+                        name:   name,
+                        value:  name,
+                    });
+
+                    //Get functions from namespaces
+                    if (name === "bladeburner" || name === "hacknet") {
+                        let namespace       = fns[name];
+                        if (typeof namespace !== "object") {continue;}
+                        let namespaceFns    = Object.keys(namespace);
+                        for (let i = 0; i < namespaceFns.length; ++i) {
+                            words.push({
+                                name:   namespaceFns[i],
+                                value:  namespaceFns[i],
+                            });
+                        }
+                    }
                 }
             }
             callback(null, words);
@@ -24897,11 +24926,11 @@ function parseOnlyRamCalculate(server, code, workerScript) {
             }
 
             // Check if this is one of the special keys, and add the appropriate ram cost if so.
-            if (ref == specialReferenceIF) ram += _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].ScriptIfRamCost;
-            if (ref == specialReferenceFOR) ram += _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].ScriptForRamCost;
-            if (ref == specialReferenceWHILE) ram += _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].ScriptWhileRamCost;
-            if (ref == "hacknetnodes") ram += _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].ScriptHacknetNodesRamCost;
-            if (ref == "document" || ref == "window") ram += _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].ScriptDomRamCost;
+            if (ref == specialReferenceIF)              ram += _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].ScriptIfRamCost;
+            if (ref == specialReferenceFOR)             ram += _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].ScriptForRamCost;
+            if (ref == specialReferenceWHILE)           ram += _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].ScriptWhileRamCost;
+            if (ref == "hacknet")                       ram += _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].ScriptHacknetNodesRamCost;
+            if (ref == "document" || ref == "window")   ram += _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].ScriptDomRamCost;
 
             // Check if this ident is a function in the workerscript env. If it is, then we need to
             // get its RAM cost. We do this by calling it, which works because the running script
@@ -25171,7 +25200,7 @@ function calculateRamUsage(codeCopy) {
     }
 
     //Special case: hacknetnodes array
-    if (codeCopy.includes("hacknetnodes")) {
+    if (codeCopy.includes("hacknet")) {
         ramUsage += _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].ScriptHacknetNodesRamCost;
     }
     return ramUsage;
@@ -25802,9 +25831,9 @@ exports.isString = isString;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Message; });
 /* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentations */ 18);
 /* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateProgram */ 21);
-/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Missions */ 38);
+/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Missions */ 39);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./RedPill */ 46);
+/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./RedPill */ 45);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Server */ 9);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Settings */ 22);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
@@ -26031,12 +26060,12 @@ function initMessages()  {
 /* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./CreateProgram */ 21);
 /* harmony import */ var _DarkWeb__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./DarkWeb */ 60);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./engine */ 6);
-/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Gang */ 40);
+/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Gang */ 41);
 /* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Faction */ 12);
-/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./HacknetNode */ 44);
+/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./HacknetNode */ 47);
 /* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Location */ 4);
 /* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Message */ 33);
-/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Missions */ 38);
+/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Missions */ 39);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Script */ 30);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Server */ 9);
@@ -26053,7 +26082,7 @@ function initMessages()  {
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
 /* harmony import */ var _utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../utils/helpers/isPowerOfTwo */ 96);
 /* harmony import */ var _utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_29___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_29__);
-/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 39);
+/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 40);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_30__);
 /* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ../utils/IPAddress */ 17);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 1);
@@ -26211,9 +26240,64 @@ function NetscriptFunctions(workerScript) {
         }
     };
 
+    //Utility function to get Hacknet Node object
+    var getHacknetNode = function(i) {
+        if (isNaN(i)) {
+            throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_25__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid index specified for Hacknet Node: " + i);
+        }
+        if (i < 0 || i >= _Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].hacknetNodes.length) {
+            throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_25__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Index specified for Hacknet Node is out-of-bounds: " + i);
+        }
+        return _Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].hacknetNodes[i];
+    }
+
     return {
-        hacknetnodes : function() {
-            return _Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].hacknetNodeWrappers;
+        hacknet : {
+            numNodes : function() {
+                return _Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].hacknetNodes.length;
+            },
+            purchaseNode : function() {
+                return Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_12__[/* purchaseHacknet */ "e"])();
+            },
+            getPurchaseNodeCost : function() {
+                return Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_12__[/* getCostOfNextHacknetNode */ "c"])();
+            },
+            getNodeStats : function(i) {
+                var node = getHacknetNode(i);
+                return {
+                    name:               node.name,
+                    level:              node.level,
+                    ram:                node.ram,
+                    cores:              node.cores,
+                    production:         node.moneyGainRatePerSecond,
+                    timeOnline:         node.onlineTimeSeconds,
+                    totalProduction:    node.totalMoneyGenerated,
+                };
+            },
+            upgradeLevel : function(i, n) {
+                var node = getHacknetNode(i);
+                return node.purchaseLevelUpgrade(n);
+            },
+            upgradeRam : function(i, n) {
+                var node = getHacknetNode(i);
+                return node.purchaseRamUpgrade(n);
+            },
+            upgradeCore : function(i, n) {
+                var node = getHacknetNode(i);
+                return node.purchaseCoreUpgrade(n);
+            },
+            getLevelUpgradeCost : function(i, n) {
+                var node = getHacknetNode(i);
+                return node.calculateLevelUpgradeCost(n);
+            },
+            getRamUpgradeCost : function(i, n) {
+                var node = getHacknetNode(i);
+                return node.calculateRamUpgradeCost(n);
+            },
+            getCoreUpgradeCost : function(i, n) {
+                var node = getHacknetNode(i);
+                return node.calculateCoreUpgradeCost(n);
+            }
         },
         sprintf : sprintf,
         vsprintf: vsprintf,
@@ -27316,21 +27400,6 @@ function NetscriptFunctions(workerScript) {
                 argsForTargetScript.push(arguments[i]);
             }
             return (Object(_Script__WEBPACK_IMPORTED_MODULE_17__[/* findRunningScript */ "d"])(filename, argsForTargetScript, server) != null);
-        },
-        getNextHacknetNodeCost : function() {
-            if (workerScript.checkingRam) {
-                return updateStaticRam("getNextHacknetNodeCost", _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptPurchaseHacknetRamCost);
-            }
-            updateDynamicRam("getNextHacknetNodeCost", _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptPurchaseHacknetRamCost);
-            return Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_12__[/* getCostOfNextHacknetNode */ "d"])();
-        },
-
-        purchaseHacknetNode : function() {
-            if (workerScript.checkingRam) {
-                return updateStaticRam("purchaseHacknetNode", _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptPurchaseHacknetRamCost);
-            }
-            updateDynamicRam("purchaseHacknetNode", _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptPurchaseHacknetRamCost);
-            return Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_12__[/* purchaseHacknet */ "f"])();
         },
         getStockPrice : function(symbol) {
             if (workerScript.checkingRam) {
@@ -29303,9 +29372,9 @@ function NetscriptFunctions(workerScript) {
                 if (workerScript.checkingRam) {
                     return updateStaticRam("getCurrentAction", _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptBladeburnerApiBaseRamCost / 4);
                 }
-                updateDynamicRam("getCurrentAction", _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptBladeburnerApiBaseRamCost / 2);
+                updateDynamicRam("getCurrentAction", _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptBladeburnerApiBaseRamCost / 4);
                 if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
-                    return _Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bladeburner.resetAction();
+                    return _Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bladeburner.getTypeAndNameFromActionId(_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bladeburner.action);
                 }
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_25__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getCurrentAction() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
@@ -29723,3316 +29792,6 @@ exports.createPopup = createPopup;
 
 /***/ }),
 /* 37 */
-/*!**********************!*\
-  !*** ./src/Fconf.js ***!
-  \**********************/
-/*! exports provided: FconfSettings, createFconf, parseFconfSettings, loadFconf */
-/*! exports used: FconfSettings, createFconf, loadFconf, parseFconfSettings */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FconfSettings; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return createFconf; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return parseFconfSettings; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return loadFconf; });
-/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/acorn */ 43);
-/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_0__);
-
-
-var FconfSettings = {
-    ENABLE_BASH_HOTKEYS:     false,
-    ENABLE_TIMESTAMPS:       false,
-}
-
-var FconfComments = {
-    ENABLE_BASH_HOTKEYS: "Improved Bash emulation mode. Setting this to 1 enables several\n" +
-                         "new Terminal shortcuts and features that more closely resemble\n" +
-                         "a real Bash-style shell. Note that when this mode is enabled,\n"  +
-                         "the default browser shortcuts are overriden by the new Bash\n" +
-                         "shortcuts.\n\n" +
-                         "To see a full list of the Terminal shortcuts that this enables, see:\n" +
-                         "http://bitburner.readthedocs.io/en/latest/shortcuts.html",
-    ENABLE_TIMESTAMPS: "Terminal commands and log entries will be timestamped. The timestamp\n" +
-                       "will have the format: M/D h:m",
-}
-
-//Parse Fconf settings from the config text
-//Throws an exception if parsing fails
-function parseFconfSettings(config) {
-    var ast = Object(_utils_acorn__WEBPACK_IMPORTED_MODULE_0__["parse"])(config, {sourceType:"module"});
-    var queue = [];
-    queue.push(ast);
-    while (queue.length != 0) {
-        var exp = queue.shift();
-        switch (exp.type) {
-            case "BlockStatement":
-            case "Program":
-                for (var i = 0; i < exp.body.length; ++i) {
-                    if (exp.body[i] instanceof _utils_acorn__WEBPACK_IMPORTED_MODULE_0__["Node"]) {
-                        queue.push(exp.body[i]);
-                    }
-                }
-                break;
-            case "AssignmentExpression":
-                var setting, value;
-                if (exp.left != null && exp.left.name != null) {
-                    setting = exp.left.name;
-                } else {
-                    break;
-                }
-                if (exp.right != null && exp.right.raw != null) {
-                    value = exp.right.raw;
-                } else {
-                    break;
-                }
-                parseFconfSetting(setting, value);
-                break;
-            default:
-                break;
-        }
-
-        for (var prop in exp) {
-            if (exp.hasOwnProperty(prop)) {
-                if (exp[prop] instanceof _utils_acorn__WEBPACK_IMPORTED_MODULE_0__["Node"]) {
-                    queue.push(exp[prop]);
-                }
-            }
-        }
-    }
-}
-
-function parseFconfSetting(setting, value) {
-    setting = String(setting);
-    value = String(value);
-    if (setting == null || value == null || FconfSettings[setting] == null) {
-        console.log("WARNING: Invalid .fconf setting: " + setting);
-        return;
-    }
-
-    //Needed to convert entered value to boolean/strings accordingly
-    switch(setting) {
-        case "ENABLE_BASH_HOTKEYS":
-        case "ENABLE_TIMESTAMPS":
-            var value = value.toLowerCase();
-            if (value === "1" || value === "true" || value === "y") {
-                value = true;
-            } else {
-                value = false;
-            }
-            FconfSettings[setting] = value;
-            break;
-        default:
-            break;
-    }
-    return;
-}
-
-//Create the .fconf file text from the settings
-function createFconf() {
-    var res = "";
-    for (var setting in FconfSettings) {
-        if (FconfSettings.hasOwnProperty(setting)) {
-            //Setting comments (description)
-            var comment = FconfComments[setting];
-            if (comment == null) {continue;}
-            var comment = comment.split("\n");
-            for (var i = 0; i < comment.length; ++i) {
-                res += ("//" + comment[i] + "\n");
-            }
-
-            var value = 0;
-            if (FconfSettings[setting] === true) {
-                value = "1";
-            } else if (FconfSettings[setting] === false) {
-                value = "0";
-            } else {
-                value = String(FconfSettings[setting]);
-            }
-            res += (setting + "=" + value + "\n\n");
-        }
-    }
-    return res;
-}
-
-function loadFconf(saveString) {
-    let tempFconfSettings = JSON.parse(saveString);
-    for (var setting in tempFconfSettings) {
-        if (tempFconfSettings.hasOwnProperty(setting)) {
-            FconfSettings[setting] = tempFconfSettings[setting];
-        }
-    }
-}
-
-
-
-
-/***/ }),
-/* 38 */
-/*!*************************!*\
-  !*** ./src/Missions.js ***!
-  \*************************/
-/*! exports provided: HackingMission, inMission, setInMission, currMission */
-/*! exports used: HackingMission, currMission, inMission, setInMission */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HackingMission; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return inMission; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return setInMission; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return currMission; });
-/* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Constants */ 2);
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./engine */ 6);
-/* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Faction */ 12);
-/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 13);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 42);
-/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 1);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 5);
-/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/isString */ 32);
-/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var jsplumb__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! jsplumb */ 178);
-/* harmony import */ var jsplumb__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(jsplumb__WEBPACK_IMPORTED_MODULE_10__);
-
-
-
-
-
-
-
-
-
-
-
-
-let inMission = false; //Flag to denote whether a mission is running
-let currMission = null;
-function setInMission(bool, mission) {
-    inMission = bool;
-    if (bool) {
-        currMission = mission;
-    } else {
-        currMission = null;
-    }
-}
-
-//Keyboard shortcuts
-$(document).keydown(function(e) {
-    if (inMission && currMission && currMission.selectedNode.length != 0) {
-        switch (e.keyCode) {
-            case 65: //a for Attack
-                currMission.actionButtons[0].click();
-                break;
-            case 83: //s for Scan
-                currMission.actionButtons[1].click();
-                break;
-            case 87: //w for Weaken
-                currMission.actionButtons[2].click();
-                break;
-            case 70: //f for Fortify
-                currMission.actionButtons[3].click();
-                break;
-            case 82: //r for Overflow
-                currMission.actionButtons[4].click();
-                break;
-            case 68: //d for Detach connection
-                currMission.actionButtons[5].click();
-                break;
-            default:
-                break;
-        }
-    }
-});
-
-let NodeTypes = {
-    Core: "CPU Core Node",      //All actions available
-    Firewall: "Firewall Node",  //No actions available
-    Database: "Database Node",  //No actions available
-    Spam: "Spam Node",          //No actions Available
-    Transfer: "Transfer Node",  //Can Weaken, Scan, Fortify and Overflow
-    Shield: "Shield Node"       //Can Fortify
-}
-
-let NodeActions = {
-    Attack: "Attacking", //Damaged based on attack stat + hacking level + opp def
-    Scan: "Scanning", //-Def for target, affected by attack and hacking level
-    Weaken: "Weakening", //-Attack for target, affected by attack and hacking level
-    Fortify: "Fortifying", //+Defense for Node, affected by hacking level
-    Overflow: "Overflowing", //+Attack but -Defense for Node, affected by hacking level
-}
-
-function Node(type, stats) {
-    this.type = type;
-    this.atk = stats.atk ? stats.atk : 0;
-    this.def = stats.def ? stats.def : 0;
-    this.hp = stats.hp ? stats.hp : 0;
-    this.maxhp = this.hp;
-    this.plyrCtrl = false;
-    this.enmyCtrl = false;
-    this.pos = [0, 0]; //x, y
-    this.el = null; //Holds the Node's DOM element
-    this.action = null;
-    this.targetedCount = 0; //Count of how many connections this node is the target of
-
-    //Holds the JsPlumb Connection object for this Node,
-    //where this Node is the Source (since each Node
-    //can only have 1 outgoing Connection)
-    this.conn = null;
-}
-
-Node.prototype.setPosition = function(x, y) {
-    this.pos = [x, y];
-}
-
-Node.prototype.setControlledByPlayer = function() {
-    this.plyrCtrl = true;
-    this.enmyCtrl = false;
-    if (this.el) {
-        this.el.classList.remove("hack-mission-enemy-node");
-        this.el.classList.add("hack-mission-player-node");
-    }
-}
-
-Node.prototype.setControlledByEnemy = function() {
-    this.plyrCtrl = false;
-    this.enmyCtrl = true;
-    if (this.el) {
-        this.el.classList.remove("hack-mission-player-node");
-        this.el.classList.add("hack-mission-enemy-node");
-    }
-}
-
-//Sets this node to be the active node
-Node.prototype.select = function(actionButtons) {
-    if (this.enmyCtrl) {return;}
-    this.el.classList.add("hack-mission-player-node-active");
-
-    //Make all buttons inactive
-    for (var i = 0; i < actionButtons.length; ++i) {
-        actionButtons[i].classList.remove("a-link-button");
-        actionButtons[i].classList.add("a-link-button-inactive");
-    }
-
-    switch(this.type) {
-        case NodeTypes.Core:
-            //All buttons active
-            for (var i = 0; i < actionButtons.length; ++i) {
-                actionButtons[i].classList.remove("a-link-button-inactive");
-                actionButtons[i].classList.add("a-link-button");
-            }
-            break;
-        case NodeTypes.Transfer:
-            actionButtons[1].classList.remove("a-link-button-inactive");
-            actionButtons[1].classList.add("a-link-button");
-            actionButtons[2].classList.remove("a-link-button-inactive");
-            actionButtons[2].classList.add("a-link-button");
-            actionButtons[3].classList.remove("a-link-button-inactive");
-            actionButtons[3].classList.add("a-link-button");
-            actionButtons[4].classList.remove("a-link-button-inactive");
-            actionButtons[4].classList.add("a-link-button");
-            actionButtons[5].classList.remove("a-link-button-inactive");
-            actionButtons[5].classList.add("a-link-button");
-            break;
-        case NodeTypes.Shield:
-        case NodeTypes.Firewall:
-            actionButtons[3].classList.remove("a-link-button-inactive");
-            actionButtons[3].classList.add("a-link-button");
-            break;
-        default:
-            break;
-    }
-}
-
-Node.prototype.deselect = function(actionButtons) {
-    this.el.classList.remove("hack-mission-player-node-active");
-    for (var i = 0; i < actionButtons.length; ++i) {
-        actionButtons[i].classList.remove("a-link-button");
-        actionButtons[i].classList.add("a-link-button-inactive");
-    }
-}
-
-
-Node.prototype.untarget = function() {
-    if (this.targetedCount === 0) {
-        console.log("WARN: Node " + this.el.id + " is being 'untargeted' when it has no target count");
-        return;
-    }
-    --this.targetedCount;
-}
-
-//Hacking mission instance
-//Takes in the reputation of the Faction for which the mission is
-//being conducted
-function HackingMission(rep, fac) {
-    this.faction = fac;
-
-    this.started = false;
-    this.time = 180000; //5 minutes to start, milliseconds
-
-    this.playerCores = [];
-    this.playerNodes = []; //Non-core nodes
-    this.playerAtk = 0;
-    this.playerDef = 0;
-
-    this.enemyCores = [];
-    this.enemyDatabases = [];
-    this.enemyNodes = []; //Non-core nodes
-    this.enemyAtk = 0;
-    this.enemyDef = 0;
-
-    this.miscNodes = [];
-
-    this.selectedNode = []; //Which of the player's nodes are currently selected
-
-    this.actionButtons = []; //DOM buttons for actions
-
-    this.availablePositions = [];
-    for (var r = 0; r < 8; ++r) {
-        for (var c = 0; c < 8; ++c) {
-            this.availablePositions.push([r, c]);
-        }
-    }
-
-    this.map = [];
-    for (var i = 0; i < 8; ++i) {
-        this.map.push([null, null, null, null, null, null, null, null]);
-    }
-
-    this.jsplumbinstance = null;
-
-    this.difficulty = rep / _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].HackingMissionRepToDiffConversion + 1;
-    console.log("difficulty: " + this.difficulty);
-    this.reward = 250 + (rep / _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].HackingMissionRepToRewardConversion);
-}
-
-HackingMission.prototype.init = function() {
-    //Create Header DOM
-    this.createPageDom();
-
-    //Create player starting nodes
-    var home = _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].getHomeComputer()
-    for (var i = 0; i < home.cpuCores; ++i) {
-        var stats = {
-            atk: (_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].hacking_skill / 7.5) + 30,
-            def: (_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].hacking_skill / 20),
-            hp: (_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].hacking_skill / 4),
-        };
-        this.playerCores.push(new Node(NodeTypes.Core, stats));
-        this.playerCores[i].setControlledByPlayer();
-        this.setNodePosition(this.playerCores[i], i, 0);
-        this.removeAvailablePosition(i, 0);
-    }
-
-    //Randomly generate enemy nodes (CPU and Firewall) based on difficulty
-    var numNodes = Math.min(8, Math.max(1, Math.round(this.difficulty / 4)));
-    var numFirewalls = Math.min(20,
-                                Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(Math.round(this.difficulty/3), Math.round(this.difficulty/3) + 1));
-    var numDatabases = Math.min(10, Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(1, Math.round(this.difficulty / 3) + 1));
-    var totalNodes = numNodes + numFirewalls + numDatabases;
-    var xlimit = 7 - Math.floor(totalNodes / 8);
-    var randMult = Object(_utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_6__["addOffset"])(0.8 + (this.difficulty / 5), 10);
-    for (var i = 0; i < numNodes; ++i) {
-        var stats = {
-            atk: randMult * Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(80, 86),
-            def: randMult * Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(5, 10),
-            hp: randMult * Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(210, 230)
-        }
-        this.enemyCores.push(new Node(NodeTypes.Core, stats));
-        this.enemyCores[i].setControlledByEnemy();
-        this.setNodeRandomPosition(this.enemyCores[i], xlimit);
-    }
-    for (var i = 0; i < numFirewalls; ++i) {
-        var stats = {
-            atk: 0,
-            def: randMult * Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(10, 20),
-            hp: randMult * Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(275, 300)
-        }
-        this.enemyNodes.push(new Node(NodeTypes.Firewall, stats));
-        this.enemyNodes[i].setControlledByEnemy();
-        this.setNodeRandomPosition(this.enemyNodes[i], xlimit);
-    }
-    for (var i = 0; i < numDatabases; ++i) {
-        var stats = {
-            atk: 0,
-            def: randMult * Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(30, 55),
-            hp: randMult * Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(210, 275)
-        }
-        var node = new Node(NodeTypes.Database, stats);
-        node.setControlledByEnemy();
-        this.setNodeRandomPosition(node, xlimit);
-        this.enemyDatabases.push(node);
-    }
-    this.calculateDefenses();
-    this.calculateAttacks();
-    this.createMap();
-}
-
-HackingMission.prototype.createPageDom = function() {
-    var container = document.getElementById("mission-container");
-
-    var favorMult = 1 + (this.faction.favor / 100);
-    var gain = this.reward  * _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].faction_rep_mult * favorMult;
-    var headerText = document.createElement("p");
-    headerText.innerHTML = "You are about to start a hacking mission! You will gain " +
-                    Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(gain, 3) + " faction reputation with " + this.faction.name +
-                    " if you win. For more information " +
-                    "about how hacking missions work, click one of the guide links " +
-                    "below (one opens up an in-game guide and the other opens up " +
-                    "the guide from the wiki). Click the 'Start' button to begin.";
-    headerText.style.display = "block";
-    headerText.classList.add("hack-mission-header-element");
-    headerText.style.width = "80%";
-
-    var inGameGuideBtn = document.createElement("a");
-    inGameGuideBtn.innerText = "How to Play";
-    inGameGuideBtn.classList.add("a-link-button");
-    inGameGuideBtn.style.display = "inline-block";
-    inGameGuideBtn.classList.add("hack-mission-header-element");
-    inGameGuideBtn.addEventListener("click", function() {
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__["dialogBoxCreate"])(_Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].HackingMissionHowToPlay);
-        return false;
-    });
-
-    var wikiGuideBtn = document.createElement("a");
-    wikiGuideBtn.innerText = "Wiki Guide";
-    wikiGuideBtn.classList.add("a-link-button");
-    wikiGuideBtn.style.display = "inline-block";
-    wikiGuideBtn.classList.add("hack-mission-header-element");
-    wikiGuideBtn.target = "_blank";
-    //TODO Add link to wiki page     wikiGuideBtn.href =
-
-
-    //Start button will get replaced with forfeit when game is started
-    var startBtn = document.createElement("a");
-    startBtn.innerHTML = "Start";
-    startBtn.setAttribute("id", "hack-mission-start-btn");
-    startBtn.classList.add("a-link-button");
-    startBtn.classList.add("hack-mission-header-element");
-    startBtn.style.display = "inline-block";
-    startBtn.addEventListener("click", ()=>{
-        this.start();
-        return false;
-    });
-
-    var forfeitMission = document.createElement("a");
-    forfeitMission.innerHTML = "Forfeit Mission (Exit)";
-    forfeitMission.classList.add("a-link-button");
-    forfeitMission.classList.add("hack-mission-header-element");
-    forfeitMission.style.display = "inline-block";
-    forfeitMission.addEventListener("click", ()=> {
-        this.finishMission(false);
-        return false;
-    });
-
-    var timer = document.createElement("p");
-    timer.setAttribute("id", "hacking-mission-timer");
-    timer.style.display = "inline-block";
-    timer.style.margin = "6px";
-
-    //Create Action Buttons (Attack/Scan/Weaken/ etc...)
-    var actionsContainer = document.createElement("span");
-    actionsContainer.style.display = "block";
-    actionsContainer.classList.add("hack-mission-action-buttons-container");
-    for (var i = 0; i < 6; ++i) {
-        this.actionButtons.push(document.createElement("a"));
-        this.actionButtons[i].style.display = "inline-block";
-        this.actionButtons[i].classList.add("a-link-button-inactive"); //Disabled at start
-        this.actionButtons[i].classList.add("tooltip"); //Disabled at start
-        this.actionButtons[i].classList.add("hack-mission-header-element");
-        actionsContainer.appendChild(this.actionButtons[i]);
-    }
-    this.actionButtons[0].innerText = "Attack(a)";
-    var atkTooltip = document.createElement("span");
-    atkTooltip.classList.add("tooltiptexthigh");
-    atkTooltip.innerText = "Lowers the targeted node's HP. The effectiveness of this depends on " +
-                           "this node's Attack level, your hacking level, and the opponent's defense level.";
-    this.actionButtons[0].appendChild(atkTooltip);
-    this.actionButtons[1].innerText = "Scan(s)";
-    var scanTooltip = document.createElement("span");
-    scanTooltip.classList.add("tooltiptexthigh");
-    scanTooltip.innerText = "Lowers the targeted node's defense. The effectiveness of this depends on " +
-                            "this node's Attack level, your hacking level, and the opponent's defense level.";
-    this.actionButtons[1].appendChild(scanTooltip);
-    this.actionButtons[2].innerText = "Weaken(w)";
-    var WeakenTooltip = document.createElement("span");
-    WeakenTooltip.classList.add("tooltiptexthigh");
-    WeakenTooltip.innerText = "Lowers the targeted node's attack. The effectiveness of this depends on " +
-                              "this node's Attack level, your hacking level, and the opponent's defense level.";
-    this.actionButtons[2].appendChild(WeakenTooltip);
-    this.actionButtons[3].innerText = "Fortify(f)";
-    var fortifyTooltip = document.createElement("span");
-    fortifyTooltip.classList.add("tooltiptexthigh");
-    fortifyTooltip.innerText = "Raises this node's Defense level. The effectiveness of this depends on " +
-                               "your hacking level";
-    this.actionButtons[3].appendChild(fortifyTooltip);
-    this.actionButtons[4].innerText = "Overflow(r)";
-    var overflowTooltip = document.createElement("span");
-    overflowTooltip.classList.add("tooltiptexthigh");
-    overflowTooltip.innerText = "Raises this node's Attack level but lowers its Defense level. The effectiveness " +
-                                "of this depends on your hacking level.";
-    this.actionButtons[4].appendChild(overflowTooltip);
-    this.actionButtons[5].innerText = "Drop Connection(d)";
-    var dropconnTooltip = document.createElement("span");
-    dropconnTooltip.classList.add("tooltiptexthigh");
-    dropconnTooltip.innerText = "Removes this Node's current connection to some target Node, if it has one. This can " +
-                                "also be done by simply clicking the white connection line.";
-    this.actionButtons[5].appendChild(dropconnTooltip);
-
-    //Player/enemy defense displays will be in action container
-    var playerStats = document.createElement("p");
-    var enemyStats = document.createElement("p");
-    playerStats.style.display = "inline-block";
-    enemyStats.style.display = "inline-block";
-    playerStats.style.color = "#00ccff";
-    enemyStats.style.color = "red";
-    playerStats.style.margin = "4px";
-    enemyStats.style.margin = "4px";
-    playerStats.setAttribute("id", "hacking-mission-player-stats");
-    enemyStats.setAttribute("id", "hacking-mission-enemy-stats");
-    actionsContainer.appendChild(playerStats);
-    actionsContainer.appendChild(enemyStats);
-
-    //Set Action Button event listeners
-    this.actionButtons[0].addEventListener("click", ()=>{
-        if (!(this.selectedNode.length > 0)) {
-            console.log("ERR: Pressing Action button without selected node");
-            return;
-        }
-        if (this.selectedNode[0].type !== NodeTypes.Core) {return;}
-        this.setActionButtonsActive(this.selectedNode[0].type);
-        this.setActionButton(NodeActions.Attack, false); //Set attack button inactive
-        this.selectedNode.forEach(function(node){
-            node.action = NodeActions.Attack;
-        });
-    });
-
-    this.actionButtons[1].addEventListener("click", ()=>{
-        if (!(this.selectedNode.length > 0)) {
-            console.log("ERR: Pressing Action button without selected node");
-            return;
-        }
-        var nodeType = this.selectedNode[0].type; //In a multiselect, every Node will have the same type
-        if (nodeType !== NodeTypes.Core && nodeType !== NodeTypes.Transfer) {return;}
-        this.setActionButtonsActive(nodeType);
-        this.setActionButton(NodeActions.Scan, false); //Set scan button inactive
-        this.selectedNode.forEach(function(node){
-            node.action = NodeActions.Scan;
-        });
-    });
-
-    this.actionButtons[2].addEventListener("click", ()=>{
-        if (!(this.selectedNode.length > 0)) {
-            console.log("ERR: Pressing Action button without selected node");
-            return;
-        }
-        var nodeType = this.selectedNode[0].type; //In a multiselect, every Node will have the same type
-        if (nodeType !== NodeTypes.Core && nodeType !== NodeTypes.Transfer) {return;}
-        this.setActionButtonsActive(nodeType);
-        this.setActionButton(NodeActions.Weaken, false); //Set Weaken button inactive
-        this.selectedNode.forEach(function(node){
-            node.action = NodeActions.Weaken;
-        });
-    });
-
-    this.actionButtons[3].addEventListener("click", ()=>{
-        if (!(this.selectedNode.length > 0)) {
-            console.log("ERR: Pressing Action button without selected node");
-            return;
-        }
-        this.setActionButtonsActive(this.selectedNode[0].type);
-        this.setActionButton(NodeActions.Fortify, false); //Set Fortify button inactive
-        this.selectedNode.forEach(function(node){
-            node.action = NodeActions.Fortify;
-        });
-    });
-
-    this.actionButtons[4].addEventListener("click", ()=>{
-        if (!(this.selectedNode.length > 0)) {
-            console.log("ERR: Pressing Action button without selected node");
-            return;
-        }
-        var nodeType = this.selectedNode[0].type;
-        if (nodeType !== NodeTypes.Core && nodeType !== NodeTypes.Transfer) {return;}
-        this.setActionButtonsActive(nodeType);
-        this.setActionButton(NodeActions.Overflow, false); //Set Overflow button inactive
-        this.selectedNode.forEach(function(node){
-            node.action = NodeActions.Overflow;
-        });
-    });
-
-    this.actionButtons[5].addEventListener("click", ()=>{
-        if (!(this.selectedNode.length > 0)) {
-            console.log("ERR: Pressing Action button without selected node");
-            return;
-        }
-        this.selectedNode.forEach(function(node){
-            if (node.conn) {
-                var endpoints = node.conn.endpoints;
-                endpoints[0].detachFrom(endpoints[1]);
-            }
-            node.action = NodeActions.Fortify;
-        });
-        // if (this.selectedNode.conn) {
-        //     var endpoints = this.selectedNode.conn.endpoints;
-        //     endpoints[0].detachFrom(endpoints[1]);
-        // }
-    })
-
-    var timeDisplay = document.createElement("p");
-
-    container.appendChild(headerText);
-    container.appendChild(inGameGuideBtn);
-    container.appendChild(wikiGuideBtn);
-    container.appendChild(startBtn);
-    container.appendChild(forfeitMission);
-    container.appendChild(timer);
-    container.appendChild(actionsContainer);
-    container.appendChild(timeDisplay);
-}
-
-HackingMission.prototype.setActionButtonsInactive = function() {
-    for (var i = 0; i < this.actionButtons.length; ++i) {
-        this.actionButtons[i].classList.remove("a-link-button");
-        this.actionButtons[i].classList.add("a-link-button-inactive");
-    }
-}
-
-HackingMission.prototype.setActionButtonsActive = function(nodeType=null) {
-    for (var i = 0; i < this.actionButtons.length; ++i) {
-        this.actionButtons[i].classList.add("a-link-button");
-        this.actionButtons[i].classList.remove("a-link-button-inactive");
-    }
-
-    //For Transfer, FireWall and Shield Nodes, certain buttons should always be disabled
-    //0 = Attack, 1 = Scan, 2 = Weaken, 3 = Fortify, 4 = overflow, 5 = Drop conn
-    if (nodeType) {
-        switch (nodeType) {
-            case NodeTypes.Firewall:
-            case NodeTypes.Shield:
-                this.actionButtons[0].classList.remove("a-link-button");
-                this.actionButtons[0].classList.add("a-link-button-inactive");
-                this.actionButtons[1].classList.remove("a-link-button");
-                this.actionButtons[1].classList.add("a-link-button-inactive");
-                this.actionButtons[2].classList.remove("a-link-button");
-                this.actionButtons[2].classList.add("a-link-button-inactive");
-                this.actionButtons[4].classList.remove("a-link-button");
-                this.actionButtons[4].classList.add("a-link-button-inactive");
-                this.actionButtons[5].classList.remove("a-link-button");
-                this.actionButtons[5].classList.add("a-link-button-inactive");
-                break;
-            case NodeTypes.Transfer:
-                this.actionButtons[0].classList.remove("a-link-button");
-                this.actionButtons[0].classList.add("a-link-button-inactive");
-                break;
-            default:
-                break;
-        }
-    }
-}
-
-//True for active, false for inactive
-HackingMission.prototype.setActionButton = function(i, active=true) {
-    if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9__["isString"])(i)) {
-        switch (i) {
-            case NodeActions.Attack:
-                i = 0;
-                break;
-            case NodeActions.Scan:
-                i = 1;
-                break;
-            case NodeActions.Weaken:
-                i = 2;
-                break;
-            case NodeActions.Fortify:
-                i = 3;
-                break;
-            case NodeActions.Overflow:
-            default:
-                i = 4;
-                break;
-        }
-    }
-    if (active) {
-        this.actionButtons[i].classList.remove("a-link-button-inactive");
-        this.actionButtons[i].classList.add("a-link-button");
-    } else {
-        this.actionButtons[i].classList.remove("a-link-button");
-        this.actionButtons[i].classList.add("a-link-button-inactive");
-    }
-
-}
-
-HackingMission.prototype.calculateAttacks = function() {
-    var total = 0;
-    for (var i = 0; i < this.playerCores.length; ++i) {
-        total += this.playerCores[i].atk;
-    }
-    for (var i = 0; i < this.playerNodes.length; ++i) {
-        total += this.playerNodes[i].atk;
-    }
-    this.playerAtk = total;
-    document.getElementById("hacking-mission-player-stats").innerHTML =
-        "Player Attack: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(this.playerAtk, 1) + "<br>" +
-        "Player Defense: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(this.playerDef, 1);
-    total = 0;
-    for (var i = 0; i < this.enemyCores.length; ++i) {
-        total += this.enemyCores[i].atk;
-    }
-    for (var i = 0; i < this.enemyDatabases.length; ++i) {
-        total += this.enemyDatabases[i].atk;
-    }
-    for (var i = 0; i < this.enemyNodes.length; ++i) {
-        total += this.enemyNodes[i].atk;
-    }
-    this.enemyAtk = total;
-    document.getElementById("hacking-mission-enemy-stats").innerHTML =
-        "Enemy Attack: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(this.enemyAtk, 1) + "<br>" +
-        "Enemy Defense: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(this.enemyDef, 1);
-}
-
-HackingMission.prototype.calculateDefenses = function() {
-    var total = 0;
-    for (var i = 0; i < this.playerCores.length; ++i) {
-        total += this.playerCores[i].def;
-    }
-    for (var i = 0; i < this.playerNodes.length; ++i) {
-        total += this.playerNodes[i].def;
-    }
-    this.playerDef = total;
-    document.getElementById("hacking-mission-player-stats").innerHTML =
-        "Player Attack: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(this.playerAtk, 1) + "<br>" +
-        "Player Defense: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(this.playerDef, 1);
-    total = 0;
-    for (var i = 0; i < this.enemyCores.length; ++i) {
-        total += this.enemyCores[i].def;
-    }
-    for (var i = 0; i < this.enemyDatabases.length; ++i) {
-        total += this.enemyDatabases[i].def;
-    }
-    for (var i = 0; i < this.enemyNodes.length; ++i) {
-        total += this.enemyNodes[i].def;
-    }
-    this.enemyDef = total;
-    document.getElementById("hacking-mission-enemy-stats").innerHTML =
-        "Enemy Attack: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(this.enemyAtk, 1) + "<br>" +
-        "Enemy Defense: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(this.enemyDef, 1);
-}
-
-HackingMission.prototype.removeAvailablePosition = function(x, y) {
-    for (var i = 0; i < this.availablePositions.length; ++i) {
-        if (this.availablePositions[i][0] === x &&
-            this.availablePositions[i][1] === y) {
-            this.availablePositions.splice(i, 1);
-            return;
-        }
-    }
-    console.log("WARNING: removeAvailablePosition() did not remove " + x + ", " + y);
-}
-
-HackingMission.prototype.setNodePosition = function(nodeObj, x, y) {
-    if (!(nodeObj instanceof Node)) {
-        console.log("WARNING: Non-Node object passed into setNodePOsition");
-        return;
-    }
-    if (isNaN(x) || isNaN(y)) {
-        console.log("ERR: Invalid values passed as x and y for setNodePosition");
-        console.log(x);
-        console.log(y);
-        return;
-    }
-    nodeObj.pos = [x, y];
-    this.map[x][y] = nodeObj;
-}
-
-HackingMission.prototype.setNodeRandomPosition = function(nodeObj, xlimit=0) {
-    var i = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(0, this.availablePositions.length - 1);
-    if (this.availablePositions[i][1] < xlimit) {
-        //Recurse if not within limit
-        return this.setNodeRandomPosition(nodeObj, xlimit);
-    }
-    var pos = this.availablePositions.splice(i, 1);
-    pos = pos[0];
-    this.setNodePosition(nodeObj, pos[0], pos[1]);
-}
-
-HackingMission.prototype.createMap = function() {
-    //Use a grid
-    var map = document.createElement("div");
-    map.classList.add("hack-mission-grid");
-    map.setAttribute("id", "hacking-mission-map");
-    document.getElementById("mission-container").appendChild(map);
-
-    //Create random Nodes for every space in the map that
-    //hasn't been filled yet. The stats of each Node will be based on
-    //the player/enemy attack
-    var averageAttack = (this.playerAtk + this.enemyAtk) / 2;
-    for (var x = 0; x < 8; ++x) {
-        for (var y = 0; y < 8; ++y) {
-            if (!(this.map[x][y] instanceof Node)) {
-                var node, type = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(0, 2);
-                var randMult = Object(_utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_6__["addOffset"])(0.85 + (this.difficulty / 2), 15);
-                switch (type) {
-                    case 0: //Spam
-                        var stats = {
-                            atk: 0,
-                            def: averageAttack * 1.1 + Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(15, 45),
-                            hp: randMult * Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(200, 225)
-                        }
-                        node = new Node(NodeTypes.Spam, stats);
-                        break;
-                    case 1: //Transfer
-                        var stats = {
-                            atk: 0,
-                            def: averageAttack * 1.1 + Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(15, 45),
-                            hp: randMult * Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(250, 275)
-                        }
-                        node = new Node(NodeTypes.Transfer, stats);
-                        break;
-                    case 2: //Shield
-                    default:
-                        var stats = {
-                            atk: 0,
-                            def: averageAttack * 1.1 + Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(30, 70),
-                            hp: randMult * Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(300, 320)
-                        }
-                        node = new Node(NodeTypes.Shield, stats);
-                        break;
-                }
-                this.setNodePosition(node, x, y);
-                this.removeAvailablePosition(x, y);
-                this.miscNodes.push(node);
-            }
-        }
-    }
-
-    //Create DOM elements in order
-    for (var r = 0; r < 8; ++r) {
-        for (var c = 0; c < 8; ++c) {
-            this.createNodeDomElement(this.map[r][c]);
-        }
-    }
-
-    //Configure all Player CPUS
-    for (var i = 0; i < this.playerCores.length; ++i) {
-        console.log("Configuring Player Node: " + this.playerCores[i].el.id);
-        this.configurePlayerNodeElement(this.playerCores[i].el);
-    }
-}
-
-HackingMission.prototype.createNodeDomElement = function(nodeObj) {
-    var nodeDiv = document.createElement("a"), txtEl = document.createElement('p');
-    nodeObj.el = nodeDiv;
-
-    //Set the node element's id based on its coordinates
-    var id = "hacking-mission-node-" + nodeObj.pos[0] + "-" + nodeObj.pos[1];
-    nodeDiv.setAttribute("id", id);
-    txtEl.setAttribute("id", id + "-txt");
-
-    //Set node classes for owner
-    nodeDiv.classList.add("hack-mission-node");
-    if (nodeObj.plyrCtrl) {
-        nodeDiv.classList.add("hack-mission-player-node");
-    } else if (nodeObj.enmyCtrl) {
-        nodeDiv.classList.add("hack-mission-enemy-node");
-    }
-
-    //Set node classes based on type
-    var txt;
-    switch (nodeObj.type) {
-        case NodeTypes.Core:
-            txt = "CPU Core<br>" + "HP: " +
-                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
-            nodeDiv.classList.add("hack-mission-cpu-node");
-            break;
-        case NodeTypes.Firewall:
-            txt = "Firewall<br>" + "HP: " +
-                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
-            nodeDiv.classList.add("hack-mission-firewall-node");
-            break;
-        case NodeTypes.Database:
-            txt = "Database<br>" + "HP: " +
-                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
-            nodeDiv.classList.add("hack-mission-database-node");
-            break;
-        case NodeTypes.Spam:
-            txt = "Spam<br>" + "HP: " +
-                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
-            nodeDiv.classList.add("hack-mission-spam-node");
-            break;
-        case NodeTypes.Transfer:
-            txt = "Transfer<br>" + "HP: " +
-                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
-            nodeDiv.classList.add("hack-mission-transfer-node");
-            break;
-        case NodeTypes.Shield:
-        default:
-            txt = "Shield<br>" + "HP: " +
-                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
-            nodeDiv.classList.add("hack-mission-shield-node");
-            break;
-    }
-
-    txt += "<br>Atk: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.atk, 1) +
-           "<br>Def: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.def, 1);
-    txtEl.innerHTML = txt;
-
-    nodeDiv.appendChild(txtEl);
-    document.getElementById("hacking-mission-map").appendChild(nodeDiv);
-}
-
-HackingMission.prototype.updateNodeDomElement = function(nodeObj) {
-    if (nodeObj.el == null) {
-        console.log("ERR: Calling updateNodeDomElement on a Node without an element");
-        return;
-    }
-
-    var id = "hacking-mission-node-" + nodeObj.pos[0] + "-" + nodeObj.pos[1];
-    var nodeDiv = document.getElementById(id), txtEl = document.getElementById(id + "-txt");
-
-    //Set node classes based on type
-    var txt;
-    switch (nodeObj.type) {
-        case NodeTypes.Core:
-            txt = "CPU Core<br>" + "HP: " +
-                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
-            break;
-        case NodeTypes.Firewall:
-            txt = "Firewall<br>" + "HP: " +
-                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
-            break;
-        case NodeTypes.Database:
-            txt = "Database<br>" + "HP: " +
-                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
-            break;
-        case NodeTypes.Spam:
-            txt = "Spam<br>" + "HP: " +
-                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
-            break;
-        case NodeTypes.Transfer:
-            txt = "Transfer<br>" + "HP: " +
-                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
-            break;
-        case NodeTypes.Shield:
-        default:
-            txt = "Shield<br>" + "HP: " +
-                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
-            break;
-    }
-
-    txt += "<br>Atk: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.atk, 1) +
-           "<br>Def: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.def, 1);
-    if (nodeObj.action) {
-        txt += "<br>" + nodeObj.action;
-    }
-    txtEl.innerHTML = txt;
-}
-
-//Gets a Node DOM element's corresponding Node object using its
-//element id. Function accepts either the DOM element object or the ID as
-//an argument
-HackingMission.prototype.getNodeFromElement = function(el) {
-    var id;
-    if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9__["isString"])(el)) {
-        id = el;
-    } else {
-        id = el.id;
-    }
-    id = id.replace("hacking-mission-node-", "");
-    var res = id.split('-');
-    if (res.length != 2) {
-        console.log("ERROR Parsing Hacking Mission Node Id. Could not find coordinates");
-        return null;
-    }
-    var x = res[0], y = res[1];
-    if (isNaN(x) || isNaN(y) || x >= 8 || y >= 8 || x < 0 || y < 0) {
-        console.log("ERROR: Unexpected values for x and y: " + x + ", " + y);
-        return null;
-    }
-    return this.map[x][y];
-}
-
-function selectNode(hackMissionInst, el) {
-    var nodeObj = hackMissionInst.getNodeFromElement(el);
-    if (nodeObj == null) {console.log("Error getting Node object");}
-    if (!nodeObj.plyrCtrl) {return;}
-
-    clearAllSelectedNodes(hackMissionInst);
-    nodeObj.select(hackMissionInst.actionButtons);
-    hackMissionInst.selectedNode.push(nodeObj);
-}
-
-function multiselectNode(hackMissionInst, el) {
-    var nodeObj = hackMissionInst.getNodeFromElement(el);
-    if (nodeObj == null) {console.log("ERROR: Getting Node Object in multiselectNode()");}
-    if (!nodeObj.plyrCtrl) {return;}
-
-    clearAllSelectedNodes(hackMissionInst);
-    var type = nodeObj.type;
-    if (type === NodeTypes.Core) {
-        hackMissionInst.playerCores.forEach(function(node) {
-            node.select(hackMissionInst.actionButtons);
-            hackMissionInst.selectedNode.push(node);
-        });
-    } else {
-        hackMissionInst.playerNodes.forEach(function(node) {
-            if (node.type === type) {
-                node.select(hackMissionInst.actionButtons);
-                hackMissionInst.selectedNode.push(node);
-            }
-        });
-    }
-}
-
-function clearAllSelectedNodes(hackMissionInst) {
-    if (hackMissionInst.selectedNode.length > 0) {
-        hackMissionInst.selectedNode.forEach(function(node){
-            node.deselect(hackMissionInst.actionButtons);
-        });
-        hackMissionInst.selectedNode.length = 0;
-    }
-}
-
-//Configures a DOM element representing a player-owned node to
-//be selectable and actionable
-//Note: Does NOT change its css class. This is handled by Node.setControlledBy...
-HackingMission.prototype.configurePlayerNodeElement = function(el) {
-    var nodeObj = this.getNodeFromElement(el);
-    if (nodeObj == null) {console.log("Error getting Node object");}
-
-    //Add event listener
-    var self = this;
-    function selectNodeWrapper() {
-        selectNode(self, el);
-    }
-    el.addEventListener("click", selectNodeWrapper);
-
-    function multiselectNodeWrapper() {
-        multiselectNode(self, el);
-    }
-    el.addEventListener("dblclick", multiselectNodeWrapper);
-
-
-    if (el.firstChild) {
-        el.firstChild.addEventListener("click", selectNodeWrapper);
-    }
-}
-
-//Configures a DOM element representing an enemy-node by removing
-//any event listeners
-HackingMission.prototype.configureEnemyNodeElement = function(el) {
-    //Deselect node if it was the selected node
-    var nodeObj = this.getNodeFromElement(el);
-    for (var i = 0; i < this.selectedNode.length; ++i) {
-        if (this.selectedNode[i] == nodeObj) {
-            nodeObj.deselect(this.actionButtons);
-            this.selectedNode.splice(i, 1);
-            break;
-        }
-    }
-}
-
-//Returns bool indicating whether a node is reachable by player
-//by checking if any of the adjacent nodes are owned by the player
-HackingMission.prototype.nodeReachable = function(node) {
-    var x = node.pos[0], y = node.pos[1];
-    if (x > 0 && this.map[x-1][y].plyrCtrl) {return true;}
-    if (x < 7 && this.map[x+1][y].plyrCtrl) {return true;}
-    if (y > 0 && this.map[x][y-1].plyrCtrl) {return true;}
-    if (y < 7 && this.map[x][y+1].plyrCtrl) {return true;}
-    return false;
-}
-
-HackingMission.prototype.nodeReachableByEnemy = function(node) {
-    if (node == null) {return false;}
-    var x = node.pos[0], y = node.pos[1];
-    if (x > 0 && this.map[x-1][y].enmyCtrl) {return true;}
-    if (x < 7 && this.map[x+1][y].enmyCtrl) {return true;}
-    if (y > 0 && this.map[x][y-1].enmyCtrl) {return true;}
-    if (y < 7 && this.map[x][y+1].enmyCtrl) {return true;}
-    return false;
-}
-
-HackingMission.prototype.start = function() {
-    this.started = true;
-    this.initJsPlumb();
-    var startBtn = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__["clearEventListeners"])("hack-mission-start-btn");
-    startBtn.classList.remove("a-link-button");
-    startBtn.classList.add("a-link-button-inactive");
-}
-
-HackingMission.prototype.initJsPlumb = function() {
-    var instance = jsPlumb.getInstance({
-        DragOptions:{cursor:"pointer", zIndex:2000},
-        PaintStyle: {
-            gradient: { stops: [
-                [ 0, "#FFFFFF" ],
-                [ 1, "#FFFFFF" ]
-            ] },
-            stroke: "#FFFFFF",
-            strokeWidth: 8
-        },
-    });
-
-    this.jsplumbinstance = instance;
-
-    //All player cores are sources
-    for (var i = 0; i < this.playerCores.length; ++i) {
-        instance.makeSource(this.playerCores[i].el, {
-            deleteEndpointsOnEmpty:true,
-            maxConnections:1,
-            anchor:"Continuous",
-            connector:"Flowchart"
-        });
-    }
-
-    //Everything else is a target
-    for (var i = 0; i < this.enemyCores.length; ++i) {
-        instance.makeTarget(this.enemyCores[i].el, {
-            maxConnections:-1,
-            anchor:"Continuous",
-            connector:"Flowchart"
-        });
-    }
-    for (var i = 0; i < this.enemyDatabases.length; ++i) {
-        instance.makeTarget(this.enemyDatabases[i].el, {
-            maxConnections:-1,
-            anchor:"Continuous",
-            connector:["Flowchart"]
-        });
-    }
-    for (var i = 0; i < this.enemyNodes.length; ++i) {
-        instance.makeTarget(this.enemyNodes[i].el, {
-            maxConnections:-1,
-            anchor:"Continuous",
-            connector:"Flowchart"
-        });
-    }
-    for (var i = 0; i < this.miscNodes.length; ++i) {
-        instance.makeTarget(this.miscNodes[i].el, {
-            maxConnections:-1,
-            anchor:"Continuous",
-            connector:"Flowchart"
-        });
-    }
-
-    //Clicking a connection drops it
-    instance.bind("click", function(conn, originalEvent) {
-        var endpoints = conn.endpoints;
-        endpoints[0].detachFrom(endpoints[1]);
-    });
-
-    //Connection events
-    instance.bind("connection", (info)=>{
-        var targetNode = this.getNodeFromElement(info.target);
-
-        //Do not detach for enemy nodes
-        var thisNode = this.getNodeFromElement(info.source);
-        if (thisNode.enmyCtrl) {return;}
-
-        //If the node is not reachable, drop the connection
-        if (!this.nodeReachable(targetNode)) {
-            info.sourceEndpoint.detachFrom(info.targetEndpoint);
-            return;
-        }
-
-        var sourceNode = this.getNodeFromElement(info.source);
-        sourceNode.conn = info.connection;
-        var targetNode = this.getNodeFromElement(info.target);
-        ++targetNode.targetedCount;
-    });
-
-    //Detach Connection events
-    instance.bind("connectionDetached", (info, originalEvent)=>{
-        var sourceNode = this.getNodeFromElement(info.source);
-        sourceNode.conn = null;
-        var targetNode = this.getNodeFromElement(info.target);
-        targetNode.untarget();
-    });
-
-}
-
-//Drops all connections where the specified node is the source
-HackingMission.prototype.dropAllConnectionsFromNode = function(node) {
-    var allConns = this.jsplumbinstance.getAllConnections();
-    for (var i = allConns.length-1; i >= 0; --i) {
-        if (allConns[i].source == node.el) {
-            allConns[i].endpoints[0].detachFrom(allConns[i].endpoints[1]);
-        }
-    }
-}
-
-//Drops all connections where the specified node is the target
-HackingMission.prototype.dropAllConnectionsToNode = function(node) {
-    var allConns = this.jsplumbinstance.getAllConnections();
-    for (var i = allConns.length-1; i >= 0; --i) {
-        if (allConns[i].target == node.el) {
-            allConns[i].endpoints[0].detachFrom(allConns[i].endpoints[1]);
-        }
-    }
-    node.beingTargeted = false;
-}
-
-var storedCycles = 0;
-HackingMission.prototype.process = function(numCycles=1) {
-    if (!this.started) {return;}
-    storedCycles += numCycles;
-    if (storedCycles < 2) {return;} //Only process every 3 cycles minimum
-
-    var res = false;
-    //Process actions of all player nodes
-    this.playerCores.forEach((node)=>{
-        res |= this.processNode(node, storedCycles);
-    });
-
-    this.playerNodes.forEach((node)=>{
-        if (node.type === NodeTypes.Transfer ||
-            node.type === NodeTypes.Shield ||
-            node.type === NodeTypes.Firewall) {
-            res |= this.processNode(node, storedCycles);
-        }
-    });
-
-    //Process actions of all enemy nodes
-    this.enemyCores.forEach((node)=>{
-        this.enemyAISelectAction(node);
-        res |= this.processNode(node, storedCycles);
-    });
-
-    this.enemyNodes.forEach((node)=>{
-        if (node.type === NodeTypes.Transfer ||
-            node.type === NodeTypes.Shield ||
-            node.type === NodeTypes.Firewall) {
-            this.enemyAISelectAction(node);
-            res |= this.processNode(node, storedCycles);
-        }
-    });
-
-    //The hp of enemy databases increases slowly
-    this.enemyDatabases.forEach((node)=>{
-        node.maxhp += (0.1 * storedCycles);
-        node.hp += (0.1 * storedCycles);
-    });
-
-    if (res) {
-        this.calculateAttacks();
-        this.calculateDefenses();
-    }
-
-    //Win if all enemy databases are conquered
-    if (this.enemyDatabases.length === 0) {
-        this.finishMission(true);
-        return;
-    }
-
-    //Lose if all your cores are gone
-    if (this.playerCores.length === 0) {
-        this.finishMission(false);
-        return;
-    }
-
-    //Defense/hp of misc nodes increases slowly over time
-    this.miscNodes.forEach((node)=>{
-        node.def += (0.1 * storedCycles);
-        node.maxhp += (0.05 * storedCycles);
-        node.hp += (0.1 * storedCycles);
-        if (node.hp > node.maxhp) {node.hp = node.maxhp;}
-        this.updateNodeDomElement(node);
-    });
-
-    //Update timer and check if player lost
-    this.time -= (storedCycles * _engine__WEBPACK_IMPORTED_MODULE_1__["Engine"]._idleSpeed);
-    if (this.time <= 0) {
-        this.finishMission(false);
-        return;
-    }
-    this.updateTimer();
-
-    storedCycles = 0;
-}
-
-//Returns a bool representing whether defenses need to be re-calculated
-HackingMission.prototype.processNode = function(nodeObj, numCycles=1) {
-    if (nodeObj.action == null) {
-        return;
-    }
-
-    var targetNode = null, def, atk;
-    if (nodeObj.conn) {
-        if (nodeObj.conn.target != null) {
-            targetNode = this.getNodeFromElement(nodeObj.conn.target);
-        } else {
-            targetNode = this.getNodeFromElement(nodeObj.conn.targetId);
-        }
-
-        if (targetNode == null) {
-            //Player is in the middle of  dragging the connection,
-            //so the target node is null. Do nothing here
-        } else if (targetNode.plyrCtrl) {
-            def = this.playerDef;
-            atk = this.enemyAtk;
-        } else if (targetNode.enmyCtrl) {
-            def = this.enemyDef;
-            atk = this.playerAtk;
-        } else { //Misc Node
-            def = targetNode.def;
-            nodeObj.plyrCtrl ? atk = this.playerAtk : atk = this.enemyAtk;
-        }
-    }
-
-    //Calculations are per second, so divide everything by 5
-    var calcStats = false, plyr = nodeObj.plyrCtrl;
-    var enmyHacking = this.difficulty * _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].HackingMissionDifficultyToHacking;
-    switch(nodeObj.action) {
-        case NodeActions.Attack:
-            if (targetNode == null) {break;}
-            if (nodeObj.conn == null) {break;}
-            var dmg = this.calculateAttackDamage(atk, def, plyr ? _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].hacking_skill : enmyHacking);
-            targetNode.hp -= (dmg/5 * numCycles);
-            break;
-        case NodeActions.Scan:
-            if (targetNode == null) {break;}
-            if (nodeObj.conn == null) {break;}
-            var eff = this.calculateScanEffect(atk, def, plyr ? _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].hacking_skill : enmyHacking);
-            targetNode.def -= (eff/5 * numCycles);
-            calcStats = true;
-            break;
-        case NodeActions.Weaken:
-            if (targetNode == null) {break;}
-            if (nodeObj.conn == null) {break;}
-            var eff = this.calculateWeakenEffect(atk, def, plyr ? _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].hacking_skill : enmyHacking);
-            targetNode.atk -= (eff/5 * numCycles);
-            calcStats = true;
-            break;
-        case NodeActions.Fortify:
-            var eff = this.calculateFortifyEffect(_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].hacking_skill);
-            nodeObj.def += (eff/5 * numCycles);
-            calcStats = true;
-            break;
-        case NodeActions.Overflow:
-            var eff = this.calculateOverflowEffect(_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].hacking_skill);
-            if (nodeObj.def < eff) {break;}
-            nodeObj.def -= (eff/5 * numCycles);
-            nodeObj.atk += (eff/5 * numCycles);
-            calcStats = true;
-            break;
-        default:
-            console.log("ERR: Invalid Node Action: " + nodeObj.action);
-            break;
-    }
-
-    //Stats can't go below 0
-    if (nodeObj.atk < 0) {nodeObj.atk = 0;}
-    if (nodeObj.def < 0) {nodeObj.def = 0;}
-    if (targetNode && targetNode.atk < 0) {targetNode.atk = 0;}
-    if (targetNode && targetNode.def < 0) {targetNode.def = 0;}
-
-    //Conquering a node
-    if (targetNode && targetNode.hp <= 0) {
-        var conqueredByPlayer = nodeObj.plyrCtrl;
-        targetNode.hp = targetNode.maxhp;
-        targetNode.action = null;
-        targetNode.conn = null;
-        if (this.selectedNode == targetNode) {
-            targetNode.deselect(this.actionButtons);
-        }
-
-        //The conquered node has its stats reduced
-        targetNode.atk /= 2;
-        targetNode.def /= 3.5;
-
-        //Flag for whether the target node was a misc node
-        var isMiscNode = !targetNode.plyrCtrl && !targetNode.enmyCtrl;
-
-        //Remove all connections from Node
-        this.dropAllConnectionsToNode(targetNode);
-        this.dropAllConnectionsFromNode(targetNode);
-
-        //Changes the css class and turn the node into a JsPlumb Source/Target
-        if (conqueredByPlayer) {
-            targetNode.setControlledByPlayer();
-            this.jsplumbinstance.unmakeTarget(targetNode.el);
-            this.jsplumbinstance.makeSource(targetNode.el, {
-                deleteEndpointsOnEmpty:true,
-                maxConnections:1,
-                anchor:"Continuous",
-                connector:"Flowchart"
-            });
-        } else {
-            targetNode.setControlledByEnemy();
-            nodeObj.conn = null; //Clear connection
-            this.jsplumbinstance.unmakeSource(targetNode.el);
-            this.jsplumbinstance.makeTarget(targetNode.el, {
-                maxConnections:-1,
-                anchor:"Continuous",
-                connector:["Flowchart"]
-            });
-        }
-
-        calcStats = true;
-
-        //Helper function to swap nodes between the respective enemyNodes/playerNodes arrays
-        function swapNodes(orig, dest, targetNode) {
-            for (var i = 0; i < orig.length; ++i) {
-                if (orig[i] == targetNode) {
-                    var node = orig.splice(i, 1);
-                    node = node[0];
-                    dest.push(node);
-                    break;
-                }
-            }
-        }
-
-        switch(targetNode.type) {
-            case NodeTypes.Core:
-                if (conqueredByPlayer) {
-                    swapNodes(this.enemyCores, this.playerCores, targetNode);
-                    this.configurePlayerNodeElement(targetNode.el);
-                } else {
-                    swapNodes(this.playerCores, this.enemyCores, targetNode);
-                    this.configureEnemyNodeElement(targetNode.el);
-                }
-                break;
-            case NodeTypes.Firewall:
-                if (conqueredByPlayer) {
-                    swapNodes(this.enemyNodes, this.playerNodes, targetNode);
-                } else {
-                    swapNodes(this.playerNodes, this.enemyNodes, targetNode);
-                    this.configureEnemyNodeElement(targetNode.el);
-                }
-                break;
-            case NodeTypes.Database:
-                if (conqueredByPlayer) {
-                    swapNodes(this.enemyDatabases, this.playerNodes, targetNode);
-                } else {
-                    swapNodes(this.playerNodes, this.enemyDatabases, targetNode);
-                }
-                break;
-            case NodeTypes.Spam:
-                if (conqueredByPlayer) {
-                    swapNodes(isMiscNode ? this.miscNodes : this.enemyNodes, this.playerNodes, targetNode);
-                    //Conquering spam node increases time limit
-                    this.time += _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].HackingMissionSpamTimeIncrease;
-                } else {
-                    swapNodes(isMiscNode ? this.miscNodes : this.playerNodes, this.enemyNodes, targetNode);
-                }
-
-                break;
-            case NodeTypes.Transfer:
-                //Conquering a Transfer node increases the attack of all cores by some percentages
-                if (conqueredByPlayer) {
-                    swapNodes(isMiscNode ? this.miscNodes : this.enemyNodes, this.playerNodes, targetNode);
-                    this.playerCores.forEach(function(node) {
-                        node.atk *= _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].HackingMissionTransferAttackIncrease;
-                    });
-                    this.configurePlayerNodeElement(targetNode.el);
-                } else {
-                    swapNodes(isMiscNode ? this.miscNodes : this.playerNodes, this.enemyNodes, targetNode);
-                    this.enemyCores.forEach(function(node) {
-                        node.atk *= _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].HackingMissionTransferAttackIncrease;
-                    });
-                    this.configureEnemyNodeElement(targetNode.el);
-                }
-                break;
-            case NodeTypes.Shield:
-                if (conqueredByPlayer) {
-                    swapNodes(isMiscNode ? this.miscNodes : this.enemyNodes, this.playerNodes, targetNode);
-                    this.configurePlayerNodeElement(targetNode.el);
-                } else {
-                    swapNodes(isMiscNode ? this.miscNodes : this.playerNodes, this.enemyNodes, targetNode);
-                    this.configureEnemyNodeElement(targetNode.el);
-                }
-                break;
-        }
-
-        //If a misc node was conquered, the defense for all misc nodes increases by some fixed amount
-        if (isMiscNode) { //&& conqueredByPlayer) {
-            this.miscNodes.forEach((node)=>{
-                if (node.targetedCount === 0) {
-                    node.def *= _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].HackingMissionMiscDefenseIncrease;
-                }
-            });
-        }
-    }
-
-    //Update node DOMs
-    this.updateNodeDomElement(nodeObj);
-    if (targetNode) {this.updateNodeDomElement(targetNode);}
-    return calcStats;
-}
-
-//Enemy "AI" for CPU Core and Transfer Nodes
-HackingMission.prototype.enemyAISelectAction = function(nodeObj) {
-    if (nodeObj == null) {return;}
-    switch(nodeObj.type) {
-        case NodeTypes.Core:
-            //Select a single RANDOM target from miscNodes and player's Nodes
-            //If it is reachable, it will target it. If not, no target will
-            //be selected for now, and the next time process() gets called this will repeat
-            if (nodeObj.conn == null) {
-                if (this.miscNodes.length === 0) {
-                    //Randomly pick a player node and attack it if its reachable
-                    var rand = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(0, this.playerNodes.length-1);
-                    var node;
-                    if (this.playerNodes.length === 0) {
-                        node = null;
-                    } else {
-                        node = this.playerNodes[rand];
-                    }
-                    if (this.nodeReachableByEnemy(node)) {
-                        //Create connection
-                        nodeObj.conn = this.jsplumbinstance.connect({
-                            source:nodeObj.el,
-                            target:node.el
-                        });
-                        ++node.targetedCount;
-                    } else {
-                        //Randomly pick a player core and attack it if its reachable
-                        rand = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(0, this.playerCores.length-1);
-                        if (this.playerCores.length === 0) {
-                            return; //No Misc Nodes, no player Nodes, no Player cores. Player lost
-                        } else {
-                            node = this.playerCores[rand];
-                        }
-
-                        if (this.nodeReachableByEnemy(node)) {
-                            //Create connection
-                            nodeObj.conn = this.jsplumbinstance.connect({
-                                source:nodeObj.el,
-                                target:node.el
-                            });
-                            ++node.targetedCount;
-                        }
-                    }
-                } else {
-                    //Randomly pick a misc node and attack it if its reachable
-                    var rand = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(0, this.miscNodes.length-1);
-                    var node = this.miscNodes[rand];
-                    if (this.nodeReachableByEnemy(node)) {
-                        nodeObj.conn = this.jsplumbinstance.connect({
-                            source:nodeObj.el,
-                            target:node.el,
-                        });
-                        ++node.targetedCount;
-                    }
-                }
-
-                //If no connection was made, set the Core to Fortify
-                nodeObj.action = NodeActions.Fortify;
-            } else {
-                //If this node has a selected target
-                var targetNode;
-                if (nodeObj.conn.target) {
-                    targetNode = this.getNodeFromElement(nodeObj.conn.target);
-                } else {
-                    targetNode = this.getNodeFromElement(nodeObj.conn.targetId);
-                }
-                if (targetNode == null) {
-                    console.log("Error getting Target node Object in enemyAISelectAction()");
-                }
-
-                if (targetNode.def > this.enemyAtk + 15) {
-                    if (nodeObj.def < 50) {
-                        nodeObj.action = NodeActions.Fortify;
-                    } else {
-                        nodeObj.action = NodeActions.Overflow;
-                    }
-                } else if (Math.abs(targetNode.def - this.enemyAtk) <= 15) {
-                    nodeObj.action = NodeActions.Scan;
-                } else {
-                    nodeObj.action = NodeActions.Attack;
-                }
-            }
-            break;
-        case NodeTypes.Transfer:
-            //Switch between fortifying and overflowing as necessary
-            if (nodeObj.def < 125) {
-                nodeObj.action = NodeActions.Fortify;
-            } else {
-                nodeObj.action = NodeActions.Overflow;
-            }
-            break;
-        case NodeTypes.Firewall:
-        case NodeTypes.Shield:
-            nodeObj.action = NodeActions.Fortify;
-            break;
-        default:
-            break;
-    }
-}
-
-var hackEffWeightSelf = 130; //Weight for Node actions on self
-var hackEffWeightTarget = 25; //Weight for Node Actions against Target
-var hackEffWeightAttack = 80; //Weight for Attack action
-
-//Returns damage per cycle based on stats
-HackingMission.prototype.calculateAttackDamage = function(atk, def, hacking = 0) {
-    return Math.max(0.55 * (atk + (hacking / hackEffWeightAttack) - def), 1);
-}
-
-HackingMission.prototype.calculateScanEffect = function(atk, def, hacking=0) {
-    return Math.max(0.6 * ((atk) + hacking / hackEffWeightTarget - (def * 0.95)), 2);
-}
-
-HackingMission.prototype.calculateWeakenEffect = function(atk, def, hacking=0) {
-    return Math.max((atk) + hacking / hackEffWeightTarget - (def * 0.95), 2);
-}
-
-HackingMission.prototype.calculateFortifyEffect = function(hacking=0) {
-    return 0.9 * hacking / hackEffWeightSelf;
-}
-
-HackingMission.prototype.calculateOverflowEffect = function(hacking=0) {
-    return 0.95 * hacking / hackEffWeightSelf;
-}
-
-//Updates timer display
-HackingMission.prototype.updateTimer = function() {
-    var timer = document.getElementById("hacking-mission-timer");
-
-    //Convert time remaining to a string of the form mm:ss
-    var seconds = Math.round(this.time / 1000);
-    var minutes = Math.trunc(seconds / 60);
-    seconds %= 60;
-    var str = ("0" + minutes).slice(-2) + ":" + ("0" + seconds).slice(-2);
-    timer.innerText = "Time left: " + str;
-}
-
-//The 'win' argument is a bool for whether or not the player won
-HackingMission.prototype.finishMission = function(win) {
-    inMission = false;
-    currMission = null;
-
-    if (win) {
-        var favorMult = 1 + (this.faction.favor / 100);
-        console.log("Hacking mission base reward: " + this.reward);
-        console.log("favorMult: " + favorMult);
-        console.log("rep mult: " + _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].faction_rep_mult);
-        var gain = this.reward  * _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].faction_rep_mult * favorMult;
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__["dialogBoxCreate"])("Mission won! You earned " +
-                        Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(gain, 3) + " reputation with " + this.faction.name);
-        _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gainIntelligenceExp(this.difficulty * _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].IntelligenceHackingMissionBaseExpGain);
-        this.faction.playerReputation += gain;
-    } else {
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__["dialogBoxCreate"])("Mission lost/forfeited! You did not gain any faction reputation.");
-    }
-
-    //Clear mission container
-    var container = document.getElementById("mission-container");
-    while(container.firstChild) {
-        container.removeChild(container.firstChild);
-    }
-
-    //Return to Faction page
-    document.getElementById("mainmenu-container").style.visibility = "visible";
-    document.getElementById("character-overview-wrapper").style.visibility = "visible";
-    _engine__WEBPACK_IMPORTED_MODULE_1__["Engine"].loadFactionContent();
-    Object(_Faction__WEBPACK_IMPORTED_MODULE_2__[/* displayFactionContent */ "c"])(this.faction.name);
-}
-
-
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 51)))
-
-/***/ }),
-/* 39 */
-/*!****************************************!*\
-  !*** ./utils/helpers/arrayToString.ts ***!
-  \****************************************/
-/*! no static exports found */
-/*! exports used: arrayToString */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * Returns the input array as a comma separated string.
- */
-function arrayToString(a) {
-    return `[${a.join(", ")}]`;
-}
-exports.arrayToString = arrayToString;
-
-
-/***/ }),
-/* 40 */
-/*!*********************!*\
-  !*** ./src/Gang.js ***!
-  \*********************/
-/*! exports provided: Gang, displayGangContent, updateGangContent, loadAllGangs, AllGangs, resetGangs, deleteGangDisplayContent */
-/*! exports used: AllGangs, Gang, deleteGangDisplayContent, displayGangContent, loadAllGangs, resetGangs, updateGangContent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Gang; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return displayGangContent; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return updateGangContent; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return loadAllGangs; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AllGangs; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return resetGangs; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return deleteGangDisplayContent; });
-/* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Constants */ 2);
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./engine */ 6);
-/* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Faction */ 12);
-/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
-/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/JSONReviver */ 10);
-/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 57);
-/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 3);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 36);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var numeral_min_numeral_min__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! numeral/min/numeral.min */ 15);
-/* harmony import */ var numeral_min_numeral_min__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(numeral_min_numeral_min__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 1);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 5);
-/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 27);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 54);
-/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/YesNoBox */ 14);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Gang.js */
-//Switch between territory and management screen with 1 and 2
-$(document).keydown(function(event) {
-    if (_engine__WEBPACK_IMPORTED_MODULE_1__["Engine"].currentPage == _engine__WEBPACK_IMPORTED_MODULE_1__["Engine"].Page.Gang && !_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_15__[/* yesNoBoxOpen */ "e"]) {
-        if (gangMemberFilter != null && gangMemberFilter === document.activeElement) {return;}
-        if (event.keyCode === 49) {
-            if(gangTerritorySubpage.style.display === "block") {
-                managementButton.click();
-            }
-        } else if (event.keyCode === 50) {
-            if (gangManagementSubpage.style.display === "block") {
-                territoryButton.click();
-            }
-        }
-    }
-});
-
-//Delete upgrade box when clicking outside
-$(document).mousedown(function(event) {
-    var boxId = "gang-member-upgrade-popup-box";
-    var contentId = "gang-member-upgrade-popup-box-content";
-    if (gangMemberUpgradeBoxOpened) {
-        if ( $(event.target).closest("#" + contentId).get(0) == null ) {
-            //Delete the box
-            Object(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_13__["removeElement"])(gangMemberUpgradeBox);
-            gangMemberUpgradeBox = null;
-            gangMemberUpgradeBoxContent = null;
-            gangMemberUpgradeBoxOpened = false;
-            gangMemberUpgradeBoxElements = null;
-        }
-    }
-});
-
-let GangNames = ["Slum Snakes", "Tetrads", "The Syndicate", "The Dark Army", "Speakers for the Dead",
-             "NiteSec", "The Black Hand"];
-let AllGangs = {
-    "Slum Snakes" : {
-        power: 1,
-        territory: 1/7,
-    },
-    "Tetrads" : {
-        power: 1,
-        territory: 1/7,
-    },
-    "The Syndicate" : {
-        power: 1,
-        territory: 1/7,
-    },
-    "The Dark Army" : {
-        power: 1,
-        territory: 1/7,
-    },
-    "Speakers for the Dead" : {
-        power: 1,
-        territory: 1/7,
-    },
-    "NiteSec" : {
-        power: 1,
-        territory: 1/7,
-    },
-    "The Black Hand" : {
-        power: 1,
-        territory: 1/7,
-    },
-}
-
-function resetGangs() {
-    AllGangs = {
-        "Slum Snakes" : {
-            power: 1,
-            territory: 1/7,
-        },
-        "Tetrads" : {
-            power: 1,
-            territory: 1/7,
-        },
-        "The Syndicate" : {
-            power: 1,
-            territory: 1/7,
-        },
-        "The Dark Army" : {
-            power: 1,
-            territory: 1/7,
-        },
-        "Speakers for the Dead" : {
-            power: 1,
-            territory: 1/7,
-        },
-        "NiteSec" : {
-            power: 1,
-            territory: 1/7,
-        },
-        "The Black Hand" : {
-            power: 1,
-            territory: 1/7,
-        },
-    }
-}
-
-function loadAllGangs(saveString) {
-    AllGangs = JSON.parse(saveString, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_5__["Reviver"]);
-}
-
-//Power is an estimate of a gang's ability to gain/defend territory
-let gangStoredPowerCycles = 0;
-function processAllGangPowerGains(numCycles=1) {
-    if (!_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].inGang()) {return;}
-    gangStoredPowerCycles += numCycles;
-    if (gangStoredPowerCycles < 150) {return;}
-    var playerGangName = _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.facName;
-    for (var name in AllGangs) {
-        if (AllGangs.hasOwnProperty(name)) {
-            if (name == playerGangName) {
-                AllGangs[name].power += _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.calculatePower();
-            } else {
-                var gain = Math.random() * 0.02; //TODO Adjust as necessary
-                AllGangs[name].power += (gain);
-            }
-        }
-    }
-
-    gangStoredPowerCycles -= 150;
-}
-
-let gangStoredTerritoryCycles = 0;
-function processAllGangTerritory(numCycles=1) {
-    if (!_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].inGang()) {return;}
-    gangStoredTerritoryCycles += numCycles;
-    if (gangStoredTerritoryCycles < _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].GangTerritoryUpdateTimer) {return;}
-
-    for (var i = 0; i < GangNames.length; ++i) {
-        var other = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_11__["getRandomInt"])(0, GangNames.length-1);
-        while(other == i) {
-            other = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_11__["getRandomInt"])(0, GangNames.length-1);
-        }
-        var thisPwr = AllGangs[GangNames[i]].power;
-        var otherPwr = AllGangs[GangNames[other]].power;
-        var thisChance = thisPwr / (thisPwr + otherPwr);
-
-        if (Math.random() < thisChance) {
-            if (AllGangs[GangNames[other]].territory <= 0) {
-                return;
-            }
-            AllGangs[GangNames[i]].territory += 0.0001;
-            AllGangs[GangNames[other]].territory -= 0.0001;
-        } else {
-            if (AllGangs[GangNames[i]].territory <= 0) {
-                return;
-            }
-            AllGangs[GangNames[i]].territory -= 0.0001;
-            AllGangs[GangNames[other]].territory += 0.0001;
-        }
-    }
-
-    gangStoredTerritoryCycles -= _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].GangTerritoryUpdateTimer;
-}
-
-/*  faction - Name of corresponding faction
-    hacking - Boolean indicating whether its a hacking gang or not
- */
-function Gang(facName, hacking=false) {
-    this.facName    = facName;
-    this.members    = [];  //Array of GangMembers
-    this.wanted     = 1;
-    this.respect    = 1;
-    this.power      = 0;
-
-    this.isHackingGang = hacking;
-
-    this.respectGainRate = 0;
-    this.wantedGainRate = 0;
-    this.moneyGainRate = 0;
-
-    //When processing gains, this stores the number of cycles until some
-    //limit is reached, and then calculates and applies the gains only at that limit
-    this.storedCycles   = 0;
-}
-
-Gang.prototype.process = function(numCycles=1) {
-    this.processGains(numCycles);
-    this.processExperienceGains(numCycles);
-    processAllGangPowerGains(numCycles);
-    processAllGangTerritory(numCycles);
-}
-
-Gang.prototype.processGains = function(numCycles=1) {
-    this.storedCycles += numCycles;
-    if (isNaN(this.storedCycles)) {
-        console.log("ERROR: Gang's storedCylces is NaN");
-        this.storedCycles = 0;
-    }
-    if (this.storedCycles < 25) {return;} //Only process every 5 seconds at least
-
-    //Get gains per cycle
-    var moneyGains = 0, respectGains = 0, wantedLevelGains = 0;
-    for (var i = 0; i < this.members.length; ++i) {
-        respectGains += (this.members[i].calculateRespectGain());
-        wantedLevelGains += (this.members[i].calculateWantedLevelGain());
-        moneyGains += (this.members[i].calculateMoneyGain());
-    }
-    this.respectGainRate = respectGains;
-    this.wantedGainRate = wantedLevelGains;
-    this.moneyGainRate = moneyGains;
-
-    if (!isNaN(respectGains)) {
-        var gain = respectGains * this.storedCycles;
-        this.respect += (gain);
-        //Faction reputation gains is respect gain divided by some constant
-        var fac = _Faction__WEBPACK_IMPORTED_MODULE_2__[/* Factions */ "b"][this.facName];
-        if (!(fac instanceof _Faction__WEBPACK_IMPORTED_MODULE_2__[/* Faction */ "a"])) {
-            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__["dialogBoxCreate"])("ERROR: Could not get Faction associates with your gang. This is a bug, please report to game dev");
-        } else {
-            var favorMult = 1 + (fac.favor / 100);
-            fac.playerReputation += ((_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].faction_rep_mult * gain * favorMult) / _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].GangRespectToReputationRatio);
-        }
-
-    } else {
-        console.log("ERROR: respectGains is NaN");
-    }
-    if (!isNaN(wantedLevelGains)) {
-        if (this.wanted === 1 && wantedLevelGains < 0) {
-            //Do nothing
-        } else {
-            this.wanted += (wantedLevelGains * this.storedCycles);
-            if (this.wanted < 1) {this.wanted = 1;}
-        }
-    } else {
-        console.log("ERROR: wantedLevelGains is NaN");
-    }
-    if (!isNaN(moneyGains)) {
-        _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gainMoney(moneyGains * this.storedCycles);
-    } else {
-        console.log("ERROR: respectGains is NaN");
-    }
-
-    this.storedCycles = 0;
-}
-
-Gang.prototype.processExperienceGains = function(numCycles=1) {
-    for (var i = 0; i < this.members.length; ++i) {
-        this.members[i].gainExperience(numCycles);
-        this.members[i].updateSkillLevels();
-    }
-}
-
-//Calculates power GAIN, which is added onto the Gang's existing power
-Gang.prototype.calculatePower = function() {
-    var memberTotal = 0;
-    for (var i = 0; i < this.members.length; ++i) {
-        if (this.members[i].task instanceof GangMemberTask &&
-            this.members[i].task.name == "Territory Warfare") {
-            memberTotal += this.members[i].calculatePower();
-        }
-    }
-    return (0.0005 * memberTotal);
-}
-
-Gang.prototype.autoAssignMemberToTask = function(taskName) {
-    for (var i = 0; i < this.members.length; ++i) {
-        if (this.members[i].task.name === taskName) {
-            this.members[i].assignToTask(taskName);
-            return true;
-        }
-    }
-    return false;
-}
-
-Gang.prototype.autoUnassignMemberFromTask = function(taskName) {
-    for (var i = 0; i < this.members.length; ++i) {
-        if (this.members[i].task.name === taskName) {
-            this.members[i].unassignFromTask();
-            return true;
-        }
-    }
-    return false;
-}
-
-Gang.prototype.toJSON = function() {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_5__["Generic_toJSON"])("Gang", this);
-}
-
-Gang.fromJSON = function(value) {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_5__["Generic_fromJSON"])(Gang, value.data);
-}
-
-_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_5__["Reviver"].constructors.Gang = Gang;
-
-/*** Gang Member object ***/
-function GangMember(name) {
-    this.name   = name;
-    this.task   = GangMemberTasks["Unassigned"]; //GangMemberTask object
-    this.city   = _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].city;
-
-    this.hack   = 1;
-    this.str    = 1;
-    this.def    = 1;
-    this.dex    = 1;
-    this.agi    = 1;
-    this.cha    = 1;
-
-    this.hack_exp   = 0;
-    this.str_exp    = 0;
-    this.def_exp    = 0;
-    this.dex_exp    = 0;
-    this.agi_exp    = 0;
-    this.cha_exp    = 0;
-
-    this.hack_mult  = 1;
-    this.str_mult   = 1;
-    this.def_mult   = 1;
-    this.dex_mult   = 1;
-    this.agi_mult   = 1;
-    this.cha_mult   = 1;
-
-    this.upgrades = []; //Names of upgrades
-}
-
-//Same formula for Player
-GangMember.prototype.calculateSkill = function(exp, mult=1) {
-    return Math.max(Math.floor(mult*(32 * Math.log(exp + 534.5) - 200)), 1);
-}
-
-GangMember.prototype.updateSkillLevels = function() {
-    this.hack   = this.calculateSkill(this.hack_exp, this.hack_mult);
-    this.str    = this.calculateSkill(this.str_exp, this.str_mult);
-    this.def    = this.calculateSkill(this.def_exp, this.def_mult);
-    this.dex    = this.calculateSkill(this.dex_exp, this.dex_mult);
-    this.agi    = this.calculateSkill(this.agi_exp, this.agi_mult);
-    this.cha    = this.calculateSkill(this.cha_exp, this.cha_mult);
-}
-
-GangMember.prototype.calculatePower = function() {
-    return (this.hack + this.str + this.def +
-            this.dex + this.agi + this.cha) / 100;
-}
-
-GangMember.prototype.assignToTask = function(taskName) {
-    if (GangMemberTasks.hasOwnProperty(taskName)) {
-        this.task = GangMemberTasks[taskName];
-    } else {
-        this.task = GangMemberTasks["Unassigned"];
-    }
-}
-
-GangMember.prototype.unassignFromTask = function() {
-    if (GangMemberTasks.hasOwnProperty("Unassigned")) {
-        this.task = GangMemberTasks["Unassigned"];
-    } else {
-        console.log("ERROR: Can't find Unassigned Gang member task");
-        this.task = null;
-    }
-}
-
-//Gains are per cycle
-GangMember.prototype.calculateRespectGain = function() {
-    var task = this.task;
-    if (task == null || !(task instanceof GangMemberTask) || task.baseRespect === 0) {return 0;}
-    var statWeight =    (task.hackWeight/100) * this.hack +
-                        (task.strWeight/100) * this.str +
-                        (task.defWeight/100) * this.def +
-                        (task.dexWeight/100) * this.dex +
-                        (task.agiWeight/100) * this.agi +
-                        (task.chaWeight/100) * this.cha;
-    statWeight -= (3.5 * task.difficulty);
-    if (statWeight <= 0) {return 0;}
-    var territoryMult = AllGangs[_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.facName].territory;
-    if (territoryMult <= 0) {return 0;}
-    var respectMult = (_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.respect) / (_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.respect + _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.wanted);
-    return 12 * task.baseRespect * statWeight * territoryMult * respectMult;
-}
-
-GangMember.prototype.calculateWantedLevelGain = function() {
-    var task = this.task;
-    if (task == null || !(task instanceof GangMemberTask) || task.baseWanted === 0) {return 0;}
-    var statWeight =    (task.hackWeight/100) * this.hack +
-                        (task.strWeight/100) * this.str +
-                        (task.defWeight/100) * this.def +
-                        (task.dexWeight/100) * this.dex +
-                        (task.agiWeight/100) * this.agi +
-                        (task.chaWeight/100) * this.cha;
-    statWeight -= (3.5 * task.difficulty);
-    if (statWeight <= 0) {return 0;}
-    var territoryMult = AllGangs[_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.facName].territory;
-    if (territoryMult <= 0) {return 0;}
-    if (task.baseWanted < 0) {
-        return task.baseWanted * statWeight * territoryMult;
-    } else {
-        return 6 * task.baseWanted / (3 * statWeight * territoryMult);
-    }
-}
-
-GangMember.prototype.calculateMoneyGain = function() {
-    var task = this.task;
-    if (task == null || !(task instanceof GangMemberTask) || task.baseMoney === 0) {return 0;}
-    var statWeight =    (task.hackWeight/100) * this.hack +
-                        (task.strWeight/100) * this.str +
-                        (task.defWeight/100) * this.def +
-                        (task.dexWeight/100) * this.dex +
-                        (task.agiWeight/100) * this.agi +
-                        (task.chaWeight/100) * this.cha;
-    statWeight -= (3.5 * task.difficulty);
-    if (statWeight <= 0) {return 0;}
-    var territoryMult = AllGangs[_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.facName].territory;
-    if (territoryMult <= 0) {return 0;}
-    var respectMult = (_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.respect) / (_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.respect + _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.wanted);
-    return 5 * task.baseMoney * statWeight * territoryMult * respectMult;
-}
-
-GangMember.prototype.gainExperience = function(numCycles=1) {
-    var task = this.task;
-    if (task == null || !(task instanceof GangMemberTask)) {return;}
-    this.hack_exp   += (task.hackWeight / 1500) * task.difficulty * numCycles;
-    this.str_exp    += (task.strWeight / 1500) * task.difficulty * numCycles;
-    this.def_exp    += (task.defWeight / 1500) * task.difficulty * numCycles;
-    this.dex_exp    += (task.dexWeight / 1500) * task.difficulty * numCycles;
-    this.agi_exp    += (task.agiWeight / 1500) * task.difficulty * numCycles;
-    this.cha_exp    += (task.chaWeight / 1500) * task.difficulty * numCycles;
-}
-
-GangMember.prototype.toJSON = function() {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_5__["Generic_toJSON"])("GangMember", this);
-}
-
-GangMember.fromJSON = function(value) {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_5__["Generic_fromJSON"])(GangMember, value.data);
-}
-
-_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_5__["Reviver"].constructors.GangMember = GangMember;
-
-//Defines tasks that Gang Members can work on
-function GangMemberTask(name="", desc="",
-                        params={baseRespect: 0, baseWanted: 0, baseMoney: 0,
-                                hackWeight: 0, strWeight: 0, defWeight: 0,
-                                dexWeight: 0, agiWeight: 0, chaWeight: 0,
-                                difficulty: 0}) {
-    this.name = name;
-    this.desc = desc;
-
-    this.baseRespect    = params.baseRespect ? params.baseRespect   : 0;
-    this.baseWanted     = params.baseWanted  ? params.baseWanted    : 0;
-    this.baseMoney      = params.baseMoney   ? params.baseMoney     : 0;
-
-    //Weights must add up to 100
-    this.hackWeight     = params.hackWeight ? params.hackWeight : 0;
-    this.strWeight      = params.strWeight  ? params.strWeight  : 0;
-    this.defWeight      = params.defWeight  ? params.defWeight  : 0;
-    this.dexWeight      = params.dexWeight  ? params.dexWeight  : 0;
-    this.agiWeight      = params.agiWeight  ? params.agiWeight  : 0;
-    this.chaWeight      = params.chaWeight  ? params.chaWeight  : 0;
-
-    //1 - 100
-    this.difficulty     = params.difficulty ? params.difficulty : 1;
-}
-
-GangMemberTask.prototype.toJSON = function() {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_5__["Generic_toJSON"])("GangMemberTask", this);
-}
-
-GangMemberTask.fromJSON = function(value) {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_5__["Generic_fromJSON"])(GangMemberTask, value.data);
-}
-
-_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_5__["Reviver"].constructors.GangMemberTask = GangMemberTask;
-
-//TODO Human trafficking and an equivalent hacking crime
-let GangMemberTasks = {
-    "Unassigned" :              new GangMemberTask(
-                                        "Unassigned",
-                                        "This gang member is currently idle"),
-    "Ransomware" :              new GangMemberTask(
-                                        "Ransomware",
-                                        "Assign this gang member to create and distribute ransomware<br><br>" +
-                                        "Earns money - Slightly increases respect - Slightly increases wanted level",
-                                        {baseRespect: 0.00005, baseWanted: 0.00001, baseMoney: 1,
-                                         hackWeight: 100, difficulty: 1}),
-    "Phishing" :                new GangMemberTask(
-                                        "Phishing",
-                                        "Assign this gang member to attempt phishing scams and attacks<br><br>" +
-                                        "Earns money - Slightly increases respect - Slightly increases wanted level",
-                                        {baseRespect: 0.00008, baseWanted: 0.001, baseMoney: 2.5,
-                                         hackWeight: 85, chaWeight: 15, difficulty: 3}),
-    "Identity Theft" :          new GangMemberTask(
-                                        "Identity Theft",
-                                        "Assign this gang member to attempt identity theft<br><br>" +
-                                        "Earns money - Increases respect - Increases wanted level",
-                                        {baseRespect: 0.0001, baseWanted: 0.01, baseMoney: 6,
-                                         hackWeight: 80, chaWeight: 20, difficulty: 4}),
-    "DDoS Attacks" :            new GangMemberTask(
-                                        "DDoS Attacks",
-                                        "Assign this gang member to carry out DDoS attacks<br><br>" +
-                                        "Increases respect - Increases wanted level",
-                                        {baseRespect: 0.0004, baseWanted: 0.05,
-                                         hackWeight: 100, difficulty: 7}),
-    "Plant Virus" :             new GangMemberTask(
-                                        "Plant Virus",
-                                        "Assign this gang member to create and distribute malicious viruses<br><br>" +
-                                        "Increases respect - Increases wanted level",
-                                        {baseRespect: 0.0006, baseWanted: 0.05,
-                                         hackWeight: 100, difficulty: 10}),
-    "Fraud & Counterfeiting" :  new GangMemberTask(
-                                        "Fraud & Counterfeiting",
-                                        "Assign this gang member to commit financial fraud and digital counterfeiting<br><br>" +
-                                        "Earns money - Slightly increases respect - Slightly increases wanted level",
-                                        {baseRespect: 0.0005, baseWanted: 0.1, baseMoney: 15,
-                                         hackWeight: 80, chaWeight: 20, difficulty: 17}),
-    "Money Laundering" :        new GangMemberTask(
-                                        "Money Laundering",
-                                        "Assign this gang member to launder money<br><br>" +
-                                        "Earns money - Increases respect - Increases wanted level",
-                                        {baseRespect: 0.0006, baseWanted:0.2, baseMoney: 40,
-                                         hackWeight: 75, chaWeight: 25, difficulty: 20}),
-    "Cyberterrorism" :          new GangMemberTask(
-                                        "Cyberterrorism",
-                                        "Assign this gang member to commit acts of cyberterrorism<br><br>" +
-                                        "Greatly increases respect - Greatly increases wanted level",
-                                        {baseRespect: 0.001, baseWanted: 0.5,
-                                         hackWeight: 80, chaWeight: 20, difficulty: 33}),
-    "Ethical Hacking" :         new GangMemberTask(
-                                        "Ethical Hacking",
-                                        "Assign this gang member to be an ethical hacker for corporations<br><br>" +
-                                        "Earns money - Lowers wanted level",
-                                        {baseWanted: -0.001, baseMoney: 1,
-                                         hackWeight: 90, chaWeight: 10, difficulty: 1}),
-    "Mug People" :              new GangMemberTask(
-                                        "Mug People",
-                                        "Assign this gang member to mug random people on the streets<br><br>" +
-                                        "Earns money - Slightly increases respect - Very slightly increases wanted level",
-                                         {baseRespect: 0.00005, baseWanted: 0.00001, baseMoney: 1,
-                                          strWeight: 25, defWeight: 25, dexWeight: 25, agiWeight: 10, chaWeight: 15, difficulty: 1}),
-    "Deal Drugs" :              new GangMemberTask(
-                                        "Deal Drugs",
-                                        "Assign this gang member to sell drugs.<br><br>" +
-                                        "Earns money - Slightly increases respect - Slightly increases wanted level",
-                                        {baseRespect: 0.00008, baseWanted: 0.001, baseMoney: 4,
-                                         agiWeight: 20, dexWeight: 20, chaWeight: 60, difficulty: 3}),
-    "Run a Con" :               new GangMemberTask(
-                                        "Run a Con",
-                                        "Assign this gang member to run cons<br><br>" +
-                                        "Earns money - Increases respect - Increases wanted level",
-                                        {baseRespect: 0.00015, baseWanted: 0.01, baseMoney: 10,
-                                         strWeight: 5, defWeight: 5, agiWeight: 25, dexWeight: 25, chaWeight: 40, difficulty: 10}),
-    "Armed Robbery" :           new GangMemberTask(
-                                        "Armed Robbery",
-                                        "Assign this gang member to commit armed robbery on stores, banks and armored cars<br><br>" +
-                                        "Earns money - Increases respect - Increases wanted level",
-                                        {baseRespect: 0.00015, baseWanted: 0.05, baseMoney: 25,
-                                         hackWeight: 20, strWeight: 15, defWeight: 15, agiWeight: 10, dexWeight: 20, chaWeight: 20,
-                                         difficulty: 17}),
-    "Traffick Illegal Arms" :   new GangMemberTask(
-                                        "Traffick Illegal Arms",
-                                        "Assign this gang member to traffick illegal arms<br><br>" +
-                                        "Earns money - Increases respect - Increases wanted level",
-                                        {baseRespect: 0.0003, baseWanted: 0.1, baseMoney: 40,
-                                         hackWeight: 15, strWeight: 20, defWeight: 20, dexWeight: 20, chaWeight: 75,
-                                         difficulty: 25}),
-    "Threaten & Blackmail" :    new GangMemberTask(
-                                        "Threaten & Blackmail",
-                                        "Assign this gang member to threaten and black mail high-profile targets<br><br>" +
-                                        "Earns money - Slightly increases respect - Slightly increases wanted level",
-                                        {baseRespect: 0.0002, baseWanted: 0.05, baseMoney: 15,
-                                         hackWeight: 25, strWeight: 25, dexWeight: 25, chaWeight: 25, difficulty: 28}),
-    "Terrorism" :               new GangMemberTask(
-                                        "Terrorism",
-                                        "Assign this gang member to commit acts of terrorism<br><br>" +
-                                        "Greatly increases respect - Greatly increases wanted level",
-                                        {baseRespect: 0.001, baseWanted: 1,
-                                         hackWeight: 20, strWeight: 20, defWeight: 20,dexWeight: 20, chaWeight: 20,
-                                         difficulty: 33}),
-    "Vigilante Justice" :       new GangMemberTask(
-                                        "Vigilante Justice",
-                                        "Assign this gang member to be a vigilante and protect the city from criminals<br><br>" +
-                                        "Decreases wanted level",
-                                        {baseWanted: -0.001,
-                                         hackWeight: 20, strWeight: 20, defWeight: 20, dexWeight: 20, agiWeight:20,
-                                         difficulty: 1}),
-    "Train Combat" :            new GangMemberTask(
-                                        "Train Combat",
-                                        "Assign this gang member to increase their combat stats (str, def, dex, agi)",
-                                        {strWeight: 25, defWeight: 25, dexWeight: 25, agiWeight: 25, difficulty: 5}),
-    "Train Hacking" :           new GangMemberTask(
-                                        "Train Hacking",
-                                        "Assign this gang member to train their hacking skills",
-                                        {hackWeight: 100, difficulty: 8}),
-    "Territory Warfare" :       new GangMemberTask(
-                                        "Territory Warfare",
-                                        "Assign this gang member to engage in territorial warfare with other gangs. " +
-                                        "Members assigned to this task will help increase your gang's territory " +
-                                        "and will defend your territory from being taken.",
-                                        {hackWeight: 15, strWeight: 20, defWeight: 20, dexWeight: 20, agiWeight: 20,
-                                         chaWeight: 5, difficulty: 3}),
-}
-
-
-function GangMemberUpgrade(name="", desc="", cost=0, type="w") {
-    this.name = name;
-    this.desc = desc;
-    this.cost = cost;
-    this.type = type; //w, a, v, r
-}
-
-//Passes in a GangMember object
-GangMemberUpgrade.prototype.apply = function(member) {
-    switch(this.name) {
-        case "Baseball Bat":
-            member.str_mult *= 1.05;
-            member.def_mult *= 1.05;
-            break;
-        case "Katana":
-            member.str_mult *= 1.1;
-            member.def_mult *= 1.1;
-            member.dex_mult *= 1.1;
-            break;
-        case "Glock 18C":
-            member.str_mult *= 1.15;
-            member.def_mult *= 1.15;
-            member.dex_mult *= 1.15;
-            member.agi_mult *= 1.15;
-            break;
-        case "P90C":
-            member.str_mult *= 1.2;
-            member.def_mult *= 1.2;
-            member.agi_mult *= 1.1;
-            break;
-        case "Steyr AUG":
-            member.str_mult *= 1.25;
-            member.def_mult *= 1.25;
-            break;
-        case "AK-47":
-            member.str_mult *= 1.5;
-            member.def_mult *= 1.5;
-            break;
-        case "M15A10 Assault Rifle":
-            member.str_mult *= 1.6;
-            member.def_mult *= 1.6;
-            break;
-        case "AWM Sniper Rifle":
-            member.str_mult *= 1.5;
-            member.dex_mult *= 1.5;
-            member.agi_mult *= 1.5;
-            break;
-        case "Bulletproof Vest":
-            member.def_mult *= 1.05;
-            break;
-        case "Full Body Armor":
-            member.def_mult *= 1.1;
-            break;
-        case "Liquid Body Armor":
-            member.def_mult *= 1.25;
-            member.agi_mult *= 1.25;
-            break;
-        case "Graphene Plating Armor":
-            member.def_mult *= 1.5;
-            break;
-        case "Ford Flex V20":
-            member.agi_mult *= 1.1;
-            member.cha_mult *= 1.1;
-            break;
-        case "ATX1070 Superbike":
-            member.agi_mult *= 1.15;
-            member.cha_mult *= 1.15;
-            break;
-        case "Mercedes-Benz S9001":
-            member.agi_mult *= 1.2;
-            member.cha_mult *= 1.2;
-            break;
-        case "White Ferrari":
-            member.agi_mult *= 1.25;
-            member.cha_mult *= 1.25;
-            break;
-        case "NUKE Rootkit":
-            member.hack_mult *= 1.1;
-            break;
-        case "Soulstealer Rootkit":
-            member.hack_mult *= 1.2;
-            break;
-        case "Demon Rootkit":
-            member.hack_mult *= 1.3;
-            break;
-        default:
-            console.log("ERROR: Could not find this upgrade: " + this.name);
-            break;
-    }
-}
-
-GangMemberUpgrade.prototype.toJSON = function() {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_5__["Generic_toJSON"])("GangMemberUpgrade", this);
-}
-
-GangMemberUpgrade.fromJSON = function(value) {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_5__["Generic_fromJSON"])(GangMemberUpgrade, value.data);
-}
-
-_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_5__["Reviver"].constructors.GangMemberUpgrade = GangMemberUpgrade;
-
-let GangMemberUpgrades = {
-    "Baseball Bat" : new GangMemberUpgrade("Baseball Bat",
-                            "Increases strength and defense by 5%", 1e6, "w"),
-    "Katana" :       new GangMemberUpgrade("Katana",
-                            "Increases strength, defense, and dexterity by 10%", 12e6, "w"),
-    "Glock 18C" :    new GangMemberUpgrade("Glock 18C",
-                            "Increases strength, defense, dexterity, and agility by 15%", 25e6, "w"),
-    "P90C" :          new GangMemberUpgrade("P90C",
-                            "Increases strength and defense by 20%. Increases agility by 10%", 50e6, "w"),
-    "Steyr AUG" :    new GangMemberUpgrade("Steyr AUG",
-                            "Increases strength and defense by 25%", 60e6, "w"),
-    "AK-47" :        new GangMemberUpgrade("AK-47",
-                            "Increases strength and defense by 50%", 100e6, "w"),
-    "M15A10 Assault Rifle" :    new GangMemberUpgrade("M15A10 Assault Rifle",
-                                        "Increases strength and defense by 60%", 150e6, "w"),
-    "AWM Sniper Rifle" :        new GangMemberUpgrade("AWM Sniper Rifle",
-                                        "Increases strength, dexterity, and agility by 50%", 225e6, "w"),
-    "Bulletproof Vest" :        new GangMemberUpgrade("Bulletproof Vest",
-                                        "Increases defense by 5%", 2e6, "a"),
-    "Full Body Armor" :         new GangMemberUpgrade("Full Body Armor",
-                                        "Increases defense by 10%", 5e6, "a"),
-    "Liquid Body Armor" :       new GangMemberUpgrade("Liquid Body Armor",
-                                        "Increases defense and agility by 25%", 25e6, "a"),
-    "Graphene Plating Armor" :  new GangMemberUpgrade("Graphene Plating Armor",
-                                        "Increases defense by 50%", 40e6, "a"),
-    "Ford Flex V20" :           new GangMemberUpgrade("Ford Flex V20",
-                                        "Increases agility and charisma by 10%", 3e6, "v"),
-    "ATX1070 Superbike" :       new GangMemberUpgrade("ATX1070 Superbike",
-                                        "Increases agility and charisma by 15%", 9e6, "v"),
-    "Mercedes-Benz S9001" :     new GangMemberUpgrade("Mercedes-Benz S9001",
-                                        "Increases agility and charisma by 20%", 18e6, "v"),
-    "White Ferrari" :           new GangMemberUpgrade("White Ferrari",
-                                        "Increases agility and charisma by 25%", 30e6, "v"),
-    "NUKE Rootkit" :            new GangMemberUpgrade("NUKE Rootkit",
-                                        "Increases hacking by 10%", 5e6, "r"),
-    "Soulstealer Rootkit" :     new GangMemberUpgrade("Soulstealer Rootkit",
-                                        "Increases hacking by 20%", 15e6, "r"),
-    "Demon Rootkit" :           new GangMemberUpgrade("Demon Rootkit",
-                                        "Increases hacking by 30%", 50e6, "r"),
-}
-
-//Create a pop-up box that lets player purchase upgrades
-let gangMemberUpgradeBoxOpened = false;
-function createGangMemberUpgradeBox(initialFilter="") {
-    var boxId = "gang-member-upgrade-popup-box";
-    if (gangMemberUpgradeBoxOpened) {
-        //Already opened, refreshing
-        if (gangMemberUpgradeBoxElements == null || gangMemberUpgradeBox == null || gangMemberUpgradeBoxContent == null) {
-            console.log("ERROR: Refreshing Gang member upgrade box throws error because required elements are null");
-            return;
-        }
-
-        for (var i = 1; i < gangMemberUpgradeBoxElements.length; ++i) {
-            Object(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_13__["removeElement"])(gangMemberUpgradeBoxElements[i]);
-        }
-        gangMemberUpgradeBoxElements = [gangMemberUpgradeBoxFilter];
-
-        var filter = gangMemberUpgradeBoxFilter.value.toString();
-        for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.members.length; ++i) {
-            if (_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.members[i].name.indexOf(filter) > -1 || _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.members[i].task.name.indexOf(filter) > -1) {
-                var newPanel = createGangMemberUpgradePanel(_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.members[i]);
-                gangMemberUpgradeBoxContent.appendChild(newPanel);
-                gangMemberUpgradeBoxElements.push(newPanel);
-            }
-        }
-    } else {
-        //New popup
-        gangMemberUpgradeBoxFilter = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("input", {
-            type:"text", placeholder:"Filter gang members",
-            value:initialFilter,
-            onkeyup:()=>{
-                var filterValue = gangMemberUpgradeBoxFilter.value.toString();
-                createGangMemberUpgradeBox(filterValue);
-            }
-        });
-
-        gangMemberUpgradeBoxElements = [gangMemberUpgradeBoxFilter];
-
-        var filter = gangMemberUpgradeBoxFilter.value.toString();
-        for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.members.length; ++i) {
-            if (_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.members[i].name.indexOf(filter) > -1 || _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.members[i].task.name.indexOf(filter) > -1) {
-                gangMemberUpgradeBoxElements.push(createGangMemberUpgradePanel(_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.members[i]));
-            }
-        }
-
-        gangMemberUpgradeBox = Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_8__["createPopup"])(boxId, gangMemberUpgradeBoxElements);
-        gangMemberUpgradeBoxContent = document.getElementById(boxId + "-content");
-        gangMemberUpgradeBoxOpened = true;
-    }
-}
-
-//Create upgrade panels for each individual Gang Member
-function createGangMemberUpgradePanel(memberObj) {
-    var container = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("div", {
-        border:"1px solid white",
-    });
-
-    var header = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("h1", {
-        innerText:memberObj.name + " (" + memberObj.task.name + ")"
-    });
-    container.appendChild(header);
-
-    var text = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("pre", {
-        fontSize:"14px", display: "inline-block", width:"20%",
-        innerText:
-            "Hack: " + memberObj.hack + " (x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(memberObj.hack_mult, 2) + ")\n" +
-            "Str:  " + memberObj.str  + " (x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(memberObj.str_mult, 2) + ")\n" +
-            "Def:  " + memberObj.def  + " (x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(memberObj.def_mult, 2) + ")\n" +
-            "Dex:  " + memberObj.dex  + " (x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(memberObj.dex_mult, 2) + ")\n" +
-            "Agi:  " + memberObj.agi  + " (x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(memberObj.agi_mult, 2) + ")\n" +
-            "Cha:  " + memberObj.cha  + " (x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(memberObj.cha_mult, 2) + ")\n",
-    });
-
-    //Already purchased upgrades
-    var ownedUpgradesElements = [];
-    for (var i = 0; i < memberObj.upgrades.length; ++i) {
-        var upg = GangMemberUpgrades[memberObj.upgrades[i]];
-        if (upg == null) {
-            console.log("ERR: Could not find this upgrade: " + memberObj.upgrades[i]);
-            continue;
-        }
-        var e = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("div", {
-            border:"1px solid white", innerText:memberObj.upgrades[i],
-            margin:"1px", padding:"1px", tooltip:upg.desc, fontSize:"12px",
-        });
-        ownedUpgradesElements.push(e);
-    }
-    var ownedUpgrades = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("div", {
-        display:"inline-block", marginLeft:"6px", width:"75%", innerText:"Purchased Upgrades:",
-    });
-    for (var i = 0; i < ownedUpgradesElements.length; ++i) {
-        ownedUpgrades.appendChild(ownedUpgradesElements[i]);
-    }
-    container.appendChild(text);
-    container.appendChild(ownedUpgrades);
-    container.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("br", {}));
-
-    //Upgrade buttons. Only show upgrades that can be afforded
-    var weaponUpgrades = [], armorUpgrades = [], vehicleUpgrades = [], rootkitUpgrades = [];
-    for (var upgName in GangMemberUpgrades) {
-        if (GangMemberUpgrades.hasOwnProperty(upgName)) {
-            var upg = GangMemberUpgrades[upgName];
-            if (_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].money.lt(upg.cost) || memberObj.upgrades.includes(upgName)) {continue;}
-            switch (upg.type) {
-                case "w":
-                    weaponUpgrades.push(upg);
-                    break;
-                case "a":
-                    armorUpgrades.push(upg);
-                    break;
-                case "v":
-                    vehicleUpgrades.push(upg);
-                    break;
-                case "r":
-                    rootkitUpgrades.push(upg);
-                    break;
-                default:
-                    console.log("ERROR: Invalid Gang Member Upgrade Type: " + upg.type);
-            }
-        }
-    }
-
-    var weaponDiv   = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("div", {width:"20%", display:"inline-block",});
-    var armorDiv    = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("div", {width:"20%", display:"inline-block",});
-    var vehicleDiv  = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("div", {width:"20%", display:"inline-block",});
-    var rootkitDiv  = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("div", {width:"20%", display:"inline-block",});
-    var upgrades = [weaponUpgrades, armorUpgrades, vehicleUpgrades, rootkitUpgrades];
-    var divs = [weaponDiv, armorDiv, vehicleDiv, rootkitDiv];
-
-    for (var i = 0; i < upgrades.length; ++i) {
-        var upgradeArray = upgrades[i];
-        var div = divs[i];
-        for (var j = 0; j < upgradeArray.length; ++j) {
-            var upg = upgradeArray[j];
-            (function (upg, div, memberObj) {
-                div.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("a", {
-                    innerText:upg.name + " - " + numeral_min_numeral_min__WEBPACK_IMPORTED_MODULE_9___default()(upg.cost).format("$0.000a"),
-                    class:"a-link-button", margin:"2px",  padding:"2px", display:"block",
-                    fontSize:"12px",
-                    tooltip:upg.desc,
-                    clickListener:()=>{
-                        if (_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].money.lt(upg.cost)) {return false;}
-                        _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].loseMoney(upg.cost);
-                        memberObj.upgrades.push(upg.name);
-                        upg.apply(memberObj);
-                        var initFilterValue = gangMemberUpgradeBoxFilter.value.toString();
-                        createGangMemberUpgradeBox(initFilterValue);
-                        return false;
-                    }
-                }));
-            })(upg, div, memberObj);
-        }
-    }
-
-    container.appendChild(weaponDiv);
-    container.appendChild(armorDiv);
-    container.appendChild(vehicleDiv);
-    container.appendChild(rootkitDiv);
-    return container;
-}
-
-//Gang DOM elements
-let gangContentCreated = false,
-    gangContainer = null, managementButton = null, territoryButton = null;
-
-//Subpages
-let gangManagementSubpage = null, gangTerritorySubpage = null;
-
-//Gang Management Elements
-let gangDesc = null, gangInfo = null,
-    gangRecruitMemberButton = null, gangRecruitRequirementText = null,
-    gangExpandAllButton = null, gangCollapseAllButton, gangMemberFilter = null,
-    gangManageEquipmentButton = null,
-    gangMemberList = null;
-
-//Gang Equipment Upgrade Elements
-let gangMemberUpgradeBox = null, gangMemberUpgradeBoxContent = null,
-    gangMemberUpgradeBoxFilter = null, gangMemberUpgradeBoxElements = null;
-
-
-//Gang Territory Elements
-let gangTerritoryDescText = null, gangTerritoryInfoText = null;
-
-function displayGangContent() {
-    if (!gangContentCreated || gangContainer == null) {
-        gangContentCreated = true;
-
-        //Create gang container
-        gangContainer = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("div", {
-            id:"gang-container", class:"generic-menupage-container",
-        });
-
-        //Get variables
-        var facName = _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.facName,
-            members = _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.members,
-            wanted = _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.wanted,
-            respect = _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.respect;
-
-        //Back button
-        gangContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("a", {
-            class:"a-link-button", display:"inline-block", innerText:"Back",
-            clickListener:()=>{
-                _engine__WEBPACK_IMPORTED_MODULE_1__["Engine"].loadFactionContent();
-                Object(_Faction__WEBPACK_IMPORTED_MODULE_2__[/* displayFactionContent */ "c"])(facName);
-                return false;
-            }
-        }));
-
-        //Buttons to switch between panels
-        managementButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("a", {
-            id:"gang-management-subpage-button", class:"a-link-button-inactive",
-            display:"inline-block", innerHTML: "Gang Management (1)",
-            clickListener:()=>{
-                gangManagementSubpage.style.display = "block";
-                gangTerritorySubpage.style.display = "none";
-                managementButton.classList.toggle("a-link-button-inactive");
-                managementButton.classList.toggle("a-link-button");
-                territoryButton.classList.toggle("a-link-button-inactive");
-                territoryButton.classList.toggle("a-link-button");
-                updateGangContent();
-                return false;
-            }
-        })
-        territoryButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("a", {
-            id:"gang-territory-subpage-button", class:"a-link-button",
-            display:"inline-block", innerHTML:"Gang Territory (2)",
-            clickListener:()=>{
-                gangManagementSubpage.style.display = "none";
-                gangTerritorySubpage.style.display = "block";
-                managementButton.classList.toggle("a-link-button-inactive");
-                managementButton.classList.toggle("a-link-button");
-                territoryButton.classList.toggle("a-link-button-inactive");
-                territoryButton.classList.toggle("a-link-button");
-                updateGangContent();
-                return false;
-            }
-        });
-        gangContainer.appendChild(managementButton);
-        gangContainer.appendChild(territoryButton);
-
-        //Subpage for managing gang members
-        gangManagementSubpage = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("div", {
-            display:"block", id:"gang-management-subpage",
-        });
-
-        var lowerWantedTask = "";
-        if (_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.isHackingGang) {
-            lowerWantedTask = "Ethical Hacking";
-        } else {
-            lowerWantedTask = "Vigilante Justice";
-        }
-        gangDesc = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("p", {width:"70%",
-            innerHTML:
-            "This page is used to manage your gang members and get an overview of your  " +
-            "gang's stats.<br><br>" +
-            "If a gang member is not earning much money or respect, the task that you " +
-            "have assigned to that member might be too difficult. Consider training that " +
-            "member's stats or choosing an easier task. The tasks closer to the " +
-            "top of the dropdown list are generally easier. Alternatively, the gang member's " +
-            "low production might be due to the fact that your wanted level is too high. " +
-            "Consider assigning a few members to the '" + lowerWantedTask + "' " +
-            "task to lower your wanted level. <br><br>" +
-            "Installing Augmentations does NOT reset your progress with your Gang. " +
-            "Furthermore, after installing Augmentations, you will " +
-            "automatically be a member of whatever Faction you created your gang with.<br><br>"
-        });
-        gangManagementSubpage.appendChild(gangDesc);
-
-        gangInfo = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("p", {id:"gang-info", width:"70%"});
-        gangManagementSubpage.appendChild(gangInfo);
-
-        gangRecruitMemberButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("a", {
-            id:"gang-management-recruit-member-btn", class:"a-link-button-inactive",
-            innerHTML:"Recruit Gang Member", display:"inline-block", margin:"10px",
-            clickListener:()=>{
-                var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_15__[/* yesNoTxtInpBoxGetYesButton */ "j"])(), noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_15__[/* yesNoTxtInpBoxGetNoButton */ "i"])();
-                yesBtn.innerHTML = "Recruit Gang Member";
-                noBtn.innerHTML = "Cancel";
-                yesBtn.addEventListener("click", ()=>{
-                    var name = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_15__[/* yesNoTxtInpBoxGetInput */ "h"])();
-                    if (name === "") {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__["dialogBoxCreate"])("You must enter a name for your Gang member!");
-                    } else {
-                        for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.members.length; ++i) {
-                            if (name == _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.members[i].name) {
-                                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__["dialogBoxCreate"])("You already have a gang member with this name!");
-                                return false;
-                            }
-                        }
-                        var member = new GangMember(name);
-                        _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.members.push(member);
-                        createGangMemberDisplayElement(member);
-                        updateGangContent();
-                    }
-                    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_15__[/* yesNoTxtInpBoxClose */ "f"])();
-                });
-                noBtn.addEventListener("click", ()=>{
-                    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_15__[/* yesNoTxtInpBoxClose */ "f"])();
-                });
-                Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_15__[/* yesNoTxtInpBoxCreate */ "g"])("Please enter a name for your new Gang member:");
-                return false;
-            }
-        });
-        gangManagementSubpage.appendChild(gangRecruitMemberButton);
-
-        //Text for how much reputation is required for recruiting next memberList
-        gangRecruitRequirementText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("p", {color:"red", id:"gang-recruit-requirement-text"});
-        gangManagementSubpage.appendChild(gangRecruitRequirementText);
-
-        //Gang Member List management buttons (Expand/Collapse All, select a single member)
-        gangManagementSubpage.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("br", {}));
-        gangExpandAllButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("a", {
-            class:"a-link-button", display:"inline-block",
-            innerHTML:"Expand All",
-            clickListener:()=>{
-                var allHeaders = gangManagementSubpage.getElementsByClassName("accordion-header");
-                for (var i = 0; i < allHeaders.length; ++i) {
-                    var hdr = allHeaders[i];
-                    if (!hdr.classList.contains("active")) {
-                        hdr.click();
-                    }
-                }
-                return false;
-            }
-        });
-        gangCollapseAllButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("a", {
-            class:"a-link-button", display:"inline-block",
-            innerHTML:"Collapse All",
-            clickListener:()=>{
-                var allHeaders = gangManagementSubpage.getElementsByClassName("accordion-header");
-                for (var i = 0; i < allHeaders.length; ++i) {
-                    var hdr = allHeaders[i];
-                    if (hdr.classList.contains("active")) {
-                        hdr.click();
-                    }
-                }
-                return false;
-            }
-        });
-        gangMemberFilter = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("input", {
-            type:"text", placeholder:"Filter gang members", margin:"5px", padding:"5px",
-            onkeyup:()=>{
-                displayGangMemberList();
-            }
-        });
-        gangManageEquipmentButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("a", {
-            class:"a-link-button", display:"inline-block",
-            innerHTML:"Manage Equipment",
-            clickListener:()=>{
-                createGangMemberUpgradeBox();
-            }
-        });
-        gangManagementSubpage.appendChild(gangExpandAllButton);
-        gangManagementSubpage.appendChild(gangCollapseAllButton);
-        gangManagementSubpage.appendChild(gangMemberFilter);
-        gangManagementSubpage.appendChild(gangManageEquipmentButton);
-
-        //Gang Member list
-        gangMemberList = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("ul", {id:"gang-member-list"});
-        displayGangMemberList();
-        gangManagementSubpage.appendChild(gangMemberList);
-
-        //Subpage for seeing gang territory information
-        gangTerritorySubpage = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("div", {
-            id:"gang-territory-subpage", display:"none"
-        });
-
-        //Info text for territory page
-        gangTerritoryDescText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("p", {
-            width:"70%",
-            innerHTML:"This page shows how much territory your Gang controls. This statistic is listed as a percentage, " +
-            "which represents how much of the total territory you control.<br><br>" +
-            "Territory gain and loss is processed automatically and is updated every ~30 seconds. Your chances " +
-            "to gain and lose territory depend on your Gang's power, which is listed in the display below. " +
-            "Your gang's power is determined by the stats of all Gang members you have assigned to the " +
-            "'Territory Warfare' task. Gang members that are not assigned to this task do not contribute to " +
-            "your Gang's power.<br><br>" +
-            "The amount of territory you have affects all aspects of your Gang members' production, including " +
-            "money, respect, and wanted level. It is very beneficial to have high territory control.<br><br>"
-        });
-        gangTerritorySubpage.appendChild(gangTerritoryDescText);
-
-        var territoryBorder = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("fieldset", {width:"50%", display:"inline-block"});
-
-        gangTerritoryInfoText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("p", {id:"gang-territory-info"});
-
-        territoryBorder.appendChild(gangTerritoryInfoText);
-        gangTerritorySubpage.appendChild(territoryBorder);
-
-        gangContainer.appendChild(gangTerritorySubpage);
-        gangContainer.appendChild(gangManagementSubpage);
-        document.getElementById("entire-game-container").appendChild(gangContainer);
-    }
-    gangContainer.style.display = "block";
-    updateGangContent();
-}
-
-function displayGangMemberList() {
-    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_12__["removeChildrenFromElement"])(gangMemberList);
-    var members = _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.members;
-    var filter = gangMemberFilter.value.toString();
-    for (var i = 0; i < members.length; ++i) {
-        if (members[i].name.indexOf(filter) > -1 || members[i].task.name.indexOf(filter) > -1) {
-            createGangMemberDisplayElement(members[i]);
-        }
-    }
-    //setGangMemberClickHandlers(); //Set buttons to toggle the gang member info panels
-}
-
-function updateGangContent() {
-    if (!gangContentCreated || !_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].inGang()) {return;}
-
-    if(gangTerritorySubpage.style.display === "block") {
-        //Update territory information
-        gangTerritoryInfoText.innerHTML = "";
-        for (var gangname in AllGangs) {
-            if (AllGangs.hasOwnProperty(gangname)) {
-                var gangTerritoryInfo = AllGangs[gangname];
-                let territory = gangTerritoryInfo.territory*100;
-
-                //Fix some rounding issues graphically
-                let displayNumber;
-                if (territory <= 0) {
-                    displayNumber = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(0, 2);
-                } else if (territory >= 100) {
-                    displayNumber = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(100, 2);
-                } else {
-                    displayNumber = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(territory, 2);
-                }
-
-                if (gangname == _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.facName) {
-                    gangTerritoryInfoText.innerHTML += ("<b>" + gangname + "</b><br>(Power: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(gangTerritoryInfo.power, 6) + "): " +
-                                       displayNumber + "%<br><br>");
-                } else {
-                    gangTerritoryInfoText.innerHTML += (gangname + "<br>(Power: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(gangTerritoryInfo.power, 6) + "): " +
-                                       displayNumber + "%<br><br>");
-                }
-            }
-        }
-    } else {
-        //Update information for overall gang
-        if (gangInfo instanceof Element) {
-            var faction = _Faction__WEBPACK_IMPORTED_MODULE_2__[/* Factions */ "b"][_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.facName];
-            var rep;
-            if (!(faction instanceof _Faction__WEBPACK_IMPORTED_MODULE_2__[/* Faction */ "a"])) {
-                rep = "ERROR";
-            } else {
-                rep = faction.playerReputation;
-            }
-            Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_12__["removeChildrenFromElement"])(gangInfo);
-            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("p", {   //Respect
-                display:"inline-block",
-                innerText:"Respect: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.respect, 6) +
-                          " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(5*_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.respectGainRate, 6) + " / sec)",
-                tooltip:"Represents the amount of respect your gang has from other gangs and criminal " +
-                        "organizations. Your respect affects the amount of money " +
-                        "your gang members will earn, and also determines how much " +
-                        "reputation you are earning with your gang's corresponding Faction."
-            }));
-            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("br", {}));
-
-            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("p", {   //Wanted level
-                display:"inline-block",
-                innerText:"Wanted Level: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.wanted, 6) +
-                          " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(5*_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.wantedGainRate, 6) + " / sec)",
-                tooltip:"Represents how much the gang is wanted by law enforcement. The higher " +
-                        "your gang's wanted level, the harder it will be for your gang members " +
-                        "to make money and earn respect. Note that the minimum wanted level is 1."
-            }));
-            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("br", {}));
-
-            var wantedPenalty = (_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.respect) / (_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.respect + _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.wanted);
-            wantedPenalty = (1 - wantedPenalty) * 100;
-            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("p", {   //Wanted Level multiplier
-                display:"inline-block",
-                innerText:"Wanted Level Penalty: -" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(wantedPenalty, 2) + "%",
-                tooltip:"Penalty for respect and money gain rates due to Wanted Level"
-            }));
-            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("br", {}));
-
-            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("p", {   //Money gain rate
-                display:"inline-block",
-                innerText:"Money gain rate: $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(5*_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.moneyGainRate, 2) +
-                          " / sec",
-            }));
-            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("br", {}));
-
-            //Fix some rounding issues graphically
-            var territoryMult = AllGangs[_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.facName].territory * 100;
-            let displayNumber;
-            if (territoryMult <= 0) {
-                displayNumber = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(0, 2);
-            } else if (territoryMult >= 100) {
-                displayNumber = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(100, 2);
-            } else {
-                displayNumber = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(territoryMult, 2);
-            }
-            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("p", {  //Territory multiplier
-                display:"inline-block",
-                innerText:"Territory: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(displayNumber, 3) + "%",
-                tooltip:"The percentage of total territory your Gang controls"
-            }));
-            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("br", {}));
-
-            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("p", {  //Faction reputation
-                display:"inline-block",
-                innerText:"Faction reputation: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(rep, 3)
-            }));
-            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("br", {}));
-        } else {
-            console.log("ERROR: gang-info DOM element DNE");
-        }
-
-        //Toggle the 'Recruit member button' if valid
-        var numMembers = _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.members.length;
-        var repCost = 0;
-        if (numMembers > 0) {
-            var repCost = Math.pow(_Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].GangRecruitCostMultiplier, numMembers);
-        }
-        var faction = _Faction__WEBPACK_IMPORTED_MODULE_2__[/* Factions */ "b"][_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.facName];
-        if (faction == null) {
-            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__["dialogBoxCreate"])("Could not find your gang's faction. This is probably a bug please report to dev");
-            return;
-        }
-        var btn = gangRecruitMemberButton;
-        if (numMembers >= _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].MaximumGangMembers) {
-            btn.className = "a-link-button-inactive";
-            gangRecruitRequirementText.style.display = "block";
-            gangRecruitRequirementText.innerHTML =
-                "You have reached the maximum amount of gang members";
-        } else if (faction.playerReputation >= repCost) {
-            btn.className = "a-link-button";
-            gangRecruitRequirementText.style.display = "none";
-        } else {
-            btn.className = "a-link-button-inactive";
-            gangRecruitRequirementText.style.display = "block";
-            gangRecruitRequirementText.innerHTML =
-                Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(repCost, 2) + " Faction reputation needed to recruit next member";
-        }
-
-        //Update information for each gang member
-        for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.members.length; ++i) {
-            updateGangMemberDisplayElement(_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.members[i]);
-        }
-    }
-}
-
-//Takes in a GangMember object
-function createGangMemberDisplayElement(memberObj) {
-    if (!gangContentCreated || !_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].inGang()) {return;}
-    var name = memberObj.name;
-
-    var accordion = Object(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_6__["createAccordionElement"])({
-        id:name + "gang-member",
-        hdrText:name,
-    });
-    var li = accordion[0];
-    var hdr = accordion[1];
-    var gangMemberDiv = accordion[2];
-
-    //Gang member content divided into 3 panels:
-    //Stats Panel
-    var statsDiv = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("div", {
-        id: name + "gang-member-stats", class: "gang-member-info-div",
-        width:"30%", display:"inline"
-    });
-    var statsP = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("p", {
-        id:name + "gang-member-stats-text", display:"inline"
-    });
-
-    statsDiv.appendChild(statsP);
-    //statsDiv.appendChild(upgradeButton);
-
-    //Panel for Selecting task and show respect/wanted gain
-    var taskDiv = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("div", {
-        id: name + "gang-member-task", class:"gang-member-info-div",
-        width:"30%", display:"inline"
-    });
-    var taskSelector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("select", {
-        color:"white", backgroundColor:"black",
-        id:name + "gang-member-task-selector"
-    });
-
-    var tasks = null;
-    if (_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.isHackingGang) {
-        tasks = ["---", "Ransomware", "Phishing", "Identity Theft", "DDoS Attacks",
-                 "Plant Virus", "Fraud & Counterfeiting","Money Laundering",
-                 "Cyberterrorism", "Ethical Hacking", "Train Combat",
-                 "Train Hacking", "Territory Warfare"];
-    } else {
-        tasks = ["---", "Mug People", "Deal Drugs", "Run a Con", "Armed Robbery",
-                 "Traffick Illegal Arms", "Threaten & Blackmail",
-                 "Terrorism", "Vigilante Justice", "Train Combat",
-                 "Train Hacking", "Territory Warfare"];
-    }
-    for (var i = 0; i < tasks.length; ++i) {
-        var option = document.createElement("option");
-        option.text = tasks[i];
-        taskSelector.add(option);
-    }
-    taskSelector.addEventListener("change", function() {
-        var task = taskSelector.options[taskSelector.selectedIndex].text;
-        memberObj.assignToTask(task);
-        setGangMemberTaskDescription(memberObj, task);
-        updateGangContent();
-    });
-    //Set initial task in selector element
-    if (memberObj.task instanceof GangMemberTask) {
-        var taskName = memberObj.task.name;
-        var taskIndex = 0;
-        for (let i = 0; i < tasks.length; ++i) {
-            if (taskName == tasks[i]) {
-                taskIndex = i;
-                break;
-            }
-        }
-        taskSelector.selectedIndex = taskIndex;
-    }
-
-    var gainInfo = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("p", {id:name + "gang-member-gain-info"});
-    taskDiv.appendChild(taskSelector);
-    taskDiv.appendChild(gainInfo);
-
-    //Panel for Description of task
-    var taskDescDiv = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("div", {
-        id:name + "gang-member-task-desc", class:"gang-member-info-div",
-        width:"30%", display:"inline"
-    });
-
-    var taskDescP = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("p", {id: name + "gang-member-task-description", display:"inline"});
-    taskDescDiv.appendChild(taskDescP);
-
-    statsDiv.style.width = "30%";
-    taskDiv.style.width = "30%";
-    taskDescDiv.style.width = "30%";
-    statsDiv.style.display = "inline";
-    taskDiv.style.display = "inline";
-    taskDescDiv.style.display = "inline";
-    gangMemberDiv.appendChild(statsDiv);
-    gangMemberDiv.appendChild(taskDiv);
-    gangMemberDiv.appendChild(taskDescDiv);
-
-    gangMemberList.appendChild(li);
-    setGangMemberTaskDescription(memberObj, taskName); //Initialize description
-    updateGangMemberDisplayElement(memberObj);
-}
-
-function updateGangMemberDisplayElement(memberObj) {
-    if (!gangContentCreated || !_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].inGang()) {return;}
-    var name = memberObj.name;
-
-    //TODO Add upgrade information
-    var stats = document.getElementById(name + "gang-member-stats-text");
-    if (stats) {
-        stats.innerHTML =
-            "Hacking: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(memberObj.hack, 0) + " (" + numeral_min_numeral_min__WEBPACK_IMPORTED_MODULE_9___default()(memberObj.hack_exp).format('(0.00a)') + " exp)<br>" +
-            "Strength: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(memberObj.str, 0) + " (" + numeral_min_numeral_min__WEBPACK_IMPORTED_MODULE_9___default()(memberObj.str_exp).format('(0.00a)') + " exp)<br>" +
-            "Defense: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(memberObj.def, 0) + " (" + numeral_min_numeral_min__WEBPACK_IMPORTED_MODULE_9___default()(memberObj.def_exp).format('(0.00a)') + " exp)<br>" +
-            "Dexterity: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(memberObj.dex, 0) + " (" + numeral_min_numeral_min__WEBPACK_IMPORTED_MODULE_9___default()(memberObj.dex_exp).format('(0.00a)') + " exp)<br>" +
-            "Agility: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(memberObj.agi, 0) + " (" + numeral_min_numeral_min__WEBPACK_IMPORTED_MODULE_9___default()(memberObj.agi_exp).format('(0.00a)') + " exp)<br>" +
-            "Charisma: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(memberObj.cha, 0) + " (" + numeral_min_numeral_min__WEBPACK_IMPORTED_MODULE_9___default()(memberObj.cha_exp).format('(0.00a)') + " exp)<br>";
-    }
-
-    var gainInfo = document.getElementById(name + "gang-member-gain-info");
-    if (gainInfo) {
-        gainInfo.innerHTML =
-            "Money: $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(5*memberObj.calculateMoneyGain(), 2) + " / sec<br>" +
-            "Respect: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(5*memberObj.calculateRespectGain(), 6) + " / sec<br>" +
-            "Wanted Level: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(5*memberObj.calculateWantedLevelGain(), 6) + " / sec<br>";
-    }
-}
-
-function setGangMemberTaskDescription(memberObj, taskName) {
-    var name = memberObj.name;
-    var taskDesc = document.getElementById(name + "gang-member-task-description");
-    if (taskDesc) {
-        var task = GangMemberTasks[taskName];
-        if (task == null) {return;}
-        var desc = task.desc;
-        taskDesc.innerHTML = desc;
-    }
-}
-
-function deleteGangDisplayContent() {
-    if (gangContainer != null) {Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_14__["removeElementById"])(gangContainer.id);}
-
-    gangContentCreated = false;
-    gangContainer = null;
-    managementButton = null;
-    territoryButton = null;
-
-    //Subpages
-    gangManagementSubpage = null;
-    gangTerritorySubpage = null;
-
-    //Gang Management Elements
-    gangDesc = null;
-    gangInfo = null;
-    gangRecruitMemberButton = null;
-    gangRecruitRequirementText = null;
-    gangExpandAllButton = null;
-    gangCollapseAllButton = null;
-    gangMemberFilter = null;
-    gangManageEquipmentButton = null;
-    gangMemberList = null;
-
-    //Gang Equipment Upgrade Elements
-    gangMemberUpgradeBox = null;
-    gangMemberUpgradeBoxContent = null;
-    gangMemberUpgradeBoxFilter = null;
-    gangMemberUpgradeBoxElements = null;
-}
-
-
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 51)))
-
-/***/ }),
-/* 41 */
-/*!*****************************************!*\
-  !*** ./utils/helpers/exceptionAlert.js ***!
-  \*****************************************/
-/*! exports provided: exceptionAlert */
-/*! exports used: exceptionAlert */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return exceptionAlert; });
-/* harmony import */ var _DialogBox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../DialogBox */ 8);
-
-
-function exceptionAlert(e) {
-    Object(_DialogBox__WEBPACK_IMPORTED_MODULE_0__["dialogBoxCreate"])("Caught an exception: " + e + "<br><br>" +
-                    "Filename: " + (e.fileName || "UNKNOWN FILE NAME") + "<br><br>" +
-                    "Line Number: " + (e.lineNumber || "UNKNOWN LINE NUMBER") + "<br><br>" +
-                    "This is a bug, please report to game developer with this " +
-                    "message as well as details about how to reproduce the bug.<br><br>" +
-                    "If you want to be safe, I suggest refreshing the game WITHOUT saving so that your " +
-                    "safe doesn't get corrupted");
-}
-
-
-
-
-/***/ }),
-/* 42 */
-/*!************************************!*\
-  !*** ./utils/helpers/addOffset.ts ***!
-  \************************************/
-/*! no static exports found */
-/*! exports used: addOffset */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * Adds a random offset to a number within a certain percentage
- * @example
- * // Returns between 95-105
- * addOffset(100, 5);
- * @example
- * // Returns between 63-77
- * addOffSet(70, 10);
- * @param midpoint The number to be the midpoint of the offset range
- * @param percentage The percentage (in a range of 0-100) to offset
- */
-function addOffset(midpoint, percentage) {
-    const maxPercent = 100;
-    if (percentage < 0 || percentage > maxPercent) {
-        return midpoint;
-    }
-    const offset = midpoint * (percentage / maxPercent);
-    // Double the range to account for both sides of the midpoint.
-    // tslint:disable-next-line:no-magic-numbers
-    return midpoint + ((Math.random() * (offset * 2)) - offset);
-}
-exports.addOffset = addOffset;
-
-
-/***/ }),
-/* 43 */
 /*!************************!*\
   !*** ./utils/acorn.js ***!
   \************************/
@@ -36672,674 +33431,3317 @@ Object.defineProperty(exports, '__esModule', { value: true });
 })));
 
 /***/ }),
-/* 44 */
-/*!****************************!*\
-  !*** ./src/HacknetNode.js ***!
-  \****************************/
-/*! exports provided: HacknetNode, createPlayerHacknetNodeWrappers, displayHacknetNodesContent, getCostOfNextHacknetNode, getHacknetNode, getMaxNumberLevelUpgrades, hacknetNodesInit, processAllHacknetNodeEarnings, purchaseHacknet, updateHacknetNodesContent, updateHacknetNodesMultiplierButtons, updateTotalHacknetProduction */
-/*! exports used: HacknetNode, createPlayerHacknetNodeWrappers, displayHacknetNodesContent, getCostOfNextHacknetNode, processAllHacknetNodeEarnings, purchaseHacknet, updateHacknetNodesContent */
+/* 38 */
+/*!**********************!*\
+  !*** ./src/Fconf.js ***!
+  \**********************/
+/*! exports provided: FconfSettings, createFconf, parseFconfSettings, loadFconf */
+/*! exports used: FconfSettings, createFconf, loadFconf, parseFconfSettings */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HacknetNode; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return createPlayerHacknetNodeWrappers; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return displayHacknetNodesContent; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return getCostOfNextHacknetNode; });
-/* unused harmony export getHacknetNode */
-/* unused harmony export getMaxNumberLevelUpgrades */
-/* unused harmony export hacknetNodesInit */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return processAllHacknetNodeEarnings; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return purchaseHacknet; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return updateHacknetNodesContent; });
-/* unused harmony export updateHacknetNodesMultiplierButtons */
-/* unused harmony export updateTotalHacknetProduction */
-/* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNode */ 16);
-/* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Constants */ 2);
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 6);
-/* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./InteractiveTutorial */ 28);
-/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 13);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/JSONReviver */ 10);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 3);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 1);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/uiHelpers/getElementById */ 53);
-/* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FconfSettings; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return createFconf; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return parseFconfSettings; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return loadFconf; });
+/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/acorn */ 37);
+/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_0__);
 
 
-
-
-
-
-
-
-
-
-
-
-/**
- * Overwrites the inner text of the specified HTML element if it is different from what currently exists.
- * @param {string} elementId The HTML ID to find the first instance of.
- * @param {string} text The inner text that should be set.
- */
-function updateText(elementId, text) {
-    var el = Object(_utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__["getElementById"])(elementId);
-    if (el.innerText != text) {
-        el.innerText = text;
-    }
-};
-
-/* HacknetNode.js */
-function hacknetNodesInit() {
-    var performMapping = function(x) {
-        Object(_utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__["getElementById"])("hacknet-nodes-" + x.id + "-multiplier")
-            .addEventListener("click", function() {
-                hacknetNodePurchaseMultiplier = x.multiplier;
-                updateHacknetNodesMultiplierButtons();
-                updateHacknetNodesContent();
-                return false;
-            });
-    };
-
-    var mappings = [
-        { id: "1x", multiplier: 1 },
-        { id: "5x", multiplier: 5 },
-        { id: "10x", multiplier: 10 },
-        { id: "max", multiplier: 0 }
-    ];
-    for (var elem of mappings) {
-        // Encapsulate in a function so that the appropriate scope is kept in the click handler.
-        performMapping(elem);
-    }
+var FconfSettings = {
+    ENABLE_BASH_HOTKEYS:     false,
+    ENABLE_TIMESTAMPS:       false,
 }
 
-document.addEventListener("DOMContentLoaded", hacknetNodesInit, false);
-
-function HacknetNode(name) {
-    this.level      = 1;
-    this.ram        = 1; //GB
-    this.cores      = 1;
-
-    this.name       = name;
-
-    this.totalMoneyGenerated    = 0;
-    this.onlineTimeSeconds      = 0;
-
-    this.moneyGainRatePerSecond = 0;
+var FconfComments = {
+    ENABLE_BASH_HOTKEYS: "Improved Bash emulation mode. Setting this to 1 enables several\n" +
+                         "new Terminal shortcuts and features that more closely resemble\n" +
+                         "a real Bash-style shell. Note that when this mode is enabled,\n"  +
+                         "the default browser shortcuts are overriden by the new Bash\n" +
+                         "shortcuts.\n\n" +
+                         "To see a full list of the Terminal shortcuts that this enables, see:\n" +
+                         "http://bitburner.readthedocs.io/en/latest/shortcuts.html",
+    ENABLE_TIMESTAMPS: "Terminal commands and log entries will be timestamped. The timestamp\n" +
+                       "will have the format: M/D h:m",
 }
 
-
-HacknetNode.prototype.updateMoneyGainRate = function() {
-    //How much extra $/s is gained per level
-    var gainPerLevel = _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodeMoneyGainPerLevel;
-
-    this.moneyGainRatePerSecond = (this.level * gainPerLevel) *
-                                  Math.pow(1.035, this.ram-1) *
-                                  ((this.cores + 5) / 6) *
-                                  _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknet_node_money_mult *
-                                  _BitNode__WEBPACK_IMPORTED_MODULE_0__[/* BitNodeMultipliers */ "a"].HacknetNodeMoney;
-    if (isNaN(this.moneyGainRatePerSecond)) {
-        this.moneyGainRatePerSecond = 0;
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_5__["dialogBoxCreate"])("Error in calculating Hacknet Node production. Please report to game developer");
-    }
-
-    updateTotalHacknetProduction();
-}
-
-HacknetNode.prototype.calculateLevelUpgradeCost = function(levels=1) {
-    levels = Math.round(levels);
-    if (isNaN(levels) || levels < 1) {
-        return 0;
-    }
-
-    var mult = _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodeUpgradeLevelMult;
-    var totalMultiplier = 0; //Summed
-    var currLevel = this.level;
-    for (var i = 0; i < levels; ++i) {
-        totalMultiplier += Math.pow(mult, currLevel);
-        ++currLevel;
-    }
-
-    return _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].BaseCostForHacknetNode / 2 * totalMultiplier * _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknet_node_level_cost_mult;
-}
-
-//Wrapper function for Netscript
-HacknetNode.prototype.getLevelUpgradeCost = function(levels=1) {
-    return this.calculateLevelUpgradeCost(levels);
-}
-
-HacknetNode.prototype.purchaseLevelUpgrade = function(levels=1) {
-    levels = Math.round(levels);
-    var cost = this.calculateLevelUpgradeCost(levels);
-    if (isNaN(cost) || levels < 0) {
-        return false;
-    }
-
-    if (this.level + levels > _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodeMaxLevel) {
-        var diff = Math.max(0, _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodeMaxLevel - this.level);
-        return this.purchaseLevelUpgrade(diff);
-    }
-
-    if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.lt(cost)) {
-        return false;
-    }
-
-    _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].loseMoney(cost);
-    this.level += levels;
-    this.updateMoneyGainRate();
-    return true;
-}
-
-//Wrapper function for Netscript
-HacknetNode.prototype.upgradeLevel = function(levels=1) {
-    let res = this.purchaseLevelUpgrade(levels);
-    createPlayerHacknetNodeWrappers();
-    return res;
-}
-
-HacknetNode.prototype.calculateRamUpgradeCost = function() {
-    var numUpgrades = Math.log2(this.ram);
-
-    //Calculate cost
-    //Base cost of RAM is 50k per 1GB, increased by some multiplier for each time RAM is upgraded
-    var baseCost = this.ram * _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].BaseCostFor1GBOfRamHacknetNode;
-    var mult = Math.pow(_Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodeUpgradeRamMult, numUpgrades);
-    return baseCost * mult * _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknet_node_ram_cost_mult;
-}
-
-//Wrapper function for Netscript
-HacknetNode.prototype.getRamUpgradeCost = function() {
-    return this.calculateRamUpgradeCost();
-}
-
-HacknetNode.prototype.purchaseRamUpgrade = function() {
-    var cost = this.calculateRamUpgradeCost();
-    if (isNaN(cost)) {
-        return false;
-    }
-
-    if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.lt(cost)) {
-        return false;
-    }
-
-    if (this.ram >= _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodeMaxRam) {
-        return false;
-    }
-
-    _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].loseMoney(cost);
-    this.ram *= 2; //Ram is always doubled
-    this.updateMoneyGainRate();
-    return true;
-}
-
-//Wrapper function for Netscript
-HacknetNode.prototype.upgradeRam = function() {
-    let res = this.purchaseRamUpgrade();
-    createPlayerHacknetNodeWrappers();
-    return res;
-}
-
-HacknetNode.prototype.calculateCoreUpgradeCost = function() {
-    var coreBaseCost = _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].BaseCostForHacknetNodeCore;
-    var mult = _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodeUpgradeCoreMult;
-    return coreBaseCost * Math.pow(mult, this.cores - 1) * _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknet_node_core_cost_mult;
-}
-
-//Wrapper function for Netscript
-HacknetNode.prototype.getCoreUpgradeCost = function() {
-    let res = this.calculateCoreUpgradeCost();
-    createPlayerHacknetNodeWrappers();
-    return res;
-}
-
-HacknetNode.prototype.purchaseCoreUpgrade = function() {
-    var cost = this.calculateCoreUpgradeCost();
-    if (isNaN(cost)) {
-        return false;
-    }
-
-    if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.lt(cost)) {
-        return false;
-    }
-
-    if (this.cores >= _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodeMaxCores) {
-        return false;
-    }
-
-    _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].loseMoney(cost);
-    ++this.cores;
-    this.updateMoneyGainRate();
-    return true;
-}
-
-//Wrapper function for Netscript
-HacknetNode.prototype.upgradeCore = function() {
-    return this.purchaseCoreUpgrade();
-}
-
-/* Saving and loading HackNets */
-HacknetNode.prototype.toJSON = function() {
-    return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_7__["Generic_toJSON"])("HacknetNode", this);
-}
-
-HacknetNode.fromJSON = function(value) {
-    return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_7__["Generic_fromJSON"])(HacknetNode, value.data);
-}
-
-_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_7__["Reviver"].constructors.HacknetNode = HacknetNode;
-
-var HacknetNodeWrapper = function(hacknetNodeObj) {
-    var _node                   = hacknetNodeObj;
-    return {
-        name                   : _node.name,
-        level                  : _node.level,
-        ram                    : _node.ram,
-        cores                  : _node.cores,
-        totalMoneyGenerated    : _node.totalMoneyGenerated,
-        onlineTimeSeconds      : _node.onlineTimeSeconds,
-        moneyGainRatePerSecond : _node.moneyGainRatePerSecond,
-        upgradeLevel : function(n) {
-            return _node.upgradeLevel(n);
-        },
-        upgradeRam : function() {
-            return _node.upgradeRam();
-        },
-        upgradeCore : function() {
-            return _node.upgradeCore();
-        },
-        getLevelUpgradeCost : function(n) {
-            return _node.getLevelUpgradeCost(n);
-        },
-        getRamUpgradeCost : function() {
-            return _node.getRamUpgradeCost();
-        },
-        getCoreUpgradeCost : function() {
-            return _node.getCoreUpgradeCost();
+//Parse Fconf settings from the config text
+//Throws an exception if parsing fails
+function parseFconfSettings(config) {
+    var ast = Object(_utils_acorn__WEBPACK_IMPORTED_MODULE_0__["parse"])(config, {sourceType:"module"});
+    var queue = [];
+    queue.push(ast);
+    while (queue.length != 0) {
+        var exp = queue.shift();
+        switch (exp.type) {
+            case "BlockStatement":
+            case "Program":
+                for (var i = 0; i < exp.body.length; ++i) {
+                    if (exp.body[i] instanceof _utils_acorn__WEBPACK_IMPORTED_MODULE_0__["Node"]) {
+                        queue.push(exp.body[i]);
+                    }
+                }
+                break;
+            case "AssignmentExpression":
+                var setting, value;
+                if (exp.left != null && exp.left.name != null) {
+                    setting = exp.left.name;
+                } else {
+                    break;
+                }
+                if (exp.right != null && exp.right.raw != null) {
+                    value = exp.right.raw;
+                } else {
+                    break;
+                }
+                parseFconfSetting(setting, value);
+                break;
+            default:
+                break;
         }
-    }
-}
 
-function purchaseHacknet() {
-    /* INTERACTIVE TUTORIAL */
-    if (_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_3__[/* iTutorialIsRunning */ "b"]) {
-        if (_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_3__[/* currITutorialStep */ "a"] == _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_3__[/* iTutorialSteps */ "e"].HacknetNodesIntroduction) {
-            Object(_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_3__[/* iTutorialNextStep */ "c"])();
-        } else {
-            return;
-        }
-    }
-
-    /* END INTERACTIVE TUTORIAL */
-
-    var cost = getCostOfNextHacknetNode();
-    if (isNaN(cost)) {
-        throw new Error("Cost is NaN");
-    }
-
-    if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.lt(cost)) {
-        //dialogBoxCreate("You cannot afford to purchase a Hacknet Node!");
-        return false;
-    }
-
-    //Auto generate a name for the node for now...TODO
-    var numOwned = _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodes.length;
-    var name = "hacknet-node-" + numOwned;
-    var node = new HacknetNode(name);
-    node.updateMoneyGainRate();
-
-    _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].loseMoney(cost);
-    _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodes.push(node);
-
-    if (_engine__WEBPACK_IMPORTED_MODULE_2__["Engine"].currentPage === _engine__WEBPACK_IMPORTED_MODULE_2__["Engine"].Page.HacknetNodes) {
-        displayHacknetNodesContent();
-    }
-    createPlayerHacknetNodeWrappers();
-    updateTotalHacknetProduction();
-    return numOwned;
-}
-
-//Calculates the total production from all HacknetNodes
-function updateTotalHacknetProduction() {
-    var total = 0;
-    for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodes.length; ++i) {
-        total += _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodes[i].moneyGainRatePerSecond;
-    }
-    _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].totalHacknetNodeProduction = total;
-}
-
-function getCostOfNextHacknetNode() {
-    //Cost increases exponentially based on how many you own
-    var numOwned = _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodes.length;
-    var mult = _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodePurchaseNextMult;
-    return _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].BaseCostForHacknetNode * Math.pow(mult, numOwned) * _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknet_node_purchase_cost_mult;
-}
-
-var hacknetNodePurchaseMultiplier = 1;
-function updateHacknetNodesMultiplierButtons() {
-    var mult1x = document.getElementById("hacknet-nodes-1x-multiplier");
-    var mult5x = document.getElementById("hacknet-nodes-5x-multiplier");
-    var mult10x = document.getElementById("hacknet-nodes-10x-multiplier");
-    var multMax = document.getElementById("hacknet-nodes-max-multiplier");
-    mult1x.setAttribute("class", "a-link-button");
-    mult5x.setAttribute("class", "a-link-button");
-    mult10x.setAttribute("class", "a-link-button");
-    multMax.setAttribute("class", "a-link-button");
-    if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodes.length == 0) {
-        mult1x.setAttribute("class", "a-link-button-inactive");
-        mult5x.setAttribute("class", "a-link-button-inactive");
-        mult10x.setAttribute("class", "a-link-button-inactive");
-        multMax.setAttribute("class", "a-link-button-inactive");
-    } else if (hacknetNodePurchaseMultiplier == 1) {
-        mult1x.setAttribute("class", "a-link-button-inactive");
-    } else if (hacknetNodePurchaseMultiplier == 5) {
-        mult5x.setAttribute("class", "a-link-button-inactive");
-    } else if (hacknetNodePurchaseMultiplier == 10) {
-        mult10x.setAttribute("class", "a-link-button-inactive");
-    } else {
-        multMax.setAttribute("class", "a-link-button-inactive");
-    }
-}
-
-//Calculate the maximum number of times the Player can afford to upgrade
-//a Hacknet Node's level"
-function getMaxNumberLevelUpgrades(nodeObj) {
-    if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.lt(nodeObj.calculateLevelUpgradeCost(1))) {
-        return 0;
-    }
-
-    var min = 1;
-    var max = _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodeMaxLevel - 1;
-    var levelsToMax = _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodeMaxLevel - nodeObj.level;
-    if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.gt(nodeObj.calculateLevelUpgradeCost(levelsToMax))) {
-        return levelsToMax;
-    }
-
-    while (min <= max) {
-        var curr = (min + max) / 2 | 0;
-        if (curr != _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodeMaxLevel &&
-            _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.gt(nodeObj.calculateLevelUpgradeCost(curr)) &&
-            _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.lt(nodeObj.calculateLevelUpgradeCost(curr + 1))) {
-            return Math.min(levelsToMax, curr);
-        } else if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.lt(nodeObj.calculateLevelUpgradeCost(curr))) {
-            max = curr - 1;
-        } else if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.gt(nodeObj.calculateLevelUpgradeCost(curr))) {
-            min = curr + 1;
-        } else {
-            return Math.min(levelsToMax, curr);
-        }
-    }
-}
-
-//Creates Hacknet Node DOM elements when the page is opened
-function displayHacknetNodesContent() {
-    //Update Hacknet Nodes button
-    var newPurchaseButton = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__["clearEventListeners"])("hacknet-nodes-purchase-button");
-
-    newPurchaseButton.addEventListener("click", function() {
-        purchaseHacknet();
-        return false;
-    });
-
-    //Handle Purchase multiplier buttons
-    updateHacknetNodesMultiplierButtons();
-
-    //Remove all old hacknet Node DOM elements
-    var hacknetNodesList = document.getElementById("hacknet-nodes-list");
-    while (hacknetNodesList.firstChild) {
-        hacknetNodesList.removeChild(hacknetNodesList.firstChild);
-    }
-
-    //Then re-create them
-    for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodes.length; ++i) {
-        createHacknetNodeDomElement(_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodes[i]);
-    }
-
-    updateHacknetNodesContent();
-}
-
-//Update information on all Hacknet Node DOM elements
-function updateHacknetNodesContent() {
-    //Set purchase button to inactive if not enough money, and update its price display
-    var cost = getCostOfNextHacknetNode();
-    var purchaseButton = Object(_utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__["getElementById"])("hacknet-nodes-purchase-button");
-    var formattedCost = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(cost, 2);
-
-    updateText("hacknet-nodes-purchase-button", "Purchase Hacknet Node - $" + formattedCost);
-
-    if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.lt(cost)) {
-        purchaseButton.setAttribute("class", "a-link-button-inactive");
-    } else {
-        purchaseButton.setAttribute("class", "a-link-button");
-    }
-
-    //Update player's money
-    updateText("hacknet-nodes-player-money", "$" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.toNumber(), 2));
-    updateText("hacknet-nodes-total-production", "$" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].totalHacknetNodeProduction, 2) + " / second");
-
-    //Update information in each owned hacknet node
-    for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodes.length; ++i) {
-        updateHacknetNodeDomElement(_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodes[i]);
-    }
-}
-
-//Creates a single Hacknet Node DOM element
-function createHacknetNodeDomElement(nodeObj) {
-    var nodeName = nodeObj.name;
-
-    var nodeLevelContainer = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_8__["createElement"])("div", {
-        class: "hacknet-node-level-container row",
-        innerHTML: "<p>Level:</p><span class=\"text upgradable-info\" id=\"hacknet-node-level-" + nodeName + "\"></span>"
-    });
-
-    var nodeRamContainer = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_8__["createElement"])("div", {
-        class: "hacknet-node-ram-container row",
-        innerHTML: "<p>RAM:</p><span class=\"text upgradable-info\" id=\"hacknet-node-ram-" + nodeName + "\"></span>"
-    });
-
-    var nodeCoresContainer = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_8__["createElement"])("div", {
-        class: "hacknet-node-cores-container row",
-        innerHTML: "<p>Cores:</p><span class=\"text upgradable-info\" id=\"hacknet-node-cores-" + nodeName + "\"><span>"
-    })
-    var containingDiv = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_8__["createElement"])("div", {
-        class: "hacknet-node-container",
-        innerHTML: "<div class=\"hacknet-node-name-container row\">" +
-            "<p>Node name:</p>" +
-            "<span class=\"text\" id=\"hacknet-node-name-" + nodeName + "\"></span>" +
-            "</div>" + 
-            "<div class=\"hacknet-node-production-container row\">" +
-            "<p>Production:</p>" +
-            "<span class=\"text\" id=\"hacknet-node-total-production-" + nodeName + "\"></span>" +
-            "<span class=\"text\" id=\"hacknet-node-production-rate-" + nodeName + "\"></span>" +
-            "</div>"
-    });
-    containingDiv.appendChild(nodeLevelContainer);
-    containingDiv.appendChild(nodeRamContainer);
-    containingDiv.appendChild(nodeCoresContainer);
-
-    var listItem = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_8__["createElement"])("li", {
-        class: "hacknet-node"
-    });
-    listItem.appendChild(containingDiv);
-
-    //Upgrade buttons
-    nodeLevelContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_8__["createElement"])("a", {
-        id: "hacknet-node-upgrade-level-" + nodeName,
-        class: "a-link-button-inactive",
-        clickListener: function() {
-            var numUpgrades = hacknetNodePurchaseMultiplier;
-            if (hacknetNodePurchaseMultiplier == 0) {
-                numUpgrades = getMaxNumberLevelUpgrades(nodeObj);
+        for (var prop in exp) {
+            if (exp.hasOwnProperty(prop)) {
+                if (exp[prop] instanceof _utils_acorn__WEBPACK_IMPORTED_MODULE_0__["Node"]) {
+                    queue.push(exp[prop]);
+                }
             }
-            nodeObj.purchaseLevelUpgrade(numUpgrades);
-            updateHacknetNodesContent();
-            return false;
-        }
-    }));
-
-    nodeRamContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_8__["createElement"])("a", {
-        id: "hacknet-node-upgrade-ram-" + nodeName,
-        class: "a-link-button-inactive",
-        clickListener: function() {
-            nodeObj.purchaseRamUpgrade();
-            updateHacknetNodesContent();
-            return false;
-        }
-    }));
-
-    nodeCoresContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_8__["createElement"])("a", {
-        id: "hacknet-node-upgrade-core-" + nodeName,
-        class: "a-link-button-inactive",
-        clickListener: function() {
-            nodeObj.purchaseCoreUpgrade();
-            updateHacknetNodesContent();
-            return false;
-        }
-    }));
-
-    document.getElementById("hacknet-nodes-list").appendChild(listItem);
-
-    //Set the text and stuff inside the DOM element
-    updateHacknetNodeDomElement(nodeObj);
-}
-
-//Updates information on a single hacknet node DOM element
-function updateHacknetNodeDomElement(nodeObj) {
-    var nodeName = nodeObj.name;
-
-    updateText("hacknet-node-name-" + nodeName, nodeName);
-    updateText("hacknet-node-total-production-" + nodeName, "$" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(nodeObj.totalMoneyGenerated, 2));
-    updateText("hacknet-node-production-rate-" + nodeName, "($" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(nodeObj.moneyGainRatePerSecond, 2) + " / second)");
-    updateText("hacknet-node-level-" + nodeName, nodeObj.level);
-    updateText("hacknet-node-ram-" + nodeName, nodeObj.ram + "GB");
-    updateText("hacknet-node-cores-" + nodeName, nodeObj.cores);
-
-    //Upgrade level
-    var upgradeLevelButton = Object(_utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__["getElementById"])("hacknet-node-upgrade-level-" + nodeName);
-
-    if (nodeObj.level >= _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodeMaxLevel) {
-        updateText("hacknet-node-upgrade-level-" + nodeName, "MAX LEVEL");
-        upgradeLevelButton.setAttribute("class", "a-link-button-inactive");
-    } else {
-        var multiplier = 0;
-        if (hacknetNodePurchaseMultiplier == 0) {
-            //Max
-            multiplier = getMaxNumberLevelUpgrades(nodeObj);
-        } else {
-            var levelsToMax = _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodeMaxLevel - nodeObj.level;
-            multiplier = Math.min(levelsToMax, hacknetNodePurchaseMultiplier);
-        }
-
-        var upgradeLevelCost = nodeObj.calculateLevelUpgradeCost(multiplier);
-        updateText("hacknet-node-upgrade-level-" + nodeName, "Upgrade x" + multiplier + " - $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(upgradeLevelCost, 2))
-        if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.lt(upgradeLevelCost)) {
-            upgradeLevelButton.setAttribute("class", "a-link-button-inactive");
-        } else {
-            upgradeLevelButton.setAttribute("class", "a-link-button");
-        }
-    }
-
-    //Upgrade RAM
-    var upgradeRamButton = Object(_utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__["getElementById"])("hacknet-node-upgrade-ram-" + nodeName);
-
-    if (nodeObj.ram >= _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodeMaxRam) {
-        updateText("hacknet-node-upgrade-ram-" + nodeName, "MAX RAM");
-        upgradeRamButton.setAttribute("class", "a-link-button-inactive");
-    } else {
-        var upgradeRamCost = nodeObj.calculateRamUpgradeCost();
-        updateText("hacknet-node-upgrade-ram-" + nodeName, "Upgrade - $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(upgradeRamCost, 2));
-        if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.lt(upgradeRamCost)) {
-            upgradeRamButton.setAttribute("class", "a-link-button-inactive");
-        } else {
-            upgradeRamButton.setAttribute("class", "a-link-button");
-        }
-    }
-
-    //Upgrade Cores
-    var upgradeCoreButton = Object(_utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__["getElementById"])("hacknet-node-upgrade-core-" + nodeName);
-
-    if (nodeObj.cores >= _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodeMaxCores) {
-        updateText("hacknet-node-upgrade-core-" + nodeName, "MAX CORES");
-        upgradeCoreButton.setAttribute("class", "a-link-button-inactive");
-    } else {
-        var upgradeCoreCost = nodeObj.calculateCoreUpgradeCost();
-        updateText("hacknet-node-upgrade-core-" + nodeName, "Upgrade - $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(upgradeCoreCost, 2));
-        if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.lt(upgradeCoreCost)) {
-            upgradeCoreButton.setAttribute("class", "a-link-button-inactive");
-        } else {
-            upgradeCoreButton.setAttribute("class", "a-link-button");
         }
     }
 }
 
-function createPlayerHacknetNodeWrappers() {
-    _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodeWrappers.length = _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodes.length;
-    for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodes.length; ++i) {
-        _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodeWrappers[i] = new HacknetNodeWrapper(_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodes[i]);
+function parseFconfSetting(setting, value) {
+    setting = String(setting);
+    value = String(value);
+    if (setting == null || value == null || FconfSettings[setting] == null) {
+        console.log("WARNING: Invalid .fconf setting: " + setting);
+        return;
     }
+
+    //Needed to convert entered value to boolean/strings accordingly
+    switch(setting) {
+        case "ENABLE_BASH_HOTKEYS":
+        case "ENABLE_TIMESTAMPS":
+            var value = value.toLowerCase();
+            if (value === "1" || value === "true" || value === "y") {
+                value = true;
+            } else {
+                value = false;
+            }
+            FconfSettings[setting] = value;
+            break;
+        default:
+            break;
+    }
+    return;
 }
 
-function updatePlayerHacknetNodeWrappers() {
-    if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodeWrappers.length !== _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodes.length) {
-        return createPlayerHacknetNodeWrappers();
-    }
+//Create the .fconf file text from the settings
+function createFconf() {
+    var res = "";
+    for (var setting in FconfSettings) {
+        if (FconfSettings.hasOwnProperty(setting)) {
+            //Setting comments (description)
+            var comment = FconfComments[setting];
+            if (comment == null) {continue;}
+            var comment = comment.split("\n");
+            for (var i = 0; i < comment.length; ++i) {
+                res += ("//" + comment[i] + "\n");
+            }
 
-    for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodeWrappers.length; ++i) {
-        if (!(_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodeWrappers[i] instanceof HacknetNodeWrapper)) {
-            return createPlayerHacknetNodeWrappers();
-        }
-
-        _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodeWrappers[i].level                  = _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodes[i].level;
-        _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodeWrappers[i].ram                    = _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodes[i].ram;
-        _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodeWrappers[i].cores                  = _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodes[i].cores;
-        _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodeWrappers[i].totalMoneyGenerated    = _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodes[i].totalMoneyGenerated;
-        _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodeWrappers[i].onlineTimeSeconds      = _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodes[i].onlineTimeSeconds;
-        _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodeWrappers[i].moneyGainRatePerSecond = _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodes[i].moneyGainRatePerSecond;
-    }
-}
-
-function processAllHacknetNodeEarnings(numCycles) {
-    var total = 0;
-    updatePlayerHacknetNodeWrappers();
-    for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodes.length; ++i) {
-        total += processSingleHacknetNodeEarnings(numCycles, _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodes[i]);
-    }
-
-    return total;
-}
-
-function processSingleHacknetNodeEarnings(numCycles, nodeObj) {
-    var cyclesPerSecond = 1000 / _engine__WEBPACK_IMPORTED_MODULE_2__["Engine"]._idleSpeed;
-    var earningPerCycle = nodeObj.moneyGainRatePerSecond / cyclesPerSecond;
-    if (isNaN(earningPerCycle)) {
-        console.error("Hacknet Node '" + nodeObj.name + "' Calculated earnings is NaN");
-        earningPerCycle = 0;
-    }
-
-    var totalEarnings = numCycles * earningPerCycle;
-    nodeObj.totalMoneyGenerated += totalEarnings;
-    nodeObj.onlineTimeSeconds += (numCycles * (_engine__WEBPACK_IMPORTED_MODULE_2__["Engine"]._idleSpeed / 1000));
-    _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gainMoney(totalEarnings);
-    return totalEarnings;
-}
-
-function getHacknetNode(name) {
-    for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodes.length; ++i) {
-        if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodes[i].name == name) {
-            return _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodes[i];
+            var value = 0;
+            if (FconfSettings[setting] === true) {
+                value = "1";
+            } else if (FconfSettings[setting] === false) {
+                value = "0";
+            } else {
+                value = String(FconfSettings[setting]);
+            }
+            res += (setting + "=" + value + "\n\n");
         }
     }
+    return res;
+}
 
-    return null;
+function loadFconf(saveString) {
+    let tempFconfSettings = JSON.parse(saveString);
+    for (var setting in tempFconfSettings) {
+        if (tempFconfSettings.hasOwnProperty(setting)) {
+            FconfSettings[setting] = tempFconfSettings[setting];
+        }
+    }
 }
 
 
 
 
 /***/ }),
-/* 45 */
+/* 39 */
+/*!*************************!*\
+  !*** ./src/Missions.js ***!
+  \*************************/
+/*! exports provided: HackingMission, inMission, setInMission, currMission */
+/*! exports used: HackingMission, currMission, inMission, setInMission */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HackingMission; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return inMission; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return setInMission; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return currMission; });
+/* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Constants */ 2);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./engine */ 6);
+/* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Faction */ 12);
+/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Player */ 0);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 13);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 43);
+/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 1);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 5);
+/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/isString */ 32);
+/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var jsplumb__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! jsplumb */ 177);
+/* harmony import */ var jsplumb__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(jsplumb__WEBPACK_IMPORTED_MODULE_10__);
+
+
+
+
+
+
+
+
+
+
+
+
+let inMission = false; //Flag to denote whether a mission is running
+let currMission = null;
+function setInMission(bool, mission) {
+    inMission = bool;
+    if (bool) {
+        currMission = mission;
+    } else {
+        currMission = null;
+    }
+}
+
+//Keyboard shortcuts
+$(document).keydown(function(e) {
+    if (inMission && currMission && currMission.selectedNode.length != 0) {
+        switch (e.keyCode) {
+            case 65: //a for Attack
+                currMission.actionButtons[0].click();
+                break;
+            case 83: //s for Scan
+                currMission.actionButtons[1].click();
+                break;
+            case 87: //w for Weaken
+                currMission.actionButtons[2].click();
+                break;
+            case 70: //f for Fortify
+                currMission.actionButtons[3].click();
+                break;
+            case 82: //r for Overflow
+                currMission.actionButtons[4].click();
+                break;
+            case 68: //d for Detach connection
+                currMission.actionButtons[5].click();
+                break;
+            default:
+                break;
+        }
+    }
+});
+
+let NodeTypes = {
+    Core: "CPU Core Node",      //All actions available
+    Firewall: "Firewall Node",  //No actions available
+    Database: "Database Node",  //No actions available
+    Spam: "Spam Node",          //No actions Available
+    Transfer: "Transfer Node",  //Can Weaken, Scan, Fortify and Overflow
+    Shield: "Shield Node"       //Can Fortify
+}
+
+let NodeActions = {
+    Attack: "Attacking", //Damaged based on attack stat + hacking level + opp def
+    Scan: "Scanning", //-Def for target, affected by attack and hacking level
+    Weaken: "Weakening", //-Attack for target, affected by attack and hacking level
+    Fortify: "Fortifying", //+Defense for Node, affected by hacking level
+    Overflow: "Overflowing", //+Attack but -Defense for Node, affected by hacking level
+}
+
+function Node(type, stats) {
+    this.type = type;
+    this.atk = stats.atk ? stats.atk : 0;
+    this.def = stats.def ? stats.def : 0;
+    this.hp = stats.hp ? stats.hp : 0;
+    this.maxhp = this.hp;
+    this.plyrCtrl = false;
+    this.enmyCtrl = false;
+    this.pos = [0, 0]; //x, y
+    this.el = null; //Holds the Node's DOM element
+    this.action = null;
+    this.targetedCount = 0; //Count of how many connections this node is the target of
+
+    //Holds the JsPlumb Connection object for this Node,
+    //where this Node is the Source (since each Node
+    //can only have 1 outgoing Connection)
+    this.conn = null;
+}
+
+Node.prototype.setPosition = function(x, y) {
+    this.pos = [x, y];
+}
+
+Node.prototype.setControlledByPlayer = function() {
+    this.plyrCtrl = true;
+    this.enmyCtrl = false;
+    if (this.el) {
+        this.el.classList.remove("hack-mission-enemy-node");
+        this.el.classList.add("hack-mission-player-node");
+    }
+}
+
+Node.prototype.setControlledByEnemy = function() {
+    this.plyrCtrl = false;
+    this.enmyCtrl = true;
+    if (this.el) {
+        this.el.classList.remove("hack-mission-player-node");
+        this.el.classList.add("hack-mission-enemy-node");
+    }
+}
+
+//Sets this node to be the active node
+Node.prototype.select = function(actionButtons) {
+    if (this.enmyCtrl) {return;}
+    this.el.classList.add("hack-mission-player-node-active");
+
+    //Make all buttons inactive
+    for (var i = 0; i < actionButtons.length; ++i) {
+        actionButtons[i].classList.remove("a-link-button");
+        actionButtons[i].classList.add("a-link-button-inactive");
+    }
+
+    switch(this.type) {
+        case NodeTypes.Core:
+            //All buttons active
+            for (var i = 0; i < actionButtons.length; ++i) {
+                actionButtons[i].classList.remove("a-link-button-inactive");
+                actionButtons[i].classList.add("a-link-button");
+            }
+            break;
+        case NodeTypes.Transfer:
+            actionButtons[1].classList.remove("a-link-button-inactive");
+            actionButtons[1].classList.add("a-link-button");
+            actionButtons[2].classList.remove("a-link-button-inactive");
+            actionButtons[2].classList.add("a-link-button");
+            actionButtons[3].classList.remove("a-link-button-inactive");
+            actionButtons[3].classList.add("a-link-button");
+            actionButtons[4].classList.remove("a-link-button-inactive");
+            actionButtons[4].classList.add("a-link-button");
+            actionButtons[5].classList.remove("a-link-button-inactive");
+            actionButtons[5].classList.add("a-link-button");
+            break;
+        case NodeTypes.Shield:
+        case NodeTypes.Firewall:
+            actionButtons[3].classList.remove("a-link-button-inactive");
+            actionButtons[3].classList.add("a-link-button");
+            break;
+        default:
+            break;
+    }
+}
+
+Node.prototype.deselect = function(actionButtons) {
+    this.el.classList.remove("hack-mission-player-node-active");
+    for (var i = 0; i < actionButtons.length; ++i) {
+        actionButtons[i].classList.remove("a-link-button");
+        actionButtons[i].classList.add("a-link-button-inactive");
+    }
+}
+
+
+Node.prototype.untarget = function() {
+    if (this.targetedCount === 0) {
+        console.log("WARN: Node " + this.el.id + " is being 'untargeted' when it has no target count");
+        return;
+    }
+    --this.targetedCount;
+}
+
+//Hacking mission instance
+//Takes in the reputation of the Faction for which the mission is
+//being conducted
+function HackingMission(rep, fac) {
+    this.faction = fac;
+
+    this.started = false;
+    this.time = 180000; //5 minutes to start, milliseconds
+
+    this.playerCores = [];
+    this.playerNodes = []; //Non-core nodes
+    this.playerAtk = 0;
+    this.playerDef = 0;
+
+    this.enemyCores = [];
+    this.enemyDatabases = [];
+    this.enemyNodes = []; //Non-core nodes
+    this.enemyAtk = 0;
+    this.enemyDef = 0;
+
+    this.miscNodes = [];
+
+    this.selectedNode = []; //Which of the player's nodes are currently selected
+
+    this.actionButtons = []; //DOM buttons for actions
+
+    this.availablePositions = [];
+    for (var r = 0; r < 8; ++r) {
+        for (var c = 0; c < 8; ++c) {
+            this.availablePositions.push([r, c]);
+        }
+    }
+
+    this.map = [];
+    for (var i = 0; i < 8; ++i) {
+        this.map.push([null, null, null, null, null, null, null, null]);
+    }
+
+    this.jsplumbinstance = null;
+
+    this.difficulty = rep / _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].HackingMissionRepToDiffConversion + 1;
+    console.log("difficulty: " + this.difficulty);
+    this.reward = 250 + (rep / _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].HackingMissionRepToRewardConversion);
+}
+
+HackingMission.prototype.init = function() {
+    //Create Header DOM
+    this.createPageDom();
+
+    //Create player starting nodes
+    var home = _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].getHomeComputer()
+    for (var i = 0; i < home.cpuCores; ++i) {
+        var stats = {
+            atk: (_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].hacking_skill / 7.5) + 30,
+            def: (_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].hacking_skill / 20),
+            hp: (_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].hacking_skill / 4),
+        };
+        this.playerCores.push(new Node(NodeTypes.Core, stats));
+        this.playerCores[i].setControlledByPlayer();
+        this.setNodePosition(this.playerCores[i], i, 0);
+        this.removeAvailablePosition(i, 0);
+    }
+
+    //Randomly generate enemy nodes (CPU and Firewall) based on difficulty
+    var numNodes = Math.min(8, Math.max(1, Math.round(this.difficulty / 4)));
+    var numFirewalls = Math.min(20,
+                                Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(Math.round(this.difficulty/3), Math.round(this.difficulty/3) + 1));
+    var numDatabases = Math.min(10, Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(1, Math.round(this.difficulty / 3) + 1));
+    var totalNodes = numNodes + numFirewalls + numDatabases;
+    var xlimit = 7 - Math.floor(totalNodes / 8);
+    var randMult = Object(_utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_6__["addOffset"])(0.8 + (this.difficulty / 5), 10);
+    for (var i = 0; i < numNodes; ++i) {
+        var stats = {
+            atk: randMult * Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(80, 86),
+            def: randMult * Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(5, 10),
+            hp: randMult * Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(210, 230)
+        }
+        this.enemyCores.push(new Node(NodeTypes.Core, stats));
+        this.enemyCores[i].setControlledByEnemy();
+        this.setNodeRandomPosition(this.enemyCores[i], xlimit);
+    }
+    for (var i = 0; i < numFirewalls; ++i) {
+        var stats = {
+            atk: 0,
+            def: randMult * Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(10, 20),
+            hp: randMult * Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(275, 300)
+        }
+        this.enemyNodes.push(new Node(NodeTypes.Firewall, stats));
+        this.enemyNodes[i].setControlledByEnemy();
+        this.setNodeRandomPosition(this.enemyNodes[i], xlimit);
+    }
+    for (var i = 0; i < numDatabases; ++i) {
+        var stats = {
+            atk: 0,
+            def: randMult * Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(30, 55),
+            hp: randMult * Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(210, 275)
+        }
+        var node = new Node(NodeTypes.Database, stats);
+        node.setControlledByEnemy();
+        this.setNodeRandomPosition(node, xlimit);
+        this.enemyDatabases.push(node);
+    }
+    this.calculateDefenses();
+    this.calculateAttacks();
+    this.createMap();
+}
+
+HackingMission.prototype.createPageDom = function() {
+    var container = document.getElementById("mission-container");
+
+    var favorMult = 1 + (this.faction.favor / 100);
+    var gain = this.reward  * _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].faction_rep_mult * favorMult;
+    var headerText = document.createElement("p");
+    headerText.innerHTML = "You are about to start a hacking mission! You will gain " +
+                    Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(gain, 3) + " faction reputation with " + this.faction.name +
+                    " if you win. For more information " +
+                    "about how hacking missions work, click one of the guide links " +
+                    "below (one opens up an in-game guide and the other opens up " +
+                    "the guide from the wiki). Click the 'Start' button to begin.";
+    headerText.style.display = "block";
+    headerText.classList.add("hack-mission-header-element");
+    headerText.style.width = "80%";
+
+    var inGameGuideBtn = document.createElement("a");
+    inGameGuideBtn.innerText = "How to Play";
+    inGameGuideBtn.classList.add("a-link-button");
+    inGameGuideBtn.style.display = "inline-block";
+    inGameGuideBtn.classList.add("hack-mission-header-element");
+    inGameGuideBtn.addEventListener("click", function() {
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__["dialogBoxCreate"])(_Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].HackingMissionHowToPlay);
+        return false;
+    });
+
+    var wikiGuideBtn = document.createElement("a");
+    wikiGuideBtn.innerText = "Wiki Guide";
+    wikiGuideBtn.classList.add("a-link-button");
+    wikiGuideBtn.style.display = "inline-block";
+    wikiGuideBtn.classList.add("hack-mission-header-element");
+    wikiGuideBtn.target = "_blank";
+    //TODO Add link to wiki page     wikiGuideBtn.href =
+
+
+    //Start button will get replaced with forfeit when game is started
+    var startBtn = document.createElement("a");
+    startBtn.innerHTML = "Start";
+    startBtn.setAttribute("id", "hack-mission-start-btn");
+    startBtn.classList.add("a-link-button");
+    startBtn.classList.add("hack-mission-header-element");
+    startBtn.style.display = "inline-block";
+    startBtn.addEventListener("click", ()=>{
+        this.start();
+        return false;
+    });
+
+    var forfeitMission = document.createElement("a");
+    forfeitMission.innerHTML = "Forfeit Mission (Exit)";
+    forfeitMission.classList.add("a-link-button");
+    forfeitMission.classList.add("hack-mission-header-element");
+    forfeitMission.style.display = "inline-block";
+    forfeitMission.addEventListener("click", ()=> {
+        this.finishMission(false);
+        return false;
+    });
+
+    var timer = document.createElement("p");
+    timer.setAttribute("id", "hacking-mission-timer");
+    timer.style.display = "inline-block";
+    timer.style.margin = "6px";
+
+    //Create Action Buttons (Attack/Scan/Weaken/ etc...)
+    var actionsContainer = document.createElement("span");
+    actionsContainer.style.display = "block";
+    actionsContainer.classList.add("hack-mission-action-buttons-container");
+    for (var i = 0; i < 6; ++i) {
+        this.actionButtons.push(document.createElement("a"));
+        this.actionButtons[i].style.display = "inline-block";
+        this.actionButtons[i].classList.add("a-link-button-inactive"); //Disabled at start
+        this.actionButtons[i].classList.add("tooltip"); //Disabled at start
+        this.actionButtons[i].classList.add("hack-mission-header-element");
+        actionsContainer.appendChild(this.actionButtons[i]);
+    }
+    this.actionButtons[0].innerText = "Attack(a)";
+    var atkTooltip = document.createElement("span");
+    atkTooltip.classList.add("tooltiptexthigh");
+    atkTooltip.innerText = "Lowers the targeted node's HP. The effectiveness of this depends on " +
+                           "this node's Attack level, your hacking level, and the opponent's defense level.";
+    this.actionButtons[0].appendChild(atkTooltip);
+    this.actionButtons[1].innerText = "Scan(s)";
+    var scanTooltip = document.createElement("span");
+    scanTooltip.classList.add("tooltiptexthigh");
+    scanTooltip.innerText = "Lowers the targeted node's defense. The effectiveness of this depends on " +
+                            "this node's Attack level, your hacking level, and the opponent's defense level.";
+    this.actionButtons[1].appendChild(scanTooltip);
+    this.actionButtons[2].innerText = "Weaken(w)";
+    var WeakenTooltip = document.createElement("span");
+    WeakenTooltip.classList.add("tooltiptexthigh");
+    WeakenTooltip.innerText = "Lowers the targeted node's attack. The effectiveness of this depends on " +
+                              "this node's Attack level, your hacking level, and the opponent's defense level.";
+    this.actionButtons[2].appendChild(WeakenTooltip);
+    this.actionButtons[3].innerText = "Fortify(f)";
+    var fortifyTooltip = document.createElement("span");
+    fortifyTooltip.classList.add("tooltiptexthigh");
+    fortifyTooltip.innerText = "Raises this node's Defense level. The effectiveness of this depends on " +
+                               "your hacking level";
+    this.actionButtons[3].appendChild(fortifyTooltip);
+    this.actionButtons[4].innerText = "Overflow(r)";
+    var overflowTooltip = document.createElement("span");
+    overflowTooltip.classList.add("tooltiptexthigh");
+    overflowTooltip.innerText = "Raises this node's Attack level but lowers its Defense level. The effectiveness " +
+                                "of this depends on your hacking level.";
+    this.actionButtons[4].appendChild(overflowTooltip);
+    this.actionButtons[5].innerText = "Drop Connection(d)";
+    var dropconnTooltip = document.createElement("span");
+    dropconnTooltip.classList.add("tooltiptexthigh");
+    dropconnTooltip.innerText = "Removes this Node's current connection to some target Node, if it has one. This can " +
+                                "also be done by simply clicking the white connection line.";
+    this.actionButtons[5].appendChild(dropconnTooltip);
+
+    //Player/enemy defense displays will be in action container
+    var playerStats = document.createElement("p");
+    var enemyStats = document.createElement("p");
+    playerStats.style.display = "inline-block";
+    enemyStats.style.display = "inline-block";
+    playerStats.style.color = "#00ccff";
+    enemyStats.style.color = "red";
+    playerStats.style.margin = "4px";
+    enemyStats.style.margin = "4px";
+    playerStats.setAttribute("id", "hacking-mission-player-stats");
+    enemyStats.setAttribute("id", "hacking-mission-enemy-stats");
+    actionsContainer.appendChild(playerStats);
+    actionsContainer.appendChild(enemyStats);
+
+    //Set Action Button event listeners
+    this.actionButtons[0].addEventListener("click", ()=>{
+        if (!(this.selectedNode.length > 0)) {
+            console.log("ERR: Pressing Action button without selected node");
+            return;
+        }
+        if (this.selectedNode[0].type !== NodeTypes.Core) {return;}
+        this.setActionButtonsActive(this.selectedNode[0].type);
+        this.setActionButton(NodeActions.Attack, false); //Set attack button inactive
+        this.selectedNode.forEach(function(node){
+            node.action = NodeActions.Attack;
+        });
+    });
+
+    this.actionButtons[1].addEventListener("click", ()=>{
+        if (!(this.selectedNode.length > 0)) {
+            console.log("ERR: Pressing Action button without selected node");
+            return;
+        }
+        var nodeType = this.selectedNode[0].type; //In a multiselect, every Node will have the same type
+        if (nodeType !== NodeTypes.Core && nodeType !== NodeTypes.Transfer) {return;}
+        this.setActionButtonsActive(nodeType);
+        this.setActionButton(NodeActions.Scan, false); //Set scan button inactive
+        this.selectedNode.forEach(function(node){
+            node.action = NodeActions.Scan;
+        });
+    });
+
+    this.actionButtons[2].addEventListener("click", ()=>{
+        if (!(this.selectedNode.length > 0)) {
+            console.log("ERR: Pressing Action button without selected node");
+            return;
+        }
+        var nodeType = this.selectedNode[0].type; //In a multiselect, every Node will have the same type
+        if (nodeType !== NodeTypes.Core && nodeType !== NodeTypes.Transfer) {return;}
+        this.setActionButtonsActive(nodeType);
+        this.setActionButton(NodeActions.Weaken, false); //Set Weaken button inactive
+        this.selectedNode.forEach(function(node){
+            node.action = NodeActions.Weaken;
+        });
+    });
+
+    this.actionButtons[3].addEventListener("click", ()=>{
+        if (!(this.selectedNode.length > 0)) {
+            console.log("ERR: Pressing Action button without selected node");
+            return;
+        }
+        this.setActionButtonsActive(this.selectedNode[0].type);
+        this.setActionButton(NodeActions.Fortify, false); //Set Fortify button inactive
+        this.selectedNode.forEach(function(node){
+            node.action = NodeActions.Fortify;
+        });
+    });
+
+    this.actionButtons[4].addEventListener("click", ()=>{
+        if (!(this.selectedNode.length > 0)) {
+            console.log("ERR: Pressing Action button without selected node");
+            return;
+        }
+        var nodeType = this.selectedNode[0].type;
+        if (nodeType !== NodeTypes.Core && nodeType !== NodeTypes.Transfer) {return;}
+        this.setActionButtonsActive(nodeType);
+        this.setActionButton(NodeActions.Overflow, false); //Set Overflow button inactive
+        this.selectedNode.forEach(function(node){
+            node.action = NodeActions.Overflow;
+        });
+    });
+
+    this.actionButtons[5].addEventListener("click", ()=>{
+        if (!(this.selectedNode.length > 0)) {
+            console.log("ERR: Pressing Action button without selected node");
+            return;
+        }
+        this.selectedNode.forEach(function(node){
+            if (node.conn) {
+                var endpoints = node.conn.endpoints;
+                endpoints[0].detachFrom(endpoints[1]);
+            }
+            node.action = NodeActions.Fortify;
+        });
+        // if (this.selectedNode.conn) {
+        //     var endpoints = this.selectedNode.conn.endpoints;
+        //     endpoints[0].detachFrom(endpoints[1]);
+        // }
+    })
+
+    var timeDisplay = document.createElement("p");
+
+    container.appendChild(headerText);
+    container.appendChild(inGameGuideBtn);
+    container.appendChild(wikiGuideBtn);
+    container.appendChild(startBtn);
+    container.appendChild(forfeitMission);
+    container.appendChild(timer);
+    container.appendChild(actionsContainer);
+    container.appendChild(timeDisplay);
+}
+
+HackingMission.prototype.setActionButtonsInactive = function() {
+    for (var i = 0; i < this.actionButtons.length; ++i) {
+        this.actionButtons[i].classList.remove("a-link-button");
+        this.actionButtons[i].classList.add("a-link-button-inactive");
+    }
+}
+
+HackingMission.prototype.setActionButtonsActive = function(nodeType=null) {
+    for (var i = 0; i < this.actionButtons.length; ++i) {
+        this.actionButtons[i].classList.add("a-link-button");
+        this.actionButtons[i].classList.remove("a-link-button-inactive");
+    }
+
+    //For Transfer, FireWall and Shield Nodes, certain buttons should always be disabled
+    //0 = Attack, 1 = Scan, 2 = Weaken, 3 = Fortify, 4 = overflow, 5 = Drop conn
+    if (nodeType) {
+        switch (nodeType) {
+            case NodeTypes.Firewall:
+            case NodeTypes.Shield:
+                this.actionButtons[0].classList.remove("a-link-button");
+                this.actionButtons[0].classList.add("a-link-button-inactive");
+                this.actionButtons[1].classList.remove("a-link-button");
+                this.actionButtons[1].classList.add("a-link-button-inactive");
+                this.actionButtons[2].classList.remove("a-link-button");
+                this.actionButtons[2].classList.add("a-link-button-inactive");
+                this.actionButtons[4].classList.remove("a-link-button");
+                this.actionButtons[4].classList.add("a-link-button-inactive");
+                this.actionButtons[5].classList.remove("a-link-button");
+                this.actionButtons[5].classList.add("a-link-button-inactive");
+                break;
+            case NodeTypes.Transfer:
+                this.actionButtons[0].classList.remove("a-link-button");
+                this.actionButtons[0].classList.add("a-link-button-inactive");
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+//True for active, false for inactive
+HackingMission.prototype.setActionButton = function(i, active=true) {
+    if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9__["isString"])(i)) {
+        switch (i) {
+            case NodeActions.Attack:
+                i = 0;
+                break;
+            case NodeActions.Scan:
+                i = 1;
+                break;
+            case NodeActions.Weaken:
+                i = 2;
+                break;
+            case NodeActions.Fortify:
+                i = 3;
+                break;
+            case NodeActions.Overflow:
+            default:
+                i = 4;
+                break;
+        }
+    }
+    if (active) {
+        this.actionButtons[i].classList.remove("a-link-button-inactive");
+        this.actionButtons[i].classList.add("a-link-button");
+    } else {
+        this.actionButtons[i].classList.remove("a-link-button");
+        this.actionButtons[i].classList.add("a-link-button-inactive");
+    }
+
+}
+
+HackingMission.prototype.calculateAttacks = function() {
+    var total = 0;
+    for (var i = 0; i < this.playerCores.length; ++i) {
+        total += this.playerCores[i].atk;
+    }
+    for (var i = 0; i < this.playerNodes.length; ++i) {
+        total += this.playerNodes[i].atk;
+    }
+    this.playerAtk = total;
+    document.getElementById("hacking-mission-player-stats").innerHTML =
+        "Player Attack: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(this.playerAtk, 1) + "<br>" +
+        "Player Defense: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(this.playerDef, 1);
+    total = 0;
+    for (var i = 0; i < this.enemyCores.length; ++i) {
+        total += this.enemyCores[i].atk;
+    }
+    for (var i = 0; i < this.enemyDatabases.length; ++i) {
+        total += this.enemyDatabases[i].atk;
+    }
+    for (var i = 0; i < this.enemyNodes.length; ++i) {
+        total += this.enemyNodes[i].atk;
+    }
+    this.enemyAtk = total;
+    document.getElementById("hacking-mission-enemy-stats").innerHTML =
+        "Enemy Attack: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(this.enemyAtk, 1) + "<br>" +
+        "Enemy Defense: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(this.enemyDef, 1);
+}
+
+HackingMission.prototype.calculateDefenses = function() {
+    var total = 0;
+    for (var i = 0; i < this.playerCores.length; ++i) {
+        total += this.playerCores[i].def;
+    }
+    for (var i = 0; i < this.playerNodes.length; ++i) {
+        total += this.playerNodes[i].def;
+    }
+    this.playerDef = total;
+    document.getElementById("hacking-mission-player-stats").innerHTML =
+        "Player Attack: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(this.playerAtk, 1) + "<br>" +
+        "Player Defense: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(this.playerDef, 1);
+    total = 0;
+    for (var i = 0; i < this.enemyCores.length; ++i) {
+        total += this.enemyCores[i].def;
+    }
+    for (var i = 0; i < this.enemyDatabases.length; ++i) {
+        total += this.enemyDatabases[i].def;
+    }
+    for (var i = 0; i < this.enemyNodes.length; ++i) {
+        total += this.enemyNodes[i].def;
+    }
+    this.enemyDef = total;
+    document.getElementById("hacking-mission-enemy-stats").innerHTML =
+        "Enemy Attack: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(this.enemyAtk, 1) + "<br>" +
+        "Enemy Defense: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(this.enemyDef, 1);
+}
+
+HackingMission.prototype.removeAvailablePosition = function(x, y) {
+    for (var i = 0; i < this.availablePositions.length; ++i) {
+        if (this.availablePositions[i][0] === x &&
+            this.availablePositions[i][1] === y) {
+            this.availablePositions.splice(i, 1);
+            return;
+        }
+    }
+    console.log("WARNING: removeAvailablePosition() did not remove " + x + ", " + y);
+}
+
+HackingMission.prototype.setNodePosition = function(nodeObj, x, y) {
+    if (!(nodeObj instanceof Node)) {
+        console.log("WARNING: Non-Node object passed into setNodePOsition");
+        return;
+    }
+    if (isNaN(x) || isNaN(y)) {
+        console.log("ERR: Invalid values passed as x and y for setNodePosition");
+        console.log(x);
+        console.log(y);
+        return;
+    }
+    nodeObj.pos = [x, y];
+    this.map[x][y] = nodeObj;
+}
+
+HackingMission.prototype.setNodeRandomPosition = function(nodeObj, xlimit=0) {
+    var i = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(0, this.availablePositions.length - 1);
+    if (this.availablePositions[i][1] < xlimit) {
+        //Recurse if not within limit
+        return this.setNodeRandomPosition(nodeObj, xlimit);
+    }
+    var pos = this.availablePositions.splice(i, 1);
+    pos = pos[0];
+    this.setNodePosition(nodeObj, pos[0], pos[1]);
+}
+
+HackingMission.prototype.createMap = function() {
+    //Use a grid
+    var map = document.createElement("div");
+    map.classList.add("hack-mission-grid");
+    map.setAttribute("id", "hacking-mission-map");
+    document.getElementById("mission-container").appendChild(map);
+
+    //Create random Nodes for every space in the map that
+    //hasn't been filled yet. The stats of each Node will be based on
+    //the player/enemy attack
+    var averageAttack = (this.playerAtk + this.enemyAtk) / 2;
+    for (var x = 0; x < 8; ++x) {
+        for (var y = 0; y < 8; ++y) {
+            if (!(this.map[x][y] instanceof Node)) {
+                var node, type = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(0, 2);
+                var randMult = Object(_utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_6__["addOffset"])(0.85 + (this.difficulty / 2), 15);
+                switch (type) {
+                    case 0: //Spam
+                        var stats = {
+                            atk: 0,
+                            def: averageAttack * 1.1 + Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(15, 45),
+                            hp: randMult * Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(200, 225)
+                        }
+                        node = new Node(NodeTypes.Spam, stats);
+                        break;
+                    case 1: //Transfer
+                        var stats = {
+                            atk: 0,
+                            def: averageAttack * 1.1 + Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(15, 45),
+                            hp: randMult * Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(250, 275)
+                        }
+                        node = new Node(NodeTypes.Transfer, stats);
+                        break;
+                    case 2: //Shield
+                    default:
+                        var stats = {
+                            atk: 0,
+                            def: averageAttack * 1.1 + Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(30, 70),
+                            hp: randMult * Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(300, 320)
+                        }
+                        node = new Node(NodeTypes.Shield, stats);
+                        break;
+                }
+                this.setNodePosition(node, x, y);
+                this.removeAvailablePosition(x, y);
+                this.miscNodes.push(node);
+            }
+        }
+    }
+
+    //Create DOM elements in order
+    for (var r = 0; r < 8; ++r) {
+        for (var c = 0; c < 8; ++c) {
+            this.createNodeDomElement(this.map[r][c]);
+        }
+    }
+
+    //Configure all Player CPUS
+    for (var i = 0; i < this.playerCores.length; ++i) {
+        console.log("Configuring Player Node: " + this.playerCores[i].el.id);
+        this.configurePlayerNodeElement(this.playerCores[i].el);
+    }
+}
+
+HackingMission.prototype.createNodeDomElement = function(nodeObj) {
+    var nodeDiv = document.createElement("a"), txtEl = document.createElement('p');
+    nodeObj.el = nodeDiv;
+
+    //Set the node element's id based on its coordinates
+    var id = "hacking-mission-node-" + nodeObj.pos[0] + "-" + nodeObj.pos[1];
+    nodeDiv.setAttribute("id", id);
+    txtEl.setAttribute("id", id + "-txt");
+
+    //Set node classes for owner
+    nodeDiv.classList.add("hack-mission-node");
+    if (nodeObj.plyrCtrl) {
+        nodeDiv.classList.add("hack-mission-player-node");
+    } else if (nodeObj.enmyCtrl) {
+        nodeDiv.classList.add("hack-mission-enemy-node");
+    }
+
+    //Set node classes based on type
+    var txt;
+    switch (nodeObj.type) {
+        case NodeTypes.Core:
+            txt = "CPU Core<br>" + "HP: " +
+                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
+            nodeDiv.classList.add("hack-mission-cpu-node");
+            break;
+        case NodeTypes.Firewall:
+            txt = "Firewall<br>" + "HP: " +
+                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
+            nodeDiv.classList.add("hack-mission-firewall-node");
+            break;
+        case NodeTypes.Database:
+            txt = "Database<br>" + "HP: " +
+                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
+            nodeDiv.classList.add("hack-mission-database-node");
+            break;
+        case NodeTypes.Spam:
+            txt = "Spam<br>" + "HP: " +
+                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
+            nodeDiv.classList.add("hack-mission-spam-node");
+            break;
+        case NodeTypes.Transfer:
+            txt = "Transfer<br>" + "HP: " +
+                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
+            nodeDiv.classList.add("hack-mission-transfer-node");
+            break;
+        case NodeTypes.Shield:
+        default:
+            txt = "Shield<br>" + "HP: " +
+                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
+            nodeDiv.classList.add("hack-mission-shield-node");
+            break;
+    }
+
+    txt += "<br>Atk: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.atk, 1) +
+           "<br>Def: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.def, 1);
+    txtEl.innerHTML = txt;
+
+    nodeDiv.appendChild(txtEl);
+    document.getElementById("hacking-mission-map").appendChild(nodeDiv);
+}
+
+HackingMission.prototype.updateNodeDomElement = function(nodeObj) {
+    if (nodeObj.el == null) {
+        console.log("ERR: Calling updateNodeDomElement on a Node without an element");
+        return;
+    }
+
+    var id = "hacking-mission-node-" + nodeObj.pos[0] + "-" + nodeObj.pos[1];
+    var nodeDiv = document.getElementById(id), txtEl = document.getElementById(id + "-txt");
+
+    //Set node classes based on type
+    var txt;
+    switch (nodeObj.type) {
+        case NodeTypes.Core:
+            txt = "CPU Core<br>" + "HP: " +
+                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
+            break;
+        case NodeTypes.Firewall:
+            txt = "Firewall<br>" + "HP: " +
+                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
+            break;
+        case NodeTypes.Database:
+            txt = "Database<br>" + "HP: " +
+                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
+            break;
+        case NodeTypes.Spam:
+            txt = "Spam<br>" + "HP: " +
+                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
+            break;
+        case NodeTypes.Transfer:
+            txt = "Transfer<br>" + "HP: " +
+                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
+            break;
+        case NodeTypes.Shield:
+        default:
+            txt = "Shield<br>" + "HP: " +
+                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
+            break;
+    }
+
+    txt += "<br>Atk: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.atk, 1) +
+           "<br>Def: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.def, 1);
+    if (nodeObj.action) {
+        txt += "<br>" + nodeObj.action;
+    }
+    txtEl.innerHTML = txt;
+}
+
+//Gets a Node DOM element's corresponding Node object using its
+//element id. Function accepts either the DOM element object or the ID as
+//an argument
+HackingMission.prototype.getNodeFromElement = function(el) {
+    var id;
+    if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9__["isString"])(el)) {
+        id = el;
+    } else {
+        id = el.id;
+    }
+    id = id.replace("hacking-mission-node-", "");
+    var res = id.split('-');
+    if (res.length != 2) {
+        console.log("ERROR Parsing Hacking Mission Node Id. Could not find coordinates");
+        return null;
+    }
+    var x = res[0], y = res[1];
+    if (isNaN(x) || isNaN(y) || x >= 8 || y >= 8 || x < 0 || y < 0) {
+        console.log("ERROR: Unexpected values for x and y: " + x + ", " + y);
+        return null;
+    }
+    return this.map[x][y];
+}
+
+function selectNode(hackMissionInst, el) {
+    var nodeObj = hackMissionInst.getNodeFromElement(el);
+    if (nodeObj == null) {console.log("Error getting Node object");}
+    if (!nodeObj.plyrCtrl) {return;}
+
+    clearAllSelectedNodes(hackMissionInst);
+    nodeObj.select(hackMissionInst.actionButtons);
+    hackMissionInst.selectedNode.push(nodeObj);
+}
+
+function multiselectNode(hackMissionInst, el) {
+    var nodeObj = hackMissionInst.getNodeFromElement(el);
+    if (nodeObj == null) {console.log("ERROR: Getting Node Object in multiselectNode()");}
+    if (!nodeObj.plyrCtrl) {return;}
+
+    clearAllSelectedNodes(hackMissionInst);
+    var type = nodeObj.type;
+    if (type === NodeTypes.Core) {
+        hackMissionInst.playerCores.forEach(function(node) {
+            node.select(hackMissionInst.actionButtons);
+            hackMissionInst.selectedNode.push(node);
+        });
+    } else {
+        hackMissionInst.playerNodes.forEach(function(node) {
+            if (node.type === type) {
+                node.select(hackMissionInst.actionButtons);
+                hackMissionInst.selectedNode.push(node);
+            }
+        });
+    }
+}
+
+function clearAllSelectedNodes(hackMissionInst) {
+    if (hackMissionInst.selectedNode.length > 0) {
+        hackMissionInst.selectedNode.forEach(function(node){
+            node.deselect(hackMissionInst.actionButtons);
+        });
+        hackMissionInst.selectedNode.length = 0;
+    }
+}
+
+//Configures a DOM element representing a player-owned node to
+//be selectable and actionable
+//Note: Does NOT change its css class. This is handled by Node.setControlledBy...
+HackingMission.prototype.configurePlayerNodeElement = function(el) {
+    var nodeObj = this.getNodeFromElement(el);
+    if (nodeObj == null) {console.log("Error getting Node object");}
+
+    //Add event listener
+    var self = this;
+    function selectNodeWrapper() {
+        selectNode(self, el);
+    }
+    el.addEventListener("click", selectNodeWrapper);
+
+    function multiselectNodeWrapper() {
+        multiselectNode(self, el);
+    }
+    el.addEventListener("dblclick", multiselectNodeWrapper);
+
+
+    if (el.firstChild) {
+        el.firstChild.addEventListener("click", selectNodeWrapper);
+    }
+}
+
+//Configures a DOM element representing an enemy-node by removing
+//any event listeners
+HackingMission.prototype.configureEnemyNodeElement = function(el) {
+    //Deselect node if it was the selected node
+    var nodeObj = this.getNodeFromElement(el);
+    for (var i = 0; i < this.selectedNode.length; ++i) {
+        if (this.selectedNode[i] == nodeObj) {
+            nodeObj.deselect(this.actionButtons);
+            this.selectedNode.splice(i, 1);
+            break;
+        }
+    }
+}
+
+//Returns bool indicating whether a node is reachable by player
+//by checking if any of the adjacent nodes are owned by the player
+HackingMission.prototype.nodeReachable = function(node) {
+    var x = node.pos[0], y = node.pos[1];
+    if (x > 0 && this.map[x-1][y].plyrCtrl) {return true;}
+    if (x < 7 && this.map[x+1][y].plyrCtrl) {return true;}
+    if (y > 0 && this.map[x][y-1].plyrCtrl) {return true;}
+    if (y < 7 && this.map[x][y+1].plyrCtrl) {return true;}
+    return false;
+}
+
+HackingMission.prototype.nodeReachableByEnemy = function(node) {
+    if (node == null) {return false;}
+    var x = node.pos[0], y = node.pos[1];
+    if (x > 0 && this.map[x-1][y].enmyCtrl) {return true;}
+    if (x < 7 && this.map[x+1][y].enmyCtrl) {return true;}
+    if (y > 0 && this.map[x][y-1].enmyCtrl) {return true;}
+    if (y < 7 && this.map[x][y+1].enmyCtrl) {return true;}
+    return false;
+}
+
+HackingMission.prototype.start = function() {
+    this.started = true;
+    this.initJsPlumb();
+    var startBtn = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__["clearEventListeners"])("hack-mission-start-btn");
+    startBtn.classList.remove("a-link-button");
+    startBtn.classList.add("a-link-button-inactive");
+}
+
+HackingMission.prototype.initJsPlumb = function() {
+    var instance = jsPlumb.getInstance({
+        DragOptions:{cursor:"pointer", zIndex:2000},
+        PaintStyle: {
+            gradient: { stops: [
+                [ 0, "#FFFFFF" ],
+                [ 1, "#FFFFFF" ]
+            ] },
+            stroke: "#FFFFFF",
+            strokeWidth: 8
+        },
+    });
+
+    this.jsplumbinstance = instance;
+
+    //All player cores are sources
+    for (var i = 0; i < this.playerCores.length; ++i) {
+        instance.makeSource(this.playerCores[i].el, {
+            deleteEndpointsOnEmpty:true,
+            maxConnections:1,
+            anchor:"Continuous",
+            connector:"Flowchart"
+        });
+    }
+
+    //Everything else is a target
+    for (var i = 0; i < this.enemyCores.length; ++i) {
+        instance.makeTarget(this.enemyCores[i].el, {
+            maxConnections:-1,
+            anchor:"Continuous",
+            connector:"Flowchart"
+        });
+    }
+    for (var i = 0; i < this.enemyDatabases.length; ++i) {
+        instance.makeTarget(this.enemyDatabases[i].el, {
+            maxConnections:-1,
+            anchor:"Continuous",
+            connector:["Flowchart"]
+        });
+    }
+    for (var i = 0; i < this.enemyNodes.length; ++i) {
+        instance.makeTarget(this.enemyNodes[i].el, {
+            maxConnections:-1,
+            anchor:"Continuous",
+            connector:"Flowchart"
+        });
+    }
+    for (var i = 0; i < this.miscNodes.length; ++i) {
+        instance.makeTarget(this.miscNodes[i].el, {
+            maxConnections:-1,
+            anchor:"Continuous",
+            connector:"Flowchart"
+        });
+    }
+
+    //Clicking a connection drops it
+    instance.bind("click", function(conn, originalEvent) {
+        var endpoints = conn.endpoints;
+        endpoints[0].detachFrom(endpoints[1]);
+    });
+
+    //Connection events
+    instance.bind("connection", (info)=>{
+        var targetNode = this.getNodeFromElement(info.target);
+
+        //Do not detach for enemy nodes
+        var thisNode = this.getNodeFromElement(info.source);
+        if (thisNode.enmyCtrl) {return;}
+
+        //If the node is not reachable, drop the connection
+        if (!this.nodeReachable(targetNode)) {
+            info.sourceEndpoint.detachFrom(info.targetEndpoint);
+            return;
+        }
+
+        var sourceNode = this.getNodeFromElement(info.source);
+        sourceNode.conn = info.connection;
+        var targetNode = this.getNodeFromElement(info.target);
+        ++targetNode.targetedCount;
+    });
+
+    //Detach Connection events
+    instance.bind("connectionDetached", (info, originalEvent)=>{
+        var sourceNode = this.getNodeFromElement(info.source);
+        sourceNode.conn = null;
+        var targetNode = this.getNodeFromElement(info.target);
+        targetNode.untarget();
+    });
+
+}
+
+//Drops all connections where the specified node is the source
+HackingMission.prototype.dropAllConnectionsFromNode = function(node) {
+    var allConns = this.jsplumbinstance.getAllConnections();
+    for (var i = allConns.length-1; i >= 0; --i) {
+        if (allConns[i].source == node.el) {
+            allConns[i].endpoints[0].detachFrom(allConns[i].endpoints[1]);
+        }
+    }
+}
+
+//Drops all connections where the specified node is the target
+HackingMission.prototype.dropAllConnectionsToNode = function(node) {
+    var allConns = this.jsplumbinstance.getAllConnections();
+    for (var i = allConns.length-1; i >= 0; --i) {
+        if (allConns[i].target == node.el) {
+            allConns[i].endpoints[0].detachFrom(allConns[i].endpoints[1]);
+        }
+    }
+    node.beingTargeted = false;
+}
+
+var storedCycles = 0;
+HackingMission.prototype.process = function(numCycles=1) {
+    if (!this.started) {return;}
+    storedCycles += numCycles;
+    if (storedCycles < 2) {return;} //Only process every 3 cycles minimum
+
+    var res = false;
+    //Process actions of all player nodes
+    this.playerCores.forEach((node)=>{
+        res |= this.processNode(node, storedCycles);
+    });
+
+    this.playerNodes.forEach((node)=>{
+        if (node.type === NodeTypes.Transfer ||
+            node.type === NodeTypes.Shield ||
+            node.type === NodeTypes.Firewall) {
+            res |= this.processNode(node, storedCycles);
+        }
+    });
+
+    //Process actions of all enemy nodes
+    this.enemyCores.forEach((node)=>{
+        this.enemyAISelectAction(node);
+        res |= this.processNode(node, storedCycles);
+    });
+
+    this.enemyNodes.forEach((node)=>{
+        if (node.type === NodeTypes.Transfer ||
+            node.type === NodeTypes.Shield ||
+            node.type === NodeTypes.Firewall) {
+            this.enemyAISelectAction(node);
+            res |= this.processNode(node, storedCycles);
+        }
+    });
+
+    //The hp of enemy databases increases slowly
+    this.enemyDatabases.forEach((node)=>{
+        node.maxhp += (0.1 * storedCycles);
+        node.hp += (0.1 * storedCycles);
+    });
+
+    if (res) {
+        this.calculateAttacks();
+        this.calculateDefenses();
+    }
+
+    //Win if all enemy databases are conquered
+    if (this.enemyDatabases.length === 0) {
+        this.finishMission(true);
+        return;
+    }
+
+    //Lose if all your cores are gone
+    if (this.playerCores.length === 0) {
+        this.finishMission(false);
+        return;
+    }
+
+    //Defense/hp of misc nodes increases slowly over time
+    this.miscNodes.forEach((node)=>{
+        node.def += (0.1 * storedCycles);
+        node.maxhp += (0.05 * storedCycles);
+        node.hp += (0.1 * storedCycles);
+        if (node.hp > node.maxhp) {node.hp = node.maxhp;}
+        this.updateNodeDomElement(node);
+    });
+
+    //Update timer and check if player lost
+    this.time -= (storedCycles * _engine__WEBPACK_IMPORTED_MODULE_1__["Engine"]._idleSpeed);
+    if (this.time <= 0) {
+        this.finishMission(false);
+        return;
+    }
+    this.updateTimer();
+
+    storedCycles = 0;
+}
+
+//Returns a bool representing whether defenses need to be re-calculated
+HackingMission.prototype.processNode = function(nodeObj, numCycles=1) {
+    if (nodeObj.action == null) {
+        return;
+    }
+
+    var targetNode = null, def, atk;
+    if (nodeObj.conn) {
+        if (nodeObj.conn.target != null) {
+            targetNode = this.getNodeFromElement(nodeObj.conn.target);
+        } else {
+            targetNode = this.getNodeFromElement(nodeObj.conn.targetId);
+        }
+
+        if (targetNode == null) {
+            //Player is in the middle of  dragging the connection,
+            //so the target node is null. Do nothing here
+        } else if (targetNode.plyrCtrl) {
+            def = this.playerDef;
+            atk = this.enemyAtk;
+        } else if (targetNode.enmyCtrl) {
+            def = this.enemyDef;
+            atk = this.playerAtk;
+        } else { //Misc Node
+            def = targetNode.def;
+            nodeObj.plyrCtrl ? atk = this.playerAtk : atk = this.enemyAtk;
+        }
+    }
+
+    //Calculations are per second, so divide everything by 5
+    var calcStats = false, plyr = nodeObj.plyrCtrl;
+    var enmyHacking = this.difficulty * _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].HackingMissionDifficultyToHacking;
+    switch(nodeObj.action) {
+        case NodeActions.Attack:
+            if (targetNode == null) {break;}
+            if (nodeObj.conn == null) {break;}
+            var dmg = this.calculateAttackDamage(atk, def, plyr ? _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].hacking_skill : enmyHacking);
+            targetNode.hp -= (dmg/5 * numCycles);
+            break;
+        case NodeActions.Scan:
+            if (targetNode == null) {break;}
+            if (nodeObj.conn == null) {break;}
+            var eff = this.calculateScanEffect(atk, def, plyr ? _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].hacking_skill : enmyHacking);
+            targetNode.def -= (eff/5 * numCycles);
+            calcStats = true;
+            break;
+        case NodeActions.Weaken:
+            if (targetNode == null) {break;}
+            if (nodeObj.conn == null) {break;}
+            var eff = this.calculateWeakenEffect(atk, def, plyr ? _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].hacking_skill : enmyHacking);
+            targetNode.atk -= (eff/5 * numCycles);
+            calcStats = true;
+            break;
+        case NodeActions.Fortify:
+            var eff = this.calculateFortifyEffect(_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].hacking_skill);
+            nodeObj.def += (eff/5 * numCycles);
+            calcStats = true;
+            break;
+        case NodeActions.Overflow:
+            var eff = this.calculateOverflowEffect(_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].hacking_skill);
+            if (nodeObj.def < eff) {break;}
+            nodeObj.def -= (eff/5 * numCycles);
+            nodeObj.atk += (eff/5 * numCycles);
+            calcStats = true;
+            break;
+        default:
+            console.log("ERR: Invalid Node Action: " + nodeObj.action);
+            break;
+    }
+
+    //Stats can't go below 0
+    if (nodeObj.atk < 0) {nodeObj.atk = 0;}
+    if (nodeObj.def < 0) {nodeObj.def = 0;}
+    if (targetNode && targetNode.atk < 0) {targetNode.atk = 0;}
+    if (targetNode && targetNode.def < 0) {targetNode.def = 0;}
+
+    //Conquering a node
+    if (targetNode && targetNode.hp <= 0) {
+        var conqueredByPlayer = nodeObj.plyrCtrl;
+        targetNode.hp = targetNode.maxhp;
+        targetNode.action = null;
+        targetNode.conn = null;
+        if (this.selectedNode == targetNode) {
+            targetNode.deselect(this.actionButtons);
+        }
+
+        //The conquered node has its stats reduced
+        targetNode.atk /= 2;
+        targetNode.def /= 3.5;
+
+        //Flag for whether the target node was a misc node
+        var isMiscNode = !targetNode.plyrCtrl && !targetNode.enmyCtrl;
+
+        //Remove all connections from Node
+        this.dropAllConnectionsToNode(targetNode);
+        this.dropAllConnectionsFromNode(targetNode);
+
+        //Changes the css class and turn the node into a JsPlumb Source/Target
+        if (conqueredByPlayer) {
+            targetNode.setControlledByPlayer();
+            this.jsplumbinstance.unmakeTarget(targetNode.el);
+            this.jsplumbinstance.makeSource(targetNode.el, {
+                deleteEndpointsOnEmpty:true,
+                maxConnections:1,
+                anchor:"Continuous",
+                connector:"Flowchart"
+            });
+        } else {
+            targetNode.setControlledByEnemy();
+            nodeObj.conn = null; //Clear connection
+            this.jsplumbinstance.unmakeSource(targetNode.el);
+            this.jsplumbinstance.makeTarget(targetNode.el, {
+                maxConnections:-1,
+                anchor:"Continuous",
+                connector:["Flowchart"]
+            });
+        }
+
+        calcStats = true;
+
+        //Helper function to swap nodes between the respective enemyNodes/playerNodes arrays
+        function swapNodes(orig, dest, targetNode) {
+            for (var i = 0; i < orig.length; ++i) {
+                if (orig[i] == targetNode) {
+                    var node = orig.splice(i, 1);
+                    node = node[0];
+                    dest.push(node);
+                    break;
+                }
+            }
+        }
+
+        switch(targetNode.type) {
+            case NodeTypes.Core:
+                if (conqueredByPlayer) {
+                    swapNodes(this.enemyCores, this.playerCores, targetNode);
+                    this.configurePlayerNodeElement(targetNode.el);
+                } else {
+                    swapNodes(this.playerCores, this.enemyCores, targetNode);
+                    this.configureEnemyNodeElement(targetNode.el);
+                }
+                break;
+            case NodeTypes.Firewall:
+                if (conqueredByPlayer) {
+                    swapNodes(this.enemyNodes, this.playerNodes, targetNode);
+                } else {
+                    swapNodes(this.playerNodes, this.enemyNodes, targetNode);
+                    this.configureEnemyNodeElement(targetNode.el);
+                }
+                break;
+            case NodeTypes.Database:
+                if (conqueredByPlayer) {
+                    swapNodes(this.enemyDatabases, this.playerNodes, targetNode);
+                } else {
+                    swapNodes(this.playerNodes, this.enemyDatabases, targetNode);
+                }
+                break;
+            case NodeTypes.Spam:
+                if (conqueredByPlayer) {
+                    swapNodes(isMiscNode ? this.miscNodes : this.enemyNodes, this.playerNodes, targetNode);
+                    //Conquering spam node increases time limit
+                    this.time += _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].HackingMissionSpamTimeIncrease;
+                } else {
+                    swapNodes(isMiscNode ? this.miscNodes : this.playerNodes, this.enemyNodes, targetNode);
+                }
+
+                break;
+            case NodeTypes.Transfer:
+                //Conquering a Transfer node increases the attack of all cores by some percentages
+                if (conqueredByPlayer) {
+                    swapNodes(isMiscNode ? this.miscNodes : this.enemyNodes, this.playerNodes, targetNode);
+                    this.playerCores.forEach(function(node) {
+                        node.atk *= _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].HackingMissionTransferAttackIncrease;
+                    });
+                    this.configurePlayerNodeElement(targetNode.el);
+                } else {
+                    swapNodes(isMiscNode ? this.miscNodes : this.playerNodes, this.enemyNodes, targetNode);
+                    this.enemyCores.forEach(function(node) {
+                        node.atk *= _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].HackingMissionTransferAttackIncrease;
+                    });
+                    this.configureEnemyNodeElement(targetNode.el);
+                }
+                break;
+            case NodeTypes.Shield:
+                if (conqueredByPlayer) {
+                    swapNodes(isMiscNode ? this.miscNodes : this.enemyNodes, this.playerNodes, targetNode);
+                    this.configurePlayerNodeElement(targetNode.el);
+                } else {
+                    swapNodes(isMiscNode ? this.miscNodes : this.playerNodes, this.enemyNodes, targetNode);
+                    this.configureEnemyNodeElement(targetNode.el);
+                }
+                break;
+        }
+
+        //If a misc node was conquered, the defense for all misc nodes increases by some fixed amount
+        if (isMiscNode) { //&& conqueredByPlayer) {
+            this.miscNodes.forEach((node)=>{
+                if (node.targetedCount === 0) {
+                    node.def *= _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].HackingMissionMiscDefenseIncrease;
+                }
+            });
+        }
+    }
+
+    //Update node DOMs
+    this.updateNodeDomElement(nodeObj);
+    if (targetNode) {this.updateNodeDomElement(targetNode);}
+    return calcStats;
+}
+
+//Enemy "AI" for CPU Core and Transfer Nodes
+HackingMission.prototype.enemyAISelectAction = function(nodeObj) {
+    if (nodeObj == null) {return;}
+    switch(nodeObj.type) {
+        case NodeTypes.Core:
+            //Select a single RANDOM target from miscNodes and player's Nodes
+            //If it is reachable, it will target it. If not, no target will
+            //be selected for now, and the next time process() gets called this will repeat
+            if (nodeObj.conn == null) {
+                if (this.miscNodes.length === 0) {
+                    //Randomly pick a player node and attack it if its reachable
+                    var rand = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(0, this.playerNodes.length-1);
+                    var node;
+                    if (this.playerNodes.length === 0) {
+                        node = null;
+                    } else {
+                        node = this.playerNodes[rand];
+                    }
+                    if (this.nodeReachableByEnemy(node)) {
+                        //Create connection
+                        nodeObj.conn = this.jsplumbinstance.connect({
+                            source:nodeObj.el,
+                            target:node.el
+                        });
+                        ++node.targetedCount;
+                    } else {
+                        //Randomly pick a player core and attack it if its reachable
+                        rand = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(0, this.playerCores.length-1);
+                        if (this.playerCores.length === 0) {
+                            return; //No Misc Nodes, no player Nodes, no Player cores. Player lost
+                        } else {
+                            node = this.playerCores[rand];
+                        }
+
+                        if (this.nodeReachableByEnemy(node)) {
+                            //Create connection
+                            nodeObj.conn = this.jsplumbinstance.connect({
+                                source:nodeObj.el,
+                                target:node.el
+                            });
+                            ++node.targetedCount;
+                        }
+                    }
+                } else {
+                    //Randomly pick a misc node and attack it if its reachable
+                    var rand = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(0, this.miscNodes.length-1);
+                    var node = this.miscNodes[rand];
+                    if (this.nodeReachableByEnemy(node)) {
+                        nodeObj.conn = this.jsplumbinstance.connect({
+                            source:nodeObj.el,
+                            target:node.el,
+                        });
+                        ++node.targetedCount;
+                    }
+                }
+
+                //If no connection was made, set the Core to Fortify
+                nodeObj.action = NodeActions.Fortify;
+            } else {
+                //If this node has a selected target
+                var targetNode;
+                if (nodeObj.conn.target) {
+                    targetNode = this.getNodeFromElement(nodeObj.conn.target);
+                } else {
+                    targetNode = this.getNodeFromElement(nodeObj.conn.targetId);
+                }
+                if (targetNode == null) {
+                    console.log("Error getting Target node Object in enemyAISelectAction()");
+                }
+
+                if (targetNode.def > this.enemyAtk + 15) {
+                    if (nodeObj.def < 50) {
+                        nodeObj.action = NodeActions.Fortify;
+                    } else {
+                        nodeObj.action = NodeActions.Overflow;
+                    }
+                } else if (Math.abs(targetNode.def - this.enemyAtk) <= 15) {
+                    nodeObj.action = NodeActions.Scan;
+                } else {
+                    nodeObj.action = NodeActions.Attack;
+                }
+            }
+            break;
+        case NodeTypes.Transfer:
+            //Switch between fortifying and overflowing as necessary
+            if (nodeObj.def < 125) {
+                nodeObj.action = NodeActions.Fortify;
+            } else {
+                nodeObj.action = NodeActions.Overflow;
+            }
+            break;
+        case NodeTypes.Firewall:
+        case NodeTypes.Shield:
+            nodeObj.action = NodeActions.Fortify;
+            break;
+        default:
+            break;
+    }
+}
+
+var hackEffWeightSelf = 130; //Weight for Node actions on self
+var hackEffWeightTarget = 25; //Weight for Node Actions against Target
+var hackEffWeightAttack = 80; //Weight for Attack action
+
+//Returns damage per cycle based on stats
+HackingMission.prototype.calculateAttackDamage = function(atk, def, hacking = 0) {
+    return Math.max(0.55 * (atk + (hacking / hackEffWeightAttack) - def), 1);
+}
+
+HackingMission.prototype.calculateScanEffect = function(atk, def, hacking=0) {
+    return Math.max(0.6 * ((atk) + hacking / hackEffWeightTarget - (def * 0.95)), 2);
+}
+
+HackingMission.prototype.calculateWeakenEffect = function(atk, def, hacking=0) {
+    return Math.max((atk) + hacking / hackEffWeightTarget - (def * 0.95), 2);
+}
+
+HackingMission.prototype.calculateFortifyEffect = function(hacking=0) {
+    return 0.9 * hacking / hackEffWeightSelf;
+}
+
+HackingMission.prototype.calculateOverflowEffect = function(hacking=0) {
+    return 0.95 * hacking / hackEffWeightSelf;
+}
+
+//Updates timer display
+HackingMission.prototype.updateTimer = function() {
+    var timer = document.getElementById("hacking-mission-timer");
+
+    //Convert time remaining to a string of the form mm:ss
+    var seconds = Math.round(this.time / 1000);
+    var minutes = Math.trunc(seconds / 60);
+    seconds %= 60;
+    var str = ("0" + minutes).slice(-2) + ":" + ("0" + seconds).slice(-2);
+    timer.innerText = "Time left: " + str;
+}
+
+//The 'win' argument is a bool for whether or not the player won
+HackingMission.prototype.finishMission = function(win) {
+    inMission = false;
+    currMission = null;
+
+    if (win) {
+        var favorMult = 1 + (this.faction.favor / 100);
+        console.log("Hacking mission base reward: " + this.reward);
+        console.log("favorMult: " + favorMult);
+        console.log("rep mult: " + _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].faction_rep_mult);
+        var gain = this.reward  * _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].faction_rep_mult * favorMult;
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__["dialogBoxCreate"])("Mission won! You earned " +
+                        Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(gain, 3) + " reputation with " + this.faction.name);
+        _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gainIntelligenceExp(this.difficulty * _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].IntelligenceHackingMissionBaseExpGain);
+        this.faction.playerReputation += gain;
+    } else {
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__["dialogBoxCreate"])("Mission lost/forfeited! You did not gain any faction reputation.");
+    }
+
+    //Clear mission container
+    var container = document.getElementById("mission-container");
+    while(container.firstChild) {
+        container.removeChild(container.firstChild);
+    }
+
+    //Return to Faction page
+    document.getElementById("mainmenu-container").style.visibility = "visible";
+    document.getElementById("character-overview-wrapper").style.visibility = "visible";
+    _engine__WEBPACK_IMPORTED_MODULE_1__["Engine"].loadFactionContent();
+    Object(_Faction__WEBPACK_IMPORTED_MODULE_2__[/* displayFactionContent */ "c"])(this.faction.name);
+}
+
+
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 51)))
+
+/***/ }),
+/* 40 */
+/*!****************************************!*\
+  !*** ./utils/helpers/arrayToString.ts ***!
+  \****************************************/
+/*! no static exports found */
+/*! exports used: arrayToString */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Returns the input array as a comma separated string.
+ */
+function arrayToString(a) {
+    return `[${a.join(", ")}]`;
+}
+exports.arrayToString = arrayToString;
+
+
+/***/ }),
+/* 41 */
+/*!*********************!*\
+  !*** ./src/Gang.js ***!
+  \*********************/
+/*! exports provided: Gang, displayGangContent, updateGangContent, loadAllGangs, AllGangs, resetGangs, deleteGangDisplayContent */
+/*! exports used: AllGangs, Gang, deleteGangDisplayContent, displayGangContent, loadAllGangs, resetGangs, updateGangContent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Gang; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return displayGangContent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return updateGangContent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return loadAllGangs; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AllGangs; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return resetGangs; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return deleteGangDisplayContent; });
+/* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Constants */ 2);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./engine */ 6);
+/* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Faction */ 12);
+/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Player */ 0);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
+/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/JSONReviver */ 10);
+/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 57);
+/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 3);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 36);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var numeral_min_numeral_min__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! numeral/min/numeral.min */ 15);
+/* harmony import */ var numeral_min_numeral_min__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(numeral_min_numeral_min__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 1);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 5);
+/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 27);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 54);
+/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/YesNoBox */ 14);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Gang.js */
+//Switch between territory and management screen with 1 and 2
+$(document).keydown(function(event) {
+    if (_engine__WEBPACK_IMPORTED_MODULE_1__["Engine"].currentPage == _engine__WEBPACK_IMPORTED_MODULE_1__["Engine"].Page.Gang && !_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_15__[/* yesNoBoxOpen */ "e"]) {
+        if (gangMemberFilter != null && gangMemberFilter === document.activeElement) {return;}
+        if (event.keyCode === 49) {
+            if(gangTerritorySubpage.style.display === "block") {
+                managementButton.click();
+            }
+        } else if (event.keyCode === 50) {
+            if (gangManagementSubpage.style.display === "block") {
+                territoryButton.click();
+            }
+        }
+    }
+});
+
+//Delete upgrade box when clicking outside
+$(document).mousedown(function(event) {
+    var boxId = "gang-member-upgrade-popup-box";
+    var contentId = "gang-member-upgrade-popup-box-content";
+    if (gangMemberUpgradeBoxOpened) {
+        if ( $(event.target).closest("#" + contentId).get(0) == null ) {
+            //Delete the box
+            Object(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_13__["removeElement"])(gangMemberUpgradeBox);
+            gangMemberUpgradeBox = null;
+            gangMemberUpgradeBoxContent = null;
+            gangMemberUpgradeBoxOpened = false;
+            gangMemberUpgradeBoxElements = null;
+        }
+    }
+});
+
+let GangNames = ["Slum Snakes", "Tetrads", "The Syndicate", "The Dark Army", "Speakers for the Dead",
+             "NiteSec", "The Black Hand"];
+let AllGangs = {
+    "Slum Snakes" : {
+        power: 1,
+        territory: 1/7,
+    },
+    "Tetrads" : {
+        power: 1,
+        territory: 1/7,
+    },
+    "The Syndicate" : {
+        power: 1,
+        territory: 1/7,
+    },
+    "The Dark Army" : {
+        power: 1,
+        territory: 1/7,
+    },
+    "Speakers for the Dead" : {
+        power: 1,
+        territory: 1/7,
+    },
+    "NiteSec" : {
+        power: 1,
+        territory: 1/7,
+    },
+    "The Black Hand" : {
+        power: 1,
+        territory: 1/7,
+    },
+}
+
+function resetGangs() {
+    AllGangs = {
+        "Slum Snakes" : {
+            power: 1,
+            territory: 1/7,
+        },
+        "Tetrads" : {
+            power: 1,
+            territory: 1/7,
+        },
+        "The Syndicate" : {
+            power: 1,
+            territory: 1/7,
+        },
+        "The Dark Army" : {
+            power: 1,
+            territory: 1/7,
+        },
+        "Speakers for the Dead" : {
+            power: 1,
+            territory: 1/7,
+        },
+        "NiteSec" : {
+            power: 1,
+            territory: 1/7,
+        },
+        "The Black Hand" : {
+            power: 1,
+            territory: 1/7,
+        },
+    }
+}
+
+function loadAllGangs(saveString) {
+    AllGangs = JSON.parse(saveString, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_5__["Reviver"]);
+}
+
+//Power is an estimate of a gang's ability to gain/defend territory
+let gangStoredPowerCycles = 0;
+function processAllGangPowerGains(numCycles=1) {
+    if (!_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].inGang()) {return;}
+    gangStoredPowerCycles += numCycles;
+    if (gangStoredPowerCycles < 150) {return;}
+    var playerGangName = _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.facName;
+    for (var name in AllGangs) {
+        if (AllGangs.hasOwnProperty(name)) {
+            if (name == playerGangName) {
+                AllGangs[name].power += _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.calculatePower();
+            } else {
+                var gain = Math.random() * 0.02; //TODO Adjust as necessary
+                AllGangs[name].power += (gain);
+            }
+        }
+    }
+
+    gangStoredPowerCycles -= 150;
+}
+
+let gangStoredTerritoryCycles = 0;
+function processAllGangTerritory(numCycles=1) {
+    if (!_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].inGang()) {return;}
+    gangStoredTerritoryCycles += numCycles;
+    if (gangStoredTerritoryCycles < _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].GangTerritoryUpdateTimer) {return;}
+
+    for (var i = 0; i < GangNames.length; ++i) {
+        var other = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_11__["getRandomInt"])(0, GangNames.length-1);
+        while(other == i) {
+            other = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_11__["getRandomInt"])(0, GangNames.length-1);
+        }
+        var thisPwr = AllGangs[GangNames[i]].power;
+        var otherPwr = AllGangs[GangNames[other]].power;
+        var thisChance = thisPwr / (thisPwr + otherPwr);
+
+        if (Math.random() < thisChance) {
+            if (AllGangs[GangNames[other]].territory <= 0) {
+                return;
+            }
+            AllGangs[GangNames[i]].territory += 0.0001;
+            AllGangs[GangNames[other]].territory -= 0.0001;
+        } else {
+            if (AllGangs[GangNames[i]].territory <= 0) {
+                return;
+            }
+            AllGangs[GangNames[i]].territory -= 0.0001;
+            AllGangs[GangNames[other]].territory += 0.0001;
+        }
+    }
+
+    gangStoredTerritoryCycles -= _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].GangTerritoryUpdateTimer;
+}
+
+/*  faction - Name of corresponding faction
+    hacking - Boolean indicating whether its a hacking gang or not
+ */
+function Gang(facName, hacking=false) {
+    this.facName    = facName;
+    this.members    = [];  //Array of GangMembers
+    this.wanted     = 1;
+    this.respect    = 1;
+    this.power      = 0;
+
+    this.isHackingGang = hacking;
+
+    this.respectGainRate = 0;
+    this.wantedGainRate = 0;
+    this.moneyGainRate = 0;
+
+    //When processing gains, this stores the number of cycles until some
+    //limit is reached, and then calculates and applies the gains only at that limit
+    this.storedCycles   = 0;
+}
+
+Gang.prototype.process = function(numCycles=1) {
+    this.processGains(numCycles);
+    this.processExperienceGains(numCycles);
+    processAllGangPowerGains(numCycles);
+    processAllGangTerritory(numCycles);
+}
+
+Gang.prototype.processGains = function(numCycles=1) {
+    this.storedCycles += numCycles;
+    if (isNaN(this.storedCycles)) {
+        console.log("ERROR: Gang's storedCylces is NaN");
+        this.storedCycles = 0;
+    }
+    if (this.storedCycles < 25) {return;} //Only process every 5 seconds at least
+
+    //Get gains per cycle
+    var moneyGains = 0, respectGains = 0, wantedLevelGains = 0;
+    for (var i = 0; i < this.members.length; ++i) {
+        respectGains += (this.members[i].calculateRespectGain());
+        wantedLevelGains += (this.members[i].calculateWantedLevelGain());
+        moneyGains += (this.members[i].calculateMoneyGain());
+    }
+    this.respectGainRate = respectGains;
+    this.wantedGainRate = wantedLevelGains;
+    this.moneyGainRate = moneyGains;
+
+    if (!isNaN(respectGains)) {
+        var gain = respectGains * this.storedCycles;
+        this.respect += (gain);
+        //Faction reputation gains is respect gain divided by some constant
+        var fac = _Faction__WEBPACK_IMPORTED_MODULE_2__[/* Factions */ "b"][this.facName];
+        if (!(fac instanceof _Faction__WEBPACK_IMPORTED_MODULE_2__[/* Faction */ "a"])) {
+            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__["dialogBoxCreate"])("ERROR: Could not get Faction associates with your gang. This is a bug, please report to game dev");
+        } else {
+            var favorMult = 1 + (fac.favor / 100);
+            fac.playerReputation += ((_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].faction_rep_mult * gain * favorMult) / _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].GangRespectToReputationRatio);
+        }
+
+    } else {
+        console.log("ERROR: respectGains is NaN");
+    }
+    if (!isNaN(wantedLevelGains)) {
+        if (this.wanted === 1 && wantedLevelGains < 0) {
+            //Do nothing
+        } else {
+            this.wanted += (wantedLevelGains * this.storedCycles);
+            if (this.wanted < 1) {this.wanted = 1;}
+        }
+    } else {
+        console.log("ERROR: wantedLevelGains is NaN");
+    }
+    if (!isNaN(moneyGains)) {
+        _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gainMoney(moneyGains * this.storedCycles);
+    } else {
+        console.log("ERROR: respectGains is NaN");
+    }
+
+    this.storedCycles = 0;
+}
+
+Gang.prototype.processExperienceGains = function(numCycles=1) {
+    for (var i = 0; i < this.members.length; ++i) {
+        this.members[i].gainExperience(numCycles);
+        this.members[i].updateSkillLevels();
+    }
+}
+
+//Calculates power GAIN, which is added onto the Gang's existing power
+Gang.prototype.calculatePower = function() {
+    var memberTotal = 0;
+    for (var i = 0; i < this.members.length; ++i) {
+        if (this.members[i].task instanceof GangMemberTask &&
+            this.members[i].task.name == "Territory Warfare") {
+            memberTotal += this.members[i].calculatePower();
+        }
+    }
+    return (0.0005 * memberTotal);
+}
+
+Gang.prototype.autoAssignMemberToTask = function(taskName) {
+    for (var i = 0; i < this.members.length; ++i) {
+        if (this.members[i].task.name === taskName) {
+            this.members[i].assignToTask(taskName);
+            return true;
+        }
+    }
+    return false;
+}
+
+Gang.prototype.autoUnassignMemberFromTask = function(taskName) {
+    for (var i = 0; i < this.members.length; ++i) {
+        if (this.members[i].task.name === taskName) {
+            this.members[i].unassignFromTask();
+            return true;
+        }
+    }
+    return false;
+}
+
+Gang.prototype.toJSON = function() {
+	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_5__["Generic_toJSON"])("Gang", this);
+}
+
+Gang.fromJSON = function(value) {
+	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_5__["Generic_fromJSON"])(Gang, value.data);
+}
+
+_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_5__["Reviver"].constructors.Gang = Gang;
+
+/*** Gang Member object ***/
+function GangMember(name) {
+    this.name   = name;
+    this.task   = GangMemberTasks["Unassigned"]; //GangMemberTask object
+    this.city   = _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].city;
+
+    this.hack   = 1;
+    this.str    = 1;
+    this.def    = 1;
+    this.dex    = 1;
+    this.agi    = 1;
+    this.cha    = 1;
+
+    this.hack_exp   = 0;
+    this.str_exp    = 0;
+    this.def_exp    = 0;
+    this.dex_exp    = 0;
+    this.agi_exp    = 0;
+    this.cha_exp    = 0;
+
+    this.hack_mult  = 1;
+    this.str_mult   = 1;
+    this.def_mult   = 1;
+    this.dex_mult   = 1;
+    this.agi_mult   = 1;
+    this.cha_mult   = 1;
+
+    this.upgrades = []; //Names of upgrades
+}
+
+//Same formula for Player
+GangMember.prototype.calculateSkill = function(exp, mult=1) {
+    return Math.max(Math.floor(mult*(32 * Math.log(exp + 534.5) - 200)), 1);
+}
+
+GangMember.prototype.updateSkillLevels = function() {
+    this.hack   = this.calculateSkill(this.hack_exp, this.hack_mult);
+    this.str    = this.calculateSkill(this.str_exp, this.str_mult);
+    this.def    = this.calculateSkill(this.def_exp, this.def_mult);
+    this.dex    = this.calculateSkill(this.dex_exp, this.dex_mult);
+    this.agi    = this.calculateSkill(this.agi_exp, this.agi_mult);
+    this.cha    = this.calculateSkill(this.cha_exp, this.cha_mult);
+}
+
+GangMember.prototype.calculatePower = function() {
+    return (this.hack + this.str + this.def +
+            this.dex + this.agi + this.cha) / 100;
+}
+
+GangMember.prototype.assignToTask = function(taskName) {
+    if (GangMemberTasks.hasOwnProperty(taskName)) {
+        this.task = GangMemberTasks[taskName];
+    } else {
+        this.task = GangMemberTasks["Unassigned"];
+    }
+}
+
+GangMember.prototype.unassignFromTask = function() {
+    if (GangMemberTasks.hasOwnProperty("Unassigned")) {
+        this.task = GangMemberTasks["Unassigned"];
+    } else {
+        console.log("ERROR: Can't find Unassigned Gang member task");
+        this.task = null;
+    }
+}
+
+//Gains are per cycle
+GangMember.prototype.calculateRespectGain = function() {
+    var task = this.task;
+    if (task == null || !(task instanceof GangMemberTask) || task.baseRespect === 0) {return 0;}
+    var statWeight =    (task.hackWeight/100) * this.hack +
+                        (task.strWeight/100) * this.str +
+                        (task.defWeight/100) * this.def +
+                        (task.dexWeight/100) * this.dex +
+                        (task.agiWeight/100) * this.agi +
+                        (task.chaWeight/100) * this.cha;
+    statWeight -= (3.5 * task.difficulty);
+    if (statWeight <= 0) {return 0;}
+    var territoryMult = AllGangs[_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.facName].territory;
+    if (territoryMult <= 0) {return 0;}
+    var respectMult = (_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.respect) / (_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.respect + _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.wanted);
+    return 12 * task.baseRespect * statWeight * territoryMult * respectMult;
+}
+
+GangMember.prototype.calculateWantedLevelGain = function() {
+    var task = this.task;
+    if (task == null || !(task instanceof GangMemberTask) || task.baseWanted === 0) {return 0;}
+    var statWeight =    (task.hackWeight/100) * this.hack +
+                        (task.strWeight/100) * this.str +
+                        (task.defWeight/100) * this.def +
+                        (task.dexWeight/100) * this.dex +
+                        (task.agiWeight/100) * this.agi +
+                        (task.chaWeight/100) * this.cha;
+    statWeight -= (3.5 * task.difficulty);
+    if (statWeight <= 0) {return 0;}
+    var territoryMult = AllGangs[_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.facName].territory;
+    if (territoryMult <= 0) {return 0;}
+    if (task.baseWanted < 0) {
+        return task.baseWanted * statWeight * territoryMult;
+    } else {
+        return 6 * task.baseWanted / (3 * statWeight * territoryMult);
+    }
+}
+
+GangMember.prototype.calculateMoneyGain = function() {
+    var task = this.task;
+    if (task == null || !(task instanceof GangMemberTask) || task.baseMoney === 0) {return 0;}
+    var statWeight =    (task.hackWeight/100) * this.hack +
+                        (task.strWeight/100) * this.str +
+                        (task.defWeight/100) * this.def +
+                        (task.dexWeight/100) * this.dex +
+                        (task.agiWeight/100) * this.agi +
+                        (task.chaWeight/100) * this.cha;
+    statWeight -= (3.5 * task.difficulty);
+    if (statWeight <= 0) {return 0;}
+    var territoryMult = AllGangs[_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.facName].territory;
+    if (territoryMult <= 0) {return 0;}
+    var respectMult = (_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.respect) / (_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.respect + _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.wanted);
+    return 5 * task.baseMoney * statWeight * territoryMult * respectMult;
+}
+
+GangMember.prototype.gainExperience = function(numCycles=1) {
+    var task = this.task;
+    if (task == null || !(task instanceof GangMemberTask)) {return;}
+    this.hack_exp   += (task.hackWeight / 1500) * task.difficulty * numCycles;
+    this.str_exp    += (task.strWeight / 1500) * task.difficulty * numCycles;
+    this.def_exp    += (task.defWeight / 1500) * task.difficulty * numCycles;
+    this.dex_exp    += (task.dexWeight / 1500) * task.difficulty * numCycles;
+    this.agi_exp    += (task.agiWeight / 1500) * task.difficulty * numCycles;
+    this.cha_exp    += (task.chaWeight / 1500) * task.difficulty * numCycles;
+}
+
+GangMember.prototype.toJSON = function() {
+	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_5__["Generic_toJSON"])("GangMember", this);
+}
+
+GangMember.fromJSON = function(value) {
+	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_5__["Generic_fromJSON"])(GangMember, value.data);
+}
+
+_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_5__["Reviver"].constructors.GangMember = GangMember;
+
+//Defines tasks that Gang Members can work on
+function GangMemberTask(name="", desc="",
+                        params={baseRespect: 0, baseWanted: 0, baseMoney: 0,
+                                hackWeight: 0, strWeight: 0, defWeight: 0,
+                                dexWeight: 0, agiWeight: 0, chaWeight: 0,
+                                difficulty: 0}) {
+    this.name = name;
+    this.desc = desc;
+
+    this.baseRespect    = params.baseRespect ? params.baseRespect   : 0;
+    this.baseWanted     = params.baseWanted  ? params.baseWanted    : 0;
+    this.baseMoney      = params.baseMoney   ? params.baseMoney     : 0;
+
+    //Weights must add up to 100
+    this.hackWeight     = params.hackWeight ? params.hackWeight : 0;
+    this.strWeight      = params.strWeight  ? params.strWeight  : 0;
+    this.defWeight      = params.defWeight  ? params.defWeight  : 0;
+    this.dexWeight      = params.dexWeight  ? params.dexWeight  : 0;
+    this.agiWeight      = params.agiWeight  ? params.agiWeight  : 0;
+    this.chaWeight      = params.chaWeight  ? params.chaWeight  : 0;
+
+    //1 - 100
+    this.difficulty     = params.difficulty ? params.difficulty : 1;
+}
+
+GangMemberTask.prototype.toJSON = function() {
+	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_5__["Generic_toJSON"])("GangMemberTask", this);
+}
+
+GangMemberTask.fromJSON = function(value) {
+	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_5__["Generic_fromJSON"])(GangMemberTask, value.data);
+}
+
+_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_5__["Reviver"].constructors.GangMemberTask = GangMemberTask;
+
+//TODO Human trafficking and an equivalent hacking crime
+let GangMemberTasks = {
+    "Unassigned" :              new GangMemberTask(
+                                        "Unassigned",
+                                        "This gang member is currently idle"),
+    "Ransomware" :              new GangMemberTask(
+                                        "Ransomware",
+                                        "Assign this gang member to create and distribute ransomware<br><br>" +
+                                        "Earns money - Slightly increases respect - Slightly increases wanted level",
+                                        {baseRespect: 0.00005, baseWanted: 0.00001, baseMoney: 1,
+                                         hackWeight: 100, difficulty: 1}),
+    "Phishing" :                new GangMemberTask(
+                                        "Phishing",
+                                        "Assign this gang member to attempt phishing scams and attacks<br><br>" +
+                                        "Earns money - Slightly increases respect - Slightly increases wanted level",
+                                        {baseRespect: 0.00008, baseWanted: 0.001, baseMoney: 2.5,
+                                         hackWeight: 85, chaWeight: 15, difficulty: 3}),
+    "Identity Theft" :          new GangMemberTask(
+                                        "Identity Theft",
+                                        "Assign this gang member to attempt identity theft<br><br>" +
+                                        "Earns money - Increases respect - Increases wanted level",
+                                        {baseRespect: 0.0001, baseWanted: 0.01, baseMoney: 6,
+                                         hackWeight: 80, chaWeight: 20, difficulty: 4}),
+    "DDoS Attacks" :            new GangMemberTask(
+                                        "DDoS Attacks",
+                                        "Assign this gang member to carry out DDoS attacks<br><br>" +
+                                        "Increases respect - Increases wanted level",
+                                        {baseRespect: 0.0004, baseWanted: 0.05,
+                                         hackWeight: 100, difficulty: 7}),
+    "Plant Virus" :             new GangMemberTask(
+                                        "Plant Virus",
+                                        "Assign this gang member to create and distribute malicious viruses<br><br>" +
+                                        "Increases respect - Increases wanted level",
+                                        {baseRespect: 0.0006, baseWanted: 0.05,
+                                         hackWeight: 100, difficulty: 10}),
+    "Fraud & Counterfeiting" :  new GangMemberTask(
+                                        "Fraud & Counterfeiting",
+                                        "Assign this gang member to commit financial fraud and digital counterfeiting<br><br>" +
+                                        "Earns money - Slightly increases respect - Slightly increases wanted level",
+                                        {baseRespect: 0.0005, baseWanted: 0.1, baseMoney: 15,
+                                         hackWeight: 80, chaWeight: 20, difficulty: 17}),
+    "Money Laundering" :        new GangMemberTask(
+                                        "Money Laundering",
+                                        "Assign this gang member to launder money<br><br>" +
+                                        "Earns money - Increases respect - Increases wanted level",
+                                        {baseRespect: 0.0006, baseWanted:0.2, baseMoney: 40,
+                                         hackWeight: 75, chaWeight: 25, difficulty: 20}),
+    "Cyberterrorism" :          new GangMemberTask(
+                                        "Cyberterrorism",
+                                        "Assign this gang member to commit acts of cyberterrorism<br><br>" +
+                                        "Greatly increases respect - Greatly increases wanted level",
+                                        {baseRespect: 0.001, baseWanted: 0.5,
+                                         hackWeight: 80, chaWeight: 20, difficulty: 33}),
+    "Ethical Hacking" :         new GangMemberTask(
+                                        "Ethical Hacking",
+                                        "Assign this gang member to be an ethical hacker for corporations<br><br>" +
+                                        "Earns money - Lowers wanted level",
+                                        {baseWanted: -0.001, baseMoney: 1,
+                                         hackWeight: 90, chaWeight: 10, difficulty: 1}),
+    "Mug People" :              new GangMemberTask(
+                                        "Mug People",
+                                        "Assign this gang member to mug random people on the streets<br><br>" +
+                                        "Earns money - Slightly increases respect - Very slightly increases wanted level",
+                                         {baseRespect: 0.00005, baseWanted: 0.00001, baseMoney: 1,
+                                          strWeight: 25, defWeight: 25, dexWeight: 25, agiWeight: 10, chaWeight: 15, difficulty: 1}),
+    "Deal Drugs" :              new GangMemberTask(
+                                        "Deal Drugs",
+                                        "Assign this gang member to sell drugs.<br><br>" +
+                                        "Earns money - Slightly increases respect - Slightly increases wanted level",
+                                        {baseRespect: 0.00008, baseWanted: 0.001, baseMoney: 4,
+                                         agiWeight: 20, dexWeight: 20, chaWeight: 60, difficulty: 3}),
+    "Run a Con" :               new GangMemberTask(
+                                        "Run a Con",
+                                        "Assign this gang member to run cons<br><br>" +
+                                        "Earns money - Increases respect - Increases wanted level",
+                                        {baseRespect: 0.00015, baseWanted: 0.01, baseMoney: 10,
+                                         strWeight: 5, defWeight: 5, agiWeight: 25, dexWeight: 25, chaWeight: 40, difficulty: 10}),
+    "Armed Robbery" :           new GangMemberTask(
+                                        "Armed Robbery",
+                                        "Assign this gang member to commit armed robbery on stores, banks and armored cars<br><br>" +
+                                        "Earns money - Increases respect - Increases wanted level",
+                                        {baseRespect: 0.00015, baseWanted: 0.05, baseMoney: 25,
+                                         hackWeight: 20, strWeight: 15, defWeight: 15, agiWeight: 10, dexWeight: 20, chaWeight: 20,
+                                         difficulty: 17}),
+    "Traffick Illegal Arms" :   new GangMemberTask(
+                                        "Traffick Illegal Arms",
+                                        "Assign this gang member to traffick illegal arms<br><br>" +
+                                        "Earns money - Increases respect - Increases wanted level",
+                                        {baseRespect: 0.0003, baseWanted: 0.1, baseMoney: 40,
+                                         hackWeight: 15, strWeight: 20, defWeight: 20, dexWeight: 20, chaWeight: 75,
+                                         difficulty: 25}),
+    "Threaten & Blackmail" :    new GangMemberTask(
+                                        "Threaten & Blackmail",
+                                        "Assign this gang member to threaten and black mail high-profile targets<br><br>" +
+                                        "Earns money - Slightly increases respect - Slightly increases wanted level",
+                                        {baseRespect: 0.0002, baseWanted: 0.05, baseMoney: 15,
+                                         hackWeight: 25, strWeight: 25, dexWeight: 25, chaWeight: 25, difficulty: 28}),
+    "Terrorism" :               new GangMemberTask(
+                                        "Terrorism",
+                                        "Assign this gang member to commit acts of terrorism<br><br>" +
+                                        "Greatly increases respect - Greatly increases wanted level",
+                                        {baseRespect: 0.001, baseWanted: 1,
+                                         hackWeight: 20, strWeight: 20, defWeight: 20,dexWeight: 20, chaWeight: 20,
+                                         difficulty: 33}),
+    "Vigilante Justice" :       new GangMemberTask(
+                                        "Vigilante Justice",
+                                        "Assign this gang member to be a vigilante and protect the city from criminals<br><br>" +
+                                        "Decreases wanted level",
+                                        {baseWanted: -0.001,
+                                         hackWeight: 20, strWeight: 20, defWeight: 20, dexWeight: 20, agiWeight:20,
+                                         difficulty: 1}),
+    "Train Combat" :            new GangMemberTask(
+                                        "Train Combat",
+                                        "Assign this gang member to increase their combat stats (str, def, dex, agi)",
+                                        {strWeight: 25, defWeight: 25, dexWeight: 25, agiWeight: 25, difficulty: 5}),
+    "Train Hacking" :           new GangMemberTask(
+                                        "Train Hacking",
+                                        "Assign this gang member to train their hacking skills",
+                                        {hackWeight: 100, difficulty: 8}),
+    "Territory Warfare" :       new GangMemberTask(
+                                        "Territory Warfare",
+                                        "Assign this gang member to engage in territorial warfare with other gangs. " +
+                                        "Members assigned to this task will help increase your gang's territory " +
+                                        "and will defend your territory from being taken.",
+                                        {hackWeight: 15, strWeight: 20, defWeight: 20, dexWeight: 20, agiWeight: 20,
+                                         chaWeight: 5, difficulty: 3}),
+}
+
+
+function GangMemberUpgrade(name="", desc="", cost=0, type="w") {
+    this.name = name;
+    this.desc = desc;
+    this.cost = cost;
+    this.type = type; //w, a, v, r
+}
+
+//Passes in a GangMember object
+GangMemberUpgrade.prototype.apply = function(member) {
+    switch(this.name) {
+        case "Baseball Bat":
+            member.str_mult *= 1.05;
+            member.def_mult *= 1.05;
+            break;
+        case "Katana":
+            member.str_mult *= 1.1;
+            member.def_mult *= 1.1;
+            member.dex_mult *= 1.1;
+            break;
+        case "Glock 18C":
+            member.str_mult *= 1.15;
+            member.def_mult *= 1.15;
+            member.dex_mult *= 1.15;
+            member.agi_mult *= 1.15;
+            break;
+        case "P90C":
+            member.str_mult *= 1.2;
+            member.def_mult *= 1.2;
+            member.agi_mult *= 1.1;
+            break;
+        case "Steyr AUG":
+            member.str_mult *= 1.25;
+            member.def_mult *= 1.25;
+            break;
+        case "AK-47":
+            member.str_mult *= 1.5;
+            member.def_mult *= 1.5;
+            break;
+        case "M15A10 Assault Rifle":
+            member.str_mult *= 1.6;
+            member.def_mult *= 1.6;
+            break;
+        case "AWM Sniper Rifle":
+            member.str_mult *= 1.5;
+            member.dex_mult *= 1.5;
+            member.agi_mult *= 1.5;
+            break;
+        case "Bulletproof Vest":
+            member.def_mult *= 1.05;
+            break;
+        case "Full Body Armor":
+            member.def_mult *= 1.1;
+            break;
+        case "Liquid Body Armor":
+            member.def_mult *= 1.25;
+            member.agi_mult *= 1.25;
+            break;
+        case "Graphene Plating Armor":
+            member.def_mult *= 1.5;
+            break;
+        case "Ford Flex V20":
+            member.agi_mult *= 1.1;
+            member.cha_mult *= 1.1;
+            break;
+        case "ATX1070 Superbike":
+            member.agi_mult *= 1.15;
+            member.cha_mult *= 1.15;
+            break;
+        case "Mercedes-Benz S9001":
+            member.agi_mult *= 1.2;
+            member.cha_mult *= 1.2;
+            break;
+        case "White Ferrari":
+            member.agi_mult *= 1.25;
+            member.cha_mult *= 1.25;
+            break;
+        case "NUKE Rootkit":
+            member.hack_mult *= 1.1;
+            break;
+        case "Soulstealer Rootkit":
+            member.hack_mult *= 1.2;
+            break;
+        case "Demon Rootkit":
+            member.hack_mult *= 1.3;
+            break;
+        default:
+            console.log("ERROR: Could not find this upgrade: " + this.name);
+            break;
+    }
+}
+
+GangMemberUpgrade.prototype.toJSON = function() {
+	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_5__["Generic_toJSON"])("GangMemberUpgrade", this);
+}
+
+GangMemberUpgrade.fromJSON = function(value) {
+	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_5__["Generic_fromJSON"])(GangMemberUpgrade, value.data);
+}
+
+_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_5__["Reviver"].constructors.GangMemberUpgrade = GangMemberUpgrade;
+
+let GangMemberUpgrades = {
+    "Baseball Bat" : new GangMemberUpgrade("Baseball Bat",
+                            "Increases strength and defense by 5%", 1e6, "w"),
+    "Katana" :       new GangMemberUpgrade("Katana",
+                            "Increases strength, defense, and dexterity by 10%", 12e6, "w"),
+    "Glock 18C" :    new GangMemberUpgrade("Glock 18C",
+                            "Increases strength, defense, dexterity, and agility by 15%", 25e6, "w"),
+    "P90C" :          new GangMemberUpgrade("P90C",
+                            "Increases strength and defense by 20%. Increases agility by 10%", 50e6, "w"),
+    "Steyr AUG" :    new GangMemberUpgrade("Steyr AUG",
+                            "Increases strength and defense by 25%", 60e6, "w"),
+    "AK-47" :        new GangMemberUpgrade("AK-47",
+                            "Increases strength and defense by 50%", 100e6, "w"),
+    "M15A10 Assault Rifle" :    new GangMemberUpgrade("M15A10 Assault Rifle",
+                                        "Increases strength and defense by 60%", 150e6, "w"),
+    "AWM Sniper Rifle" :        new GangMemberUpgrade("AWM Sniper Rifle",
+                                        "Increases strength, dexterity, and agility by 50%", 225e6, "w"),
+    "Bulletproof Vest" :        new GangMemberUpgrade("Bulletproof Vest",
+                                        "Increases defense by 5%", 2e6, "a"),
+    "Full Body Armor" :         new GangMemberUpgrade("Full Body Armor",
+                                        "Increases defense by 10%", 5e6, "a"),
+    "Liquid Body Armor" :       new GangMemberUpgrade("Liquid Body Armor",
+                                        "Increases defense and agility by 25%", 25e6, "a"),
+    "Graphene Plating Armor" :  new GangMemberUpgrade("Graphene Plating Armor",
+                                        "Increases defense by 50%", 40e6, "a"),
+    "Ford Flex V20" :           new GangMemberUpgrade("Ford Flex V20",
+                                        "Increases agility and charisma by 10%", 3e6, "v"),
+    "ATX1070 Superbike" :       new GangMemberUpgrade("ATX1070 Superbike",
+                                        "Increases agility and charisma by 15%", 9e6, "v"),
+    "Mercedes-Benz S9001" :     new GangMemberUpgrade("Mercedes-Benz S9001",
+                                        "Increases agility and charisma by 20%", 18e6, "v"),
+    "White Ferrari" :           new GangMemberUpgrade("White Ferrari",
+                                        "Increases agility and charisma by 25%", 30e6, "v"),
+    "NUKE Rootkit" :            new GangMemberUpgrade("NUKE Rootkit",
+                                        "Increases hacking by 10%", 5e6, "r"),
+    "Soulstealer Rootkit" :     new GangMemberUpgrade("Soulstealer Rootkit",
+                                        "Increases hacking by 20%", 15e6, "r"),
+    "Demon Rootkit" :           new GangMemberUpgrade("Demon Rootkit",
+                                        "Increases hacking by 30%", 50e6, "r"),
+}
+
+//Create a pop-up box that lets player purchase upgrades
+let gangMemberUpgradeBoxOpened = false;
+function createGangMemberUpgradeBox(initialFilter="") {
+    var boxId = "gang-member-upgrade-popup-box";
+    if (gangMemberUpgradeBoxOpened) {
+        //Already opened, refreshing
+        if (gangMemberUpgradeBoxElements == null || gangMemberUpgradeBox == null || gangMemberUpgradeBoxContent == null) {
+            console.log("ERROR: Refreshing Gang member upgrade box throws error because required elements are null");
+            return;
+        }
+
+        for (var i = 1; i < gangMemberUpgradeBoxElements.length; ++i) {
+            Object(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_13__["removeElement"])(gangMemberUpgradeBoxElements[i]);
+        }
+        gangMemberUpgradeBoxElements = [gangMemberUpgradeBoxFilter];
+
+        var filter = gangMemberUpgradeBoxFilter.value.toString();
+        for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.members.length; ++i) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.members[i].name.indexOf(filter) > -1 || _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.members[i].task.name.indexOf(filter) > -1) {
+                var newPanel = createGangMemberUpgradePanel(_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.members[i]);
+                gangMemberUpgradeBoxContent.appendChild(newPanel);
+                gangMemberUpgradeBoxElements.push(newPanel);
+            }
+        }
+    } else {
+        //New popup
+        gangMemberUpgradeBoxFilter = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("input", {
+            type:"text", placeholder:"Filter gang members",
+            value:initialFilter,
+            onkeyup:()=>{
+                var filterValue = gangMemberUpgradeBoxFilter.value.toString();
+                createGangMemberUpgradeBox(filterValue);
+            }
+        });
+
+        gangMemberUpgradeBoxElements = [gangMemberUpgradeBoxFilter];
+
+        var filter = gangMemberUpgradeBoxFilter.value.toString();
+        for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.members.length; ++i) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.members[i].name.indexOf(filter) > -1 || _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.members[i].task.name.indexOf(filter) > -1) {
+                gangMemberUpgradeBoxElements.push(createGangMemberUpgradePanel(_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.members[i]));
+            }
+        }
+
+        gangMemberUpgradeBox = Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_8__["createPopup"])(boxId, gangMemberUpgradeBoxElements);
+        gangMemberUpgradeBoxContent = document.getElementById(boxId + "-content");
+        gangMemberUpgradeBoxOpened = true;
+    }
+}
+
+//Create upgrade panels for each individual Gang Member
+function createGangMemberUpgradePanel(memberObj) {
+    var container = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("div", {
+        border:"1px solid white",
+    });
+
+    var header = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("h1", {
+        innerText:memberObj.name + " (" + memberObj.task.name + ")"
+    });
+    container.appendChild(header);
+
+    var text = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("pre", {
+        fontSize:"14px", display: "inline-block", width:"20%",
+        innerText:
+            "Hack: " + memberObj.hack + " (x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(memberObj.hack_mult, 2) + ")\n" +
+            "Str:  " + memberObj.str  + " (x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(memberObj.str_mult, 2) + ")\n" +
+            "Def:  " + memberObj.def  + " (x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(memberObj.def_mult, 2) + ")\n" +
+            "Dex:  " + memberObj.dex  + " (x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(memberObj.dex_mult, 2) + ")\n" +
+            "Agi:  " + memberObj.agi  + " (x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(memberObj.agi_mult, 2) + ")\n" +
+            "Cha:  " + memberObj.cha  + " (x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(memberObj.cha_mult, 2) + ")\n",
+    });
+
+    //Already purchased upgrades
+    var ownedUpgradesElements = [];
+    for (var i = 0; i < memberObj.upgrades.length; ++i) {
+        var upg = GangMemberUpgrades[memberObj.upgrades[i]];
+        if (upg == null) {
+            console.log("ERR: Could not find this upgrade: " + memberObj.upgrades[i]);
+            continue;
+        }
+        var e = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("div", {
+            border:"1px solid white", innerText:memberObj.upgrades[i],
+            margin:"1px", padding:"1px", tooltip:upg.desc, fontSize:"12px",
+        });
+        ownedUpgradesElements.push(e);
+    }
+    var ownedUpgrades = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("div", {
+        display:"inline-block", marginLeft:"6px", width:"75%", innerText:"Purchased Upgrades:",
+    });
+    for (var i = 0; i < ownedUpgradesElements.length; ++i) {
+        ownedUpgrades.appendChild(ownedUpgradesElements[i]);
+    }
+    container.appendChild(text);
+    container.appendChild(ownedUpgrades);
+    container.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("br", {}));
+
+    //Upgrade buttons. Only show upgrades that can be afforded
+    var weaponUpgrades = [], armorUpgrades = [], vehicleUpgrades = [], rootkitUpgrades = [];
+    for (var upgName in GangMemberUpgrades) {
+        if (GangMemberUpgrades.hasOwnProperty(upgName)) {
+            var upg = GangMemberUpgrades[upgName];
+            if (_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].money.lt(upg.cost) || memberObj.upgrades.includes(upgName)) {continue;}
+            switch (upg.type) {
+                case "w":
+                    weaponUpgrades.push(upg);
+                    break;
+                case "a":
+                    armorUpgrades.push(upg);
+                    break;
+                case "v":
+                    vehicleUpgrades.push(upg);
+                    break;
+                case "r":
+                    rootkitUpgrades.push(upg);
+                    break;
+                default:
+                    console.log("ERROR: Invalid Gang Member Upgrade Type: " + upg.type);
+            }
+        }
+    }
+
+    var weaponDiv   = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("div", {width:"20%", display:"inline-block",});
+    var armorDiv    = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("div", {width:"20%", display:"inline-block",});
+    var vehicleDiv  = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("div", {width:"20%", display:"inline-block",});
+    var rootkitDiv  = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("div", {width:"20%", display:"inline-block",});
+    var upgrades = [weaponUpgrades, armorUpgrades, vehicleUpgrades, rootkitUpgrades];
+    var divs = [weaponDiv, armorDiv, vehicleDiv, rootkitDiv];
+
+    for (var i = 0; i < upgrades.length; ++i) {
+        var upgradeArray = upgrades[i];
+        var div = divs[i];
+        for (var j = 0; j < upgradeArray.length; ++j) {
+            var upg = upgradeArray[j];
+            (function (upg, div, memberObj) {
+                div.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("a", {
+                    innerText:upg.name + " - " + numeral_min_numeral_min__WEBPACK_IMPORTED_MODULE_9___default()(upg.cost).format("$0.000a"),
+                    class:"a-link-button", margin:"2px",  padding:"2px", display:"block",
+                    fontSize:"12px",
+                    tooltip:upg.desc,
+                    clickListener:()=>{
+                        if (_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].money.lt(upg.cost)) {return false;}
+                        _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].loseMoney(upg.cost);
+                        memberObj.upgrades.push(upg.name);
+                        upg.apply(memberObj);
+                        var initFilterValue = gangMemberUpgradeBoxFilter.value.toString();
+                        createGangMemberUpgradeBox(initFilterValue);
+                        return false;
+                    }
+                }));
+            })(upg, div, memberObj);
+        }
+    }
+
+    container.appendChild(weaponDiv);
+    container.appendChild(armorDiv);
+    container.appendChild(vehicleDiv);
+    container.appendChild(rootkitDiv);
+    return container;
+}
+
+//Gang DOM elements
+let gangContentCreated = false,
+    gangContainer = null, managementButton = null, territoryButton = null;
+
+//Subpages
+let gangManagementSubpage = null, gangTerritorySubpage = null;
+
+//Gang Management Elements
+let gangDesc = null, gangInfo = null,
+    gangRecruitMemberButton = null, gangRecruitRequirementText = null,
+    gangExpandAllButton = null, gangCollapseAllButton, gangMemberFilter = null,
+    gangManageEquipmentButton = null,
+    gangMemberList = null;
+
+//Gang Equipment Upgrade Elements
+let gangMemberUpgradeBox = null, gangMemberUpgradeBoxContent = null,
+    gangMemberUpgradeBoxFilter = null, gangMemberUpgradeBoxElements = null;
+
+
+//Gang Territory Elements
+let gangTerritoryDescText = null, gangTerritoryInfoText = null;
+
+function displayGangContent() {
+    if (!gangContentCreated || gangContainer == null) {
+        gangContentCreated = true;
+
+        //Create gang container
+        gangContainer = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("div", {
+            id:"gang-container", class:"generic-menupage-container",
+        });
+
+        //Get variables
+        var facName = _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.facName,
+            members = _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.members,
+            wanted = _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.wanted,
+            respect = _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.respect;
+
+        //Back button
+        gangContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("a", {
+            class:"a-link-button", display:"inline-block", innerText:"Back",
+            clickListener:()=>{
+                _engine__WEBPACK_IMPORTED_MODULE_1__["Engine"].loadFactionContent();
+                Object(_Faction__WEBPACK_IMPORTED_MODULE_2__[/* displayFactionContent */ "c"])(facName);
+                return false;
+            }
+        }));
+
+        //Buttons to switch between panels
+        managementButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("a", {
+            id:"gang-management-subpage-button", class:"a-link-button-inactive",
+            display:"inline-block", innerHTML: "Gang Management (1)",
+            clickListener:()=>{
+                gangManagementSubpage.style.display = "block";
+                gangTerritorySubpage.style.display = "none";
+                managementButton.classList.toggle("a-link-button-inactive");
+                managementButton.classList.toggle("a-link-button");
+                territoryButton.classList.toggle("a-link-button-inactive");
+                territoryButton.classList.toggle("a-link-button");
+                updateGangContent();
+                return false;
+            }
+        })
+        territoryButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("a", {
+            id:"gang-territory-subpage-button", class:"a-link-button",
+            display:"inline-block", innerHTML:"Gang Territory (2)",
+            clickListener:()=>{
+                gangManagementSubpage.style.display = "none";
+                gangTerritorySubpage.style.display = "block";
+                managementButton.classList.toggle("a-link-button-inactive");
+                managementButton.classList.toggle("a-link-button");
+                territoryButton.classList.toggle("a-link-button-inactive");
+                territoryButton.classList.toggle("a-link-button");
+                updateGangContent();
+                return false;
+            }
+        });
+        gangContainer.appendChild(managementButton);
+        gangContainer.appendChild(territoryButton);
+
+        //Subpage for managing gang members
+        gangManagementSubpage = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("div", {
+            display:"block", id:"gang-management-subpage",
+        });
+
+        var lowerWantedTask = "";
+        if (_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.isHackingGang) {
+            lowerWantedTask = "Ethical Hacking";
+        } else {
+            lowerWantedTask = "Vigilante Justice";
+        }
+        gangDesc = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("p", {width:"70%",
+            innerHTML:
+            "This page is used to manage your gang members and get an overview of your  " +
+            "gang's stats.<br><br>" +
+            "If a gang member is not earning much money or respect, the task that you " +
+            "have assigned to that member might be too difficult. Consider training that " +
+            "member's stats or choosing an easier task. The tasks closer to the " +
+            "top of the dropdown list are generally easier. Alternatively, the gang member's " +
+            "low production might be due to the fact that your wanted level is too high. " +
+            "Consider assigning a few members to the '" + lowerWantedTask + "' " +
+            "task to lower your wanted level. <br><br>" +
+            "Installing Augmentations does NOT reset your progress with your Gang. " +
+            "Furthermore, after installing Augmentations, you will " +
+            "automatically be a member of whatever Faction you created your gang with.<br><br>"
+        });
+        gangManagementSubpage.appendChild(gangDesc);
+
+        gangInfo = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("p", {id:"gang-info", width:"70%"});
+        gangManagementSubpage.appendChild(gangInfo);
+
+        gangRecruitMemberButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("a", {
+            id:"gang-management-recruit-member-btn", class:"a-link-button-inactive",
+            innerHTML:"Recruit Gang Member", display:"inline-block", margin:"10px",
+            clickListener:()=>{
+                var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_15__[/* yesNoTxtInpBoxGetYesButton */ "j"])(), noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_15__[/* yesNoTxtInpBoxGetNoButton */ "i"])();
+                yesBtn.innerHTML = "Recruit Gang Member";
+                noBtn.innerHTML = "Cancel";
+                yesBtn.addEventListener("click", ()=>{
+                    var name = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_15__[/* yesNoTxtInpBoxGetInput */ "h"])();
+                    if (name === "") {
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__["dialogBoxCreate"])("You must enter a name for your Gang member!");
+                    } else {
+                        for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.members.length; ++i) {
+                            if (name == _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.members[i].name) {
+                                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__["dialogBoxCreate"])("You already have a gang member with this name!");
+                                return false;
+                            }
+                        }
+                        var member = new GangMember(name);
+                        _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.members.push(member);
+                        createGangMemberDisplayElement(member);
+                        updateGangContent();
+                    }
+                    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_15__[/* yesNoTxtInpBoxClose */ "f"])();
+                });
+                noBtn.addEventListener("click", ()=>{
+                    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_15__[/* yesNoTxtInpBoxClose */ "f"])();
+                });
+                Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_15__[/* yesNoTxtInpBoxCreate */ "g"])("Please enter a name for your new Gang member:");
+                return false;
+            }
+        });
+        gangManagementSubpage.appendChild(gangRecruitMemberButton);
+
+        //Text for how much reputation is required for recruiting next memberList
+        gangRecruitRequirementText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("p", {color:"red", id:"gang-recruit-requirement-text"});
+        gangManagementSubpage.appendChild(gangRecruitRequirementText);
+
+        //Gang Member List management buttons (Expand/Collapse All, select a single member)
+        gangManagementSubpage.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("br", {}));
+        gangExpandAllButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("a", {
+            class:"a-link-button", display:"inline-block",
+            innerHTML:"Expand All",
+            clickListener:()=>{
+                var allHeaders = gangManagementSubpage.getElementsByClassName("accordion-header");
+                for (var i = 0; i < allHeaders.length; ++i) {
+                    var hdr = allHeaders[i];
+                    if (!hdr.classList.contains("active")) {
+                        hdr.click();
+                    }
+                }
+                return false;
+            }
+        });
+        gangCollapseAllButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("a", {
+            class:"a-link-button", display:"inline-block",
+            innerHTML:"Collapse All",
+            clickListener:()=>{
+                var allHeaders = gangManagementSubpage.getElementsByClassName("accordion-header");
+                for (var i = 0; i < allHeaders.length; ++i) {
+                    var hdr = allHeaders[i];
+                    if (hdr.classList.contains("active")) {
+                        hdr.click();
+                    }
+                }
+                return false;
+            }
+        });
+        gangMemberFilter = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("input", {
+            type:"text", placeholder:"Filter gang members", margin:"5px", padding:"5px",
+            onkeyup:()=>{
+                displayGangMemberList();
+            }
+        });
+        gangManageEquipmentButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("a", {
+            class:"a-link-button", display:"inline-block",
+            innerHTML:"Manage Equipment",
+            clickListener:()=>{
+                createGangMemberUpgradeBox();
+            }
+        });
+        gangManagementSubpage.appendChild(gangExpandAllButton);
+        gangManagementSubpage.appendChild(gangCollapseAllButton);
+        gangManagementSubpage.appendChild(gangMemberFilter);
+        gangManagementSubpage.appendChild(gangManageEquipmentButton);
+
+        //Gang Member list
+        gangMemberList = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("ul", {id:"gang-member-list"});
+        displayGangMemberList();
+        gangManagementSubpage.appendChild(gangMemberList);
+
+        //Subpage for seeing gang territory information
+        gangTerritorySubpage = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("div", {
+            id:"gang-territory-subpage", display:"none"
+        });
+
+        //Info text for territory page
+        gangTerritoryDescText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("p", {
+            width:"70%",
+            innerHTML:"This page shows how much territory your Gang controls. This statistic is listed as a percentage, " +
+            "which represents how much of the total territory you control.<br><br>" +
+            "Territory gain and loss is processed automatically and is updated every ~30 seconds. Your chances " +
+            "to gain and lose territory depend on your Gang's power, which is listed in the display below. " +
+            "Your gang's power is determined by the stats of all Gang members you have assigned to the " +
+            "'Territory Warfare' task. Gang members that are not assigned to this task do not contribute to " +
+            "your Gang's power.<br><br>" +
+            "The amount of territory you have affects all aspects of your Gang members' production, including " +
+            "money, respect, and wanted level. It is very beneficial to have high territory control.<br><br>"
+        });
+        gangTerritorySubpage.appendChild(gangTerritoryDescText);
+
+        var territoryBorder = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("fieldset", {width:"50%", display:"inline-block"});
+
+        gangTerritoryInfoText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("p", {id:"gang-territory-info"});
+
+        territoryBorder.appendChild(gangTerritoryInfoText);
+        gangTerritorySubpage.appendChild(territoryBorder);
+
+        gangContainer.appendChild(gangTerritorySubpage);
+        gangContainer.appendChild(gangManagementSubpage);
+        document.getElementById("entire-game-container").appendChild(gangContainer);
+    }
+    gangContainer.style.display = "block";
+    updateGangContent();
+}
+
+function displayGangMemberList() {
+    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_12__["removeChildrenFromElement"])(gangMemberList);
+    var members = _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.members;
+    var filter = gangMemberFilter.value.toString();
+    for (var i = 0; i < members.length; ++i) {
+        if (members[i].name.indexOf(filter) > -1 || members[i].task.name.indexOf(filter) > -1) {
+            createGangMemberDisplayElement(members[i]);
+        }
+    }
+    //setGangMemberClickHandlers(); //Set buttons to toggle the gang member info panels
+}
+
+function updateGangContent() {
+    if (!gangContentCreated || !_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].inGang()) {return;}
+
+    if(gangTerritorySubpage.style.display === "block") {
+        //Update territory information
+        gangTerritoryInfoText.innerHTML = "";
+        for (var gangname in AllGangs) {
+            if (AllGangs.hasOwnProperty(gangname)) {
+                var gangTerritoryInfo = AllGangs[gangname];
+                let territory = gangTerritoryInfo.territory*100;
+
+                //Fix some rounding issues graphically
+                let displayNumber;
+                if (territory <= 0) {
+                    displayNumber = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(0, 2);
+                } else if (territory >= 100) {
+                    displayNumber = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(100, 2);
+                } else {
+                    displayNumber = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(territory, 2);
+                }
+
+                if (gangname == _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.facName) {
+                    gangTerritoryInfoText.innerHTML += ("<b>" + gangname + "</b><br>(Power: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(gangTerritoryInfo.power, 6) + "): " +
+                                       displayNumber + "%<br><br>");
+                } else {
+                    gangTerritoryInfoText.innerHTML += (gangname + "<br>(Power: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(gangTerritoryInfo.power, 6) + "): " +
+                                       displayNumber + "%<br><br>");
+                }
+            }
+        }
+    } else {
+        //Update information for overall gang
+        if (gangInfo instanceof Element) {
+            var faction = _Faction__WEBPACK_IMPORTED_MODULE_2__[/* Factions */ "b"][_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.facName];
+            var rep;
+            if (!(faction instanceof _Faction__WEBPACK_IMPORTED_MODULE_2__[/* Faction */ "a"])) {
+                rep = "ERROR";
+            } else {
+                rep = faction.playerReputation;
+            }
+            Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_12__["removeChildrenFromElement"])(gangInfo);
+            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("p", {   //Respect
+                display:"inline-block",
+                innerText:"Respect: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.respect, 6) +
+                          " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(5*_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.respectGainRate, 6) + " / sec)",
+                tooltip:"Represents the amount of respect your gang has from other gangs and criminal " +
+                        "organizations. Your respect affects the amount of money " +
+                        "your gang members will earn, and also determines how much " +
+                        "reputation you are earning with your gang's corresponding Faction."
+            }));
+            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("br", {}));
+
+            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("p", {   //Wanted level
+                display:"inline-block",
+                innerText:"Wanted Level: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.wanted, 6) +
+                          " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(5*_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.wantedGainRate, 6) + " / sec)",
+                tooltip:"Represents how much the gang is wanted by law enforcement. The higher " +
+                        "your gang's wanted level, the harder it will be for your gang members " +
+                        "to make money and earn respect. Note that the minimum wanted level is 1."
+            }));
+            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("br", {}));
+
+            var wantedPenalty = (_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.respect) / (_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.respect + _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.wanted);
+            wantedPenalty = (1 - wantedPenalty) * 100;
+            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("p", {   //Wanted Level multiplier
+                display:"inline-block",
+                innerText:"Wanted Level Penalty: -" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(wantedPenalty, 2) + "%",
+                tooltip:"Penalty for respect and money gain rates due to Wanted Level"
+            }));
+            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("br", {}));
+
+            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("p", {   //Money gain rate
+                display:"inline-block",
+                innerText:"Money gain rate: $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(5*_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.moneyGainRate, 2) +
+                          " / sec",
+            }));
+            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("br", {}));
+
+            //Fix some rounding issues graphically
+            var territoryMult = AllGangs[_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.facName].territory * 100;
+            let displayNumber;
+            if (territoryMult <= 0) {
+                displayNumber = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(0, 2);
+            } else if (territoryMult >= 100) {
+                displayNumber = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(100, 2);
+            } else {
+                displayNumber = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(territoryMult, 2);
+            }
+            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("p", {  //Territory multiplier
+                display:"inline-block",
+                innerText:"Territory: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(displayNumber, 3) + "%",
+                tooltip:"The percentage of total territory your Gang controls"
+            }));
+            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("br", {}));
+
+            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("p", {  //Faction reputation
+                display:"inline-block",
+                innerText:"Faction reputation: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(rep, 3)
+            }));
+            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("br", {}));
+        } else {
+            console.log("ERROR: gang-info DOM element DNE");
+        }
+
+        //Toggle the 'Recruit member button' if valid
+        var numMembers = _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.members.length;
+        var repCost = 0;
+        if (numMembers > 0) {
+            var repCost = Math.pow(_Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].GangRecruitCostMultiplier, numMembers);
+        }
+        var faction = _Faction__WEBPACK_IMPORTED_MODULE_2__[/* Factions */ "b"][_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.facName];
+        if (faction == null) {
+            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__["dialogBoxCreate"])("Could not find your gang's faction. This is probably a bug please report to dev");
+            return;
+        }
+        var btn = gangRecruitMemberButton;
+        if (numMembers >= _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].MaximumGangMembers) {
+            btn.className = "a-link-button-inactive";
+            gangRecruitRequirementText.style.display = "block";
+            gangRecruitRequirementText.innerHTML =
+                "You have reached the maximum amount of gang members";
+        } else if (faction.playerReputation >= repCost) {
+            btn.className = "a-link-button";
+            gangRecruitRequirementText.style.display = "none";
+        } else {
+            btn.className = "a-link-button-inactive";
+            gangRecruitRequirementText.style.display = "block";
+            gangRecruitRequirementText.innerHTML =
+                Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(repCost, 2) + " Faction reputation needed to recruit next member";
+        }
+
+        //Update information for each gang member
+        for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.members.length; ++i) {
+            updateGangMemberDisplayElement(_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.members[i]);
+        }
+    }
+}
+
+//Takes in a GangMember object
+function createGangMemberDisplayElement(memberObj) {
+    if (!gangContentCreated || !_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].inGang()) {return;}
+    var name = memberObj.name;
+
+    var accordion = Object(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_6__["createAccordionElement"])({
+        id:name + "gang-member",
+        hdrText:name,
+    });
+    var li = accordion[0];
+    var hdr = accordion[1];
+    var gangMemberDiv = accordion[2];
+
+    //Gang member content divided into 3 panels:
+    //Stats Panel
+    var statsDiv = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("div", {
+        id: name + "gang-member-stats", class: "gang-member-info-div",
+        width:"30%", display:"inline"
+    });
+    var statsP = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("p", {
+        id:name + "gang-member-stats-text", display:"inline"
+    });
+
+    statsDiv.appendChild(statsP);
+    //statsDiv.appendChild(upgradeButton);
+
+    //Panel for Selecting task and show respect/wanted gain
+    var taskDiv = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("div", {
+        id: name + "gang-member-task", class:"gang-member-info-div",
+        width:"30%", display:"inline"
+    });
+    var taskSelector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("select", {
+        color:"white", backgroundColor:"black",
+        id:name + "gang-member-task-selector"
+    });
+
+    var tasks = null;
+    if (_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gang.isHackingGang) {
+        tasks = ["---", "Ransomware", "Phishing", "Identity Theft", "DDoS Attacks",
+                 "Plant Virus", "Fraud & Counterfeiting","Money Laundering",
+                 "Cyberterrorism", "Ethical Hacking", "Train Combat",
+                 "Train Hacking", "Territory Warfare"];
+    } else {
+        tasks = ["---", "Mug People", "Deal Drugs", "Run a Con", "Armed Robbery",
+                 "Traffick Illegal Arms", "Threaten & Blackmail",
+                 "Terrorism", "Vigilante Justice", "Train Combat",
+                 "Train Hacking", "Territory Warfare"];
+    }
+    for (var i = 0; i < tasks.length; ++i) {
+        var option = document.createElement("option");
+        option.text = tasks[i];
+        taskSelector.add(option);
+    }
+    taskSelector.addEventListener("change", function() {
+        var task = taskSelector.options[taskSelector.selectedIndex].text;
+        memberObj.assignToTask(task);
+        setGangMemberTaskDescription(memberObj, task);
+        updateGangContent();
+    });
+    //Set initial task in selector element
+    if (memberObj.task instanceof GangMemberTask) {
+        var taskName = memberObj.task.name;
+        var taskIndex = 0;
+        for (let i = 0; i < tasks.length; ++i) {
+            if (taskName == tasks[i]) {
+                taskIndex = i;
+                break;
+            }
+        }
+        taskSelector.selectedIndex = taskIndex;
+    }
+
+    var gainInfo = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("p", {id:name + "gang-member-gain-info"});
+    taskDiv.appendChild(taskSelector);
+    taskDiv.appendChild(gainInfo);
+
+    //Panel for Description of task
+    var taskDescDiv = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("div", {
+        id:name + "gang-member-task-desc", class:"gang-member-info-div",
+        width:"30%", display:"inline"
+    });
+
+    var taskDescP = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("p", {id: name + "gang-member-task-description", display:"inline"});
+    taskDescDiv.appendChild(taskDescP);
+
+    statsDiv.style.width = "30%";
+    taskDiv.style.width = "30%";
+    taskDescDiv.style.width = "30%";
+    statsDiv.style.display = "inline";
+    taskDiv.style.display = "inline";
+    taskDescDiv.style.display = "inline";
+    gangMemberDiv.appendChild(statsDiv);
+    gangMemberDiv.appendChild(taskDiv);
+    gangMemberDiv.appendChild(taskDescDiv);
+
+    gangMemberList.appendChild(li);
+    setGangMemberTaskDescription(memberObj, taskName); //Initialize description
+    updateGangMemberDisplayElement(memberObj);
+}
+
+function updateGangMemberDisplayElement(memberObj) {
+    if (!gangContentCreated || !_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].inGang()) {return;}
+    var name = memberObj.name;
+
+    //TODO Add upgrade information
+    var stats = document.getElementById(name + "gang-member-stats-text");
+    if (stats) {
+        stats.innerHTML =
+            "Hacking: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(memberObj.hack, 0) + " (" + numeral_min_numeral_min__WEBPACK_IMPORTED_MODULE_9___default()(memberObj.hack_exp).format('(0.00a)') + " exp)<br>" +
+            "Strength: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(memberObj.str, 0) + " (" + numeral_min_numeral_min__WEBPACK_IMPORTED_MODULE_9___default()(memberObj.str_exp).format('(0.00a)') + " exp)<br>" +
+            "Defense: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(memberObj.def, 0) + " (" + numeral_min_numeral_min__WEBPACK_IMPORTED_MODULE_9___default()(memberObj.def_exp).format('(0.00a)') + " exp)<br>" +
+            "Dexterity: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(memberObj.dex, 0) + " (" + numeral_min_numeral_min__WEBPACK_IMPORTED_MODULE_9___default()(memberObj.dex_exp).format('(0.00a)') + " exp)<br>" +
+            "Agility: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(memberObj.agi, 0) + " (" + numeral_min_numeral_min__WEBPACK_IMPORTED_MODULE_9___default()(memberObj.agi_exp).format('(0.00a)') + " exp)<br>" +
+            "Charisma: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(memberObj.cha, 0) + " (" + numeral_min_numeral_min__WEBPACK_IMPORTED_MODULE_9___default()(memberObj.cha_exp).format('(0.00a)') + " exp)<br>";
+    }
+
+    var gainInfo = document.getElementById(name + "gang-member-gain-info");
+    if (gainInfo) {
+        gainInfo.innerHTML =
+            "Money: $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(5*memberObj.calculateMoneyGain(), 2) + " / sec<br>" +
+            "Respect: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(5*memberObj.calculateRespectGain(), 6) + " / sec<br>" +
+            "Wanted Level: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(5*memberObj.calculateWantedLevelGain(), 6) + " / sec<br>";
+    }
+}
+
+function setGangMemberTaskDescription(memberObj, taskName) {
+    var name = memberObj.name;
+    var taskDesc = document.getElementById(name + "gang-member-task-description");
+    if (taskDesc) {
+        var task = GangMemberTasks[taskName];
+        if (task == null) {return;}
+        var desc = task.desc;
+        taskDesc.innerHTML = desc;
+    }
+}
+
+function deleteGangDisplayContent() {
+    if (gangContainer != null) {Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_14__["removeElementById"])(gangContainer.id);}
+
+    gangContentCreated = false;
+    gangContainer = null;
+    managementButton = null;
+    territoryButton = null;
+
+    //Subpages
+    gangManagementSubpage = null;
+    gangTerritorySubpage = null;
+
+    //Gang Management Elements
+    gangDesc = null;
+    gangInfo = null;
+    gangRecruitMemberButton = null;
+    gangRecruitRequirementText = null;
+    gangExpandAllButton = null;
+    gangCollapseAllButton = null;
+    gangMemberFilter = null;
+    gangManageEquipmentButton = null;
+    gangMemberList = null;
+
+    //Gang Equipment Upgrade Elements
+    gangMemberUpgradeBox = null;
+    gangMemberUpgradeBoxContent = null;
+    gangMemberUpgradeBoxFilter = null;
+    gangMemberUpgradeBoxElements = null;
+}
+
+
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 51)))
+
+/***/ }),
+/* 42 */
+/*!*****************************************!*\
+  !*** ./utils/helpers/exceptionAlert.js ***!
+  \*****************************************/
+/*! exports provided: exceptionAlert */
+/*! exports used: exceptionAlert */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return exceptionAlert; });
+/* harmony import */ var _DialogBox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../DialogBox */ 8);
+
+
+function exceptionAlert(e) {
+    Object(_DialogBox__WEBPACK_IMPORTED_MODULE_0__["dialogBoxCreate"])("Caught an exception: " + e + "<br><br>" +
+                    "Filename: " + (e.fileName || "UNKNOWN FILE NAME") + "<br><br>" +
+                    "Line Number: " + (e.lineNumber || "UNKNOWN LINE NUMBER") + "<br><br>" +
+                    "This is a bug, please report to game developer with this " +
+                    "message as well as details about how to reproduce the bug.<br><br>" +
+                    "If you want to be safe, I suggest refreshing the game WITHOUT saving so that your " +
+                    "safe doesn't get corrupted");
+}
+
+
+
+
+/***/ }),
+/* 43 */
+/*!************************************!*\
+  !*** ./utils/helpers/addOffset.ts ***!
+  \************************************/
+/*! no static exports found */
+/*! exports used: addOffset */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Adds a random offset to a number within a certain percentage
+ * @example
+ * // Returns between 95-105
+ * addOffset(100, 5);
+ * @example
+ * // Returns between 63-77
+ * addOffSet(70, 10);
+ * @param midpoint The number to be the midpoint of the offset range
+ * @param percentage The percentage (in a range of 0-100) to offset
+ */
+function addOffset(midpoint, percentage) {
+    const maxPercent = 100;
+    if (percentage < 0 || percentage > maxPercent) {
+        return midpoint;
+    }
+    const offset = midpoint * (percentage / maxPercent);
+    // Double the range to account for both sides of the midpoint.
+    // tslint:disable-next-line:no-magic-numbers
+    return midpoint + ((Math.random() * (offset * 2)) - offset);
+}
+exports.addOffset = addOffset;
+
+
+/***/ }),
+/* 44 */
 /*!*********************************************!*\
   !*** ./utils/uiHelpers/appendLineBreaks.ts ***!
   \*********************************************/
@@ -37365,7 +36767,7 @@ exports.appendLineBreaks = appendLineBreaks;
 
 
 /***/ }),
-/* 46 */
+/* 45 */
 /*!************************!*\
   !*** ./src/RedPill.js ***!
   \************************/
@@ -37380,7 +36782,7 @@ exports.appendLineBreaks = appendLineBreaks;
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./engine */ 6);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Prestige */ 64);
-/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SourceFile */ 47);
+/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SourceFile */ 46);
 /* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Terminal */ 25);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 13);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__);
@@ -37720,7 +37122,7 @@ function createBitNodeYesNoEventListeners(newBitNode, destroyedBitNode, flume=fa
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 51)))
 
 /***/ }),
-/* 47 */
+/* 46 */
 /*!***************************!*\
   !*** ./src/SourceFile.js ***!
   \***************************/
@@ -37982,6 +37384,705 @@ function applySourceFile(srcFile) {
 
 
 /***/ }),
+/* 47 */
+/*!****************************!*\
+  !*** ./src/HacknetNode.js ***!
+  \****************************/
+/*! exports provided: HacknetNode, displayHacknetNodesContent, getCostOfNextHacknetNode, getHacknetNode, getMaxNumberLevelUpgrades, hacknetNodesInit, processAllHacknetNodeEarnings, purchaseHacknet, updateHacknetNodesContent, updateHacknetNodesMultiplierButtons, updateTotalHacknetProduction */
+/*! exports used: HacknetNode, displayHacknetNodesContent, getCostOfNextHacknetNode, processAllHacknetNodeEarnings, purchaseHacknet, updateHacknetNodesContent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HacknetNode; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return displayHacknetNodesContent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return getCostOfNextHacknetNode; });
+/* unused harmony export getHacknetNode */
+/* unused harmony export getMaxNumberLevelUpgrades */
+/* unused harmony export hacknetNodesInit */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return processAllHacknetNodeEarnings; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return purchaseHacknet; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return updateHacknetNodesContent; });
+/* unused harmony export updateHacknetNodesMultiplierButtons */
+/* unused harmony export updateTotalHacknetProduction */
+/* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNode */ 16);
+/* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Constants */ 2);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 6);
+/* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./InteractiveTutorial */ 28);
+/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Player */ 0);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 13);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/JSONReviver */ 10);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 3);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 1);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/uiHelpers/getElementById */ 53);
+/* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__);
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * Overwrites the inner text of the specified HTML element if it is different from what currently exists.
+ * @param {string} elementId The HTML ID to find the first instance of.
+ * @param {string} text The inner text that should be set.
+ */
+function updateText(elementId, text) {
+    var el = Object(_utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__["getElementById"])(elementId);
+    if (el.innerText != text) {
+        el.innerText = text;
+    }
+};
+
+/* HacknetNode.js */
+function hacknetNodesInit() {
+    var performMapping = function(x) {
+        Object(_utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__["getElementById"])("hacknet-nodes-" + x.id + "-multiplier")
+            .addEventListener("click", function() {
+                hacknetNodePurchaseMultiplier = x.multiplier;
+                updateHacknetNodesMultiplierButtons();
+                updateHacknetNodesContent();
+                return false;
+            });
+    };
+
+    var mappings = [
+        { id: "1x", multiplier: 1 },
+        { id: "5x", multiplier: 5 },
+        { id: "10x", multiplier: 10 },
+        { id: "max", multiplier: 0 }
+    ];
+    for (var elem of mappings) {
+        // Encapsulate in a function so that the appropriate scope is kept in the click handler.
+        performMapping(elem);
+    }
+}
+
+document.addEventListener("DOMContentLoaded", hacknetNodesInit, false);
+
+function HacknetNode(name) {
+    this.level      = 1;
+    this.ram        = 1; //GB
+    this.cores      = 1;
+
+    this.name       = name;
+
+    this.totalMoneyGenerated    = 0;
+    this.onlineTimeSeconds      = 0;
+
+    this.moneyGainRatePerSecond = 0;
+}
+
+HacknetNode.prototype.updateMoneyGainRate = function() {
+    //How much extra $/s is gained per level
+    var gainPerLevel = _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodeMoneyGainPerLevel;
+
+    this.moneyGainRatePerSecond = (this.level * gainPerLevel) *
+                                  Math.pow(1.035, this.ram-1) *
+                                  ((this.cores + 5) / 6) *
+                                  _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknet_node_money_mult *
+                                  _BitNode__WEBPACK_IMPORTED_MODULE_0__[/* BitNodeMultipliers */ "a"].HacknetNodeMoney;
+    if (isNaN(this.moneyGainRatePerSecond)) {
+        this.moneyGainRatePerSecond = 0;
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_5__["dialogBoxCreate"])("Error in calculating Hacknet Node production. Please report to game developer");
+    }
+
+    updateTotalHacknetProduction();
+}
+
+HacknetNode.prototype.calculateLevelUpgradeCost = function(levels=1) {
+    levels = Math.round(levels);
+    if (isNaN(levels) || levels < 1) {
+        return 0;
+    }
+
+    var mult = _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodeUpgradeLevelMult;
+    var totalMultiplier = 0; //Summed
+    var currLevel = this.level;
+    for (var i = 0; i < levels; ++i) {
+        totalMultiplier += Math.pow(mult, currLevel);
+        ++currLevel;
+    }
+
+    return _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].BaseCostForHacknetNode / 2 * totalMultiplier * _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknet_node_level_cost_mult;
+}
+
+HacknetNode.prototype.purchaseLevelUpgrade = function(levels=1) {
+    levels = Math.round(levels);
+    var cost = this.calculateLevelUpgradeCost(levels);
+    if (isNaN(cost) || levels < 0) {
+        return false;
+    }
+
+    //If we're at max level, return false
+    if (this.level >= _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodeMaxLevel) {
+        return false;
+    }
+
+    //If the number of specified upgrades would exceed the max level, calculate
+    //the maximum number of upgrades and use that
+    if (this.level + levels > _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodeMaxLevel) {
+        var diff = Math.max(0, _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodeMaxLevel - this.level);
+        return this.purchaseLevelUpgrade(diff);
+    }
+
+    if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.lt(cost)) {
+        return false;
+    }
+
+    _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].loseMoney(cost);
+    this.level = Math.round(this.level + levels); //Just in case of floating point imprecision
+    this.updateMoneyGainRate();
+    return true;
+}
+
+HacknetNode.prototype.calculateRamUpgradeCost = function(levels=1) {
+    levels = Math.round(levels);
+    if (isNaN(levels) || levels < 1) {
+        return 0;
+    }
+
+    let totalCost = 0;
+    let numUpgrades = Math.round(Math.log2(this.ram));
+    let currentRam = this.ram;
+
+    for (let i = 0; i < levels; ++i) {
+        let baseCost = currentRam * _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].BaseCostFor1GBOfRamHacknetNode;
+        let mult = Math.pow(_Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodeUpgradeRamMult, numUpgrades);
+
+        totalCost += (baseCost * mult);
+
+        currentRam *= 2;
+        ++numUpgrades;
+    }
+
+    totalCost *= _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknet_node_ram_cost_mult
+    return totalCost;
+}
+
+HacknetNode.prototype.purchaseRamUpgrade = function(levels=1) {
+    levels = Math.round(levels);
+    var cost = this.calculateRamUpgradeCost(levels);
+    if (isNaN(cost) || levels < 0) {
+        return false;
+    }
+
+    //Fail if we're already at max
+    if (this.ram >= _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodeMaxRam) {
+        return false;
+    }
+
+    //If the number of specified upgrades would exceed the max RAM, calculate the
+    //max possible number of upgrades and use that
+    if (this.ram * Math.pow(2, levels) > _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodeMaxRam) {
+        var diff = Math.max(0, Math.log2(Math.round(_Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodeMaxRam / this.ram)));
+        return this.purchaseRamUpgrade(diff);
+    }
+
+    if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.lt(cost)) {
+        return false;
+    }
+
+    _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].loseMoney(cost);
+    for (let i = 0; i < levels; ++i) {
+        this.ram *= 2; //Ram is always doubled
+    }
+    this.ram = Math.round(this.ram); //Handle any floating point precision issues
+    this.updateMoneyGainRate();
+    return true;
+}
+
+HacknetNode.prototype.calculateCoreUpgradeCost = function(levels=1) {
+    levels = Math.round(levels);
+    if (isNaN(levels) || levels < 1) {
+        return 0;
+    }
+
+    const coreBaseCost  = _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].BaseCostForHacknetNodeCore;
+    const mult          = _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodeUpgradeCoreMult;
+    let totalCost       = 0;
+    let currentCores    = this.cores;
+    for (let i = 0; i < levels; ++i) {
+        totalCost += (coreBaseCost * Math.pow(mult, currentCores-1));
+        ++currentCores;
+    }
+
+    totalCost *= _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknet_node_core_cost_mult;
+
+    return totalCost;
+}
+
+HacknetNode.prototype.purchaseCoreUpgrade = function(levels=1) {
+    levels = Math.round(levels);
+    var cost = this.calculateCoreUpgradeCost(levels);
+    if (isNaN(cost) || levels < 0) {
+        return false;
+    }
+
+    //Fail if we're already at max
+    if (this.cores >= _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodeMaxCores) {
+        return false;
+    }
+
+    //If the specified number of upgrades would exceed the max Cores, calculate
+    //the max possible number of upgrades and use that
+    if (this.cores + levels > _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodeMaxCores) {
+        var diff = Math.max(0, _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodeMaxCores - this.cores);
+        return this.purchaseCoreUpgrade(diff);
+    }
+
+    if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.lt(cost)) {
+        return false;
+    }
+
+    _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].loseMoney(cost);
+    this.cores = Math.round(this.cores + levels); //Just in case of floating point imprecision
+    this.updateMoneyGainRate();
+    return true;
+}
+
+/* Saving and loading HackNets */
+HacknetNode.prototype.toJSON = function() {
+    return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_7__["Generic_toJSON"])("HacknetNode", this);
+}
+
+HacknetNode.fromJSON = function(value) {
+    return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_7__["Generic_fromJSON"])(HacknetNode, value.data);
+}
+
+_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_7__["Reviver"].constructors.HacknetNode = HacknetNode;
+
+function purchaseHacknet() {
+    /* INTERACTIVE TUTORIAL */
+    if (_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_3__[/* iTutorialIsRunning */ "b"]) {
+        if (_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_3__[/* currITutorialStep */ "a"] == _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_3__[/* iTutorialSteps */ "e"].HacknetNodesIntroduction) {
+            Object(_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_3__[/* iTutorialNextStep */ "c"])();
+        } else {
+            return;
+        }
+    }
+
+    /* END INTERACTIVE TUTORIAL */
+
+    var cost = getCostOfNextHacknetNode();
+    if (isNaN(cost)) {
+        throw new Error("Cost is NaN");
+    }
+
+    if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.lt(cost)) {
+        //dialogBoxCreate("You cannot afford to purchase a Hacknet Node!");
+        return false;
+    }
+
+    //Auto generate a name for the node for now...TODO
+    var numOwned = _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodes.length;
+    var name = "hacknet-node-" + numOwned;
+    var node = new HacknetNode(name);
+    node.updateMoneyGainRate();
+
+    _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].loseMoney(cost);
+    _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodes.push(node);
+
+    if (_engine__WEBPACK_IMPORTED_MODULE_2__["Engine"].currentPage === _engine__WEBPACK_IMPORTED_MODULE_2__["Engine"].Page.HacknetNodes) {
+        displayHacknetNodesContent();
+    }
+    updateTotalHacknetProduction();
+    return numOwned;
+}
+
+//Calculates the total production from all HacknetNodes
+function updateTotalHacknetProduction() {
+    var total = 0;
+    for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodes.length; ++i) {
+        total += _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodes[i].moneyGainRatePerSecond;
+    }
+    _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].totalHacknetNodeProduction = total;
+}
+
+function getCostOfNextHacknetNode() {
+    //Cost increases exponentially based on how many you own
+    var numOwned = _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodes.length;
+    var mult = _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodePurchaseNextMult;
+    return _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].BaseCostForHacknetNode * Math.pow(mult, numOwned) * _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknet_node_purchase_cost_mult;
+}
+
+var hacknetNodePurchaseMultiplier = 1;
+function updateHacknetNodesMultiplierButtons() {
+    var mult1x = document.getElementById("hacknet-nodes-1x-multiplier");
+    var mult5x = document.getElementById("hacknet-nodes-5x-multiplier");
+    var mult10x = document.getElementById("hacknet-nodes-10x-multiplier");
+    var multMax = document.getElementById("hacknet-nodes-max-multiplier");
+    mult1x.setAttribute("class", "a-link-button");
+    mult5x.setAttribute("class", "a-link-button");
+    mult10x.setAttribute("class", "a-link-button");
+    multMax.setAttribute("class", "a-link-button");
+    if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodes.length == 0) {
+        mult1x.setAttribute("class", "a-link-button-inactive");
+        mult5x.setAttribute("class", "a-link-button-inactive");
+        mult10x.setAttribute("class", "a-link-button-inactive");
+        multMax.setAttribute("class", "a-link-button-inactive");
+    } else if (hacknetNodePurchaseMultiplier == 1) {
+        mult1x.setAttribute("class", "a-link-button-inactive");
+    } else if (hacknetNodePurchaseMultiplier == 5) {
+        mult5x.setAttribute("class", "a-link-button-inactive");
+    } else if (hacknetNodePurchaseMultiplier == 10) {
+        mult10x.setAttribute("class", "a-link-button-inactive");
+    } else {
+        multMax.setAttribute("class", "a-link-button-inactive");
+    }
+}
+
+//Calculate the maximum number of times the Player can afford to upgrade a Hacknet Node
+function getMaxNumberLevelUpgrades(nodeObj) {
+    if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.lt(nodeObj.calculateLevelUpgradeCost(1))) {
+        return 0;
+    }
+
+    var min = 1;
+    var max = _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodeMaxLevel - 1;
+    var levelsToMax = _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodeMaxLevel - nodeObj.level;
+    if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.gt(nodeObj.calculateLevelUpgradeCost(levelsToMax))) {
+        return levelsToMax;
+    }
+
+    while (min <= max) {
+        var curr = (min + max) / 2 | 0;
+        if (curr != _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodeMaxLevel &&
+            _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.gt(nodeObj.calculateLevelUpgradeCost(curr)) &&
+            _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.lt(nodeObj.calculateLevelUpgradeCost(curr + 1))) {
+            return Math.min(levelsToMax, curr);
+        } else if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.lt(nodeObj.calculateLevelUpgradeCost(curr))) {
+            max = curr - 1;
+        } else if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.gt(nodeObj.calculateLevelUpgradeCost(curr))) {
+            min = curr + 1;
+        } else {
+            return Math.min(levelsToMax, curr);
+        }
+    }
+    return 0;
+}
+
+function getMaxNumberRamUpgrades(nodeObj) {
+    if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.lt(nodeObj.calculateRamUpgradeCost(1))) {
+        return 0;
+    }
+
+    const levelsToMax = Math.round(Math.log2(_Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodeMaxRam / nodeObj.ram));
+    if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.gt(nodeObj.calculateRamUpgradeCost(levelsToMax))) {
+        return levelsToMax;
+    }
+
+    //We'll just loop until we find the max
+    for (let i = levelsToMax-1; i >= 0; --i) {
+        if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.gt(nodeObj.calculateRamUpgradeCost(i))) {
+            return i;
+        }
+    }
+    return 0;
+}
+
+function getMaxNumberCoreUpgrades(nodeObj) {
+    if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.lt(nodeObj.calculateCoreUpgradeCost(1))) {
+        return 0;
+    }
+
+    var min = 1;
+    var max = _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodeMaxCores - 1;
+    const levelsToMax = _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodeMaxCores - nodeObj.cores;
+    if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.gt(nodeObj.calculateCoreUpgradeCost(levelsToMax))) {
+        return levelsToMax;
+    }
+
+    //Use a binary search to find the max possible number of upgrades
+    while (min <= max) {
+        let curr = (min + max) / 2 | 0;
+        if (curr != _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodeMaxCores &&
+            _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.gt(nodeObj.calculateCoreUpgradeCost(curr)) &&
+            _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.lt(nodeObj.calculateCoreUpgradeCost(curr + 1))) {
+            return Math.min(levelsToMax, curr);
+        } else if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.lt(nodeObj.calculateCoreUpgradeCost(curr))) {
+            max = curr - 1;
+        } else if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.gt(nodeObj.calculateCoreUpgradeCost(curr))) {
+            min = curr + 1;
+        } else {
+            return Math.min(levelsToMax, curr);
+        }
+    }
+    return 0;
+}
+
+//Creates Hacknet Node DOM elements when the page is opened
+function displayHacknetNodesContent() {
+    //Update Hacknet Nodes button
+    var newPurchaseButton = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__["clearEventListeners"])("hacknet-nodes-purchase-button");
+
+    newPurchaseButton.addEventListener("click", function() {
+        purchaseHacknet();
+        return false;
+    });
+
+    //Handle Purchase multiplier buttons
+    updateHacknetNodesMultiplierButtons();
+
+    //Remove all old hacknet Node DOM elements
+    var hacknetNodesList = document.getElementById("hacknet-nodes-list");
+    while (hacknetNodesList.firstChild) {
+        hacknetNodesList.removeChild(hacknetNodesList.firstChild);
+    }
+
+    //Then re-create them
+    for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodes.length; ++i) {
+        createHacknetNodeDomElement(_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodes[i]);
+    }
+
+    updateHacknetNodesContent();
+}
+
+//Update information on all Hacknet Node DOM elements
+function updateHacknetNodesContent() {
+    //Set purchase button to inactive if not enough money, and update its price display
+    var cost = getCostOfNextHacknetNode();
+    var purchaseButton = Object(_utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__["getElementById"])("hacknet-nodes-purchase-button");
+    var formattedCost = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(cost, 2);
+
+    updateText("hacknet-nodes-purchase-button", "Purchase Hacknet Node - $" + formattedCost);
+
+    if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.lt(cost)) {
+        purchaseButton.setAttribute("class", "a-link-button-inactive");
+    } else {
+        purchaseButton.setAttribute("class", "a-link-button");
+    }
+
+    //Update player's money
+    updateText("hacknet-nodes-player-money", "$" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.toNumber(), 2));
+    updateText("hacknet-nodes-total-production", "$" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].totalHacknetNodeProduction, 2) + " / second");
+
+    //Update information in each owned hacknet node
+    for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodes.length; ++i) {
+        updateHacknetNodeDomElement(_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodes[i]);
+    }
+}
+
+//Creates a single Hacknet Node DOM element
+function createHacknetNodeDomElement(nodeObj) {
+    var nodeName = nodeObj.name;
+
+    var nodeLevelContainer = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_8__["createElement"])("div", {
+        class: "hacknet-node-level-container row",
+        innerHTML: "<p>Level:</p><span class=\"text upgradable-info\" id=\"hacknet-node-level-" + nodeName + "\"></span>"
+    });
+
+    var nodeRamContainer = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_8__["createElement"])("div", {
+        class: "hacknet-node-ram-container row",
+        innerHTML: "<p>RAM:</p><span class=\"text upgradable-info\" id=\"hacknet-node-ram-" + nodeName + "\"></span>"
+    });
+
+    var nodeCoresContainer = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_8__["createElement"])("div", {
+        class: "hacknet-node-cores-container row",
+        innerHTML: "<p>Cores:</p><span class=\"text upgradable-info\" id=\"hacknet-node-cores-" + nodeName + "\"><span>"
+    })
+    var containingDiv = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_8__["createElement"])("div", {
+        class: "hacknet-node-container",
+        innerHTML: "<div class=\"hacknet-node-name-container row\">" +
+            "<p>Node name:</p>" +
+            "<span class=\"text\" id=\"hacknet-node-name-" + nodeName + "\"></span>" +
+            "</div>" +
+            "<div class=\"hacknet-node-production-container row\">" +
+            "<p>Production:</p>" +
+            "<span class=\"text\" id=\"hacknet-node-total-production-" + nodeName + "\"></span>" +
+            "<span class=\"text\" id=\"hacknet-node-production-rate-" + nodeName + "\"></span>" +
+            "</div>"
+    });
+    containingDiv.appendChild(nodeLevelContainer);
+    containingDiv.appendChild(nodeRamContainer);
+    containingDiv.appendChild(nodeCoresContainer);
+
+    var listItem = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_8__["createElement"])("li", {
+        class: "hacknet-node"
+    });
+    listItem.appendChild(containingDiv);
+
+    //Upgrade buttons
+    nodeLevelContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_8__["createElement"])("a", {
+        id: "hacknet-node-upgrade-level-" + nodeName,
+        class: "a-link-button-inactive",
+        clickListener: function() {
+            let numUpgrades = hacknetNodePurchaseMultiplier;
+            if (hacknetNodePurchaseMultiplier == 0) {
+                numUpgrades = getMaxNumberLevelUpgrades(nodeObj);
+            }
+            nodeObj.purchaseLevelUpgrade(numUpgrades);
+            updateHacknetNodesContent();
+            return false;
+        }
+    }));
+
+    nodeRamContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_8__["createElement"])("a", {
+        id: "hacknet-node-upgrade-ram-" + nodeName,
+        class: "a-link-button-inactive",
+        clickListener: function() {
+            let numUpgrades = hacknetNodePurchaseMultiplier;
+            if (hacknetNodePurchaseMultiplier == 0) {
+                numUpgrades = getMaxNumberRamUpgrades(nodeObj);
+            }
+            nodeObj.purchaseRamUpgrade(numUpgrades);
+            updateHacknetNodesContent();
+            return false;
+        }
+    }));
+
+    nodeCoresContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_8__["createElement"])("a", {
+        id: "hacknet-node-upgrade-core-" + nodeName,
+        class: "a-link-button-inactive",
+        clickListener: function() {
+            let numUpgrades = hacknetNodePurchaseMultiplier;
+            if (hacknetNodePurchaseMultiplier == 0) {
+                numUpgrades = getMaxNumberCoreUpgrades(nodeObj);
+            }
+            nodeObj.purchaseCoreUpgrade(numUpgrades);
+            updateHacknetNodesContent();
+            return false;
+        }
+    }));
+
+    document.getElementById("hacknet-nodes-list").appendChild(listItem);
+
+    //Set the text and stuff inside the DOM element
+    updateHacknetNodeDomElement(nodeObj);
+}
+
+//Updates information on a single hacknet node DOM element
+function updateHacknetNodeDomElement(nodeObj) {
+    var nodeName = nodeObj.name;
+
+    updateText("hacknet-node-name-" + nodeName, nodeName);
+    updateText("hacknet-node-total-production-" + nodeName, "$" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(nodeObj.totalMoneyGenerated, 2));
+    updateText("hacknet-node-production-rate-" + nodeName, "($" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(nodeObj.moneyGainRatePerSecond, 2) + " / second)");
+    updateText("hacknet-node-level-" + nodeName, nodeObj.level);
+    updateText("hacknet-node-ram-" + nodeName, nodeObj.ram + "GB");
+    updateText("hacknet-node-cores-" + nodeName, nodeObj.cores);
+
+    //Upgrade level
+    var upgradeLevelButton = Object(_utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__["getElementById"])("hacknet-node-upgrade-level-" + nodeName);
+
+    if (nodeObj.level >= _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodeMaxLevel) {
+        updateText("hacknet-node-upgrade-level-" + nodeName, "MAX LEVEL");
+        upgradeLevelButton.setAttribute("class", "a-link-button-inactive");
+    } else {
+        let multiplier = 0;
+        if (hacknetNodePurchaseMultiplier == 0) {
+            //Max
+            multiplier = getMaxNumberLevelUpgrades(nodeObj);
+        } else {
+            var levelsToMax = _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodeMaxLevel - nodeObj.level;
+            multiplier = Math.min(levelsToMax, hacknetNodePurchaseMultiplier);
+        }
+
+        var upgradeLevelCost = nodeObj.calculateLevelUpgradeCost(multiplier);
+        updateText("hacknet-node-upgrade-level-" + nodeName, "Upgrade x" + multiplier + " - $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(upgradeLevelCost, 2))
+        if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.lt(upgradeLevelCost)) {
+            upgradeLevelButton.setAttribute("class", "a-link-button-inactive");
+        } else {
+            upgradeLevelButton.setAttribute("class", "a-link-button");
+        }
+    }
+
+    //Upgrade RAM
+    var upgradeRamButton = Object(_utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__["getElementById"])("hacknet-node-upgrade-ram-" + nodeName);
+
+    if (nodeObj.ram >= _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodeMaxRam) {
+        updateText("hacknet-node-upgrade-ram-" + nodeName, "MAX RAM");
+        upgradeRamButton.setAttribute("class", "a-link-button-inactive");
+    } else {
+        let multiplier = 0;
+        if (hacknetNodePurchaseMultiplier == 0) {
+            multiplier = getMaxNumberRamUpgrades(nodeObj);
+        } else {
+            var levelsToMax = Math.round(Math.log2(_Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodeMaxRam / nodeObj.ram));
+            multiplier = Math.min(levelsToMax, hacknetNodePurchaseMultiplier);
+        }
+
+        var upgradeRamCost = nodeObj.calculateRamUpgradeCost(multiplier);
+        updateText("hacknet-node-upgrade-ram-" + nodeName, "Upgrade x" + multiplier + " - $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(upgradeRamCost, 2));
+        if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.lt(upgradeRamCost)) {
+            upgradeRamButton.setAttribute("class", "a-link-button-inactive");
+        } else {
+            upgradeRamButton.setAttribute("class", "a-link-button");
+        }
+    }
+
+    //Upgrade Cores
+    var upgradeCoreButton = Object(_utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__["getElementById"])("hacknet-node-upgrade-core-" + nodeName);
+
+    if (nodeObj.cores >= _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodeMaxCores) {
+        updateText("hacknet-node-upgrade-core-" + nodeName, "MAX CORES");
+        upgradeCoreButton.setAttribute("class", "a-link-button-inactive");
+    } else {
+        let multiplier = 0;
+        if (hacknetNodePurchaseMultiplier == 0) {
+            multiplier = getMaxNumberCoreUpgrades(nodeObj);
+        } else {
+            var levelsToMax = _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].HacknetNodeMaxCores - nodeObj.cores;
+            multiplier = Math.min(levelsToMax, hacknetNodePurchaseMultiplier);
+        }
+        var upgradeCoreCost = nodeObj.calculateCoreUpgradeCost(multiplier);
+        updateText("hacknet-node-upgrade-core-" + nodeName, "Upgrade x" + multiplier + " - $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(upgradeCoreCost, 2));
+        if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.lt(upgradeCoreCost)) {
+            upgradeCoreButton.setAttribute("class", "a-link-button-inactive");
+        } else {
+            upgradeCoreButton.setAttribute("class", "a-link-button");
+        }
+    }
+}
+
+
+function processAllHacknetNodeEarnings(numCycles) {
+    var total = 0;
+    for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodes.length; ++i) {
+        total += processSingleHacknetNodeEarnings(numCycles, _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodes[i]);
+    }
+
+    return total;
+}
+
+function processSingleHacknetNodeEarnings(numCycles, nodeObj) {
+    var cyclesPerSecond = 1000 / _engine__WEBPACK_IMPORTED_MODULE_2__["Engine"]._idleSpeed;
+    var earningPerCycle = nodeObj.moneyGainRatePerSecond / cyclesPerSecond;
+    if (isNaN(earningPerCycle)) {
+        console.error("Hacknet Node '" + nodeObj.name + "' Calculated earnings is NaN");
+        earningPerCycle = 0;
+    }
+
+    var totalEarnings = numCycles * earningPerCycle;
+    nodeObj.totalMoneyGenerated += totalEarnings;
+    nodeObj.onlineTimeSeconds += (numCycles * (_engine__WEBPACK_IMPORTED_MODULE_2__["Engine"]._idleSpeed / 1000));
+    _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gainMoney(totalEarnings);
+    return totalEarnings;
+}
+
+function getHacknetNode(name) {
+    for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodes.length; ++i) {
+        if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodes[i].name == name) {
+            return _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacknetNodes[i];
+        }
+    }
+
+    return null;
+}
+
+
+
+
+/***/ }),
 /* 48 */
 /*!********************************!*\
   !*** ./src/ActiveScriptsUI.js ***!
@@ -38001,11 +38102,11 @@ function applySourceFile(srcFile) {
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
 /* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 57);
 /* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 39);
+/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 40);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 3);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 41);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 42);
 /* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/LogBox */ 59);
 /* harmony import */ var numeral_min_numeral_min__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! numeral/min/numeral.min */ 15);
 /* harmony import */ var numeral_min_numeral_min__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(numeral_min_numeral_min__WEBPACK_IMPORTED_MODULE_10__);
@@ -43548,9 +43649,9 @@ NetscriptPort.prototype.clear = function() {
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Constants */ 2);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./engine */ 6);
 /* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Faction */ 12);
-/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Fconf */ 37);
-/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Gang */ 40);
-/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./HacknetNode */ 44);
+/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Fconf */ 38);
+/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Gang */ 41);
+/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./HacknetNode */ 47);
 /* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Message */ 33);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Script */ 30);
@@ -43799,8 +43900,6 @@ function loadGame(saveString) {
         }
     }
 
-    //Re-initialize Hacknet Node Wrappers
-    Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_7__[/* createPlayerHacknetNodeWrappers */ "b"])();
     return true;
 }
 
@@ -44017,9 +44116,6 @@ function loadImportedGame(saveObj, saveString) {
         }
     }
 
-    //Re-initialize Hacknet Node Wrappers
-    Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_7__[/* createPlayerHacknetNodeWrappers */ "b"])();
-
     var popupId = "import-game-restart-game-notice";
     var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_19__["createElement"])("p", {
         innerText:"Imported game! I would suggest saving the game and then reloading the page " +
@@ -44065,7 +44161,7 @@ function loadImportedGame(saveObj, saveString) {
     }
 
     //Hacknet Nodes offline progress
-    var offlineProductionFromHacknetNodes = Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_7__[/* processAllHacknetNodeEarnings */ "e"])(numCyclesOffline);
+    var offlineProductionFromHacknetNodes = Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_7__[/* processAllHacknetNodeEarnings */ "d"])(numCyclesOffline);
 
     //Passive faction rep gain offline
     Object(_Faction__WEBPACK_IMPORTED_MODULE_4__[/* processPassiveFactionRepGain */ "j"])(numCyclesOffline);
@@ -44286,7 +44382,7 @@ exports.clearObject = clearObject;
 /* harmony import */ var _src_NetscriptWorker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/NetscriptWorker */ 23);
 /* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./uiHelpers/clearEventListeners */ 13);
 /* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _helpers_arrayToString__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers/arrayToString */ 39);
+/* harmony import */ var _helpers_arrayToString__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers/arrayToString */ 40);
 /* harmony import */ var _helpers_arrayToString__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_2__);
 
 
@@ -45051,7 +45147,7 @@ exports.isValidIPAddress = isValidIPAddress;
 /* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./CreateProgram */ 21);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./engine */ 6);
 /* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Faction */ 12);
-/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Gang */ 40);
+/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Gang */ 41);
 /* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Location */ 4);
 /* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Message */ 33);
 /* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./NetscriptFunctions */ 34);
@@ -45069,7 +45165,7 @@ exports.isValidIPAddress = isValidIPAddress;
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 36);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 41);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 42);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/YesNoBox */ 14);
 
 
@@ -45519,7 +45615,7 @@ exports.getRandomByte = getRandomByte;
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 3);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 41);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 42);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/helpers/isString */ 32);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_4__);
 
@@ -45867,7 +45963,7 @@ exports.HelpTexts = {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Environment; });
-/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HacknetNode */ 44);
+/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HacknetNode */ 47);
 /* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NetscriptFunctions */ 34);
 /* harmony import */ var _NetscriptPort__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NetscriptPort */ 55);
 
@@ -46345,7 +46441,7 @@ exports.FactionInfos = {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Interpreter; });
-/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/acorn */ 43);
+/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/acorn */ 37);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_0__);
 
 /**
@@ -51249,8 +51345,8 @@ let NetscriptFunctions =
     "getServerGrowth|getServerSecurityLevel|getServerBaseSecurityLevel|"       +
     "getServerMinSecurityLevel|"                                               +
     "getServerRequiredHackingLevel|getServerNumPortsRequired|getServerRam|"    +
-    "serverExists|fileExists|isRunning|getNextHacknetNodeCost|"                +
-    "purchaseHacknetNode|deleteServer|getPurchasedServers|"                    +
+    "serverExists|fileExists|isRunning|"                +
+    "deleteServer|getPurchasedServers|"                    +
     "purchaseServer|round|write|read|peek|clear|rm|getPortHandle|"             +
     "scriptRunning|scriptKill|getScriptName|getScriptRam|"                     +
     "getHackTime|getGrowTime|getWeakenTime|getScriptIncome|getScriptExpGain|"  +
@@ -51263,10 +51359,13 @@ let NetscriptFunctions =
     "createProgram|commitCrime|getCrimeChance|getOwnedAugmentations|"          +
     "getAugmentationsFromFaction|"                                             +
     "getAugmentationCost|purchaseAugmentation|"                                +
-    "installAugmentations|hacknetnodes|upgradeLevel|upgradeRam|upgradeCore|"   +
-    "getLevelUpgradeCost|getRamUpgradeCost|getCoreUpgradeCost|"                +
+    "installAugmentations|"   +
     "getStockPrice|getStockPosition|buyStock|sellStock|shortStock|sellShort|"  +
     "placeOrder|cancelOrder|"                                                  +
+    //Hacknet Node API
+    "hacknet|numNodes|purchaseNode|getPurchaseNodeCost|getNodeStats|"          +
+    "upgradeLevel|upgradeRam|upgradeCore|getLevelUpgradeCost|"                 +
+    "getRamUpgradeCost|getCoreUpgradeCost|"                                    +
 
     //Bladeburner functions
     "bladeburner|getContractNames|getOperationNames|getBlackOpNames|"          +
@@ -52044,8 +52143,7 @@ exports.Mode = Mode;
 /* 153 */,
 /* 154 */,
 /* 155 */,
-/* 156 */,
-/* 157 */
+/* 156 */
 /*!**********************!*\
   !*** util (ignored) ***!
   \**********************/
@@ -52056,7 +52154,7 @@ exports.Mode = Mode;
 /* (ignored) */
 
 /***/ }),
-/* 158 */
+/* 157 */
 /*!**********************!*\
   !*** util (ignored) ***!
   \**********************/

@@ -3259,20 +3259,38 @@ Bladeburner.prototype.getActionIdFromTypeAndName = function(type="", name="") {
         switch (convertedName) {
             case "training":
                 action.type = ActionTypes["Training"];
+                action.name = "Training";
                 break;
             case "recruitment":
             case "recruit":
                 action.type = ActionTypes["Recruitment"];
+                action.name = "Recruitment";
                 break;
             case "field analysis":
             case "fieldanalysis":
                 action.type = ActionTypes["Field Analysis"];
+                action.name = "Field Analysis";
                 break;
             default:
                 return null;
         }
         return action;
     }
+}
+
+Bladeburner.prototype.getTypeAndNameFromActionId = function(actionId) {
+    var res = {};
+    let types = Object.keys(ActionTypes);
+    for (let i = 0; i < types.length; ++i) {
+        if (actionId.type === ActionTypes[types[i]]) {
+            res.type = types[i];
+            break;
+        }
+    }
+    if (res.type == null) {res.type = "Idle";}
+
+    res.name = actionId.name != null ? actionId.name : "Idle";
+    return res;
 }
 
 Bladeburner.prototype.getContractNamesNetscriptFn = function() {
@@ -3424,9 +3442,7 @@ Bladeburner.prototype.getSkillLevelNetscriptFn = function(skillName, workerScrip
                        skillName + ". Note that the name of the skill is case-sensitive";
 
     if (skillName === "") {
-        //If skill name isn't specified, return an object with all of the player's skill levels
-        let copy = Object.assign({}, this.Skills);
-        return copy;
+        return -1;
     }
 
     if (!Skills.hasOwnProperty(skillName)) {

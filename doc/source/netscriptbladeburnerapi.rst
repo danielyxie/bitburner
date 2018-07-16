@@ -110,6 +110,21 @@ stopBladeburnerAction
 
     Stops the current Bladeburner action
 
+getCurrentAction
+----------------
+
+.. js:function:: getCurrentAction()
+
+    Returns an object that represents the player's current Bladeburner action::
+
+        {
+            type: Type of Action
+            name: Name of Action
+        }
+
+    If the player is not performing an action, the function will return an object
+    with the 'type' property set to "Idle".
+
 getActionTime
 -------------
 
@@ -162,21 +177,9 @@ getSkillLevel
 
 .. js:function:: getSkillLevel(skillName="")
 
-    :param string skillName: Optional name of Skill. Empty string by default
+    :param string skillName: Name of skill
 
-    If no argument or an empty string is passed in, this function returns
-    an object with your level for all Bladeburner Skills (only for skills that
-    have at least one level). In the object, the name of the Bladeburner Skills
-    are the keys and your skill levels are the values. For example::
-
-        {
-            "Blade's Intuition":    10,
-            "Cloak":                5,
-            "Evasive System":       6
-        }
-
-    If the name of a skill is passed in as an argument, then this function
-    returns your level in the specified skill.
+    This function returns your level in the specified skill.
 
     The function returns -1 if an invalid skill name is passed in
 

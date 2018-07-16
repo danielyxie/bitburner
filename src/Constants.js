@@ -64,8 +64,7 @@ let CONSTANTS = {
     ScriptGetServerRamCost:         0.1,
     ScriptFileExistsRamCost:        0.1,
     ScriptIsRunningRamCost:         0.1,
-    ScriptPurchaseHacknetRamCost:   1.5,
-    ScriptHacknetNodesRamCost:      4.0, //Base cost for accessing hacknet nodes array
+    ScriptHacknetNodesRamCost:      4.0, //Base cost for accessing Hacknet Node API
     ScriptHNUpgLevelRamCost:        0.4,
     ScriptHNUpgRamRamCost:          0.6,
     ScriptHNUpgCoreRamCost:         0.8,
@@ -488,8 +487,10 @@ let CONSTANTS = {
 
     LatestUpdate:
     "v0.40.0<br>"  +
+    "* Added getCurrentAction() to Bladeburner API<br>" +
+    "* getSkillLevel() in Bladeburner API now returns an error if no argument is passed in (as opposed to an object with all skill levels). This may break scripts<br>" +
     "* Minimum Netscript execution time reduced from 15ms to 10ms (configurable in Options)<br>" +
-    "* HP is now reset (restored) when Augmenting<br>" + 
+    "* HP is now reset (restored) when Augmenting<br>" +
     "* Bug Fix: Infiltration buttons can no longer be clicked through NetscriptJS<br>"
 }
 

@@ -166,9 +166,64 @@ function NetscriptFunctions(workerScript) {
         }
     };
 
+    //Utility function to get Hacknet Node object
+    var getHacknetNode = function(i) {
+        if (isNaN(i)) {
+            throw makeRuntimeRejectMsg(workerScript, "Invalid index specified for Hacknet Node: " + i);
+        }
+        if (i < 0 || i >= Player.hacknetNodes.length) {
+            throw makeRuntimeRejectMsg(workerScript, "Index specified for Hacknet Node is out-of-bounds: " + i);
+        }
+        return Player.hacknetNodes[i];
+    }
+
     return {
-        hacknetnodes : function() {
-            return Player.hacknetNodeWrappers;
+        hacknet : {
+            numNodes : function() {
+                return Player.hacknetNodes.length;
+            },
+            purchaseNode : function() {
+                return purchaseHacknet();
+            },
+            getPurchaseNodeCost : function() {
+                return getCostOfNextHacknetNode();
+            },
+            getNodeStats : function(i) {
+                var node = getHacknetNode(i);
+                return {
+                    name:               node.name,
+                    level:              node.level,
+                    ram:                node.ram,
+                    cores:              node.cores,
+                    production:         node.moneyGainRatePerSecond,
+                    timeOnline:         node.onlineTimeSeconds,
+                    totalProduction:    node.totalMoneyGenerated,
+                };
+            },
+            upgradeLevel : function(i, n) {
+                var node = getHacknetNode(i);
+                return node.purchaseLevelUpgrade(n);
+            },
+            upgradeRam : function(i, n) {
+                var node = getHacknetNode(i);
+                return node.purchaseRamUpgrade(n);
+            },
+            upgradeCore : function(i, n) {
+                var node = getHacknetNode(i);
+                return node.purchaseCoreUpgrade(n);
+            },
+            getLevelUpgradeCost : function(i, n) {
+                var node = getHacknetNode(i);
+                return node.calculateLevelUpgradeCost(n);
+            },
+            getRamUpgradeCost : function(i, n) {
+                var node = getHacknetNode(i);
+                return node.calculateRamUpgradeCost(n);
+            },
+            getCoreUpgradeCost : function(i, n) {
+                var node = getHacknetNode(i);
+                return node.calculateCoreUpgradeCost(n);
+            }
         },
         sprintf : sprintf,
         vsprintf: vsprintf,
@@ -1272,21 +1327,6 @@ function NetscriptFunctions(workerScript) {
                 argsForTargetScript.push(arguments[i]);
             }
             return (findRunningScript(filename, argsForTargetScript, server) != null);
-        },
-        getNextHacknetNodeCost : function() {
-            if (workerScript.checkingRam) {
-                return updateStaticRam("getNextHacknetNodeCost", CONSTANTS.ScriptPurchaseHacknetRamCost);
-            }
-            updateDynamicRam("getNextHacknetNodeCost", CONSTANTS.ScriptPurchaseHacknetRamCost);
-            return getCostOfNextHacknetNode();
-        },
-
-        purchaseHacknetNode : function() {
-            if (workerScript.checkingRam) {
-                return updateStaticRam("purchaseHacknetNode", CONSTANTS.ScriptPurchaseHacknetRamCost);
-            }
-            updateDynamicRam("purchaseHacknetNode", CONSTANTS.ScriptPurchaseHacknetRamCost);
-            return purchaseHacknet();
         },
         getStockPrice : function(symbol) {
             if (workerScript.checkingRam) {
@@ -3259,9 +3299,9 @@ function NetscriptFunctions(workerScript) {
                 if (workerScript.checkingRam) {
                     return updateStaticRam("getCurrentAction", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 4);
                 }
-                updateDynamicRam("getCurrentAction", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 2);
+                updateDynamicRam("getCurrentAction", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 4);
                 if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
-                    return Player.bladeburner.resetAction();
+                    return Player.bladeburner.getTypeAndNameFromActionId(Player.bladeburner.action);
                 }
                 throw makeRuntimeRejectMsg(workerScript, "getCurrentAction() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
