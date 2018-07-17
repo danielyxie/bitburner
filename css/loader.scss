@@ -1,4 +1,5 @@
 @import "mixins";
+@import "reset";
 
 @include keyframes(LOADERSPINNER) {
     0% {
@@ -26,13 +27,6 @@
         opacity: 1.0;
         #{$browser}transform: translate(-50%, -50%) scale(1.0);
     }
-}
-
-*, *:before, *:after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    vertical-align: top;
 }
 
 .loaderoverlay {
@@ -99,14 +93,4 @@
         top: 50%;
         left: 50%;
     }
-}
-
-button[type="button"] {
-    @include transform(translateX(-50%));
-
-    padding: 0.5rem 1rem;
-    position: absolute;
-    z-index: 1;
-    bottom: 10px;
-    left: 50%;
 }
