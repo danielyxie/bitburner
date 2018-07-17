@@ -1,11 +1,13 @@
 @import "theme";
 
-#bladeburner-container p,
-#bladeburner-container pre,
-#bladeburner-container a,
-#bladeburner-container div,
-#bladeburner-container td {
-    font-size: $defaultFontSize * 0.8125;
+#bladeburner-container {
+    a,
+    div,
+    p,
+    pre,
+    td {
+        font-size: $defaultFontSize * 0.8125;
+    }
 }
 
 .bladeburner-action {
@@ -13,10 +15,10 @@
     margin: 7px;
     padding: 7px;
     white-space: pre-wrap;
-}
 
-.bladeburner-action pre {
-    white-space: pre-wrap;
+    pre {
+        white-space: pre-wrap;
+    }
 }
 
 /* Whatever action is currently active */
@@ -25,25 +27,29 @@
 }
 
 /* Action & Skills panel navigation button */
-.bladeburner-nav-button {
+%bladburner-nav-button {
     border: 1px solid #fff;
-    color: #fff;
-    padding: 2px;
     margin: 2px;
+    padding: 2px;
 }
 
-.bladeburner-nav-button:hover {
-    background-color: #3d4044;
+.bladeburner-nav-button {
+    color: #fff;
+
+    @extend %bladburner-nav-button;
+
+    &:hover {
+        background-color: #3d4044;
+    }
 }
 
 .bladeburner-nav-button-inactive {
-    border: 1px solid #fff;
-    padding: 2px;
-    margin: 2px;
     text-decoration: none;
     background-color: #555;
     cursor: default;
     pointer-events: none;
+
+    @extend %bladburner-nav-button;
 }
 
 /* Bladeburner Console */

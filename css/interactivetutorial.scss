@@ -18,10 +18,10 @@
     overflow: auto; /* Enable scroll if needed */
     background-color: #444; /* Fallback color */
     color: #fff;
-}
 
-#interactive-tutorial-container > strong {
-    background-color: #444;
+    > strong {
+        background-color: #444;
+    }
 }
 
 #interactive-tutorial-text {
@@ -41,6 +41,13 @@
     font-size: $defaultFontSize * 1.25;
     font-weight: bold;
     background-color: #000;
+
+    &:hover,
+    &:focus {
+        color: #fff;
+        text-decoration: none;
+        cursor: pointer;
+    }
 }
 
 #interactive-tutorial-exit {
@@ -54,15 +61,4 @@
 
 #interactive-tutorial-next {
     float: right;
-}
-
-#interactive-tutorial-exit:hover,
-#interactive-tutorial-exit:focus,
-#interactive-tutorial-next:hover,
-#interactive-tutorial-next:focus,
-#interactive-tutorial-back:hover,
-#interactive-tutorial-back:focus {
-    color: #fff;
-    text-decoration: none;
-    cursor: pointer;
 }
