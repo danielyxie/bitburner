@@ -1,4 +1,6 @@
 @import "mixins";
+@import "theme";
+
 /* Pop-up boxes */
 .popup-box-container {
     display: none; /* Hidden by default */
@@ -25,7 +27,7 @@
 .popup-box-button-inactive {
     color: #aaa;
     float: right;
-    font-size: 16px;
+    font-size: $defaultFontSize;
     font-weight: bold;
     padding: 2px;
     margin: 6px;
@@ -80,7 +82,7 @@
 
     float: right;
     color: #aaa;
-    font-size: 20px;
+    font-size: $defaultFontSize * 1.25;
     font-weight: bold;
 }
 
@@ -160,7 +162,7 @@
     float: right;
     margin: 4px;
     padding: 4px;
-    font-size: 20px;
+    font-size: $defaultFontSize * 1.25;
     font-weight: bold;
 }
 

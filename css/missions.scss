@@ -1,4 +1,6 @@
 @import "mixins";
+@import "theme";
+
 /* css for Missions */
 
 /* Hacking missions */
@@ -33,7 +35,7 @@
 .hack-mission-node p {
     margin-top: 8px;
     color: #fff;
-    font-size: 12px;
+    font-size: $defaultFontSize * 0.75;
     text-align: center;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -80,7 +82,7 @@
     -moz-transform: skew(-20deg);
     -o-transform: skew(-20deg);
     color: #fff;
-    font-size: 12px;
+    font-size: $defaultFontSize * 0.75;
     margin-top: 8px;
     text-align: center;
     -webkit-user-select: none;
@@ -102,7 +104,7 @@
     -moz-transform: skew(20deg);
     -o-transform: skew(20deg);
     color: #fff;
-    font-size: 12px;
+    font-size: $defaultFontSize * 0.75;
     margin-top: 8px;
     text-align: center;
     -webkit-user-select: none;

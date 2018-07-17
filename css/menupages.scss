@@ -46,7 +46,7 @@
 }
 
 .ace_text-input {
-    font-size: 16px;
+    font-size: $defaultFontSize;
     background-color: transparent;
 }
 
@@ -129,7 +129,7 @@
     margin-top: 8px;
     margin-bottom: 8px;
     padding: 2px;
-    font-size: 12px;
+    font-size: $defaultFontSize * 0.75;
 }
 
 /* Active scripts */
@@ -151,7 +151,7 @@
 
 .active-scripts-server-header {
     background-color: #444;
-    font-size: 20px;
+    font-size: $defaultFontSize * 1.25;
     color: #fff;
     margin: 6px 6px 0 6px;
     padding: 6px;
@@ -173,7 +173,7 @@
 
 .active-scripts-server-header:after {
     content: '\02795'; /* "plus" sign (+) */
-    font-size: 13px;
+    font-size: $defaultFontSize * 0.8125;
     color: #fff;
     float: right;
     margin-left: 5px;
@@ -181,7 +181,7 @@
 
 .active-scripts-server-header.active:after {
     content: "\2796"; /* "minus" sign (-) */
-    font-size: 13px;
+    font-size: $defaultFontSize * 0.8125;
     color: #fff;
     float: right;
     margin-left: 5px;
@@ -224,7 +224,7 @@
 
 .active-scripts-script-header:after {
     content: '\02795'; /* "plus" sign (+) */
-    font-size: 13px;
+    font-size: $defaultFontSize * 0.8125;
     color: var(--my-font-color);
     float: right;
     margin-left: 5px;
@@ -232,7 +232,7 @@
 
 .active-scripts-script-header.active:after {
     content: "\2796"; /* "minus" sign (-) */
-    font-size: 13px;
+    font-size: $defaultFontSize * 0.8125;
     color: var(--my-font-color);
     float: right;
     margin-left: 5px;
@@ -261,7 +261,7 @@
     @include boxShadow(1px 1px 3px #000);
 
     color: #aaa;
-    font-size: 16px;
+    font-size: $defaultFontSize;
     font-weight: bold;
     margin: 4px;
     padding: 4px;
@@ -343,7 +343,7 @@
     display: inline-block;
     margin: 0 4px; /* Don't want the vertical margin/padding, just left & right */
     padding: 0 4px;
-    width: 48px; /* Four times font-size */
+    width: $defaultFontSize * 4;
 }
 
 .menu-page-text {

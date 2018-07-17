@@ -1,9 +1,11 @@
+@import "theme";
+
 #bladeburner-container p,
 #bladeburner-container pre,
 #bladeburner-container a,
 #bladeburner-container div,
 #bladeburner-container td {
-    font-size: 13px;
+    font-size: $defaultFontSize * 0.8125;
 }
 
 .bladeburner-action {
@@ -76,7 +78,7 @@
     margin: 0 !important;
     border: 0;
     background-color: var(--my-background-color);
-    font-size: 13px;
+    font-size: $defaultFontSize * 0.8125;
     outline: none;
     color: var(--my-font-color);
     flex: 1 1 auto;

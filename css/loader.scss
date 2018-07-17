@@ -1,5 +1,6 @@
 @import "mixins";
 @import "reset";
+@import "theme";
 
 @include keyframes(LOADERSPINNER) {
     0% {
@@ -86,7 +87,7 @@
 
         text-transform: uppercase;
         font-family: sans-serif;
-        font-size: 22px;
+        font-size: $defaultFontSize * 1.375;
         font-weight: 700;
         letter-spacing: 2px;
         position: absolute;

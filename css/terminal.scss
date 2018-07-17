@@ -1,3 +1,5 @@
+@import "theme";
+
 #terminal-container {
     position: fixed;
     margin-left: 10%;
@@ -12,7 +14,7 @@
     padding-left: 10px;
     height: auto;
     width: 70%;
-    font-size: 16px;
+    font-size: $defaultFontSize;
     overflow: auto;
     overflow-y: scroll;
     background-color: var(--my-background-color);
@@ -31,7 +33,7 @@
     margin: 0 !important;
     border: 0;
     background-color: var(--my-background-color);
-    font-size: 16px;
+    font-size: $defaultFontSize;
     outline: none;
     color: var(--my-font-color);
 }

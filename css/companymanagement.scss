@@ -1,9 +1,10 @@
 @import "mixins";
+@import "theme";
 
 #cmpy-mgmt-container p,
 #cmpy-mgmt-container a,
 #cmpy-mgmt-container div {
-    font-size: 13px;
+    font-size: $defaultFontSize * 0.8125;
 }
 
 /* Header tabs */
@@ -120,10 +121,14 @@
     margin: 2px;
     padding: 6px;
     border-radius: 25px;
-    font-size: "12px";
+    font-size: $defaultFontSize * 0.75;
     color: var(--my-font-color);
 }
 
 .cmpy-mgmt-upgrade-div:hover {
     background-color: #333;
+}
+
+.cmpy-mgmt-advertising-info {
+    font-size: $defaultFontSize * 0.75;
 }
