@@ -34,9 +34,9 @@
 }
 
 .bladeburner-nav-button {
-    color: #fff;
-
     @extend %bladburner-nav-button;
+
+    color: #fff;
 
     &:hover {
         background-color: #3d4044;
@@ -44,12 +44,12 @@
 }
 
 .bladeburner-nav-button-inactive {
+    @extend %bladburner-nav-button;
+
     text-decoration: none;
     background-color: #555;
     cursor: default;
     pointer-events: none;
-
-    @extend %bladburner-nav-button;
 }
 
 /* Bladeburner Console */
