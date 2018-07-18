@@ -7,7 +7,7 @@ import {Faction, Factions, factionExists,
 import {Locations}                                  from "./Location";
 import {Player}                                     from "./Player";
 import {hackWorldDaemon, redPillFlag}               from "./RedPill";
-import {KEY}                                        from "./Terminal";
+import {KEY}                                        from "../utils/helpers/keyCodes";
 
 import {createProgressBarText}                      from "../utils/helpers/createProgressBarText";
 import {dialogBoxCreate}                            from "../utils/DialogBox";

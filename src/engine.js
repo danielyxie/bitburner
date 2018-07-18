@@ -63,7 +63,8 @@ import {StockMarket, StockSymbols,
         initSymbolToStockMap, stockMarketCycle,
         updateStockPrices,
         displayStockMarketContent}              from "./StockMarket";
-import {Terminal, postNetburnerText, post, KEY} from "./Terminal";
+import {Terminal, postNetburnerText}            from "./Terminal";
+import {KEY}                                    from "../utils/helpers/keyCodes";
 
 // These should really be imported with the module that is presenting that UI, but because they very much depend on the
 // cascade order, we'll pull them all in here.

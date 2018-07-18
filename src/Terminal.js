@@ -35,6 +35,7 @@ import {TextFile, getTextFile}              from "./TextFile";
 
 import {containsAllStrings, longestCommonStart,
         formatNumber}                       from "../utils/StringHelperFunctions";
+import {KEY}                                from "../utils/helpers/keyCodes";
 import {addOffset}                          from "../utils/helpers/addOffset";
 import {isString}                           from "../utils/helpers/isString";
 import {arrayToString}                      from "../utils/helpers/arrayToString";
@@ -73,34 +74,6 @@ function updateTerminalScroll() {
 
 function postNetburnerText() {
 	post("Bitburner v" + CONSTANTS.Version);
-}
-
-
-//Key Codes
-var KEY = {
-    TAB:            9,
-    ENTER:          13,
-    CTRL:           17,
-    UPARROW:        38,
-    DOWNARROW:      40,
-    A:              65,
-    B:              66,
-    C:              67,
-    D:              68,
-    E:              69,
-    F:              70,
-    H:              72,
-    J:              74,
-    K:              75,
-    L:              76,
-    M:              77,
-    N:              78,
-    O:              79,
-    P:              80,
-    R:              82,
-    S:              83,
-    U:              85,
-    W:              87,
 }
 
 //Defines key commands in terminal
@@ -2084,4 +2057,4 @@ let Terminal = {
 	}
 };
 
-export {postNetburnerText, post, Terminal, KEY};
+export {postNetburnerText, post, Terminal};
