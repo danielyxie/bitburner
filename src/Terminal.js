@@ -44,33 +44,11 @@ import {logBoxCreate}                       from "../utils/LogBox";
 import {yesNoBoxCreate,
         yesNoBoxGetYesButton,
         yesNoBoxGetNoButton, yesNoBoxClose} from "../utils/YesNoBox";
+import {post, hackProgressBarPost,
+        hackProgressPost}                   from "./ui/postToTerminal";
 
 import * as JSZip from 'jszip';
 import * as FileSaver from 'file-saver';
-
-/* Write text to terminal */
-//If replace is true then spaces are replaced with "&nbsp;"
-function post(input) {
-    $("#terminal-input").before('<tr class="posted"><td class="terminal-line" style="color: var(--my-font-color); background-color: var(--my-background-color); white-space:pre-wrap;">' + input + '</td></tr>');
-	updateTerminalScroll();
-}
-
-//Same thing as post but the td cells have ids so they can be animated for the hack progress bar
-function hackProgressBarPost(input) {
-    $("#terminal-input").before('<tr class="posted"><td id="hack-progress-bar" style="color: var(--my-font-color); background-color: var(--my-background-color);">' + input + '</td></tr>');
-	updateTerminalScroll();
-}
-
-function hackProgressPost(input) {
-    $("#terminal-input").before('<tr class="posted"><td id="hack-progress" style="color: var(--my-font-color); background-color: var(--my-background-color);">' + input + '</td></tr>');
-	updateTerminalScroll();
-}
-
-//Scroll to the bottom of the terminal's 'text area'
-function updateTerminalScroll() {
-	var element = document.getElementById("terminal-container");
-	element.scrollTop = element.scrollHeight;
-}
 
 function postNetburnerText() {
 	post("Bitburner v" + CONSTANTS.Version);
@@ -2057,4 +2035,4 @@ let Terminal = {
 	}
 };
 
-export {postNetburnerText, post, Terminal};
+export {postNetburnerText, Terminal};

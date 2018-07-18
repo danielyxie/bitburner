@@ -35,7 +35,7 @@ import {StockMarket, StockSymbols, SymbolToStockMap, initStockSymbols,
         updateStockTicker, updateStockPlayerPosition,
         Stock, shortStock, sellShort, OrderTypes,
         PositionTypes, placeOrder, cancelOrder}     from "./StockMarket";
-import {post}                                       from "./Terminal";
+import {post}                                       from "./ui/postToTerminal";
 import {TextFile, getTextFile, createTextFile}      from "./TextFile";
 
 import {unknownBladeburnerActionErrorMessage,

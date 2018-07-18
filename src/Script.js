@@ -29,7 +29,7 @@ import {addWorkerScript,
 import {Player}                                 from "./Player";
 import {AllServers, processSingleServerGrowth}  from "./Server";
 import {Settings}                               from "./Settings";
-import {post}                                   from "./Terminal";
+import {post}                                   from "./ui/postToTerminal";
 import {TextFile}                               from "./TextFile";
 
 import {parse, Node}                            from "../utils/acorn";
