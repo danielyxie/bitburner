@@ -261,7 +261,7 @@ function purchaseHacknet() {
 
     if (Player.money.lt(cost)) {
         //dialogBoxCreate("You cannot afford to purchase a Hacknet Node!");
-        return false;
+        return -1;
     }
 
     //Auto generate a name for the node for now...TODO
