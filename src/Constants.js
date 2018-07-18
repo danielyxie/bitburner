@@ -487,10 +487,14 @@ let CONSTANTS = {
 
     LatestUpdate:
     "v0.40.0<br>"  +
+    "* Netscript 1.0 (NS1) now uses a fully-fledged ES5 Javascript Interpreter. This means many new features are now available in NS, and this also fixes several bugs.<br>" +
     "* Added getCurrentAction() to Bladeburner API<br>" +
+    "* Completely re-designed the Hacknet Node API<br>" +
     "* getSkillLevel() in Bladeburner API now returns an error if no argument is passed in (as opposed to an object with all skill levels). This may break scripts<br>" +
     "* Minimum Netscript execution time reduced from 15ms to 10ms (configurable in Options)<br>" +
     "* HP is now reset (restored) when Augmenting<br>" +
+    "* Source-File 6 now increases both the level and experience gain of all combat stats (it was only experience gain previously)<br>" + 
+    "* Reverted a previous change for Source-File 12. It's benefits are now multiplicative rather than additive<br>" +
     "* Bug Fix: Infiltration buttons can no longer be clicked through NetscriptJS<br>"
 }
 
