@@ -212,7 +212,10 @@ function loadGame(saveString) {
                     }
                 }
             }
-            if (ver != CONSTANTS.Version) {
+            if (window.location.href.toLowerCase().includes("bitburner-beta")) {
+                //Beta branch, always show changes
+                createBetaUpdateText();
+            } else if (ver != CONSTANTS.Version) {
                 createNewUpdateText();
             }
         } catch(e) {
@@ -583,6 +586,14 @@ BitburnerSaveObject.prototype.deleteGame = function(db) {
 
 function createNewUpdateText() {
     dialogBoxCreate("New update!<br>" +
+                    "Please report any bugs/issues through the github repository " +
+                    "or the Bitburner subreddit (reddit.com/r/bitburner).<br><br>" +
+                    CONSTANTS.LatestUpdate);
+}
+
+function createBetaUpdateText() {
+    dialogBoxCreate("You are playing on the beta environment! This branch of the game " +
+                    "features the latest developments in the game. The game may have bugs.<br>" +
                     "Please report any bugs/issues through the github repository " +
                     "or the Bitburner subreddit (reddit.com/r/bitburner).<br><br>" +
                     CONSTANTS.LatestUpdate);
