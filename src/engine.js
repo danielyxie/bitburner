@@ -1222,23 +1222,6 @@ let Engine = {
         }
     },
 
-    _prevTimeout: null,
-    createStatusText: function(txt) {
-        if (Engine._prevTimeout != null) {
-            clearTimeout(Engine._prevTimeout);
-            Engine._prevTimeout = null;
-        }
-        var statusText = document.getElementById("status-text")
-        statusText.style.display = "inline-block";
-        statusText.setAttribute("class", "status-text");
-        statusText.innerHTML = txt;
-        Engine._prevTimeout = setTimeout(function() {
-            statusText.style.display = "none";
-            statusText.removeAttribute("class");
-            statusText.innerHTML = "";
-        }, 3000);
-    },
-
     //Used when initializing a game
     //elems should be an array of all DOM elements under the header
     closeMainMenuHeader: function(elems) {

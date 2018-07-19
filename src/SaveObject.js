@@ -23,6 +23,7 @@ import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver";
 import {createElement}                          from "../utils/uiHelpers/createElement";
 import {createPopup}                            from "../utils/uiHelpers/createPopup";
+import {createStatusText}                       from "./ui/createStatusText";
 import {formatNumber}                           from "../utils/StringHelperFunctions";
 import {removeElementById}                      from "../utils/uiHelpers/removeElementById";
 
@@ -97,7 +98,7 @@ BitburnerSaveObject.prototype.saveGame = function(db) {
         //console.log("Saved game to LocalStorage!");
     } catch(e) {
         if (e.code == 22) {
-            Engine.createStatusText("Save failed for localStorage! Check console(F12)");
+            createStatusText("Save failed for localStorage! Check console(F12)");
             console.log("Failed to save game to localStorage because the size of the save file " +
                         "is too large. However, the game will still be saved to IndexedDb if your browser " +
                         "supports it. If you would like to save to localStorage as well, then " +
@@ -106,7 +107,7 @@ BitburnerSaveObject.prototype.saveGame = function(db) {
         }
     }
 
-    Engine.createStatusText("Game saved!");
+    createStatusText("Game saved!");
 }
 
 function loadGame(saveString) {
@@ -581,7 +582,7 @@ BitburnerSaveObject.prototype.deleteGame = function(db) {
     request.onerror = function(e) {
         console.log("Failed to delete save from indexedDb: " + e);
     }
-    Engine.createStatusText("Game deleted!");
+    createStatusText("Game deleted!");
 }
 
 function createNewUpdateText() {

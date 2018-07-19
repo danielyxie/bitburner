@@ -9,3 +9,8 @@ export type EqualityFunc<T> = (a: T, b: T) => boolean;
 export interface IMap<T> {
   [key: string]: T;
 }
+
+/**
+ * Performs some action, with no returned value.
+ */
+export type Action = () => void;

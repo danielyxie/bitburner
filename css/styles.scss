@@ -391,21 +391,18 @@ a:visited {
 @-webkit-keyframes status-text{
     from{
         opacity: 1;
-        top: 0;
     }
     to{
         opacity: 0;
-        top: 0;
     }
 }
 
 .status-text{
-    display: inline;
-    position: fixed;
-    top: 0;
-    -webkit-animation: status-text 3s 1;
-    background-color: transparent;
+    display: inline-block;
     height: 15%;
+    position: fixed;
+    z-index: 2;
+    -webkit-animation: status-text 3s 1;
 }
 
 #status-text-container {
@@ -413,14 +410,14 @@ a:visited {
 }
 
 #status-text {
-    font-size: $defaultFontSize * 1.25;
-    color: #fff;
-    right: 0;
-    bottom: 0;
-    padding: 4px;
-    margin-right: 14px;
     background-color: transparent;
-    z-index: 2;
+    font-size: $defaultFontSize * 1.25;
+    bottom: 0;
+    color: #fff;
+    margin-right: 14px;
+    padding: 4px;
+    right: 0;
+    top: 0;
     width: auto;
 }
 
