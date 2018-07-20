@@ -14,12 +14,17 @@ import {NetscriptPort}                      from "./NetscriptPort";
 import {AllServers}                         from "./Server";
 import {Settings}                           from "./Settings";
 
-import {parse}                              from "../utils/acorn";
+//TODO Maybe escodegen might be better?
+import {generate}                           from 'escodegen';
+
+import {parse, Node}                        from "../utils/acorn";
 import {dialogBoxCreate}                    from "../utils/DialogBox";
 import {compareArrays}                      from "../utils/helpers/compareArrays";
 import {arrayToString}                      from "../utils/helpers/arrayToString";
 import {roundToTwo}                         from "../utils/helpers/roundToTwo";
 import {isString}                           from "../utils/StringHelperFunctions";
+
+const walk  = require("acorn/dist/walk");
 
 function WorkerScript(runningScriptObj) {
 	this.name 			= runningScriptObj.filename;
@@ -160,6 +165,17 @@ function startNetscript1Script(workerScript) {
     var code = workerScript.code;
     workerScript.running = true;
 
+    //Process imports
+    var ast;
+    try {
+        ast = processNetscript1Imports(code, workerScript);
+    } catch(e) {
+        dialogBoxCreate("Error processing Imports in " + workerScript.name + ":<br>" +  e);
+        workerScript.env.stopFlag = true;
+        workerScript.running = false;
+        return;
+    }
+
     var interpreterInitialization = function(int, scope) {
         //Add the Netscript environment
         var ns = NetscriptFunctions(workerScript);
@@ -209,7 +225,7 @@ function startNetscript1Script(workerScript) {
 
     var interpreter;
     try {
-        interpreter = new Interpreter(code, interpreterInitialization);
+        interpreter = new Interpreter(ast, interpreterInitialization);
     } catch(e) {
         dialogBoxCreate("Syntax ERROR in " + workerScript.name + ":<br>" +  e);
         workerScript.env.stopFlag = true;
@@ -240,8 +256,6 @@ function startNetscript1Script(workerScript) {
         try {
             runInterpreter();
         } catch(e) {
-            console.log("Caught in original");
-            console.log(e);
             if (isString(e)) {
                 workerScript.errorMessage = e;
                 return reject(workerScript);
@@ -252,8 +266,122 @@ function startNetscript1Script(workerScript) {
             }
         }
     });
+}
 
+/*  Since the JS Interpreter used for Netscript 1.0 only supports ES5, the keyword
+    'import' throws an error. However, since we want to support import funtionality
+    we'll implement it ourselves by parsing the Nodes in the AST out.
 
+    @param code - The script's code
+    @returns - ES5-compliant AST with properly imported functions
+*/
+function processNetscript1Imports(code, workerScript) {
+    //allowReserved prevents 'import' from throwing error in ES5
+    var ast = parse(code, {ecmaVersion:6, allowReserved:true, sourceType:"module"});
+
+    var server = workerScript.getServer();
+    if (server == null) {
+        throw new Error("Failed to find underlying Server object for script");
+    }
+
+    function getScript(scriptName) {
+        for (let i = 0; i < server.scripts.length; ++i) {
+            if (server.scripts[i].filename === scriptName) {
+                return server.scripts[i];
+            }
+        }
+        return null;
+    }
+
+    var generatedCode = ""; //Generated Javascript Code
+
+    //Walk over the tree and process ImportDeclaration nodes
+    walk.simple(ast, {
+        ImportDeclaration: (node) => {
+            let scriptName = node.source.value;
+            let script = getScript(scriptName);
+            if (script == null) {
+                throw new Error("'Import' failed due to invalid script: " + scriptName);
+            }
+            let scriptAst = parse(script.code, {ecmaVersion:5, allowReserved:true, sourceType:"module"});
+
+            if (node.specifiers.length === 1 && node.specifiers[0].type === "ImportNamespaceSpecifier") {
+                //import * as namespace from script
+                let namespace = node.specifiers[0].local.name;
+                let fnNames         = []; //Names only
+                let fnDeclarations  = []; //FunctionDeclaration Node objects
+                walk.simple(scriptAst, {
+                    FunctionDeclaration: (node) => {
+                        fnNames.push(node.id.name);
+                        fnDeclarations.push(node);
+                    }
+                });
+
+                //Now we have to generate the code that would create the namespace
+                generatedCode =
+                    "var " + namespace + ";\n" +
+                    "(function (namespace) {\n";
+
+                //Add the function declarations
+                fnDeclarations.forEach((fn) => {
+                    generatedCode += generate(fn);
+                    generatedCode += "\n";
+                });
+
+                //Add functions to namespace
+                fnNames.forEach((fnName) => {
+                    generatedCode += ("namespace." + fnName + " = " + fnName);
+                    generatedCode += "\n";
+                });
+
+                //Finish
+                generatedCode += (
+                    "})(" + namespace + " || " + "(" + namespace + " = {}));"
+                )
+            } else {
+                //import {...} from script
+
+                //Get array of all fns to import
+                let fnsToImport = [];
+                node.specifiers.forEach((e) => {
+                    fnsToImport.push(e.local.name);
+                });
+
+                //Walk through script and get FunctionDeclaration code for all specified fns
+                let fnDeclarations = [];
+                walk.simple(scriptAst, {
+                    FunctionDeclaration: (node) => {
+                        if (fnsToImport.includes(node.id.name)) {
+                            fnDeclarations.push(node);
+                        }
+                    }
+                });
+
+                //Convert FunctionDeclarations into code
+                fnDeclarations.forEach((fn) => {
+                    generatedCode += generate(fn);
+                    generatedCode += "\n";
+                });
+            }
+        }
+    });
+
+    //Remove ImportDeclarations from AST. These ImportDeclarations must be in top-level
+    if (ast.type !== "Program" || ast.body == null) {
+        throw new Error("Code could not be properly parsed");
+    }
+    for (let i = ast.body.length-1; i >= 0; --i) {
+        if (ast.body[i].type === "ImportDeclaration") {
+            ast.body.splice(i, 1);
+        }
+    }
+
+    //Convert the AST back into code
+    code = generate(ast);
+
+    //Add the imported code and re-generate in ES5 (JS Interpreter for NS1 only supports ES5);
+    code = generatedCode + code;
+    return parse(code, {ecmaVersion:5});
 }
 
 //Loop through workerScripts and run every script that is not currently running
