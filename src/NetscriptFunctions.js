@@ -1578,7 +1578,7 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("getPurchasedServerLimit", CONSTANTS.ScriptGetPurchasedServerLimit);
 
-            return CONSTANTS.PurchasedServerLimit
+            return CONSTANTS.PurchasedServerLimit;
         },
         getPurchasedServerMaxRam: function() {
             if (workerScript.checkingRam) {
@@ -1586,7 +1586,7 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("getPurchasedServerMaxRam", CONSTANTS.ScriptGetPurchasedServerMaxRam);
 
-            return CONSTANTS.PurchasedServerMaxRam
+            return CONSTANTS.PurchasedServerMaxRam;
         },
         purchaseServer : function(hostname, ram) {
             if (workerScript.checkingRam) {
