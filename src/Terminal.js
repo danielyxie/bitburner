@@ -192,7 +192,7 @@ $(document).keydown(function(event) {
 
         if (event.keyCode === KEY.TAB) {
             event.preventDefault();
-            
+
             //Autocomplete
             if (terminalInput == null) {return;}
             var input = terminalInput.value;
@@ -1253,7 +1253,7 @@ let Terminal = {
                         }
                     }
                 } else {
-                    post("Error: Invalid file. Only scripts (.script), text files (.txt), or .fconf can be edited with nano"); return;
+                    post("Error: Invalid file. Only scripts (.script, .ns, .js), text files (.txt), or .fconf can be edited with nano"); return;
                 }
                 Engine.loadScriptEditorContent(filename);
 				break;

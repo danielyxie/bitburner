@@ -487,7 +487,12 @@ let CONSTANTS = {
 
     LatestUpdate:
     "v0.40.0<br>"  +
-    "* Netscript 1.0 (NS1) now uses a fully-fledged ES5 Javascript Interpreter. This means many new features are now available in NS, and this also fixes several bugs.<br>" +
+    "* Netscript 1.0 (NS1) now uses a fully-fledged ES5 Javascript Interpreter. This means many new features are now available in NS1, and this also fixes several bugs." +
+    " However this also means any ES6+ features are no longer supported in NS1 <br>" +
+    "* When a server is hacked with a very large number of threads and left with no money, the server's security level " +
+    "now only increases by however many threads were needed to drain the server. For example, if you hack a server with " +
+    "5000 threads but it only needed 2000 threads to deplete the server's money, then the server's security will only increase " +
+    "as if you had hacked it with 2000 threads (change by hydroflame)<br>" + 
     "* Added getCurrentAction() to Bladeburner API<br>" +
     "* Completely re-designed the Hacknet Node API<br>" +
     "* getSkillLevel() in Bladeburner API now returns an error if no argument is passed in (as opposed to an object with all skill levels). This may break scripts<br>" +
@@ -495,7 +500,7 @@ let CONSTANTS = {
     "* HP is now reset (restored) when Augmenting<br>" +
     "* Source-File 6 now increases both the level and experience gain of all combat stats (it was only experience gain previously)<br>" +
     "* Reverted a previous change for Source-File 12. It's benefits are now multiplicative rather than additive<br>" +
-    "* Starting Infiltration security level for almost every location decreased by ~10%<br>" + 
+    "* Starting Infiltration security level for almost every location decreased by ~10%<br>" +
     "* Bug Fix: Infiltration buttons can no longer be clicked through NetscriptJS<br>"
 }
 
