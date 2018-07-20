@@ -71,6 +71,8 @@ let CONSTANTS = {
     ScriptGetStockRamCost:          2.0,
     ScriptBuySellStockRamCost:      2.5,
     ScriptPurchaseServerRamCost:    2.25,
+    ScriptGetPurchasedServerLimit:  0.05,
+    ScriptGetPurchasedServerMaxRam: 0.05,
     ScriptRoundRamCost:             0.05,
     ScriptReadWriteRamCost:         1.0,
     ScriptArbScriptRamCost:         1.0, //Functions that apply to all scripts regardless of args

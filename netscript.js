@@ -69,8 +69,9 @@ let NetscriptFunctions =
     "getServerGrowth|getServerSecurityLevel|getServerBaseSecurityLevel|"       +
     "getServerMinSecurityLevel|"                                               +
     "getServerRequiredHackingLevel|getServerNumPortsRequired|getServerRam|"    +
-    "serverExists|fileExists|isRunning|"                +
-    "deleteServer|getPurchasedServers|"                    +
+    "serverExists|fileExists|isRunning|"                                       +
+    "deleteServer|getPurchasedServers|"                                        +
+    "getPurchasedServerLimit|getPurchasedServerMaxRam|"                        +
     "purchaseServer|round|write|read|peek|clear|rm|getPortHandle|"             +
     "scriptRunning|scriptKill|getScriptName|getScriptRam|"                     +
     "getHackTime|getGrowTime|getWeakenTime|getScriptIncome|getScriptExpGain|"  +
