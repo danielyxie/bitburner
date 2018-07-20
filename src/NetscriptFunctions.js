@@ -1575,6 +1575,22 @@ function NetscriptFunctions(workerScript) {
             };
             return cancelOrder(params, workerScript);
         },
+        getPurchasedServerLimit : function() {
+            if (workerScript.checkingRam) {
+                return updateStaticRam("getPurchasedServerLimit", CONSTANTS.ScriptGetPurchasedServerLimit);
+            }
+            updateDynamicRam("getPurchasedServerLimit", CONSTANTS.ScriptGetPurchasedServerLimit);
+
+            return CONSTANTS.PurchasedServerLimit;
+        },
+        getPurchasedServerMaxRam: function() {
+            if (workerScript.checkingRam) {
+                return updateStaticRam("getPurchasedServerMaxRam", CONSTANTS.ScriptGetPurchasedServerMaxRam);
+            }
+            updateDynamicRam("getPurchasedServerMaxRam", CONSTANTS.ScriptGetPurchasedServerMaxRam);
+
+            return CONSTANTS.PurchasedServerMaxRam;
+        },
         purchaseServer : function(hostname, ram) {
             if (workerScript.checkingRam) {
                 return updateStaticRam("purchaseServer", CONSTANTS.ScriptPurchaseServerRamCost);
