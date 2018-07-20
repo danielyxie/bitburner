@@ -158,6 +158,54 @@ getActionCountRemaining
     Note that this is meant to be used for Contracts and Operations.
     This function will return 'Infinity' for actions such as Training and Field Analysis.
 
+getActionMaxLevel
+-----------------
+
+.. js:function:: getActionMaxLevel(type, name)
+
+    :param string type: Type of action. See :ref:`bladeburner_action_types`
+    :param string name: Name of action. Must be an exact match
+
+    Return the maximum level for this action.
+
+getActionCurrentLevel
+---------------------
+
+.. js:function:: getActionCurrentLevel(type, name)
+
+    :param string type: Type of action. See :ref:`bladeburner_action_types`
+    :param string name: Name of action. Must be an exact match
+
+    Return the current level of this action.
+
+getActionAutolevel
+------------------
+
+.. js:function:: getActionAutolevel(type, name)
+
+    :param string type: Type of action. See :ref:`bladeburner_action_types`
+    :param string name: Name of action. Must be an exact match
+
+    Return wether of not this action is currently autoleveling.
+
+setActionAutolevel
+------------------
+
+.. js:function:: setActionAutolevel(type, name, autoLevel)
+
+    :param string type: Type of action. See :ref:`bladeburner_action_types`
+    :param string name: Name of action. Must be an exact match
+    :param boolean autoLevel: wether or not to autolevel this action
+
+setActionLevel
+--------------
+
+.. js:function:: setActionLevel(type, name, level)
+
+    :param string type: Type of action. See :ref:`bladeburner_action_types`
+    :param string name: Name of action. Must be an exact match
+    :param level int: the level to set this action to
+
 getRank
 -------
 
