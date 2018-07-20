@@ -593,8 +593,8 @@ function createNewUpdateText() {
 
 function createBetaUpdateText() {
     dialogBoxCreate("You are playing on the beta environment! This branch of the game " +
-                    "features the latest developments in the game. The game may have bugs.<br>" +
-                    "Please report any bugs/issues through the github repository " +
+                    "features the latest developments in the game. This version may be unstable.<br>" +
+                    "Please report any bugs/issues through the github repository (https://github.com/danielyxie/bitburner/issues) " +
                     "or the Bitburner subreddit (reddit.com/r/bitburner).<br><br>" +
                     CONSTANTS.LatestUpdate);
 }

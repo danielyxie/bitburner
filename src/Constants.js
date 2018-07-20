@@ -494,8 +494,10 @@ let CONSTANTS = {
     "* When a server is hacked with a very large number of threads and left with no money, the server's security level " +
     "now only increases by however many threads were needed to drain the server. For example, if you hack a server with " +
     "5000 threads but it only needed 2000 threads to deplete the server's money, then the server's security will only increase " +
-    "as if you had hacked it with 2000 threads (change by hydroflame)<br>" + 
+    "as if you had hacked it with 2000 threads (change by hydroflame)<br>" +
     "* Added getCurrentAction() to Bladeburner API<br>" +
+    "* Added a variety of functions to Bladeburner API that deal with action levels (change by hydroflame)<br>" +
+    "* Added getPurchasedServerLimit() and getPurchasedServerMaxRam() functions to Netscript (change by hydroflame & kopelli)<br>" + 
     "* Completely re-designed the Hacknet Node API<br>" +
     "* getSkillLevel() in Bladeburner API now returns an error if no argument is passed in (as opposed to an object with all skill levels). This may break scripts<br>" +
     "* Minimum Netscript execution time reduced from 15ms to 10ms (configurable in Options)<br>" +

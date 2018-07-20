@@ -17,7 +17,6 @@ function checkBladeburnerAccess(workerScript, functionName) {
 		" currently have access to the Bladeburner API. This is either" +
 		" because you are not currently employed at the Bladeburner division" +
 		" or because you do not have Source-File 7";
-	console.log(Player.sourceFiles);
 	const hasAccess = Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || Player.sourceFiles.some(a=>{return a.n === 7}));
 	if(!hasAccess) {
 		throw makeRuntimeRejectMsg(workerScript, accessDenied);
