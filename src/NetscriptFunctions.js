@@ -38,6 +38,9 @@ import {StockMarket, StockSymbols, SymbolToStockMap, initStockSymbols,
 import {post}                                       from "./Terminal";
 import {TextFile, getTextFile, createTextFile}      from "./TextFile";
 
+import {unknownBladeburnerActionErrorMessage,
+        unknownBladeburnerExceptionMessage,
+        checkBladeburnerAccess}                     from "./NetscriptBladeburner.js";
 import {WorkerScript, workerScripts,
         killWorkerScript, NetscriptPorts}           from "./NetscriptWorker";
 import {makeRuntimeRejectMsg, netscriptDelay, runScriptFromScript,
@@ -3355,6 +3358,134 @@ function NetscriptFunctions(workerScript) {
                 }
                 throw makeRuntimeRejectMsg(workerScript, "getActionCountRemaining() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
+            },
+            getActionMaxLevel: function(type="", name="") {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getActionMaxLevel", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
+                }
+                updateDynamicRam("getActionMaxLevel", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
+                checkBladeburnerAccess(workerScript, "getActionMaxLevel");
+
+                try {
+                    var errorLogText = unknownBladeburnerActionErrorMessage("getActionMaxLevel", type, name);
+                    const actionId = Player.bladeburner.getActionIdFromTypeAndName(type, name);
+                    if (actionId == null) {
+                        workerScript.log(errorLogText);
+                        return -1;
+                    }
+                    const actionObj = Player.bladeburner.getActionObject(actionId);
+                    if (actionObj == null) {
+                        workerScript.log(errorLogText);
+                        return -1;
+                    }
+                    return actionObj.maxLevel;
+                } catch(err) {
+                    throw makeRuntimeRejectMsg(workerScript, unknownBladeburnerExceptionMessage("getActionMaxLevel", err));
+                }
+            },
+            getActionCurrentLevel: function(type="", name="") {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getActionCurrentLevel", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
+                }
+                updateDynamicRam("getActionCurrentLevel", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
+                checkBladeburnerAccess(workerScript, "getActionCurrentLevel");
+
+                try {
+                    var errorLogText = unknownBladeburnerActionErrorMessage("getActionCurrentLevel", type, name);
+                    const actionId = Player.bladeburner.getActionIdFromTypeAndName(type, name);
+                    if (actionId == null) {
+                        workerScript.log(errorLogText);
+                        return -1;
+                    }
+                    const actionObj = Player.bladeburner.getActionObject(actionId);
+                    if (actionObj == null) {
+                        workerScript.log(errorLogText);
+                        return -1;
+                    }
+                    return actionObj.level;
+                } catch(err) {
+                    throw makeRuntimeRejectMsg(workerScript, unknownBladeburnerExceptionMessage("getActionCurrentLevel", err));
+                }
+            },
+            getActionAutolevel: function(type="", name="") {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getActionAutolevel", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
+                }
+                updateDynamicRam("getActionAutolevel", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
+                checkBladeburnerAccess(workerScript, "getActionAutolevel");
+
+                try {
+                    var errorLogText = unknownBladeburnerActionErrorMessage("getActionAutolevel", type, name);
+                    const actionId = Player.bladeburner.getActionIdFromTypeAndName(type, name);
+                    if (actionId == null) {
+                        workerScript.log(errorLogText);
+                        return false;
+                    }
+                    const actionObj = Player.bladeburner.getActionObject(actionId);
+                    if (actionObj == null) {
+                        workerScript.log(errorLogText);
+                        return false;
+                    }
+                    return actionObj.autoLevel;
+                } catch(err) {
+                    throw makeRuntimeRejectMsg(workerScript, unknownBladeburnerExceptionMessage("getActionAutolevel", err));
+                }
+            },
+            setActionAutolevel: function(type="", name="", autoLevel=true) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("setActionAutolevel", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
+                }
+                updateDynamicRam("setActionAutolevel", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
+                checkBladeburnerAccess(workerScript, "setActionAutolevel");
+
+                try {
+                    var errorLogText = unknownBladeburnerActionErrorMessage("setActionAutolevel", type, name);
+                    const actionId = Player.bladeburner.getActionIdFromTypeAndName(type, name);
+                    if (actionId == null) {
+                        workerScript.log(errorLogText);
+                        return;
+                    }
+                    const actionObj = Player.bladeburner.getActionObject(actionId);
+                    if (actionObj == null) {
+                        workerScript.log(errorLogText);
+                        return;
+                    }
+                    actionObj.autoLevel = autoLevel;
+                } catch(err) {
+                    throw makeRuntimeRejectMsg(workerScript, unknownBladeburnerExceptionMessage("setActionAutolevel", err));
+                }
+            },
+            setActionLevel: function(type="", name="", level=1) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("setActionLevel", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
+                }
+                updateDynamicRam("setActionLevel", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
+                checkBladeburnerAccess(workerScript, "setActionLevel");
+
+                try {
+                    var errorLogText = unknownBladeburnerActionErrorMessage("setActionLevel", type, name);
+                    const actionId = Player.bladeburner.getActionIdFromTypeAndName(type, name);
+                    if (actionId == null) {
+                        workerScript.log(errorLogText);
+                        return;
+                    }
+                    const actionObj = Player.bladeburner.getActionObject(actionId);
+                    if (actionObj == null) {
+                        workerScript.log(errorLogText);
+                        return;
+                    }
+                    if(level > actionObj.maxLevel) {
+                        workerScript.log(`ERROR: bladeburner.${setActionLevel}() failed because level exceeds max level for given action.`);
+                        return;
+                    }
+                    if(level < 1) {
+                        workerScript.log(`ERROR: bladeburner.${setActionLevel}() failed because level is below 1.`);
+                        return;
+                    }
+                    actionObj.level = level;
+                } catch(err) {
+                    throw makeRuntimeRejectMsg(workerScript, unknownBladeburnerExceptionMessage("setActionLevel", err));
+                }
             },
             getRank : function() {
                 if (workerScript.checkingRam) {
