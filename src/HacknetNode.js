@@ -9,6 +9,7 @@ import {clearEventListeners}                    from "../utils/uiHelpers/clearEv
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver";
 import {createElement}                          from "../utils/uiHelpers/createElement";
+import {Page, routing}                          from "./ui/navigationTracking";
 import {formatNumber}                           from "../utils/StringHelperFunctions";
 import {getElementById}                         from "../utils/uiHelpers/getElementById";
 
@@ -273,7 +274,7 @@ function purchaseHacknet() {
     Player.loseMoney(cost);
     Player.hacknetNodes.push(node);
 
-    if (Engine.currentPage === Engine.Page.HacknetNodes) {
+    if (routing.isOn(Page.HacknetNodes)) {
         displayHacknetNodesContent();
     }
     updateTotalHacknetProduction();

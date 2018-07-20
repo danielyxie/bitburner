@@ -35,6 +35,7 @@ import {TextFile, getTextFile}              from "./TextFile";
 
 import {containsAllStrings, longestCommonStart,
         formatNumber}                       from "../utils/StringHelperFunctions";
+import {Page, routing}                      from "./ui/navigationTracking";
 import {KEY}                                from "../utils/helpers/keyCodes";
 import {addOffset}                          from "../utils/helpers/addOffset";
 import {isString}                           from "../utils/helpers/isString";
@@ -57,7 +58,7 @@ function postNetburnerText() {
 //Defines key commands in terminal
 $(document).keydown(function(event) {
 	//Terminal
-	if (Engine.currentPage == Engine.Page.Terminal) {
+	if (routing.isOn(Page.Terminal)) {
         var terminalInput = document.getElementById("terminal-input-text-box");
         if (terminalInput != null && !event.ctrlKey && !event.shiftKey) {terminalInput.focus();}
 
@@ -228,13 +229,13 @@ $(document).keydown(function(event) {
 //Keep terminal in focus
 let terminalCtrlPressed = false, shiftKeyPressed = false;
 $(document).ready(function() {
-	if (Engine.currentPage === Engine.Page.Terminal) {
+	if (routing.isOn(Page.Terminal)) {
 		$('.terminal-input').focus();
 	}
 });
 $(document).keydown(function(e) {
-	if (Engine.currentPage == Engine.Page.Terminal) {
-		if (e.which == 17) {
+	if (routing.isOn(Page.Terminal)) {
+		if (e.which == KEY.CTRL) {
 			terminalCtrlPressed = true;
 		} else if (e.shiftKey) {
             shiftKeyPressed = true;
@@ -250,8 +251,8 @@ $(document).keydown(function(e) {
 	}
 })
 $(document).keyup(function(e) {
-	if (Engine.currentPage == Engine.Page.Terminal) {
-		if (e.which == 17) {
+	if (routing.isOn(Page.Terminal)) {
+		if (e.which == KEY.CTRL) {
 			terminalCtrlPressed = false;
 		}
         if (e.shiftKey) {

@@ -9,6 +9,7 @@ import {HackingMission, setInMission}           from "./Missions";
 import {Player}                                 from "./Player";
 import {Settings}                               from "./Settings";
 
+import {Page, routing}                          from "./ui/navigationTracking";
 import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {factionInvitationBoxCreate}             from "../utils/FactionInvitationBox";
 import {removeChildrenFromElement}              from "../utils/uiHelpers/removeChildrenFromElement";
@@ -137,7 +138,7 @@ function inviteToFaction(faction) {
     if (Settings.SuppressFactionInvites) {
         faction.alreadyInvited = true;
         Player.factionInvitations.push(faction.name);
-        if (Engine.currentPage === Engine.Page.Factions) {
+        if (routing.isOn(Page.Factions)) {
             Engine.loadFactionsContent();
         }
     } else {

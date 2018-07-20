@@ -65,6 +65,7 @@ import {StockMarket, StockSymbols,
         displayStockMarketContent}              from "./StockMarket";
 import {Terminal, postNetburnerText}            from "./Terminal";
 import {KEY}                                    from "../utils/helpers/keyCodes";
+import {Page, routing}                          from "./ui/navigationTracking";
 
 // These should really be imported with the module that is presenting that UI, but because they very much depend on the
 // cascade order, we'll pull them all in here.
@@ -126,7 +127,7 @@ $(document).keydown(function(e) {
             Engine.loadCreateProgramContent();
         } else if (e.keyCode === KEY.F && e.altKey) {
             //Overriden by Fconf
-            if (Engine.currentPage === Engine.Page.Terminal && FconfSettings.ENABLE_BASH_HOTKEYS) {
+            if (routing.isOn(Page.Terminal) && FconfSettings.ENABLE_BASH_HOTKEYS) {
                 return;
             }
             e.preventDefault();
@@ -255,44 +256,15 @@ let Engine = {
         characterInfo:                  null,
     },
 
-    //Current page status
-    Page: {
-        Terminal:           "Terminal",
-        CharacterInfo:      "CharacterInfo",
-        ScriptEditor:       "ScriptEditor",
-        ActiveScripts:      "ActiveScripts",
-        HacknetNodes:       "HacknetNodes",
-        World:              "World",
-        CreateProgram:      "CreateProgram",
-        Factions:           "Factions",
-        Faction:            "Faction",
-        Augmentations:      "Augmentations",
-        Tutorial:           "Tutorial",
-        DevMenu:            "Dev Menu",
-        Location:           "Location",
-        workInProgress:     "WorkInProgress",
-        RedPill:            "RedPill",
-        CinematicText:      "CinematicText",
-        Infiltration:       "Infiltration",
-        StockMarket:        "StockMarket",
-        Gang:               "Gang",
-        Mission:            "Mission",
-        Corporation:        "Corporation",
-        Bladeburner:        "Bladeburner",
-    },
-    currentPage:    null,
-
-
     //Time variables (milliseconds unix epoch time)
     _lastUpdate: new Date().getTime(),
     _idleSpeed: 200,    //Speed (in ms) at which the main loop is updated
-
 
     /* Load content when a main menu button is clicked */
     loadTerminalContent: function() {
         Engine.hideAllContent();
         Engine.Display.terminalContent.style.display = "block";
-        Engine.currentPage = Engine.Page.Terminal;
+        routing.navigateTo(Page.Terminal);
         document.getElementById("terminal-menu-link").classList.add("active");
     },
 
@@ -300,7 +272,7 @@ let Engine = {
         Engine.hideAllContent();
         Engine.Display.characterContent.style.display = "block";
         Engine.displayCharacterInfo();
-        Engine.currentPage = Engine.Page.CharacterInfo;
+        routing.navigateTo(Page.CharacterInfo);
         document.getElementById("stats-menu-link").classList.add("active");
     },
 
@@ -314,7 +286,7 @@ let Engine = {
         }
         editor.focus();
         updateScriptEditorContent();
-        Engine.currentPage = Engine.Page.ScriptEditor;
+        routing.navigateTo(Page.ScriptEditor);
         document.getElementById("create-script-menu-link").classList.add("active");
     },
 
@@ -322,7 +294,7 @@ let Engine = {
         Engine.hideAllContent();
         Engine.Display.activeScriptsContent.style.display = "block";
         updateActiveScriptsItems();
-        Engine.currentPage = Engine.Page.ActiveScripts;
+        routing.navigateTo(Page.ActiveScripts);
         document.getElementById("active-scripts-menu-link").classList.add("active");
     },
 
@@ -330,7 +302,7 @@ let Engine = {
         Engine.hideAllContent();
         Engine.Display.hacknetNodesContent.style.display = "block";
         displayHacknetNodesContent();
-        Engine.currentPage = Engine.Page.HacknetNodes;
+        routing.navigateTo(Page.HacknetNodes);
         document.getElementById("hacknet-nodes-menu-link").classList.add("active");
     },
 
@@ -338,7 +310,7 @@ let Engine = {
         Engine.hideAllContent();
         Engine.Display.worldContent.style.display = "block";
         Engine.displayWorldInfo();
-        Engine.currentPage = Engine.Page.World;
+        routing.navigateTo(Page.World);
         document.getElementById("city-menu-link").classList.add("active");
     },
 
@@ -346,7 +318,7 @@ let Engine = {
         Engine.hideAllContent();
         Engine.Display.createProgramContent.style.display = "block";
         displayCreateProgramContent();
-        Engine.currentPage = Engine.Page.CreateProgram;
+        routing.navigateTo(Page.CreateProgram);
         document.getElementById("create-program-menu-link").classList.add("active");
     },
 
@@ -354,21 +326,21 @@ let Engine = {
         Engine.hideAllContent();
         Engine.Display.factionsContent.style.display = "block";
         Engine.displayFactionsInfo();
-        Engine.currentPage = Engine.Page.Factions;
+        routing.navigateTo(Page.Factions);
         document.getElementById("factions-menu-link").classList.add("active");
     },
 
     loadFactionContent: function() {
         Engine.hideAllContent();
         Engine.Display.factionContent.style.display = "block";
-        Engine.currentPage = Engine.Page.Faction;
+        routing.navigateTo(Page.Faction);
     },
 
     loadAugmentationsContent: function() {
         Engine.hideAllContent();
         Engine.Display.augmentationsContent.style.display = "block";
         displayAugmentationsContent();
-        Engine.currentPage = Engine.Page.Augmentations;
+        routing.navigateTo(Page.Augmentations);
         document.getElementById("augmentations-menu-link").classList.add("active");
     },
 
@@ -376,7 +348,7 @@ let Engine = {
         Engine.hideAllContent();
         Engine.Display.tutorialContent.style.display = "block";
         Engine.displayTutorialContent();
-        Engine.currentPage = Engine.Page.Tutorial;
+        routing.navigateTo(Page.Tutorial);
         document.getElementById("tutorial-menu-link").classList.add("active");
     },
 
@@ -384,7 +356,7 @@ let Engine = {
         Engine.hideAllContent();
         Engine.Display.devMenuContent.style.display = "block";
         Engine.displayDevMenuContent();
-        Engine.currentPage = Engine.Page.DevMenu;
+        routing.navigateTo(Page.DevMenu);
         document.getElementById("dev-menu-link").classList.add("active");
     },
 
@@ -392,7 +364,7 @@ let Engine = {
         Engine.hideAllContent();
         Engine.Display.locationContent.style.display = "block";
         displayLocationContent();
-        Engine.currentPage = Engine.Page.Location;
+        routing.navigateTo(Page.Location);
     },
 
     loadTravelContent: function() {
@@ -438,7 +410,7 @@ let Engine = {
         //mainMenu.style.visibility = "hidden";
         mainMenu.style.visibility = "hidden";
         Engine.Display.workInProgressContent.style.display = "block";
-        Engine.currentPage = Engine.Page.WorkInProgress;
+        routing.navigateTo(Page.WorkInProgress);
     },
 
     loadRedPillContent: function() {
@@ -446,7 +418,7 @@ let Engine = {
         var mainMenu = document.getElementById("mainmenu-container");
         mainMenu.style.visibility = "hidden";
         Engine.Display.redPillContent.style.display = "block";
-        Engine.currentPage = Engine.Page.RedPill;
+        routing.navigateTo(Page.RedPill);
     },
 
     loadCinematicTextContent: function() {
@@ -454,19 +426,19 @@ let Engine = {
         var mainMenu = document.getElementById("mainmenu-container");
         mainMenu.style.visibility = "hidden";
         Engine.Display.cinematicTextContent.style.display = "block";
-        Engine.currentPage = Engine.Page.CinematicText;
+        routing.navigateTo(Page.CinematicText);
     },
 
     loadInfiltrationContent: function() {
         Engine.hideAllContent();
         Engine.Display.infiltrationContent.style.display = "block";
-        Engine.currentPage = Engine.Page.Infiltration;
+        routing.navigateTo(Page.Infiltration);
     },
 
     loadStockMarketContent: function() {
         Engine.hideAllContent();
         Engine.Display.stockMarketContent.style.display = "block";
-        Engine.currentPage = Engine.Page.StockMarket;
+        routing.navigateTo(Page.StockMarket);
         displayStockMarketContent();
     },
 
@@ -474,10 +446,10 @@ let Engine = {
         Engine.hideAllContent();
         if (document.getElementById("gang-container") || Player.inGang()) {
             displayGangContent();
-            Engine.currentPage = Engine.Page.Gang;
+            routing.navigateTo(Page.Gang);
         } else {
             Engine.loadTerminalContent();
-            Engine.currentPage = Engine.Page.Terminal;
+            routing.navigateTo(Page.Terminal);
         }
     },
 
@@ -486,7 +458,7 @@ let Engine = {
         document.getElementById("mainmenu-container").style.visibility = "hidden";
         document.getElementById("character-overview-wrapper").style.visibility = "hidden";
         Engine.Display.missionContent.style.display = "block";
-        Engine.currentPage = Engine.Page.Mission;
+        routing.navigateTo(Page.Mission);
     },
 
     loadCorporationContent: function() {
@@ -494,7 +466,7 @@ let Engine = {
             Engine.hideAllContent();
             document.getElementById("character-overview-wrapper").style.visibility = "hidden";
             Player.corporation.createUI();
-            Engine.currentPage = Engine.Page.Corporation;
+            routing.navigateTo(Page.Corporation);
         }
     },
 
@@ -502,7 +474,7 @@ let Engine = {
         if (Player.bladeburner instanceof Bladeburner) {
             try {
                 Engine.hideAllContent();
-                Engine.currentPage = Engine.Page.Bladeburner;
+                routing.navigateTo(Page.Bladeburner);
                 Player.bladeburner.createContent();
             } catch(e) {
                 exceptionAlert(e);
@@ -1073,7 +1045,7 @@ let Engine = {
         if (Engine.Counters.updateActiveScriptsDisplay <= 0) {
             //Always update, but make the interval longer if the page isn't active
             updateActiveScriptsItems();
-            if (Engine.currentPage === Engine.Page.ActiveScripts) {
+            if (routing.isOn(Page.ActiveScripts)) {
                 Engine.Counters.updateActiveScriptsDisplay = 5;
             } else {
                 Engine.Counters.updateActiveScriptsDisplay = 10;
@@ -1082,11 +1054,11 @@ let Engine = {
 
         if (Engine.Counters.updateDisplays <= 0) {
             Engine.displayCharacterOverviewInfo();
-            if (Engine.currentPage == Engine.Page.CharacterInfo) {
+            if (routing.isOn(Page.CharacterInfo)) {
                 Engine.displayCharacterInfo();
-            }  else if (Engine.currentPage == Engine.Page.HacknetNodes) {
+            }  else if (routing.isOn(Page.HacknetNodes)) {
                 updateHacknetNodesContent();
-            } else if (Engine.currentPage == Engine.Page.CreateProgram) {
+            } else if (routing.isOn(Page.CreateProgram)) {
                 displayCreateProgramContent();
             }
 
@@ -1098,16 +1070,16 @@ let Engine = {
         }
 
         if (Engine.Counters.updateDisplaysMed <= 0) {
-            if (Engine.currentPage === Engine.Page.Corporation) {
+            if (routing.isOn(Page.Corporation)) {
                 Player.corporation.updateUIContent();
             }
             Engine.Counters.updateDisplaysMed = 9;
         }
 
         if (Engine.Counters.updateDisplaysLong <= 0) {
-            if (Engine.currentPage === Engine.Page.Gang) {
+            if (routing.isOn(Page.Gang)) {
                 updateGangContent();
-            } else if (Engine.currentPage === Engine.Page.ScriptEditor) {
+            } else if (routing.isOn(Page.ScriptEditor)) {
                 updateScriptEditorContent();
             }
             Engine.Counters.updateDisplaysLong = 15;
@@ -1445,7 +1417,7 @@ let Engine = {
     setDisplayElements: function() {
         //Content elements
         Engine.Display.terminalContent = document.getElementById("terminal-container");
-        Engine.currentPage = Engine.Page.Terminal;
+        routing.navigateTo(Page.Terminal);
 
         Engine.Display.characterContent = document.getElementById("character-container");
         Engine.Display.characterContent.style.display = "none";

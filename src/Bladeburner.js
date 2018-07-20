@@ -20,6 +20,7 @@ import {appendLineBreaks}                           from "../utils/uiHelpers/app
 import {clearObject}                                from "../utils/helpers/clearObject";
 import {createElement}                              from "../utils/uiHelpers/createElement";
 import {createPopup}                                from "../utils/uiHelpers/createPopup";
+import {Page, routing}                              from "./ui/navigationTracking";
 import {exceptionAlert}                             from "../utils/helpers/exceptionAlert";
 import {formatNumber}                               from "../utils/StringHelperFunctions";
 import {getRandomInt}                               from "../utils/helpers/getRandomInt";
@@ -145,7 +146,7 @@ var consoleHelpText = {
 
 //Keypresses for Console
 $(document).keydown(function(event) {
-    if (Engine.currentPage === Engine.Page.Bladeburner) {
+    if (routing.isOn(Page.Bladeburner)) {
         //if (DomElems.consoleInput && !event.ctrlKey && !event.shiftKey && !event.altKey) {
         //    DomElems.consoleInput.focus();
         //}
@@ -915,7 +916,7 @@ Bladeburner.prototype.process = function() {
             }
         }
 
-        if (Engine.currentPage === Engine.Page.Bladeburner) {
+        if (routing.isOn(Page.Bladeburner)) {
             this.updateContent();
         }
     }
@@ -1257,7 +1258,7 @@ Bladeburner.prototype.completeAction = function() {
                         return hackWorldDaemon(Player.bitNodeN);
                     }
 
-                    if (Engine.currentPage === Engine.Page.Bladeburner) {
+                    if (routing.isOn(Page.Bladeburner)) {
                         this.createActionAndSkillsContent();
                     }
 
@@ -2201,7 +2202,7 @@ Bladeburner.prototype.updateContent = function() {
 }
 
 Bladeburner.prototype.updateOverviewContent = function() {
-    if (Engine.currentPage !== Engine.Page.Bladeburner) {return;}
+    if (!routing.isOn(Page.Bladeburner)) {return;}
     DomElems.overviewRank.childNodes[0].nodeValue = "Rank: " + formatNumber(this.rank, 2);
     DomElems.overviewStamina.innerText = "Stamina: " + formatNumber(this.stamina, 3) + " / " + formatNumber(this.maxStamina, 3);
     DomElems.overviewGen1.innerHTML =
@@ -3505,7 +3506,7 @@ Bladeburner.prototype.upgradeSkillNetscriptFn = function(skillName, workerScript
 
     this.skillPoints -= cost;
     this.upgradeSkill(skill);
-    if (Engine.currentPage === Engine.Page.Bladeburner && DomElems.currentTab.toLowerCase() === "skills") {
+    if (routing.isOn(Page.Bladeburner) && DomElems.currentTab.toLowerCase() === "skills") {
         this.createActionAndSkillsContent();
     }
     if (workerScript.shouldLog("upgradeSkill")) {
@@ -3627,7 +3628,7 @@ Bladeburner.prototype.joinBladeburnerFactionNetscriptFn = function(workerScript)
         if (workerScript.shouldLog("joinBladeburnerFaction")) {
             workerScript.log("Joined Bladeburners Faction");
         }
-        if (Engine.currentPage === Engine.Page.Bladeburner) {
+        if (routing.isOn(Page.Bladeburner)) {
             removeChildrenFromElement(DomElems.overviewDiv);
             this.createOverviewContent();
         }

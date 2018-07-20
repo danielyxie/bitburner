@@ -1,7 +1,8 @@
-import {Faction, joinFaction}       from "../src/Faction";
+import {joinFaction}                from "../src/Faction";
 import {Engine}                     from "../src/engine";
 import {Player}                     from "../src/Player";
 import {clearEventListeners}        from "./uiHelpers/clearEventListeners";
+import {Page, routing}              from "../src/ui/navigationTracking";
 
 /* Faction Invitation Pop-up box */
 function factionInvitationBoxClose() {
@@ -30,7 +31,7 @@ function factionInvitationBoxCreate(faction) {
     faction.alreadyInvited = true;
     Player.factionInvitations.push(faction.name);
 
-    if (Engine.currentPage === Engine.Page.Factions) {
+    if (routing.isOn(Page.Factions)) {
         Engine.loadFactionsContent();
     }
 
@@ -45,7 +46,7 @@ function factionInvitationBoxCreate(faction) {
         }
         joinFaction(faction);
         factionInvitationBoxClose();
-        if (Engine.currentPage === Engine.Page.Factions) {
+        if (routing.isOn(Page.Factions)) {
             Engine.loadFactionsContent();
         }
         return false;

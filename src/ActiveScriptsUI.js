@@ -1,4 +1,3 @@
-import {Engine}                    from "./engine";
 import {workerScripts,
         addWorkerScript,
         killWorkerScript}          from "./NetscriptWorker";
@@ -14,6 +13,7 @@ import numeral                     from "numeral/min/numeral.min";
 import {formatNumber}              from "../utils/StringHelperFunctions";
 import {removeChildrenFromElement} from "../utils/uiHelpers/removeChildrenFromElement";
 import {removeElement}             from "../utils/uiHelpers/removeElement";
+import {Page, routing}             from "./ui/navigationTracking";
 
 /* {
  *     serverName: {
@@ -196,7 +196,7 @@ function updateActiveScriptsItems(maxTasks=150) {
         }
     }
 
-    if (Engine.currentPage !== Engine.Page.ActiveScripts) {return;}
+    if (!routing.isOn(Page.ActiveScripts)) {return;}
     var total = 0;
     for (var i = 0; i < workerScripts.length; ++i) {
         try {

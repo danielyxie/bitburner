@@ -1,5 +1,4 @@
 import {CONSTANTS}                              from "./Constants";
-import {Engine}                                 from "./engine";
 import {Locations}                              from "./Location";
 import {hasWallStreetSF, wallStreetSFLvl}       from "./NetscriptFunctions";
 import {WorkerScript}                           from "./NetscriptWorker";
@@ -9,6 +8,7 @@ import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {clearEventListeners}                    from "../utils/uiHelpers/clearEventListeners";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver";
+import {Page, routing}                          from "./ui/navigationTracking";
 import numeral                                  from "numeral/min/numeral.min";
 import {formatNumber}                           from "../utils/StringHelperFunctions";
 import {getRandomInt}                           from "../utils/helpers/getRandomInt";
@@ -593,7 +593,7 @@ function updateStockPrices() {
                 processOrders(stock, OrderTypes.LimitSell, PositionTypes.Long);
                 processOrders(stock, OrderTypes.StopBuy, PositionTypes.Long);
                 processOrders(stock, OrderTypes.StopSell, PositionTypes.Short);
-                if (Engine.currentPage == Engine.Page.StockMarket) {
+                if (routing.isOn(Page.StockMarket)) {
                     updateStockTicker(stock, true);
                 }
             } else {
@@ -602,7 +602,7 @@ function updateStockPrices() {
                 processOrders(stock, OrderTypes.LimitSell, PositionTypes.Short);
                 processOrders(stock, OrderTypes.StopBuy, PositionTypes.Short);
                 processOrders(stock, OrderTypes.StopSell, PositionTypes.Long);
-                if (Engine.currentPage == Engine.Page.StockMarket) {
+                if (routing.isOn(Page.StockMarket)) {
                     updateStockTicker(stock, false);
                 }
             }
@@ -1182,7 +1182,7 @@ function setStockTickerClickHandlers() {
 
 //'increase' argument is a boolean indicating whether the price increased or decreased
 function updateStockTicker(stock, increase) {
-    if (Engine.currentPage !== Engine.Page.StockMarket) {return;}
+    if (!routing.isOn(Page.StockMarket)) {return;}
     if (!(stock instanceof Stock)) {
         console.log("Invalid stock in updateStockTicker():");
         console.log(stock);
@@ -1207,7 +1207,7 @@ function updateStockTicker(stock, increase) {
 }
 
 function updateStockPlayerPosition(stock) {
-    if (Engine.currentPage !== Engine.Page.StockMarket) {return;}
+    if (!routing.isOn(Page.StockMarket)) {return;}
     if (!(stock instanceof Stock)) {
         console.log("Invalid stock in updateStockPlayerPosition():");
         console.log(stock);
@@ -1277,7 +1277,7 @@ function updateStockPlayerPosition(stock) {
 }
 
 function updateStockOrderList(stock) {
-    if (Engine.currentPage !== Engine.Page.StockMarket) {return;}
+    if (!routing.isOn(Page.StockMarket)) {return;}
     var tickerId = "stock-market-ticker-" + stock.symbol;
     var orderList = document.getElementById(tickerId + "-order-list");
     if (orderList == null) {

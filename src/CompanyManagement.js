@@ -1,5 +1,4 @@
 import {BitNodeMultipliers}                             from "./BitNode";
-import {Engine}                                         from "./engine";
 import {Factions}                                       from "./Faction";
 import {showLiterature}                                 from "./Literature";
 import {Locations}                                      from "./Location";
@@ -13,6 +12,7 @@ import {Reviver, Generic_toJSON,
 import numeral                                          from "numeral/min/numeral.min";
 import {createElement}                                  from "../utils/uiHelpers/createElement";
 import {createPopup}                                    from "../utils/uiHelpers/createPopup";
+import {Page, routing}                                  from "./ui/navigationTracking";
 import {formatNumber, generateRandomString}             from "../utils/StringHelperFunctions";
 import {getRandomInt}                                   from "../utils/helpers/getRandomInt";
 import {isString}                                       from "../utils/helpers/isString";
@@ -3118,7 +3118,7 @@ Corporation.prototype.process = function() {
 
         this.state.nextState();
 
-        if (Engine.currentPage === Engine.Page.Corporation) {this.updateUIContent();}
+        if (routing.isOn(Page.Corporation)) {this.updateUIContent();}
     }
 }
 
