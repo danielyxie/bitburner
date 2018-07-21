@@ -4,7 +4,7 @@ import {CONSTANTS}                                  from "./Constants";
 import {Engine}                                     from "./engine";
 import {Faction, Factions, factionExists,
         joinFaction, displayFactionContent}         from "./Faction";
-import {Locations}                                  from "./Location";
+import {Locations}                                  from "./Locations";
 import {Player}                                     from "./Player";
 import {hackWorldDaemon, redPillFlag}               from "./RedPill";
 import {KEY}                                        from "../utils/helpers/keyCodes";

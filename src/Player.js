@@ -13,7 +13,7 @@ import {Engine}                                 from "./engine";
 import {Factions, Faction,
         displayFactionContent}                  from "./Faction";
 import {Gang, resetGangs}                       from "./Gang";
-import {Locations}                              from "./Location";
+import {Locations}                              from "./Locations";
 import {hasBn11SF, hasWallStreetSF,hasAISF}     from "./NetscriptFunctions";
 import {AllServers, Server, AddToAllServers}    from "./Server";
 import {SpecialServerIps, SpecialServerNames}   from "./SpecialServerIps";

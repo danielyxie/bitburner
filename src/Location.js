@@ -7,6 +7,7 @@ import {Crimes}                                 from "./Crimes";
 import {Engine}                                 from "./engine";
 import {beginInfiltration}                      from "./Infiltration";
 import {hasBladeburnerSF}                       from "./NetscriptFunctions";
+import {Locations}                              from "./Locations";
 import {Player}                                 from "./Player";
 import {Server, AllServers, AddToAllServers}    from "./Server";
 import {purchaseServer,
@@ -25,95 +26,8 @@ import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
         yesNoTxtInpBoxGetInput, yesNoBoxClose,
         yesNoTxtInpBoxClose}                    from "../utils/YesNoBox";
 
-/* Display Location Content when visiting somewhere in the World*/
-var Locations = {
-    //Cities
-	Aevum: 			"Aevum",
-    //AevumDesc:      ""
-	Chongqing: 		"Chongqing",
-	Sector12: 		"Sector-12",
-	NewTokyo: 		"New Tokyo",
-	Ishima: 		"Ishima",
-	Volhaven: 		"Volhaven",
-
-    //Aevum Locations
-    AevumTravelAgency:          "Aevum Travel Agency",
-    AevumSummitUniversity:      "Summit University",
-    AevumECorp:                 "ECorp",
-    AevumBachmanAndAssociates:  "Bachman & Associates",
-    AevumClarkeIncorporated:    "Clarke Incorporated",
-    AevumFulcrumTechnologies:   "Fulcrum Technologies",
-    AevumAeroCorp:              "AeroCorp",
-    AevumGalacticCybersystems:  "Galactic Cybersystems",
-    AevumWatchdogSecurity:      "Watchdog Security",
-    AevumRhoConstruction:       "Rho Construction",
-    AevumPolice:                "Aevum Police Headquarters",
-    AevumNetLinkTechnologies:   "NetLink Technologies",
-    AevumCrushFitnessGym:       "Crush Fitness Gym",
-    AevumSnapFitnessGym:        "Snap Fitness Gym",
-    AevumSlums:                 "Aevum Slums",
-
-    //Chongqing locations
-    ChongqingTravelAgency:          "Chongqing Travel Agency",
-    ChongqingKuaiGongInternational: "KuaiGong International",
-    ChongqingSolarisSpaceSystems:   "Solaris Space Systems",
-    ChongqingSlums:                 "Chongqing Slums",
-
-    //Sector 12
-    Sector12TravelAgency:       "Sector-12 Travel Agency",
-    Sector12RothmanUniversity:  "Rothman University",
-    Sector12MegaCorp:           "MegaCorp",
-    Sector12BladeIndustries:    "Blade Industries",
-    Sector12FourSigma:          "Four Sigma",
-    Sector12IcarusMicrosystems: "Icarus Microsystems",
-    Sector12UniversalEnergy:    "Universal Energy",
-    Sector12DeltaOne:           "DeltaOne",
-    Sector12CIA:                "Central Intelligence Agency",
-    Sector12NSA:                "National Security Agency",
-    Sector12AlphaEnterprises:   "Alpha Enterprises",
-    Sector12CarmichaelSecurity: "Carmichael Security",
-    Sector12FoodNStuff:         "FoodNStuff",
-    Sector12JoesGuns:           "Joe's Guns",
-    Sector12IronGym:            "Iron Gym",
-    Sector12PowerhouseGym:      "Powerhouse Gym",
-    Sector12Slums:              "Sector-12 Slums",
-    Sector12CityHall:           "Sector-12 City Hall",
-
-    //New Tokyo
-    NewTokyoTravelAgency:           "New Tokyo Travel Agency",
-    NewTokyoDefComm:                "DefComm",
-    NewTokyoVitaLife:               "VitaLife",
-    NewTokyoGlobalPharmaceuticals:  "Global Pharmaceuticals",
-    NewTokyoNoodleBar:              "Noodle Bar",
-    NewTokyoSlums:                  "New Tokyo Slums",
-
-    //Ishima
-    IshimaTravelAgency:         "Ishima Travel Agency",
-    IshimaStormTechnologies:    "Storm Technologies",
-    IshimaNovaMedical:          "Nova Medical",
-    IshimaOmegaSoftware:        "Omega Software",
-    IshimaSlums:                "Ishima Slums",
-
-    //Volhaven
-    VolhavenTravelAgency:               "Volhaven Travel Agency",
-    VolhavenZBInstituteOfTechnology:    "ZB Institute of Technology",
-    VolhavenOmniTekIncorporated:        "OmniTek Incorporated",
-    VolhavenNWO:                        "NWO",
-    VolhavenHeliosLabs:                 "Helios Labs",
-    VolhavenOmniaCybersystems:          "Omnia Cybersystems",
-    VolhavenLexoCorp:                   "LexoCorp",
-    VolhavenSysCoreSecurities:          "SysCore Securities",
-    VolhavenCompuTek:                   "CompuTek",
-    VolhavenMilleniumFitnessGym:        "Millenium Fitness Gym",
-    VolhavenSlums:                      "Volhaven Slums",
-
-    //Generic locations
-    Hospital:               "Hospital",
-    WorldStockExchange:     "World Stock Exchange",
-}
-
 function displayLocationContent() {
-	if (Engine.debug) {
+	if (Engine.Debug) {
 		console.log("displayLocationContent() called with location " + Player.location)
 	}
 
@@ -2199,4 +2113,4 @@ function purchaseServerBoxCreate(ram, cost) {
                          "Please enter the server hostname below:<br>");
 }
 
-export {Locations, displayLocationContent, initLocationButtons};
+export {displayLocationContent, initLocationButtons};

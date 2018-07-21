@@ -1,7 +1,7 @@
 import {BitNodeMultipliers}                             from "./BitNode";
 import {Factions}                                       from "./Faction";
 import {showLiterature}                                 from "./Literature";
-import {Locations}                                      from "./Location";
+import {Locations}                                      from "./Locations";
 import {Player}                                         from "./Player";
 
 import Decimal                                          from "decimal.js";

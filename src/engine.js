@@ -32,8 +32,9 @@ import {displayFactionContent, joinFaction,
         processPassiveFactionRepGain, Factions,
         inviteToFaction, initFactions}          from "./Faction";
 import {FconfSettings}                          from "./Fconf";
-import {Locations, displayLocationContent,
+import {displayLocationContent,
         initLocationButtons}                    from "./Location";
+import {Locations}                              from "./Locations";
 import {displayGangContent, updateGangContent,
         Gang}                                   from "./Gang";
 import {displayHacknetNodesContent, processAllHacknetNodeEarnings,

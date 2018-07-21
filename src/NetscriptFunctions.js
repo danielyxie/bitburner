@@ -17,7 +17,7 @@ import {AllGangs}                                   from "./Gang";
 import {Factions, Faction, joinFaction,
         factionExists, purchaseAugmentation}        from "./Faction";
 import {getCostOfNextHacknetNode, purchaseHacknet}  from "./HacknetNode";
-import {Locations}                                  from "./Location";
+import {Locations}                                  from "./Locations";
 import {Message, Messages}                          from "./Message";
 import {inMission}                                  from "./Missions";
 import {Player}                                     from "./Player";

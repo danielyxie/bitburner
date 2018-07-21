@@ -1,5 +1,5 @@
 import {CONSTANTS}                              from "./Constants";
-import {Locations}                              from "./Location";
+import {Locations}                              from "./Locations";
 import {hasWallStreetSF, wallStreetSFLvl}       from "./NetscriptFunctions";
 import {WorkerScript}                           from "./NetscriptWorker";
 import {Player}                                 from "./Player";
