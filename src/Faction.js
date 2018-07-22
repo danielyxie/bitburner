@@ -571,7 +571,6 @@ function createFactionAugmentationDisplayElements(augmentationsList, augs, facti
             var aElem = createElement("a", {
                 innerText:aug.name, display:"inline",
                 clickListener:()=>{
-                    console.log('sup buy in fac: '+Settings.SuppressBuyAugmentationConfirmation);
                     if (!Settings.SuppressBuyAugmentationConfirmation) {
                         purchaseAugmentationBoxCreate(aug, faction);
                     } else {
