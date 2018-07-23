@@ -3636,7 +3636,7 @@ function initBladeburner() {
     Skills[SkillNames.BladesIntuition] = new Skill({
         name:SkillNames.BladesIntuition,
         desc:"Each level of this skill increases your success chance " +
-             "for all contracts and operations by 3%",
+             "for all Contracts, Operations, and BlackOps by 3%",
         baseCost:5, costInc:2,
         successChanceAll:3
     });
@@ -3650,7 +3650,7 @@ function initBladeburner() {
     Skills[SkillNames.Cloak] = new Skill({
         name:SkillNames.Cloak,
         desc:"Each level of this skill increases your " +
-             "success chance in stealth-related contracts and operations by 5.5%",
+             "success chance in stealth-related Contracts, Operations, and BlackOps by 5.5%",
         baseCost:3, costInc:1,
         successChanceStealth:5.5
     });
@@ -3661,7 +3661,7 @@ function initBladeburner() {
     Skills[SkillNames.Overclock] = new Skill({
         name:SkillNames.Overclock,
         desc:"Each level of this skill decreases the time it takes " +
-             "to attempt a contract or operation by 1% (Max Level: 95)",
+             "to attempt a Contract, Operation, and BlackOp by 1% (Max Level: 95)",
         baseCost:5, costInc:1, maxLvl:95,
         actionTime:1
     });
@@ -3675,14 +3675,14 @@ function initBladeburner() {
     Skills[SkillNames.ShortCircuit] = new Skill({
         name:SkillNames.ShortCircuit,
         desc:"Each level of this skill increases your success chance " +
-             "in contracts and operations that involve retirement by 5.5%",
+             "in Contracts, Operations, and BlackOps that involve retirement by 5.5%",
         baseCost:3, costInc:2,
         successChanceKill:5.5
     });
     Skills[SkillNames.DigitalObserver] = new Skill({
         name:SkillNames.DigitalObserver,
         desc:"Each level of this skill increases your success chance in " +
-             "all operations by 4%",
+             "all Operations and BlackOps by 4%",
         baseCost:5, costInc:2,
         successChanceOperation:4
     });
@@ -3698,7 +3698,7 @@ function initBladeburner() {
     Skills[SkillNames.Tracer] = new Skill({
         name:SkillNames.Tracer,
         desc:"Each level of this skill increases your success chance in " +
-             "all contracts by 4%",
+             "all Contracts by 4%",
         baseCost:3, costInc:2,
         successChanceContract:4
     });
