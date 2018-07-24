@@ -188,7 +188,240 @@
 
 	<!-- Character Info page -->
     <div id="character-container" class="generic-menupage-container">
-        <div id="character-content"></div>
+        <div id="character-content">
+            <table>
+                <tr><td class="text"><b>General</b></td></tr>
+                <tr><td>&nbsp;</td></tr>
+                <tr>
+                    <td class="text">Current City:&nbsp;</td><td class="text right-align" id="character-info-city"></td>
+                </tr>
+                <tr><td>&nbsp;</td></tr>
+                <tr>
+                    <td class="text">Employer:&nbsp;</td><td class="text right-align" id="character-info-employer"></td>
+                </tr>
+                <tr>
+                    <td class="text">Job Title:&nbsp;</td><td class="text right-align" id="character-info-job"></td>
+                </tr>
+                <tr><td>&nbsp;</td></tr>
+                <tr>
+                    <td class="text">Money:&nbsp;</td><td class="text right-align" id="character-info-money"></td>
+                </tr>
+                <tr><td>&nbsp;</td></tr>
+            </table>
+
+            <table>
+                <tr><td class="text"><b>Stats</b></td></tr>
+                <tr><td>&nbsp;</td></tr>
+                <tr>
+                    <td class="text">Hacking Level:&nbsp;</td>
+                    <td class="text right-align" id="character-info-hacking">1</td>
+                    <td class="text right-align" id="character-info-hacking-exp">(%s experience)</td>
+                </tr>
+                <tr>
+                    <td class="text">Strength:&nbsp;</td>
+                    <td class="text right-align" id="character-info-strength">1</td>
+                    <td class="text right-align" id="character-info-strength-exp">(%s experience)</td>
+                </tr>
+                <tr>
+                    <td class="text">Defense:&nbsp;</td>
+                    <td class="text right-align" id="character-info-defense">1</td>
+                    <td class="text right-align" id="character-info-defense-exp">(%s experience)</td>
+                </tr>
+                <tr>
+                    <td class="text">Dexterity:&nbsp;</td>
+                    <td class="text right-align" id="character-info-dexterity">1</td>
+                    <td class="text right-align" id="character-info-dexterity-exp">(%s experience)</td>
+                </tr>
+                <tr>
+                    <td class="text">Agility:&nbsp;</td>
+                    <td class="text right-align" id="character-info-agility">1</td>
+                    <td class="text right-align" id="character-info-agility-exp">(%s experience)</td>
+                </tr>
+                <tr>
+                    <td class="text">Charisma:&nbsp;</td>
+                    <td class="text right-align" id="character-info-charisma">1</td>
+                    <td class="text right-align" id="character-info-charisma-exp">(%s experience)</td>
+                </tr>
+                <tr class="hidden" id="character-info-intelligence-row">
+                    <td class="text">Intelligence:&nbsp;</td>
+                    <td class="text right-align" id="character-info-intelligence">1</td>
+                </tr>
+                <tr><td>&nbsp;</td></tr>
+            </table>
+
+            <table>
+                <tr><td class="text"><b>Multipliers</b></td></tr>
+                <tr><td>&nbsp;</td></tr>
+                <tr>
+                    <td class="text">Hacking Chance multiplier:&nbsp;<td>
+                    <td class="text right-align" id="character-info-hacking-chance">100%</td>
+                </tr>
+                <tr>
+                    <td class="text">Hacking Speed multiplier:&nbsp;<td>
+                    <td class="text right-align" id="character-info-hacking-speed">100%</td>
+                </tr>
+                <tr>
+                    <td class="text">Hacking Money multiplier:&nbsp;<td>
+                    <td class="text right-align" id="character-info-hacking-money">100%</td>
+                </tr>
+                <tr>
+                    <td class="text">Hacking Growth multiplier:&nbsp;<td>
+                    <td class="text right-align" id="character-info-hacking-growth">100%</td>
+                </tr>
+                <tr><td>&nbsp;</td></tr>
+            </table>
+            <table>
+                <tr>
+                    <td class="text">Hacking Level multiplier:&nbsp;<td>
+                    <td class="text right-align" id="character-info-hacking-lvl-mult">100%</td>
+                </tr>
+                <tr>
+                    <td class="text">Hacking Experience multiplier:&nbsp;<td>
+                    <td class="text right-align" id="character-info-hacking-exp-mult">100%</td>
+                </tr>
+                <tr><td>&nbsp;</td></tr>
+            </table>
+            <table>
+                <tr>
+                    <td class="text">Strength Level multiplier:&nbsp;<td>
+                    <td class="text right-align" id="character-info-strength-lvl-mult">100%</td>
+                </tr>
+                <tr>
+                    <td class="text">Strength Experience multiplier:&nbsp;<td>
+                    <td class="text right-align" id="character-info-strength-exp-mult">100%</td>
+                </tr>
+                <tr><td>&nbsp;</td></tr>
+            </table>
+            <table>
+                <tr>
+                    <td class="text">Defense Level multiplier:&nbsp;<td>
+                    <td class="text right-align" id="character-info-defense-lvl-mult">100%</td>
+                </tr>
+                <tr>
+                    <td class="text">Defense Experience multiplier:&nbsp;<td>
+                    <td class="text right-align" id="character-info-defense-exp-mult">100%</td>
+                </tr>
+                <tr><td>&nbsp;</td></tr>
+            </table>
+            <table>
+                <tr>
+                    <td class="text">Dexterity Level multiplier:&nbsp;<td>
+                    <td class="text right-align" id="character-info-dexterity-lvl-mult">100%</td>
+                </tr>
+                <tr>
+                    <td class="text">Dexterity Experience multiplier:&nbsp;<td>
+                    <td class="text right-align" id="character-info-dexterity-exp-mult">100%</td>
+                </tr>
+                <tr><td>&nbsp;</td></tr>
+            </table>
+            <table>
+                <tr>
+                    <td class="text">Agility Level multiplier:&nbsp;<td>
+                    <td class="text right-align" id="character-info-agility-lvl-mult">100%</td>
+                </tr>
+                <tr>
+                    <td class="text">Agility Experience multiplier:&nbsp;<td>
+                    <td class="text right-align" id="character-info-agility-exp-mult">100%</td>
+                </tr>
+                <tr><td>&nbsp;</td></tr>
+            </table>
+            <table>
+                <tr>
+                    <td class="text">Charisma Level multiplier:&nbsp;<td>
+                    <td class="text right-align" id="character-info-charisma-lvl-mult">100%</td>
+                </tr>
+                <tr>
+                    <td class="text">Charisma Experience multiplier:&nbsp;<td>
+                    <td class="text right-align" id="character-info-charisma-exp-mult">100%</td>
+                </tr>
+                <tr><td>&nbsp;</td></tr>
+            </table>
+            <table>
+                <tr>
+                    <td class="text">Hacknet Node production multiplier:&nbsp;<td>
+                    <td class="text right-align" id="character-info-hacknet-production">100%</td>
+                </tr>
+                <tr>
+                    <td class="text">Hacknet Node purchase cost multiplier:&nbsp;<td>
+                    <td class="text right-align" id="character-info-hacknet-purchase">100%</td>
+                </tr>
+                <tr>
+                    <td class="text">Hacknet Node RAM upgrade cost multiplier:&nbsp;<td>
+                    <td class="text right-align" id="character-info-hacknet-ram">100%</td>
+                </tr>
+                <tr>
+                    <td class="text">Hacknet Node Core purchase cost multiplier:&nbsp;<td>
+                    <td class="text right-align" id="character-info-hacknet-core">100%</td>
+                </tr>
+                <tr>
+                    <td class="text">Hacknet Node level upgrade cost multiplier:&nbsp;<td>
+                    <td class="text right-align" id="character-info-hacknet-level">100%</td>
+                </tr>
+                <tr><td>&nbsp;</td></tr>
+            </table>
+            <table>
+                <tr>
+                    <td class="text">Company reputation gain multiplier:&nbsp;<td>
+                    <td class="text right-align" id="character-info-company-reputation-gain">100%</td>
+                </tr>
+                <tr>
+                    <td class="text">Faction reputation gain multiplier:&nbsp;<td>
+                    <td class="text right-align" id="character-info-faction-reputation-gain">100%</td>
+                </tr>
+                <tr>
+                    <td class="text">Salary multiplier:&nbsp;<td>
+                    <td class="text right-align" id="character-info-salary">100%</td>
+                </tr>
+                <tr>
+                    <td class="text">Crime success multiplier:&nbsp;<td>
+                    <td class="text right-align" id="character-info-crime-success">100%</td>
+                </tr>
+                <tr>
+                    <td class="text">Crime money multiplier:&nbsp;<td>
+                    <td class="text right-align" id="character-info-crime-money">100%</td>
+                </tr>
+                <tr><td>&nbsp;</td></tr>
+            </table>
+
+            <table>
+                <tr><td class="text"><b>Misc.</b></td></tr>
+                <tr><td>&nbsp;</td></tr>
+                <tr>
+                    <td class="text">Servers owned:&nbsp;</td>
+                    <td class="text right-align" id="character-info-servers-owned"></td>
+                </tr>
+                <tr>
+                    <td class="text">Hacknet Nodes owned:&nbsp;</td>
+                    <td class="text right-align" id="character-info-hacknet-owned"></td>
+                </tr>
+                <tr>
+                    <td class="text">Augmentations installed:&nbsp;</td>
+                    <td class="text right-align" id="character-info-aug-installed"></td>
+                </tr>
+                <tr><td>&nbsp;</td></tr>
+            </table>
+
+            <table>
+                <tr>
+                    <td class="text">Time played since last Augmentation:&nbsp;</td>
+                    <td class="text right-align" id="character-info-aug-time"></td>
+                </tr>
+                <tr class="hidden" id="character-info-bitnode-time-row">
+                    <td class="text">Time played since last Bitnode destroyed:&nbsp;</td>
+                    <td class="text right-align" id="character-info-bitnode-time"></td>
+                </tr>
+                <tr>
+                    <td class="text">Time played:&nbsp;</td>
+                    <td class="text right-align" id="character-info-total-time"></td>
+                </tr>
+                <tr><td>&nbsp;</td></tr>
+            </table>
+
+            <div id="character-info-current-bitnode" class="hidden">
+                <p>Current BitNode: <span id="character-info-bitnode-n"></span> (<span id="character-info-bitnode-name"></span>)</p><br>
+                <p id="character-info-bitnode-info" style="margin-left: 4%; font-size: 13px; width: 60%;"></p>
+            </div>
+        </div>
     </div>
 
 	<!-- Active scripts info page -->
