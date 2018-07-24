@@ -1112,7 +1112,8 @@ function initAugmentations() {
              "This augmentation: <br>" +
              "Increases the player's agility by 10% <br>" +
              "Increases the player's defense by 10% <br>" +
-             "Increases the amount of money the player gains from crimes by 25%"
+             "Increases the amount of money the player gains from crimes by 25%",
+	prereqs:[AugmentationNames.LuminCloaking1]
     });
     LuminCloaking2.addToFactions(["Slum Snakes", "Tetrads"]);
     if (augmentationExists(AugmentationNames.LuminCloaking2)) {
