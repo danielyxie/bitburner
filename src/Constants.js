@@ -497,7 +497,7 @@ let CONSTANTS = {
     "as if you had hacked it with 2000 threads (change by hydroflame)<br>" +
     "* Added getCurrentAction() to Bladeburner API<br>" +
     "* Added a variety of functions to Bladeburner API that deal with action levels (change by hydroflame)<br>" +
-    "* Added getPurchasedServerLimit() and getPurchasedServerMaxRam() functions to Netscript (change by hydroflame & kopelli)<br>" + 
+    "* Added getPurchasedServerLimit() and getPurchasedServerMaxRam() functions to Netscript (change by hydroflame & kopelli)<br>" +
     "* Completely re-designed the Hacknet Node API<br>" +
     "* getSkillLevel() in Bladeburner API now returns an error if no argument is passed in (as opposed to an object with all skill levels). This may break scripts<br>" +
     "* Minimum Netscript execution time reduced from 15ms to 10ms (configurable in Options)<br>" +
@@ -505,7 +505,8 @@ let CONSTANTS = {
     "* Source-File 6 now increases both the level and experience gain of all combat stats (it was only experience gain previously)<br>" +
     "* Reverted a previous change for Source-File 12. It's benefits are now multiplicative rather than additive<br>" +
     "* Starting Infiltration security level for almost every location decreased by ~10%<br>" +
-    "* Bug Fix: Infiltration buttons can no longer be clicked through NetscriptJS<br>"
+    "* Bug Fix: Infiltration buttons can no longer be clicked through NetscriptJS<br>" +
+    "* Bug Fix: Bladeburner 'Overclock' skill can no longer be leveled above max level through the API (by hydroflame)"
 }
 
 export {CONSTANTS};
