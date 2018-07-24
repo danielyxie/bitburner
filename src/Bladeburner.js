@@ -2015,7 +2015,7 @@ Bladeburner.prototype.createContractsContent = function() {
     }
 
     DomElems.actionsAndSkillsDesc.innerHTML =
-        "Complete contracts in order to increase your Bitburner rank and earn money. " +
+        "Complete contracts in order to increase your Bladeburner rank and earn money. " +
         "Failing a contract will cause you to lose HP, which can lead to hospitalization.<br><br>" +
         "You can unlock higher-level contracts by successfully completing them. " +
         "Higher-level contracts are more difficult, but grant more rank, experience, and money.";
