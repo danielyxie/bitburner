@@ -1280,7 +1280,7 @@ Bladeburner.prototype.completeAction = function() {
                     teamLossMax = Math.floor(teamCount);
 
                     if (this.logging.blackops) {
-                        this.log(action.name + " failed! Lost " + formatNumber(rankLoss, 1) + " rank and took" + formatNumber(damage, 0) + " damage");
+                        this.log(action.name + " failed! Lost " + formatNumber(rankLoss, 1) + " rank and took " + formatNumber(damage, 0) + " damage");
                     }
                 }
 
