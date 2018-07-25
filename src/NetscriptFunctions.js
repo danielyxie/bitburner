@@ -298,7 +298,11 @@ function NetscriptFunctions(workerScript) {
                 var expGainedOnFailure = (expGainedOnSuccess / 4);
                 if (rand < hackChance) { //Success!
                     const percentHacked = scriptCalculatePercentMoneyHacked(server);
-                    const maxThreadNeeded = Math.ceil(1/percentHacked*(server.moneyAvailable/server.moneyMax))
+                    let maxThreadNeeded = Math.ceil(1/percentHacked*(server.moneyAvailable/server.moneyMax));
+                    if (isNaN(maxThreadNeeded)) {
+                        maxThreadNeeded = 1e6; //Server has a 'max money' of 0 (probably)
+                    }
+
                     let moneyGained = Math.floor(server.moneyAvailable * percentHacked) * threads;
 
                     //Over-the-top safety checks
