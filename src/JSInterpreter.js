@@ -30,9 +30,12 @@ import * as acorn from "../utils/acorn";
  * @param {Function=} opt_initFunc Optional initialization function.  Used to
  *     define APIs.  When called it is passed the interpreter object and the
  *     global scope object.
+ * @param {Number} Bitburner-specific number used for determining exception line numbers
  * @constructor
  */
-var Interpreter = function(code, opt_initFunc) {
+var Interpreter = function(code, opt_initFunc, lineOffset=0) {
+  this.sourceCode = code;
+  this.sourceCodeLineOffset = lineOffset;
   if (typeof code === 'string') {
     code = acorn.parse(code, Interpreter.PARSE_OPTIONS);
   }
@@ -146,6 +149,37 @@ Interpreter.VALUE_IN_DESCRIPTOR = {};
  * Since this is for atomic actions only, it can be a class property.
  */
 Interpreter.toStringCycles_ = [];
+
+/**
+ * Determine error/exception line number in Bitburner source code
+ * @param {Object} AST Node that causes Error/Exception
+ */
+Interpreter.prototype.getErrorLineNumber = function(node) {
+  var code = this.sourceCode;
+  if (node == null || node.start == null) {return NaN;}
+  try {
+    code = code.substring(0, node.start);
+    return (code.match(/\n/g) || []).length + 1 - this.sourceCodeLineOffset;
+  } catch(e) {
+    return NaN;
+  }
+}
+
+/**
+ * Generate the appropriate line number error message for Bitburner
+ * @param {Number} lineNumber
+ */
+Interpreter.prototype.getErrorLineNumberMessage = function(lineNumber) {
+  if (isNaN(lineNumber)) {
+      return " (Unknown line number)";
+  } else if (lineNumber <= 0) {
+      return " (Error occurred in an imported function)";
+  } else {
+      return " (Line Number " + lineNumber + ". This line number is probably incorrect " +
+             "if your script is importing any functions. This is being worked on)";
+  }
+
+}
 
 /**
  * Add more code to the interpreter.
@@ -2575,7 +2609,7 @@ Interpreter.prototype.setValue = function(ref, value) {
  *   provided) or the value to throw (if no message).
  * @param {string=} opt_message Message being thrown.
  */
-Interpreter.prototype.throwException = function(errorClass, opt_message) {
+Interpreter.prototype.throwException = function(errorClass, opt_message, lineNumber) {
   if (opt_message === undefined) {
     var error = errorClass;  // This is a value to throw, not an error class.
   } else {
@@ -2583,7 +2617,11 @@ Interpreter.prototype.throwException = function(errorClass, opt_message) {
     this.setProperty(error, 'message', opt_message,
         Interpreter.NONENUMERABLE_DESCRIPTOR);
   }
-  this.unwind(Interpreter.Completion.THROW, error, undefined);
+  var lineNumErrorMsg;
+  if (lineNumber !=  null) {
+      lineNumErrorMsg = this.getErrorLineNumberMessage(lineNumber);
+  }
+  this.unwind(Interpreter.Completion.THROW, error, undefined, lineNumErrorMsg);
   // Abort anything related to the current step.
   throw Interpreter.STEP_ERROR;
 };
@@ -2597,7 +2635,7 @@ Interpreter.prototype.throwException = function(errorClass, opt_message) {
  * @param {Interpreter.Value=} value Value computed, returned or thrown.
  * @param {string=} label Target label for break or return.
  */
-Interpreter.prototype.unwind = function(type, value, label) {
+Interpreter.prototype.unwind = function(type, value, label, lineNumberMsg="") {
   if (type === Interpreter.Completion.NORMAL) {
     throw TypeError('Should not unwind for NORMAL completions');
   }
@@ -2645,9 +2683,9 @@ Interpreter.prototype.unwind = function(type, value, label) {
     var name = this.getProperty(value, 'name').toString();
     var message = this.getProperty(value, 'message').valueOf();
     var type = errorTable[name] || Error;
-    realError = type(message);
+    realError = type(message + lineNumberMsg);
   } else {
-    realError = String(value);
+    realError = String(value + lineNumberMsg);
   }
   throw realError;
 };
@@ -2839,15 +2877,17 @@ Interpreter.prototype['stepBinaryExpression'] = function(stack, state, node) {
     case '>>>': value = leftValue >>> rightValue; break;
     case 'in':
       if (!rightValue || !rightValue.isObject) {
+        let lineNum = this.getErrorLineNumber(node);
         this.throwException(this.TYPE_ERROR,
-            "'in' expects an object, not '" + rightValue + "'");
+            "'in' expects an object, not '" + rightValue + "'", lineNum);
       }
       value = this.hasProperty(rightValue, leftValue);
       break;
     case 'instanceof':
       if (!this.isa(rightValue, this.FUNCTION)) {
+        let lineNum = this.getErrorLineNumber(node);
         this.throwException(this.TYPE_ERROR,
-            'Right-hand side of instanceof is not an object');
+            'Right-hand side of instanceof is not an object', lineNum);
       }
       value = leftValue.isObject ? this.isa(leftValue, rightValue) : false;
       break;
@@ -2920,7 +2960,8 @@ Interpreter.prototype['stepCallExpression'] = function(stack, state, node) {
     if (node['type'] === 'NewExpression') {
       if (func.illegalConstructor) {
         // Illegal: new escape();
-        this.throwException(this.TYPE_ERROR, func + ' is not a constructor');
+        let lineNum = this.getErrorLineNumber(node);
+        this.throwException(this.TYPE_ERROR, func + ' is not a constructor', lineNum);
       }
       // Constructor, 'this' is new object.
       var proto = func.properties['prototype'];
@@ -2939,7 +2980,8 @@ Interpreter.prototype['stepCallExpression'] = function(stack, state, node) {
   if (!state.doneExec_) {
     state.doneExec_ = true;
     if (!func || !func.isObject) {
-      this.throwException(this.TYPE_ERROR, func + ' is not a function');
+      let lineNum = this.getErrorLineNumber(node);
+      this.throwException(this.TYPE_ERROR, func + ' is not a function', lineNum);
     }
     var funcNode = func.node;
     if (funcNode) {
@@ -2977,7 +3019,8 @@ Interpreter.prototype['stepCallExpression'] = function(stack, state, node) {
           var ast = acorn.parse(code.toString(), Interpreter.PARSE_OPTIONS);
         } catch (e) {
           // Acorn threw a SyntaxError.  Rethrow as a trappable error.
-          this.throwException(this.SYNTAX_ERROR, 'Invalid code: ' + e.message);
+          let lineNum = this.getErrorLineNumber(node);
+          this.throwException(this.SYNTAX_ERROR, 'Invalid code: ' + e.message, lineNum);
         }
         var evalNode = new this.nodeConstructor();
         evalNode['type'] = 'EvalProgram_';
@@ -3014,7 +3057,8 @@ Interpreter.prototype['stepCallExpression'] = function(stack, state, node) {
       var f = new F();
       f();
       */
-      this.throwException(this.TYPE_ERROR, func.class + ' is not a function');
+      let lineNum = this.getErrorLineNumber(node);
+      this.throwException(this.TYPE_ERROR, func.class + ' is not a function', lineNum);
     }
   } else {
     // Execution complete.  Put the return value on the stack.
@@ -3129,8 +3173,9 @@ Interpreter.prototype['stepForInStatement'] = function(stack, state, node) {
     if (node['left']['declarations'] &&
         node['left']['declarations'][0]['init']) {
       if (state.scope.strict) {
+        let lineNum = this.getErrorLineNumber(node);
         this.throwException(this.SYNTAX_ERROR,
-            'for-in loop variable declaration may not have an initializer.');
+            'for-in loop variable declaration may not have an initializer.', lineNum);
       }
       // Variable initialization: for (var x = 4 in y)
       return new Interpreter.State(node['left'], state.scope);

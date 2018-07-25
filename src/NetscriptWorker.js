@@ -166,9 +166,11 @@ function startNetscript1Script(workerScript) {
     workerScript.running = true;
 
     //Process imports
-    var ast;
+    var codeWithImports, codeLineOffset;
     try {
-        ast = processNetscript1Imports(code, workerScript);
+        let importProcessingRes = processNetscript1Imports(code, workerScript);
+        codeWithImports = importProcessingRes.code;
+        codeLineOffset  = importProcessingRes.lineOffset;
     } catch(e) {
         dialogBoxCreate("Error processing Imports in " + workerScript.name + ":<br>" +  e);
         workerScript.env.stopFlag = true;
@@ -197,6 +199,23 @@ function startNetscript1Script(workerScript) {
                         });
                     }
                     int.setProperty(scope, name, int.createAsyncFunction(tempWrapper));
+                } else if (name === "sprintf" || name === "vsprintf") {
+                    let tempWrapper = function() {
+                        let fnArgs = [];
+
+                        //All of the Object/array elements are in JSInterpreter format, so
+                        //we have to convert them back to native format to pass them to these fns
+                        for (let i = 0; i < arguments.length; ++i) {
+                            if (typeof arguments[i] === 'object' || arguments[i].constructor === Array) {
+                                fnArgs.push(int.pseudoToNative(arguments[i]));
+                            } else {
+                                fnArgs.push(arguments[i]);
+                            }
+                        }
+
+                        return entry.apply(null, fnArgs);
+                    }
+                    int.setProperty(scope, name, int.createNativeFunction(tempWrapper));
                 } else {
                     let tempWrapper = function() {
                         let res = entry.apply(null, arguments);
@@ -205,7 +224,6 @@ function startNetscript1Script(workerScript) {
                             return res;
                         } else if (res.constructor === Array || (res === Object(res))) {
                             //Objects and Arrays must be converted to the interpreter's format
-                            console.log("Function returning object detected: " + name);
                             return int.nativeToPseudo(res);
                         } else {
                             return res;
@@ -225,7 +243,7 @@ function startNetscript1Script(workerScript) {
 
     var interpreter;
     try {
-        interpreter = new Interpreter(ast, interpreterInitialization);
+        interpreter = new Interpreter(codeWithImports, interpreterInitialization, codeLineOffset);
     } catch(e) {
         dialogBoxCreate("Syntax ERROR in " + workerScript.name + ":<br>" +  e);
         workerScript.env.stopFlag = true;
@@ -273,7 +291,11 @@ function startNetscript1Script(workerScript) {
     we'll implement it ourselves by parsing the Nodes in the AST out.
 
     @param code - The script's code
-    @returns - ES5-compliant AST with properly imported functions
+    @returns {Object} {
+        code: Newly-generated code with imported functions
+        lineOffset: Net number of lines of code added/removed due to imported functions
+                    Should typically be positive
+    }
 */
 function processNetscript1Imports(code, workerScript) {
     //allowReserved prevents 'import' from throwing error in ES5
@@ -294,10 +316,12 @@ function processNetscript1Imports(code, workerScript) {
     }
 
     var generatedCode = ""; //Generated Javascript Code
+    var hasImports = false;
 
     //Walk over the tree and process ImportDeclaration nodes
     walk.simple(ast, {
         ImportDeclaration: (node) => {
+            hasImports = true;
             let scriptName = node.source.value;
             let script = getScript(scriptName);
             if (script == null) {
@@ -336,7 +360,7 @@ function processNetscript1Imports(code, workerScript) {
 
                 //Finish
                 generatedCode += (
-                    "})(" + namespace + " || " + "(" + namespace + " = {}));"
+                    "})(" + namespace + " || " + "(" + namespace + " = {}));\n"
                 )
             } else {
                 //import {...} from script
@@ -366,22 +390,34 @@ function processNetscript1Imports(code, workerScript) {
         }
     });
 
+    //If there are no imports, just return the original code
+    if (!hasImports) {return {code:code, lineOffset:0};}
+
     //Remove ImportDeclarations from AST. These ImportDeclarations must be in top-level
+    var linesRemoved = 0;
     if (ast.type !== "Program" || ast.body == null) {
         throw new Error("Code could not be properly parsed");
     }
     for (let i = ast.body.length-1; i >= 0; --i) {
         if (ast.body[i].type === "ImportDeclaration") {
             ast.body.splice(i, 1);
+            ++linesRemoved;
         }
     }
+
+    //Calculated line offset
+    var lineOffset = (generatedCode.match(/\n/g) || []).length - linesRemoved;
 
     //Convert the AST back into code
     code = generate(ast);
 
     //Add the imported code and re-generate in ES5 (JS Interpreter for NS1 only supports ES5);
     code = generatedCode + code;
-    return parse(code, {ecmaVersion:5});
+    var res = {
+        code:       code,
+        lineOffset: lineOffset
+    }
+    return res;
 }
 
 //Loop through workerScripts and run every script that is not currently running
