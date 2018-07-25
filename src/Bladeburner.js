@@ -1662,6 +1662,7 @@ Bladeburner.prototype.initializeDomElementRefs = function() {
         overviewEstComms:           null,
         overviewChaos:              null,
         overviewSkillPoints:        null,
+        overviewBonusTime:          null,
         overviewAugSuccessMult:     null,
         overviewAugMaxStaminaMult:  null,
         overviewAugStaminaGainMult: null,
@@ -1825,7 +1826,14 @@ Bladeburner.prototype.createOverviewContent = function() {
                 "Having too high of a chaos level can make contracts and operations harder."
     });
 
+    DomElems.overviewBonusTime = createElement("p", {
+      innerText: "Bonus time: ",
+      display: "inline-block",
+      tooltip: "You gain bonus time while offline or when you're not performing any action. " +
+        "Bonus time makes the game progress faster."
+    });
     DomElems.overviewSkillPoints = createElement("p", {display:"block"});
+    
 
     DomElems.overviewAugSuccessMult = createElement("p", {display:"block"});
     DomElems.overviewAugMaxStaminaMult = createElement("p", {display:"block"});
@@ -1845,6 +1853,7 @@ Bladeburner.prototype.createOverviewContent = function() {
     appendLineBreaks(DomElems.overviewDiv, 1);
     DomElems.overviewDiv.appendChild(DomElems.overviewChaos);
     appendLineBreaks(DomElems.overviewDiv, 2);
+    DomElems.overviewDiv.appendChild(DomElems.overviewBonusTime);
     DomElems.overviewDiv.appendChild(DomElems.overviewSkillPoints);
     appendLineBreaks(DomElems.overviewDiv, 1);
     DomElems.overviewDiv.appendChild(DomElems.overviewAugSuccessMult);
@@ -2205,6 +2214,7 @@ Bladeburner.prototype.updateOverviewContent = function() {
     DomElems.overviewEstComms.childNodes[0].nodeValue = "Est. Synthoid Communities: " + formatNumber(this.getCurrentCity().comms, 0);
     DomElems.overviewChaos.childNodes[0].nodeValue = "City Chaos: " + formatNumber(this.getCurrentCity().chaos);
     DomElems.overviewSkillPoints.innerText = "Skill Points: " + formatNumber(this.skillPoints, 0);
+    DomElems.overviewBonusTime.childNodes[0].nodeValue = "Bonus time: " + this.storedCycles/CyclesPerSecond;
     DomElems.overviewAugSuccessMult.innerText = "Aug. Success Chance Mult: " + formatNumber(Player.bladeburner_success_chance_mult*100, 1) + "%";
     DomElems.overviewAugMaxStaminaMult.innerText = "Aug. Max Stamina Mult: " + formatNumber(Player.bladeburner_max_stamina_mult*100, 1) + "%";
     DomElems.overviewAugStaminaGainMult.innerText = "Aug. Stamina Gain Mult: " + formatNumber(Player.bladeburner_stamina_gain_mult*100, 1) + "%";
