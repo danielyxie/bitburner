@@ -558,18 +558,40 @@ let Engine = {
 
     displayCharacterOverviewInfo: function() {
         if (Player.hp == null) {Player.hp = Player.max_hp;}
-        var overviewText = "Hp:    " + Player.hp + " / " + Player.max_hp + "<br>" +
-                           "Money: " + numeral(Player.money.toNumber()).format('($0.000a)') + "<br>" +
-                           "Hack:  " + (Player.hacking_skill).toLocaleString() + "<br>" +
-                           "Str:   " + (Player.strength).toLocaleString() + "<br>" +
-                           "Def:   " + (Player.defense).toLocaleString() + "<br>" +
-                           "Dex:   " + (Player.dexterity).toLocaleString() + "<br>" +
-                           "Agi:   " + (Player.agility).toLocaleString() + "<br>" +
-                           "Cha:   " + (Player.charisma).toLocaleString();
-        if (Player.intelligence >= 1) {
-            overviewText += "<br>Int:   " + (Player.intelligence).toLocaleString();
+
+        const replaceAndChanged = function(elem, text) {
+            if(elem.textContent === text) {
+                return false;
+            }
+            elem.textContent = text;
+            return true;
         }
-        document.getElementById("character-overview-text").innerHTML = overviewText.replace( / /g, "&nbsp;");
+
+        let changed = false;
+        changed = replaceAndChanged(document.getElementById("character-hp-text"), Player.hp + " / " + Player.max_hp) || changed;
+        changed = replaceAndChanged(document.getElementById("character-money-text"), numeral(Player.money.toNumber()).format('($0.000a)')) || changed;
+        changed = replaceAndChanged(document.getElementById("character-hack-text"), (Player.hacking_skill).toLocaleString()) || changed;
+        changed = replaceAndChanged(document.getElementById("character-str-text"), (Player.strength).toLocaleString()) || changed;
+        changed = replaceAndChanged(document.getElementById("character-def-text"), (Player.defense).toLocaleString()) || changed;
+        changed = replaceAndChanged(document.getElementById("character-dex-text"), (Player.dexterity).toLocaleString()) || changed;
+        changed = replaceAndChanged(document.getElementById("character-agi-text"), (Player.agility).toLocaleString()) || changed;
+        changed = replaceAndChanged(document.getElementById("character-cha-text"), (Player.charisma).toLocaleString()) || changed;
+        changed = replaceAndChanged(document.getElementById("character-int-text"), (Player.intelligence).toLocaleString()) || changed;
+
+        // handle int appearing
+        const int = document.getElementById("character-int-wrapper");
+        const old = int.style.display;
+        const now = Player.intelligence >= 1 ? "" : "none"; // new is a reserved keyword
+        if(old !== now) {
+            int.style.display = now;
+            changed = true;
+        }
+
+        // recalculate box size if something changed
+        if(changed) {
+            // this is an arbitrary function we can call to trigger a repaint.
+            document.getElementById("character-overview-text").getClientRects();
+        }
     },
 
     /* Display character info */
