@@ -570,6 +570,16 @@ let Engine = {
             overviewText += "<br>Int:   " + (Player.intelligence).toLocaleString();
         }
         document.getElementById("character-overview-text").innerHTML = overviewText.replace( / /g, "&nbsp;");
+        
+        
+
+        const save = document.getElementById("character-overview-save-button");
+        const flashClass = "flashing-button";
+        if(!Settings.AutosaveInterval) {    
+            save.classList.add(flashClass);
+        } else {
+            save.classList.remove(flashClass);
+        }
     },
 
     /* Display character info */
