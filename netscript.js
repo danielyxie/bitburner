@@ -82,9 +82,9 @@ let NetscriptFunctions =
     "getCompanyFavor|stopAction|getFactionFavor|"                              +
     "checkFactionInvitations|joinFaction|workForFaction|getFactionRep|"        +
     "createProgram|commitCrime|getCrimeChance|getOwnedAugmentations|"          +
-    "getAugmentationsFromFaction|"                                             +
+    "getOwnedSourceFiles|getAugmentationsFromFaction|"                         +
     "getAugmentationCost|purchaseAugmentation|"                                +
-    "installAugmentations|"   +
+    "installAugmentations|"                                                    +
     "getStockPrice|getStockPosition|buyStock|sellStock|shortStock|sellShort|"  +
     "placeOrder|cancelOrder|"                                                  +
     //Hacknet Node API
