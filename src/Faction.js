@@ -669,7 +669,7 @@ function purchaseAugmentation(aug, fac, sing=false) {
         var txt = "You must first purchase or install " + aug.prereqs.join(",") + " before you can " +
                   "purchase this one.";
         if (sing) {return txt;} else {dialogBoxCreate(txt);}
-    } else if (Player.money.lt(aug.baseCost * factionInfo.augmentationPriceMult)) {
+    } else if (aug.baseCost !== 0 && Player.money.lt(aug.baseCost * factionInfo.augmentationPriceMult)) {
         let txt = "You don't have enough money to purchase " + aug.name;
         if (sing) {return txt;}
         dialogBoxCreate(txt);
@@ -677,7 +677,7 @@ function purchaseAugmentation(aug, fac, sing=false) {
         let txt = "You don't have enough faction reputation to purchase " + aug.name;
         if (sing) {return txt;}
         dialogBoxCreate(txt);
-    } else if (Player.money.gte(aug.baseCost * factionInfo.augmentationPriceMult)) {
+    } else if (aug.baseCost === 0 || Player.money.gte(aug.baseCost * factionInfo.augmentationPriceMult)) {
         if (Player.firstAugPurchased === false) {
             Player.firstAugPurchased = true;
             document.getElementById("augmentations-tab").style.display = "list-item";
