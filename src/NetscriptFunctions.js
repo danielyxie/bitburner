@@ -3094,6 +3094,25 @@ function NetscriptFunctions(workerScript) {
             }
             return res;
         },
+        getOwnedSourceFiles : function() {
+            let ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
+            if (Player.bitNodeN !== 4) {ramCost *= 8;}
+            if (workerScript.checkingRam) {
+                return updateStaticRam("getOwnedSourceFiles", ramCost);
+            }
+            updateDynamicRam("getOwnedSourceFiles", ramCost);
+            if (Player.bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 3)) {
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run getOwnedSourceFiles(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
+                    return [];
+                }
+            }
+            let res = [];
+            for (let i = 0; i < Player.sourceFiles.length; ++i) {
+                res.push({n: Player.sourceFiles[i].n, lvl: Player.sourceFiles[i].lvl});
+            }
+            return res;
+        },
         getAugmentationsFromFaction : function(facname) {
             var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
             if (Player.bitNodeN !== 4) {ramCost *= 8;}
