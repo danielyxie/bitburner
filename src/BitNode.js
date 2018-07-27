@@ -392,7 +392,7 @@ function initBitNodeMultipliers() {
             BitNodeMultipliers.InfiltrationRep   = dec;
 
             BitNodeMultipliers.CorporationValuation = dec;
-        
+
             BitNodeMultipliers.BladeburnerRank      = dec;
             BitNodeMultipliers.BladeburnerSkillCost = dec;
             break;
