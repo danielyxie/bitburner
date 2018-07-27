@@ -357,8 +357,8 @@ function initBitNodeMultipliers() {
                     sf12Lvl = Player.sourceFiles[i].lvl;
                 }
             }
-            var inc = Math.pow(1.01, sf12Lvl);
-            var dec = Math.pow(0.99, sf12Lvl);
+            var inc = Math.pow(1.02, sf12Lvl);
+            var dec = Math.pow(0.98, sf12Lvl);
             BitNodeMultipliers.HackingLevelMultiplier = dec;
 
             BitNodeMultipliers.ServerMaxMoney         = dec;
@@ -392,6 +392,10 @@ function initBitNodeMultipliers() {
             BitNodeMultipliers.InfiltrationRep   = dec;
 
             BitNodeMultipliers.CorporationValuation = dec;
+            
+            BitNodeMultipliers.BladeburnerRank = dec;
+            // verify what happens to non-integer values of BladeburnerSkillCost before enabling this.
+            //BitNodeMultipliers.BladeburnerSkillCost = dec;
             break;
         default:
             console.log("WARNING: Player.bitNodeN invalid");
