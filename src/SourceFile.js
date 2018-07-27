@@ -47,7 +47,7 @@ function initSourceFiles() {
                                                    "Level 2: 12%<br>" +
                                                    "Level 3: 14%");
     SourceFiles["SourceFile6"] = new SourceFile(6, "This Source-File allows you to access the NSA's Bladeburner Division in other " +
-                                                   "BitNodes. In addition, this Source-File will raise the experience gain rate of all your combat stats by:<br><br>" +
+                                                   "BitNodes. In addition, this Source-File will raise both the level and experience gain rate of all your combat stats by:<br><br>" +
                                                    "Level 1: 8%<br>" +
                                                    "Level 2: 12%<br>" +
                                                    "Level 3: 14%");
@@ -70,8 +70,8 @@ function initSourceFiles() {
                                                      "Level 1: 24%<br>" +
                                                      "Level 2: 36%<br>" +
                                                      "Level 3: 42%<br>");
-    SourceFiles["SourceFile12"] = new SourceFile(12, "This Source-File increases all your multipliers by 1% per level. This effect is additive with itself, " +
-                                                     "NOT multiplicative. In other words, level N of this Source-File will increase all of your multipliers by N%");
+    SourceFiles["SourceFile12"] = new SourceFile(12, "This Source-File increases all your multipliers by 1% per level. This effect is multiplicative with itself. " +
+                                                     "In other words, level N of this Source-File will result in a multiplier of 1.01^N (or 0.99^N for multipliers that decrease)");
 }
 
 function PlayerOwnedSourceFile(number, level) {
@@ -168,6 +168,10 @@ function applySourceFile(srcFile) {
             Player.defense_exp_mult         *= incMult;
             Player.dexterity_exp_mult       *= incMult;
             Player.agility_exp_mult         *= incMult;
+            Player.strength_mult            *= incMult;
+            Player.defense_mult             *= incMult;
+            Player.dexterity_mult           *= incMult;
+            Player.agility_mult             *= incMult;
             break;
         case 7: //Bladeburner 2079
             var mult = 0;
@@ -198,8 +202,8 @@ function applySourceFile(srcFile) {
             Player.company_rep_mult   *= incMult;
             break;
         case 12: //The Recursion
-            var inc = 1 + (srcFile.lvl/100);
-            var dec = 1 - (srcFile.lvl/100);
+            var inc = Math.pow(1.01, srcFile.lvl);
+            var dec = Math.pow(0.99, srcFile.lvl);
 
             Player.hacking_chance_mult *= inc;
             Player.hacking_speed_mult  *= inc;
@@ -233,6 +237,7 @@ function applySourceFile(srcFile) {
             Player.hacknet_node_level_cost_mult       *= dec;
 
             Player.work_money_mult    *= inc;
+            break;
         default:
             console.log("ERROR: Invalid source file number: " + srcFile.n);
             break;

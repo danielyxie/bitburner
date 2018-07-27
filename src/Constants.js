@@ -64,14 +64,15 @@ let CONSTANTS = {
     ScriptGetServerRamCost:         0.1,
     ScriptFileExistsRamCost:        0.1,
     ScriptIsRunningRamCost:         0.1,
-    ScriptPurchaseHacknetRamCost:   1.5,
-    ScriptHacknetNodesRamCost:      4.0, //Base cost for accessing hacknet nodes array
+    ScriptHacknetNodesRamCost:      4.0, //Base cost for accessing Hacknet Node API
     ScriptHNUpgLevelRamCost:        0.4,
     ScriptHNUpgRamRamCost:          0.6,
     ScriptHNUpgCoreRamCost:         0.8,
     ScriptGetStockRamCost:          2.0,
     ScriptBuySellStockRamCost:      2.5,
     ScriptPurchaseServerRamCost:    2.25,
+    ScriptGetPurchasedServerLimit:  0.05,
+    ScriptGetPurchasedServerMaxRam: 0.05,
     ScriptRoundRamCost:             0.05,
     ScriptReadWriteRamCost:         1.0,
     ScriptArbScriptRamCost:         1.0, //Functions that apply to all scripts regardless of args
@@ -487,27 +488,28 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
-    "v0.39.1<br>"  +
-    "* Bladeburner Rank gain in BN-7 is now reduced by 40% instead of 50%<br>" +
-    "* Quadrupled the amount of money gained from Bladeburner contracts<br>" +
-    "* Added joinBladeburnerDivision() Netscript function to Bladeburner API<br>" +
-    "* Doubled the effects of Source-File 5. Now gives 8%, 12%, and 14% increase to all hacking multipliers " +
-    "at levels 1, 2, and 3, respectively (increased from 4%/6%, 7%)<br>" +
-    "* Increased the effect of Source-File 8. It now gives a 12%, 18% and 21% to your hacking growth multiplier " +
-    "at levels 1, 2, and 3, respectively (increased from 8%, 12%, 14%)<br>" +
-    "* The effect of Source-File 12 is now additive with itself, rather than multiplicative. This means " +
-    "that level N of Source-File 12 now increases all multipliers by N%<br>" +
-    "* The setting to suppress the confirmation box when purchasing Augmentations was moved into the main Options menu (by Github user hydroflame)<br>" +
-    "* Bug Fix: Crime Success rates were being calculated incorrectly (by Github user hydroflame)<br>" +
-    "* When an Infiltration is finished, you will now return back to the company's page, rather than the city<br>" +
-    "* Infiltration faction reputation selector now remembers your last choice<br>" +
-    "* Significantly increased the amount of money gained from Infiltration<br>" +
-    "* Bug Fix: Copying a NetscriptJS script to another server using scp now properly takes into account " +
-    "the script's changes.<br>" +
-    "* Bug Fix: Fixed an issue where game would not load in Edge due to incompatible features<br>" +
-    "* travelToCity() Singularity function no longer grants Intelligence exp"
-
-
+    "v0.40.0<br>"  +
+    "* Netscript 1.0 (NS1) now uses a fully-fledged ES5 Javascript Interpreter. This means many new features are now available in NS1, and this also fixes several bugs." +
+    " However this also means any ES6+ features are no longer supported in NS1 <br>" +
+    "* When a server is hacked with a very large number of threads and left with no money, the server's security level " +
+    "now only increases by however many threads were needed to drain the server. For example, if you hack a server with " +
+    "5000 threads but it only needed 2000 threads to deplete the server's money, then the server's security will only increase " +
+    "as if you had hacked it with 2000 threads (change by hydroflame)<br>" +
+    "* Added getCurrentAction() to Bladeburner API<br>" +
+    "* Added a variety of functions to Bladeburner API that deal with action levels (change by hydroflame)<br>" +
+    "* Added getPurchasedServerLimit() and getPurchasedServerMaxRam() functions to Netscript (change by hydroflame & kopelli)<br>" +
+    "* Added getOwnedSourceFiles() Singularity function (by hydroflame)<br>" +
+    "* Completely re-designed the Hacknet Node API<br>" +
+    "* getSkillLevel() in Bladeburner API now returns an error if no argument is passed in (as opposed to an object with all skill levels). This may break scripts<br>" +
+    "* Minimum Netscript execution time reduced from 15ms to 10ms (configurable in Options)<br>" +
+    "* HP is now reset (restored) when Augmenting<br>" +
+    "* Source-File 6 now increases both the level and experience gain of all combat stats (it was only experience gain previously)<br>" +
+    "* Reverted a previous change for Source-File 12. It's benefits are now multiplicative rather than additive<br>" +
+    "* Starting Infiltration security level for almost every location decreased by ~10%<br>" +
+    "* Changed 'fl1ght.exe' message when its listed conditions are fulfilled (by hydroflame)<br>" +
+    "* The 'Save Game' button in the top-right overview panel now flashes red if autosave is disabled<br>" + 
+    "* Bug Fix: Infiltration buttons can no longer be clicked through NetscriptJS<br>" +
+    "* Bug Fix: Bladeburner 'Overclock' skill can no longer be leveled above max level through the API (by hydroflame)"
 }
 
 export {CONSTANTS};

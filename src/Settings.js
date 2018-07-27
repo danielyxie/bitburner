@@ -2,7 +2,7 @@ import {Engine} from "./engine";
 
 /* Settings.js */
 let Settings = {
-    CodeInstructionRunTime:              50,
+    CodeInstructionRunTime:              25,
     MaxLogCapacity:                      50,
     MaxPortCapacity:                     50,
     SuppressMessages:                    false,

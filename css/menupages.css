@@ -1,12 +1,12 @@
 /* CSS for different main menu pages, such as character info, script editor, etc (but excluding
-	terminal which has its own page) */
+    terminal which has its own page) */
 
 .generic-menupage-container {
     height: 100%;
     padding-left: 10px;
     margin-left: 10%;
     width: 99%;
-	overflow-y: scroll;
+    overflow-y: scroll;
 }
 
 /* Character Info */
@@ -17,7 +17,7 @@
 
 /* Script Editor */
 #script-editor-container {
-    background-color:transparent;
+    background-color: transparent;
 }
 #javascript-editor {
     margin: 10px;
@@ -37,43 +37,43 @@
 
 .ace_line,
 .ace_line * {
-    background-color:transparent;
-    margin:0px;
-    padding:0px;
+    background-color: transparent;
+    margin: 0;
+    padding: 0;
 }
 
 .ace_text-input {
-    font-size:16px;
-    background-color:transparent;
+    font-size: 16px;
+    background-color: transparent;
 }
 
 /* This temp element is used for auto adjusting filename field */
 .tmp-element {
-        visibility: hidden;
-        white-space: pre;
+    visibility: hidden;
+    white-space: pre;
 }
 
 #script-editor-container {
-	position: fixed;
-	padding-top: 10px;
+    position: fixed;
+    padding-top: 10px;
 }
 
 #script-editor-buttons-wrapper {
     width: 100%;
-    padding-right: 0xp;
-    margin-right: 0px;
+    padding-right: 0;
+    margin-right: 0;
 }
 
 #script-editor-wrapper {
-    height:100%;
+    height: 100%;
     width: 70%;
-    background:transparent;
+    background: transparent;
 }
 
 #script-editor-filename-wrapper {
     background-color: #555;
     margin-left: 6px;
-    margin-right: 0px;
+    margin-right: 0;
     padding-left: 6px;
     width: 100%;
     border: 2px solid var(--my-highlight-color);
@@ -82,57 +82,57 @@
 #script-editor-filename-tag {
     display: inline-block;
     padding-top: 10px;
-    padding-bottom: 0px;
-    float:center;
+    padding-bottom: 0;
+    float: center;
     background-color: #555;
-    color: white;
+    color: #fff;
 }
 
 #script-editor-filename {
     background-color: #555;
     display: inline-block;
-	float: center;
-	resize: none;
-	color: white;
+    float: center;
+    resize: none;
+    color: #fff;
     margin: 4px;
 
-    padding:  2px;
+    padding: 2px;
 
     border: 2px solid var(--my-highlight-color);
     -webkit-box-shadow:
-      inset 0 0 8px  rgba(0,0,0,0.1),
-            0 0 16px rgba(0,0,0,0.1);
+        inset 0 0 8px rgba(0, 0, 0, 0.1),
+        0 0 16px rgba(0, 0, 0, 0.1);
     -moz-box-shadow:
-      inset 0 0 8px  rgba(0,0,0,0.1),
-            0 0 16px rgba(0,0,0,0.1);
+        inset 0 0 8px rgba(0, 0, 0, 0.1),
+        0 0 16px rgba(0, 0, 0, 0.1);
     box-shadow:
-      inset 0 0 8px  rgba(0,0,0,0.1),
-            0 0 16px rgba(0,0,0,0.1);
+        inset 0 0 8px rgba(0, 0, 0, 0.1),
+        0 0 16px rgba(0, 0, 0, 0.1);
 }
 
 #script-editor-status {
-	float: left;
-	color: #ffffff;
+    float: left;
+    color: #fff;
 }
 
 #script-editor-options-panel {
-    position:absolute;
+    position: absolute;
     right: 9%;
-    bottom:15%;
-    border:2px solid white;
-    width:19%;
-    background-color:#444;
-    padding:2px;
-    overflow:auto;
+    bottom: 15%;
+    border: 2px solid #fff;
+    width: 19%;
+    background-color: #444;
+    padding: 2px;
+    overflow: auto;
     z-index: 1;
-    color: white;
+    color: #fff;
 }
 
 #script-editor-options-panel fieldset {
-    margin-top:8px;
-    margin-bottom:8px;
+    margin-top: 8px;
+    margin-bottom: 8px;
     padding: 2px;
-    font-size:12px;
+    font-size: 12px;
 }
 
 /* Active scripts */
@@ -141,8 +141,8 @@
 }
 
 #active-scripts-container {
-	position: fixed;
-	padding-top: 10px;
+    position: fixed;
+    padding-top: 10px;
 }
 
 #active-scripts-text,
@@ -155,8 +155,8 @@
 .active-scripts-server-header {
     background-color: #444;
     font-size: 20px;
-    color: white;
-    margin: 6px 6px 0px 6px;
+    color: #fff;
+    margin: 6px 6px 0 6px;
     padding: 6px;
     cursor: pointer;
     width: 60%;
@@ -177,7 +177,7 @@
 .active-scripts-server-header:after {
     content: '\02795'; /* "plus" sign (+) */
     font-size: 13px;
-    color: white;
+    color: #fff;
     float: right;
     margin-left: 5px;
 }
@@ -185,14 +185,14 @@
 .active-scripts-server-header.active:after {
     content: "\2796"; /* "minus" sign (-) */
     font-size: 13px;
-    color: white;
+    color: #fff;
     float: right;
     margin-left: 5px;
 }
 
 .active-scripts-server-panel {
-    margin: 0px 6px 6px 6px;
-    padding: 0px 6px 6px 6px;
+    margin: 0 6px 6px 6px;
+    padding: 0 6px 6px 6px;
     width: 55%;
     margin-left: 5%;
     display: none;
@@ -255,7 +255,7 @@
 .active-scripts-script-panel li {
     background-color: #555;
     width: auto;
-    color: white;
+    color: #fff;
     margin-left: 5%;
 }
 
@@ -271,12 +271,12 @@
     box-shadow: 1px 1px 3px #000;
     margin: 4px;
     padding: 4px;
-    background-color:black;
+    background-color: #000;
 }
 
 .active-scripts-button:hover,
 .active-scripts-button:focus {
-    color: white;
+    color: #fff;
     text-decoration: none;
     cursor: pointer;
 }
@@ -328,14 +328,14 @@
     width: 34vw;
     border: 2px solid var(--my-highlight-color);
     -webkit-box-shadow:
-      inset 0 0 8px  rgba(0,0,0,0.1),
-            0 0 16px rgba(0,0,0,0.1);
+        inset 0 0 8px  rgba(0, 0, 0, 0.1),
+        0 0 16px rgba(0, 0, 0, 0.1);
     -moz-box-shadow:
-      inset 0 0 8px  rgba(0,0,0,0.1),
-            0 0 16px rgba(0,0,0,0.1);
+        inset 0 0 8px  rgba(0, 0, 0, 0.1),
+        0 0 16px rgba(0, 0, 0, 0.1);
     box-shadow:
-      inset 0 0 8px  rgba(0,0,0,0.1),
-            0 0 16px rgba(0,0,0,0.1);
+        inset 0 0 8px  rgba(0, 0, 0, 0.1),
+        0 0 16px rgba(0, 0, 0, 0.1);
 }
 
 .hacknet-node-container {
@@ -367,7 +367,6 @@
     position: fixed;
     padding-top: 10px;
 }
-
 
 #world-city-name,
 #world-city-desc {
@@ -403,11 +402,11 @@
 }
 
 .faction-work-div-wrapper {
-    overflow:hidden;
+    overflow: hidden;
     border: 2px solid #333;
     padding: 6px;
     margin: 6px;
-    width:70%;
+    width: 70%;
 }
 
 #faction-donate-amount-txt,
@@ -416,11 +415,11 @@
     margin: 6px;
     display: inline-block;
     color: var(--my-font-color);
-    background-color:black;
+    background-color: #000;
 }
 
 #faction-donate-amount-txt {
-    width:50%;
+    width: 50%;
 }
 
 #faction-container p,
@@ -467,7 +466,7 @@
 .augmentations-list button,
 .augmentations-list div {
     color: var(--my-font-color);
-	padding: 8px;
+    padding: 8px;
     text-decoration: none;
 }
 
@@ -503,13 +502,13 @@
 
 /* Location */
 #location-container {
-	position: fixed;
-	padding: 6px;
+    position: fixed;
+    padding: 6px;
     overflow-x: hidden;
 }
 
 #location-container a {
-    display:inline-block;
+    display: inline-block;
     width: 30%;
 }
 
@@ -524,7 +523,7 @@
 }
 
 #location-container * {
-	margin: 10px 5px 10px 5px;
+    margin: 10px 5px 10px 5px;
 }
 
 #location-job-reputation, #location-company-favor {
@@ -538,8 +537,8 @@
 }
 #infiltration-left-panel,
 #infiltration-right-panel {
-    display:inline-block;
-    border: 1px solid white;
+    display: inline-block;
+    border: 1px solid #fff;
     width: 35%;
     height: 75%;
     top: 10px;
@@ -548,7 +547,7 @@
 }
 
 #infiltration-faction-select {
-    color:white;
+    color: #fff;
 }
 
 #infiltration-left-panel p,
@@ -557,7 +556,7 @@
 }
 
 #infiltration-buttons .a-link-button {
-    display:inline;
+    display: inline;
     width: 25%;
 }
 
@@ -581,27 +580,27 @@
     display: inline-block;
     padding: 4px;
     margin: 2px;
-    background-color: black;
-    border: 1px solid white;
+    background-color: #000;
+    border: 1px solid #fff;
     color: var(--my-font-color);
 }
 
 .stock-market-position-text {
-    color:white;
-    display:inline-block;
+    color: #fff;
+    display: inline-block;
 }
 
 .stock-market-order-list {
-    overflow-y:auto;
+    overflow-y: auto;
     max-height: 100px;
 }
 
 .stock-market-order-cancel-btn {
-    background-color: black;
-    border: 1px solid white;
+    background-color: #000;
+    border: 1px solid #fff;
     color: var(--my-font-color);
     margin: 2px;
-    padding: 0px;
+    padding: 0;
 }
 
 /* Gang */
@@ -615,6 +614,6 @@
 }
 
 .gang-member-info-div {
-    float:left;
+    float: left;
     background-color: #555;
 }

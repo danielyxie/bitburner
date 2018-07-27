@@ -1,7 +1,7 @@
 :root{
-    --my-font-color: #66ff33;
-    --my-background-color: #000000;
-    --my-highlight-color: #ffffff;
+    --my-font-color: #6f3;
+    --my-background-color: #000;
+    --my-highlight-color: #fff;
 }
 
 * {
@@ -42,7 +42,7 @@ span {
 }
 
 #entire-game-container {
-    background-color:transparent;
+    background-color: transparent;
 }
 
 /* Disable border highlight on elements */
@@ -51,7 +51,7 @@ textarea:focus,
 button:focus,
 td:focus,
 tr:focus {
-    outline:none;
+    outline: none;
 }
 
 /* Main navigation menu */
@@ -65,13 +65,13 @@ tr:focus {
     overflow: auto;
 
     border: 0;
-	border-bottom: 1px solid #000000;
-	border-radius: 0;
-	background-color: #333;
+    border-bottom: 1px solid #000;
+    border-radius: 0;
+    background-color: #333;
 }
 
 /* Default buttons */
-.mainmenu>li a {
+.mainmenu > li a {
     display: block;
     color: #e6e6e6;
     background-color: #555;
@@ -80,28 +80,28 @@ tr:focus {
 }
 
 /* Hovering makes them lighter */
-.mainmenu>li a:hover,
-.mainmenu>li a:hover:not(.active),
-.mainmenu>li a:focus {
+.mainmenu > li a:hover,
+.mainmenu > li a:hover:not(.active),
+.mainmenu > li a:focus {
     background-color: #777;
-    color: white;
+    color: #fff;
 }
 
 /* Panel headers can become active, and they are "lighter" than the rest */
-.mainmenu>li a.active {
+.mainmenu > li a.active {
     background-color: #777;
-    color: white;
+    color: #fff;
 }
 
-.mainmenu>li a.active:hover {
-    background-color:#aaa;
+.mainmenu > li a.active:hover {
+    background-color: #aaa;
 }
 
 /* Plus and minus signs */
 .mainmenu-accordion-header:after {
     content: '\02795';
     font-size: 13px;
-    color: white;
+    color: #fff;
     float: right;
     margin-left: 5px;
 }
@@ -111,7 +111,7 @@ tr:focus {
 }
 
 .mainmenu-accordion-header.opened {
-    background-color:#222;
+    background-color: #222;
 }
 
 /* Slide down transition */
@@ -123,21 +123,21 @@ tr:focus {
 
 /* Borders */
 .mainmenu-accordion-header {
-    border:2px solid white;
+    border: 2px solid #fff;
 }
 
 /* Make html links ("a" elements) nice looking buttons with this class */
 a:link, a:visited {
-    color:white;
+    color: #fff;
 }
 
 .a-link-button {
     text-decoration: none;
     background-color: #555;
-    color: #FFFFFF;
+    color: #fff;
     padding: 5px;
     margin: 5px;
-    border: 1px solid #333333;
+    border: 1px solid #333;
 
     -moz-user-select: none;
     -ms-user-select: none;
@@ -151,18 +151,18 @@ a:link, a:visited {
 
 .a-link-button:active {
     -webkit-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
-	-moz-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
-	box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+    box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
 }
 
 /* Make anchor tags ("a" elements) inactive (not clickable) */
 .a-link-button-inactive {
     text-decoration: none;
     background-color: #333;
-    color: #FFFFFF;
+    color: #fff;
     padding: 5px;
     margin: 5px;
-    border: 1px solid #333333;
+    border: 1px solid #333;
     cursor: default;
 }
 
@@ -179,11 +179,11 @@ a:link, a:visited {
 /* Make anchor tags ("a" elements) for activated actions */
 .a-link-button-bought {
     text-decoration: none;
-    background-color: #00AA00;
-    color: #FFFFFF;
+    background-color: #0a0;
+    color: #fff;
     padding: 5px;
     margin: 5px;
-    border: 1px solid #00AA00;
+    border: 1px solid #0a0;
     cursor: default;
 }
 
@@ -198,18 +198,18 @@ a:link, a:visited {
 }
 
 .dropdown {
-    color:white;
-    background-color:black;
+    color: #fff;
+    background-color: #000;
 }
 
 .text-input {
-    color:white;
-    background-color:black;
+    color: #fff;
+    background-color: #000;
 }
 
 /* Notification icon (for create program right now only) */
 #create-program-tab {
-    position:relative;
+    position: relative;
 }
 #create-program-notification {
     font-size: 10px;
@@ -221,7 +221,7 @@ a:link, a:visited {
 
 .notification-on {
     background-color: #fa3e3e;
-    color: white;
+    color: #fff;
     border-radius: 2px;
     padding: 1px 3px;
 }
@@ -229,8 +229,8 @@ a:link, a:visited {
 .notification-off {
     background-color: #333;
     color: #333;
-    border-radius: 0px;
-    padding: 0px;
+    border-radius: 0;
+    padding: 0;
 }
 
 /* Tool tips (when hovering over an element */
@@ -243,8 +243,8 @@ a:link, a:visited {
     visibility: hidden;
     width: 300px;
     background-color: var(--my-background-color);
-    border: 2px solid var(--my-highlight-color);;
-    color: white;
+    border: 2px solid var(--my-highlight-color);
+    color: #fff;
     text-align: center;
     padding: 4px;
     left: 101%;
@@ -258,12 +258,12 @@ a:link, a:visited {
     visibility: hidden;
     width: 300px;
     background-color: var(--my-background-color);
-    border: 2px solid var(--my-highlight-color);;
-    color: white;
+    border: 2px solid var(--my-highlight-color);
+    color: #fff;
     text-align: center;
     padding: 4px;
     left: 101%;
-    bottom:-25%;
+    bottom: -25%;
 
     position: absolute;
     z-index: 99;
@@ -275,12 +275,12 @@ a:link, a:visited {
     visibility: hidden;
     width: 300px;
     background-color: var(--my-background-color);
-    border: 2px solid var(--my-highlight-color);;
-    color: white;
+    border: 2px solid var(--my-highlight-color);
+    color: #fff;
     text-align: center;
     padding: 4px;
     left: 40%;
-    bottom:-10%;
+    bottom: -10%;
 
     position: absolute;
     z-index: 99;
@@ -294,13 +294,13 @@ a:link, a:visited {
 
 /* help tip. Question mark that opens popup with info/details */
 .help-tip {
-    content:'?';
-    padding:1px;
-    margin-left:3px;
-    color:#fff;
-    border:1px solid white;
-    border-radius:5px;
-    display:inline-block;
+    content: '?';
+    padding: 1px;
+    margin-left: 3px;
+    color: #fff;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    display: inline-block;
 }
 
 .help-tip:hover {
@@ -309,33 +309,33 @@ a:link, a:visited {
 
 .help-tip:active {
     -webkit-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
-	-moz-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
-	box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+    box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
 }
 
 /* Flashing button (Red) */
 @-webkit-keyframes glowing {
-    0% { background-color: #B20000; -webkit-box-shadow: 0 0 3px #B20000; }
-    50% { background-color: #FF0000; -webkit-box-shadow: 0 0 40px #FF0000; }
-    100% { background-color: #B20000; -webkit-box-shadow: 0 0 3px #B20000; }
+    0% { background-color: #b20000; -webkit-box-shadow: 0 0 3px #b20000; }
+    50% { background-color: #f00; -webkit-box-shadow: 0 0 40px #f00; }
+    100% { background-color: #b20000; -webkit-box-shadow: 0 0 3px #b20000; }
 }
 
 @-moz-keyframes glowing {
-    0% { background-color: #B20000; -moz-box-shadow: 0 0 3px #B20000; }
-    50% { background-color: #FF0000; -moz-box-shadow: 0 0 40px #FF0000; }
-    100% { background-color: #B20000; -moz-box-shadow: 0 0 3px #B20000; }
+    0% { background-color: #b20000; -moz-box-shadow: 0 0 3px #b20000; }
+    50% { background-color: #f00; -moz-box-shadow: 0 0 40px #f00; }
+    100% { background-color: #b20000; -moz-box-shadow: 0 0 3px #b20000; }
 }
 
 @-o-keyframes glowing {
-    0% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
-    50% { background-color: #FF0000; box-shadow: 0 0 40px #FF0000; }
-    100% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+    0% { background-color: #b20000; box-shadow: 0 0 3px #b20000; }
+    50% { background-color: #f00; box-shadow: 0 0 40px #f00; }
+    100% { background-color: #b20000; box-shadow: 0 0 3px #b20000; }
 }
 
 @keyframes glowing {
-    0% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
-    50% { background-color: #FF0000; box-shadow: 0 0 40px #FF0000; }
-    100% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+    0% { background-color: #b20000; box-shadow: 0 0 3px #b20000; }
+    50% { background-color: #f00; box-shadow: 0 0 40px #f00; }
+    100% { background-color: #b20000; box-shadow: 0 0 3px #b20000; }
 }
 
 .flashing-button {
@@ -348,57 +348,57 @@ a:link, a:visited {
 /* Blinking Cursor */
 /* ----- blinking cursor animation ----- */
 .typed-cursor{
-  opacity: 1;
-  -webkit-animation: blink 0.95s infinite;
-  -moz-animation: blink 0.95s infinite;
-  -ms-animation: blink 0.95s infinite;
-  -o-animation: blink 0.95s infinite;
-  animation: blink 0.95s infinite;
+    opacity: 1;
+    -webkit-animation: blink 0.95s infinite;
+    -moz-animation: blink 0.95s infinite;
+    -ms-animation: blink 0.95s infinite;
+    -o-animation: blink 0.95s infinite;
+    animation: blink 0.95s infinite;
 }
 
 @-keyframes blink{
-  0% { opacity:1; }
-  50% { opacity:0; }
-  100% { opacity:1; }
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
 }
 @-webkit-keyframes blink{
-  0% { opacity:1; }
-  50% { opacity:0; }
-  100% { opacity:1; }
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
 }
 @-moz-keyframes blink{
-  0% { opacity:1; }
-  50% { opacity:0; }
-  100% { opacity:1; }
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
 }
 @-ms-keyframes blink{
-  0% { opacity:1; }
-  50% { opacity:0; }
-  100% { opacity:1; }
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
 }
 @-o-keyframes blink{
-  0% { opacity:1; }
-  50% { opacity:0; }
-  100% { opacity:1; }
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
 }
 
 /* Status text */
 @-webkit-keyframes status-text{
     from{
-        opacity:1;
-        top:0px;
+        opacity: 1;
+        top: 0;
     }
     to{
-        opacity:0;
-        top:0px;
+        opacity: 0;
+        top: 0;
     }
 }
 
 .status-text{
-    display:inline;
-    position:fixed;
-    top:0px;
-    -webkit-animation:status-text 3s 1;
+    display: inline;
+    position: fixed;
+    top: 0;
+    -webkit-animation: status-text 3s 1;
     background-color: transparent;
     height: 15%;
 }
@@ -409,7 +409,7 @@ a:link, a:visited {
 
 #status-text {
     font-size: 20px;
-    color: #FFFFFF;
+    color: #fff;
     right: 0;
     bottom: 0;
     padding: 4px;
@@ -429,7 +429,6 @@ a:link, a:visited {
     right: 0;
     top: 0;
     height: 205px; /* Full height */
-    /*margin: 50% auto;*/
     padding: 5px;
     border: 2px solid var(--my-highlight-color);
     width: 19%;
@@ -441,7 +440,7 @@ a:link, a:visited {
 #character-overview-text {
     padding: 4px;
     margin: 8px;
-    color: white;
+    color: #fff;
     background-color: #444;
 }
 
@@ -457,14 +456,14 @@ a:link, a:visited {
     -webkit-box-shadow: 1px 1px 3px #000;
     box-shadow: 1px 1px 3px #000;
     height: 22px;
-    background-color:black;
+    background-color: #000;
 }
 
 #character-overview-save-button:hover,
 #character-overview-save-button:focus,
 #character-overview-options-button:hover,
 #character-overview-options-button:focus {
-    color: white;
+    color: #fff;
     text-decoration: none;
     cursor: pointer;
 }
@@ -475,20 +474,20 @@ a:link, a:visited {
 
 /* Scan analyze links from AutoLink */
 .scan-analyze-link {
-    cursor:pointer;
-    color:#FFFFFF;
-    text-decoration:underline;
+    cursor: pointer;
+    color: #fff;
+    text-decoration: underline;
 }
 .scan-analyze-link:hover {
-    text-decoration:none;
+    text-decoration: none;
 }
 
 /* Accordion menus (Header with collapsible panel) */
 .accordion-header {
     background-color: #444;
     font-size: 20px;
-    color: white;
-    margin: 6px 6px 0px 6px;
+    color: #fff;
+    margin: 6px 6px 0 6px;
     padding: 6px;
     cursor: pointer;
     width: 80%;
@@ -509,7 +508,7 @@ a:link, a:visited {
 .accordion-header:after {
     content: '\02795'; /* "plus" sign (+) */
     font-size: 13px;
-    color: white;
+    color: #fff;
     float: right;
     margin-left: 5px;
 }
@@ -517,20 +516,20 @@ a:link, a:visited {
 .accordion-header.active:after {
     content: "\2796"; /* "minus" sign (-) */
     font-size: 13px;
-    color: white;
+    color: #fff;
     float: right;
     margin-left: 5px;
 }
 
 .accordion-panel {
-    margin: 0px 6px 6px 6px;
-    padding: 0px 6px 6px 6px;
+    margin: 0 6px 6px 6px;
+    padding: 0 6px 6px 6px;
     width: 75%;
     margin-left: 5%;
     display: none;
     background-color: #555;
-    overflow-y:auto;
-    overflow-x:none;
+    overflow-y: auto;
+    overflow-x: none;
 }
 
 .accordion-panel div,

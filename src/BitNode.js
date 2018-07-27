@@ -111,7 +111,7 @@ function initBitNodes() {
                                           "Crimes and Infiltration are 50% less profitable<br><br>" +
                                           "Destroying this BitNode will give you Source-File 6, or if you already have this Source-File it will upgrade " +
                                           "its level up to a maximum of 3. This Source-File allows you to access the NSA's Bladeburner Division in other " +
-                                          "BitNodes. In addition, this Source-File will raise the experience gain rate of all your combat stats by:<br><br>" +
+                                          "BitNodes. In addition, this Source-File will raise both the level and experience gain rate of all your combat stats by:<br><br>" +
                                           "Level 1: 8%<br>" +
                                           "Level 2: 12%<br>" +
                                           "Level 3: 14%");
@@ -182,8 +182,8 @@ function initBitNodes() {
                                             "To iterate is human, to recurse divine.<br><br>" +
                                             "Every time this BitNode is destroyed, it becomes slightly harder. Destroying this BitNode will give your Souce-File 12, or " +
                                             "if you already have this Source-File it will upgrade its level. There is no maximum level for Source-File 12. Each level " +
-                                            "of Source-File 12 will increase all of your multipliers by 1%. This effect is additive with itself, NOT multiplicative. In other words, " +
-                                            "level N of this Source-File will increase all of your multipliers by N%");
+                                            "of Source-File 12 will increase all of your multipliers by 1%. This effect is multiplicative with itself. " +
+                                            "In other words, level N of this Source-File will result in a multiplier of 1.01^N (or 0.99^N for multipliers that decrease)");
     //Books: Frontera, Shiner
     BitNodes["BitNode13"] = new BitNode(13, "fOS", "COMING SOON"); //Unlocks the new game mode and the rest of the BitNodes
     BitNodes["BitNode14"] = new BitNode(14, "", "COMING SOON");
@@ -392,10 +392,9 @@ function initBitNodeMultipliers() {
             BitNodeMultipliers.InfiltrationRep   = dec;
 
             BitNodeMultipliers.CorporationValuation = dec;
-            
-            BitNodeMultipliers.BladeburnerRank = dec;
-            // verify what happens to non-integer values of BladeburnerSkillCost before enabling this.
-            //BitNodeMultipliers.BladeburnerSkillCost = dec;
+        
+            BitNodeMultipliers.BladeburnerRank      = dec;
+            BitNodeMultipliers.BladeburnerSkillCost = dec;
             break;
         default:
             console.log("WARNING: Player.bitNodeN invalid");

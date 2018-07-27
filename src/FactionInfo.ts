@@ -65,28 +65,28 @@ class FactionInfo {
 // tslint:disable-next-line:variable-name
 export const FactionInfos: IMap<FactionInfo> = {
     // Endgame
-    Illuminati: new FactionInfo("Humanity never changes. No matter how civilized society becomes, it will eventually" +
+    Illuminati: new FactionInfo("Humanity never changes. No matter how civilized society becomes, it will eventually " +
       "fall back into chaos. And from this chaos, we are the Invisible hand that guides them to order. ",
                                 [], true, true, true, false),
 
     Daedalus: new FactionInfo("Yesterday we obeyed kings and bent our necks to emperors. Today we kneel only to truth.",
                               [], true, true, true, false),
 
-    "The Covenant": new FactionInfo("Surrender yourself. Give up your empty individuality to become part of something" +
-                                    "great, something eternal. Become a slave. Submit your mind, body, and soul. Only" +
+    "The Covenant": new FactionInfo("Surrender yourself. Give up your empty individuality to become part of something " +
+                                    "great, something eternal. Become a slave. Submit your mind, body, and soul. Only " +
                                     "then can you set yourself free.<br><br> Only then can you discover immortality.",
                                     [], true, true, true, false),
 
     // Megacorporations, each forms its own faction
-    ECorp: new FactionInfo("ECorp's mission is simple: to connect the world of today with the technology of tomorrow." +
-                            "With our wide range of Internet-related software and commercial hardware, ECorp makes" +
+    ECorp: new FactionInfo("ECorp's mission is simple: to connect the world of today with the technology of tomorrow. " +
+                            "With our wide range of Internet-related software and commercial hardware, ECorp makes " +
                             "the world's information universally accessible.",
                            [], true, true, true, true),
 
-    MegaCorp: new FactionInfo("MegaCorp does things that others don't. We imagine. We create. We invent. We build" +
-                              "things that others have never even dreamed of. Our work fills the world's needs for" +
-                              "food, water, power, and transporation on an unprecendented scale, in ways that no" +
-                              "other company can.<br><br>In our labs and factories and on the ground with customers," +
+    MegaCorp: new FactionInfo("MegaCorp does things that others don't. We imagine. We create. We invent. We build " +
+                              "things that others have never even dreamed of. Our work fills the world's needs for " +
+                              "food, water, power, and transporation on an unprecendented scale, in ways that no " +
+                              "other company can.<br><br>In our labs and factories and on the ground with customers, " +
                               "MegaCorp is ushering in a new era for the world.",
                               [], true, true, true, true),
 
@@ -107,11 +107,10 @@ export const FactionInfos: IMap<FactionInfo> = {
     "Clarke Incorporated": new FactionInfo("Unlocking the power of the genome",
                                            [], true, true, true, true),
 
-    "OmniTek Incorporated": new FactionInfo("Simply put, our mission is to design and build robots that make a" +
-      "difference",
+    "OmniTek Incorporated": new FactionInfo("Simply put, our mission is to design and build robots that make a difference",
                                             [], true, true, true, true),
 
-    "Four Sigma": new FactionInfo("The scientific method is the best way to approach investing. Big strategies backed" +
+    "Four Sigma": new FactionInfo("The scientific method is the best way to approach investing. Big strategies backed " +
       "up with big data. Driven by deep learning and innovative ideas. And improved by iteration. That's Four Sigma.",
                                   [], true, true, true, true),
 
@@ -125,16 +124,16 @@ export const FactionInfos: IMap<FactionInfo> = {
                                                    [], true, true, false, true),
 
     // Hacker groups
-    BitRunners: new FactionInfo("Our entire lives are controlled by bits. All of our actions, our thoughts, our" +
-                    "personal information. It's all transformed into bits, stored in bits, communicated through bits." +
-                    "It’s impossible for any person to move, to live, to operate at any level without the use of" +
-                    "bits. And when a person moves, lives, and operates, they leave behind their bits, mere traces of" +
-                    "seemingly meaningless fragments of information. But these bits can be reconstructed." +
+    BitRunners: new FactionInfo("Our entire lives are controlled by bits. All of our actions, our thoughts, our " +
+                    "personal information. It's all transformed into bits, stored in bits, communicated through bits. " +
+                    "It’s impossible for any person to move, to live, to operate at any level without the use of " +
+                    "bits. And when a person moves, lives, and operates, they leave behind their bits, mere traces of " +
+                    "seemingly meaningless fragments of information. But these bits can be reconstructed. " +
                     "Transformed. Used.<br><br>Those who run the bits, run the world",
                                 [], true, true, false, false),
 
-    "The Black Hand": new FactionInfo("The world, so afraid of strong government, now has no government." +
-                  "Only power - Digital power. Financial power. Technological power. And those at the top rule with" +
+    "The Black Hand": new FactionInfo("The world, so afraid of strong government, now has no government. " +
+                  "Only power - Digital power. Financial power. Technological power. And those at the top rule with " +
                   "an invisible hand. They built a society where the rich get richer, and everyone else suffers." +
                   "<br><br>So much pain. So many lives. Their darkness must end.",
                                       [], true, true, true, false),
@@ -200,10 +199,10 @@ export const FactionInfos: IMap<FactionInfo> = {
 
     "The Syndicate": new FactionInfo("Honor holds you back", [], true, true, true, true),
 
-    Silhouette: new FactionInfo("Corporations have filled the void of power left behind by the collapse of Western" +
-                    "government. The issue is they've become so big that you don't know who they're working for. And" +
+    Silhouette: new FactionInfo("Corporations have filled the void of power left behind by the collapse of Western " +
+                    "government. The issue is they've become so big that you don't know who they're working for. And " +
                     "if you're employed at one of these corporations, you don't even know who you're working for.\n\n" +
-                    "That's terror. Terror, fear, and corruption. All born into the system, all propagated by the" +
+                    "That's terror. Terror, fear, and corruption. All born into the system, all propagated by the " +
                     "system.",
                                 [], true, true, true, false),
 
@@ -216,14 +215,14 @@ export const FactionInfos: IMap<FactionInfo> = {
 
     "Tian Di Hui": new FactionInfo("Obey Heaven and Work Righteousness", [], true, true, false, true),
 
-    CyberSec: new FactionInfo("The Internet is the first thing that humanity has built that humanity doesn’t" +
-                  "understand, the largest experiment in anarchy that we have ever had. And as the world becomes" +
-                  "increasingly dominated by the internet, society approaches the brink of total chaos. We serve only" +
+    CyberSec: new FactionInfo("The Internet is the first thing that humanity has built that humanity doesn’t " +
+                  "understand, the largest experiment in anarchy that we have ever had. And as the world becomes " +
+                  "increasingly dominated by the internet, society approaches the brink of total chaos. We serve only " +
                   "to protect society, to protect humanity, to protect the world from its imminent collapse.",
                               [], true, true, false, false),
 
     // Special Factions
-    Bladeburners: new FactionInfo("It's too bad they won't live. But then again, who does?<br><br>Note that for this" +
+    Bladeburners: new FactionInfo("It's too bad they won't live. But then again, who does?<br><br>Note that for this " +
                                     "faction, reputation can only be gained through Bladeburner actions. Completing " +
                                     "Bladeburner contracts/operations will increase your reputation.",
                                   [], false, false, false, false),

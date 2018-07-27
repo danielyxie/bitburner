@@ -1,4 +1,4 @@
-import {clearEventListeners}                from "./HelperFunctions";
+import {clearEventListeners} from "./uiHelpers/clearEventListeners";
 /* Generic Yes-No Pop-up box
  * Can be used to create pop-up boxes that require a yes/no response from player
  */

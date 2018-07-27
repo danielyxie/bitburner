@@ -3,10 +3,11 @@ import {Engine}                                     from "./engine";
 import {displayFactionContent}                      from "./Faction";
 import {Player}                                     from "./Player";
 import {dialogBoxCreate}                            from "../utils/DialogBox";
-import {addOffset, getRandomInt,
-        clearEventListenersEl,
-        clearEventListeners}                        from "../utils/HelperFunctions";
-import {formatNumber, isString}                     from "../utils/StringHelperFunctions";
+import {clearEventListeners}                        from "../utils/uiHelpers/clearEventListeners";
+import {addOffset}                                  from "../utils/helpers/addOffset";
+import {formatNumber}                               from "../utils/StringHelperFunctions";
+import {getRandomInt}                               from "../utils/helpers/getRandomInt";
+import {isString}                                   from "../utils/helpers/isString";
 import jsplumb                                      from 'jsplumb'
 
 let inMission = false; //Flag to denote whether a mission is running

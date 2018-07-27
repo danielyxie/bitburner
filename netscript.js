@@ -69,8 +69,9 @@ let NetscriptFunctions =
     "getServerGrowth|getServerSecurityLevel|getServerBaseSecurityLevel|"       +
     "getServerMinSecurityLevel|"                                               +
     "getServerRequiredHackingLevel|getServerNumPortsRequired|getServerRam|"    +
-    "serverExists|fileExists|isRunning|getNextHacknetNodeCost|"                +
-    "purchaseHacknetNode|deleteServer|getPurchasedServers|"                    +
+    "serverExists|fileExists|isRunning|"                                       +
+    "deleteServer|getPurchasedServers|"                                        +
+    "getPurchasedServerLimit|getPurchasedServerMaxRam|"                        +
     "purchaseServer|round|write|read|peek|clear|rm|getPortHandle|"             +
     "scriptRunning|scriptKill|getScriptName|getScriptRam|"                     +
     "getHackTime|getGrowTime|getWeakenTime|getScriptIncome|getScriptExpGain|"  +
@@ -81,12 +82,15 @@ let NetscriptFunctions =
     "getCompanyFavor|stopAction|getFactionFavor|"                              +
     "checkFactionInvitations|joinFaction|workForFaction|getFactionRep|"        +
     "createProgram|commitCrime|getCrimeChance|getOwnedAugmentations|"          +
-    "getAugmentationsFromFaction|"                                             +
+    "getOwnedSourceFiles|getAugmentationsFromFaction|"                         +
     "getAugmentationCost|purchaseAugmentation|"                                +
-    "installAugmentations|hacknetnodes|upgradeLevel|upgradeRam|upgradeCore|"   +
-    "getLevelUpgradeCost|getRamUpgradeCost|getCoreUpgradeCost|"                +
+    "installAugmentations|"                                                    +
     "getStockPrice|getStockPosition|buyStock|sellStock|shortStock|sellShort|"  +
     "placeOrder|cancelOrder|"                                                  +
+    //Hacknet Node API
+    "hacknet|numNodes|purchaseNode|getPurchaseNodeCost|getNodeStats|"          +
+    "upgradeLevel|upgradeRam|upgradeCore|getLevelUpgradeCost|"                 +
+    "getRamUpgradeCost|getCoreUpgradeCost|"                                    +
 
     //Bladeburner functions
     "bladeburner|getContractNames|getOperationNames|getBlackOpNames|"          +

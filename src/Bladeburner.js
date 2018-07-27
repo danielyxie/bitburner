@@ -9,16 +9,22 @@ import {Player}                                     from "./Player";
 import {hackWorldDaemon, redPillFlag}               from "./RedPill";
 import {KEY}                                        from "./Terminal";
 
+import {createProgressBarText}                      from "../utils/helpers/createProgressBarText";
 import {dialogBoxCreate}                            from "../utils/DialogBox";
-import {getRandomInt, addOffset, clearObject,
-        createElement, removeChildrenFromElement,
-        exceptionAlert, createPopup, appendLineBreaks,
-        removeElementById, removeElement,
-        createProgressBarText}                      from "../utils/HelperFunctions";
+import {removeChildrenFromElement}                  from "../utils/uiHelpers/removeChildrenFromElement";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                           from "../utils/JSONReviver";
 import numeral                                      from "numeral/min/numeral.min";
+import {addOffset}                                  from "../utils/helpers/addOffset";
+import {appendLineBreaks}                           from "../utils/uiHelpers/appendLineBreaks";
+import {clearObject}                                from "../utils/helpers/clearObject";
+import {createElement}                              from "../utils/uiHelpers/createElement";
+import {createPopup}                                from "../utils/uiHelpers/createPopup";
+import {exceptionAlert}                             from "../utils/helpers/exceptionAlert";
 import {formatNumber}                               from "../utils/StringHelperFunctions";
+import {getRandomInt}                               from "../utils/helpers/getRandomInt";
+import {removeElement}                              from "../utils/uiHelpers/removeElement";
+import {removeElementById}                          from "../utils/uiHelpers/removeElementById";
 
 
 var CityNames = ["Aevum", "Chongqing", "Sector-12", "New Tokyo", "Ishima", "Volhaven"];
@@ -1274,7 +1280,7 @@ Bladeburner.prototype.completeAction = function() {
                     teamLossMax = Math.floor(teamCount);
 
                     if (this.logging.blackops) {
-                        this.log(action.name + " failed! Lost " + formatNumber(rankLoss, 1) + " rank and took" + formatNumber(damage, 0) + " damage");
+                        this.log(action.name + " failed! Lost " + formatNumber(rankLoss, 1) + " rank and took " + formatNumber(damage, 0) + " damage");
                     }
                 }
 
@@ -2009,7 +2015,7 @@ Bladeburner.prototype.createContractsContent = function() {
     }
 
     DomElems.actionsAndSkillsDesc.innerHTML =
-        "Complete contracts in order to increase your Bitburner rank and earn money. " +
+        "Complete contracts in order to increase your Bladeburner rank and earn money. " +
         "Failing a contract will cause you to lose HP, which can lead to hospitalization.<br><br>" +
         "You can unlock higher-level contracts by successfully completing them. " +
         "Higher-level contracts are more difficult, but grant more rank, experience, and money.";
@@ -3253,20 +3259,38 @@ Bladeburner.prototype.getActionIdFromTypeAndName = function(type="", name="") {
         switch (convertedName) {
             case "training":
                 action.type = ActionTypes["Training"];
+                action.name = "Training";
                 break;
             case "recruitment":
             case "recruit":
                 action.type = ActionTypes["Recruitment"];
+                action.name = "Recruitment";
                 break;
             case "field analysis":
             case "fieldanalysis":
                 action.type = ActionTypes["Field Analysis"];
+                action.name = "Field Analysis";
                 break;
             default:
                 return null;
         }
         return action;
     }
+}
+
+Bladeburner.prototype.getTypeAndNameFromActionId = function(actionId) {
+    var res = {};
+    let types = Object.keys(ActionTypes);
+    for (let i = 0; i < types.length; ++i) {
+        if (actionId.type === ActionTypes[types[i]]) {
+            res.type = types[i];
+            break;
+        }
+    }
+    if (res.type == null) {res.type = "Idle";}
+
+    res.name = actionId.name != null ? actionId.name : "Idle";
+    return res;
 }
 
 Bladeburner.prototype.getContractNamesNetscriptFn = function() {
@@ -3290,7 +3314,7 @@ Bladeburner.prototype.getSkillNamesNetscriptFn = function() {
 }
 
 Bladeburner.prototype.startActionNetscriptFn = function(type, name, workerScript) {
-    var errorLogText = "ERROR: Bladeburner.startAction() failed due to an invalid action specified. " +
+    var errorLogText = "ERROR: bladeburner.startAction() failed due to an invalid action specified. " +
                        "Type: " + type + ", Name: " + name + ". Note that for contracts and operations, the " +
                        "name of the operation is case-sensitive.";
     var actionId = this.getActionIdFromTypeAndName(type, name);
@@ -3302,19 +3326,19 @@ Bladeburner.prototype.startActionNetscriptFn = function(type, name, workerScript
     try {
         this.startAction(actionId);
         if (workerScript.shouldLog("startAction")) {
-            workerScript.scriptRef.log("Starting Bladeburner action with type " + type + " and name " + name);
+            workerScript.scriptRef.log("Starting bladeburner action with type " + type + " and name " + name);
         }
         return true;
     } catch(e) {
         this.resetAction();
-        workerScript.scriptRef.log("ERROR: Bladeburner.startAction() failed to start action of type " + type + " due to invalid name: " + name +
+        workerScript.scriptRef.log("ERROR: bladeburner.startAction() failed to start action of type " + type + " due to invalid name: " + name +
                                    "Note that this name is case-sensitive and whitespace-sensitive");
         return false;
     }
 }
 
 Bladeburner.prototype.getActionTimeNetscriptFn = function(type, name, workerScript) {
-    var errorLogText = "ERROR: Bladeburner.getActionTime() failed due to an invalid action specified. " +
+    var errorLogText = "ERROR: bladeburner.getActionTime() failed due to an invalid action specified. " +
                        "Type: " + type + ", Name: " + name + ". Note that for contracts and operations, the " +
                        "name of the operation is case-sensitive.";
     var actionId = this.getActionIdFromTypeAndName(type, name);
@@ -3348,7 +3372,7 @@ Bladeburner.prototype.getActionTimeNetscriptFn = function(type, name, workerScri
 }
 
 Bladeburner.prototype.getActionEstimatedSuccessChanceNetscriptFn = function(type, name, workerScript) {
-    var errorLogText = "ERROR: Bladeburner.getActionEstimatedSuccessChance() failed due to an invalid action specified. " +
+    var errorLogText = "ERROR: bladeburner.getActionEstimatedSuccessChance() failed due to an invalid action specified. " +
                        "Type: " + type + ", Name: " + name + ". Note that for contracts and operations, the " +
                        "name of the operation is case-sensitive.";
     var actionId = this.getActionIdFromTypeAndName(type, name);
@@ -3382,7 +3406,7 @@ Bladeburner.prototype.getActionEstimatedSuccessChanceNetscriptFn = function(type
 }
 
 Bladeburner.prototype.getActionCountRemainingNetscriptFn = function(type, name, workerScript) {
-    var errorLogText = "ERROR: Bladeburner.getActionCountRemaining() failed due to an invalid action specified. " +
+    var errorLogText = "ERROR: bladeburner.getActionCountRemaining() failed due to an invalid action specified. " +
                        "Type: " + type + ", Name: " + name + ". Note that for contracts and operations, the " +
                        "name of the operation is case-sensitive.";
     var actionId = this.getActionIdFromTypeAndName(type, name);
@@ -3414,13 +3438,11 @@ Bladeburner.prototype.getActionCountRemainingNetscriptFn = function(type, name, 
 }
 
 Bladeburner.prototype.getSkillLevelNetscriptFn = function(skillName, workerScript) {
-    var errorLogText = "ERROR: Bladeburner.getSkillLevel() failed due to an invalid skill specified: " +
+    var errorLogText = "ERROR: bladeburner.getSkillLevel() failed due to an invalid skill specified: " +
                        skillName + ". Note that the name of the skill is case-sensitive";
 
     if (skillName === "") {
-        //If skill name isn't specified, return an object with all of the player's skill levels
-        let copy = Object.assign({}, this.Skills);
-        return copy;
+        return -1;
     }
 
     if (!Skills.hasOwnProperty(skillName)) {
@@ -3436,7 +3458,7 @@ Bladeburner.prototype.getSkillLevelNetscriptFn = function(skillName, workerScrip
 }
 
 Bladeburner.prototype.upgradeSkillNetscriptFn = function(skillName, workerScript) {
-    var errorLogText = "ERROR: Bladeburner.upgradeSkill() failed due to an invalid skill specified: " +
+    var errorLogText = "ERROR: bladeburner.upgradeSkill() failed due to an invalid skill specified: " +
                        skillName + ". Note that the name of the skill is case-sensitive";
     if (!Skills.hasOwnProperty(skillName)) {
         workerScript.log(errorLogText);
@@ -3450,9 +3472,16 @@ Bladeburner.prototype.upgradeSkillNetscriptFn = function(skillName, workerScript
     }
     var cost = skill.calculateCost(currentLevel);
 
+    if(skill.maxLvl && currentLevel >= skill.maxLvl) {
+      if (workerScript.shouldLog("upgradeSkill")) {
+        workerScript.log(`bladeburner.upgradeSkill() failed because ${skillName} is already maxed`);
+      }
+      return false;
+    }
+
     if (this.skillPoints < cost) {
         if (workerScript.shouldLog("upgradeSkill")) {
-            workerScript.log("Bladeburner.upgradeSkill() failed because you do not have enough " +
+            workerScript.log("bladeburner.upgradeSkill() failed because you do not have enough " +
                              "skill points to upgrade " + skillName + " (You have " +
                             this.skillPoints + ", you need " + cost + ")");
         }
@@ -3475,7 +3504,7 @@ Bladeburner.prototype.getTeamSizeNetscriptFn = function(type, name, workerScript
         return this.teamSize;
     }
 
-    var errorLogText = "ERROR: Bladeburner.getTeamSize() failed due to an invalid action specified. " +
+    var errorLogText = "ERROR: bladeburner.getTeamSize() failed due to an invalid action specified. " +
                        "Type: " + type + ", Name: " + name + ". Note that for contracts and operations, the " +
                        "name of the operation is case-sensitive.";
 
@@ -3501,7 +3530,7 @@ Bladeburner.prototype.getTeamSizeNetscriptFn = function(type, name, workerScript
 }
 
 Bladeburner.prototype.setTeamSizeNetscriptFn = function(type, name, size, workerScript) {
-    var errorLogText = "ERROR: Bladeburner.setTeamSize() failed due to an invalid action specified. " +
+    var errorLogText = "ERROR: bladeburner.setTeamSize() failed due to an invalid action specified. " +
                        "Type: " + type + ", Name: " + name + ". Note that for contracts and operations, the " +
                        "name of the operation is case-sensitive.";
     var actionId = this.getActionIdFromTypeAndName(type, name);
@@ -3513,7 +3542,7 @@ Bladeburner.prototype.setTeamSizeNetscriptFn = function(type, name, size, worker
     if (actionId.type !== ActionTypes["Operation"] &&
         actionId.type !== ActionTypes["BlackOp"]   &&
         actionId.type !== ActionTypes["BlackOperation"]) {
-        workerScript.log("ERROR: Bladeburner.setTeamSize() failed. This function " +
+        workerScript.log("ERROR: bladeburner.setTeamSize() failed. This function " +
                          "only works for Operations and BlackOps");
         return -1;
     }
@@ -3526,7 +3555,7 @@ Bladeburner.prototype.setTeamSizeNetscriptFn = function(type, name, size, worker
 
     var sanitizedSize = Math.round(size);
     if (isNaN(sanitizedSize)) {
-        workerScript.log("ERROR: Bladeburner.setTeamSize() failed due to an invalid 'size' argument: " + size);
+        workerScript.log("ERROR: bladeburner.setTeamSize() failed due to an invalid 'size' argument: " + size);
         return -1;
     }
     if (this.teamSize < sanitizedSize) {sanitizedSize = this.teamSize;}
@@ -3539,7 +3568,7 @@ Bladeburner.prototype.setTeamSizeNetscriptFn = function(type, name, size, worker
 
 Bladeburner.prototype.getCityEstimatedPopulationNetscriptFn = function(cityName, workerScript) {
     if (!this.cities.hasOwnProperty(cityName)) {
-        workerScript.log("ERROR: Bladeburner.getCityEstimatedPopulation() failed because the specified " +
+        workerScript.log("ERROR: bladeburner.getCityEstimatedPopulation() failed because the specified " +
                          "city was invalid: " + cityName + ". Note that this city argument is case-sensitive");
         return -1;
     }
@@ -3548,7 +3577,7 @@ Bladeburner.prototype.getCityEstimatedPopulationNetscriptFn = function(cityName,
 
 Bladeburner.prototype.getCityEstimatedCommunitiesNetscriptFn = function(cityName, workerScript) {
     if (!this.cities.hasOwnProperty(cityName)) {
-        workerScript.log("ERROR: Bladeburner.getCityEstimatedCommunities() failed because the specified " +
+        workerScript.log("ERROR: bladeburner.getCityEstimatedCommunities() failed because the specified " +
                          "city was invalid: " + cityName + ". Note that this city argument is case-sensitive");
         return -1;
     }
@@ -3557,7 +3586,7 @@ Bladeburner.prototype.getCityEstimatedCommunitiesNetscriptFn = function(cityName
 
 Bladeburner.prototype.getCityChaosNetscriptFn = function(cityName, workerScript) {
     if (!this.cities.hasOwnProperty(cityName)) {
-        workerScript.log("ERROR: Bladeburner.getCityChaos() failed because the specified " +
+        workerScript.log("ERROR: bladeburner.getCityChaos() failed because the specified " +
                          "city was invalid: " + cityName + ". Note that this city argument is case-sensitive");
         return -1;
     }
@@ -3566,7 +3595,7 @@ Bladeburner.prototype.getCityChaosNetscriptFn = function(cityName, workerScript)
 
 Bladeburner.prototype.switchCityNetscriptFn = function(cityName, workerScript) {
     if (!this.cities.hasOwnProperty(cityName)) {
-        workerScript.log("ERROR: Bladeburner.switchCity() failed because the specified " +
+        workerScript.log("ERROR: bladeburner.switchCity() failed because the specified " +
                          "city was invalid: " + cityName + ". Note that this city argument is case-sensitive");
         return false;
     }
@@ -3614,7 +3643,7 @@ function initBladeburner() {
     Skills[SkillNames.BladesIntuition] = new Skill({
         name:SkillNames.BladesIntuition,
         desc:"Each level of this skill increases your success chance " +
-             "for all contracts and operations by 3%",
+             "for all Contracts, Operations, and BlackOps by 3%",
         baseCost:5, costInc:2,
         successChanceAll:3
     });
@@ -3628,7 +3657,7 @@ function initBladeburner() {
     Skills[SkillNames.Cloak] = new Skill({
         name:SkillNames.Cloak,
         desc:"Each level of this skill increases your " +
-             "success chance in stealth-related contracts and operations by 5.5%",
+             "success chance in stealth-related Contracts, Operations, and BlackOps by 5.5%",
         baseCost:3, costInc:1,
         successChanceStealth:5.5
     });
@@ -3639,7 +3668,7 @@ function initBladeburner() {
     Skills[SkillNames.Overclock] = new Skill({
         name:SkillNames.Overclock,
         desc:"Each level of this skill decreases the time it takes " +
-             "to attempt a contract or operation by 1% (Max Level: 95)",
+             "to attempt a Contract, Operation, and BlackOp by 1% (Max Level: 95)",
         baseCost:5, costInc:1, maxLvl:95,
         actionTime:1
     });
@@ -3653,14 +3682,14 @@ function initBladeburner() {
     Skills[SkillNames.ShortCircuit] = new Skill({
         name:SkillNames.ShortCircuit,
         desc:"Each level of this skill increases your success chance " +
-             "in contracts and operations that involve retirement by 5.5%",
+             "in Contracts, Operations, and BlackOps that involve retirement by 5.5%",
         baseCost:3, costInc:2,
         successChanceKill:5.5
     });
     Skills[SkillNames.DigitalObserver] = new Skill({
         name:SkillNames.DigitalObserver,
         desc:"Each level of this skill increases your success chance in " +
-             "all operations by 4%",
+             "all Operations and BlackOps by 4%",
         baseCost:5, costInc:2,
         successChanceOperation:4
     });
@@ -3676,7 +3705,7 @@ function initBladeburner() {
     Skills[SkillNames.Tracer] = new Skill({
         name:SkillNames.Tracer,
         desc:"Each level of this skill increases your success chance in " +
-             "all contracts by 4%",
+             "all Contracts by 4%",
         baseCost:3, costInc:2,
         successChanceContract:4
     });

@@ -1,22 +1,24 @@
-import {BitNodeMultipliers}                             from "./BitNode";
-import {CONSTANTS}                                      from "./Constants";
-import {Engine}                                         from "./engine";
+import {BitNodeMultipliers}                from "./BitNode";
+import {CONSTANTS}                         from "./Constants";
+import {Engine}                            from "./engine";
 import {Factions, getNextNeurofluxLevel,
-        factionExists}                                  from "./Faction";
-import {hasBladeburnerSF}                               from "./NetscriptFunctions";
-import {addWorkerScript}                                from "./NetscriptWorker";
-import {Player}                                         from "./Player";
-import {prestigeAugmentation}                           from "./Prestige";
-import {saveObject}                                     from "./SaveObject";
-import {Script, RunningScript}                          from "./Script";
-import {Server}                                         from "./Server";
-import {SourceFiles}                                    from "./SourceFile";
-import {dialogBoxCreate}                                from "../utils/DialogBox";
-import {createElement, createAccordionElement,
-        removeChildrenFromElement, clearObject}         from "../utils/HelperFunctions";
+        factionExists}                     from "./Faction";
+import {hasBladeburnerSF}                  from "./NetscriptFunctions";
+import {addWorkerScript}                   from "./NetscriptWorker";
+import {Player}                            from "./Player";
+import {prestigeAugmentation}              from "./Prestige";
+import {saveObject}                        from "./SaveObject";
+import {Script, RunningScript}             from "./Script";
+import {Server}                            from "./Server";
+import {SourceFiles}                       from "./SourceFile";
+import {dialogBoxCreate}                   from "../utils/DialogBox";
+import {createAccordionElement}            from "../utils/uiHelpers/createAccordionElement";
 import {Reviver, Generic_toJSON,
-        Generic_fromJSON}                               from "../utils/JSONReviver";
-import {isString}                                       from "../utils/StringHelperFunctions";
+        Generic_fromJSON}                  from "../utils/JSONReviver";
+import {clearObject}                       from "../utils/helpers/clearObject";
+import {createElement}                     from "../utils/uiHelpers/createElement";
+import {isString}                          from "../utils/helpers/isString";
+import {removeChildrenFromElement}         from "../utils/uiHelpers/removeChildrenFromElement";
 
 //Augmentations
 function Augmentation(params) {
@@ -1110,7 +1112,8 @@ function initAugmentations() {
              "This augmentation: <br>" +
              "Increases the player's agility by 10% <br>" +
              "Increases the player's defense by 10% <br>" +
-             "Increases the amount of money the player gains from crimes by 25%"
+             "Increases the amount of money the player gains from crimes by 25%",
+	prereqs:[AugmentationNames.LuminCloaking1]
     });
     LuminCloaking2.addToFactions(["Slum Snakes", "Tetrads"]);
     if (augmentationExists(AugmentationNames.LuminCloaking2)) {

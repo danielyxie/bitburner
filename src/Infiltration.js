@@ -3,7 +3,8 @@ import {CONSTANTS}                              from "./Constants";
 import {Engine}                                 from "./engine";
 import {Player}                                 from "./Player";
 import {dialogBoxCreate}                        from "../utils/DialogBox";
-import {clearEventListeners, getRandomInt}      from "../utils/HelperFunctions";
+import {clearEventListeners}                    from "../utils/uiHelpers/clearEventListeners";
+import {getRandomInt}                           from "../utils/helpers/getRandomInt";
 import {infiltrationBoxCreate}                  from "../utils/InfiltrationBox";
 import {formatNumber}                           from "../utils/StringHelperFunctions";
 
@@ -157,7 +158,8 @@ function nextInfiltrationLevel(inst) {
         case 3:
             scenario = InfiltrationScenarios.Bots;
             killButton.style.display = "block";
-            killButton.addEventListener("click", function() {
+            killButton.addEventListener("click", function(e) {
+                if (!e.isTrusted) {return false;}
                 var res = attemptInfiltrationKill(inst);
                 if (res[0]) {
                     writeInfiltrationStatusText("You SUCCESSFULLY killed the security bots! Unfortunately you alerted the " +
@@ -180,7 +182,8 @@ function nextInfiltrationLevel(inst) {
                 updateInfiltrationLevelText(inst);
             });
             assassinateButton.style.display = "block";
-            assassinateButton.addEventListener("click", function() {
+            assassinateButton.addEventListener("click", function(e) {
+                if (!e.isTrusted) {return false;}
                 var res = attemptInfiltrationAssassinate(inst);
                 if (res[0]) {
                     writeInfiltrationStatusText("You SUCCESSFULLY assassinated the security bots without being detected!");
@@ -202,7 +205,8 @@ function nextInfiltrationLevel(inst) {
         default:    //0, 4-5
             scenario = InfiltrationScenarios.Guards;
             killButton.style.display = "block";
-            killButton.addEventListener("click", function() {
+            killButton.addEventListener("click", function(e) {
+                if (!e.isTrusted) {return false;}
                 var res = attemptInfiltrationKill(inst);
                 if (res[0]) {
                     writeInfiltrationStatusText("You SUCCESSFULLY killed the security guard! Unfortunately you alerted the " +
@@ -228,7 +232,8 @@ function nextInfiltrationLevel(inst) {
             knockoutButton.style.display = "block";
             stealthKnockoutButton.style.display = "block";
             assassinateButton.style.display = "block";
-            assassinateButton.addEventListener("click", function() {
+            assassinateButton.addEventListener("click", function(e) {
+                if (!e.isTrusted) {return false;}
                 var res = attemptInfiltrationAssassinate(inst);
                 if (res[0]) {
                     writeInfiltrationStatusText("You SUCCESSFULLY assassinated the security guard without being detected!");
@@ -250,7 +255,8 @@ function nextInfiltrationLevel(inst) {
             break;
     }
 
-    knockoutButton.addEventListener("click", function() {
+    knockoutButton.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         var res = attemptInfiltrationKnockout(inst);
         if (res[0]) {
             writeInfiltrationStatusText("You SUCCESSFULLY knocked out the security guard! " +
@@ -272,7 +278,8 @@ function nextInfiltrationLevel(inst) {
         return false;
     });
 
-    stealthKnockoutButton.addEventListener("click", function() {
+    stealthKnockoutButton.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         var res = attemptInfiltrationStealthKnockout(inst);
         if (res[0]) {
             writeInfiltrationStatusText("You SUCCESSFULLY knocked out the security guard without making " +
@@ -293,7 +300,8 @@ function nextInfiltrationLevel(inst) {
         return false;
     });
 
-    hackSecurityButton.addEventListener("click", function() {
+    hackSecurityButton.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         var res = attemptInfiltrationHack(inst);
         if (res[0]) {
             writeInfiltrationStatusText("You SUCCESSFULLY hacked and disabled the security system!");
@@ -309,7 +317,8 @@ function nextInfiltrationLevel(inst) {
         return false;
     });
 
-    destroySecurityButton.addEventListener("click", function() {
+    destroySecurityButton.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         var res = attemptInfiltrationDestroySecurity(inst);
         if (res[0]) {
             writeInfiltrationStatusText("You SUCCESSFULLY and violently destroy the security system!");
@@ -325,7 +334,8 @@ function nextInfiltrationLevel(inst) {
         return false;
     });
 
-    sneakButton.addEventListener("click", function() {
+    sneakButton.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         var res = attemptInfiltrationSneak(inst);
         if (res[0]) {
             writeInfiltrationStatusText("You SUCCESSFULLY sneak past the security undetected!");
@@ -340,7 +350,8 @@ function nextInfiltrationLevel(inst) {
         return false;
     });
 
-    pickdoorButton.addEventListener("click", function() {
+    pickdoorButton.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         var res = attemptInfiltrationPickLockedDoor(inst);
         if (res[0]) {
             writeInfiltrationStatusText("You SUCCESSFULLY pick the locked door!");
@@ -356,7 +367,8 @@ function nextInfiltrationLevel(inst) {
         return false;
     });
 
-    bribeButton.addEventListener("click", function() {
+    bribeButton.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         var bribeAmt = CONSTANTS.InfiltrationBribeBaseAmount * inst.clearanceLevel;
         if (Player.money.lt(bribeAmt)) {
             writeInfiltrationStatusText("You do not have enough money to bribe the guard. " +
@@ -380,7 +392,8 @@ function nextInfiltrationLevel(inst) {
         return false;
     });
 
-    escapeButton.addEventListener("click", function() {
+    escapeButton.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         var res = attemptInfiltrationEscape(inst);
         if (res[0]) {
             writeInfiltrationStatusText("You SUCCESSFULLY escape from the facility with the stolen classified " +
