@@ -96,6 +96,8 @@ let NetscriptFunctions =
     "bladeburner|getContractNames|getOperationNames|getBlackOpNames|"          +
     "getGeneralActionNames|getSkillNames|startAction|stopBladeburnerAction|"   +
     "getActionTime|getActionEstimatedSuccessChance|getActionCountRemaining|"   +
+    "getActionMaxLevel|getActionCurrentLevel|getActionAutolevel|"              +
+    "setActionAutolevel|setActionLevel|"                                       +
     "getRank|getSkillPoints|getSkillLevel|upgradeSkill|getTeamSize|"           +
     "setTeamSize|getCityEstimatedPopulation|getCityEstimatedCommunities|"      +
     "getCityChaos|switchCity|getStamina|joinBladeburnerFaction";

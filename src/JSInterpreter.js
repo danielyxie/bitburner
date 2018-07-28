@@ -84,7 +84,8 @@ var Interpreter = function(code, opt_initFunc, lineOffset=0) {
  * @const {!Object} Configuration used for all Acorn parsing.
  */
 Interpreter.PARSE_OPTIONS = {
-  ecmaVersion: 5
+  ecmaVersion: 5,
+  locations: true
 };
 
 /**
@@ -2125,13 +2126,18 @@ Interpreter.prototype.getPrototype = function(value) {
  * Fetch a property value from a data object.
  * @param {Interpreter.Value} obj Data object.
  * @param {Interpreter.Value} name Name of property.
+ * @param {Acorn AST Node} node Node that triggered this function. Used by Bitburner for getting error line numbers
  * @return {Interpreter.Value} Property value (may be undefined).
  */
-Interpreter.prototype.getProperty = function(obj, name) {
+Interpreter.prototype.getProperty = function(obj, name, node) {
   name = String(name);
   if (obj === undefined || obj === null) {
+    let lineNum;
+    if (node != null && node.loc != null && node.loc.start != null) {
+        lineNum = node.loc.start.line;
+    }
     this.throwException(this.TYPE_ERROR,
-                        "Cannot read property '" + name + "' of " + obj);
+                        "Cannot read property '" + name + "' of " + obj, lineNum);
   }
   if (name === 'length') {
     // Special cases for magic length property.
@@ -2425,11 +2431,12 @@ Interpreter.prototype.createSpecialScope = function(parentScope, opt_scope) {
 /**
  * Retrieves a value from the scope chain.
  * @param {string} name Name of variable.
+ * @param {Acorn AST Node} node Node that triggered this function. Used by Bitburner for getting error line number
  * @return {Interpreter.Value} Any value.
  *   May be flagged as being a getter and thus needing immediate execution
  *   (rather than being the value of the property).
  */
-Interpreter.prototype.getValueFromScope = function(name) {
+Interpreter.prototype.getValueFromScope = function(name, node) {
   var scope = this.getScope();
   while (scope && scope !== this.global) {
     if (name in scope.properties) {
@@ -2448,7 +2455,12 @@ Interpreter.prototype.getValueFromScope = function(name) {
       prevNode['operator'] === 'typeof') {
     return undefined;
   }
-  this.throwException(this.REFERENCE_ERROR, name + ' is not defined');
+
+  var lineNum;
+  if (node != null && node.loc != null && node.loc.start != null) {
+      lineNum = node.loc.start.line;
+  }
+  this.throwException(this.REFERENCE_ERROR, name + ' is not defined', lineNum);
 };
 
 /**
@@ -2557,17 +2569,18 @@ Interpreter.prototype.calledWithNew = function() {
 /**
  * Gets a value from the scope chain or from an object property.
  * @param {!Array} ref Name of variable or object/propname tuple.
+ * @param {Acorn AST Node} node Node that triggered this function. Used by Bitburner for getting error line number
  * @return {Interpreter.Value} Any value.
  *   May be flagged as being a getter and thus needing immediate execution
  *   (rather than being the value of the property).
  */
-Interpreter.prototype.getValue = function(ref) {
+Interpreter.prototype.getValue = function(ref, node) {
   if (ref[0] === Interpreter.SCOPE_REFERENCE) {
     // A null/varname variable lookup.
-    return this.getValueFromScope(ref[1]);
+    return this.getValueFromScope(ref[1], node);
   } else {
     // An obj/prop components tuple (foo.bar).
-    return this.getProperty(ref[0], ref[1]);
+    return this.getProperty(ref[0], ref[1], node);
   }
 };
 
@@ -2685,7 +2698,7 @@ Interpreter.prototype.unwind = function(type, value, label, lineNumberMsg="") {
     var type = errorTable[name] || Error;
     realError = type(message + lineNumberMsg);
   } else {
-    realError = String(value + lineNumberMsg);
+    realError = String(value) + lineNumberMsg;
   }
   throw realError;
 };
@@ -2791,7 +2804,7 @@ Interpreter.prototype['stepAssignmentExpression'] =
       state.leftValue_ = state.value;
     }
     if (!state.doneGetter_ && node['operator'] !== '=') {
-      var leftValue = this.getValue(state.leftReference_);
+      var leftValue = this.getValue(state.leftReference_, node);
       state.leftValue_ = leftValue;
       if (leftValue && typeof leftValue === 'object' && leftValue.isGetter) {
         // Clear the getter flag and call the getter function.
@@ -2925,7 +2938,7 @@ Interpreter.prototype['stepCallExpression'] = function(stack, state, node) {
     state.doneCallee_ = 2;
     var func = state.value;
     if (Array.isArray(func)) {
-      state.func_ = this.getValue(func);
+      state.func_ = this.getValue(func, node);
       if (func[0] === Interpreter.SCOPE_REFERENCE) {
         // (Globally or locally) named function.  Is it named 'eval'?
         state.directEval_ = (func[1] === 'eval');
@@ -3335,7 +3348,7 @@ Interpreter.prototype['stepIdentifier'] = function(stack, state, node) {
     stack[stack.length - 1].value = [Interpreter.SCOPE_REFERENCE, node['name']];
     return;
   }
-  var value = this.getValueFromScope(node['name']);
+  var value = this.getValueFromScope(node['name'], node);
   // An identifier could be a getter if it's a property on the global object.
   if (value && typeof value === 'object' && value.isGetter) {
     // Clear the getter flag and call the getter function.
@@ -3570,7 +3583,7 @@ Interpreter.prototype['stepSwitchStatement'] = function(stack, state, node) {
 
 Interpreter.prototype['stepThisExpression'] = function(stack, state, node) {
   stack.pop();
-  stack[stack.length - 1].value = this.getValueFromScope('this');
+  stack[stack.length - 1].value = this.getValueFromScope('this', node);
 };
 
 Interpreter.prototype['stepThrowStatement'] = function(stack, state, node) {
@@ -3671,7 +3684,7 @@ Interpreter.prototype['stepUpdateExpression'] = function(stack, state, node) {
     state.leftValue_ = state.value;
   }
   if (!state.doneGetter_) {
-    var leftValue = this.getValue(state.leftSide_);
+    var leftValue = this.getValue(state.leftSide_, node);
     state.leftValue_ = leftValue;
     if (leftValue && typeof leftValue === 'object' && leftValue.isGetter) {
       // Clear the getter flag and call the getter function.

@@ -7,7 +7,7 @@ let CONSTANTS = {
 	MaxSkillLevel: 			975,
 
     //How much reputation is needed to join a megacorporation's faction
-    CorpFactionRepRequirement: 250000,
+    CorpFactionRepRequirement: 200e3,
 
     /* Base costs */
     BaseCostFor1GBOfRamHome: 32000,
@@ -502,12 +502,13 @@ let CONSTANTS = {
     "* Completely re-designed the Hacknet Node API<br>" +
     "* getSkillLevel() in Bladeburner API now returns an error if no argument is passed in (as opposed to an object with all skill levels). This may break scripts<br>" +
     "* Minimum Netscript execution time reduced from 15ms to 10ms (configurable in Options)<br>" +
+    "* Company reputation needed to get invited to Megacorporation factions decreased from 250k to 200k<br>" +
     "* HP is now reset (restored) when Augmenting<br>" +
     "* Source-File 6 now increases both the level and experience gain of all combat stats (it was only experience gain previously)<br>" +
     "* Reverted a previous change for Source-File 12. It's benefits are now multiplicative rather than additive<br>" +
     "* Starting Infiltration security level for almost every location decreased by ~10%<br>" +
     "* Changed 'fl1ght.exe' message when its listed conditions are fulfilled (by hydroflame)<br>" +
-    "* The 'Save Game' button in the top-right overview panel now flashes red if autosave is disabled<br>" + 
+    "* The 'Save Game' button in the top-right overview panel now flashes red if autosave is disabled<br>" +
     "* Bug Fix: Infiltration buttons can no longer be clicked through NetscriptJS<br>" +
     "* Bug Fix: Bladeburner 'Overclock' skill can no longer be leveled above max level through the API (by hydroflame)"
 }

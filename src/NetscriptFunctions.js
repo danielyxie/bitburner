@@ -300,7 +300,9 @@ function NetscriptFunctions(workerScript) {
                     const percentHacked = scriptCalculatePercentMoneyHacked(server);
                     let maxThreadNeeded = Math.ceil(1/percentHacked*(server.moneyAvailable/server.moneyMax));
                     if (isNaN(maxThreadNeeded)) {
-                        maxThreadNeeded = 1e6; //Server has a 'max money' of 0 (probably)
+                        //Server has a 'max money' of 0 (probably).
+                        //We'll set this to an arbitrarily large value
+                        maxThreadNeeded = 1e6;
                     }
 
                     let moneyGained = Math.floor(server.moneyAvailable * percentHacked) * threads;
@@ -3046,7 +3048,7 @@ function NetscriptFunctions(workerScript) {
 
             const crime = findCrime(crimeRoughName.toLowerCase());
             if(crime == null) { // couldn't find crime
-                throw makeRuntimeRejectMsg(workerScript, "Invalid crime passed into commitCrime(): " + crime);
+                throw makeRuntimeRejectMsg(workerScript, "Invalid crime passed into commitCrime(): " + crimeRoughName);
             }
             if(workerScript.disableLogs.ALL == null && workerScript.disableLogs.commitCrime == null) {
                 workerScript.scriptRef.log("Attempting to commit crime: "+crime.name+"...");

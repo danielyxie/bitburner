@@ -1042,22 +1042,23 @@ Bladeburner.prototype.upgradeSkill = function(skill) {
 
 Bladeburner.prototype.getActionObject = function(actionId) {
     //Given an ActionIdentifier object, returns the corresponding
-    //Contract, Operation, or BlackOperation object
+    //GeneralAction, Contract, Operation, or BlackOperation object
     switch (actionId.type) {
         case ActionTypes["Contract"]:
             return this.contracts[actionId.name];
-            break;
         case ActionTypes["Operation"]:
             return this.operations[actionId.name];
-            break;
         case ActionTypes["BlackOp"]:
         case ActionTypes["BlackOperation"]:
             return BlackOperations[actionId.name];
-            break;
+        case ActionTypes["Training"]:
+            return GeneralActions["Training"];
+        case ActionTypes["Field Analysis"]:
+            return GeneralActions["Field Analysis"];
+        case ActionTypes["Recruitment"]:
+            return GeneralActions["Recruitment"];
         default:
             return null;
-            console.log("WARNING: Bladeburner.getActionObject() called with an unexpected " +
-                        "ActionIdentifier type: " + actionId.type);
     }
 }
 
@@ -3222,6 +3223,7 @@ Bladeburner.prototype.getActionIdFromTypeAndName = function(type="", name="") {
             } else {
                 return null;
             }
+            break;
         case "operation":
         case "operations":
         case "op":
@@ -3233,6 +3235,7 @@ Bladeburner.prototype.getActionIdFromTypeAndName = function(type="", name="") {
             } else {
                 return null;
             }
+            break;
         case "blackoperation":
         case "black operation":
         case "black operations":
@@ -3247,6 +3250,7 @@ Bladeburner.prototype.getActionIdFromTypeAndName = function(type="", name="") {
             } else {
                 return null;
             }
+            break;
         case "general":
         case "general action":
         case "gen":
