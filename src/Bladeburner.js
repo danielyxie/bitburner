@@ -358,7 +358,7 @@ function Skill(params={name:"foo", desc:"foo"}) {
 }
 
 Skill.prototype.calculateCost = function(currentLevel) {
-    return (this.baseCost + (currentLevel * this.costInc)) * BitNodeMultipliers.BladeburnerSkillCost;
+    return Math.floor((this.baseCost + (currentLevel * this.costInc)) * BitNodeMultipliers.BladeburnerSkillCost);
 }
 var Skills = {};
 var SkillNames = {
