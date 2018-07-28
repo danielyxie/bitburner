@@ -31,6 +31,7 @@ let CONSTANTS = {
     HacknetNodeMaxCores: 16,
 
     /* Faction and Company favor */
+    BaseFavorToDonate:            150,
     FactionReputationToFavorBase: 500,
     FactionReputationToFavorMult: 1.02,
     CompanyReputationToFavorBase: 500,
@@ -78,6 +79,7 @@ let CONSTANTS = {
     ScriptArbScriptRamCost:         1.0, //Functions that apply to all scripts regardless of args
     ScriptGetScriptRamCost:         0.1,
     ScriptGetHackTimeRamCost:       0.05,
+    ScriptGetFavorToDonate:         0.10,
 
     ScriptSingularityFn1RamCost:    1,
     ScriptSingularityFn2RamCost:    2,
