@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.39.1",
+    Version:                "0.40.0",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -489,7 +489,10 @@ let CONSTANTS = {
 
     LatestUpdate:
     "v0.40.0<br>"  +
-    "* Netscript 1.0 (NS1) now uses a fully-fledged ES5 Javascript Interpreter. This means many new features are now available in NS1, and this also fixes several bugs." +
+    "* <b>WARNING: This update makes some significant changes to Netscript and therefore you may need to " +
+    "make some changes to your scripts. See <a href='https://www.reddit.com/r/Bitburner/comments/9252j4/psa_netscript_10_changes_in_next_version_v0400/' target='_blank'> " +
+    "this post for details</a></b><br>" +
+    "* Netscript 1.0 (NS1) now uses a fully-fledged ES5 JavaScript Interpreter. This means many new features are now available in NS1, and this also fixes several bugs." +
     " However this also means any ES6+ features are no longer supported in NS1 <br>" +
     "* When a server is hacked with a very large number of threads and left with no money, the server's security level " +
     "now only increases by however many threads were needed to drain the server. For example, if you hack a server with " +
@@ -510,7 +513,9 @@ let CONSTANTS = {
     "* Changed 'fl1ght.exe' message when its listed conditions are fulfilled (by hydroflame)<br>" +
     "* The 'Save Game' button in the top-right overview panel now flashes red if autosave is disabled<br>" +
     "* Bug Fix: Infiltration buttons can no longer be clicked through NetscriptJS<br>" +
-    "* Bug Fix: Bladeburner 'Overclock' skill can no longer be leveled above max level through the API (by hydroflame)"
+    "* Bug Fix: Bladeburner 'Overclock' skill can no longer be leveled above max level through the API (by hydroflame)<br>" +
+    "* Bug Fix: Healthcare division in Bladeburner should no longer cause game to crash"
+
 }
 
 export {CONSTANTS};
