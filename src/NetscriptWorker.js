@@ -199,7 +199,7 @@ function startNetscript1Script(workerScript) {
                         });
                     }
                     int.setProperty(scope, name, int.createAsyncFunction(tempWrapper));
-                } else if (name === "sprintf" || name === "vsprintf") {
+                } else if (name === "sprintf" || name === "vsprintf" || name === "scp") {
                     let tempWrapper = function() {
                         let fnArgs = [];
 
