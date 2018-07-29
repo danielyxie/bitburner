@@ -89,6 +89,15 @@
             <li id="job-tab" class="mainmenu-accordion-panel">
                 <a id="job-menu-link">Job</a>
             </li>
+            <li id="bladeburner-tab" class="mainmenu-accordion-panel">
+                <a id="bladeburner-menu-link"> Bladeburner </a>
+            </li>
+            <li id="corporation-tab" class="mainmenu-accordion-panel">
+                <a id="corporation-menu-link"> Corp </a>
+            </li>
+            <li id="gang-tab" class="mainmenu-accordion-panel">
+                <a id="gang-menu-link"> Gang </a>
+            </li>
 
             <li id="help-menu-header-li">
                 <a id="help-menu-header" class="mainmenu-accordion-header">Help</a>
@@ -805,11 +814,11 @@
                         <span class="tooltiptext">
                             The minimum number of milliseconds it takes to execute an operation in Netscript.
                             Setting this too low can result in poor performance if you have many scripts running.
-                            The default value is 50ms.
+                            The default value is 25ms.
                         </span>
                     </label>
 
-                    <input type ="range" max="250" min="15" step="1" name="settingsNSExecTimeRangeVal" id="settingsNSExecTimeRangeVal" value="100" />
+                    <input type ="range" max="100" min="10" step="1" name="settingsNSExecTimeRangeVal" id="settingsNSExecTimeRangeVal" value="25" />
                     <em id="settingsNSExecTimeRangeValLabel" style="font-style: normal;"></em>
                 </fieldset>
 
@@ -950,6 +959,7 @@
         <div class="loaderspinner"></div>
         <div class="loaderlabel">Loading Bitburner...</div>
     </div>
+    <script src="dist/vendor.bundle.js"></script>
     <script src="dist/engine.bundle.js"></script>
 </body>
 </html>

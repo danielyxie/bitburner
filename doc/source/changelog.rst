@@ -3,25 +3,48 @@
 Changelog
 =========
 
+v0.40.0 - 7/28/2018
+-------------------
+* **WARNING: This update makes some significant changes to Netscript and therefore you may need to make some changes to your scripts. See** `this post <https://www.reddit.com/r/Bitburner/comments/9252j4/psa_netscript_10_changes_in_next_version_v0400/>`_ **this post for details**
+* Netscript 1.0 (NS1) now uses a fully-fledged ES5 JavaScript Interpreter. This means many new features are now available in NS1, and this also fixes several bugs.
+  However this also means any ES6+ features are no longer supported in NS1
+* When a server is hacked with a very large number of threads and left with no money, the server's security level
+  now only increases by however many threads were needed to drain the server. For example, if you hack a server with
+  5000 threads but it only needed 2000 threads to deplete the server's money, then the server's security will only increase
+  as if you had hacked it with 2000 threads (change by hydroflame)
+* Added getCurrentAction() to Bladeburner API
+* Added a variety of functions to Bladeburner API that deal with action levels (change by hydroflame)
+* Added getPurchasedServerLimit() and getPurchasedServerMaxRam() functions to Netscript (change by hydroflame & kopelli)
+* Added getOwnedSourceFiles() Singularity function (by hydroflame)
+* Completely re-designed the Hacknet Node API
+* getSkillLevel() in Bladeburner API now returns an error if no argument is passed in (as opposed to an object with all skill levels). This may break scripts
+* Minimum Netscript execution time reduced from 15ms to 10ms (configurable in Options)
+* Company reputation needed to get invited to Megacorporation factions decreased from 250k to 200k
+* HP is now reset (restored) when Augmenting
+* Source-File 6 now increases both the level and experience gain of all combat stats (it was only experience gain previously)
+* Reverted a previous change for Source-File 12. It's benefits are now multiplicative rather than additive
+* Starting Infiltration security level for almost every location decreased by ~10%
+* Changed 'fl1ght.exe' message when its listed conditions are fulfilled (by hydroflame)
+* The 'Save Game' button in the top-right overview panel now flashes red if autosave is disabled
+* Bug Fix: Infiltration buttons can no longer be clicked through NetscriptJS
+* Bug Fix: Bladeburner 'Overclock' skill can no longer be leveled above max level through the API (by hydroflame)
+* Bug Fix: Healthcare division in Bladeburner should no longer cause game to crash
+
 v0.39.1 - 7/4/2018
 ------------------
 
 * Bladeburner Rank gain in BN-7 is now reduced by 40% instead of 50%
 * Quadrupled the amount of money gained from Bladeburner contracts
 * Added joinBladeburnerDivision() Netscript function to Bladeburner API
-* Doubled the effects of Source-File 5. Now gives 8%, 12%, and 14% increase to all hacking multipliers " +
-at levels 1, 2, and 3, respectively (increased from 4%/6%, 7%)
-* Increased the effect of Source-File 8. It now gives a 12%, 18% and 21% to your hacking growth multiplier " +
-at levels 1, 2, and 3, respectively (increased from 8%, 12%, 14%)
-* The effect of Source-File 12 is now additive with itself, rather than multiplicative. This means " +
-that level N of Source-File 12 now increases all multipliers by N%
+* Doubled the effects of Source-File 5. Now gives 8%, 12%, and 14% increase to all hacking multipliers at levels 1, 2, and 3, respectively (increased from 4%/6%, 7%)
+* Increased the effect of Source-File 8. It now gives a 12%, 18% and 21% to your hacking growth multiplier at levels 1, 2, and 3, respectively (increased from 8%, 12%, 14%)
+* The effect of Source-File 12 is now additive with itself, rather than multiplicative. This means that level N of Source-File 12 now increases all multipliers by N%
 * The setting to suppress the confirmation box when purchasing Augmentations was moved into the main Options menu (by Github user hydroflame)
 * Bug Fix: Crime Success rates were being calculated incorrectly (by Github user hydroflame)
 * When an Infiltration is finished, you will now return back to the company's page, rather than the city
 * Infiltration faction reputation selector now remembers your last choice
 * Significantly increased the amount of money gained from Infiltration
-* Bug Fix: Copying a NetscriptJS script to another server using scp now properly takes into account " +
-the script's changes.
+* Bug Fix: Copying a NetscriptJS script to another server using scp now properly takes into account the script's changes.
 * Bug Fix: Fixed an issue where game would not load in Edge due to incompatible features
 * travelToCity() Singularity function no longer grants Intelligence exp"
 
@@ -530,7 +553,7 @@ v0.26.1
 v0.26.0
 -------
 * Game now has a real ending, although it's not very interesting/satisfying right now. It sets up the framework for the secondary prestige system in the future
-* Forgot to mention that since last update, comments now work in Netscript. Use // for single line comments or /* and */ for multiline comments just like in Javascript
+* Forgot to mention that since last update, comments now work in Netscript. Use // for single line comments or /* and \*/ for multiline comments just like in Javascript
 * Added ports to Netscript. These ports are essentially serialized queues. You can use the write() Netscript function to write a value to a queue, and then you can use the read() Netscript function to read the value from the queue. Once you read a value from the queue it will be removed. There are only 10 queues (1-10), and each has a maximum capacity of 50 entries. If you try to write to a queue that is full, the the first value is removed. See wiki/Netscript documentation for more details
 * You can now use the 'help' Terminal command for specific commands
 * You can now use './' to run a script/program (./NUKE.exe). However, tab completion currently doesn't work for it (I'm working on it)

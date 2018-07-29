@@ -21,7 +21,7 @@ import {SourceFiles, applySourceFile}           from "./SourceFile";
 
 import Decimal                                  from "decimal.js";
 import {dialogBoxCreate}                        from "../utils/DialogBox";
-import {clearEventListeners}                    from "../utils/HelperFunctions";
+import {clearEventListeners}                    from "../utils/uiHelpers/clearEventListeners";
 import {createRandomIp}                         from "../utils/IPAddress";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver";
@@ -99,7 +99,6 @@ function PlayerObject() {
     this.currentServer          = ""; //IP address of Server currently being accessed through terminal
     this.purchasedServers       = []; //IP Addresses of purchased servers
     this.hacknetNodes           = [];
-    this.hacknetNodeWrappers    = [];
     this.totalHacknetNodeProduction = 0;
 
     //Factions
@@ -300,6 +299,10 @@ PlayerObject.prototype.prestigeAugmentation = function() {
 
     this.hacknetNodes.length = 0;
     this.totalHacknetNodeProduction = 0;
+
+    //Re-calculate skills and reset HP
+    this.updateSkillLevels();
+    this.hp = this.max_hp;
 }
 
 PlayerObject.prototype.prestigeSourceFile = function() {
@@ -393,6 +396,9 @@ PlayerObject.prototype.prestigeSourceFile = function() {
     this.playtimeSinceLastAug = 0;
     this.playtimeSinceLastBitnode = 0;
     this.scriptProdSinceLastAug = 0;
+
+    this.updateSkillLevels();
+    this.hp = this.max_hp;
 }
 
 PlayerObject.prototype.getCurrentServer = function() {
@@ -2357,7 +2363,7 @@ PlayerObject.prototype.queueAugmentation = function(name) {
             return;
         }
     }
-    
+
     this.firstAugPurchased = true;
     this.queuedAugmentations.push(new PlayerOwnedAugmentation(name));
 }

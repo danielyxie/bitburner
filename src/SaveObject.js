@@ -8,8 +8,7 @@ import {loadFactions, Factions,
         processPassiveFactionRepGain}           from "./Faction";
 import {FconfSettings, loadFconf}               from "./Fconf";
 import {loadAllGangs, AllGangs}                 from "./Gang";
-import {processAllHacknetNodeEarnings,
-        createPlayerHacknetNodeWrappers}        from "./HacknetNode";
+import {processAllHacknetNodeEarnings}          from "./HacknetNode";
 import {loadMessages, initMessages, Messages}   from "./Message";
 import {Player, loadPlayer}                     from "./Player";
 import {loadAllRunningScripts}                  from "./Script";
@@ -19,11 +18,13 @@ import {loadSpecialServerIps, SpecialServerIps} from "./SpecialServerIps";
 import {loadStockMarket, StockMarket}           from "./StockMarket";
 import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {gameOptionsBoxClose}                    from "../utils/GameOptions";
-import {clearEventListeners, createElement,
-        createPopup, removeElementById}         from "../utils/HelperFunctions";
+import {clearEventListeners}                    from "../utils/uiHelpers/clearEventListeners";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver";
+import {createElement}                          from "../utils/uiHelpers/createElement";
+import {createPopup}                            from "../utils/uiHelpers/createPopup";
 import {formatNumber}                           from "../utils/StringHelperFunctions";
+import {removeElementById}                      from "../utils/uiHelpers/removeElementById";
 
 import Decimal                                  from "decimal.js";
 
@@ -211,7 +212,10 @@ function loadGame(saveString) {
                     }
                 }
             }
-            if (ver != CONSTANTS.Version) {
+            if (window.location.href.toLowerCase().includes("bitburner-beta")) {
+                //Beta branch, always show changes
+                createBetaUpdateText();
+            } else if (ver != CONSTANTS.Version) {
                 createNewUpdateText();
             }
         } catch(e) {
@@ -228,8 +232,6 @@ function loadGame(saveString) {
         }
     }
 
-    //Re-initialize Hacknet Node Wrappers
-    createPlayerHacknetNodeWrappers();
     return true;
 }
 
@@ -446,9 +448,6 @@ function loadImportedGame(saveObj, saveString) {
         }
     }
 
-    //Re-initialize Hacknet Node Wrappers
-    createPlayerHacknetNodeWrappers();
-
     var popupId = "import-game-restart-game-notice";
     var txt = createElement("p", {
         innerText:"Imported game! I would suggest saving the game and then reloading the page " +
@@ -588,6 +587,14 @@ BitburnerSaveObject.prototype.deleteGame = function(db) {
 function createNewUpdateText() {
     dialogBoxCreate("New update!<br>" +
                     "Please report any bugs/issues through the github repository " +
+                    "or the Bitburner subreddit (reddit.com/r/bitburner).<br><br>" +
+                    CONSTANTS.LatestUpdate);
+}
+
+function createBetaUpdateText() {
+    dialogBoxCreate("You are playing on the beta environment! This branch of the game " +
+                    "features the latest developments in the game. This version may be unstable.<br>" +
+                    "Please report any bugs/issues through the github repository (https://github.com/danielyxie/bitburner/issues) " +
                     "or the Bitburner subreddit (reddit.com/r/bitburner).<br><br>" +
                     CONSTANTS.LatestUpdate);
 }

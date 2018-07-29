@@ -88,7 +88,8 @@ the following rules:
    the changes to the UI
  - If your changes affect Netscript, provide some 
    scripts that can be used to test the Netscript changes. 
- - Do not check in the bundled engine (dist\engine.bundle.js)
+ - Do not check in any bundled files (`dist\*.bundle.js`). These will be
+   updated as part of official releases.
 
 ## As a Documentor
 To contribute to BitBurner documentation, you will need to have Python

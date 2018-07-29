@@ -8,7 +8,7 @@ still being able to access the Netscript functions.
 
 NetscriptJS was developed primarily by `Github user jaguilar <https://github.com/jaguilar>`_
 
-On top of having almost all of the features and capabilities of Javascript, NetscriptJS is also
+On top of having almost all of the features and capabilities of JavaScript, NetscriptJS is also
 significantly faster than Netscript 1.0.
 
 This documentation will not go over any of the additional features of NetscriptJS, since

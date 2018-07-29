@@ -11,8 +11,8 @@ import {Settings}                               from "./Settings";
 
 import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {factionInvitationBoxCreate}             from "../utils/FactionInvitationBox";
-import {clearEventListeners, createElement,
-        removeChildrenFromElement}              from "../utils/HelperFunctions";
+import {removeChildrenFromElement}              from "../utils/uiHelpers/removeChildrenFromElement";
+import {createElement}                          from "../utils/uiHelpers/createElement";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver";
 import numeral                                  from "numeral/min/numeral.min";
@@ -306,13 +306,16 @@ function displayFactionContent(factionName) {
     var donateDivWrapper = createElement("div", {class:"faction-work-div-wrapper"});
     donateDiv.appendChild(donateDivWrapper);
     var donateRepGain = createElement("p", {
-        innerText:"This donation will result in 0 reputation gain"
+        innerText:"This donation will result in 0.000 reputation gain"
     });
     var donateAmountInput = createElement("input", {
         placeholder:"Donation amount",
         inputListener:()=>{
-            var amt = parseFloat(donateAmountInput.value);
-            if (isNaN(amt) || amt < 0) {
+            let amt = 0;
+            if(donateAmountInput.value !== "") {
+                amt = parseFloat(donateAmountInput.value);
+            }
+            if (isNaN(amt)) {
                 donateRepGain.innerText = "Invalid donate amount entered!";
             } else {
                 var repGain = amt / 1e6 * Player.faction_rep_mult;
@@ -389,6 +392,9 @@ function displayFactionContent(factionName) {
                         var hacking = false;
                         if (factionName === "NiteSec" || factionName === "The Black Hand") {hacking = true;}
                         Player.startGang(factionName, hacking);
+                        document.getElementById("gang-tab").style.display = "list-item";
+                        document.getElementById("world-menu-header").click();
+                        document.getElementById("world-menu-header").click();
                         Engine.loadGangContent();
                         yesNoBoxClose();
                     });
@@ -571,7 +577,6 @@ function createFactionAugmentationDisplayElements(augmentationsList, augs, facti
             var aElem = createElement("a", {
                 innerText:aug.name, display:"inline",
                 clickListener:()=>{
-                    console.log('sup buy in fac: '+Settings.SuppressBuyAugmentationConfirmation);
                     if (!Settings.SuppressBuyAugmentationConfirmation) {
                         purchaseAugmentationBoxCreate(aug, faction);
                     } else {

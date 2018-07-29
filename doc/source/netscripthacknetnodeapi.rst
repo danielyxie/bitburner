@@ -7,112 +7,145 @@ through scripts.
 Note that none of these functions will write to the script's logs. If you want
 to see what your script is doing you will have to print to the logs yourself.
 
-hacknetnodes
-^^^^^^^^^^^^
+**Hacknet Node API functions must be accessed through the hacknet namespace**
 
-    *hacknetnodes* is a special variable. It is an array that maps to the player's
-    Hacknet Nodes. The Hacknet Nodes are accessed through indexed. These indexes
-    correspond to the number at the end of the name of the Hacknet Node. For example,
-    the first Hacknet Node you purchase will have the name "hacknet-node-0" and can be
-    accessed using *hacknetnodes[0]*. The fourth Hacknet Node you purchase will have the name
-    "hacknet-node-3" and can be accessed using *hacknetnodes[3]*.
+In Netscript 1.0::
 
-Purchasing Hacknet Nodes
-^^^^^^^^^^^^^^^^^^^^^^^^
+    hacknet.purchaseNode();
+    hacknet.getNodeStats(3).level;
 
-The following is a list of supported functions for purchasing Hacknet Nodes.
+In :ref:`netscriptjs`::
 
-.. js:function:: getNextHacknetNodeCost()
+    ns.hacknet.purchaseNode();
+    ns.hacknet.getNodeStats(3).level;
+
+Referencing a Hacknet Node
+--------------------------
+Most of the functions in the Hacknet Node API perform an operation on a single
+Node. Therefore, a numeric index is used to identify and specify which Hacknet
+Node a function should act on. This index number corresponds to the number
+at the end of the name of the Hacknet Node. For example, the first Hacknet Node you
+purchase will have the name "hacknet-node-0" and is referenced using index 0.
+The fifth Hacknet Node you purchase will have the name "hacknet-node-4" and is
+referenced using index 4.
+
+numNodes
+--------
+.. js:function:: numNodes()
+
+    Returns the number of Hacknet Nodes you own.
+
+purchaseNode
+------------
+.. js:function:: purchaseNode()
+
+    Purchases a new Hacknet Node. Returns a number with the index of the Hacknet Node.
+    This index is equivalent to the number at the end of the Hacknet Node's name
+    (e.g The Hacknet Node named 'hacknet-node-4' will have an index of 4).
+
+    If the player cannot afford to purchase a new Hacknet Node then the function
+    will return -1.
+
+getPurchaseNodeCost
+-------------------
+.. js:function:: getPurchaseNodeCost()
 
     Returns the cost of purchasing a new Hacknet Node
 
-.. js:function:: purchaseHacknetNode()
+getNodeStats
+------------
+.. js:function:: getNodeStats(i)
 
-    Purchases a new Hacknet Node. Returns a number with the index of the Hacknet Node. This index is equivalent to the number at the
-    end of the Hacknet Node's name (e.g The Hacknet Node named 'hacknet-node-4' will have an index of 4). If the player cannot afford
-    to purchase a new Hacknet Node then the function will return false.
+    :param number i: Index/Identifier of Hacknet Node
 
+    Returns an object containing a variety of stats about the specified Hacknet Node::
 
-Hacknet Node Member Variables
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        {
+            name:               Node's name ("hacknet-node-5"),
+            level:              Node's level,
+            ram:                Node's RAM,
+            cores:              Node's number of cores,
+            production:         Node's money earned per second,
+            timeOnline:         Number of seconds since Node has been purchased,
+            totalProduction:    Total number of money Node has produced
+        }
 
-The following is a list of member variables for a Hacknet Node object. These variables are read-only, which means you cannot assign
-a value to these.
+upgradeLevel
+------------
+.. js:function:: upgradeLevel(i, n)
 
-Note that these must be called on an element inside the *hacknetnodes* array, not the array itself.
+    :param number i: Index/Identifier of Hacknet Node
+    :param number n: Number of levels to purchase. Must be positive. Rounded to nearest integer
 
-.. js:attribute:: hacknetnodes[i].name
+    Tries to upgrade the level of the specified Hacknet Node by *n*.
 
-    Returns the name of the corresponding Hacknet Node
-    
+    Returns true if the Hacknet Node's level is successfully upgraded by *n* or
+    if it is upgraded by some positive amount and the Node reaches its max level.
 
-.. js:attribute:: hacknetnodes[i].level
+    Returns false otherwise.
 
-    Returns the level of the corresponding Hacknet Node
+upgradeRam
+----------
+.. js:function:: upgradeRam(i, n)
 
-.. js:attribute:: hacknetnodes[i].ram
+    :param number i: Index/Identifier of Hacknet Node
+    :param number n: Number of times to upgrade RAM. Must be positive. Rounded to nearest integer
 
-    Returns the amount of RAM on the corresponding Hacknet Node
+    Tries to upgrade the specified Hacknet Node's RAM *n* times. Note that each upgrade
+    doubles the Node's RAM. So this is equivalent to multiplying the Node's RAM by
+    2 :sup:`n`.
 
-.. js:attribute:: hacknetnodes[i].cores
+    Returns true if the Hacknet Node's RAM is successfully upgraded *n* times or if
+    it is upgraded some positive number of times and the Node reaches it max RAM.
 
-    Returns the number of cores on the corresponding Hacknet Node
+    Returns false otherwise.
 
-.. js:attribute:: hacknetnodes[i].totalMoneyGenerated
+upgradeCore
+-----------
+.. js:function:: upgradeCore(i, n)
 
-    Returns the total amount of money that the corresponding Hacknet Node has earned
+    :param number i: Index/Identifier of Hacknet Node
+    :param number n: Number of cores to purchase. Must be positive. Rounded to nearest integer
 
-.. js:attribute:: hacknetnodes[i].onlineTimeSeconds
+    Tries to purchase *n* cores for the specified Hacknet Node.
 
-    Returns the total amount of time (in seconds) that the corresponding Hacknet Node has existed
+    Returns true if it successfully purchases *n* cores for the Hacknet Node or if
+    it purchases some positive amount and the Node reaches its max number of cores.
 
-.. js:attribute:: hacknetnodes[i].moneyGainRatePerSecond
+    Returns false otherwise.
 
-    Returns the amount of income that the corresponding Hacknet Node earns
+getLevelUpgradeCost
+-------------------
+.. js:function:: getLevelUpgradeCost(i, n)
 
-Hacknet Node Methods
-^^^^^^^^^^^^^^^^^^^^
-
-The following is a list of supported functions/methods for a Hacknet Node object.
-
-Note that these must be called on an element inside the *hacknetnodes* array, not the
-array itself.
-
-.. js:method:: hacknetnodes[i].upgradeLevel(n)
-
-    :param number n: Number of levels to upgrade. Must be positive. Rounded to nearest integer
-
-    Tries to upgrade the level of the corresponding Hacknet Node *n* times. Returns true if the
-    Hacknet Node's level is successfully upgraded *n* times or up to the max level (200), and false
-    otherwise.
-
-.. js:method:: hacknetnodes[i].upgradeRam()
-
-    Tries to upgrade the amount of RAM on the corresponding Hacknet Node. Returns true if the RAM is
-    successfully upgraded and false otherwise.
-
-.. js:method:: hacknetnodes[i].upgradeCore()
-
-    Tries to purchase an additional core for the corresponding Hacknet Node. Returns true if the
-    additional core is successfully purchased, and false otherwise.
-
-.. js:method:: hacknetnodes[i].getLevelUpgradeCost(n)
-
+    :param number i: Index/Identifier of Hacknet Node
     :param number n: Number of levels to upgrade. Must be positive. Rounded to nearest integer
 
     Returns the cost of upgrading the specified Hacknet Node by *n* levels
 
-.. js:method:: hacknetnodes[i].getRamUpgradeCost()
+getRamUpgradeCost
+-----------------
+.. js:function:: getRamUpgradeCost(i, n)
 
-    Returns the cost of upgrading the RAM of the specified Hacknet Node. Upgrading a Node's RAM doubles it.
+    :param number i: Index/Identifier of Hacknet Node
+    :param number n: Number of times to upgrade RAM. Must be positive. Rounded to nearest integer
 
-.. js:method:: hacknetnodes[i].getCoreUpgradeCost()
+    Returns the cost of upgrading the RAM of the specified Hacknet Node *n* times.
 
-    Returns the cost of upgrading the number of cores of the specified Hacknet Node. Upgrading a Node's
-    number of cores adds one additional core.
+getCoreUpgradeCost
+------------------
+.. js:function:: getCoreUpgradeCost(i, n)
 
-Utils
-^^^^^
+    :param number i: Index/Identifier of Hacknet Node
+    :param number n: Number of times to upgrade cores. Must be positive. Rounded to nearest integer
+
+    Returns the cost of upgrading the number of cores of the specified Hacknet Node by *n*.
+
+Utilities
+---------
+The following functions are not officially part of the Hacknet Node API, but they
+can be useful when writing Hacknet Node-related scripts. Since they are not part
+of the API, they do not need to be accessed using the *hacknet* namespace.
 
 .. js:function:: getHacknetMultipliers()
 
@@ -137,35 +170,86 @@ Utils
 Example(s)
 ^^^^^^^^^^
 
-The following is an example of one way a script can be used to automate the purchasing and upgrading of Hacknet Nodes.
-This script purchases new Hacknet Nodes until the player has four. Then, it iteratively upgrades each of those four Hacknet
-Nodes to a level of at least 75, RAM to at least 8GB, and number of cores to at least 2::
+The following is an example of one way a script can be used to automate the
+purchasing and upgrading of Hacknet Nodes.
 
-    //Purchase 4 Hacknet Nodes
-    while(hacknetnodes.length < 4) {
-        purchaseHacknetNode();
-    }
+This script attempts to purchase Hacknet Nodes until the player has a total of 8. Then
+it gradually upgrades those Node's to a minimum of level 140, 64 GB RAM, and 8 cores::
 
-    //Upgrade all 4 Hacknet Nodes to at least level 75
-    for (i = 0; i < 4; i = i++) {
-        while (hacknetnodes[i].level <= 75) {
-            hacknetnodes[i].upgradeLevel(5);
-            sleep(10000);
-        }
+    function myMoney() {
+        return getServerMoneyAvailable("home");
     }
+    disableLog("getServerMoneyAvailable");
+    disableLog("sleep");
 
-    //Upgrade RAM on all Hacknet Nodes to 8GB
-    for (i = 0; i < 4; i = i++) {
-        while (hacknetnodes[i].ram < 8) {
-            hacknetnodes[i].upgradeRam();
-            sleep(10000);
-        }
-    }
+    cnt = 8;
 
-    //Upgrade cores on all Hacknet Nodes to 2
-    for (i = 0; i < 4; i = i++) {
-        while (hacknetnodes[i].cores < 2) {
-            hacknetnodes[i].upgradeCore();
-            sleep(10000);
-        }
-    }
+    while(hacknet.numNodes() < cnt) {
+        res = hacknet.purchaseNode();
+        print("Purchased hacknet Node with index " + res);
+    };
+
+    for (i = 0; i < cnt; i++) {
+        while (hacknet.getNodeStats(i).level <= 80) {
+            var cost = hacknet.getLevelUpgradeCost(i, 10);
+            while (myMoney() < cost) {
+                print("Need $" + cost + " . Have $" + myMoney());
+                sleep(3000);
+            }
+            res = hacknet.upgradeLevel(i, 10);
+        };
+    };
+
+    print("All nodes upgrade to level 80");
+
+    for (i = 0; i < cnt; i++) {
+        while (hacknet.getNodeStats(i).ram < 16) {
+            var cost = hacknet.getRamUpgradeCost(i, 2);
+            while (myMoney() < cost) {
+                print("Need $" + cost + " . Have $" + myMoney());
+                sleep(3000);
+            }
+            res = hacknet.upgradeRam(i, 2);
+        };
+    };
+
+    print("All nodes upgrade to 16GB RAM");
+
+    for (i = 0; i < cnt; i++) {
+        while (hacknet.getNodeStats(i).level <= 140) {
+            var cost = hacknet.getLevelUpgradeCost(i, 5);
+            while (myMoney() < cost) {
+                print("Need $" + cost + " . Have $" + myMoney());
+                sleep(3000);
+            }
+            res = hacknet.upgradeLevel(i, 5);
+        };
+    };
+
+    print("All nodes upgrade to level 140");
+
+    for (i = 0; i < cnt; i++) {
+        while (hacknet.getNodeStats(i).ram < 64) {
+            var cost = hacknet.getRamUpgradeCost(i, 2);
+            while (myMoney() < cost) {
+                print("Need $" + cost + " . Have $" + myMoney());
+                sleep(3000);
+            }
+            res = hacknet.upgradeRam(i, 2);
+        };
+    };
+
+    print("All nodes upgrade to 64GB RAM (MAX)");
+
+    for (i = 0; i < cnt; i++) {
+        while (hacknetnodes.getNodeStatsi(i).cores < 8) {
+            var cost = hacknet.getCoreUpgradeCost(7);
+            while (myMoney() < cost) {
+                print("Need $" + cost + " . Have $" + myMoney());
+                sleep(3000);
+            }
+            res = hacknet.upgradeCore(i, 7);
+        };
+    };
+
+    print("All nodes upgrade to 8 cores");

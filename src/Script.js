@@ -36,10 +36,10 @@ import {parse, Node}                            from "../utils/acorn";
 import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver";
-import {compareArrays, createElement,
-        roundToTwo}                             from "../utils/HelperFunctions";
-import {formatNumber, numOccurrences,
-        numNetscriptOperators}                  from "../utils/StringHelperFunctions";
+import {compareArrays}                          from "../utils/helpers/compareArrays";
+import {createElement}                          from "../utils/uiHelpers/createElement";
+import {formatNumber}                           from "../utils/StringHelperFunctions";
+import {roundToTwo}                             from "../utils/helpers/roundToTwo";
 
 var keybindings = {
     ace: null,
@@ -211,12 +211,25 @@ function scriptEditorInit() {
             if (prefix.length === 0) {callback(null, []); return;}
             var words = [];
             var fns = NetscriptFunctions(null);
-            for (var name in fns) {
+            for (let name in fns) {
                 if (fns.hasOwnProperty(name)) {
                     words.push({
-                                name: name,
-                                value: name,
-                               });
+                        name:   name,
+                        value:  name,
+                    });
+
+                    //Get functions from namespaces
+                    if (name === "bladeburner" || name === "hacknet") {
+                        let namespace       = fns[name];
+                        if (typeof namespace !== "object") {continue;}
+                        let namespaceFns    = Object.keys(namespace);
+                        for (let i = 0; i < namespaceFns.length; ++i) {
+                            words.push({
+                                name:   namespaceFns[i],
+                                value:  namespaceFns[i],
+                            });
+                        }
+                    }
                 }
             }
             callback(null, words);
@@ -465,11 +478,11 @@ function parseOnlyRamCalculate(server, code, workerScript) {
             }
 
             // Check if this is one of the special keys, and add the appropriate ram cost if so.
-            if (ref == specialReferenceIF) ram += CONSTANTS.ScriptIfRamCost;
-            if (ref == specialReferenceFOR) ram += CONSTANTS.ScriptForRamCost;
-            if (ref == specialReferenceWHILE) ram += CONSTANTS.ScriptWhileRamCost;
-            if (ref == "hacknetnodes") ram += CONSTANTS.ScriptHacknetNodesRamCost;
-            if (ref == "document" || ref == "window") ram += CONSTANTS.ScriptDomRamCost;
+            if (ref == specialReferenceIF)              ram += CONSTANTS.ScriptIfRamCost;
+            if (ref == specialReferenceFOR)             ram += CONSTANTS.ScriptForRamCost;
+            if (ref == specialReferenceWHILE)           ram += CONSTANTS.ScriptWhileRamCost;
+            if (ref == "hacknet")                       ram += CONSTANTS.ScriptHacknetNodesRamCost;
+            if (ref == "document" || ref == "window")   ram += CONSTANTS.ScriptDomRamCost;
 
             // Check if this ident is a function in the workerscript env. If it is, then we need to
             // get its RAM cost. We do this by calling it, which works because the running script
@@ -507,7 +520,7 @@ function parseOnlyRamCalculate(server, code, workerScript) {
         return ram;
 
     } catch (error) {
-        console.info("parse or eval error: ", error);
+        //console.info("parse or eval error: ", error);
         // This is not unexpected. The user may be editing a script, and it may be in
         // a transitory invalid state.
         return -1;
@@ -739,7 +752,7 @@ function calculateRamUsage(codeCopy) {
     }
 
     //Special case: hacknetnodes array
-    if (codeCopy.includes("hacknetnodes")) {
+    if (codeCopy.includes("hacknet")) {
         ramUsage += CONSTANTS.ScriptHacknetNodesRamCost;
     }
     return ramUsage;

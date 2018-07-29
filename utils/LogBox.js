@@ -1,5 +1,6 @@
-import {killWorkerScript}                   from "../src/NetscriptWorker";
-import {printArray, clearEventListeners}    from "./HelperFunctions";
+import {killWorkerScript}    from "../src/NetscriptWorker";
+import {clearEventListeners} from "./uiHelpers/clearEventListeners";
+import {arrayToString}       from "./helpers/arrayToString";
 
 $(document).keydown(function(event) {
     if (logBoxOpened && event.keyCode == 27) {
@@ -47,7 +48,7 @@ function logBoxCreate(script) {
     document.getElementById('log-box-kill-script').style.display = "inline-block";
     logBoxOpen();
     document.getElementById("log-box-text-header").innerHTML =
-        logBoxCurrentScript.filename + " " + printArray(logBoxCurrentScript.args) + ":<br><br>";
+        logBoxCurrentScript.filename + " " + arrayToString(logBoxCurrentScript.args) + ":<br><br>";
     logBoxCurrentScript.logUpd = true;
     logBoxUpdateText();
 }

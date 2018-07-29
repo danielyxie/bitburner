@@ -1,3 +1,4 @@
 node_modules/
+doc/build/
 dist/
 tests/*.bundle.*

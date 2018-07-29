@@ -34,8 +34,10 @@ import {SpecialServerIps,
 import {TextFile, getTextFile}              from "./TextFile";
 
 import {containsAllStrings, longestCommonStart,
-        formatNumber, isString}             from "../utils/StringHelperFunctions";
-import {addOffset, printArray}              from "../utils/HelperFunctions";
+        formatNumber}                       from "../utils/StringHelperFunctions";
+import {addOffset}                          from "../utils/helpers/addOffset";
+import {isString}                           from "../utils/helpers/isString";
+import {arrayToString}                      from "../utils/helpers/arrayToString";
 import {logBoxCreate}                       from "../utils/LogBox";
 import {yesNoBoxCreate,
         yesNoBoxGetYesButton,
@@ -189,6 +191,8 @@ $(document).keydown(function(event) {
         }
 
         if (event.keyCode === KEY.TAB) {
+            event.preventDefault();
+
             //Autocomplete
             if (terminalInput == null) {return;}
             var input = terminalInput.value;
@@ -218,6 +222,7 @@ $(document).keydown(function(event) {
             }
 
             tabCompletion(command, arg, allPos);
+            terminalInput.focus();
         }
 
         //Extra Bash Emulation Hotkeys, must be enabled through .fconf
@@ -1248,7 +1253,7 @@ let Terminal = {
                         }
                     }
                 } else {
-                    post("Error: Invalid file. Only scripts (.script), text files (.txt), or .fconf can be edited with nano"); return;
+                    post("Error: Invalid file. Only scripts (.script, .ns, .js), text files (.txt), or .fconf can be edited with nano"); return;
                 }
                 Engine.loadScriptEditorContent(filename);
 				break;
@@ -1917,17 +1922,29 @@ let Terminal = {
                 post("DeepscanV2.exe lets you run 'scan-analyze' with a depth up to 10.");
                 break;
             case Programs.Flight.name:
-                post("Augmentations: " + Player.augmentations.length + " / 30");
+                const fulfilled = Player.augmentations.length >= 30 &&
+                    Player.money.gt(1e11) &&
+                    ((Player.hacking_skill >= 2500)||
+                    (Player.strength >= 1500 &&
+                    Player.defense >= 1500 &&
+                    Player.dexterity >= 1500 &&
+                    Player.agility >= 1500));
+                if(!fulfilled) {
+                    post("Augmentations: " + Player.augmentations.length + " / 30");
 
-                post("Money: " + numeral(Player.money.toNumber()).format('($0.000a)') + " / " + numeral(1e11).format('($0.000a)'));
-                post("One path below must be fulfilled...");
-                post("----------HACKING PATH----------");
-                post("Hacking skill: " + Player.hacking_skill + " / 2500");
-                post("----------COMBAT PATH----------");
-                post("Strength: " + Player.strength + " / 1500");
-                post("Defense: " + Player.defense + " / 1500");
-                post("Dexterity: " + Player.dexterity + " / 1500");
-                post("Agility: " + Player.agility + " / 1500");
+                    post("Money: " + numeral(Player.money.toNumber()).format('($0.000a)') + " / " + numeral(1e11).format('($0.000a)'));
+                    post("One path below must be fulfilled...");
+                    post("----------HACKING PATH----------");
+                    post("Hacking skill: " + Player.hacking_skill + " / 2500");
+                    post("----------COMBAT PATH----------");
+                    post("Strength: " + Player.strength + " / 1500");
+                    post("Defense: " + Player.defense + " / 1500");
+                    post("Dexterity: " + Player.dexterity + " / 1500");
+                    post("Agility: " + Player.agility + " / 1500");
+                } else {
+                    post("We will contact you.");
+                    post("-- Daedalus --");
+                }
                 break;
             case Programs.BitFlume.name:
                 var yesBtn = yesNoBoxGetYesButton(),
@@ -2033,7 +2050,7 @@ let Terminal = {
 					return;
 				} else {
 					//Able to run script
-					post("Running script with " + numThreads +  " thread(s) and args: " + printArray(args) + ".");
+					post("Running script with " + numThreads +  " thread(s) and args: " + arrayToString(args) + ".");
                     post("May take a few seconds to start up the process...");
                     var runningScriptObj = new RunningScript(script, args);
                     runningScriptObj.threads = numThreads;

@@ -725,6 +725,20 @@ getPurchasedServers
 
     Returns an array with either the hostnames or IPs of all of the servers you have purchased.
 
+getPurchasedServerLimit
+^^^^^^^^^^^^^^^^^^^^^^^
+
+.. js:function:: getPurchasedServerLimit()
+
+    Returns the maximum number of servers you can purchase
+
+getPurchasedServerMaxRam
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. js:function:: getPurchasedServerMaxRam()
+
+    Returns the maximum RAM that a purchased server can have
+
 write
 ^^^^^
 
@@ -847,7 +861,7 @@ getScriptRam
     :param string hostname/ip: Hostname or IP of target server the script is located on. This is optional, If it is not specified then the function will se the current server as the target server.
 
     Returns the amount of RAM required to run the specified script on the target server. Returns
-    0 if the script does not exist. 
+    0 if the script does not exist.
 
 getHackTime
 ^^^^^^^^^^^

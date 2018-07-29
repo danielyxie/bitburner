@@ -110,6 +110,21 @@ stopBladeburnerAction
 
     Stops the current Bladeburner action
 
+getCurrentAction
+----------------
+
+.. js:function:: getCurrentAction()
+
+    Returns an object that represents the player's current Bladeburner action::
+
+        {
+            type: Type of Action
+            name: Name of Action
+        }
+
+    If the player is not performing an action, the function will return an object
+    with the 'type' property set to "Idle".
+
 getActionTime
 -------------
 
@@ -143,6 +158,64 @@ getActionCountRemaining
     Note that this is meant to be used for Contracts and Operations.
     This function will return 'Infinity' for actions such as Training and Field Analysis.
 
+getActionMaxLevel
+-----------------
+
+.. js:function:: getActionMaxLevel(type, name)
+
+    :param string type: Type of action. See :ref:`bladeburner_action_types`
+    :param string name: Name of action. Must be an exact match
+
+    Returns the maximum level for this action.
+
+    Returns -1 if an invalid action is specified.
+
+getActionCurrentLevel
+---------------------
+
+.. js:function:: getActionCurrentLevel(type, name)
+
+    :param string type: Type of action. See :ref:`bladeburner_action_types`
+    :param string name: Name of action. Must be an exact match
+
+    Returns the current level of this action.
+
+    Returns -1 if an invalid action is specified.
+
+getActionAutolevel
+------------------
+
+.. js:function:: getActionAutolevel(type, name)
+
+    :param string type: Type of action. See :ref:`bladeburner_action_types`
+    :param string name: Name of action. Must be an exact match
+
+    Return a boolean indicating whether or not this action is currently set to autolevel.
+
+    Returns false if an invalid action is specified.
+
+setActionAutolevel
+------------------
+
+.. js:function:: setActionAutolevel(type, name, autoLevel)
+
+    :param string type: Type of action. See :ref:`bladeburner_action_types`
+    :param string name: Name of action. Must be an exact match
+    :param boolean autoLevel: Whether or not to autolevel this action
+
+    Enable/disable autoleveling for the specified action.
+
+setActionLevel
+--------------
+
+.. js:function:: setActionLevel(type, name, level)
+
+    :param string type: Type of action. See :ref:`bladeburner_action_types`
+    :param string name: Name of action. Must be an exact match
+    :param level int: Level to set this action to
+
+    Set the level for the specified action.
+
 getRank
 -------
 
@@ -162,21 +235,9 @@ getSkillLevel
 
 .. js:function:: getSkillLevel(skillName="")
 
-    :param string skillName: Optional name of Skill. Empty string by default
+    :param string skillName: Name of skill
 
-    If no argument or an empty string is passed in, this function returns
-    an object with your level for all Bladeburner Skills (only for skills that
-    have at least one level). In the object, the name of the Bladeburner Skills
-    are the keys and your skill levels are the values. For example::
-
-        {
-            "Blade's Intuition":    10,
-            "Cloak":                5,
-            "Evasive System":       6
-        }
-
-    If the name of a skill is passed in as an argument, then this function
-    returns your level in the specified skill.
+    This function returns your level in the specified skill.
 
     The function returns -1 if an invalid skill name is passed in
 

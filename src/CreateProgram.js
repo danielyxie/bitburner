@@ -1,6 +1,6 @@
 import {CONSTANTS}          from "./Constants";
 import {Player}             from "./Player";
-import {createElement}      from "../utils/HelperFunctions";
+import {createElement}      from "../utils/uiHelpers/createElement";
 
 // a function that returns a requirement for a program that requires only that
 // the player has at least the given skill level.
