@@ -125,7 +125,7 @@ function initBitNodes() {
                                           "functionality through Netscript. Furthermore: <br><br>" +
                                           "The rank you gain from Bladeburner contracts/operations is reduced by 40%<br>" +
                                           "Bladeburner skills cost twice as many skill points<br>" +
-                                          "Augmentations are 3x more expensive<br>" +
+                                          "Bladeburner augmentations are 3x more expensive<br>" +
                                           "Hacking and Hacknet Nodes will be significantly less profitable<br>" +
                                           "Your hacking level is reduced by 50%<br>" +
                                           "Hacking experience gain from scripts is reduced by 75%<br>" +
