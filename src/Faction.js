@@ -1,6 +1,6 @@
 import {Augmentations, AugmentationNames,
         PlayerOwnedAugmentation}                from "./Augmentations";
-import {BitNodeMultipliers}                     from "./BitNode";
+import {BitNodeMultipliers}                     from "./BitNodeMultipliers";
 import {CONSTANTS}                              from "./Constants";
 import {Engine}                                 from "./engine";
 import {FactionInfos}                           from "./FactionInfo";

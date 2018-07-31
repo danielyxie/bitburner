@@ -1,4 +1,4 @@
-import {BitNodeMultipliers}                             from "./BitNode";
+import {BitNodeMultipliers}                             from "./BitNodeMultipliers";
 import {Factions}                                       from "./Faction";
 import {showLiterature}                                 from "./Literature";
 import {Locations}                                      from "./Locations";

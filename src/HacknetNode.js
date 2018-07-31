@@ -1,4 +1,4 @@
-import {BitNodeMultipliers}                     from "./BitNode";
+import {BitNodeMultipliers}                     from "./BitNodeMultipliers";
 import {CONSTANTS}                              from "./Constants";
 import {Engine}                                 from "./engine";
 import {iTutorialSteps, iTutorialNextStep,

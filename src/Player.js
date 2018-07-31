@@ -1,7 +1,7 @@
 import {Augmentations, applyAugmentation,
         AugmentationNames,
         PlayerOwnedAugmentation}                from "./Augmentations";
-import {BitNodes, BitNode, BitNodeMultipliers}  from "./BitNode";
+import {BitNodeMultipliers}                     from "./BitNodeMultipliers";
 import {Company, Companies, getNextCompanyPosition,
         getJobRequirementText, CompanyPosition,
         CompanyPositions}                       from "./Company";
