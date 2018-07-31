@@ -55,7 +55,8 @@ import {saveObject, loadGame}                   from "./SaveObject";
 import {loadAllRunningScripts, scriptEditorInit,
         updateScriptEditorContent}              from "./Script";
 import {AllServers, Server, initForeignServers} from "./Server";
-import {Settings, setSettingsLabels}            from "./Settings";
+import {Settings}                               from "./Settings";
+import {setSettingsLabels}                      from "./ui/setSettingsLabels";
 import {initSourceFiles, SourceFiles,
         PlayerOwnedSourceFile}                  from "./SourceFile";
 import {SpecialServerIps, initSpecialServerIps} from "./SpecialServerIps";

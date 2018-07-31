@@ -13,7 +13,7 @@ import {loadMessages, initMessages, Messages}   from "./Message";
 import {Player, loadPlayer}                     from "./Player";
 import {loadAllRunningScripts}                  from "./Script";
 import {AllServers, loadAllServers}             from "./Server";
-import {loadSettings, initSettings, Settings}   from "./Settings";
+import {Settings}                               from "./Settings";
 import {loadSpecialServerIps, SpecialServerIps} from "./SpecialServerIps";
 import {loadStockMarket, StockMarket}           from "./StockMarket";
 import {dialogBoxCreate}                        from "../utils/DialogBox";
@@ -169,13 +169,13 @@ function loadGame(saveString) {
     }
     if (saveObj.hasOwnProperty("SettingsSave")) {
         try {
-            loadSettings(saveObj.SettingsSave);
+            Settings.load(saveObj.SettingsSave);
         } catch(e) {
             console.log("ERROR: Failed to parse Settings. Re-initing default values");
-            initSettings();
+            Settings.init();
         }
     } else {
-        initSettings();
+        Settings.init();
     }
     if (saveObj.hasOwnProperty("FconfSettingsSave")) {
         try {
@@ -388,12 +388,12 @@ function loadImportedGame(saveObj, saveString) {
     }
     if (saveObj.hasOwnProperty("SettingsSave")) {
         try {
-            loadSettings(saveObj.SettingsSave);
+            Settings.load(saveObj.SettingsSave);
         } catch(e) {
-            initSettings();
+            Settings.init();
         }
     } else {
-        initSettings();
+        Settings.init();
     }
     if (saveObj.hasOwnProperty("FconfSettingsSave")) {
         try {
