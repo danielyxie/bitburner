@@ -647,8 +647,8 @@ let Terminal = {
     },
 
     getTimestamp: function() {
-        let d = new Date();
-        return (d.getMonth() + "/" + d.getDay() + " " + d.getHours() + ":" + d.getMinutes());
+        const d = new Date();
+        return `${d.getMonth() + 1}/${d.getDate()} ${`0${d.getHours()}`.slice(-2)}:${`0${d.getMinutes()}`.slice(-2)}`;
     },
 
     finishAction: function(cancelled = false) {
