@@ -1648,63 +1648,79 @@ let Terminal = {
             }
         }
 
-        //Display all programs and scripts
-        var allFiles = [];
-
-        //Get all of the programs and scripts on the machine into one temporary array
-        var s = Player.getCurrentServer();
-        for (var i = 0; i < s.programs.length; i++) {
-            if (filter) {
-                if (s.programs[i].includes(filter)) {
-                    allFiles.push(s.programs[i]);
+        const postFilterAll = function(list) {
+            for(const elem of list) {
+                if(filter && !elem.includes(filter)) {
+                    continue;
                 }
-            } else {
-                allFiles.push(s.programs[i]);
-            }
-        }
-        for (var i = 0; i < s.scripts.length; i++) {
-            if (filter) {
-                if (s.scripts[i].filename.includes(filter)) {
-                    allFiles.push(s.scripts[i].filename);
-                }
-            } else {
-                allFiles.push(s.scripts[i].filename);
-            }
-
-        }
-        for (var i = 0; i < s.messages.length; i++) {
-            if (filter) {
-                if (s.messages[i] instanceof Message) {
-                    if (s.messages[i].filename.includes(filter)) {
-                        allFiles.push(s.messages[i].filename);
-                    }
-                } else if (s.messages[i].includes(filter)) {
-                    allFiles.push(s.messages[i]);
-                }
-            } else {
-                if (s.messages[i] instanceof Message) {
-                    allFiles.push(s.messages[i].filename);
-                } else {
-                    allFiles.push(s.messages[i]);
-                }
-            }
-        }
-        for (var i = 0; i < s.textFiles.length; ++i) {
-            if (filter) {
-                if (s.textFiles[i].fn.includes(filter)) {
-                    allFiles.push(s.textFiles[i].fn);
-                }
-            } else {
-                allFiles.push(s.textFiles[i].fn);
+                post(elem);
             }
         }
 
-        //Sort the files alphabetically then print each
-        allFiles.sort();
+        const s = Player.getCurrentServer();
 
-        for (var i = 0; i < allFiles.length; i++) {
-            post(allFiles[i]);
-        }
+        // special order for programs
+        const programOrder = {};
+        programOrder[Programs.BitFlume.name] = 0;
+        programOrder[Programs.NukeProgram.name] = 1;
+        programOrder[Programs.BruteSSHProgram.name] = 2;
+        programOrder[Programs.FTPCrackProgram.name] = 3;
+        programOrder[Programs.RelaySMTPProgram.name] = 4;
+        programOrder[Programs.HTTPWormProgram.name] = 5;
+        programOrder[Programs.SQLInjectProgram.name] = 6;
+        programOrder[Programs.AutoLink.name] = 7;
+        programOrder[Programs.DeepscanV1.name] = 8;
+        programOrder[Programs.DeepscanV2.name] = 9;
+        programOrder[Programs.ServerProfiler.name] = 10;
+        programOrder[Programs.Flight.name] = 11;
+        const programs = s.programs.slice(0).sort((a, b) => {
+            const ia = programOrder[a];
+            const ib = programOrder[b];
+            if(ia === undefined || ib === undefined) {
+                console.log(`${a} or ${b} had no default order.`);
+                return 0;
+            }
+            return ia-ib;
+        }); // copy and special sort
+
+        postFilterAll(programs);
+
+        // .lit
+        const lits = s.messages.slice(0).map(m=>{
+            if(!(m instanceof Message) && m.endsWith(".lit")) {
+                return m;
+            }
+        }).filter(m => m);
+        lits.sort();
+        postFilterAll(lits);
+
+        // .msg
+        const messages = s.messages.slice(0).map(m => {
+            if (m instanceof Message) {
+                return m.filename;
+            }
+        }).filter(m => m);
+        messages.sort();
+        postFilterAll(messages);
+
+        const textFiles = s.textFiles.slice(0).map(t => t.fn);
+        textFiles.sort();
+        postFilterAll(textFiles);
+
+        // print scripts
+        const allScripts = s.scripts.slice(0).map(a => a.filename);
+
+        const scripts = allScripts.filter(a=>a.endsWith(".script"));
+        scripts.sort();
+        postFilterAll(scripts);
+        
+        const nss = allScripts.filter(a=>a.endsWith(".ns"));
+        nss.sort();
+        postFilterAll(nss);
+
+        const jss = allScripts.filter(a=>a.endsWith(".js"));
+        jss.sort();
+        postFilterAll(jss);
     },
 
     executeScanCommand: function(commandArray) {

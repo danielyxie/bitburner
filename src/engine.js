@@ -1656,7 +1656,7 @@ let Engine = {
         Engine.Clickables.devMenuProgramsDropdown = document.getElementById("dev-menu-add-program-dropdown");
         const programsDD = Engine.Clickables.devMenuProgramsDropdown;
         for(const i in Programs) {
-            programsDD.options[programsDD.options.length] = new Option(Programs[i], Programs[i]);
+            programsDD.options[programsDD.options.length] = new Option(Programs[i].name, Programs[i].name);
         }
 
         Engine.Clickables.devMenuAddProgram = document.getElementById("dev-add-program");
