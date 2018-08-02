@@ -357,8 +357,8 @@ function initBitNodeMultipliers() {
                     sf12Lvl = Player.sourceFiles[i].lvl;
                 }
             }
-            var inc = Math.pow(1.01, sf12Lvl);
-            var dec = Math.pow(0.99, sf12Lvl);
+            var inc = Math.pow(1.02, sf12Lvl);
+            var dec = 1/inc;
             BitNodeMultipliers.HackingLevelMultiplier = dec;
 
             BitNodeMultipliers.ServerMaxMoney         = dec;

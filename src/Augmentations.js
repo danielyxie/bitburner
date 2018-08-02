@@ -739,7 +739,8 @@ function initAugmentations() {
             "This augmentation: <br>" +
             "Increases the player's hacking speed by 2%<br>" +
             "Increases the player's chance of successfully performing a hack by 5%<br>" +
-            "Increases the player's hacking skill by 7%"
+            "Increases the player's hacking skill by 7%",
+	prereqs:[AugmentationNames.CranialSignalProcessorsG1]
     });
     CranialSignalProcessorsG2.addToFactions(["NiteSec"]);
     if (augmentationExists(AugmentationNames.CranialSignalProcessorsG2)) {
@@ -756,7 +757,8 @@ function initAugmentations() {
              "This augmentation:<br>" +
              "Increases the player's hacking speed by 2%<br>" +
              "Increases the amount of money the player gains from hacking by 15%<br>" +
-             "Increases the player's hacking skill by 9%"
+             "Increases the player's hacking skill by 9%",
+	prereqs:[AugmentationNames.CranialSignalProcessorsG2]
     });
     CranialSignalProcessorsG3.addToFactions(["NiteSec", "The Black Hand"]);
     if (augmentationExists(AugmentationNames.CranialSignalProcessorsG3)) {
@@ -773,7 +775,8 @@ function initAugmentations() {
              "This augmentation: <br>" +
              "Increases the player's hacking speed by 2%<br>" +
              "Increases the amount of money the player gains from hacking by 20%<br>" +
-             "Increases the amount of money the player can inject into servers using grow() by 25%"
+             "Increases the amount of money the player can inject into servers using grow() by 25%",
+	prereqs:[AugmentationNames.CranialSignalProcessorsG3]
     });
     CranialSignalProcessorsG4.addToFactions(["The Black Hand"]);
     if (augmentationExists(AugmentationNames.CranialSignalProcessorsG4)) {
@@ -784,13 +787,14 @@ function initAugmentations() {
     var CranialSignalProcessorsG5 = new Augmentation({
         name:AugmentationNames.CranialSignalProcessorsG5, repCost:100e3, moneyCost:450e6,
         info:"The fifth generation of Cranial Signal Processors. Cranial Signal Processors " +
-        "are a set of specialized microprocessors that are attached to " +
-        "neurons in the brain. These chips process neural signals to quickly and automatically perform specific computations " +
-        "so that the brain doesn't have to. <br><br>" +
-        "This augmentation:<br>" +
-        "Increases the player's hacking skill by 30%<br>" +
-        "Increases the amount of money the player gains from hacking by 25%<br>" +
-        "Increases the amount of money the player can inject into servers using grow() by 75%"
+             "are a set of specialized microprocessors that are attached to " +
+             "neurons in the brain. These chips process neural signals to quickly and automatically perform specific computations " +
+             "so that the brain doesn't have to. <br><br>" +
+             "This augmentation:<br>" +
+             "Increases the player's hacking skill by 30%<br>" +
+             "Increases the amount of money the player gains from hacking by 25%<br>" +
+             "Increases the amount of money the player can inject into servers using grow() by 75%",
+	prereqs:[AugmentationNames.CranialSignalProcessorsG4]
     });
     CranialSignalProcessorsG5.addToFactions(["BitRunners"]);
     if (augmentationExists(AugmentationNames.CranialSignalProcessorsG5)) {
@@ -884,7 +888,7 @@ function initAugmentations() {
              "This augmentation:<br>" +
              "Increases the amount of reputation the player gains when working for a company by 75%<br>" +
              "Increases the player's hacking skill by 10%",
-        prereqs:[AugmentationNames.PCDNI],
+        prereqs:[AugmentationNames.PCDNI]
     });
     PCDNIOptimizer.addToFactions(["Fulcrum Secret Technologies", "ECorp", "Blade Industries"]);
     if (augmentationExists(AugmentationNames.PCDNIOptimizer)) {
@@ -902,7 +906,7 @@ function initAugmentations() {
              "Increases the amount of reputation the player gains when working for a company by 100%<br>" +
              "Increases the player's hacking skill by 10%<br>" +
              "Increases the player's hacking speed by 5%",
-        prereqs:[AugmentationNames.PCDNI],
+        prereqs:[AugmentationNames.PCDNI]
     });
     PCDNINeuralNetwork.addToFactions(["Fulcrum Secret Technologies"]);
     if (augmentationExists(AugmentationNames.PCDNINeuralNetwork)) {

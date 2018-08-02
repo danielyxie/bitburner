@@ -435,7 +435,7 @@ PlayerObject.prototype.calculateSkill = function(exp, mult=1) {
 }
 
 PlayerObject.prototype.updateSkillLevels = function() {
-	this.hacking_skill = Math.max(1, Math.floor(this.calculateSkill(this.hacking_exp, this.hacking_mult) * BitNodeMultipliers.HackingLevelMultiplier));
+	this.hacking_skill = Math.max(1, Math.floor(this.calculateSkill(this.hacking_exp, this.hacking_mult * BitNodeMultipliers.HackingLevelMultiplier)));
 	this.strength      = this.calculateSkill(this.strength_exp, this.strength_mult);
     this.defense       = this.calculateSkill(this.defense_exp, this.defense_mult);
     this.dexterity     = this.calculateSkill(this.dexterity_exp, this.dexterity_mult);

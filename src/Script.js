@@ -24,12 +24,12 @@ import {iTutorialSteps, iTutorialNextStep,
         iTutorialIsRunning, currITutorialStep}  from "./InteractiveTutorial";
 import {evaluateImport}                         from "./NetscriptEvaluator";
 import {NetscriptFunctions}                     from "./NetscriptFunctions";
-import {addWorkerScript, killWorkerScript,
+import {addWorkerScript,
         WorkerScript}                           from "./NetscriptWorker";
 import {Player}                                 from "./Player";
 import {AllServers, processSingleServerGrowth}  from "./Server";
 import {Settings}                               from "./Settings";
-import {post, Terminal}                         from "./Terminal";
+import {post}                                   from "./Terminal";
 import {TextFile}                               from "./TextFile";
 
 import {parse, Node}                            from "../utils/acorn";
@@ -39,6 +39,7 @@ import {Reviver, Generic_toJSON,
 import {compareArrays}                          from "../utils/helpers/compareArrays";
 import {createElement}                          from "../utils/uiHelpers/createElement";
 import {formatNumber}                           from "../utils/StringHelperFunctions";
+import {getTimestamp}                           from "../utils/helpers/getTimestamp";
 import {roundToTwo}                             from "../utils/helpers/roundToTwo";
 
 var keybindings = {
@@ -962,7 +963,7 @@ RunningScript.prototype.log = function(txt) {
     }
     let logEntry = txt;
     if (FconfSettings.ENABLE_TIMESTAMPS) {
-        logEntry = "[" + Terminal.getTimestamp() + "] " + logEntry;
+        logEntry = "[" + getTimestamp() + "] " + logEntry;
     }
     this.logs.push(logEntry);
     this.logUpd = true;

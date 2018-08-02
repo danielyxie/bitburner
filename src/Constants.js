@@ -31,6 +31,7 @@ let CONSTANTS = {
     HacknetNodeMaxCores: 16,
 
     /* Faction and Company favor */
+    BaseFavorToDonate:            150,
     FactionReputationToFavorBase: 500,
     FactionReputationToFavorMult: 1.02,
     CompanyReputationToFavorBase: 500,
@@ -70,6 +71,7 @@ let CONSTANTS = {
     ScriptHNUpgCoreRamCost:         0.8,
     ScriptGetStockRamCost:          2.0,
     ScriptBuySellStockRamCost:      2.5,
+    ScriptGetPurchaseServerRamCost: 0.25,
     ScriptPurchaseServerRamCost:    2.25,
     ScriptGetPurchasedServerLimit:  0.05,
     ScriptGetPurchasedServerMaxRam: 0.05,
@@ -78,6 +80,7 @@ let CONSTANTS = {
     ScriptArbScriptRamCost:         1.0, //Functions that apply to all scripts regardless of args
     ScriptGetScriptRamCost:         0.1,
     ScriptGetHackTimeRamCost:       0.05,
+    ScriptGetFavorToDonate:         0.10,
 
     ScriptSingularityFn1RamCost:    1,
     ScriptSingularityFn2RamCost:    2,

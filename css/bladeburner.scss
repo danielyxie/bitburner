@@ -1,9 +1,13 @@
-#bladeburner-container p,
-#bladeburner-container pre,
-#bladeburner-container a,
-#bladeburner-container div,
-#bladeburner-container td {
-    font-size: 13px;
+@import "theme";
+
+#bladeburner-container {
+    a,
+    div,
+    p,
+    pre,
+    td {
+        font-size: $defaultFontSize * 0.8125;
+    }
 }
 
 .bladeburner-action {
@@ -11,10 +15,10 @@
     margin: 7px;
     padding: 7px;
     white-space: pre-wrap;
-}
 
-.bladeburner-action pre {
-    white-space: pre-wrap;
+    pre {
+        white-space: pre-wrap;
+    }
 }
 
 /* Whatever action is currently active */
@@ -23,21 +27,25 @@
 }
 
 /* Action & Skills panel navigation button */
-.bladeburner-nav-button {
+%bladburner-nav-button {
     border: 1px solid #fff;
-    color: #fff;
-    padding: 2px;
     margin: 2px;
+    padding: 2px;
 }
 
-.bladeburner-nav-button:hover {
-    background-color: #3d4044;
+.bladeburner-nav-button {
+    @extend %bladburner-nav-button;
+
+    color: #fff;
+
+    &:hover {
+        background-color: #3d4044;
+    }
 }
 
 .bladeburner-nav-button-inactive {
-    border: 1px solid #fff;
-    padding: 2px;
-    margin: 2px;
+    @extend %bladburner-nav-button;
+
     text-decoration: none;
     background-color: #555;
     cursor: default;
@@ -76,7 +84,7 @@
     margin: 0 !important;
     border: 0;
     background-color: var(--my-background-color);
-    font-size: 13px;
+    font-size: $defaultFontSize * 0.8125;
     outline: none;
     color: var(--my-font-color);
     flex: 1 1 auto;
