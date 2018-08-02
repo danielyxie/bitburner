@@ -540,3 +540,11 @@ a:visited {
 .accordion-panel ul > li {
     background-color: #555;
 }
+
+/* override the global <span> styling */
+#active-scripts-total-production-active,
+#active-scripts-total-prod-aug-total,
+#active-scripts-total-prod-aug-avg {
+    margin: 0;
+    padding: 0;
+}
