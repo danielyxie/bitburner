@@ -1094,6 +1094,7 @@ Bladeburner.prototype.startAction = function(actionId) {
                     throw new Error ("Failed to get Operation Object for: " + actionId.name);
                 }
                 if (action.count < 1) {return this.resetAction();}
+                if (actionId.name === "Raid" && this.getCurrentCity().commsEst === 0) {return this.resetAction();}
                 this.actionTimeToComplete = action.getActionTime(this);
             } catch(e) {
                 exceptionAlert(e);
