@@ -2142,6 +2142,13 @@ function NetscriptFunctions(workerScript) {
                 yesNoBoxCreate(txt);
             });
         },
+        getFavorToDonate: function() {
+            if (workerScript.checkingRam) {
+                return updateStaticRam("getFavorToDonate", CONSTANTS.ScriptGetFavorToDonate);
+            }
+            updateDynamicRam("getFavorToDonate", CONSTANTS.ScriptGetFavorToDonate);
+            return Math.floor(CONSTANTS.BaseFavorToDonate * BitNodeMultipliers.RepToDonateToFaction);
+        },
 
         /* Singularity Functions */
         universityCourse : function(universityName, className) {
@@ -2777,6 +2784,27 @@ function NetscriptFunctions(workerScript) {
             }
             return company.favor;
         },
+        getCompanyFavorGain : function(companyName) {
+            var ramCost = CONSTANTS.ScriptSingularityFn2RamCost / 4;
+            if (Player.bitNodeN !== 4) {ramCost *= 8;}
+            if (workerScript.checkingRam) {
+                return updateStaticRam("getCompanyFavorGain", ramCost);
+            }
+            updateDynamicRam("getCompanyFavorGain", ramCost);
+            if (Player.bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 2)) {
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run getCompanyFavorGain(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    return -1;
+                }
+            }
+
+            var company = Companies[companyName];
+            if (company == null || !(company instanceof Company)) {
+                workerScript.scriptRef.log("ERROR: Invalid companyName passed into getCompanyFavorGain(): " + companyName);
+                return -1;
+            }
+            return company.getFavorGain()[0];
+        },
         checkFactionInvitations : function() {
             var ramCost = CONSTANTS.ScriptSingularityFn2RamCost;
             if (Player.bitNodeN !== 4) {ramCost *= 8;}
@@ -2973,6 +3001,27 @@ function NetscriptFunctions(workerScript) {
             }
 
             return Factions[name].favor;
+        },
+        getFactionFavorGain: function(name){
+            var ramCost = CONSTANTS.ScriptSingularityFn2RamCost;
+            if (Player.bitNodeN !== 4) {ramCost *= 8;}
+            if (workerScript.checkingRam) {
+                return updateStaticRam("getFactionFavorGain", ramCost);
+            }
+            updateDynamicRam("getFactionFavorGain", ramCost);
+            if (Player.bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 2)) {
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run getFactionFavorGain(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    return -1;
+                }
+            }
+
+            if (!factionExists(name)) {
+                workerScript.scriptRef.log("ERROR: Faction specified in getFactionFavorGain() does not exist.");
+                return -1;
+            }
+
+            return Factions[name].getFavorGain()[0];
         },
         createProgram : function(name) {
             var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;

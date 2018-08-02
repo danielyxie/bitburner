@@ -55,7 +55,7 @@ Faction.prototype.gainFavor = function() {
     this.rolloverRep = res[1];
 }
 
-//Returns an array with [How much favor would be gained, how much favor would be left over]
+//Returns an array with [How much favor would be gained, how much rep would be left over]
 Faction.prototype.getFavorGain = function() {
     if (this.favor == null || this.favor == undefined) {this.favor = 0;}
     if (this.rolloverRep == null || this.rolloverRep == undefined) {this.rolloverRep = 0;}
@@ -432,7 +432,7 @@ function displayFactionContent(factionName) {
 		throw new Error("Not a member of this faction, cannot display faction information");
 	}
 
-    donateDiv.style.display = faction.favor >= (150 * BitNodeMultipliers.RepToDonateToFaction) ? "inline" : "none";
+    donateDiv.style.display = faction.favor >= Math.floor(CONSTANTS.BaseFavorToDonate * BitNodeMultipliers.RepToDonateToFaction) ? "inline" : "none";
 
     hackMissionDiv.style.display  = factionInfo.offerHackingMission ? "inline": "none";
     hackDiv.style.display         = factionInfo.offerHackingWork ? "inline" : "none";
