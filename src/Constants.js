@@ -488,33 +488,18 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
-    "v0.40.0<br>"  +
-    "* <b>WARNING: This update makes some significant changes to Netscript and therefore you may need to " +
-    "make some changes to your scripts. See <a href='https://www.reddit.com/r/Bitburner/comments/9252j4/psa_netscript_10_changes_in_next_version_v0400/' target='_blank'> " +
-    "this post for details</a></b><br>" +
-    "* Netscript 1.0 (NS1) now uses a fully-fledged ES5 JavaScript Interpreter. This means many new features are now available in NS1, and this also fixes several bugs." +
-    " However this also means any ES6+ features are no longer supported in NS1 <br>" +
-    "* When a server is hacked with a very large number of threads and left with no money, the server's security level " +
-    "now only increases by however many threads were needed to drain the server. For example, if you hack a server with " +
-    "5000 threads but it only needed 2000 threads to deplete the server's money, then the server's security will only increase " +
-    "as if you had hacked it with 2000 threads (change by hydroflame)<br>" +
-    "* Added getCurrentAction() to Bladeburner API<br>" +
-    "* Added a variety of functions to Bladeburner API that deal with action levels (change by hydroflame)<br>" +
-    "* Added getPurchasedServerLimit() and getPurchasedServerMaxRam() functions to Netscript (change by hydroflame & kopelli)<br>" +
-    "* Added getOwnedSourceFiles() Singularity function (by hydroflame)<br>" +
-    "* Completely re-designed the Hacknet Node API<br>" +
-    "* getSkillLevel() in Bladeburner API now returns an error if no argument is passed in (as opposed to an object with all skill levels). This may break scripts<br>" +
-    "* Minimum Netscript execution time reduced from 15ms to 10ms (configurable in Options)<br>" +
-    "* Company reputation needed to get invited to Megacorporation factions decreased from 250k to 200k<br>" +
-    "* HP is now reset (restored) when Augmenting<br>" +
-    "* Source-File 6 now increases both the level and experience gain of all combat stats (it was only experience gain previously)<br>" +
-    "* Reverted a previous change for Source-File 12. It's benefits are now multiplicative rather than additive<br>" +
-    "* Starting Infiltration security level for almost every location decreased by ~10%<br>" +
-    "* Changed 'fl1ght.exe' message when its listed conditions are fulfilled (by hydroflame)<br>" +
-    "* The 'Save Game' button in the top-right overview panel now flashes red if autosave is disabled<br>" +
-    "* Bug Fix: Infiltration buttons can no longer be clicked through NetscriptJS<br>" +
-    "* Bug Fix: Bladeburner 'Overclock' skill can no longer be leveled above max level through the API (by hydroflame)<br>" +
-    "* Bug Fix: Healthcare division in Bladeburner should no longer cause game to crash"
+    "v0.40.1 - Community Update<br>" +
+    "* Added getPurchasedServerCost() Netscript function (by kopelli)<br>" +
+    "* Added getFavorToDonate() Netscript function (by hydroflame)<br>" +
+    "* Added getFactionFavorGain() and getCompanyFavorGain() Singularity functions (by hydroflame)<br>" +
+    "* Accumulated 'bonus' time in Bladeburner is now displayed in the UI (by hydroflame)<br>" +
+    "* The Red Pill can now be purchased with negative money (since its supposed to be free) (by hydroflame)<br>" +
+    "* Cranial Signal Processor Augmentations now have the previous generation as a prerequisite. i.e. Cranial Signal Processor - Gen II requires Gen I (by Kline-)<br>"
+    "* Bladeburner Raid operations can no longer be performed if your estimate of Synthoid communities is zero (by hydroflame)<br>" +
+    "* The difficulty of BN-12 now scales faster (by hydroflame)<br>"  +
+    "* Bug Fix: Corrected terminal timestamp format (by kopelli)<br>" +
+    "* Bug Fix: NetscriptJS scripts should now die properly if they don't have a 'main' function (by hydroflame)<br>"
+
 
 }
 
