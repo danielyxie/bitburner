@@ -142,6 +142,8 @@ Comments are not evaluated as code, and can be used to document and/or explain c
      * comment */
     print("This code will actually get executed");
 
+.. _netscriptimporting:
+
 Importing Functions
 -------------------
 
@@ -201,7 +203,7 @@ to specify a namespace for the import::
         //...
     }
 
-Note that exporting functions is not required. 
+Note that exporting functions is not required.
 
 
 Javascript Math Module

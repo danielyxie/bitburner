@@ -166,7 +166,9 @@ getActionMaxLevel
     :param string type: Type of action. See :ref:`bladeburner_action_types`
     :param string name: Name of action. Must be an exact match
 
-    Return the maximum level for this action.
+    Returns the maximum level for this action.
+
+    Returns -1 if an invalid action is specified.
 
 getActionCurrentLevel
 ---------------------
@@ -176,7 +178,9 @@ getActionCurrentLevel
     :param string type: Type of action. See :ref:`bladeburner_action_types`
     :param string name: Name of action. Must be an exact match
 
-    Return the current level of this action.
+    Returns the current level of this action.
+
+    Returns -1 if an invalid action is specified.
 
 getActionAutolevel
 ------------------
@@ -186,7 +190,9 @@ getActionAutolevel
     :param string type: Type of action. See :ref:`bladeburner_action_types`
     :param string name: Name of action. Must be an exact match
 
-    Return wether of not this action is currently autoleveling.
+    Return a boolean indicating whether or not this action is currently set to autolevel.
+
+    Returns false if an invalid action is specified.
 
 setActionAutolevel
 ------------------
@@ -195,7 +201,9 @@ setActionAutolevel
 
     :param string type: Type of action. See :ref:`bladeburner_action_types`
     :param string name: Name of action. Must be an exact match
-    :param boolean autoLevel: wether or not to autolevel this action
+    :param boolean autoLevel: Whether or not to autolevel this action
+
+    Enable/disable autoleveling for the specified action.
 
 setActionLevel
 --------------
@@ -204,7 +212,9 @@ setActionLevel
 
     :param string type: Type of action. See :ref:`bladeburner_action_types`
     :param string name: Name of action. Must be an exact match
-    :param level int: the level to set this action to
+    :param level int: Level to set this action to
+
+    Set the level for the specified action.
 
 getRank
 -------

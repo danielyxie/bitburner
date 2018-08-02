@@ -14,10 +14,9 @@ to reach out to the developer!
    :maxdepth: 5
    :caption: Sections:
 
+    Learn to Program <netscriptlearntoprogram>
+    Netscript 1.0 <netscript1>
     NetscriptJS (Netscript 2.0) <netscriptjs>
-    Data Types and Variables <netscriptdatatypes>
-    Operators <netscriptoperators>
-    Loops and Conditionals <netscriptloopsandconditionals>
     Script Arguments <netscriptscriptarguments>
     Basic Functions <netscriptfunctions>
     Advanced Functions <netscriptadvancedfunctions>

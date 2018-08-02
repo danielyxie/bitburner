@@ -130,13 +130,17 @@ module.exports = {
         "no-missing-end-of-source-newline": true,
         "no-unknown-animations": true,
         "number-leading-zero": "always",
-        "number-max-precision": [3, { ignoreUnits: [ "%" ] }],
+        "number-max-precision": [4, { ignoreUnits: [ "%" ] }],
 //        "number-no-trailing-zeros": true,
         "order/order": [
             [
                 "dollar-variables",
                 "at-variables",
                 "custom-properties",
+                {
+                    type: "at-rule",
+                    name: "extend"
+                },
                 {
                     type: "at-rule",
                     name: "include"

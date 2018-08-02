@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.39.1",
+    Version:                "0.40.0",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -7,7 +7,7 @@ let CONSTANTS = {
 	MaxSkillLevel: 			975,
 
     //How much reputation is needed to join a megacorporation's faction
-    CorpFactionRepRequirement: 250000,
+    CorpFactionRepRequirement: 200e3,
 
     /* Base costs */
     BaseCostFor1GBOfRamHome: 32000,
@@ -31,6 +31,7 @@ let CONSTANTS = {
     HacknetNodeMaxCores: 16,
 
     /* Faction and Company favor */
+    BaseFavorToDonate:            150,
     FactionReputationToFavorBase: 500,
     FactionReputationToFavorMult: 1.02,
     CompanyReputationToFavorBase: 500,
@@ -70,6 +71,7 @@ let CONSTANTS = {
     ScriptHNUpgCoreRamCost:         0.8,
     ScriptGetStockRamCost:          2.0,
     ScriptBuySellStockRamCost:      2.5,
+    ScriptGetPurchaseServerRamCost: 0.25,
     ScriptPurchaseServerRamCost:    2.25,
     ScriptGetPurchasedServerLimit:  0.05,
     ScriptGetPurchasedServerMaxRam: 0.05,
@@ -78,6 +80,7 @@ let CONSTANTS = {
     ScriptArbScriptRamCost:         1.0, //Functions that apply to all scripts regardless of args
     ScriptGetScriptRamCost:         0.1,
     ScriptGetHackTimeRamCost:       0.05,
+    ScriptGetFavorToDonate:         0.10,
 
     ScriptSingularityFn1RamCost:    1,
     ScriptSingularityFn2RamCost:    2,
@@ -489,7 +492,10 @@ let CONSTANTS = {
 
     LatestUpdate:
     "v0.40.0<br>"  +
-    "* Netscript 1.0 (NS1) now uses a fully-fledged ES5 Javascript Interpreter. This means many new features are now available in NS1, and this also fixes several bugs." +
+    "* <b>WARNING: This update makes some significant changes to Netscript and therefore you may need to " +
+    "make some changes to your scripts. See <a href='https://www.reddit.com/r/Bitburner/comments/9252j4/psa_netscript_10_changes_in_next_version_v0400/' target='_blank'> " +
+    "this post for details</a></b><br>" +
+    "* Netscript 1.0 (NS1) now uses a fully-fledged ES5 JavaScript Interpreter. This means many new features are now available in NS1, and this also fixes several bugs." +
     " However this also means any ES6+ features are no longer supported in NS1 <br>" +
     "* When a server is hacked with a very large number of threads and left with no money, the server's security level " +
     "now only increases by however many threads were needed to drain the server. For example, if you hack a server with " +
@@ -497,15 +503,22 @@ let CONSTANTS = {
     "as if you had hacked it with 2000 threads (change by hydroflame)<br>" +
     "* Added getCurrentAction() to Bladeburner API<br>" +
     "* Added a variety of functions to Bladeburner API that deal with action levels (change by hydroflame)<br>" +
-    "* Added getPurchasedServerLimit() and getPurchasedServerMaxRam() functions to Netscript (change by hydroflame & kopelli)<br>" + 
+    "* Added getPurchasedServerLimit() and getPurchasedServerMaxRam() functions to Netscript (change by hydroflame & kopelli)<br>" +
+    "* Added getOwnedSourceFiles() Singularity function (by hydroflame)<br>" +
     "* Completely re-designed the Hacknet Node API<br>" +
     "* getSkillLevel() in Bladeburner API now returns an error if no argument is passed in (as opposed to an object with all skill levels). This may break scripts<br>" +
     "* Minimum Netscript execution time reduced from 15ms to 10ms (configurable in Options)<br>" +
+    "* Company reputation needed to get invited to Megacorporation factions decreased from 250k to 200k<br>" +
     "* HP is now reset (restored) when Augmenting<br>" +
     "* Source-File 6 now increases both the level and experience gain of all combat stats (it was only experience gain previously)<br>" +
     "* Reverted a previous change for Source-File 12. It's benefits are now multiplicative rather than additive<br>" +
     "* Starting Infiltration security level for almost every location decreased by ~10%<br>" +
-    "* Bug Fix: Infiltration buttons can no longer be clicked through NetscriptJS<br>"
+    "* Changed 'fl1ght.exe' message when its listed conditions are fulfilled (by hydroflame)<br>" +
+    "* The 'Save Game' button in the top-right overview panel now flashes red if autosave is disabled<br>" +
+    "* Bug Fix: Infiltration buttons can no longer be clicked through NetscriptJS<br>" +
+    "* Bug Fix: Bladeburner 'Overclock' skill can no longer be leveled above max level through the API (by hydroflame)<br>" +
+    "* Bug Fix: Healthcare division in Bladeburner should no longer cause game to crash"
+
 }
 
 export {CONSTANTS};

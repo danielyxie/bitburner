@@ -72,6 +72,7 @@ let NetscriptFunctions =
     "serverExists|fileExists|isRunning|"                                       +
     "deleteServer|getPurchasedServers|"                                        +
     "getPurchasedServerLimit|getPurchasedServerMaxRam|"                        +
+    "getPurchasedServerCost|"                                                  +
     "purchaseServer|round|write|read|peek|clear|rm|getPortHandle|"             +
     "scriptRunning|scriptKill|getScriptName|getScriptRam|"                     +
     "getHackTime|getGrowTime|getWeakenTime|getScriptIncome|getScriptExpGain|"  +
@@ -82,9 +83,9 @@ let NetscriptFunctions =
     "getCompanyFavor|stopAction|getFactionFavor|"                              +
     "checkFactionInvitations|joinFaction|workForFaction|getFactionRep|"        +
     "createProgram|commitCrime|getCrimeChance|getOwnedAugmentations|"          +
-    "getAugmentationsFromFaction|"                                             +
+    "getOwnedSourceFiles|getAugmentationsFromFaction|"                         +
     "getAugmentationCost|purchaseAugmentation|"                                +
-    "installAugmentations|"   +
+    "installAugmentations|"                                                    +
     "getStockPrice|getStockPosition|buyStock|sellStock|shortStock|sellShort|"  +
     "placeOrder|cancelOrder|"                                                  +
     //Hacknet Node API
@@ -96,6 +97,8 @@ let NetscriptFunctions =
     "bladeburner|getContractNames|getOperationNames|getBlackOpNames|"          +
     "getGeneralActionNames|getSkillNames|startAction|stopBladeburnerAction|"   +
     "getActionTime|getActionEstimatedSuccessChance|getActionCountRemaining|"   +
+    "getActionMaxLevel|getActionCurrentLevel|getActionAutolevel|"              +
+    "setActionAutolevel|setActionLevel|"                                       +
     "getRank|getSkillPoints|getSkillLevel|upgradeSkill|getTeamSize|"           +
     "setTeamSize|getCityEstimatedPopulation|getCityEstimatedCommunities|"      +
     "getCityChaos|switchCity|getStamina|joinBladeburnerFaction";

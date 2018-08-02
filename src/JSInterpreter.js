@@ -30,9 +30,12 @@ import * as acorn from "../utils/acorn";
  * @param {Function=} opt_initFunc Optional initialization function.  Used to
  *     define APIs.  When called it is passed the interpreter object and the
  *     global scope object.
+ * @param {Number} Bitburner-specific number used for determining exception line numbers
  * @constructor
  */
-var Interpreter = function(code, opt_initFunc) {
+var Interpreter = function(code, opt_initFunc, lineOffset=0) {
+  this.sourceCode = code;
+  this.sourceCodeLineOffset = lineOffset;
   if (typeof code === 'string') {
     code = acorn.parse(code, Interpreter.PARSE_OPTIONS);
   }
@@ -81,7 +84,8 @@ var Interpreter = function(code, opt_initFunc) {
  * @const {!Object} Configuration used for all Acorn parsing.
  */
 Interpreter.PARSE_OPTIONS = {
-  ecmaVersion: 5
+  ecmaVersion: 5,
+  locations: true
 };
 
 /**
@@ -146,6 +150,37 @@ Interpreter.VALUE_IN_DESCRIPTOR = {};
  * Since this is for atomic actions only, it can be a class property.
  */
 Interpreter.toStringCycles_ = [];
+
+/**
+ * Determine error/exception line number in Bitburner source code
+ * @param {Object} AST Node that causes Error/Exception
+ */
+Interpreter.prototype.getErrorLineNumber = function(node) {
+  var code = this.sourceCode;
+  if (node == null || node.start == null) {return NaN;}
+  try {
+    code = code.substring(0, node.start);
+    return (code.match(/\n/g) || []).length + 1 - this.sourceCodeLineOffset;
+  } catch(e) {
+    return NaN;
+  }
+}
+
+/**
+ * Generate the appropriate line number error message for Bitburner
+ * @param {Number} lineNumber
+ */
+Interpreter.prototype.getErrorLineNumberMessage = function(lineNumber) {
+  if (isNaN(lineNumber)) {
+      return " (Unknown line number)";
+  } else if (lineNumber <= 0) {
+      return " (Error occurred in an imported function)";
+  } else {
+      return " (Line Number " + lineNumber + ". This line number is probably incorrect " +
+             "if your script is importing any functions. This is being worked on)";
+  }
+
+}
 
 /**
  * Add more code to the interpreter.
@@ -911,6 +946,66 @@ Interpreter.prototype.initArray = function(scope) {
 "});",
 
 // Polyfill copied from:
+// https://tc39.github.io/ecma262/#sec-array.prototype.find
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find
+"if (!Array.prototype.find) {",
+  "Object.defineProperty(Array.prototype, 'find', {",
+    "value: function(predicate) {",
+      "if (this == null) {",
+        "throw new TypeError('\"this\" is null or not defined');",
+    "}",
+      "var o = Object(this);",
+      "var len = o.length >>> 0;",
+      "if (typeof predicate !== 'function') {",
+        "throw new TypeError('predicate must be a function');",
+    "}",
+      "var thisArg = arguments[1];",
+      "var k = 0;",
+      "while (k < len) {",
+        "var kValue = o[k];",
+        "if (predicate.call(thisArg, kValue, k, o)) {",
+          "return kValue;",
+      "}",
+        "k++;",
+    "}",
+      "return undefined;",
+  "},",
+    "configurable: true,",
+    "writable: true",
+"});",
+"}",
+
+// Poly fill copied from:
+// https://tc39.github.io/ecma262/#sec-array.prototype.findIndex
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex
+"if (!Array.prototype.findIndex) {",
+  "Object.defineProperty(Array.prototype, 'findIndex', {",
+    "value: function(predicate) {",
+      "if (this == null) {",
+        "throw new TypeError('\"this\" is null or not defined');",
+      "}",
+      "var o = Object(this);",
+      "var len = o.length >>> 0;",
+      "if (typeof predicate !== 'function') {",
+        "throw new TypeError('predicate must be a function');",
+      "}",
+      "var thisArg = arguments[1];",
+      "var k = 0;",
+      "while (k < len) {",
+        "var kValue = o[k];",
+        "if (predicate.call(thisArg, kValue, k, o)) {",
+          "return k;",
+        "}",
+        "k++;",
+      "}",
+      "return -1;",
+    "},",
+    "configurable: true,",
+    "writable: true",
+  "});",
+"}",
+
+// Polyfill copied from:
 // developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach
 "Object.defineProperty(Array.prototype, 'forEach',",
     "{configurable: true, writable: true, value:",
@@ -925,6 +1020,48 @@ Interpreter.prototype.initArray = function(scope) {
       "if (k in O) callback.call(T, O[k], k, O);",
       "k++;",
     "}",
+  "}",
+"});",
+
+// Polyfill copied from:
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes#Polyfill
+"Object.defineProperty(Array.prototype, 'includes', {",
+    "value: function(searchElement, fromIndex) {",
+      "if (this == null) {",
+        "throw new TypeError('\"this\" is null or not defined');",
+    "}",
+      "// 1. Let O be ? ToObject(this value).",
+      "var o = Object(this);",
+      "// 2. Let len be ? ToLength(? Get(O, \"length\")).",
+      "var len = o.length >>> 0;",
+      "// 3. If len is 0, return false.",
+      "if (len === 0) {",
+        "return false;",
+    "}",
+      "// 4. Let n be ? ToInteger(fromIndex).",
+      "//    (If fromIndex is undefined, this step produces the value 0.)",
+      "var n = fromIndex | 0;",
+      "// 5. If n ≥ 0, then",
+      "//  a. Let k be n.",
+      "// 6. Else n < 0,",
+      "//  a. Let k be len + n.",
+      "//  b. If k < 0, let k be 0.",
+      "var k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);",
+      "function sameValueZero(x, y) {",
+        "return x === y || (typeof x === 'number' && typeof y === 'number' && isNaN(x) && isNaN(y));",
+    "}",
+      "// 7. Repeat, while k < len",
+      "while (k < len) {",
+        "// a. Let elementK be the result of ? Get(O, ! ToString(k)).",
+        "// b. If SameValueZero(searchElement, elementK) is true, return true.",
+        "if (sameValueZero(o[k], searchElement)) {",
+          "return true;",
+      "}",
+        "// c. Increase k by 1. ",
+        "k++;",
+    "}",
+      "// 8. Return false",
+      "return false;",
   "}",
 "});",
 
@@ -1009,48 +1146,6 @@ Interpreter.prototype.initArray = function(scope) {
       "}",
     "}",
     "return false;",
-  "}",
-"});",
-
-// Polyfill copied from:
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes#Polyfill
-"Object.defineProperty(Array.prototype, 'includes', {",
-    "value: function(searchElement, fromIndex) {",
-      "if (this == null) {",
-        "throw new TypeError('\"this\" is null or not defined');",
-    "}",
-      "// 1. Let O be ? ToObject(this value).",
-      "var o = Object(this);",
-      "// 2. Let len be ? ToLength(? Get(O, \"length\")).",
-      "var len = o.length >>> 0;",
-      "// 3. If len is 0, return false.",
-      "if (len === 0) {",
-        "return false;",
-    "}",
-      "// 4. Let n be ? ToInteger(fromIndex).",
-      "//    (If fromIndex is undefined, this step produces the value 0.)",
-      "var n = fromIndex | 0;",
-      "// 5. If n ≥ 0, then",
-      "//  a. Let k be n.",
-      "// 6. Else n < 0,",
-      "//  a. Let k be len + n.",
-      "//  b. If k < 0, let k be 0.",
-      "var k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);",
-      "function sameValueZero(x, y) {",
-        "return x === y || (typeof x === 'number' && typeof y === 'number' && isNaN(x) && isNaN(y));",
-    "}",
-      "// 7. Repeat, while k < len",
-      "while (k < len) {",
-        "// a. Let elementK be the result of ? Get(O, ! ToString(k)).",
-        "// b. If SameValueZero(searchElement, elementK) is true, return true.",
-        "if (sameValueZero(o[k], searchElement)) {",
-          "return true;",
-      "}",
-        "// c. Increase k by 1. ",
-        "k++;",
-    "}",
-      "// 8. Return false",
-      "return false;",
   "}",
 "});",
 
@@ -1203,6 +1298,43 @@ Interpreter.prototype.initString = function(scope) {
     "return str;",
   "};",
 "})();",
+
+// Polyfill copied from:
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/endsWith
+"if (!String.prototype.endsWith) {",
+	"String.prototype.endsWith = function(search, this_len) {",
+		"if (this_len === undefined || this_len > this.length) {",
+			"this_len = this.length;",
+		"}",
+		"return this.substring(this_len - search.length, this_len) === search;",
+	"};",
+"}",
+
+//Polyfill copied from:
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes
+"if (!String.prototype.includes) {",
+  "String.prototype.includes = function(search, start) {",
+    "'use strict';",
+    "if (typeof start !== 'number') {",
+      "start = 0;",
+    "}",
+"    ",
+    "if (start + search.length > this.length) {",
+      "return false;",
+    "} else {",
+      "return this.indexOf(search, start) !== -1;",
+    "}",
+  "};",
+"}",
+
+// Polyfill copied from:
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/startsWith
+"if (!String.prototype.startsWith) {",
+	"String.prototype.startsWith = function(search, pos) {",
+		"return this.substr(!pos || pos < 0 ? 0 : +pos, search.length) === search;",
+	"};",
+"}",
+
 "");
 };
 
@@ -1994,13 +2126,18 @@ Interpreter.prototype.getPrototype = function(value) {
  * Fetch a property value from a data object.
  * @param {Interpreter.Value} obj Data object.
  * @param {Interpreter.Value} name Name of property.
+ * @param {Acorn AST Node} node Node that triggered this function. Used by Bitburner for getting error line numbers
  * @return {Interpreter.Value} Property value (may be undefined).
  */
-Interpreter.prototype.getProperty = function(obj, name) {
+Interpreter.prototype.getProperty = function(obj, name, node) {
   name = String(name);
   if (obj === undefined || obj === null) {
+    let lineNum;
+    if (node != null && node.loc != null && node.loc.start != null) {
+        lineNum = node.loc.start.line;
+    }
     this.throwException(this.TYPE_ERROR,
-                        "Cannot read property '" + name + "' of " + obj);
+                        "Cannot read property '" + name + "' of " + obj, lineNum);
   }
   if (name === 'length') {
     // Special cases for magic length property.
@@ -2294,11 +2431,12 @@ Interpreter.prototype.createSpecialScope = function(parentScope, opt_scope) {
 /**
  * Retrieves a value from the scope chain.
  * @param {string} name Name of variable.
+ * @param {Acorn AST Node} node Node that triggered this function. Used by Bitburner for getting error line number
  * @return {Interpreter.Value} Any value.
  *   May be flagged as being a getter and thus needing immediate execution
  *   (rather than being the value of the property).
  */
-Interpreter.prototype.getValueFromScope = function(name) {
+Interpreter.prototype.getValueFromScope = function(name, node) {
   var scope = this.getScope();
   while (scope && scope !== this.global) {
     if (name in scope.properties) {
@@ -2317,7 +2455,12 @@ Interpreter.prototype.getValueFromScope = function(name) {
       prevNode['operator'] === 'typeof') {
     return undefined;
   }
-  this.throwException(this.REFERENCE_ERROR, name + ' is not defined');
+
+  var lineNum;
+  if (node != null && node.loc != null && node.loc.start != null) {
+      lineNum = node.loc.start.line;
+  }
+  this.throwException(this.REFERENCE_ERROR, name + ' is not defined', lineNum);
 };
 
 /**
@@ -2426,17 +2569,18 @@ Interpreter.prototype.calledWithNew = function() {
 /**
  * Gets a value from the scope chain or from an object property.
  * @param {!Array} ref Name of variable or object/propname tuple.
+ * @param {Acorn AST Node} node Node that triggered this function. Used by Bitburner for getting error line number
  * @return {Interpreter.Value} Any value.
  *   May be flagged as being a getter and thus needing immediate execution
  *   (rather than being the value of the property).
  */
-Interpreter.prototype.getValue = function(ref) {
+Interpreter.prototype.getValue = function(ref, node) {
   if (ref[0] === Interpreter.SCOPE_REFERENCE) {
     // A null/varname variable lookup.
-    return this.getValueFromScope(ref[1]);
+    return this.getValueFromScope(ref[1], node);
   } else {
     // An obj/prop components tuple (foo.bar).
-    return this.getProperty(ref[0], ref[1]);
+    return this.getProperty(ref[0], ref[1], node);
   }
 };
 
@@ -2478,7 +2622,7 @@ Interpreter.prototype.setValue = function(ref, value) {
  *   provided) or the value to throw (if no message).
  * @param {string=} opt_message Message being thrown.
  */
-Interpreter.prototype.throwException = function(errorClass, opt_message) {
+Interpreter.prototype.throwException = function(errorClass, opt_message, lineNumber) {
   if (opt_message === undefined) {
     var error = errorClass;  // This is a value to throw, not an error class.
   } else {
@@ -2486,7 +2630,11 @@ Interpreter.prototype.throwException = function(errorClass, opt_message) {
     this.setProperty(error, 'message', opt_message,
         Interpreter.NONENUMERABLE_DESCRIPTOR);
   }
-  this.unwind(Interpreter.Completion.THROW, error, undefined);
+  var lineNumErrorMsg;
+  if (lineNumber !=  null) {
+      lineNumErrorMsg = this.getErrorLineNumberMessage(lineNumber);
+  }
+  this.unwind(Interpreter.Completion.THROW, error, undefined, lineNumErrorMsg);
   // Abort anything related to the current step.
   throw Interpreter.STEP_ERROR;
 };
@@ -2500,7 +2648,7 @@ Interpreter.prototype.throwException = function(errorClass, opt_message) {
  * @param {Interpreter.Value=} value Value computed, returned or thrown.
  * @param {string=} label Target label for break or return.
  */
-Interpreter.prototype.unwind = function(type, value, label) {
+Interpreter.prototype.unwind = function(type, value, label, lineNumberMsg="") {
   if (type === Interpreter.Completion.NORMAL) {
     throw TypeError('Should not unwind for NORMAL completions');
   }
@@ -2548,9 +2696,9 @@ Interpreter.prototype.unwind = function(type, value, label) {
     var name = this.getProperty(value, 'name').toString();
     var message = this.getProperty(value, 'message').valueOf();
     var type = errorTable[name] || Error;
-    realError = type(message);
+    realError = type(message + lineNumberMsg);
   } else {
-    realError = String(value);
+    realError = String(value) + lineNumberMsg;
   }
   throw realError;
 };
@@ -2656,7 +2804,7 @@ Interpreter.prototype['stepAssignmentExpression'] =
       state.leftValue_ = state.value;
     }
     if (!state.doneGetter_ && node['operator'] !== '=') {
-      var leftValue = this.getValue(state.leftReference_);
+      var leftValue = this.getValue(state.leftReference_, node);
       state.leftValue_ = leftValue;
       if (leftValue && typeof leftValue === 'object' && leftValue.isGetter) {
         // Clear the getter flag and call the getter function.
@@ -2742,15 +2890,17 @@ Interpreter.prototype['stepBinaryExpression'] = function(stack, state, node) {
     case '>>>': value = leftValue >>> rightValue; break;
     case 'in':
       if (!rightValue || !rightValue.isObject) {
+        let lineNum = this.getErrorLineNumber(node);
         this.throwException(this.TYPE_ERROR,
-            "'in' expects an object, not '" + rightValue + "'");
+            "'in' expects an object, not '" + rightValue + "'", lineNum);
       }
       value = this.hasProperty(rightValue, leftValue);
       break;
     case 'instanceof':
       if (!this.isa(rightValue, this.FUNCTION)) {
+        let lineNum = this.getErrorLineNumber(node);
         this.throwException(this.TYPE_ERROR,
-            'Right-hand side of instanceof is not an object');
+            'Right-hand side of instanceof is not an object', lineNum);
       }
       value = leftValue.isObject ? this.isa(leftValue, rightValue) : false;
       break;
@@ -2788,7 +2938,7 @@ Interpreter.prototype['stepCallExpression'] = function(stack, state, node) {
     state.doneCallee_ = 2;
     var func = state.value;
     if (Array.isArray(func)) {
-      state.func_ = this.getValue(func);
+      state.func_ = this.getValue(func, node);
       if (func[0] === Interpreter.SCOPE_REFERENCE) {
         // (Globally or locally) named function.  Is it named 'eval'?
         state.directEval_ = (func[1] === 'eval');
@@ -2823,7 +2973,8 @@ Interpreter.prototype['stepCallExpression'] = function(stack, state, node) {
     if (node['type'] === 'NewExpression') {
       if (func.illegalConstructor) {
         // Illegal: new escape();
-        this.throwException(this.TYPE_ERROR, func + ' is not a constructor');
+        let lineNum = this.getErrorLineNumber(node);
+        this.throwException(this.TYPE_ERROR, func + ' is not a constructor', lineNum);
       }
       // Constructor, 'this' is new object.
       var proto = func.properties['prototype'];
@@ -2842,7 +2993,8 @@ Interpreter.prototype['stepCallExpression'] = function(stack, state, node) {
   if (!state.doneExec_) {
     state.doneExec_ = true;
     if (!func || !func.isObject) {
-      this.throwException(this.TYPE_ERROR, func + ' is not a function');
+      let lineNum = this.getErrorLineNumber(node);
+      this.throwException(this.TYPE_ERROR, func + ' is not a function', lineNum);
     }
     var funcNode = func.node;
     if (funcNode) {
@@ -2880,7 +3032,8 @@ Interpreter.prototype['stepCallExpression'] = function(stack, state, node) {
           var ast = acorn.parse(code.toString(), Interpreter.PARSE_OPTIONS);
         } catch (e) {
           // Acorn threw a SyntaxError.  Rethrow as a trappable error.
-          this.throwException(this.SYNTAX_ERROR, 'Invalid code: ' + e.message);
+          let lineNum = this.getErrorLineNumber(node);
+          this.throwException(this.SYNTAX_ERROR, 'Invalid code: ' + e.message, lineNum);
         }
         var evalNode = new this.nodeConstructor();
         evalNode['type'] = 'EvalProgram_';
@@ -2917,7 +3070,8 @@ Interpreter.prototype['stepCallExpression'] = function(stack, state, node) {
       var f = new F();
       f();
       */
-      this.throwException(this.TYPE_ERROR, func.class + ' is not a function');
+      let lineNum = this.getErrorLineNumber(node);
+      this.throwException(this.TYPE_ERROR, func.class + ' is not a function', lineNum);
     }
   } else {
     // Execution complete.  Put the return value on the stack.
@@ -3032,8 +3186,9 @@ Interpreter.prototype['stepForInStatement'] = function(stack, state, node) {
     if (node['left']['declarations'] &&
         node['left']['declarations'][0]['init']) {
       if (state.scope.strict) {
+        let lineNum = this.getErrorLineNumber(node);
         this.throwException(this.SYNTAX_ERROR,
-            'for-in loop variable declaration may not have an initializer.');
+            'for-in loop variable declaration may not have an initializer.', lineNum);
       }
       // Variable initialization: for (var x = 4 in y)
       return new Interpreter.State(node['left'], state.scope);
@@ -3193,7 +3348,7 @@ Interpreter.prototype['stepIdentifier'] = function(stack, state, node) {
     stack[stack.length - 1].value = [Interpreter.SCOPE_REFERENCE, node['name']];
     return;
   }
-  var value = this.getValueFromScope(node['name']);
+  var value = this.getValueFromScope(node['name'], node);
   // An identifier could be a getter if it's a property on the global object.
   if (value && typeof value === 'object' && value.isGetter) {
     // Clear the getter flag and call the getter function.
@@ -3428,7 +3583,7 @@ Interpreter.prototype['stepSwitchStatement'] = function(stack, state, node) {
 
 Interpreter.prototype['stepThisExpression'] = function(stack, state, node) {
   stack.pop();
-  stack[stack.length - 1].value = this.getValueFromScope('this');
+  stack[stack.length - 1].value = this.getValueFromScope('this', node);
 };
 
 Interpreter.prototype['stepThrowStatement'] = function(stack, state, node) {
@@ -3529,7 +3684,7 @@ Interpreter.prototype['stepUpdateExpression'] = function(stack, state, node) {
     state.leftValue_ = state.value;
   }
   if (!state.doneGetter_) {
-    var leftValue = this.getValue(state.leftSide_);
+    var leftValue = this.getValue(state.leftSide_, node);
     state.leftValue_ = leftValue;
     if (leftValue && typeof leftValue === 'object' && leftValue.isGetter) {
       // Clear the getter flag and call the getter function.
