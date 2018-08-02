@@ -1,14 +1,12 @@
+@import "mixins";
+@import "theme";
+
+@import "reset";
+
 :root{
     --my-font-color: #6f3;
     --my-background-color: #000;
     --my-highlight-color: #fff;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    font-size: 16px;
-    font-family: 'Lucida Console', 'Lucida Sans Unicode', 'Fira Mono', 'Consolas', 'Courier New', Courier, monospace, 'Times New Roman';
 }
 
 body {
@@ -23,7 +21,7 @@ h2,
 }
 
 h1 {
-    font-size: 22px;
+    font-size: $defaultFontSize * 1.375;
     color: var(--my-font-color);
 }
 
@@ -39,6 +37,16 @@ li {
 span {
     margin: 4px;
     padding: 4px;
+}
+
+button[type="button"] {
+    @include transform(translateX(-50%));
+
+    padding: 0.5rem 1rem;
+    position: absolute;
+    z-index: 1;
+    bottom: 10px;
+    left: 50%;
 }
 
 #entire-game-container {
@@ -100,7 +108,7 @@ tr:focus {
 /* Plus and minus signs */
 .mainmenu-accordion-header:after {
     content: '\02795';
-    font-size: 13px;
+    font-size: $defaultFontSize * 0.8125;
     color: #fff;
     float: right;
     margin-left: 5px;
@@ -127,7 +135,8 @@ tr:focus {
 }
 
 /* Make html links ("a" elements) nice looking buttons with this class */
-a:link, a:visited {
+a:link,
+a:visited {
     color: #fff;
 }
 
@@ -150,9 +159,7 @@ a:link, a:visited {
 }
 
 .a-link-button:active {
-    -webkit-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
-    -moz-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
-    box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+    @include boxShadow(inset 0 1px 4px rgba(0, 0, 0, 0.6));
 }
 
 /* Make anchor tags ("a" elements) inactive (not clickable) */
@@ -212,7 +219,7 @@ a:link, a:visited {
     position: relative;
 }
 #create-program-notification {
-    font-size: 10px;
+    font-size: $defaultFontSize * 0.625;
 
     position: absolute; /* Position the badge within the relatively positioned button */
     top: 0;
@@ -308,9 +315,7 @@ a:link, a:visited {
 }
 
 .help-tip:active {
-    -webkit-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
-    -moz-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
-    box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+    @include boxShadow(inset 0 1px 4px rgba(0, 0, 0, 0.6));
 }
 
 /* Flashing button (Red) */
@@ -408,7 +413,7 @@ a:link, a:visited {
 }
 
 #status-text {
-    font-size: 20px;
+    font-size: $defaultFontSize * 1.25;
     color: #fff;
     right: 0;
     bottom: 0;
@@ -446,15 +451,12 @@ a:link, a:visited {
 
 #character-overview-save-button,
 #character-overview-options-button {
+    @include borderRadius(12px);
+    @include boxShadow(1px 1px 3px #000);
+
     color: #aaa;
-    font-size: 14px;
+    font-size: $defaultFontSize * 0.875;
     font-weight: bold;
-    -webkit-border-radius: 12px;
-    -moz-border-radius: 12px;
-    border-radius: 12px;
-    -moz-box-shadow: 1px 1px 3px #000;
-    -webkit-box-shadow: 1px 1px 3px #000;
-    box-shadow: 1px 1px 3px #000;
     height: 22px;
     background-color: #000;
 }
@@ -485,7 +487,7 @@ a:link, a:visited {
 /* Accordion menus (Header with collapsible panel) */
 .accordion-header {
     background-color: #444;
-    font-size: 20px;
+    font-size: $defaultFontSize * 1.25;
     color: #fff;
     margin: 6px 6px 0 6px;
     padding: 6px;
@@ -507,7 +509,7 @@ a:link, a:visited {
 
 .accordion-header:after {
     content: '\02795'; /* "plus" sign (+) */
-    font-size: 13px;
+    font-size: $defaultFontSize * 0.8125;
     color: #fff;
     float: right;
     margin-left: 5px;
@@ -515,7 +517,7 @@ a:link, a:visited {
 
 .accordion-header.active:after {
     content: "\2796"; /* "minus" sign (-) */
-    font-size: 13px;
+    font-size: $defaultFontSize * 0.8125;
     color: #fff;
     float: right;
     margin-left: 5px;

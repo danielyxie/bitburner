@@ -1,3 +1,6 @@
+@import "mixins";
+@import "theme";
+
 /* Pop-up boxes */
 .popup-box-container {
     display: none; /* Hidden by default */
@@ -24,7 +27,7 @@
 .popup-box-button-inactive {
     color: #aaa;
     float: right;
-    font-size: 16px;
+    font-size: $defaultFontSize;
     font-weight: bold;
     padding: 2px;
     margin: 6px;
@@ -74,16 +77,13 @@
 }
 
 .dialog-box-close-button {
+    @include borderRadius(12px);
+    @include boxShadow(1px 1px 3px #000);
+
     float: right;
     color: #aaa;
-    font-size: 20px;
+    font-size: $defaultFontSize * 1.25;
     font-weight: bold;
-    -webkit-border-radius: 12px;
-    -moz-border-radius: 12px;
-    border-radius: 12px;
-    -moz-box-shadow: 1px 1px 3px #000;
-    -webkit-box-shadow: 1px 1px 3px #000;
-    box-shadow: 1px 1px 3px #000;
 }
 
 #log-box-close {
@@ -155,18 +155,15 @@
 }
 
 #game-options-close-button {
+    @include borderRadius(12px);
+    @include boxShadow(1px 1px 3px #000);
+
     color: #aaa;
     float: right;
     margin: 4px;
     padding: 4px;
-    font-size: 20px;
+    font-size: $defaultFontSize * 1.25;
     font-weight: bold;
-    -webkit-border-radius: 12px;
-    -moz-border-radius: 12px;
-    border-radius: 12px #fff;
-    -moz-box-shadow: 1px 1px 3px #000;
-    -webkit-box-shadow: 1px 1px 3px #000;
-    box-shadow: 1px 1px 3px #000;
 }
 
 #game-options-close-button:hover,
