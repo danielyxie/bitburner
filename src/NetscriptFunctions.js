@@ -178,7 +178,25 @@ function NetscriptFunctions(workerScript) {
             throw makeRuntimeRejectMsg(workerScript, "Index specified for Hacknet Node is out-of-bounds: " + i);
         }
         return Player.hacknetNodes[i];
-    }
+    };
+
+    /**
+     * @param {number} ram The amount of server RAM to calculate cost of.
+     * @exception {Error} If the value passed in is not numeric, out of range, or too large of a value.
+     * @returns {number} The cost of 
+     */
+    const getPurchaseServerRamCostGuard = (ram) => {
+        const guardedRam = Math.round(ram);
+        if (isNaN(guardedRam) || !powerOfTwo(guardedRam)) {
+            throw Error("failed due to invalid ram argument. Must be numeric and a power of 2");
+        }
+
+        if (guardedRam > CONSTANTS.PurchasedServerMaxRam) {
+            throw Error("failed because specified RAM was too high. Maximum RAM on a purchased server is " + CONSTANTS.PurchasedServerMaxRam + "GB");
+        }
+
+        return guardedRam * CONSTANTS.BaseCostFor1GBOfRamServer;
+    };
 
     return {
         hacknet : {
@@ -1597,6 +1615,22 @@ function NetscriptFunctions(workerScript) {
 
             return CONSTANTS.PurchasedServerMaxRam;
         },
+        getPurchasedServerCost: function(ram) {
+            if (workerScript.checkingRam) {
+                return updateStaticRam("getPurchasedServerCost", CONSTANTS.ScriptGetPurchaseServerRamCost);
+            }
+            updateDynamicRam("getPurchasedServerCost", CONSTANTS.ScriptGetPurchaseServerRamCost);
+
+            let cost = 0;
+            try {
+                cost = getPurchaseServerRamCostGuard(ram);
+            } catch (e) {
+                workerScript.scriptRef.log("ERROR: 'getPurchasedServerCost()' " + e.message);
+                return "";
+            }
+
+            return cost;
+        },
         purchaseServer : function(hostname, ram) {
             if (workerScript.checkingRam) {
                 return updateStaticRam("purchaseServer", CONSTANTS.ScriptPurchaseServerRamCost);
@@ -1615,18 +1649,14 @@ function NetscriptFunctions(workerScript) {
                 return "";
             }
 
-            ram = Math.round(ram);
-            if (isNaN(ram) || !isPowerOfTwo(ram)) {
-                workerScript.scriptRef.log("ERROR: purchaseServer() failed due to invalid ram argument. Must be numeric and a power of 2");
+            let cost = 0;
+            try {
+                cost = getPurchaseServerRamCostGuard(ram);
+            } catch (e) {
+                workerScript.scriptRef.log("ERROR: 'purchaseServer()' " + e.message);
                 return "";
             }
 
-            if (ram > CONSTANTS.PurchasedServerMaxRam) {
-                workerScript.scriptRef.log("ERROR: purchasedServer() failed because specified RAM was too high. Maximum RAM on a purchased server is " + CONSTANTS.PurchasedServerMaxRam + "GB");
-                return "";
-            }
-
-            var cost = ram * CONSTANTS.BaseCostFor1GBOfRamServer;
             if (Player.money.lt(cost)) {
                 workerScript.scriptRef.log("ERROR: Not enough money to purchase server. Need $" + formatNumber(cost, 2));
                 return "";
@@ -2111,6 +2141,13 @@ function NetscriptFunctions(workerScript) {
                 });
                 yesNoBoxCreate(txt);
             });
+        },
+        getFavorToDonate: function() {
+            if (workerScript.checkingRam) {
+                return updateStaticRam("getFavorToDonate", CONSTANTS.ScriptGetFavorToDonate);
+            }
+            updateDynamicRam("getFavorToDonate", CONSTANTS.ScriptGetFavorToDonate);
+            return Math.floor(CONSTANTS.BaseFavorToDonate * BitNodeMultipliers.RepToDonateToFaction);
         },
 
         /* Singularity Functions */
@@ -2747,6 +2784,27 @@ function NetscriptFunctions(workerScript) {
             }
             return company.favor;
         },
+        getCompanyFavorGain : function(companyName) {
+            var ramCost = CONSTANTS.ScriptSingularityFn2RamCost / 4;
+            if (Player.bitNodeN !== 4) {ramCost *= 8;}
+            if (workerScript.checkingRam) {
+                return updateStaticRam("getCompanyFavorGain", ramCost);
+            }
+            updateDynamicRam("getCompanyFavorGain", ramCost);
+            if (Player.bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 2)) {
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run getCompanyFavorGain(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    return -1;
+                }
+            }
+
+            var company = Companies[companyName];
+            if (company == null || !(company instanceof Company)) {
+                workerScript.scriptRef.log("ERROR: Invalid companyName passed into getCompanyFavorGain(): " + companyName);
+                return -1;
+            }
+            return company.getFavorGain()[0];
+        },
         checkFactionInvitations : function() {
             var ramCost = CONSTANTS.ScriptSingularityFn2RamCost;
             if (Player.bitNodeN !== 4) {ramCost *= 8;}
@@ -2943,6 +3001,27 @@ function NetscriptFunctions(workerScript) {
             }
 
             return Factions[name].favor;
+        },
+        getFactionFavorGain: function(name){
+            var ramCost = CONSTANTS.ScriptSingularityFn2RamCost;
+            if (Player.bitNodeN !== 4) {ramCost *= 8;}
+            if (workerScript.checkingRam) {
+                return updateStaticRam("getFactionFavorGain", ramCost);
+            }
+            updateDynamicRam("getFactionFavorGain", ramCost);
+            if (Player.bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 2)) {
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run getFactionFavorGain(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    return -1;
+                }
+            }
+
+            if (!factionExists(name)) {
+                workerScript.scriptRef.log("ERROR: Faction specified in getFactionFavorGain() does not exist.");
+                return -1;
+            }
+
+            return Factions[name].getFavorGain()[0];
         },
         createProgram : function(name) {
             var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;

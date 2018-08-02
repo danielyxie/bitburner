@@ -1,3 +1,6 @@
+@import "mixins";
+@import "theme";
+
 /* css for Missions */
 
 /* Hacking missions */
@@ -15,10 +18,10 @@
     width: 100%;
     overflow-y: auto;
     padding-right: 10px;
-}
 
-.hack-mission-grid::-webkit-scrollbar {
-    display: none;
+    &::-webkit-scrollbar {
+        display: none;
+    }
 }
 
 .hack-mission-node {
@@ -27,17 +30,15 @@
     align-self: center;
     justify-self: center;
     display: inline-block;
-}
 
-.hack-mission-node p {
-    margin-top: 8px;
-    color: #fff;
-    font-size: 12px;
-    text-align: center;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+    p {
+        @include userSelect(none);
+
+        margin-top: 8px;
+        color: #fff;
+        font-size: $defaultFontSize * 0.75;
+        text-align: center;
+    }
 }
 
 .hack-mission-player-node {
@@ -56,11 +57,9 @@
 }
 
 .hack-mission-cpu-node {
+    @include borderRadius(50%);
     width: 100%;
     height: 100%;
-    -moz-border-radius: 50%;
-    -webkit-border-radius: 50%;
-    border-radius: 50%;
 }
 
 .hack-mission-firewall-node {
@@ -69,47 +68,37 @@
 }
 
 .hack-mission-database-node {
+    @include transform(skew(20deg));
+
     width: 100%;
     height: 90%;
-    -webkit-transform: skew(20deg);
-    -moz-transform: skew(20deg);
-    -o-transform: skew(20deg);
-}
 
-.hack-mission-database-node p {
-    -webkit-transform: skew(-20deg);
-    -moz-transform: skew(-20deg);
-    -o-transform: skew(-20deg);
-    color: #fff;
-    font-size: 12px;
-    margin-top: 8px;
-    text-align: center;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+    p {
+        @include transform(skew(-20deg));
+        @include userSelect(none);
+
+        color: #fff;
+        font-size: $defaultFontSize * 0.75;
+        margin-top: 8px;
+        text-align: center;
+    }
 }
 
 .hack-mission-transfer-node {
+    @include transform(skew(-20deg));
+
     width: 100%;
     height: 90%;
-    -webkit-transform: skew(-20deg);
-    -moz-transform: skew(-20deg);
-    -o-transform: skew(-20deg);
-}
 
-.hack-mission-transfer-node p {
-    -webkit-transform: skew(20deg);
-    -moz-transform: skew(20deg);
-    -o-transform: skew(20deg);
-    color: #fff;
-    font-size: 12px;
-    margin-top: 8px;
-    text-align: center;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+    p {
+        @include transform(skew(20deg));
+        @include userSelect(none);
+
+        color: #fff;
+        font-size: $defaultFontSize * 0.75;
+        margin-top: 8px;
+        text-align: center;
+    }
 }
 
 .hack-mission-spam-node,

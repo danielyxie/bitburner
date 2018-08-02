@@ -38,6 +38,7 @@ import {containsAllStrings, longestCommonStart,
 import {addOffset}                          from "../utils/helpers/addOffset";
 import {isString}                           from "../utils/helpers/isString";
 import {arrayToString}                      from "../utils/helpers/arrayToString";
+import {getTimestamp}                       from "../utils/helpers/getTimestamp";
 import {logBoxCreate}                       from "../utils/LogBox";
 import {yesNoBoxCreate,
         yesNoBoxGetYesButton,
@@ -112,15 +113,14 @@ $(document).keydown(function(event) {
 		if (event.keyCode === KEY.ENTER) {
             event.preventDefault(); //Prevent newline from being entered in Script Editor
 			var command = $('input[class=terminal-input]').val();
-			post(
+			      post(
                 "[" +
-                (FconfSettings.ENABLE_TIMESTAMPS ? Terminal.getTimestamp() + " " : "") +
+                (FconfSettings.ENABLE_TIMESTAMPS ? getTimestamp() + " " : "") +
                 Player.getCurrentServer().hostname +
                 " ~]> " + command
             );
 
             if (command.length > 0) {
-
                 Terminal.resetTerminalInput();      //Clear input first
                 const commands = command.split(";");
                 for(let i = 0; i < commands.length; i++) {
@@ -666,11 +666,6 @@ let Terminal = {
         } catch(e) {
             console.log("Exception in Terminal.moveTextCursor: " + e);
         }
-    },
-
-    getTimestamp: function() {
-        let d = new Date();
-        return (d.getMonth() + "/" + d.getDay() + " " + d.getHours() + ":" + d.getMinutes());
     },
 
     finishAction: function(cancelled = false) {
@@ -1853,142 +1848,164 @@ let Terminal = {
         if (splitArgs.length > 1) {
             programName = splitArgs[0];
         }
-		switch (programName) {
-			case Programs.NukeProgram.name:
-				if (s.hasAdminRights) {
-					post("You already have root access to this computer. There is no reason to run NUKE.exe");
-				} else {
-					if (s.openPortCount >= Player.getCurrentServer().numOpenPortsRequired) {
-						s.hasAdminRights = true;
-						post("NUKE successful! Gained root access to " + Player.getCurrentServer().hostname);
-						//TODO Make this take time rather than be instant
-					} else {
-						post("NUKE unsuccessful. Not enough ports have been opened");
-					}
-				}
-				break;
-            case Programs.BruteSSHProgram.name:
-                if (s.sshPortOpen) {
-                    post("SSH Port (22) is already open!");
-                } else {
-                    s.sshPortOpen = true;
-                    post("Opened SSH Port(22)!")
-                    ++s.openPortCount;
-                }
-                break;
-            case Programs.FTPCrackProgram.name:
-                if (s.ftpPortOpen) {
-                    post("FTP Port (21) is already open!");
-                } else {
-                    s.ftpPortOpen = true;
-                    post("Opened FTP Port (21)!");
-                    ++s.openPortCount;
-                }
-                break;
-            case Programs.RelaySMTPProgram.name:
-                if (s.smtpPortOpen) {
-                    post("SMTP Port (25) is already open!");
-                } else {
-                    s.smtpPortOpen = true;
-                    post("Opened SMTP Port (25)!");
-                    ++s.openPortCount;
-                }
-                break;
-            case Programs.HTTPWormProgram.name:
-                if (s.httpPortOpen) {
-                    post("HTTP Port (80) is already open!");
-                } else {
-                    s.httpPortOpen = true;
-                    post("Opened HTTP Port (80)!");
-                    ++s.openPortCount;
-                }
-                break;
-            case Programs.SQLInjectProgram.name:
-                if (s.sqlPortOpen) {
-                    post("SQL Port (1433) is already open!");
-                } else {
-                    s.sqlPortOpen = true;
-                    post("Opened SQL Port (1433)!");
-                    ++s.openPortCount;
-                }
-                break;
-            case Programs.ServerProfiler.name:
-                if (splitArgs.length != 2) {
-                    post("Must pass a server hostname or IP as an argument for ServerProfiler.exe");
-                    return;
-                }
-                var serv = getServer(splitArgs[1]);
-                if (serv == null) {
-                    post("Invalid server IP/hostname");
-                    return;
-                }
-                post(serv.hostname + ":");
-                post("Server base security level: " + serv.baseDifficulty);
-                post("Server current security level: " + serv.hackDifficulty);
-                post("Server growth rate: " + serv.serverGrowth);
-                post("Netscript hack() execution time: " + formatNumber(scriptCalculateHackingTime(serv), 1) + "s");
-                post("Netscript grow() execution time: " + formatNumber(scriptCalculateGrowTime(serv)/1000, 1) + "s");
-                post("Netscript weaken() execution time: " + formatNumber(scriptCalculateWeakenTime(serv)/1000, 1) + "s");
-                break;
-            case Programs.AutoLink.name:
-                post("This executable cannot be run.");
-                post("AutoLink.exe lets you automatically connect to other servers when using 'scan-analyze'.");
-                post("When using scan-analyze, click on a server's hostname to connect to it.");
-                break;
-            case Programs.DeepscanV1.name:
-                post("This executable cannot be run.");
-                post("DeepscanV1.exe lets you run 'scan-analyze' with a depth up to 5.");
-                break;
-            case Programs.DeepscanV2.name:
-                post("This executable cannot be run.");
-                post("DeepscanV2.exe lets you run 'scan-analyze' with a depth up to 10.");
-                break;
-            case Programs.Flight.name:
-                const fulfilled = Player.augmentations.length >= 30 &&
-                    Player.money.gt(1e11) &&
-                    ((Player.hacking_skill >= 2500)||
-                    (Player.strength >= 1500 &&
-                    Player.defense >= 1500 &&
-                    Player.dexterity >= 1500 &&
-                    Player.agility >= 1500));
-                if(!fulfilled) {
-                    post("Augmentations: " + Player.augmentations.length + " / 30");
 
-                    post("Money: " + numeral(Player.money.toNumber()).format('($0.000a)') + " / " + numeral(1e11).format('($0.000a)'));
-                    post("One path below must be fulfilled...");
-                    post("----------HACKING PATH----------");
-                    post("Hacking skill: " + Player.hacking_skill + " / 2500");
-                    post("----------COMBAT PATH----------");
-                    post("Strength: " + Player.strength + " / 1500");
-                    post("Defense: " + Player.defense + " / 1500");
-                    post("Dexterity: " + Player.dexterity + " / 1500");
-                    post("Agility: " + Player.agility + " / 1500");
-                } else {
-                    post("We will contact you.");
-                    post("-- Daedalus --");
-                }
-                break;
-            case Programs.BitFlume.name:
-                var yesBtn = yesNoBoxGetYesButton(),
-                    noBtn = yesNoBoxGetNoButton();
-                yesBtn.innerHTML = "Travel to BitNode Nexus";
-                noBtn.innerHTML = "Cancel";
-                yesBtn.addEventListener("click", function() {
-                    hackWorldDaemon(Player.bitNodeN, true);
-                    return yesNoBoxClose();
-                });
-                noBtn.addEventListener("click", function() {
-                    return yesNoBoxClose();
-                });
-                yesNoBoxCreate("WARNING: USING THIS PROGRAM WILL CAUSE YOU TO LOSE ALL OF YOUR PROGRESS ON THE CURRENT BITNODE.<br><br>" +
-                               "Do you want to travel to the BitNode Nexus? This allows you to reset the current BitNode " +
-                               "and select a new one.");
+        // TODO: refactor this/these out of Terminal. This logic could reside closer to the Programs themselves.
+        /**
+         * @typedef {function (server=, args=)} ProgramHandler
+         * @param {Server} server The current server the program is being executed against
+         * @param {string[]} args The command line arguments passed in to the program
+         * @returns {void}
+         */
+        /**
+         * @type {Object.<string, ProgramHandler} 
+         */
+        const programHandlers = {};
+        programHandlers[Programs.NukeProgram.name] = (server) => {
+            if (server.hasAdminRights) {
+                post("You already have root access to this computer. There is no reason to run NUKE.exe");
+                return;
+            }
 
-                break;
-			default:
-				post("Invalid executable. Cannot be run");
-				return;
-		}
+            if (server.openPortCount >= Player.getCurrentServer().numOpenPortsRequired) {
+                server.hasAdminRights = true;
+                post("NUKE successful! Gained root access to " + Player.getCurrentServer().hostname);
+                // TODO: Make this take time rather than be instant
+                return;
+            }
+
+            post("NUKE unsuccessful. Not enough ports have been opened");
+        };
+        programHandlers[Programs.BruteSSHProgram.name] = (server) => {
+            if (server.sshPortOpen) {
+                post("SSH Port (22) is already open!");
+                return;
+            }
+
+            server.sshPortOpen = true;
+            post("Opened SSH Port(22)!")
+            server.openPortCount++;
+        };
+        programHandlers[Programs.FTPCrackProgram.name] = (server) => {
+            if (server.ftpPortOpen) {
+                post("FTP Port (21) is already open!");
+                return;
+            }
+
+            server.ftpPortOpen = true;
+            post("Opened FTP Port (21)!");
+            server.openPortCount++;
+        };
+        programHandlers[Programs.RelaySMTPProgram.name] = (server) => {
+            if (server.smtpPortOpen) {
+                post("SMTP Port (25) is already open!");
+                return;
+            }
+
+            server.smtpPortOpen = true;
+            post("Opened SMTP Port (25)!");
+            server.openPortCount++;
+        };
+        programHandlers[Programs.HTTPWormProgram.name] = (server) => {
+            if (serv.httpPortOpen) {
+                post("HTTP Port (80) is already open!");
+                return;
+            }
+
+            server.httpPortOpen = true;
+            post("Opened HTTP Port (80)!");
+            server.openPortCount++;
+        };
+        programHandlers[Programs.SQLInjectProgram.name] = (server) => {
+            if (server.sqlPortOpen) {
+                post("SQL Port (1433) is already open!");
+                return;
+            }
+
+            server.sqlPortOpen = true;
+            post("Opened SQL Port (1433)!");
+            server.openPortCount++;
+        };
+        programHandlers[Programs.ServerProfiler.name] = (server, args) => {
+            if (args.length !== 2) {
+                post("Must pass a server hostname or IP as an argument for ServerProfiler.exe");
+                return;
+            }
+
+            const targetServer = getServer(args[1]);
+            if (targetServer == null) {
+                post("Invalid server IP/hostname");
+                return;
+            }
+            post(targetServer.hostname + ":");
+            post("Server base security level: " + targetServer.baseDifficulty);
+            post("Server current security level: " + targetServer.hackDifficulty);
+            post("Server growth rate: " + targetServer.serverGrowth);
+            post("Netscript hack() execution time: " + formatNumber(scriptCalculateHackingTime(targetServer), 1) + "s");
+            post("Netscript grow() execution time: " + formatNumber(scriptCalculateGrowTime(targetServer)/1000, 1) + "s");
+            post("Netscript weaken() execution time: " + formatNumber(scriptCalculateWeakenTime(targetServer)/1000, 1) + "s");
+        };
+        programHandlers[Programs.AutoLink.name] = () => {
+            post("This executable cannot be run.");
+            post("AutoLink.exe lets you automatically connect to other servers when using 'scan-analyze'.");
+            post("When using scan-analyze, click on a server's hostname to connect to it.");
+        };
+        programHandlers[Programs.DeepscanV1.name] = () => {
+            post("This executable cannot be run.");
+            post("DeepscanV1.exe lets you run 'scan-analyze' with a depth up to 5.");
+        };
+        programHandlers[Programs.DeepscanV2.name] = () => {
+            post("This executable cannot be run.");
+            post("DeepscanV2.exe lets you run 'scan-analyze' with a depth up to 10.");
+        };
+        programHandlers[Programs.Flight.name] = () => {
+            const fulfilled = Player.augmentations.length >= 30 &&
+                Player.money.gt(1e11) &&
+                ((Player.hacking_skill >= 2500)||
+                (Player.strength >= 1500 &&
+                Player.defense >= 1500 &&
+                Player.dexterity >= 1500 &&
+                Player.agility >= 1500));
+            if(!fulfilled) {
+                post("Augmentations: " + Player.augmentations.length + " / 30");
+
+                post("Money: " + numeral(Player.money.toNumber()).format('($0.000a)') + " / " + numeral(1e11).format('($0.000a)'));
+                post("One path below must be fulfilled...");
+                post("----------HACKING PATH----------");
+                post("Hacking skill: " + Player.hacking_skill + " / 2500");
+                post("----------COMBAT PATH----------");
+                post("Strength: " + Player.strength + " / 1500");
+                post("Defense: " + Player.defense + " / 1500");
+                post("Dexterity: " + Player.dexterity + " / 1500");
+                post("Agility: " + Player.agility + " / 1500");
+                return;
+            }
+
+            post("We will contact you.");
+            post("-- Daedalus --");
+        };
+        programHandlers[Programs.BitFlume.name] = () => {
+            const yesBtn = yesNoBoxGetYesButton();
+            const noBtn = yesNoBoxGetNoButton();
+            yesBtn.innerHTML = "Travel to BitNode Nexus";
+            noBtn.innerHTML = "Cancel";
+            yesBtn.addEventListener("click", function() {
+                hackWorldDaemon(Player.bitNodeN, true);
+                return yesNoBoxClose();
+            });
+            noBtn.addEventListener("click", function() {
+                return yesNoBoxClose();
+            });
+            yesNoBoxCreate("WARNING: USING THIS PROGRAM WILL CAUSE YOU TO LOSE ALL OF YOUR PROGRESS ON THE CURRENT BITNODE.<br><br>" +
+                            "Do you want to travel to the BitNode Nexus? This allows you to reset the current BitNode " +
+                            "and select a new one.");
+        };
+
+        if (!programHandlers.hasOwnProperty(programName)){
+            post("Invalid executable. Cannot be run");
+            return;
+        }
+
+        programHandlers[programName](s, splitArgs);
 	},
 
 	runScript: function(scriptName) {

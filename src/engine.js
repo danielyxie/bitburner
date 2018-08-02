@@ -65,6 +65,19 @@ import {StockMarket, StockSymbols,
         displayStockMarketContent}              from "./StockMarket";
 import {Terminal, postNetburnerText, post, KEY} from "./Terminal";
 
+// These should really be imported with the module that is presenting that UI, but because they very much depend on the
+// cascade order, we'll pull them all in here.
+import "../css/styles.scss";
+import "../css/terminal.scss";
+import "../css/menupages.scss";
+import "../css/workinprogress.scss";
+import "../css/popupboxes.scss";
+import "../css/interactivetutorial.scss";
+import "../css/loader.scss";
+import "../css/missions.scss";
+import "../css/companymanagement.scss";
+import "../css/bladeburner.scss";
+
 /* Shortcuts to navigate through the game
  *  Alt-t - Terminal
  *  Alt-c - Character
@@ -1656,12 +1669,12 @@ let Engine = {
         Engine.Clickables.devMenuProgramsDropdown = document.getElementById("dev-menu-add-program-dropdown");
         const programsDD = Engine.Clickables.devMenuProgramsDropdown;
         for(const i in Programs) {
-            programsDD.options[programsDD.options.length] = new Option(Programs[i], Programs[i]);
+            programsDD.options[programsDD.options.length] = new Option(Programs[i].name, Programs[i].name);
         }
 
         Engine.Clickables.devMenuAddProgram = document.getElementById("dev-add-program");
         Engine.Clickables.devMenuAddProgram.addEventListener("click", function() {
-            const program = programsDD.options[programsDD.selectedIndex].value;;
+            const program = programsDD.options[programsDD.selectedIndex].value;
             if(!Player.hasProgram(program)) {
                 Player.getHomeComputer().programs.push(program);
             }

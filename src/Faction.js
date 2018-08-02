@@ -55,7 +55,7 @@ Faction.prototype.gainFavor = function() {
     this.rolloverRep = res[1];
 }
 
-//Returns an array with [How much favor would be gained, how much favor would be left over]
+//Returns an array with [How much favor would be gained, how much rep would be left over]
 Faction.prototype.getFavorGain = function() {
     if (this.favor == null || this.favor == undefined) {this.favor = 0;}
     if (this.rolloverRep == null || this.rolloverRep == undefined) {this.rolloverRep = 0;}
@@ -432,7 +432,7 @@ function displayFactionContent(factionName) {
 		throw new Error("Not a member of this faction, cannot display faction information");
 	}
 
-    donateDiv.style.display = faction.favor >= (150 * BitNodeMultipliers.RepToDonateToFaction) ? "inline" : "none";
+    donateDiv.style.display = faction.favor >= Math.floor(CONSTANTS.BaseFavorToDonate * BitNodeMultipliers.RepToDonateToFaction) ? "inline" : "none";
 
     hackMissionDiv.style.display  = factionInfo.offerHackingMission ? "inline": "none";
     hackDiv.style.display         = factionInfo.offerHackingWork ? "inline" : "none";
@@ -669,7 +669,7 @@ function purchaseAugmentation(aug, fac, sing=false) {
         var txt = "You must first purchase or install " + aug.prereqs.join(",") + " before you can " +
                   "purchase this one.";
         if (sing) {return txt;} else {dialogBoxCreate(txt);}
-    } else if (Player.money.lt(aug.baseCost * factionInfo.augmentationPriceMult)) {
+    } else if (aug.baseCost !== 0 && Player.money.lt(aug.baseCost * factionInfo.augmentationPriceMult)) {
         let txt = "You don't have enough money to purchase " + aug.name;
         if (sing) {return txt;}
         dialogBoxCreate(txt);
@@ -677,7 +677,7 @@ function purchaseAugmentation(aug, fac, sing=false) {
         let txt = "You don't have enough faction reputation to purchase " + aug.name;
         if (sing) {return txt;}
         dialogBoxCreate(txt);
-    } else if (Player.money.gte(aug.baseCost * factionInfo.augmentationPriceMult)) {
+    } else if (aug.baseCost === 0 || Player.money.gte(aug.baseCost * factionInfo.augmentationPriceMult)) {
         if (Player.firstAugPurchased === false) {
             Player.firstAugPurchased = true;
             document.getElementById("augmentations-tab").style.display = "list-item";

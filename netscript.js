@@ -72,6 +72,7 @@ let NetscriptFunctions =
     "serverExists|fileExists|isRunning|"                                       +
     "deleteServer|getPurchasedServers|"                                        +
     "getPurchasedServerLimit|getPurchasedServerMaxRam|"                        +
+    "getPurchasedServerCost|"                                                  +
     "purchaseServer|round|write|read|peek|clear|rm|getPortHandle|"             +
     "scriptRunning|scriptKill|getScriptName|getScriptRam|"                     +
     "getHackTime|getGrowTime|getWeakenTime|getScriptIncome|getScriptExpGain|"  +
