@@ -38,6 +38,7 @@ import {containsAllStrings, longestCommonStart,
 import {addOffset}                          from "../utils/helpers/addOffset";
 import {isString}                           from "../utils/helpers/isString";
 import {arrayToString}                      from "../utils/helpers/arrayToString";
+import {getTimestamp}                       from "../utils/helpers/getTimestamp";
 import {logBoxCreate}                       from "../utils/LogBox";
 import {yesNoBoxCreate,
         yesNoBoxGetYesButton,
@@ -115,7 +116,7 @@ $(document).keydown(function(event) {
 			if (command.length > 0) {
                 post(
                     "[" +
-                    (FconfSettings.ENABLE_TIMESTAMPS ? Terminal.getTimestamp() + " " : "") +
+                    (FconfSettings.ENABLE_TIMESTAMPS ? getTimestamp() + " " : "") +
                     Player.getCurrentServer().hostname +
                     " ~]> " + command
                 );
@@ -644,11 +645,6 @@ let Terminal = {
         } catch(e) {
             console.log("Exception in Terminal.moveTextCursor: " + e);
         }
-    },
-
-    getTimestamp: function() {
-        let d = new Date();
-        return (d.getMonth() + "/" + d.getDay() + " " + d.getHours() + ":" + d.getMinutes());
     },
 
     finishAction: function(cancelled = false) {
