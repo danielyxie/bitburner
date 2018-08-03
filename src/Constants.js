@@ -500,9 +500,10 @@ let CONSTANTS = {
     "* Cranial Signal Processor Augmentations now have the previous generation as a prerequisite. i.e. Cranial Signal Processor - Gen II requires Gen I (by Kline-)<br>"
     "* Bladeburner Raid operations can no longer be performed if your estimate of Synthoid communities is zero (by hydroflame)<br>" +
     "* The difficulty of BN-12 now scales faster (by hydroflame)<br>"  +
+    "* Active Scripts UI now shows a RAM Usage bar for each server<br>" + 
     "* Bug Fix: Corrected terminal timestamp format (by kopelli)<br>" +
-    "* Bug Fix: NetscriptJS scripts should now die properly if they don't have a 'main' function (by hydroflame)<br>"
-
+    "* Bug Fix: NetscriptJS scripts should now die properly if they don't have a 'main' function (by hydroflame)<br>" +
+    "* Various minor UI/QOL fixes by hydroflame, kopelli, and Kline-"
 
 }
 
