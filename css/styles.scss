@@ -433,8 +433,8 @@ a:visited {
     position: absolute; /* Stay in place */
     right: 0;
     top: 0;
-    height: 205px; /* Full height */
-    padding: 5px;
+    height: auto; /* Full height */
+    padding: 8px;
     border: 2px solid var(--my-highlight-color);
     width: 19%;
     overflow: auto; /* Enable scroll if needed */
@@ -443,10 +443,16 @@ a:visited {
 }
 
 #character-overview-text {
-    padding: 4px;
-    margin: 8px;
     color: #fff;
     background-color: #444;
+}
+
+.character-stat-text {
+    color: #fff;
+    background-color: #444;
+}
+ .character-stat-cell {
+    text-align: right;
 }
 
 #character-overview-save-button,
@@ -459,6 +465,10 @@ a:visited {
     font-weight: bold;
     height: 22px;
     background-color: #000;
+}
+
+.character-quick-options {
+    padding-top: 5px;
 }
 
 #character-overview-save-button:hover,
