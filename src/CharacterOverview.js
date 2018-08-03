@@ -13,7 +13,6 @@ function CharacterOverview() {
 	this.int = document.getElementById("character-int-text");
 	this.intWrapper = document.getElementById("character-int-wrapper");
 	this.repaintElem = document.getElementById("character-overview-text");
-	console.log(this.hp,this.money,this.hack,this.str,this.def,this.dex,this.agi,this.cha,this.int,this.intWrapper,this.repaintElem)
 }
 
 CharacterOverview.prototype.repaint = function() {
