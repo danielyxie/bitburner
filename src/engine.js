@@ -20,6 +20,7 @@ import {Augmentations, installAugmentations,
 import {BitNodes, initBitNodes,
         initBitNodeMultipliers}                 from "./BitNode";
 import {Bladeburner}                            from "./Bladeburner";
+import {CharacterOverview}                      from "./CharacterOverview";
 import {cinematicTextFlag}                      from "./CinematicText";
 import {CompanyPositions, initCompanies}        from "./Company";
 import {Corporation}                            from "./CompanyManagement";
@@ -280,6 +281,7 @@ let Engine = {
         Bladeburner:        "Bladeburner",
     },
     currentPage:    null,
+    overview: new CharacterOverview(),
 
 
     //Time variables (milliseconds unix epoch time)
@@ -570,20 +572,7 @@ let Engine = {
     },
 
     displayCharacterOverviewInfo: function() {
-        if (Player.hp == null) {Player.hp = Player.max_hp;}
-        var overviewText = "Hp:    " + Player.hp + " / " + Player.max_hp + "<br>" +
-                           "Money: " + numeral(Player.money.toNumber()).format('($0.000a)') + "<br>" +
-                           "Hack:  " + (Player.hacking_skill).toLocaleString() + "<br>" +
-                           "Str:   " + (Player.strength).toLocaleString() + "<br>" +
-                           "Def:   " + (Player.defense).toLocaleString() + "<br>" +
-                           "Dex:   " + (Player.dexterity).toLocaleString() + "<br>" +
-                           "Agi:   " + (Player.agility).toLocaleString() + "<br>" +
-                           "Cha:   " + (Player.charisma).toLocaleString();
-        if (Player.intelligence >= 1) {
-            overviewText += "<br>Int:   " + (Player.intelligence).toLocaleString();
-        }
-        document.getElementById("character-overview-text").innerHTML = overviewText.replace( / /g, "&nbsp;");
-        
+        Engine.overview.update();
         
 
         const save = document.getElementById("character-overview-save-button");
