@@ -1421,13 +1421,6 @@ Bladeburner.prototype.completeOperation = function(success) {
     }
 
     var city = this.getCurrentCity();
-    if (this.logging.ops) {
-        if (success) {
-            this.log(action.name + " completed successfully! ")
-        } else {
-
-        }
-    }
     switch (action.name) {
         case "Investigation":
             if (success) {
