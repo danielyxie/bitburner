@@ -1,4 +1,3 @@
-import {registerEnv, unregisterEnv, makeEnvHeader} from "./NetscriptJSPreamble";
 import {makeRuntimeRejectMsg} from "./NetscriptEvaluator";
 
 // Makes a blob that contains the code of a given script.
