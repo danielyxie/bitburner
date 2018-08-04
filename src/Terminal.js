@@ -113,16 +113,20 @@ $(document).keydown(function(event) {
 		if (event.keyCode === KEY.ENTER) {
             event.preventDefault(); //Prevent newline from being entered in Script Editor
 			var command = $('input[class=terminal-input]').val();
-			if (command.length > 0) {
-                post(
-                    "[" +
-                    (FconfSettings.ENABLE_TIMESTAMPS ? getTimestamp() + " " : "") +
-                    Player.getCurrentServer().hostname +
-                    " ~]> " + command
-                );
+			      post(
+                "[" +
+                (FconfSettings.ENABLE_TIMESTAMPS ? getTimestamp() + " " : "") +
+                Player.getCurrentServer().hostname +
+                " ~]> " + command
+            );
 
+            if (command.length > 0) {
                 Terminal.resetTerminalInput();      //Clear input first
-				Terminal.executeCommand(command);
+                const commands = command.split(";");
+                for(let i = 0; i < commands.length; i++) {
+                    if(commands[i].match(/^\s*$/)) { continue; }
+                    Terminal.executeCommand(commands[i]);
+                }
 			}
 		}
 
@@ -198,6 +202,12 @@ $(document).keydown(function(event) {
             if (terminalInput == null) {return;}
             var input = terminalInput.value;
             if (input == "") {return;}
+
+            const semiColonIndex = input.lastIndexOf(";");
+            if(semiColonIndex !== -1) {
+                input = input.slice(semiColonIndex+1);
+            }
+
             input = input.trim();
             input = input.replace(/\s\s+/g, ' ');
 
@@ -350,7 +360,18 @@ function tabCompletion(command, arg, allPossibilities, index=0) {
         } else {
             val = command + " " + allPossibilities[0];
         }
-        document.getElementById("terminal-input-text-box").value = val;
+
+        const textBox = document.getElementById("terminal-input-text-box");
+        const oldValue = textBox.value;
+        const semiColonIndex = oldValue.lastIndexOf(";");
+        if(semiColonIndex === -1) {
+            // no ; replace the whole thing.
+            textBox.value = val;
+        } else {
+            // replace just after the last semicolon
+            textBox.value = textBox.value.slice(0, semiColonIndex+1)+" "+val;
+        }
+
         document.getElementById("terminal-input-text-box").focus();
     } else {
         var longestStartSubstr = longestCommonStart(allPossibilities);
