@@ -498,6 +498,7 @@ let CONSTANTS = {
     "* Accumulated 'bonus' time in Bladeburner is now displayed in the UI (by hydroflame)<br>" +
     "* The Red Pill can now be purchased with negative money (since its supposed to be free) (by hydroflame)<br>" +
     "* Cranial Signal Processor Augmentations now have the previous generation as a prerequisite. i.e. Cranial Signal Processor - Gen II requires Gen I (by Kline-)<br>" +
+    "* Terminal now supports semicolon usage (end of command). This allows chaining multiple Terminal commands (by hydroflame)<br>" + 
     "* Bladeburner Raid operations can no longer be performed if your estimate of Synthoid communities is zero (by hydroflame)<br>" +
     "* The difficulty of BN-12 now scales faster (by hydroflame)<br>"  +
     "* Active Scripts UI now shows a RAM Usage bar for each server (by kopelli)<br>" +

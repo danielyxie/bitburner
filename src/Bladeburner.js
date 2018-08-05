@@ -1824,8 +1824,8 @@ Bladeburner.prototype.createOverviewContent = function() {
     DomElems.overviewBonusTime = createElement("p", {
       innerText: "Bonus time: ",
       display: "inline-block",
-      tooltip: "You gain bonus time while offline or when you're not performing any action. " +
-        "Bonus time makes the game progress faster."
+      tooltip: "You gain bonus time while offline or when the game is inactive (e.g. when the tab is throttled by browser). " +
+        "Bonus time makes the Bladeburner mechanic progress faster, up to 5x the normal speed."
     });
     DomElems.overviewSkillPoints = createElement("p", {display:"block"});
     

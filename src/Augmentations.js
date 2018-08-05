@@ -746,7 +746,7 @@ function initAugmentations() {
             "Increases the player's hacking skill by 7%.",
 	    prereqs:[AugmentationNames.CranialSignalProcessorsG1]
     });
-    CranialSignalProcessorsG2.addToFactions(["NiteSec"]);
+    CranialSignalProcessorsG2.addToFactions(["CyberSec", "NiteSec"]);
     if (augmentationExists(AugmentationNames.CranialSignalProcessorsG2)) {
         delete Augmentations[AugmentationNames.CranialSignalProcessorsG2];
     }
@@ -764,7 +764,7 @@ function initAugmentations() {
              "Increases the player's hacking skill by 9%.",
 	    prereqs:[AugmentationNames.CranialSignalProcessorsG2]
     });
-    CranialSignalProcessorsG3.addToFactions(["NiteSec", "The Black Hand"]);
+    CranialSignalProcessorsG3.addToFactions(["NiteSec", "The Black Hand", "BitRunners"]);
     if (augmentationExists(AugmentationNames.CranialSignalProcessorsG3)) {
         delete Augmentations[AugmentationNames.CranialSignalProcessorsG3];
     }
@@ -782,7 +782,7 @@ function initAugmentations() {
              "Increases the amount of money the player can inject into servers using grow() by 25%.",
 	    prereqs:[AugmentationNames.CranialSignalProcessorsG3]
     });
-    CranialSignalProcessorsG4.addToFactions(["The Black Hand"]);
+    CranialSignalProcessorsG4.addToFactions(["The Black Hand", "BitRunners"]);
     if (augmentationExists(AugmentationNames.CranialSignalProcessorsG4)) {
         delete Augmentations[AugmentationNames.CranialSignalProcessorsG4];
     }

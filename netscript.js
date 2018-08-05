@@ -81,6 +81,7 @@ let NetscriptFunctions =
     "gymWorkout|travelToCity|purchaseTor|purchaseProgram|upgradeHomeRam|"      +
     "getUpgradeHomeRamCost|workForCompany|applyToCompany|getCompanyRep|"       +
     "getCompanyFavor|stopAction|getFactionFavor|"                              +
+    "getFavorToDonate|getFactionFavorGain|getCompanyFavorGain|"                +
     "checkFactionInvitations|joinFaction|workForFaction|getFactionRep|"        +
     "createProgram|commitCrime|getCrimeChance|getOwnedAugmentations|"          +
     "getOwnedSourceFiles|getAugmentationsFromFaction|"                         +
