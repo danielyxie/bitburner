@@ -5,3 +5,4 @@ Netburner.txt
 /dist/*.map
 /tests/*.map
 /tests/*.bundle.*
+/tests/*.css

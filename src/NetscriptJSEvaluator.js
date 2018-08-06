@@ -38,8 +38,7 @@ export async function executeJSScript(scripts = [], workerScript) {
         // TODO: putting await in a non-async function yields unhelpful
         // "SyntaxError: unexpected reserved word" with no line number information.
         if (!loadedModule.main) {
-            throw makeRuntimeRejectMsg(script.filename +
-                                       " did not have a main function, cannot run it.");
+            throw makeRuntimeRejectMsg(workerScript, `${script.filename} cannot be run because it does not have a main function.`);
         }
         return loadedModule.main(ns);
     } finally {

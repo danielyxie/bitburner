@@ -20,6 +20,7 @@ import {Augmentations, installAugmentations,
 import {BitNodes, initBitNodes,
         initBitNodeMultipliers}                 from "./BitNode";
 import {Bladeburner}                            from "./Bladeburner";
+import {CharacterOverview}                      from "./CharacterOverview";
 import {cinematicTextFlag}                      from "./CinematicText";
 import {CompanyPositions, initCompanies}        from "./Company";
 import {Corporation}                            from "./CompanyManagement";
@@ -64,6 +65,19 @@ import {StockMarket, StockSymbols,
         updateStockPrices,
         displayStockMarketContent}              from "./StockMarket";
 import {Terminal, postNetburnerText, post, KEY} from "./Terminal";
+
+// These should really be imported with the module that is presenting that UI, but because they very much depend on the
+// cascade order, we'll pull them all in here.
+import "../css/styles.scss";
+import "../css/terminal.scss";
+import "../css/menupages.scss";
+import "../css/workinprogress.scss";
+import "../css/popupboxes.scss";
+import "../css/interactivetutorial.scss";
+import "../css/loader.scss";
+import "../css/missions.scss";
+import "../css/companymanagement.scss";
+import "../css/bladeburner.scss";
 
 /* Shortcuts to navigate through the game
  *  Alt-t - Terminal
@@ -267,6 +281,7 @@ let Engine = {
         Bladeburner:        "Bladeburner",
     },
     currentPage:    null,
+    overview: new CharacterOverview(),
 
 
     //Time variables (milliseconds unix epoch time)
@@ -557,20 +572,7 @@ let Engine = {
     },
 
     displayCharacterOverviewInfo: function() {
-        if (Player.hp == null) {Player.hp = Player.max_hp;}
-        var overviewText = "Hp:    " + Player.hp + " / " + Player.max_hp + "<br>" +
-                           "Money: " + numeral(Player.money.toNumber()).format('($0.000a)') + "<br>" +
-                           "Hack:  " + (Player.hacking_skill).toLocaleString() + "<br>" +
-                           "Str:   " + (Player.strength).toLocaleString() + "<br>" +
-                           "Def:   " + (Player.defense).toLocaleString() + "<br>" +
-                           "Dex:   " + (Player.dexterity).toLocaleString() + "<br>" +
-                           "Agi:   " + (Player.agility).toLocaleString() + "<br>" +
-                           "Cha:   " + (Player.charisma).toLocaleString();
-        if (Player.intelligence >= 1) {
-            overviewText += "<br>Int:   " + (Player.intelligence).toLocaleString();
-        }
-        document.getElementById("character-overview-text").innerHTML = overviewText.replace( / /g, "&nbsp;");
-        
+        Engine.overview.update();
         
 
         const save = document.getElementById("character-overview-save-button");
@@ -1656,12 +1658,12 @@ let Engine = {
         Engine.Clickables.devMenuProgramsDropdown = document.getElementById("dev-menu-add-program-dropdown");
         const programsDD = Engine.Clickables.devMenuProgramsDropdown;
         for(const i in Programs) {
-            programsDD.options[programsDD.options.length] = new Option(Programs[i], Programs[i]);
+            programsDD.options[programsDD.options.length] = new Option(Programs[i].name, Programs[i].name);
         }
 
         Engine.Clickables.devMenuAddProgram = document.getElementById("dev-add-program");
         Engine.Clickables.devMenuAddProgram.addEventListener("click", function() {
-            const program = programsDD.options[programsDD.selectedIndex].value;;
+            const program = programsDD.options[programsDD.selectedIndex].value;
             if(!Player.hasProgram(program)) {
                 Player.getHomeComputer().programs.push(program);
             }
