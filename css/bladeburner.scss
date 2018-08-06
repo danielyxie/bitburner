@@ -27,14 +27,14 @@
 }
 
 /* Action & Skills panel navigation button */
-%bladburner-nav-button {
+%bladeburner-nav-button {
     border: 1px solid #fff;
     margin: 2px;
     padding: 2px;
 }
 
 .bladeburner-nav-button {
-    @extend %bladburner-nav-button;
+    @extend %bladeburner-nav-button;
 
     color: #fff;
 
@@ -44,7 +44,7 @@
 }
 
 .bladeburner-nav-button-inactive {
-    @extend %bladburner-nav-button;
+    @extend %bladeburner-nav-button;
 
     text-decoration: none;
     background-color: #555;
