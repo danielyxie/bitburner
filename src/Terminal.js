@@ -1906,7 +1906,7 @@ let Terminal = {
             server.openPortCount++;
         };
         programHandlers[Programs.HTTPWormProgram.name] = (server) => {
-            if (serv.httpPortOpen) {
+            if (server.httpPortOpen) {
                 post("HTTP Port (80) is already open!");
                 return;
             }
