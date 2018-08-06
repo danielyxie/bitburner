@@ -72,6 +72,7 @@ let NetscriptFunctions =
     "serverExists|fileExists|isRunning|"                                       +
     "deleteServer|getPurchasedServers|"                                        +
     "getPurchasedServerLimit|getPurchasedServerMaxRam|"                        +
+    "getPurchasedServerCost|"                                                  +
     "purchaseServer|round|write|read|peek|clear|rm|getPortHandle|"             +
     "scriptRunning|scriptKill|getScriptName|getScriptRam|"                     +
     "getHackTime|getGrowTime|getWeakenTime|getScriptIncome|getScriptExpGain|"  +
@@ -80,6 +81,7 @@ let NetscriptFunctions =
     "gymWorkout|travelToCity|purchaseTor|purchaseProgram|upgradeHomeRam|"      +
     "getUpgradeHomeRamCost|workForCompany|applyToCompany|getCompanyRep|"       +
     "getCompanyFavor|stopAction|getFactionFavor|"                              +
+    "getFavorToDonate|getFactionFavorGain|getCompanyFavorGain|"                +
     "checkFactionInvitations|joinFaction|workForFaction|getFactionRep|"        +
     "createProgram|commitCrime|getCrimeChance|getOwnedAugmentations|"          +
     "getOwnedSourceFiles|getAugmentationsFromFaction|"                         +

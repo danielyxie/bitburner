@@ -1094,6 +1094,7 @@ Bladeburner.prototype.startAction = function(actionId) {
                     throw new Error ("Failed to get Operation Object for: " + actionId.name);
                 }
                 if (action.count < 1) {return this.resetAction();}
+                if (actionId.name === "Raid" && this.getCurrentCity().commsEst === 0) {return this.resetAction();}
                 this.actionTimeToComplete = action.getActionTime(this);
             } catch(e) {
                 exceptionAlert(e);
@@ -1420,13 +1421,6 @@ Bladeburner.prototype.completeOperation = function(success) {
     }
 
     var city = this.getCurrentCity();
-    if (this.logging.ops) {
-        if (success) {
-            this.log(action.name + " completed successfully! ")
-        } else {
-
-        }
-    }
     switch (action.name) {
         case "Investigation":
             if (success) {
@@ -1663,6 +1657,7 @@ Bladeburner.prototype.initializeDomElementRefs = function() {
         overviewEstComms:           null,
         overviewChaos:              null,
         overviewSkillPoints:        null,
+        overviewBonusTime:          null,
         overviewAugSuccessMult:     null,
         overviewAugMaxStaminaMult:  null,
         overviewAugStaminaGainMult: null,
@@ -1826,7 +1821,14 @@ Bladeburner.prototype.createOverviewContent = function() {
                 "Having too high of a chaos level can make contracts and operations harder."
     });
 
+    DomElems.overviewBonusTime = createElement("p", {
+      innerText: "Bonus time: ",
+      display: "inline-block",
+      tooltip: "You gain bonus time while offline or when the game is inactive (e.g. when the tab is throttled by browser). " +
+        "Bonus time makes the Bladeburner mechanic progress faster, up to 5x the normal speed."
+    });
     DomElems.overviewSkillPoints = createElement("p", {display:"block"});
+    
 
     DomElems.overviewAugSuccessMult = createElement("p", {display:"block"});
     DomElems.overviewAugMaxStaminaMult = createElement("p", {display:"block"});
@@ -1846,6 +1848,7 @@ Bladeburner.prototype.createOverviewContent = function() {
     appendLineBreaks(DomElems.overviewDiv, 1);
     DomElems.overviewDiv.appendChild(DomElems.overviewChaos);
     appendLineBreaks(DomElems.overviewDiv, 2);
+    DomElems.overviewDiv.appendChild(DomElems.overviewBonusTime);
     DomElems.overviewDiv.appendChild(DomElems.overviewSkillPoints);
     appendLineBreaks(DomElems.overviewDiv, 1);
     DomElems.overviewDiv.appendChild(DomElems.overviewAugSuccessMult);
@@ -2206,6 +2209,7 @@ Bladeburner.prototype.updateOverviewContent = function() {
     DomElems.overviewEstComms.childNodes[0].nodeValue = "Est. Synthoid Communities: " + formatNumber(this.getCurrentCity().comms, 0);
     DomElems.overviewChaos.childNodes[0].nodeValue = "City Chaos: " + formatNumber(this.getCurrentCity().chaos);
     DomElems.overviewSkillPoints.innerText = "Skill Points: " + formatNumber(this.skillPoints, 0);
+    DomElems.overviewBonusTime.childNodes[0].nodeValue = "Bonus time: " + this.storedCycles/CyclesPerSecond;
     DomElems.overviewAugSuccessMult.innerText = "Aug. Success Chance Mult: " + formatNumber(Player.bladeburner_success_chance_mult*100, 1) + "%";
     DomElems.overviewAugMaxStaminaMult.innerText = "Aug. Max Stamina Mult: " + formatNumber(Player.bladeburner_max_stamina_mult*100, 1) + "%";
     DomElems.overviewAugStaminaGainMult.innerText = "Aug. Stamina Gain Mult: " + formatNumber(Player.bladeburner_stamina_gain_mult*100, 1) + "%";

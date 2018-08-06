@@ -1,3 +1,6 @@
+@import "mixins";
+@import "theme";
+
 /* interactivetutorial.css */
 #interactive-tutorial-wrapper {
     position: relative;
@@ -15,10 +18,10 @@
     overflow: auto; /* Enable scroll if needed */
     background-color: #444; /* Fallback color */
     color: #fff;
-}
 
-#interactive-tutorial-container > strong {
-    background-color: #444;
+    > strong {
+        background-color: #444;
+    }
 }
 
 #interactive-tutorial-text {
@@ -31,16 +34,20 @@
 #interactive-tutorial-exit,
 #interactive-tutorial-next,
 #interactive-tutorial-back {
+    @include borderRadius(12px);
+    @include boxShadow(1px 1px 3px #000);
+
     color: #aaa;
-    font-size: 20px;
+    font-size: $defaultFontSize * 1.25;
     font-weight: bold;
-    -webkit-border-radius: 12px;
-    -moz-border-radius: 12px;
-    border-radius: 12px;
-    -moz-box-shadow: 1px 1px 3px #000;
-    -webkit-box-shadow: 1px 1px 3px #000;
-    box-shadow: 1px 1px 3px #000;
     background-color: #000;
+
+    &:hover,
+    &:focus {
+        color: #fff;
+        text-decoration: none;
+        cursor: pointer;
+    }
 }
 
 #interactive-tutorial-exit {
@@ -54,15 +61,4 @@
 
 #interactive-tutorial-next {
     float: right;
-}
-
-#interactive-tutorial-exit:hover,
-#interactive-tutorial-exit:focus,
-#interactive-tutorial-next:hover,
-#interactive-tutorial-next:focus,
-#interactive-tutorial-back:hover,
-#interactive-tutorial-back:focus {
-    color: #fff;
-    text-decoration: none;
-    cursor: pointer;
 }

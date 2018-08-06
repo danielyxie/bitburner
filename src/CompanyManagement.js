@@ -4736,7 +4736,7 @@ Corporation.prototype.updateDivisionContent = function(division) {
         var totalAdvertisingFac = advertisingFactors[0];
         advertisingInfo =
             "<p class='tooltip'>Advertising Multiplier: x" + formatNumber(totalAdvertisingFac, 3) +
-            "<span class='tooltiptext' style='font-size:12px'>Total multiplier for this industry's sales due to its awareness and popularity<br>" +
+            "<span class='tooltiptext cmpy-mgmt-advertising-info'>Total multiplier for this industry's sales due to its awareness and popularity<br>" +
             "Awareness Bonus: x" + formatNumber(Math.pow(awarenessFac, 0.85), 3) + "<br>" +
             "Popularity Bonus: x" + formatNumber(Math.pow(popularityFac, 0.85), 3) + "<br>" +
             "Ratio Multiplier: x" + formatNumber(Math.pow(ratioFac, 0.85), 3) + "</span></p><br>"
