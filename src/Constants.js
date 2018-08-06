@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.40.0",
+    Version:                "0.40.1",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -504,6 +504,7 @@ let CONSTANTS = {
     "* Active Scripts UI now shows a RAM Usage bar for each server (by kopelli)<br>" +
     "* Bug Fix: Corrected terminal timestamp format (by kopelli)<br>" +
     "* Bug Fix: NetscriptJS scripts should now die properly if they don't have a 'main' function (by hydroflame)<br>" +
+    "* Bug Fix: write(), read(), and tryWrite() Netscript functions should now work properly for writing Arrays/objects to Netscript Ports<br>" + 
     "* Various minor UI/QOL fixes by hydroflame, kopelli, and Kline-"
 
 }

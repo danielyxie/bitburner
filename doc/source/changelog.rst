@@ -17,6 +17,7 @@ v0.40.1 - 8/5/2018 - Community Update
 * Active Scripts UI now shows a RAM Usage bar for each server (by kopelli)
 * Bug Fix: Corrected terminal timestamp format (by kopelli)
 * Bug Fix: NetscriptJS scripts should now die properly if they don't have a 'main' function (by hydroflame)
+* Bug Fix: write(), read(), and tryWrite() Netscript functions should now work properly for writing Arrays/objects to Netscript Ports
 * Various minor UI/QOL fixes by hydroflame, kopelli, and Kline-
 
 v0.40.0 - 7/28/2018
