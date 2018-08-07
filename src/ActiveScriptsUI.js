@@ -1,5 +1,4 @@
 import {workerScripts,
-        addWorkerScript,
         killWorkerScript}          from "./NetscriptWorker";
 import {Player}                    from "./Player";
 import {getServer}                 from "./Server";
@@ -7,12 +6,15 @@ import {dialogBoxCreate}           from "../utils/DialogBox";
 import {createAccordionElement}    from "../utils/uiHelpers/createAccordionElement";
 import {arrayToString}             from "../utils/helpers/arrayToString";
 import {createElement}             from "../utils/uiHelpers/createElement";
+import {createProgressBarText}     from "../utils/helpers/createProgressBarText";
 import {exceptionAlert}            from "../utils/helpers/exceptionAlert";
+import {getElementById}            from "../utils/uiHelpers/getElementById";
 import {logBoxCreate}              from "../utils/LogBox";
 import numeral                     from "numeral/min/numeral.min";
 import {formatNumber}              from "../utils/StringHelperFunctions";
 import {removeChildrenFromElement} from "../utils/uiHelpers/removeChildrenFromElement";
 import {removeElement}             from "../utils/uiHelpers/removeElement";
+import {roundToTwo}                from "../utils/helpers/roundToTwo";
 import {Page, routing}             from "./ui/navigationTracking";
 
 /* {
@@ -28,12 +30,39 @@ import {Page, routing}             from "./ui/navigationTracking";
 let ActiveScriptsUI = {};
 let ActiveScriptsTasks = []; //Sequentially schedule the creation/deletion of UI elements
 
+const getHeaderHtml = (server) => {
+    // TODO: calculate the longest hostname length rather than hard coding it
+    const longestHostnameLength = 18;
+    const paddedName = `${server.hostname}${" ".repeat(longestHostnameLength)}`.slice(0, Math.max(server.hostname.length, longestHostnameLength));
+    const barOptions = {
+        progress: server.ramUsed / server.maxRam,
+        totalTicks: 30
+    };
+    return `${paddedName} ${createProgressBarText(barOptions)}`.replace(/\s/g, '&nbsp;');
+};
+
+const updateHeaderHtml = (server) => {
+    const accordion = ActiveScriptsUI[server.hostname];
+    if (accordion === null || accordion === undefined) {
+        return;
+    }
+
+    // convert it to a string, as that's how it's stored it will come out of the data attributes
+    const ramPercentage = '' + roundToTwo(server.ramUsed / server.maxRam);
+    if (accordion.header.dataset.ramPercentage !== ramPercentage) {
+        accordion.header.dataset.ramPercentage = ramPercentage;
+        accordion.header.innerHTML = getHeaderHtml(server);
+    }
+}
+
 function createActiveScriptsServerPanel(server) {
     let hostname = server.hostname;
 
     var activeScriptsList = document.getElementById("active-scripts-list");
 
-    let res     = createAccordionElement({hdrText:hostname});
+    let res     = createAccordionElement({
+        hdrText: getHeaderHtml(server)
+    });
     let li      = res[0];
     var hdr     = res[1];
     let panel   = res[2];
@@ -116,20 +145,27 @@ function addActiveScriptsItem(workerscript) {
                        "Args: " + arrayToString(workerscript.args)
         }));
         var panelText = createElement("p", {
-            innerText:"Loading...", fontSize:"14px",
+            innerText: "Loading...",
+            fontSize: "14px",
         });
         panel.appendChild(panelText);
         panel.appendChild(createElement("br"));
         panel.appendChild(createElement("span", {
-            innerText:"Log", class:"active-scripts-button", margin:"4px", padding:"4px",
-            clickListener:()=>{
+            innerText: "Log",
+            class: "active-scripts-button",
+            margin: "4px",
+            padding: "4px",
+            clickListener: () => {
                 logBoxCreate(workerscript.scriptRef);
                 return false;
             }
         }));
         panel.appendChild(createElement("span", {
-            innerText:"Kill Script", class:"active-scripts-button", margin:"4px", padding:"4px",
-            clickListener:()=>{
+            innerText: "Kill Script",
+            class: "active-scripts-button",
+            margin: "4px",
+            padding: "4px",
+            clickListener: () => {
                 killWorkerScript(workerscript.scriptRef, workerscript.scriptRef.scriptRef.server);
                 dialogBoxCreate("Killing script, may take a few minutes to complete...");
                 return false;
@@ -205,11 +241,10 @@ function updateActiveScriptsItems(maxTasks=150) {
             exceptionAlert(e);
         }
     }
-    document.getElementById("active-scripts-total-prod").innerHTML =
-        "Total online production of Active Scripts: " + numeral(total).format('$0.000a') + " / sec<br>" +
-        "Total online production since last Aug installation: " +
-        numeral(Player.scriptProdSinceLastAug).format('$0.000a') + " (" +
-        numeral(Player.scriptProdSinceLastAug / (Player.playtimeSinceLastAug/1000)).format('$0.000a') + " / sec)";
+
+    getElementById("active-scripts-total-production-active").innerText = numeral(total).format('$0.000a');
+    getElementById("active-scripts-total-prod-aug-total").innerText = numeral(Player.scriptProdSinceLastAug).format('$0.000a');
+    getElementById("active-scripts-total-prod-aug-avg").innerText = numeral(Player.scriptProdSinceLastAug / (Player.playtimeSinceLastAug/1000)).format('$0.000a');
     return total;
 }
 
@@ -224,6 +259,8 @@ function updateActiveScriptsItemContent(workerscript) {
     if (ActiveScriptsUI[hostname] == null) {
         return; //Hasn't been created yet. We'll skip it
     }
+
+    updateHeaderHtml(server);
 
     var itemNameArray = ["active", "scripts", server.hostname, workerscript.name];
     for (var i = 0; i < workerscript.args.length; ++i) {
@@ -252,6 +289,7 @@ function updateActiveScriptsText(workerscript, item, itemName) {
         return;
     }
 
+    updateHeaderHtml(server);
     var onlineMps = workerscript.scriptRef.onlineMoneyMade / workerscript.scriptRef.onlineRunningTime;
 
     //Only update if the item is visible

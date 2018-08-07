@@ -187,7 +187,7 @@ function NetscriptFunctions(workerScript) {
      */
     const getPurchaseServerRamCostGuard = (ram) => {
         const guardedRam = Math.round(ram);
-        if (isNaN(guardedRam) || !powerOfTwo(guardedRam)) {
+        if (isNaN(guardedRam) || !isPowerOfTwo(guardedRam)) {
             throw Error("failed due to invalid ram argument. Must be numeric and a power of 2");
         }
 

@@ -20,6 +20,7 @@ import {Augmentations, installAugmentations,
 import {BitNodes, initBitNodes,
         initBitNodeMultipliers}                 from "./BitNode";
 import {Bladeburner}                            from "./Bladeburner";
+import {CharacterOverview}                      from "./CharacterOverview";
 import {cinematicTextFlag}                      from "./CinematicText";
 import {CompanyPositions, initCompanies}        from "./Company";
 import {Corporation}                            from "./CompanyManagement";
@@ -545,20 +546,7 @@ let Engine = {
     },
 
     displayCharacterOverviewInfo: function() {
-        if (Player.hp == null) {Player.hp = Player.max_hp;}
-        var overviewText = "Hp:    " + Player.hp + " / " + Player.max_hp + "<br>" +
-                           "Money: " + numeral(Player.money.toNumber()).format('($0.000a)') + "<br>" +
-                           "Hack:  " + (Player.hacking_skill).toLocaleString() + "<br>" +
-                           "Str:   " + (Player.strength).toLocaleString() + "<br>" +
-                           "Def:   " + (Player.defense).toLocaleString() + "<br>" +
-                           "Dex:   " + (Player.dexterity).toLocaleString() + "<br>" +
-                           "Agi:   " + (Player.agility).toLocaleString() + "<br>" +
-                           "Cha:   " + (Player.charisma).toLocaleString();
-        if (Player.intelligence >= 1) {
-            overviewText += "<br>Int:   " + (Player.intelligence).toLocaleString();
-        }
-        document.getElementById("character-overview-text").innerHTML = overviewText.replace( / /g, "&nbsp;");
-        
+        Engine.overview.update();
         
 
         const save = document.getElementById("character-overview-save-button");
@@ -1399,11 +1387,12 @@ let Engine = {
             bladeburner.style.display = "none";
             corp.style.display = "none";
             gang.style.display = "none";
+            dev.style.display = "none";
 
             Engine.openMainMenuHeader(
                 [terminal, createScript, activeScripts, stats,
                  hacknetnodes, city,
-                 tutorial, options, dev]
+                 tutorial, options]
             );
 
             //Start interactive tutorial
@@ -1934,7 +1923,9 @@ let Engine = {
 
         Engine.Clickables.devMainMenuButton = clearEventListeners("dev-menu-link");
         Engine.Clickables.devMainMenuButton.addEventListener("click", function() {
-            Engine.loadDevMenuContent();
+            if( process.env.NODE_ENV === "development") {
+                Engine.loadDevMenuContent();
+            }
             return false;
         });
 
