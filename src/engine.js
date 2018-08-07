@@ -1430,11 +1430,12 @@ let Engine = {
             bladeburner.style.display = "none";
             corp.style.display = "none";
             gang.style.display = "none";
+            dev.style.display = "none";
 
             Engine.openMainMenuHeader(
                 [terminal, createScript, activeScripts, stats,
                  hacknetnodes, city,
-                 tutorial, options, dev]
+                 tutorial, options]
             );
 
             //Start interactive tutorial
@@ -1965,7 +1966,9 @@ let Engine = {
 
         Engine.Clickables.devMainMenuButton = clearEventListeners("dev-menu-link");
         Engine.Clickables.devMainMenuButton.addEventListener("click", function() {
-            Engine.loadDevMenuContent();
+            if( process.env.NODE_ENV === "development") {
+                Engine.loadDevMenuContent();
+            }
             return false;
         });
 
