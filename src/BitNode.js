@@ -358,7 +358,7 @@ function initBitNodeMultipliers() {
             BitNodeMultipliers.CorporationValuation = dec;
 
             BitNodeMultipliers.BladeburnerRank      = dec;
-            BitNodeMultipliers.BladeburnerSkillCost = dec;
+            BitNodeMultipliers.BladeburnerSkillCost = inc;
             break;
         default:
             console.log("WARNING: Player.bitNodeN invalid");
