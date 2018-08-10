@@ -10,7 +10,6 @@ import {clearEventListeners}                    from "../utils/uiHelpers/clearEv
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver";
 import numeral                                  from "numeral/min/numeral.min";
-import {formatNumber}                           from "../utils/StringHelperFunctions";
 import {getRandomInt}                           from "../utils/helpers/getRandomInt";
 import {removeElementById}                      from "../utils/uiHelpers/removeElementById";
 import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
@@ -430,8 +429,8 @@ function buyStock(stock, shares) {
 
     var totalPrice = stock.price * shares;
     if (Player.money.lt(totalPrice + CONSTANTS.StockMarketCommission)) {
-        dialogBoxCreate("You do not have enough money to purchase this. You need $" +
-                        formatNumber(totalPrice + CONSTANTS.StockMarketCommission, 2).toString() + ".");
+        dialogBoxCreate("You do not have enough money to purchase this. You need " +
+                        numeral(totalPrice + CONSTANTS.StockMarketCommission).format('($0.000a)') + ".");
         return false;
     }
 
@@ -441,9 +440,9 @@ function buyStock(stock, shares) {
     stock.playerShares += shares;
     stock.playerAvgPx = newTotal / stock.playerShares;
     updateStockPlayerPosition(stock);
-    dialogBoxCreate("Bought " + formatNumber(shares, 0) + " shares of " + stock.symbol + " at $" +
-                    formatNumber(stock.price, 2) + " per share. You also paid $" +
-                    formatNumber(CONSTANTS.StockMarketCommission, 2) + " in commission fees.");
+    dialogBoxCreate("Bought " + numeral(shares).format('0,0') + " shares of " + stock.symbol + " at " +
+                    numeral(stock.price).format('($0.000a)') + " per share. Paid " +
+                    numeral(CONSTANTS.StockMarketCommission).format('($0.000a)') + " in commission fees.");
     return true;
 }
 
@@ -464,9 +463,9 @@ function sellStock(stock, shares) {
         stock.playerAvgPx = 0;
     }
     updateStockPlayerPosition(stock);
-    dialogBoxCreate("Sold " + formatNumber(shares, 0) + " shares of " + stock.symbol + " at $" +
-                    formatNumber(stock.price, 2) + " per share. After commissions, you gained " +
-                    "a total of $" + formatNumber(gains, 2));
+    dialogBoxCreate("Sold " + numeral(shares).format('0,0') + " shares of " + stock.symbol + " at " +
+                    numeral(stock.price).format('($0.000a)') + " per share. After commissions, you gained " +
+                    "a total of " + numeral(gains).format('($0.000a)') + ".");
     return true;
 }
 
@@ -488,12 +487,12 @@ function shortStock(stock, shares, workerScript=null) {
     var totalPrice = stock.price * shares;
     if (Player.money.lt(totalPrice + CONSTANTS.StockMarketCommission)) {
         if (tixApi) {
-            workerScript.scriptRef.log("ERROR: shortStock() failed because you do not have " +
+            workerScript.scriptRef.log("ERROR: shortStock() failed because you do not have enough " +
                                        "money to purchase this short position. You need " +
-                                       numeral(totalPrice + CONSTANTS.StockMarketCommission).format('($0.000a)'));
+                                       numeral(totalPrice + CONSTANTS.StockMarketCommission).format('($0.000a)') + ".");
         } else {
-            dialogBoxCreate("You do not have enough money to purchase this short position. You need $" +
-                            formatNumber(totalPrice + CONSTANTS.StockMarketCommission, 2) + ".");
+            dialogBoxCreate("You do not have enough money to purchase this short position. You need " +
+                            numeral(totalPrice + CONSTANTS.StockMarketCommission).format('($0.000a)') + ".");
         }
 
         return false;
@@ -507,14 +506,14 @@ function shortStock(stock, shares, workerScript=null) {
     updateStockPlayerPosition(stock);
     if (tixApi) {
         if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.shortStock == null) {
-            workerScript.scriptRef.log("Bought a short position of " + formatNumber(shares, 0) + " shares of " + stock.symbol + " at " +
+            workerScript.scriptRef.log("Bought a short position of " + numeral(shares).format('0,0') + " shares of " + stock.symbol + " at " +
                                        numeral(stock.price).format('($0.000a)') + " per share. Paid " +
                                        numeral(CONSTANTS.StockMarketCommission).format('($0.000a)') + " in commission fees.");
         }
     } else {
-        dialogBoxCreate("Bought a short position of " + formatNumber(shares, 0) + " shares of " + stock.symbol + " at $" +
-                        formatNumber(stock.price, 2) + " per share. You also paid $" +
-                        formatNumber(CONSTANTS.StockMarketCommission, 2) + " in commission fees.");
+        dialogBoxCreate("Bought a short position of " + numeral(shares).format('0,0') + " shares of " + stock.symbol + " at " +
+                        numeral(stock.price).format('($0.000a)') + " per share. Paid " +
+                        numeral(CONSTANTS.StockMarketCommission).format('($0.000a)') + " in commission fees.");
     }
     return true;
 }
@@ -551,14 +550,14 @@ function sellShort(stock, shares, workerScript=null) {
     updateStockPlayerPosition(stock);
     if (tixApi) {
         if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.sellShort == null) {
-            workerScript.scriptRef.log("Sold your short position of " + shares + " shares of " + stock.symbol + " at " +
+            workerScript.scriptRef.log("Sold your short position of " + numeral(shares).format('0,0') + " shares of " + stock.symbol + " at " +
                                        numeral(stock.price).format('($0.000a)') + " per share. After commissions, you gained " +
-                                       "a total of " + numeral(origCost + profit).format('($0.000a)'));
+                                       "a total of " + numeral(origCost + profit).format('($0.000a)') + ".");
         }
     } else {
-        dialogBoxCreate("Sold your short position of " + formatNumber(shares, 0) + " shares of " + stock.symbol + " at $" +
-                        formatNumber(stock.price, 2) + " per share. After commissions, you gained " +
-                        "a total of $" + formatNumber(origCost + profit, 2));
+        dialogBoxCreate("Sold your short position of " + numeral(shares).format('0,0') + " shares of " + stock.symbol + " at " +
+                        numeral(stock.price).format('($0.000a)') + " per share. After commissions, you gained " +
+                        "a total of " + numeral(origCost + profit).format('($0.000a)') + ".");
     }
 
     return true;
@@ -699,7 +698,7 @@ function displayStockMarketContent() {
 
     //Purchase WSE Account button
     var wseAccountButton = clearEventListeners("stock-market-buy-account");
-    wseAccountButton.innerText = "Buy WSE Account - $" + formatNumber(CONSTANTS.WSEAccountCost, 2).toString();
+    wseAccountButton.innerText = "Buy WSE Account - " + numeral(CONSTANTS.WSEAccountCost).format('($0.000a)');
     if (!Player.hasWseAccount && Player.money.gte(CONSTANTS.WSEAccountCost)) {
         wseAccountButton.setAttribute("class", "a-link-button");
     } else if (Player.hasWseAccount){
@@ -719,8 +718,8 @@ function displayStockMarketContent() {
 
     //Purchase TIX API Access account
     var tixApiAccessButton = clearEventListeners("stock-market-buy-tix-api");
-    tixApiAccessButton.innerText = "Buy Trade Information eXchange (TIX) API Access - $" +
-                                   formatNumber(CONSTANTS.TIXAPICost, 2).toString();
+    tixApiAccessButton.innerText = "Buy Trade Information eXchange (TIX) API Access - " +
+                                   numeral(CONSTANTS.TIXAPICost).format('($0.000a)');
     if (!Player.hasTixApiAccess && Player.money.gte(CONSTANTS.TIXAPICost)) {
         tixApiAccessButton.setAttribute("class", "a-link-button");
     } else if(Player.hasTixApiAccess) {
@@ -751,8 +750,8 @@ function displayStockMarketContent() {
     if (!stockMarketContentCreated && Player.hasWseAccount) {
         console.log("Creating Stock Market UI");
         document.getElementById("stock-market-commission").innerHTML =
-            "Commission Fees: Every transaction you make has a $" +
-            formatNumber(CONSTANTS.StockMarketCommission, 2) + " commission fee.<br><br>" +
+            "Commission Fees: Every transaction you make has a " +
+            numeral(CONSTANTS.StockMarketCommission).format('($0.000a)') + " commission fee.<br><br>" +
             "WARNING: When you reset after installing Augmentations, the Stock Market is reset. " +
             "This means all your positions are lost, so make sure to sell your stocks before installing " +
             "Augmentations!";
@@ -928,7 +927,7 @@ function createStockTicker(stock) {
     var li = document.createElement("li"), hdr = document.createElement("button");
     hdr.classList.add("accordion-header");
     hdr.setAttribute("id", tickerId + "-hdr");
-    hdr.innerHTML = stock.name + "  -  " + stock.symbol + "  -  $" + stock.price;
+    hdr.innerHTML = stock.name + "  -  " + stock.symbol + "  -  " + numeral(stock.price).format('($0.000a)');
 
     //Div for entire panel
     var stockDiv = document.createElement("div");
@@ -1200,7 +1199,7 @@ function updateStockTicker(stock, increase) {
         if (!stockMarketPortfolioMode) {console.log("ERROR: Couldn't find ticker element for stock: " + stock.symbol);}
         return;
     }
-    hdr.innerHTML = stock.name + "  -  " + stock.symbol + "  -  $" + formatNumber(stock.price, 2);
+    hdr.innerHTML = stock.name + "  -  " + stock.symbol + "  -  " + numeral(stock.price).format('($0.000a)');
     if (increase != null) {
         increase ? hdr.style.color = "#66ff33" : hdr.style.color = "red";
     }
@@ -1256,21 +1255,21 @@ function updateStockPlayerPosition(stock) {
         "<h1 class='tooltip stock-market-position-text'>Long Position: " +
         "<span class='tooltiptext'>Shares in the long position will increase " +
         "in value if the price of the corresponding stock increases</span></h1>" +
-        "<br>Shares: " + formatNumber(stock.playerShares, 0) +
+        "<br>Shares: " + numeral(stock.playerShares).format('0,0') +
         "<br>Average Price: " + numeral(stock.playerAvgPx).format('$0.000a') +
         " (Total Cost: " + numeral(totalCost).format('$0.000a') + ")" +
         "<br>Profit: " + numeral(gains).format('$0.000a') +
-                     " (" + formatNumber(percentageGains*100, 2) + "%)<br><br>";
+                     " (" + numeral(percentageGains).format('0.00%') + ")<br><br>";
         if (Player.bitNodeN === 8 || (hasWallStreetSF && wallStreetSFLvl >= 2)) {
             stock.posTxtEl.innerHTML +=
             "<h1 class='tooltip stock-market-position-text'>Short Position: " +
             "<span class='tooltiptext'>Shares in short position will increase " +
             "in value if the price of the corresponding stock decreases</span></h1>" +
-            "<br>Shares: " + formatNumber(stock.playerShortShares, 0) +
+            "<br>Shares: " + numeral(stock.playerShortShares).format('0,0') +
             "<br>Average Price: " + numeral(stock.playerAvgShortPx).format('$0.000a') +
             " (Total Cost: " + numeral(shortTotalCost).format('$0.000a') + ")" +
             "<br>Profit: " + numeral(shortGains).format('$0.000a') +
-                         " (" + formatNumber(shortPercentageGains*100, 2) + "%)" +
+                         " (" + numeral(shortPercentageGains).format('0.00%') + ")" +
             "<br><br><h1 class='stock-market-position-text'>Orders: </h1>";
         }
 
@@ -1327,7 +1326,7 @@ function updateStockOrderList(stock) {
             var posText = (order.pos === PositionTypes.Long ? "Long Position" : "Short Position");
             li.style.color = "white";
             li.innerText = order.type + " - " + posText + " - " +
-                           order.shares + " @ $" + formatNumber(order.price, 2);
+                           order.shares + " @ " + numeral(order.price).format('($0.000a)');
 
             var cancelButton = document.createElement("span");
             cancelButton.classList.add("stock-market-order-cancel-btn");
