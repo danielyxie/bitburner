@@ -29,10 +29,11 @@ import {addWorkerScript,
 import {Player}                                 from "./Player";
 import {AllServers, processSingleServerGrowth}  from "./Server";
 import {Settings}                               from "./Settings";
-import {post}                                   from "./Terminal";
+import {post}                                   from "./ui/postToTerminal";
 import {TextFile}                               from "./TextFile";
 
 import {parse, Node}                            from "../utils/acorn";
+import {Page, routing}                          from "./ui/navigationTracking";
 import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver";
@@ -260,7 +261,7 @@ function updateScriptEditorContent() {
 //Define key commands in script editor (ctrl o to save + close, etc.)
 $(document).keydown(function(e) {
     if (Settings.DisableHotkeys === true) {return;}
-	if (Engine.currentPage == Engine.Page.ScriptEditor) {
+	if (routing.isOn(Page.ScriptEditor)) {
 		//Ctrl + b
         if (e.keyCode == 66 && (e.ctrlKey || e.metaKey)) {
             e.preventDefault();
@@ -364,7 +365,7 @@ function Script() {
 
 //Get the script data from the Script Editor and save it to the object
 Script.prototype.saveScript = function() {
-	if (Engine.currentPage == Engine.Page.ScriptEditor) {
+	if (routing.isOn(Page.ScriptEditor)) {
 		//Update code and filename
         var editor = ace.edit('javascript-editor');
         var code = editor.getValue();

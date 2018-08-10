@@ -1,4 +1,4 @@
-import {BitNodeMultipliers}                         from "./BitNode";
+import {BitNodeMultipliers}                         from "./BitNodeMultipliers";
 import {CONSTANTS}                                  from "./Constants";
 import {Programs}                                   from "./CreateProgram";
 import {Player}                                     from "./Player";

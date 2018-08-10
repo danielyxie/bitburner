@@ -1,4 +1,4 @@
-import {post}                   from "./Terminal";
+import {post}                   from "./ui/postToTerminal";
 
 let Aliases = {};
 let GlobalAliases = {};

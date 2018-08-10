@@ -9,6 +9,7 @@ import {Reviver, Generic_toJSON,
 import {createAccordionElement}                 from "../utils/uiHelpers/createAccordionElement";
 import {createElement}                          from "../utils/uiHelpers/createElement";
 import {createPopup}                            from "../utils/uiHelpers/createPopup";
+import {Page, routing}                          from "./ui/navigationTracking";
 import  numeral                                 from "numeral/min/numeral.min";
 import {formatNumber}                           from "../utils/StringHelperFunctions";
 import {getRandomInt}                           from "../utils/helpers/getRandomInt";
@@ -24,7 +25,7 @@ import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
 /* Gang.js */
 //Switch between territory and management screen with 1 and 2
 $(document).keydown(function(event) {
-    if (Engine.currentPage == Engine.Page.Gang && !yesNoBoxOpen) {
+    if (routing.isOn(Page.Gang) && !yesNoBoxOpen) {
         if (gangMemberFilter != null && gangMemberFilter === document.activeElement) {return;}
         if (event.keyCode === 49) {
             if(gangTerritorySubpage.style.display === "block") {

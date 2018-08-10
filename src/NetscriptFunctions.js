@@ -13,12 +13,11 @@ import {Companies, Company, CompanyPosition,
 import {CONSTANTS}                                  from "./Constants";
 import {Programs}                                   from "./CreateProgram";
 import {DarkWebItems}                               from "./DarkWeb";
-import {Engine}                                     from "./engine";
 import {AllGangs}                                   from "./Gang";
 import {Factions, Faction, joinFaction,
         factionExists, purchaseAugmentation}        from "./Faction";
 import {getCostOfNextHacknetNode, purchaseHacknet}  from "./HacknetNode";
-import {Locations}                                  from "./Location";
+import {Locations}                                  from "./Locations";
 import {Message, Messages}                          from "./Message";
 import {inMission}                                  from "./Missions";
 import {Player}                                     from "./Player";
@@ -35,7 +34,7 @@ import {StockMarket, StockSymbols, SymbolToStockMap, initStockSymbols,
         updateStockTicker, updateStockPlayerPosition,
         Stock, shortStock, sellShort, OrderTypes,
         PositionTypes, placeOrder, cancelOrder}     from "./StockMarket";
-import {post}                                       from "./Terminal";
+import {post}                                       from "./ui/postToTerminal";
 import {TextFile, getTextFile, createTextFile}      from "./TextFile";
 
 import {unknownBladeburnerActionErrorMessage,
@@ -50,6 +49,7 @@ import {makeRuntimeRejectMsg, netscriptDelay, runScriptFromScript,
 import {NetscriptPort}                              from "./NetscriptPort";
 
 import Decimal                                      from "decimal.js";
+import {Page, routing}                              from "./ui/navigationTracking";
 import {dialogBoxCreate}                            from "../utils/DialogBox";
 import {isPowerOfTwo}                               from "../utils/helpers/isPowerOfTwo";
 import {arrayToString}                              from "../utils/helpers/arrayToString";
@@ -1415,7 +1415,7 @@ function NetscriptFunctions(workerScript) {
             var newTotal = origTotal + totalPrice;
             stock.playerShares += shares;
             stock.playerAvgPx = newTotal / stock.playerShares;
-            if (Engine.currentPage == Engine.Page.StockMarket) {
+            if (routing.isOn(Page.StockMarket)) {
                 updateStockPlayerPosition(stock);
             }
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.buyStock == null) {
@@ -1456,7 +1456,7 @@ function NetscriptFunctions(workerScript) {
             if (stock.playerShares == 0) {
                 stock.playerAvgPx = 0;
             }
-            if (Engine.currentPage == Engine.Page.StockMarket) {
+            if (routing.isOn(Page.StockMarket)) {
                 updateStockPlayerPosition(stock);
             }
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.sellStock == null) {
