@@ -1,38 +1,5 @@
-import {Engine} from "./engine";
-
-/* Settings.js */
-let Settings = {
-    CodeInstructionRunTime:              25,
-    MaxLogCapacity:                      50,
-    MaxPortCapacity:                     50,
-    SuppressMessages:                    false,
-    SuppressFactionInvites:              false,
-    SuppressTravelConfirmation:          false,
-    SuppressBuyAugmentationConfirmation: false,
-    AutosaveInterval:                    60,
-    DisableHotkeys:                      false,
-    ThemeHighlightColor:                 "#ffffff",
-    ThemeFontColor:                      "#66ff33",
-    ThemeBackgroundColor:                "#000000",
-    EditorTheme:                         "Monokai",
-    EditorKeybinding:                    "ace",
-}
-
-function loadSettings(saveString) {
-    Settings = JSON.parse(saveString);
-}
-
-function initSettings()  {
-    Settings.CodeInstructionRunTime = 50;
-    Settings.MaxLogCapacity = 50;
-    Settings.MaxPortCapacity = 50;
-    Settings.SuppressMessages = false;
-    Settings.SuppressFactionInvites = false;
-    Settings.SuppressTravelConfirmation = false;
-    Settings.SuppressBuyAugmentationConfirmation = false;
-    Settings.AutosaveInterval = 60;
-    Settings.DisableHotkeys = false;
-}
+import {Engine} from "../engine";
+import {Settings} from "../Settings";
 
 function setSettingsLabels() {
     var nsExecTime = document.getElementById("settingsNSExecTimeRangeValLabel");
@@ -126,4 +93,4 @@ function setSettingsLabels() {
     }
 }
 
-export {Settings, initSettings, setSettingsLabels, loadSettings};
+export { setSettingsLabels };

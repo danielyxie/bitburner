@@ -35,6 +35,8 @@ import {TextFile, getTextFile}              from "./TextFile";
 
 import {containsAllStrings, longestCommonStart,
         formatNumber}                       from "../utils/StringHelperFunctions";
+import {Page, routing}                      from "./ui/navigationTracking";
+import {KEY}                                from "../utils/helpers/keyCodes";
 import {addOffset}                          from "../utils/helpers/addOffset";
 import {isString}                           from "../utils/helpers/isString";
 import {arrayToString}                      from "../utils/helpers/arrayToString";
@@ -43,70 +45,20 @@ import {logBoxCreate}                       from "../utils/LogBox";
 import {yesNoBoxCreate,
         yesNoBoxGetYesButton,
         yesNoBoxGetNoButton, yesNoBoxClose} from "../utils/YesNoBox";
+import {post, hackProgressBarPost,
+        hackProgressPost}                   from "./ui/postToTerminal";
 
 import * as JSZip from 'jszip';
 import * as FileSaver from 'file-saver';
-
-/* Write text to terminal */
-//If replace is true then spaces are replaced with "&nbsp;"
-function post(input) {
-    $("#terminal-input").before('<tr class="posted"><td class="terminal-line" style="color: var(--my-font-color); background-color: var(--my-background-color); white-space:pre-wrap;">' + input + '</td></tr>');
-	updateTerminalScroll();
-}
-
-//Same thing as post but the td cells have ids so they can be animated for the hack progress bar
-function hackProgressBarPost(input) {
-    $("#terminal-input").before('<tr class="posted"><td id="hack-progress-bar" style="color: var(--my-font-color); background-color: var(--my-background-color);">' + input + '</td></tr>');
-	updateTerminalScroll();
-}
-
-function hackProgressPost(input) {
-    $("#terminal-input").before('<tr class="posted"><td id="hack-progress" style="color: var(--my-font-color); background-color: var(--my-background-color);">' + input + '</td></tr>');
-	updateTerminalScroll();
-}
-
-//Scroll to the bottom of the terminal's 'text area'
-function updateTerminalScroll() {
-	var element = document.getElementById("terminal-container");
-	element.scrollTop = element.scrollHeight;
-}
 
 function postNetburnerText() {
 	post("Bitburner v" + CONSTANTS.Version);
 }
 
-
-//Key Codes
-var KEY = {
-    TAB:            9,
-    ENTER:          13,
-    CTRL:           17,
-    UPARROW:        38,
-    DOWNARROW:      40,
-    A:              65,
-    B:              66,
-    C:              67,
-    D:              68,
-    E:              69,
-    F:              70,
-    H:              72,
-    J:              74,
-    K:              75,
-    L:              76,
-    M:              77,
-    N:              78,
-    O:              79,
-    P:              80,
-    R:              82,
-    S:              83,
-    U:              85,
-    W:              87,
-}
-
 //Defines key commands in terminal
 $(document).keydown(function(event) {
 	//Terminal
-	if (Engine.currentPage == Engine.Page.Terminal) {
+	if (routing.isOn(Page.Terminal)) {
         var terminalInput = document.getElementById("terminal-input-text-box");
         if (terminalInput != null && !event.ctrlKey && !event.shiftKey) {terminalInput.focus();}
 
@@ -287,13 +239,13 @@ $(document).keydown(function(event) {
 //Keep terminal in focus
 let terminalCtrlPressed = false, shiftKeyPressed = false;
 $(document).ready(function() {
-	if (Engine.currentPage === Engine.Page.Terminal) {
+	if (routing.isOn(Page.Terminal)) {
 		$('.terminal-input').focus();
 	}
 });
 $(document).keydown(function(e) {
-	if (Engine.currentPage == Engine.Page.Terminal) {
-		if (e.which == 17) {
+	if (routing.isOn(Page.Terminal)) {
+		if (e.which == KEY.CTRL) {
 			terminalCtrlPressed = true;
 		} else if (e.shiftKey) {
             shiftKeyPressed = true;
@@ -309,8 +261,8 @@ $(document).keydown(function(e) {
 	}
 })
 $(document).keyup(function(e) {
-	if (Engine.currentPage == Engine.Page.Terminal) {
-		if (e.which == 17) {
+	if (routing.isOn(Page.Terminal)) {
+		if (e.which == KEY.CTRL) {
 			terminalCtrlPressed = false;
 		}
         if (e.shiftKey) {
@@ -2105,4 +2057,4 @@ let Terminal = {
 	}
 };
 
-export {postNetburnerText, post, Terminal, KEY};
+export {postNetburnerText, Terminal};

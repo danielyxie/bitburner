@@ -1,4 +1,4 @@
-import {BitNode, BitNodes}                      from "./BitNode";
+import {BitNodes}                               from "./BitNode";
 import {Engine}                                 from "./engine";
 import {Player}                                 from "./Player";
 import {prestigeSourceFile}                     from "./Prestige";

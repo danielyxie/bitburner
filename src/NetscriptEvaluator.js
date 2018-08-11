@@ -1,4 +1,4 @@
-import {BitNodeMultipliers}                 from "./BitNode";
+import {BitNodeMultipliers}                 from "./BitNodeMultipliers";
 import {CONSTANTS}                          from "./Constants";
 import {Player}                             from "./Player";
 import {Environment}                        from "./NetscriptEnvironment";

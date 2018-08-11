@@ -27,18 +27,18 @@ interface IAccordionConfigurationParameters {
 export function createAccordionElement(params: IAccordionConfigurationParameters) {
     const liElem: HTMLLIElement = createElement("li") as HTMLLIElement;
     const header: HTMLButtonElement = createElement("button", {
+        class: "accordion-header",
         clickListener() {
             this.classList.toggle("active");
             const pnl: CSSStyleDeclaration = (this.nextElementSibling as HTMLDivElement).style;
             pnl.display = pnl.display === "block" ? "none" : "block";
         },
         id: params.id !== undefined ? `${params.id}-hdr` : undefined,
-        class:"accordion-header",
         innerHTML: params.hdrText,
     }) as HTMLButtonElement;
     const panel: HTMLDivElement = createElement("div", {
+        class: "accordion-panel",
         id: params.id !== undefined ? `${params.id}-panel` : undefined,
-        class:"accordion-panel",
         innerHTML: params.panelText,
     }) as HTMLDivElement;
 

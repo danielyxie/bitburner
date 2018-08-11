@@ -4,5 +4,6 @@
  */
 export function roundToTwo(decimal: number) {
     const leftShift: number = Math.round(parseFloat(`${decimal}e+2`));
+
     return +(`${leftShift}e-2`);
 }
