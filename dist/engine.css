@@ -388,32 +388,29 @@ a:visited {
 /* Status text */
 @-webkit-keyframes status-text {
   from {
-    opacity: 1;
-    top: 0; }
+    opacity: 1; }
   to {
-    opacity: 0;
-    top: 0; } }
+    opacity: 0; } }
 
 .status-text {
-  display: inline;
+  display: inline-block;
+  height: 15%;
   position: fixed;
-  top: 0;
-  -webkit-animation: status-text 3s 1;
-  background-color: transparent;
-  height: 15%; }
+  z-index: 2;
+  -webkit-animation: status-text 3s 1; }
 
 #status-text-container {
   background-color: transparent; }
 
 #status-text {
-  font-size: 20px;
-  color: #fff;
-  right: 0;
-  bottom: 0;
-  padding: 4px;
-  margin-right: 14px;
   background-color: transparent;
-  z-index: 2;
+  font-size: 20px;
+  bottom: 0;
+  color: #fff;
+  margin-right: 14px;
+  padding: 4px;
+  right: 0;
+  top: 0;
   width: auto; }
 
 /* Character Overview */

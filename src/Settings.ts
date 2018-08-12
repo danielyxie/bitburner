@@ -48,6 +48,11 @@ interface IDefaultSettings {
      * Whether the user should be asked to confirm travelling between cities.
      */
     SuppressTravelConfirmation: boolean;
+    
+    /**
+     * Whether to show a popup message when player is hospitalized from taking too much damage
+     */
+    SuppressHospitalizationPopup: boolean;
 }
 
 /**
@@ -92,6 +97,7 @@ const defaultSettings: IDefaultSettings = {
     SuppressFactionInvites:              false,
     SuppressMessages:                    false,
     SuppressTravelConfirmation:          false,
+    SuppressHospitalizationPopup:        false,
 };
 
 /**
@@ -110,6 +116,7 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
     SuppressFactionInvites:              defaultSettings.SuppressFactionInvites,
     SuppressMessages:                    defaultSettings.SuppressMessages,
     SuppressTravelConfirmation:          defaultSettings.SuppressTravelConfirmation,
+    SuppressHospitalizationPopup:        defaultSettings.SuppressHospitalizationPopup,
     ThemeBackgroundColor:                "#000000",
     ThemeFontColor:                      "#66ff33",
     ThemeHighlightColor:                 "#ffffff",
