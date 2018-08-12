@@ -1,3 +1,5 @@
+.. _netscripthacknetnodeapi:
+
 Netscript Hacknet Node API
 ==========================
 

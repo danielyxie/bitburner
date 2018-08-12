@@ -100,9 +100,10 @@ let NetscriptFunctions =
     "getActionTime|getActionEstimatedSuccessChance|getActionCountRemaining|"   +
     "getActionMaxLevel|getActionCurrentLevel|getActionAutolevel|"              +
     "setActionAutolevel|setActionLevel|"                                       +
-    "getRank|getSkillPoints|getSkillLevel|upgradeSkill|getTeamSize|"           +
+    "getRank|getSkillPoints|getSkillLevel|getSkillUpgradeCost|"                +
+    "upgradeSkill|getTeamSize|"                                                +
     "setTeamSize|getCityEstimatedPopulation|getCityEstimatedCommunities|"      +
-    "getCityChaos|switchCity|getStamina|joinBladeburnerFaction";
+    "getCityChaos|switchCity|getStamina|joinBladeburnerFaction|getBonusTime";
 
 var NetscriptHighlightRules = function(options) {
     var keywordMapper = this.createKeywordMapper({

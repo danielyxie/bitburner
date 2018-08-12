@@ -153,6 +153,7 @@ $(document).keydown(function(e) {
 let Engine = {
     version: "",
     Debug: true,
+    overview: new CharacterOverview(),
 
     //Clickable objects
     Clickables: {

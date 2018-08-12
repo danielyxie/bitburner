@@ -5,7 +5,7 @@ import {updateActiveScriptsItems}                   from "./ActiveScriptsUI";
 import {Augmentations, Augmentation,
         augmentationExists, installAugmentations,
         AugmentationNames}                          from "./Augmentations";
-import {BitNodeMultipliers}                         from "./BitNode";
+import {BitNodeMultipliers}                         from "./BitNodeMultipliers";
 import {determineCrimeSuccess, findCrime}           from "./Crimes";
 import {Bladeburner}                                from "./Bladeburner";
 import {Companies, Company, CompanyPosition,
@@ -3639,6 +3639,21 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "getSkillLevel() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
+            getSkillUpgradeCost : function(skillName="") {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getSkillUpgradeCost", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
+                }
+                updateDynamicRam("getSkillUpgradeCost", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+                    try {
+                        return Player.bladeburner.getSkillUpgradeCostNetscriptFn(skillName, workerScript);
+                    } catch(e) {
+                        throw makeRuntimeRejectMsg(workerScript, "Bladeburner.getSkillUpgradeCost() failed with exception: " + e);
+                    }
+                }
+                throw makeRuntimeRejectMsg(workerScript, "getSkillUpgradeCost() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                                                         "at the Bladeburner division or because you do not have Source-File 7");
+            },
             upgradeSkill : function(skillName) {
                 if (workerScript.checkingRam) {
                     return updateStaticRam("upgradeSkill", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
@@ -3785,6 +3800,14 @@ function NetscriptFunctions(workerScript) {
                     }
                 }
                 throw makeRuntimeRejectMsg(workerScript, "joinBladeburnerDivision() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                                                         "at the Bladeburner division or because you do not have Source-File 7");
+            },
+            getBonusTime : function() {
+                if (workerScript.checkingRam) {return 0;}
+                if ((Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+                    return Math.round(Player.bladeburner.storedCycles / 5);
+                }
+                throw makeRuntimeRejectMsg(workerScript, "getBonusTime() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             }
         }
