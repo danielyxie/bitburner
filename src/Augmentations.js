@@ -1575,7 +1575,7 @@ function initAugmentations() {
                  "AR HUD and assist the user in field missions.<br><br>" +
                  "This augmentation:<br>" +
                  "Increases the player's success chance in Bladeburner contracts/operations by 3%.<br>" +
-                 "Increases the player's dexterity by 3%."
+                 "Increases the player's dexterity by 5%."
         });
         EsperEyewear.addToFactions([BladeburnersFactionName]);
         resetAugmentation(EsperEyewear);
@@ -1589,7 +1589,7 @@ function initAugmentations() {
                  "This augmentation:<br>" +
                  "Increases the player's sucess chance in Bladeburner contracts/operations by 3%.<br>" +
                  "Increases the player's effectiveness in Bladeburner Field Analysis by 5%.<br>" +
-                 "Increases the player's Bladeburner stamina gain rate by 1%."
+                 "Increases the player's Bladeburner stamina gain rate by 2%."
         });
         EMS4Recombination.addToFactions([BladeburnersFactionName]);
         resetAugmentation(EMS4Recombination);
@@ -1602,7 +1602,7 @@ function initAugmentations() {
                  "crystallized graphene plating.<br><br>" +
                  "This augmentation:<br>" +
                  "Increases the player's defense by 5%.<br>" +
-                 "Increases the player's strength and dexterity by 3%.<br>" +
+                 "Increases the player's strength and dexterity by 5%.<br>" +
                  "Increases the player's success chance in Bladeburner contracts/operations by 4%."
         });
         OrionShoulder.addToFactions([BladeburnersFactionName]);
@@ -1617,7 +1617,7 @@ function initAugmentations() {
                  "it can also be effective against non-augmented enemies due to its high temperature " +
                  "and concussive force.<br><br>" +
                  "This augmentation:<br>" +
-                 "Increases the player's success chance in Bladeburner contracts/operations by 5%."
+                 "Increases the player's success chance in Bladeburner contracts/operations by 6%."
         });
         HyperionV1.addToFactions([BladeburnersFactionName]);
         resetAugmentation(HyperionV1);
@@ -1629,7 +1629,7 @@ function initAugmentations() {
                  "more power-efficiency, more accurate, and can fire plasma bolts at a much " +
                  "higher velocity than the V1 model.<br><br>" +
                  "This augmentation:<br>" +
-                 "Increases the player's success chance in Bladeburner contracts/operations by 7%.",
+                 "Increases the player's success chance in Bladeburner contracts/operations by 8%.",
             prereqs:[AugmentationNames.HyperionV1]
         });
         HyperionV2.addToFactions([BladeburnersFactionName]);
@@ -1642,7 +1642,7 @@ function initAugmentations() {
                  "serum was originally developed by the Chinese military in an attempt to " +
                  "create super soldiers.<br><br>" +
                  "This augmentation:<br>" +
-                 "Increases all of the player's combat stats by 5%.<br>" +
+                 "Increases all of the player's combat stats by 7%.<br>" +
                  "Increases the player's Bladeburner stamina gain rate by 5%.<br>"
         });
         GolemSerum.addToFactions([BladeburnersFactionName]);
@@ -1655,7 +1655,7 @@ function initAugmentations() {
                  "This augmentation:<br>" +
                  "Increases the player's effectiveness in Bladeburner Field Analysis by 10%.<br>" +
                  "Increases the player's success chance in Bladeburner contracts/operations by 4%.<br>" +
-                 "Increases the player's dexterity experience gain rate by 5%."
+                 "Increases the player's dexterity experience gain rate by 10%."
         });
         VangelisVirus.addToFactions([BladeburnersFactionName]);
         resetAugmentation(VangelisVirus);
@@ -1668,7 +1668,7 @@ function initAugmentations() {
                  "agility/reflexes.<br><br>" +
                  "This augmentation:<br>" +
                  "Increases the player's effectiveness in Bladeburner Field Analysis by 15%.<br>" +
-                 "Increases the player's defense and dexterity experience gain rate by 5%.<br>" +
+                 "Increases the player's defense and dexterity experience gain rate by 10%.<br>" +
                  "Increases the player's success chance in Bladeburner contracts/operations by 5%.",
             prereqs:[AugmentationNames.VangelisVirus]
         });
@@ -1682,7 +1682,7 @@ function initAugmentations() {
                  "structurally support the body and grants heightened strength and " +
                  "durability.<br><br>" +
                  "This augmentation:<br>" +
-                 "Increases the player's experience gain rate for all combat stats by 4%.<br>" +
+                 "Increases the player's experience gain rate for all combat stats by 5%.<br>" +
                  "Increases the player's Bladeburner max stamina by 10%."
         });
         INTERLINKED.addToFactions([BladeburnersFactionName]);
@@ -1709,7 +1709,7 @@ function initAugmentations() {
                  "concussive, thermal, chemical, and electric trauma. It also enhances the user's " +
                  "strength and agility.<br><br>" +
                  "This augmentation:<br>" +
-                 "Increases all of the player's combat stats by 2%.<br>" +
+                 "Increases all of the player's combat stats by 4%.<br>" +
                  "Increases the player's Bladeburner stamina gain rate by 2%.<br>" +
                  "Increases the player's success chance in Bladeburner contracts/operations by 3%.",
         });
@@ -1780,7 +1780,7 @@ function initAugmentations() {
         resetAugmentation(BladeArmorIPU);
 
         var BladesSimulacrum = new Augmentation({
-            name:AugmentationNames.BladesSimulacrum, repCost:6e3, moneyCost:75e9,
+            name:AugmentationNames.BladesSimulacrum, repCost:3e3, moneyCost:80e9,
             info:"A highly-advanced matter phase-shifter module that is embedded "  +
                  "in the brainstem and cerebellum. This augmentation allows " +
                  "the user to project and control a holographic simulacrum within an " +
@@ -2297,48 +2297,48 @@ function applyAugmentation(aug, reapply=false) {
         //Bladeburner augmentations
         case AugmentationNames.EsperEyewear:
             Player.bladeburner_success_chance_mult  *= 1.03;
-            Player.dexterity_mult                   *= 1.03;
+            Player.dexterity_mult                   *= 1.05;
             break;
         case AugmentationNames.EMS4Recombination:
             Player.bladeburner_success_chance_mult  *= 1.03;
             Player.bladeburner_analysis_mult        *= 1.05;
-            Player.bladeburner_stamina_gain_mult    *= 1.01;
+            Player.bladeburner_stamina_gain_mult    *= 1.02;
             break;
         case AugmentationNames.OrionShoulder:
             Player.defense_mult                     *= 1.05;
-            Player.strength_mult                    *= 1.03;
-            Player.dexterity_mult                   *= 1.03;
+            Player.strength_mult                    *= 1.05;
+            Player.dexterity_mult                   *= 1.05;
             Player.bladeburner_success_chance_mult  *= 1.04;
             break;
         case AugmentationNames.HyperionV1:
-            Player.bladeburner_success_chance_mult  *= 1.05;
+            Player.bladeburner_success_chance_mult  *= 1.06;
             break;
         case AugmentationNames.HyperionV2:
-            Player.bladeburner_success_chance_mult  *= 1.07;
+            Player.bladeburner_success_chance_mult  *= 1.08;
             break;
         case AugmentationNames.GolemSerum:
-            Player.strength_mult                    *= 1.05;
-            Player.defense_mult                     *= 1.05;
-            Player.dexterity_mult                   *= 1.05;
-            Player.agility_mult                     *= 1.05;
+            Player.strength_mult                    *= 1.07;
+            Player.defense_mult                     *= 1.07;
+            Player.dexterity_mult                   *= 1.07;
+            Player.agility_mult                     *= 1.07;
             Player.bladeburner_stamina_gain_mult    *= 1.05;
             break;
         case AugmentationNames.VangelisVirus:
-            Player.dexterity_exp_mult               *= 1.05;
+            Player.dexterity_exp_mult               *= 1.1;
             Player.bladeburner_analysis_mult        *= 1.1;
             Player.bladeburner_success_chance_mult  *= 1.04;
             break;
         case AugmentationNames.VangelisVirus3:
-            Player.defense_exp_mult                 *= 1.05;
-            Player.dexterity_exp_mult               *= 1.05;
+            Player.defense_exp_mult                 *= 1.1;
+            Player.dexterity_exp_mult               *= 1.1;
             Player.bladeburner_analysis_mult        *= 1.15;
             Player.bladeburner_success_chance_mult  *= 1.05;
             break;
         case AugmentationNames.INTERLINKED:
-            Player.strength_exp_mult                *= 1.04;
-            Player.defense_exp_mult                 *= 1.04;
-            Player.dexterity_exp_mult               *= 1.04;
-            Player.agility_exp_mult                 *= 1.04;
+            Player.strength_exp_mult                *= 1.05;
+            Player.defense_exp_mult                 *= 1.05;
+            Player.dexterity_exp_mult               *= 1.05;
+            Player.agility_exp_mult                 *= 1.05;
             Player.bladeburner_max_stamina_mult     *= 1.1;
             break;
         case AugmentationNames.BladeRunner:
@@ -2347,10 +2347,10 @@ function applyAugmentation(aug, reapply=false) {
             Player.bladeburner_stamina_gain_mult    *= 1.05;
             break;
         case AugmentationNames.BladeArmor:
-            Player.strength_mult                    *= 1.02;
-            Player.defense_mult                     *= 1.02;
-            Player.dexterity_mult                   *= 1.02;
-            Player.agility_mult                     *= 1.02;
+            Player.strength_mult                    *= 1.04;
+            Player.defense_mult                     *= 1.04;
+            Player.dexterity_mult                   *= 1.04;
+            Player.agility_mult                     *= 1.04;
             Player.bladeburner_stamina_gain_mult    *= 1.02;
             Player.bladeburner_success_chance_mult  *= 1.03;
             break;

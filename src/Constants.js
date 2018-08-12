@@ -492,9 +492,21 @@ let CONSTANTS = {
 
     LatestUpdate:
     "v0.40.2<br>" +
+    "* Bladeburner Changes:<br>" + 
+    "*** Added getSkillUpgradeCost() Netscript function to the API<br>" + 
+    "*** Added getBonusTime() Netscript function to the API<br>" + 
+    "*** Buffed the effects of many Bladeburner Augmentations<br>" + 
+    "*** The Blade's Simulacrum Augmentation requires significantly less reputation but slightly more money<br>" + 
+    "*** Slightly increased the amount of successes needed for a Contract/Operation in order to increase its max level<br>" + 
+    "*** Increased the amount of money gained from Contracts by ~25%<br>" + 
+    "*** Increased the base amount of rank gained from Operations by 10%<br>" + 
+    "*** Significantly increased the 'randomness' in determining a Contract/Operation's initial count and rate of count increase<br>" + 
+    "*** The number (count) of Operations should now increase significantly faster<br>" + 
+    "*** There are now, on average, more Synthoid communities in a city<br>" + 
+    "*** If automation is enabled (the feature in Bladeburner console), then switching to another action such as working for a company will now disable the automation<br>" + 
     "* Bug Fix: Stock market should now be correctly initialized in BitNode-8 (by Kline-)<br>" + 
     "* Bug Fix: bladeburner.getCurrentAction() should now properly an 'Idle' object rather than null (by Kline-)<br>" + 
-    "* Bug Fix: Bladeburner skill cost multiplier should now properly increase in BitNode-12 (by hydroflame)<br>";
+    "* Bug Fix: Bladeburner skill cost multiplier should now properly increase in BitNode-12 (by hydroflame)<br>"
 
 }
 
