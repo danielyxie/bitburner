@@ -9,6 +9,7 @@ function setSettingsLabels() {
     var suppressFactionInv = document.getElementById("settingsSuppressFactionInvites")
     var suppressTravelConfirmation = document.getElementById("settingsSuppressTravelConfirmation");
     var suppressBuyAugmentationConfirmation = document.getElementById("settingsSuppressBuyAugmentationConfirmation");
+    var suppressHospitalizationPopup = document.getElementById("settingsSuppressHospitalizationPopup");
     var autosaveInterval = document.getElementById("settingsAutosaveIntervalValLabel");
     var disableHotkeys = document.getElementById("settingsDisableHotkeys");
 
@@ -20,6 +21,7 @@ function setSettingsLabels() {
     suppressFactionInv.checked = Settings.SuppressFactionInvites;
     suppressTravelConfirmation.checked = Settings.SuppressTravelConfirmation;
     suppressBuyAugmentationConfirmation.checked = Settings.SuppressBuyAugmentationConfirmation;
+    suppressHospitalizationPopup.checked = Settings.SuppressHospitalizationPopup;
     autosaveInterval.innerHTML = Settings.AutosaveInterval;
     disableHotkeys.checked = Settings.DisableHotkeys;
 
@@ -72,8 +74,11 @@ function setSettingsLabels() {
 
     suppressBuyAugmentationConfirmation.onclick = function() {
         Settings.SuppressBuyAugmentationConfirmation = this.checked;
-        console.log('sup buy: '+Settings.SuppressBuyAugmentationConfirmation);
     };
+    
+    suppressHospitalizationPopup.onclick = function() {
+        Settings.SuppressHospitalizationPopup = this.checked;
+    }
 
     disableHotkeys.onclick = function() {
         Settings.DisableHotkeys = this.checked;

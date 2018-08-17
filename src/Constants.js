@@ -504,6 +504,7 @@ let CONSTANTS = {
     "*** The number (count) of Operations should now increase significantly faster<br>" + 
     "*** There are now, on average, more Synthoid communities in a city<br>" + 
     "*** If automation is enabled (the feature in Bladeburner console), then switching to another action such as working for a company will now disable the automation<br>" + 
+    "* There is now a setting for enabling/disabling the popup that appears when you are hospitalized<br>" + 
     "* Bug Fix: Stock market should now be correctly initialized in BitNode-8 (by Kline-)<br>" + 
     "* Bug Fix: bladeburner.getCurrentAction() should now properly an 'Idle' object rather than null (by Kline-)<br>" + 
     "* Bug Fix: Bladeburner skill cost multiplier should now properly increase in BitNode-12 (by hydroflame)<br>"

@@ -12,7 +12,7 @@ function factionInvitationBoxClose() {
 
 function factionInvitationBoxOpen() {
     var factionInvitationBox = document.getElementById("faction-invitation-box-container");
-    factionInvitationBox.style.display = "block";
+    factionInvitationBox.style.display = "flex";
 }
 
 function factionInvitationSetText(txt) {

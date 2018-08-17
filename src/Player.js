@@ -16,6 +16,7 @@ import {Gang, resetGangs}                       from "./Gang";
 import {Locations}                              from "./Locations";
 import {hasBn11SF, hasWallStreetSF,hasAISF}     from "./NetscriptFunctions";
 import {AllServers, Server, AddToAllServers}    from "./Server";
+import {Settings}                               from "./Settings";
 import {SpecialServerIps, SpecialServerNames}   from "./SpecialServerIps";
 import {SourceFiles, applySourceFile}           from "./SourceFile";
 
@@ -1692,9 +1693,14 @@ PlayerObject.prototype.takeDamage = function(amt) {
 }
 
 PlayerObject.prototype.hospitalize = function() {
-    dialogBoxCreate("You were in critical condition! You were taken to the hospital where " +
-                    "luckily they were able to save your life. You were charged $" +
-                    formatNumber(this.max_hp * CONSTANTS.HospitalCostPerHp, 2));
+    if (Settings.SuppressHospitalizationPopup === false) {
+        dialogBoxCreate(
+            "You were in critical condition! You were taken to the hospital where " +
+            "luckily they were able to save your life. You were charged " +
+            numeral(this.max_hp * CONSTANTS.HospitalCostPerHp).format('$0.000a')
+        );
+    }
+    
     this.loseMoney(this.max_hp * CONSTANTS.HospitalCostPerHp);
     this.hp = this.max_hp;
 }

@@ -35,7 +35,7 @@ function gameOptionsBoxClose() {
 
 function gameOptionsBoxOpen() {
     var box = document.getElementById("game-options-container");
-    box.style.display = "block";
+    box.style.display = "flex";
     setTimeout(function() {
         gameOptionsOpened = true;
     }, 500);
