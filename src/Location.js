@@ -1053,63 +1053,72 @@ function displayLocationContent() {
 function initLocationButtons() {
     //Buttons to travel to different locations in World
     let aevumTravelAgency = document.getElementById("aevum-travelagency");
-    aevumTravelAgency.addEventListener("click", function() {
+    aevumTravelAgency.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Player.location = Locations.AevumTravelAgency;
         Engine.loadLocationContent();
         return false;
     });
 
     let aevumHospital = document.getElementById("aevum-hospital");
-    aevumHospital.addEventListener("click", function() {
+    aevumHospital.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Player.location = Locations.Hospital;
         Engine.loadLocationContent();
         return false;
     });
 
     let aevumSummitUniversity = document.getElementById("aevum-summituniversity");
-    aevumSummitUniversity.addEventListener("click", function() {
+    aevumSummitUniversity.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Player.location = Locations.AevumSummitUniversity;
         Engine.loadLocationContent();
         return false;
     });
 
     let aevumECorp = document.getElementById("aevum-ecorp");
-    aevumECorp.addEventListener("click", function() {
+    aevumECorp.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Player.location = Locations.AevumECorp;
         Engine.loadLocationContent();
         return false;
     });
 
     let aevumBachmanAndAssociates = document.getElementById("aevum-bachmanandassociates");
-    aevumBachmanAndAssociates.addEventListener("click", function() {
+    aevumBachmanAndAssociates.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Player.location = Locations.AevumBachmanAndAssociates;
         Engine.loadLocationContent();
         return false;
     });
 
     let aevumClarkeIncorporated = document.getElementById("aevum-clarkeincorporated");
-    aevumClarkeIncorporated.addEventListener("click", function() {
+    aevumClarkeIncorporated.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
        Player.location = Locations.AevumClarkeIncorporated;
        Engine.loadLocationContent();
        return false;
     });
 
     let aevumFulcrumTechnologies = document.getElementById("aevum-fulcrumtechnologies");
-    aevumFulcrumTechnologies.addEventListener("click", function() {
+    aevumFulcrumTechnologies.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Player.location = Locations.AevumFulcrumTechnologies;
         Engine.loadLocationContent();
         return false;
     });
 
     let aevumAeroCorp = document.getElementById("aevum-aerocorp");
-    aevumAeroCorp.addEventListener("click", function() {
+    aevumAeroCorp.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Player.location = Locations.AevumAeroCorp;
         Engine.loadLocationContent();
         return false;
     });
 
     let aevumGalacticCybersystems = document.getElementById("aevum-galacticcybersystems");
-    aevumGalacticCybersystems.addEventListener("click", function() {
+    aevumGalacticCybersystems.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Player.location = Locations.AevumGalacticCybersystems;
         Engine.loadLocationContent();
         return false;
@@ -1123,385 +1132,440 @@ function initLocationButtons() {
     });
 
     let aevumRhoConstruction = document.getElementById("aevum-rhoconstruction");
-    aevumRhoConstruction.addEventListener("click", function() {
-       Player.location = Locations.AevumRhoConstruction;
+    aevumRhoConstruction.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
+        Player.location = Locations.AevumRhoConstruction;
         Engine.loadLocationContent();
         return false;
     });
 
     let aevumPolice = document.getElementById("aevum-aevumpolice");
-    aevumPolice.addEventListener("click", function() {
+    aevumPolice.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Player.location = Locations.AevumPolice;
         Engine.loadLocationContent();
         return false;
     });
 
     let aevumNetLinkTechnologies = document.getElementById("aevum-netlinktechnologies");
-    aevumNetLinkTechnologies.addEventListener("click", function() {
+    aevumNetLinkTechnologies.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Player.location = Locations.AevumNetLinkTechnologies;
         Engine.loadLocationContent();
         return false;
     });
 
     let aevumCrushFitnessGym = document.getElementById("aevum-crushfitnessgym");
-    aevumCrushFitnessGym.addEventListener("click", function() {
+    aevumCrushFitnessGym.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Player.location = Locations.AevumCrushFitnessGym;
         Engine.loadLocationContent();
         return false;
     });
 
     let aevumSnapFitnessGym = document.getElementById("aevum-snapfitnessgym");
-    aevumSnapFitnessGym.addEventListener("click", function() {
+    aevumSnapFitnessGym.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Player.location = Locations.AevumSnapFitnessGym;
         Engine.loadLocationContent();
         return false;
     });
 
     let aevumSlums = document.getElementById("aevum-slums");
-    aevumSlums.addEventListener("click", function() {
+    aevumSlums.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Player.location = Locations.AevumSlums;
         Engine.loadLocationContent();
         return false;
     });
 
 	let chongqingTravelAgency = document.getElementById("chongqing-travelagency");
-	chongqingTravelAgency.addEventListener("click", function() {
+	chongqingTravelAgency.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
 		Player.location = Locations.ChongqingTravelAgency;
 		Engine.loadLocationContent();
         return false;
 	});
 
     let chongqingHospital = document.getElementById("chongqing-hospital");
-    chongqingHospital.addEventListener("click", function() {
+    chongqingHospital.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Player.location = Locations.Hospital;
         Engine.loadLocationContent();
         return false;
     });
 
 	let chongqingKuaiGongInternational = document.getElementById("chongqing-kuaigonginternational");
-	chongqingKuaiGongInternational.addEventListener("click", function() {
+	chongqingKuaiGongInternational.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
 		Player.location = Locations.ChongqingKuaiGongInternational;
 		Engine.loadLocationContent();
         return false;
 	});
 
 	let chongqingSolarisSpaceSystems = document.getElementById("chongqing-solarisspacesystems");
-	chongqingSolarisSpaceSystems.addEventListener("click", function() {
+	chongqingSolarisSpaceSystems.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
 		Player.location = Locations.ChongqingSolarisSpaceSystems;
 		Engine.loadLocationContent();
         return false;
 	});
 
     let chongqingSlums = document.getElementById("chongqing-slums");
-    chongqingSlums.addEventListener("click", function() {
+    chongqingSlums.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Player.location = Locations.ChongqingSlums;
         Engine.loadLocationContent();
         return false;
     });
 
 	let sector12TravelAgency = document.getElementById("sector12-travelagency");
-	sector12TravelAgency.addEventListener("click", function() {
+	sector12TravelAgency.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
 		Player.location = Locations.Sector12TravelAgency;
 		Engine.loadLocationContent();
         return false;
 	});
 
     let sector12Hospital = document.getElementById("sector12-hospital");
-    sector12Hospital.addEventListener("click", function() {
+    sector12Hospital.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Player.location = Locations.Hospital;
         Engine.loadLocationContent();
         return false;
     });
 
     let sector12RothmanUniversity = document.getElementById("sector12-rothmanuniversity");
-    sector12RothmanUniversity.addEventListener("click", function() {
+    sector12RothmanUniversity.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Player.location = Locations.Sector12RothmanUniversity;
         Engine.loadLocationContent();
         return false;
     });
 
 	let sector12MegaCorp = document.getElementById("sector12-megacorp");
-	sector12MegaCorp.addEventListener("click", function() {
+	sector12MegaCorp.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
 		Player.location = Locations.Sector12MegaCorp;
 		Engine.loadLocationContent();
         return false;
 	});
 
 	let sector12BladeIndustries = document.getElementById("sector12-bladeindustries");
-	sector12BladeIndustries.addEventListener("click", function() {
+	sector12BladeIndustries.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
 		Player.location = Locations.Sector12BladeIndustries;
 		Engine.loadLocationContent();
         return false;
 	});
 
 	let sector12FourSigma = document.getElementById("sector12-foursigma");
-	sector12FourSigma.addEventListener("click", function() {
+	sector12FourSigma.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
 		Player.location = Locations.Sector12FourSigma;
 		Engine.loadLocationContent();
         return false;
 	});
 
 	let sector12IcarusMicrosystems = document.getElementById("sector12-icarusmicrosystems");
-	sector12IcarusMicrosystems.addEventListener("click", function() {
+	sector12IcarusMicrosystems.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
 		Player.location = Locations.Sector12IcarusMicrosystems;
 		Engine.loadLocationContent();
         return false;
 	});
 
 	let sector12UniversalEnergy = document.getElementById("sector12-universalenergy");
-	sector12UniversalEnergy.addEventListener("click", function() {
+	sector12UniversalEnergy.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
 		Player.location = Locations.Sector12UniversalEnergy;
 		Engine.loadLocationContent();
         return false;
 	});
 
 	let sector12DeltaOne = document.getElementById("sector12-deltaone");
-	sector12DeltaOne.addEventListener("click", function() {
+	sector12DeltaOne.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
 		Player.location = Locations.Sector12DeltaOne;
 		Engine.loadLocationContent();
         return false;
 	});
 
 	let sector12CIA = document.getElementById("sector12-cia");
-	sector12CIA.addEventListener("click", function() {
+	sector12CIA.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
 		Player.location = Locations.Sector12CIA;
 		Engine.loadLocationContent();
         return false;
 	});
 
 	let sector12NSA = document.getElementById("sector12-nsa");
-	sector12NSA.addEventListener("click", function() {
+	sector12NSA.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
 		Player.location = Locations.Sector12NSA;
 		Engine.loadLocationContent();
         return false;
 	});
 
 	let sector12AlphaEnterprises = document.getElementById("sector12-alphaenterprises");
-	sector12AlphaEnterprises.addEventListener("click", function() {
+	sector12AlphaEnterprises.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
 		Player.location = Locations.Sector12AlphaEnterprises;
 		Engine.loadLocationContent();
         return false;
 	});
 
 	let sector12CarmichaelSecurity = document.getElementById("sector12-carmichaelsecurity");
-	sector12CarmichaelSecurity.addEventListener("click", function() {
+	sector12CarmichaelSecurity.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
 		Player.location = Locations.Sector12CarmichaelSecurity;
 		Engine.loadLocationContent();
         return false;
 	});
 
 	let sector12FoodNStuff = document.getElementById("sector12-foodnstuff");
-	sector12FoodNStuff.addEventListener("click", function() {
+	sector12FoodNStuff.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
 		Player.location = Locations.Sector12FoodNStuff;
 		Engine.loadLocationContent();
         return false;
 	});
 
 	let sector12JoesGuns = document.getElementById("sector12-joesguns");
-	sector12JoesGuns.addEventListener("click", function() {
+	sector12JoesGuns.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
 		Player.location = Locations.Sector12JoesGuns;
 		Engine.loadLocationContent();
         return false;
 	});
 
 	let sector12IronGym = document.getElementById("sector12-irongym");
-	sector12IronGym.addEventListener("click", function() {
+	sector12IronGym.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
 		Player.location = Locations.Sector12IronGym;
 		Engine.loadLocationContent();
         return false;
 	});
 
 	let sector12PowerhouseGym = document.getElementById("sector12-powerhousegym");
-	sector12PowerhouseGym.addEventListener("click", function() {
+	sector12PowerhouseGym.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
 		Player.location = Locations.Sector12PowerhouseGym;
 		Engine.loadLocationContent();
         return false;
 	});
 
     let sector12Slums = document.getElementById("sector12-slums");
-    sector12Slums.addEventListener("click", function() {
+    sector12Slums.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Player.location = Locations.Sector12Slums;
         Engine.loadLocationContent();
         return false;
     });
 
     let sector12CityHall = document.getElementById("sector12-cityhall");
-    sector12CityHall.addEventListener("click", function() {
+    sector12CityHall.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Player.location = Locations.Sector12CityHall;
         Engine.loadLocationContent();
         return false;
     });
 
 	let newTokyoTravelAgency = document.getElementById("newtokyo-travelagency");
-	newTokyoTravelAgency.addEventListener("click", function() {
+	newTokyoTravelAgency.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
 		Player.location = Locations.NewTokyoTravelAgency;
 		Engine.loadLocationContent();
         return false;
 	});
 
     let newTokyoHospital = document.getElementById("newtokyo-hospital");
-    newTokyoHospital.addEventListener("click", function() {
+    newTokyoHospital.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Player.location = Locations.Hospital;
         Engine.loadLocationContent();
         return false;
     });
 
 	let newTokyoDefComm = document.getElementById("newtokyo-defcomm");
-	newTokyoDefComm.addEventListener("click", function() {
+	newTokyoDefComm.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
 		Player.location = Locations.NewTokyoDefComm;
 		Engine.loadLocationContent();
         return false;
 	});
 
 	let newTokyoVitaLife = document.getElementById("newtokyo-vitalife");
-	newTokyoVitaLife.addEventListener("click", function() {
+	newTokyoVitaLife.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
 		Player.location = Locations.NewTokyoVitaLife;
 		Engine.loadLocationContent();
         return false;
 	});
 
 	let newTokyoGlobalPharmaceuticals = document.getElementById("newtokyo-globalpharmaceuticals");
-	newTokyoGlobalPharmaceuticals.addEventListener("click", function() {
+	newTokyoGlobalPharmaceuticals.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
 		Player.location = Locations.NewTokyoGlobalPharmaceuticals;
 		Engine.loadLocationContent();
         return false;
 	});
 
 	let newTokyoNoodleBar = document.getElementById("newtokyo-noodlebar");
-	newTokyoNoodleBar.addEventListener("click", function() {
+	newTokyoNoodleBar.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
 		Player.location = Locations.NewTokyoNoodleBar;
 		Engine.loadLocationContent();
         return false;
 	});
 
     let newTokyoSlums = document.getElementById("newtokyo-slums");
-    newTokyoSlums.addEventListener("click", function() {
+    newTokyoSlums.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Player.location = Locations.NewTokyoSlums;
         Engine.loadLocationContent();
         return false;
     });
 
 	let ishimaTravelAgency = document.getElementById("ishima-travelagency");
-	ishimaTravelAgency.addEventListener("click", function() {
+	ishimaTravelAgency.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
 		Player.location = Locations.IshimaTravelAgency;
 		Engine.loadLocationContent();
         return false;
 	});
 
     let ishimaHospital = document.getElementById("ishima-hospital");
-    ishimaHospital.addEventListener("click", function() {
+    ishimaHospital.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Player.location = Locations.Hospital;
         Engine.loadLocationContent();
         return false;
     });
 
 	let ishimaStormTechnologies = document.getElementById("ishima-stormtechnologies");
-	ishimaStormTechnologies.addEventListener("click", function() {
+	ishimaStormTechnologies.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
 		Player.location = Locations.IshimaStormTechnologies;
 		Engine.loadLocationContent();
         return false;
 	});
 
 	let ishimaNovaMedical = document.getElementById("ishima-novamedical");
-	ishimaNovaMedical.addEventListener("click", function() {
+	ishimaNovaMedical.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
 		Player.location = Locations.IshimaNovaMedical;
 		Engine.loadLocationContent();
         return false;
 	});
 
 	let ishimaOmegaSoftware = document.getElementById("ishima-omegasoftware");
-	ishimaOmegaSoftware.addEventListener("click", function() {
+	ishimaOmegaSoftware.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
 		Player.location = Locations.IshimaOmegaSoftware;
 		Engine.loadLocationContent();
         return false;
 	});
 
     let ishimaSlums = document.getElementById("ishima-slums");
-    ishimaSlums.addEventListener("click", function() {
+    ishimaSlums.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Player.location = Locations.IshimaSlums;
         Engine.loadLocationContent();
         return false;
     });
 
 	let volhavenTravelAgency = document.getElementById("volhaven-travelagency");
-	volhavenTravelAgency.addEventListener("click", function() {
+	volhavenTravelAgency.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
 		Player.location = Locations.VolhavenTravelAgency;
 		Engine.loadLocationContent();
         return false;
 	});
 
     let volhavenHospital = document.getElementById("volhaven-hospital");
-    volhavenHospital.addEventListener("click", function() {
+    volhavenHospital.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Player.location = Locations.Hospital;
         Engine.loadLocationContent();
         return false;
     });
 
     let volhavenZBInstituteOfTechnology = document.getElementById("volhaven-zbinstituteoftechnology");
-    volhavenZBInstituteOfTechnology.addEventListener("click", function() {
+    volhavenZBInstituteOfTechnology.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Player.location = Locations.VolhavenZBInstituteOfTechnology;
         Engine.loadLocationContent();
         return false;
     });
 
 	let volhavenOmniTekIncorporated = document.getElementById("volhaven-omnitekincorporated");
-	volhavenOmniTekIncorporated.addEventListener("click", function() {
+	volhavenOmniTekIncorporated.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
 		Player.location = Locations.VolhavenOmniTekIncorporated;
 		Engine.loadLocationContent();
         return false;
 	});
 
 	let volhavenNWO = document.getElementById("volhaven-nwo");
-	volhavenNWO.addEventListener("click", function() {
+	volhavenNWO.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
 		Player.location = Locations.VolhavenNWO;
 		Engine.loadLocationContent();
         return false;
 	});
 
 	let volhavenHeliosLabs = document.getElementById("volhaven-helioslabs");
-	volhavenHeliosLabs.addEventListener("click", function() {
+	volhavenHeliosLabs.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
 		Player.location = Locations.VolhavenHeliosLabs;
 		Engine.loadLocationContent();
         return false;
 	});
 
 	let volhavenOmniaCybersystems = document.getElementById("volhaven-omniacybersystems");
-	volhavenOmniaCybersystems.addEventListener("click", function() {
+	volhavenOmniaCybersystems.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
 		Player.location = Locations.VolhavenOmniaCybersystems;
 		Engine.loadLocationContent();
         return false;
 	});
 
 	let volhavenLexoCorp = document.getElementById("volhaven-lexocorp");
-	volhavenLexoCorp.addEventListener("click", function() {
+	volhavenLexoCorp.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
 		Player.location = Locations.VolhavenLexoCorp;
 		Engine.loadLocationContent();
         return false;
 	});
 
 	let volhavenSysCoreSecurities = document.getElementById("volhaven-syscoresecurities");
-	volhavenSysCoreSecurities.addEventListener("click", function() {
+	volhavenSysCoreSecurities.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
 		Player.location = Locations.VolhavenSysCoreSecurities;
 		Engine.loadLocationContent();
         return false;
 	});
 
 	let volhavenCompuTek = document.getElementById("volhaven-computek");
-	volhavenCompuTek.addEventListener("click", function() {
+	volhavenCompuTek.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
 		Player.location = Locations.VolhavenCompuTek;
 		Engine.loadLocationContent();
         return false;
 	});
 
 	let volhavenMilleniumFitnessGym = document.getElementById("volhaven-milleniumfitnessgym");
-	volhavenMilleniumFitnessGym.addEventListener("click", function() {
+	volhavenMilleniumFitnessGym.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
 		Player.location = Locations.VolhavenMilleniumFitnessGym;
 		Engine.loadLocationContent();
         return false;
 	});
 
     let volhavenSlums = document.getElementById("volhaven-slums");
-    volhavenSlums.addEventListener("click", function() {
+    volhavenSlums.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Player.location = Locations.VolhavenSlums;
         Engine.loadLocationContent();
         return false;
@@ -1564,127 +1628,152 @@ function initLocationButtons() {
 
     var hospitalTreatment   = document.getElementById("location-hospital-treatment");
 
-    softwareJob.addEventListener("click", function() {
+    softwareJob.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Player.applyForSoftwareJob();
         return false;
     });
 
-    softwareConsultantJob.addEventListener("click", function() {
+    softwareConsultantJob.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Player.applyForSoftwareConsultantJob();
         return false;
     });
 
-    itJob.addEventListener("click", function() {
+    itJob.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Player.applyForItJob();
         return false;
     });
 
-    securityEngineerJob.addEventListener("click", function() {
+    securityEngineerJob.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Player.applyForSecurityEngineerJob();
         return false;
     });
 
-    networkEngineerJob.addEventListener("click", function() {
+    networkEngineerJob.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Player.applyForNetworkEngineerJob();
         return false;
     });
 
-    businessJob.addEventListener("click", function() {
+    businessJob.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Player.applyForBusinessJob();
         return false;
     });
 
-    businessConsultantJob.addEventListener("click", function() {
+    businessConsultantJob.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Player.applyForBusinessConsultantJob();
         return false;
     });
 
-    securityJob.addEventListener("click", function() {
+    securityJob.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Player.applyForSecurityJob();
         return false;
     });
 
-    agentJob.addEventListener("click", function() {
+    agentJob.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Player.applyForAgentJob();
         return false;
     });
 
-    employeeJob.addEventListener("click", function() {
+    employeeJob.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Player.applyForEmployeeJob();
         return false;
     });
 
-    employeePartTimeJob.addEventListener("click", function() {
+    employeePartTimeJob.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Player.applyForPartTimeEmployeeJob();
         return false;
     });
 
-    waiterJob.addEventListener("click", function() {
+    waiterJob.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Player.applyForWaiterJob();
         return false;
     });
 
-    waiterPartTimeJob.addEventListener("click", function() {
+    waiterPartTimeJob.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Player.applyForPartTimeWaiterJob();
         return false;
     });
 
-    purchase2gb.addEventListener("click", function() {
+    purchase2gb.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         purchaseServerBoxCreate(2, 2 * CONSTANTS.BaseCostFor1GBOfRamServer);
         return false;
     });
 
-    purchase4gb.addEventListener("click", function() {
+    purchase4gb.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         purchaseServerBoxCreate(4, 4 * CONSTANTS.BaseCostFor1GBOfRamServer);
         return false;
     });
 
-    purchase8gb.addEventListener("click", function() {
+    purchase8gb.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         purchaseServerBoxCreate(8, 8 * CONSTANTS.BaseCostFor1GBOfRamServer);
         return false;
     });
 
-    purchase16gb.addEventListener("click", function() {
+    purchase16gb.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         purchaseServerBoxCreate(16, 16 * CONSTANTS.BaseCostFor1GBOfRamServer);
         return false;
     });
 
-    purchase32gb.addEventListener("click", function() {
+    purchase32gb.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         purchaseServerBoxCreate(32, 32 * CONSTANTS.BaseCostFor1GBOfRamServer);
         return false;
     });
 
-    purchase64gb.addEventListener("click", function() {
+    purchase64gb.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         purchaseServerBoxCreate(64, 64 * CONSTANTS.BaseCostFor1GBOfRamServer);
         return false;
     });
 
-    purchase128gb.addEventListener("click", function() {
+    purchase128gb.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         purchaseServerBoxCreate(128, 128 * CONSTANTS.BaseCostFor1GBOfRamServer);
         return false;
     });
 
-    purchase256gb.addEventListener("click", function() {
+    purchase256gb.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         purchaseServerBoxCreate(256, 256 * CONSTANTS.BaseCostFor1GBOfRamServer);
         return false;
     });
 
-    purchase512gb.addEventListener("click", function() {
+    purchase512gb.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         purchaseServerBoxCreate(512, 512 * CONSTANTS.BaseCostFor1GBOfRamServer);
         return false;
     });
 
-    purchase1tb.addEventListener("click", function() {
+    purchase1tb.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         purchaseServerBoxCreate(1024, 1024 * CONSTANTS.BaseCostFor1GBOfRamServer);
         return false;
     });
 
-    purchaseTor.addEventListener("click", function() {
+    purchaseTor.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         purchaseTorRouter();
         return false;
     });
 
-    purchaseHomeRam.addEventListener("click", function() {
+    purchaseHomeRam.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         const cost = Player.getUpgradeHomeRamCost();
         const ram = Player.getHomeComputer().maxRam;
 
@@ -1702,7 +1791,8 @@ function initLocationButtons() {
                        "This will cost " + numeral(cost).format('$0.000a'));
     });
 
-    purchaseHomeCores.addEventListener("click", function() {
+    purchaseHomeCores.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         var currentCores = Player.getHomeComputer().cpuCores;
         if (currentCores >= 8) {return;} //Max of 8 cores
 
@@ -1738,92 +1828,110 @@ function initLocationButtons() {
                        "cost " + numeral(cost).format('$0.000a'));
     });
 
-    travelToAevum.addEventListener("click", function() {
+    travelToAevum.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         travelBoxCreate(Locations.Aevum, CONSTANTS.TravelCost);
         return false;
     });
 
-    travelToChongqing.addEventListener("click", function() {
+    travelToChongqing.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         travelBoxCreate(Locations.Chongqing, CONSTANTS.TravelCost);
         return false;
     });
 
-    travelToSector12.addEventListener("click", function() {
+    travelToSector12.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         travelBoxCreate(Locations.Sector12, CONSTANTS.TravelCost);
         return false;
     });
 
-    travelToNewTokyo.addEventListener("click", function() {
+    travelToNewTokyo.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         travelBoxCreate(Locations.NewTokyo, CONSTANTS.TravelCost);
         return false;
     });
 
-    travelToIshima.addEventListener("click", function() {
+    travelToIshima.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         travelBoxCreate(Locations.Ishima, CONSTANTS.TravelCost);
         return false;
     });
 
-    travelToVolhaven.addEventListener("click", function() {
+    travelToVolhaven.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         travelBoxCreate(Locations.Volhaven, CONSTANTS.TravelCost);
         return false;
     });
 
-    slumsShoplift.addEventListener("click", function() {
+    slumsShoplift.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Crimes.Shoplift.commit();
         return false;
     });
 
-    slumsRobStore.addEventListener("click", function() {
+    slumsRobStore.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Crimes.RobStore.commit();
         return false;
     });
 
-    slumsMug.addEventListener("click", function() {
+    slumsMug.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Crimes.Mug.commit();
         return false;
     });
 
-    slumsLarceny.addEventListener("click", function() {
+    slumsLarceny.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Crimes.Larceny.commit();
         return false;
     });
 
-    slumsDealDrugs.addEventListener("click", function() {
+    slumsDealDrugs.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Crimes.DealDrugs.commit();
         return false;
     });
 
-    slumsBondForgery.addEventListener("click", function() {
+    slumsBondForgery.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Crimes.BondForgery.commit();
         return false;
     });
 
-    slumsTrafficArms.addEventListener("click", function() {
+    slumsTrafficArms.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Crimes.TraffickArms.commit();
         return false;
     });
 
-    slumsHomicide.addEventListener("click", function() {
+    slumsHomicide.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Crimes.Homicide.commit();
         return false;
     });
 
-    slumsGta.addEventListener("click", function() {
+    slumsGta.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Crimes.GrandTheftAuto.commit();
         return false;
     });
 
-    slumsKidnap.addEventListener("click", function() {
+    slumsKidnap.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Crimes.Kidnap.commit();
         return false;
     });
 
-    slumsAssassinate.addEventListener("click", function() {
+    slumsAssassinate.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Crimes.Assassination.commit();
         return false;
     });
 
-    slumsHeist.addEventListener("click", function() {
+    slumsHeist.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Crimes.Heist.commit();
         return false;
     });
@@ -1887,7 +1995,8 @@ function initLocationButtons() {
         }
     });
 
-    hospitalTreatment.addEventListener("click", function() {
+    hospitalTreatment.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         if (Player.hp < 0) {Player.hp = 0;}
         var price = (Player.max_hp - Player.hp) * CONSTANTS.HospitalCostPerHp;
         Player.loseMoney(price);
