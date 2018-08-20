@@ -462,6 +462,18 @@ function parseOnlyRamCalculate(server, code, workerScript) {
         const resolvedRefs = new Set();
         while (unresolvedRefs.length > 0) {
             const ref = unresolvedRefs.shift();
+
+            // Check if this is one of the special keys, and add the appropriate ram cost if so.
+            if (ref === "hacknet" && !resolvedRefs.has("hacknet")) {
+                ram += CONSTANTS.ScriptHacknetNodesRamCost;
+            }
+            if (ref === "document" && !resolvedRefs.has("document")) {
+                ram += CONSTANTS.ScriptDomRamCost;
+            }
+            if (ref === "window" && !resolvedRefs.has("window")) {
+                ram += CONSTANTS.ScriptDomRamCost;
+            }
+
             resolvedRefs.add(ref);
 
             if (ref.endsWith(".*")) {
@@ -478,13 +490,6 @@ function parseOnlyRamCalculate(server, code, workerScript) {
                     if (!resolvedRefs.has(dep)) unresolvedRefs.push(dep);
                 }
             }
-
-            // Check if this is one of the special keys, and add the appropriate ram cost if so.
-            if (ref == specialReferenceIF)              ram += CONSTANTS.ScriptIfRamCost;
-            if (ref == specialReferenceFOR)             ram += CONSTANTS.ScriptForRamCost;
-            if (ref == specialReferenceWHILE)           ram += CONSTANTS.ScriptWhileRamCost;
-            if (ref == "hacknet")                       ram += CONSTANTS.ScriptHacknetNodesRamCost;
-            if (ref == "document" || ref == "window")   ram += CONSTANTS.ScriptDomRamCost;
 
             // Check if this ident is a function in the workerscript env. If it is, then we need to
             // get its RAM cost. We do this by calling it, which works because the running script
