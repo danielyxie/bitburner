@@ -173,6 +173,8 @@ function PlayerObject() {
     //Stock Market
     this.hasWseAccount      = false;
     this.hasTixApiAccess    = false;
+    this.has4SData          = false;
+    this.has4SDataTixApi    = false;
 
     //Gang
     this.gang = 0;
@@ -1700,7 +1702,7 @@ PlayerObject.prototype.hospitalize = function() {
             numeral(this.max_hp * CONSTANTS.HospitalCostPerHp).format('$0.000a')
         );
     }
-    
+
     this.loseMoney(this.max_hp * CONSTANTS.HospitalCostPerHp);
     this.hp = this.max_hp;
 }

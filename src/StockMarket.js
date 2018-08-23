@@ -10,7 +10,10 @@ import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver";
 import {Page, routing}                          from "./ui/navigationTracking";
 import numeral                                  from "numeral/min/numeral.min";
+import {exceptionAlert}                         from "../utils/helpers/exceptionAlert";
 import {getRandomInt}                           from "../utils/helpers/getRandomInt";
+import {KEY}                                    from "../utils/helpers/keyCodes";
+import {removeChildrenFromElement}              from "../utils/uiHelpers/removeChildrenFromElement";
 import {removeElementById}                      from "../utils/uiHelpers/removeElementById";
 import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
         yesNoBoxGetYesButton, yesNoBoxGetNoButton,
@@ -409,6 +412,7 @@ function stockMarketCycle() {
     for (var name in StockMarket) {
         if (StockMarket.hasOwnProperty(name)) {
             var stock = StockMarket[name];
+            if (!(stock instanceof Stock)) {continue;}
             var thresh = 0.6;
             if (stock.b) {thresh = 0.4;}
             if (Math.random() < thresh) {
@@ -834,14 +838,32 @@ function displayStockMarketContent() {
             });
         }
 
-        for (var name in StockMarket) {
-            if (StockMarket.hasOwnProperty(name)) {
-                var stock = StockMarket[name];
-                if (!(stock instanceof Stock)) {continue;} //orders property is an array
-                createStockTicker(stock);
+        //Watchlish filter
+        var watchlistFilter = clearEventListeners("stock-market-watchlist-filter");
+        var watchlistUpdateBtn = clearEventListeners("stock-market-watchlist-filter-update");
+        if (watchlistFilter && watchlistUpdateBtn) {
+            //Initialize value in watchlist
+            if (StockMarket.watchlistFilter) {
+                watchlistFilter.value = StockMarket.watchlistFilter; //Remove whitespace
             }
+            watchlistUpdateBtn.addEventListener("click", ()=> {
+                let filterValue = watchlistFilter.value.toString();
+                StockMarket.watchlistFilter = filterValue.replace(/\s/g, '');
+                if (stockMarketPortfolioMode) {
+                    switchToPortfolioMode();
+                } else {
+                    switchToDisplayAllMode();
+                }
+            });
+            watchlistFilter.addEventListener("keyup", (e)=>{
+                e.preventDefault();
+                if (e.keyCode === KEY.ENTER) {watchlistUpdateBtn.click();}
+            })
+        } else {
+            console.warn("Stock Market Watchlist DOM elements could not be found");
         }
-        setStockTickerClickHandlers(); //Clicking headers opens/closes panels
+
+        createAllStockTickers();
         stockMarketContentCreated = true;
     }
 
@@ -849,8 +871,10 @@ function displayStockMarketContent() {
         for (var name in StockMarket) {
             if (StockMarket.hasOwnProperty(name)) {
                 var stock = StockMarket[name];
-                updateStockTicker(stock, null);
-                updateStockOrderList(stock);
+                if (stock instanceof Stock) {
+                    updateStockTicker(stock, null);
+                    updateStockOrderList(stock);
+                }
             }
         }
     }
@@ -859,17 +883,34 @@ function displayStockMarketContent() {
 //Displays only stocks you have position/order in
 function switchToPortfolioMode() {
     stockMarketPortfolioMode = true;
-    var stockList = document.getElementById("stock-market-list");
-    if (stockList == null) {return;}
     var modeBtn = clearEventListeners("stock-market-mode");
     if (modeBtn) {
         modeBtn.innerHTML = "Switch to 'All stocks' Mode" +
             "<span class='tooltiptext'>Displays all stocks on the WSE</span>";
         modeBtn.addEventListener("click", switchToDisplayAllMode);
     }
-    while(stockList.firstChild) {stockList.removeChild(stockList.firstChild);}
+    createAllStockTickers();
+}
 
-    //Get Order book (create it if it hasn't been created)
+//Displays all stocks
+function switchToDisplayAllMode() {
+    stockMarketPortfolioMode = false;
+    var modeBtn = clearEventListeners("stock-market-mode");
+    if (modeBtn) {
+        modeBtn.innerHTML = "Switch to 'Portfolio' Mode" +
+            "<span class='tooltiptext'>Displays only the stocks for which you have shares or orders</span>";
+        modeBtn.addEventListener("click", switchToPortfolioMode);
+    }
+    createAllStockTickers();
+}
+
+function createAllStockTickers() {
+    var stockList = document.getElementById("stock-market-list");
+    if (stockList == null) {
+        exceptionAlert("Error creating Stock Tickers UI. DOM element with ID 'stock-market-list' could not be found");
+    }
+    removeChildrenFromElement(stockList);
+
     var orderBook = StockMarket["Orders"];
     if (orderBook == null) {
         var orders = {};
@@ -881,41 +922,30 @@ function switchToPortfolioMode() {
             }
         }
         StockMarket["Orders"] = orders;
+        orderBook = StockMarket["Orders"];
+    }
+
+    let watchlist = null;
+    if (StockMarket.watchlistFilter != null && StockMarket.watchlistFilter !== "") {
+        let filter = StockMarket.watchlistFilter.replace(/\s/g, '');
+        watchlist = filter.split(",");
     }
 
     for (var name in StockMarket) {
         if (StockMarket.hasOwnProperty(name)) {
             var stock = StockMarket[name];
             if (!(stock instanceof Stock)) {continue;} //orders property is an array
-            var stockOrders = orderBook[stock.symbol];
-            if (stock.playerShares === 0 && stock.playerShortShares === 0 &&
-                stockOrders.length === 0) {continue;}
-            createStockTicker(stock);
-        }
-    }
-    setStockTickerClickHandlers();
-}
+            if (watchlist && !watchlist.includes(stock.symbol)) {continue;} //Watchlist filtering
 
-//Displays all stocks
-function switchToDisplayAllMode() {
-    stockMarketPortfolioMode = false;
-    var stockList = document.getElementById("stock-market-list");
-    if (stockList == null) {return;}
-    var modeBtn = clearEventListeners("stock-market-mode");
-    if (modeBtn) {
-        modeBtn.innerHTML = "Switch to 'Portfolio' Mode" +
-            "<span class='tooltiptext'>Displays only the stocks for which you have shares or orders</span>";
-        modeBtn.addEventListener("click", switchToPortfolioMode);
-    }
-    while(stockList.firstChild) {stockList.removeChild(stockList.firstChild);}
-    for (var name in StockMarket) {
-        if (StockMarket.hasOwnProperty(name)) {
-            var stock = StockMarket[name];
-            if (!(stock instanceof Stock)) {continue;} //orders property is an array
+            let stockOrders = orderBook[stock.symbol];
+            if (stockMarketPortfolioMode) {
+                if (stock.playerShares === 0 && stock.playerShortShares === 0 &&
+                    stockOrders.length === 0) {continue;}
+            }
             createStockTicker(stock);
         }
     }
-    setStockTickerClickHandlers();
+    setStockTickerClickHandlers(); //Clicking headers opens/closes panels
 }
 
 function createStockTicker(stock) {
@@ -1196,7 +1226,12 @@ function updateStockTicker(stock, increase) {
     var hdr = document.getElementById(tickerId + "-hdr");
 
     if (hdr == null) {
-        if (!stockMarketPortfolioMode) {console.log("ERROR: Couldn't find ticker element for stock: " + stock.symbol);}
+        if (!stockMarketPortfolioMode) {
+            let watchlist = StockMarket.watchlistFilter;
+            if (watchlist !== "" && watchlist.includes(stock.symbol)) {
+                console.log("ERROR: Couldn't find ticker element for stock: " + stock.symbol);
+            }
+        }
         return;
     }
     hdr.innerHTML = stock.name + "  -  " + stock.symbol + "  -  " + numeral(stock.price).format('($0.000a)');
@@ -1280,7 +1315,13 @@ function updateStockOrderList(stock) {
     var tickerId = "stock-market-ticker-" + stock.symbol;
     var orderList = document.getElementById(tickerId + "-order-list");
     if (orderList == null) {
-        if (!stockMarketPortfolioMode) {console.log("ERROR: Could not find order list for " + stock.symbol);}
+        //Log only if its a valid error
+        if (!stockMarketPortfolioMode) {
+            let watchlist = StockMarket.watchlistFilter;
+            if (watchlist !== "" && watchlist.includes(stock.symbol)) {
+                console.log("ERROR: Could not find order list for " + stock.symbol);
+            }
+        }
         return;
     }
 
