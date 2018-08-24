@@ -13,6 +13,7 @@ import numeral                                  from "numeral/min/numeral.min";
 import {exceptionAlert}                         from "../utils/helpers/exceptionAlert";
 import {getRandomInt}                           from "../utils/helpers/getRandomInt";
 import {KEY}                                    from "../utils/helpers/keyCodes";
+import {createElement}                          from "../utils/uiHelpers/createElement";
 import {removeChildrenFromElement}              from "../utils/uiHelpers/removeChildrenFromElement";
 import {removeElementById}                      from "../utils/uiHelpers/removeElementById";
 import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
@@ -697,20 +698,31 @@ var stockMarketContentCreated = false;
 var stockMarketPortfolioMode = false;
 var COMM = CONSTANTS.StockMarketCommission;
 function displayStockMarketContent() {
-    if (Player.hasWseAccount == null) {Player.hasWseAccount = false;}
+    if (Player.hasWseAccount == null)   {Player.hasWseAccount = false;}
     if (Player.hasTixApiAccess == null) {Player.hasTixApiAccess = false;}
+    if (Player.has4SData == null)       {Player.has4SData = false;}
+    if (Player.has4SDataTixApi == null) {Player.has4SDataTixApi = false;}
+
+    function stylePurchaseButton(btn, cost, flag, initMsg, purchasedMsg) {
+        btn.innerText = initMsg;
+        btn.classList.remove("a-link-button");
+        btn.classList.remove("a-link-button-bought");
+        btn.classList.remove("a-link-button-inactive");
+        if (!flag && Player.money.gte(cost)) {
+            btn.classList.add("a-link-button");
+        } else if (flag) {
+            btn.innerText = purchasedMsg;
+            btn.classList.add("a-link-button-bought");
+        } else {
+            btn.classList.add("a-link-button-inactive");
+        }
+    }
 
     //Purchase WSE Account button
     var wseAccountButton = clearEventListeners("stock-market-buy-account");
-    wseAccountButton.innerText = "Buy WSE Account - " + numeral(CONSTANTS.WSEAccountCost).format('($0.000a)');
-    if (!Player.hasWseAccount && Player.money.gte(CONSTANTS.WSEAccountCost)) {
-        wseAccountButton.setAttribute("class", "a-link-button");
-    } else if (Player.hasWseAccount){
-        wseAccountButton.innerText = "WSE Account - Purchased";
-        wseAccountButton.setAttribute("class", "a-link-button-bought");
-    } else {
-        wseAccountButton.setAttribute("class", "a-link-button-inactive");
-    }
+    stylePurchaseButton(wseAccountButton, CONSTANTS.WSEAccountCost, Player.hasWseAccount,
+                        "Buy WSE Account - " + numeral(CONSTANTS.WSEAccountCost).format('($0.000a)'),
+                        "WSE Account - Purchased");
     wseAccountButton.addEventListener("click", function() {
         Player.hasWseAccount = true;
         initStockMarket();
@@ -722,16 +734,9 @@ function displayStockMarketContent() {
 
     //Purchase TIX API Access account
     var tixApiAccessButton = clearEventListeners("stock-market-buy-tix-api");
-    tixApiAccessButton.innerText = "Buy Trade Information eXchange (TIX) API Access - " +
-                                   numeral(CONSTANTS.TIXAPICost).format('($0.000a)');
-    if (!Player.hasTixApiAccess && Player.money.gte(CONSTANTS.TIXAPICost)) {
-        tixApiAccessButton.setAttribute("class", "a-link-button");
-    } else if(Player.hasTixApiAccess) {
-        tixApiAccessButton.innerText = "Trade Information eXchange (TIX) API Access - Purchased"
-        tixApiAccessButton.setAttribute("class", "a-link-button-bought");
-    } else {
-        tixApiAccessButton.setAttribute("class", "a-link-button-inactive");
-    }
+    stylePurchaseButton(tixApiAccessButton, CONSTANTS.TIXAPICost, Player.hasTixApiAccess,
+                        "Buy Trade Information eXchange (TIX) API Access - " + numeral(CONSTANTS.TIXAPICost).format('($0.000a)'),
+                        "TIX API Access - Purchased");
     tixApiAccessButton.addEventListener("click", function() {
         Player.hasTixApiAccess = true;
         Player.loseMoney(CONSTANTS.TIXAPICost);
@@ -739,9 +744,76 @@ function displayStockMarketContent() {
         return false;
     });
 
+    //Purchase Four Sigma Market Data Feed
+    var marketDataButton = clearEventListeners("stock-market-buy-4s-data");
+    stylePurchaseButton(marketDataButton, CONSTANTS.MarketData4SCost, Player.has4SData,
+                        "Buy 4S Market Data Access - " + numeral(CONSTANTS.MarketData4SCost).format('($0.000a)'),
+                        "4S Market Data - Purchased");
+    marketDataButton.addEventListener("click", function() {
+        Player.has4SData = true;
+        Player.loseMoney(CONSTANTS.MarketData4SCost);
+        displayStockMarketContent();
+        return false;
+    });
+    marketDataButton.appendChild(createElement("span", {
+        class:"tooltiptext",
+        innerText:"Lets you view additional pricing and volatility information about stocks"
+    }));
+    marketDataButton.style.marginRight = "2px"; //Adjusts following help tip to be slightly closer
+
+    //4S Market Data Help Tip
+    var marketDataHelpTip = clearEventListeners("stock-market-4s-data-help-tip");
+    marketDataHelpTip.style.marginTop = "10px";
+    marketDataHelpTip.addEventListener("click", ()=>{
+        dialogBoxCreate("Access to the 4S Market Data feed will display two additional pieces " +
+                        "of information about each stock: Price Forecast & Volatility<br><br>" +
+                        "Price Forecast indicates the probability the stock has of increasing or " +
+                        "decreasing. A '+' forecast means the stock has a higher chance of increasing "  +
+                        "than decreasing, and a '-' means the opposite. The number of '+/-' symbols " +
+                        "is used to illustrate the magnitude of these probabilities. For example, " +
+                        "'+++' means that the stock has a significantly higher chance of increasing " +
+                        "than decreasing, while '+' means that the stock only has a slightly higher chance " +
+                        "of increasing than decreasing.<br><br>"  +
+                        "Volatility represents the maximum percentage by which a stock's price " +
+                        "can change every tick (a tick occurs every few seconds while the game " +
+                        "is running).<br><br>" +
+                        "A stock's price forecast can change over time. This is also affected by volatility. " +
+                        "The more volatile a stock is, the more its price forecast will change.");
+        return false;
+    });
+
+    //Purchase Four Sigma Market Data TIX API (Requires TIX API Access)
+    var marketDataTixButton = clearEventListeners("stock-market-buy-4s-tix-api");
+    stylePurchaseButton(marketDataTixButton, CONSTANTS.MarketDataTixApi4SCost, Player.has4SDataTixApi,
+                        "Buy 4S Market Data TIX API Access - " + numeral(CONSTANTS.MarketDataTixApi4SCost).format('($0.000a)'),
+                        "4S Market Data TIX API - Purchased");
+    if (Player.hasTixApiAccess) {
+        marketDataTixButton.addEventListener("click", function() {
+            Player.has4SDataTixApi = true;
+            Player.loseMoney(CONSTANTS.MarketDataTixApi4SCost);
+            displayStockMarketContent();
+            return false;
+        });
+        marketDataTixButton.appendChild(createElement("span", {
+            class:"tooltiptext",
+            innerText:"Lets you access 4S Market Data through Netscript"
+        }));
+    } else {
+        marketDataTixButton.classList.remove("a-link-button");
+        marketDataTixButton.classList.remove("a-link-button-bought");
+        marketDataTixButton.classList.remove("a-link-button-inactive");
+        marketDataTixButton.classList.add("a-link-button-inactive");
+        marketDataTixButton.appendChild(createElement("span", {
+            class:"tooltiptext",
+            innerText:"Requires TIX API Access"
+        }));
+    }
+
+
     var stockList = document.getElementById("stock-market-list");
     if (stockList == null) {return;}
 
+    //If Player doesn't have account, clear stocks UI and return
     if (!Player.hasWseAccount) {
         stockMarketContentCreated = false;
         while (stockList.firstChild) {
@@ -1234,7 +1306,17 @@ function updateStockTicker(stock, increase) {
         }
         return;
     }
-    hdr.innerHTML = stock.name + "  -  " + stock.symbol + "  -  " + numeral(stock.price).format('($0.000a)');
+    let hdrText = stock.name + " (" + stock.symbol + ") - " + numeral(stock.price).format('($0.000a)');
+    if (Player.has4SData) {
+        hdrText += " - Volatility: " + numeral(stock.mv).format('0,0.00') + "%" +
+                   " - Price Forecast: ";
+        if (stock.b) {
+            hdrText += "+".repeat(Math.floor(stock.otlkMag/10) + 1);
+        } else {
+            hdrText += "-".repeat(Math.floor(stock.otlkMag/10) + 1);
+        }
+    }
+    hdr.innerText = hdrText;
     if (increase != null) {
         increase ? hdr.style.color = "#66ff33" : hdr.style.color = "red";
     }

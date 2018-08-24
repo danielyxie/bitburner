@@ -552,6 +552,17 @@
 #stock-market-container {
     position: fixed;
     padding: 6px;
+    p {
+        font-size: $defaultFontSize * 0.8125;
+    }
+    a {
+        font-size: $defaultFontSize * 0.875;
+    }
+    h2 {
+        margin-top:10px;
+        margin-left:10px;
+        display:block;
+    }
 }
 
 #stock-market-container p {

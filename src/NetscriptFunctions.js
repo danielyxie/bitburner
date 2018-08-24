@@ -183,7 +183,7 @@ function NetscriptFunctions(workerScript) {
     /**
      * @param {number} ram The amount of server RAM to calculate cost of.
      * @exception {Error} If the value passed in is not numeric, out of range, or too large of a value.
-     * @returns {number} The cost of 
+     * @returns {number} The cost of
      */
     const getPurchaseServerRamCostGuard = (ram) => {
         const guardedRam = Math.round(ram);
@@ -1598,6 +1598,36 @@ function NetscriptFunctions(workerScript) {
                 pos: orderPos
             };
             return cancelOrder(params, workerScript);
+        },
+        getStockVolatility : function(symbol) {
+            if (workerScript.checkingRam) {
+                return updateStaticRam("getStockVolatility", CONSTANTS.ScriptBuySellStockRamCost);
+            }
+            updateDynamicRam("getStockVolatility", CONSTANTS.ScriptBuySellStockRamCost);
+            if (!Player.has4SDataTixApi) {
+                throw makeRuntimeRejectMsg(workerScript, "You don't have 4S Market Data TIX API Access! Cannot use getStockVolatility()");
+            }
+            var stock = SymbolToStockMap[symbol];
+            if (stock == null) {
+                throw makeRuntimeRejectMsg(workerScript, "ERROR: Invalid stock symbol passed into getStockVolatility()");
+            }
+            return stock.mv / 100; //Convert from percentage to decimal
+        },
+        getStockForecast : function(symbol) {
+            if (workerScript.checkingRam) {
+                return updateStaticRam("getStockForecast", CONSTANTS.ScriptBuySellStockRamCost);
+            }
+            updateDynamicRam("getStockForecast", CONSTANTS.ScriptBuySellStockRamCost);
+            if (!Player.has4SDataTixApi) {
+                throw makeRuntimeRejectMsg(workerScript, "You don't have 4S Market Data TIX API Access! Cannot use getStockForecast()");
+            }
+            var stock = SymbolToStockMap[symbol];
+            if (stock == null) {
+                throw makeRuntimeRejectMsg(workerScript, "ERROR: Invalid stock symbol passed into getStockForecast()");
+            }
+            var forecast = 50;
+            stock.b ? forecast += stock.otlkMag : forecast -= stock.otlkMag;
+            return forecast / 100; //Convert from percentage to decimal
         },
         getPurchasedServerLimit : function() {
             if (workerScript.checkingRam) {
@@ -3742,6 +3772,21 @@ function NetscriptFunctions(workerScript) {
                     }
                 }
                 throw makeRuntimeRejectMsg(workerScript, "getCityChaos() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                                                         "at the Bladeburner division or because you do not have Source-File 7");
+            },
+            getCity : function() {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getCity", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
+                }
+                updateDynamicRam("getCity", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+                    try {
+                        return Player.bladeburner.city;
+                    } catch(e) {
+                        throw makeRuntimeRejectMsg(workerScript, "Bladeburner.getCity() failed with exception: " + e);
+                    }
+                }
+                throw makeRuntimeRejectMsg(workerScript, "getCity() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             switchCity : function(cityName) {

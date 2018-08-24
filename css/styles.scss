@@ -310,11 +310,23 @@ a:visited {
     display: inline-block;
 }
 
-.help-tip:hover {
+.help-tip-big {
+    content: '?';
+    padding: 3px;
+    margin-left: 3px;
+    color: #fff;
+    border: 1px solid #fff;
+    border-radius: 8px;
+    display: inline-block;
+}
+
+.help-tip:hover,
+.help-tip-big:hover {
     background-color: #888;
 }
 
-.help-tip:active {
+.help-tip:active,
+.help-tip-big:active {
     @include boxShadow(inset 0 1px 4px rgba(0, 0, 0, 0.6));
 }
 
