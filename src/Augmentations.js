@@ -848,7 +848,7 @@ function initAugmentations() {
              "Increases the amount of reputation the player gains when working for a company by 10%."
     });
     SpeechEnhancement.addToFactions(["Tian Di Hui", "Speakers for the Dead", "Four Sigma", "KuaiGong International",
-                                    "Clarke Incorporated", "Four Sigma", "Bachman & Associates"]);
+                                    "Clarke Incorporated", "Bachman & Associates"]);
     if (augmentationExists(AugmentationNames.SpeechEnhancement)) {
         delete Augmentations[AugmentationNames.SpeechEnhancement];
     }
