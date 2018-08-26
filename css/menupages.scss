@@ -565,6 +565,13 @@
     }
 }
 
+/* Change font size of Stock TIcker headers */
+#stock-market-list li {
+    button {
+        font-size: $defaultFontSize;
+    }
+}
+
 #stock-market-container p {
     padding: 10px;
     margin: 10px;

@@ -276,10 +276,21 @@ a:visited {
   border-radius: 5px;
   display: inline-block; }
 
-.help-tip:hover {
+.help-tip-big {
+  content: '?';
+  padding: 3px;
+  margin-left: 3px;
+  color: #fff;
+  border: 1px solid #fff;
+  border-radius: 8px;
+  display: inline-block; }
+
+.help-tip:hover,
+.help-tip-big:hover {
   background-color: #888; }
 
-.help-tip:active {
+.help-tip:active,
+.help-tip-big:active {
   -webkit-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
   -moz-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
   box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6); }
@@ -1068,6 +1079,17 @@ a:visited {
 #stock-market-container {
   position: fixed;
   padding: 6px; }
+  #stock-market-container p {
+    font-size: 13px; }
+  #stock-market-container a {
+    font-size: 14px; }
+  #stock-market-container h2 {
+    margin-top: 10px;
+    margin-left: 10px;
+    display: block; }
+
+#stock-market-list li button {
+  font-size: 16px; }
 
 #stock-market-container p {
   padding: 10px;
@@ -1076,6 +1098,10 @@ a:visited {
 
 #stock-market-container a {
   margin: 10px; }
+
+#stock-market-watchlist-filter {
+  width: 50%;
+  margin-left: 10px; }
 
 .stock-market-input {
   display: inline-block;

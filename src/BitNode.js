@@ -142,7 +142,7 @@ function initBitNodes() {
     BitNodes["BitNode8"] = new BitNode(8, "Ghost of Wall Street", "Money never sleeps",
                                           "You are trying to make a name for yourself as an up-and-coming hedge fund manager on Wall Street.<br><br>" +
                                           "In this BitNode:<br><br>" +
-                                          "You start with $100 million<br>" +
+                                          "You start with $250 million<br>" +
                                           "The only way to earn money is by trading on the stock market<br>" +
                                           "You start with a WSE membership and access to the TIX API<br>" +
                                           "You are able to short stocks and place different types of orders (limit/stop)<br>" +

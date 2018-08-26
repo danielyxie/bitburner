@@ -813,19 +813,40 @@ function displayStockMarketContent() {
     var stockList = document.getElementById("stock-market-list");
     if (stockList == null) {return;}
 
+    //UI Elements that should only appear if you have WSE account access
+    var commissionText     = document.getElementById("stock-market-commission");
+    var modeBtn            = document.getElementById("stock-market-mode");
+    var expandBtn          = document.getElementById("stock-market-expand-tickers");
+    var collapseBtn        = document.getElementById("stock-market-collapse-tickers");
+    var watchlistFilter    = document.getElementById("stock-market-watchlist-filter");
+    var watchlistUpdateBtn = document.getElementById("stock-market-watchlist-filter-update");
+
     //If Player doesn't have account, clear stocks UI and return
     if (!Player.hasWseAccount) {
         stockMarketContentCreated = false;
         while (stockList.firstChild) {
             stockList.removeChild(stockList.firstChild);
         }
+        commissionText.style.visibility = "hidden";
+        modeBtn.style.visibility = "hidden";
+        expandBtn.style.visibility = "hidden";
+        collapseBtn.style.visibility = "hidden";
+        watchlistFilter.style.visibility = "hidden";
+        watchlistUpdateBtn.style.visibility = "hidden";
         return;
+    } else {
+        commissionText.style.visibility = "visible";
+        modeBtn.style.visibility = "visible";
+        expandBtn.style.visibility = "visible";
+        collapseBtn.style.visibility = "visible";
+        watchlistFilter.style.visibility = "visible";
+        watchlistUpdateBtn.style.visibility = "visible";
     }
 
     //Create stock market content if you have an account
     if (!stockMarketContentCreated && Player.hasWseAccount) {
         console.log("Creating Stock Market UI");
-        document.getElementById("stock-market-commission").innerHTML =
+        commissionText.innerHTML =
             "Commission Fees: Every transaction you make has a " +
             numeral(CONSTANTS.StockMarketCommission).format('($0.000a)') + " commission fee.<br><br>" +
             "WARNING: When you reset after installing Augmentations, the Stock Market is reset. " +
@@ -878,7 +899,6 @@ function displayStockMarketContent() {
         });
 
         //Switch to Portfolio Mode Button
-        var modeBtn = clearEventListeners("stock-market-mode");
         if (modeBtn) {
             modeBtn.innerHTML = "Switch to 'Portfolio' Mode" +
                 "<span class='tooltiptext'>Displays only the stocks for which you have shares or orders</span>";
@@ -886,9 +906,7 @@ function displayStockMarketContent() {
         }
 
         //Expand/Collapse tickers buttons
-        var expandBtn   = clearEventListeners("stock-market-expand-tickers"),
-            collapseBtn = clearEventListeners("stock-market-collapse-tickers"),
-            stockList   = document.getElementById("stock-market-list");
+        var stockList = document.getElementById("stock-market-list");
         if (expandBtn) {
             expandBtn.addEventListener("click", ()=>{
                 var tickerHdrs = stockList.getElementsByClassName("accordion-header");
@@ -911,8 +929,6 @@ function displayStockMarketContent() {
         }
 
         //Watchlish filter
-        var watchlistFilter = clearEventListeners("stock-market-watchlist-filter");
-        var watchlistUpdateBtn = clearEventListeners("stock-market-watchlist-filter-update");
         if (watchlistFilter && watchlistUpdateBtn) {
             //Initialize value in watchlist
             if (StockMarket.watchlistFilter) {

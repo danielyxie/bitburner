@@ -2874,16 +2874,16 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("ERROR: Cannot join " + name + " Faction because you have not been invited. joinFaction() failed");
                 return false;
             }
-
-            var index = Player.factionInvitations.indexOf(name);
-            if (index === -1) {
-                //Redundant and should never happen...
-                workerScript.scriptRef.log("ERROR: Cannot join " + name + " Faction because you have not been invited. joinFaction() failed");
-                return false;
-            }
-            Player.factionInvitations.splice(index, 1);
             var fac = Factions[name];
             joinFaction(fac);
+
+            //Update Faction Invitation list to account for joined + banned factions
+            for (var i = 0; i < Player.factionInvitations.length; ++i) {
+                if (Player.factionInvitations[i] == name || Factions[Player.factionInvitations[i]].isBanned) {
+                    Player.factionInvitations.splice(i, 1);
+                    i--;
+                }
+            }
             Player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.joinFaction == null) {
                 workerScript.scriptRef.log("Joined the " + name + " faction.");

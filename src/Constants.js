@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.40.1",
+    Version:                "0.40.2",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -516,7 +516,8 @@ let CONSTANTS = {
     "* Bug Fix: Stock market should now be correctly initialized in BitNode-8 (by Kline-)<br>" +
     "* Bug Fix: bladeburner.getCurrentAction() should now properly an 'Idle' object rather than null (by Kline-)<br>" +
     "* Bug Fix: Bladeburner skill cost multiplier should now properly increase in BitNode-12 (by hydroflame)<br>" +
-    "* Bug Fix: 'document', 'hacknet', and 'window' keywords should no longer be counted multiple times in RAM calculations <br>"
+    "* Bug Fix: 'document', 'hacknet', and 'window' keywords should no longer be counted multiple times in RAM calculations<br>" +
+    "* Bug Fix: Joining factions through Singularity functions should now prevent you from joining opposing factions<br>"
 
 }
 
