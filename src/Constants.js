@@ -517,7 +517,8 @@ let CONSTANTS = {
     "* Bug Fix: bladeburner.getCurrentAction() should now properly an 'Idle' object rather than null (by Kline-)<br>" +
     "* Bug Fix: Bladeburner skill cost multiplier should now properly increase in BitNode-12 (by hydroflame)<br>" +
     "* Bug Fix: 'document', 'hacknet', and 'window' keywords should no longer be counted multiple times in RAM calculations<br>" +
-    "* Bug Fix: Joining factions through Singularity functions should now prevent you from joining opposing factions<br>"
+    "* Bug Fix: Joining factions through Singularity functions should now prevent you from joining opposing factions<br>" + 
+    "* Bug Fix: Four Sigma should no longer have two 'Speech Enhancement' Augmentations (by Kline-)<br>"
 
 }
 

@@ -128,7 +128,7 @@ function prestigeAugmentation() {
         Player.hasWseAccount = true;
         Player.hasTixApiAccess = true;
     }
-    
+
     //Reset Stock market
     if (Player.hasWseAccount) {
         initStockMarket();
@@ -139,7 +139,10 @@ function prestigeAugmentation() {
     while(stockMarketList.firstChild) {
         stockMarketList.removeChild(stockMarketList.firstChild);
     }
+    var watchlist = document.getElementById("stock-market-watchlist-filter");
+    watchlist.value = ""; //Reset watchlist filter
 
+    //Load Terminal Screen
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
     Terminal.resetTerminalInput();

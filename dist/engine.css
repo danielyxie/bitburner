@@ -1088,6 +1088,7 @@ a:visited {
     margin-left: 10px;
     display: block; }
 
+/* Change font size of Stock TIcker headers */
 #stock-market-list li button {
   font-size: 16px; }
 

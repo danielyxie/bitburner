@@ -391,6 +391,8 @@ PlayerObject.prototype.prestigeSourceFile = function() {
     //Reset Stock market
     this.hasWseAccount = false;
     this.hasTixApiAccess = false;
+    this.has4SData = false;
+    this.has4SDataTixApi = false;
 
     //BitNode 3: Corporatocracy
     if (this.bitNodeN === 3) {this.money = new Decimal(150e9);}
