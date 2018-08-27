@@ -1,7 +1,7 @@
 import {Augmentations, applyAugmentation,
         AugmentationNames,
         PlayerOwnedAugmentation}                from "./Augmentations";
-import {BitNodes, BitNode, BitNodeMultipliers}  from "./BitNode";
+import {BitNodeMultipliers}                     from "./BitNodeMultipliers";
 import {Company, Companies, getNextCompanyPosition,
         getJobRequirementText, CompanyPosition,
         CompanyPositions}                       from "./Company";
@@ -13,9 +13,10 @@ import {Engine}                                 from "./engine";
 import {Factions, Faction,
         displayFactionContent}                  from "./Faction";
 import {Gang, resetGangs}                       from "./Gang";
-import {Locations}                              from "./Location";
+import {Locations}                              from "./Locations";
 import {hasBn11SF, hasWallStreetSF,hasAISF}     from "./NetscriptFunctions";
 import {AllServers, Server, AddToAllServers}    from "./Server";
+import {Settings}                               from "./Settings";
 import {SpecialServerIps, SpecialServerNames}   from "./SpecialServerIps";
 import {SourceFiles, applySourceFile}           from "./SourceFile";
 
@@ -172,6 +173,8 @@ function PlayerObject() {
     //Stock Market
     this.hasWseAccount      = false;
     this.hasTixApiAccess    = false;
+    this.has4SData          = false;
+    this.has4SDataTixApi    = false;
 
     //Gang
     this.gang = 0;
@@ -388,6 +391,8 @@ PlayerObject.prototype.prestigeSourceFile = function() {
     //Reset Stock market
     this.hasWseAccount = false;
     this.hasTixApiAccess = false;
+    this.has4SData = false;
+    this.has4SDataTixApi = false;
 
     //BitNode 3: Corporatocracy
     if (this.bitNodeN === 3) {this.money = new Decimal(150e9);}
@@ -1692,9 +1697,14 @@ PlayerObject.prototype.takeDamage = function(amt) {
 }
 
 PlayerObject.prototype.hospitalize = function() {
-    dialogBoxCreate("You were in critical condition! You were taken to the hospital where " +
-                    "luckily they were able to save your life. You were charged $" +
-                    formatNumber(this.max_hp * CONSTANTS.HospitalCostPerHp, 2));
+    if (Settings.SuppressHospitalizationPopup === false) {
+        dialogBoxCreate(
+            "You were in critical condition! You were taken to the hospital where " +
+            "luckily they were able to save your life. You were charged " +
+            numeral(this.max_hp * CONSTANTS.HospitalCostPerHp).format('$0.000a')
+        );
+    }
+
     this.loseMoney(this.max_hp * CONSTANTS.HospitalCostPerHp);
     this.hp = this.max_hp;
 }

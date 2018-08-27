@@ -552,6 +552,24 @@
 #stock-market-container {
     position: fixed;
     padding: 6px;
+    p {
+        font-size: $defaultFontSize * 0.8125;
+    }
+    a {
+        font-size: $defaultFontSize * 0.875;
+    }
+    h2 {
+        margin-top:10px;
+        margin-left:10px;
+        display:block;
+    }
+}
+
+/* Change font size of Stock TIcker headers */
+#stock-market-list li {
+    button {
+        font-size: $defaultFontSize;
+    }
 }
 
 #stock-market-container p {
@@ -562,6 +580,11 @@
 
 #stock-market-container a {
     margin: 10px;
+}
+
+#stock-market-watchlist-filter {
+    width:50%;
+    margin-left:10px;
 }
 
 .stock-market-input {

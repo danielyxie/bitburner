@@ -679,22 +679,44 @@
             after you 'reset' by installing Augmentations.
         </p>
         <a id="stock-market-buy-account" class="a-link-button-inactive"> Buy WSE Account </a>
+        <a id="stock-market-investopedia" class="a-link-button">Investopedia</a>
+
+        <h2> Trade Information eXchange (TIX) API </h2>
         <p>
-            You can also purchase access to the World Stock Exchange's TIX API! TIX, short for
-            Trade Information eXchange, is the communications protocol supported by the WSE.
-            <br><br>
-            Gaining access to the TIX API lets you write code to build automated trading
-            systems. In other words, you can create your own algorithmic trading strategies!
+            TIX, short for Trade Information eXchange, is the communications protocol supported by the WSE.
+            Purchasing access to the TIX API lets you write code to create your own algorithmic/automated
+            trading strategies.
             <br><br>
             If you purchase access to the TIX API, you will retain that access even after
             you 'reset' by installing Augmentations.
         </p>
         <a id="stock-market-buy-tix-api" class="a-link-button-inactive">Buy Trade Information eXchange (TIX) API Access</a>
-        <a id="stock-market-investopedia" class="a-link-button">Investopedia</a>
+
+        <h2> Four Sigma (4S) Market Data Feed </h2>
+        <p>
+            Four Sigma's (4S) Market Data Feed provides information about stocks
+            that will help your trading strategies.
+            <br><br>
+            If you purchase access to 4S Market Data and/or the 4S TIX API, you will
+            retain that access even after you 'reset' by installing Augmentations.
+        </p>
+
+        <a id="stock-market-buy-4s-data" class="a-link-button-inactive tooltip">
+            Buy 4S Market Data Feed
+        </a>
+        <div class="help-tip-big" id="stock-market-4s-data-help-tip">?</div>
+
+        <a id="stock-market-buy-4s-tix-api" class="a-link-button-inactive tooltip">
+            Buy 4S Market Data TIX API Access
+        </a>
+
         <p id="stock-market-commission"> </p>
         <a id="stock-market-mode" class="a-link-button tooltip"></a>
         <a id="stock-market-expand-tickers" class="a-link-button tooltip">Expand tickers</a>
         <a id="stock-market-collapse-tickers" class="a-link-button tooltip">Collapse tickers</a>
+        <br><br>
+        <input id="stock-market-watchlist-filter" type="text" placeholder="Filter Stocks by symbol (comma-separated list)"> </input>
+        <a id="stock-market-watchlist-filter-update" class="a-link-button"> Update Watchlist </a>
         <ul id="stock-market-list" style="list-style:none;">
 		</ul>
     </div>
@@ -766,7 +788,9 @@
     </div>
 
     <!-- Red Pill Container -->
-    <div id="red-pill-container" class="generic-fullscreen-container"></div>
+    <div id="red-pill-container" class="generic-fullscreen-container">
+        <div id="red-pill-content" class="generic-fullscreen-container-scroll"></div>
+    </div>
 
     <!-- Cinematic Text Container -->
     <div id="cinematic-text-container" class="generic-fullscreen-container"></div>
@@ -813,7 +837,7 @@
                 <tr id="character-int-wrapper">
                     <td>Int:&nbsp;</td><td id="character-int-text" class="character-stat-cell"></td>
                 </tr>
-            <table>
+            </table>
         </div>
         <div class="character-quick-options">
             <span id="character-overview-save-button"> Save Game </span>
@@ -930,6 +954,16 @@
                         </span>
                     </label>
                     <input type="checkbox" name="settingsSuppressBuyAugmentationConfirmation" id="settingsSuppressBuyAugmentationConfirmation">
+                </fieldset>
+
+                <!-- Hospitalization Popup -->
+                <fieldset>
+                    <label for="settingsSuppressHospitalizationPopup" class="tooltip">Suppress Hospitalization popup:
+                        <span class="tooltiptext">
+                            If this is set, a popup message will no longer be shown when you are hospitalized after taking too much damage.
+                        </span>
+                    </label>
+                    <input type="checkbox" name="settingsSuppressHospitalizationPopup" id="settingsSuppressHospitalizationPopup">
                 </fieldset>
 
                 <!-- Disable Terminal and Navigation Shortcuts -->

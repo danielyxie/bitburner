@@ -159,7 +159,7 @@ cancelOrder
     :param number price: Execution price for the order
     :param string type: Type of order. It must specify "limit" or "stop", and must also specify "buy" or "sell". This is NOT
         case-sensitive. Here are four examples that will work:
-        
+
         * limitbuy
         * limitsell
         * stopbuy
@@ -172,3 +172,38 @@ cancelOrder
     Cancels an oustanding Limit or Stop order on the stock market.
 
     The ability to use limit and stop orders is **not** immediately available to the player and must be unlocked later on in the game.
+
+getStockVolatility
+------------------
+
+.. js:function:: getStockVolatility(sym)
+
+    :param string sym: Symbol of stock
+
+    Returns the volatility of the specified stock.
+
+    Volatility represents the maximum percentage by which a stock's price can
+    change every tick. The volatility is returned as a decimal value, NOT
+    a percentage (e.g. if a stock has a volatility of 3%, then this function will
+    return 0.03, NOT 3).
+
+    In order to use this function, you must first purchase access to the Four Sigma (4S)
+    Market Data TIX API.
+
+getStockForecast
+----------------
+
+.. js:function:: getStockForecast(sym)
+
+    :param string sym: Symbol of stock
+
+    Returns the probability that the specified stock's price will increase
+    (as opposed to decrease) during the next tick.
+
+    The probability is returned as a decimal value, NOT a percentage (e.g. if a
+    stock has a 60% chance of increasing, then this function will return 0.6,
+    NOT 60).
+
+    In other words, if this function returned 0.30 for a stock, then this means
+    that the stock's price has a 30% chance of increasing and a 70% chance of
+    decreasing during the next tick.

@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.40.1",
+    Version:                "0.40.2",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -115,6 +115,8 @@ let CONSTANTS = {
     //Stock market constants
     WSEAccountCost:         200e6,
     TIXAPICost:             5e9,
+    MarketData4SCost:       1e9,
+    MarketDataTixApi4SCost: 20e9,
     StockMarketCommission:  100e3,
 
     //Hospital/Health
@@ -491,21 +493,32 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
-    "v0.40.1 - Community Update<br>" +
-    "* Added getPurchasedServerCost() Netscript function (by kopelli)<br>" +
-    "* Added getFavorToDonate() Netscript function (by hydroflame)<br>" +
-    "* Added getFactionFavorGain() and getCompanyFavorGain() Singularity functions (by hydroflame)<br>" +
-    "* Accumulated 'bonus' time in Bladeburner is now displayed in the UI (by hydroflame)<br>" +
-    "* The Red Pill can now be purchased with negative money (since its supposed to be free) (by hydroflame)<br>" +
-    "* Cranial Signal Processor Augmentations now have the previous generation as a prerequisite. i.e. Cranial Signal Processor - Gen II requires Gen I (by Kline-)<br>" +
-    "* Terminal now supports semicolon usage (end of command). This allows chaining multiple Terminal commands (by hydroflame)<br>" + 
-    "* Bladeburner Raid operations can no longer be performed if your estimate of Synthoid communities is zero (by hydroflame)<br>" +
-    "* The difficulty of BN-12 now scales faster (by hydroflame)<br>"  +
-    "* Active Scripts UI now shows a RAM Usage bar for each server (by kopelli)<br>" +
-    "* Bug Fix: Corrected terminal timestamp format (by kopelli)<br>" +
-    "* Bug Fix: NetscriptJS scripts should now die properly if they don't have a 'main' function (by hydroflame)<br>" +
-    "* Bug Fix: write(), read(), and tryWrite() Netscript functions should now work properly for writing Arrays/objects to Netscript Ports<br>" + 
-    "* Various minor UI/QOL fixes by hydroflame, kopelli, and Kline-"
+    "v0.40.2<br>" +
+    "------------------------------<br>"  +
+    "* Bladeburner Changes:<br>" +
+    "*** Added getBonusTime(), getSkillUpgradeCost(), and getCity() Netscript functions to the API<br>" +
+    "*** Buffed the effects of many Bladeburner Augmentations<br>" +
+    "*** The Blade's Simulacrum Augmentation requires significantly less reputation but slightly more money<br>" +
+    "*** Slightly increased the amount of successes needed for a Contract/Operation in order to increase its max level<br>" +
+    "*** Increased the amount of money gained from Contracts by ~25%<br>" +
+    "*** Increased the base amount of rank gained from Operations by 10%<br>" +
+    "*** Significantly increased the 'randomness' in determining a Contract/Operation's initial count and rate of count increase<br>" +
+    "*** The number (count) of Operations should now increase significantly faster<br>" +
+    "*** There are now, on average, more Synthoid communities in a city<br>" +
+    "*** If automation is enabled (the feature in Bladeburner console), then switching to another action such as working for a company will now disable the automation<br>" +
+    "------------------------------<br>"  +
+    "* Stock Market Changes:<br>" +
+    "***Added a watchlist filter feature to the UI that allows you to specify which stocks to show<br>" +
+    "***Added the Four Sigma (4S) Market Data feed, which provides volatility and price forecast information about stocks<br>"  +
+    "***Added the 4S Market Data TIX API, which lets you access the aforementioned data through Netscript<br>"  +
+    "------------------------------<br>"  +
+    "* There is now a setting for enabling/disabling the popup that appears when you are hospitalized<br>" +
+    "* Bug Fix: Stock market should now be correctly initialized in BitNode-8 (by Kline-)<br>" +
+    "* Bug Fix: bladeburner.getCurrentAction() should now properly an 'Idle' object rather than null (by Kline-)<br>" +
+    "* Bug Fix: Bladeburner skill cost multiplier should now properly increase in BitNode-12 (by hydroflame)<br>" +
+    "* Bug Fix: 'document', 'hacknet', and 'window' keywords should no longer be counted multiple times in RAM calculations<br>" +
+    "* Bug Fix: Joining factions through Singularity functions should now prevent you from joining opposing factions<br>" + 
+    "* Bug Fix: Four Sigma should no longer have two 'Speech Enhancement' Augmentations (by Kline-)<br>"
 
 }
 

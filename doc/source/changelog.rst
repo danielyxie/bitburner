@@ -3,6 +3,31 @@
 Changelog
 =========
 
+v0.40.2 - 8/27/2018
+-------------------
+* Bladeburner Changes:
+    * Added getBonusTime(), getSkillUpgradeCost(), and getCity() Netscript functions to the API
+    * Buffed the effects of many Bladeburner Augmentations
+    * The Blade's Simulacrum Augmentation requires significantly less reputation but slightly more money
+    * Slightly increased the amount of successes needed for a Contract/Operation in order to increase its max level
+    * Increased the amount of money gained from Contracts by ~25%
+    * Increased the base amount of rank gained from Operations by 10%
+    * Significantly increased the 'randomness' in determining a Contract/Operation's initial count and rate of count increase
+    * The number (count) of Operations should now increase significantly faster
+    * There are now, on average, more Synthoid communities in a city
+    * If automation is enabled (the feature in Bladeburner console), then switching to another action such as working for a company will now disable the automation
+* Stock Market Changes:
+    *Added a watchlist filter feature to the UI that allows you to specify which stocks to show
+    *Added the Four Sigma (4S) Market Data feed, which provides volatility and price forecast information about stocks
+    *Added the 4S Market Data TIX API, which lets you access the aforementioned data through Netscript
+* There is now a setting for enabling/disabling the popup that appears when you are hospitalized
+* Bug Fix: Stock market should now be correctly initialized in BitNode-8 (by Kline-)
+* Bug Fix: bladeburner.getCurrentAction() should now properly an 'Idle' object rather than null (by Kline-)
+* Bug Fix: Bladeburner skill cost multiplier should now properly increase in BitNode-12 (by hydroflame)
+* Bug Fix: 'document', 'hacknet', and 'window' keywords should no longer be counted multiple times in RAM calculations
+* Bug Fix: Joining factions through Singularity functions should now prevent you from joining opposing factions
+* Bug Fix: Four Sigma should no longer have two 'Speech Enhancement' Augmentations (by Kline-)
+
 v0.40.1 - 8/5/2018 - Community Update
 -------------------------------------
 * Added getPurchasedServerCost() Netscript function (by kopelli)

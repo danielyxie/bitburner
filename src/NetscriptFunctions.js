@@ -5,7 +5,7 @@ import {updateActiveScriptsItems}                   from "./ActiveScriptsUI";
 import {Augmentations, Augmentation,
         augmentationExists, installAugmentations,
         AugmentationNames}                          from "./Augmentations";
-import {BitNodeMultipliers}                         from "./BitNode";
+import {BitNodeMultipliers}                         from "./BitNodeMultipliers";
 import {determineCrimeSuccess, findCrime}           from "./Crimes";
 import {Bladeburner}                                from "./Bladeburner";
 import {Companies, Company, CompanyPosition,
@@ -13,12 +13,11 @@ import {Companies, Company, CompanyPosition,
 import {CONSTANTS}                                  from "./Constants";
 import {Programs}                                   from "./CreateProgram";
 import {DarkWebItems}                               from "./DarkWeb";
-import {Engine}                                     from "./engine";
 import {AllGangs}                                   from "./Gang";
 import {Factions, Faction, joinFaction,
         factionExists, purchaseAugmentation}        from "./Faction";
 import {getCostOfNextHacknetNode, purchaseHacknet}  from "./HacknetNode";
-import {Locations}                                  from "./Location";
+import {Locations}                                  from "./Locations";
 import {Message, Messages}                          from "./Message";
 import {inMission}                                  from "./Missions";
 import {Player}                                     from "./Player";
@@ -35,7 +34,7 @@ import {StockMarket, StockSymbols, SymbolToStockMap, initStockSymbols,
         updateStockTicker, updateStockPlayerPosition,
         Stock, shortStock, sellShort, OrderTypes,
         PositionTypes, placeOrder, cancelOrder}     from "./StockMarket";
-import {post}                                       from "./Terminal";
+import {post}                                       from "./ui/postToTerminal";
 import {TextFile, getTextFile, createTextFile}      from "./TextFile";
 
 import {unknownBladeburnerActionErrorMessage,
@@ -50,6 +49,7 @@ import {makeRuntimeRejectMsg, netscriptDelay, runScriptFromScript,
 import {NetscriptPort}                              from "./NetscriptPort";
 
 import Decimal                                      from "decimal.js";
+import {Page, routing}                              from "./ui/navigationTracking";
 import {dialogBoxCreate}                            from "../utils/DialogBox";
 import {isPowerOfTwo}                               from "../utils/helpers/isPowerOfTwo";
 import {arrayToString}                              from "../utils/helpers/arrayToString";
@@ -183,7 +183,7 @@ function NetscriptFunctions(workerScript) {
     /**
      * @param {number} ram The amount of server RAM to calculate cost of.
      * @exception {Error} If the value passed in is not numeric, out of range, or too large of a value.
-     * @returns {number} The cost of 
+     * @returns {number} The cost of
      */
     const getPurchaseServerRamCostGuard = (ram) => {
         const guardedRam = Math.round(ram);
@@ -1415,7 +1415,7 @@ function NetscriptFunctions(workerScript) {
             var newTotal = origTotal + totalPrice;
             stock.playerShares += shares;
             stock.playerAvgPx = newTotal / stock.playerShares;
-            if (Engine.currentPage == Engine.Page.StockMarket) {
+            if (routing.isOn(Page.StockMarket)) {
                 updateStockPlayerPosition(stock);
             }
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.buyStock == null) {
@@ -1456,7 +1456,7 @@ function NetscriptFunctions(workerScript) {
             if (stock.playerShares == 0) {
                 stock.playerAvgPx = 0;
             }
-            if (Engine.currentPage == Engine.Page.StockMarket) {
+            if (routing.isOn(Page.StockMarket)) {
                 updateStockPlayerPosition(stock);
             }
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.sellStock == null) {
@@ -1598,6 +1598,36 @@ function NetscriptFunctions(workerScript) {
                 pos: orderPos
             };
             return cancelOrder(params, workerScript);
+        },
+        getStockVolatility : function(symbol) {
+            if (workerScript.checkingRam) {
+                return updateStaticRam("getStockVolatility", CONSTANTS.ScriptBuySellStockRamCost);
+            }
+            updateDynamicRam("getStockVolatility", CONSTANTS.ScriptBuySellStockRamCost);
+            if (!Player.has4SDataTixApi) {
+                throw makeRuntimeRejectMsg(workerScript, "You don't have 4S Market Data TIX API Access! Cannot use getStockVolatility()");
+            }
+            var stock = SymbolToStockMap[symbol];
+            if (stock == null) {
+                throw makeRuntimeRejectMsg(workerScript, "ERROR: Invalid stock symbol passed into getStockVolatility()");
+            }
+            return stock.mv / 100; //Convert from percentage to decimal
+        },
+        getStockForecast : function(symbol) {
+            if (workerScript.checkingRam) {
+                return updateStaticRam("getStockForecast", CONSTANTS.ScriptBuySellStockRamCost);
+            }
+            updateDynamicRam("getStockForecast", CONSTANTS.ScriptBuySellStockRamCost);
+            if (!Player.has4SDataTixApi) {
+                throw makeRuntimeRejectMsg(workerScript, "You don't have 4S Market Data TIX API Access! Cannot use getStockForecast()");
+            }
+            var stock = SymbolToStockMap[symbol];
+            if (stock == null) {
+                throw makeRuntimeRejectMsg(workerScript, "ERROR: Invalid stock symbol passed into getStockForecast()");
+            }
+            var forecast = 50;
+            stock.b ? forecast += stock.otlkMag : forecast -= stock.otlkMag;
+            return forecast / 100; //Convert from percentage to decimal
         },
         getPurchasedServerLimit : function() {
             if (workerScript.checkingRam) {
@@ -2844,16 +2874,16 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("ERROR: Cannot join " + name + " Faction because you have not been invited. joinFaction() failed");
                 return false;
             }
-
-            var index = Player.factionInvitations.indexOf(name);
-            if (index === -1) {
-                //Redundant and should never happen...
-                workerScript.scriptRef.log("ERROR: Cannot join " + name + " Faction because you have not been invited. joinFaction() failed");
-                return false;
-            }
-            Player.factionInvitations.splice(index, 1);
             var fac = Factions[name];
             joinFaction(fac);
+
+            //Update Faction Invitation list to account for joined + banned factions
+            for (var i = 0; i < Player.factionInvitations.length; ++i) {
+                if (Player.factionInvitations[i] == name || Factions[Player.factionInvitations[i]].isBanned) {
+                    Player.factionInvitations.splice(i, 1);
+                    i--;
+                }
+            }
             Player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.joinFaction == null) {
                 workerScript.scriptRef.log("Joined the " + name + " faction.");
@@ -3424,12 +3454,7 @@ function NetscriptFunctions(workerScript) {
                 }
                 updateDynamicRam("getCurrentAction", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 4);
                 if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
-                    let res = Player.bladeburner.getTypeAndNameFromActionId(Player.bladeburner.action);
-                    if (res.type === "Idle" && res.name === "Idle") {
-                        return null;
-                    } else {
-                        return res;
-                    }
+                    return Player.bladeburner.getTypeAndNameFromActionId(Player.bladeburner.action);
                 }
                 throw makeRuntimeRejectMsg(workerScript, "getCurrentAction() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
@@ -3644,6 +3669,21 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "getSkillLevel() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
+            getSkillUpgradeCost : function(skillName="") {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getSkillUpgradeCost", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
+                }
+                updateDynamicRam("getSkillUpgradeCost", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+                    try {
+                        return Player.bladeburner.getSkillUpgradeCostNetscriptFn(skillName, workerScript);
+                    } catch(e) {
+                        throw makeRuntimeRejectMsg(workerScript, "Bladeburner.getSkillUpgradeCost() failed with exception: " + e);
+                    }
+                }
+                throw makeRuntimeRejectMsg(workerScript, "getSkillUpgradeCost() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                                                         "at the Bladeburner division or because you do not have Source-File 7");
+            },
             upgradeSkill : function(skillName) {
                 if (workerScript.checkingRam) {
                     return updateStaticRam("upgradeSkill", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
@@ -3734,6 +3774,21 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "getCityChaos() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
+            getCity : function() {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getCity", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
+                }
+                updateDynamicRam("getCity", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+                    try {
+                        return Player.bladeburner.city;
+                    } catch(e) {
+                        throw makeRuntimeRejectMsg(workerScript, "Bladeburner.getCity() failed with exception: " + e);
+                    }
+                }
+                throw makeRuntimeRejectMsg(workerScript, "getCity() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                                                         "at the Bladeburner division or because you do not have Source-File 7");
+            },
             switchCity : function(cityName) {
                 if (workerScript.checkingRam) {
                     return updateStaticRam("switchCity", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
@@ -3790,6 +3845,14 @@ function NetscriptFunctions(workerScript) {
                     }
                 }
                 throw makeRuntimeRejectMsg(workerScript, "joinBladeburnerDivision() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                                                         "at the Bladeburner division or because you do not have Source-File 7");
+            },
+            getBonusTime : function() {
+                if (workerScript.checkingRam) {return 0;}
+                if ((Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+                    return Math.round(Player.bladeburner.storedCycles / 5);
+                }
+                throw makeRuntimeRejectMsg(workerScript, "getBonusTime() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             }
         }

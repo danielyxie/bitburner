@@ -1,6 +1,5 @@
 import {CONSTANTS}                      from "./Constants";
-import {Locations}                      from "./Location";
-import {Player}                         from "./Player";
+import {Locations}                      from "./Locations";
 
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}               from "../utils/JSONReviver";

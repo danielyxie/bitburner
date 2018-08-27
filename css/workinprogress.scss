@@ -6,6 +6,14 @@
     color: var(--my-font-color);
     width: 99%;
     height: 100%;
+    overflow-y: hidden;
+}
+
+.generic-fullscreen-container-scroll {
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    padding-right: 20px;
 }
 
 #work-in-progress-container {

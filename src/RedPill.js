@@ -1,4 +1,4 @@
-import {BitNode, BitNodes}                      from "./BitNode";
+import {BitNodes}                               from "./BitNode";
 import {Engine}                                 from "./engine";
 import {Player}                                 from "./Player";
 import {prestigeSourceFile}                     from "./Prestige";
@@ -19,7 +19,7 @@ import {yesNoBoxCreate, yesNoBoxGetYesButton,
 function writeRedPillLine(line) {
     return new Promise(function(resolve, reject) {
 
-        var container = document.getElementById("red-pill-container");
+        var container = document.getElementById("red-pill-content");
         var pElem = document.createElement("p");
         container.appendChild(pElem);
 
@@ -134,7 +134,7 @@ function giveSourceFile(bitNodeNumber) {
 
 function loadBitVerse(destroyedBitNodeNum, flume=false) {
     //Clear the screen
-    var container = document.getElementById("red-pill-container");
+    var container = document.getElementById("red-pill-content");
     removeChildrenFromElement(container);
 
     //Create the Bit Verse

@@ -1,6 +1,5 @@
 import {CONSTANTS}                              from "./Constants";
-import {Engine}                                 from "./engine";
-import {Locations}                              from "./Location";
+import {Locations}                              from "./Locations";
 import {hasWallStreetSF, wallStreetSFLvl}       from "./NetscriptFunctions";
 import {WorkerScript}                           from "./NetscriptWorker";
 import {Player}                                 from "./Player";
@@ -9,9 +8,13 @@ import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {clearEventListeners}                    from "../utils/uiHelpers/clearEventListeners";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver";
+import {Page, routing}                          from "./ui/navigationTracking";
 import numeral                                  from "numeral/min/numeral.min";
-import {formatNumber}                           from "../utils/StringHelperFunctions";
+import {exceptionAlert}                         from "../utils/helpers/exceptionAlert";
 import {getRandomInt}                           from "../utils/helpers/getRandomInt";
+import {KEY}                                    from "../utils/helpers/keyCodes";
+import {createElement}                          from "../utils/uiHelpers/createElement";
+import {removeChildrenFromElement}              from "../utils/uiHelpers/removeChildrenFromElement";
 import {removeElementById}                      from "../utils/uiHelpers/removeElementById";
 import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
         yesNoBoxGetYesButton, yesNoBoxGetNoButton,
@@ -410,6 +413,7 @@ function stockMarketCycle() {
     for (var name in StockMarket) {
         if (StockMarket.hasOwnProperty(name)) {
             var stock = StockMarket[name];
+            if (!(stock instanceof Stock)) {continue;}
             var thresh = 0.6;
             if (stock.b) {thresh = 0.4;}
             if (Math.random() < thresh) {
@@ -430,8 +434,8 @@ function buyStock(stock, shares) {
 
     var totalPrice = stock.price * shares;
     if (Player.money.lt(totalPrice + CONSTANTS.StockMarketCommission)) {
-        dialogBoxCreate("You do not have enough money to purchase this. You need $" +
-                        formatNumber(totalPrice + CONSTANTS.StockMarketCommission, 2).toString() + ".");
+        dialogBoxCreate("You do not have enough money to purchase this. You need " +
+                        numeral(totalPrice + CONSTANTS.StockMarketCommission).format('($0.000a)') + ".");
         return false;
     }
 
@@ -441,9 +445,9 @@ function buyStock(stock, shares) {
     stock.playerShares += shares;
     stock.playerAvgPx = newTotal / stock.playerShares;
     updateStockPlayerPosition(stock);
-    dialogBoxCreate("Bought " + formatNumber(shares, 0) + " shares of " + stock.symbol + " at $" +
-                    formatNumber(stock.price, 2) + " per share. You also paid $" +
-                    formatNumber(CONSTANTS.StockMarketCommission, 2) + " in commission fees.");
+    dialogBoxCreate("Bought " + numeral(shares).format('0,0') + " shares of " + stock.symbol + " at " +
+                    numeral(stock.price).format('($0.000a)') + " per share. Paid " +
+                    numeral(CONSTANTS.StockMarketCommission).format('($0.000a)') + " in commission fees.");
     return true;
 }
 
@@ -464,9 +468,9 @@ function sellStock(stock, shares) {
         stock.playerAvgPx = 0;
     }
     updateStockPlayerPosition(stock);
-    dialogBoxCreate("Sold " + formatNumber(shares, 0) + " shares of " + stock.symbol + " at $" +
-                    formatNumber(stock.price, 2) + " per share. After commissions, you gained " +
-                    "a total of $" + formatNumber(gains, 2));
+    dialogBoxCreate("Sold " + numeral(shares).format('0,0') + " shares of " + stock.symbol + " at " +
+                    numeral(stock.price).format('($0.000a)') + " per share. After commissions, you gained " +
+                    "a total of " + numeral(gains).format('($0.000a)') + ".");
     return true;
 }
 
@@ -488,12 +492,12 @@ function shortStock(stock, shares, workerScript=null) {
     var totalPrice = stock.price * shares;
     if (Player.money.lt(totalPrice + CONSTANTS.StockMarketCommission)) {
         if (tixApi) {
-            workerScript.scriptRef.log("ERROR: shortStock() failed because you do not have " +
+            workerScript.scriptRef.log("ERROR: shortStock() failed because you do not have enough " +
                                        "money to purchase this short position. You need " +
-                                       numeral(totalPrice + CONSTANTS.StockMarketCommission).format('($0.000a)'));
+                                       numeral(totalPrice + CONSTANTS.StockMarketCommission).format('($0.000a)') + ".");
         } else {
-            dialogBoxCreate("You do not have enough money to purchase this short position. You need $" +
-                            formatNumber(totalPrice + CONSTANTS.StockMarketCommission, 2) + ".");
+            dialogBoxCreate("You do not have enough money to purchase this short position. You need " +
+                            numeral(totalPrice + CONSTANTS.StockMarketCommission).format('($0.000a)') + ".");
         }
 
         return false;
@@ -507,14 +511,14 @@ function shortStock(stock, shares, workerScript=null) {
     updateStockPlayerPosition(stock);
     if (tixApi) {
         if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.shortStock == null) {
-            workerScript.scriptRef.log("Bought a short position of " + formatNumber(shares, 0) + " shares of " + stock.symbol + " at " +
+            workerScript.scriptRef.log("Bought a short position of " + numeral(shares).format('0,0') + " shares of " + stock.symbol + " at " +
                                        numeral(stock.price).format('($0.000a)') + " per share. Paid " +
                                        numeral(CONSTANTS.StockMarketCommission).format('($0.000a)') + " in commission fees.");
         }
     } else {
-        dialogBoxCreate("Bought a short position of " + formatNumber(shares, 0) + " shares of " + stock.symbol + " at $" +
-                        formatNumber(stock.price, 2) + " per share. You also paid $" +
-                        formatNumber(CONSTANTS.StockMarketCommission, 2) + " in commission fees.");
+        dialogBoxCreate("Bought a short position of " + numeral(shares).format('0,0') + " shares of " + stock.symbol + " at " +
+                        numeral(stock.price).format('($0.000a)') + " per share. Paid " +
+                        numeral(CONSTANTS.StockMarketCommission).format('($0.000a)') + " in commission fees.");
     }
     return true;
 }
@@ -551,14 +555,14 @@ function sellShort(stock, shares, workerScript=null) {
     updateStockPlayerPosition(stock);
     if (tixApi) {
         if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.sellShort == null) {
-            workerScript.scriptRef.log("Sold your short position of " + shares + " shares of " + stock.symbol + " at " +
+            workerScript.scriptRef.log("Sold your short position of " + numeral(shares).format('0,0') + " shares of " + stock.symbol + " at " +
                                        numeral(stock.price).format('($0.000a)') + " per share. After commissions, you gained " +
-                                       "a total of " + numeral(origCost + profit).format('($0.000a)'));
+                                       "a total of " + numeral(origCost + profit).format('($0.000a)') + ".");
         }
     } else {
-        dialogBoxCreate("Sold your short position of " + formatNumber(shares, 0) + " shares of " + stock.symbol + " at $" +
-                        formatNumber(stock.price, 2) + " per share. After commissions, you gained " +
-                        "a total of $" + formatNumber(origCost + profit, 2));
+        dialogBoxCreate("Sold your short position of " + numeral(shares).format('0,0') + " shares of " + stock.symbol + " at " +
+                        numeral(stock.price).format('($0.000a)') + " per share. After commissions, you gained " +
+                        "a total of " + numeral(origCost + profit).format('($0.000a)') + ".");
     }
 
     return true;
@@ -593,7 +597,7 @@ function updateStockPrices() {
                 processOrders(stock, OrderTypes.LimitSell, PositionTypes.Long);
                 processOrders(stock, OrderTypes.StopBuy, PositionTypes.Long);
                 processOrders(stock, OrderTypes.StopSell, PositionTypes.Short);
-                if (Engine.currentPage == Engine.Page.StockMarket) {
+                if (routing.isOn(Page.StockMarket)) {
                     updateStockTicker(stock, true);
                 }
             } else {
@@ -602,7 +606,7 @@ function updateStockPrices() {
                 processOrders(stock, OrderTypes.LimitSell, PositionTypes.Short);
                 processOrders(stock, OrderTypes.StopBuy, PositionTypes.Short);
                 processOrders(stock, OrderTypes.StopSell, PositionTypes.Long);
-                if (Engine.currentPage == Engine.Page.StockMarket) {
+                if (routing.isOn(Page.StockMarket)) {
                     updateStockTicker(stock, false);
                 }
             }
@@ -694,20 +698,31 @@ var stockMarketContentCreated = false;
 var stockMarketPortfolioMode = false;
 var COMM = CONSTANTS.StockMarketCommission;
 function displayStockMarketContent() {
-    if (Player.hasWseAccount == null) {Player.hasWseAccount = false;}
+    if (Player.hasWseAccount == null)   {Player.hasWseAccount = false;}
     if (Player.hasTixApiAccess == null) {Player.hasTixApiAccess = false;}
+    if (Player.has4SData == null)       {Player.has4SData = false;}
+    if (Player.has4SDataTixApi == null) {Player.has4SDataTixApi = false;}
+
+    function stylePurchaseButton(btn, cost, flag, initMsg, purchasedMsg) {
+        btn.innerText = initMsg;
+        btn.classList.remove("a-link-button");
+        btn.classList.remove("a-link-button-bought");
+        btn.classList.remove("a-link-button-inactive");
+        if (!flag && Player.money.gte(cost)) {
+            btn.classList.add("a-link-button");
+        } else if (flag) {
+            btn.innerText = purchasedMsg;
+            btn.classList.add("a-link-button-bought");
+        } else {
+            btn.classList.add("a-link-button-inactive");
+        }
+    }
 
     //Purchase WSE Account button
     var wseAccountButton = clearEventListeners("stock-market-buy-account");
-    wseAccountButton.innerText = "Buy WSE Account - $" + formatNumber(CONSTANTS.WSEAccountCost, 2).toString();
-    if (!Player.hasWseAccount && Player.money.gte(CONSTANTS.WSEAccountCost)) {
-        wseAccountButton.setAttribute("class", "a-link-button");
-    } else if (Player.hasWseAccount){
-        wseAccountButton.innerText = "WSE Account - Purchased";
-        wseAccountButton.setAttribute("class", "a-link-button-bought");
-    } else {
-        wseAccountButton.setAttribute("class", "a-link-button-inactive");
-    }
+    stylePurchaseButton(wseAccountButton, CONSTANTS.WSEAccountCost, Player.hasWseAccount,
+                        "Buy WSE Account - " + numeral(CONSTANTS.WSEAccountCost).format('($0.000a)'),
+                        "WSE Account - Purchased");
     wseAccountButton.addEventListener("click", function() {
         Player.hasWseAccount = true;
         initStockMarket();
@@ -719,16 +734,9 @@ function displayStockMarketContent() {
 
     //Purchase TIX API Access account
     var tixApiAccessButton = clearEventListeners("stock-market-buy-tix-api");
-    tixApiAccessButton.innerText = "Buy Trade Information eXchange (TIX) API Access - $" +
-                                   formatNumber(CONSTANTS.TIXAPICost, 2).toString();
-    if (!Player.hasTixApiAccess && Player.money.gte(CONSTANTS.TIXAPICost)) {
-        tixApiAccessButton.setAttribute("class", "a-link-button");
-    } else if(Player.hasTixApiAccess) {
-        tixApiAccessButton.innerText = "Trade Information eXchange (TIX) API Access - Purchased"
-        tixApiAccessButton.setAttribute("class", "a-link-button-bought");
-    } else {
-        tixApiAccessButton.setAttribute("class", "a-link-button-inactive");
-    }
+    stylePurchaseButton(tixApiAccessButton, CONSTANTS.TIXAPICost, Player.hasTixApiAccess,
+                        "Buy Trade Information eXchange (TIX) API Access - " + numeral(CONSTANTS.TIXAPICost).format('($0.000a)'),
+                        "TIX API Access - Purchased");
     tixApiAccessButton.addEventListener("click", function() {
         Player.hasTixApiAccess = true;
         Player.loseMoney(CONSTANTS.TIXAPICost);
@@ -736,23 +744,111 @@ function displayStockMarketContent() {
         return false;
     });
 
+    //Purchase Four Sigma Market Data Feed
+    var marketDataButton = clearEventListeners("stock-market-buy-4s-data");
+    stylePurchaseButton(marketDataButton, CONSTANTS.MarketData4SCost, Player.has4SData,
+                        "Buy 4S Market Data Access - " + numeral(CONSTANTS.MarketData4SCost).format('($0.000a)'),
+                        "4S Market Data - Purchased");
+    marketDataButton.addEventListener("click", function() {
+        Player.has4SData = true;
+        Player.loseMoney(CONSTANTS.MarketData4SCost);
+        displayStockMarketContent();
+        return false;
+    });
+    marketDataButton.appendChild(createElement("span", {
+        class:"tooltiptext",
+        innerText:"Lets you view additional pricing and volatility information about stocks"
+    }));
+    marketDataButton.style.marginRight = "2px"; //Adjusts following help tip to be slightly closer
+
+    //4S Market Data Help Tip
+    var marketDataHelpTip = clearEventListeners("stock-market-4s-data-help-tip");
+    marketDataHelpTip.style.marginTop = "10px";
+    marketDataHelpTip.addEventListener("click", ()=>{
+        dialogBoxCreate("Access to the 4S Market Data feed will display two additional pieces " +
+                        "of information about each stock: Price Forecast & Volatility<br><br>" +
+                        "Price Forecast indicates the probability the stock has of increasing or " +
+                        "decreasing. A '+' forecast means the stock has a higher chance of increasing "  +
+                        "than decreasing, and a '-' means the opposite. The number of '+/-' symbols " +
+                        "is used to illustrate the magnitude of these probabilities. For example, " +
+                        "'+++' means that the stock has a significantly higher chance of increasing " +
+                        "than decreasing, while '+' means that the stock only has a slightly higher chance " +
+                        "of increasing than decreasing.<br><br>"  +
+                        "Volatility represents the maximum percentage by which a stock's price " +
+                        "can change every tick (a tick occurs every few seconds while the game " +
+                        "is running).<br><br>" +
+                        "A stock's price forecast can change over time. This is also affected by volatility. " +
+                        "The more volatile a stock is, the more its price forecast will change.");
+        return false;
+    });
+
+    //Purchase Four Sigma Market Data TIX API (Requires TIX API Access)
+    var marketDataTixButton = clearEventListeners("stock-market-buy-4s-tix-api");
+    stylePurchaseButton(marketDataTixButton, CONSTANTS.MarketDataTixApi4SCost, Player.has4SDataTixApi,
+                        "Buy 4S Market Data TIX API Access - " + numeral(CONSTANTS.MarketDataTixApi4SCost).format('($0.000a)'),
+                        "4S Market Data TIX API - Purchased");
+    if (Player.hasTixApiAccess) {
+        marketDataTixButton.addEventListener("click", function() {
+            Player.has4SDataTixApi = true;
+            Player.loseMoney(CONSTANTS.MarketDataTixApi4SCost);
+            displayStockMarketContent();
+            return false;
+        });
+        marketDataTixButton.appendChild(createElement("span", {
+            class:"tooltiptext",
+            innerText:"Lets you access 4S Market Data through Netscript"
+        }));
+    } else {
+        marketDataTixButton.classList.remove("a-link-button");
+        marketDataTixButton.classList.remove("a-link-button-bought");
+        marketDataTixButton.classList.remove("a-link-button-inactive");
+        marketDataTixButton.classList.add("a-link-button-inactive");
+        marketDataTixButton.appendChild(createElement("span", {
+            class:"tooltiptext",
+            innerText:"Requires TIX API Access"
+        }));
+    }
+
+
     var stockList = document.getElementById("stock-market-list");
     if (stockList == null) {return;}
 
+    //UI Elements that should only appear if you have WSE account access
+    var commissionText     = document.getElementById("stock-market-commission");
+    var modeBtn            = document.getElementById("stock-market-mode");
+    var expandBtn          = document.getElementById("stock-market-expand-tickers");
+    var collapseBtn        = document.getElementById("stock-market-collapse-tickers");
+    var watchlistFilter    = document.getElementById("stock-market-watchlist-filter");
+    var watchlistUpdateBtn = document.getElementById("stock-market-watchlist-filter-update");
+
+    //If Player doesn't have account, clear stocks UI and return
     if (!Player.hasWseAccount) {
         stockMarketContentCreated = false;
         while (stockList.firstChild) {
             stockList.removeChild(stockList.firstChild);
         }
+        commissionText.style.visibility = "hidden";
+        modeBtn.style.visibility = "hidden";
+        expandBtn.style.visibility = "hidden";
+        collapseBtn.style.visibility = "hidden";
+        watchlistFilter.style.visibility = "hidden";
+        watchlistUpdateBtn.style.visibility = "hidden";
         return;
+    } else {
+        commissionText.style.visibility = "visible";
+        modeBtn.style.visibility = "visible";
+        expandBtn.style.visibility = "visible";
+        collapseBtn.style.visibility = "visible";
+        watchlistFilter.style.visibility = "visible";
+        watchlistUpdateBtn.style.visibility = "visible";
     }
 
     //Create stock market content if you have an account
     if (!stockMarketContentCreated && Player.hasWseAccount) {
         console.log("Creating Stock Market UI");
-        document.getElementById("stock-market-commission").innerHTML =
-            "Commission Fees: Every transaction you make has a $" +
-            formatNumber(CONSTANTS.StockMarketCommission, 2) + " commission fee.<br><br>" +
+        commissionText.innerHTML =
+            "Commission Fees: Every transaction you make has a " +
+            numeral(CONSTANTS.StockMarketCommission).format('($0.000a)') + " commission fee.<br><br>" +
             "WARNING: When you reset after installing Augmentations, the Stock Market is reset. " +
             "This means all your positions are lost, so make sure to sell your stocks before installing " +
             "Augmentations!";
@@ -803,7 +899,6 @@ function displayStockMarketContent() {
         });
 
         //Switch to Portfolio Mode Button
-        var modeBtn = clearEventListeners("stock-market-mode");
         if (modeBtn) {
             modeBtn.innerHTML = "Switch to 'Portfolio' Mode" +
                 "<span class='tooltiptext'>Displays only the stocks for which you have shares or orders</span>";
@@ -811,9 +906,7 @@ function displayStockMarketContent() {
         }
 
         //Expand/Collapse tickers buttons
-        var expandBtn   = clearEventListeners("stock-market-expand-tickers"),
-            collapseBtn = clearEventListeners("stock-market-collapse-tickers"),
-            stockList   = document.getElementById("stock-market-list");
+        var stockList = document.getElementById("stock-market-list");
         if (expandBtn) {
             expandBtn.addEventListener("click", ()=>{
                 var tickerHdrs = stockList.getElementsByClassName("accordion-header");
@@ -835,14 +928,30 @@ function displayStockMarketContent() {
             });
         }
 
-        for (var name in StockMarket) {
-            if (StockMarket.hasOwnProperty(name)) {
-                var stock = StockMarket[name];
-                if (!(stock instanceof Stock)) {continue;} //orders property is an array
-                createStockTicker(stock);
+        //Watchlish filter
+        if (watchlistFilter && watchlistUpdateBtn) {
+            //Initialize value in watchlist
+            if (StockMarket.watchlistFilter) {
+                watchlistFilter.value = StockMarket.watchlistFilter; //Remove whitespace
             }
+            watchlistUpdateBtn.addEventListener("click", ()=> {
+                let filterValue = watchlistFilter.value.toString();
+                StockMarket.watchlistFilter = filterValue.replace(/\s/g, '');
+                if (stockMarketPortfolioMode) {
+                    switchToPortfolioMode();
+                } else {
+                    switchToDisplayAllMode();
+                }
+            });
+            watchlistFilter.addEventListener("keyup", (e)=>{
+                e.preventDefault();
+                if (e.keyCode === KEY.ENTER) {watchlistUpdateBtn.click();}
+            })
+        } else {
+            console.warn("Stock Market Watchlist DOM elements could not be found");
         }
-        setStockTickerClickHandlers(); //Clicking headers opens/closes panels
+
+        createAllStockTickers();
         stockMarketContentCreated = true;
     }
 
@@ -850,8 +959,10 @@ function displayStockMarketContent() {
         for (var name in StockMarket) {
             if (StockMarket.hasOwnProperty(name)) {
                 var stock = StockMarket[name];
-                updateStockTicker(stock, null);
-                updateStockOrderList(stock);
+                if (stock instanceof Stock) {
+                    updateStockTicker(stock, null);
+                    updateStockOrderList(stock);
+                }
             }
         }
     }
@@ -860,17 +971,34 @@ function displayStockMarketContent() {
 //Displays only stocks you have position/order in
 function switchToPortfolioMode() {
     stockMarketPortfolioMode = true;
-    var stockList = document.getElementById("stock-market-list");
-    if (stockList == null) {return;}
     var modeBtn = clearEventListeners("stock-market-mode");
     if (modeBtn) {
         modeBtn.innerHTML = "Switch to 'All stocks' Mode" +
             "<span class='tooltiptext'>Displays all stocks on the WSE</span>";
         modeBtn.addEventListener("click", switchToDisplayAllMode);
     }
-    while(stockList.firstChild) {stockList.removeChild(stockList.firstChild);}
+    createAllStockTickers();
+}
 
-    //Get Order book (create it if it hasn't been created)
+//Displays all stocks
+function switchToDisplayAllMode() {
+    stockMarketPortfolioMode = false;
+    var modeBtn = clearEventListeners("stock-market-mode");
+    if (modeBtn) {
+        modeBtn.innerHTML = "Switch to 'Portfolio' Mode" +
+            "<span class='tooltiptext'>Displays only the stocks for which you have shares or orders</span>";
+        modeBtn.addEventListener("click", switchToPortfolioMode);
+    }
+    createAllStockTickers();
+}
+
+function createAllStockTickers() {
+    var stockList = document.getElementById("stock-market-list");
+    if (stockList == null) {
+        exceptionAlert("Error creating Stock Tickers UI. DOM element with ID 'stock-market-list' could not be found");
+    }
+    removeChildrenFromElement(stockList);
+
     var orderBook = StockMarket["Orders"];
     if (orderBook == null) {
         var orders = {};
@@ -882,41 +1010,30 @@ function switchToPortfolioMode() {
             }
         }
         StockMarket["Orders"] = orders;
+        orderBook = StockMarket["Orders"];
+    }
+
+    let watchlist = null;
+    if (StockMarket.watchlistFilter != null && StockMarket.watchlistFilter !== "") {
+        let filter = StockMarket.watchlistFilter.replace(/\s/g, '');
+        watchlist = filter.split(",");
     }
 
     for (var name in StockMarket) {
         if (StockMarket.hasOwnProperty(name)) {
             var stock = StockMarket[name];
             if (!(stock instanceof Stock)) {continue;} //orders property is an array
-            var stockOrders = orderBook[stock.symbol];
-            if (stock.playerShares === 0 && stock.playerShortShares === 0 &&
-                stockOrders.length === 0) {continue;}
-            createStockTicker(stock);
-        }
-    }
-    setStockTickerClickHandlers();
-}
+            if (watchlist && !watchlist.includes(stock.symbol)) {continue;} //Watchlist filtering
 
-//Displays all stocks
-function switchToDisplayAllMode() {
-    stockMarketPortfolioMode = false;
-    var stockList = document.getElementById("stock-market-list");
-    if (stockList == null) {return;}
-    var modeBtn = clearEventListeners("stock-market-mode");
-    if (modeBtn) {
-        modeBtn.innerHTML = "Switch to 'Portfolio' Mode" +
-            "<span class='tooltiptext'>Displays only the stocks for which you have shares or orders</span>";
-        modeBtn.addEventListener("click", switchToPortfolioMode);
-    }
-    while(stockList.firstChild) {stockList.removeChild(stockList.firstChild);}
-    for (var name in StockMarket) {
-        if (StockMarket.hasOwnProperty(name)) {
-            var stock = StockMarket[name];
-            if (!(stock instanceof Stock)) {continue;} //orders property is an array
+            let stockOrders = orderBook[stock.symbol];
+            if (stockMarketPortfolioMode) {
+                if (stock.playerShares === 0 && stock.playerShortShares === 0 &&
+                    stockOrders.length === 0) {continue;}
+            }
             createStockTicker(stock);
         }
     }
-    setStockTickerClickHandlers();
+    setStockTickerClickHandlers(); //Clicking headers opens/closes panels
 }
 
 function createStockTicker(stock) {
@@ -928,7 +1045,7 @@ function createStockTicker(stock) {
     var li = document.createElement("li"), hdr = document.createElement("button");
     hdr.classList.add("accordion-header");
     hdr.setAttribute("id", tickerId + "-hdr");
-    hdr.innerHTML = stock.name + "  -  " + stock.symbol + "  -  $" + stock.price;
+    hdr.innerHTML = stock.name + "  -  " + stock.symbol + "  -  " + numeral(stock.price).format('($0.000a)');
 
     //Div for entire panel
     var stockDiv = document.createElement("div");
@@ -1182,7 +1299,7 @@ function setStockTickerClickHandlers() {
 
 //'increase' argument is a boolean indicating whether the price increased or decreased
 function updateStockTicker(stock, increase) {
-    if (Engine.currentPage !== Engine.Page.StockMarket) {return;}
+    if (!routing.isOn(Page.StockMarket)) {return;}
     if (!(stock instanceof Stock)) {
         console.log("Invalid stock in updateStockTicker():");
         console.log(stock);
@@ -1197,17 +1314,32 @@ function updateStockTicker(stock, increase) {
     var hdr = document.getElementById(tickerId + "-hdr");
 
     if (hdr == null) {
-        if (!stockMarketPortfolioMode) {console.log("ERROR: Couldn't find ticker element for stock: " + stock.symbol);}
+        if (!stockMarketPortfolioMode) {
+            let watchlist = StockMarket.watchlistFilter;
+            if (watchlist !== "" && watchlist.includes(stock.symbol)) {
+                console.log("ERROR: Couldn't find ticker element for stock: " + stock.symbol);
+            }
+        }
         return;
     }
-    hdr.innerHTML = stock.name + "  -  " + stock.symbol + "  -  $" + formatNumber(stock.price, 2);
+    let hdrText = stock.name + " (" + stock.symbol + ") - " + numeral(stock.price).format('($0.000a)');
+    if (Player.has4SData) {
+        hdrText += " - Volatility: " + numeral(stock.mv).format('0,0.00') + "%" +
+                   " - Price Forecast: ";
+        if (stock.b) {
+            hdrText += "+".repeat(Math.floor(stock.otlkMag/10) + 1);
+        } else {
+            hdrText += "-".repeat(Math.floor(stock.otlkMag/10) + 1);
+        }
+    }
+    hdr.innerText = hdrText;
     if (increase != null) {
         increase ? hdr.style.color = "#66ff33" : hdr.style.color = "red";
     }
 }
 
 function updateStockPlayerPosition(stock) {
-    if (Engine.currentPage !== Engine.Page.StockMarket) {return;}
+    if (!routing.isOn(Page.StockMarket)) {return;}
     if (!(stock instanceof Stock)) {
         console.log("Invalid stock in updateStockPlayerPosition():");
         console.log(stock);
@@ -1256,32 +1388,38 @@ function updateStockPlayerPosition(stock) {
         "<h1 class='tooltip stock-market-position-text'>Long Position: " +
         "<span class='tooltiptext'>Shares in the long position will increase " +
         "in value if the price of the corresponding stock increases</span></h1>" +
-        "<br>Shares: " + formatNumber(stock.playerShares, 0) +
+        "<br>Shares: " + numeral(stock.playerShares).format('0,0') +
         "<br>Average Price: " + numeral(stock.playerAvgPx).format('$0.000a') +
         " (Total Cost: " + numeral(totalCost).format('$0.000a') + ")" +
         "<br>Profit: " + numeral(gains).format('$0.000a') +
-                     " (" + formatNumber(percentageGains*100, 2) + "%)<br><br>";
+                     " (" + numeral(percentageGains).format('0.00%') + ")<br><br>";
         if (Player.bitNodeN === 8 || (hasWallStreetSF && wallStreetSFLvl >= 2)) {
             stock.posTxtEl.innerHTML +=
             "<h1 class='tooltip stock-market-position-text'>Short Position: " +
             "<span class='tooltiptext'>Shares in short position will increase " +
             "in value if the price of the corresponding stock decreases</span></h1>" +
-            "<br>Shares: " + formatNumber(stock.playerShortShares, 0) +
+            "<br>Shares: " + numeral(stock.playerShortShares).format('0,0') +
             "<br>Average Price: " + numeral(stock.playerAvgShortPx).format('$0.000a') +
             " (Total Cost: " + numeral(shortTotalCost).format('$0.000a') + ")" +
             "<br>Profit: " + numeral(shortGains).format('$0.000a') +
-                         " (" + formatNumber(shortPercentageGains*100, 2) + "%)" +
+                         " (" + numeral(shortPercentageGains).format('0.00%') + ")" +
             "<br><br><h1 class='stock-market-position-text'>Orders: </h1>";
         }
 
 }
 
 function updateStockOrderList(stock) {
-    if (Engine.currentPage !== Engine.Page.StockMarket) {return;}
+    if (!routing.isOn(Page.StockMarket)) {return;}
     var tickerId = "stock-market-ticker-" + stock.symbol;
     var orderList = document.getElementById(tickerId + "-order-list");
     if (orderList == null) {
-        if (!stockMarketPortfolioMode) {console.log("ERROR: Could not find order list for " + stock.symbol);}
+        //Log only if its a valid error
+        if (!stockMarketPortfolioMode) {
+            let watchlist = StockMarket.watchlistFilter;
+            if (watchlist !== "" && watchlist.includes(stock.symbol)) {
+                console.log("ERROR: Could not find order list for " + stock.symbol);
+            }
+        }
         return;
     }
 
@@ -1327,7 +1465,7 @@ function updateStockOrderList(stock) {
             var posText = (order.pos === PositionTypes.Long ? "Long Position" : "Short Position");
             li.style.color = "white";
             li.innerText = order.type + " - " + posText + " - " +
-                           order.shares + " @ $" + formatNumber(order.price, 2);
+                           order.shares + " @ " + numeral(order.price).format('($0.000a)');
 
             var cancelButton = document.createElement("span");
             cancelButton.classList.add("stock-market-order-cancel-btn");

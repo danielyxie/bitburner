@@ -32,7 +32,7 @@ function yesNoBoxCreate(txt) {
 
     var c = document.getElementById("yes-no-box-container");
     if (c) {
-        c.style.display = "block";
+        c.style.display = "flex";
     } else {
         console.log("ERROR: Container not found for YesNoBox");
     }
@@ -75,7 +75,7 @@ function yesNoTxtInpBoxCreate(txt) {
 
     var c = document.getElementById("yes-no-text-input-box-container");
     if (c) {
-        c.style.display = "block";
+        c.style.display = "flex";
     } else {
         console.log("ERROR: Container not found for YesNoTextInputBox");
     }
