@@ -2049,7 +2049,7 @@ PlayerObject.prototype.reapplyAllSourceFiles = function() {
 //those requirements and will return an array of all factions that the Player should
 //receive an invitation to
 PlayerObject.prototype.checkForFactionInvitations = function() {
-    let invitedFactions = []; //Array which will hold all Factions th eplayer should be invited to
+    let invitedFactions = []; //Array which will hold all Factions the player should be invited to
 
     var numAugmentations = this.augmentations.length;
 

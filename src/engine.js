@@ -548,11 +548,11 @@ let Engine = {
 
     displayCharacterOverviewInfo: function() {
         Engine.overview.update();
-        
+
 
         const save = document.getElementById("character-overview-save-button");
         const flashClass = "flashing-button";
-        if(!Settings.AutosaveInterval) {    
+        if(!Settings.AutosaveInterval) {
             save.classList.add(flashClass);
         } else {
             save.classList.remove(flashClass);
@@ -570,7 +570,7 @@ let Engine = {
 
         var intText = "";
         if (Player.intelligence > 0) {
-            intText = 'Intelligence:  ' + (Player.intelligence).toLocaleString() + "<br><br><br>";
+            intText = 'Intelligence:  ' + (Player.intelligence).toLocaleString() + '<br>';
         }
 
         let bitNodeTimeText = "";
@@ -584,21 +584,21 @@ let Engine = {
             'Current City: ' + Player.city + '<br><br>' +
             'Employer: ' + Player.companyName + '<br>' +
             'Job Title: ' + companyPosition + '<br><br>' +
-            'Money: $' + formatNumber(Player.money.toNumber(), 2)+ '<br><br><br>' +
+            'Money: $' + formatNumber(Player.money.toNumber(), 2) + '<br><br><br>' +
             '<b>Stats</b><br><br>' +
             'Hacking Level: ' + (Player.hacking_skill).toLocaleString() +
-                            " (" + numeral(Player.hacking_exp).format('(0.000a)') + ' experience)<br>' +
+                            ' (' + numeral(Player.hacking_exp).format('(0.000a)') + ' experience)<br>' +
             'Strength:      ' + (Player.strength).toLocaleString() +
-                       " (" + numeral(Player.strength_exp).format('(0.000a)') + ' experience)<br>' +
+                       ' (' + numeral(Player.strength_exp).format('(0.000a)') + ' experience)<br>' +
             'Defense:       ' + (Player.defense).toLocaleString() +
-                      " (" + numeral(Player.defense_exp).format('(0.000a)')+ ' experience)<br>' +
+                      ' (' + numeral(Player.defense_exp).format('(0.000a)')+ ' experience)<br>' +
             'Dexterity:     ' + (Player.dexterity).toLocaleString() +
-                       " (" + numeral(Player.dexterity_exp).format('(0.000a)') + ' experience)<br>' +
+                       ' (' + numeral(Player.dexterity_exp).format('(0.000a)') + ' experience)<br>' +
             'Agility:       ' + (Player.agility).toLocaleString() +
-                      " (" + numeral(Player.agility_exp).format('(0.000a)') + ' experience)<br>' +
+                      ' (' + numeral(Player.agility_exp).format('(0.000a)') + ' experience)<br>' +
             'Charisma:      ' + (Player.charisma).toLocaleString() +
-                       " (" + numeral(Player.charisma_exp).format('(0.000a)') + ' experience)<br>' +
-            intText +
+                       ' (' + numeral(Player.charisma_exp).format('(0.000a)') + ' experience)<br>' +
+            intText + '<br><br>' +
             '<b>Multipliers</b><br><br>' +
             'Hacking Chance multiplier: ' + formatNumber(Player.hacking_chance_mult * 100, 2) + '%<br>' +
             'Hacking Speed multiplier:  ' + formatNumber(Player.hacking_speed_mult * 100, 2) + '%<br>' +
