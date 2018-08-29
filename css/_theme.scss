@@ -1,2 +1,12 @@
 $fontFamily: 'Lucida Console', 'Lucida Sans Unicode', 'Fira Mono', 'Consolas', 'Courier New', Courier, monospace, 'Times New Roman';
 $defaultFontSize: 16px;
+
+/* COLORS */
+$hacky-green: #adff2f;
+
+/* Attributes */
+$my-stat-hp-color:    #dd3434;
+$my-stat-money-color: #ffd700;
+$my-stat-hack-color:  $hacky-green;
+$my-stat-cha-color:   #a671d1;
+$my-stat-int-color:   #6495ed;

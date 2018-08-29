@@ -446,7 +446,7 @@ function updateHacknetNodesContent() {
 
     //Update player's money
     updateText("hacknet-nodes-player-money", "$" + formatNumber(Player.money.toNumber(), 2));
-    updateText("hacknet-nodes-total-production", "$" + formatNumber(Player.totalHacknetNodeProduction, 2) + " / second");
+    updateText("hacknet-nodes-total-production", "$" + formatNumber(Player.totalHacknetNodeProduction, 2) + " / sec");
 
     //Update information in each owned hacknet node
     for (var i = 0; i < Player.hacknetNodes.length; ++i) {
@@ -548,7 +548,7 @@ function updateHacknetNodeDomElement(nodeObj) {
 
     updateText("hacknet-node-name-" + nodeName, nodeName);
     updateText("hacknet-node-total-production-" + nodeName, "$" + formatNumber(nodeObj.totalMoneyGenerated, 2));
-    updateText("hacknet-node-production-rate-" + nodeName, "($" + formatNumber(nodeObj.moneyGainRatePerSecond, 2) + " / second)");
+    updateText("hacknet-node-production-rate-" + nodeName, "($" + formatNumber(nodeObj.moneyGainRatePerSecond, 2) + " / sec)");
     updateText("hacknet-node-level-" + nodeName, nodeObj.level);
     updateText("hacknet-node-ram-" + nodeName, nodeObj.ram + "GB");
     updateText("hacknet-node-cores-" + nodeName, nodeObj.cores);

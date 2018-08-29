@@ -3,10 +3,11 @@
 
 @import "reset";
 
-:root{
+:root {
     --my-font-color: #6f3;
     --my-background-color: #000;
     --my-highlight-color: #fff;
+    --my-prompt-color: #f92672;
 }
 
 body {
@@ -83,7 +84,7 @@ tr:focus {
     display: block;
     color: #e6e6e6;
     background-color: #555;
-    padding: 16px;
+    padding: 12px 8px;
     text-decoration: none;
 }
 
@@ -105,21 +106,36 @@ tr:focus {
     background-color: #aaa;
 }
 
+#hacking-menu-header-li,
+#character-menu-header-li,
+#world-menu-header-li,
+#help-menu-header-li {
+    position: relative;
+}
+
+/* Accordion Outline */
+.mainmenu-accordion-header {
+    outline: 2px solid #fff;
+}
+
 /* Plus and minus signs */
 .mainmenu-accordion-header:after {
     content: '\02795';
-    font-size: $defaultFontSize * 0.8125;
-    color: #fff;
     float: right;
-    margin-left: 5px;
-}
-
-.mainmenu-accordion-header.opened:after {
-    content: "\2796";
+    font-size: $defaultFontSize * 0.8125;
+    position: absolute;
+    bottom: 25%;
+    right: 3px;
+    color: transparent;
+    text-shadow: 0 0 0 #fff;
 }
 
 .mainmenu-accordion-header.opened {
     background-color: #222;
+
+    &:after {
+        content: "\2796";
+    }
 }
 
 /* Slide down transition */
@@ -127,11 +143,6 @@ tr:focus {
     max-height: 0;
     opacity: 1;
     transition: max-height 0.2s ease-out;
-}
-
-/* Borders */
-.mainmenu-accordion-header {
-    border: 2px solid #fff;
 }
 
 /* Make html links ("a" elements) nice looking buttons with this class */
@@ -144,7 +155,7 @@ a:visited {
     text-decoration: none;
     background-color: #555;
     color: #fff;
-    padding: 5px;
+    padding: 3px 5px;
     margin: 5px;
     border: 1px solid #333;
 
@@ -167,7 +178,7 @@ a:visited {
     text-decoration: none;
     background-color: #333;
     color: #fff;
-    padding: 5px;
+    padding: 3px 5px;
     margin: 5px;
     border: 1px solid #333;
     cursor: default;
@@ -188,7 +199,7 @@ a:visited {
     text-decoration: none;
     background-color: #0a0;
     color: #fff;
-    padding: 5px;
+    padding: 3px 5px;
     margin: 5px;
     border: 1px solid #0a0;
     cursor: default;
@@ -218,9 +229,9 @@ a:visited {
 #create-program-tab {
     position: relative;
 }
+
 #create-program-notification {
     font-size: $defaultFontSize * 0.625;
-
     position: absolute; /* Position the badge within the relatively positioned button */
     top: 0;
     right: 0;
@@ -364,7 +375,7 @@ a:visited {
 
 /* Blinking Cursor */
 /* ----- blinking cursor animation ----- */
-.typed-cursor{
+.typed-cursor {
     opacity: 1;
     -webkit-animation: blink 0.95s infinite;
     -moz-animation: blink 0.95s infinite;
@@ -400,16 +411,16 @@ a:visited {
 }
 
 /* Status text */
-@-webkit-keyframes status-text{
-    from{
+@-webkit-keyframes status-text {
+    from {
         opacity: 1;
     }
-    to{
+    to {
         opacity: 0;
     }
 }
 
-.status-text{
+.status-text {
     display: inline-block;
     height: 15%;
     position: fixed;
@@ -437,47 +448,78 @@ a:visited {
 #character-overview-wrapper {
     position: relative;
 }
+
 #character-overview-container {
     display: none;
     position: absolute; /* Stay in place */
     right: 0;
     top: 0;
     height: auto; /* Full height */
-    padding: 8px;
+    padding: 10px 2px;
     border: 2px solid var(--my-highlight-color);
-    width: 19%;
+    width: auto;
+    max-width: 280px;
     overflow: auto; /* Enable scroll if needed */
-    background-color: #444; /* Fallback color */
+    background-color: #393636; /* Fallback color */
     z-index: 1;
 }
 
 #character-overview-text {
-    color: #fff;
-    background-color: #444;
+    color: #faffdf;
+
+    table {
+        border-collapse: collapse;
+        margin: auto;
+    }
+
+    td {
+        padding: 2px;
+        vertical-align: middle;
+    }
 }
 
 .character-stat-text {
     color: #fff;
     background-color: #444;
 }
- .character-stat-cell {
+
+.character-stat-cell {
     text-align: right;
 }
+
+#character-hack-wrapper td,
+#character-agi-wrapper td {
+    border-bottom: 1px #aaa solid;
+    padding-bottom: 10px;
+}
+
+#character-str-wrapper td,
+#character-cha-wrapper td {
+    padding-top: 10px;
+}
+
+#character-hp-wrapper    { color: $my-stat-hp-color;    }
+#character-money-wrapper { color: $my-stat-money-color; }
+#character-hack-wrapper  { color: $my-stat-hack-color;  }
+#character-cha-wrapper   { color: $my-stat-cha-color;   }
+#character-int-wrapper   { color: $my-stat-int-color;   }
 
 #character-overview-save-button,
 #character-overview-options-button {
     @include borderRadius(12px);
     @include boxShadow(1px 1px 3px #000);
-
-    color: #aaa;
+    color: #cecece;
+    display: inline-block;
     font-size: $defaultFontSize * 0.875;
     font-weight: bold;
-    height: 22px;
+    height: 25px;
     background-color: #000;
+    padding: 5px 8px;
 }
 
 .character-quick-options {
-    padding-top: 5px;
+    margin-top: 10px;
+    text-align: center;
 }
 
 #character-overview-save-button:hover,
@@ -489,16 +531,13 @@ a:visited {
     cursor: pointer;
 }
 
-#character-overview-options-button {
-    display: inline;
-}
-
 /* Scan analyze links from AutoLink */
 .scan-analyze-link {
     cursor: pointer;
     color: #fff;
     text-decoration: underline;
 }
+
 .scan-analyze-link:hover {
     text-decoration: none;
 }
@@ -509,37 +548,38 @@ a:visited {
     font-size: $defaultFontSize * 1.25;
     color: #fff;
     margin: 6px 6px 0 6px;
-    padding: 6px;
+    padding: 4px 6px;
     cursor: pointer;
     width: 80%;
     text-align: left;
     border: none;
     outline: none;
-}
+    position: relative;
 
-.accordion-header.active,
-.accordion-header:hover {
-    background-color: #555;
-}
+    &.active,
+    &:hover {
+        background-color: #555;
+    }
 
-.accordion-header.active:hover {
-    background-color: #666;
-}
+    &.active:hover {
+        background-color: #666;
+    }
 
-.accordion-header:after {
-    content: '\02795'; /* "plus" sign (+) */
-    font-size: $defaultFontSize * 0.8125;
-    color: #fff;
-    float: right;
-    margin-left: 5px;
-}
+    &:after {
+        content: '\02795'; /* "plus" sign (+) */
+        font-size: $defaultFontSize * 0.8125;
+        float: right;
+        color: transparent;
+        text-shadow: 0 0 0 #fff;
+        position: absolute;
+        bottom: 3px;
+        right: 6px;
+    }
 
-.accordion-header.active:after {
-    content: "\2796"; /* "minus" sign (-) */
-    font-size: $defaultFontSize * 0.8125;
-    color: #fff;
-    float: right;
-    margin-left: 5px;
+    &.active:after {
+        content: "\2796"; /* "minus" sign (-) */
+    }
+
 }
 
 .accordion-panel {
@@ -551,13 +591,10 @@ a:visited {
     background-color: #555;
     overflow-y: auto;
     overflow-x: none;
-}
 
-.accordion-panel div,
-.accordion-panel ul,
-.accordion-panel p,
-.accordion-panel ul > li {
-    background-color: #555;
+    div, ul, p, ul > li {
+        background-color: #555;
+    }
 }
 
 /* override the global <span> styling */
