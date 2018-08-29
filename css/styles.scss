@@ -113,6 +113,11 @@ tr:focus {
     position: relative;
 }
 
+/* Accordion Outline */
+.mainmenu-accordion-header {
+    outline: 2px solid #fff;
+}
+
 /* Plus and minus signs */
 .mainmenu-accordion-header:after {
     content: '\02795';
@@ -125,12 +130,12 @@ tr:focus {
     text-shadow: 0 0 0 #fff;
 }
 
-.mainmenu-accordion-header.opened:after {
-    content: "\2796";
-}
-
 .mainmenu-accordion-header.opened {
     background-color: #222;
+
+    &:after {
+        content: "\2796";
+    }
 }
 
 /* Slide down transition */
@@ -138,11 +143,6 @@ tr:focus {
     max-height: 0;
     opacity: 1;
     transition: max-height 0.2s ease-out;
-}
-
-/* Accordion Outline */
-.mainmenu-accordion-header {
-    outline: 2px solid #fff;
 }
 
 /* Make html links ("a" elements) nice looking buttons with this class */
@@ -554,32 +554,32 @@ a:visited {
     text-align: left;
     border: none;
     outline: none;
-}
+    position: relative;
 
-.accordion-header.active,
-.accordion-header:hover {
-    background-color: #555;
-}
+    &.active,
+    &:hover {
+        background-color: #555;
+    }
 
-.accordion-header.active:hover {
-    background-color: #666;
-}
+    &.active:hover {
+        background-color: #666;
+    }
 
-.accordion-header:after {
-    content: '\02795'; /* "plus" sign (+) */
-    font-size: $defaultFontSize * 0.8125;
-    float: right;
-    margin-left: 5px;
-    color: transparent;
-    text-shadow: 0 0 0 #fff;
-}
+    &:after {
+        content: '\02795'; /* "plus" sign (+) */
+        font-size: $defaultFontSize * 0.8125;
+        float: right;
+        color: transparent;
+        text-shadow: 0 0 0 #fff;
+        position: absolute;
+        bottom: 3px;
+        right: 6px;
+    }
 
-.accordion-header.active:after {
-    content: "\2796"; /* "minus" sign (-) */
-    font-size: $defaultFontSize * 0.8125;
-    color: #fff;
-    float: right;
-    margin-left: 5px;
+    &.active:after {
+        content: "\2796"; /* "minus" sign (-) */
+    }
+
 }
 
 .accordion-panel {
@@ -591,13 +591,10 @@ a:visited {
     background-color: #555;
     overflow-y: auto;
     overflow-x: none;
-}
 
-.accordion-panel div,
-.accordion-panel ul,
-.accordion-panel p,
-.accordion-panel ul > li {
-    background-color: #555;
+    div, ul, p, ul > li {
+        background-color: #555;
+    }
 }
 
 /* override the global <span> styling */

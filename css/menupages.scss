@@ -240,16 +240,13 @@
     width: auto;
     display: none;
     margin-bottom: 6px;
-}
 
-.active-scripts-script-panel p,
-.active-scripts-script-panel h2,
-.active-scripts-script-panel ul,
-.active-scripts-script-panel li {
-    background-color: #555;
-    width: auto;
-    color: #fff;
-    margin-left: 5%;
+    p, h2, ul, li {
+        background-color: #555;
+        width: auto;
+        color: #fff;
+        margin-left: 5%;
+    }
 }
 
 .active-scripts-button {
@@ -262,13 +259,13 @@
     margin: 4px;
     padding: 4px;
     background-color: #000;
-}
 
-.active-scripts-button:hover,
-.active-scripts-button:focus {
-    color: #fff;
-    text-decoration: none;
-    cursor: pointer;
+    &:hover,
+    &:focus {
+        color: #fff;
+        text-decoration: none;
+        cursor: pointer;
+    }
 }
 
 /* Hacknet Nodes */
@@ -324,22 +321,22 @@
 
 .hacknet-node-container {
     display: inline-table;
-}
 
-.hacknet-node-container .row {
-    display: table-row;
-    height: 30px;
-}
+    .row {
+        display: table-row;
+        height: 30px;
 
-.hacknet-node-container .row p {
-    display: table-cell;
-}
+        p {
+            display: table-cell;
+        }
+    }
 
-.hacknet-node-container .upgradable-info {
-    display: inline-block;
-    margin: 0 4px; /* Don't want the vertical margin/padding, just left & right */
-    padding: 0 4px;
-    width: $defaultFontSize * 4;
+    .upgradable-info {
+        display: inline-block;
+        margin: 0 4px; /* Don't want the vertical margin/padding, just left & right */
+        padding: 0 4px;
+        width: $defaultFontSize * 4;
+    }
 }
 
 .menu-page-text {
