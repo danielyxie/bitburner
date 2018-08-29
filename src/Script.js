@@ -21,7 +21,7 @@ import {CONSTANTS}                              from "./Constants";
 import {Engine}                                 from "./engine";
 import {FconfSettings, parseFconfSettings}      from "./Fconf";
 import {iTutorialSteps, iTutorialNextStep,
-        iTutorialIsRunning, currITutorialStep}  from "./InteractiveTutorial";
+        ITutorial}                              from "./InteractiveTutorial";
 import {evaluateImport}                         from "./NetscriptEvaluator";
 import {NetscriptFunctions}                     from "./NetscriptFunctions";
 import {addWorkerScript,
@@ -281,8 +281,9 @@ function saveAndCloseScriptEditor() {
     var filename = document.getElementById("script-editor-filename").value;
     var editor = ace.edit('javascript-editor');
     var code = editor.getValue();
-    if (iTutorialIsRunning && currITutorialStep == iTutorialSteps.TerminalTypeScript) {
-        if (filename != "foodnstuff.script") {
+    if (ITutorial.isRunning && ITutorial.currStep === iTutorialSteps.TerminalTypeScript) {
+        //Make sure filename + code properly follow tutorial
+        if (filename !== "foodnstuff.script") {
             dialogBoxCreate("Leave the script name as 'foodnstuff'!");
             return;
         }
@@ -291,7 +292,23 @@ function saveAndCloseScriptEditor() {
             dialogBoxCreate("Please copy and paste the code from the tutorial!");
             return;
         }
-        iTutorialNextStep();
+
+        //Save the script
+        let s = Player.getCurrentServer();
+        for (var i = 0; i < s.scripts.length; i++) {
+            if (filename == s.scripts[i].filename) {
+                s.scripts[i].saveScript();
+                Engine.loadTerminalContent();
+                return iTutorialNextStep();
+            }
+        }
+
+        //If the current script does NOT exist, create a new one
+        let script = new Script();
+        script.saveScript();
+        s.scripts.push(script);
+
+        return iTutorialNextStep();
     }
 
     if (filename == "") {

@@ -12,8 +12,7 @@ import {FconfSettings, parseFconfSettings,
         createFconf}                        from "./Fconf";
 import {TerminalHelpText, HelpTexts}        from "./HelpText";
 import {iTutorialNextStep, iTutorialSteps,
-        iTutorialIsRunning,
-        currITutorialStep}                  from "./InteractiveTutorial";
+        ITutorial}                          from "./InteractiveTutorial";
 import {showLiterature}                     from "./Literature";
 import {showMessage, Message}               from "./Message";
 import {scriptCalculateHackingTime,
@@ -762,11 +761,11 @@ let Terminal = {
 		if (commandArray.length == 0) {return;}
 
         /****************** Interactive Tutorial Terminal Commands ******************/
-        if (iTutorialIsRunning) {
+        if (ITutorial.isRunning) {
             var foodnstuffServ = GetServerByHostname("foodnstuff");
             if (foodnstuffServ == null) {throw new Error("Could not get foodnstuff server"); return;}
 
-            switch(currITutorialStep) {
+            switch(ITutorial.currStep) {
             case iTutorialSteps.TerminalHelp:
                 if (commandArray[0] == "help") {
                     post(TerminalHelpText);
@@ -1809,7 +1808,7 @@ let Terminal = {
          * @returns {void}
          */
         /**
-         * @type {Object.<string, ProgramHandler} 
+         * @type {Object.<string, ProgramHandler}
          */
         const programHandlers = {};
         programHandlers[Programs.NukeProgram.name] = (server) => {

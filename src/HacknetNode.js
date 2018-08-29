@@ -2,7 +2,7 @@ import {BitNodeMultipliers}                     from "./BitNodeMultipliers";
 import {CONSTANTS}                              from "./Constants";
 import {Engine}                                 from "./engine";
 import {iTutorialSteps, iTutorialNextStep,
-        iTutorialIsRunning, currITutorialStep}  from "./InteractiveTutorial";
+        ITutorial}                              from "./InteractiveTutorial";
 import {Player}                                 from "./Player";
 import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {clearEventListeners}                    from "../utils/uiHelpers/clearEventListeners";
@@ -245,8 +245,8 @@ Reviver.constructors.HacknetNode = HacknetNode;
 
 function purchaseHacknet() {
     /* INTERACTIVE TUTORIAL */
-    if (iTutorialIsRunning) {
-        if (currITutorialStep == iTutorialSteps.HacknetNodesIntroduction) {
+    if (ITutorial.isRunning) {
+        if (ITutorial.currStep === iTutorialSteps.HacknetNodesIntroduction) {
             iTutorialNextStep();
         } else {
             return;
