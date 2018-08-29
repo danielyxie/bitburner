@@ -493,32 +493,8 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
-    "v0.40.2<br>" +
-    "------------------------------<br>"  +
-    "* Bladeburner Changes:<br>" +
-    "*** Added getBonusTime(), getSkillUpgradeCost(), and getCity() Netscript functions to the API<br>" +
-    "*** Buffed the effects of many Bladeburner Augmentations<br>" +
-    "*** The Blade's Simulacrum Augmentation requires significantly less reputation but slightly more money<br>" +
-    "*** Slightly increased the amount of successes needed for a Contract/Operation in order to increase its max level<br>" +
-    "*** Increased the amount of money gained from Contracts by ~25%<br>" +
-    "*** Increased the base amount of rank gained from Operations by 10%<br>" +
-    "*** Significantly increased the 'randomness' in determining a Contract/Operation's initial count and rate of count increase<br>" +
-    "*** The number (count) of Operations should now increase significantly faster<br>" +
-    "*** There are now, on average, more Synthoid communities in a city<br>" +
-    "*** If automation is enabled (the feature in Bladeburner console), then switching to another action such as working for a company will now disable the automation<br>" +
-    "------------------------------<br>"  +
-    "* Stock Market Changes:<br>" +
-    "***Added a watchlist filter feature to the UI that allows you to specify which stocks to show<br>" +
-    "***Added the Four Sigma (4S) Market Data feed, which provides volatility and price forecast information about stocks<br>"  +
-    "***Added the 4S Market Data TIX API, which lets you access the aforementioned data through Netscript<br>"  +
-    "------------------------------<br>"  +
-    "* There is now a setting for enabling/disabling the popup that appears when you are hospitalized<br>" +
-    "* Bug Fix: Stock market should now be correctly initialized in BitNode-8 (by Kline-)<br>" +
-    "* Bug Fix: bladeburner.getCurrentAction() should now properly an 'Idle' object rather than null (by Kline-)<br>" +
-    "* Bug Fix: Bladeburner skill cost multiplier should now properly increase in BitNode-12 (by hydroflame)<br>" +
-    "* Bug Fix: 'document', 'hacknet', and 'window' keywords should no longer be counted multiple times in RAM calculations<br>" +
-    "* Bug Fix: Joining factions through Singularity functions should now prevent you from joining opposing factions<br>" + 
-    "* Bug Fix: Four Sigma should no longer have two 'Speech Enhancement' Augmentations (by Kline-)<br>"
+    "v0.40.3<br>" +
+    ""
 
 }
 

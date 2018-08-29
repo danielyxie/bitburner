@@ -1,8 +1,9 @@
 import {parse, Node}                            from "../utils/acorn";
 
 var FconfSettings = {
-    ENABLE_BASH_HOTKEYS:     false,
-    ENABLE_TIMESTAMPS:       false,
+    ENABLE_BASH_HOTKEYS:        false,
+    ENABLE_TIMESTAMPS:          false,
+    WRAP_INPUT:                 false,
 }
 
 var FconfComments = {
@@ -15,6 +16,11 @@ var FconfComments = {
                          "http://bitburner.readthedocs.io/en/latest/shortcuts.html",
     ENABLE_TIMESTAMPS: "Terminal commands and log entries will be timestamped. The timestamp\n" +
                        "will have the format: M/D h:m",
+    WRAP_INPUT: "Wrap Terminal Input. If this is enabled, then when a Terminal command is\n" +
+                "too long and overflows, then it will wrap to the next line instead of\n" +
+                "side-scrolling\n\n" +
+                "Note that after you enable/disable this, you'll have to run a command\n" +
+                "before its effect takes place.",
 }
 
 //Parse Fconf settings from the config text
@@ -74,6 +80,7 @@ function parseFconfSetting(setting, value) {
     switch(setting) {
         case "ENABLE_BASH_HOTKEYS":
         case "ENABLE_TIMESTAMPS":
+        case "WRAP_INPUT":
             var value = value.toLowerCase();
             if (value === "1" || value === "true" || value === "y") {
                 value = true;

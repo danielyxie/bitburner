@@ -548,11 +548,11 @@ let Engine = {
 
     displayCharacterOverviewInfo: function() {
         Engine.overview.update();
-        
+
 
         const save = document.getElementById("character-overview-save-button");
         const flashClass = "flashing-button";
-        if(!Settings.AutosaveInterval) {    
+        if(!Settings.AutosaveInterval) {
             save.classList.add(flashClass);
         } else {
             save.classList.remove(flashClass);

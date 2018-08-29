@@ -48,6 +48,7 @@ import {yesNoBoxCreate,
 import {post, hackProgressBarPost,
         hackProgressPost}                   from "./ui/postToTerminal";
 
+import autosize from 'autosize';
 import * as JSZip from 'jszip';
 import * as FileSaver from 'file-saver';
 
@@ -64,8 +65,8 @@ $(document).keydown(function(event) {
 
 		if (event.keyCode === KEY.ENTER) {
             event.preventDefault(); //Prevent newline from being entered in Script Editor
-			var command = $('input[class=terminal-input]').val();
-			      post(
+			var command = terminalInput.value;
+			post(
                 "[" +
                 (FconfSettings.ENABLE_TIMESTAMPS ? getTimestamp() + " " : "") +
                 Player.getCurrentServer().hostname +
@@ -520,9 +521,18 @@ let Terminal = {
     commandHistoryIndex: 0,
 
     resetTerminalInput: function() {
-        document.getElementById("terminal-input-td").innerHTML =
-            "<div id='terminal-input-header'>[" + Player.getCurrentServer().hostname + " ~]" + "$ </div>" +
-            '<input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
+        if (FconfSettings.WRAP_INPUT) {
+            document.getElementById("terminal-input-td").innerHTML =
+                "<div id='terminal-input-header'>[" + Player.getCurrentServer().hostname + " ~]" + "$ </div>" +
+                '<textarea type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
+
+            //Auto re-size the line element as it wraps
+            autosize(document.getElementById("terminal-input-text-box"));
+        } else {
+            document.getElementById("terminal-input-td").innerHTML =
+                "<div id='terminal-input-header'>[" + Player.getCurrentServer().hostname + " ~]" + "$ </div>" +
+                '<input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
+        }
         var hdr = document.getElementById("terminal-input-header");
         hdr.style.display = "inline";
     },
@@ -824,7 +834,6 @@ let Terminal = {
                     Player.analyze();
 
                     //Disable terminal
-                    //Terminal.resetTerminalInput();
                     document.getElementById("terminal-input-td").innerHTML = '<input type="text" class="terminal-input"/>';
                     $('input[class=terminal-input]').prop('disabled', true);
                     iTutorialNextStep();
@@ -848,7 +857,6 @@ let Terminal = {
 					Player.hack();
 
 					//Disable terminal
-                    //Terminal.resetTerminalInput();
 					document.getElementById("terminal-input-td").innerHTML = '<input type="text" class="terminal-input"/>';
 					$('input[class=terminal-input]').prop('disabled', true);
                     iTutorialNextStep();
@@ -929,7 +937,6 @@ let Terminal = {
                 Player.analyze();
 
                 //Disable terminal
-                //Terminal.resetTerminalInput();
                 document.getElementById("terminal-input-td").innerHTML = '<input type="text" class="terminal-input"/>';
                 $('input[class=terminal-input]').prop('disabled', true);
 				break;
@@ -1090,7 +1097,6 @@ let Terminal = {
 					Player.hack();
 
 					//Disable terminal
-                    //Terminal.resetTerminalInput();
 					document.getElementById("terminal-input-td").innerHTML = '<input type="text" class="terminal-input"/>';
 					$('input[class=terminal-input]').prop('disabled', true);
 				}
@@ -1577,6 +1583,23 @@ let Terminal = {
                     }
                 }
                 break;
+            case "wget":
+                if (commandArray.length !== 2) {
+                    return post("Incorrect usage of wget command. Usage: wget [url] [target file]");
+                }
+                var args = commandArray[1].split(" ");
+                if (args.length !== 2) {
+                    return post("Incorrect usage of wget command. Usage: wget [url] [target file]");
+                }
+
+                let url = args[0];
+                let target = args[1];
+                $.get(url, function(data) {
+                    post(data);
+                }, 'text').fail(function(e) {
+                    post("wget failed: " + JSON.stringify(e));
+                })
+                break;
 			default:
 				post("Command not found");
 		}
@@ -1809,7 +1832,7 @@ let Terminal = {
          * @returns {void}
          */
         /**
-         * @type {Object.<string, ProgramHandler} 
+         * @type {Object.<string, ProgramHandler}
          */
         const programHandlers = {};
         programHandlers[Programs.NukeProgram.name] = (server) => {
