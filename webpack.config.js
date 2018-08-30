@@ -21,6 +21,9 @@ module.exports = (env, argv) => ({
             title: "Bitburner" + (argv.mode === 'development' ? ' - development' : ""),
             template: "src/index.html",
             favicon: "favicon.ico",
+            googleAnalytics: {
+                trackingId: 'UA-100157497-1'
+            },
             meta: {},
             minify: argv.mode === 'development' ? false : {
                 collapseBooleanAttributes: true,
