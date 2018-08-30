@@ -24,7 +24,7 @@
       ga('create', 'UA-100157497-1', 'auto');
       ga('send', 'pageview');
     </script>
-<link rel="shortcut icon" href="favicon.ico"><link href="dist/engine.css" rel="stylesheet"></head>
+</head>
 <body>
     <div id="entire-game-container" style="visibility:hidden;">
     <div id="mainmenu-container">
@@ -108,7 +108,7 @@
 
         <div id="script-editor-filename-wrapper">
             <p id="script-editor-filename-tag"> <strong style="background-color:#555;">Script name: </strong></p>
-            <input id="script-editor-filename" type="text" maxlength="30" tabindex="1"/>
+            <input id="script-editor-filename" type="text" maxlength="30" tabindex="1" />
         </div>
 
         <div id="javascript-editor"></div>
@@ -158,7 +158,7 @@
 
             <fieldset>
             <label for="script-editor-option-maxerr" class="tooltip">Max Error Count</label>
-            <input type="range" max="1000" min="50" value="200" step="1" name="script-editor-option-maxerr" id="script-editor-option-maxerr"/>
+            <input type="range" max="1000" min="50" value="200" step="1" name="script-editor-option-maxerr" id="script-editor-option-maxerr" />
             <em id="script-editor-option-maxerror-value-label" style="font-style: normal;"></em>
             </fieldset>
         </div> <!-- End script editor options panel -->
@@ -169,7 +169,7 @@
         <table id="terminal">
             <tr id="terminal-input">
                 <td id="terminal-input-td" tabindex="2">$
-                    <input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1" onfocus="this.value = this.value;"/>
+                    <input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1" onfocus="this.value = this.value;" />
                 </td>
             </tr>
         </table>
@@ -186,7 +186,7 @@
         provides information about each script's production. The scripts are categorized by the hostname of the servers on which
         they are running. </p>
         <p id="active-scripts-total-prod">Total online production of
-            Active scripts: <span id="active-scripts-total-production-active">$0.000</span> / sec<br/>
+            Active scripts: <span id="active-scripts-total-production-active">$0.000</span> / sec<br />
             Total online production since last Aug installation: <span id="active-scripts-total-prod-aug-total">$0.000</span>
             (<span id="active-scripts-total-prod-aug-avg">$0.000</span> / sec)</p>
 		<ul class="active-scripts-list" id="active-scripts-list" style="list-style: none;">
@@ -470,7 +470,8 @@
 
 	<!-- Tutorial content -->
 	<div id="tutorial-container" class="generic-menupage-container">
-        <a id="tutorial-getting-started-link" class="a-link-button" href="http://bitburner.wikia.com/wiki/Chapt3rs_Guide_to_Getting_Started_with_Bitburner" target="_blank"> Getting Started </a>
+        <a id="tutorial-getting-started-link" class="a-link-button"
+           href="http://bitburner.wikia.com/wiki/Chapt3rs_Guide_to_Getting_Started_with_Bitburner" target="_blank"> Getting Started </a>
         <a id="tutorial-networking-link" class="a-link-button"> Servers & Networking </a>
         <a id="tutorial-hacking-link" class="a-link-button"> Hacking </a>
         <a id="tutorial-scripts-link" class="a-link-button"> Scripts </a>
@@ -479,7 +480,8 @@
         <a id="tutorial-jobs-link" class="a-link-button"> Companies and Infiltration </a>
         <a id="tutorial-factions-link" class="a-link-button"> Factions </a>
         <a id="tutorial-augmentations-link" class="a-link-button"> Augmentations </a>
-        <a id="tutorial-shortcuts-link" class="a-link-button" href="https://bitburner.wikia.com/wiki/Shortcuts" target="_blank"> Keyboard Shortcuts </a>
+        <a id="tutorial-shortcuts-link" class="a-link-button"
+            href="https://bitburner.wikia.com/wiki/Shortcuts" target="_blank"> Keyboard Shortcuts </a>
 
         <a id="tutorial-back-button" class="a-link-button"> Back </a>
         <p id="tutorial-text"> </p>
@@ -740,7 +742,7 @@
     <div id="yes-no-text-input-box-container" class="popup-box-container">
         <div id="yes-no-text-input-box-content" class="popup-box-content">
             <p id="yes-no-text-input-box-text"> </p>
-            <input type="text" id="yes-no-text-input-box-input" pattern="[a-zA-Z0-9-_]" maxlength="30"/>
+            <input type="text" id="yes-no-text-input-box-input" pattern="[a-zA-Z0-9-_]" maxlength="30" />
             <span id="yes-no-text-input-box-yes" class="popup-box-button"> Yes </span>
             <span id="yes-no-text-input-box-no" class="popup-box-button"> No </span>
         </div>
@@ -864,7 +866,7 @@
                         </span>
                     </label>
 
-                    <input type="range" max="100" min="10" step="1" name="settingsNSExecTimeRangeVal" id="settingsNSExecTimeRangeVal" value="25"/>
+                    <input type ="range" max="100" min="10" step="1" name="settingsNSExecTimeRangeVal" id="settingsNSExecTimeRangeVal" value="25" />
                     <em id="settingsNSExecTimeRangeValLabel" style="font-style: normal;"></em>
                 </fieldset>
 
@@ -878,7 +880,7 @@
                         </span>
                     </label>
 
-                    <input type="range" max="100" min="20" step="1" name="settingsNSLogRangeVal" id="settingsNSLogRangeVal" value="50"/>
+                    <input type="range" max="100" min="20" step="1" name="settingsNSLogRangeVal" id="settingsNSLogRangeVal" value="50" />
                     <em id="settingsNSLogRangeValLabel" style="font-style: normal;"></em>
                 </fieldset>
 
@@ -892,7 +894,7 @@
                         </span>
                     </label>
 
-                    <input type="range" max="100" min="20" step="1" name="settingsNSPortRangeVal" id="settingsNSPortRangeVal" value="50"/>
+                    <input type="range" max="100" min="20" step="1" name="settingsNSPortRangeVal" id="settingsNSPortRangeVal" value="50" />
                     <em id="settingsNSPortRangeValLabel" style="font-style: normal;"></em>
                 </fieldset>
 
@@ -904,7 +906,7 @@
                         </span>
                     </label>
 
-                    <input type="range" max="600" min="0" step="1" name="settingsAutosaveIntervalVal" id="settingsAutosaveIntervalVal" value="60"/>
+                    <input type="range" max="600" min="0" step="1" name="settingsAutosaveIntervalVal" id="settingsAutosaveIntervalVal" value="60" />
                     <em id="settingsAutosaveIntervalValLabel" style="font-style: normal;"></em>
                 </fieldset>
 
@@ -990,7 +992,7 @@
                 <a id="save-game-link" class="a-link-button" style="display:inline-block;width:46%;"> Save Game </a>
                 <a id="delete-game-link" class="a-link-button" style="display:inline-block;width:46%;"> Delete Game </a>
                 <a id="export-game-link" class="a-link-button" style="display:inline-block;width:46%;"> Export Game </a>
-                <input type="file" id="import-game-file-selector" name="file"/>
+                <input type="file" id="import-game-file-selector" name="file" />
                 <a id="import-game-link" class="a-link-button" style="display:inline-block;width:46%;"> Import Game </a>
                 <a id="debug-delete-scripts-link" class="a-link-button tooltip" style="display:block;width:46%;">
                     (DEBUG) Delete Active Scripts
@@ -1017,5 +1019,5 @@
     </div>
     <script src="dist/vendor.bundle.js"></script>
     <script src="dist/engine.bundle.js"></script>
-<script type="text/javascript" src="dist/vendor.bundle.js"></script><script type="text/javascript" src="dist/engine.bundle.js"></script></body>
+</body>
 </html>
