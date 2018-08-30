@@ -1,7 +1,6 @@
 import {Engine}                         from "./engine";
 import {Player}                         from "./Player";
 import {Settings}                       from "./Settings";
-import {Terminal}                       from "./Terminal";
 import {clearEventListeners}            from "../utils/uiHelpers/clearEventListeners";
 import {createElement}                  from "../utils/uiHelpers/createElement";
 import {createPopup}                    from "../utils/uiHelpers/createPopup";
@@ -62,7 +61,6 @@ function iTutorialStart() {
     }
 
     Engine.loadTerminalContent();
-    Terminal.resetTerminalInput();
 
     //Don't autosave during this interactive tutorial
     Engine.Counters.autoSaveCounter = Infinity;

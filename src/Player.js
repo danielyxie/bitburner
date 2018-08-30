@@ -119,11 +119,6 @@ function PlayerObject() {
     this.crime_money_mult               = 1;
     this.crime_success_mult             = 1;
 
-    //Flag to let the engine know the player is starting an action
-    //  Current actions: hack, analyze
-    this.startAction = false;
-    this.actionTime = 0;
-
     //Flags/variables for working (Company, Faction, Creating Program, Taking Class)
     this.isWorking = false;
     this.workType = "";
@@ -265,9 +260,6 @@ PlayerObject.prototype.prestigeAugmentation = function() {
 
     this.queuedAugmentations = [];
 
-    this.startAction = false;
-    this.actionTime = 0;
-
     this.isWorking = false;
     this.currentWorkFactionName = "";
     this.currentWorkFactionDescription = "";
@@ -348,9 +340,6 @@ PlayerObject.prototype.prestigeSourceFile = function() {
 
     this.queuedAugmentations = [];
     this.augmentations = [];
-
-    this.startAction = false;
-    this.actionTime = 0;
 
     this.isWorking = false;
     this.currentWorkFactionName = "";
@@ -496,72 +485,6 @@ PlayerObject.prototype.resetMultipliers = function() {
     this.bladeburner_stamina_gain_mult              = 1;
     this.bladeburner_analysis_mult                  = 1;
     this.bladeburner_success_chance_mult            = 1;
-}
-
-//Calculates the chance of hacking a server
-//The formula is:
-//  (2 * hacking_chance_multiplier * hacking_skill - requiredLevel)      100 - difficulty
-//  -----------------------------------------------------------  *  -----------------
-//        (2 * hacking_chance_multiplier * hacking_skill)                      100
-PlayerObject.prototype.calculateHackingChance = function() {
-    var difficultyMult = (100 - this.getCurrentServer().hackDifficulty) / 100;
-    var skillMult = (1.75 * this.hacking_skill) + (0.2 * this.intelligence);
-    var skillChance = (skillMult - this.getCurrentServer().requiredHackingSkill) / skillMult;
-    var chance = skillChance * difficultyMult * this.hacking_chance_mult;
-    if (chance > 1) {return 1;}
-    if (chance < 0) {return 0;}
-    return chance;
-}
-
-//Calculate the time it takes to hack a server in seconds. Returns the time
-//The formula is:
-// (2.5 * requiredLevel * difficulty + 200)
-//  -----------------------------------  *  hacking_speed_multiplier
-//        hacking_skill + 100
-PlayerObject.prototype.calculateHackingTime = function() {
-    var difficultyMult = this.getCurrentServer().requiredHackingSkill * this.getCurrentServer().hackDifficulty;
-    var skillFactor = (2.5 * difficultyMult + 200) / (this.hacking_skill + 100 + (0.1 * this.intelligence));
-    return 5 * skillFactor / this.hacking_speed_mult;
-}
-
-//Calculates the PERCENTAGE of a server's money that the player will hack from the server if successful
-//The formula is:
-//  (hacking_skill - (requiredLevel-1))      100 - difficulty
-//  --------------------------------------* -----------------------  *  hacking_money_multiplier
-//         hacking_skill                        100
-PlayerObject.prototype.calculatePercentMoneyHacked = function() {
-    var difficultyMult = (100 - this.getCurrentServer().hackDifficulty) / 100;
-    var skillMult = (this.hacking_skill - (this.getCurrentServer().requiredHackingSkill - 1)) / this.hacking_skill;
-    var percentMoneyHacked = difficultyMult * skillMult * this.hacking_money_mult / 240;
-    console.log("Percent money hacked calculated to be: " + percentMoneyHacked);
-    if (percentMoneyHacked < 0) {return 0;}
-    if (percentMoneyHacked > 1) {return 1;}
-    return percentMoneyHacked * BitNodeMultipliers.ManualHackMoney;
-}
-
-//Returns how much EXP the player gains on a successful hack
-//The formula is:
-//  difficulty * requiredLevel * hacking_multiplier
-PlayerObject.prototype.calculateExpGain = function() {
-    var s = this.getCurrentServer();
-    if (s.baseDifficulty == null) {
-        s.baseDifficulty = s.hackDifficulty;
-    }
-    return (s.baseDifficulty * this.hacking_exp_mult * 0.3 + 3) * BitNodeMultipliers.HackExpGain;
-}
-
-//Hack/Analyze a server. Return the amount of time the hack will take. This lets the Terminal object know how long to disable itself for
-//This assumes that the server being hacked is not purchased by the player, that the player's hacking skill is greater than the
-//required hacking skill and that the player has admin rights.
-PlayerObject.prototype.hack = function() {
-    this.actionTime = this.calculateHackingTime();
-    console.log("Hacking time: " + this.actionTime);
-    this.startAction = true; //Set the startAction flag so the engine starts the hacking process
-}
-
-PlayerObject.prototype.analyze = function() {
-    this.actionTime = 1;
-    this.startAction = true;
 }
 
 PlayerObject.prototype.hasProgram = function(programName) {
