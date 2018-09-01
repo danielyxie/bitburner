@@ -31,9 +31,8 @@ import {Settings}                           from "./Settings";
 import {SpecialServerIps,
         SpecialServerNames}                 from "./SpecialServerIps";
 import {TextFile, getTextFile}              from "./TextFile";
-
-import {containsAllStrings, longestCommonStart,
-        formatNumber}                       from "../utils/StringHelperFunctions";
+import {containsAllStrings,
+        longestCommonStart}                 from "../utils/StringHelperFunctions";
 import {Page, routing}                      from "./ui/navigationTracking";
 import {KEY}                                from "../utils/helpers/keyCodes";
 import {addOffset}                          from "../utils/helpers/addOffset";
@@ -660,11 +659,11 @@ let Terminal = {
 
                 server.fortify(CONSTANTS.ServerFortifyAmount);
 
-				post("Hack successful! Gained $" + formatNumber(moneyGained, 2) + " and " + formatNumber(expGainedOnSuccess, 4) + " hacking EXP");
+				post("Hack successful! Gained " + numeral(moneyGained).format('($0,0.00)') + " and " + numeral(expGainedOnSuccess).format('0.0000') + " hacking EXP");
 			} else {					//Failure
 				//Player only gains 25% exp for failure? TODO Can change this later to balance
                 Player.gainHackingExp(expGainedOnFailure)
-				post("Failed to hack " + server.hostname + ". Gained " + formatNumber(expGainedOnFailure, 4) + " hacking EXP");
+				post("Failed to hack " + server.hostname + ". Gained " + numeral(expGainedOnFailure).format('0.0000') + " hacking EXP");
 			}
 		}
 
@@ -686,10 +685,10 @@ let Terminal = {
             else {rootAccess = "NO";}
             post("Root Access: " + rootAccess);
 			post("Required hacking skill: " + Player.getCurrentServer().requiredHackingSkill);
-			post("Estimated server security level: " + formatNumber(addOffset(Player.getCurrentServer().hackDifficulty, 5), 3));
-			post("Estimated chance to hack: " + formatNumber(addOffset(Player.calculateHackingChance() * 100, 5), 2) + "%");
-			post("Estimated time to hack: " + formatNumber(addOffset(Player.calculateHackingTime(), 5), 3) + " seconds");
-			post("Estimated total money available on server: $" + formatNumber(addOffset(Player.getCurrentServer().moneyAvailable, 5), 2));
+			post("Estimated server security level: " + numeral(addOffset(Player.getCurrentServer().hackDifficulty, 5)).format('0.000'));
+			post("Estimated chance to hack: " + numeral(addOffset(Player.calculateHackingChance(), 5)).format('0.00%'));
+			post("Estimated time to hack: " + numeral(addOffset(Player.calculateHackingTime(), 5)).format('0.000') + " seconds");
+			post("Estimated total money available on server: " + numeral(addOffset(Player.getCurrentServer().moneyAvailable, 5)).format('$0,0.00'));
 			post("Required number of open ports for NUKE: " + Player.getCurrentServer().numOpenPortsRequired);
             if (Player.getCurrentServer().sshPortOpen) {
 				post("SSH port: Open")
@@ -1190,7 +1189,7 @@ let Terminal = {
                         var scriptBaseRamUsage = currServ.scripts[i].ramUsage;
                         var ramUsage = scriptBaseRamUsage * numThreads;
 
-                        post("This script requires " + formatNumber(ramUsage, 2) + "GB of RAM to run for " + numThreads + " thread(s)");
+                        post("This script requires " + numeral(ramUsage).format('0.00') + " GB of RAM to run for " + numThreads + " thread(s)");
                         return;
                     }
                 }
@@ -1555,7 +1554,7 @@ let Terminal = {
 					var spacesThread = Array(numSpacesThread+1).join(" ");
 
 					//Calculate and transform RAM usage
-					ramUsage = formatNumber(script.scriptRef.ramUsage * script.threads, 2).toString() + "GB";
+					ramUsage = numeral(script.scriptRef.ramUsage * script.threads).format('0.00') + " GB";
 
 					var entry = [script.filename, spacesScript, script.threads, spacesThread, ramUsage];
 					post(entry.join(""));
@@ -1768,9 +1767,9 @@ let Terminal = {
         if (commandArray.length != 1) {
             post("Incorrect usage of free command. Usage: free"); return;
         }
-        post("Total: " + formatNumber(Player.getCurrentServer().maxRam, 2) + " GB");
-        post("Used: " + formatNumber(Player.getCurrentServer().ramUsed, 2) + " GB");
-        post("Available: " + formatNumber(Player.getCurrentServer().maxRam - Player.getCurrentServer().ramUsed, 2) + " GB");
+        post("Total: " + numeral(Player.getCurrentServer().maxRam).format('0.00') + " GB");
+        post("Used: " + numeral(Player.getCurrentServer().ramUsed,).format('0.00') + " GB");
+        post("Available: " + numeral(Player.getCurrentServer().maxRam - Player.getCurrentServer().ramUsed).format('0.00') + " GB");
     },
 
 	//First called when the "run [program]" command is called. Checks to see if you
@@ -1891,9 +1890,9 @@ let Terminal = {
             post("Server base security level: " + targetServer.baseDifficulty);
             post("Server current security level: " + targetServer.hackDifficulty);
             post("Server growth rate: " + targetServer.serverGrowth);
-            post("Netscript hack() execution time: " + formatNumber(scriptCalculateHackingTime(targetServer), 1) + "s");
-            post("Netscript grow() execution time: " + formatNumber(scriptCalculateGrowTime(targetServer)/1000, 1) + "s");
-            post("Netscript weaken() execution time: " + formatNumber(scriptCalculateWeakenTime(targetServer)/1000, 1) + "s");
+            post("Netscript hack() execution time: " + numeral(scriptCalculateHackingTime(targetServer)).format('0.0') + "s");
+            post("Netscript grow() execution time: " + numeral(scriptCalculateGrowTime(targetServer)/1000).format('0.0') + "s");
+            post("Netscript weaken() execution time: " + numeral(scriptCalculateWeakenTime(targetServer)/1000).format('0.0') + "s");
         };
         programHandlers[Programs.AutoLink.name] = () => {
             post("This executable cannot be run.");

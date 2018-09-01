@@ -31,15 +31,14 @@ import {AllServers, processSingleServerGrowth}  from "./Server";
 import {Settings}                               from "./Settings";
 import {post}                                   from "./ui/postToTerminal";
 import {TextFile}                               from "./TextFile";
-
 import {parse, Node}                            from "../utils/acorn";
 import {Page, routing}                          from "./ui/navigationTracking";
+import numeral                                  from "numeral/min/numeral.min";
 import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver";
 import {compareArrays}                          from "../utils/helpers/compareArrays";
 import {createElement}                          from "../utils/uiHelpers/createElement";
-import {formatNumber}                           from "../utils/StringHelperFunctions";
 import {getTimestamp}                           from "../utils/helpers/getTimestamp";
 import {roundToTwo}                             from "../utils/helpers/roundToTwo";
 
@@ -252,7 +251,7 @@ function updateScriptEditorContent() {
     var codeCopy = code.repeat(1);
     var ramUsage = calculateRamUsage(codeCopy);
     if (ramUsage !== -1) {
-        scriptEditorRamText.innerText = "RAM: " + formatNumber(ramUsage, 2).toString() + "GB";
+        scriptEditorRamText.innerText = "RAM: " + numeral(ramUsage).format('0.00') + " GB";
     } else {
         scriptEditorRamText.innerText = "RAM: Syntax Error";
     }
@@ -875,7 +874,7 @@ function scriptCalculateOfflineProduction(runningScriptObj) {
             console.log(runningScriptObj.filename + " called grow() on " + serv.hostname + " " + timesGrown + " times while offline");
             runningScriptObj.log("Called grow() on " + serv.hostname + " " + timesGrown + " times while offline");
             var growth = processSingleServerGrowth(serv, timesGrown * 450);
-            runningScriptObj.log(serv.hostname + " grown by " + formatNumber(growth * 100 - 100, 6) + "% from grow() calls made while offline");
+            runningScriptObj.log(serv.hostname + " grown by " + numeral(growth * 100 - 100).format('0.000000%') + " from grow() calls made while offline");
         }
     }
 
