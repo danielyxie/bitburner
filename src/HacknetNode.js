@@ -1,14 +1,15 @@
-import {BitNodeMultipliers}                     from "./BitNode";
+import {BitNodeMultipliers}                     from "./BitNodeMultipliers";
 import {CONSTANTS}                              from "./Constants";
 import {Engine}                                 from "./engine";
 import {iTutorialSteps, iTutorialNextStep,
-        iTutorialIsRunning, currITutorialStep}  from "./InteractiveTutorial";
+        ITutorial}                              from "./InteractiveTutorial";
 import {Player}                                 from "./Player";
 import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {clearEventListeners}                    from "../utils/uiHelpers/clearEventListeners";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver";
 import {createElement}                          from "../utils/uiHelpers/createElement";
+import {Page, routing}                          from "./ui/navigationTracking";
 import {formatNumber}                           from "../utils/StringHelperFunctions";
 import {getElementById}                         from "../utils/uiHelpers/getElementById";
 
@@ -244,8 +245,8 @@ Reviver.constructors.HacknetNode = HacknetNode;
 
 function purchaseHacknet() {
     /* INTERACTIVE TUTORIAL */
-    if (iTutorialIsRunning) {
-        if (currITutorialStep == iTutorialSteps.HacknetNodesIntroduction) {
+    if (ITutorial.isRunning) {
+        if (ITutorial.currStep === iTutorialSteps.HacknetNodesIntroduction) {
             iTutorialNextStep();
         } else {
             return;
@@ -273,7 +274,7 @@ function purchaseHacknet() {
     Player.loseMoney(cost);
     Player.hacknetNodes.push(node);
 
-    if (Engine.currentPage === Engine.Page.HacknetNodes) {
+    if (routing.isOn(Page.HacknetNodes)) {
         displayHacknetNodesContent();
     }
     updateTotalHacknetProduction();
@@ -445,7 +446,7 @@ function updateHacknetNodesContent() {
 
     //Update player's money
     updateText("hacknet-nodes-player-money", "$" + formatNumber(Player.money.toNumber(), 2));
-    updateText("hacknet-nodes-total-production", "$" + formatNumber(Player.totalHacknetNodeProduction, 2) + " / second");
+    updateText("hacknet-nodes-total-production", "$" + formatNumber(Player.totalHacknetNodeProduction, 2) + " / sec");
 
     //Update information in each owned hacknet node
     for (var i = 0; i < Player.hacknetNodes.length; ++i) {
@@ -547,7 +548,7 @@ function updateHacknetNodeDomElement(nodeObj) {
 
     updateText("hacknet-node-name-" + nodeName, nodeName);
     updateText("hacknet-node-total-production-" + nodeName, "$" + formatNumber(nodeObj.totalMoneyGenerated, 2));
-    updateText("hacknet-node-production-rate-" + nodeName, "($" + formatNumber(nodeObj.moneyGainRatePerSecond, 2) + " / second)");
+    updateText("hacknet-node-production-rate-" + nodeName, "($" + formatNumber(nodeObj.moneyGainRatePerSecond, 2) + " / sec)");
     updateText("hacknet-node-level-" + nodeName, nodeObj.level);
     updateText("hacknet-node-ram-" + nodeName, nodeObj.ram + "GB");
     updateText("hacknet-node-cores-" + nodeName, nodeObj.cores);

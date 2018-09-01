@@ -1,3 +1,6 @@
+/**
+ * Formats the current time (to the minute).
+ */
 export function getTimestamp() {
         const d: Date = new Date();
         // A negative slice value takes from the end of the string rather than the beginning.

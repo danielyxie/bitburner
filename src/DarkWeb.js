@@ -1,7 +1,7 @@
 import {Programs}                               from "./CreateProgram";
 import {Player}                                 from "./Player";
 import {SpecialServerIps}                       from "./SpecialServerIps";
-import {post}                                   from "./Terminal";
+import {post}                                   from "./ui/postToTerminal";
 
 import {isValidIPAddress}                       from "../utils/helpers/isValidIPAddress";
 import {formatNumber}                           from "../utils/StringHelperFunctions";

@@ -276,10 +276,21 @@ a:visited {
   border-radius: 5px;
   display: inline-block; }
 
-.help-tip:hover {
+.help-tip-big {
+  content: '?';
+  padding: 3px;
+  margin-left: 3px;
+  color: #fff;
+  border: 1px solid #fff;
+  border-radius: 8px;
+  display: inline-block; }
+
+.help-tip:hover,
+.help-tip-big:hover {
   background-color: #888; }
 
-.help-tip:active {
+.help-tip:active,
+.help-tip-big:active {
   -webkit-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
   -moz-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
   box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6); }
@@ -388,32 +399,29 @@ a:visited {
 /* Status text */
 @-webkit-keyframes status-text {
   from {
-    opacity: 1;
-    top: 0; }
+    opacity: 1; }
   to {
-    opacity: 0;
-    top: 0; } }
+    opacity: 0; } }
 
 .status-text {
-  display: inline;
+  display: inline-block;
+  height: 15%;
   position: fixed;
-  top: 0;
-  -webkit-animation: status-text 3s 1;
-  background-color: transparent;
-  height: 15%; }
+  z-index: 2;
+  -webkit-animation: status-text 3s 1; }
 
 #status-text-container {
   background-color: transparent; }
 
 #status-text {
-  font-size: 20px;
-  color: #fff;
-  right: 0;
-  bottom: 0;
-  padding: 4px;
-  margin-right: 14px;
   background-color: transparent;
-  z-index: 2;
+  font-size: 20px;
+  bottom: 0;
+  color: #fff;
+  margin-right: 14px;
+  padding: 4px;
+  right: 0;
+  top: 0;
   width: auto; }
 
 /* Character Overview */
@@ -1071,6 +1079,18 @@ a:visited {
 #stock-market-container {
   position: fixed;
   padding: 6px; }
+  #stock-market-container p {
+    font-size: 13px; }
+  #stock-market-container a {
+    font-size: 14px; }
+  #stock-market-container h2 {
+    margin-top: 10px;
+    margin-left: 10px;
+    display: block; }
+
+/* Change font size of Stock TIcker headers */
+#stock-market-list li button {
+  font-size: 16px; }
 
 #stock-market-container p {
   padding: 10px;
@@ -1079,6 +1099,10 @@ a:visited {
 
 #stock-market-container a {
   margin: 10px; }
+
+#stock-market-watchlist-filter {
+  width: 50%;
+  margin-left: 10px; }
 
 .stock-market-input {
   display: inline-block;
@@ -1119,7 +1143,14 @@ a:visited {
 .generic-fullscreen-container {
   color: var(--my-font-color);
   width: 99%;
-  height: 100%; }
+  height: 100%;
+  overflow-y: hidden; }
+
+.generic-fullscreen-container-scroll {
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  padding-right: 20px; }
 
 #work-in-progress-container {
   position: fixed; }
@@ -1174,6 +1205,8 @@ a:visited {
   /* Sit on top */
   left: 0;
   top: 0;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100%;
   overflow: auto;
@@ -1181,10 +1214,21 @@ a:visited {
 
 .popup-box-content {
   background-color: var(--my-background-color);
-  margin: 15% auto;
   padding: 12px;
   border: 5px solid var(--my-highlight-color);
   width: 70%;
+  max-height: 80%;
+  /*
+    margin: auto;
+    height:auto;
+    max-height:80%;
+    position:absolute;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    */
+  overflow-y: auto;
   color: var(--my-font-color); }
 
 .popup-box-button,
@@ -1292,11 +1336,12 @@ a:visited {
 
 #game-options-content {
   background-color: var(--my-background-color);
-  margin: 15% auto;
   padding: 10px;
   border: 5px solid var(--my-highlight-color);
-  width: 60%;
-  color: var(--my-font-color); }
+  color: var(--my-font-color);
+  width: 80%;
+  max-height: 80%;
+  overflow-y: auto; }
 
 #game-options-left-panel,
 #game-options-right-panel {

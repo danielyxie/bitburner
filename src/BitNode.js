@@ -1,4 +1,5 @@
-import {Player}                             from "./Player";
+import {BitNodeMultipliers} from "./BitNodeMultipliers";
+import {Player}             from "./Player";
 
 function BitNode(n, name, desc="", info="") {
     this.number = n;
@@ -141,7 +142,7 @@ function initBitNodes() {
     BitNodes["BitNode8"] = new BitNode(8, "Ghost of Wall Street", "Money never sleeps",
                                           "You are trying to make a name for yourself as an up-and-coming hedge fund manager on Wall Street.<br><br>" +
                                           "In this BitNode:<br><br>" +
-                                          "You start with $100 million<br>" +
+                                          "You start with $250 million<br>" +
                                           "The only way to earn money is by trading on the stock market<br>" +
                                           "You start with a WSE membership and access to the TIX API<br>" +
                                           "You are able to short stocks and place different types of orders (limit/stop)<br>" +
@@ -197,43 +198,6 @@ function initBitNodes() {
     BitNodes["BitNode22"] = new BitNode(22, "", "COMING SOON");
     BitNodes["BitNode23"] = new BitNode(23, "", "COMING SOON");
     BitNodes["BitNode24"] = new BitNode(24, "", "COMING SOON");
-}
-
-let BitNodeMultipliers = {
-    HackingLevelMultiplier: 1,
-
-    ServerMaxMoney:         1,
-    ServerStartingMoney:    1,
-    ServerGrowthRate:       1,
-    ServerWeakenRate:       1,
-    ServerStartingSecurity: 1,
-
-    ManualHackMoney:        1,
-    ScriptHackMoney:        1,
-    CompanyWorkMoney:       1,
-    CrimeMoney:             1,
-    HacknetNodeMoney:       1,
-
-    CompanyWorkExpGain:     1,
-    ClassGymExpGain:        1,
-    FactionWorkExpGain:     1,
-    HackExpGain:            1,
-    CrimeExpGain:           1,
-
-    FactionWorkRepGain:     1,
-    FactionPassiveRepGain:  1,
-    RepToDonateToFaction:   1,
-
-    AugmentationRepCost:    1,
-    AugmentationMoneyCost:  1,
-
-    InfiltrationMoney:      1,
-    InfiltrationRep:        1,
-
-    CorporationValuation:   1,
-
-    BladeburnerRank:        1,
-    BladeburnerSkillCost:   1,
 }
 
 function initBitNodeMultipliers() {
@@ -394,7 +358,7 @@ function initBitNodeMultipliers() {
             BitNodeMultipliers.CorporationValuation = dec;
 
             BitNodeMultipliers.BladeburnerRank      = dec;
-            BitNodeMultipliers.BladeburnerSkillCost = dec;
+            BitNodeMultipliers.BladeburnerSkillCost = inc;
             break;
         default:
             console.log("WARNING: Player.bitNodeN invalid");
@@ -403,7 +367,5 @@ function initBitNodeMultipliers() {
 }
 
 export {initBitNodes,
-        BitNode,
         BitNodes,
-        BitNodeMultipliers,
         initBitNodeMultipliers};

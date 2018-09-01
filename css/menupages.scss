@@ -22,17 +22,15 @@
 #script-editor-container {
     background-color: transparent;
 }
+
 #javascript-editor {
     margin: 10px;
-
     height: 80%;
     width: 100%;
     margin-left: 6px;
-
     padding-left: 6px;
     padding-top: 6px;
     padding-bottom: 6px;
-
     border: 2px solid var(--my-highlight-color);
     z-index: 1;
     font-family: $fontFamily;
@@ -101,9 +99,7 @@
     resize: none;
     color: #fff;
     margin: 4px;
-
     padding: 2px;
-
     border: 2px solid var(--my-highlight-color);
 }
 
@@ -225,15 +221,15 @@
 .active-scripts-script-header:after {
     content: '\02795'; /* "plus" sign (+) */
     font-size: $defaultFontSize * 0.8125;
-    color: var(--my-font-color);
     float: right;
     margin-left: 5px;
+    color: transparent;
+    text-shadow: 0 0 0 var(--my-font-color);
 }
 
 .active-scripts-script-header.active:after {
     content: "\2796"; /* "minus" sign (-) */
     font-size: $defaultFontSize * 0.8125;
-    color: var(--my-font-color);
     float: right;
     margin-left: 5px;
 }
@@ -244,16 +240,13 @@
     width: auto;
     display: none;
     margin-bottom: 6px;
-}
 
-.active-scripts-script-panel p,
-.active-scripts-script-panel h2,
-.active-scripts-script-panel ul,
-.active-scripts-script-panel li {
-    background-color: #555;
-    width: auto;
-    color: #fff;
-    margin-left: 5%;
+    p, h2, ul, li {
+        background-color: #555;
+        width: auto;
+        color: #fff;
+        margin-left: 5%;
+    }
 }
 
 .active-scripts-button {
@@ -266,13 +259,13 @@
     margin: 4px;
     padding: 4px;
     background-color: #000;
-}
 
-.active-scripts-button:hover,
-.active-scripts-button:focus {
-    color: #fff;
-    text-decoration: none;
-    cursor: pointer;
+    &:hover,
+    &:focus {
+        color: #fff;
+        text-decoration: none;
+        cursor: pointer;
+    }
 }
 
 /* Hacknet Nodes */
@@ -291,6 +284,16 @@
     float: left;
     overflow: hidden;
     white-space: nowrap;
+
+    &.hacknet-node {
+        $boxShadowArgs: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 0 16px rgba(0, 0, 0, 0.1);
+        @include boxShadow($boxShadowArgs);
+
+        margin: 6px;
+        padding: 7px;
+        width: 35vw;
+        border: 2px solid var(--my-highlight-color);
+    }
 }
 
 #hacknet-nodes-list {
@@ -316,34 +319,24 @@
     display: inline-block;
 }
 
-.hacknet-node {
-    $boxShadowArgs: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 0 16px rgba(0, 0, 0, 0.1);
-    @include boxShadow($boxShadowArgs);
-
-    margin: 6px;
-    padding: 6px;
-    width: 34vw;
-    border: 2px solid var(--my-highlight-color);
-}
-
 .hacknet-node-container {
     display: inline-table;
-}
 
-.hacknet-node-container .row {
-    display: table-row;
-    height: 30px;
-}
+    .row {
+        display: table-row;
+        height: 30px;
 
-.hacknet-node-container .row p {
-    display: table-cell;
-}
+        p {
+            display: table-cell;
+        }
+    }
 
-.hacknet-node-container .upgradable-info {
-    display: inline-block;
-    margin: 0 4px; /* Don't want the vertical margin/padding, just left & right */
-    padding: 0 4px;
-    width: $defaultFontSize * 4;
+    .upgradable-info {
+        display: inline-block;
+        margin: 0 4px; /* Don't want the vertical margin/padding, just left & right */
+        padding: 0 4px;
+        width: $defaultFontSize * 4;
+    }
 }
 
 .menu-page-text {
@@ -426,17 +419,14 @@
 }
 
 /* Faction Augmentations */
-#faction-augmentations-container{
+#faction-augmentations-container {
     position: fixed;
     padding-top: 10px;
-}
 
-#faction-augmentations-container p,
-#faction-augmentations-container a,
-#faction-augmentations-container ul,
-#faction-augmentations-container h1{
-    margin: 8px;
-    padding: 4px;
+    p, a, ul, h1 {
+        margin: 8px;
+        padding: 4px;
+    }
 }
 
 /* World */
@@ -451,11 +441,20 @@
     padding-top: 10px;
 }
 
-.augmentations-list button,
-.augmentations-list div {
-    color: var(--my-font-color);
-    padding: 8px;
-    text-decoration: none;
+.augmentations-list {
+    button,
+    div {
+        color: var(--my-font-color);
+        text-decoration: none;
+    }
+
+    button {
+        padding: 2px 5px;
+    }
+
+    div {
+        padding: 6px;
+    }
 }
 
 /* Tutorial */
@@ -510,11 +509,12 @@
     padding: 6px;
 }
 
-#location-container * {
+#location-container > * {
     margin: 10px 5px 10px 5px;
 }
 
-#location-job-reputation, #location-company-favor {
+#location-job-reputation,
+#location-company-favor {
     display: inline;
 }
 
@@ -523,6 +523,7 @@
     position: fixed;
     padding: 6px;
 }
+
 #infiltration-left-panel,
 #infiltration-right-panel {
     display: inline-block;
@@ -552,6 +553,25 @@
 #stock-market-container {
     position: fixed;
     padding: 6px;
+
+    p {
+        font-size: $defaultFontSize * 0.8125;
+    }
+    a {
+        font-size: $defaultFontSize * 0.875;
+    }
+    h2 {
+        margin-top: 10px;
+        margin-left: 10px;
+        display: block;
+    }
+}
+
+/* Change font size of Stock TIcker headers */
+#stock-market-list li {
+    button {
+        font-size: $defaultFontSize;
+    }
 }
 
 #stock-market-container p {
@@ -562,6 +582,11 @@
 
 #stock-market-container a {
     margin: 10px;
+}
+
+#stock-market-watchlist-filter {
+    width: 50%;
+    margin-left: 10px;
 }
 
 .stock-market-input {

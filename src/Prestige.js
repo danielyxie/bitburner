@@ -109,17 +109,6 @@ function prestigeAugmentation() {
     //Messages
     initMessages();
 
-    //Reset Stock market
-    if (Player.hasWseAccount) {
-        initStockMarket();
-        initSymbolToStockMap();
-    }
-    setStockMarketContentCreated(false);
-    var stockMarketList = document.getElementById("stock-market-list");
-    while(stockMarketList.firstChild) {
-        stockMarketList.removeChild(stockMarketList.firstChild);
-    }
-
     //Gang, in BitNode 2
     if (Player.bitNodeN == 2 && Player.inGang()) {
         var faction = Factions[Player.gang.facName];
@@ -140,6 +129,20 @@ function prestigeAugmentation() {
         Player.hasTixApiAccess = true;
     }
 
+    //Reset Stock market
+    if (Player.hasWseAccount) {
+        initStockMarket();
+        initSymbolToStockMap();
+    }
+    setStockMarketContentCreated(false);
+    var stockMarketList = document.getElementById("stock-market-list");
+    while(stockMarketList.firstChild) {
+        stockMarketList.removeChild(stockMarketList.firstChild);
+    }
+    var watchlist = document.getElementById("stock-market-watchlist-filter");
+    watchlist.value = ""; //Reset watchlist filter
+
+    //Load Terminal Screen
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
     Terminal.resetTerminalInput();
@@ -241,22 +244,6 @@ function prestigeSourceFile() {
     //Reinitialize Bit Node flags
     initSingularitySFFlags();
 
-    //Reset Stock market, gang, and corporation
-    if (Player.hasWseAccount) {
-        initStockMarket();
-        initSymbolToStockMap();
-    }
-    setStockMarketContentCreated(false);
-    var stockMarketList = document.getElementById("stock-market-list");
-    while(stockMarketList.firstChild) {
-        stockMarketList.removeChild(stockMarketList.firstChild);
-    }
-
-    Player.gang = null;
-    deleteGangDisplayContent();
-    Player.corporation = null;
-    Player.bladeburner = null;
-
     //BitNode 3: Corporatocracy
     if (Player.bitNodeN === 3) {
         Player.money = new Decimal(150e9);
@@ -315,6 +302,22 @@ function prestigeSourceFile() {
         Player.hasWseAccount = true;
         Player.hasTixApiAccess = true;
     }
+
+    //Reset Stock market, gang, and corporation
+    if (Player.hasWseAccount) {
+        initStockMarket();
+        initSymbolToStockMap();
+    }
+    setStockMarketContentCreated(false);
+    var stockMarketList = document.getElementById("stock-market-list");
+    while(stockMarketList.firstChild) {
+        stockMarketList.removeChild(stockMarketList.firstChild);
+    }
+
+    Player.gang = null;
+    deleteGangDisplayContent();
+    Player.corporation = null;
+    Player.bladeburner = null;
 
     //Gain int exp
     Player.gainIntelligenceExp(5);

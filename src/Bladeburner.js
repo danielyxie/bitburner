@@ -1,13 +1,13 @@
 import {Augmentations, AugmentationNames}           from "./Augmentations";
-import {BitNodeMultipliers}                         from "./BitNode";
+import {BitNodeMultipliers}                         from "./BitNodeMultipliers";
 import {CONSTANTS}                                  from "./Constants";
 import {Engine}                                     from "./engine";
 import {Faction, Factions, factionExists,
         joinFaction, displayFactionContent}         from "./Faction";
-import {Locations}                                  from "./Location";
+import {Locations}                                  from "./Locations";
 import {Player}                                     from "./Player";
 import {hackWorldDaemon, redPillFlag}               from "./RedPill";
-import {KEY}                                        from "./Terminal";
+import {KEY}                                        from "../utils/helpers/keyCodes";
 
 import {createProgressBarText}                      from "../utils/helpers/createProgressBarText";
 import {dialogBoxCreate}                            from "../utils/DialogBox";
@@ -20,6 +20,7 @@ import {appendLineBreaks}                           from "../utils/uiHelpers/app
 import {clearObject}                                from "../utils/helpers/clearObject";
 import {createElement}                              from "../utils/uiHelpers/createElement";
 import {createPopup}                                from "../utils/uiHelpers/createPopup";
+import {Page, routing}                              from "./ui/navigationTracking";
 import {exceptionAlert}                             from "../utils/helpers/exceptionAlert";
 import {formatNumber}                               from "../utils/StringHelperFunctions";
 import {getRandomInt}                               from "../utils/helpers/getRandomInt";
@@ -61,12 +62,12 @@ var ActionCountGrowthPeriod     = 300; //Time (s) it takes for action count to g
 var RankToFactionRepFactor      = 2; //Delta Faction Rep = this * Delta Rank
 var RankNeededForFaction        = 25;
 
-var ContractSuccessesPerLevel   = 3; //How many successes you need to level up a contract
-var OperationSuccessesPerLevel  = 2.5; //How many successes you need to level up an op
+var ContractSuccessesPerLevel   = 3.5; //How many successes you need to level up a contract
+var OperationSuccessesPerLevel  = 3; //How many successes you need to level up an op
 
 var RanksPerSkillPoint          = 4;  //How many ranks needed to get 1 Skill Point
 
-var ContractBaseMoneyGain       = 40e3; //Base Money Gained per contract
+var ContractBaseMoneyGain       = 50e3; //Base Money Gained per contract
 
 //DOM related variables
 var ActiveActionCssClass        = "bladeburner-active-action";
@@ -145,7 +146,7 @@ var consoleHelpText = {
 
 //Keypresses for Console
 $(document).keydown(function(event) {
-    if (Engine.currentPage === Engine.Page.Bladeburner) {
+    if (routing.isOn(Page.Bladeburner)) {
         //if (DomElems.consoleInput && !event.ctrlKey && !event.shiftKey && !event.altKey) {
         //    DomElems.consoleInput.focus();
         //}
@@ -213,8 +214,8 @@ function City(params={}) {
     this.popEst = this.pop * (Math.random() + 0.5);
 
     //Number of Synthoid communities population and estimate
-    this.comms          = params.comms  ? params.comms  : getRandomInt(1, 40);
-    this.commsEst       = this.comms + getRandomInt(-2, 2);
+    this.comms          = params.comms  ? params.comms  : getRandomInt(5, 100);
+    this.commsEst       = this.comms + getRandomInt(-5, 5);
     if (this.commsEst < 0) {this.commsEst = 0;}
     this.chaos          = 0;
 }
@@ -733,7 +734,7 @@ Bladeburner.prototype.create = function() {
              "whatever city you are currently in.",
         baseDifficulty:125,difficultyFac:1.02,rewardFac:1.041,
         rankGain:0.3, hpLoss:0.5,
-        count:getRandomInt(300, 800), countGrowth:getRandomInt(1, 5),
+        count:getRandomInt(100, 500), countGrowth:getRandomInt(5, 75)/10,
         weights:{hack:0,str:0.05,def:0.05,dex:0.35,agi:0.35,cha:0.1, int:0.05},
         decays:{hack:0,str:0.91,def:0.91,dex:0.91,agi:0.91,cha:0.9, int:1},
         isStealth:true
@@ -745,7 +746,7 @@ Bladeburner.prototype.create = function() {
              "current city, and will also increase its chaos level.",
         baseDifficulty:250, difficultyFac:1.04,rewardFac:1.085,
         rankGain:0.9, hpLoss:1,
-        count:getRandomInt(200, 750), countGrowth:getRandomInt(1, 3),
+        count:getRandomInt(25, 750), countGrowth:getRandomInt(5, 75)/10,
         weights:{hack:0,str:0.15,def:0.15,dex:0.25,agi:0.25,cha:0.1, int:0.1},
         decays:{hack:0,str:0.91,def:0.91,dex:0.91,agi:0.91,cha:0.8, int:0.9},
         isKill:true
@@ -757,7 +758,7 @@ Bladeburner.prototype.create = function() {
              "city, and will also increase its chaos level.",
         baseDifficulty:200, difficultyFac:1.03, rewardFac:1.065,
         rankGain:0.6, hpLoss:1,
-        count:getRandomInt(300, 900), countGrowth:getRandomInt(1,4),
+        count:getRandomInt(50, 1000), countGrowth:getRandomInt(5,75)/10,
         weights:{hack:0,str:0.2,def:0.2,dex:0.2,agi:0.2,cha:0.1, int:0.1},
         decays:{hack:0,str:0.91,def:0.91,dex:0.91,agi:0.91,cha:0.8, int:0.9},
         isKill:true
@@ -771,8 +772,8 @@ Bladeburner.prototype.create = function() {
              "synthoid data.<br><br>" +
              "You will NOT lose HP from failed Investigation ops.",
         baseDifficulty:400, difficultyFac:1.03,rewardFac:1.07,reqdRank:25,
-        rankGain:2, rankLoss:0.2,
-        count:getRandomInt(50, 400), countGrowth:1,
+        rankGain:2.2, rankLoss:0.2,
+        count:getRandomInt(50, 200), countGrowth:getRandomInt(10, 40)/10,
         weights:{hack:0.25,str:0.05,def:0.05,dex:0.2,agi:0.1,cha:0.25, int:0.1},
         decays:{hack:0.85,str:0.9,def:0.9,dex:0.9,agi:0.9,cha:0.7, int:0.9},
         isStealth:true
@@ -784,8 +785,8 @@ Bladeburner.prototype.create = function() {
              "Successful Undercover ops will increase the accuracy of your synthoid " +
              "data.",
         baseDifficulty:500, difficultyFac:1.04, rewardFac:1.09, reqdRank:100,
-        rankGain:4, rankLoss:0.4, hpLoss:2,
-        count:getRandomInt(50, 300), countGrowth:1,
+        rankGain:4.4, rankLoss:0.4, hpLoss:2,
+        count:getRandomInt(25, 300), countGrowth:getRandomInt(10, 40)/10,
         weights:{hack:0.2,str:0.05,def:0.05,dex:0.2,agi:0.2,cha:0.2, int:0.1},
         decays:{hack:0.8,str:0.9,def:0.9,dex:0.9,agi:0.9,cha:0.7, int:0.9},
         isStealth:true
@@ -795,8 +796,8 @@ Bladeburner.prototype.create = function() {
         desc:"Conduct a sting operation to bait and capture particularly " +
              "notorious Synthoid criminals.",
         baseDifficulty:650, difficultyFac:1.04, rewardFac:1.095, reqdRank:500,
-        rankGain:5, rankLoss:0.5, hpLoss:2.5,
-        count:getRandomInt(25,400), countGrowth:0.75,
+        rankGain:5.5, rankLoss:0.5, hpLoss:2.5,
+        count:getRandomInt(25,400), countGrowth:getRandomInt(3, 40)/10,
         weights:{hack:0.25,str:0.05,def:0.05,dex:0.25,agi:0.1,cha:0.2, int:0.1},
         decays:{hack:0.8,str:0.85,def:0.85,dex:0.85,agi:0.85,cha:0.7, int:0.9},
         isStealth:true
@@ -807,8 +808,8 @@ Bladeburner.prototype.create = function() {
              "there must be an existing Synthoid community in your current city " +
              "in order for this Operation to be successful",
         baseDifficulty:800, difficultyFac:1.045, rewardFac:1.1, reqdRank:3000,
-        rankGain:50,rankLoss:2.5,hpLoss:50,
-        count:getRandomInt(25, 150), countGrowth:0.2,
+        rankGain:55,rankLoss:2.5,hpLoss:50,
+        count:getRandomInt(25, 150), countGrowth:getRandomInt(2, 40)/10,
         weights:{hack:0.1,str:0.2,def:0.2,dex:0.2,agi:0.2,cha:0, int:0.1},
         decays:{hack:0.7,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.9},
         isKill:true
@@ -819,8 +820,8 @@ Bladeburner.prototype.create = function() {
              "objective is to complete the task without " +
              "drawing any attention. Stealth and discretion are key.",
         baseDifficulty:1000, difficultyFac:1.05, rewardFac:1.11, reqdRank:20e3,
-        rankGain:20, rankLoss:2, hpLoss:10,
-        count:getRandomInt(25, 250), countGrowth:0.1,
+        rankGain:22, rankLoss:2, hpLoss:10,
+        count:getRandomInt(25, 250), countGrowth:getRandomInt(1, 20)/10,
         weights:{hack:0.1,str:0.1,def:0.1,dex:0.3,agi:0.3,cha:0, int:0.1},
         decays:{hack:0.7,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.9},
         isStealth:true, isKill:true
@@ -831,8 +832,8 @@ Bladeburner.prototype.create = function() {
              "important, high-profile social and political leaders " +
              "in the Synthoid communities.",
         baseDifficulty:1500, difficultyFac:1.06, rewardFac:1.14, reqdRank:50e3,
-        rankGain:40, rankLoss:4, hpLoss:5,
-        count:getRandomInt(25, 200), countGrowth:0.1,
+        rankGain:44, rankLoss:4, hpLoss:5,
+        count:getRandomInt(25, 200), countGrowth:getRandomInt(1, 20)/10,
         weights:{hack:0.1,str:0.1,def:0.1,dex:0.3,agi:0.3,cha:0, int:0.1},
         decays:{hack:0.6,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.8},
         isStealth:true, isKill:true
@@ -852,8 +853,12 @@ Bladeburner.prototype.process = function() {
     //If the Player starts doing some other actions, set action to idle and alert
     if (Augmentations[AugmentationNames.BladesSimulacrum].owned === false && Player.isWorking) {
         if (this.action.type !== ActionTypes["Idle"]) {
-            dialogBoxCreate("Your Bladeburner action was cancelled because you started " +
-                            "doing something else");
+            let msg = "Your Bladeburner action was cancelled because you started doing something else.";
+            if (this.automateEnabled) {
+                msg += `<br><br>Your automation was disabled as well. You will have to re-enable it through the Bladeburner console`
+                this.automateEnabled = false;
+            }
+            dialogBoxCreate(msg);
         }
         this.resetAction();
     }
@@ -915,7 +920,7 @@ Bladeburner.prototype.process = function() {
             }
         }
 
-        if (Engine.currentPage === Engine.Page.Bladeburner) {
+        if (routing.isOn(Page.Bladeburner)) {
             this.updateContent();
         }
     }
@@ -1257,7 +1262,7 @@ Bladeburner.prototype.completeAction = function() {
                         return hackWorldDaemon(Player.bitNodeN);
                     }
 
-                    if (Engine.currentPage === Engine.Page.Bladeburner) {
+                    if (routing.isOn(Page.Bladeburner)) {
                         this.createActionAndSkillsContent();
                     }
 
@@ -1338,7 +1343,7 @@ Bladeburner.prototype.completeAction = function() {
             Player.gainHackingExp(hackingExpGain);
             Player.gainIntelligenceExp(BaseIntGain);
             Player.gainCharismaExp(charismaExpGain);
-            this.changeRank(0.1);
+            this.changeRank(0.1 * BitNodeMultipliers.BladeburnerRank);
             console.log("DEBUG: Field Analysis effectiveness is " + (eff * this.skillMultipliers.successChanceEstimate));
             this.getCurrentCity().improvePopulationEstimateByPercentage(eff * this.skillMultipliers.successChanceEstimate);
             if (this.logging.general) {
@@ -1527,7 +1532,7 @@ Bladeburner.prototype.randomEvent = function() {
     var destCity = this.cities[destCityName];
 
     if (!(sourceCity instanceof City) || !(destCity instanceof City)) {
-        throw new Error("sourceCity was not a City object in Bladeburner.randomEvent()");
+        throw new Error("sourceCity/destCity was not a City object in Bladeburner.randomEvent()");
     }
 
     if (chance <= 0.05) {
@@ -1824,8 +1829,8 @@ Bladeburner.prototype.createOverviewContent = function() {
     DomElems.overviewBonusTime = createElement("p", {
       innerText: "Bonus time: ",
       display: "inline-block",
-      tooltip: "You gain bonus time while offline or when you're not performing any action. " +
-        "Bonus time makes the game progress faster."
+      tooltip: "You gain bonus time while offline or when the game is inactive (e.g. when the tab is throttled by browser). " +
+        "Bonus time makes the Bladeburner mechanic progress faster, up to 5x the normal speed."
     });
     DomElems.overviewSkillPoints = createElement("p", {display:"block"});
     
@@ -2194,7 +2199,7 @@ Bladeburner.prototype.updateContent = function() {
 }
 
 Bladeburner.prototype.updateOverviewContent = function() {
-    if (Engine.currentPage !== Engine.Page.Bladeburner) {return;}
+    if (!routing.isOn(Page.Bladeburner)) {return;}
     DomElems.overviewRank.childNodes[0].nodeValue = "Rank: " + formatNumber(this.rank, 2);
     DomElems.overviewStamina.innerText = "Stamina: " + formatNumber(this.stamina, 3) + " / " + formatNumber(this.maxStamina, 3);
     DomElems.overviewGen1.innerHTML =
@@ -3465,6 +3470,27 @@ Bladeburner.prototype.getSkillLevelNetscriptFn = function(skillName, workerScrip
     }
 }
 
+Bladeburner.prototype.getSkillUpgradeCostNetscriptFn = function(skillName, workerScript) {
+    var errorLogText = "ERROR: bladeburner.getSkillUpgradeCostNetscriptFn() failed due to an invalid skill specified: " +
+                       skillName + ". Note that the name of the skill is case-sensitive";
+
+    if (skillName === "") {
+        return -1;
+    }
+
+    if (!Skills.hasOwnProperty(skillName)) {
+        workerScript.log(errorLogText);
+        return -1;
+    }
+
+    var skill = Skills[skillName];
+    if (this.skills[skillName] == null) {
+        return skill.calculateCost(0);
+    } else {
+        return skill.calculateCost(this.skills[skillName]);
+    }
+}
+
 Bladeburner.prototype.upgradeSkillNetscriptFn = function(skillName, workerScript) {
     var errorLogText = "ERROR: bladeburner.upgradeSkill() failed due to an invalid skill specified: " +
                        skillName + ". Note that the name of the skill is case-sensitive";
@@ -3498,7 +3524,7 @@ Bladeburner.prototype.upgradeSkillNetscriptFn = function(skillName, workerScript
 
     this.skillPoints -= cost;
     this.upgradeSkill(skill);
-    if (Engine.currentPage === Engine.Page.Bladeburner && DomElems.currentTab.toLowerCase() === "skills") {
+    if (routing.isOn(Page.Bladeburner) && DomElems.currentTab.toLowerCase() === "skills") {
         this.createActionAndSkillsContent();
     }
     if (workerScript.shouldLog("upgradeSkill")) {
@@ -3620,7 +3646,7 @@ Bladeburner.prototype.joinBladeburnerFactionNetscriptFn = function(workerScript)
         if (workerScript.shouldLog("joinBladeburnerFaction")) {
             workerScript.log("Joined Bladeburners Faction");
         }
-        if (Engine.currentPage === Engine.Page.Bladeburner) {
+        if (routing.isOn(Page.Bladeburner)) {
             removeChildrenFromElement(DomElems.overviewDiv);
             this.createOverviewContent();
         }

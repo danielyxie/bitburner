@@ -1,38 +1,5 @@
-import {Engine} from "./engine";
-
-/* Settings.js */
-let Settings = {
-    CodeInstructionRunTime:              25,
-    MaxLogCapacity:                      50,
-    MaxPortCapacity:                     50,
-    SuppressMessages:                    false,
-    SuppressFactionInvites:              false,
-    SuppressTravelConfirmation:          false,
-    SuppressBuyAugmentationConfirmation: false,
-    AutosaveInterval:                    60,
-    DisableHotkeys:                      false,
-    ThemeHighlightColor:                 "#ffffff",
-    ThemeFontColor:                      "#66ff33",
-    ThemeBackgroundColor:                "#000000",
-    EditorTheme:                         "Monokai",
-    EditorKeybinding:                    "ace",
-}
-
-function loadSettings(saveString) {
-    Settings = JSON.parse(saveString);
-}
-
-function initSettings()  {
-    Settings.CodeInstructionRunTime = 50;
-    Settings.MaxLogCapacity = 50;
-    Settings.MaxPortCapacity = 50;
-    Settings.SuppressMessages = false;
-    Settings.SuppressFactionInvites = false;
-    Settings.SuppressTravelConfirmation = false;
-    Settings.SuppressBuyAugmentationConfirmation = false;
-    Settings.AutosaveInterval = 60;
-    Settings.DisableHotkeys = false;
-}
+import {Engine} from "../engine";
+import {Settings} from "../Settings";
 
 function setSettingsLabels() {
     var nsExecTime = document.getElementById("settingsNSExecTimeRangeValLabel");
@@ -42,6 +9,7 @@ function setSettingsLabels() {
     var suppressFactionInv = document.getElementById("settingsSuppressFactionInvites")
     var suppressTravelConfirmation = document.getElementById("settingsSuppressTravelConfirmation");
     var suppressBuyAugmentationConfirmation = document.getElementById("settingsSuppressBuyAugmentationConfirmation");
+    var suppressHospitalizationPopup = document.getElementById("settingsSuppressHospitalizationPopup");
     var autosaveInterval = document.getElementById("settingsAutosaveIntervalValLabel");
     var disableHotkeys = document.getElementById("settingsDisableHotkeys");
 
@@ -53,6 +21,7 @@ function setSettingsLabels() {
     suppressFactionInv.checked = Settings.SuppressFactionInvites;
     suppressTravelConfirmation.checked = Settings.SuppressTravelConfirmation;
     suppressBuyAugmentationConfirmation.checked = Settings.SuppressBuyAugmentationConfirmation;
+    suppressHospitalizationPopup.checked = Settings.SuppressHospitalizationPopup;
     autosaveInterval.innerHTML = Settings.AutosaveInterval;
     disableHotkeys.checked = Settings.DisableHotkeys;
 
@@ -105,8 +74,11 @@ function setSettingsLabels() {
 
     suppressBuyAugmentationConfirmation.onclick = function() {
         Settings.SuppressBuyAugmentationConfirmation = this.checked;
-        console.log('sup buy: '+Settings.SuppressBuyAugmentationConfirmation);
     };
+    
+    suppressHospitalizationPopup.onclick = function() {
+        Settings.SuppressHospitalizationPopup = this.checked;
+    }
 
     disableHotkeys.onclick = function() {
         Settings.DisableHotkeys = this.checked;
@@ -126,4 +98,4 @@ function setSettingsLabels() {
     }
 }
 
-export {Settings, initSettings, setSettingsLabels, loadSettings};
+export { setSettingsLabels };

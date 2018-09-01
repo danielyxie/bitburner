@@ -143,7 +143,9 @@ getActionEstimatedSuccessChance
     :param string type: Type of action. See :ref:`bladeburner_action_types`
     :param string name: Name of action. Must be an exact match
 
-    Returns the estimated success chance for the specified action
+    Returns the estimated success chance for the specified action. This chance
+    is returned as a decimal value, NOT a percentage (e.g. if you have an estimated
+    success chance of 80%, then this function will return 0.80, NOT 80).
 
 getActionCountRemaining
 -----------------------
@@ -235,18 +237,30 @@ getSkillLevel
 
 .. js:function:: getSkillLevel(skillName="")
 
-    :param string skillName: Name of skill
+    :param string skillName: Name of skill. Case-sensitive and must be an exact match
 
     This function returns your level in the specified skill.
 
     The function returns -1 if an invalid skill name is passed in
+
+getSkillUpgradeCost
+-------------------
+
+.. js:function:: getSkillUpgradeCost(skillName="")
+
+    :param string skillName: Name of skill. Case-sensitive and must be an exact match
+
+    This function returns the number of skill points needed to upgrade the
+    specified skill.
+
+    The function returns -1 if an invalid skill name is passed in.
 
 upgradeSkill
 ------------
 
 .. js:function:: upgradeSkill(skillName)
 
-    :param string skillName: Name of Skill to be upgraded. Must be an exact match
+    :param string skillName: Name of Skill to be upgraded. Case-sensitive and must be an exact match
 
     Attempts to upgrade the specified Bladeburner skill. Returns true if the
     skill is successfully upgraded, and false otherwise
@@ -357,6 +371,21 @@ joinBladeburnerDivision
     are already a member.
 
     Returns false otherwise
+
+getBonusTime
+------------
+
+.. js:function:: getBonusTime()
+
+    Returns the amount of accumulated "bonus time" (seconds) for the Bladeburner mechanic.
+
+    "Bonus time" is accumulated when the game is offline or if the game is
+    inactive in the browser.
+
+    "Bonus time" makes the game progress faster, up to 5x the normal speed.
+    For example, if an action takes 30 seconds to complete but you've accumulated
+    over 30 seconds in bonus time, then the action will only take 6 seconds
+    in real life to complete.
 
 Examples
 --------

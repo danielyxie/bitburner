@@ -12,8 +12,7 @@ import {FconfSettings, parseFconfSettings,
         createFconf}                        from "./Fconf";
 import {TerminalHelpText, HelpTexts}        from "./HelpText";
 import {iTutorialNextStep, iTutorialSteps,
-        iTutorialIsRunning,
-        currITutorialStep}                  from "./InteractiveTutorial";
+        ITutorial}                          from "./InteractiveTutorial";
 import {showLiterature}                     from "./Literature";
 import {showMessage, Message}               from "./Message";
 import {scriptCalculateHackingTime,
@@ -35,6 +34,8 @@ import {TextFile, getTextFile}              from "./TextFile";
 
 import {containsAllStrings, longestCommonStart,
         formatNumber}                       from "../utils/StringHelperFunctions";
+import {Page, routing}                      from "./ui/navigationTracking";
+import {KEY}                                from "../utils/helpers/keyCodes";
 import {addOffset}                          from "../utils/helpers/addOffset";
 import {isString}                           from "../utils/helpers/isString";
 import {arrayToString}                      from "../utils/helpers/arrayToString";
@@ -43,86 +44,40 @@ import {logBoxCreate}                       from "../utils/LogBox";
 import {yesNoBoxCreate,
         yesNoBoxGetYesButton,
         yesNoBoxGetNoButton, yesNoBoxClose} from "../utils/YesNoBox";
+import {post, hackProgressBarPost,
+        hackProgressPost}                   from "./ui/postToTerminal";
 
 import * as JSZip from 'jszip';
 import * as FileSaver from 'file-saver';
-
-/* Write text to terminal */
-//If replace is true then spaces are replaced with "&nbsp;"
-function post(input) {
-    $("#terminal-input").before('<tr class="posted"><td class="terminal-line" style="color: var(--my-font-color); background-color: var(--my-background-color); white-space:pre-wrap;">' + input + '</td></tr>');
-	updateTerminalScroll();
-}
-
-//Same thing as post but the td cells have ids so they can be animated for the hack progress bar
-function hackProgressBarPost(input) {
-    $("#terminal-input").before('<tr class="posted"><td id="hack-progress-bar" style="color: var(--my-font-color); background-color: var(--my-background-color);">' + input + '</td></tr>');
-	updateTerminalScroll();
-}
-
-function hackProgressPost(input) {
-    $("#terminal-input").before('<tr class="posted"><td id="hack-progress" style="color: var(--my-font-color); background-color: var(--my-background-color);">' + input + '</td></tr>');
-	updateTerminalScroll();
-}
-
-//Scroll to the bottom of the terminal's 'text area'
-function updateTerminalScroll() {
-	var element = document.getElementById("terminal-container");
-	element.scrollTop = element.scrollHeight;
-}
 
 function postNetburnerText() {
 	post("Bitburner v" + CONSTANTS.Version);
 }
 
-
-//Key Codes
-var KEY = {
-    TAB:            9,
-    ENTER:          13,
-    CTRL:           17,
-    UPARROW:        38,
-    DOWNARROW:      40,
-    A:              65,
-    B:              66,
-    C:              67,
-    D:              68,
-    E:              69,
-    F:              70,
-    H:              72,
-    J:              74,
-    K:              75,
-    L:              76,
-    M:              77,
-    N:              78,
-    O:              79,
-    P:              80,
-    R:              82,
-    S:              83,
-    U:              85,
-    W:              87,
-}
-
 //Defines key commands in terminal
 $(document).keydown(function(event) {
 	//Terminal
-	if (Engine.currentPage == Engine.Page.Terminal) {
+	if (routing.isOn(Page.Terminal)) {
         var terminalInput = document.getElementById("terminal-input-text-box");
         if (terminalInput != null && !event.ctrlKey && !event.shiftKey) {terminalInput.focus();}
 
 		if (event.keyCode === KEY.ENTER) {
             event.preventDefault(); //Prevent newline from being entered in Script Editor
 			var command = $('input[class=terminal-input]').val();
-			if (command.length > 0) {
-                post(
-                    "[" +
-                    (FconfSettings.ENABLE_TIMESTAMPS ? getTimestamp() + " " : "") +
-                    Player.getCurrentServer().hostname +
-                    " ~]> " + command
-                );
+			      post(
+                "[" +
+                (FconfSettings.ENABLE_TIMESTAMPS ? getTimestamp() + " " : "") +
+                Player.getCurrentServer().hostname +
+                " ~]> " + command
+            );
 
+            if (command.length > 0) {
                 Terminal.resetTerminalInput();      //Clear input first
-				Terminal.executeCommand(command);
+                const commands = command.split(";");
+                for(let i = 0; i < commands.length; i++) {
+                    if(commands[i].match(/^\s*$/)) { continue; }
+                    Terminal.executeCommand(commands[i]);
+                }
 			}
 		}
 
@@ -198,6 +153,12 @@ $(document).keydown(function(event) {
             if (terminalInput == null) {return;}
             var input = terminalInput.value;
             if (input == "") {return;}
+
+            const semiColonIndex = input.lastIndexOf(";");
+            if(semiColonIndex !== -1) {
+                input = input.slice(semiColonIndex+1);
+            }
+
             input = input.trim();
             input = input.replace(/\s\s+/g, ' ');
 
@@ -277,13 +238,13 @@ $(document).keydown(function(event) {
 //Keep terminal in focus
 let terminalCtrlPressed = false, shiftKeyPressed = false;
 $(document).ready(function() {
-	if (Engine.currentPage === Engine.Page.Terminal) {
+	if (routing.isOn(Page.Terminal)) {
 		$('.terminal-input').focus();
 	}
 });
 $(document).keydown(function(e) {
-	if (Engine.currentPage == Engine.Page.Terminal) {
-		if (e.which == 17) {
+	if (routing.isOn(Page.Terminal)) {
+		if (e.which == KEY.CTRL) {
 			terminalCtrlPressed = true;
 		} else if (e.shiftKey) {
             shiftKeyPressed = true;
@@ -299,8 +260,8 @@ $(document).keydown(function(e) {
 	}
 })
 $(document).keyup(function(e) {
-	if (Engine.currentPage == Engine.Page.Terminal) {
-		if (e.which == 17) {
+	if (routing.isOn(Page.Terminal)) {
+		if (e.which == KEY.CTRL) {
 			terminalCtrlPressed = false;
 		}
         if (e.shiftKey) {
@@ -350,7 +311,18 @@ function tabCompletion(command, arg, allPossibilities, index=0) {
         } else {
             val = command + " " + allPossibilities[0];
         }
-        document.getElementById("terminal-input-text-box").value = val;
+
+        const textBox = document.getElementById("terminal-input-text-box");
+        const oldValue = textBox.value;
+        const semiColonIndex = oldValue.lastIndexOf(";");
+        if(semiColonIndex === -1) {
+            // no ; replace the whole thing.
+            textBox.value = val;
+        } else {
+            // replace just after the last semicolon
+            textBox.value = textBox.value.slice(0, semiColonIndex+1)+" "+val;
+        }
+
         document.getElementById("terminal-input-text-box").focus();
     } else {
         var longestStartSubstr = longestCommonStart(allPossibilities);
@@ -789,11 +761,11 @@ let Terminal = {
 		if (commandArray.length == 0) {return;}
 
         /****************** Interactive Tutorial Terminal Commands ******************/
-        if (iTutorialIsRunning) {
+        if (ITutorial.isRunning) {
             var foodnstuffServ = GetServerByHostname("foodnstuff");
             if (foodnstuffServ == null) {throw new Error("Could not get foodnstuff server"); return;}
 
-            switch(currITutorialStep) {
+            switch(ITutorial.currStep) {
             case iTutorialSteps.TerminalHelp:
                 if (commandArray[0] == "help") {
                     post(TerminalHelpText);
@@ -1836,7 +1808,7 @@ let Terminal = {
          * @returns {void}
          */
         /**
-         * @type {Object.<string, ProgramHandler} 
+         * @type {Object.<string, ProgramHandler}
          */
         const programHandlers = {};
         programHandlers[Programs.NukeProgram.name] = (server) => {
@@ -1885,7 +1857,7 @@ let Terminal = {
             server.openPortCount++;
         };
         programHandlers[Programs.HTTPWormProgram.name] = (server) => {
-            if (serv.httpPortOpen) {
+            if (server.httpPortOpen) {
                 post("HTTP Port (80) is already open!");
                 return;
             }
@@ -2084,4 +2056,4 @@ let Terminal = {
 	}
 };
 
-export {postNetburnerText, post, Terminal, KEY};
+export {postNetburnerText, Terminal};

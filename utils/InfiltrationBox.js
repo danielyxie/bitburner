@@ -1,4 +1,4 @@
-import {BitNodeMultipliers}                 from "../src/BitNode";
+import {BitNodeMultipliers}                 from "../src/BitNodeMultipliers";
 import {CONSTANTS}                          from "../src/Constants";
 import {Factions, Faction}                  from "../src/Faction";
 import {Player}                             from "../src/Player";

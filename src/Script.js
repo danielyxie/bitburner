@@ -21,7 +21,7 @@ import {CONSTANTS}                              from "./Constants";
 import {Engine}                                 from "./engine";
 import {FconfSettings, parseFconfSettings}      from "./Fconf";
 import {iTutorialSteps, iTutorialNextStep,
-        iTutorialIsRunning, currITutorialStep}  from "./InteractiveTutorial";
+        ITutorial}                              from "./InteractiveTutorial";
 import {evaluateImport}                         from "./NetscriptEvaluator";
 import {NetscriptFunctions}                     from "./NetscriptFunctions";
 import {addWorkerScript,
@@ -29,10 +29,11 @@ import {addWorkerScript,
 import {Player}                                 from "./Player";
 import {AllServers, processSingleServerGrowth}  from "./Server";
 import {Settings}                               from "./Settings";
-import {post}                                   from "./Terminal";
+import {post}                                   from "./ui/postToTerminal";
 import {TextFile}                               from "./TextFile";
 
 import {parse, Node}                            from "../utils/acorn";
+import {Page, routing}                          from "./ui/navigationTracking";
 import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver";
@@ -260,7 +261,7 @@ function updateScriptEditorContent() {
 //Define key commands in script editor (ctrl o to save + close, etc.)
 $(document).keydown(function(e) {
     if (Settings.DisableHotkeys === true) {return;}
-	if (Engine.currentPage == Engine.Page.ScriptEditor) {
+	if (routing.isOn(Page.ScriptEditor)) {
 		//Ctrl + b
         if (e.keyCode == 66 && (e.ctrlKey || e.metaKey)) {
             e.preventDefault();
@@ -280,8 +281,9 @@ function saveAndCloseScriptEditor() {
     var filename = document.getElementById("script-editor-filename").value;
     var editor = ace.edit('javascript-editor');
     var code = editor.getValue();
-    if (iTutorialIsRunning && currITutorialStep == iTutorialSteps.TerminalTypeScript) {
-        if (filename != "foodnstuff.script") {
+    if (ITutorial.isRunning && ITutorial.currStep === iTutorialSteps.TerminalTypeScript) {
+        //Make sure filename + code properly follow tutorial
+        if (filename !== "foodnstuff.script") {
             dialogBoxCreate("Leave the script name as 'foodnstuff'!");
             return;
         }
@@ -290,7 +292,23 @@ function saveAndCloseScriptEditor() {
             dialogBoxCreate("Please copy and paste the code from the tutorial!");
             return;
         }
-        iTutorialNextStep();
+
+        //Save the script
+        let s = Player.getCurrentServer();
+        for (var i = 0; i < s.scripts.length; i++) {
+            if (filename == s.scripts[i].filename) {
+                s.scripts[i].saveScript();
+                Engine.loadTerminalContent();
+                return iTutorialNextStep();
+            }
+        }
+
+        //If the current script does NOT exist, create a new one
+        let script = new Script();
+        script.saveScript();
+        s.scripts.push(script);
+
+        return iTutorialNextStep();
     }
 
     if (filename == "") {
@@ -364,7 +382,7 @@ function Script() {
 
 //Get the script data from the Script Editor and save it to the object
 Script.prototype.saveScript = function() {
-	if (Engine.currentPage == Engine.Page.ScriptEditor) {
+	if (routing.isOn(Page.ScriptEditor)) {
 		//Update code and filename
         var editor = ace.edit('javascript-editor');
         var code = editor.getValue();
@@ -461,6 +479,18 @@ function parseOnlyRamCalculate(server, code, workerScript) {
         const resolvedRefs = new Set();
         while (unresolvedRefs.length > 0) {
             const ref = unresolvedRefs.shift();
+
+            // Check if this is one of the special keys, and add the appropriate ram cost if so.
+            if (ref === "hacknet" && !resolvedRefs.has("hacknet")) {
+                ram += CONSTANTS.ScriptHacknetNodesRamCost;
+            }
+            if (ref === "document" && !resolvedRefs.has("document")) {
+                ram += CONSTANTS.ScriptDomRamCost;
+            }
+            if (ref === "window" && !resolvedRefs.has("window")) {
+                ram += CONSTANTS.ScriptDomRamCost;
+            }
+
             resolvedRefs.add(ref);
 
             if (ref.endsWith(".*")) {
@@ -477,13 +507,6 @@ function parseOnlyRamCalculate(server, code, workerScript) {
                     if (!resolvedRefs.has(dep)) unresolvedRefs.push(dep);
                 }
             }
-
-            // Check if this is one of the special keys, and add the appropriate ram cost if so.
-            if (ref == specialReferenceIF)              ram += CONSTANTS.ScriptIfRamCost;
-            if (ref == specialReferenceFOR)             ram += CONSTANTS.ScriptForRamCost;
-            if (ref == specialReferenceWHILE)           ram += CONSTANTS.ScriptWhileRamCost;
-            if (ref == "hacknet")                       ram += CONSTANTS.ScriptHacknetNodesRamCost;
-            if (ref == "document" || ref == "window")   ram += CONSTANTS.ScriptDomRamCost;
 
             // Check if this ident is a function in the workerscript env. If it is, then we need to
             // get its RAM cost. We do this by calling it, which works because the running script

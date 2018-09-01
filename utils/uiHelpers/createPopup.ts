@@ -9,8 +9,8 @@ import { getElementById } from "./getElementById";
 export function createPopup(id: string, elems: HTMLElement[]) {
     const container: HTMLDivElement = createElement("div", {
             class: "popup-box-container",
-            display: "block",
-            id: id,
+            display: "flex",
+            id,
         }) as HTMLDivElement;
     const content: HTMLElement = createElement("div", {
             class: "popup-box-content",

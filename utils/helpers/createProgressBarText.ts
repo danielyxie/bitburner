@@ -34,11 +34,14 @@ export function createProgressBarText(params: IProgressBarConfiguration) {
     };
 
     // tslint:disable-next-line:prefer-object-spread
-    const derivedParams: IProgressBarConfigurationMaterialized = Object.assign({}, defaultParams, params);
+    const derived: IProgressBarConfigurationMaterialized = Object.assign({}, defaultParams, params);
+    // Ensure it is 0..1
+    derived.progress = Math.max(Math.min(derived.progress, 1), 0);
 
-    const bars: number = Math.floor(derivedParams.progress / (1 / derivedParams.totalTicks));
-    const dashes: number = derivedParams.totalTicks - bars;
+    // This way there is always at least one bar filled in...
+    const bars: number = Math.max(Math.floor(derived.progress / (1 / derived.totalTicks)), 1);
+    const dashes: number = Math.max(derived.totalTicks - bars, 0);
 
     // String.prototype.repeat isn't completley supported, but good enough for our purposes
-    return `[${"|".repeat(bars + 1)}${"-".repeat(dashes + 1)}]`;
+    return `[${"|".repeat(bars)}${"-".repeat(dashes)}]`;
 }
