@@ -16,6 +16,11 @@
 #character-container {
     padding-top: 10px;
     position: fixed;
+
+    span {
+        margin: 0;
+        padding: 0;
+    }
 }
 
 /* Script Editor */
@@ -539,9 +544,20 @@
     color: #fff;
 }
 
-#infiltration-left-panel p,
-#infiltration-right-panel p {
-    margin: 4px;
+#infiltration-left-panel,
+#infiltration-right-panel {
+    span {
+        padding: 0;
+        margin: 0;
+    }
+
+    p {
+        margin: 4px;
+    }
+}
+
+#infiltration-buttons {
+    margin-top: 20px;
 }
 
 #infiltration-buttons .a-link-button {

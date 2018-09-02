@@ -19,6 +19,12 @@
     overflow-y: scroll;
     background-color: var(--my-background-color);
     table-layout: fixed;
+
+    .prompt {
+        color: var(--my-prompt-color);
+        margin: 0;
+        padding: 0;
+    }
 }
 
 #terminal-input {
@@ -51,7 +57,6 @@
 }
 
 #terminal-input-header {
-    color: var(--my-prompt-color);
     white-space: pre;
 }
 

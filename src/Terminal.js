@@ -65,10 +65,10 @@ $(document).keydown(function(event) {
             event.preventDefault(); //Prevent newline from being entered in Script Editor
 			var command = $('input[class=terminal-input]').val();
 			      post(
-                "[" +
+                "<span class='prompt'>[" +
                 (FconfSettings.ENABLE_TIMESTAMPS ? getTimestamp() + " " : "") +
                 Player.getCurrentServer().hostname +
-                " ~]> " + command
+                " ~]&gt;</span> " + command
             );
 
             if (command.length > 0) {
@@ -520,7 +520,7 @@ let Terminal = {
 
     resetTerminalInput: function() {
         document.getElementById("terminal-input-td").innerHTML =
-            "<div id='terminal-input-header'>[" + Player.getCurrentServer().hostname + " ~]" + "$ </div>" +
+            "<div id='terminal-input-header' class='prompt'>[" + Player.getCurrentServer().hostname + " ~]" + "$ </div>" +
             '<input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
         var hdr = document.getElementById("terminal-input-header");
         hdr.style.display = "inline";
