@@ -163,14 +163,14 @@ a:visited {
     -ms-user-select: none;
     -khtml-user-select: none;
     -webkit-user-select: none;
-}
 
-.a-link-button:hover {
-    background-color: #666;
-}
+    &:hover {
+        background-color: #666;
+    }
 
-.a-link-button:active {
-    @include boxShadow(inset 0 1px 4px rgba(0, 0, 0, 0.6));
+    &:active {
+        @include boxShadow(inset 0 1px 4px rgba(0, 0, 0, 0.6));
+    }
 }
 
 /* Make anchor tags ("a" elements) inactive (not clickable) */
@@ -182,16 +182,18 @@ a:visited {
     margin: 5px;
     border: 1px solid #333;
     cursor: default;
-}
 
-.a-link-button-inactive:hover .tooltiptext,
-.a-link-button-inactive:hover .tooltiptexthigh,
-.a-link-button-inactive:hover .tooltiptextleft {
-    visibility: visible;
-}
+    &:hover {
+        .tooltiptext,
+        .tooltiptexthigh,
+        .tooltiptextleft {
+            visibility: visible;
+        }
+    }
 
-.a-link-button-inactive:active {
-    pointer-events: none;
+    &:active {
+        pointer-events: none;
+    }
 }
 
 /* Make anchor tags ("a" elements) for activated actions */
@@ -203,16 +205,18 @@ a:visited {
     margin: 5px;
     border: 1px solid #0a0;
     cursor: default;
-}
 
-.a-link-button-bought:hover .tooltiptext,
-.a-link-button-bought:hover .tooltiptexthigh,
-.a-link-button-bought:hover .tooltiptextleft {
-    visibility: visible;
-}
+    &:hover {
+        .tooltiptext,
+        .tooltiptexthigh,
+        .tooltiptextleft {
+            visibility: visible;
+        }
+    }
 
-.a-link-button-bought:active {
-    pointer-events: none;
+    &:active {
+        pointer-events: none;
+    }
 }
 
 .dropdown {
@@ -253,22 +257,23 @@ a:visited {
 
 /* Tool tips (when hovering over an element */
 .tooltip {
-    position: relative;
     display: inline-block;
-}
+    position: relative;
 
-.tooltip .tooltiptext {
-    visibility: hidden;
-    width: 300px;
-    background-color: var(--my-background-color);
-    border: 2px solid var(--my-highlight-color);
-    color: #fff;
-    text-align: center;
-    padding: 4px;
-    left: 101%;
+    .tooltiptext {
+        visibility: hidden;
+        width: 300px;
+        background-color: var(--my-background-color);
+        border: 2px solid var(--my-highlight-color);
+        color: #fff;
+        text-align: center;
+        padding: 4px;
+        left: 101%;
 
-    position: absolute;
-    z-index: 99;
+        pointer-events: none;
+        position: absolute;
+        z-index: 99;
+    }
 }
 
 /* Same thing as a normal tooltip except its a bit higher */
@@ -287,7 +292,7 @@ a:visited {
     z-index: 99;
 }
 
-/* Similar to a normal tooltip except its positioned on the left of the elemnt
+/* Similar to a normal tooltip except its positioned on the left of the element
    rather than the right to avoid exceeding the elements normal width */
 .tooltip .tooltiptextleft {
     visibility: hidden;
@@ -460,12 +465,12 @@ a:visited {
     width: auto;
     max-width: 280px;
     overflow: auto; /* Enable scroll if needed */
-    background-color: #393636; /* Fallback color */
+    background-color: rgba(57, 54, 54, 0.9); /* Fallback color */
     z-index: 1;
 }
 
 #character-overview-text {
-    color: #faffdf;
+    color: $my-stat-physical;
 
     table {
         border-collapse: collapse;
@@ -536,10 +541,10 @@ a:visited {
     cursor: pointer;
     color: #fff;
     text-decoration: underline;
-}
 
-.scan-analyze-link:hover {
-    text-decoration: none;
+    &:hover {
+        text-decoration: none;
+    }
 }
 
 /* Accordion menus (Header with collapsible panel) */
@@ -572,7 +577,7 @@ a:visited {
         color: transparent;
         text-shadow: 0 0 0 #fff;
         position: absolute;
-        bottom: 3px;
+        bottom: 5px;
         right: 6px;
     }
 
@@ -602,4 +607,31 @@ a:visited {
 #active-scripts-total-prod-aug-avg {
     margin: 0;
     padding: 0;
+}
+
+/* Helper Classes */
+.hacker-green {
+    color: $hacker-green;
+}
+
+.money-gold {
+    color: $money-gold;
+}
+
+.failure {
+    color: $alert-red;
+    text-shadow: 0 0 0 $alert-red;
+}
+
+.success {
+    color: $success-green;
+    text-shadow: 0 0 0 $success-green;
+}
+
+.physical-yellow {
+    color: $my-stat-physical;
+}
+
+.charisma-purple {
+    color: $my-stat-cha-color;
 }
