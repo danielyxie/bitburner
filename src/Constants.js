@@ -501,9 +501,8 @@ let CONSTANTS = {
      * UI improvements for the character overview panel and the left-hand menu (by mat-jaworski)
      * Updated documentation to reflect the fact that Netscript port handles (getPortHandle()) only works in NetscriptJS (2.0), NOT Netscript 1.0
      * Added tryWrite() Netscript function
+     * When working (for a company/faction), experience is gained immediately/continuously rather than all at once when the work is finished
      * Improved the introductory tutorial`
-
-
 }
 
 export {CONSTANTS};
