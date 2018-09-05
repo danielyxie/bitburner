@@ -10,14 +10,17 @@ import {executeDarkwebTerminalCommand,
 import {Engine}                             from "./engine";
 import {FconfSettings, parseFconfSettings,
         createFconf}                        from "./Fconf";
+import {calculateHackingChance,
+        calculateHackingExpGain,
+        calculatePercentMoneyHacked,
+        calculateHackingTime,
+        calculateGrowTime,
+        calculateWeakenTime}                from "./Hacking";
 import {TerminalHelpText, HelpTexts}        from "./HelpText";
 import {iTutorialNextStep, iTutorialSteps,
         ITutorial}                          from "./InteractiveTutorial";
 import {showLiterature}                     from "./Literature";
 import {showMessage, Message}               from "./Message";
-import {scriptCalculateHackingTime,
-        scriptCalculateGrowTime,
-        scriptCalculateWeakenTime}          from "./NetscriptEvaluator";
 import {killWorkerScript, addWorkerScript}  from "./NetscriptWorker";
 import numeral                              from "numeral/min/numeral.min";
 import {Player}                             from "./Player";
@@ -512,8 +515,10 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
 
 let Terminal = {
     //Flags to determine whether the player is currently running a hack or an analyze
-    hackFlag:       false,
-    analyzeFlag:    false,
+    hackFlag:           false,
+    analyzeFlag:        false,
+    actionStarted:      false,
+    actionTime:         0,
 
     commandHistory: [],
     commandHistoryIndex: 0,
@@ -619,6 +624,32 @@ let Terminal = {
         }
     },
 
+    startHack: function() {
+        Terminal.hackFlag = true;
+
+        //Hacking through Terminal should be faster than hacking through a script
+        Terminal.actionTime = calculateHackingTime(Player.getCurrentServer()) / 4;
+        Terminal.startAction();
+    },
+
+    startAnalyze: function() {
+        Terminal.analyzeFlag = true;
+        Terminal.actionTime = 1;
+        post("Analyzing system...");
+        Terminal.startAction();
+    },
+
+    startAction: function() {
+       Terminal.actionStarted = true;
+
+       hackProgressPost("Time left:");
+       hackProgressBarPost("[");
+
+       //Disable terminal
+       document.getElementById("terminal-input-td").innerHTML = '<input type="text" class="terminal-input"/>';
+       $('input[class=terminal-input]').prop('disabled', true);
+    },
+
     finishAction: function(cancelled = false) {
         if (Terminal.hackFlag) {
             Terminal.finishHack(cancelled);
@@ -633,10 +664,10 @@ let Terminal = {
             var server = Player.getCurrentServer();
 
 			//Calculate whether hack was successful
-			var hackChance = Player.calculateHackingChance();
+			var hackChance = calculateHackingChance(server);
 			var rand = Math.random();
 			console.log("Hack success chance: " + hackChance +  ", rand: " + rand);
-			var expGainedOnSuccess = Player.calculateExpGain();
+			var expGainedOnSuccess = calculateHackingExpGain(server);
 			var expGainedOnFailure = (expGainedOnSuccess / 4);
 			if (rand < hackChance) {	//Success!
                 if (SpecialServerIps[SpecialServerNames.WorldDaemon] &&
@@ -648,7 +679,7 @@ let Terminal = {
                     return;
                 }
                 server.manuallyHacked = true;
-				var moneyGained = Player.calculatePercentMoneyHacked();
+				var moneyGained = calculatePercentMoneyHacked(server);
 				moneyGained = Math.floor(server.moneyAvailable * moneyGained);
 
 				if (moneyGained <= 0) {moneyGained = 0;} //Safety check
@@ -679,43 +710,44 @@ let Terminal = {
 
     finishAnalyze: function(cancelled = false) {
 		if (cancelled == false) {
-			post(Player.getCurrentServer().hostname + ": ");
-            post("Organization name: " + Player.getCurrentServer().organizationName);
+            let currServ = Player.getCurrentServer();
+			post(currServ.hostname + ": ");
+            post("Organization name: " + currServ.organizationName);
             var rootAccess = "";
-            if (Player.getCurrentServer().hasAdminRights) {rootAccess = "YES";}
+            if (currServ.hasAdminRights) {rootAccess = "YES";}
             else {rootAccess = "NO";}
             post("Root Access: " + rootAccess);
-			post("Required hacking skill: " + Player.getCurrentServer().requiredHackingSkill);
-			post("Estimated server security level: " + formatNumber(addOffset(Player.getCurrentServer().hackDifficulty, 5), 3));
-			post("Estimated chance to hack: " + formatNumber(addOffset(Player.calculateHackingChance() * 100, 5), 2) + "%");
-			post("Estimated time to hack: " + formatNumber(addOffset(Player.calculateHackingTime(), 5), 3) + " seconds");
-			post("Estimated total money available on server: $" + formatNumber(addOffset(Player.getCurrentServer().moneyAvailable, 5), 2));
-			post("Required number of open ports for NUKE: " + Player.getCurrentServer().numOpenPortsRequired);
-            if (Player.getCurrentServer().sshPortOpen) {
+			post("Required hacking skill: " + currServ.requiredHackingSkill);
+			post("Server security level: " + formatNumber(currServ.hackDifficulty, 3));
+			post("Chance to hack: " + formatNumber(calculateHackingChance(currServ) * 100, 2) + "%");
+			post("Time to hack: " + formatNumber(calculateHackingTime(currServ), 3) + " seconds");
+			post("Total money available on server: $" + formatNumber(currServ.moneyAvailable, 2));
+			post("Required number of open ports for NUKE: " + currServ.numOpenPortsRequired);
+            if (currServ.sshPortOpen) {
 				post("SSH port: Open")
 			} else {
 				post("SSH port: Closed")
 			}
 
-			if (Player.getCurrentServer().ftpPortOpen) {
+			if (currServ.ftpPortOpen) {
 				post("FTP port: Open")
 			} else {
 				post("FTP port: Closed")
 			}
 
-			if (Player.getCurrentServer().smtpPortOpen) {
+			if (currServ.smtpPortOpen) {
 				post("SMTP port: Open")
 			} else {
 				post("SMTP port: Closed")
 			}
 
-			if (Player.getCurrentServer().httpPortOpen) {
+			if (currServ.httpPortOpen) {
 				post("HTTP port: Open")
 			} else {
 				post("HTTP port: Closed")
 			}
 
-			if (Player.getCurrentServer().sqlPortOpen) {
+			if (currServ.sqlPortOpen) {
 				post("SQL port: Open")
 			} else {
 				post("SQL port: Closed")
@@ -815,17 +847,7 @@ let Terminal = {
                     if (commandArray.length != 1) {
                         post("Incorrect usage of analyze command. Usage: analyze"); return;
                     }
-                    //Analyze the current server for information
-                    Terminal.analyzeFlag = true;
-                    post("Analyzing system...");
-                    hackProgressPost("Time left:");
-                    hackProgressBarPost("[");
-                    Player.analyze();
-
-                    //Disable terminal
-                    //Terminal.resetTerminalInput();
-                    document.getElementById("terminal-input-td").innerHTML = '<input type="text" class="terminal-input"/>';
-                    $('input[class=terminal-input]').prop('disabled', true);
+                    Terminal.startAnalyze();
                     iTutorialNextStep();
                 } else {
                     post("Bad command. Please follow the tutorial");
@@ -841,15 +863,7 @@ let Terminal = {
                 break;
             case iTutorialSteps.TerminalManualHack:
                 if (commandArray.length == 1 && commandArray[0] == "hack") {
-                    Terminal.hackFlag = true;
-					hackProgressPost("Time left:");
-					hackProgressBarPost("[");
-					Player.hack();
-
-					//Disable terminal
-                    //Terminal.resetTerminalInput();
-					document.getElementById("terminal-input-td").innerHTML = '<input type="text" class="terminal-input"/>';
-					$('input[class=terminal-input]').prop('disabled', true);
+                    Terminal.startHack();
                     iTutorialNextStep();
                 } else {post("Bad command. Please follow the tutorial");}
 				break;
@@ -920,17 +934,7 @@ let Terminal = {
 				if (commandArray.length != 1) {
 					post("Incorrect usage of analyze command. Usage: analyze"); return;
 				}
-                //Analyze the current server for information
-                Terminal.analyzeFlag = true;
-                post("Analyzing system...");
-                hackProgressPost("Time left:");
-                hackProgressBarPost("[");
-                Player.analyze();
-
-                //Disable terminal
-                //Terminal.resetTerminalInput();
-                document.getElementById("terminal-input-td").innerHTML = '<input type="text" class="terminal-input"/>';
-                $('input[class=terminal-input]').prop('disabled', true);
+                Terminal.startAnalyze();
 				break;
             case "buy":
                 if (SpecialServerIps.hasOwnProperty("Darkweb Server")) {
@@ -1083,15 +1087,7 @@ let Terminal = {
 				} else if (Player.getCurrentServer().requiredHackingSkill > Player.hacking_skill) {
 					post("Your hacking skill is not high enough to attempt hacking this machine. Try analyzing the machine to determine the required hacking skill");
 				} else {
-                    Terminal.hackFlag = true;
-					hackProgressPost("Time left:");
-					hackProgressBarPost("[");
-					Player.hack();
-
-					//Disable terminal
-                    //Terminal.resetTerminalInput();
-					document.getElementById("terminal-input-td").innerHTML = '<input type="text" class="terminal-input"/>';
-					$('input[class=terminal-input]').prop('disabled', true);
+                    Terminal.startHack();
 				}
 				break;
 			case "help":
@@ -1891,9 +1887,9 @@ let Terminal = {
             post("Server base security level: " + targetServer.baseDifficulty);
             post("Server current security level: " + targetServer.hackDifficulty);
             post("Server growth rate: " + targetServer.serverGrowth);
-            post("Netscript hack() execution time: " + formatNumber(scriptCalculateHackingTime(targetServer), 1) + "s");
-            post("Netscript grow() execution time: " + formatNumber(scriptCalculateGrowTime(targetServer)/1000, 1) + "s");
-            post("Netscript weaken() execution time: " + formatNumber(scriptCalculateWeakenTime(targetServer)/1000, 1) + "s");
+            post("Netscript hack() execution time: " + formatNumber(calculateHackingTime(targetServer), 1) + "s");
+            post("Netscript grow() execution time: " + formatNumber(calculateGrowTime(targetServer), 1) + "s");
+            post("Netscript weaken() execution time: " + formatNumber(calculateWeakenTime(targetServer), 1) + "s");
         };
         programHandlers[Programs.AutoLink.name] = () => {
             post("This executable cannot be run.");
