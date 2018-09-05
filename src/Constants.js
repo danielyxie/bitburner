@@ -6,6 +6,9 @@ let CONSTANTS = {
     //the player will have this level assuming no multipliers. Multipliers can cause skills to go above this.
 	MaxSkillLevel: 			975,
 
+    //Milliseconds per game cycle
+    MilliPerCycle: 200,
+
     //How much reputation is needed to join a megacorporation's faction
     CorpFactionRepRequirement: 200e3,
 
@@ -493,12 +496,13 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
-    "v0.40.3<br>" +
-    "* b1t_flum3.exe program can now be created immediately at Hacking level 1 (rather than hacking level 5)<br>"  +
-    "* UI improvements for the character overview panel and the left-hand menu (by mat-jaworski)<br>" +
-    "* Improved the introductory tutorial<br>"
-
-
+    `v0.40.3<br>
+     * b1t_flum3.exe program can now be created immediately at Hacking level 1 (rather than hacking level 5)
+     * UI improvements for the character overview panel and the left-hand menu (by mat-jaworski)
+     * Updated documentation to reflect the fact that Netscript port handles (getPortHandle()) only works in NetscriptJS (2.0), NOT Netscript 1.0
+     * Added tryWrite() Netscript function
+     * When working (for a company/faction), experience is gained immediately/continuously rather than all at once when the work is finished
+     * Improved the introductory tutorial`
 }
 
 export {CONSTANTS};

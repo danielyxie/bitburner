@@ -659,14 +659,14 @@ getNextHacknetNodeCost
 
 .. js:function:: getNextHacknetNodeCost()
 
-    Deprecated (no longer usable). See :doc:`netscripthacknetnodeapi` 
+    Deprecated (no longer usable). See :doc:`netscripthacknetnodeapi`
 
 purchaseHacknetNode
 ^^^^^^^^^^^^^^^^^^^
 
 .. js:function:: purchaseHacknetNode()
 
-    Deprecated (no longer usable). See :doc:`netscripthacknetnodeapi` 
+    Deprecated (no longer usable). See :doc:`netscripthacknetnodeapi`
 
 getPurchasedServerCost
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -772,6 +772,18 @@ write
     is set to "w", then the data is written in "write" mode which means that it will overwrite all existing data on the text file. If *mode* is set to
     any other value then the data will be written in "append" mode which means that the data will be added at the end of the text file.
 
+tryWrite
+^^^^^^^^
+
+.. js:function:: tryWrite(port, data="")
+
+    :param number port: Port to be written to
+    :param string data: Data to try to write
+    :returns: True if the data is successfully written to the port, and false otherwise
+
+    Attempts to write data to the specified Netscript Port. If the port is full, the data will
+    not be written. Otherwise, the data will be written normally
+
 read
 ^^^^
 
@@ -812,6 +824,17 @@ clear
     If the *port/fn* argument is a number between 1 and 10, then it specifies a port and will clear it (deleting all data from the underlying queue).
 
     If the *port/fn* argument is a string, then it specifies the name of a text file (.txt) and will delete all data from that text file.
+
+getPortHandle
+^^^^^^^^^^^^^
+
+.. js:function:: getPortHandle(port)
+
+    :param number port: Port number
+
+    Get a handle to a Netscript Port. See more details here: :ref:`netscript_ports`
+
+    **WARNING:** Port Handles only work in :ref:`netscriptjs`. They will not work in :ref:`netscript1`.
 
 rm
 ^^

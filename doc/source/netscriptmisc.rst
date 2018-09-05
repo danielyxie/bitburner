@@ -1,9 +1,13 @@
+.. _netscript_misc:
+
 Netscript Miscellaneous
 =======================
 
+.. _netscript_ports:
+
 Netscript Ports
 ---------------
-Netscript ports are endpoints that can be used to communicate between scripts.
+Netscript Ports are endpoints that can be used to communicate between scripts.
 A port is implemented as a sort of serialized queue, where you can only write
 and read one element at a time from the port. When you read data from a port,
 the element that is read is removed from the port.
@@ -55,9 +59,11 @@ And the data in port 1 will look like::
 
 **Port Handles**
 
+WARNING: Port Handles only work in :ref:`netscriptjs`. They do not work in :ref:`netscript1`
+
 The :js:func:`getPortHandle` Netscript function can be used to get a handle to a Netscript Port.
 This handle allows you to access several new port-related functions and the
-port's underlying data structure, which is just a Javascript array. The functions are:
+port's underlying data structure, which is just a JavaScript array. The functions are:
 
 .. js:method:: NetscriptPort.write(data)
 
