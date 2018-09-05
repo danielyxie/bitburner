@@ -30,6 +30,8 @@ import numeral                                  from "numeral/min/numeral.min";
 import {formatNumber,
         convertTimeMsToTimeElapsedString}       from "../utils/StringHelperFunctions";
 
+const CYCLES_PER_SEC = 1000 / CONSTANTS.MilliPerCycle;
+
 function PlayerObject() {
     //Skills and stats
     this.hacking_skill  = 1;
@@ -613,6 +615,7 @@ PlayerObject.prototype.resetWorkStatus = function() {
     this.workChaExpGainRate     = 0;
     this.workRepGainRate        = 0;
     this.workMoneyGainRate      = 0;
+    this.workMoneyLossRate      = 0;
 
     this.workHackExpGained  = 0;
     this.workStrExpGained   = 0;
@@ -634,7 +637,7 @@ PlayerObject.prototype.resetWorkStatus = function() {
     document.getElementById("work-in-progress-text").innerHTML = "";
 }
 
-PlayerObject.prototype.processWorkEarnings(numCycles=1) {
+PlayerObject.prototype.processWorkEarnings = function(numCycles=1) {
     var hackExpGain = this.workHackExpGainRate * numCycles;
     var strExpGain = this.workStrExpGainRate * numCycles;
     var defExpGain = this.workDefExpGainRate * numCycles;
@@ -656,6 +659,7 @@ PlayerObject.prototype.processWorkEarnings(numCycles=1) {
     this.workChaExpGained   += chaExpGain;
     this.workRepGained      += this.workRepGainRate * numCycles;
     this.workMoneyGained    += this.workMoneyGainRate * numCycles;
+    this.workMoneyGained    -= this.workMoneyLossRate * numCycles;
 }
 
 /* Working for Company */
@@ -718,14 +722,14 @@ PlayerObject.prototype.work = function(numCycles) {
                     formatNumber(companyRep, 0) + ")<br><br>" +
                     "You have been working for " + convertTimeMsToTimeElapsedString(this.timeWorked) + "<br><br>" +
                     "You have earned: <br><br>" +
-                    "$" + formatNumber(this.workMoneyGained, 2) + " ($" + formatNumber(this.workMoneyGainRate * cyclesPerSec, 2) + " / sec) <br><br>" +
-                    formatNumber(this.workRepGained, 4) + " (" + formatNumber(this.workRepGainRate * cyclesPerSec, 4) + " / sec) reputation for this company <br><br>" +
-                    formatNumber(this.workHackExpGained, 4) + " (" + formatNumber(this.workHackExpGainRate * cyclesPerSec, 4) + " / sec) hacking exp <br><br>" +
-                    formatNumber(this.workStrExpGained, 4) + " (" + formatNumber(this.workStrExpGainRate * cyclesPerSec, 4) + " / sec) strength exp <br>" +
-                    formatNumber(this.workDefExpGained, 4) + " (" + formatNumber(this.workDefExpGainRate * cyclesPerSec, 4) + " / sec) defense exp <br>" +
-                    formatNumber(this.workDexExpGained, 4) + " (" + formatNumber(this.workDexExpGainRate * cyclesPerSec, 4) + " / sec) dexterity exp <br>" +
-                    formatNumber(this.workAgiExpGained, 4) + " (" + formatNumber(this.workAgiExpGainRate * cyclesPerSec, 4) + " / sec) agility exp <br><br> " +
-                    formatNumber(this.workChaExpGained, 4) + " (" + formatNumber(this.workChaExpGainRate * cyclesPerSec, 4) + " / sec) charisma exp <br><br>" +
+                    "$" + formatNumber(this.workMoneyGained, 2) + " ($" + formatNumber(this.workMoneyGainRate * CYCLES_PER_SEC, 2) + " / sec) <br><br>" +
+                    formatNumber(this.workRepGained, 4) + " (" + formatNumber(this.workRepGainRate * CYCLES_PER_SEC, 4) + " / sec) reputation for this company <br><br>" +
+                    formatNumber(this.workHackExpGained, 4) + " (" + formatNumber(this.workHackExpGainRate * CYCLES_PER_SEC, 4) + " / sec) hacking exp <br><br>" +
+                    formatNumber(this.workStrExpGained, 4) + " (" + formatNumber(this.workStrExpGainRate * CYCLES_PER_SEC, 4) + " / sec) strength exp <br>" +
+                    formatNumber(this.workDefExpGained, 4) + " (" + formatNumber(this.workDefExpGainRate * CYCLES_PER_SEC, 4) + " / sec) defense exp <br>" +
+                    formatNumber(this.workDexExpGained, 4) + " (" + formatNumber(this.workDexExpGainRate * CYCLES_PER_SEC, 4) + " / sec) dexterity exp <br>" +
+                    formatNumber(this.workAgiExpGained, 4) + " (" + formatNumber(this.workAgiExpGainRate * CYCLES_PER_SEC, 4) + " / sec) agility exp <br><br> " +
+                    formatNumber(this.workChaExpGained, 4) + " (" + formatNumber(this.workChaExpGainRate * CYCLES_PER_SEC, 4) + " / sec) charisma exp <br><br>" +
                     "You will automatically finish after working for 8 hours. You can cancel earlier if you wish, " +
                     "but you will only gain half of the reputation you've earned so far."
 }
@@ -840,14 +844,14 @@ PlayerObject.prototype.workPartTime = function(numCycles) {
                     formatNumber(companyRep, 0) + ")<br><br>" +
                     "You have been working for " + convertTimeMsToTimeElapsedString(this.timeWorked) + "<br><br>" +
                     "You have earned: <br><br>" +
-                    "$" + formatNumber(this.workMoneyGained, 2) + " ($" + formatNumber(this.workMoneyGainRate * cyclesPerSec, 2) + " / sec) <br><br>" +
-                    formatNumber(this.workRepGained, 4) + " (" + formatNumber(this.workRepGainRate * cyclesPerSec, 4) + " / sec) reputation for this company <br><br>" +
-                    formatNumber(this.workHackExpGained, 4) + " (" + formatNumber(this.workHackExpGainRate * cyclesPerSec, 4) + " / sec) hacking exp <br><br>" +
-                    formatNumber(this.workStrExpGained, 4) + " (" + formatNumber(this.workStrExpGainRate * cyclesPerSec, 4) + " / sec) strength exp <br>" +
-                    formatNumber(this.workDefExpGained, 4) + " (" + formatNumber(this.workDefExpGainRate * cyclesPerSec, 4) + " / sec) defense exp <br>" +
-                    formatNumber(this.workDexExpGained, 4) + " (" + formatNumber(this.workDexExpGainRate * cyclesPerSec, 4) + " / sec) dexterity exp <br>" +
-                    formatNumber(this.workAgiExpGained, 4) + " (" + formatNumber(this.workAgiExpGainRate * cyclesPerSec, 4) + " / sec) agility exp <br><br> " +
-                    formatNumber(this.workChaExpGained, 4) + " (" + formatNumber(this.workChaExpGainRate * cyclesPerSec, 4) + " / sec) charisma exp <br><br>" +
+                    "$" + formatNumber(this.workMoneyGained, 2) + " ($" + formatNumber(this.workMoneyGainRate * CYCLES_PER_SEC, 2) + " / sec) <br><br>" +
+                    formatNumber(this.workRepGained, 4) + " (" + formatNumber(this.workRepGainRate * CYCLES_PER_SEC, 4) + " / sec) reputation for this company <br><br>" +
+                    formatNumber(this.workHackExpGained, 4) + " (" + formatNumber(this.workHackExpGainRate * CYCLES_PER_SEC, 4) + " / sec) hacking exp <br><br>" +
+                    formatNumber(this.workStrExpGained, 4) + " (" + formatNumber(this.workStrExpGainRate * CYCLES_PER_SEC, 4) + " / sec) strength exp <br>" +
+                    formatNumber(this.workDefExpGained, 4) + " (" + formatNumber(this.workDefExpGainRate * CYCLES_PER_SEC, 4) + " / sec) defense exp <br>" +
+                    formatNumber(this.workDexExpGained, 4) + " (" + formatNumber(this.workDexExpGainRate * CYCLES_PER_SEC, 4) + " / sec) dexterity exp <br>" +
+                    formatNumber(this.workAgiExpGained, 4) + " (" + formatNumber(this.workAgiExpGainRate * CYCLES_PER_SEC, 4) + " / sec) agility exp <br><br> " +
+                    formatNumber(this.workChaExpGained, 4) + " (" + formatNumber(this.workChaExpGainRate * CYCLES_PER_SEC, 4) + " / sec) charisma exp <br><br>" +
                     "You will automatically finish after working for 8 hours. You can cancel earlier if you wish, <br>" +
                     "and there will be no penalty because this is a part-time job.";
 
@@ -989,32 +993,19 @@ PlayerObject.prototype.workForFaction = function(numCycles) {
     this.workRepGainRate *= favorMult;
     this.workRepGainRate *= BitNodeMultipliers.FactionWorkRepGain;
 
-    this.workHackExpGained  += this.workHackExpGainRate * numCycles;
-    this.workStrExpGained   += this.workStrExpGainRate * numCycles;
-    this.workDefExpGained   += this.workDefExpGainRate * numCycles;
-    this.workDexExpGained   += this.workDexExpGainRate * numCycles;
-    this.workAgiExpGained   += this.workAgiExpGainRate * numCycles;
-    this.workChaExpGained   += this.workChaExpGainRate * numCycles;
-    this.workRepGained      += this.workRepGainRate * numCycles;
-    this.workMoneyGained    += this.workMoneyGainRate * numCycles;
-
-    var cyclesPerSec = 1000 / Engine._idleSpeed;
-
+    //Cap the number of cycles being processed to whatever would put you at limit (20 hours)
+    var overMax = false;
+    if (this.timeWorked + (Engine._idleSpeed * numCycles) >= CONSTANTS.MillisecondsPer20Hours) {
+        overMax = true;
+        numCycles = Math.round((CONSTANTS.MillisecondsPer20Hours - this.timeWorked) / Engine._idleSpeed);
+    }
     this.timeWorked += Engine._idleSpeed * numCycles;
 
+    this.processWorkEarnings(numCycles);
+
     //If timeWorked == 20 hours, then finish. You can only work for the faction for 20 hours
-    if (this.timeWorked >= CONSTANTS.MillisecondsPer20Hours) {
-        var maxCycles = CONSTANTS.GameCyclesPer20Hours;
-        this.timeWorked = CONSTANTS.MillisecondsPer20Hours;
-        this.workHackExpGained = this.workHackExpGainRate * maxCycles;
-        this.workStrExpGained  = this.workStrExpGainRate * maxCycles;
-        this.workDefExpGained  = this.workDefExpGainRate * maxCycles;
-        this.workDexExpGained  = this.workDexExpGainRate * maxCycles;
-        this.workAgiExpGained  = this.workAgiExpGainRate * maxCycles;
-        this.workChaExpGained  = this.workChaExpGainRate * maxCycles;
-        this.workRepGained     = this.workRepGainRate * maxCycles;
-        this.workMoneyGained   = this.workMoneyGainRate * maxCycles;
-        this.finishFactionWork(false);
+    if (overMax || this.timeWorked >= CONSTANTS.MillisecondsPer20Hours) {
+        return this.finishWork(false);
     }
 
     var txt = document.getElementById("work-in-progress-text");
@@ -1022,22 +1013,20 @@ PlayerObject.prototype.workForFaction = function(numCycles) {
                     " (Current Faction Reputation: " + formatNumber(faction.playerReputation, 0) + "). " +
                     "You have been doing this for " + convertTimeMsToTimeElapsedString(this.timeWorked) + "<br><br>" +
                     "You have earned: <br><br>" +
-                    "$" + formatNumber(this.workMoneyGained, 2) + " (" + formatNumber(this.workMoneyGainRate * cyclesPerSec, 2) + " / sec) <br><br>" +
-                    formatNumber(this.workRepGained, 4) + " (" + formatNumber(this.workRepGainRate * cyclesPerSec, 4) + " / sec) reputation for this faction <br><br>" +
-                    formatNumber(this.workHackExpGained, 4) + " (" + formatNumber(this.workHackExpGainRate * cyclesPerSec, 4) + " / sec) hacking exp <br><br>" +
-                    formatNumber(this.workStrExpGained, 4) + " (" + formatNumber(this.workStrExpGainRate * cyclesPerSec, 4) + " / sec) strength exp <br>" +
-                    formatNumber(this.workDefExpGained, 4) + " (" + formatNumber(this.workDefExpGainRate * cyclesPerSec, 4) + " / sec) defense exp <br>" +
-                    formatNumber(this.workDexExpGained, 4) + " (" + formatNumber(this.workDexExpGainRate * cyclesPerSec, 4) + " / sec) dexterity exp <br>" +
-                    formatNumber(this.workAgiExpGained, 4) + " (" + formatNumber(this.workAgiExpGainRate * cyclesPerSec, 4) + " / sec) agility exp <br><br> " +
-                    formatNumber(this.workChaExpGained, 4) + " (" + formatNumber(this.workChaExpGainRate * cyclesPerSec, 4) + " / sec) charisma exp <br><br>" +
+                    "$" + formatNumber(this.workMoneyGained, 2) + " (" + formatNumber(this.workMoneyGainRate * CYCLES_PER_SEC, 2) + " / sec) <br><br>" +
+                    formatNumber(this.workRepGained, 4) + " (" + formatNumber(this.workRepGainRate * CYCLES_PER_SEC, 4) + " / sec) reputation for this faction <br><br>" +
+                    formatNumber(this.workHackExpGained, 4) + " (" + formatNumber(this.workHackExpGainRate * CYCLES_PER_SEC, 4) + " / sec) hacking exp <br><br>" +
+                    formatNumber(this.workStrExpGained, 4) + " (" + formatNumber(this.workStrExpGainRate * CYCLES_PER_SEC, 4) + " / sec) strength exp <br>" +
+                    formatNumber(this.workDefExpGained, 4) + " (" + formatNumber(this.workDefExpGainRate * CYCLES_PER_SEC, 4) + " / sec) defense exp <br>" +
+                    formatNumber(this.workDexExpGained, 4) + " (" + formatNumber(this.workDexExpGainRate * CYCLES_PER_SEC, 4) + " / sec) dexterity exp <br>" +
+                    formatNumber(this.workAgiExpGained, 4) + " (" + formatNumber(this.workAgiExpGainRate * CYCLES_PER_SEC, 4) + " / sec) agility exp <br><br> " +
+                    formatNumber(this.workChaExpGained, 4) + " (" + formatNumber(this.workChaExpGainRate * CYCLES_PER_SEC, 4) + " / sec) charisma exp <br><br>" +
 
                     "You will automatically finish after working for 20 hours. You can cancel earlier if you wish.<br>" +
                     "There is no penalty for cancelling earlier.";
 }
 
 PlayerObject.prototype.finishFactionWork = function(cancelled, sing=false) {
-    this.gainWorkExp();
-
     var faction = Factions[this.currentWorkFactionName];
     faction.playerReputation += (this.workRepGained);
 
@@ -1354,36 +1343,25 @@ PlayerObject.prototype.takeClass = function(numCycles) {
     this.timeWorked += Engine._idleSpeed * numCycles;
     var className = this.className;
 
-    this.workHackExpGained  += this.workHackExpGainRate * numCycles;
-    this.workStrExpGained   += this.workStrExpGainRate * numCycles;
-    this.workDefExpGained   += this.workDefExpGainRate * numCycles;
-    this.workDexExpGained   += this.workDexExpGainRate * numCycles;
-    this.workAgiExpGained   += this.workAgiExpGainRate * numCycles;
-    this.workChaExpGained   += this.workChaExpGainRate * numCycles;
-    this.workRepGained      += this.workRepGainRate * numCycles;
-    this.workMoneyGained    += this.workMoneyGainRate * numCycles;
-    this.workMoneyGained    -= this.workMoneyLossRate * numCycles;
-
-    var cyclesPerSec = 1000 / Engine._idleSpeed;
+    this.processWorkEarnings(numCycles);
 
     var txt = document.getElementById("work-in-progress-text");
     txt.innerHTML = "You have been " + className + " for " + convertTimeMsToTimeElapsedString(this.timeWorked) + "<br><br>" +
                     "This has cost you: <br>" +
-                    "$" + formatNumber(this.workMoneyGained, 2) + " ($" + formatNumber(this.workMoneyLossRate * cyclesPerSec, 2) + " / sec) <br><br>" +
+                    "$" + formatNumber(this.workMoneyGained, 2) + " ($" + formatNumber(this.workMoneyLossRate * CYCLES_PER_SEC, 2) + " / sec) <br><br>" +
                     "You have gained: <br>" +
-                    formatNumber(this.workHackExpGained, 4) + " (" + formatNumber(this.workHackExpGainRate * cyclesPerSec, 4) + " / sec) hacking exp <br>" +
-                    formatNumber(this.workStrExpGained, 4) + " (" + formatNumber(this.workStrExpGainRate * cyclesPerSec, 4) + " / sec) strength exp <br>" +
-                    formatNumber(this.workDefExpGained, 4) + " (" + formatNumber(this.workDefExpGainRate * cyclesPerSec, 4) + " / sec) defense exp <br>" +
-                    formatNumber(this.workDexExpGained, 4) + " (" + formatNumber(this.workDexExpGainRate * cyclesPerSec, 4) + " / sec) dexterity exp <br>" +
-                    formatNumber(this.workAgiExpGained, 4) + " (" + formatNumber(this.workAgiExpGainRate * cyclesPerSec, 4) + " / sec) agility exp <br>" +
-                    formatNumber(this.workChaExpGained, 4) + " (" + formatNumber(this.workChaExpGainRate * cyclesPerSec, 4) + " / sec) charisma exp <br>" +
+                    formatNumber(this.workHackExpGained, 4) + " (" + formatNumber(this.workHackExpGainRate * CYCLES_PER_SEC, 4) + " / sec) hacking exp <br>" +
+                    formatNumber(this.workStrExpGained, 4) + " (" + formatNumber(this.workStrExpGainRate * CYCLES_PER_SEC, 4) + " / sec) strength exp <br>" +
+                    formatNumber(this.workDefExpGained, 4) + " (" + formatNumber(this.workDefExpGainRate * CYCLES_PER_SEC, 4) + " / sec) defense exp <br>" +
+                    formatNumber(this.workDexExpGained, 4) + " (" + formatNumber(this.workDexExpGainRate * CYCLES_PER_SEC, 4) + " / sec) dexterity exp <br>" +
+                    formatNumber(this.workAgiExpGained, 4) + " (" + formatNumber(this.workAgiExpGainRate * CYCLES_PER_SEC, 4) + " / sec) agility exp <br>" +
+                    formatNumber(this.workChaExpGained, 4) + " (" + formatNumber(this.workChaExpGainRate * CYCLES_PER_SEC, 4) + " / sec) charisma exp <br>" +
                     "You may cancel at any time";
 }
 
 //The 'sing' argument defines whether or not this function was called
 //through a Singularity Netscript function
 PlayerObject.prototype.finishClass = function(sing=false) {
-    this.gainWorkExp();
     this.gainIntelligenceExp(CONSTANTS.IntelligenceClassBaseExpGain * Math.round(this.timeWorked / 1000));
 
     if (this.workMoneyGained > 0) {
@@ -1558,7 +1536,12 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
             }
         }
 
-        this.gainWorkExp();
+        this.gainHackingExp(this.workHackExpGained);
+        this.gainStrengthExp(this.workStrExpGained);
+        this.gainDefenseExp(this.workDefExpGained);
+        this.gainDexterityExp(this.workDexExpGained);
+        this.gainAgilityExp(this.workAgiExpGained);
+        this.gainCharismaExp(this.workChaExpGained);
     }
     this.committingCrimeThruSingFn = false;
     this.singFnCrimeWorkerScript = null;

@@ -6,6 +6,9 @@ let CONSTANTS = {
     //the player will have this level assuming no multipliers. Multipliers can cause skills to go above this.
 	MaxSkillLevel: 			975,
 
+    //Milliseconds per game cycle
+    MilliPerCycle: 200,
+
     //How much reputation is needed to join a megacorporation's faction
     CorpFactionRepRequirement: 200e3,
 
