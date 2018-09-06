@@ -1001,7 +1001,7 @@ function displayLocationContent() {
             slumsDealDrugs.innerHTML = "Deal Drugs (" + (drugsChance*100).toFixed(3) + "% chance of success)";
             slumsDealDrugs.innerHTML += '<span class="tooltiptext"> Attempt to deal drugs </span>';
             slumsBondForgery.style.display = "block";
-            slumsBondForgery.innerHTML = "Bond Forgery(" + (bondChance*100).toFixed(3) + "% chance of success)";
+            slumsBondForgery.innerHTML = "Bond Forgery (" + (bondChance*100).toFixed(3) + "% chance of success)";
             slumsBondForgery.innerHTML += "<span class='tooltiptext'> Attempt to forge corporate bonds</span>";
             slumsTrafficArms.style.display = "block";
             slumsTrafficArms.innerHTML = "Traffick Illegal Arms (" + (armsChance*100).toFixed(3) + "% chance of success)";

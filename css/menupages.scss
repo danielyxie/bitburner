@@ -200,38 +200,37 @@
 .active-scripts-script-header {
     background-color: #555;
     color: var(--my-font-color);
-    padding: 4px;
-    padding-left: 10px;
+    padding: 4px 25px 4px 10px;
     cursor: pointer;
     width: auto;
     text-align: left;
     border: none;
     outline: none;
-}
+    position: relative;
 
-.active-scripts-script-header:hover,
-.active-scripts-script-header.active:hover {
-    background-color: #666;
-}
+    &:after {
+        content: '\02795'; /* "plus" sign (+) */
+        font-size: $defaultFontSize * 0.8125;
+        float: right;
+        margin-left: 5px;
+        color: transparent;
+        text-shadow: 0 0 0 var(--my-font-color);
+        position: absolute;
+        bottom: 4px;
+    }
 
-.active-scripts-script-header.active {
-    background-color: #555;
-}
+    &.active:after {
+        content: "\2796"; /* "minus" sign (-) */
+    }
 
-.active-scripts-script-header:after {
-    content: '\02795'; /* "plus" sign (+) */
-    font-size: $defaultFontSize * 0.8125;
-    float: right;
-    margin-left: 5px;
-    color: transparent;
-    text-shadow: 0 0 0 var(--my-font-color);
-}
+    &:hover,
+    &.active:hover {
+        background-color: #666;
+    }
 
-.active-scripts-script-header.active:after {
-    content: "\2796"; /* "minus" sign (-) */
-    font-size: $defaultFontSize * 0.8125;
-    float: right;
-    margin-left: 5px;
+    &.active {
+        background-color: #555;
+    }
 }
 
 .active-scripts-script-panel {
@@ -405,8 +404,8 @@
 
 #faction-container p,
 #faction-container pre {
-    padding: 6px;
-    margin: 6px;
+    padding: 4px 6px;
+    margin: 4px 6px;
 }
 
 #faction-container pre {
@@ -522,6 +521,11 @@
 #infiltration-container {
     position: fixed;
     padding: 6px;
+
+    span {
+        margin: 0;
+        padding: 0;
+    }
 }
 
 #infiltration-left-panel,
@@ -542,6 +546,10 @@
 #infiltration-left-panel p,
 #infiltration-right-panel p {
     margin: 4px;
+}
+
+#infiltration-buttons {
+    margin-top: 20px;
 }
 
 #infiltration-buttons .a-link-button {

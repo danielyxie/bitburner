@@ -87,6 +87,11 @@
     z-index: 2;
     background-color: var(--my-background-color);
     padding: 10px;
+
+    p span {
+        padding: 0;
+        margin: 0;
+    }
 }
 
 .dialog-box-close-button {
@@ -136,6 +141,11 @@
     display: block;
     padding: 8px;
     margin: 8px;
+}
+
+#infiltration-box-content span {
+    padding: 0;
+    margin: 0;
 }
 
 #infiltration-faction-select {

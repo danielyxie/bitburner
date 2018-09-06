@@ -115,7 +115,7 @@ function factionExists(name) {
 //      This might change in the future for balance
 function initFactions() {
     for(const name in FactionInfos) {
-        resetFaction(new Faction(name));    
+        resetFaction(new Faction(name));
     }
 }
 
