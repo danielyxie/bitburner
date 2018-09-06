@@ -516,9 +516,9 @@ function loadImportedGame(saveObj, saveString) {
 
     Player.lastUpdate = Engine._lastUpdate;
     Engine.start();                 //Run main game loop and Scripts loop
-    dialogBoxCreate("While you were offline, your scripts generated $" +
-                    formatNumber(offlineProductionFromScripts, 2) + " and your Hacknet Nodes generated $" +
-                    formatNumber(offlineProductionFromHacknetNodes, 2));
+    dialogBoxCreate("While you were offline, your scripts generated <span class='money-gold'>$" +
+                    formatNumber(offlineProductionFromScripts, 2) + "</span> and your Hacknet Nodes generated <span class='money-gold'>$" +
+                    formatNumber(offlineProductionFromHacknetNodes, 2) + "</span>");
     return true;
 }
 

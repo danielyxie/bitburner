@@ -189,9 +189,9 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
         provides information about each script's production. The scripts are categorized by the hostname of the servers on which
         they are running. </p>
         <p id="active-scripts-total-prod">Total online production of
-            Active scripts: <span id="active-scripts-total-production-active">$0.000</span> / sec<br />
-            Total online production since last Aug installation: <span id="active-scripts-total-prod-aug-total">$0.000</span>
-            (<span id="active-scripts-total-prod-aug-avg">$0.000</span> / sec)</p>
+            Active scripts: <span class="money-gold"><span id="active-scripts-total-production-active">$0.000</span> / sec</span><br />
+            Total online production since last Aug installation: <span id="active-scripts-total-prod-aug-total" class="money-gold">$0.000</span>
+            (<span class="money-gold"><span id="active-scripts-total-prod-aug-avg" class="money-gold">$0.000</span> / sec</span>)</p>
 		<ul class="active-scripts-list" id="active-scripts-list" style="list-style: none;">
 		</ul>
 	</div>
@@ -203,20 +203,20 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
         The Hacknet is a global, decentralized network of machines. It is used by hackers all around
         the world to anonymously share computing power and perform distributed cyberattacks without the
         fear of being traced.
-        <br><br>
+        <br /><br />
         Here, you can purchase a Hacknet Node, a specialized machine that can connect and contribute its
         resources to the Hacknet network. This allows you to take a small percentage of profits
         from hacks performed on the network. Essentially, you are renting out your Node's computing power.
-        <br><br>
+        <br /><br />
         Each Hacknet Node you purchase will passively earn you money. Each Hacknet Node can be upgraded
         in order to increase its computing power and thereby increase the profit you earn from it.
         </p>
         <a id="hacknet-nodes-purchase-button" class="a-link-button"> Purchase Hacknet Node </a>
-        <br>
+        <br />
         <div id="hacknet-nodes-money-multipliers-div">
             <p id="hacknet-nodes-money">
-                <span>Money:</span><span id="hacknet-nodes-player-money"></span><br/>
-                <span>Total Hacknet Node Production:</span><span id="hacknet-nodes-total-production"></span>
+                <span>Money:</span><span id="hacknet-nodes-player-money" class="money-gold"></span><br />
+                <span>Total Hacknet Node Production:</span><span id="hacknet-nodes-total-production" class="money-gold"></span>
             </p>
             <span id="hacknet-nodes-multipliers">
                 <a id="hacknet-nodes-1x-multiplier" class="a-link-button-inactive"> x1 </a>
@@ -627,7 +627,7 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
         <p id="location-slums-description">
             You have entered the Slums, a poverty-ridden district filled with gangs, criminals, and
             other shadowy entities. The city's government and police have neglected this area for years...
-            <br><br><br>
+            <br /><br /><br />
             In the Slums, you can commit crimes to earn money and experience. Crime attempts are not always
             successful. Your chance at successfully committing a crime is determined by your stats.
         </p>
@@ -674,7 +674,7 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
 
     <div id="stock-market-container" class="generic-menupage-container">
         <p>
-            Welcome to the World Stock Exchange (WSE)! <br><br>
+            Welcome to the World Stock Exchange (WSE)! <br /><br />
 
             To begin trading, you must first purchase an account. WSE accounts will persist
             after you 'reset' by installing Augmentations.
@@ -687,7 +687,7 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
             TIX, short for Trade Information eXchange, is the communications protocol supported by the WSE.
             Purchasing access to the TIX API lets you write code to create your own algorithmic/automated
             trading strategies.
-            <br><br>
+            <br /><br />
             If you purchase access to the TIX API, you will retain that access even after
             you 'reset' by installing Augmentations.
         </p>
@@ -697,7 +697,7 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
         <p>
             Four Sigma's (4S) Market Data Feed provides information about stocks
             that will help your trading strategies.
-            <br><br>
+            <br /><br />
             If you purchase access to 4S Market Data and/or the 4S TIX API, you will
             retain that access even after you 'reset' by installing Augmentations.
         </p>
@@ -715,7 +715,7 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
         <a id="stock-market-mode" class="a-link-button tooltip"></a>
         <a id="stock-market-expand-tickers" class="a-link-button tooltip">Expand tickers</a>
         <a id="stock-market-collapse-tickers" class="a-link-button tooltip">Collapse tickers</a>
-        <br><br>
+        <br /><br />
         <input id="stock-market-watchlist-filter" type="text" placeholder="Filter Stocks by symbol (comma-separated list)"/>
         <a id="stock-market-watchlist-filter-update" class="a-link-button"> Update Watchlist </a>
         <ul id="stock-market-list" style="list-style:none;">
@@ -757,7 +757,7 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
             <p id="faction-invitation-box-text"> </p>
             <p id="faction-invitation-box-message"> </p>
             <p id="faction-invitation-box-warning">
-                Would you like to join? <br> <br>
+                Would you like to join? <br /> <br />
                 Warning: Joining this faction may prevent you from joining other factions during this run!
             </p>
             <span id="faction-invitation-box-yes" class="popup-box-button"> Yes </span>
@@ -770,8 +770,8 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
         <div id="infiltration-box-content" class="popup-box-content">
             <p id="infiltration-box-text"> </p>
 
-            <span id="infiltration-box-sell" class="a-link-button"> Sell on Black Market </span> <br><br>
-            <select id="infiltration-faction-select"> </select> <br>
+            <span id="infiltration-box-sell" class="a-link-button"> Sell on Black Market </span> <br /><br />
+            <select id="infiltration-faction-select"> </select> <br />
             <span id="infiltration-box-faction" class="a-link-button"> Give to Faction for Reputation </span>
 
         </div>
@@ -857,7 +857,7 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
         <div id="game-options-content" class="game-options-box">
             <span id="game-options-close-button">&times;</span>
             <h1> Game Options </h1>
-            <br>
+            <br />
             <div id="game-options-left-panel">
                 <!-- Netscript execution time -->
                 <fieldset>

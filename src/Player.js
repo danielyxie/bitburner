@@ -1010,7 +1010,7 @@ PlayerObject.prototype.workForFaction = function(numCycles) {
 
     var txt = document.getElementById("work-in-progress-text");
     txt.innerHTML = "You are currently " + this.currentWorkFactionDescription + " for your faction " + faction.name +
-                    " (Current Faction Reputation: " + formatNumber(faction.playerReputation, 0) + "). " +
+                    " (Current Faction Reputation: " + formatNumber(faction.playerReputation, 0) + "). <br>" +
                     "You have been doing this for " + convertTimeMsToTimeElapsedString(this.timeWorked) + "<br><br>" +
                     "You have earned: <br><br>" +
                     "$" + formatNumber(this.workMoneyGained, 2) + " (" + formatNumber(this.workMoneyGainRate * CYCLES_PER_SEC, 2) + " / sec) <br><br>" +
