@@ -923,14 +923,14 @@ let Engine = {
         Player.playtimeSinceLastBitnode += time;
 
         //Start Manual hack
-        if (Player.startAction == true) {
-            Engine._totalActionTime = Player.actionTime;
-            Engine._actionTimeLeft = Player.actionTime;
+        if (Terminal.actionStarted === true) {
+            Engine._totalActionTime = Terminal.actionTime;
+            Engine._actionTimeLeft = Terminal.actionTime;
             Engine._actionInProgress = true;
             Engine._actionProgressBarCount = 1;
             Engine._actionProgressStr = "[                                                  ]";
             Engine._actionTimeStr = "Time left: ";
-            Player.startAction = false;
+            Terminal.actionStarted = false;
         }
 
         //Working
