@@ -429,9 +429,9 @@ function endInfiltrationLevel(inst) {
                                BitNodeMultipliers.InfiltrationMoney;
         inst.secretsStolen.push(baseSecretValue);
         dialogBoxCreate("You found and stole a set of classified documents from the company. " +
-                        "These classified secrets could probably be sold for money ($" +
-                        formatNumber(secretMoneyValue, 2) + "), or they " +
-                        "could be given to factions for reputation (" + formatNumber(secretValue, 3) + " rep)");
+                        "These classified secrets could probably be sold for money (<span class='money-gold'>$" +
+                        formatNumber(secretMoneyValue, 2) + "</span>), or they " +
+                        "could be given to factions for reputation (<span class='light-yellow'>" + formatNumber(secretValue, 3) + " rep</span>)");
     }
 
     //Increase security level based on difficulty
@@ -469,17 +469,18 @@ function updateInfiltrationLevelText(inst) {
 
     var expMultiplier = 2 * inst.clearanceLevel / inst.maxClearanceLevel;
     document.getElementById("infiltration-level-text").innerHTML =
-        "Facility name:   " + inst.companyName + "<br>" +
-        "Clearance Level: " + inst.clearanceLevel + "<br>" +
-        "Security Level:  " + formatNumber(inst.securityLevel, 3) + "<br><br>" +
-        "Total reputation value of secrets stolen: " + formatNumber(totalValue, 3) + "<br>" +
-        "Total monetary value of secrets stolen:  $" + formatNumber(totalMoneyValue, 2) + "<br><br>" +
-        "Hack exp gained: " + formatNumber(inst.hackingExpGained * expMultiplier, 3) + "<br>" +
-        "Str exp gained:  " + formatNumber(inst.strExpGained * expMultiplier, 3) + "<br>" +
-        "Def exp gained:  " + formatNumber(inst.defExpGained * expMultiplier, 3) + "<br>" +
-        "Dex exp gained:  " + formatNumber(inst.dexExpGained * expMultiplier, 3) + "<br>" +
-        "Agi exp gained:  " + formatNumber(inst.agiExpGained * expMultiplier, 3) + "<br>" +
-        "Cha exp gained:  " + formatNumber(inst.chaExpGained * expMultiplier, 3);
+        "Facility name:    " + inst.companyName + "<br>" +
+        "Clearance Level:  " + inst.clearanceLevel + "<br>" +
+        "Security Level:   " + formatNumber(inst.securityLevel, 3) + "<br><br>" +
+        "Total value of stolen secrets<br>" +
+        "Reputation:       <span class='light-yellow'>" + formatNumber(totalValue, 3) + "</span><br>" +
+        "Money:           <span class='money-gold'>$" + formatNumber(totalMoneyValue, 2) + "</span><br><br>" +
+        "Hack exp gained:  " + formatNumber(inst.hackingExpGained * expMultiplier, 3) + "<br>" +
+        "Str exp gained:   " + formatNumber(inst.strExpGained * expMultiplier, 3) + "<br>" +
+        "Def exp gained:   " + formatNumber(inst.defExpGained * expMultiplier, 3) + "<br>" +
+        "Dex exp gained:   " + formatNumber(inst.dexExpGained * expMultiplier, 3) + "<br>" +
+        "Agi exp gained:   " + formatNumber(inst.agiExpGained * expMultiplier, 3) + "<br>" +
+        "Cha exp gained:   " + formatNumber(inst.chaExpGained * expMultiplier, 3);
 }
 
 function updateInfiltrationButtons(inst, scenario) {

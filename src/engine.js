@@ -1324,9 +1324,9 @@ let Engine = {
             Player.lastUpdate = Engine._lastUpdate;
             Engine.start();                 //Run main game loop and Scripts loop
             removeLoadingScreen();
-            dialogBoxCreate("While you were offline, your scripts generated $" +
-                            formatNumber(offlineProductionFromScripts, 2) + " and your Hacknet Nodes generated $" +
-                            formatNumber(offlineProductionFromHacknetNodes, 2));
+            dialogBoxCreate("While you were offline, your scripts generated <span class='money-gold'>$" +
+                            formatNumber(offlineProductionFromScripts, 2) + "</span> and your Hacknet Nodes generated <span class='money-gold'>$" +
+                            formatNumber(offlineProductionFromHacknetNodes, 2) + "</span>");
             //Close main menu accordions for loaded game
             var visibleMenuTabs = [terminal, createScript, activeScripts, stats,
                                    hacknetnodes, city, tutorial, options, dev];
