@@ -150,7 +150,7 @@ $(document).keydown(function(e) {
     }
 });
 
-let Engine = {
+const Engine = {
     version: "",
     Debug: true,
     overview: new CharacterOverview(),

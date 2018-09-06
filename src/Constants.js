@@ -497,11 +497,20 @@ let CONSTANTS = {
 
     LatestUpdate:
     `v0.40.3<br>
-     * b1t_flum3.exe program can now be created immediately at Hacking level 1 (rather than hacking level 5)
-     * UI improvements for the character overview panel and the left-hand menu (by mat-jaworski)
-     * Updated documentation to reflect the fact that Netscript port handles (getPortHandle()) only works in NetscriptJS (2.0), NOT Netscript 1.0
-     * Added tryWrite() Netscript function
-     * When working (for a company/faction), experience is gained immediately/continuously rather than all at once when the work is finished
+     -----------------------------------------------<br>
+     * Bladeburner Changes:<br>
+     *** Increased the effect that agi and dexterity have on action time<br>
+     *** Starting number of contracts/operations available will be slightly lower<br>
+     *** Random events will now happen slightly more often<br>
+     *** Slightly increased the rate at which the Overclock skill point cost increases<br>
+     -----------------------------------------------<br>
+     * The maximum volatility of stocks is now randomized (randomly generated within a certain range every time the game resets)<br>
+     * Increased the range of possible values for initial stock prices<br>
+     * b1t_flum3.exe program can now be created immediately at Hacking level 1 (rather than hacking level 5)<br>
+     * UI improvements for the character overview panel and the left-hand menu (by mat-jaworski)<br>
+     * Updated documentation to reflect the fact that Netscript port handles (getPortHandle()) only works in NetscriptJS (2.0), NOT Netscript 1.0<br>
+     * Added tryWrite() Netscript function<br>
+     * When working (for a company/faction), experience is gained immediately/continuously rather than all at once when the work is finished<br>
      * Improved the introductory tutorial`
 }
 
