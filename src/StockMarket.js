@@ -3,6 +3,7 @@ import {Locations}                              from "./Locations";
 import {hasWallStreetSF, wallStreetSFLvl}       from "./NetscriptFunctions";
 import {WorkerScript}                           from "./NetscriptWorker";
 import {Player}                                 from "./Player";
+import {Stock}                                  from "./Stock";
 
 import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {clearEventListeners}                    from "../utils/uiHelpers/clearEventListeners";
@@ -23,32 +24,6 @@ import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
         yesNoTxtInpBoxClose, yesNoBoxOpen}      from "../utils/YesNoBox";
 
 let StockPriceCap = 1e9; //Put a limit on how high a price can go
-
-function Stock(name, symbol, mv, b, otlkMag, initPrice=10000) {
-    this.symbol     = symbol;
-    this.name       = name;
-    this.price      = initPrice;
-
-    this.playerShares       = 0;
-    this.playerAvgPx        = 0;
-    this.playerShortShares  = 0;
-    this.playerAvgShortPx   = 0;
-    this.mv             = mv;
-    this.b              = b;
-    this.otlkMag        = otlkMag;
-
-    this.posTxtEl       = null;
-}
-
-Stock.prototype.toJSON = function() {
-	return Generic_toJSON("Stock", this);
-}
-
-Stock.fromJSON = function(value) {
-	return Generic_fromJSON(Stock, value.data);
-}
-
-Reviver.constructors.Stock = Stock;
 
 var OrderTypes = {
     LimitBuy: "Limit Buy Order",
@@ -253,135 +228,135 @@ function initStockMarket() {
     }
 
     var ecorp = Locations.AevumECorp;
-    var ecorpStk = new Stock(ecorp, StockSymbols[ecorp], 0.45, true, 19, getRandomInt(20000, 25000));
+    var ecorpStk = new Stock(ecorp, StockSymbols[ecorp], getRandomInt(40, 50)/100, true, 19, getRandomInt(17e3, 28e3));
     StockMarket[ecorp] = ecorpStk;
 
     var megacorp = Locations.Sector12MegaCorp;
-    var megacorpStk = new Stock(megacorp, StockSymbols[megacorp], 0.45, true, 19, getRandomInt(25000, 33000));
+    var megacorpStk = new Stock(megacorp, StockSymbols[megacorp], getRandomInt(40,50)/100, true, 19, getRandomInt(24e3, 34e3));
     StockMarket[megacorp] = megacorpStk;
 
     var blade = Locations.Sector12BladeIndustries;
-    var bladeStk = new Stock(blade, StockSymbols[blade], 0.75, true, 13, getRandomInt(15000, 22000));
+    var bladeStk = new Stock(blade, StockSymbols[blade], getRandomInt(70, 80)/100, true, 13, getRandomInt(12e3, 25e3));
     StockMarket[blade] = bladeStk;
 
     var clarke = Locations.AevumClarkeIncorporated;
-    var clarkeStk = new Stock(clarke, StockSymbols[clarke], 0.7, true, 12, getRandomInt(15000, 20000));
+    var clarkeStk = new Stock(clarke, StockSymbols[clarke], getRandomInt(65, 75)/100, true, 12, getRandomInt(10e3, 25e3));
     StockMarket[clarke] = clarkeStk;
 
     var omnitek = Locations.VolhavenOmniTekIncorporated;
-    var omnitekStk = new Stock(omnitek, StockSymbols[omnitek], 0.65, true, 12, getRandomInt(35000, 40000));
+    var omnitekStk = new Stock(omnitek, StockSymbols[omnitek], getRandomInt(60, 70)/100, true, 12, getRandomInt(32e3, 43e3));
     StockMarket[omnitek] = omnitekStk;
 
     var foursigma = Locations.Sector12FourSigma;
-    var foursigmaStk = new Stock(foursigma, StockSymbols[foursigma], 1.05, true, 17, getRandomInt(60000, 70000));
+    var foursigmaStk = new Stock(foursigma, StockSymbols[foursigma], getRandomInt(100, 110)/100, true, 17, getRandomInt(50e3, 80e3));
     StockMarket[foursigma] = foursigmaStk;
 
     var kuaigong = Locations.ChongqingKuaiGongInternational;
-    var kuaigongStk = new Stock(kuaigong, StockSymbols[kuaigong], 0.8, true, 10, getRandomInt(20000, 24000));
+    var kuaigongStk = new Stock(kuaigong, StockSymbols[kuaigong], getRandomInt(75, 85)/100, true, 10, getRandomInt(16e3, 28e3));
     StockMarket[kuaigong] = kuaigongStk;
 
     var fulcrum = Locations.AevumFulcrumTechnologies;
-    var fulcrumStk = new Stock(fulcrum, StockSymbols[fulcrum], 1.25, true, 16, getRandomInt(30000, 35000));
+    var fulcrumStk = new Stock(fulcrum, StockSymbols[fulcrum], getRandomInt(120, 130)/100, true, 16, getRandomInt(29e3, 36e3));
     StockMarket[fulcrum] = fulcrumStk;
 
     var storm = Locations.IshimaStormTechnologies;
-    var stormStk = new Stock(storm, StockSymbols[storm], 0.85, true, 7, getRandomInt(21000, 24000));
+    var stormStk = new Stock(storm, StockSymbols[storm], getRandomInt(80, 90)/100, true, 7, getRandomInt(20e3, 25e3));
     StockMarket[storm] = stormStk;
 
     var defcomm = Locations.NewTokyoDefComm;
-    var defcommStk = new Stock(defcomm, StockSymbols[defcomm], 0.65, true, 10, getRandomInt(10000, 15000));
+    var defcommStk = new Stock(defcomm, StockSymbols[defcomm], getRandomInt(60, 70)/100, true, 10, getRandomInt(6e3, 19e3));
     StockMarket[defcomm] = defcommStk;
 
     var helios = Locations.VolhavenHeliosLabs;
-    var heliosStk = new Stock(helios, StockSymbols[helios], 0.6, true, 9, getRandomInt(12000, 16000));
+    var heliosStk = new Stock(helios, StockSymbols[helios], getRandomInt(55, 65)/100, true, 9, getRandomInt(10e3, 18e3));
     StockMarket[helios] = heliosStk;
 
     var vitalife = Locations.NewTokyoVitaLife;
-    var vitalifeStk = new Stock(vitalife, StockSymbols[vitalife], 0.75, true, 7, getRandomInt(10000, 12000));
+    var vitalifeStk = new Stock(vitalife, StockSymbols[vitalife], getRandomInt(70, 80)/100, true, 7, getRandomInt(8e3, 14e3));
     StockMarket[vitalife] = vitalifeStk;
 
     var icarus = Locations.Sector12IcarusMicrosystems;
-    var icarusStk = new Stock(icarus, StockSymbols[icarus], 0.65, true, 7.5, getRandomInt(16000, 20000));
+    var icarusStk = new Stock(icarus, StockSymbols[icarus], getRandomInt(60, 70)/100, true, 7.5, getRandomInt(12e3, 24e3));
     StockMarket[icarus] = icarusStk;
 
     var universalenergy = Locations.Sector12UniversalEnergy;
-    var universalenergyStk = new Stock(universalenergy, StockSymbols[universalenergy], 0.55, true, 10, getRandomInt(20000, 25000));
+    var universalenergyStk = new Stock(universalenergy, StockSymbols[universalenergy], getRandomInt(50, 60)/100, true, 10, getRandomInt(16e3, 29e3));
     StockMarket[universalenergy] = universalenergyStk;
 
     var aerocorp = Locations.AevumAeroCorp;
-    var aerocorpStk = new Stock(aerocorp, StockSymbols[aerocorp], 0.6, true, 6, getRandomInt(10000, 15000));
+    var aerocorpStk = new Stock(aerocorp, StockSymbols[aerocorp], getRandomInt(55, 65)/100, true, 6, getRandomInt(8e3, 17e3));
     StockMarket[aerocorp] = aerocorpStk;
 
     var omnia = Locations.VolhavenOmniaCybersystems;
-    var omniaStk = new Stock(omnia, StockSymbols[omnia], 0.7, true, 4.5, getRandomInt(9000, 12000));
+    var omniaStk = new Stock(omnia, StockSymbols[omnia], getRandomInt(65, 75)/100, true, 4.5, getRandomInt(6e3, 15e3));
     StockMarket[omnia] = omniaStk;
 
     var solaris = Locations.ChongqingSolarisSpaceSystems;
-    var solarisStk = new Stock(solaris, StockSymbols[solaris], 0.75, true, 8.5, getRandomInt(18000, 24000));
+    var solarisStk = new Stock(solaris, StockSymbols[solaris], getRandomInt(70, 80)/100, true, 8.5, getRandomInt(14e3, 28e3));
     StockMarket[solaris] = solarisStk;
 
     var globalpharm = Locations.NewTokyoGlobalPharmaceuticals;
-    var globalpharmStk = new Stock(globalpharm, StockSymbols[globalpharm], 0.6, true, 10.5, getRandomInt(18000, 24000));
+    var globalpharmStk = new Stock(globalpharm, StockSymbols[globalpharm], getRandomInt(55, 65)/100, true, 10.5, getRandomInt(12e3, 30e3));
     StockMarket[globalpharm] = globalpharmStk;
 
     var nova = Locations.IshimaNovaMedical;
-    var novaStk = new Stock(nova, StockSymbols[nova], 0.75, true, 5, getRandomInt(18000, 24000));
+    var novaStk = new Stock(nova, StockSymbols[nova], getRandomInt(70, 80)/100, true, 5, getRandomInt(15e3, 27e3));
     StockMarket[nova] = novaStk;
 
     var watchdog = Locations.AevumWatchdogSecurity;
-    var watchdogStk = new Stock(watchdog, StockSymbols[watchdog], 2.5, true, 1.5, getRandomInt(5000, 7500));
+    var watchdogStk = new Stock(watchdog, StockSymbols[watchdog], getRandomInt(240, 260)/100, true, 1.5, getRandomInt(4e3, 8.5e3));
     StockMarket[watchdog] = watchdogStk;
 
     var lexocorp = Locations.VolhavenLexoCorp;
-    var lexocorpStk = new Stock(lexocorp, StockSymbols[lexocorp], 1.25, true, 6, getRandomInt(5000, 7500));
+    var lexocorpStk = new Stock(lexocorp, StockSymbols[lexocorp], getRandomInt(115, 135)/100, true, 6, getRandomInt(4.5e3, 8e3));
     StockMarket[lexocorp] = lexocorpStk;
 
     var rho = Locations.AevumRhoConstruction;
-    var rhoStk = new Stock(rho, StockSymbols[rho], 0.6, true, 1, getRandomInt(3000, 6000));
+    var rhoStk = new Stock(rho, StockSymbols[rho], getRandomInt(50, 70)/100, true, 1, getRandomInt(2e3, 7e3));
     StockMarket[rho] = rhoStk;
 
     var alpha = Locations.Sector12AlphaEnterprises;
-    var alphaStk = new Stock(alpha, StockSymbols[alpha], 1.9, true, 10, getRandomInt(5000, 7500));
+    var alphaStk = new Stock(alpha, StockSymbols[alpha], getRandomInt(175, 205)/100, true, 10, getRandomInt(4e3, 8.5e3));
     StockMarket[alpha] = alphaStk;
 
     var syscore = Locations.VolhavenSysCoreSecurities;
-    var syscoreStk = new Stock(syscore, StockSymbols[syscore], 1.6, true, 3, getRandomInt(4000, 7000))
+    var syscoreStk = new Stock(syscore, StockSymbols[syscore], getRandomInt(150, 170)/100, true, 3, getRandomInt(3e3, 8e3));
     StockMarket[syscore] = syscoreStk;
 
     var computek = Locations.VolhavenCompuTek;
-    var computekStk = new Stock(computek, StockSymbols[computek], 0.9, true, 4, getRandomInt(2000, 5000));
+    var computekStk = new Stock(computek, StockSymbols[computek], getRandomInt(80, 100)/100, true, 4, getRandomInt(1e3, 6e3));
     StockMarket[computek] = computekStk;
 
     var netlink = Locations.AevumNetLinkTechnologies;
-    var netlinkStk = new Stock(netlink, StockSymbols[netlink], 4.2, true, 1, getRandomInt(2000, 4000));
+    var netlinkStk = new Stock(netlink, StockSymbols[netlink], getRandomInt(400, 430)/100, true, 1, getRandomInt(1e3, 5e3));
     StockMarket[netlink] = netlinkStk;
 
     var omega = Locations.IshimaOmegaSoftware;
-    var omegaStk = new Stock(omega, StockSymbols[omega], 1, true, 0.5, getRandomInt(3000, 6000));
+    var omegaStk = new Stock(omega, StockSymbols[omega], getRandomInt(90, 110)/100, true, 0.5, getRandomInt(1e3, 8e3));
     StockMarket[omega] = omegaStk;
 
     var fns = Locations.Sector12FoodNStuff;
-    var fnsStk = new Stock(fns, StockSymbols[fns], 0.75, false, 1, getRandomInt(1000, 4000));
+    var fnsStk = new Stock(fns, StockSymbols[fns], getRandomInt(70, 80)/100, false, 1, getRandomInt(500, 4.5e3));
     StockMarket[fns] = fnsStk;
 
     var sigmacosm = "Sigma Cosmetics";
-    var sigmacosmStk = new Stock(sigmacosm, StockSymbols[sigmacosm], 2.8, true, 0, getRandomInt(2000, 3000));
+    var sigmacosmStk = new Stock(sigmacosm, StockSymbols[sigmacosm], getRandomInt(260, 300)/100, true, 0, getRandomInt(1.5e3, 3.5e3));
     StockMarket[sigmacosm] = sigmacosmStk;
 
     var joesguns = "Joes Guns";
-    var joesgunsStk = new Stock(joesguns, StockSymbols[joesguns], 3.8, true, 1, getRandomInt(500, 1000));
+    var joesgunsStk = new Stock(joesguns, StockSymbols[joesguns], getRandomInt(360, 400)/100, true, 1, getRandomInt(250, 1.5e3));
     StockMarket[joesguns] = joesgunsStk;
 
     var catalyst = "Catalyst Ventures";
-    var catalystStk = new Stock(catalyst, StockSymbols[catalyst], 1.45, true, 13.5, getRandomInt(500, 1000));
+    var catalystStk = new Stock(catalyst, StockSymbols[catalyst], getRandomInt(120, 175)/100, true, 13.5, getRandomInt(250, 1.5e3));
     StockMarket[catalyst] = catalystStk;
 
     var microdyne = "Microdyne Technologies";
-    var microdyneStk = new Stock(microdyne, StockSymbols[microdyne], 0.75, true, 8, getRandomInt(20000, 25000));
+    var microdyneStk = new Stock(microdyne, StockSymbols[microdyne], getRandomInt(70, 80)/100, true, 8, getRandomInt(15e3, 30e3));
     StockMarket[microdyne] = microdyneStk;
 
     var titanlabs = "Titan Laboratories";
-    var titanlabsStk = new Stock(titanlabs, StockSymbols[titanlabs], 0.6, true, 11, getRandomInt(15000, 20000));
+    var titanlabsStk = new Stock(titanlabs, StockSymbols[titanlabs], getRandomInt(50, 70)/100, true, 11, getRandomInt(12e3, 24e3));
     StockMarket[titanlabs] = titanlabsStk;
 
     var orders = {};
