@@ -41,8 +41,9 @@ interface IServerMetadata {
 
     /**
      * When populated, the exponent of 2^x amount of RAM the server has.
+     * This should be in the range of 1-20, to match the Player's max RAM.
      */
-    maxRamExponent?: number;
+    maxRamExponent?: number | IMinMaxRange;
 
     /**
      * How much money the server starts out with.

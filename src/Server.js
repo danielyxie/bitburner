@@ -160,7 +160,7 @@ function initForeignServers() {
         };
 
         if (metadata.maxRamExponent !== undefined) {
-            serverParams.maxRam = Math.pow(2, metadata.maxRamExponent);
+            serverParams.maxRam = Math.pow(2, toNumber(metadata.maxRamExponent));
         }
 
         for (const prop of propertiesToPatternMatch) {
