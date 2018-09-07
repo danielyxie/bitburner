@@ -155,10 +155,13 @@ function initForeignServers() {
         const serverParams = {
             hostname: metadata.hostname,
             ip: createRandomIp(),
-            maxRam: metadata.maxRam || 0,
             numOpenPortsRequired: metadata.numOpenPortsRequired,
             organizationName: metadata.organizationName
         };
+
+        if (metadata.maxRamExponent !== undefined) {
+            serverParams.maxRam = Math.pow(2, metadata.maxRamExponent);
+        }
 
         for (const prop of propertiesToPatternMatch) {
             if (metadata[prop] !== undefined) {

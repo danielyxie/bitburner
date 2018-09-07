@@ -40,9 +40,9 @@ interface IServerMetadata {
     literature?: string[];
 
     /**
-     * When populated, the amount of RAM the server has.
+     * When populated, the exponent of 2^x amount of RAM the server has.
      */
-    maxRam?: number;
+    maxRamExponent?: number;
 
     /**
      * How much money the server starts out with.
@@ -147,7 +147,7 @@ export const serverMetadata: IServerMetadata[] = [
     },
     hostname: "blade",
     literature: ["beyond-man.lit"],
-    maxRam: 128,
+    maxRamExponent: 7,
     moneyAvailable: {
       max: 20000000000,
       min: 12000000000,
@@ -220,7 +220,7 @@ export const serverMetadata: IServerMetadata[] = [
       "coded-intelligence.lit",
       "history-of-synthoids.lit",
     ],
-    maxRam: 256,
+    maxRamExponent: 8,
     moneyAvailable: {
       max: 20000000000,
       min: 15000000000,
@@ -288,7 +288,7 @@ export const serverMetadata: IServerMetadata[] = [
     },
     hostname: "fulcrumtech",
     literature: ["simulated-reality.lit"],
-    maxRam: 512,
+    maxRamExponent: 9,
     moneyAvailable: {
       max: 1800000000,
       min: 1400000000,
@@ -392,7 +392,7 @@ export const serverMetadata: IServerMetadata[] = [
     },
     hostname: "helios",
     literature: ["beyond-man.lit"],
-    maxRam: 128,
+    maxRamExponent: 7,
     moneyAvailable: {
       max: 750000000,
       min: 550000000,
@@ -416,7 +416,7 @@ export const serverMetadata: IServerMetadata[] = [
     },
     hostname: "vitalife",
     literature: ["A-Green-Tomorrow.lit"],
-    maxRam: 64,
+    maxRamExponent: 6,
     moneyAvailable: {
       max: 800000000,
       min: 700000000,
@@ -461,7 +461,7 @@ export const serverMetadata: IServerMetadata[] = [
       min: 80,
     },
     hostname: "univ-energy",
-    maxRam: 64,
+    maxRamExponent: 6,
     moneyAvailable: {
       max: 1200000000,
       min: 1100000000,
@@ -485,7 +485,7 @@ export const serverMetadata: IServerMetadata[] = [
     },
     hostname: "titan-labs",
     literature: ["coded-intelligence.lit"],
-    maxRam: 64,
+    maxRamExponent: 6,
     moneyAvailable: {
       max: 900000000,
       min: 750000000,
@@ -509,7 +509,7 @@ export const serverMetadata: IServerMetadata[] = [
     },
     hostname: "microdyne",
     literature: ["synthetic-muscles.lit"],
-    maxRam: 32,
+    maxRamExponent: 5,
     moneyAvailable: {
       max: 700000000,
       min: 500000000,
@@ -604,7 +604,7 @@ export const serverMetadata: IServerMetadata[] = [
     },
     hostname: "omnia",
     literature: ["history-of-synthoids.lit"],
-    maxRam: 64,
+    maxRamExponent: 6,
     moneyAvailable: {
       max: 1000000000,
       min: 900000000,
@@ -676,7 +676,7 @@ export const serverMetadata: IServerMetadata[] = [
         "A-Green-Tomorrow.lit",
         "the-failed-frontier.lit",
     ],
-    maxRam: 64,
+    maxRamExponent: 6,
     moneyAvailable: {
       max: 900000000,
       min: 700000000,
@@ -722,7 +722,7 @@ export const serverMetadata: IServerMetadata[] = [
     },
     hostname: "global-pharm",
     literature: ["A-Green-Tomorrow.lit"],
-    maxRam: 32,
+    maxRamExponent: 5,
     moneyAvailable: {
       max: 1750000000,
       min: 1500000000,
@@ -789,7 +789,7 @@ export const serverMetadata: IServerMetadata[] = [
       min: 70,
     },
     hostname: "unitalife",
-    maxRam: 32,
+    maxRamExponent: 5,
     moneyAvailable: {
       max: 1100000000,
       min: 1000000000,
@@ -812,7 +812,7 @@ export const serverMetadata: IServerMetadata[] = [
       min: 60,
     },
     hostname: "lexo-corp",
-    maxRam: 32,
+    maxRamExponent: 5,
     moneyAvailable: {
       max: 800000000,
       min: 700000000,
@@ -858,7 +858,7 @@ export const serverMetadata: IServerMetadata[] = [
     },
     hostname: "alpha-ent",
     literature: ["sector-12-crime.lit"],
-    maxRam: 32,
+    maxRamExponent: 5,
     moneyAvailable: {
       max: 750000000,
       min: 600000000,
@@ -881,7 +881,7 @@ export const serverMetadata: IServerMetadata[] = [
       min: 70,
     },
     hostname: "aevum-police",
-    maxRam: 32,
+    maxRamExponent: 5,
     moneyAvailable: {
       max: 400000000,
       min: 200000000,
@@ -909,7 +909,7 @@ export const serverMetadata: IServerMetadata[] = [
       "the-failed-frontier.lit",
       "tensions-in-tech-race.lit",
     ],
-    maxRam: 64,
+    maxRamExponent: 6,
     moneyAvailable: {
       max: 250000000,
       min: 175000000,
@@ -932,7 +932,7 @@ export const serverMetadata: IServerMetadata[] = [
       min: 65,
     },
     hostname: "zb-institute",
-    maxRam: 64,
+    maxRamExponent: 6,
     moneyAvailable: {
       max: 1100000000,
       min: 800000000,
@@ -960,7 +960,7 @@ export const serverMetadata: IServerMetadata[] = [
       "the-failed-frontier.lit",
       "synthetic-muscles.lit",
     ],
-    maxRam: 32,
+    maxRamExponent: 5,
     moneyAvailable: {
       max: 350000000,
       min: 200000000,
@@ -1074,7 +1074,7 @@ export const serverMetadata: IServerMetadata[] = [
     },
     hostname: "netlink",
     literature: ["simulated-reality.lit"],
-    maxRam: 64,
+    maxRamExponent: 6,
     moneyAvailable: 275000000,
     networkLayer: 4,
     numOpenPortsRequired: 3,
@@ -1114,7 +1114,7 @@ export const serverMetadata: IServerMetadata[] = [
     hackDifficulty: 10,
     hostname: "foodnstuff",
     literature: ["sector-12-crime.lit"],
-    maxRam: 16,
+    maxRamExponent: 4,
     moneyAvailable: 2000000,
     networkLayer: 1,
     numOpenPortsRequired: 0,
@@ -1125,7 +1125,7 @@ export const serverMetadata: IServerMetadata[] = [
   {
     hackDifficulty: 10,
     hostname: "sigma-cosmetics",
-    maxRam: 16,
+    maxRamExponent: 4,
     moneyAvailable: 2300000,
     networkLayer: 1,
     numOpenPortsRequired: 0,
@@ -1136,7 +1136,7 @@ export const serverMetadata: IServerMetadata[] = [
   {
     hackDifficulty: 15,
     hostname: "joesguns",
-    maxRam: 16,
+    maxRamExponent: 4,
     moneyAvailable: 2500000,
     networkLayer: 1,
     numOpenPortsRequired: 0,
@@ -1147,7 +1147,7 @@ export const serverMetadata: IServerMetadata[] = [
   {
     hackDifficulty: 25,
     hostname: "zer0",
-    maxRam: 32,
+    maxRamExponent: 5,
     moneyAvailable: 7500000,
     networkLayer: 2,
     numOpenPortsRequired: 1,
@@ -1158,7 +1158,7 @@ export const serverMetadata: IServerMetadata[] = [
   {
     hackDifficulty: 20,
     hostname: "nectar-net",
-    maxRam: 16,
+    maxRamExponent: 4,
     moneyAvailable: 2750000,
     networkLayer: 2,
     numOpenPortsRequired: 0,
@@ -1170,7 +1170,7 @@ export const serverMetadata: IServerMetadata[] = [
     hackDifficulty: 25,
     hostname: "neo-net",
     literature: ["the-hidden-world.lit"],
-    maxRam: 32,
+    maxRamExponent: 5,
     moneyAvailable: 5000000,
     networkLayer: 3,
     numOpenPortsRequired: 1,
@@ -1182,7 +1182,7 @@ export const serverMetadata: IServerMetadata[] = [
     hackDifficulty: 30,
     hostname: "silver-helix",
     literature: ["new-triads.lit"],
-    maxRam: 64,
+    maxRamExponent: 6,
     moneyAvailable: 45000000,
     networkLayer: 3,
     numOpenPortsRequired: 2,
@@ -1194,7 +1194,7 @@ export const serverMetadata: IServerMetadata[] = [
     hackDifficulty: 15,
     hostname: "hong-fang-tea",
     literature: ["brighter-than-the-sun.lit"],
-    maxRam: 16,
+    maxRamExponent: 4,
     moneyAvailable: 3000000,
     networkLayer: 1,
     numOpenPortsRequired: 0,
@@ -1205,7 +1205,7 @@ export const serverMetadata: IServerMetadata[] = [
   {
     hackDifficulty: 15,
     hostname: "harakiri-sushi",
-    maxRam: 16,
+    maxRamExponent: 4,
     moneyAvailable: 4000000,
     networkLayer: 1,
     numOpenPortsRequired: 0,
@@ -1216,7 +1216,7 @@ export const serverMetadata: IServerMetadata[] = [
   {
     hackDifficulty: 20,
     hostname: "phantasy",
-    maxRam: 32,
+    maxRamExponent: 5,
     moneyAvailable: 24000000,
     networkLayer: 3,
     numOpenPortsRequired: 2,
@@ -1227,7 +1227,7 @@ export const serverMetadata: IServerMetadata[] = [
   {
     hackDifficulty: 15,
     hostname: "max-hardware",
-    maxRam: 32,
+    maxRamExponent: 5,
     moneyAvailable: 10000000,
     networkLayer: 2,
     numOpenPortsRequired: 1,
@@ -1242,7 +1242,7 @@ export const serverMetadata: IServerMetadata[] = [
     },
     hostname: "omega-net",
     literature: ["the-new-god.lit"],
-    maxRam: 32,
+    maxRamExponent: 5,
     moneyAvailable: {
       max: 70000000,
       min: 60000000,
@@ -1284,7 +1284,7 @@ export const serverMetadata: IServerMetadata[] = [
   {
     hackDifficulty: 30,
     hostname: "iron-gym",
-    maxRam: 32,
+    maxRamExponent: 5,
     moneyAvailable: 20000000,
     networkLayer: 1,
     numOpenPortsRequired: 1,
@@ -1356,7 +1356,7 @@ export const serverMetadata: IServerMetadata[] = [
         "simulated-reality.lit",
         "the-new-god.lit",
     ],
-    maxRam: 128,
+    maxRamExponent: 7,
     moneyAvailable: 0,
     networkLayer: 11,
     numOpenPortsRequired: 4,
@@ -1372,7 +1372,7 @@ export const serverMetadata: IServerMetadata[] = [
     hackDifficulty: 0,
     hostname: "I.I.I.I",
     literature: ["democracy-is-dead.lit"],
-    maxRam: 64,
+    maxRamExponent: 6,
     moneyAvailable: 0,
     networkLayer: 5,
     numOpenPortsRequired: 3,
@@ -1388,7 +1388,7 @@ export const serverMetadata: IServerMetadata[] = [
     hackDifficulty: 0,
     hostname: "avmnite-02h",
     literature: ["democracy-is-dead.lit"],
-    maxRam: 32,
+    maxRamExponent: 5,
     moneyAvailable: 0,
     networkLayer: 4,
     numOpenPortsRequired: 2,
@@ -1403,7 +1403,7 @@ export const serverMetadata: IServerMetadata[] = [
   {
     hackDifficulty: 0,
     hostname: ".",
-    maxRam: 16,
+    maxRamExponent: 4,
     moneyAvailable: 0,
     networkLayer: 13,
     numOpenPortsRequired: 4,
@@ -1419,7 +1419,7 @@ export const serverMetadata: IServerMetadata[] = [
     hackDifficulty: 0,
     hostname: "CSEC",
     literature: ["democracy-is-dead.lit"],
-    maxRam: 8,
+    maxRamExponent: 3,
     moneyAvailable: 0,
     networkLayer: 2,
     numOpenPortsRequired: 1,
