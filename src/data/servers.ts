@@ -54,7 +54,7 @@ interface IServerMetadata {
      * This value is between 1 and 15.
      * If this is not populated, @specialName should be.
      */
-    networkLayer?: number;
+    networkLayer?: number | IMinMaxRange;
 
     /**
      * The number of ports that must be opened before the player can execute NUKE.

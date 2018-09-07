@@ -177,7 +177,7 @@ function initForeignServers() {
 
         AddToAllServers(server);
         if (metadata.networkLayer !== undefined) {
-            networkLayers[metadata.networkLayer - 1].push(server);
+            networkLayers[toNumber(metadata.networkLayer) - 1].push(server);
         }
     }
 
