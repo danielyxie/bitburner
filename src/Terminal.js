@@ -69,7 +69,7 @@ $(document).keydown(function(event) {
             event.preventDefault(); //Prevent newline from being entered in Script Editor
 			var command = terminalInput.value;
 			post(
-                "[" +
+                "<span class='prompt'>[" +
                 (FconfSettings.ENABLE_TIMESTAMPS ? getTimestamp() + " " : "") +
                 Player.getCurrentServer().hostname +
                 " ~]&gt;</span> " + command
@@ -527,14 +527,14 @@ let Terminal = {
     resetTerminalInput: function() {
         if (FconfSettings.WRAP_INPUT) {
             document.getElementById("terminal-input-td").innerHTML =
-                "<div id='terminal-input-header'>[" + Player.getCurrentServer().hostname + " ~]" + "$ </div>" +
+                "<div id='terminal-input-header' class='prompt'>[" + Player.getCurrentServer().hostname + " ~]" + "$ </div>" +
                 '<textarea type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
 
             //Auto re-size the line element as it wraps
             autosize(document.getElementById("terminal-input-text-box"));
         } else {
             document.getElementById("terminal-input-td").innerHTML =
-                "<div id='terminal-input-header'>[" + Player.getCurrentServer().hostname + " ~]" + "$ </div>" +
+                "<div id='terminal-input-header' class='prompt'>[" + Player.getCurrentServer().hostname + " ~]" + "$ </div>" +
                 '<input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
         }
         var hdr = document.getElementById("terminal-input-header");
