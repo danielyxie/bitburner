@@ -741,7 +741,56 @@ let Terminal = {
         $('input[class=terminal-input]').prop('disabled', false);
     },
 
-	executeCommand:  function(command) {
+    writeToScriptFile : function(server, fn, code) {
+        var ret = {success: false, overwritten: false};
+        if (!isScriptFilename(fn) || !(server instanceof Server)) { return ret; }
+
+        //Check if the script already exists, and overwrite it if it does
+        for (let i = 0; i < server.scripts.length; ++i) {
+            if (fn === server.scripts[i].filename) {
+                let script = server.scripts[i];
+                script.code = code;
+                script.updateRamUsage();
+                script.module = "";
+                ret.overwritten = true;
+                ret.success = true;
+                return ret;
+            }
+        }
+
+        //Otherwise, create a new script
+        var newScript = new Script();
+        newScript.filename = fn;
+        newScript.code = code;
+        newScript.updateRamUsage();
+        newScript.server = server.ip;
+        server.scripts.push(newScript);
+        ret.success = true;
+        return ret;
+    },
+
+    writeToTextFile : function(server, fn, txt) {
+        var ret = {success: false, overwritten: false};
+        if (!fn.endsWith("txt") || !(server instanceof Server)) { return ret; }
+
+        //Check if the text file already exists, and overwrite if it does
+        for (let i = 0; i < server.textFiles.length; ++i) {
+            if (server.textFiles[i].fn === fn) {
+                ret.overwritten = true;
+                server.textFiles[i].text = txt;
+                ret.success = true;
+                return ret;
+            }
+        }
+
+        //Otherwise create a new text file
+        var newFile = new TextFile(fn, txt);
+        server.textFiles.push(newFile);
+        ret.success = true;
+        return ret;
+    },
+
+	executeCommand : function(command) {
         command = command.trim();
         //Replace all extra whitespace in command with a single space
         command = command.replace(/\s\s+/g, ' ');
@@ -1395,8 +1444,7 @@ let Terminal = {
                         }
                     }
                     destServer.messages.push(scriptname);
-                    post(scriptname + " copied over to " + destServer.hostname);
-                    return;
+                    return post(scriptname + " copied over to " + destServer.hostname);
                 }
 
                 //Scp for txt files
@@ -1412,18 +1460,15 @@ let Terminal = {
 
                     if (!found) {return post("Error: no such file exists!");}
 
-                    for (var i = 0; i < destServer.textFiles.length; ++i) {
-                        if (destServer.textFiles[i].fn === scriptname) {
-                            //Overwrite
-                            destServer.textFiles[i].text = txtFile.text;
-                            post("WARNING: " + scriptname + " already exists on " + destServer.hostname +
-                                 "and will be overwriten");
-                            return post(scriptname + " copied over to " + destServer.hostname);
-                        }
+                    let tRes = Terminal.writeToTextFile(destServer, txtFile.fn, txtFile.text);
+                    if (!tRes.success) {
+                        return post("Error: scp failed");
                     }
-                    var newFile = new TextFile(txtFile.fn, txtFile.text);
-                    destServer.textFiles.push(newFile);
-                    return post(scriptname + " copied over to " + destServer.hostname);
+                    if (tRes.overwritten) {
+                        post(`WARNING: ${scriptname} already exists on ${destServer.hostname} and will be overwriten`);
+                        return post(`${scriptname} overwritten on ${destServer.hostname}`);
+                    }
+                    return post(`${scriptname} copied over to ${destServer.hostname}`);
                 }
 
                 //Get the current script
@@ -1439,27 +1484,16 @@ let Terminal = {
                     return;
                 }
 
-                //Overwrite script if it exists
-                for (var i = 0; i < destServer.scripts.length; ++i) {
-                    if (scriptname == destServer.scripts[i].filename) {
-                        post("WARNING: " + scriptname + " already exists on " + destServer.hostname + " and will be overwritten");
-                        var oldScript = destServer.scripts[i];
-                        oldScript.code = sourceScript.code;
-                        oldScript.ramUsage = sourceScript.ramUsage;
-                        oldScript.module = "";
-                        post(scriptname + " overwriten on " + destServer.hostname);
-                        return;
-                    }
+                let sRes = Terminal.writeToScriptFile(destServer, scriptname, sourceScript.code);
+                if (!sRes.success) {
+                    return post(`Error: scp failed`);
                 }
-
-                var newScript = new Script();
-                newScript.filename = scriptname;
-                newScript.code = sourceScript.code;
-                newScript.ramUsage = sourceScript.ramUsage;
-                newScript.destServer = ip;
-                destServer.scripts.push(newScript);
-                post(scriptname + " copied over to " + destServer.hostname);
-				break;
+                if (sRes.overwritten) {
+                    post(`WARNING: ${scriptname} already exists on ${destServer.hostname} and will be overwritten`);
+                    return post(`${scriptname} overwritten on ${destServer.hostname}`);
+                }
+                post(`${scriptname} copied over to ${destServer.hostname}`);
+                break;
             case "sudov":
                 if (commandArray.length != 1) {
                     post("Incorrect number of arguments. Usage: sudov"); return;
@@ -1594,10 +1628,25 @@ let Terminal = {
 
                 let url = args[0];
                 let target = args[1];
+                if (!isScriptFilename(target) && !target.endsWith(".txt")) {
+                    return post(`wget failed: Invalid target file. Target file must be script or text file`);
+                }
                 $.get(url, function(data) {
-                    post(data);
+                    let res;
+                    if (isScriptFilename(target)) {
+                        res = Terminal.writeToScriptFile(s, target, data);
+                    } else {
+                        res = Terminal.writeToTextFile(s, target, data);
+                    }
+                    if (!res.success) {
+                        return post("wget failed");
+                    }
+                    if (res.overwritten) {
+                         return post(`wget successfully retrieved content and overwrote ${target}`);
+                    }
+                    return post(`wget successfully retrieved content to new file ${target}`);
                 }, 'text').fail(function(e) {
-                    post("wget failed: " + JSON.stringify(e));
+                    return post("wget failed: " + JSON.stringify(e));
                 })
                 break;
 			default:

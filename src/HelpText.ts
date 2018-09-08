@@ -32,7 +32,8 @@ export const TerminalHelpText: string =
     "tail [script] [args...]        Displays dynamic logs for the specified script<br>" +
     "theme [preset] | bg txt hlgt   Change the color scheme of the UI<br>" +
     "top                            Displays all running scripts and their RAM usage<br>" +
-    'unalias "[alias name]"         Deletes the specified alias<br>';
+    'unalias "[alias name]"         Deletes the specified alias<br>' +
+    'wget [url] [target file]       Retrieves code/text from a web server<br>';
 
 interface IMap<T> {
     [key: string]: T;
@@ -214,5 +215,11 @@ export const HelpTexts: IMap<string> = {
                     "Then it could be removed using:<br><br>" +
                     'unalias "r"<br><br>' +
                     "It is not necessary to differentiate between global and non-global aliases when using 'unalias'",
-
+    wget:           "wget [url] [target file]<br>" +
+                    "Retrieves data from a URL and downloads it to a file on the current server. The data can only " +
+                    "be downloaded to a script (.script, .ns, .js) or a text file (.txt). If the file already exists, " +
+                    "it will be overwritten by this command.<br><br>" +
+                    "Note that it will not be possible to download data from many websites because they do not allow " +
+                    "cross-origin resource sharing (CORS). Example:<br><br>" +
+                    "wget https://raw.githubusercontent.com/danielyxie/bitburner/master/README.md game_readme.txt",
 };

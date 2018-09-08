@@ -494,7 +494,7 @@ let CONSTANTS = {
 
     LatestUpdate:
     "v0.40.3<br>" +
-    ""
+    "* Added a setting in .fconf for enabling line-wrap in the Terminal input<br>"
 
 }
 
