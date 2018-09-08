@@ -44,9 +44,9 @@ var DifficultyToTimeFactor      = 10;  //Action Difficulty divided by this to ge
 var DiffMultExponentialFactor   = 0.28;
 var DiffMultLinearFactor        = 650;
 
-var EffAgiLinearFactor          = 90e3;
-var EffDexLinearFactor          = 90e3;
-var EffAgiExponentialFactor     = 0.031;
+var EffAgiLinearFactor          = 40e3;
+var EffDexLinearFactor          = 40e3;
+var EffAgiExponentialFactor     = 0.032;
 var EffDexExponentialFactor     = 0.03;
 
 var BaseRecruitmentTimeNeeded   = 300; //Base time needed (s) to complete a Recruitment action
@@ -659,7 +659,7 @@ function Bladeburner(params={}) {
 
     this.storedCycles   = 0;
 
-    this.randomEventCounter = getRandomInt(300, 600); //5-10 minutes
+    this.randomEventCounter = getRandomInt(240, 600); //4-10 minutes
 
     //These times are in seconds
     this.actionTimeToComplete   = 0; //0 or -1 is an infinite running action (like training)
@@ -734,7 +734,7 @@ Bladeburner.prototype.create = function() {
              "whatever city you are currently in.",
         baseDifficulty:125,difficultyFac:1.02,rewardFac:1.041,
         rankGain:0.3, hpLoss:0.5,
-        count:getRandomInt(100, 500), countGrowth:getRandomInt(5, 75)/10,
+        count:getRandomInt(25, 500), countGrowth:getRandomInt(5, 75)/10,
         weights:{hack:0,str:0.05,def:0.05,dex:0.35,agi:0.35,cha:0.1, int:0.05},
         decays:{hack:0,str:0.91,def:0.91,dex:0.91,agi:0.91,cha:0.9, int:1},
         isStealth:true
@@ -746,7 +746,7 @@ Bladeburner.prototype.create = function() {
              "current city, and will also increase its chaos level.",
         baseDifficulty:250, difficultyFac:1.04,rewardFac:1.085,
         rankGain:0.9, hpLoss:1,
-        count:getRandomInt(25, 750), countGrowth:getRandomInt(5, 75)/10,
+        count:getRandomInt(5, 500), countGrowth:getRandomInt(5, 75)/10,
         weights:{hack:0,str:0.15,def:0.15,dex:0.25,agi:0.25,cha:0.1, int:0.1},
         decays:{hack:0,str:0.91,def:0.91,dex:0.91,agi:0.91,cha:0.8, int:0.9},
         isKill:true
@@ -758,7 +758,7 @@ Bladeburner.prototype.create = function() {
              "city, and will also increase its chaos level.",
         baseDifficulty:200, difficultyFac:1.03, rewardFac:1.065,
         rankGain:0.6, hpLoss:1,
-        count:getRandomInt(50, 1000), countGrowth:getRandomInt(5,75)/10,
+        count:getRandomInt(5, 500), countGrowth:getRandomInt(5,75)/10,
         weights:{hack:0,str:0.2,def:0.2,dex:0.2,agi:0.2,cha:0.1, int:0.1},
         decays:{hack:0,str:0.91,def:0.91,dex:0.91,agi:0.91,cha:0.8, int:0.9},
         isKill:true
@@ -773,7 +773,7 @@ Bladeburner.prototype.create = function() {
              "You will NOT lose HP from failed Investigation ops.",
         baseDifficulty:400, difficultyFac:1.03,rewardFac:1.07,reqdRank:25,
         rankGain:2.2, rankLoss:0.2,
-        count:getRandomInt(50, 200), countGrowth:getRandomInt(10, 40)/10,
+        count:getRandomInt(1, 250), countGrowth:getRandomInt(10, 40)/10,
         weights:{hack:0.25,str:0.05,def:0.05,dex:0.2,agi:0.1,cha:0.25, int:0.1},
         decays:{hack:0.85,str:0.9,def:0.9,dex:0.9,agi:0.9,cha:0.7, int:0.9},
         isStealth:true
@@ -786,7 +786,7 @@ Bladeburner.prototype.create = function() {
              "data.",
         baseDifficulty:500, difficultyFac:1.04, rewardFac:1.09, reqdRank:100,
         rankGain:4.4, rankLoss:0.4, hpLoss:2,
-        count:getRandomInt(25, 300), countGrowth:getRandomInt(10, 40)/10,
+        count:getRandomInt(1, 250), countGrowth:getRandomInt(10, 40)/10,
         weights:{hack:0.2,str:0.05,def:0.05,dex:0.2,agi:0.2,cha:0.2, int:0.1},
         decays:{hack:0.8,str:0.9,def:0.9,dex:0.9,agi:0.9,cha:0.7, int:0.9},
         isStealth:true
@@ -797,7 +797,7 @@ Bladeburner.prototype.create = function() {
              "notorious Synthoid criminals.",
         baseDifficulty:650, difficultyFac:1.04, rewardFac:1.095, reqdRank:500,
         rankGain:5.5, rankLoss:0.5, hpLoss:2.5,
-        count:getRandomInt(25,400), countGrowth:getRandomInt(3, 40)/10,
+        count:getRandomInt(1, 300), countGrowth:getRandomInt(3, 40)/10,
         weights:{hack:0.25,str:0.05,def:0.05,dex:0.25,agi:0.1,cha:0.2, int:0.1},
         decays:{hack:0.8,str:0.85,def:0.85,dex:0.85,agi:0.85,cha:0.7, int:0.9},
         isStealth:true
@@ -809,7 +809,7 @@ Bladeburner.prototype.create = function() {
              "in order for this Operation to be successful",
         baseDifficulty:800, difficultyFac:1.045, rewardFac:1.1, reqdRank:3000,
         rankGain:55,rankLoss:2.5,hpLoss:50,
-        count:getRandomInt(25, 150), countGrowth:getRandomInt(2, 40)/10,
+        count:getRandomInt(1, 200), countGrowth:getRandomInt(2, 40)/10,
         weights:{hack:0.1,str:0.2,def:0.2,dex:0.2,agi:0.2,cha:0, int:0.1},
         decays:{hack:0.7,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.9},
         isKill:true
@@ -821,7 +821,7 @@ Bladeburner.prototype.create = function() {
              "drawing any attention. Stealth and discretion are key.",
         baseDifficulty:1000, difficultyFac:1.05, rewardFac:1.11, reqdRank:20e3,
         rankGain:22, rankLoss:2, hpLoss:10,
-        count:getRandomInt(25, 250), countGrowth:getRandomInt(1, 20)/10,
+        count:getRandomInt(1, 250), countGrowth:getRandomInt(1, 20)/10,
         weights:{hack:0.1,str:0.1,def:0.1,dex:0.3,agi:0.3,cha:0, int:0.1},
         decays:{hack:0.7,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.9},
         isStealth:true, isKill:true
@@ -833,7 +833,7 @@ Bladeburner.prototype.create = function() {
              "in the Synthoid communities.",
         baseDifficulty:1500, difficultyFac:1.06, rewardFac:1.14, reqdRank:50e3,
         rankGain:44, rankLoss:4, hpLoss:5,
-        count:getRandomInt(25, 200), countGrowth:getRandomInt(1, 20)/10,
+        count:getRandomInt(1, 200), countGrowth:getRandomInt(1, 20)/10,
         weights:{hack:0.1,str:0.1,def:0.1,dex:0.3,agi:0.3,cha:0, int:0.1},
         decays:{hack:0.6,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.8},
         isStealth:true, isKill:true
@@ -900,7 +900,7 @@ Bladeburner.prototype.process = function() {
         this.randomEventCounter -= seconds;
         if (this.randomEventCounter <= 0) {
             this.randomEvent();
-            this.randomEventCounter = getRandomInt(300, 600);
+            this.randomEventCounter = getRandomInt(240, 600);
         }
 
         this.processAction(seconds);
@@ -1833,7 +1833,7 @@ Bladeburner.prototype.createOverviewContent = function() {
         "Bonus time makes the Bladeburner mechanic progress faster, up to 5x the normal speed."
     });
     DomElems.overviewSkillPoints = createElement("p", {display:"block"});
-    
+
 
     DomElems.overviewAugSuccessMult = createElement("p", {display:"block"});
     DomElems.overviewAugMaxStaminaMult = createElement("p", {display:"block"});
@@ -3703,7 +3703,7 @@ function initBladeburner() {
         name:SkillNames.Overclock,
         desc:"Each level of this skill decreases the time it takes " +
              "to attempt a Contract, Operation, and BlackOp by 1% (Max Level: 95)",
-        baseCost:5, costInc:1, maxLvl:95,
+        baseCost:5, costInc:1.1, maxLvl:95,
         actionTime:1
     });
     Skills[SkillNames.EvasiveSystem] = new Skill({

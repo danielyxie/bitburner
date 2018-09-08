@@ -13,6 +13,12 @@ import {Companies, Company, CompanyPosition,
 import {CONSTANTS}                                  from "./Constants";
 import {Programs}                                   from "./CreateProgram";
 import {DarkWebItems}                               from "./DarkWeb";
+import {calculateHackingChance,
+        calculateHackingExpGain,
+        calculatePercentMoneyHacked,
+        calculateHackingTime,
+        calculateGrowTime,
+        calculateWeakenTime}                        from "./Hacking";
 import {AllGangs}                                   from "./Gang";
 import {Factions, Faction, joinFaction,
         factionExists, purchaseAugmentation}        from "./Faction";
@@ -28,11 +34,12 @@ import {Server, getServer, AddToAllServers,
         GetServerByHostname}                        from "./Server";
 import {Settings}                                   from "./Settings";
 import {SpecialServerIps}                           from "./SpecialServerIps";
+import {Stock}                                      from "./Stock";
 import {StockMarket, StockSymbols, SymbolToStockMap, initStockSymbols,
         initStockMarket, initSymbolToStockMap, stockMarketCycle, buyStock,
         sellStock, updateStockPrices, displayStockMarketContent,
         updateStockTicker, updateStockPlayerPosition,
-        Stock, shortStock, sellShort, OrderTypes,
+        shortStock, sellShort, OrderTypes,
         PositionTypes, placeOrder, cancelOrder}     from "./StockMarket";
 import {post}                                       from "./ui/postToTerminal";
 import {TextFile, getTextFile, createTextFile}      from "./TextFile";
@@ -42,10 +49,8 @@ import {unknownBladeburnerActionErrorMessage,
         checkBladeburnerAccess}                     from "./NetscriptBladeburner.js";
 import {WorkerScript, workerScripts,
         killWorkerScript, NetscriptPorts}           from "./NetscriptWorker";
-import {makeRuntimeRejectMsg, netscriptDelay, runScriptFromScript,
-        scriptCalculateHackingChance, scriptCalculateHackingTime,
-        scriptCalculateExpGain, scriptCalculatePercentMoneyHacked,
-        scriptCalculateGrowTime, scriptCalculateWeakenTime} from "./NetscriptEvaluator";
+import {makeRuntimeRejectMsg, netscriptDelay,
+        runScriptFromScript}                        from "./NetscriptEvaluator";
 import {NetscriptPort}                              from "./NetscriptPort";
 
 import Decimal                                      from "decimal.js";
@@ -292,7 +297,7 @@ function NetscriptFunctions(workerScript) {
             }
 
             //Calculate the hacking time
-            var hackingTime = scriptCalculateHackingTime(server); //This is in seconds
+            var hackingTime = calculateHackingTime(server); //This is in seconds
 
             //No root access or skill level too low
             if (server.hasAdminRights == false) {
@@ -308,14 +313,14 @@ function NetscriptFunctions(workerScript) {
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.hack == null) {
                 workerScript.scriptRef.log("Attempting to hack " + ip + " in " + hackingTime.toFixed(3) + " seconds (t=" + threads + ")");
             }
-            return netscriptDelay(hackingTime* 1000, workerScript).then(function() {
+            return netscriptDelay(hackingTime * 1000, workerScript).then(function() {
                 if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
-                var hackChance = scriptCalculateHackingChance(server);
+                var hackChance = calculateHackingChance(server);
                 var rand = Math.random();
-                var expGainedOnSuccess = scriptCalculateExpGain(server) * threads;
+                var expGainedOnSuccess = calculateHackingExpGain(server) * threads;
                 var expGainedOnFailure = (expGainedOnSuccess / 4);
                 if (rand < hackChance) { //Success!
-                    const percentHacked = scriptCalculatePercentMoneyHacked(server);
+                    const percentHacked = calculatePercentMoneyHacked(server);
                     let maxThreadNeeded = Math.ceil(1/percentHacked*(server.moneyAvailable/server.moneyMax));
                     if (isNaN(maxThreadNeeded)) {
                         //Server has a 'max money' of 0 (probably).
@@ -390,18 +395,18 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "Cannot grow this server (" + server.hostname + ") because user does not have root access");
             }
 
-            var growTime = scriptCalculateGrowTime(server);
+            var growTime = calculateGrowTime(server);
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.grow == null) {
-                workerScript.scriptRef.log("Executing grow() on server " + server.hostname + " in " + formatNumber(growTime/1000, 3) + " seconds (t=" + threads + ")");
+                workerScript.scriptRef.log("Executing grow() on server " + server.hostname + " in " + formatNumber(growTime, 3) + " seconds (t=" + threads + ")");
             }
-            return netscriptDelay(growTime, workerScript).then(function() {
+            return netscriptDelay(growTime * 1000, workerScript).then(function() {
                 if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
                 const moneyBefore = server.moneyAvailable;
                 server.moneyAvailable += (1 * threads); //It can be grown even if it has no money
                 var growthPercentage = processSingleServerGrowth(server, 450 * threads);
                 const moneyAfter = server.moneyAvailable;
                 workerScript.scriptRef.recordGrow(server.ip, threads);
-                var expGain = scriptCalculateExpGain(server) * threads;
+                var expGain = calculateHackingExpGain(server) * threads;
                 if (growthPercentage == 1) {
                     expGain = 0;
                 }
@@ -437,16 +442,16 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "Cannot weaken this server (" + server.hostname + ") because user does not have root access");
             }
 
-            var weakenTime = scriptCalculateWeakenTime(server);
+            var weakenTime = calculateWeakenTime(server);
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.weaken == null) {
                 workerScript.scriptRef.log("Executing weaken() on server " + server.hostname + " in " +
-                                           formatNumber(weakenTime/1000, 3) + " seconds (t=" + threads + ")");
+                                           formatNumber(weakenTime, 3) + " seconds (t=" + threads + ")");
             }
-            return netscriptDelay(weakenTime, workerScript).then(function() {
+            return netscriptDelay(weakenTime * 1000, workerScript).then(function() {
                 if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
                 server.weaken(CONSTANTS.ServerWeakenAmount * threads);
                 workerScript.scriptRef.recordWeaken(server.ip, threads);
-                var expGain = scriptCalculateExpGain(server) * threads;
+                var expGain = calculateHackingExpGain(server) * threads;
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.weaken == null) {
                     workerScript.scriptRef.log("Server security level on " + server.hostname + " weakened to " + server.hackDifficulty +
                                                ". Gained " + formatNumber(expGain, 4) + " hacking exp (t=" + threads + ")");
@@ -1843,6 +1848,25 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "Invalid argument passed in for write: " + port);
             }
         },
+        tryWrite : function(port, data="") {
+            if (workerScript.checkingRam) {
+                return updateStaticRam("tryWrite", CONSTANTS.ScriptReadWriteRamCost);
+            }
+            updateDynamicRam("tryWrite", CONSTANTS.ScriptReadWriteRamCost);
+            if (!isNaN(port)) {
+                port = Math.round(port);
+                if (port < 1 || port > CONSTANTS.NumNetscriptPorts) {
+                    throw makeRuntimeRejectMsg(workerScript, "ERROR: tryWrite() called on invalid port: " + port + ". Only ports 1-" + CONSTANTS.NumNetscriptPorts + " are valid.");
+                }
+                var port = NetscriptPorts[port-1];
+                if (port == null || !(port instanceof NetscriptPort)) {
+                    throw makeRuntimeRejectMsg(workerScript, "Could not find port: " + port + ". This is a bug contact the game developer");
+                }
+                return port.tryWrite(data);
+            } else {
+                throw makeRuntimeRejectMsg(workerScript, "Invalid argument passed in for tryWrite: " + port);
+            }
+        },
         read : function(port) {
             if (workerScript.checkingRam) {
                 return updateStaticRam("read", CONSTANTS.ScriptReadWriteRamCost);
@@ -2057,7 +2081,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("getHackTime() failed. Invalid IP or hostname passed in: " + ip);
                 throw makeRuntimeRejectMsg(workerScript, "getHackTime() failed. Invalid IP or hostname passed in: " + ip);
             }
-            return scriptCalculateHackingTime(server); //Returns seconds
+            return calculateHackingTime(server); //Returns seconds
         },
         getGrowTime : function(ip) {
             if (workerScript.checkingRam) {
@@ -2069,7 +2093,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("getGrowTime() failed. Invalid IP or hostname passed in: " + ip);
                 throw makeRuntimeRejectMsg(workerScript, "getGrowTime() failed. Invalid IP or hostname passed in: " + ip);
             }
-            return scriptCalculateGrowTime(server) / 1000; //Returns seconds
+            return calculateGrowTime(server); //Returns seconds
         },
         getWeakenTime : function(ip) {
             if (workerScript.checkingRam) {
@@ -2081,7 +2105,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("getWeakenTime() failed. Invalid IP or hostname passed in: " + ip);
                 throw makeRuntimeRejectMsg(workerScript, "getWeakenTime() failed. Invalid IP or hostname passed in: " + ip);
             }
-            return scriptCalculateWeakenTime(server) / 1000; //Returns seconds
+            return calculateWeakenTime(server); //Returns seconds
         },
         getScriptIncome : function(scriptname, ip) {
             if (workerScript.checkingRam) {

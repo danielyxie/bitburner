@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Bitburner - development</title>
+    <title><%= htmlWebpackPlugin.options.title %></title>
     <link rel="apple-touch-icon" sizes="180x180" href="dist/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="dist/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="dist/favicon-16x16.png">
@@ -20,12 +20,14 @@
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-    </script>
+    </script><%
+if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
     <script>
-      ga('create', 'UA-100157497-1', 'auto');
+      ga('create', '<%= htmlWebpackPlugin.options.googleAnalytics.trackingId %>', 'auto');
       ga('send', 'pageview');
-    </script>
-<link rel="shortcut icon" href="favicon.ico"><link href="dist/engine.css" rel="stylesheet"></head>
+    </script><%
+} %>
+</head>
 <body>
     <div id="entire-game-container" style="visibility:hidden;">
     <div id="mainmenu-container">
@@ -1018,5 +1020,5 @@
         <div class="loaderspinner"></div>
         <div class="loaderlabel">Loading Bitburner...</div>
     </div>
-<script type="text/javascript" src="dist/vendor.bundle.js"></script><script type="text/javascript" src="dist/engine.bundle.js"></script></body>
+</body>
 </html>

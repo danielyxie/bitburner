@@ -17,29 +17,29 @@ heard:
    scripting perhaps there is something that is conflicting with the
    browser's Javascript interaction. So please do not be afraid to open a
    [new issue](https://github.com/danielyxie/bitburner/issues/new).
-   
-## Reporting Bugs
-The recommended method for reporting a bug is by opening a 
-[Github Issue](https://github.com/danielyxie/bitburner/issues). 
 
-Before submitting a bug report, please check to make sure the bug has not 
-already been reported as an [Issue](https://github.com/danielyxie/bitburner/issues). 
+## Reporting Bugs
+The recommended method for reporting a bug is by opening a
+[Github Issue](https://github.com/danielyxie/bitburner/issues).
+
+Before submitting a bug report, please check to make sure the bug has not
+already been reported as an [Issue](https://github.com/danielyxie/bitburner/issues).
 
 #### How to Submit a Good Bug Report
 
   * **Use a clear and descriptive title** for the issue
   * **State your browser, your browser's version, and your computer's OS**
-  * **Provide instructions on how to reproduce the bug** in as much detail 
+  * **Provide instructions on how to reproduce the bug** in as much detail
     as possible. If you cannot reliably reproduce the bug, then just try
     your best to explain what was happening when the bug occurred
   * **Provide any scripts** that triggered the bug if the issue is Netscript-related
-  * **Open your browser's Dev Console and report any error-related output** 
-    that may be printed there. The Dev Console can be opened on most modern 
+  * **Open your browser's Dev Console and report any error-related output**
+    that may be printed there. The Dev Console can be opened on most modern
     browsers by pressing F12
 
 ## As a Developer
-Anyone is welcome to contribute to Bitburner code. However, please read 
-the [license](https://github.com/danielyxie/bitburner/blob/dev/license.txt) 
+Anyone is welcome to contribute to Bitburner code. However, please read
+the [license](https://github.com/danielyxie/bitburner/blob/dev/license.txt)
 and the [readme](https://github.com/danielyxie/bitburner/blob/dev/README.md)
 before doing so.
 
@@ -48,22 +48,22 @@ To contribute to Bitburner code, you will need to have
 called `npm` is installed as well.
 
 #### What are you Allowed to Contribute?
-Not all code contributions will be accepted. The safest way to ensure 
-that you don't waste time working on something that gets rejected is to 
-run your idea(s)/plan(s) past [danielyxie](https://github.com/danielyxie) first. 
+Not all code contributions will be accepted. The safest way to ensure
+that you don't waste time working on something that gets rejected is to
+run your idea(s)/plan(s) past [danielyxie](https://github.com/danielyxie) first.
 You can contact him through:
 
   * Github
   * Discord
   * [Reddit](https://www.reddit.com/user/chapt3r/)
 
-Otherwise, here are some general guidelines for determining what types of changes 
-are okay to contribute:
+Otherwise, here are some general guidelines for determining what types of
+changes are okay to contribute:
 
 ##### Contributions that Will Most Likely Be Accepted
 * Bug Fixes
 * Quality-of-Life Changes
-  * Adding a new, commonly-requested Netscript function 
+  * Adding a new, commonly-requested Netscript function
   * Fixing or improving UI elements
   * Adding game settings/options
   * Adding a new Terminal command
@@ -73,8 +73,8 @@ are okay to contribute:
 * Changes that directly affect the game's balance
 * New gameplay mechanics
 
-#### Submitting a Pull Request 
-When submitting a pull request with your code contributions, please abide by 
+#### Submitting a Pull Request
+When submitting a pull request with your code contributions, please abide by
 the following rules:
 
  - Work in a branch forked from `dev` to isolate the new code
@@ -86,14 +86,18 @@ the following rules:
    _danielyxie/bitburner_ and the base is _dev_.
  - If your changes affect the game's UI, attach some screenshots or GIFs showing
    the changes to the UI
- - If your changes affect Netscript, provide some 
-   scripts that can be used to test the Netscript changes. 
- - Do not check in any bundled files (`dist\*.bundle.js`). These will be
-   updated as part of official releases.
+ - If your changes affect Netscript, provide some
+   scripts that can be used to test the Netscript changes.
+ - Ensure you have run `npm run lint` to make sure your changes conform to the
+   rules enforced across the code base. The command will fail if any of the
+   linters find a violation.
+ - Do not check in any bundled files (`dist\*.bundle.js`) or the `index.html`
+   in the root of the repository. These will be updated as part of official
+   releases.
 
 ## As a Documentor
-To contribute to BitBurner documentation, you will need to have Python
-installed, along with [Sphinx](http://www.sphinx-doc.org).
+To contribute to and view your changes to the BitBurner documentation, you will
+need to have Python installed, along with [Sphinx](http://www.sphinx-doc.org).
 
 Before submitting your code for a pull request, please try to follow these
 rules:
@@ -103,3 +107,5 @@ rules:
  - Rebase your branch if necessary
  - When submitting the pull request, make sure that the base fork is
    _danielyxie/bitburner_ and the base is _dev_.
+ - Do not check in any generated files under `doc\`. The documentation is built
+   automatically by ReadTheDocs.

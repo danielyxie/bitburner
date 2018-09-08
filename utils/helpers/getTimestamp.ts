@@ -1,3 +1,6 @@
+/**
+ * Returns a MM/DD HH:MM timestamp for the current time
+ */
 export function getTimestamp() {
         const d: Date = new Date();
         // A negative slice value takes from the end of the string rather than the beginning.

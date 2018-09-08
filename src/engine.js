@@ -150,7 +150,7 @@ $(document).keydown(function(e) {
     }
 });
 
-let Engine = {
+const Engine = {
     version: "",
     Debug: true,
     overview: new CharacterOverview(),
@@ -570,7 +570,7 @@ let Engine = {
 
         var intText = "";
         if (Player.intelligence > 0) {
-            intText = 'Intelligence:  ' + (Player.intelligence).toLocaleString() + "<br><br><br>";
+            intText = 'Intelligence:  ' + (Player.intelligence).toLocaleString() + '<br>';
         }
 
         let bitNodeTimeText = "";
@@ -584,21 +584,21 @@ let Engine = {
             'Current City: ' + Player.city + '<br><br>' +
             'Employer: ' + Player.companyName + '<br>' +
             'Job Title: ' + companyPosition + '<br><br>' +
-            'Money: $' + formatNumber(Player.money.toNumber(), 2)+ '<br><br><br>' +
+            'Money: $' + formatNumber(Player.money.toNumber(), 2) + '<br><br><br>' +
             '<b>Stats</b><br><br>' +
             'Hacking Level: ' + (Player.hacking_skill).toLocaleString() +
-                            " (" + numeral(Player.hacking_exp).format('(0.000a)') + ' experience)<br>' +
+                            ' (' + numeral(Player.hacking_exp).format('(0.000a)') + ' experience)<br>' +
             'Strength:      ' + (Player.strength).toLocaleString() +
-                       " (" + numeral(Player.strength_exp).format('(0.000a)') + ' experience)<br>' +
+                       ' (' + numeral(Player.strength_exp).format('(0.000a)') + ' experience)<br>' +
             'Defense:       ' + (Player.defense).toLocaleString() +
-                      " (" + numeral(Player.defense_exp).format('(0.000a)')+ ' experience)<br>' +
+                      ' (' + numeral(Player.defense_exp).format('(0.000a)')+ ' experience)<br>' +
             'Dexterity:     ' + (Player.dexterity).toLocaleString() +
-                       " (" + numeral(Player.dexterity_exp).format('(0.000a)') + ' experience)<br>' +
+                       ' (' + numeral(Player.dexterity_exp).format('(0.000a)') + ' experience)<br>' +
             'Agility:       ' + (Player.agility).toLocaleString() +
-                      " (" + numeral(Player.agility_exp).format('(0.000a)') + ' experience)<br>' +
+                      ' (' + numeral(Player.agility_exp).format('(0.000a)') + ' experience)<br>' +
             'Charisma:      ' + (Player.charisma).toLocaleString() +
-                       " (" + numeral(Player.charisma_exp).format('(0.000a)') + ' experience)<br>' +
-            intText +
+                       ' (' + numeral(Player.charisma_exp).format('(0.000a)') + ' experience)<br>' +
+            intText + '<br><br>' +
             '<b>Multipliers</b><br><br>' +
             'Hacking Chance multiplier: ' + formatNumber(Player.hacking_chance_mult * 100, 2) + '%<br>' +
             'Hacking Speed multiplier:  ' + formatNumber(Player.hacking_speed_mult * 100, 2) + '%<br>' +
@@ -923,14 +923,14 @@ let Engine = {
         Player.playtimeSinceLastBitnode += time;
 
         //Start Manual hack
-        if (Player.startAction == true) {
-            Engine._totalActionTime = Player.actionTime;
-            Engine._actionTimeLeft = Player.actionTime;
+        if (Terminal.actionStarted === true) {
+            Engine._totalActionTime = Terminal.actionTime;
+            Engine._actionTimeLeft = Terminal.actionTime;
             Engine._actionInProgress = true;
             Engine._actionProgressBarCount = 1;
             Engine._actionProgressStr = "[                                                  ]";
             Engine._actionTimeStr = "Time left: ";
-            Player.startAction = false;
+            Terminal.actionStarted = false;
         }
 
         //Working
@@ -1324,9 +1324,9 @@ let Engine = {
             Player.lastUpdate = Engine._lastUpdate;
             Engine.start();                 //Run main game loop and Scripts loop
             removeLoadingScreen();
-            dialogBoxCreate("While you were offline, your scripts generated $" +
-                            formatNumber(offlineProductionFromScripts, 2) + " and your Hacknet Nodes generated $" +
-                            formatNumber(offlineProductionFromHacknetNodes, 2));
+            dialogBoxCreate("While you were offline, your scripts generated <span class='money-gold'>$" +
+                            formatNumber(offlineProductionFromScripts, 2) + "</span> and your Hacknet Nodes generated <span class='money-gold'>$" +
+                            formatNumber(offlineProductionFromHacknetNodes, 2) + "</span>");
             //Close main menu accordions for loaded game
             var visibleMenuTabs = [terminal, createScript, activeScripts, stats,
                                    hacknetnodes, city, tutorial, options, dev];

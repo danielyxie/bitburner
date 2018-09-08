@@ -11,11 +11,11 @@
     position: absolute; /* Stay in place */
     right: 0;
     top: 0;
-    height: 400px; /* Full height */
+    height: 450px;
     padding: 10px;
     border: 5px solid #fff;
-    width: 20%;
-    overflow: auto; /* Enable scroll if needed */
+    width: 23%;
+    overflow: hidden;
     background-color: #444; /* Fallback color */
     color: #fff;
 
@@ -29,6 +29,9 @@
     margin: 4px;
     color: #fff;
     background-color: #444;
+    font-size: $defaultFontSize * 0.875;
+    max-height: 350px;
+    overflow-y: auto;
 }
 
 #interactive-tutorial-exit,
@@ -38,7 +41,7 @@
     @include boxShadow(1px 1px 3px #000);
 
     color: #aaa;
-    font-size: $defaultFontSize * 1.25;
+    font-size: $defaultFontSize * 1.125;
     font-weight: bold;
     background-color: #000;
 
@@ -50,6 +53,7 @@
     }
 }
 
+/*
 #interactive-tutorial-exit {
     float: left;
 }
@@ -57,6 +61,16 @@
 #interactive-tutorial-back {
     margin-right: 20%;
     float: right;
+}
+*/
+#interactive-tutorial-exit {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+#interactive-tutorial-back {
+    float: left;
 }
 
 #interactive-tutorial-next {
