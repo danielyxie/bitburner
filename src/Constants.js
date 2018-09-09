@@ -511,6 +511,8 @@ let CONSTANTS = {
      * Updated documentation to reflect the fact that Netscript port handles (getPortHandle()) only works in NetscriptJS (2.0), NOT Netscript 1.0<br>
      * Added tryWrite() Netscript function<br>
      * When working (for a company/faction), experience is gained immediately/continuously rather than all at once when the work is finished<br>
+     * Added a setting in .fconf for enabling line-wrap in the Terminal input<br>
+     * Added 'wget' Terminal command<br>
      * Improved the introductory tutorial`
 }
 

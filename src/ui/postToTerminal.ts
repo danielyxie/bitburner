@@ -1,4 +1,4 @@
-import { getElementById } from "../../utils/uiHelpers/getElementById";
+import { getElementById }   from "../../utils/uiHelpers/getElementById";
 
 /**
  * Adds some output to the terminal.

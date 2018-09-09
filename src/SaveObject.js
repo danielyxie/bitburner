@@ -451,7 +451,7 @@ function loadImportedGame(saveObj, saveString) {
 
     var popupId = "import-game-restart-game-notice";
     var txt = createElement("p", {
-        innerText:"Imported game! I would suggest saving the game and then reloading the page " +
+        innerText:"Imported game! You need to SAVE the game and then RELOAD the page " +
                  "to make sure everything runs smoothly"
     });
     var gotitBtn = createElement("a", {
