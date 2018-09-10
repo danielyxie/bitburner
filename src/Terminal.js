@@ -1400,6 +1400,7 @@ let Terminal = {
                     post("Incorrect usage of scan-analyze command. usage: scan-analyze [depth]");
                 }
                 break;
+            /* eslint-disable no-case-declarations */
 			case "scp":
 				if (commandArray.length != 2) {
                     post("Incorrect usage of scp command. Usage: scp [file] [destination hostname/ip]");
@@ -1493,6 +1494,7 @@ let Terminal = {
                 }
                 post(`${scriptname} copied over to ${destServer.hostname}`);
                 break;
+            /* eslint-enable no-case-declarations */
             case "sudov":
                 if (commandArray.length != 1) {
                     post("Incorrect number of arguments. Usage: sudov"); return;
@@ -1616,6 +1618,7 @@ let Terminal = {
                     }
                 }
                 break;
+            /* eslint-disable no-case-declarations */
             case "wget":
                 if (commandArray.length !== 2) {
                     return post("Incorrect usage of wget command. Usage: wget [url] [target file]");
@@ -1648,6 +1651,7 @@ let Terminal = {
                     return post("wget failed: " + JSON.stringify(e));
                 })
                 break;
+            /* eslint-enable no-case-declarations */
 			default:
 				post("Command not found");
 		}
