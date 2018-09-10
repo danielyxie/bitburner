@@ -1019,6 +1019,15 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
     <div id="loader" class="loaderoverlay">
         <div class="loaderspinner"></div>
         <div class="loaderlabel">Loading Bitburner...</div>
+        <div id="killAllMessageWrapper" class="killAllMessage killAllMessageWrapperHidden">
+            <script>setTimeout(function(){
+                var w = document.getElementById('killAllMessageWrapper');
+                if (w == null) {return;}
+                w.classList.remove("killAllMessageWrapperHidden");
+                w.classList.add("killAllMessageWrapperShow");
+            }, 2000);</script>
+            <p>If the game fails to load, consider <a href="?noScripts">killing all scripts</a></p>
+        </div>
     </div>
 </body>
 </html>
