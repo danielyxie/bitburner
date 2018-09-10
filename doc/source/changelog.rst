@@ -17,9 +17,9 @@ v0.40.2 - 8/27/2018
     * There are now, on average, more Synthoid communities in a city
     * If automation is enabled (the feature in Bladeburner console), then switching to another action such as working for a company will now disable the automation
 * Stock Market Changes:
-    *Added a watchlist filter feature to the UI that allows you to specify which stocks to show
-    *Added the Four Sigma (4S) Market Data feed, which provides volatility and price forecast information about stocks
-    *Added the 4S Market Data TIX API, which lets you access the aforementioned data through Netscript
+    * Added a watchlist filter feature to the UI that allows you to specify which stocks to show
+    * Added the Four Sigma (4S) Market Data feed, which provides volatility and price forecast information about stocks
+    * Added the 4S Market Data TIX API, which lets you access the aforementioned data through Netscript
 * There is now a setting for enabling/disabling the popup that appears when you are hospitalized
 * Bug Fix: Stock market should now be correctly initialized in BitNode-8 (by Kline-)
 * Bug Fix: bladeburner.getCurrentAction() should now properly an 'Idle' object rather than null (by Kline-)

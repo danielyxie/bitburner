@@ -412,3 +412,18 @@ Then it could be removed using::
     $ unalias "r"
 
 It is not necessary to differentiate between global and non-global aliases when using 'unalias'
+
+wget
+^^^^
+
+    $ wget [url] [target file]
+
+Retrieves data from a url and downloads it to a file on the current server.
+The data can only be downloaded to a script (.script, .ns, .js) or a text file
+(.txt). If the target file already exists, it will be overwritten by this command.
+
+Note that will not be possible to download data from many websites because they
+do not allow cross-origin origin sharing (CORS). This includes websites such
+as gist and pastebin. One notable site it will work on is rawgithub. Example::
+
+    $ wget https://raw.githubusercontent.com/danielyxie/bitburner/master/README.md game_readme.txt
