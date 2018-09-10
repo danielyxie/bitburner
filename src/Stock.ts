@@ -1,5 +1,8 @@
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
 
+/**
+ * Represents the valuation of a company in the World Stock Exchange.
+ */
 export class Stock {
     /**
      * Initializes a Stock from a JSON save state
@@ -9,39 +12,9 @@ export class Stock {
     }
 
     /**
-     * The stock's ticker symbol
+     * Bear or bull (more likely to go up or down, based on otlkMag)
      */
-    readonly symbol: string;
-
-    /**
-     * Name of the company that the stock is for
-     */
-    readonly name: string;
-
-    /**
-     * Stock's share price
-     */
-    price: number;
-
-    /**
-     * Number of shares the player owns in the LONG position
-     */
-    playerShares: number;
-
-    /**
-     * Average price of stocks that the player owns in the LONG position
-     */
-    playerAvgPx: number;
-
-    /**
-     * Number of shares the player owns in the SHORT position
-     */
-    playerShortShares: number;
-
-    /**
-     * Average price of stocks that the player owns in the SHORT position
-     */
-    playerAvgShortPx: number;
+    b: boolean;
 
     /**
      * Maximum volatility
@@ -49,9 +22,9 @@ export class Stock {
     readonly mv: number;
 
     /**
-     * Bear or bull (more likely to go up or down, based on otlkMag)
+     * Name of the company that the stock is for
      */
-    b: boolean;
+    readonly name: string;
 
     /**
      * Outlook magnitude. Represents the stock's forecast and likelihood
@@ -60,15 +33,45 @@ export class Stock {
     otlkMag: number;
 
     /**
+     * Average price of stocks that the player owns in the LONG position
+     */
+    playerAvgPx: number;
+
+    /**
+     * Average price of stocks that the player owns in the SHORT position
+     */
+    playerAvgShortPx: number;
+
+    /**
+     * Number of shares the player owns in the LONG position
+     */
+    playerShares: number;
+
+    /**
+     * Number of shares the player owns in the SHORT position
+     */
+    playerShortShares: number;
+
+    /**
      * The HTML element that displays the stock's info in the UI
      */
     posTxtEl: HTMLElement | null;
 
-    constructor(name: string="",
-                symbol: string="",
-                mv: number=1,
-                b: boolean=true,
-                otlkMag: number=0,
+    /**
+     * Stock's share price
+     */
+    price: number;
+
+    /**
+     * The stock's ticker symbol
+     */
+    readonly symbol: string;
+
+    constructor(name: string = "",
+                symbol: string = "",
+                mv: number = 1,
+                b: boolean = true,
+                otlkMag: number = 0,
                 initPrice: number = 10e3) {
         this.name               = name;
         this.symbol             = symbol;

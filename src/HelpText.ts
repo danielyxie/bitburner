@@ -33,7 +33,7 @@ export const TerminalHelpText: string =
     "theme [preset] | bg txt hlgt   Change the color scheme of the UI<br>" +
     "top                            Displays all running scripts and their RAM usage<br>" +
     'unalias "[alias name]"         Deletes the specified alias<br>' +
-    'wget [url] [target file]       Retrieves code/text from a web server<br>';
+    "wget [url] [target file]       Retrieves code/text from a web server<br>";
 
 interface IMap<T> {
     [key: string]: T;
