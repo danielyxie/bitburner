@@ -468,6 +468,8 @@ function updateInfiltrationLevelText(inst) {
     }
 
     var expMultiplier = 2 * inst.clearanceLevel / inst.maxClearanceLevel;
+    // TODO: fix this to not rely on <pre> and whitespace for formatting...
+    /* eslint-disable no-irregular-whitespace */
     document.getElementById("infiltration-level-text").innerHTML =
         "Facility name:    " + inst.companyName + "<br>" +
         "Clearance Level:  " + inst.clearanceLevel + "<br>" +
@@ -481,6 +483,7 @@ function updateInfiltrationLevelText(inst) {
         "Dex exp gained:   " + formatNumber(inst.dexExpGained * expMultiplier, 3) + "<br>" +
         "Agi exp gained:   " + formatNumber(inst.agiExpGained * expMultiplier, 3) + "<br>" +
         "Cha exp gained:   " + formatNumber(inst.chaExpGained * expMultiplier, 3);
+    /* eslint-enable no-irregular-whitespace */
 }
 
 function updateInfiltrationButtons(inst, scenario) {
