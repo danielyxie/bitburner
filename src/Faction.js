@@ -319,7 +319,7 @@ function displayFactionContent(factionName) {
             if (isNaN(amt)) {
                 donateRepGain.innerText = "Invalid donate amount entered!";
             } else {
-                var repGain = amt / 1e6 * Player.faction_rep_mult;
+                var repGain = amt / CONSTANTS.DonateMoneyToRepDivisor * Player.faction_rep_mult;
                 donateRepGain.innerText = "This donation will result in " +
                                           formatNumber(repGain, 3) + " reputation gain";
             }
@@ -335,7 +335,7 @@ function displayFactionContent(factionName) {
                 dialogBoxCreate("You cannot afford to donate this much money!");
             } else {
                 Player.loseMoney(amt);
-                var repGain = amt / 1e6 * Player.faction_rep_mult;
+                var repGain = amt / CONSTANTS.DonateMoneyToRepDivisor * Player.faction_rep_mult;
                 faction.playerReputation += repGain;
                 dialogBoxCreate("You just donated " + numeral(amt).format("$0.000a") + " to " +
                                 faction.name + " to gain " + formatNumber(repGain, 3) + " reputation");

@@ -121,6 +121,7 @@ var possibleLogs = {
     applyToCompany: true,
     joinFaction: true,
     workForFaction: true,
+    donateToFaction: true,
     createProgram: true,
     commitCrime: true,
     shortStock: true,
@@ -506,6 +507,17 @@ function NetscriptFunctions(workerScript) {
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.enableLog == null) {
                 workerScript.scriptRef.log("Enabled logging for " + fn);
             }
+        },
+        isLogEnabled : function(fn) {
+            if (workerScript.checkingRam) {return 0;}
+            if (possibleLogs[fn] === undefined) {
+                throw makeRuntimeRejectMsg(workerScript, "Invalid argument to isLogEnabled: " + fn);
+            }
+            return workerScript.disableLogs[fn] ? false : true;
+        },
+        getScriptLogs : function() {
+            if (workerScript.checkingRam) {return 0;}
+            return workerScript.scriptRef.logs.slice();
         },
         nuke : function(ip){
             if (workerScript.checkingRam) {
@@ -2071,7 +2083,7 @@ function NetscriptFunctions(workerScript) {
             }
             return 0;
         },
-        getHackTime : function(ip) {
+        getHackTime : function(ip, hack, int) {
             if (workerScript.checkingRam) {
                 return updateStaticRam("getHackTime", CONSTANTS.ScriptGetHackTimeRamCost);
             }
@@ -2081,9 +2093,9 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("getHackTime() failed. Invalid IP or hostname passed in: " + ip);
                 throw makeRuntimeRejectMsg(workerScript, "getHackTime() failed. Invalid IP or hostname passed in: " + ip);
             }
-            return calculateHackingTime(server); //Returns seconds
+            return calculateHackingTime(server, hack, int); //Returns seconds
         },
-        getGrowTime : function(ip) {
+        getGrowTime : function(ip, hack, int) {
             if (workerScript.checkingRam) {
                 return updateStaticRam("getGrowTime", CONSTANTS.ScriptGetHackTimeRamCost);
             }
@@ -2093,9 +2105,9 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("getGrowTime() failed. Invalid IP or hostname passed in: " + ip);
                 throw makeRuntimeRejectMsg(workerScript, "getGrowTime() failed. Invalid IP or hostname passed in: " + ip);
             }
-            return calculateGrowTime(server); //Returns seconds
+            return calculateGrowTime(server, hack, int); //Returns seconds
         },
-        getWeakenTime : function(ip) {
+        getWeakenTime : function(ip, hack, int) {
             if (workerScript.checkingRam) {
                 return updateStaticRam("getWeakenTime", CONSTANTS.ScriptGetHackTimeRamCost);
             }
@@ -2105,7 +2117,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("getWeakenTime() failed. Invalid IP or hostname passed in: " + ip);
                 throw makeRuntimeRejectMsg(workerScript, "getWeakenTime() failed. Invalid IP or hostname passed in: " + ip);
             }
-            return calculateWeakenTime(server); //Returns seconds
+            return calculateWeakenTime(server, hack, int); //Returns seconds
         },
         getScriptIncome : function(scriptname, ip) {
             if (workerScript.checkingRam) {
@@ -3056,7 +3068,7 @@ function NetscriptFunctions(workerScript) {
 
             return Factions[name].favor;
         },
-        getFactionFavorGain: function(name){
+        getFactionFavorGain: function(name) {
             var ramCost = CONSTANTS.ScriptSingularityFn2RamCost;
             if (Player.bitNodeN !== 4) {ramCost *= 8;}
             if (workerScript.checkingRam) {
@@ -3076,6 +3088,45 @@ function NetscriptFunctions(workerScript) {
             }
 
             return Factions[name].getFavorGain()[0];
+        },
+        donateToFaction : function(name, amt) {
+            var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
+            if (Player.bitNodeN !== 4) {ramCost *= 8;}
+            if (workerScript.checkingRam) {
+                return updateStaticRam("donateToFaction", ramCost);
+            }
+            updateDynamicRam("donateToFaction", ramCost);
+            if (Player.bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 3)) {
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run donateToFaction(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
+                    return;
+                }
+            }
+
+            if (!factionExists(name)) {
+                workerScript.log(`ERROR: Faction specified in donateToFaction() does not exist: ${name}`);
+                return false;
+            }
+            if (typeof amt !== 'number' || amt <= 0) {
+                workerScript.log(`ERROR: Invalid donation amount specified in donateToFaction(): ${amt}. Must be numeric and positive`);
+                return false;
+            }
+            if (Player.money.lt(amt)) {
+                workerScript.log(`ERROR: You do not have enough money to donate $${amt} to ${name}`);
+                return false;
+            }
+            var repNeededToDonate = Math.round(CONSTANTS.BaseFavorToDonate * BitNodeMultipliers.RepToDonateToFaction);
+            if (Factions[name].favor < repNeededToDonate) {
+                workerScript.log(`ERROR: You do not have enough favor to donate to this faction. Have ${Factions[name].favor}, need ${repNeededToDonate}`);
+                return false;
+            }
+            var repGain = amt / CONSTANTS.DonateMoneyToRepDivisor * Player.faction_rep_mult;
+            Factions[name].playerReputation += repGain;
+            Player.loseMoney(amt);
+            if (workerScript.shouldLog("donateToFaction")) {
+                workerScript.log(`$${amt} donated to ${name} for ${repGain} reputation`);
+            }
+            return true;
         },
         createProgram : function(name) {
             var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;

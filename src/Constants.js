@@ -35,6 +35,7 @@ let CONSTANTS = {
 
     /* Faction and Company favor */
     BaseFavorToDonate:            150,
+    DonateMoneyToRepDivisor:      1e6,
     FactionReputationToFavorBase: 500,
     FactionReputationToFavorMult: 1.02,
     CompanyReputationToFavorBase: 500,
@@ -508,6 +509,10 @@ let CONSTANTS = {
      * Increased the range of possible values for initial stock prices<br>
      * b1t_flum3.exe program can now be created immediately at Hacking level 1 (rather than hacking level 5)<br>
      * UI improvements for the character overview panel and the left-hand menu (by mat-jaworski)<br>
+     * General UI improvements for displays and Terminal (by mat-jaworski)<br>
+     * Added optional parameters to the getHackTime(), getGrowTime(), and getWeakenTime() Netscript functions<br>
+     * Added isLogEnabled() and getScriptLogs() Netscript functions<br>
+     * Added donateToFaction() Singularity function<br>
      * Updated documentation to reflect the fact that Netscript port handles (getPortHandle()) only works in NetscriptJS (2.0), NOT Netscript 1.0<br>
      * Added tryWrite() Netscript function<br>
      * When working (for a company/faction), experience is gained immediately/continuously rather than all at once when the work is finished<br>

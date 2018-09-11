@@ -54,16 +54,18 @@ export function calculatePercentMoneyHacked(server) {
 /**
  * Returns time it takes to complete a hack on a server, in seconds
  */
-export function calculateHackingTime(server) {
+export function calculateHackingTime(server, hack, int) {
     const difficultyMult = server.requiredHackingSkill * server.hackDifficulty;
 
     const baseDiff      = 500;
     const baseSkill     = 50;
     const diffFactor    = 2.5;
     const intFactor     = 0.1;
+    if (hack == null) {hack = Player.hacking_skill;}
+    if (int == null) {int = Player.intelligence;}
     var skillFactor = (diffFactor * difficultyMult + baseDiff);
     // tslint:disable-next-line
-    skillFactor /= (Player.hacking_skill + baseSkill + (intFactor * Player.intelligence));
+    skillFactor /= (hack + baseSkill + (intFactor * int));
 
     const hackTimeMultiplier = 5;
     const hackingTime = hackTimeMultiplier * skillFactor / Player.hacking_speed_mult;
@@ -74,17 +76,17 @@ export function calculateHackingTime(server) {
 /**
  * Returns time it takes to complete a grow operation on a server, in seconds
  */
-export function calculateGrowTime(server) {
+export function calculateGrowTime(server, hack, int) {
     const growTimeMultiplier = 3.2; // Relative to hacking time. 16/5 = 3.2
 
-    return growTimeMultiplier * calculateHackingTime(server);
+    return growTimeMultiplier * calculateHackingTime(server, hack, int);
 }
 
 /**
  * Returns time it takes to complete a weaken operation on a server, in seconds
  */
-export function calculateWeakenTime(server) {
+export function calculateWeakenTime(server, hack, int) {
     const weakenTimeMultiplier = 4; // Relative to hacking time
 
-    return weakenTimeMultiplier * calculateHackingTime(server);
+    return weakenTimeMultiplier * calculateHackingTime(server, hack, int);
 }
