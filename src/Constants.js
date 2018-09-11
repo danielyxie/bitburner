@@ -517,6 +517,8 @@ let CONSTANTS = {
      * Added tryWrite() Netscript function<br>
      * When working (for a company/faction), experience is gained immediately/continuously rather than all at once when the work is finished<br>
      * Added a setting in .fconf for enabling line-wrap in the Terminal input<br>
+     * The randomized parameters of many high-level servers can now take on a higher range of values<br>
+     * Many 'foreign' servers (hackable servers that you don't own) now have a randomized amount of RAM<br>
      * Added 'wget' Terminal command<br>
      * Improved the introductory tutorial`
 }
