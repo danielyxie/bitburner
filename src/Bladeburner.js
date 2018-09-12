@@ -7,6 +7,7 @@ import {Faction, Factions, factionExists,
 import {Locations}                                  from "./Locations";
 import {Player}                                     from "./Player";
 import {hackWorldDaemon, redPillFlag}               from "./RedPill";
+import {numeralWrapper}                             from "./ui/numeralFormat";
 import {KEY}                                        from "../utils/helpers/keyCodes";
 
 import {createProgressBarText}                      from "../utils/helpers/createProgressBarText";
@@ -14,7 +15,6 @@ import {dialogBoxCreate}                            from "../utils/DialogBox";
 import {removeChildrenFromElement}                  from "../utils/uiHelpers/removeChildrenFromElement";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                           from "../utils/JSONReviver";
-import numeral                                      from "numeral/min/numeral.min";
 import {addOffset}                                  from "../utils/helpers/addOffset";
 import {appendLineBreaks}                           from "../utils/uiHelpers/appendLineBreaks";
 import {clearObject}                                from "../utils/helpers/clearObject";
@@ -1191,7 +1191,7 @@ Bladeburner.prototype.completeAction = function() {
                         if (isOperation && this.logging.ops) {
                             this.log(action.name + " successfully completed! Gained " + formatNumber(gain, 3) + " rank");
                         } else if (!isOperation && this.logging.contracts) {
-                            this.log(action.name + " contract successfully completed! Gained " + formatNumber(gain, 3) + " rank and " + numeral(moneyGain).format("$0.000a"));
+                            this.log(action.name + " contract successfully completed! Gained " + formatNumber(gain, 3) + " rank and " + numeralWrapper.format(moneyGain, "$0.000a"));
                         }
                     }
                     isOperation ? this.completeOperation(true) : this.completeContract(true);
@@ -2207,10 +2207,10 @@ Bladeburner.prototype.updateOverviewContent = function() {
         "Team Size: "   + formatNumber(this.teamSize, 0)  + "<br>" +
         "Team Members Lost: " + formatNumber(this.teamLost, 0) + "<br><br>" +
         "Num Times Hospitalized: " + this.numHosp + "<br>" +
-        "Money Lost From Hospitalizations: " + numeral(this.moneyLost).format("$0.000a") + "<br><br>" +
+        "Money Lost From Hospitalizations: " + numeralWrapper.format(this.moneyLost, "$0.000a") + "<br><br>" +
         "Current City: " + this.city + "<br>";
 
-    DomElems.overviewEstPop.childNodes[0].nodeValue = "Est. Synthoid Population: " + numeral(this.getCurrentCity().popEst).format("0.000a");
+    DomElems.overviewEstPop.childNodes[0].nodeValue = "Est. Synthoid Population: " + numeralWrapper.format(this.getCurrentCity().popEst, "0.000a");
     DomElems.overviewEstComms.childNodes[0].nodeValue = "Est. Synthoid Communities: " + formatNumber(this.getCurrentCity().comms, 0);
     DomElems.overviewChaos.childNodes[0].nodeValue = "City Chaos: " + formatNumber(this.getCurrentCity().chaos);
     DomElems.overviewSkillPoints.innerText = "Skill Points: " + formatNumber(this.skillPoints, 0);

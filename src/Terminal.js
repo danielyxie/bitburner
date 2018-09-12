@@ -22,7 +22,6 @@ import {iTutorialNextStep, iTutorialSteps,
 import {showLiterature}                     from "./Literature";
 import {showMessage, Message}               from "./Message";
 import {killWorkerScript, addWorkerScript}  from "./NetscriptWorker";
-import numeral                              from "numeral/min/numeral.min";
 import {Player}                             from "./Player";
 import {hackWorldDaemon}                    from "./RedPill";
 import {findRunningScript, RunningScript,
@@ -37,6 +36,7 @@ import {TextFile, getTextFile}              from "./TextFile";
 import {containsAllStrings,
         longestCommonStart}                 from "../utils/StringHelperFunctions";
 import {Page, routing}                      from "./ui/navigationTracking";
+import {numeralWrapper}                     from "./ui/numeralFormat";
 import {KEY}                                from "../utils/helpers/keyCodes";
 import {addOffset}                          from "../utils/helpers/addOffset";
 import {isString}                           from "../utils/helpers/isString";
@@ -700,11 +700,11 @@ let Terminal = {
 
                 server.fortify(CONSTANTS.ServerFortifyAmount);
 
-				post("Hack successful! Gained " + numeral(moneyGained).format('($0,0.00)') + " and " + numeral(expGainedOnSuccess).format('0.0000') + " hacking EXP");
+				post("Hack successful! Gained " + numeralWrapper.format(moneyGained, '($0,0.00)') + " and " + numeralWrapper.format(expGainedOnSuccess, '0.0000') + " hacking EXP");
 			} else {					//Failure
 				//Player only gains 25% exp for failure? TODO Can change this later to balance
                 Player.gainHackingExp(expGainedOnFailure)
-				post("Failed to hack " + server.hostname + ". Gained " + numeral(expGainedOnFailure).format('0.0000') + " hacking EXP");
+				post("Failed to hack " + server.hostname + ". Gained " + numeralWrapper.format(expGainedOnFailure, '0.0000') + " hacking EXP");
 			}
 		}
 
@@ -727,10 +727,10 @@ let Terminal = {
             else {rootAccess = "NO";}
             post("Root Access: " + rootAccess);
 			post("Required hacking skill: " + currServ.requiredHackingSkill);
-			post("Server security level: " + numeral(currServ.hackDifficulty).format('0.000a'));
-			post("Chance to hack: " + numeral(calculateHackingChance(currServ) * 100).format('0.00%'));
-			post("Time to hack: " + numeral(calculateHackingTime(currServ)).format('0.000') + " seconds");
-			post("Total money available on server: $" + numeral(currServ.moneyAvailable).format('$0,0.00'));
+			post("Server security level: " + numeralWrapper.format(currServ.hackDifficulty, '0.000a'));
+			post("Chance to hack: " + numeralWrapper.format(calculateHackingChance(currServ) * 100, '0.00%'));
+			post("Time to hack: " + numeralWrapper.format(calculateHackingTime(currServ), '0.000') + " seconds");
+			post("Total money available on server: $" + numeralWrapper.format(currServ.moneyAvailable, '$0,0.00'));
 			post("Required number of open ports for NUKE: " + currServ.numOpenPortsRequired);
 
             if (currServ.sshPortOpen) {
@@ -1245,7 +1245,7 @@ let Terminal = {
                         var scriptBaseRamUsage = currServ.scripts[i].ramUsage;
                         var ramUsage = scriptBaseRamUsage * numThreads;
 
-                        post("This script requires " + numeral(ramUsage).format('0.00') + " GB of RAM to run for " + numThreads + " thread(s)");
+                        post("This script requires " + numeralWrapper.format(ramUsage, '0.00') + " GB of RAM to run for " + numThreads + " thread(s)");
                         return;
                     }
                 }
@@ -1597,7 +1597,7 @@ let Terminal = {
 					var spacesThread = Array(numSpacesThread+1).join(" ");
 
 					//Calculate and transform RAM usage
-					ramUsage = numeral(script.scriptRef.ramUsage * script.threads).format('0.00') + " GB";
+					ramUsage = numeralWrapper.format(script.scriptRef.ramUsage * script.threads, '0.00') + " GB";
 
 					var entry = [script.filename, spacesScript, script.threads, spacesThread, ramUsage];
 					post(entry.join(""));
@@ -1844,9 +1844,9 @@ let Terminal = {
         if (commandArray.length != 1) {
             post("Incorrect usage of free command. Usage: free"); return;
         }
-        post("Total: " + numeral(Player.getCurrentServer().maxRam).format('0.00') + " GB");
-        post("Used: " + numeral(Player.getCurrentServer().ramUsed,).format('0.00') + " GB");
-        post("Available: " + numeral(Player.getCurrentServer().maxRam - Player.getCurrentServer().ramUsed).format('0.00') + " GB");
+        post("Total: " + numeralWrapper.format(Player.getCurrentServer().maxRam, '0.00') + " GB");
+        post("Used: " + numeralWrapper.format(Player.getCurrentServer().ramUsed, '0.00') + " GB");
+        post("Available: " + numeralWrapper.format(Player.getCurrentServer().maxRam - Player.getCurrentServer().ramUsed, '0.00') + " GB");
     },
 
 	//First called when the "run [program]" command is called. Checks to see if you
@@ -1967,9 +1967,9 @@ let Terminal = {
             post("Server base security level: " + targetServer.baseDifficulty);
             post("Server current security level: " + targetServer.hackDifficulty);
             post("Server growth rate: " + targetServer.serverGrowth);
-            post("Netscript hack() execution time: " + numeral(scriptCalculateHackingTime(targetServer)).format('0.0') + "s");
-            post("Netscript grow() execution time: " + numeral(scriptCalculateGrowTime(targetServer)).format('0.0') + "s");
-            post("Netscript weaken() execution time: " + numeral(scriptCalculateWeakenTime(targetServer)).format('0.0') + "s");
+            post("Netscript hack() execution time: " + numeralWrapper.format(scriptCalculateHackingTime(targetServer), '0.0') + "s");
+            post("Netscript grow() execution time: " + numeralWrapper.format(scriptCalculateGrowTime(targetServer), '0.0') + "s");
+            post("Netscript weaken() execution time: " + numeralWrapper.format(scriptCalculateWeakenTime(targetServer), '0.0') + "s");
         };
         programHandlers[Programs.AutoLink.name] = () => {
             post("This executable cannot be run.");
@@ -1995,7 +1995,7 @@ let Terminal = {
             if(!fulfilled) {
                 post("Augmentations: " + Player.augmentations.length + " / 30");
 
-                post("Money: " + numeral(Player.money.toNumber()).format('($0.000a)') + " / " + numeral(1e11).format('($0.000a)'));
+                post("Money: " + numeralWrapper.format(Player.money.toNumber(), '($0.000a)') + " / " + numeralWrapper.format(1e11, '($0.000a)'));
                 post("One path below must be fulfilled...");
                 post("----------HACKING PATH----------");
                 post("Hacking skill: " + Player.hacking_skill + " / 2500");

@@ -10,13 +10,13 @@ import {Player}                                 from "./Player";
 import {Settings}                               from "./Settings";
 
 import {Page, routing}                          from "./ui/navigationTracking";
+import {numeralWrapper}                         from "./ui/numeralFormat";
 import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {factionInvitationBoxCreate}             from "../utils/FactionInvitationBox";
 import {removeChildrenFromElement}              from "../utils/uiHelpers/removeChildrenFromElement";
 import {createElement}                          from "../utils/uiHelpers/createElement";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver";
-import numeral                                  from "numeral/min/numeral.min";
 import {formatNumber}                           from "../utils/StringHelperFunctions";
 import {yesNoBoxCreate, yesNoBoxGetYesButton,
         yesNoBoxGetNoButton, yesNoBoxClose}     from "../utils/YesNoBox";
@@ -337,7 +337,7 @@ function displayFactionContent(factionName) {
                 Player.loseMoney(amt);
                 var repGain = amt / 1e6 * Player.faction_rep_mult;
                 faction.playerReputation += repGain;
-                dialogBoxCreate("You just donated " + numeral(amt).format("$0.000a") + " to " +
+                dialogBoxCreate("You just donated " + numeralWrapper.format(amt, "$0.000a") + " to " +
                                 faction.name + " to gain " + formatNumber(repGain, 3) + " reputation");
                 displayFactionContent(factionName);
             }
@@ -603,10 +603,10 @@ function createFactionAugmentationDisplayElements(augmentationsList, augs, facti
                 pElem.innerHTML = "ALREADY OWNED";
             } else if (faction.playerReputation >= req) {
                 aElem.setAttribute("class", "a-link-button");
-                pElem.innerHTML = "UNLOCKED - " + numeral(aug.baseCost * factionInfo.augmentationPriceMult).format("$0.000a");
+                pElem.innerHTML = "UNLOCKED - " + numeralWrapper.format(aug.baseCost * factionInfo.augmentationPriceMult, "$0.000a");
             } else {
                 aElem.setAttribute("class", "a-link-button-inactive");
-                pElem.innerHTML = "LOCKED (Requires " + formatNumber(req, 1) + " faction reputation) - " + numeral(aug.baseCost * factionInfo.augmentationPriceMult).format("$0.000a");
+                pElem.innerHTML = "LOCKED (Requires " + formatNumber(req, 1) + " faction reputation) - " + numeralWrapper.format(aug.baseCost * factionInfo.augmentationPriceMult, "$0.000a");
                 pElem.style.color = "red";
             }
             aDiv.appendChild(aElem);
