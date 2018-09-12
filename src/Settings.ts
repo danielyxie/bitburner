@@ -20,6 +20,11 @@ interface IDefaultSettings {
     DisableHotkeys: boolean;
 
     /**
+     * Locale used for display numbers
+     */
+    Locale: string;
+
+    /**
      * Limit the number of log entries for each script being executed on each server.
      */
     MaxLogCapacity: number;
@@ -91,6 +96,7 @@ const defaultSettings: IDefaultSettings = {
     AutosaveInterval:                    60,
     CodeInstructionRunTime:              50,
     DisableHotkeys:                      false,
+    Locale:                              "en",
     MaxLogCapacity:                      50,
     MaxPortCapacity:                     50,
     SuppressBuyAugmentationConfirmation: false,
@@ -110,6 +116,7 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
     DisableHotkeys:                      defaultSettings.DisableHotkeys,
     EditorKeybinding:                    "ace",
     EditorTheme:                         "Monokai",
+    Locale:                              "en",
     MaxLogCapacity:                      defaultSettings.MaxLogCapacity,
     MaxPortCapacity:                     defaultSettings.MaxPortCapacity,
     SuppressBuyAugmentationConfirmation: defaultSettings.SuppressBuyAugmentationConfirmation,
