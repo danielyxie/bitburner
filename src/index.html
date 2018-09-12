@@ -928,7 +928,7 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
                 <!-- Suppress faction invites -->
                 <fieldset>
                     <label for="settingsSuppressFactionInvites" class="tooltip">Suppress Faction Invites:
-                        <span class="tooltiptext">
+                        <span class="tooltiptexthigh">
                             If this is set, then any faction invites you receive will not appear as popups
                             on the screen. Your outstanding faction invites can be viewed in the 'Factions' page.
                         </span>
@@ -939,7 +939,7 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
                 <!-- Suppress travel confirmation -->
                 <fieldset>
                     <label for="settingsSuppressTravelConfirmation" class="tooltip">Suppress Travel Confirmation:
-                        <span class="tooltiptext">
+                        <span class="tooltiptexthigh">
                             If this is set, the confirmation message before traveling will not show up. You will automatically be deducted the travel cost as soon as you click.
                         </span>
                     </label>
@@ -950,7 +950,7 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
                 <!-- Suppress buy aug confirmation -->
                 <fieldset>
                     <label for="settingsSuppressBuyAugmentationConfirmation" class="tooltip">Suppress buy augmentation confirmation:
-                        <span class="tooltiptext">
+                        <span class="tooltiptexthigh">
                             If this is set, the confirmation message before buying augmentation will not show up.
                         </span>
                     </label>
@@ -960,7 +960,7 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
                 <!-- Hospitalization Popup -->
                 <fieldset>
                     <label for="settingsSuppressHospitalizationPopup" class="tooltip">Suppress Hospitalization popup:
-                        <span class="tooltiptext">
+                        <span class="tooltiptexthigh">
                             If this is set, a popup message will no longer be shown when you are hospitalized after taking too much damage.
                         </span>
                     </label>
@@ -970,13 +970,39 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
                 <!-- Disable Terminal and Navigation Shortcuts -->
                 <fieldset>
                     <label for="settingsDisableHotkeys" class="tooltip">Disable Hotkeys:
-                        <span class="tooltiptext">
+                        <span class="tooltiptexthigh">
                             If this is set, then most hotkeys (keyboard shortcuts) in the game are disabled.
                             This includes Terminal commands, hotkeys to navigate between different parts of the game,
                             and the "Save and Close (Ctrl + b)" hotkey in the Text Editor.
                         </span>
                     </label>
                     <input type="checkbox" name="settingsDisableHotkeys" id="settingsDisableHotkeys">
+                </fieldset>
+
+                <!-- Locale for displaying numbers -->
+                <fieldset>
+                    <label for="settingsLocale" class="tooltip">Locale:
+                        <span class="tooltiptexthigh">
+                            Sets the locale for displaying numbers. Defaults to 'en'
+                        </span>
+                    </label>
+                    <select name="settingsLocale" id="settingsLocale">
+                        <option value="en">en</option>
+                        <option value="bg">bg</option>
+                        <option value="cs">cs</option>
+                        <option value="da-dk">da-dk</option>
+                        <option value="de">de</option>
+                        <option value="en-au">en-au</option>
+                        <option value="en-gb">en-gb</option>
+                        <option value="es">es</option>
+                        <option value="fr">fr</option>
+                        <option value="hu">hu</option>
+                        <option value="it">it</option>
+                        <option value="lv">lv</option>
+                        <option value="no">no</option>
+                        <option value="pl">pl</option>
+                        <option value="ru">ru</option>
+                    </select>
                 </fieldset>
 
                 <!-- Donate button -->
@@ -999,14 +1025,14 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
                 <a id="import-game-link" class="a-link-button" style="display:inline-block;width:46%;"> Import Game </a>
                 <a id="debug-delete-scripts-link" class="a-link-button tooltip" style="display:block;width:46%;">
                     (DEBUG) Delete Active Scripts
-                    <span class="tooltiptext">
+                    <span class="tooltiptextleft">
                         Debug option used to forcefully kill all active running scripts, in case there is a bug or some unexpected issue with the game. After
                         using this, save the game and then reload the page.
                     </span>
                 </a>
                 <a id="debug-soft-reset" class="a-link-button tooltip" style="display:block;width:46%;">
                     (DEBUG) Soft Reset
-                    <span class="tooltiptext">
+                    <span class="tooltiptextleft">
                         Perform a soft reset. Resets everything as if you had just purchased an Augmentation.
                     </span>
                 </a>
