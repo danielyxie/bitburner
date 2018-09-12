@@ -14,13 +14,18 @@ import 'numeral/locales/no';
 import 'numeral/locales/pl';
 import 'numeral/locales/ru';
 
+/* eslint-disable class-methods-use-this */
+
 class NumeralFormatter {
+    constructor() {
+        this.defaultLocale = 'en';
+    }
+
     updateLocale(l) {
         if (numeral.locale(l) == null) {
             console.warn(`Invalid locale for numeral: ${l}`);
 
-            let defaultValue = 'en';
-            numeral.locale(defaultValue);
+            numeral.locale(this.defaultLocale);
             return false;
         }
         return true;
