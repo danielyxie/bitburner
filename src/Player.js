@@ -21,12 +21,13 @@ import {SpecialServerIps, SpecialServerNames}   from "./SpecialServerIps";
 import {SourceFiles, applySourceFile}           from "./SourceFile";
 
 import Decimal                                  from "decimal.js";
+import {numeralWrapper}                         from "./ui/numeralFormat";
+
 import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {clearEventListeners}                    from "../utils/uiHelpers/clearEventListeners";
 import {createRandomIp}                         from "../utils/IPAddress";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver";
-import numeral                                  from "numeral/min/numeral.min";
 import {formatNumber,
         convertTimeMsToTimeElapsedString}       from "../utils/StringHelperFunctions";
 
@@ -1486,7 +1487,7 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
             if (this.committingCrimeThruSingFn) {
                 if(this.singFnCrimeWorkerScript.disableLogs.ALL == null && this.singFnCrimeWorkerScript.disableLogs.commitCrime == null) {
                     this.singFnCrimeWorkerScript.scriptRef.log("Crime successful! Gained " +
-                                                               numeral(this.workMoneyGained).format("$0.000a") + ", " +
+                                                               numeralWrapper.format(this.workMoneyGained, "$0.000a") + ", " +
                                                                formatNumber(this.workHackExpGained, 3) + " hack exp, " +
                                                                formatNumber(this.workStrExpGained, 3) + " str exp, " +
                                                                formatNumber(this.workDefExpGained, 3) + " def exp, " +
@@ -1600,7 +1601,7 @@ PlayerObject.prototype.hospitalize = function() {
         dialogBoxCreate(
             "You were in critical condition! You were taken to the hospital where " +
             "luckily they were able to save your life. You were charged " +
-            numeral(this.max_hp * CONSTANTS.HospitalCostPerHp).format('$0.000a')
+            numeralWrapper.format(this.max_hp * CONSTANTS.HospitalCostPerHp, '$0.000a')
         );
     }
 

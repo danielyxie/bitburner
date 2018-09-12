@@ -5,13 +5,14 @@ import {clearEventListeners}                    from "../utils/uiHelpers/clearEv
 import {createElement}                          from "../utils/uiHelpers/createElement";
 import {exceptionAlert}                         from "../utils/helpers/exceptionAlert";
 import {removeLoadingScreen}                    from "../utils/uiHelpers/removeLoadingScreen";
-import numeral                                  from "numeral/min/numeral.min";
+
+import {numeralWrapper}                         from "./ui/numeralFormat";
+
 import {formatNumber,
         convertTimeMsToTimeElapsedString,
         replaceAt}                              from "../utils/StringHelperFunctions";
 import {loxBoxCreate, logBoxUpdateText,
         logBoxOpened}                           from "../utils/LogBox";
-
 import {updateActiveScriptsItems}               from "./ActiveScriptsUI";
 import {Augmentations, installAugmentations,
         initAugmentations, AugmentationNames,
@@ -587,17 +588,17 @@ const Engine = {
             'Money: $' + formatNumber(Player.money.toNumber(), 2) + '<br><br><br>' +
             '<b>Stats</b><br><br>' +
             'Hacking Level: ' + (Player.hacking_skill).toLocaleString() +
-                            ' (' + numeral(Player.hacking_exp).format('(0.000a)') + ' experience)<br>' +
+                            ' (' + numeralWrapper.format(Player.hacking_exp, '(0.000a)') + ' experience)<br>' +
             'Strength:      ' + (Player.strength).toLocaleString() +
-                       ' (' + numeral(Player.strength_exp).format('(0.000a)') + ' experience)<br>' +
+                       ' (' + numeralWrapper.format(Player.strength_exp, '(0.000a)') + ' experience)<br>' +
             'Defense:       ' + (Player.defense).toLocaleString() +
-                      ' (' + numeral(Player.defense_exp).format('(0.000a)')+ ' experience)<br>' +
+                      ' (' + numeralWrapper.format(Player.defense_exp, '(0.000a)') + ' experience)<br>' +
             'Dexterity:     ' + (Player.dexterity).toLocaleString() +
-                       ' (' + numeral(Player.dexterity_exp).format('(0.000a)') + ' experience)<br>' +
+                       ' (' + numeralWrapper.format(Player.dexterity_exp, '(0.000a)') + ' experience)<br>' +
             'Agility:       ' + (Player.agility).toLocaleString() +
-                      ' (' + numeral(Player.agility_exp).format('(0.000a)') + ' experience)<br>' +
+                      ' (' + numeralWrapper.format(Player.agility_exp, '(0.000a)') + ' experience)<br>' +
             'Charisma:      ' + (Player.charisma).toLocaleString() +
-                       ' (' + numeral(Player.charisma_exp).format('(0.000a)') + ' experience)<br>' +
+                       ' (' + numeralWrapper.format(Player.charisma_exp, '(0.000a)') + ' experience)<br>' +
             intText + '<br><br>' +
             '<b>Multipliers</b><br><br>' +
             'Hacking Chance multiplier: ' + formatNumber(Player.hacking_chance_mult * 100, 2) + '%<br>' +

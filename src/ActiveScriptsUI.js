@@ -2,6 +2,7 @@ import {workerScripts,
         killWorkerScript}          from "./NetscriptWorker";
 import {Player}                    from "./Player";
 import {getServer}                 from "./Server";
+import {numeralWrapper}            from "./ui/numeralFormat";
 import {dialogBoxCreate}           from "../utils/DialogBox";
 import {createAccordionElement}    from "../utils/uiHelpers/createAccordionElement";
 import {arrayToString}             from "../utils/helpers/arrayToString";
@@ -10,7 +11,6 @@ import {createProgressBarText}     from "../utils/helpers/createProgressBarText"
 import {exceptionAlert}            from "../utils/helpers/exceptionAlert";
 import {getElementById}            from "../utils/uiHelpers/getElementById";
 import {logBoxCreate}              from "../utils/LogBox";
-import numeral                     from "numeral/min/numeral.min";
 import {formatNumber}              from "../utils/StringHelperFunctions";
 import {removeChildrenFromElement} from "../utils/uiHelpers/removeChildrenFromElement";
 import {removeElement}             from "../utils/uiHelpers/removeElement";
@@ -242,9 +242,9 @@ function updateActiveScriptsItems(maxTasks=150) {
         }
     }
 
-    getElementById("active-scripts-total-production-active").innerText = numeral(total).format('$0.000a');
-    getElementById("active-scripts-total-prod-aug-total").innerText = numeral(Player.scriptProdSinceLastAug).format('$0.000a');
-    getElementById("active-scripts-total-prod-aug-avg").innerText = numeral(Player.scriptProdSinceLastAug / (Player.playtimeSinceLastAug/1000)).format('$0.000a');
+    getElementById("active-scripts-total-production-active").innerText = numeralWrapper.format(total, '$0.000a');
+    getElementById("active-scripts-total-prod-aug-total").innerText = numeralWrapper.format(Player.scriptProdSinceLastAug, '$0.000a');
+    getElementById("active-scripts-total-prod-aug-avg").innerText = numeralWrapper.format(Player.scriptProdSinceLastAug / (Player.playtimeSinceLastAug/1000), '$0.000a');
     return total;
 }
 

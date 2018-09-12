@@ -33,7 +33,7 @@ import {post}                                   from "./ui/postToTerminal";
 import {TextFile}                               from "./TextFile";
 import {parse, Node}                            from "../utils/acorn";
 import {Page, routing}                          from "./ui/navigationTracking";
-import numeral                                  from "numeral/min/numeral.min";
+import {numeralWrapper}                         from "./ui/numeralFormat";
 import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver";
@@ -251,7 +251,7 @@ function updateScriptEditorContent() {
     var codeCopy = code.repeat(1);
     var ramUsage = calculateRamUsage(codeCopy);
     if (ramUsage !== -1) {
-        scriptEditorRamText.innerText = "RAM: " + numeral(ramUsage).format('0.00') + " GB";
+        scriptEditorRamText.innerText = "RAM: " + numeralWrapper.format(ramUsage, '0.00') + " GB";
     } else {
         scriptEditorRamText.innerText = "RAM: Syntax Error";
     }
@@ -874,7 +874,7 @@ function scriptCalculateOfflineProduction(runningScriptObj) {
             console.log(runningScriptObj.filename + " called grow() on " + serv.hostname + " " + timesGrown + " times while offline");
             runningScriptObj.log("Called grow() on " + serv.hostname + " " + timesGrown + " times while offline");
             var growth = processSingleServerGrowth(serv, timesGrown * 450);
-            runningScriptObj.log(serv.hostname + " grown by " + numeral(growth * 100 - 100).format('0.000000%') + " from grow() calls made while offline");
+            runningScriptObj.log(serv.hostname + " grown by " + numeralWrapper.format(growth * 100 - 100, '0.000000%') + " from grow() calls made while offline");
         }
     }
 

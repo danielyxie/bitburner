@@ -1,7 +1,8 @@
 import {Engine} from "../engine";
 import {Settings} from "../Settings";
 
-import numeral from "numeral/min/numeral.min";
+import {numeralWrapper} from "./NumeralFormat";
+
 
 function setSettingsLabels() {
     var nsExecTime = document.getElementById("settingsNSExecTimeRangeValLabel");
@@ -28,6 +29,7 @@ function setSettingsLabels() {
     autosaveInterval.innerHTML = Settings.AutosaveInterval;
     disableHotkeys.checked = Settings.DisableHotkeys;
     locale.value = Settings.Locale;
+    numeralWrapper.updateLocale(Settings.Locale); //Initialize locale
 
     //Set handlers for when input changes for sliders
     var nsExecTimeInput = document.getElementById("settingsNSExecTimeRangeVal");
@@ -91,16 +93,14 @@ function setSettingsLabels() {
 
     //Locale selector
     locale.onchange = function() {
-        if (numeral.locale(locale.value) == null) {
+        if (!numeralWrapper.updateLocale(locale.value)) {
             console.warn(`Invalid locale for numeral: ${locale.value}`);
 
             let defaultValue = 'en';
-            numeral.locale(defaultValue);
             Settings.Locale = defaultValue;
             locale.value = defaultValue;
             return;
         }
-        
         Settings.Locale = locale.value;
     }
 
