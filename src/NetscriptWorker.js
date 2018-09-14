@@ -57,12 +57,25 @@ WorkerScript.prototype.getServer = function() {
 //Returns the Script object for the underlying script
 WorkerScript.prototype.getScript = function() {
     let server = this.getServer();
-    for (var i = 0; i < server.scripts.length; ++i) {
+    for (let i = 0; i < server.scripts.length; ++i) {
         if (server.scripts[i].filename === this.name) {
             return server.scripts[i];
         }
     }
     console.log("ERROR: Failed to find underlying Script object in WorkerScript.getScript(). This probably means somethings wrong");
+    return null;
+}
+
+//Returns the Script object for the specified script
+WorkerScript.prototype.getScriptOnServer = function(fn, server) {
+    if (server == null) {
+        server = this.getServer();
+    }
+    for (let i = 0; i < server.scripts.length; ++i) {
+        if (server.scripts[i].filename === fn) {
+            return server.scripts[i];
+        }
+    }
     return null;
 }
 

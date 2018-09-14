@@ -85,6 +85,8 @@ let CONSTANTS = {
     ScriptGetScriptRamCost:         0.1,
     ScriptGetHackTimeRamCost:       0.05,
     ScriptGetFavorToDonate:         0.10,
+    ScriptGetContractDataRamCost:   25,
+    ScriptAttemptContractRamCost:   25,
 
     ScriptSingularityFn1RamCost:    1,
     ScriptSingularityFn2RamCost:    2,
@@ -191,12 +193,13 @@ let CONSTANTS = {
                              "-Nodes slowly regenerate health over time.",
 
 
-    //Gang constants
+    /* Gang constant */
     GangRespectToReputationRatio: 2, //Respect is divided by this to get rep gain
     MaximumGangMembers: 20,
     GangRecruitCostMultiplier: 2,
     GangTerritoryUpdateTimer: 150,
 
+    /* Time Constants */
     MillisecondsPer20Hours: 72000000,
     GameCyclesPer20Hours: 72000000 / 200,
 
@@ -224,6 +227,7 @@ let CONSTANTS = {
     MillisecondsPerFiveMinutes: 300000,
     GameCyclesPerFiveMinutes: 300000 / 200,
 
+    /* Player Work / Action related Constants */
     FactionWorkHacking: "Faction Hacking Work",
     FactionWorkField: "Faction Field Work",
     FactionWorkSecurity: "Faction Security Work",
@@ -266,6 +270,11 @@ let CONSTANTS = {
     CrimeKidnap: "kidnap someone for ransom",
     CrimeAssassination: "assassinate a high-profile target",
     CrimeHeist: "pull off the ultimate heist",
+
+    /* Coding Contract Constants */
+    CodingContractBaseFactionRepGain:   2500,
+    CodingContractBaseCompanyRepGain:   4000,
+    CodingContractBaseMoneyGain:        10e6,
 
     /* Tutorial related things */
     TutorialNetworkingText: "Servers are a central part of the game. You start with a single personal server (your home computer) " +
@@ -497,7 +506,13 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
-    `v0.40.3<br>
+    `
+     v0.40.4<br>
+     * (TODO NEEDS DOCUMENTATION) The write() and read() Netscript functions now work on scripts<br>
+     * It is now possible to use freely use angled bracket (<, >) and create DOM elements using tprint()<br>
+     * Added Coding Contracts (not yet generated in game, but the data/implementation exists)<br>
+
+     v0.40.3<br>
      -----------------------------------------------<br>
      * Bladeburner Changes:<br>
      *** Increased the effect that agi and dexterity have on action time<br>
