@@ -17,7 +17,7 @@ function infiltrationBoxClose() {
 
 function infiltrationBoxOpen() {
     var box = document.getElementById("infiltration-box-container");
-    box.style.display = "block";
+    box.style.display = "flex";
 }
 
 function infiltrationSetText(txt) {

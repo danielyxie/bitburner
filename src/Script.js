@@ -371,12 +371,13 @@ function checkValidFilename(filename) {
 	return false;
 }
 
-function Script() {
-	this.filename 	= "";
-    this.code       = "";
+function Script(fn = "", code = "", server = "") {
+	this.filename 	= fn;
+    this.code       = code;
     this.ramUsage   = 0;
-	this.server 	= "";	//IP of server this script is on
+	this.server 	= server; //IP of server this script is on
     this.module     = "";
+    if (this.code !== "") {this.updateRamUsage();}
 };
 
 //Get the script data from the Script Editor and save it to the object

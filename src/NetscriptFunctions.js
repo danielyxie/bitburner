@@ -475,13 +475,6 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "tprint() call has incorrect number of arguments. Takes 1 argument");
             }
             var x = args.toString();
-            if (isHTML(x)) {
-                Player.takeDamage(1);
-                dialogBoxCreate("You suddenly feel a sharp shooting pain through your body as an angry voice in your head exclaims: <br><br>" +
-                                "DON'T USE TPRINT() TO OUTPUT HTML ELEMENTS TO YOUR TERMINAL!!!!<br><br>" +
-                                "(You lost 1 HP)");
-                return;
-            }
             post(workerScript.scriptRef.filename + ": " + args.toString());
         },
         clearLog : function() {
@@ -1839,21 +1832,35 @@ function NetscriptFunctions(workerScript) {
                     throw makeRuntimeRejectMsg(workerScript, "Could not find port: " + port + ". This is a bug contact the game developer");
                 }
                 return port.write(data);
-            } else if (isString(port)) { //Write to text file
+            } else if (isString(port)) { //Write to script or text file
                 var fn = port;
-                var server = getServer(workerScript.serverIp);
+                var server = workerScript.getServer();
                 if (server == null) {
                     throw makeRuntimeRejectMsg(workerScript, "Error getting Server for this script in write(). This is a bug please contact game dev");
                 }
-                var txtFile = getTextFile(fn, server);
-                if (txtFile == null) {
-                    txtFile = createTextFile(fn, data, server);
-                    return true;
-                }
-                if (mode === "w") {
-                    txtFile.write(data);
+                if (isScriptFilename(fn)) {
+                    //Write to script
+                    let script = workerScript.getScriptOnServer(fn);
+                    if (script == null) {
+                        //Create a new script
+                        script = new Script(fn, data, server.ip);
+                        server.scripts.push(script);
+                        return true;
+                    }
+                    mode === "w" ? script.code = data : script.code += data;
+                    script.updateRamUsage();
                 } else {
-                    txtFile.append(data);
+                    //Write to text file
+                    let txtFile = getTextFile(fn, server);
+                    if (txtFile == null) {
+                        txtFile = createTextFile(fn, data, server);
+                        return true;
+                    }
+                    if (mode === "w") {
+                        txtFile.write(data);
+                    } else {
+                        txtFile.append(data);
+                    }
                 }
                 return true;
             } else {
@@ -1895,17 +1902,27 @@ function NetscriptFunctions(workerScript) {
                     throw makeRuntimeRejectMsg(workerScript, "ERROR: Could not find port: " + port + ". This is a bug contact the game developer");
                 }
                 return port.read();
-            } else if (isString(port)) { //Read from text file
-                var fn = port;
-                var server = getServer(workerScript.serverIp);
+            } else if (isString(port)) { //Read from script or text file
+                let fn = port;
+                let server = getServer(workerScript.serverIp);
                 if (server == null) {
                     throw makeRuntimeRejectMsg(workerScript, "Error getting Server for this script in read(). This is a bug please contact game dev");
                 }
-                var txtFile = getTextFile(fn, server);
-                if (txtFile !== null) {
-                    return txtFile.text;
+                if (isScriptFilename(fn)) {
+                    //Read from script
+                    let script = workerScript.getScriptOnServer(fn);
+                    if (script == null) {
+                        return "";
+                    }
+                    return script.code;
                 } else {
-                    return "";
+                    //Read from text file
+                    let txtFile = getTextFile(fn, server);
+                    if (txtFile !== null) {
+                        return txtFile.text;
+                    } else {
+                        return "";
+                    }
                 }
             } else {
                 throw makeRuntimeRejectMsg(workerScript, "Invalid argument passed in for read(): " + port);

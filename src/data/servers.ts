@@ -150,7 +150,7 @@ export const serverMetadata: IServerMetadata[] = [
     literature: ["beyond-man.lit"],
     maxRamExponent: {
         max: 9,
-        min: 5
+        min: 5,
     },
     moneyAvailable: {
       max: 40e9,
@@ -226,7 +226,7 @@ export const serverMetadata: IServerMetadata[] = [
     ],
     maxRamExponent: {
         max: 9,
-        min: 7
+        min: 7,
     },
     moneyAvailable: {
       max: 22e9,
@@ -297,7 +297,7 @@ export const serverMetadata: IServerMetadata[] = [
     literature: ["simulated-reality.lit"],
     maxRamExponent: {
         max: 11,
-        min: 7
+        min: 7,
     },
     moneyAvailable: {
       max: 1800e6,
@@ -404,7 +404,7 @@ export const serverMetadata: IServerMetadata[] = [
     literature: ["beyond-man.lit"],
     maxRamExponent: {
         max: 8,
-        min: 5
+        min: 5,
     },
     moneyAvailable: {
       max: 750e6,
@@ -431,7 +431,7 @@ export const serverMetadata: IServerMetadata[] = [
     literature: ["A-Green-Tomorrow.lit"],
     maxRamExponent: {
         max: 7,
-        min: 4
+        min: 4,
     },
     moneyAvailable: {
       max: 800e6,
@@ -479,7 +479,7 @@ export const serverMetadata: IServerMetadata[] = [
     hostname: "univ-energy",
     maxRamExponent: {
         max: 7,
-        min: 4
+        min: 4,
     },
     moneyAvailable: {
       max: 1200e6,
@@ -506,7 +506,7 @@ export const serverMetadata: IServerMetadata[] = [
     literature: ["coded-intelligence.lit"],
     maxRamExponent: {
         max: 7,
-        min: 4
+        min: 4,
     },
     moneyAvailable: {
       max: 900000000,
@@ -533,7 +533,7 @@ export const serverMetadata: IServerMetadata[] = [
     literature: ["synthetic-muscles.lit"],
     maxRamExponent: {
         max: 6,
-        min: 4
+        min: 4,
     },
     moneyAvailable: {
       max: 700000000,
@@ -631,7 +631,7 @@ export const serverMetadata: IServerMetadata[] = [
     literature: ["history-of-synthoids.lit"],
     maxRamExponent: {
         max: 6,
-        min: 4
+        min: 4,
     },
     moneyAvailable: {
       max: 1000000000,
@@ -706,7 +706,7 @@ export const serverMetadata: IServerMetadata[] = [
     ],
     maxRamExponent: {
         max: 7,
-        min: 4
+        min: 4,
     },
     moneyAvailable: {
       max: 900000000,
@@ -755,7 +755,7 @@ export const serverMetadata: IServerMetadata[] = [
     literature: ["A-Green-Tomorrow.lit"],
     maxRamExponent: {
         max: 6,
-        min: 3
+        min: 3,
     },
     moneyAvailable: {
       max: 1750000000,
@@ -825,7 +825,7 @@ export const serverMetadata: IServerMetadata[] = [
     hostname: "unitalife",
     maxRamExponent: {
         max: 6,
-        min: 4
+        min: 4,
     },
     moneyAvailable: {
       max: 1100000000,
@@ -851,7 +851,7 @@ export const serverMetadata: IServerMetadata[] = [
     hostname: "lexo-corp",
     maxRamExponent: {
         max: 7,
-        min: 4
+        min: 4,
     },
     moneyAvailable: {
       max: 800000000,
@@ -877,7 +877,7 @@ export const serverMetadata: IServerMetadata[] = [
     hostname: "rho-construction",
     maxRamExponent: {
         max: 6,
-        min: 4
+        min: 4,
     },
     moneyAvailable: {
       max: 700000000,
@@ -904,7 +904,7 @@ export const serverMetadata: IServerMetadata[] = [
     literature: ["sector-12-crime.lit"],
     maxRamExponent: {
         max: 7,
-        min: 4
+        min: 4,
     },
     moneyAvailable: {
       max: 750000000,
@@ -930,7 +930,7 @@ export const serverMetadata: IServerMetadata[] = [
     hostname: "aevum-police",
     maxRamExponent: {
         max: 6,
-        min: 4
+        min: 4,
     },
     moneyAvailable: {
       max: 400000000,
@@ -961,7 +961,7 @@ export const serverMetadata: IServerMetadata[] = [
     ],
     maxRamExponent: {
         max: 7,
-        min: 4
+        min: 4,
     },
     moneyAvailable: {
       max: 250000000,
@@ -987,7 +987,7 @@ export const serverMetadata: IServerMetadata[] = [
     hostname: "zb-institute",
     maxRamExponent: {
         max: 7,
-        min: 4
+        min: 4,
     },
     moneyAvailable: {
       max: 1100000000,
@@ -1018,7 +1018,7 @@ export const serverMetadata: IServerMetadata[] = [
     ],
     maxRamExponent: {
         max: 6,
-        min: 4
+        min: 4,
     },
     moneyAvailable: {
       max: 350000000,
@@ -1067,7 +1067,7 @@ export const serverMetadata: IServerMetadata[] = [
     literature: ["tensions-in-tech-race.lit"],
     maxRamExponent: {
         max: 7,
-        min: 4
+        min: 4,
     },
     moneyAvailable: {
       max: 550000000,
@@ -1093,7 +1093,7 @@ export const serverMetadata: IServerMetadata[] = [
     hostname: "the-hub",
     maxRamExponent: {
         max: 6,
-        min: 3
+        min: 3,
     },
     moneyAvailable: {
       max: 200000000,
@@ -1143,7 +1143,7 @@ export const serverMetadata: IServerMetadata[] = [
     literature: ["simulated-reality.lit"],
     maxRamExponent: {
         max: 7,
-        min: 4
+        min: 4,
     },
     moneyAvailable: 275000000,
     networkLayer: 4,
@@ -1370,7 +1370,7 @@ export const serverMetadata: IServerMetadata[] = [
     hostname: "millenium-fitness",
     maxRamExponent: {
         max: 8,
-        min: 4
+        min: 4,
     },
     moneyAvailable: 250000000,
     networkLayer: 6,
@@ -1393,7 +1393,7 @@ export const serverMetadata: IServerMetadata[] = [
     hostname: "powerhouse-fitness",
     maxRamExponent: {
         max: 6,
-        min: 4
+        min: 4,
     },
     moneyAvailable: 900000000,
     networkLayer: 14,
@@ -1436,7 +1436,7 @@ export const serverMetadata: IServerMetadata[] = [
     ],
     maxRamExponent: {
         max: 9,
-        min: 5
+        min: 5,
     },
     moneyAvailable: 0,
     networkLayer: 11,
@@ -1455,7 +1455,7 @@ export const serverMetadata: IServerMetadata[] = [
     literature: ["democracy-is-dead.lit"],
     maxRamExponent: {
         max: 8,
-        min: 4
+        min: 4,
     },
     moneyAvailable: 0,
     networkLayer: 5,
@@ -1474,7 +1474,7 @@ export const serverMetadata: IServerMetadata[] = [
     literature: ["democracy-is-dead.lit"],
     maxRamExponent: {
         max: 7,
-        min: 4
+        min: 4,
     },
     moneyAvailable: 0,
     networkLayer: 4,

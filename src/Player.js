@@ -2,6 +2,7 @@ import {Augmentations, applyAugmentation,
         AugmentationNames,
         PlayerOwnedAugmentation}                from "./Augmentations";
 import {BitNodeMultipliers}                     from "./BitNodeMultipliers";
+import {CodingContractRewardType}               from "./CodingContracts";
 import {Company, Companies, getNextCompanyPosition,
         getJobRequirementText, CompanyPosition,
         CompanyPositions}                       from "./Company";
@@ -2276,6 +2277,52 @@ PlayerObject.prototype.queueAugmentation = function(name) {
 
     this.firstAugPurchased = true;
     this.queuedAugmentations.push(new PlayerOwnedAugmentation(name));
+}
+
+/************* Coding Contracts **************/
+PlayerObject.prototype.gainCodingContractReward = function(reward, difficulty=1) {
+    if (reward == null || reward.type == null || reward == null) {
+        return `No reward for this contract`;
+    }
+
+    /* eslint-disable no-case-declarations */
+    switch (reward.type) {
+        case CodingContractRewardType.FactionReputation:
+            if (reward.name == null || !(Factions[reward.name] instanceof Faction)) {
+                // If no/invalid faction was designated, just give rewards to all factions
+                reward.type = CodingContractRewardType.FactionReputationAll;
+                return this.gainCodingContractReward(reward);
+            }
+            var repGain = CONSTANTS.CodingContractBaseFactionRepGain * difficulty;
+            Factions[reward.name].playerReputation += repGain;
+            return `Gained ${repGain} faction reputation for ${reward.name}`;
+        case CodingContractRewardType.FactionReputationAll:
+            const totalGain = CONSTANTS.CodingContractBaseFactionRepGain * difficulty;
+            const gainPerFaction = Math.floor(totalGain / this.factions.length);
+            for (const facName of this.factions) {
+                if (!(Factions[facName] instanceof Faction)) { continue; }
+                Factions[facName].playerReputation += gainPerFaction;
+            }
+            return `Gained ${gainPerFaction} reputation for each faction you are a member of`;
+            break;
+        case CodingContractRewardType.CompanyReputation:
+            if (reward.name ==  null || !(Companies[reward.name] instanceof Company)) {
+                //If no/invalid company was designated, just give rewards to all factions
+                reward.type = CodingContractRewardType.FactionReputationAll;
+                return this.gainCodingContractReward(reward);
+            }
+            var repGain = CONSTANTS.CodingContractBaseCompanyRepGain * difficulty;
+            Companies[reward.name].playerReputation += repGain;
+            return `Gained ${repGain} company reputation for ${reward.name}`;
+            break;
+        case CodingContractRewardType.Money:
+        default:
+            var moneyGain = CONSTANTS.CodingContractBaseMoneyGain * difficulty;
+            this.gainMoney(moneyGain);
+            return `Gained ${numeralWrapper.format(moneyGain, '$0.000a')}`;
+            break;
+    }
+    /* eslint-enable no-case-declarations */
 }
 
 /* Functions for saving and loading the Player data */

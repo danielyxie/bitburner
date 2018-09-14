@@ -1,9 +1,11 @@
 import {substituteAliases, printAliases,
         parseAliasDeclaration,
         removeAlias, GlobalAliases,
-        Aliases}                            from "./Alias";
-import {CONSTANTS}                          from "./Constants";
-import {Programs}                           from "./CreateProgram";
+        Aliases}                                from "./Alias";
+import {CodingContract, CodingContractResult,
+        CodingContractRewardType}               from "./CodingContracts";
+import {CONSTANTS}                              from "./Constants";
+import {Programs}                               from "./CreateProgram";
 import {executeDarkwebTerminalCommand,
         checkIfConnectedToDarkweb,
         DarkWebItems}                       from "./DarkWeb";
@@ -62,7 +64,7 @@ $(document).keydown(function(event) {
 	//Terminal
 	if (routing.isOn(Page.Terminal)) {
         var terminalInput = document.getElementById("terminal-input-text-box");
-        if (terminalInput != null && !event.ctrlKey && !event.shiftKey) {terminalInput.focus();}
+        if (terminalInput != null && !event.ctrlKey && !event.shiftKey && !Terminal.contractOpen) {terminalInput.focus();}
 
 		if (event.keyCode === KEY.ENTER) {
             event.preventDefault(); //Prevent newline from being entered in Script Editor
@@ -251,7 +253,7 @@ $(document).keydown(function(e) {
 			terminalCtrlPressed = true;
 		} else if (e.shiftKey) {
             shiftKeyPressed = true;
-        } else if (terminalCtrlPressed || shiftKeyPressed) {
+        } else if (terminalCtrlPressed || shiftKeyPressed || Terminal.contractOpen) {
 			//Don't focus
 		} else {
             var inputTextBox = document.getElementById("terminal-input-text-box");
@@ -522,6 +524,8 @@ let Terminal = {
 
     commandHistory: [],
     commandHistoryIndex: 0,
+
+    contractOpen:       false, //True if a Coding Contract prompt is opened
 
     resetTerminalInput: function() {
         if (FconfSettings.WRAP_INPUT) {
@@ -1354,9 +1358,11 @@ let Terminal = {
                     }
 
 					//Check if its a script or just a program/executable
-					//if (isScriptFilename(executableName)) {
+					//Dont use isScriptFilename here because `executableName` includes the args too
                     if (executableName.includes(".script") || executableName.includes(".js") || executableName.includes(".ns")) {
 						Terminal.runScript(executableName);
+                    } else if (executableName.endsWith(".cct")) {
+                        Terminal.runContract(executableName);
 					} else {
                         Terminal.runProgram(executableName);
 					}
@@ -1742,6 +1748,15 @@ let Terminal = {
                 allFiles.push(s.textFiles[i].fn);
             }
         }
+        for (var i = 0; i < s.contracts.length; ++i) {
+            if (filter) {
+                if (s.contracts[i].fn.includes(filter)) {
+                    allFiles.push(s.contracts[i].fn);
+                }
+            } else {
+                allFiles.push(s.contracts[i].fn);
+            }
+        }
 
         //Sort the files alphabetically then print each
         allFiles.sort();
@@ -1967,9 +1982,9 @@ let Terminal = {
             post("Server base security level: " + targetServer.baseDifficulty);
             post("Server current security level: " + targetServer.hackDifficulty);
             post("Server growth rate: " + targetServer.serverGrowth);
-            post("Netscript hack() execution time: " + numeralWrapper.format(scriptCalculateHackingTime(targetServer), '0.0') + "s");
-            post("Netscript grow() execution time: " + numeralWrapper.format(scriptCalculateGrowTime(targetServer), '0.0') + "s");
-            post("Netscript weaken() execution time: " + numeralWrapper.format(scriptCalculateWeakenTime(targetServer), '0.0') + "s");
+            post("Netscript hack() execution time: " + numeralWrapper.format(calculateHackingTime(targetServer), '0.0') + "s");
+            post("Netscript grow() execution time: " + numeralWrapper.format(calculateGrowTime(targetServer), '0.0') + "s");
+            post("Netscript weaken() execution time: " + numeralWrapper.format(calculateWeakenTime(targetServer), '0.0') + "s");
         };
         programHandlers[Programs.AutoLink.name] = () => {
             post("This executable cannot be run.");
@@ -2130,7 +2145,42 @@ let Terminal = {
 
 
 		post("ERROR: No such script");
-	}
+	},
+
+    runContract: async function(contractName) {
+        // There's already an opened contract
+        if (Terminal.contractOpen) {
+            return post("ERROR: There's already a Coding Contract in Progress");
+        }
+        Terminal.contractOpen = true;
+
+        const serv = Player.getCurrentServer();
+        const contract = serv.getContract(contractName);
+        if (contract == null) {
+            return post("ERROR: No such contract");
+        }
+        const res = await contract.prompt();
+
+        switch (res) {
+            case CodingContractResult.Success:
+                var reward = Player.gainCodingContractReward(contract.reward, contract.getDifficulty());
+                post(`Contract SUCCESS - ${reward}`);
+                serv.removeContract(contract);
+                break;
+            case CodingContractResult.Failure:
+                post("Contract <p style='color:red;display:inline'>FAILED</p> - Contract is now self-destructing");
+                ++contract.tries;
+                if (contract.tries >= contract.getMaxNumTries()) {
+                    serv.removeContract(contract);
+                }
+                break;
+            case CodingContractResult.Cancelled:
+            default:
+                post("Contract cancelled");
+                break;
+        }
+        Terminal.contractOpen = false;
+    },
 };
 
 export {postNetburnerText, Terminal};
