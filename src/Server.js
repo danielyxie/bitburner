@@ -1,4 +1,5 @@
 import {BitNodeMultipliers}                         from "./BitNodeMultipliers";
+import {CodingContract, ContractTypes}              from "./CodingContracts";
 import {CONSTANTS}                                  from "./Constants";
 import {Programs}                                   from "./CreateProgram";
 import {Player}                                     from "./Player";
@@ -37,11 +38,12 @@ function Server(params={ip:createRandomIp(), hostname:""}) {
     this.ramUsed    = 0;
     this.cpuCores   = 1; //Max of 8, affects hacking times and Hacking Mission starting Cores
 
-    this.scripts        = [];
-    this.runningScripts = [];   //Stores RunningScript objects
-    this.programs       = [];
-    this.messages       = [];
-    this.textFiles      = [];
+    this.scripts         = [];
+    this.runningScripts  = [];   //Stores RunningScript objects
+    this.programs        = [];
+    this.messages        = [];
+    this.textFiles       = [];
+    this.contracts       = [];
     this.dir            = 0;    //new Directory(this, null, ""); TODO
 
     /* Hacking information (only valid for "foreign" aka non-purchased servers) */
@@ -111,6 +113,32 @@ Server.prototype.fortify = function(amt) {
 Server.prototype.weaken = function(amt) {
     this.hackDifficulty -= (amt * BitNodeMultipliers.ServerWeakenRate);
     this.capDifficulty();
+}
+
+// Coding Contracts
+Server.prototype.addContract = function(contract) {
+    this.contracts.push(contract);
+}
+
+Server.prototype.removeContract = function(contract) {
+    if (contract instanceof CodingContract) {
+        this.contracts = this.contracts.filter((c) => {
+            return c.fn !== contract.fn;
+        });
+    } else {
+        this.contracts = this.contracts.filter((c) => {
+            return c.fn !== contract;
+        });
+    }
+}
+
+Server.prototype.getContract = function(contractName) {
+    for (const contract of this.contracts) {
+        if (contract.fn === contractName) {
+            return contract;
+        }
+    }
+    return null;
 }
 
 //Functions for loading and saving a Server
