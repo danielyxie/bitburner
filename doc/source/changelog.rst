@@ -3,6 +3,31 @@
 Changelog
 =========
 
+v0.40.3 - 9/15/2018
+-------------------
+* Bladeburner Changes:
+    * Increased the effect that agi and dexterity have on action time
+    * Starting number of contracts/operations available will be slightly lower
+    * Random events will now happen slightly more often
+    * Slightly increased the rate at which the Overclock skill point cost increases
+* The maximum volatility of stocks is now randomized (randomly generated within a certain range every time the game resets)
+* Increased the range of possible values for initial stock prices
+* b1t_flum3.exe program can now be created immediately at Hacking level 1 (rather than hacking level 5)
+* UI improvements for the character overview panel and the left-hand menu (by mat-jaworski)
+* General UI improvements for displays and Terminal (by mat-jaworski)
+* Added optional parameters to the getHackTime(), getGrowTime(), and getWeakenTime() Netscript functions
+* Added isLogEnabled() and getScriptLogs() Netscript functions
+* Added donateToFaction() Singularity function
+* Updated documentation to reflect the fact that Netscript port handles (getPortHandle()) only works in NetscriptJS (2.0), NOT Netscript 1.0
+* Added tryWrite() Netscript function
+* When working (for a company/faction), experience is gained immediately/continuously rather than all at once when the work is finished
+* Added a setting in .fconf for enabling line-wrap in the Terminal input
+* Adding a game option for changing the locale that most numbers are displayed in (this mostly applies for whenever money is displayed)
+* The randomized parameters of many high-level servers can now take on a higher range of values
+* Many 'foreign' servers (hackable servers that you don't own) now have a randomized amount of RAM
+* Added 'wget' Terminal command
+* Improved the introductory tutorial
+
 v0.40.2 - 8/27/2018
 -------------------
 * Bladeburner Changes:
