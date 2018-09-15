@@ -10,17 +10,18 @@ import {executeDarkwebTerminalCommand,
 import {Engine}                             from "./engine";
 import {FconfSettings, parseFconfSettings,
         createFconf}                        from "./Fconf";
+import {calculateHackingChance,
+        calculateHackingExpGain,
+        calculatePercentMoneyHacked,
+        calculateHackingTime,
+        calculateGrowTime,
+        calculateWeakenTime}                from "./Hacking";
 import {TerminalHelpText, HelpTexts}        from "./HelpText";
 import {iTutorialNextStep, iTutorialSteps,
-        iTutorialIsRunning,
-        currITutorialStep}                  from "./InteractiveTutorial";
+        ITutorial}                          from "./InteractiveTutorial";
 import {showLiterature}                     from "./Literature";
 import {showMessage, Message}               from "./Message";
-import {scriptCalculateHackingTime,
-        scriptCalculateGrowTime,
-        scriptCalculateWeakenTime}          from "./NetscriptEvaluator";
 import {killWorkerScript, addWorkerScript}  from "./NetscriptWorker";
-import numeral                              from "numeral/min/numeral.min";
 import {Player}                             from "./Player";
 import {hackWorldDaemon}                    from "./RedPill";
 import {findRunningScript, RunningScript,
@@ -32,10 +33,10 @@ import {Settings}                           from "./Settings";
 import {SpecialServerIps,
         SpecialServerNames}                 from "./SpecialServerIps";
 import {TextFile, getTextFile}              from "./TextFile";
-
-import {containsAllStrings, longestCommonStart,
-        formatNumber}                       from "../utils/StringHelperFunctions";
+import {containsAllStrings,
+        longestCommonStart}                 from "../utils/StringHelperFunctions";
 import {Page, routing}                      from "./ui/navigationTracking";
+import {numeralWrapper}                     from "./ui/numeralFormat";
 import {KEY}                                from "../utils/helpers/keyCodes";
 import {addOffset}                          from "../utils/helpers/addOffset";
 import {isString}                           from "../utils/helpers/isString";
@@ -48,6 +49,7 @@ import {yesNoBoxCreate,
 import {post, hackProgressBarPost,
         hackProgressPost}                   from "./ui/postToTerminal";
 
+import autosize from 'autosize';
 import * as JSZip from 'jszip';
 import * as FileSaver from 'file-saver';
 
@@ -64,12 +66,12 @@ $(document).keydown(function(event) {
 
 		if (event.keyCode === KEY.ENTER) {
             event.preventDefault(); //Prevent newline from being entered in Script Editor
-			var command = $('input[class=terminal-input]').val();
-			      post(
-                "[" +
+			var command = terminalInput.value;
+			post(
+                "<span class='prompt'>[" +
                 (FconfSettings.ENABLE_TIMESTAMPS ? getTimestamp() + " " : "") +
                 Player.getCurrentServer().hostname +
-                " ~]> " + command
+                " ~]&gt;</span> " + command
             );
 
             if (command.length > 0) {
@@ -513,16 +515,27 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
 
 let Terminal = {
     //Flags to determine whether the player is currently running a hack or an analyze
-    hackFlag:       false,
-    analyzeFlag:    false,
+    hackFlag:           false,
+    analyzeFlag:        false,
+    actionStarted:      false,
+    actionTime:         0,
 
     commandHistory: [],
     commandHistoryIndex: 0,
 
     resetTerminalInput: function() {
-        document.getElementById("terminal-input-td").innerHTML =
-            "<div id='terminal-input-header'>[" + Player.getCurrentServer().hostname + " ~]" + "$ </div>" +
-            '<input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
+        if (FconfSettings.WRAP_INPUT) {
+            document.getElementById("terminal-input-td").innerHTML =
+                "<div id='terminal-input-header' class='prompt'>[" + Player.getCurrentServer().hostname + " ~]" + "$ </div>" +
+                '<textarea type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
+
+            //Auto re-size the line element as it wraps
+            autosize(document.getElementById("terminal-input-text-box"));
+        } else {
+            document.getElementById("terminal-input-td").innerHTML =
+                "<div id='terminal-input-header' class='prompt'>[" + Player.getCurrentServer().hostname + " ~]" + "$ </div>" +
+                '<input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
+        }
         var hdr = document.getElementById("terminal-input-header");
         hdr.style.display = "inline";
     },
@@ -620,6 +633,32 @@ let Terminal = {
         }
     },
 
+    startHack: function() {
+        Terminal.hackFlag = true;
+
+        //Hacking through Terminal should be faster than hacking through a script
+        Terminal.actionTime = calculateHackingTime(Player.getCurrentServer()) / 4;
+        Terminal.startAction();
+    },
+
+    startAnalyze: function() {
+        Terminal.analyzeFlag = true;
+        Terminal.actionTime = 1;
+        post("Analyzing system...");
+        Terminal.startAction();
+    },
+
+    startAction: function() {
+       Terminal.actionStarted = true;
+
+       hackProgressPost("Time left:");
+       hackProgressBarPost("[");
+
+       //Disable terminal
+       document.getElementById("terminal-input-td").innerHTML = '<input type="text" class="terminal-input"/>';
+       $('input[class=terminal-input]').prop('disabled', true);
+    },
+
     finishAction: function(cancelled = false) {
         if (Terminal.hackFlag) {
             Terminal.finishHack(cancelled);
@@ -634,10 +673,10 @@ let Terminal = {
             var server = Player.getCurrentServer();
 
 			//Calculate whether hack was successful
-			var hackChance = Player.calculateHackingChance();
+			var hackChance = calculateHackingChance(server);
 			var rand = Math.random();
 			console.log("Hack success chance: " + hackChance +  ", rand: " + rand);
-			var expGainedOnSuccess = Player.calculateExpGain();
+			var expGainedOnSuccess = calculateHackingExpGain(server);
 			var expGainedOnFailure = (expGainedOnSuccess / 4);
 			if (rand < hackChance) {	//Success!
                 if (SpecialServerIps[SpecialServerNames.WorldDaemon] &&
@@ -649,7 +688,7 @@ let Terminal = {
                     return;
                 }
                 server.manuallyHacked = true;
-				var moneyGained = Player.calculatePercentMoneyHacked();
+				var moneyGained = calculatePercentMoneyHacked(server);
 				moneyGained = Math.floor(server.moneyAvailable * moneyGained);
 
 				if (moneyGained <= 0) {moneyGained = 0;} //Safety check
@@ -661,11 +700,11 @@ let Terminal = {
 
                 server.fortify(CONSTANTS.ServerFortifyAmount);
 
-				post("Hack successful! Gained $" + formatNumber(moneyGained, 2) + " and " + formatNumber(expGainedOnSuccess, 4) + " hacking EXP");
+				post("Hack successful! Gained " + numeralWrapper.format(moneyGained, '($0,0.00)') + " and " + numeralWrapper.format(expGainedOnSuccess, '0.0000') + " hacking EXP");
 			} else {					//Failure
 				//Player only gains 25% exp for failure? TODO Can change this later to balance
                 Player.gainHackingExp(expGainedOnFailure)
-				post("Failed to hack " + server.hostname + ". Gained " + formatNumber(expGainedOnFailure, 4) + " hacking EXP");
+				post("Failed to hack " + server.hostname + ". Gained " + numeralWrapper.format(expGainedOnFailure, '0.0000') + " hacking EXP");
 			}
 		}
 
@@ -680,43 +719,45 @@ let Terminal = {
 
     finishAnalyze: function(cancelled = false) {
 		if (cancelled == false) {
-			post(Player.getCurrentServer().hostname + ": ");
-            post("Organization name: " + Player.getCurrentServer().organizationName);
+            let currServ = Player.getCurrentServer();
+			post(currServ.hostname + ": ");
+            post("Organization name: " + currServ.organizationName);
             var rootAccess = "";
-            if (Player.getCurrentServer().hasAdminRights) {rootAccess = "YES";}
+            if (currServ.hasAdminRights) {rootAccess = "YES";}
             else {rootAccess = "NO";}
             post("Root Access: " + rootAccess);
-			post("Required hacking skill: " + Player.getCurrentServer().requiredHackingSkill);
-			post("Estimated server security level: " + formatNumber(addOffset(Player.getCurrentServer().hackDifficulty, 5), 3));
-			post("Estimated chance to hack: " + formatNumber(addOffset(Player.calculateHackingChance() * 100, 5), 2) + "%");
-			post("Estimated time to hack: " + formatNumber(addOffset(Player.calculateHackingTime(), 5), 3) + " seconds");
-			post("Estimated total money available on server: $" + formatNumber(addOffset(Player.getCurrentServer().moneyAvailable, 5), 2));
-			post("Required number of open ports for NUKE: " + Player.getCurrentServer().numOpenPortsRequired);
-            if (Player.getCurrentServer().sshPortOpen) {
+			post("Required hacking skill: " + currServ.requiredHackingSkill);
+			post("Server security level: " + numeralWrapper.format(currServ.hackDifficulty, '0.000a'));
+			post("Chance to hack: " + numeralWrapper.format(calculateHackingChance(currServ) * 100, '0.00%'));
+			post("Time to hack: " + numeralWrapper.format(calculateHackingTime(currServ), '0.000') + " seconds");
+			post("Total money available on server: $" + numeralWrapper.format(currServ.moneyAvailable, '$0,0.00'));
+			post("Required number of open ports for NUKE: " + currServ.numOpenPortsRequired);
+
+            if (currServ.sshPortOpen) {
 				post("SSH port: Open")
 			} else {
 				post("SSH port: Closed")
 			}
 
-			if (Player.getCurrentServer().ftpPortOpen) {
+			if (currServ.ftpPortOpen) {
 				post("FTP port: Open")
 			} else {
 				post("FTP port: Closed")
 			}
 
-			if (Player.getCurrentServer().smtpPortOpen) {
+			if (currServ.smtpPortOpen) {
 				post("SMTP port: Open")
 			} else {
 				post("SMTP port: Closed")
 			}
 
-			if (Player.getCurrentServer().httpPortOpen) {
+			if (currServ.httpPortOpen) {
 				post("HTTP port: Open")
 			} else {
 				post("HTTP port: Closed")
 			}
 
-			if (Player.getCurrentServer().sqlPortOpen) {
+			if (currServ.sqlPortOpen) {
 				post("SQL port: Open")
 			} else {
 				post("SQL port: Closed")
@@ -731,7 +772,56 @@ let Terminal = {
         $('input[class=terminal-input]').prop('disabled', false);
     },
 
-	executeCommand:  function(command) {
+    writeToScriptFile : function(server, fn, code) {
+        var ret = {success: false, overwritten: false};
+        if (!isScriptFilename(fn) || !(server instanceof Server)) { return ret; }
+
+        //Check if the script already exists, and overwrite it if it does
+        for (let i = 0; i < server.scripts.length; ++i) {
+            if (fn === server.scripts[i].filename) {
+                let script = server.scripts[i];
+                script.code = code;
+                script.updateRamUsage();
+                script.module = "";
+                ret.overwritten = true;
+                ret.success = true;
+                return ret;
+            }
+        }
+
+        //Otherwise, create a new script
+        var newScript = new Script();
+        newScript.filename = fn;
+        newScript.code = code;
+        newScript.updateRamUsage();
+        newScript.server = server.ip;
+        server.scripts.push(newScript);
+        ret.success = true;
+        return ret;
+    },
+
+    writeToTextFile : function(server, fn, txt) {
+        var ret = {success: false, overwritten: false};
+        if (!fn.endsWith("txt") || !(server instanceof Server)) { return ret; }
+
+        //Check if the text file already exists, and overwrite if it does
+        for (let i = 0; i < server.textFiles.length; ++i) {
+            if (server.textFiles[i].fn === fn) {
+                ret.overwritten = true;
+                server.textFiles[i].text = txt;
+                ret.success = true;
+                return ret;
+            }
+        }
+
+        //Otherwise create a new text file
+        var newFile = new TextFile(fn, txt);
+        server.textFiles.push(newFile);
+        ret.success = true;
+        return ret;
+    },
+
+	executeCommand : function(command) {
         command = command.trim();
         //Replace all extra whitespace in command with a single space
         command = command.replace(/\s\s+/g, ' ');
@@ -762,11 +852,11 @@ let Terminal = {
 		if (commandArray.length == 0) {return;}
 
         /****************** Interactive Tutorial Terminal Commands ******************/
-        if (iTutorialIsRunning) {
+        if (ITutorial.isRunning) {
             var foodnstuffServ = GetServerByHostname("foodnstuff");
             if (foodnstuffServ == null) {throw new Error("Could not get foodnstuff server"); return;}
 
-            switch(currITutorialStep) {
+            switch(ITutorial.currStep) {
             case iTutorialSteps.TerminalHelp:
                 if (commandArray[0] == "help") {
                     post(TerminalHelpText);
@@ -816,17 +906,7 @@ let Terminal = {
                     if (commandArray.length != 1) {
                         post("Incorrect usage of analyze command. Usage: analyze"); return;
                     }
-                    //Analyze the current server for information
-                    Terminal.analyzeFlag = true;
-                    post("Analyzing system...");
-                    hackProgressPost("Time left:");
-                    hackProgressBarPost("[");
-                    Player.analyze();
-
-                    //Disable terminal
-                    //Terminal.resetTerminalInput();
-                    document.getElementById("terminal-input-td").innerHTML = '<input type="text" class="terminal-input"/>';
-                    $('input[class=terminal-input]').prop('disabled', true);
+                    Terminal.startAnalyze();
                     iTutorialNextStep();
                 } else {
                     post("Bad command. Please follow the tutorial");
@@ -842,15 +922,7 @@ let Terminal = {
                 break;
             case iTutorialSteps.TerminalManualHack:
                 if (commandArray.length == 1 && commandArray[0] == "hack") {
-                    Terminal.hackFlag = true;
-					hackProgressPost("Time left:");
-					hackProgressBarPost("[");
-					Player.hack();
-
-					//Disable terminal
-                    //Terminal.resetTerminalInput();
-					document.getElementById("terminal-input-td").innerHTML = '<input type="text" class="terminal-input"/>';
-					$('input[class=terminal-input]').prop('disabled', true);
+                    Terminal.startHack();
                     iTutorialNextStep();
                 } else {post("Bad command. Please follow the tutorial");}
 				break;
@@ -921,17 +993,7 @@ let Terminal = {
 				if (commandArray.length != 1) {
 					post("Incorrect usage of analyze command. Usage: analyze"); return;
 				}
-                //Analyze the current server for information
-                Terminal.analyzeFlag = true;
-                post("Analyzing system...");
-                hackProgressPost("Time left:");
-                hackProgressBarPost("[");
-                Player.analyze();
-
-                //Disable terminal
-                //Terminal.resetTerminalInput();
-                document.getElementById("terminal-input-td").innerHTML = '<input type="text" class="terminal-input"/>';
-                $('input[class=terminal-input]').prop('disabled', true);
+                Terminal.startAnalyze();
 				break;
             case "buy":
                 if (SpecialServerIps.hasOwnProperty("Darkweb Server")) {
@@ -1084,15 +1146,7 @@ let Terminal = {
 				} else if (Player.getCurrentServer().requiredHackingSkill > Player.hacking_skill) {
 					post("Your hacking skill is not high enough to attempt hacking this machine. Try analyzing the machine to determine the required hacking skill");
 				} else {
-                    Terminal.hackFlag = true;
-					hackProgressPost("Time left:");
-					hackProgressBarPost("[");
-					Player.hack();
-
-					//Disable terminal
-                    //Terminal.resetTerminalInput();
-					document.getElementById("terminal-input-td").innerHTML = '<input type="text" class="terminal-input"/>';
-					$('input[class=terminal-input]').prop('disabled', true);
+                    Terminal.startHack();
 				}
 				break;
 			case "help":
@@ -1191,7 +1245,7 @@ let Terminal = {
                         var scriptBaseRamUsage = currServ.scripts[i].ramUsage;
                         var ramUsage = scriptBaseRamUsage * numThreads;
 
-                        post("This script requires " + formatNumber(ramUsage, 2) + "GB of RAM to run for " + numThreads + " thread(s)");
+                        post("This script requires " + numeralWrapper.format(ramUsage, '0.00') + " GB of RAM to run for " + numThreads + " thread(s)");
                         return;
                     }
                 }
@@ -1346,6 +1400,7 @@ let Terminal = {
                     post("Incorrect usage of scan-analyze command. usage: scan-analyze [depth]");
                 }
                 break;
+            /* eslint-disable no-case-declarations */
 			case "scp":
 				if (commandArray.length != 2) {
                     post("Incorrect usage of scp command. Usage: scp [file] [destination hostname/ip]");
@@ -1389,8 +1444,7 @@ let Terminal = {
                         }
                     }
                     destServer.messages.push(scriptname);
-                    post(scriptname + " copied over to " + destServer.hostname);
-                    return;
+                    return post(scriptname + " copied over to " + destServer.hostname);
                 }
 
                 //Scp for txt files
@@ -1406,18 +1460,15 @@ let Terminal = {
 
                     if (!found) {return post("Error: no such file exists!");}
 
-                    for (var i = 0; i < destServer.textFiles.length; ++i) {
-                        if (destServer.textFiles[i].fn === scriptname) {
-                            //Overwrite
-                            destServer.textFiles[i].text = txtFile.text;
-                            post("WARNING: " + scriptname + " already exists on " + destServer.hostname +
-                                 "and will be overwriten");
-                            return post(scriptname + " copied over to " + destServer.hostname);
-                        }
+                    let tRes = Terminal.writeToTextFile(destServer, txtFile.fn, txtFile.text);
+                    if (!tRes.success) {
+                        return post("Error: scp failed");
                     }
-                    var newFile = new TextFile(txtFile.fn, txtFile.text);
-                    destServer.textFiles.push(newFile);
-                    return post(scriptname + " copied over to " + destServer.hostname);
+                    if (tRes.overwritten) {
+                        post(`WARNING: ${scriptname} already exists on ${destServer.hostname} and will be overwriten`);
+                        return post(`${scriptname} overwritten on ${destServer.hostname}`);
+                    }
+                    return post(`${scriptname} copied over to ${destServer.hostname}`);
                 }
 
                 //Get the current script
@@ -1433,27 +1484,17 @@ let Terminal = {
                     return;
                 }
 
-                //Overwrite script if it exists
-                for (var i = 0; i < destServer.scripts.length; ++i) {
-                    if (scriptname == destServer.scripts[i].filename) {
-                        post("WARNING: " + scriptname + " already exists on " + destServer.hostname + " and will be overwritten");
-                        var oldScript = destServer.scripts[i];
-                        oldScript.code = sourceScript.code;
-                        oldScript.ramUsage = sourceScript.ramUsage;
-                        oldScript.module = "";
-                        post(scriptname + " overwriten on " + destServer.hostname);
-                        return;
-                    }
+                let sRes = Terminal.writeToScriptFile(destServer, scriptname, sourceScript.code);
+                if (!sRes.success) {
+                    return post(`Error: scp failed`);
                 }
-
-                var newScript = new Script();
-                newScript.filename = scriptname;
-                newScript.code = sourceScript.code;
-                newScript.ramUsage = sourceScript.ramUsage;
-                newScript.destServer = ip;
-                destServer.scripts.push(newScript);
-                post(scriptname + " copied over to " + destServer.hostname);
-				break;
+                if (sRes.overwritten) {
+                    post(`WARNING: ${scriptname} already exists on ${destServer.hostname} and will be overwritten`);
+                    return post(`${scriptname} overwritten on ${destServer.hostname}`);
+                }
+                post(`${scriptname} copied over to ${destServer.hostname}`);
+                break;
+            /* eslint-enable no-case-declarations */
             case "sudov":
                 if (commandArray.length != 1) {
                     post("Incorrect number of arguments. Usage: sudov"); return;
@@ -1556,7 +1597,7 @@ let Terminal = {
 					var spacesThread = Array(numSpacesThread+1).join(" ");
 
 					//Calculate and transform RAM usage
-					ramUsage = formatNumber(script.scriptRef.ramUsage * script.threads, 2).toString() + "GB";
+					ramUsage = numeralWrapper.format(script.scriptRef.ramUsage * script.threads, '0.00') + " GB";
 
 					var entry = [script.filename, spacesScript, script.threads, spacesThread, ramUsage];
 					post(entry.join(""));
@@ -1577,6 +1618,40 @@ let Terminal = {
                     }
                 }
                 break;
+            /* eslint-disable no-case-declarations */
+            case "wget":
+                if (commandArray.length !== 2) {
+                    return post("Incorrect usage of wget command. Usage: wget [url] [target file]");
+                }
+                var args = commandArray[1].split(" ");
+                if (args.length !== 2) {
+                    return post("Incorrect usage of wget command. Usage: wget [url] [target file]");
+                }
+
+                let url = args[0];
+                let target = args[1];
+                if (!isScriptFilename(target) && !target.endsWith(".txt")) {
+                    return post(`wget failed: Invalid target file. Target file must be script or text file`);
+                }
+                $.get(url, function(data) {
+                    let res;
+                    if (isScriptFilename(target)) {
+                        res = Terminal.writeToScriptFile(s, target, data);
+                    } else {
+                        res = Terminal.writeToTextFile(s, target, data);
+                    }
+                    if (!res.success) {
+                        return post("wget failed");
+                    }
+                    if (res.overwritten) {
+                         return post(`wget successfully retrieved content and overwrote ${target}`);
+                    }
+                    return post(`wget successfully retrieved content to new file ${target}`);
+                }, 'text').fail(function(e) {
+                    return post("wget failed: " + JSON.stringify(e));
+                })
+                break;
+            /* eslint-enable no-case-declarations */
 			default:
 				post("Command not found");
 		}
@@ -1769,9 +1844,9 @@ let Terminal = {
         if (commandArray.length != 1) {
             post("Incorrect usage of free command. Usage: free"); return;
         }
-        post("Total: " + formatNumber(Player.getCurrentServer().maxRam, 2) + " GB");
-        post("Used: " + formatNumber(Player.getCurrentServer().ramUsed, 2) + " GB");
-        post("Available: " + formatNumber(Player.getCurrentServer().maxRam - Player.getCurrentServer().ramUsed, 2) + " GB");
+        post("Total: " + numeralWrapper.format(Player.getCurrentServer().maxRam, '0.00') + " GB");
+        post("Used: " + numeralWrapper.format(Player.getCurrentServer().ramUsed, '0.00') + " GB");
+        post("Available: " + numeralWrapper.format(Player.getCurrentServer().maxRam - Player.getCurrentServer().ramUsed, '0.00') + " GB");
     },
 
 	//First called when the "run [program]" command is called. Checks to see if you
@@ -1809,7 +1884,7 @@ let Terminal = {
          * @returns {void}
          */
         /**
-         * @type {Object.<string, ProgramHandler} 
+         * @type {Object.<string, ProgramHandler}
          */
         const programHandlers = {};
         programHandlers[Programs.NukeProgram.name] = (server) => {
@@ -1892,9 +1967,9 @@ let Terminal = {
             post("Server base security level: " + targetServer.baseDifficulty);
             post("Server current security level: " + targetServer.hackDifficulty);
             post("Server growth rate: " + targetServer.serverGrowth);
-            post("Netscript hack() execution time: " + formatNumber(scriptCalculateHackingTime(targetServer), 1) + "s");
-            post("Netscript grow() execution time: " + formatNumber(scriptCalculateGrowTime(targetServer)/1000, 1) + "s");
-            post("Netscript weaken() execution time: " + formatNumber(scriptCalculateWeakenTime(targetServer)/1000, 1) + "s");
+            post("Netscript hack() execution time: " + numeralWrapper.format(scriptCalculateHackingTime(targetServer), '0.0') + "s");
+            post("Netscript grow() execution time: " + numeralWrapper.format(scriptCalculateGrowTime(targetServer), '0.0') + "s");
+            post("Netscript weaken() execution time: " + numeralWrapper.format(scriptCalculateWeakenTime(targetServer), '0.0') + "s");
         };
         programHandlers[Programs.AutoLink.name] = () => {
             post("This executable cannot be run.");
@@ -1920,7 +1995,7 @@ let Terminal = {
             if(!fulfilled) {
                 post("Augmentations: " + Player.augmentations.length + " / 30");
 
-                post("Money: " + numeral(Player.money.toNumber()).format('($0.000a)') + " / " + numeral(1e11).format('($0.000a)'));
+                post("Money: " + numeralWrapper.format(Player.money.toNumber(), '($0.000a)') + " / " + numeralWrapper.format(1e11, '($0.000a)'));
                 post("One path below must be fulfilled...");
                 post("----------HACKING PATH----------");
                 post("Hacking skill: " + Player.hacking_skill + " / 2500");
@@ -2052,6 +2127,7 @@ let Terminal = {
 				}
 			}
 		}
+
 
 		post("ERROR: No such script");
 	}

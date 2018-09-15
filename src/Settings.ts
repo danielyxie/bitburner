@@ -20,6 +20,11 @@ interface IDefaultSettings {
     DisableHotkeys: boolean;
 
     /**
+     * Locale used for display numbers
+     */
+    Locale: string;
+
+    /**
      * Limit the number of log entries for each script being executed on each server.
      */
     MaxLogCapacity: number;
@@ -40,6 +45,11 @@ interface IDefaultSettings {
     SuppressFactionInvites: boolean;
 
     /**
+     * Whether to show a popup message when player is hospitalized from taking too much damage
+     */
+    SuppressHospitalizationPopup: boolean;
+
+    /**
      * Whether the user should be shown a dialog box whenever they receive a new message file.
      */
     SuppressMessages: boolean;
@@ -48,11 +58,6 @@ interface IDefaultSettings {
      * Whether the user should be asked to confirm travelling between cities.
      */
     SuppressTravelConfirmation: boolean;
-    
-    /**
-     * Whether to show a popup message when player is hospitalized from taking too much damage
-     */
-    SuppressHospitalizationPopup: boolean;
 }
 
 /**
@@ -91,13 +96,14 @@ const defaultSettings: IDefaultSettings = {
     AutosaveInterval:                    60,
     CodeInstructionRunTime:              50,
     DisableHotkeys:                      false,
+    Locale:                              "en",
     MaxLogCapacity:                      50,
     MaxPortCapacity:                     50,
     SuppressBuyAugmentationConfirmation: false,
     SuppressFactionInvites:              false,
+    SuppressHospitalizationPopup:        false,
     SuppressMessages:                    false,
     SuppressTravelConfirmation:          false,
-    SuppressHospitalizationPopup:        false,
 };
 
 /**
@@ -110,13 +116,14 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
     DisableHotkeys:                      defaultSettings.DisableHotkeys,
     EditorKeybinding:                    "ace",
     EditorTheme:                         "Monokai",
+    Locale:                              "en",
     MaxLogCapacity:                      defaultSettings.MaxLogCapacity,
     MaxPortCapacity:                     defaultSettings.MaxPortCapacity,
     SuppressBuyAugmentationConfirmation: defaultSettings.SuppressBuyAugmentationConfirmation,
     SuppressFactionInvites:              defaultSettings.SuppressFactionInvites,
+    SuppressHospitalizationPopup:        defaultSettings.SuppressHospitalizationPopup,
     SuppressMessages:                    defaultSettings.SuppressMessages,
     SuppressTravelConfirmation:          defaultSettings.SuppressTravelConfirmation,
-    SuppressHospitalizationPopup:        defaultSettings.SuppressHospitalizationPopup,
     ThemeBackgroundColor:                "#000000",
     ThemeFontColor:                      "#66ff33",
     ThemeHighlightColor:                 "#ffffff",

@@ -21,7 +21,7 @@ import {CONSTANTS}                              from "./Constants";
 import {Engine}                                 from "./engine";
 import {FconfSettings, parseFconfSettings}      from "./Fconf";
 import {iTutorialSteps, iTutorialNextStep,
-        iTutorialIsRunning, currITutorialStep}  from "./InteractiveTutorial";
+        ITutorial}                              from "./InteractiveTutorial";
 import {evaluateImport}                         from "./NetscriptEvaluator";
 import {NetscriptFunctions}                     from "./NetscriptFunctions";
 import {addWorkerScript,
@@ -31,15 +31,14 @@ import {AllServers, processSingleServerGrowth}  from "./Server";
 import {Settings}                               from "./Settings";
 import {post}                                   from "./ui/postToTerminal";
 import {TextFile}                               from "./TextFile";
-
 import {parse, Node}                            from "../utils/acorn";
 import {Page, routing}                          from "./ui/navigationTracking";
+import {numeralWrapper}                         from "./ui/numeralFormat";
 import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver";
 import {compareArrays}                          from "../utils/helpers/compareArrays";
 import {createElement}                          from "../utils/uiHelpers/createElement";
-import {formatNumber}                           from "../utils/StringHelperFunctions";
 import {getTimestamp}                           from "../utils/helpers/getTimestamp";
 import {roundToTwo}                             from "../utils/helpers/roundToTwo";
 
@@ -252,7 +251,7 @@ function updateScriptEditorContent() {
     var codeCopy = code.repeat(1);
     var ramUsage = calculateRamUsage(codeCopy);
     if (ramUsage !== -1) {
-        scriptEditorRamText.innerText = "RAM: " + formatNumber(ramUsage, 2).toString() + "GB";
+        scriptEditorRamText.innerText = "RAM: " + numeralWrapper.format(ramUsage, '0.00') + " GB";
     } else {
         scriptEditorRamText.innerText = "RAM: Syntax Error";
     }
@@ -281,8 +280,9 @@ function saveAndCloseScriptEditor() {
     var filename = document.getElementById("script-editor-filename").value;
     var editor = ace.edit('javascript-editor');
     var code = editor.getValue();
-    if (iTutorialIsRunning && currITutorialStep == iTutorialSteps.TerminalTypeScript) {
-        if (filename != "foodnstuff.script") {
+    if (ITutorial.isRunning && ITutorial.currStep === iTutorialSteps.TerminalTypeScript) {
+        //Make sure filename + code properly follow tutorial
+        if (filename !== "foodnstuff.script") {
             dialogBoxCreate("Leave the script name as 'foodnstuff'!");
             return;
         }
@@ -291,7 +291,23 @@ function saveAndCloseScriptEditor() {
             dialogBoxCreate("Please copy and paste the code from the tutorial!");
             return;
         }
-        iTutorialNextStep();
+
+        //Save the script
+        let s = Player.getCurrentServer();
+        for (var i = 0; i < s.scripts.length; i++) {
+            if (filename == s.scripts[i].filename) {
+                s.scripts[i].saveScript();
+                Engine.loadTerminalContent();
+                return iTutorialNextStep();
+            }
+        }
+
+        //If the current script does NOT exist, create a new one
+        let script = new Script();
+        script.saveScript();
+        s.scripts.push(script);
+
+        return iTutorialNextStep();
     }
 
     if (filename == "") {
@@ -858,7 +874,7 @@ function scriptCalculateOfflineProduction(runningScriptObj) {
             console.log(runningScriptObj.filename + " called grow() on " + serv.hostname + " " + timesGrown + " times while offline");
             runningScriptObj.log("Called grow() on " + serv.hostname + " " + timesGrown + " times while offline");
             var growth = processSingleServerGrowth(serv, timesGrown * 450);
-            runningScriptObj.log(serv.hostname + " grown by " + formatNumber(growth * 100 - 100, 6) + "% from grow() calls made while offline");
+            runningScriptObj.log(serv.hostname + " grown by " + numeralWrapper.format(growth * 100 - 100, '0.000000%') + " from grow() calls made while offline");
         }
     }
 

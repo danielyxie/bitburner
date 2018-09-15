@@ -60,7 +60,7 @@ var identifierRe = "[a-zA-Z\\$_\u00a1-\uffff][a-zA-Z\\d\\$_\u00a1-\uffff]*";
 
 let NetscriptFunctions =
     "hack|sleep|grow|weaken|print|tprint|scan|nuke|brutessh|ftpcrack|"         + //Netscript functions
-    "clearLog|disableLog|enableLog|"                                           +
+    "clearLog|disableLog|enableLog|isLogEnabled|getScriptLogs|"                +
     "relaysmtp|httpworm|sqlinject|run|exec|spawn|kill|killall|exit|"           +
     "scp|ls|hasRootAccess|"                                                    +
     "getIp|getHackingMultipliers|getBitNodeMultipliers|getStats|isBusy|"       +
@@ -73,22 +73,28 @@ let NetscriptFunctions =
     "deleteServer|getPurchasedServers|"                                        +
     "getPurchasedServerLimit|getPurchasedServerMaxRam|"                        +
     "getPurchasedServerCost|"                                                  +
-    "purchaseServer|round|write|read|peek|clear|rm|getPortHandle|"             +
+    "purchaseServer|round|write|tryWrite|read|peek|clear|rm|getPortHandle|"    +
     "scriptRunning|scriptKill|getScriptName|getScriptRam|"                     +
     "getHackTime|getGrowTime|getWeakenTime|getScriptIncome|getScriptExpGain|"  +
     "getTimeSinceLastAug|prompt|"                                              +
+
+    //Singularity Functions
     "universityCourse|getCharacterInformation|"                                +
     "gymWorkout|travelToCity|purchaseTor|purchaseProgram|upgradeHomeRam|"      +
     "getUpgradeHomeRamCost|workForCompany|applyToCompany|getCompanyRep|"       +
     "getCompanyFavor|stopAction|getFactionFavor|"                              +
     "getFavorToDonate|getFactionFavorGain|getCompanyFavorGain|"                +
     "checkFactionInvitations|joinFaction|workForFaction|getFactionRep|"        +
+    "donateToFaction|"                                                         +
     "createProgram|commitCrime|getCrimeChance|getOwnedAugmentations|"          +
     "getOwnedSourceFiles|getAugmentationsFromFaction|"                         +
     "getAugmentationCost|purchaseAugmentation|"                                +
     "installAugmentations|"                                                    +
+
+    //TIX API
     "getStockPrice|getStockPosition|buyStock|sellStock|shortStock|sellShort|"  +
     "placeOrder|cancelOrder|"                                                  +
+
     //Hacknet Node API
     "hacknet|numNodes|purchaseNode|getPurchaseNodeCost|getNodeStats|"          +
     "upgradeLevel|upgradeRam|upgradeCore|getLevelUpgradeCost|"                 +
@@ -101,7 +107,7 @@ let NetscriptFunctions =
     "getActionMaxLevel|getActionCurrentLevel|getActionAutolevel|"              +
     "setActionAutolevel|setActionLevel|"                                       +
     "getRank|getSkillPoints|getSkillLevel|getSkillUpgradeCost|"                +
-    "upgradeSkill|getTeamSize|"                                                +
+    "upgradeSkill|getTeamSize|getCity|"                                        +
     "setTeamSize|getCityEstimatedPopulation|getCityEstimatedCommunities|"      +
     "getCityChaos|switchCity|getStamina|joinBladeburnerFaction|getBonusTime";
 

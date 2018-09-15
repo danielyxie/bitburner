@@ -451,7 +451,7 @@ function loadImportedGame(saveObj, saveString) {
 
     var popupId = "import-game-restart-game-notice";
     var txt = createElement("p", {
-        innerText:"Imported game! I would suggest saving the game and then reloading the page " +
+        innerText:"Imported game! You need to SAVE the game and then RELOAD the page " +
                  "to make sure everything runs smoothly"
     });
     var gotitBtn = createElement("a", {
@@ -516,9 +516,9 @@ function loadImportedGame(saveObj, saveString) {
 
     Player.lastUpdate = Engine._lastUpdate;
     Engine.start();                 //Run main game loop and Scripts loop
-    dialogBoxCreate("While you were offline, your scripts generated $" +
-                    formatNumber(offlineProductionFromScripts, 2) + " and your Hacknet Nodes generated $" +
-                    formatNumber(offlineProductionFromHacknetNodes, 2));
+    dialogBoxCreate("While you were offline, your scripts generated <span class='money-gold'>$" +
+                    formatNumber(offlineProductionFromScripts, 2) + "</span> and your Hacknet Nodes generated <span class='money-gold'>$" +
+                    formatNumber(offlineProductionFromHacknetNodes, 2) + "</span>");
     return true;
 }
 

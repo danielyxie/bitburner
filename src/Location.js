@@ -15,10 +15,11 @@ import {purchaseServer,
 import {Settings}                               from "./Settings";
 import {SpecialServerNames, SpecialServerIps}   from "./SpecialServerIps";
 
+import {numeralWrapper}                         from "./ui/numeralFormat";
+
 import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {clearEventListeners}                    from "../utils/uiHelpers/clearEventListeners";
 import {createRandomIp}                         from "../utils/IPAddress";
-import numeral                                  from "numeral/min/numeral.min";
 import {formatNumber}                           from "../utils/StringHelperFunctions";
 import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
         yesNoBoxGetYesButton, yesNoBoxGetNoButton,
@@ -1001,7 +1002,7 @@ function displayLocationContent() {
             slumsDealDrugs.innerHTML = "Deal Drugs (" + (drugsChance*100).toFixed(3) + "% chance of success)";
             slumsDealDrugs.innerHTML += '<span class="tooltiptext"> Attempt to deal drugs </span>';
             slumsBondForgery.style.display = "block";
-            slumsBondForgery.innerHTML = "Bond Forgery(" + (bondChance*100).toFixed(3) + "% chance of success)";
+            slumsBondForgery.innerHTML = "Bond Forgery (" + (bondChance*100).toFixed(3) + "% chance of success)";
             slumsBondForgery.innerHTML += "<span class='tooltiptext'> Attempt to forge corporate bonds</span>";
             slumsTrafficArms.style.display = "block";
             slumsTrafficArms.innerHTML = "Traffick Illegal Arms (" + (armsChance*100).toFixed(3) + "% chance of success)";
@@ -1788,7 +1789,7 @@ function initLocationButtons() {
         });
         yesNoBoxCreate("Would you like to purchase additional RAM for your home computer? <br><br>" +
                        "This will upgrade your RAM from " + ram + "GB to " + ram*2 + "GB. <br><br>" +
-                       "This will cost " + numeral(cost).format('$0.000a'));
+                       "This will cost " + numeralWrapper.format(cost, '$0.000a'));
     });
 
     purchaseHomeCores.addEventListener("click", function(e) {
@@ -1825,7 +1826,7 @@ function initLocationButtons() {
         yesNoBoxCreate("Would you like to purchase an additional CPU Core for your home computer? Each CPU Core " +
                        "lets you start with an additional Core Node in Hacking Missions.<br><br>" +
                        "Purchasing an additional core (for a total of " + (Player.getHomeComputer().cpuCores + 1) + ") will " +
-                       "cost " + numeral(cost).format('$0.000a'));
+                       "cost " + numeralWrapper.format(cost, '$0.000a'));
     });
 
     travelToAevum.addEventListener("click", function(e) {

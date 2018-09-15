@@ -1,5 +1,6 @@
 import {Player}  from "./Player";
-import numeral from "numeral/min/numeral.min";
+
+import {numeralWrapper} from "./ui/numeralFormat";
 
 function CharacterOverview() {
 	this.hp = document.getElementById("character-hp-text");
@@ -33,7 +34,7 @@ CharacterOverview.prototype.update = function() {
 
         let changed = false;
         changed = replaceAndChanged(this.hp, Player.hp + " / " + Player.max_hp) || changed;
-        changed = replaceAndChanged(this.money, numeral(Player.money.toNumber()).format('($0.000a)')) || changed;
+        changed = replaceAndChanged(this.money, numeralWrapper.format(Player.money.toNumber(), '($0.000a)')) || changed;
         changed = replaceAndChanged(this.hack, (Player.hacking_skill).toLocaleString()) || changed;
         changed = replaceAndChanged(this.str, (Player.strength).toLocaleString()) || changed;
         changed = replaceAndChanged(this.def, (Player.defense).toLocaleString()) || changed;

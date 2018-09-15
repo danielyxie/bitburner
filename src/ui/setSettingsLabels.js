@@ -1,6 +1,9 @@
 import {Engine} from "../engine";
 import {Settings} from "../Settings";
 
+import {numeralWrapper} from "./NumeralFormat";
+
+
 function setSettingsLabels() {
     var nsExecTime = document.getElementById("settingsNSExecTimeRangeValLabel");
     var nsLogLimit = document.getElementById("settingsNSLogRangeValLabel");
@@ -12,6 +15,7 @@ function setSettingsLabels() {
     var suppressHospitalizationPopup = document.getElementById("settingsSuppressHospitalizationPopup");
     var autosaveInterval = document.getElementById("settingsAutosaveIntervalValLabel");
     var disableHotkeys = document.getElementById("settingsDisableHotkeys");
+    var locale = document.getElementById("settingsLocale");
 
     //Initialize values on labels
     nsExecTime.innerHTML = Settings.CodeInstructionRunTime + "ms";
@@ -24,8 +28,10 @@ function setSettingsLabels() {
     suppressHospitalizationPopup.checked = Settings.SuppressHospitalizationPopup;
     autosaveInterval.innerHTML = Settings.AutosaveInterval;
     disableHotkeys.checked = Settings.DisableHotkeys;
+    locale.value = Settings.Locale;
+    numeralWrapper.updateLocale(Settings.Locale); //Initialize locale
 
-    //Set handlers for when input changes
+    //Set handlers for when input changes for sliders
     var nsExecTimeInput = document.getElementById("settingsNSExecTimeRangeVal");
     var nsLogRangeInput = document.getElementById("settingsNSLogRangeVal");
     var nsPortRangeInput = document.getElementById("settingsNSPortRangeVal");
@@ -60,6 +66,7 @@ function setSettingsLabels() {
         }
     };
 
+    //Set handlers for when settings change on checkboxes
     suppressMsgs.onclick = function() {
         Settings.SuppressMessages = this.checked;
     };
@@ -75,13 +82,26 @@ function setSettingsLabels() {
     suppressBuyAugmentationConfirmation.onclick = function() {
         Settings.SuppressBuyAugmentationConfirmation = this.checked;
     };
-    
+
     suppressHospitalizationPopup.onclick = function() {
         Settings.SuppressHospitalizationPopup = this.checked;
     }
 
     disableHotkeys.onclick = function() {
         Settings.DisableHotkeys = this.checked;
+    }
+
+    //Locale selector
+    locale.onchange = function() {
+        if (!numeralWrapper.updateLocale(locale.value)) {
+            console.warn(`Invalid locale for numeral: ${locale.value}`);
+
+            let defaultValue = 'en';
+            Settings.Locale = defaultValue;
+            locale.value = defaultValue;
+            return;
+        }
+        Settings.Locale = locale.value;
     }
 
     //Theme

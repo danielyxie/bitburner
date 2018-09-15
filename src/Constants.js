@@ -1,10 +1,13 @@
 let CONSTANTS = {
-    Version:                "0.40.2",
+    Version:                "0.40.3",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
     //the player will have this level assuming no multipliers. Multipliers can cause skills to go above this.
 	MaxSkillLevel: 			975,
+
+    //Milliseconds per game cycle
+    MilliPerCycle: 200,
 
     //How much reputation is needed to join a megacorporation's faction
     CorpFactionRepRequirement: 200e3,
@@ -32,6 +35,7 @@ let CONSTANTS = {
 
     /* Faction and Company favor */
     BaseFavorToDonate:            150,
+    DonateMoneyToRepDivisor:      1e6,
     FactionReputationToFavorBase: 500,
     FactionReputationToFavorMult: 1.02,
     CompanyReputationToFavorBase: 500,
@@ -493,33 +497,31 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
-    "v0.40.2<br>" +
-    "------------------------------<br>"  +
-    "* Bladeburner Changes:<br>" +
-    "*** Added getBonusTime(), getSkillUpgradeCost(), and getCity() Netscript functions to the API<br>" +
-    "*** Buffed the effects of many Bladeburner Augmentations<br>" +
-    "*** The Blade's Simulacrum Augmentation requires significantly less reputation but slightly more money<br>" +
-    "*** Slightly increased the amount of successes needed for a Contract/Operation in order to increase its max level<br>" +
-    "*** Increased the amount of money gained from Contracts by ~25%<br>" +
-    "*** Increased the base amount of rank gained from Operations by 10%<br>" +
-    "*** Significantly increased the 'randomness' in determining a Contract/Operation's initial count and rate of count increase<br>" +
-    "*** The number (count) of Operations should now increase significantly faster<br>" +
-    "*** There are now, on average, more Synthoid communities in a city<br>" +
-    "*** If automation is enabled (the feature in Bladeburner console), then switching to another action such as working for a company will now disable the automation<br>" +
-    "------------------------------<br>"  +
-    "* Stock Market Changes:<br>" +
-    "***Added a watchlist filter feature to the UI that allows you to specify which stocks to show<br>" +
-    "***Added the Four Sigma (4S) Market Data feed, which provides volatility and price forecast information about stocks<br>"  +
-    "***Added the 4S Market Data TIX API, which lets you access the aforementioned data through Netscript<br>"  +
-    "------------------------------<br>"  +
-    "* There is now a setting for enabling/disabling the popup that appears when you are hospitalized<br>" +
-    "* Bug Fix: Stock market should now be correctly initialized in BitNode-8 (by Kline-)<br>" +
-    "* Bug Fix: bladeburner.getCurrentAction() should now properly an 'Idle' object rather than null (by Kline-)<br>" +
-    "* Bug Fix: Bladeburner skill cost multiplier should now properly increase in BitNode-12 (by hydroflame)<br>" +
-    "* Bug Fix: 'document', 'hacknet', and 'window' keywords should no longer be counted multiple times in RAM calculations<br>" +
-    "* Bug Fix: Joining factions through Singularity functions should now prevent you from joining opposing factions<br>" + 
-    "* Bug Fix: Four Sigma should no longer have two 'Speech Enhancement' Augmentations (by Kline-)<br>"
-
+    `v0.40.3<br>
+     -----------------------------------------------<br>
+     * Bladeburner Changes:<br>
+     *** Increased the effect that agi and dexterity have on action time<br>
+     *** Starting number of contracts/operations available will be slightly lower<br>
+     *** Random events will now happen slightly more often<br>
+     *** Slightly increased the rate at which the Overclock skill point cost increases<br>
+     -----------------------------------------------<br>
+     * The maximum volatility of stocks is now randomized (randomly generated within a certain range every time the game resets)<br>
+     * Increased the range of possible values for initial stock prices<br>
+     * b1t_flum3.exe program can now be created immediately at Hacking level 1 (rather than hacking level 5)<br>
+     * UI improvements for the character overview panel and the left-hand menu (by mat-jaworski)<br>
+     * General UI improvements for displays and Terminal (by mat-jaworski)<br>
+     * Added optional parameters to the getHackTime(), getGrowTime(), and getWeakenTime() Netscript functions<br>
+     * Added isLogEnabled() and getScriptLogs() Netscript functions<br>
+     * Added donateToFaction() Singularity function<br>
+     * Updated documentation to reflect the fact that Netscript port handles (getPortHandle()) only works in NetscriptJS (2.0), NOT Netscript 1.0<br>
+     * Added tryWrite() Netscript function<br>
+     * When working (for a company/faction), experience is gained immediately/continuously rather than all at once when the work is finished<br>
+     * Added a setting in .fconf for enabling line-wrap in the Terminal input<br>
+     * Adding a game option for changing the locale that most numbers are displayed in (this mostly applies for whenever money is displayed)<br>
+     * The randomized parameters of many high-level servers can now take on a higher range of values<br>
+     * Many 'foreign' servers (hackable servers that you don't own) now have a randomized amount of RAM<br>
+     * Added 'wget' Terminal command<br>
+     * Improved the introductory tutorial`
 }
 
 export {CONSTANTS};

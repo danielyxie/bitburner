@@ -23,7 +23,11 @@ function initLiterature() {
     var title, fn, txt;
     title   = "The Beginner's Guide to Hacking";
     fn      = "hackers-starting-handbook.lit";
-    txt     = "When starting out, hacking is the most profitable way to earn money and progress. This " +
+    txt     = "Some resources:<br><br>"  +
+              "<a class='a-link-button' href='https://bitburner.readthedocs.io/en/latest/netscriptlearntoprogram.html' target='_blank' style='margin:4px'>Learn to Program</a><br><br>" +
+              "<a class='a-link-button' href='https://bitburner.readthedocs.io/en/latest/netscriptjs.html' target='_blank' style='margin:4px'>For Experienced JavaScript Developers: NetscriptJS</a><br><br>" +
+              "<a class='a-link-button' href='https://bitburner.readthedocs.io/en/latest/netscript.html' target='_blank' style='margin:4px'>Netscript Documentation</a><br><br>" +
+              "When starting out, hacking is the most profitable way to earn money and progress. This " +
               "is a brief collection of tips/pointers on how to make the most out of your hacking scripts.<br><br>" +
               "-hack() and grow() both work by percentages. hack() steals a certain percentage of the " +
               "money on a server, and grow() increases the amount of money on a server by some percentage (multiplicatively)<br><br>" +

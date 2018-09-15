@@ -1,3 +1,7 @@
+/* COLORS */
+/* Attributes */
+/* COLORS */
+/* Attributes */
 * {
   font-size: 16px;
   font-family: "Lucida Console", "Lucida Sans Unicode", "Fira Mono", "Consolas", "Courier New", Courier, monospace, "Times New Roman"; }
@@ -13,7 +17,8 @@
 :root {
   --my-font-color: #6f3;
   --my-background-color: #000;
-  --my-highlight-color: #fff; }
+  --my-highlight-color: #fff;
+  --my-prompt-color: #f92672; }
 
 body {
   background-color: var(--my-background-color); }
@@ -81,7 +86,7 @@ tr:focus {
   display: block;
   color: #e6e6e6;
   background-color: #555;
-  padding: 16px;
+  padding: 12px 8px;
   text-decoration: none; }
 
 /* Hovering makes them lighter */
@@ -99,29 +104,37 @@ tr:focus {
 .mainmenu > li a.active:hover {
   background-color: #aaa; }
 
+#hacking-menu-header-li,
+#character-menu-header-li,
+#world-menu-header-li,
+#help-menu-header-li {
+  position: relative; }
+
+/* Accordion Outline */
+.mainmenu-accordion-header {
+  outline: 2px solid #fff; }
+
 /* Plus and minus signs */
 .mainmenu-accordion-header:after {
   content: '\2795';
-  font-size: 13px;
-  color: #fff;
   float: right;
-  margin-left: 5px; }
-
-.mainmenu-accordion-header.opened:after {
-  content: "\2796"; }
+  font-size: 13px;
+  position: absolute;
+  bottom: 25%;
+  right: 3px;
+  color: transparent;
+  text-shadow: 0 0 0 #fff; }
 
 .mainmenu-accordion-header.opened {
   background-color: #222; }
+  .mainmenu-accordion-header.opened:after {
+    content: "\2796"; }
 
 /* Slide down transition */
 .mainmenu-accordion-panel {
   max-height: 0;
   opacity: 1;
   transition: max-height 0.2s ease-out; }
-
-/* Borders */
-.mainmenu-accordion-header {
-  border: 2px solid #fff; }
 
 /* Make html links ("a" elements) nice looking buttons with this class */
 a:link,
@@ -132,57 +145,51 @@ a:visited {
   text-decoration: none;
   background-color: #555;
   color: #fff;
-  padding: 5px;
+  padding: 3px 5px;
   margin: 5px;
   border: 1px solid #333;
   -moz-user-select: none;
   -ms-user-select: none;
   -khtml-user-select: none;
   -webkit-user-select: none; }
-
-.a-link-button:hover {
-  background-color: #666; }
-
-.a-link-button:active {
-  -webkit-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
-  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6); }
+  .a-link-button:hover {
+    background-color: #666; }
+  .a-link-button:active {
+    -webkit-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+    box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6); }
 
 /* Make anchor tags ("a" elements) inactive (not clickable) */
 .a-link-button-inactive {
   text-decoration: none;
   background-color: #333;
   color: #fff;
-  padding: 5px;
+  padding: 3px 5px;
   margin: 5px;
   border: 1px solid #333;
   cursor: default; }
-
-.a-link-button-inactive:hover .tooltiptext,
-.a-link-button-inactive:hover .tooltiptexthigh,
-.a-link-button-inactive:hover .tooltiptextleft {
-  visibility: visible; }
-
-.a-link-button-inactive:active {
-  pointer-events: none; }
+  .a-link-button-inactive:hover .tooltiptext,
+  .a-link-button-inactive:hover .tooltiptexthigh,
+  .a-link-button-inactive:hover .tooltiptextleft {
+    visibility: visible; }
+  .a-link-button-inactive:active {
+    pointer-events: none; }
 
 /* Make anchor tags ("a" elements) for activated actions */
 .a-link-button-bought {
   text-decoration: none;
   background-color: #0a0;
   color: #fff;
-  padding: 5px;
+  padding: 3px 5px;
   margin: 5px;
   border: 1px solid #0a0;
   cursor: default; }
-
-.a-link-button-bought:hover .tooltiptext,
-.a-link-button-bought:hover .tooltiptexthigh,
-.a-link-button-bought:hover .tooltiptextleft {
-  visibility: visible; }
-
-.a-link-button-bought:active {
-  pointer-events: none; }
+  .a-link-button-bought:hover .tooltiptext,
+  .a-link-button-bought:hover .tooltiptexthigh,
+  .a-link-button-bought:hover .tooltiptextleft {
+    visibility: visible; }
+  .a-link-button-bought:active {
+    pointer-events: none; }
 
 .dropdown {
   color: #fff;
@@ -217,20 +224,20 @@ a:visited {
 
 /* Tool tips (when hovering over an element */
 .tooltip {
-  position: relative;
-  display: inline-block; }
-
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 300px;
-  background-color: var(--my-background-color);
-  border: 2px solid var(--my-highlight-color);
-  color: #fff;
-  text-align: center;
-  padding: 4px;
-  left: 101%;
-  position: absolute;
-  z-index: 99; }
+  display: inline-block;
+  position: relative; }
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 300px;
+    background-color: var(--my-background-color);
+    border: 2px solid var(--my-highlight-color);
+    color: #fff;
+    text-align: center;
+    padding: 4px;
+    left: 101%;
+    pointer-events: none;
+    position: absolute;
+    z-index: 99; }
 
 /* Same thing as a normal tooltip except its a bit higher */
 .tooltip .tooltiptexthigh {
@@ -246,7 +253,7 @@ a:visited {
   position: absolute;
   z-index: 99; }
 
-/* Similar to a normal tooltip except its positioned on the left of the elemnt
+/* Similar to a normal tooltip except its positioned on the left of the element
    rather than the right to avoid exceeding the elements normal width */
 .tooltip .tooltiptextleft {
   visibility: hidden;
@@ -436,18 +443,24 @@ a:visited {
   top: 0;
   height: auto;
   /* Full height */
-  padding: 8px;
+  padding: 10px 2px;
   border: 2px solid var(--my-highlight-color);
-  width: 19%;
+  width: auto;
+  max-width: 280px;
   overflow: auto;
   /* Enable scroll if needed */
-  background-color: #444;
+  background-color: rgba(57, 54, 54, 0.9);
   /* Fallback color */
   z-index: 1; }
 
 #character-overview-text {
-  color: #fff;
-  background-color: #444; }
+  color: #faffdf; }
+  #character-overview-text table {
+    border-collapse: collapse;
+    margin: auto; }
+  #character-overview-text td {
+    padding: 2px;
+    vertical-align: middle; }
 
 .character-stat-text {
   color: #fff;
@@ -455,6 +468,30 @@ a:visited {
 
 .character-stat-cell {
   text-align: right; }
+
+#character-hack-wrapper td,
+#character-agi-wrapper td {
+  border-bottom: 1px #aaa solid;
+  padding-bottom: 10px; }
+
+#character-str-wrapper td,
+#character-cha-wrapper td {
+  padding-top: 10px; }
+
+#character-hp-wrapper {
+  color: #dd3434; }
+
+#character-money-wrapper {
+  color: #ffd700; }
+
+#character-hack-wrapper {
+  color: #adff2f; }
+
+#character-cha-wrapper {
+  color: #a671d1; }
+
+#character-int-wrapper {
+  color: #6495ed; }
 
 #character-overview-save-button,
 #character-overview-options-button {
@@ -464,14 +501,17 @@ a:visited {
   -webkit-box-shadow: 1px 1px 3px #000;
   -moz-box-shadow: 1px 1px 3px #000;
   box-shadow: 1px 1px 3px #000;
-  color: #aaa;
+  color: #cecece;
+  display: inline-block;
   font-size: 14px;
   font-weight: bold;
-  height: 22px;
-  background-color: #000; }
+  height: 25px;
+  background-color: #000;
+  padding: 5px 8px; }
 
 .character-quick-options {
-  padding-top: 5px; }
+  margin-top: 10px;
+  text-align: center; }
 
 #character-overview-save-button:hover,
 #character-overview-save-button:focus,
@@ -481,17 +521,13 @@ a:visited {
   text-decoration: none;
   cursor: pointer; }
 
-#character-overview-options-button {
-  display: inline; }
-
 /* Scan analyze links from AutoLink */
 .scan-analyze-link {
   cursor: pointer;
   color: #fff;
   text-decoration: underline; }
-
-.scan-analyze-link:hover {
-  text-decoration: none; }
+  .scan-analyze-link:hover {
+    text-decoration: none; }
 
 /* Accordion menus (Header with collapsible panel) */
 .accordion-header {
@@ -499,35 +535,30 @@ a:visited {
   font-size: 20px;
   color: #fff;
   margin: 6px 6px 0 6px;
-  padding: 6px;
+  padding: 4px 6px;
   cursor: pointer;
   width: 80%;
   text-align: left;
   border: none;
-  outline: none; }
-
-.accordion-header.active,
-.accordion-header:hover {
-  background-color: #555; }
-
-.accordion-header.active:hover {
-  background-color: #666; }
-
-.accordion-header:after {
-  content: '\2795';
-  /* "plus" sign (+) */
-  font-size: 13px;
-  color: #fff;
-  float: right;
-  margin-left: 5px; }
-
-.accordion-header.active:after {
-  content: "\2796";
-  /* "minus" sign (-) */
-  font-size: 13px;
-  color: #fff;
-  float: right;
-  margin-left: 5px; }
+  outline: none;
+  position: relative; }
+  .accordion-header.active, .accordion-header:hover {
+    background-color: #555; }
+  .accordion-header.active:hover {
+    background-color: #666; }
+  .accordion-header:after {
+    content: '\2795';
+    /* "plus" sign (+) */
+    font-size: 13px;
+    float: right;
+    color: transparent;
+    text-shadow: 0 0 0 #fff;
+    position: absolute;
+    bottom: 5px;
+    right: 6px; }
+  .accordion-header.active:after {
+    content: "\2796";
+    /* "minus" sign (-) */ }
 
 .accordion-panel {
   margin: 0 6px 6px 6px;
@@ -538,12 +569,8 @@ a:visited {
   background-color: #555;
   overflow-y: auto;
   overflow-x: none; }
-
-.accordion-panel div,
-.accordion-panel ul,
-.accordion-panel p,
-.accordion-panel ul > li {
-  background-color: #555; }
+  .accordion-panel div, .accordion-panel ul, .accordion-panel p, .accordion-panel ul > li {
+    background-color: #555; }
 
 /* override the global <span> styling */
 #active-scripts-total-production-active,
@@ -552,6 +579,32 @@ a:visited {
   margin: 0;
   padding: 0; }
 
+/* Helper Classes */
+.hacker-green {
+  color: #adff2f; }
+
+.money-gold {
+  color: #ffd700; }
+
+.light-yellow {
+  color: #faffdf; }
+
+.failure {
+  color: #ff2929;
+  text-shadow: 0 0 0 #ff2929; }
+
+.success {
+  color: #3adb76;
+  text-shadow: 0 0 0 #3adb76; }
+
+.physical-yellow {
+  color: #faffdf; }
+
+.charisma-purple {
+  color: #a671d1; }
+
+/* COLORS */
+/* Attributes */
 #terminal-container {
   position: fixed;
   margin-left: 10%;
@@ -570,6 +623,10 @@ a:visited {
   overflow-y: scroll;
   background-color: var(--my-background-color);
   table-layout: fixed; }
+  #terminal .prompt {
+    color: var(--my-prompt-color);
+    margin: 0;
+    padding: 0; }
 
 #terminal-input {
   background-color: var(--my-background-color);
@@ -596,12 +653,19 @@ a:visited {
 #terminal-input-td {
   display: flex; }
 
+#terminal-input-td textarea {
+  overflow: hidden;
+  resize: none;
+  height: auto; }
+
 #terminal-input-header {
   white-space: pre; }
 
 #terminal-input-text-box {
   flex: 1 1 auto; }
 
+/* COLORS */
+/* Attributes */
 /* CSS for different main menu pages, such as character info, script editor, etc (but excluding
     terminal which has its own page) */
 .generic-menupage-container {
@@ -776,36 +840,30 @@ a:visited {
 .active-scripts-script-header {
   background-color: #555;
   color: var(--my-font-color);
-  padding: 4px;
-  padding-left: 10px;
+  padding: 4px 25px 4px 10px;
   cursor: pointer;
   width: auto;
   text-align: left;
   border: none;
-  outline: none; }
-
-.active-scripts-script-header:hover,
-.active-scripts-script-header.active:hover {
-  background-color: #666; }
-
-.active-scripts-script-header.active {
-  background-color: #555; }
-
-.active-scripts-script-header:after {
-  content: '\2795';
-  /* "plus" sign (+) */
-  font-size: 13px;
-  color: var(--my-font-color);
-  float: right;
-  margin-left: 5px; }
-
-.active-scripts-script-header.active:after {
-  content: "\2796";
-  /* "minus" sign (-) */
-  font-size: 13px;
-  color: var(--my-font-color);
-  float: right;
-  margin-left: 5px; }
+  outline: none;
+  position: relative; }
+  .active-scripts-script-header:after {
+    content: '\2795';
+    /* "plus" sign (+) */
+    font-size: 13px;
+    float: right;
+    margin-left: 5px;
+    color: transparent;
+    text-shadow: 0 0 0 var(--my-font-color);
+    position: absolute;
+    bottom: 4px; }
+  .active-scripts-script-header.active:after {
+    content: "\2796";
+    /* "minus" sign (-) */ }
+  .active-scripts-script-header:hover, .active-scripts-script-header.active:hover {
+    background-color: #666; }
+  .active-scripts-script-header.active {
+    background-color: #555; }
 
 .active-scripts-script-panel {
   padding: 0 18px;
@@ -813,15 +871,11 @@ a:visited {
   width: auto;
   display: none;
   margin-bottom: 6px; }
-
-.active-scripts-script-panel p,
-.active-scripts-script-panel h2,
-.active-scripts-script-panel ul,
-.active-scripts-script-panel li {
-  background-color: #555;
-  width: auto;
-  color: #fff;
-  margin-left: 5%; }
+  .active-scripts-script-panel p, .active-scripts-script-panel h2, .active-scripts-script-panel ul, .active-scripts-script-panel li {
+    background-color: #555;
+    width: auto;
+    color: #fff;
+    margin-left: 5%; }
 
 .active-scripts-button {
   -webkit-border-radius: 12px;
@@ -836,12 +890,10 @@ a:visited {
   margin: 4px;
   padding: 4px;
   background-color: #000; }
-
-.active-scripts-button:hover,
-.active-scripts-button:focus {
-  color: #fff;
-  text-decoration: none;
-  cursor: pointer; }
+  .active-scripts-button:hover, .active-scripts-button:focus {
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer; }
 
 /* Hacknet Nodes */
 #hacknet-nodes-container {
@@ -857,6 +909,14 @@ a:visited {
   float: left;
   overflow: hidden;
   white-space: nowrap; }
+  #hacknet-nodes-container li.hacknet-node {
+    -webkit-box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 0 16px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 0 16px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 0 16px rgba(0, 0, 0, 0.1);
+    margin: 6px;
+    padding: 7px;
+    width: 35vw;
+    border: 2px solid var(--my-highlight-color); }
 
 #hacknet-nodes-list {
   list-style: none;
@@ -876,31 +936,19 @@ a:visited {
 #hacknet-nodes-purchase-button {
   display: inline-block; }
 
-.hacknet-node {
-  -webkit-box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 0 16px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 0 16px rgba(0, 0, 0, 0.1);
-  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 0 16px rgba(0, 0, 0, 0.1);
-  margin: 6px;
-  padding: 6px;
-  width: 34vw;
-  border: 2px solid var(--my-highlight-color); }
-
 .hacknet-node-container {
   display: inline-table; }
-
-.hacknet-node-container .row {
-  display: table-row;
-  height: 30px; }
-
-.hacknet-node-container .row p {
-  display: table-cell; }
-
-.hacknet-node-container .upgradable-info {
-  display: inline-block;
-  margin: 0 4px;
-  /* Don't want the vertical margin/padding, just left & right */
-  padding: 0 4px;
-  width: 64px; }
+  .hacknet-node-container .row {
+    display: table-row;
+    height: 30px; }
+    .hacknet-node-container .row p {
+      display: table-cell; }
+  .hacknet-node-container .upgradable-info {
+    display: inline-block;
+    margin: 0 4px;
+    /* Don't want the vertical margin/padding, just left & right */
+    padding: 0 4px;
+    width: 64px; }
 
 .menu-page-text {
   width: 70vw; }
@@ -957,8 +1005,8 @@ a:visited {
 
 #faction-container p,
 #faction-container pre {
-  padding: 6px;
-  margin: 6px; }
+  padding: 4px 6px;
+  margin: 4px 6px; }
 
 #faction-container pre {
   width: 70%;
@@ -977,13 +1025,9 @@ a:visited {
 #faction-augmentations-container {
   position: fixed;
   padding-top: 10px; }
-
-#faction-augmentations-container p,
-#faction-augmentations-container a,
-#faction-augmentations-container ul,
-#faction-augmentations-container h1 {
-  margin: 8px;
-  padding: 4px; }
+  #faction-augmentations-container p, #faction-augmentations-container a, #faction-augmentations-container ul, #faction-augmentations-container h1 {
+    margin: 8px;
+    padding: 4px; }
 
 /* World */
 #world-container li {
@@ -998,8 +1042,13 @@ a:visited {
 .augmentations-list button,
 .augmentations-list div {
   color: var(--my-font-color);
-  padding: 8px;
   text-decoration: none; }
+
+.augmentations-list button {
+  padding: 2px 5px; }
+
+.augmentations-list div {
+  padding: 6px; }
 
 /* Tutorial */
 #tutorial-container {
@@ -1043,16 +1092,20 @@ a:visited {
   margin: 10px;
   padding: 6px; }
 
-#location-container * {
+#location-container > * {
   margin: 10px 5px 10px 5px; }
 
-#location-job-reputation, #location-company-favor {
+#location-job-reputation,
+#location-company-favor {
   display: inline; }
 
 /* Infiltration */
 #infiltration-container {
   position: fixed;
   padding: 6px; }
+  #infiltration-container span {
+    margin: 0;
+    padding: 0; }
 
 #infiltration-left-panel,
 #infiltration-right-panel {
@@ -1070,6 +1123,9 @@ a:visited {
 #infiltration-left-panel p,
 #infiltration-right-panel p {
   margin: 4px; }
+
+#infiltration-buttons {
+  margin-top: 20px; }
 
 #infiltration-buttons .a-link-button {
   display: inline;
@@ -1139,6 +1195,8 @@ a:visited {
   float: left;
   background-color: #555; }
 
+/* COLORS */
+/* Attributes */
 /* Both Work in progress and BitNode stuff */
 .generic-fullscreen-container {
   color: var(--my-font-color);
@@ -1195,6 +1253,8 @@ a:visited {
 .bitnode-destroyed:hover {
   color: #fff; }
 
+/* COLORS */
+/* Attributes */
 /* Pop-up boxes */
 .popup-box-container {
   display: none;
@@ -1277,6 +1337,10 @@ a:visited {
   z-index: 2;
   background-color: var(--my-background-color);
   padding: 10px; }
+  .dialog-box-content p span,
+  #log-box-content p span {
+    padding: 0;
+    margin: 0; }
 
 .dialog-box-close-button {
   -webkit-border-radius: 12px;
@@ -1322,6 +1386,10 @@ a:visited {
   display: block;
   padding: 8px;
   margin: 8px; }
+
+#infiltration-box-content span {
+  padding: 0;
+  margin: 0; }
 
 #infiltration-faction-select {
   background-color: #000; }
@@ -1375,6 +1443,8 @@ a:visited {
 #import-game-file-selector {
   display: none; }
 
+/* COLORS */
+/* Attributes */
 /* interactivetutorial.css */
 #interactive-tutorial-wrapper {
   position: relative; }
@@ -1385,13 +1455,11 @@ a:visited {
   /* Stay in place */
   right: 0;
   top: 0;
-  height: 400px;
-  /* Full height */
+  height: 450px;
   padding: 10px;
   border: 5px solid #fff;
-  width: 20%;
-  overflow: auto;
-  /* Enable scroll if needed */
+  width: 23%;
+  overflow: hidden;
   background-color: #444;
   /* Fallback color */
   color: #fff; }
@@ -1402,7 +1470,10 @@ a:visited {
   padding: 4px;
   margin: 4px;
   color: #fff;
-  background-color: #444; }
+  background-color: #444;
+  font-size: 14px;
+  max-height: 350px;
+  overflow-y: auto; }
 
 #interactive-tutorial-exit,
 #interactive-tutorial-next,
@@ -1414,7 +1485,7 @@ a:visited {
   -moz-box-shadow: 1px 1px 3px #000;
   box-shadow: 1px 1px 3px #000;
   color: #aaa;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
   background-color: #000; }
   #interactive-tutorial-exit:hover, #interactive-tutorial-exit:focus,
@@ -1426,16 +1497,29 @@ a:visited {
     text-decoration: none;
     cursor: pointer; }
 
+/*
 #interactive-tutorial-exit {
-  float: left; }
+    float: left;
+}
 
 #interactive-tutorial-back {
-  margin-right: 20%;
-  float: right; }
+    margin-right: 20%;
+    float: right;
+}
+*/
+#interactive-tutorial-exit {
+  position: absolute;
+  bottom: 0;
+  left: 0; }
+
+#interactive-tutorial-back {
+  float: left; }
 
 #interactive-tutorial-next {
   float: right; }
 
+/* COLORS */
+/* Attributes */
 * {
   font-size: 16px;
   font-family: "Lucida Console", "Lucida Sans Unicode", "Fira Mono", "Consolas", "Courier New", Courier, monospace, "Times New Roman"; }
@@ -1448,6 +1532,8 @@ a:visited {
   box-sizing: border-box;
   vertical-align: top; }
 
+/* COLORS */
+/* Attributes */
 @-webkit-keyframes LOADERSPINNER {
   0% {
     -webkit-transform: translate(-50%, -50%) rotate(0deg); }
@@ -1604,6 +1690,24 @@ a:visited {
     top: 50%;
     left: 50%; }
 
+.killAllMessage {
+  position: absolute;
+  top: 95%;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
+  transform: translateX(-50%); }
+
+.killAllMessageWrapperHidden {
+  display: none; }
+
+.killAllMessageWrapperShow {
+  display: block; }
+
+/* COLORS */
+/* Attributes */
 /* css for Missions */
 /* Hacking missions */
 #mission-container {
@@ -1720,6 +1824,8 @@ a:visited {
 .hack-mission-action-buttons-container {
   border: 2px solid #fff; }
 
+/* COLORS */
+/* Attributes */
 #cmpy-mgmt-container p,
 #cmpy-mgmt-container a,
 #cmpy-mgmt-container div {
@@ -1830,6 +1936,8 @@ a:visited {
 .cmpy-mgmt-advertising-info {
   font-size: 12px; }
 
+/* COLORS */
+/* Attributes */
 #bladeburner-container a,
 #bladeburner-container div,
 #bladeburner-container p,

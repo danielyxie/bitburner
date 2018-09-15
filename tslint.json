@@ -48,6 +48,7 @@
             "ignore-params",
             "ignore-properties"
         ],
+        "no-magic-numbers": [true, -1, 0, 1, 2, 10, 100],
         "no-null-keyword": false,
         "no-unsafe-any": false,
         "object-literal-key-quotes": [
@@ -59,6 +60,7 @@
             "allow-declarations",
             "allow-named-functions"
         ],
+        "triple-equals": [true, "allow-null-check", "allow-undefined-check"],
         "typedef": [
             true,
             "call-signatures",
