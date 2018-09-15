@@ -24,6 +24,7 @@ import {Page, routing}                              from "./ui/navigationTrackin
 import {exceptionAlert}                             from "../utils/helpers/exceptionAlert";
 import {formatNumber}                               from "../utils/StringHelperFunctions";
 import {getRandomInt}                               from "../utils/helpers/getRandomInt";
+import {getTimestamp}                               from "../utils/helpers/getTimestamp";
 import {removeElement}                              from "../utils/uiHelpers/removeElement";
 import {removeElementById}                          from "../utils/uiHelpers/removeElementById";
 
@@ -2755,9 +2756,7 @@ Bladeburner.prototype.clearConsole = function() {
 
 Bladeburner.prototype.log = function(input) {
     //Adds a timestamp and then just calls postToConsole
-    var d = new Date();
-    var timestamp = d.getMonth() + "/" + d.getDay() + " " + d.getHours() + ":" + d.getMinutes();
-    this.postToConsole("[" + timestamp + "] " + input);
+    this.postToConsole(`[${getTimestamp()}] ${input}`);
 }
 
 //Handles a potential series of commands (comm1; comm2; comm3;)
