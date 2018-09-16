@@ -1006,7 +1006,7 @@ PlayerObject.prototype.workForFaction = function(numCycles) {
 
     //If timeWorked == 20 hours, then finish. You can only work for the faction for 20 hours
     if (overMax || this.timeWorked >= CONSTANTS.MillisecondsPer20Hours) {
-        return this.finishWork(false);
+        return this.finishFactionWork(false);
     }
 
     var txt = document.getElementById("work-in-progress-text");
