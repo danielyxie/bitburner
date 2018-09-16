@@ -1,75 +1,78 @@
-import {dialogBoxCreate}                        from "../utils/DialogBox";
-import {gameOptionsBoxOpen, gameOptionsBoxClose}from "../utils/GameOptions";
-import {removeChildrenFromElement}              from "../utils/uiHelpers/removeChildrenFromElement";
-import {clearEventListeners}                    from "../utils/uiHelpers/clearEventListeners";
-import {createElement}                          from "../utils/uiHelpers/createElement";
-import {exceptionAlert}                         from "../utils/helpers/exceptionAlert";
-import {removeLoadingScreen}                    from "../utils/uiHelpers/removeLoadingScreen";
+import {dialogBoxCreate}                                from "../utils/DialogBox";
+import {gameOptionsBoxOpen, gameOptionsBoxClose}        from "../utils/GameOptions";
+import { getRandomInt }                                 from "../utils/helpers/getRandomInt";
+import {removeChildrenFromElement}                      from "../utils/uiHelpers/removeChildrenFromElement";
+import {clearEventListeners}                            from "../utils/uiHelpers/clearEventListeners";
+import {createElement}                                  from "../utils/uiHelpers/createElement";
+import {exceptionAlert}                                 from "../utils/helpers/exceptionAlert";
+import {removeLoadingScreen}                            from "../utils/uiHelpers/removeLoadingScreen";
 
-import {numeralWrapper}                         from "./ui/numeralFormat";
+import {numeralWrapper}                                 from "./ui/numeralFormat";
 
 import {formatNumber,
         convertTimeMsToTimeElapsedString,
-        replaceAt}                              from "../utils/StringHelperFunctions";
+        replaceAt}                                      from "../utils/StringHelperFunctions";
 import {loxBoxCreate, logBoxUpdateText,
-        logBoxOpened}                           from "../utils/LogBox";
-import {updateActiveScriptsItems}               from "./ActiveScriptsUI";
+        logBoxOpened}                                   from "../utils/LogBox";
+import {updateActiveScriptsItems}                       from "./ActiveScriptsUI";
 import {Augmentations, installAugmentations,
         initAugmentations, AugmentationNames,
         displayAugmentationsContent,
-        PlayerOwnedAugmentation}                from "./Augmentations";
+        PlayerOwnedAugmentation}                        from "./Augmentations";
 import {BitNodes, initBitNodes,
-        initBitNodeMultipliers}                 from "./BitNode";
-import {Bladeburner}                            from "./Bladeburner";
-import {CharacterOverview}                      from "./CharacterOverview";
-import {cinematicTextFlag}                      from "./CinematicText";
-import {CompanyPositions, initCompanies}        from "./Company";
-import {Corporation}                            from "./CompanyManagement";
-import {CONSTANTS}                              from "./Constants";
+        initBitNodeMultipliers}                         from "./BitNode";
+import {Bladeburner}                                    from "./Bladeburner";
+import {CharacterOverview}                              from "./CharacterOverview";
+import {cinematicTextFlag}                              from "./CinematicText";
+import {CodingContract, CodingContractRewardType,
+        CodingContractTypes}                            from "./CodingContracts";
+import {CompanyPositions, initCompanies}                from "./Company";
+import {Corporation}                                    from "./CompanyManagement";
+import {CONSTANTS}                                      from "./Constants";
 import {displayCreateProgramContent,
         getNumAvailableCreateProgram,
         initCreateProgramButtons,
-        Programs}                               from "./CreateProgram";
+        Programs}                                       from "./CreateProgram";
 import {displayFactionContent, joinFaction,
         processPassiveFactionRepGain, Factions,
-        inviteToFaction, initFactions}          from "./Faction";
-import {FconfSettings}                          from "./Fconf";
+        inviteToFaction, initFactions}                  from "./Faction";
+import {FconfSettings}                                  from "./Fconf";
 import {displayLocationContent,
-        initLocationButtons}                    from "./Location";
-import {Locations}                              from "./Locations";
+        initLocationButtons}                            from "./Location";
+import {Locations}                                      from "./Locations";
 import {displayGangContent, updateGangContent,
-        Gang}                                   from "./Gang";
+        Gang}                                           from "./Gang";
 import {displayHacknetNodesContent, processAllHacknetNodeEarnings,
-        updateHacknetNodesContent}              from "./HacknetNode";
-import {iTutorialStart}                         from "./InteractiveTutorial";
-import {initLiterature}                         from "./Literature";
-import {checkForMessagesToSend, initMessages}   from "./Message";
-import {inMission, currMission}                 from "./Missions";
+        updateHacknetNodesContent}                      from "./HacknetNode";
+import {iTutorialStart}                                 from "./InteractiveTutorial";
+import {initLiterature}                                 from "./Literature";
+import {checkForMessagesToSend, initMessages}           from "./Message";
+import {inMission, currMission}                         from "./Missions";
 import {initSingularitySFFlags,
-        hasSingularitySF, hasCorporationSF}     from "./NetscriptFunctions";
+        hasSingularitySF, hasCorporationSF}             from "./NetscriptFunctions";
 import {updateOnlineScriptTimes,
-        runScriptsLoop}                         from "./NetscriptWorker";
-import {Player}                                 from "./Player";
+        runScriptsLoop}                                 from "./NetscriptWorker";
+import {Player}                                         from "./Player";
 import {prestigeAugmentation,
-        prestigeSourceFile}                     from "./Prestige";
-import {redPillFlag, hackWorldDaemon}           from "./RedPill";
-import {saveObject, loadGame}                   from "./SaveObject";
+        prestigeSourceFile}                             from "./Prestige";
+import {redPillFlag, hackWorldDaemon}                   from "./RedPill";
+import {saveObject, loadGame}                           from "./SaveObject";
 import {loadAllRunningScripts, scriptEditorInit,
-        updateScriptEditorContent}              from "./Script";
-import {AllServers, Server, initForeignServers} from "./Server";
-import {Settings}                               from "./Settings";
-import {setSettingsLabels}                      from "./ui/setSettingsLabels";
+        updateScriptEditorContent}                      from "./Script";
+import {AllServers, Server, initForeignServers}         from "./Server";
+import {Settings}                                       from "./Settings";
+import {setSettingsLabels}                              from "./ui/setSettingsLabels";
 import {initSourceFiles, SourceFiles,
-        PlayerOwnedSourceFile}                  from "./SourceFile";
-import {SpecialServerIps, initSpecialServerIps} from "./SpecialServerIps";
+        PlayerOwnedSourceFile}                          from "./SourceFile";
+import {SpecialServerIps, initSpecialServerIps}         from "./SpecialServerIps";
 import {StockMarket, StockSymbols,
         SymbolToStockMap, initStockSymbols,
         initSymbolToStockMap, stockMarketCycle,
         updateStockPrices,
-        displayStockMarketContent}              from "./StockMarket";
-import {Terminal, postNetburnerText}            from "./Terminal";
-import {KEY}                                    from "../utils/helpers/keyCodes";
-import {Page, routing}                          from "./ui/navigationTracking";
+        displayStockMarketContent}                      from "./StockMarket";
+import {Terminal, postNetburnerText}                    from "./Terminal";
+import {KEY}                                            from "../utils/helpers/keyCodes";
+import {Page, routing}                                  from "./ui/navigationTracking";
 
 // These should really be imported with the module that is presenting that UI, but because they very much depend on the
 // cascade order, we'll pull them all in here.
@@ -1004,6 +1007,7 @@ const Engine = {
         stockTick:  30,                     //Update stock prices
         sCr: 1500,
         mechanicProcess: 5,                 //Processes certain mechanics (Corporation, Bladeburner)
+        contractGeneration: 3000            //Generate Coding Contracts
     },
 
     decrementAllCounters: function(numCycles = 1) {
@@ -1148,6 +1152,25 @@ const Engine = {
 
             }
             Engine.Counters.mechanicProcess = 5;
+        }
+
+        if (Engine.Counters.contractGeneration <= 0) {
+            // 5% chance of a contract being generated
+            if (Math.random() <= 0.05) {
+                // First select a random problem type
+                let problemTypes = Object.keys(CodingContractTypes);
+                let randIndex = getRandomInt(0, problemTypes.length - 1);
+                let problemType = CodingContractTypes[problemTypes[randIndex]];
+
+                // Then select a random reward type. 'Money' will always be the last reward type
+                let rewardType = getRandomInt(1, CodingContractRewardType.Money);
+
+                // Add additional information based on the reward type
+                switch (rewardType) {
+                    case CodingContractRewardType
+                }
+            }
+            Engine.Counters.contractGeneration = 3000;
         }
     },
 
