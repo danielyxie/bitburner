@@ -8,7 +8,7 @@ import { IMap } from "./types";
 /* tslint:disable:no-magic-numbers completed-docs max-classes-per-file no-console */
 
 /* Represents different types of problems that a Coding Contract can have */
-export class ContractType {
+export class CodingContractType {
     /**
      * Function that generates a description of the problem
      */
@@ -56,12 +56,12 @@ export class ContractType {
 
 /* Contract Types */
 // tslint:disable-next-line
-export const ContractTypes: IMap<ContractType> = {};
+export const CodingContractTypes: IMap<CodingContractType> = {};
 
 for (const md of codingContractTypesMetadata) {
-    ContractTypes[md.name] = new ContractType(md.name, md.desc, md.gen, md.solver, md.difficulty, md.numTries);
+    CodingContractTypes[md.name] = new CodingContractType(md.name, md.desc, md.gen, md.solver, md.difficulty, md.numTries);
 }
-console.info(`${Object.keys(ContractTypes).length} Coding Contract Types loaded`);
+console.info(`${Object.keys(CodingContractTypes).length} Coding Contract Types loaded`);
 
 /**
  * Enum representing the different types of rewards a Coding Contract can give
@@ -70,7 +70,7 @@ export enum CodingContractRewardType {
     FactionReputation,
     FactionReputationAll,
     CompanyReputation,
-    Money,
+    Money, // This must always be the last reward type 
 }
 
 /**
@@ -128,25 +128,25 @@ export class CodingContract {
         }
 
         // tslint:disable-next-line
-        if (ContractTypes[type] == null) {
+        if (CodingContractTypes[type] == null) {
             throw new Error(`Error: invalid contract type: ${type} please contact developer`);
         }
 
         this.type = type;
-        this.data = ContractTypes[type].generate();
+        this.data = CodingContractTypes[type].generate();
         this.reward = reward;
     }
 
     getDifficulty(): number {
-        return ContractTypes[this.type].difficulty;
+        return CodingContractTypes[this.type].difficulty;
     }
 
     getMaxNumTries(): number {
-        return ContractTypes[this.type].numTries;
+        return CodingContractTypes[this.type].numTries;
     }
 
     isSolution(solution: string): boolean {
-        return ContractTypes[this.type].solver(this.data, solution);
+        return CodingContractTypes[this.type].solver(this.data, solution);
     }
 
     /**
@@ -155,7 +155,7 @@ export class CodingContract {
     async prompt(): Promise<CodingContractResult> {
         // tslint:disable-next-line
         return new Promise<CodingContractResult>((resolve: Function, reject: Function) => {
-            const contractType: ContractType = ContractTypes[this.type];
+            const contractType: ContractType = CodingContractTypes[this.type];
             const popupId: string = `coding-contract-prompt-popup-${this.fn}`;
             const txt: HTMLElement = createElement("p", {
                 innerText: ["You are attempting to solve a Coding Contract. Note that",
