@@ -1,7 +1,7 @@
 import {Engine} from "../engine";
 import {Settings} from "../Settings";
 
-import {numeralWrapper} from "./NumeralFormat";
+import {numeralWrapper} from "./numeralFormat";
 
 
 function setSettingsLabels() {
