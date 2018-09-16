@@ -93,7 +93,7 @@
     "url": "git+https://github.com/danielyxie/bitburner.git"
   },
   "scripts": {
-    "start:dev": "webpack-dev-server",
+    "start:dev": "webpack-dev-server --progress --env.devServer --mode development",
     "build": "webpack --mode production",
     "build:dev": "webpack --mode development",
     "lint": "npm run lint:typescript & npm run lint:javascript & npm run lint:style",
