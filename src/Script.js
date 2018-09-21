@@ -325,7 +325,7 @@ function saveAndCloseScriptEditor() {
         try {
             parseFconfSettings(code);
         } catch(e) {
-            dialogBoxCreate("Invalid .fconf file");
+            dialogBoxCreate(`Invalid .fconf file: ${e}`);
             return;
         }
     } else if (isScriptFilename(filename)) {
