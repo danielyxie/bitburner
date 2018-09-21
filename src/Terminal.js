@@ -1543,6 +1543,7 @@ let Terminal = {
                         document.body.style.setProperty('--my-highlight-color',"#ffffff");
                         document.body.style.setProperty('--my-font-color',"#66ff33");
                         document.body.style.setProperty('--my-background-color',"#000000");
+                        document.body.style.setProperty('--my-prompt-color', "#f92672");
                     } else if (themeName == "muted"){
                         document.body.style.setProperty('--my-highlight-color',"#ffffff");
                         document.body.style.setProperty('--my-font-color',"#66ff33");
@@ -1554,9 +1555,10 @@ let Terminal = {
                     } else {
                         return post("Theme not found");
                     }
-                    Settings.ThemeHighlightColor = document.body.style.getPropertyValue("--my-highlight-color");
-                    Settings.ThemeFontColor = document.body.style.getPropertyValue("--my-font-color");
-                    Settings.ThemeBackgroundColor = document.body.style.getPropertyValue("--my-background-color");
+                    FconfSettings.THEME_HIGHLIGHT_COLOR = document.body.style.getPropertyValue("--my-highlight-color");
+                    FconfSettings.THEME_FONT_COLOR = document.body.style.getPropertyValue("--my-font-color");
+                    FconfSettings.THEME_BACKGROUND_COLOR = document.body.style.getPropertyValue("--my-background-color");
+                    FconfSettings.THEME_PROMPT_COLOR = document.body.style.getPropertyValue("--my-prompt-color");
                 } else {
                     var inputBackgroundHex = args[0];
                     var inputTextHex = args[1];
@@ -1567,9 +1569,9 @@ let Terminal = {
                         document.body.style.setProperty('--my-highlight-color',inputHighlightHex);
                         document.body.style.setProperty('--my-font-color',inputTextHex);
                         document.body.style.setProperty('--my-background-color',inputBackgroundHex);
-                        Settings.ThemeHighlightColor = document.body.style.getPropertyValue("--my-highlight-color");
-                        Settings.ThemeFontColor = document.body.style.getPropertyValue("--my-font-color");
-                        Settings.ThemeBackgroundColor = document.body.style.getPropertyValue("--my-background-color");
+                        FconfSettings.THEME_HIGHLIGHT_COLOR = document.body.style.getPropertyValue("--my-highlight-color");
+                        FconfSettings.THEME_FONT_COLOR = document.body.style.getPropertyValue("--my-font-color");
+                        FconfSettings.THEME_BACKGROUND_COLOR = document.body.style.getPropertyValue("--my-background-color");
                     } else {
                         return post("Invalid Hex Input for theme");
                     }
