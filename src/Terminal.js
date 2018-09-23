@@ -458,34 +458,41 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
     }
 
     if (input.startsWith("rm ")) {
-        for (var i = 0; i < currServ.scripts.length; ++i) {
+        for (let i = 0; i < currServ.scripts.length; ++i) {
             allPos.push(currServ.scripts[i].filename);
         }
-        for (var i = 0; i < currServ.programs.length; ++i) {
+        for (let i = 0; i < currServ.programs.length; ++i) {
             allPos.push(currServ.programs[i]);
         }
-        for (var i = 0; i < currServ.messages.length; ++i) {
+        for (let i = 0; i < currServ.messages.length; ++i) {
             if (!(currServ.messages[i] instanceof Message) && isString(currServ.messages[i]) &&
                   currServ.messages[i].endsWith(".lit")) {
                 allPos.push(currServ.messages[i]);
             }
         }
-        for (var i = 0; i < currServ.textFiles.length; ++i) {
+        for (let i = 0; i < currServ.textFiles.length; ++i) {
             allPos.push(currServ.textFiles[i].fn);
+        }
+        for (let i = 0; i < currServ.contracts.length; ++i) {
+            allPos.push(currServ.contracts[i].fn);
         }
         return allPos;
     }
 
     if (input.startsWith("run ")) {
-        //All programs and scripts
-        for (var i = 0; i < currServ.scripts.length; ++i) {
+        //All programs, scripts, and contracts
+        for (let i = 0; i < currServ.scripts.length; ++i) {
             allPos.push(currServ.scripts[i].filename);
         }
 
         //Programs are on home computer
         var homeComputer = Player.getHomeComputer();
-        for(var i = 0; i < homeComputer.programs.length; ++i) {
+        for (let i = 0; i < homeComputer.programs.length; ++i) {
             allPos.push(homeComputer.programs[i]);
+        }
+
+        for (let i = 0; i < currServ.contracts.length; ++i) {
+            allPos.push(currServ.contracts[i].fn);
         }
         return allPos;
     }
@@ -1341,6 +1348,13 @@ let Terminal = {
                             return;
                         }
                     }
+                } else if (delTarget.endsWith(".cct")) {
+                    for (var i = 0; i < s.contracts.length; ++i) {
+                        if (s.contracts[i].fn === delTarget) {
+                            s.contracts.splice(i, 1);
+                            return;
+                        }
+                    }
                 }
                 post("Error: No such file exists");
 				break;
@@ -2152,13 +2166,14 @@ let Terminal = {
         if (Terminal.contractOpen) {
             return post("ERROR: There's already a Coding Contract in Progress");
         }
-        Terminal.contractOpen = true;
 
         const serv = Player.getCurrentServer();
         const contract = serv.getContract(contractName);
         if (contract == null) {
             return post("ERROR: No such contract");
         }
+
+        Terminal.contractOpen = true;
         const res = await contract.prompt();
 
         switch (res) {
@@ -2168,10 +2183,12 @@ let Terminal = {
                 serv.removeContract(contract);
                 break;
             case CodingContractResult.Failure:
-                post("Contract <p style='color:red;display:inline'>FAILED</p> - Contract is now self-destructing");
                 ++contract.tries;
                 if (contract.tries >= contract.getMaxNumTries()) {
+                    post("Contract <p style='color:red;display:inline'>FAILED</p> - Contract is now self-destructing");
                     serv.removeContract(contract);
+                } else {
+                    post(`Contract <p style='color:red;display:inline'>FAILED</p> - ${contract.getMaxNumTries() - contract.tries} tries remaining`);
                 }
                 break;
             case CodingContractResult.Cancelled:
@@ -2180,6 +2197,7 @@ let Terminal = {
                 break;
         }
         Terminal.contractOpen = false;
+        console.log(Terminal.contractOpen);
     },
 };
 

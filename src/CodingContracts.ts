@@ -70,7 +70,7 @@ export enum CodingContractRewardType {
     FactionReputation,
     FactionReputationAll,
     CompanyReputation,
-    Money, // This must always be the last reward type 
+    Money, // This must always be the last reward type
 }
 
 /**
@@ -137,6 +137,14 @@ export class CodingContract {
         this.reward = reward;
     }
 
+    getData(): any {
+        return this.data;
+    }
+
+    getDescription(): string {
+        return CodingContractTypes[this.type].desc(this.data);
+    }
+
     getDifficulty(): number {
         return CodingContractTypes[this.type].difficulty;
     }
@@ -155,15 +163,21 @@ export class CodingContract {
     async prompt(): Promise<CodingContractResult> {
         // tslint:disable-next-line
         return new Promise<CodingContractResult>((resolve: Function, reject: Function) => {
-            const contractType: ContractType = CodingContractTypes[this.type];
+            const contractType: CodingContractType = CodingContractTypes[this.type];
             const popupId: string = `coding-contract-prompt-popup-${this.fn}`;
             const txt: HTMLElement = createElement("p", {
-                innerText: ["You are attempting to solve a Coding Contract. Note that",
-                            "you only have one chance. Providing the wrong solution",
-                            "will cause the contract to self-destruct.\n\n",
+                innerText: ["You are attempting to solve a Coding Contract. You have",
+                            `${this.getMaxNumTries() - this.tries} tries remaining,`,
+                            "after which the contract will self-destruct.\n\n",
                             `${contractType.desc(this.data)}`].join(" "),
             });
             const answerInput: HTMLInputElement = createElement("input", {
+                onkeydown:(e)=>{
+                    if (e.keyCode === 13 && answerInput.value !== "") {
+                        e.preventDefault();
+                        solveBtn.click();
+                    }
+                },
                 placeholder: "Enter Solution here",
             }) as HTMLInputElement;
             const solveBtn: HTMLElement = createElement("a", {
@@ -189,6 +203,7 @@ export class CodingContract {
             });
             const lineBreak: HTMLElement = createElement("br");
             createPopup(popupId, [txt, lineBreak, lineBreak, answerInput, solveBtn, cancelBtn]);
+            answerInput.focus();
         });
     }
 

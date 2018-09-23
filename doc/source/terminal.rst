@@ -285,12 +285,15 @@ except literature files (.lit).
 
 **WARNING: This is permanent and cannot be undone**
 
+
+.. _run_terminal_command:
+
 run
 ^^^
 
     $ run [file name] [-t] [num threads] [args...]
 
-Execute a program or a script.
+Execute a program, script, or :ref:`codingcontracts`.
 
 The '[-t]', '[num threads]', and '[args...]' arguments are only valid when
 running a script. The '-t' flag is used to indicate that the script should
@@ -305,13 +308,17 @@ argument must be separated by a space.
 
 **Examples**
 
-Run a program:
+Run a program::
 
-    run BruteSSH.exe
+    $ run BruteSSH.exe
 
 Run *foo.script* with 50 threads and the arguments [1e3, 0.5, foodnstuff]::
 
-    run foo.script -t 50 1e3 0.5 foodnstuff
+    $ run foo.script -t 50 1e3 0.5 foodnstuff
+
+Run a Coding Contract::
+
+    $ run foo-contract.cct
 
 scan
 ^^^^

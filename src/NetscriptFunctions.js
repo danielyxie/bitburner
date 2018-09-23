@@ -175,7 +175,21 @@ function NetscriptFunctions(workerScript) {
         }
     };
 
-    //Utility function to get Hacknet Node object
+    /**
+     * Gets the Server for a specific hostname/ip, throwing an error
+     * if the server doesn't exist.
+     * @param {string} Hostname or IP of the server
+     * @returns {Server} The specified Server
+     */
+    var safeGetServer = function(ip, callingFnName="") {
+        var server = getServer(ip);
+        if (server == null) {
+            throw makeRuntimeRejectMsg(workerScript, `Invalid IP or hostname passed into ${callingFnName}() function`);
+        }
+        return server;
+    }
+
+    // Utility function to get Hacknet Node object
     var getHacknetNode = function(i) {
         if (isNaN(i)) {
             throw makeRuntimeRejectMsg(workerScript, "Invalid index specified for Hacknet Node: " + i);
@@ -185,6 +199,11 @@ function NetscriptFunctions(workerScript) {
         }
         return Player.hacknetNodes[i];
     };
+
+    var getCodingContract = function(fn, ip) {
+        var server = safeGetServer(ip, "getCodingContract");
+        return server.getContract(fn);
+    }
 
     /**
      * @param {number} ram The amount of server RAM to calculate cost of.
@@ -1054,6 +1073,16 @@ function NetscriptFunctions(workerScript) {
                     }
                 } else {
                     allFiles.push(server.textFiles[i].fn);
+                }
+            }
+
+            for (var i = 0; i < server.contracts.length; ++i) {
+                if (filter) {
+                    if (server.contracts[i].fn.includes(filter)) {
+                        allFiles.push(server.contracts[i].fn);
+                    }
+                } else {
+                    allFiles.push(server.contracts[i].fn);
                 }
             }
 
@@ -2037,6 +2066,13 @@ function NetscriptFunctions(workerScript) {
                 for (var i = 0; i < s.textFiles.length; ++i) {
                     if (s.textFiles[i].fn === fn) {
                         s.textFiles.splice(i, 1);
+                        return true;
+                    }
+                }
+            } else if (fn.endsWith(".cct")) {
+                for (var i = 0; i < s.contracts.length; ++i) {
+                    if (s.contracts[i].fn === fn) {
+                        s.contracts.splice(i, 1);
                         return true;
                     }
                 }
@@ -3947,6 +3983,72 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "getBonusTime() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             }
+        }, // End Bladeburner
+        codingcontract : {
+            attempt : function(answer, fn, ip=workerScript.serverIp) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("attempt", CONSTANTS.ScriptCodingContractBaseRamCost);
+                }
+                updateDynamicRam("attempt", CONSTANTS.ScriptCodingContractBaseRamCost);
+                const contract = getCodingContract(fn, ip);
+                if (contract == null) {
+                    workerScript.log(`ERROR: codingcontract.getData() failed because it could find the specified contract ${fn} on server ${ip}`);
+                    return false;
+                }
+                answer = String(answer);
+                const serv = safeGetServer(ip, "codingcontract.attempt()");
+                if (contract.isSolution(answer)) {
+                    const reward = Player.gainCodingContractReward(contract.reward, contract.getDifficulty());
+                    workerScript.log(`Successfully completed Coding Contract ${fn}. Reward: ${reward}`);
+                    serv.removeContract(fn);
+                    return true;
+                } else {
+                    ++contract.tries;
+                    if (contract.tries >= contract.getMaxNumTries()) {
+                        workerScript.log(`Coding Contract ${fn} failed. Contract is now self-destructing`);
+                        serv.removeContract(fn);
+                    } else {
+                        workerScript.log(`Coding Contract ${fn} failed. ${contract.getMaxNumTries() - contract.tries} attempts remaining`);
+                    }
+                    return false;
+                }
+            },
+            getData : function(fn, ip=workerScript.serverIp) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getData", CONSTANTS.ScriptCodingContractBaseRamCost / 2);
+                }
+                updateDynamicRam("getData", CONSTANTS.ScriptCodingContractBaseRamCost / 2);
+                var contract = getCodingContract(fn, ip);
+                if (contract == null) {
+                    workerScript.log(`ERROR: codingcontract.getData() failed because it could find the specified contract ${fn} on server ${ip}`);
+                    return null;
+                }
+                return contract.getData();
+            },
+            getDescription : function(fn, ip=workerScript.serverIp) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getDescription", CONSTANTS.ScriptCodingContractBaseRamCost / 2);
+                }
+                updateDynamicRam("getDescription", CONSTANTS.ScriptCodingContractBaseRamCost / 2);
+                var contract = getCodingContract(fn, ip);
+                if (contract == null) {
+                    workerScript.log(`ERROR: codingcontract.getDescription() failed because it could find the specified contract ${fn} on server ${ip}`);
+                    return "";
+                }
+                return contract.getDescription();
+            },
+            getNumTriesRemaining : function(fn, ip=workerScript.serverIp) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getNumTriesRemaining", CONSTANTS.ScriptCodingContractBaseRamCost / 2);
+                }
+                updateDynamicRam("getNumTriesRemaining", CONSTANTS.ScriptCodingContractBaseRamCost / 2);
+                var contract = getCodingContract(fn, ip);
+                if (contract == null) {
+                    workerScript.log(`ERROR: codingcontract.getNumTriesRemaining() failed because it could find the specified contract ${fn} on server ${ip}`);
+                    return -1;
+                }
+                return contract.getMaxNumTries() - contract.tries;
+            },
         }
     } //End return
 } //End NetscriptFunction()

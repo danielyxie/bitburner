@@ -1,9 +1,8 @@
 Netscript Bladeburner API
 =========================
-
 Netscript provides the following API for interacting with the game's Bladeburner mechanic.
 
-The Bladeburner API is **not** immediately available to the palyer and must be unlocked
+The Bladeburner API is **not** immediately available to the player and must be unlocked
 later in the game
 
 **WARNING: This page contains spoilers for the game**
@@ -12,9 +11,9 @@ The Bladeburner API is unlocked in BitNode-7. If you are in BitNode-7, you will
 automatically gain access to this API. Otherwise, you must have Source-File 7 in
 order to use this API in other BitNodes
 
-**Bladeburner API functions must be accessed through the bladeburner namespace**
+**Bladeburner API functions must be accessed through the 'bladeburner' namespace**
 
-In Netscript 1.0::
+In :ref:`netscript1`::
 
     bladeburner.getContractNames();
     bladeburner.startAction("general", "Training");

@@ -85,8 +85,7 @@ let CONSTANTS = {
     ScriptGetScriptRamCost:         0.1,
     ScriptGetHackTimeRamCost:       0.05,
     ScriptGetFavorToDonate:         0.10,
-    ScriptGetContractDataRamCost:   25,
-    ScriptAttemptContractRamCost:   25,
+    ScriptCodingContractBaseRamCost:10,
 
     ScriptSingularityFn1RamCost:    1,
     ScriptSingularityFn2RamCost:    2,
@@ -274,7 +273,7 @@ let CONSTANTS = {
     /* Coding Contract Constants */
     CodingContractBaseFactionRepGain:   2500,
     CodingContractBaseCompanyRepGain:   4000,
-    CodingContractBaseMoneyGain:        10e6,
+    CodingContractBaseMoneyGain:        50e6,
 
     /* Tutorial related things */
     TutorialNetworkingText: "Servers are a central part of the game. You start with a single personal server (your home computer) " +
@@ -508,35 +507,13 @@ let CONSTANTS = {
     LatestUpdate:
     `
      v0.40.4<br>
-     * (TODO NEEDS DOCUMENTATION) The write() and read() Netscript functions now work on scripts<br>
-     * It is now possible to use freely use angled bracket (<, >) and create DOM elements using tprint()<br>
-     * Added Coding Contracts (not yet generated in game, but the data/implementation exists)<br>
+     * Added new Coding Contracts mechanic. Solve programming problems to earn rewards
+     * (TODO NEEDS DOCUMENTATION) The write() and read() Netscript functions now work on scripts
+     * It is now possible to use freely use angled bracket (<, >) and create DOM elements using tprint()
+     * The game's theme colors can now be set through the Terminal configuration (.fconf).
+     * You can now switch to the old left-hand main menu bar through the Terminal configuration (.fconf)
+     `
 
-     v0.40.3<br>
-     -----------------------------------------------<br>
-     * Bladeburner Changes:<br>
-     *** Increased the effect that agi and dexterity have on action time<br>
-     *** Starting number of contracts/operations available will be slightly lower<br>
-     *** Random events will now happen slightly more often<br>
-     *** Slightly increased the rate at which the Overclock skill point cost increases<br>
-     -----------------------------------------------<br>
-     * The maximum volatility of stocks is now randomized (randomly generated within a certain range every time the game resets)<br>
-     * Increased the range of possible values for initial stock prices<br>
-     * b1t_flum3.exe program can now be created immediately at Hacking level 1 (rather than hacking level 5)<br>
-     * UI improvements for the character overview panel and the left-hand menu (by mat-jaworski)<br>
-     * General UI improvements for displays and Terminal (by mat-jaworski)<br>
-     * Added optional parameters to the getHackTime(), getGrowTime(), and getWeakenTime() Netscript functions<br>
-     * Added isLogEnabled() and getScriptLogs() Netscript functions<br>
-     * Added donateToFaction() Singularity function<br>
-     * Updated documentation to reflect the fact that Netscript port handles (getPortHandle()) only works in NetscriptJS (2.0), NOT Netscript 1.0<br>
-     * Added tryWrite() Netscript function<br>
-     * When working (for a company/faction), experience is gained immediately/continuously rather than all at once when the work is finished<br>
-     * Added a setting in .fconf for enabling line-wrap in the Terminal input<br>
-     * Adding a game option for changing the locale that most numbers are displayed in (this mostly applies for whenever money is displayed)<br>
-     * The randomized parameters of many high-level servers can now take on a higher range of values<br>
-     * Many 'foreign' servers (hackable servers that you don't own) now have a randomized amount of RAM<br>
-     * Added 'wget' Terminal command<br>
-     * Improved the introductory tutorial`
 }
 
 export {CONSTANTS};

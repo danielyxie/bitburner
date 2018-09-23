@@ -2298,12 +2298,26 @@ PlayerObject.prototype.gainCodingContractReward = function(reward, difficulty=1)
             return `Gained ${repGain} faction reputation for ${reward.name}`;
         case CodingContractRewardType.FactionReputationAll:
             const totalGain = CONSTANTS.CodingContractBaseFactionRepGain * difficulty;
-            const gainPerFaction = Math.floor(totalGain / this.factions.length);
-            for (const facName of this.factions) {
+
+            // Ignore Bladeburners and other special factions for this calculation
+            const specialFactions = ["Bladeburners"];
+            var factions = this.factions.slice();
+            factions = factions.filter((f) => {
+                return !specialFactions.includes(f);
+            });
+
+            // If the player was only part of the special factions, we'll just give money
+            if (factions.length == 0) {
+                reward.type = CodingContractRewardType.Money;
+                return this.gainCodingContractReward(reward, difficulty);
+            }
+
+            const gainPerFaction = Math.floor(totalGain / factions.length);
+            for (const facName of factions) {
                 if (!(Factions[facName] instanceof Faction)) { continue; }
                 Factions[facName].playerReputation += gainPerFaction;
             }
-            return `Gained ${gainPerFaction} reputation for each faction you are a member of`;
+            return `Gained ${gainPerFaction} reputation for each of the following factions: ${factions.toString()}`;
             break;
         case CodingContractRewardType.CompanyReputation:
             if (reward.name ==  null || !(Companies[reward.name] instanceof Company)) {

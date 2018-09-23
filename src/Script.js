@@ -531,10 +531,12 @@ function parseOnlyRamCalculate(server, code, workerScript) {
                     }
                 }
 
-                //Special logic for Bladeburner
+                //Special logic for namespaces (Bladeburner, CodingCOntract)
                 var func;
                 if (ref in workerScript.env.vars.bladeburner) {
                     func = workerScript.env.vars.bladeburner[ref];
+                } else if (ref in workerScript.env.vars.codingcontract) {
+                    func = workerScript.env.vars.codingcontract[ref];
                 } else {
                     func = workerScript.env.get(ref);
                 }
