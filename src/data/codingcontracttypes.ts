@@ -21,6 +21,28 @@ export interface ICodingContractTypeMetadata {
     solver: SolverFunc;
 }
 
+/* Helper functions for Coding Contract implementations */
+function removeBracketsFromArrayString(str: string) {
+    let strCpy: string = str;
+    if (strCpy.startsWith("[")) { strCpy = strCpy.slice(1); }
+    if (strCpy.endsWith("]")) { strCpy = strCpy.slice(-1); }
+
+    return strCpy;
+}
+
+function convert2DArrayToString(arr: any[][]) {
+    let res = "";
+    const components: string[] = [];
+    arr.forEach((e) => {
+        let s = e.toString();
+        s = ["[", s, "]"].join("");
+        components.push(s);
+    });
+
+    res = components.join(",");
+    return res.replace(/\s/g, "");
+}
+
 export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
     {
         desc: (n: number) => {
@@ -136,6 +158,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
             const matrix: number[][] = [];
             matrix.length = m;
             for (let i: number = 0; i < m; ++i) {
+                matrix[i] = [];
                 matrix[i].length = n;
             }
 
@@ -187,7 +210,9 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
                 }
                 if (++l > r) { break; }
             }
-            const playerAns: any[] = ans.split(",");
+
+            const sanitizedPlayerAns: string = removeBracketsFromArrayString(ans);
+            const playerAns: any[] = sanitizedPlayerAns.split(",");
             for (let i: number = 0; i < playerAns.length; ++i) {
                 playerAns[i] = parseInt(playerAns[i], 10);
             }
@@ -282,22 +307,21 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
             }
             result.push([start, end]);
 
-            const sanitizedResult: string = result
-                                                .toString()
-                                                .replace(/\s/g, "");
+            const sanitizedResult: string = convert2DArrayToString(result);
             const sanitizedAns: string = ans.replace(/\s/g, "");
 
-            return sanitizedResult === sanitizedAns;
+            return (sanitizedResult === sanitizedAns || 
+                    sanitizedResult === removeBracketsFromArrayString(sanitizedAns));
         },
     },
     {
         desc: (data: string) => {
-            return ["Given the following string containing only digits, determine",
+            return ["Given the following string containing only digits, return",
                     "an array with all possible valid IP address combinations",
                     "that can be created from the string:\n\n",
                     `${data}\n\n`,
                     "Example:\n\n",
-                    "'25525511135' -> ['255.255.11.135', '255.255.111.35']"].join(" ");
+                    "25525511135 -> [255.255.11.135, 255.255.111.35]"].join(" ");
         },
         difficulty: 3,
         gen: () => {
@@ -425,7 +449,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
             return ["You are given the following array of stock prices where the i-th element",
                     "represents the stock price on day i:\n\n",
                     `${data}\n\n`,
-                    "Determine the maximum possible profit you can earn using at most ",
+                    "Determine the maximum possible profit you can earn using at most",
                     "two transactions. A transaction is defined as buying",
                     "and then selling one share of the stock. Note that you cannot",
                     "engage in multiple transactions at once. In other words, you",
