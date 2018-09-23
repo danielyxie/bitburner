@@ -154,7 +154,7 @@ getScriptLogs
 scan
 ^^^^
 
-.. js:function:: scan(hostname/ip[, hostnames=true])
+.. js:function:: scan(hostname/ip=current ip[, hostnames=true])
 
     :param string hostname/ip: IP or hostname of the server to scan
     :param boolean: Optional boolean specifying whether the function should output hostnames (if true) or IP addresses (if false)

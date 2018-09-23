@@ -917,7 +917,6 @@ const Engine = {
     },
 
     updateGame: function(numCycles = 1) {
-        //Update total playtime
         var time = numCycles * Engine._idleSpeed;
         if (Player.totalPlaytime == null) {Player.totalPlaytime = 0;}
         if (Player.playtimeSinceLastAug == null) {Player.playtimeSinceLastAug = 0;}
@@ -1155,20 +1154,66 @@ const Engine = {
         }
 
         if (Engine.Counters.contractGeneration <= 0) {
-            // 5% chance of a contract being generated
-            if (Math.random() <= 0.05) {
+            // 20% chance of a contract being generated
+            if (Math.random() < 0.2) {
                 // First select a random problem type
-                let problemTypes = Object.keys(CodingContractTypes);
+                const problemTypes = Object.keys(CodingContractTypes);
                 let randIndex = getRandomInt(0, problemTypes.length - 1);
-                let problemType = CodingContractTypes[problemTypes[randIndex]];
+                let problemType = problemTypes[randIndex];
 
                 // Then select a random reward type. 'Money' will always be the last reward type
-                let rewardType = getRandomInt(1, CodingContractRewardType.Money);
+                var reward = {};
+                reward.type = getRandomInt(0, CodingContractRewardType.Money);
+
+                // Change type based on certain conditions
+                if (Player.factions.length === 0) { reward.type = CodingContractRewardType.CompanyReputation; }
+                if (Player.companyName === "") { reward.type = CodingContractRewardType.Money; }
 
                 // Add additional information based on the reward type
-                switch (rewardType) {
-                    case CodingContractRewardType
+                switch (reward.type) {
+                    case CodingContractRewardType.FactionReputation:
+                        // Get a random faction that player is a part of. That
+                        //faction must allow hacking contracts
+                        var numFactions = Player.factions.length;
+                        var randFaction = Player.factions[getRandomInt(0, numFactions - 1)];
+                        try {
+                            while(Factions[randFaction].getInfo().offerHackingWork !== true) {
+                                randFaction = Player.factions[getRandomInt(0, numFactions - 1)];
+                            }
+                            reward.name = randFaction;
+                        } catch (e) {
+                            exceptionAlert("Failed to find a faction for Coding Contract Generation: " + e);
+                        }
+
+                        break;
+                    case CodingContractRewardType.CompanyReputation:
+                        if (Player.companyName !== "") {
+                            reward.name = Player.companyName;
+                        } else {
+                            reward.type = CodingContractRewardType.Money;
+                        }
+                        break;
+                    default:
+                        break;
                 }
+
+                // Choose random server
+                const servers = Object.keys(AllServers);
+                randIndex = getRandomInt(0, servers.length - 1);
+                var randServer = AllServers[servers[randIndex]];
+                while (randServer.purchasedByPlayer === true) {
+                    randIndex = getRandomInt(0, servers.length - 1);
+                    randServer = AllServers[servers[randIndex]];
+                }
+
+                let contractFn = `contract-${getRandomInt(0, 1e6)}`;
+                while (randServer.contracts.filter((c) => {return c.fn === contractFn}).length > 0) {
+                    contractFn = `contract-${getRandomInt(0, 1e6)}`;
+                }
+                if (reward.name) { contractFn += `-${reward.name.replace(/\s/g, "")}`; }
+                let contract = new CodingContract(contractFn, problemType, reward);
+
+                randServer.addContract(contract);
             }
             Engine.Counters.contractGeneration = 3000;
         }

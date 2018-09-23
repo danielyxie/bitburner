@@ -78,7 +78,7 @@ let NetscriptFunctions =
     "getHackTime|getGrowTime|getWeakenTime|getScriptIncome|getScriptExpGain|"  +
     "getTimeSinceLastAug|prompt|"                                              +
 
-    //Singularity Functions
+    // Singularity Functions
     "universityCourse|getCharacterInformation|"                                +
     "gymWorkout|travelToCity|purchaseTor|purchaseProgram|upgradeHomeRam|"      +
     "getUpgradeHomeRamCost|workForCompany|applyToCompany|getCompanyRep|"       +
@@ -91,16 +91,16 @@ let NetscriptFunctions =
     "getAugmentationCost|purchaseAugmentation|"                                +
     "installAugmentations|"                                                    +
 
-    //TIX API
+    // TIX API
     "getStockPrice|getStockPosition|buyStock|sellStock|shortStock|sellShort|"  +
     "placeOrder|cancelOrder|"                                                  +
 
-    //Hacknet Node API
+    // Hacknet Node API
     "hacknet|numNodes|purchaseNode|getPurchaseNodeCost|getNodeStats|"          +
     "upgradeLevel|upgradeRam|upgradeCore|getLevelUpgradeCost|"                 +
     "getRamUpgradeCost|getCoreUpgradeCost|"                                    +
 
-    //Bladeburner functions
+    // Bladeburner functions
     "bladeburner|getContractNames|getOperationNames|getBlackOpNames|"          +
     "getGeneralActionNames|getSkillNames|startAction|stopBladeburnerAction|"   +
     "getActionTime|getActionEstimatedSuccessChance|getActionCountRemaining|"   +
@@ -109,7 +109,10 @@ let NetscriptFunctions =
     "getRank|getSkillPoints|getSkillLevel|getSkillUpgradeCost|"                +
     "upgradeSkill|getTeamSize|getCity|"                                        +
     "setTeamSize|getCityEstimatedPopulation|getCityEstimatedCommunities|"      +
-    "getCityChaos|switchCity|getStamina|joinBladeburnerFaction|getBonusTime";
+    "getCityChaos|switchCity|getStamina|joinBladeburnerFaction|getBonusTime|"  +
+
+    // Coding Contract API
+    "codingcontract|attempt|getData|getDescription|getNumTriesRemaining";
 
 var NetscriptHighlightRules = function(options) {
     var keywordMapper = this.createKeywordMapper({
