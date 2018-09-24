@@ -509,6 +509,7 @@ let CONSTANTS = {
      v0.40.4<br>
      * Added new Coding Contracts mechanic. Solve programming problems to earn rewards
      * (TODO NEEDS DOCUMENTATION) The write() and read() Netscript functions now work on scripts
+     * Added bladeburner.getActionRepGain() function to the Netscript Bladeburner API
      * It is now possible to use freely use angled bracket (<, >) and create DOM elements using tprint()
      * The game's theme colors can now be set through the Terminal configuration (.fconf).
      * You can now switch to the old left-hand main menu bar through the Terminal configuration (.fconf)

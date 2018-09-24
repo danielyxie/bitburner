@@ -211,7 +211,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
                 if (++l > r) { break; }
             }
 
-            const sanitizedPlayerAns: string = removeBracketsFromArrayString(ans);
+            const sanitizedPlayerAns: string = removeBracketsFromArrayString(ans).replace(/\s/g, "");
             const playerAns: any[] = sanitizedPlayerAns.split(",");
             for (let i: number = 0; i < playerAns.length; ++i) {
                 playerAns[i] = parseInt(playerAns[i], 10);
@@ -310,7 +310,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
             const sanitizedResult: string = convert2DArrayToString(result);
             const sanitizedAns: string = ans.replace(/\s/g, "");
 
-            return (sanitizedResult === sanitizedAns || 
+            return (sanitizedResult === sanitizedAns ||
                     sanitizedResult === removeBracketsFromArrayString(sanitizedAns));
         },
     },
@@ -362,11 +362,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
                 }
             }
 
-            let sanitizedAns: string = ans.replace(/\s/g, "");
-            if (sanitizedAns.length === 0 || sanitizedAns[0] !== "[" || sanitizedAns[sanitizedAns.length - 1] !== "]") {
-                return false;
-            }
-            sanitizedAns = sanitizedAns.slice(1, -1); // Remove []
+            let sanitizedAns: string = removeBracketsFromArrayString(ans).replace(/\s/g, "");
             const ansArr: string[] = sanitizedAns.split(",");
             if (ansArr.length !== ret.length) { return false; }
             for (const ipInAns of ansArr) {

@@ -105,7 +105,7 @@ let NetscriptFunctions =
     "getGeneralActionNames|getSkillNames|startAction|stopBladeburnerAction|"   +
     "getActionTime|getActionEstimatedSuccessChance|getActionCountRemaining|"   +
     "getActionMaxLevel|getActionCurrentLevel|getActionAutolevel|"              +
-    "setActionAutolevel|setActionLevel|"                                       +
+    "getActionRepGain|setActionAutolevel|setActionLevel|"                      +
     "getRank|getSkillPoints|getSkillLevel|getSkillUpgradeCost|"                +
     "upgradeSkill|getTeamSize|getCity|"                                        +
     "setTeamSize|getCityEstimatedPopulation|getCityEstimatedCommunities|"      +

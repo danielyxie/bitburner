@@ -3617,6 +3617,37 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "getActionEstimatedSuccessChance() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
+            getActionRepGain: function(type="", name="", level) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getActionRepGain", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
+                }
+                updateDynamicRam("getActionRepGain", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
+                checkBladeburnerAccess(workerScript, "getActionRepGain");
+
+                try {
+                    var errorLogText = unknownBladeburnerActionErrorMessage("getActionAutolevel", type, name);
+                    const actionId = Player.bladeburner.getActionIdFromTypeAndName(type, name);
+                    if (actionId == null) {
+                        workerScript.log(errorLogText);
+                        return -1;
+                    }
+                    const actionObj = Player.bladeburner.getActionObject(actionId);
+                    if (actionObj == null) {
+                        workerScript.log(errorLogText);
+                        return -1;
+                    }
+                    var rewardMultiplier;
+                    if (level == null || isNaN(level)) {
+                        rewardMultiplier = Math.pow(actionObj.rewardFac, actionObj.level - 1);
+                    } else {
+                        rewardMultiplier = Math.pow(actionObj.rewardFac, level - 1);
+                    }
+
+                    return actionObj.rankGain * rewardMultiplier * BitNodeMultipliers.BladeburnerRank;
+                } catch(err) {
+                    throw makeRuntimeRejectMsg(workerScript, unknownBladeburnerExceptionMessage("getActionAutolevel", err));
+                }
+            },
             getActionCountRemaining : function(type="", name="") {
                 if (workerScript.checkingRam) {
                     return updateStaticRam("getActionCountRemaining", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
