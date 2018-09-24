@@ -100,6 +100,7 @@
     "lint:javascript": "eslint *.js ./src/**/*.js ./tests/**/*.js ./utils/**/*.js",
     "lint:style": "stylelint ./css/*",
     "lint:typescript": "tslint --project . --exclude **/*.d.ts --format stylish src/**/*.ts utils/**/*.ts",
+    "preinstall": "node ./scripts/engines-check.js",
     "watch": "webpack --watch --mode production",
     "watch:dev": "webpack --watch --mode development"
   },
