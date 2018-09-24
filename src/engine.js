@@ -1154,8 +1154,8 @@ const Engine = {
         }
 
         if (Engine.Counters.contractGeneration <= 0) {
-            // 20% chance of a contract being generated
-            if (Math.random() < 0.2) {
+            // X% chance of a contract being generated
+            if (Math.random() < 0.23) {
                 // First select a random problem type
                 const problemTypes = Object.keys(CodingContractTypes);
                 let randIndex = getRandomInt(0, problemTypes.length - 1);
@@ -1166,8 +1166,15 @@ const Engine = {
                 reward.type = getRandomInt(0, CodingContractRewardType.Money);
 
                 // Change type based on certain conditions
-                if (Player.factions.length === 0) { reward.type = CodingContractRewardType.CompanyReputation; }
-                if (Player.companyName === "") { reward.type = CodingContractRewardType.Money; }
+                if (reward.type === CodingContractRewardType.FactionReputation && Player.factions.length === 0) {
+                    reward.type = CodingContractRewardType.CompanyReputation;
+                }
+                if (reward.type === CodingContractRewardType.FactionReputationAll && Player.factions.length === 0) {
+                    reward.type = CodingContractRewardType.CompanyReputation;
+                }
+                if (reward.type === CodingContractRewardType.CompanyReputation && Player.companyName === "") {
+                    reward.type = CodingContractRewardType.Money;
+                }
 
                 // Add additional information based on the reward type
                 switch (reward.type) {
