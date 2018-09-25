@@ -84,7 +84,7 @@
     "worker-loader": "^2.0.0"
   },
   "engines": {
-    "node": ">=4.3.0 <5.0.0 || >=5.10"
+    "node": ">=8 || <=9"
   },
   "homepage": "https://github.com/danielyxie/bitburner",
   "license": "SEE LICENSE IN license.txt",
