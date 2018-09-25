@@ -76,7 +76,10 @@ import {Page, routing}                                  from "./ui/navigationTra
 
 // These should really be imported with the module that is presenting that UI, but because they very much depend on the
 // cascade order, we'll pull them all in here.
+import 'normalize.css';
 import "../css/styles.scss";
+import "../css/buttons.scss";
+import "../css/mainmenu.scss";
 import "../css/terminal.scss";
 import "../css/menupages.scss";
 import "../css/workinprogress.scss";
