@@ -27,6 +27,7 @@
     "loader-runner": "^2.3.0",
     "loader-utils": "^1.1.0",
     "memory-fs": "~0.4.1",
+    "normalize.css": "^8.0.0",
     "numeral": "2.0.6",
     "sprintf-js": "^1.1.1",
     "tapable": "^1.0.0",

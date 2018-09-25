@@ -3533,7 +3533,7 @@ Corporation.prototype.updateUIHeaderTabs = function() {
             content.appendChild(yesBtn);
             container.appendChild(content);
             document.getElementById("entire-game-container").appendChild(container);
-            container.style.display = "block";
+            container.style.display = "flex";
             return false;
         }
     }));
