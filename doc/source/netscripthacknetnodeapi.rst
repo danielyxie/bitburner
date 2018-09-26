@@ -123,7 +123,10 @@ getLevelUpgradeCost
     :param number i: Index/Identifier of Hacknet Node
     :param number n: Number of levels to upgrade. Must be positive. Rounded to nearest integer
 
-    Returns the cost of upgrading the specified Hacknet Node by *n* levels
+    Returns the cost of upgrading the specified Hacknet Node by *n* levels.
+
+    If an invalid value for *n* is provided, then this function returns 0. If the
+    specified Hacknet Node is already at max level, then Infinity is returned.
 
 getRamUpgradeCost
 -----------------
@@ -134,6 +137,9 @@ getRamUpgradeCost
 
     Returns the cost of upgrading the RAM of the specified Hacknet Node *n* times.
 
+    If an invalid value for *n* is provided, then this function returns 0. If the
+    specified Hacknet Node is already at max RAM, then Infinity is returned.
+
 getCoreUpgradeCost
 ------------------
 .. js:function:: getCoreUpgradeCost(i, n)
@@ -142,6 +148,9 @@ getCoreUpgradeCost
     :param number n: Number of times to upgrade cores. Must be positive. Rounded to nearest integer
 
     Returns the cost of upgrading the number of cores of the specified Hacknet Node by *n*.
+
+    If an invalid value for *n* is provided, then this function returns 0. If the
+    specified Hacknet Node is already at the max number of cores, then Infinity is returned. 
 
 Utilities
 ---------

@@ -779,20 +779,20 @@ write
 
 .. js:function:: write(port/fn, data="", mode="a")
 
-    :param string/number port/fn: Port or text file that will be written to
+    :param string/number port/fn: Port or text file/script that will be written to
     :param string data: Data to write
-    :param string mode: Defines the write mode. Only valid when writing to text files.
+    :param string mode: Defines the write mode. Only valid when writing to text files or scripts.
 
-    This function can be used to either write data to a port or to a text file (.txt).
+    This function can be used to either write data to a port, a text file (.txt), or a script (.script, .js, .ns)
 
-    If the first argument is a number between 1 and 10, then it specifies a port and this function will write *data* to that port. Read
-    about how `Netscript Ports work here <http://bitburner.wikia.com/wiki/Netscript_Ports>`_. The third argument, *mode*, is not used
+    If the first argument is a number between 1 and 20, then it specifies a port and this function will write *data* to that port. Read
+    about how :ref:`netscript_ports` work here. The third argument, *mode*, is not used
     when writing to a port.
 
-    If the first argument is a string, then it specifies the name of a text file (.txt) and this function will write *data* to that text file. If the
-    specified text file does not exist, then it will be created. The third argument *mode*, defines how the data will be written to the text file. If *mode*
-    is set to "w", then the data is written in "write" mode which means that it will overwrite all existing data on the text file. If *mode* is set to
-    any other value then the data will be written in "append" mode which means that the data will be added at the end of the text file.
+    If the first argument is a string, then it specifies the name of a text file or script and this function will write *data* to that text file/script. If the
+    specified text file/script does not exist, then it will be created. The third argument *mode*, defines how the data will be written. If *mode*
+    is set to "w", then the data is written in "write" mode which means that it will overwrite all existing data on the text file/script. If *mode* is set to
+    any other value then the data will be written in "append" mode which means that the data will be added at the end of the file.
 
 tryWrite
 ^^^^^^^^
@@ -813,13 +813,13 @@ read
 
     :param string/number port/fn: Port or text file to read from
 
-    This function is used to read data from a port or from a text file (.txt).
+    This function is used to read data from a port, a text file (.txt), or a script (.script, .js, .ns)
 
-    If the argument *port/fn* is a number between 1 and 10, then it specifies a port and it will read data from that port. Read
-    about how `Netscript Ports work here <http://bitburner.wikia.com/wiki/Netscript_Ports>`_. A port is a serialized queue. This function
+    If the argument *port/fn* is a number between 1 and 20, then it specifies a port and it will read data from that port. Read
+    about how :ref:`netscript_ports` work here. A port is a serialized queue. This function
     will remove the first element from that queue and return it. If the queue is empty, then the string "NULL PORT DATA" will be returned.
 
-    If the argument *port/fn* is a string, then it specifies the name of a text file (.txt) and this function will return the data in the specified text file. If
+    If the argument *port/fn* is a string, then it specifies the name of a text file or script and this function will return the data in the specified text file/script. If
     the text file does not exist, an empty string will be returned.
 
 peek
@@ -827,12 +827,12 @@ peek
 
 .. js:function:: peek(port)
 
-    :param number port: Port to peek. Must be an integer between 1 and 10
+    :param number port: Port to peek. Must be an integer between 1 and 20
 
     This function is used to peek at the data from a port. It returns the first element in the specified port
     without removing that element. If the port is empty, the string "NULL PORT DATA" will be returned.
 
-    Read about how `Netscript Ports work here <http://bitburner.wikia.com/wiki/Netscript_Ports>`_.
+    Read about how :ref:`netscript_ports` work here
 
 clear
 ^^^^^
@@ -843,7 +843,7 @@ clear
 
     This function is used to clear data in a `Netscript Ports <http://bitburner.wikia.com/wiki/Netscript_Ports>`_ or a text file.
 
-    If the *port/fn* argument is a number between 1 and 10, then it specifies a port and will clear it (deleting all data from the underlying queue).
+    If the *port/fn* argument is a number between 1 and 20, then it specifies a port and will clear it (deleting all data from the underlying queue).
 
     If the *port/fn* argument is a string, then it specifies the name of a text file (.txt) and will delete all data from that text file.
 
