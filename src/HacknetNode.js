@@ -87,6 +87,10 @@ HacknetNode.prototype.calculateLevelUpgradeCost = function(levels=1) {
         return 0;
     }
 
+    if (this.level >= CONSTANTS.HacknetNodeMaxLevel) {
+        return Infinity;
+    }
+
     var mult = CONSTANTS.HacknetNodeUpgradeLevelMult;
     var totalMultiplier = 0; //Summed
     var currLevel = this.level;
@@ -133,6 +137,10 @@ HacknetNode.prototype.calculateRamUpgradeCost = function(levels=1) {
         return 0;
     }
 
+    if (this.ram >= CONSTANTS.HacknetNodeMaxRam) {
+        return Infinity;
+    }
+
     let totalCost = 0;
     let numUpgrades = Math.round(Math.log2(this.ram));
     let currentRam = this.ram;
@@ -158,7 +166,7 @@ HacknetNode.prototype.purchaseRamUpgrade = function(levels=1) {
         return false;
     }
 
-    //Fail if we're already at max
+    // Fail if we're already at max
     if (this.ram >= CONSTANTS.HacknetNodeMaxRam) {
         return false;
     }
@@ -187,6 +195,10 @@ HacknetNode.prototype.calculateCoreUpgradeCost = function(levels=1) {
     levels = Math.round(levels);
     if (isNaN(levels) || levels < 1) {
         return 0;
+    }
+
+    if (this.cores >= CONSTANTS.HacknetNodeMaxCores) {
+        return Infinity;
     }
 
     const coreBaseCost  = CONSTANTS.BaseCostForHacknetNodeCore;

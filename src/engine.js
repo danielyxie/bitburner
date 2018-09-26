@@ -1158,7 +1158,7 @@ const Engine = {
 
         if (Engine.Counters.contractGeneration <= 0) {
             // X% chance of a contract being generated
-            if (Math.random() < 0.23) {
+            if (Math.random() <= 0.25) {
                 // First select a random problem type
                 const problemTypes = Object.keys(CodingContractTypes);
                 let randIndex = getRandomInt(0, problemTypes.length - 1);

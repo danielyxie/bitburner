@@ -44,18 +44,6 @@ span {
   margin: 4px;
   padding: 4px; }
 
-button[type="button"] {
-  -webkit-transform: translateX(-50%);
-  -moz-transform: translateX(-50%);
-  -ms-transform: translateX(-50%);
-  -o-transform: translateX(-50%);
-  transform: translateX(-50%);
-  padding: 0.5rem 1rem;
-  position: absolute;
-  z-index: 1;
-  bottom: 10px;
-  left: 50%; }
-
 #entire-game-container {
   background-color: transparent; }
 
@@ -67,145 +55,10 @@ td:focus,
 tr:focus {
   outline: none; }
 
-/* Main navigation menu */
-.mainmenu {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  width: 10%;
-  position: fixed;
-  height: 100%;
-  overflow: auto;
-  border: 0;
-  border-bottom: 1px solid #000;
-  border-radius: 0;
-  background-color: #333; }
-
-/* Default buttons */
-.mainmenu > li a {
-  display: block;
-  color: #e6e6e6;
-  background-color: #555;
-  padding: 12px 8px;
-  text-decoration: none; }
-
-.mainmenu.classic > li a {
-  padding: 16px; }
-
-/* Hovering makes them lighter */
-.mainmenu > li a:hover,
-.mainmenu > li a:hover:not(.active),
-.mainmenu > li a:focus {
-  background-color: #777;
-  color: #fff; }
-
-/* Panel headers can become active, and they are "lighter" than the rest */
-.mainmenu > li a.active {
-  background-color: #777;
-  color: #fff; }
-
-.mainmenu > li a.active:hover {
-  background-color: #aaa; }
-
-#hacking-menu-header-li,
-#character-menu-header-li,
-#world-menu-header-li,
-#help-menu-header-li {
-  position: relative; }
-
-/* Accordion Outline */
-.mainmenu-accordion-header {
-  outline: 2px solid #fff; }
-
-.mainmenu-accordion-header-classic {
-  border: 2px solid #fff;
-  padding: 16px !important; }
-
-/* Plus and minus signs */
-.mainmenu-accordion-header:after {
-  content: '\2795';
-  float: right;
-  font-size: 13px;
-  position: absolute;
-  bottom: 25%;
-  right: 3px;
-  color: transparent;
-  text-shadow: 0 0 0 #fff; }
-
-.mainmenu-accordion-header-classic:after {
-  content: '\2795';
-  float: right;
-  font-size: 13px;
-  color: #fff;
-  margin-left: 5px; }
-
-.mainmenu-accordion-header.opened,
-.mainmenu-accordion-header-classic.opened {
-  background-color: #222; }
-  .mainmenu-accordion-header.opened:after,
-  .mainmenu-accordion-header-classic.opened:after {
-    content: "\2796"; }
-
-/* Slide down transition */
-.mainmenu-accordion-panel {
-  max-height: 0;
-  opacity: 1;
-  transition: max-height 0.2s ease-out; }
-
 /* Make html links ("a" elements) nice looking buttons with this class */
 a:link,
 a:visited {
   color: #fff; }
-
-.a-link-button {
-  text-decoration: none;
-  background-color: #555;
-  color: #fff;
-  padding: 3px 5px;
-  margin: 5px;
-  border: 1px solid #333;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  -khtml-user-select: none;
-  -webkit-user-select: none; }
-  .a-link-button:hover {
-    background-color: #666; }
-  .a-link-button:active {
-    -webkit-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
-    -moz-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
-    box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6); }
-
-/* Make anchor tags ("a" elements) inactive (not clickable) */
-.a-link-button-inactive {
-  text-decoration: none;
-  background-color: #333;
-  color: #fff;
-  padding: 3px 5px;
-  margin: 5px;
-  border: 1px solid #333;
-  cursor: default; }
-  .a-link-button-inactive:hover .tooltiptext,
-  .a-link-button-inactive:hover .tooltiptexthigh,
-  .a-link-button-inactive:hover .tooltiptextleft {
-    visibility: visible; }
-  .a-link-button-inactive:active {
-    pointer-events: none; }
-
-/* Make anchor tags ("a" elements) for activated actions */
-.a-link-button-bought {
-  text-decoration: none;
-  background-color: #0a0;
-  color: #fff;
-  padding: 3px 5px;
-  margin: 5px;
-  border: 1px solid #0a0;
-  cursor: default; }
-  .a-link-button-bought:hover .tooltiptext,
-  .a-link-button-bought:hover .tooltiptexthigh,
-  .a-link-button-bought:hover .tooltiptextleft {
-    visibility: visible; }
-  .a-link-button-bought:active {
-    pointer-events: none; }
 
 .dropdown {
   color: #fff;
@@ -618,6 +471,179 @@ a:visited {
 
 .charisma-purple {
   color: #a671d1; }
+
+/* COLORS */
+/* Attributes */
+/**
+ * Styling for all buttons
+ *
+ * Includes <button> elements as well as classes that are used
+ * for formatting buttons
+ */
+/* Remove default <button> styling */
+button {
+  border: none; }
+
+.a-link-button,
+.std-button {
+  text-decoration: none;
+  background-color: #555;
+  color: #fff;
+  padding: 3px 5px;
+  margin: 5px;
+  border: 1px solid #333;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none; }
+  .a-link-button:hover,
+  .std-button:hover {
+    background-color: #666; }
+  .a-link-button:active,
+  .std-button:active {
+    -webkit-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+    box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6); }
+
+.a-link-button-inactive,
+.std-button:disabled {
+  text-decoration: none;
+  background-color: #333;
+  color: #fff;
+  padding: 3px 5px;
+  margin: 5px;
+  border: 1px solid #333;
+  cursor: default; }
+  .a-link-button-inactive:hover .tooltiptext,
+  .a-link-button-inactive:hover .tooltiptexthigh,
+  .a-link-button-inactive:hover .tooltiptextleft,
+  .std-button:disabled:hover .tooltiptext,
+  .std-button:disabled:hover .tooltiptexthigh,
+  .std-button:disabled:hover .tooltiptextleft {
+    visibility: visible; }
+  .a-link-button-inactive:active,
+  .std-button:disabled:active {
+    pointer-events: none; }
+
+.a-link-button-bought,
+.std-button-bought {
+  text-decoration: none;
+  background-color: #0a0;
+  color: #fff;
+  padding: 3px 5px;
+  margin: 5px;
+  border: 1px solid #0a0;
+  cursor: default; }
+  .a-link-button-bought:hover .tooltiptext,
+  .a-link-button-bought:hover .tooltiptexthigh,
+  .a-link-button-bought:hover .tooltiptextleft,
+  .std-button-bought:hover .tooltiptext,
+  .std-button-bought:hover .tooltiptexthigh,
+  .std-button-bought:hover .tooltiptextleft {
+    visibility: visible; }
+  .a-link-button-bought:active,
+  .std-button-bought:active {
+    pointer-events: none; }
+
+/* COLORS */
+/* Attributes */
+/**
+ * Styling for the main navigation menu on the left-hand-side
+ */
+.mainmenu {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 10%;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+  border: 0;
+  border-bottom: 1px solid #000;
+  border-radius: 0;
+  background-color: #333; }
+
+/* Default buttons */
+.mainmenu > li a,
+.mainmenu > li button {
+  display: block;
+  color: #e6e6e6;
+  background-color: #555;
+  padding: 12px 8px;
+  text-decoration: none;
+  width: 100%;
+  text-align: left; }
+
+.mainmenu.classic > li a,
+.mainmenu.classic > li button {
+  padding: 16px; }
+
+/* Hovering makes them lighter */
+.mainmenu > li a:hover,
+.mainmenu > li a:hover:not(.active),
+.mainmenu > li a:focus {
+  background-color: #777;
+  color: #fff; }
+
+.mainmenu > li button:hover,
+.mainmenu > li button:hover:not(.active) {
+  background-color: #777;
+  color: #fff; }
+
+/* Panel headers can become active, and they are "lighter" than the rest */
+.mainmenu > li a.active,
+.mainmenu > li button.active {
+  background-color: #777;
+  color: #fff; }
+
+.mainmenu > li a.active:hover,
+.mainmenu > li button.active:hover {
+  background-color: #aaa; }
+
+#hacking-menu-header-li,
+#character-menu-header-li,
+#world-menu-header-li,
+#help-menu-header-li {
+  position: relative; }
+
+/* Accordion Outline */
+.mainmenu-accordion-header {
+  outline: 2px solid #fff !important; }
+
+.mainmenu-accordion-header-classic {
+  border: 2px solid #fff;
+  padding: 16px !important; }
+
+/* Plus and minus signs */
+.mainmenu-accordion-header:after {
+  content: '\2795';
+  float: right;
+  font-size: 13px;
+  position: absolute;
+  bottom: 25%;
+  right: 3px;
+  color: transparent;
+  text-shadow: 0 0 0 #fff; }
+
+.mainmenu-accordion-header-classic:after {
+  content: '\2795';
+  float: right;
+  font-size: 13px;
+  color: #fff;
+  margin-left: 5px; }
+
+.mainmenu-accordion-header.opened,
+.mainmenu-accordion-header-classic.opened {
+  background-color: #222; }
+  .mainmenu-accordion-header.opened:after,
+  .mainmenu-accordion-header-classic.opened:after {
+    content: "\2796"; }
+
+/* Slide down transition */
+.mainmenu-accordion-panel {
+  max-height: 0;
+  opacity: 1;
+  transition: max-height 0.2s ease-out; }
 
 /* COLORS */
 /* Attributes */
@@ -1294,16 +1320,6 @@ a:visited {
   border: 5px solid var(--my-highlight-color);
   width: 70%;
   max-height: 80%;
-  /*
-    margin: auto;
-    height:auto;
-    max-height:80%;
-    position:absolute;
-    top:0;
-    left:0;
-    bottom:0;
-    right:0;
-    */
   overflow-y: auto;
   color: var(--my-font-color); }
 
