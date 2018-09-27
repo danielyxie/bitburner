@@ -2261,6 +2261,34 @@ function NetscriptFunctions(workerScript) {
                 yesNoBoxCreate(txt);
             });
         },
+        wget : async function(url, target, ip=workerScript.serverIp) {
+            if (!isScriptFilename(target) && !target.endsWith(".txt")) {
+                workerSript.log(`ERROR: wget() failed because of an invalid target file: ${target}. Target file must be a script or text file`);
+                return false;
+            }
+            var s = safeGetServer(ip, "wget");
+            $.get(url, function(data) {
+                let res;
+                if (isScriptFilename(target)) {
+                    res = s.writeToScriptFile(target, data);
+                } else {
+                    res = s.writeToTextFile(target, data);
+                }
+                if (!res.success) {
+                    workerScript.log("ERROR: wget() failed");
+                    return false;
+                }
+                if (res.overwritten) {
+                     workerScript.log(`wget() successfully retrieved content and overwrote ${target} on ${ip}`);
+                     return true;
+                }
+                workerScript.log(`wget successfully retrieved content to new file ${target} on ${ip}`);
+                return true;
+            }, 'text').fail(function(e) {
+                workerScript.log("ERROR: wget() failed: " + JSON.stringify(e));
+                return false;
+            });
+        },
         getFavorToDonate: function() {
             if (workerScript.checkingRam) {
                 return updateStaticRam("getFavorToDonate", CONSTANTS.ScriptGetFavorToDonate);
