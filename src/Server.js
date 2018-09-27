@@ -1,9 +1,11 @@
 import {BitNodeMultipliers}                         from "./BitNodeMultipliers";
 import {CodingContract, ContractTypes}              from "./CodingContracts";
 import {CONSTANTS}                                  from "./Constants";
+import {Script, isScriptFilename}                   from "./Script";
 import {Programs}                                   from "./CreateProgram";
 import {Player}                                     from "./Player";
 import {SpecialServerIps}                           from "./SpecialServerIps";
+import {TextFile}                                   from "./TextFile";
 import {getRandomInt}                               from "../utils/helpers/getRandomInt";
 import {createRandomIp, ipExists}                   from "../utils/IPAddress";
 import {serverMetadata}                             from "./data/servers";
@@ -115,7 +117,59 @@ Server.prototype.weaken = function(amt) {
     this.capDifficulty();
 }
 
-// Coding Contracts
+// Write to a script file
+// Overwrites existing files. Creates new files if the script does not eixst
+Server.prototype.writeToScriptFile = function(fn, code) {
+    var ret = {success: false, overwritten: false};
+    if (!isScriptFilename(fn)) { return ret; }
+
+    //Check if the script already exists, and overwrite it if it does
+    for (let i = 0; i < this.scripts.length; ++i) {
+        if (fn === this.scripts[i].filename) {
+            let script = this.scripts[i];
+            script.code = code;
+            script.updateRamUsage();
+            script.module = "";
+            ret.overwritten = true;
+            ret.success = true;
+            return ret;
+        }
+    }
+
+    //Otherwise, create a new script
+    var newScript = new Script();
+    newScript.filename = fn;
+    newScript.code = code;
+    newScript.updateRamUsage();
+    newScript.server = this.ip;
+    this.scripts.push(newScript);
+    ret.success = true;
+    return ret;
+}
+
+// Write to a text file
+// Overwrites existing files. Creates new files if the text file does not exist
+Server.prototype.writeToTextFile = function(fn, txt) {
+    var ret = {success: false, overwritten: false};
+    if (!fn.endsWith("txt")) { return ret; }
+
+    //Check if the text file already exists, and overwrite if it does
+    for (let i = 0; i < this.textFiles.length; ++i) {
+        if (this.textFiles[i].fn === fn) {
+            ret.overwritten = true;
+            this.textFiles[i].text = txt;
+            ret.success = true;
+            return ret;
+        }
+    }
+
+    //Otherwise create a new text file
+    var newFile = new TextFile(fn, txt);
+    this.textFiles.push(newFile);
+    ret.success = true;
+    return ret;
+}
+
 Server.prototype.addContract = function(contract) {
     this.contracts.push(contract);
 }
