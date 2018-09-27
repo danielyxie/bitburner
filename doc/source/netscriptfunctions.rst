@@ -1023,92 +1023,27 @@ prompt
     Prompts the player with a dialog box with two options: "Yes" and "No". This function will return true if the player click "Yes" and
     false if the player clicks "No". The script's execution is halted until the player selects one of the options.
 
+wget
+^^^^
 
-Defining your own Functions
----------------------------
+.. js:function:: wget(url, target[, hostname/ip=current ip])
 
-Note that the following information is only applicable for Netscript 1.0.
-:doc:`netscriptjs` allows you to define your functions using native Javascript
-techniques.
+    :param string url: URL to pull data from
+    :param string target: Filename to write data to. Must be script or text file
+    :param string ip: Optional hostname/ip of server for target file.
 
-You can define your own functions in Netscript 1.0 using the following syntax::
+    Retrieves data from a URL and downloads it to a file on the specified server. The data can only
+    be downloaded to a script (.script, .ns, .js) or a text file (.txt). If the file already exists,
+    it will be overwritten by this command.
 
-    function name(args...) {
-        function code here...
-        return some_value
-    }
+    Note that it will not be possible to download data from many websites because they do not allow
+    cross-origin resource sharing (CORS). Example::
 
-Functions should have some return value. Here is an example of defining and using a function::
+        wget("https://raw.githubusercontent.com/danielyxie/bitburner/master/README.md", "game_readme.txt");
 
-    function sum(values) {
-        res = 0;
-        for (i = 0; i < values.length; ++i) {
-            res += values[i];
-        }
-        return res;
-    }
+    Returns a boolean indicating whether or not the data was successfully downloaded.
 
-    print(sum([1, 2, 3, 4, 5]));    //Prints 15
-    print(sum([1, 10]));            //Prints 11
+getFavorToDonate
+^^^^^^^^^^^^^^^^
 
-For those with experience in other languages, especially Javascript, it may be important to note that
-function declarations are not hoisted and must be declared BEFORE you use them.
-For example, the following will cause an error saying `variable hello not defined`::
-
-    print(hello());
-
-    function hello() {
-        return "world";
-    }
-
-The following will work fine::
-
-    function hello() {
-        return "world";
-    }
-
-    print(hello());     //Prints out "world"
-
-**Note about variable scope in functions:**
-
-Functions can access "global" variables declared outside of the function's scope. However, they cannot change the value of any "global" variables.
-Any changes to "global" variables will only be applied locally to the function.
-
-The following example shows that any change to a "global" variable
-from inside a function only applies in the function's local scope::
-
-    function foo() {
-        i = 5;
-        return "foo";
-    }
-
-    i = 0;
-    print(i);   //Prints 0
-    foo();
-    print(i);   //Prints 0
-
-Furthermore, this also means that any variable that is first defined inside a
-function will NOT be accessible outside of the function as shown in the following example::
-
-    function sum(values) {
-        res = 0;
-        for (i = 0; i < values.length; ++i) {
-            res += values[i];
-        }
-        return res;
-    }
-    print(res);
-
-results in the following runtime error::
-
-    Script runtime error:
-    Server Ip: 75.7.4.1
-    Script name: test.script
-    Args:[]
-    variable res not defined
-
-
-**Other Notes about creating your own functions:**
-
-Defining a function does not create a Javascript function object in the underlying game code. This means that you cannot use any function
-you create in functions such as `Array.sort() <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort>`_ (not yet at least, I'll try to make it work in the future).
+    Returns the amount of Faction favor required to be able to donate to a faction.

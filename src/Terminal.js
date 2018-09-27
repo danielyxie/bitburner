@@ -27,14 +27,13 @@ import {killWorkerScript, addWorkerScript}  from "./NetscriptWorker";
 import {Player}                             from "./Player";
 import {hackWorldDaemon}                    from "./RedPill";
 import {findRunningScript, RunningScript,
-        AllServersMap, Script,
-        isScriptFilename}                   from "./Script";
+        AllServersMap, isScriptFilename}    from "./Script";
 import {AllServers, GetServerByHostname,
         getServer, Server}                  from "./Server";
 import {Settings}                           from "./Settings";
 import {SpecialServerIps,
         SpecialServerNames}                 from "./SpecialServerIps";
-import {TextFile, getTextFile}              from "./TextFile";
+import {getTextFile}                        from "./TextFile";
 import {containsAllStrings,
         longestCommonStart}                 from "../utils/StringHelperFunctions";
 import {Page, routing}                      from "./ui/navigationTracking";
@@ -783,55 +782,6 @@ let Terminal = {
         $('input[class=terminal-input]').prop('disabled', false);
     },
 
-    writeToScriptFile : function(server, fn, code) {
-        var ret = {success: false, overwritten: false};
-        if (!isScriptFilename(fn) || !(server instanceof Server)) { return ret; }
-
-        //Check if the script already exists, and overwrite it if it does
-        for (let i = 0; i < server.scripts.length; ++i) {
-            if (fn === server.scripts[i].filename) {
-                let script = server.scripts[i];
-                script.code = code;
-                script.updateRamUsage();
-                script.module = "";
-                ret.overwritten = true;
-                ret.success = true;
-                return ret;
-            }
-        }
-
-        //Otherwise, create a new script
-        var newScript = new Script();
-        newScript.filename = fn;
-        newScript.code = code;
-        newScript.updateRamUsage();
-        newScript.server = server.ip;
-        server.scripts.push(newScript);
-        ret.success = true;
-        return ret;
-    },
-
-    writeToTextFile : function(server, fn, txt) {
-        var ret = {success: false, overwritten: false};
-        if (!fn.endsWith("txt") || !(server instanceof Server)) { return ret; }
-
-        //Check if the text file already exists, and overwrite if it does
-        for (let i = 0; i < server.textFiles.length; ++i) {
-            if (server.textFiles[i].fn === fn) {
-                ret.overwritten = true;
-                server.textFiles[i].text = txt;
-                ret.success = true;
-                return ret;
-            }
-        }
-
-        //Otherwise create a new text file
-        var newFile = new TextFile(fn, txt);
-        server.textFiles.push(newFile);
-        ret.success = true;
-        return ret;
-    },
-
 	executeCommand : function(command) {
         command = command.trim();
         //Replace all extra whitespace in command with a single space
@@ -1480,7 +1430,7 @@ let Terminal = {
 
                     if (!found) {return post("Error: no such file exists!");}
 
-                    let tRes = Terminal.writeToTextFile(destServer, txtFile.fn, txtFile.text);
+                    let tRes = destServer.writeToTextFile(txtFile.fn, txtFile.text);
                     if (!tRes.success) {
                         return post("Error: scp failed");
                     }
@@ -1504,7 +1454,7 @@ let Terminal = {
                     return;
                 }
 
-                let sRes = Terminal.writeToScriptFile(destServer, scriptname, sourceScript.code);
+                let sRes = destServer.writeToScriptFile(scriptname, sourceScript.code);
                 if (!sRes.success) {
                     return post(`Error: scp failed`);
                 }
@@ -1658,9 +1608,9 @@ let Terminal = {
                 $.get(url, function(data) {
                     let res;
                     if (isScriptFilename(target)) {
-                        res = Terminal.writeToScriptFile(s, target, data);
+                        res = s.writeToScriptFile(target, data);
                     } else {
-                        res = Terminal.writeToTextFile(s, target, data);
+                        res = s.writeToTextFile(target, data);
                     }
                     if (!res.success) {
                         return post("wget failed");
