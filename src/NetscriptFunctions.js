@@ -2262,6 +2262,10 @@ function NetscriptFunctions(workerScript) {
             });
         },
         wget : async function(url, target, ip=workerScript.serverIp) {
+            if (workerScript.checkingRam) {
+                return updateStaticRam("wget", CONSTANTS.ScriptWgetRamCost);
+            }
+            updateDynamicRam("wget", CONSTANTS.ScriptWgetRamCost);
             if (!isScriptFilename(target) && !target.endsWith(".txt")) {
                 workerSript.log(`ERROR: wget() failed because of an invalid target file: ${target}. Target file must be a script or text file`);
                 return false;

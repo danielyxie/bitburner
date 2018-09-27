@@ -85,6 +85,7 @@ let CONSTANTS = {
     ScriptGetScriptRamCost:         0.1,
     ScriptGetHackTimeRamCost:       0.05,
     ScriptGetFavorToDonate:         0.10,
+    ScriptWgetRamCost:              5,
     ScriptCodingContractBaseRamCost:10,
 
     ScriptSingularityFn1RamCost:    1,
