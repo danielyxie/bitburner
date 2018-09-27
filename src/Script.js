@@ -517,6 +517,12 @@ function parseOnlyRamCalculate(server, code, workerScript) {
                 function applyFuncRam(func) {
                     if (typeof func === "function") {
                         try {
+                            let res;
+                            if (func instance of (async () => {}).constructor) {
+
+                            } else {
+
+                            }
                             let res = func.apply(null, []);
                             if (typeof res === "number") {
                                 return res;
