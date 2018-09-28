@@ -1041,7 +1041,18 @@ wget
 
         wget("https://raw.githubusercontent.com/danielyxie/bitburner/master/README.md", "game_readme.txt");
 
-    Returns a boolean indicating whether or not the data was successfully downloaded.
+    **IMPORTANT:** This is an asynchronous function that returns a Promise. The Promise's resolved
+    value will be a boolean indicating whether or not the data was successfully
+    retrieved from the URL. Because the function is async and returns a Promise,
+    it is recommended you use :code:`wget` in :ref:`netscriptjs`.
+
+    In NetscriptJS, you must preface any call to
+    :code:`wget` with the :code:`await` keyword (like you would :code:`hack` or :code:`sleep`).
+
+    :code:`wget` will still work in :ref:`netscript1`, but the functions execution will not
+    be synchronous (i.e. it may not execute when you expect/want it to). Furthermore, since Promises are not
+    supported in ES5, you will not be able to process the returned value of :code:`wget` in
+    Netscript 1.0.
 
 getFavorToDonate
 ^^^^^^^^^^^^^^^^
