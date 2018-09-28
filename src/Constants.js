@@ -514,6 +514,7 @@ let CONSTANTS = {
      * It is now possible to use freely use angled bracket (<, >) and create DOM elements using tprint()
      * The game's theme colors can now be set through the Terminal configuration (.fconf).
      * You can now switch to the old left-hand main menu bar through the Terminal configuration (.fconf)
+     * grow() percentage is no longer reported as Infinity when a server's money is grown from 0 to X
      `
 
 }
