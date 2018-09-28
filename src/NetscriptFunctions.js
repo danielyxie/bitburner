@@ -421,7 +421,7 @@ function NetscriptFunctions(workerScript) {
             }
             return netscriptDelay(growTime * 1000, workerScript).then(function() {
                 if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
-                const moneyBefore = server.moneyAvailable;
+                const moneyBefore = server.moneyAvailable <= 0 ? 1 : server.moneyAvailable;
                 server.moneyAvailable += (1 * threads); //It can be grown even if it has no money
                 var growthPercentage = processSingleServerGrowth(server, 450 * threads);
                 const moneyAfter = server.moneyAvailable;
