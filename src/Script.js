@@ -518,12 +518,11 @@ function parseOnlyRamCalculate(server, code, workerScript) {
                     if (typeof func === "function") {
                         try {
                             let res;
-                            if (func instance of (async () => {}).constructor) {
-
+                            if (func.constructor.name === "AsyncFunction") {
+                                res = 0; // Async functions will always be 0 RAM
                             } else {
-
+                                res = func.apply(null, []);
                             }
-                            let res = func.apply(null, []);
                             if (typeof res === "number") {
                                 return res;
                             }
