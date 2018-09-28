@@ -2265,7 +2265,7 @@ function NetscriptFunctions(workerScript) {
             if (workerScript.checkingRam) { return 0; }
             if (!isScriptFilename(target) && !target.endsWith(".txt")) {
                 workerSript.log(`ERROR: wget() failed because of an invalid target file: ${target}. Target file must be a script or text file`);
-                return false;
+                return Promise.resolve(false);
             }
             var s = safeGetServer(ip, "wget");
             return new Promise(function(resolve, reject) {
