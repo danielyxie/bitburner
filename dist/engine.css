@@ -87,7 +87,8 @@ tr:focus {
   color: #e6e6e6;
   background-color: #555;
   padding: 12px 8px;
-  text-decoration: none; }
+  text-decoration: none; 
+  cursor: pointer; }
 
 /* Hovering makes them lighter */
 .mainmenu > li a:hover,
