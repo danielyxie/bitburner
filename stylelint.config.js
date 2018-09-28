@@ -277,6 +277,7 @@ module.exports = {
             "active",
             "after",
             "before",
+            "disabled",
             "focus",
             "hover",
             "link",
