@@ -59,6 +59,7 @@ export class CodingContractType {
 export const CodingContractTypes: IMap<CodingContractType> = {};
 
 for (const md of codingContractTypesMetadata) {
+    // tslint:disable-next-line
     CodingContractTypes[md.name] = new CodingContractType(md.name, md.desc, md.gen, md.solver, md.difficulty, md.numTries);
 }
 console.info(`${Object.keys(CodingContractTypes).length} Coding Contract Types loaded`);
@@ -171,8 +172,10 @@ export class CodingContract {
                             "after which the contract will self-destruct.\n\n",
                             `${contractType.desc(this.data)}`].join(" "),
             });
-            const answerInput: HTMLInputElement = createElement("input", {
-                onkeydown:(e)=>{
+            let answerInput: HTMLInputElement;
+            let solveBtn: HTMLElement;
+            answerInput = createElement("input", {
+                onkeydown: (e: any) => {
                     if (e.keyCode === 13 && answerInput.value !== "") {
                         e.preventDefault();
                         solveBtn.click();
@@ -180,7 +183,7 @@ export class CodingContract {
                 },
                 placeholder: "Enter Solution here",
             }) as HTMLInputElement;
-            const solveBtn: HTMLElement = createElement("a", {
+            solveBtn = createElement("a", {
                 class: "a-link-button",
                 clickListener: () => {
                     const answer: string = answerInput.value;
