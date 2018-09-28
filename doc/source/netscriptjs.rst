@@ -58,6 +58,7 @@ Here is a summary of all rules you need to follow when writing Netscript JS code
     * run
     * exec
     * prompt
+    * wget
 
 * Any function that contains :code:`await` must be declared as :code:`async`
 
