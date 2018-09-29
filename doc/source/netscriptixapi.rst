@@ -24,6 +24,14 @@ getStockPrice
 
         getStockPrice("FISG");
 
+getStockSymbols
+-------------
+
+.. js:function:: getStockSymbols()
+
+    Returns an array of the symbols of the tradable stocks.
+
+
 getStockPosition
 ----------------
 
