@@ -1668,6 +1668,13 @@ function NetscriptFunctions(workerScript) {
             stock.b ? forecast += stock.otlkMag : forecast -= stock.otlkMag;
             return forecast / 100; //Convert from percentage to decimal
         },
+        getStockSymbols : function(){
+            if (workerScript.checkingRam) {
+                return updateStaticRam("getStockSymbols", CONSTANTS.ScriptGetStockRamCost);
+            }
+            updateDynamicRam("getStockSymbols", CONSTANTS.ScriptGetStockRamCost);
+            return Object.values(StockSymbols);
+        },
         getPurchasedServerLimit : function() {
             if (workerScript.checkingRam) {
                 return updateStaticRam("getPurchasedServerLimit", CONSTANTS.ScriptGetPurchasedServerLimit);
