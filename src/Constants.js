@@ -508,13 +508,15 @@ let CONSTANTS = {
     `
      v0.40.4<br>
      * Added new Coding Contracts mechanic. Solve programming problems to earn rewards
-     * (TODO NEEDS DOCUMENTATION) The write() and read() Netscript functions now work on scripts
+     * The write() and read() Netscript functions now work on scripts
+     * Added wget() Netscript function
      * Added bladeburner.getActionRepGain() function to the Netscript Bladeburner API
      * The getLevelUpgradeCost(), getRamUpgradeCost(), and getCoreUpgradeCost() functions in the Hacknet API now return Infinity if the node is at max level. See documentation
      * It is now possible to use freely use angled bracket (<, >) and create DOM elements using tprint()
      * The game's theme colors can now be set through the Terminal configuration (.fconf).
      * You can now switch to the old left-hand main menu bar through the Terminal configuration (.fconf)
-     * grow() percentage is no longer reported as Infinity when a server's money is grown from 0 to X
+     * Bug Fix: grow() percentage is no longer reported as Infinity when a server's money is grown from 0 to X
+     * Bug Fix: Infiltration popup now displays the correct amount of exp gained
      `
 
 }
