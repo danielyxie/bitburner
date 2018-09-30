@@ -10,6 +10,13 @@ TIX API can be purchased by visiting the World Stock Exchange in-game.
 Access to the TIX API currently costs $5 billion. After you purchase it, you will retain this
 access even after you 'reset' by installing Augmentations
 
+getStockSymbols
+-------------
+
+.. js:function:: getStockSymbols()
+
+    Returns an array of the symbols of the tradable stocks
+
 getStockPrice
 -------------
 
@@ -23,14 +30,6 @@ getStockPrice
     Example::
 
         getStockPrice("FISG");
-
-getStockSymbols
--------------
-
-.. js:function:: getStockSymbols()
-
-    Returns an array of the symbols of the tradable stocks.
-
 
 getStockPosition
 ----------------

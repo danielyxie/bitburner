@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.40.3",
+    Version:                "0.40.4",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -506,9 +506,10 @@ let CONSTANTS = {
 
     LatestUpdate:
     `
-     v0.40.4<br>
+     v0.40.4
      * Added new Coding Contracts mechanic. Solve programming problems to earn rewards
      * The write() and read() Netscript functions now work on scripts
+     * Added getStockSymbols() Netscript function to the TIX API
      * Added wget() Netscript function
      * Added bladeburner.getActionRepGain() function to the Netscript Bladeburner API
      * The getLevelUpgradeCost(), getRamUpgradeCost(), and getCoreUpgradeCost() functions in the Hacknet API now return Infinity if the node is at max level. See documentation
