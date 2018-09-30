@@ -571,6 +571,7 @@ button {
   background-color: #555;
   padding: 12px 8px;
   text-decoration: none;
+  cursor: pointer;
   width: 100%;
   text-align: left; }
 

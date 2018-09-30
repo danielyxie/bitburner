@@ -1394,6 +1394,16 @@ function NetscriptFunctions(workerScript) {
             }
             return (findRunningScript(filename, argsForTargetScript, server) != null);
         },
+        getStockSymbols : function(){
+            if (workerScript.checkingRam) {
+                return updateStaticRam("getStockSymbols", CONSTANTS.ScriptGetStockRamCost);
+            }
+            updateDynamicRam("getStockSymbols", CONSTANTS.ScriptGetStockRamCost);
+            if (!Player.hasTixApiAccess) {
+                throw makeRuntimeRejectMsg(workerScript, "You don't have TIX API Access! Cannot use getStockSymbols()");
+            }
+            return Object.values(StockSymbols);
+        },
         getStockPrice : function(symbol) {
             if (workerScript.checkingRam) {
                 return updateStaticRam("getStockPrice", CONSTANTS.ScriptGetStockRamCost);
@@ -1667,13 +1677,6 @@ function NetscriptFunctions(workerScript) {
             var forecast = 50;
             stock.b ? forecast += stock.otlkMag : forecast -= stock.otlkMag;
             return forecast / 100; //Convert from percentage to decimal
-        },
-        getStockSymbols : function(){
-            if (workerScript.checkingRam) {
-                return updateStaticRam("getStockSymbols", CONSTANTS.ScriptGetStockRamCost);
-            }
-            updateDynamicRam("getStockSymbols", CONSTANTS.ScriptGetStockRamCost);
-            return Object.values(StockSymbols);
         },
         getPurchasedServerLimit : function() {
             if (workerScript.checkingRam) {
