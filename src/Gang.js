@@ -1,3 +1,18 @@
+/*
+gang member upgrades - they should be cheaper as the gang gets more  respect/power
+kopelli09/12/2018
+Another gang-related idea (and perhaps I'm not seeing it in the code) - gangs can lose power. Seems odd that the player's power can drop by removing members, but the other gangs are forever gaining power...
+Grub09/12/2018
+Maybe add a % chance of other gangs clashing?
+assign gangs a number of gang members and each clash kills a number of gang members based on each one's power
+and they lose a proportionate number of members
+Also add police clashes
+balance point to keep them from running out of control
+*/
+
+import {gangMemberTasksMetadata}                from "./data/gangmembertasks";
+import {gangMemberUpgradesMetadata}             from "./data/gangmemberupgrades";
+
 import {Engine}                                 from "./engine";
 import {Faction, Factions,
         displayFactionContent}                  from "./Faction";
@@ -11,6 +26,7 @@ import {createElement}                          from "../utils/uiHelpers/createE
 import {createPopup}                            from "../utils/uiHelpers/createPopup";
 import {Page, routing}                          from "./ui/navigationTracking";
 import {formatNumber}                           from "../utils/StringHelperFunctions";
+import {exceptionAlert}                         from "../utils/helpers/exceptionAlert";
 import {getRandomInt}                           from "../utils/helpers/getRandomInt";
 import {removeChildrenFromElement}              from "../utils/uiHelpers/removeChildrenFromElement";
 import {removeElement}                          from "../utils/uiHelpers/removeElement";
@@ -22,11 +38,11 @@ import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
         yesNoTxtInpBoxClose, yesNoBoxOpen}      from "../utils/YesNoBox";
 
 // Constants
-
 const GangRespectToReputationRatio = 2; //Respect is divided by this to get rep gain
 const MaximumGangMembers = 47;
 const GangRecruitCostMultiplier = 2;
 const GangTerritoryUpdateTimer = 150;
+const AscensionMultiplierRatio = 10 / 100; //Portion upgrade multiplier is kept after ascending
 
 // Switch between territory and management screen with 1 and 2
 $(document).keydown(function(event) {
@@ -218,7 +234,7 @@ Gang.prototype.processGains = function(numCycles=1) {
         console.log("ERROR: Gang's storedCylces is NaN");
         this.storedCycles = 0;
     }
-    if (this.storedCycles < 25) {return;} //Only process every 5 seconds at least
+    if (this.storedCycles < 25) { return; } //Only process every 5 seconds at least
 
     //Get gains per cycle
     var moneyGains = 0, respectGains = 0, wantedLevelGains = 0;
@@ -231,10 +247,10 @@ Gang.prototype.processGains = function(numCycles=1) {
     this.wantedGainRate = wantedLevelGains;
     this.moneyGainRate = moneyGains;
 
-    if (!isNaN(respectGains)) {
+    if (typeof respectGains === "number") {
         var gain = respectGains * this.storedCycles;
         this.respect += (gain);
-        //Faction reputation gains is respect gain divided by some constant
+        // Faction reputation gains is respect gain divided by some constant
         var fac = Factions[this.facName];
         if (!(fac instanceof Faction)) {
             dialogBoxCreate("ERROR: Could not get Faction associates with your gang. This is a bug, please report to game dev");
@@ -243,26 +259,56 @@ Gang.prototype.processGains = function(numCycles=1) {
             fac.playerReputation += ((Player.faction_rep_mult * gain * favorMult) / GangRespectToReputationRatio);
         }
 
+        // Keep track of respect gained per member
+        for (let i = 0; i < this.members.length; ++i) {
+            this.members[i].recordEarnedRespect(this.storedCycles);
+        }
     } else {
-        console.log("ERROR: respectGains is NaN");
+        console.warn("respectGains calculated to be NaN");
     }
-    if (!isNaN(wantedLevelGains)) {
+    if (typeof wantedLevelGains === "number") {
         if (this.wanted === 1 && wantedLevelGains < 0) {
             //Do nothing
         } else {
-            this.wanted += (wantedLevelGains * this.storedCycles);
+            const oldWanted = this.wanted;
+            let newWanted =  + (wantedLevelGains * this.storedCycles);
+
+            // Prevent overflow
+            if (wantedLevelGains <= 0 && newWanted > oldWanted) {
+                newWanted = 1;
+            }
+
+            this.wanted = newWanted;
             if (this.wanted < 1) {this.wanted = 1;}
         }
     } else {
-        console.log("ERROR: wantedLevelGains is NaN");
+        console.warn("ERROR: wantedLevelGains is NaN");
     }
-    if (!isNaN(moneyGains)) {
+    if (typeof moneyGains === "number") {
         Player.gainMoney(moneyGains * this.storedCycles);
     } else {
-        console.log("ERROR: respectGains is NaN");
+        console.warn("ERROR: respectGains is NaN");
     }
 
     this.storedCycles = 0;
+}
+
+Gang.prototype.canRecruitMember = function() {
+    if (this.members.length >= MaximumGangMembers) { return false; }
+    return (this.respect >= this.getRespectNeededToRecruitMember());
+}
+
+Gang.prototype.getRespectNeededToRecruitMember = function() {
+    // First 3 members are free
+    if (this.members.length < 3) { return 0; }
+
+    const i = this.members.length;
+    return Math.round(0.7 * Math.pow(i, 3) + 0.8 * Math.pow(i, 2));
+}
+
+// Money and Respect gains multiplied by this number (< 1)
+Gang.prototype.getWantedPenalty = function() {
+    return (this.respect) / (this.respect + this.wanted);
 }
 
 Gang.prototype.processExperienceGains = function(numCycles=1) {
@@ -284,24 +330,17 @@ Gang.prototype.calculatePower = function() {
     return (0.0005 * memberTotal);
 }
 
-Gang.prototype.autoAssignMemberToTask = function(taskName) {
-    for (var i = 0; i < this.members.length; ++i) {
-        if (this.members[i].task.name === taskName) {
-            this.members[i].assignToTask(taskName);
-            return true;
-        }
-    }
-    return false;
+Gang.prototype.killMember = function(memberObj) {
+    // TODO
 }
 
-Gang.prototype.autoUnassignMemberFromTask = function(taskName) {
-    for (var i = 0; i < this.members.length; ++i) {
-        if (this.members[i].task.name === taskName) {
-            this.members[i].unassignFromTask();
-            return true;
-        }
+Gang.prototype.ascendMember = function(memberObj) {
+    try {
+        //Member.ascend() returns the amount of respect to deduct
+        this.respect = Math.min(1, this.respect - memberObj.ascend());
+    } catch(e) {
+        exceptionAlert(e);
     }
-    return false;
 }
 
 Gang.prototype.toJSON = function() {
@@ -318,7 +357,8 @@ Reviver.constructors.Gang = Gang;
 function GangMember(name) {
     this.name   = name;
     this.task   = GangMemberTasks["Unassigned"]; //GangMemberTask object
-    this.city   = Player.city;
+
+    this.earnedRespect = 0;
 
     this.hack   = 1;
     this.str    = 1;
@@ -341,21 +381,29 @@ function GangMember(name) {
     this.agi_mult   = 1;
     this.cha_mult   = 1;
 
-    this.upgrades = []; //Names of upgrades
+    this.hack_asc_mult  = 1;
+    this.str_asc_mult   = 1;
+    this.def_asc_mult   = 1;
+    this.dex_asc_mult   = 1;
+    this.agi_asc_mult   = 1;
+    this.cha_asc_mult   = 1;
+
+    this.upgrades = [];         //Names of upgrades
+    this.augmentations = [];    //Names only
 }
 
 //Same formula for Player
 GangMember.prototype.calculateSkill = function(exp, mult=1) {
-    return Math.max(Math.floor(mult*(32 * Math.log(exp + 534.5) - 200)), 1);
+    return Math.max(Math.floor(mult * (32 * Math.log(exp + 534.5) - 200)), 1);
 }
 
 GangMember.prototype.updateSkillLevels = function() {
-    this.hack   = this.calculateSkill(this.hack_exp, this.hack_mult);
-    this.str    = this.calculateSkill(this.str_exp, this.str_mult);
-    this.def    = this.calculateSkill(this.def_exp, this.def_mult);
-    this.dex    = this.calculateSkill(this.dex_exp, this.dex_mult);
-    this.agi    = this.calculateSkill(this.agi_exp, this.agi_mult);
-    this.cha    = this.calculateSkill(this.cha_exp, this.cha_mult);
+    this.hack   = this.calculateSkill(this.hack_exp, this.hack_mult * this.hack_asc_mult);
+    this.str    = this.calculateSkill(this.str_exp, this.str_mult * this.str_asc_mult);
+    this.def    = this.calculateSkill(this.def_exp, this.def_mult * this.def_asc_mult);
+    this.dex    = this.calculateSkill(this.dex_exp, this.dex_mult * this.dex_asc_mult);
+    this.agi    = this.calculateSkill(this.agi_exp, this.agi_mult * this.agi_asc_mult);
+    this.cha    = this.calculateSkill(this.cha_exp, this.cha_mult * this.cha_asc_mult);
 }
 
 GangMember.prototype.calculatePower = function() {
@@ -391,10 +439,10 @@ GangMember.prototype.calculateRespectGain = function() {
                         (task.agiWeight/100) * this.agi +
                         (task.chaWeight/100) * this.cha;
     statWeight -= (3.5 * task.difficulty);
-    if (statWeight <= 0) {return 0;}
+    if (statWeight <= 0) { return 0; }
     var territoryMult = AllGangs[Player.gang.facName].territory;
-    if (territoryMult <= 0) {return 0;}
-    var respectMult = (Player.gang.respect) / (Player.gang.respect + Player.gang.wanted);
+    if (territoryMult <= 0) { return 0; }
+    var respectMult = Player.gang.getWantedPenalty();
     return 12 * task.baseRespect * statWeight * territoryMult * respectMult;
 }
 
@@ -431,7 +479,7 @@ GangMember.prototype.calculateMoneyGain = function() {
     if (statWeight <= 0) {return 0;}
     var territoryMult = AllGangs[Player.gang.facName].territory;
     if (territoryMult <= 0) {return 0;}
-    var respectMult = (Player.gang.respect) / (Player.gang.respect + Player.gang.wanted);
+    var respectMult = Player.gang.getWantedPenalty();
     return 5 * task.baseMoney * statWeight * territoryMult * respectMult;
 }
 
@@ -444,6 +492,58 @@ GangMember.prototype.gainExperience = function(numCycles=1) {
     this.dex_exp    += (task.dexWeight / 1500) * task.difficulty * numCycles;
     this.agi_exp    += (task.agiWeight / 1500) * task.difficulty * numCycles;
     this.cha_exp    += (task.chaWeight / 1500) * task.difficulty * numCycles;
+}
+
+GangMember.prototype.recordEarnedRespect = function(numCycles=1) {
+    this.earnedRespect += (this.calculateRespectGain() * numCycles);
+}
+
+GangMember.prototype.ascend = function() {
+    // Calculate ascension bonus to stat multipliers.
+    // This is based on the current number of multipliers from Non-Augmentation upgrades
+    // + Ascension Bonus = N% of current bonus from Augmentations
+    let hack = 1;
+    let str = 1;
+    let def = 1;
+    let dex = 1;
+    let agi = 1;
+    let cha = 1;
+    for (let i = 0; i < this.upgrades.length; ++i) {
+        let upg = GangMemberUpgrades[this.upgrades[i]];
+        if (upg.mults.hack != null) { hack *= upg.mults.hack; }
+        if (upg.mults.str != null)  { str *= upg.mults.str; }
+        if (upg.mults.def != null)  { def *= upg.mults.def; }
+        if (upg.mults.dex != null)  { dex *= upg.mults.dex; }
+        if (upg.mults.agi != null)  { agi *= upg.mults.agi; }
+        if (upg.mults.cha != null)  { cha *= upg.mults.cha; }
+    }
+
+    // Get just the bonus multiplier part, and then record
+    --hack; --str; --def; --dex; --agi; --cha;
+    this.hack_asc_mult += (hack * AscensionMultiplierRatio);
+    this.str_asc_mult += (str * AscensionMultiplierRatio);
+    this.def_asc_mult += (def * AscensionMultiplierRatio);
+    this.dex_asc_mult += (dex * AscensionMultiplierRatio);
+    this.agi_asc_mult += (agi * AscensionMultiplierRatio);
+    this.cha_asc_mult += (cha * AscensionMultiplierRatio);
+
+    // Remove upgrades. Then re-calculate multipliers and stats
+    this.upgrades.length = 0;
+    this.hack_mult = 1;
+    this.str_mult = 1;
+    this.def_mult = 1;
+    this.dex_mult = 1;
+    this.agi_mult = 1;
+    this.cha_mult = 1;
+    for (let i = 0; i < this.augmentations.length; ++i) {
+        let aug = GangMemberUpgrades[this.augmentations[i]];
+        aug.apply(this);
+    }
+    this.updateSkillLevels();
+
+    const respectToDeduct = this.earnedRespect;
+    this.earnedRespect = 0;
+    return respectToDeduct;
 }
 
 GangMember.prototype.toJSON = function() {
@@ -492,163 +592,46 @@ GangMemberTask.fromJSON = function(value) {
 Reviver.constructors.GangMemberTask = GangMemberTask;
 
 //TODO Human trafficking and an equivalent hacking crime
-let GangMemberTasks = {
-    "Unassigned" :              new GangMemberTask(
-                                        "Unassigned",
-                                        "This gang member is currently idle"),
-    "Ransomware" :              new GangMemberTask(
-                                        "Ransomware",
-                                        "Assign this gang member to create and distribute ransomware<br><br>" +
-                                        "Earns money - Slightly increases respect - Slightly increases wanted level",
-                                        {baseRespect: 0.00005, baseWanted: 0.00001, baseMoney: 1,
-                                         hackWeight: 100, difficulty: 1}),
-    "Phishing" :                new GangMemberTask(
-                                        "Phishing",
-                                        "Assign this gang member to attempt phishing scams and attacks<br><br>" +
-                                        "Earns money - Slightly increases respect - Slightly increases wanted level",
-                                        {baseRespect: 0.00008, baseWanted: 0.001, baseMoney: 2.5,
-                                         hackWeight: 85, chaWeight: 15, difficulty: 3}),
-    "Identity Theft" :          new GangMemberTask(
-                                        "Identity Theft",
-                                        "Assign this gang member to attempt identity theft<br><br>" +
-                                        "Earns money - Increases respect - Increases wanted level",
-                                        {baseRespect: 0.0001, baseWanted: 0.01, baseMoney: 6,
-                                         hackWeight: 80, chaWeight: 20, difficulty: 4}),
-    "DDoS Attacks" :            new GangMemberTask(
-                                        "DDoS Attacks",
-                                        "Assign this gang member to carry out DDoS attacks<br><br>" +
-                                        "Increases respect - Increases wanted level",
-                                        {baseRespect: 0.0004, baseWanted: 0.05,
-                                         hackWeight: 100, difficulty: 7}),
-    "Plant Virus" :             new GangMemberTask(
-                                        "Plant Virus",
-                                        "Assign this gang member to create and distribute malicious viruses<br><br>" +
-                                        "Increases respect - Increases wanted level",
-                                        {baseRespect: 0.0006, baseWanted: 0.05,
-                                         hackWeight: 100, difficulty: 10}),
-    "Fraud & Counterfeiting" :  new GangMemberTask(
-                                        "Fraud & Counterfeiting",
-                                        "Assign this gang member to commit financial fraud and digital counterfeiting<br><br>" +
-                                        "Earns money - Slightly increases respect - Slightly increases wanted level",
-                                        {baseRespect: 0.0005, baseWanted: 0.1, baseMoney: 15,
-                                         hackWeight: 80, chaWeight: 20, difficulty: 17}),
-    "Money Laundering" :        new GangMemberTask(
-                                        "Money Laundering",
-                                        "Assign this gang member to launder money<br><br>" +
-                                        "Earns money - Increases respect - Increases wanted level",
-                                        {baseRespect: 0.0006, baseWanted:0.2, baseMoney: 40,
-                                         hackWeight: 75, chaWeight: 25, difficulty: 20}),
-    "Cyberterrorism" :          new GangMemberTask(
-                                        "Cyberterrorism",
-                                        "Assign this gang member to commit acts of cyberterrorism<br><br>" +
-                                        "Greatly increases respect - Greatly increases wanted level",
-                                        {baseRespect: 0.001, baseWanted: 0.5,
-                                         hackWeight: 80, chaWeight: 20, difficulty: 33}),
-    "Ethical Hacking" :         new GangMemberTask(
-                                        "Ethical Hacking",
-                                        "Assign this gang member to be an ethical hacker for corporations<br><br>" +
-                                        "Earns money - Lowers wanted level",
-                                        {baseWanted: -0.001, baseMoney: 1,
-                                         hackWeight: 90, chaWeight: 10, difficulty: 1}),
-    "Mug People" :              new GangMemberTask(
-                                        "Mug People",
-                                        "Assign this gang member to mug random people on the streets<br><br>" +
-                                        "Earns money - Slightly increases respect - Very slightly increases wanted level",
-                                         {baseRespect: 0.00005, baseWanted: 0.00001, baseMoney: 1,
-                                          strWeight: 25, defWeight: 25, dexWeight: 25, agiWeight: 10, chaWeight: 15, difficulty: 1}),
-    "Deal Drugs" :              new GangMemberTask(
-                                        "Deal Drugs",
-                                        "Assign this gang member to sell drugs.<br><br>" +
-                                        "Earns money - Slightly increases respect - Slightly increases wanted level",
-                                        {baseRespect: 0.00008, baseWanted: 0.001, baseMoney: 4,
-                                         agiWeight: 20, dexWeight: 20, chaWeight: 60, difficulty: 3}),
-    "Run a Con" :               new GangMemberTask(
-                                        "Run a Con",
-                                        "Assign this gang member to run cons<br><br>" +
-                                        "Earns money - Increases respect - Increases wanted level",
-                                        {baseRespect: 0.00015, baseWanted: 0.01, baseMoney: 10,
-                                         strWeight: 5, defWeight: 5, agiWeight: 25, dexWeight: 25, chaWeight: 40, difficulty: 10}),
-    "Armed Robbery" :           new GangMemberTask(
-                                        "Armed Robbery",
-                                        "Assign this gang member to commit armed robbery on stores, banks and armored cars<br><br>" +
-                                        "Earns money - Increases respect - Increases wanted level",
-                                        {baseRespect: 0.00015, baseWanted: 0.05, baseMoney: 25,
-                                         hackWeight: 20, strWeight: 15, defWeight: 15, agiWeight: 10, dexWeight: 20, chaWeight: 20,
-                                         difficulty: 17}),
-    "Traffick Illegal Arms" :   new GangMemberTask(
-                                        "Traffick Illegal Arms",
-                                        "Assign this gang member to traffick illegal arms<br><br>" +
-                                        "Earns money - Increases respect - Increases wanted level",
-                                        {baseRespect: 0.0003, baseWanted: 0.1, baseMoney: 40,
-                                         hackWeight: 15, strWeight: 20, defWeight: 20, dexWeight: 20, chaWeight: 75,
-                                         difficulty: 25}),
-    "Threaten & Blackmail" :    new GangMemberTask(
-                                        "Threaten & Blackmail",
-                                        "Assign this gang member to threaten and black mail high-profile targets<br><br>" +
-                                        "Earns money - Slightly increases respect - Slightly increases wanted level",
-                                        {baseRespect: 0.0002, baseWanted: 0.05, baseMoney: 15,
-                                         hackWeight: 25, strWeight: 25, dexWeight: 25, chaWeight: 25, difficulty: 28}),
-    "Terrorism" :               new GangMemberTask(
-                                        "Terrorism",
-                                        "Assign this gang member to commit acts of terrorism<br><br>" +
-                                        "Greatly increases respect - Greatly increases wanted level",
-                                        {baseRespect: 0.001, baseWanted: 1,
-                                         hackWeight: 20, strWeight: 20, defWeight: 20,dexWeight: 20, chaWeight: 20,
-                                         difficulty: 33}),
-    "Vigilante Justice" :       new GangMemberTask(
-                                        "Vigilante Justice",
-                                        "Assign this gang member to be a vigilante and protect the city from criminals<br><br>" +
-                                        "Decreases wanted level",
-                                        {baseWanted: -0.001,
-                                         hackWeight: 20, strWeight: 20, defWeight: 20, dexWeight: 20, agiWeight:20,
-                                         difficulty: 1}),
-    "Train Combat" :            new GangMemberTask(
-                                        "Train Combat",
-                                        "Assign this gang member to increase their combat stats (str, def, dex, agi)",
-                                        {strWeight: 25, defWeight: 25, dexWeight: 25, agiWeight: 25, difficulty: 5}),
-    "Train Hacking" :           new GangMemberTask(
-                                        "Train Hacking",
-                                        "Assign this gang member to train their hacking skills",
-                                        {hackWeight: 100, difficulty: 8}),
-    "Territory Warfare" :       new GangMemberTask(
-                                        "Territory Warfare",
-                                        "Assign this gang member to engage in territorial warfare with other gangs. " +
-                                        "Members assigned to this task will help increase your gang's territory " +
-                                        "and will defend your territory from being taken.",
-                                        {hackWeight: 15, strWeight: 20, defWeight: 20, dexWeight: 20, agiWeight: 20,
-                                         chaWeight: 5, difficulty: 3}),
+const GangMemberTasks = {};
+
+function addGangMemberTask(name, desc, params) {
+    GangMemberTasks[name] = new GangMemberTask(name, desc, params);
 }
 
+gangMemberTasksMetadata.forEach((e) => {
+    addGangMemberTask(e.name, e.desc, e.params);
+});
 
 function GangMemberUpgrade(name="", cost=0, type="w", mults={}) {
     this.name = name;
     this.cost = cost;
-    this.type = type; //w, a, v, r, g
+    this.type = type; //w = weapon, a = armor, v = vehicle, r = rootkit, g = Aug
     this.mults = mults;
 
     this.createDescription();
 }
 
 GangMemberUpgrade.prototype.createDescription = function() {
-    var lines = ["Increases:\n"];
+    const lines = ["Increases:"];
     if (this.mults.str != null) {
-        lines.push(`* Strength by ${Math.round((this.mults.str - 1) * 100)%}`);
+        lines.push(`* Strength by ${Math.round((this.mults.str - 1) * 100)}%`);
     }
     if (this.mults.def != null) {
-        lines.push(`* Defense by ${Math.round((this.mults.def - 1) * 100)%}`);
+        lines.push(`* Defense by ${Math.round((this.mults.def - 1) * 100)}%`);
     }
     if (this.mults.dex != null) {
-        lines.push(`* Dexterity by ${Math.round((this.mults.dex - 1) * 100)%}`);
+        lines.push(`* Dexterity by ${Math.round((this.mults.dex - 1) * 100)}%`);
     }
     if (this.mults.agi != null) {
-        lines.push(`* Agility by ${Math.round((this.mults.agi - 1) * 100)%}`);
+        lines.push(`* Agility by ${Math.round((this.mults.agi - 1) * 100)}%`);
     }
     if (this.mults.cha != null) {
-        lines.push(`* Charisma by ${Math.round((this.mults.cha - 1) * 100)%}`);
+        lines.push(`* Charisma by ${Math.round((this.mults.cha - 1) * 100)}%`);
     }
     if (this.mults.hack != null) {
-        lines.push(`* Hacking by ${Math.round((this.mults.hack - 1) * 100)%}`);
+        lines.push(`* Hacking by ${Math.round((this.mults.hack - 1) * 100)}%`);
     }
+    this.desc = lines.join("\n");
 }
 
 //Passes in a GangMember object
@@ -672,32 +655,16 @@ GangMemberUpgrade.fromJSON = function(value) {
 
 Reviver.constructors.GangMemberUpgrade = GangMemberUpgrade;
 
+// Initialize Gang Member Upgrades
 const GangMemberUpgrades = {}
 
 function addGangMemberUpgrade(name, cost, type, mults) {
-    GangMemberUpgrades[name] = new GangMemberUpgrade(name, desc, cost, type, mults);
+    GangMemberUpgrades[name] = new GangMemberUpgrade(name, cost, type, mults);
 }
 
-addGangMemberUpgrade("Baseball Bat",            1e6,    "w",    {str: 1.05, def: 1.05});
-addGangMemberUpgrade("Katana",                  12e6,   "w",    {str: 1.10, def: 1.10, dex: 1.10});
-addGangMemberUpgrade("Glock 18C",               25e6,   "w",    {str: 1.15, def: 1.15, dex: 1.15, agi: 1.15});
-addGangMemberUpgrade("P90C",                    50e6,   "w",    {str: 1.20, def: 1.20, agi: 1.10});
-addGangMemberUpgrade("Steyr AUG",               60e6,   "w",    {str: 1.25, def: 1.25});
-addGangMemberUpgrade("AK-47",                   100e6,  "w",    {str: 1.50, def: 1.50});
-addGangMemberUpgrade("M15A10 Assault Rifle",    150e6,  "w",    {str: 1.60, def: 1.60});
-addGangMemberUpgrade("AWM Sniper Rifle",        225e6,  "w",    {str: 1.50, dex: 1.50, agi: 1.50});
-addGangMemberUpgrade("Bulletproof Vest",        2e6,    "a",    {def: 1.05});
-addGangMemberUpgrade("Full Body Armor",         5e6,    "a",    {def: 1.10});
-addGangMemberUpgrade("Liquid Body Armor",       25e6,   "a",    {def: 1.25, agi: 1.25});
-addGangMemberUpgrade("Graphene Plating Armor",  40e6,   "a",    {def: 1.50});
-addGangMemberUpgrade("Ford Flex V20",           3e6,    "v",    {agi: 1.10, cha: 1.10});
-addGangMemberUpgrade("ATX1070 Superbike",       9e6,    "v",    {agi: 1.15, cha: 1.15});
-addGangMemberUpgrade("Mercedes-Benz S9001",     18e6,   "v",    {agi: 1.20, cha: 1.20});
-addGangMemberUpgrade("White Ferrari",           30e6,   "v",    {agi: 1.25, cha: 1.25});
-addGangMemberUpgrade("NUKE Rootkit",            5e6,    "r",    {hack: 1.10});
-addGangMemberUpgrade("Soulstealer Rootkit",     15e6,   "r",    {hack: 1.20});
-addGangMemberUpgrade("Demon Rootkit",           50e6,   "r",    {hack: 1.30});
-addGangMemberUpgrade("Bionic Arm";
+gangMemberUpgradesMetadata.forEach((e) => {
+    addGangMemberUpgrade(e.name, e.cost, e.upgType, e.mults);
+});
 
 //Create a pop-up box that lets player purchase upgrades
 let gangMemberUpgradeBoxOpened = false;
@@ -796,10 +763,15 @@ function createGangMemberUpgradePanel(memberObj) {
     container.appendChild(createElement("br", {}));
 
     //Upgrade buttons. Only show upgrades that can be afforded
-    var weaponUpgrades = [], armorUpgrades = [], vehicleUpgrades = [], rootkitUpgrades = [];
-    for (var upgName in GangMemberUpgrades) {
+    const weaponUpgrades = [];
+    const armorUpgrades = [];
+    const vehicleUpgrades = [];
+    const rootkitUpgrades = [];
+    const augUpgrades = [];
+
+    for (let upgName in GangMemberUpgrades) {
         if (GangMemberUpgrades.hasOwnProperty(upgName)) {
-            var upg = GangMemberUpgrades[upgName];
+            let upg = GangMemberUpgrades[upgName];
             if (Player.money.lt(upg.cost) || memberObj.upgrades.includes(upgName)) {continue;}
             switch (upg.type) {
                 case "w":
@@ -814,34 +786,41 @@ function createGangMemberUpgradePanel(memberObj) {
                 case "r":
                     rootkitUpgrades.push(upg);
                     break;
+                case "g":
+                    augUpgrades.push(upg);
                 default:
-                    console.log("ERROR: Invalid Gang Member Upgrade Type: " + upg.type);
+                    console.error(`ERROR: Invalid Gang Member Upgrade Type: ${upg.type}`);
             }
         }
     }
 
-    var weaponDiv   = createElement("div", {width:"20%", display:"inline-block",});
-    var armorDiv    = createElement("div", {width:"20%", display:"inline-block",});
-    var vehicleDiv  = createElement("div", {width:"20%", display:"inline-block",});
-    var rootkitDiv  = createElement("div", {width:"20%", display:"inline-block",});
-    var upgrades = [weaponUpgrades, armorUpgrades, vehicleUpgrades, rootkitUpgrades];
-    var divs = [weaponDiv, armorDiv, vehicleDiv, rootkitDiv];
+    const weaponDiv   = createElement("div", {width: "16%", display: "inline-block"});
+    const armorDiv    = createElement("div", {width: "16%", display: "inline-block"});
+    const vehicleDiv  = createElement("div", {width: "16%", display: "inline-block"});
+    const rootkitDiv  = createElement("div", {width: "16%", display: "inline-block"});
+    const augDiv      = createElement("div", {width: "16%", display: "inline-block"});
+    const upgrades = [weaponUpgrades, armorUpgrades, vehicleUpgrades, rootkitUpgrades, augUpgrades];
+    const divs = [weaponDiv, armorDiv, vehicleDiv, rootkitDiv, augDiv];
 
-    for (var i = 0; i < upgrades.length; ++i) {
-        var upgradeArray = upgrades[i];
-        var div = divs[i];
-        for (var j = 0; j < upgradeArray.length; ++j) {
-            var upg = upgradeArray[j];
+    for (let i = 0; i < upgrades.length; ++i) {
+        let upgradeArray = upgrades[i];
+        let div = divs[i];
+        for (let j = 0; j < upgradeArray.length; ++j) {
+            let upg = upgradeArray[j];
             (function (upg, div, memberObj) {
                 div.appendChild(createElement("a", {
                     innerText:upg.name + " - " + numeralWrapper.format(upg.cost, "$0.000a"),
                     class:"a-link-button", margin:"2px",  padding:"2px", display:"block",
-                    fontSize:"12px",
+                    fontSize:"11px",
                     tooltip:upg.desc,
                     clickListener:()=>{
-                        if (Player.money.lt(upg.cost)) {return false;}
+                        if (Player.money.lt(upg.cost)) { return false; }
                         Player.loseMoney(upg.cost);
-                        memberObj.upgrades.push(upg.name);
+                        if (upg.type === "g") {
+                            memberObj.augmentations.push(upg.name);
+                        } else {
+                            memberObj.upgrades.push(upg.name);
+                        }
                         upg.apply(memberObj);
                         var initFilterValue = gangMemberUpgradeBoxFilter.value.toString();
                         createGangMemberUpgradeBox(initFilterValue);
@@ -876,7 +855,6 @@ let gangDesc = null, gangInfo = null,
 //Gang Equipment Upgrade Elements
 let gangMemberUpgradeBox = null, gangMemberUpgradeBoxContent = null,
     gangMemberUpgradeBoxFilter = null, gangMemberUpgradeBoxElements = null;
-
 
 //Gang Territory Elements
 let gangTerritoryDescText = null, gangTerritoryInfoText = null;
@@ -1169,19 +1147,18 @@ function updateGangContent() {
             }));
             gangInfo.appendChild(createElement("br", {}));
 
-            var wantedPenalty = (Player.gang.respect) / (Player.gang.respect + Player.gang.wanted);
+            var wantedPenalty = Player.gang.getWantedPenalty();
             wantedPenalty = (1 - wantedPenalty) * 100;
             gangInfo.appendChild(createElement("p", {   //Wanted Level multiplier
                 display:"inline-block",
-                innerText:"Wanted Level Penalty: -" + formatNumber(wantedPenalty, 2) + "%",
+                innerText:`Wanted Level Penalty: - ${formatNumber(wantedPenalty, 2)}%`,
                 tooltip:"Penalty for respect and money gain rates due to Wanted Level"
             }));
             gangInfo.appendChild(createElement("br", {}));
 
             gangInfo.appendChild(createElement("p", {   //Money gain rate
                 display:"inline-block",
-                innerText:"Money gain rate: $" + formatNumber(5*Player.gang.moneyGainRate, 2) +
-                          " / sec",
+                innerText: `Money gain rate: ${numeralWrapper.format(5 * Player.gang.moneyGainRate, $0.000a)} / sec`);
             }));
             gangInfo.appendChild(createElement("br", {}));
 
@@ -1197,7 +1174,7 @@ function updateGangContent() {
             }
             gangInfo.appendChild(createElement("p", {  //Territory multiplier
                 display:"inline-block",
-                innerText:"Territory: " + formatNumber(displayNumber, 3) + "%",
+                innerText:`Territory: ${formatNumber(displayNumber, 3)}%`,
                 tooltip:"The percentage of total territory your Gang controls"
             }));
             gangInfo.appendChild(createElement("br", {}));
@@ -1213,33 +1190,22 @@ function updateGangContent() {
 
         //Toggle the 'Recruit member button' if valid
         var numMembers = Player.gang.members.length;
-        var repCost = 0;
-        if (numMembers > 0) {
-            var repCost = Math.pow(GangRecruitCostMultiplier, numMembers);
-        }
-        var faction = Factions[Player.gang.facName];
-        if (faction == null) {
-            dialogBoxCreate("Could not find your gang's faction. This is probably a bug please report to dev");
-            return;
-        }
-        var btn = gangRecruitMemberButton;
+        const respectCost = Player.gang.getRespectNeededToRecruitMember();
         if (numMembers >= MaximumGangMembers) {
             btn.className = "a-link-button-inactive";
             gangRecruitRequirementText.style.display = "block";
-            gangRecruitRequirementText.innerHTML =
-                "You have reached the maximum amount of gang members";
-        } else if (faction.playerReputation >= repCost) {
+            gangRecruitRequirementText.innerHTML = "You have reached the maximum amount of gang members";
+        } else if (Player.gang.canRecruitMember()) {
             btn.className = "a-link-button";
             gangRecruitRequirementText.style.display = "none";
         } else {
             btn.className = "a-link-button-inactive";
             gangRecruitRequirementText.style.display = "block";
-            gangRecruitRequirementText.innerHTML =
-                formatNumber(repCost, 2) + " Faction reputation needed to recruit next member";
+            gangRecruitRequirementText.innerHTML = `${formatNumber(repCost, 2)} respect needed to recruit next member`;
         }
 
         //Update information for each gang member
-        for (var i = 0; i < Player.gang.members.length; ++i) {
+        for (let i = 0; i < Player.gang.members.length; ++i) {
             updateGangMemberDisplayElement(Player.gang.members[i]);
         }
     }
