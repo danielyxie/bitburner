@@ -1,4 +1,3 @@
-import {CONSTANTS}                              from "./Constants";
 import {Engine}                                 from "./engine";
 import {Faction, Factions,
         displayFactionContent}                  from "./Faction";
@@ -22,8 +21,14 @@ import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
         yesNoTxtInpBoxGetInput, yesNoBoxClose,
         yesNoTxtInpBoxClose, yesNoBoxOpen}      from "../utils/YesNoBox";
 
-/* Gang.js */
-//Switch between territory and management screen with 1 and 2
+// Constants
+
+const GangRespectToReputationRatio = 2; //Respect is divided by this to get rep gain
+const MaximumGangMembers = 47;
+const GangRecruitCostMultiplier = 2;
+const GangTerritoryUpdateTimer = 150;
+
+// Switch between territory and management screen with 1 and 2
 $(document).keydown(function(event) {
     if (routing.isOn(Page.Gang) && !yesNoBoxOpen) {
         if (gangMemberFilter != null && gangMemberFilter === document.activeElement) {return;}
@@ -150,7 +155,7 @@ let gangStoredTerritoryCycles = 0;
 function processAllGangTerritory(numCycles=1) {
     if (!Player.inGang()) {return;}
     gangStoredTerritoryCycles += numCycles;
-    if (gangStoredTerritoryCycles < CONSTANTS.GangTerritoryUpdateTimer) {return;}
+    if (gangStoredTerritoryCycles < GangTerritoryUpdateTimer) {return;}
 
     for (var i = 0; i < GangNames.length; ++i) {
         var other = getRandomInt(0, GangNames.length-1);
@@ -176,7 +181,7 @@ function processAllGangTerritory(numCycles=1) {
         }
     }
 
-    gangStoredTerritoryCycles -= CONSTANTS.GangTerritoryUpdateTimer;
+    gangStoredTerritoryCycles -= GangTerritoryUpdateTimer;
 }
 
 /*  faction - Name of corresponding faction
@@ -235,7 +240,7 @@ Gang.prototype.processGains = function(numCycles=1) {
             dialogBoxCreate("ERROR: Could not get Faction associates with your gang. This is a bug, please report to game dev");
         } else {
             var favorMult = 1 + (fac.favor / 100);
-            fac.playerReputation += ((Player.faction_rep_mult * gain * favorMult) / CONSTANTS.GangRespectToReputationRatio);
+            fac.playerReputation += ((Player.faction_rep_mult * gain * favorMult) / GangRespectToReputationRatio);
         }
 
     } else {
@@ -615,95 +620,46 @@ let GangMemberTasks = {
 }
 
 
-function GangMemberUpgrade(name="", desc="", cost=0, type="w") {
+function GangMemberUpgrade(name="", cost=0, type="w", mults={}) {
     this.name = name;
-    this.desc = desc;
     this.cost = cost;
-    this.type = type; //w, a, v, r
+    this.type = type; //w, a, v, r, g
+    this.mults = mults;
+
+    this.createDescription();
+}
+
+GangMemberUpgrade.prototype.createDescription = function() {
+    var lines = ["Increases:\n"];
+    if (this.mults.str != null) {
+        lines.push(`* Strength by ${Math.round((this.mults.str - 1) * 100)%}`);
+    }
+    if (this.mults.def != null) {
+        lines.push(`* Defense by ${Math.round((this.mults.def - 1) * 100)%}`);
+    }
+    if (this.mults.dex != null) {
+        lines.push(`* Dexterity by ${Math.round((this.mults.dex - 1) * 100)%}`);
+    }
+    if (this.mults.agi != null) {
+        lines.push(`* Agility by ${Math.round((this.mults.agi - 1) * 100)%}`);
+    }
+    if (this.mults.cha != null) {
+        lines.push(`* Charisma by ${Math.round((this.mults.cha - 1) * 100)%}`);
+    }
+    if (this.mults.hack != null) {
+        lines.push(`* Hacking by ${Math.round((this.mults.hack - 1) * 100)%}`);
+    }
 }
 
 //Passes in a GangMember object
 GangMemberUpgrade.prototype.apply = function(member) {
-    switch(this.name) {
-        case "Baseball Bat":
-            member.str_mult *= 1.05;
-            member.def_mult *= 1.05;
-            break;
-        case "Katana":
-            member.str_mult *= 1.1;
-            member.def_mult *= 1.1;
-            member.dex_mult *= 1.1;
-            break;
-        case "Glock 18C":
-            member.str_mult *= 1.15;
-            member.def_mult *= 1.15;
-            member.dex_mult *= 1.15;
-            member.agi_mult *= 1.15;
-            break;
-        case "P90C":
-            member.str_mult *= 1.2;
-            member.def_mult *= 1.2;
-            member.agi_mult *= 1.1;
-            break;
-        case "Steyr AUG":
-            member.str_mult *= 1.25;
-            member.def_mult *= 1.25;
-            break;
-        case "AK-47":
-            member.str_mult *= 1.5;
-            member.def_mult *= 1.5;
-            break;
-        case "M15A10 Assault Rifle":
-            member.str_mult *= 1.6;
-            member.def_mult *= 1.6;
-            break;
-        case "AWM Sniper Rifle":
-            member.str_mult *= 1.5;
-            member.dex_mult *= 1.5;
-            member.agi_mult *= 1.5;
-            break;
-        case "Bulletproof Vest":
-            member.def_mult *= 1.05;
-            break;
-        case "Full Body Armor":
-            member.def_mult *= 1.1;
-            break;
-        case "Liquid Body Armor":
-            member.def_mult *= 1.25;
-            member.agi_mult *= 1.25;
-            break;
-        case "Graphene Plating Armor":
-            member.def_mult *= 1.5;
-            break;
-        case "Ford Flex V20":
-            member.agi_mult *= 1.1;
-            member.cha_mult *= 1.1;
-            break;
-        case "ATX1070 Superbike":
-            member.agi_mult *= 1.15;
-            member.cha_mult *= 1.15;
-            break;
-        case "Mercedes-Benz S9001":
-            member.agi_mult *= 1.2;
-            member.cha_mult *= 1.2;
-            break;
-        case "White Ferrari":
-            member.agi_mult *= 1.25;
-            member.cha_mult *= 1.25;
-            break;
-        case "NUKE Rootkit":
-            member.hack_mult *= 1.1;
-            break;
-        case "Soulstealer Rootkit":
-            member.hack_mult *= 1.2;
-            break;
-        case "Demon Rootkit":
-            member.hack_mult *= 1.3;
-            break;
-        default:
-            console.log("ERROR: Could not find this upgrade: " + this.name);
-            break;
-    }
+    if (this.mults.str != null)     { member.str_mult *= this.mults.str; }
+    if (this.mults.def != null)     { member.def_mult *= this.mults.def; }
+    if (this.mults.dex != null)     { member.dex_mult *= this.mults.dex; }
+    if (this.mults.agi != null)     { member.agi_mult *= this.mults.agi; }
+    if (this.mults.cha != null)     { member.cha_mult *= this.mults.cha; }
+    if (this.mults.hack != null)    { member.hack_mult *= this.mults.hack; }
+    return;
 }
 
 GangMemberUpgrade.prototype.toJSON = function() {
@@ -716,46 +672,32 @@ GangMemberUpgrade.fromJSON = function(value) {
 
 Reviver.constructors.GangMemberUpgrade = GangMemberUpgrade;
 
-let GangMemberUpgrades = {
-    "Baseball Bat" : new GangMemberUpgrade("Baseball Bat",
-                            "Increases strength and defense by 5%", 1e6, "w"),
-    "Katana" :       new GangMemberUpgrade("Katana",
-                            "Increases strength, defense, and dexterity by 10%", 12e6, "w"),
-    "Glock 18C" :    new GangMemberUpgrade("Glock 18C",
-                            "Increases strength, defense, dexterity, and agility by 15%", 25e6, "w"),
-    "P90C" :          new GangMemberUpgrade("P90C",
-                            "Increases strength and defense by 20%. Increases agility by 10%", 50e6, "w"),
-    "Steyr AUG" :    new GangMemberUpgrade("Steyr AUG",
-                            "Increases strength and defense by 25%", 60e6, "w"),
-    "AK-47" :        new GangMemberUpgrade("AK-47",
-                            "Increases strength and defense by 50%", 100e6, "w"),
-    "M15A10 Assault Rifle" :    new GangMemberUpgrade("M15A10 Assault Rifle",
-                                        "Increases strength and defense by 60%", 150e6, "w"),
-    "AWM Sniper Rifle" :        new GangMemberUpgrade("AWM Sniper Rifle",
-                                        "Increases strength, dexterity, and agility by 50%", 225e6, "w"),
-    "Bulletproof Vest" :        new GangMemberUpgrade("Bulletproof Vest",
-                                        "Increases defense by 5%", 2e6, "a"),
-    "Full Body Armor" :         new GangMemberUpgrade("Full Body Armor",
-                                        "Increases defense by 10%", 5e6, "a"),
-    "Liquid Body Armor" :       new GangMemberUpgrade("Liquid Body Armor",
-                                        "Increases defense and agility by 25%", 25e6, "a"),
-    "Graphene Plating Armor" :  new GangMemberUpgrade("Graphene Plating Armor",
-                                        "Increases defense by 50%", 40e6, "a"),
-    "Ford Flex V20" :           new GangMemberUpgrade("Ford Flex V20",
-                                        "Increases agility and charisma by 10%", 3e6, "v"),
-    "ATX1070 Superbike" :       new GangMemberUpgrade("ATX1070 Superbike",
-                                        "Increases agility and charisma by 15%", 9e6, "v"),
-    "Mercedes-Benz S9001" :     new GangMemberUpgrade("Mercedes-Benz S9001",
-                                        "Increases agility and charisma by 20%", 18e6, "v"),
-    "White Ferrari" :           new GangMemberUpgrade("White Ferrari",
-                                        "Increases agility and charisma by 25%", 30e6, "v"),
-    "NUKE Rootkit" :            new GangMemberUpgrade("NUKE Rootkit",
-                                        "Increases hacking by 10%", 5e6, "r"),
-    "Soulstealer Rootkit" :     new GangMemberUpgrade("Soulstealer Rootkit",
-                                        "Increases hacking by 20%", 15e6, "r"),
-    "Demon Rootkit" :           new GangMemberUpgrade("Demon Rootkit",
-                                        "Increases hacking by 30%", 50e6, "r"),
+const GangMemberUpgrades = {}
+
+function addGangMemberUpgrade(name, cost, type, mults) {
+    GangMemberUpgrades[name] = new GangMemberUpgrade(name, desc, cost, type, mults);
 }
+
+addGangMemberUpgrade("Baseball Bat",            1e6,    "w",    {str: 1.05, def: 1.05});
+addGangMemberUpgrade("Katana",                  12e6,   "w",    {str: 1.10, def: 1.10, dex: 1.10});
+addGangMemberUpgrade("Glock 18C",               25e6,   "w",    {str: 1.15, def: 1.15, dex: 1.15, agi: 1.15});
+addGangMemberUpgrade("P90C",                    50e6,   "w",    {str: 1.20, def: 1.20, agi: 1.10});
+addGangMemberUpgrade("Steyr AUG",               60e6,   "w",    {str: 1.25, def: 1.25});
+addGangMemberUpgrade("AK-47",                   100e6,  "w",    {str: 1.50, def: 1.50});
+addGangMemberUpgrade("M15A10 Assault Rifle",    150e6,  "w",    {str: 1.60, def: 1.60});
+addGangMemberUpgrade("AWM Sniper Rifle",        225e6,  "w",    {str: 1.50, dex: 1.50, agi: 1.50});
+addGangMemberUpgrade("Bulletproof Vest",        2e6,    "a",    {def: 1.05});
+addGangMemberUpgrade("Full Body Armor",         5e6,    "a",    {def: 1.10});
+addGangMemberUpgrade("Liquid Body Armor",       25e6,   "a",    {def: 1.25, agi: 1.25});
+addGangMemberUpgrade("Graphene Plating Armor",  40e6,   "a",    {def: 1.50});
+addGangMemberUpgrade("Ford Flex V20",           3e6,    "v",    {agi: 1.10, cha: 1.10});
+addGangMemberUpgrade("ATX1070 Superbike",       9e6,    "v",    {agi: 1.15, cha: 1.15});
+addGangMemberUpgrade("Mercedes-Benz S9001",     18e6,   "v",    {agi: 1.20, cha: 1.20});
+addGangMemberUpgrade("White Ferrari",           30e6,   "v",    {agi: 1.25, cha: 1.25});
+addGangMemberUpgrade("NUKE Rootkit",            5e6,    "r",    {hack: 1.10});
+addGangMemberUpgrade("Soulstealer Rootkit",     15e6,   "r",    {hack: 1.20});
+addGangMemberUpgrade("Demon Rootkit",           50e6,   "r",    {hack: 1.30});
+addGangMemberUpgrade("Bionic Arm";
 
 //Create a pop-up box that lets player purchase upgrades
 let gangMemberUpgradeBoxOpened = false;
@@ -1273,7 +1215,7 @@ function updateGangContent() {
         var numMembers = Player.gang.members.length;
         var repCost = 0;
         if (numMembers > 0) {
-            var repCost = Math.pow(CONSTANTS.GangRecruitCostMultiplier, numMembers);
+            var repCost = Math.pow(GangRecruitCostMultiplier, numMembers);
         }
         var faction = Factions[Player.gang.facName];
         if (faction == null) {
@@ -1281,7 +1223,7 @@ function updateGangContent() {
             return;
         }
         var btn = gangRecruitMemberButton;
-        if (numMembers >= CONSTANTS.MaximumGangMembers) {
+        if (numMembers >= MaximumGangMembers) {
             btn.className = "a-link-button-inactive";
             gangRecruitRequirementText.style.display = "block";
             gangRecruitRequirementText.innerHTML =

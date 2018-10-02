@@ -191,13 +191,6 @@ let CONSTANTS = {
                              "-Miscellaneous Nodes slowly raise their defense over time<br><br>" +
                              "-Nodes slowly regenerate health over time.",
 
-
-    /* Gang constant */
-    GangRespectToReputationRatio: 2, //Respect is divided by this to get rep gain
-    MaximumGangMembers: 20,
-    GangRecruitCostMultiplier: 2,
-    GangTerritoryUpdateTimer: 150,
-
     /* Time Constants */
     MillisecondsPer20Hours: 72000000,
     GameCyclesPer20Hours: 72000000 / 200,
