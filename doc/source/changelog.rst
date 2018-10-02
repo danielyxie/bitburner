@@ -7,7 +7,7 @@ v0.40.4 - 9/29/2018
 -------------------
 * Added new Coding Contracts mechanic. Solve programming problems to earn rewards
 * The write() and read() Netscript functions now work on scripts
-* Added getStockSymbols() Netscript function to the TIX API
+* Added getStockSymbols() Netscript function to the TIX API (by InfraK)
 * Added wget() Netscript function
 * Added bladeburner.getActionRepGain() function to the Netscript Bladeburner API
 * The getLevelUpgradeCost(), getRamUpgradeCost(), and getCoreUpgradeCost() functions in the Hacknet API now return Infinity if the node is at max level. See documentation
