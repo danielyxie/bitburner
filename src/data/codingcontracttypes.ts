@@ -25,7 +25,7 @@ export interface ICodingContractTypeMetadata {
 function removeBracketsFromArrayString(str: string) {
     let strCpy: string = str;
     if (strCpy.startsWith("[")) { strCpy = strCpy.slice(1); }
-    if (strCpy.endsWith("]")) { strCpy = strCpy.slice(-1); }
+    if (strCpy.endsWith("]")) { strCpy = strCpy.slice(0, -1); }
 
     return strCpy;
 }
@@ -244,6 +244,8 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
             for (let i: number = 0; i < arr.length; ++i) {
                 arr[i] = getRandomInt(0, 24);
             }
+
+            return arr;
         },
         name: "Array Jumping Game",
         numTries: 1,
@@ -265,7 +267,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         desc: (arr: number[][]) => {
             return ["Given the following array of array of numbers representing a list of",
                     "intervals, merge all overlapping intervals.\n\n",
-                    `${arr}\n\n`,
+                    `[${convert2DArrayToString(arr)}]\n\n`,
                     "Example:\n\n",
                     "[[1, 3], [8, 10], [2, 6], [10, 16]]\n\n",
                     "would merge into [[1, 6], [8, 16]].\n\n",
