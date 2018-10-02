@@ -21,6 +21,7 @@ import {numeralWrapper}                         from "./ui/numeralFormat";
 import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver";
+import {KEY}                                    from "../utils/helpers/keyCodes";
 import {createAccordionElement}                 from "../utils/uiHelpers/createAccordionElement";
 import {createElement}                          from "../utils/uiHelpers/createElement";
 import {createPopup}                            from "../utils/uiHelpers/createPopup";
@@ -951,38 +952,66 @@ function displayGangContent() {
             id:"gang-management-recruit-member-btn", class:"a-link-button-inactive",
             innerHTML:"Recruit Gang Member", display:"inline-block", margin:"10px",
             clickListener:()=>{
-                var yesBtn = yesNoTxtInpBoxGetYesButton(), noBtn = yesNoTxtInpBoxGetNoButton();
-                yesBtn.innerHTML = "Recruit Gang Member";
-                noBtn.innerHTML = "Cancel";
-                yesBtn.addEventListener("click", ()=>{
-                    var name = yesNoTxtInpBoxGetInput();
-                    if (name === "") {
-                        dialogBoxCreate("You must enter a name for your Gang member!");
-                    } else {
-                        for (var i = 0; i < Player.gang.members.length; ++i) {
-                            if (name == Player.gang.members[i].name) {
-                                dialogBoxCreate("You already have a gang member with this name!");
-                                return false;
-                            }
+                let popupId = "recruit-gang-member-popup";
+
+                let yesBtn;
+                const txt = createElement("p", {
+                    innerText:"Please enter a name for your new Gang member:",
+                });
+                const br = createElement("br");
+                const nameInput = createElement("input", {
+                    onkeyup: (e) => {
+                        if (e.keyCode === KEY.ENTER) { yesBtn.click(); }
+                    },
+                    placeholder: "Name must be unique",
+                    type: "text",
+                });
+                yesBtn = createElement("a", {
+                    class: "a-link-button",
+                    clickListener: () => {
+                        let name = nameInput.value;
+
+                        // Check for already-existing names
+                        let sameNames = Player.gang.members.filter((m) => {
+                            return m.name === name;
+                        });
+                        if (sameNames.length >= 1) {
+                            dialogBoxCreate("You already have a gang member with this name!");
+                            return false;
                         }
-                        var member = new GangMember(name);
-                        Player.gang.members.push(member);
-                        createGangMemberDisplayElement(member);
-                        updateGangContent();
-                    }
-                    yesNoTxtInpBoxClose();
+
+                        if (name === "") {
+                            dialogBoxCreate("You must enter a name for your Gang member!");
+                        } else {
+                            let member = new GangMember(name);
+                            Player.gang.members.push(member);
+                            createGangMemberDisplayElement(member);
+                            updateGangContent();
+                            removeElementById(popupId);
+                        }
+                        return false;
+                    },
+                    innerText: "Recruit Gang Member",
                 });
-                noBtn.addEventListener("click", ()=>{
-                    yesNoTxtInpBoxClose();
+                const noBtn = createElement("a", {
+                    class: "a-link-button",
+                    clickListener: () => {
+                        removeElementById(popupId);
+                        return false;
+                    },
+                    innerText: "Cancel",
                 });
-                yesNoTxtInpBoxCreate("Please enter a name for your new Gang member:");
-                return false;
+                createPopup(popupId, [txt, br, nameInput, yesBtn, noBtn]);
             }
         });
         gangManagementSubpage.appendChild(gangRecruitMemberButton);
 
-        //Text for how much reputation is required for recruiting next memberList
-        gangRecruitRequirementText = createElement("p", {color:"red", id:"gang-recruit-requirement-text"});
+        // Text for how much reputation is required for recruiting next memberList
+        gangRecruitRequirementText = createElement("p", {
+            color:"red",
+            id: "gang-recruit-requirement-text",
+            margin: "10px",
+        });
         gangManagementSubpage.appendChild(gangRecruitRequirementText);
 
         //Gang Member List management buttons (Expand/Collapse All, select a single member)
@@ -1151,14 +1180,14 @@ function updateGangContent() {
             wantedPenalty = (1 - wantedPenalty) * 100;
             gangInfo.appendChild(createElement("p", {   //Wanted Level multiplier
                 display:"inline-block",
-                innerText:`Wanted Level Penalty: - ${formatNumber(wantedPenalty, 2)}%`,
+                innerText:`Wanted Level Penalty: -${formatNumber(wantedPenalty, 2)}%`,
                 tooltip:"Penalty for respect and money gain rates due to Wanted Level"
             }));
             gangInfo.appendChild(createElement("br", {}));
 
             gangInfo.appendChild(createElement("p", {   //Money gain rate
                 display:"inline-block",
-                innerText: `Money gain rate: ${numeralWrapper.format(5 * Player.gang.moneyGainRate, $0.000a)} / sec`);
+                innerText: `Money gain rate: ${numeralWrapper.format(5 * Player.gang.moneyGainRate, "$0.000a")} / sec`,
             }));
             gangInfo.appendChild(createElement("br", {}));
 
@@ -1189,19 +1218,21 @@ function updateGangContent() {
         }
 
         //Toggle the 'Recruit member button' if valid
-        var numMembers = Player.gang.members.length;
+        const numMembers = Player.gang.members.length;
         const respectCost = Player.gang.getRespectNeededToRecruitMember();
+
+        const btn = gangRecruitMemberButton;
         if (numMembers >= MaximumGangMembers) {
             btn.className = "a-link-button-inactive";
-            gangRecruitRequirementText.style.display = "block";
+            gangRecruitRequirementText.style.display = "inline-block";
             gangRecruitRequirementText.innerHTML = "You have reached the maximum amount of gang members";
         } else if (Player.gang.canRecruitMember()) {
             btn.className = "a-link-button";
             gangRecruitRequirementText.style.display = "none";
         } else {
             btn.className = "a-link-button-inactive";
-            gangRecruitRequirementText.style.display = "block";
-            gangRecruitRequirementText.innerHTML = `${formatNumber(repCost, 2)} respect needed to recruit next member`;
+            gangRecruitRequirementText.style.display = "inline-block";
+            gangRecruitRequirementText.innerHTML = `${formatNumber(respectCost, 2)} respect needed to recruit next member`;
         }
 
         //Update information for each gang member
