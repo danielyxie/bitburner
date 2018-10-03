@@ -54,14 +54,13 @@ export async function executeJSScript(scripts = [], workerScript) {
 //
 // - script -- the script for whom we are getting a URL.
 // - scripts -- all the scripts available on this server
-// - envHeader -- the preamble that goes at the start of every NSJS script.
 // - seen -- The modules above this one -- to prevent mutual dependency.
 //
 // TODO We don't make any effort to cache a given module when it is imported at
 // different parts of the tree. That hasn't presented any problem with during
 // testing, but it might be an idea for the future. Would require a topo-sort
 // then url-izing from leaf-most to root-most.
-function _getScriptUrls(script, scripts, seen) {
+export function _getScriptUrls(script, scripts, seen) {
     // Inspired by: https://stackoverflow.com/a/43834063/91401
     const urlStack = [];
     seen.push(script);
@@ -90,7 +89,8 @@ function _getScriptUrls(script, scripts, seen) {
                 // The top url in the stack is the replacement import file for this script.
                 urlStack.push(...urls);
                 return [prefix, urls[urls.length - 1], suffix].join('');
-            });
+            }
+        );
 
 
         // If we successfully transformed the code, create a blob url for it and
