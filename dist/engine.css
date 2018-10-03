@@ -482,7 +482,8 @@ a:visited {
  */
 /* Remove default <button> styling */
 button {
-  border: none; }
+  border: none;
+  background-color: transparent; }
 
 .a-link-button,
 .std-button {
@@ -1530,26 +1531,19 @@ button {
     text-decoration: none;
     cursor: pointer; }
 
-/*
-#interactive-tutorial-exit {
-    float: left;
-}
-
-#interactive-tutorial-back {
-    margin-right: 20%;
-    float: right;
-}
-*/
 #interactive-tutorial-exit {
   position: absolute;
   bottom: 0;
-  left: 0; }
+  left: 0;
+  padding: 4px; }
 
 #interactive-tutorial-back {
-  float: left; }
+  float: left;
+  padding: 4px; }
 
 #interactive-tutorial-next {
-  float: right; }
+  float: right;
+  padding: 4px; }
 
 /* COLORS */
 /* Attributes */
