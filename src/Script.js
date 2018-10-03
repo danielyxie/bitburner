@@ -24,8 +24,7 @@ import {iTutorialSteps, iTutorialNextStep,
         ITutorial}                              from "./InteractiveTutorial";
 import {evaluateImport}                         from "./NetscriptEvaluator";
 import {NetscriptFunctions}                     from "./NetscriptFunctions";
-import {addWorkerScript,
-        WorkerScript}                           from "./NetscriptWorker";
+import {addWorkerScript, WorkerScript}          from "./NetscriptWorker";
 import {Player}                                 from "./Player";
 import {AllServers, processSingleServerGrowth}  from "./Server";
 import {Settings}                               from "./Settings";
@@ -240,7 +239,7 @@ function scriptEditorInit() {
 }
 
 //Updates RAM usage in script
-function updateScriptEditorContent() {
+async function updateScriptEditorContent() {
     var filename = document.getElementById("script-editor-filename").value;
     if (scriptEditorRamCheck == null || !scriptEditorRamCheck.checked || !isScriptFilename(filename)) {
         scriptEditorRamText.innerText = "N/A";
@@ -249,7 +248,7 @@ function updateScriptEditorContent() {
     var editor = ace.edit('javascript-editor');
     var code = editor.getValue();
     var codeCopy = code.repeat(1);
-    var ramUsage = calculateRamUsage(codeCopy);
+    var ramUsage = await calculateRamUsage(codeCopy);
     if (ramUsage !== -1) {
         scriptEditorRamText.innerText = "RAM: " + numeralWrapper.format(ramUsage, '0.00') + " GB";
     } else {
@@ -402,9 +401,9 @@ Script.prototype.saveScript = function() {
 }
 
 //Updates how much RAM the script uses when it is running.
-Script.prototype.updateRamUsage = function() {
+Script.prototype.updateRamUsage = async function() {
     var codeCopy = this.code.repeat(1);
-    var res = calculateRamUsage(codeCopy);
+    var res = await calculateRamUsage(codeCopy);
     if (res !== -1) {
         this.ramUsage = roundToTwo(res);
     }
@@ -422,7 +421,7 @@ const memCheckGlobalKey = ".__GLOBAL__";
 // Calcluates the amount of RAM a script uses. Uses parsing and AST walking only,
 // rather than NetscriptEvaluator. This is useful because NetscriptJS code does
 // not work under NetscriptEvaluator.
-function parseOnlyRamCalculate(server, code, workerScript) {
+async function parseOnlyRamCalculate(server, code, workerScript) {
     try {
         // Maps dependent identifiers to their dependencies.
         //
@@ -465,11 +464,27 @@ function parseOnlyRamCalculate(server, code, workerScript) {
             // Get the code from the server.
             const nextModule = parseQueue.shift();
 
-            const script = server.getScript(nextModule);
-            if (!script) return -1;  // No such script on the server.
+            let code;
+            if (nextModule.startsWith("https://")) {
+                try {
+                    const module = await eval('import(nextModule)');
+                    code = "";
+                    for (const prop in module) {
+                        if (typeof module[prop] === 'function') {
+                            code += module[prop].toString();
+                        }
+                    }
+                } catch(e) {
+                    console.error(`Error dynamically importing module from ${nextModule} for RAM calculations: ${e}`);
+                    return -1;
+                }
+            } else {
+                const script = server.getScript(nextModule);
+                if (!script) return -1;  // No such script on the server.
+                code = script.code;
+            }
 
-            // Not sure why we always take copies, but let's do that here too.
-            parseCode(script.code.repeat(1), nextModule);
+            parseCode(code, nextModule);
         }
 
         // Finally, walk the reference map and generate a ram cost. The initial set of keys to scan
@@ -551,7 +566,7 @@ function parseOnlyRamCalculate(server, code, workerScript) {
         return ram;
 
     } catch (error) {
-        //console.info("parse or eval error: ", error);
+        console.info("parse or eval error: ", error);
         // This is not unexpected. The user may be editing a script, and it may be in
         // a transitory invalid state.
         return -1;
@@ -688,7 +703,7 @@ function parseOnlyCalculateDeps(code, currentModule) {
     return {dependencyMap: dependencyMap, additionalModules: additionalModules};
 }
 
-function calculateRamUsage(codeCopy) {
+async function calculateRamUsage(codeCopy) {
     //Create a temporary/mock WorkerScript and an AST from the code
     var currServ = Player.getCurrentServer();
     var workerScript = new WorkerScript({
@@ -700,7 +715,7 @@ function calculateRamUsage(codeCopy) {
     workerScript.serverIp = currServ.ip;
 
     try {
-        return parseOnlyRamCalculate(currServ, codeCopy, workerScript);
+        return await parseOnlyRamCalculate(currServ, codeCopy, workerScript);
 	} catch (e) {
         console.log("Failed to parse ram using new method. Falling back.", e);
 	}
@@ -862,7 +877,6 @@ function scriptCalculateOfflineProduction(runningScriptObj) {
 	var thisUpdate = new Date().getTime();
 	var lastUpdate = Player.lastUpdate;
 	var timePassed = (thisUpdate - lastUpdate) / 1000;	//Seconds
-	console.log("Offline for " + timePassed + " seconds");
 
 	//Calculate the "confidence" rating of the script's true production. This is based
 	//entirely off of time. We will arbitrarily say that if a script has been running for
