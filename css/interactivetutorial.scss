@@ -53,26 +53,19 @@
     }
 }
 
-/*
-#interactive-tutorial-exit {
-    float: left;
-}
-
-#interactive-tutorial-back {
-    margin-right: 20%;
-    float: right;
-}
-*/
 #interactive-tutorial-exit {
     position: absolute;
     bottom: 0;
     left: 0;
+    padding: 4px;
 }
 
 #interactive-tutorial-back {
     float: left;
+    padding: 4px;
 }
 
 #interactive-tutorial-next {
     float: right;
+    padding: 4px;
 }
