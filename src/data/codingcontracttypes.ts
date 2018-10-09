@@ -50,7 +50,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         },
         difficulty: 1,
         gen: () => {
-            return getRandomInt(500, 9e9);
+            return getRandomInt(500, 1e9);
         },
         name: "Find Largest Prime Factor",
         numTries: 10,
