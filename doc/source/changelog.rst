@@ -3,6 +3,13 @@
 Changelog
 =========
 
+v0.40.5 - 10/09/2018
+--------------------
+* Added codingcontract.getContractType() Netscript function
+* Bug Fix: codingcontract.getData() Netscript function now returns arrays by value rather than reference
+* Bug Fix: Decreased highest possible data value for 'Find Largest Prime Factor' Coding Contract (to avoid hangs when solving it)
+* Bug Fix: Fixed a bug that caused game to freeze during Coding Contract generation
+
 v0.40.4 - 9/29/2018
 -------------------
 * Added new Coding Contracts mechanic. Solve programming problems to earn rewards
