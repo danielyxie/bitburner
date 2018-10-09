@@ -4108,7 +4108,7 @@ function NetscriptFunctions(workerScript) {
                     return null;
                 }
                 let data = contract.getData();
-                if (typeof data === "object") {
+                if (data.constructor === Array) {
                     // Pass a copy
                     return data.slice();
                 } else {
