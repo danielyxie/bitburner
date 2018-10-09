@@ -1194,6 +1194,7 @@ const Engine = {
                         // faction must allow hacking contracts
                         var numFactions = factionsThatAllowHacking.length;
                         var randFaction = factionsThatAllowHacking[getRandomInt(0, numFactions - 1)];
+                        reward.name = randFaction;
                         break;
                     case CodingContractRewardType.CompanyReputation:
                         if (Player.companyName !== "") {
