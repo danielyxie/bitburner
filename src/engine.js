@@ -1169,10 +1169,18 @@ const Engine = {
                 reward.type = getRandomInt(0, CodingContractRewardType.Money);
 
                 // Change type based on certain conditions
-                if (reward.type === CodingContractRewardType.FactionReputation && Player.factions.length === 0) {
+                var factionsThatAllowHacking = Player.factions.filter((fac) => {
+                    try {
+                        return Factions[fac].getInfo().offerHackingWork;
+                    } catch (e) {
+                        console.error(`Error when trying to filter Hacking Factions for Coding Contract Generation: ${e}`);
+                        return false;
+                    }
+                });
+                if (reward.type === CodingContractRewardType.FactionReputation && factionsThatAllowHacking.length === 0) {
                     reward.type = CodingContractRewardType.CompanyReputation;
                 }
-                if (reward.type === CodingContractRewardType.FactionReputationAll && Player.factions.length === 0) {
+                if (reward.type === CodingContractRewardType.FactionReputationAll && factionsThatAllowHacking.length === 0) {
                     reward.type = CodingContractRewardType.CompanyReputation;
                 }
                 if (reward.type === CodingContractRewardType.CompanyReputation && Player.companyName === "") {
@@ -1183,18 +1191,9 @@ const Engine = {
                 switch (reward.type) {
                     case CodingContractRewardType.FactionReputation:
                         // Get a random faction that player is a part of. That
-                        //faction must allow hacking contracts
-                        var numFactions = Player.factions.length;
-                        var randFaction = Player.factions[getRandomInt(0, numFactions - 1)];
-                        try {
-                            while(Factions[randFaction].getInfo().offerHackingWork !== true) {
-                                randFaction = Player.factions[getRandomInt(0, numFactions - 1)];
-                            }
-                            reward.name = randFaction;
-                        } catch (e) {
-                            exceptionAlert("Failed to find a faction for Coding Contract Generation: " + e);
-                        }
-
+                        // faction must allow hacking contracts
+                        var numFactions = factionsThatAllowHacking.length;
+                        var randFaction = factionsThatAllowHacking[getRandomInt(0, numFactions - 1)];
                         break;
                     case CodingContractRewardType.CompanyReputation:
                         if (Player.companyName !== "") {
