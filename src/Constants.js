@@ -506,11 +506,10 @@ let CONSTANTS = {
 
     LatestUpdate:
     `
-     v0.40.5
-     * Added codingcontract.getContractType() Netscript function
-     * Bug Fix: codingcontract.getData() Netscript function now returns arrays by value rather than reference
-     * Bug Fix: Decreased highest possible data value for 'Find Largest Prime Factor' Coding Contract (to avoid hangs when solving it)
-     * Bug Fix: Fixed a bug that caused game to freeze during Coding Contract generation
+     v0.41.0
+     * b1t_flum3.exe now takes significantly less time to create
+     * Bug Fix: Fixed a bug that sometimes caused a blank black screen when destroying/resetting/switching BitNodes
+     * Bug Fix: Netscript calls that throw errors will now no longer cause the 'concurrent calls' error if they are caught in the script. i.e. try/catch should now work properly in scripts
      `
 
 }
