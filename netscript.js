@@ -112,7 +112,8 @@ let NetscriptFunctions =
     "getCityChaos|switchCity|getStamina|joinBladeburnerFaction|getBonusTime|"  +
 
     // Coding Contract API
-    "codingcontract|attempt|getData|getDescription|getNumTriesRemaining";
+    "codingcontract|attempt|getContractType|getData|getDescription|"           +
+    "getNumTriesRemaining";
 
 var NetscriptHighlightRules = function(options) {
     var keywordMapper = this.createKeywordMapper({

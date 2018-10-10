@@ -188,7 +188,7 @@
 /* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! decimal.js */ 30);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./ui/numeralFormat */ 12);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 18);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 17);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_20__);
 /* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../utils/IPAddress */ 51);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
@@ -2578,7 +2578,7 @@ let Player = new PlayerObject();
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CONSTANTS; });
 let CONSTANTS = {
-    Version:                "0.40.4",
+    Version:                "0.40.5",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -3078,18 +3078,10 @@ let CONSTANTS = {
 
     LatestUpdate:
     `
-     v0.40.4
-     * Added new Coding Contracts mechanic. Solve programming problems to earn rewards
-     * The write() and read() Netscript functions now work on scripts
-     * Added getStockSymbols() Netscript function to the TIX API (by InfraK)
-     * Added wget() Netscript function
-     * Added bladeburner.getActionRepGain() function to the Netscript Bladeburner API
-     * The getLevelUpgradeCost(), getRamUpgradeCost(), and getCoreUpgradeCost() functions in the Hacknet API now return Infinity if the node is at max level. See documentation
-     * It is now possible to use freely use angled bracket (<, >) and create DOM elements using tprint()
-     * The game's theme colors can now be set through the Terminal configuration (.fconf).
-     * You can now switch to the old left-hand main menu bar through the Terminal configuration (.fconf)
-     * Bug Fix: grow() percentage is no longer reported as Infinity when a server's money is grown from 0 to X
-     * Bug Fix: Infiltration popup now displays the correct amount of exp gained
+     v0.41.0
+     * b1t_flum3.exe now takes significantly less time to create
+     * Bug Fix: Fixed a bug that sometimes caused a blank black screen when destroying/resetting/switching BitNodes
+     * Bug Fix: Netscript calls that throw errors will now no longer cause the 'concurrent calls' error if they are caught in the script. i.e. try/catch should now work properly in scripts
      `
 
 }
@@ -3520,7 +3512,7 @@ exports.createElement = createElement;
 
 
 
-var Promise = __webpack_require__(/*! bluebird */ 211);
+var Promise = __webpack_require__(/*! bluebird */ 213);
 
 Promise.config({
     warnings: false,
@@ -4491,11 +4483,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 26);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 18);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 17);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 4);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 42);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 43);
 /* harmony import */ var _utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/uiHelpers/removeLoadingScreen */ 97);
 /* harmony import */ var _utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./ui/numeralFormat */ 12);
@@ -4544,32 +4536,34 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_46___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_46__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(/*! ./ui/navigationTracking */ 16);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__);
-/* harmony import */ var normalize_css__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(/*! normalize.css */ 175);
+/* harmony import */ var normalize_css__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(/*! normalize.css */ 177);
 /* harmony import */ var normalize_css__WEBPACK_IMPORTED_MODULE_48___default = /*#__PURE__*/__webpack_require__.n(normalize_css__WEBPACK_IMPORTED_MODULE_48__);
-/* harmony import */ var _css_styles_scss__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(/*! ../css/styles.scss */ 153);
+/* harmony import */ var _css_styles_scss__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(/*! ../css/styles.scss */ 155);
 /* harmony import */ var _css_styles_scss__WEBPACK_IMPORTED_MODULE_49___default = /*#__PURE__*/__webpack_require__.n(_css_styles_scss__WEBPACK_IMPORTED_MODULE_49__);
-/* harmony import */ var _css_buttons_scss__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(/*! ../css/buttons.scss */ 151);
+/* harmony import */ var _css_buttons_scss__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(/*! ../css/buttons.scss */ 153);
 /* harmony import */ var _css_buttons_scss__WEBPACK_IMPORTED_MODULE_50___default = /*#__PURE__*/__webpack_require__.n(_css_buttons_scss__WEBPACK_IMPORTED_MODULE_50__);
-/* harmony import */ var _css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! ../css/mainmenu.scss */ 149);
+/* harmony import */ var _css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! ../css/mainmenu.scss */ 151);
 /* harmony import */ var _css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_51___default = /*#__PURE__*/__webpack_require__.n(_css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_51__);
-/* harmony import */ var _css_terminal_scss__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! ../css/terminal.scss */ 147);
+/* harmony import */ var _css_terminal_scss__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! ../css/terminal.scss */ 149);
 /* harmony import */ var _css_terminal_scss__WEBPACK_IMPORTED_MODULE_52___default = /*#__PURE__*/__webpack_require__.n(_css_terminal_scss__WEBPACK_IMPORTED_MODULE_52__);
-/* harmony import */ var _css_menupages_scss__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(/*! ../css/menupages.scss */ 145);
+/* harmony import */ var _css_menupages_scss__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(/*! ../css/menupages.scss */ 147);
 /* harmony import */ var _css_menupages_scss__WEBPACK_IMPORTED_MODULE_53___default = /*#__PURE__*/__webpack_require__.n(_css_menupages_scss__WEBPACK_IMPORTED_MODULE_53__);
-/* harmony import */ var _css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(/*! ../css/workinprogress.scss */ 143);
+/* harmony import */ var _css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(/*! ../css/workinprogress.scss */ 145);
 /* harmony import */ var _css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_54___default = /*#__PURE__*/__webpack_require__.n(_css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_54__);
-/* harmony import */ var _css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(/*! ../css/popupboxes.scss */ 141);
+/* harmony import */ var _css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(/*! ../css/popupboxes.scss */ 143);
 /* harmony import */ var _css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_55___default = /*#__PURE__*/__webpack_require__.n(_css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_55__);
-/* harmony import */ var _css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(/*! ../css/interactivetutorial.scss */ 139);
+/* harmony import */ var _css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(/*! ../css/interactivetutorial.scss */ 141);
 /* harmony import */ var _css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_56___default = /*#__PURE__*/__webpack_require__.n(_css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_56__);
-/* harmony import */ var _css_loader_scss__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(/*! ../css/loader.scss */ 137);
+/* harmony import */ var _css_loader_scss__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(/*! ../css/loader.scss */ 139);
 /* harmony import */ var _css_loader_scss__WEBPACK_IMPORTED_MODULE_57___default = /*#__PURE__*/__webpack_require__.n(_css_loader_scss__WEBPACK_IMPORTED_MODULE_57__);
-/* harmony import */ var _css_missions_scss__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(/*! ../css/missions.scss */ 135);
+/* harmony import */ var _css_missions_scss__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(/*! ../css/missions.scss */ 137);
 /* harmony import */ var _css_missions_scss__WEBPACK_IMPORTED_MODULE_58___default = /*#__PURE__*/__webpack_require__.n(_css_missions_scss__WEBPACK_IMPORTED_MODULE_58__);
-/* harmony import */ var _css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(/*! ../css/companymanagement.scss */ 133);
+/* harmony import */ var _css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(/*! ../css/companymanagement.scss */ 135);
 /* harmony import */ var _css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_59___default = /*#__PURE__*/__webpack_require__.n(_css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_59__);
-/* harmony import */ var _css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(/*! ../css/bladeburner.scss */ 131);
+/* harmony import */ var _css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(/*! ../css/bladeburner.scss */ 133);
 /* harmony import */ var _css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_60___default = /*#__PURE__*/__webpack_require__.n(_css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_60__);
+/* harmony import */ var _css_gang_scss__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(/*! ../css/gang.scss */ 131);
+/* harmony import */ var _css_gang_scss__WEBPACK_IMPORTED_MODULE_61___default = /*#__PURE__*/__webpack_require__.n(_css_gang_scss__WEBPACK_IMPORTED_MODULE_61__);
 
 
 
@@ -4623,6 +4617,7 @@ __webpack_require__.r(__webpack_exports__);
 
 // These should really be imported with the module that is presenting that UI, but because they very much depend on the
 // cascade order, we'll pull them all in here.
+
 
 
 
@@ -5716,10 +5711,18 @@ const Engine = {
                 reward.type = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_2__["getRandomInt"])(0, _CodingContracts__WEBPACK_IMPORTED_MODULE_17__["CodingContractRewardType"].Money);
 
                 // Change type based on certain conditions
-                if (reward.type === _CodingContracts__WEBPACK_IMPORTED_MODULE_17__["CodingContractRewardType"].FactionReputation && _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].factions.length === 0) {
+                var factionsThatAllowHacking = _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].factions.filter((fac) => {
+                    try {
+                        return _Faction__WEBPACK_IMPORTED_MODULE_22__[/* Factions */ "b"][fac].getInfo().offerHackingWork;
+                    } catch (e) {
+                        console.error(`Error when trying to filter Hacking Factions for Coding Contract Generation: ${e}`);
+                        return false;
+                    }
+                });
+                if (reward.type === _CodingContracts__WEBPACK_IMPORTED_MODULE_17__["CodingContractRewardType"].FactionReputation && factionsThatAllowHacking.length === 0) {
                     reward.type = _CodingContracts__WEBPACK_IMPORTED_MODULE_17__["CodingContractRewardType"].CompanyReputation;
                 }
-                if (reward.type === _CodingContracts__WEBPACK_IMPORTED_MODULE_17__["CodingContractRewardType"].FactionReputationAll && _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].factions.length === 0) {
+                if (reward.type === _CodingContracts__WEBPACK_IMPORTED_MODULE_17__["CodingContractRewardType"].FactionReputationAll && factionsThatAllowHacking.length === 0) {
                     reward.type = _CodingContracts__WEBPACK_IMPORTED_MODULE_17__["CodingContractRewardType"].CompanyReputation;
                 }
                 if (reward.type === _CodingContracts__WEBPACK_IMPORTED_MODULE_17__["CodingContractRewardType"].CompanyReputation && _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].companyName === "") {
@@ -5730,18 +5733,10 @@ const Engine = {
                 switch (reward.type) {
                     case _CodingContracts__WEBPACK_IMPORTED_MODULE_17__["CodingContractRewardType"].FactionReputation:
                         // Get a random faction that player is a part of. That
-                        //faction must allow hacking contracts
-                        var numFactions = _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].factions.length;
-                        var randFaction = _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].factions[Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_2__["getRandomInt"])(0, numFactions - 1)];
-                        try {
-                            while(_Faction__WEBPACK_IMPORTED_MODULE_22__[/* Factions */ "b"][randFaction].getInfo().offerHackingWork !== true) {
-                                randFaction = _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].factions[Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_2__["getRandomInt"])(0, numFactions - 1)];
-                            }
-                            reward.name = randFaction;
-                        } catch (e) {
-                            Object(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_6__[/* exceptionAlert */ "a"])("Failed to find a faction for Coding Contract Generation: " + e);
-                        }
-
+                        // faction must allow hacking contracts
+                        var numFactions = factionsThatAllowHacking.length;
+                        var randFaction = factionsThatAllowHacking[Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_2__["getRandomInt"])(0, numFactions - 1)];
+                        reward.name = randFaction;
                         break;
                     case _CodingContracts__WEBPACK_IMPORTED_MODULE_17__["CodingContractRewardType"].CompanyReputation:
                         if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].companyName !== "") {
@@ -7369,33 +7364,33 @@ Directory.prototype.getPath = function(name) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return numeralWrapper; });
 /* harmony import */ var numeral__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! numeral */ 63);
 /* harmony import */ var numeral__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(numeral__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var numeral_locales_bg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! numeral/locales/bg */ 240);
+/* harmony import */ var numeral_locales_bg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! numeral/locales/bg */ 242);
 /* harmony import */ var numeral_locales_bg__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_bg__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var numeral_locales_cs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! numeral/locales/cs */ 239);
+/* harmony import */ var numeral_locales_cs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! numeral/locales/cs */ 241);
 /* harmony import */ var numeral_locales_cs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_cs__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var numeral_locales_da_dk__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! numeral/locales/da-dk */ 238);
+/* harmony import */ var numeral_locales_da_dk__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! numeral/locales/da-dk */ 240);
 /* harmony import */ var numeral_locales_da_dk__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_da_dk__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var numeral_locales_de__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! numeral/locales/de */ 237);
+/* harmony import */ var numeral_locales_de__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! numeral/locales/de */ 239);
 /* harmony import */ var numeral_locales_de__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_de__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var numeral_locales_en_au__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! numeral/locales/en-au */ 236);
+/* harmony import */ var numeral_locales_en_au__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! numeral/locales/en-au */ 238);
 /* harmony import */ var numeral_locales_en_au__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_en_au__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var numeral_locales_en_gb__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! numeral/locales/en-gb */ 235);
+/* harmony import */ var numeral_locales_en_gb__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! numeral/locales/en-gb */ 237);
 /* harmony import */ var numeral_locales_en_gb__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_en_gb__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var numeral_locales_es__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! numeral/locales/es */ 234);
+/* harmony import */ var numeral_locales_es__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! numeral/locales/es */ 236);
 /* harmony import */ var numeral_locales_es__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_es__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var numeral_locales_fr__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! numeral/locales/fr */ 233);
+/* harmony import */ var numeral_locales_fr__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! numeral/locales/fr */ 235);
 /* harmony import */ var numeral_locales_fr__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_fr__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var numeral_locales_hu__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! numeral/locales/hu */ 232);
+/* harmony import */ var numeral_locales_hu__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! numeral/locales/hu */ 234);
 /* harmony import */ var numeral_locales_hu__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_hu__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var numeral_locales_it__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! numeral/locales/it */ 231);
+/* harmony import */ var numeral_locales_it__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! numeral/locales/it */ 233);
 /* harmony import */ var numeral_locales_it__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_it__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var numeral_locales_lv__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! numeral/locales/lv */ 230);
+/* harmony import */ var numeral_locales_lv__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! numeral/locales/lv */ 232);
 /* harmony import */ var numeral_locales_lv__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_lv__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var numeral_locales_no__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! numeral/locales/no */ 229);
+/* harmony import */ var numeral_locales_no__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! numeral/locales/no */ 231);
 /* harmony import */ var numeral_locales_no__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_no__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var numeral_locales_pl__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! numeral/locales/pl */ 228);
+/* harmony import */ var numeral_locales_pl__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! numeral/locales/pl */ 230);
 /* harmony import */ var numeral_locales_pl__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_pl__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var numeral_locales_ru__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! numeral/locales/ru */ 227);
+/* harmony import */ var numeral_locales_ru__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! numeral/locales/ru */ 229);
 /* harmony import */ var numeral_locales_ru__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_ru__WEBPACK_IMPORTED_MODULE_14__);
 
 
@@ -8741,7 +8736,7 @@ function Generic_fromJSON(ctor, data) {
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 2);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/YesNoBox */ 18);
 
 
 
@@ -9655,6 +9650,42 @@ exports.routing = new Routing();
 
 /***/ }),
 /* 17 */
+/*!************************************************!*\
+  !*** ./utils/uiHelpers/clearEventListeners.ts ***!
+  \************************************************/
+/*! no static exports found */
+/*! exports used: clearEventListeners */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const getElementById_1 = __webpack_require__(/*! ./getElementById */ 45);
+/**
+ * Given an element by its ID, removes all event listeners from that element by cloning and
+ * replacing. Then returns the new cloned element.
+ * @param elemId The HTML ID to retrieve the element by.
+ */
+function clearEventListeners(elemId) {
+    try {
+        const elem = getElementById_1.getElementById(elemId);
+        const newElem = elem.cloneNode(true);
+        if (elem.parentNode !== null) {
+            elem.parentNode.replaceChild(newElem, elem);
+        }
+        return newElem;
+    }
+    catch (e) {
+        // tslint:disable-next-line:no-console
+        console.error(e);
+        return null;
+    }
+}
+exports.clearEventListeners = clearEventListeners;
+
+
+/***/ }),
+/* 18 */
 /*!***************************!*\
   !*** ./utils/YesNoBox.js ***!
   \***************************/
@@ -9673,7 +9704,7 @@ exports.routing = new Routing();
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return yesNoBoxClose; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return yesNoTxtInpBoxClose; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return yesNoBoxOpen; });
-/* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./uiHelpers/clearEventListeners */ 18);
+/* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./uiHelpers/clearEventListeners */ 17);
 /* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_0__);
 
 /* Generic Yes-No Pop-up box
@@ -9761,42 +9792,6 @@ function yesNoTxtInpBoxCreate(txt) {
 }
 
 
-
-
-/***/ }),
-/* 18 */
-/*!************************************************!*\
-  !*** ./utils/uiHelpers/clearEventListeners.ts ***!
-  \************************************************/
-/*! no static exports found */
-/*! exports used: clearEventListeners */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const getElementById_1 = __webpack_require__(/*! ./getElementById */ 45);
-/**
- * Given an element by its ID, removes all event listeners from that element by cloning and
- * replacing. Then returns the new cloned element.
- * @param elemId The HTML ID to retrieve the element by.
- */
-function clearEventListeners(elemId) {
-    try {
-        const elem = getElementById_1.getElementById(elemId);
-        const newElem = elem.cloneNode(true);
-        if (elem.parentNode !== null) {
-            elem.parentNode.replaceChild(newElem, elem);
-        }
-        return newElem;
-    }
-    catch (e) {
-        // tslint:disable-next-line:no-console
-        console.error(e);
-        return null;
-    }
-}
-exports.clearEventListeners = clearEventListeners;
 
 
 /***/ }),
@@ -12664,7 +12659,7 @@ const Programs = {
         level: 1,
         tooltip:"This program creates a portal to the BitNode Nexus (allows you to restart and switch BitNodes)",
         req: function() {return _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].sourceFiles.length > 0 && _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].hacking_skill >= 1},
-        time: _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].MillisecondsPerFiveMinutes / 5,
+        time: _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].MillisecondsPerFiveMinutes / 20,
     }),
     // special because you can't create it.
     Flight: new Program("fl1ght.exe"),
@@ -12777,13 +12772,13 @@ function initCreateProgramButtons() {
 /* harmony import */ var _Stock__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Stock */ 25);
 /* harmony import */ var _Stock__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Stock__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 18);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 17);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./ui/navigationTracking */ 16);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ui/numeralFormat */ 12);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 42);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 43);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 10);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 32);
@@ -12794,7 +12789,7 @@ function initCreateProgramButtons() {
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 21);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/YesNoBox */ 18);
 
 
 
@@ -14431,7 +14426,18 @@ function startNetscript2Script(workerScript) {
                 throw workerScript;
             }
             runningFn = propName;
-            let result = f(...args);
+
+            // If the function throws an error, clear the runningFn flag first, and then re-throw it
+            // This allows people to properly catch errors thrown by NS functions without getting
+            // the concurrent call error above
+            let result;
+            try {
+                result = f(...args);
+            } catch(e) {
+                runningFn = null;
+                throw(e);
+            }
+
             if (result && result.finally !== undefined) {
                 return result.finally(function () {
                     runningFn = null;
@@ -15118,21 +15124,21 @@ function initSpecialServerIps() {
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_19__);
 /* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 71);
 /* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_20__);
-var ace = __webpack_require__(/*! brace */ 225);
-var beautify = __webpack_require__(/*! js-beautify */ 224).js_beautify;
-__webpack_require__(/*! brace/mode/javascript */ 223);
-__webpack_require__(/*! ../netscript */ 162);
-__webpack_require__(/*! brace/theme/chaos */ 222);
-__webpack_require__(/*! brace/theme/chrome */ 221);
-__webpack_require__(/*! brace/theme/monokai */ 220);
-__webpack_require__(/*! brace/theme/solarized_dark */ 219);
-__webpack_require__(/*! brace/theme/solarized_light */ 218);
-__webpack_require__(/*! brace/theme/terminal */ 217);
-__webpack_require__(/*! brace/theme/twilight */ 216);
-__webpack_require__(/*! brace/theme/xcode */ 215);
-__webpack_require__(/*! brace/keybinding/vim */ 214);
-__webpack_require__(/*! brace/keybinding/emacs */ 213);
-__webpack_require__(/*! brace/ext/language_tools */ 212);
+var ace = __webpack_require__(/*! brace */ 227);
+var beautify = __webpack_require__(/*! js-beautify */ 226).js_beautify;
+__webpack_require__(/*! brace/mode/javascript */ 225);
+__webpack_require__(/*! ../netscript */ 164);
+__webpack_require__(/*! brace/theme/chaos */ 224);
+__webpack_require__(/*! brace/theme/chrome */ 223);
+__webpack_require__(/*! brace/theme/monokai */ 222);
+__webpack_require__(/*! brace/theme/solarized_dark */ 221);
+__webpack_require__(/*! brace/theme/solarized_light */ 220);
+__webpack_require__(/*! brace/theme/terminal */ 219);
+__webpack_require__(/*! brace/theme/twilight */ 218);
+__webpack_require__(/*! brace/theme/xcode */ 217);
+__webpack_require__(/*! brace/keybinding/vim */ 216);
+__webpack_require__(/*! brace/keybinding/emacs */ 215);
+__webpack_require__(/*! brace/ext/language_tools */ 214);
 
 // Importing this doesn't work for some reason.
 const walk = __webpack_require__(/*! acorn/dist/walk */ 125);
@@ -15357,7 +15363,7 @@ function scriptEditorInit() {
 }
 
 //Updates RAM usage in script
-function updateScriptEditorContent() {
+async function updateScriptEditorContent() {
     var filename = document.getElementById("script-editor-filename").value;
     if (scriptEditorRamCheck == null || !scriptEditorRamCheck.checked || !isScriptFilename(filename)) {
         scriptEditorRamText.innerText = "N/A";
@@ -15366,7 +15372,7 @@ function updateScriptEditorContent() {
     var editor = ace.edit('javascript-editor');
     var code = editor.getValue();
     var codeCopy = code.repeat(1);
-    var ramUsage = calculateRamUsage(codeCopy);
+    var ramUsage = await calculateRamUsage(codeCopy);
     if (ramUsage !== -1) {
         scriptEditorRamText.innerText = "RAM: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_14__[/* numeralWrapper */ "a"].format(ramUsage, '0.00') + " GB";
     } else {
@@ -15519,9 +15525,9 @@ Script.prototype.saveScript = function() {
 }
 
 //Updates how much RAM the script uses when it is running.
-Script.prototype.updateRamUsage = function() {
+Script.prototype.updateRamUsage = async function() {
     var codeCopy = this.code.repeat(1);
-    var res = calculateRamUsage(codeCopy);
+    var res = await calculateRamUsage(codeCopy);
     if (res !== -1) {
         this.ramUsage = Object(_utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_20__["roundToTwo"])(res);
     }
@@ -15539,7 +15545,7 @@ const memCheckGlobalKey = ".__GLOBAL__";
 // Calcluates the amount of RAM a script uses. Uses parsing and AST walking only,
 // rather than NetscriptEvaluator. This is useful because NetscriptJS code does
 // not work under NetscriptEvaluator.
-function parseOnlyRamCalculate(server, code, workerScript) {
+async function parseOnlyRamCalculate(server, code, workerScript) {
     try {
         // Maps dependent identifiers to their dependencies.
         //
@@ -15582,11 +15588,27 @@ function parseOnlyRamCalculate(server, code, workerScript) {
             // Get the code from the server.
             const nextModule = parseQueue.shift();
 
-            const script = server.getScript(nextModule);
-            if (!script) return -1;  // No such script on the server.
+            let code;
+            if (nextModule.startsWith("https://")) {
+                try {
+                    const module = await eval('import(nextModule)');
+                    code = "";
+                    for (const prop in module) {
+                        if (typeof module[prop] === 'function') {
+                            code += module[prop].toString() + ";\n";
+                        }
+                    }
+                } catch(e) {
+                    console.error(`Error dynamically importing module from ${nextModule} for RAM calculations: ${e}`);
+                    return -1;
+                }
+            } else {
+                const script = server.getScript(nextModule);
+                if (!script) return -1;  // No such script on the server.
+                code = script.code;
+            }
 
-            // Not sure why we always take copies, but let's do that here too.
-            parseCode(script.code.repeat(1), nextModule);
+            parseCode(code, nextModule);
         }
 
         // Finally, walk the reference map and generate a ram cost. The initial set of keys to scan
@@ -15668,7 +15690,7 @@ function parseOnlyRamCalculate(server, code, workerScript) {
         return ram;
 
     } catch (error) {
-        //console.info("parse or eval error: ", error);
+        // console.info("parse or eval error: ", error);
         // This is not unexpected. The user may be editing a script, and it may be in
         // a transitory invalid state.
         return -1;
@@ -15805,7 +15827,7 @@ function parseOnlyCalculateDeps(code, currentModule) {
     return {dependencyMap: dependencyMap, additionalModules: additionalModules};
 }
 
-function calculateRamUsage(codeCopy) {
+async function calculateRamUsage(codeCopy) {
     //Create a temporary/mock WorkerScript and an AST from the code
     var currServ = _Player__WEBPACK_IMPORTED_MODULE_7__[/* Player */ "a"].getCurrentServer();
     var workerScript = new _NetscriptWorker__WEBPACK_IMPORTED_MODULE_6__[/* WorkerScript */ "b"]({
@@ -15817,7 +15839,7 @@ function calculateRamUsage(codeCopy) {
     workerScript.serverIp = currServ.ip;
 
     try {
-        return parseOnlyRamCalculate(currServ, codeCopy, workerScript);
+        return await parseOnlyRamCalculate(currServ, codeCopy, workerScript);
 	} catch (e) {
         console.log("Failed to parse ram using new method. Falling back.", e);
 	}
@@ -15979,7 +16001,6 @@ function scriptCalculateOfflineProduction(runningScriptObj) {
 	var thisUpdate = new Date().getTime();
 	var lastUpdate = _Player__WEBPACK_IMPORTED_MODULE_7__[/* Player */ "a"].lastUpdate;
 	var timePassed = (thisUpdate - lastUpdate) / 1000;	//Seconds
-	console.log("Offline for " + timePassed + " seconds");
 
 	//Calculate the "confidence" rating of the script's true production. This is based
 	//entirely off of time. We will arbitrarily say that if a script has been running for
@@ -16239,7 +16260,7 @@ _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__["Reviver"].constructors.AllServ
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_18__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./ui/navigationTracking */ 16);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 42);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 43);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 2);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21__);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 10);
@@ -20392,7 +20413,7 @@ function initBladeburner() {
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 18);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 17);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 4);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_4__);
@@ -21557,7 +21578,7 @@ exports.createPopup = createPopup;
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./CreateProgram */ 22);
 /* harmony import */ var _DarkWeb__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./DarkWeb */ 69);
-/* harmony import */ var _Hacking__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Hacking */ 43);
+/* harmony import */ var _Hacking__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Hacking */ 42);
 /* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Gang */ 49);
 /* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Faction */ 15);
 /* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./HacknetNode */ 59);
@@ -21595,7 +21616,7 @@ exports.createPopup = createPopup;
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_35___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_35__);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ../utils/helpers/isString */ 34);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_36___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_36__);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ../utils/YesNoBox */ 18);
 var sprintf = __webpack_require__(/*! sprintf-js */ 124).sprintf,
     vsprintf = __webpack_require__(/*! sprintf-js */ 124).vsprintf
 
@@ -25660,17 +25681,35 @@ function NetscriptFunctions(workerScript) {
                     return false;
                 }
             },
+            getContractType : function(fn, ip=workerScript.serverIp) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getContractType", _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptCodingContractBaseRamCost / 2);
+                }
+                updateDynamicRam("getContractType", _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptCodingContractBaseRamCost / 2);
+                let contract = getCodingContract(fn, ip);
+                if (contract == null) {
+                    workerScript.log(`ERROR: codingcontract.getData() failed because it could find the specified contract ${fn} on server ${ip}`);
+                    return null;
+                }
+                return contract.getType();
+            },
             getData : function(fn, ip=workerScript.serverIp) {
                 if (workerScript.checkingRam) {
                     return updateStaticRam("getData", _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptCodingContractBaseRamCost / 2);
                 }
                 updateDynamicRam("getData", _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptCodingContractBaseRamCost / 2);
-                var contract = getCodingContract(fn, ip);
+                let contract = getCodingContract(fn, ip);
                 if (contract == null) {
                     workerScript.log(`ERROR: codingcontract.getData() failed because it could find the specified contract ${fn} on server ${ip}`);
                     return null;
                 }
-                return contract.getData();
+                let data = contract.getData();
+                if (data.constructor === Array) {
+                    // Pass a copy
+                    return data.slice();
+                } else {
+                    return data;
+                }
             },
             getDescription : function(fn, ip=workerScript.serverIp) {
                 if (workerScript.checkingRam) {
@@ -25728,7 +25767,7 @@ const JSONReviver_1 = __webpack_require__(/*! ../utils/JSONReviver */ 14);
 const createElement_1 = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 4);
 const createPopup_1 = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 36);
 const removeElementById_1 = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 21);
-const codingcontracttypes_1 = __webpack_require__(/*! ./data/codingcontracttypes */ 167);
+const codingcontracttypes_1 = __webpack_require__(/*! ./data/codingcontracttypes */ 169);
 /* tslint:disable:no-magic-numbers completed-docs max-classes-per-file no-console */
 /* Represents different types of problems that a Coding Contract can have */
 class CodingContractType {
@@ -25806,6 +25845,9 @@ class CodingContract {
     }
     getMaxNumTries() {
         return exports.CodingContractTypes[this.type].numTries;
+    }
+    getType() {
+        return exports.CodingContractTypes[this.type].name;
     }
     isSolution(solution) {
         return exports.CodingContractTypes[this.type].solver(this.data, solution);
@@ -29922,33 +29964,6 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 /***/ }),
 /* 42 */
-/*!*****************************************!*\
-  !*** ./utils/helpers/exceptionAlert.js ***!
-  \*****************************************/
-/*! exports provided: exceptionAlert */
-/*! exports used: exceptionAlert */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return exceptionAlert; });
-/* harmony import */ var _DialogBox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../DialogBox */ 8);
-
-
-function exceptionAlert(e) {
-    Object(_DialogBox__WEBPACK_IMPORTED_MODULE_0__["dialogBoxCreate"])("Caught an exception: " + e + "<br><br>" +
-                    "Filename: " + (e.fileName || "UNKNOWN FILE NAME") + "<br><br>" +
-                    "Line Number: " + (e.lineNumber || "UNKNOWN LINE NUMBER") + "<br><br>" +
-                    "This is a bug, please report to game developer with this " +
-                    "message as well as details about how to reproduce the bug.<br><br>" +
-                    "If you want to be safe, I suggest refreshing the game WITHOUT saving so that your " +
-                    "safe doesn't get corrupted");
-}
-
-
-
-
-/***/ }),
-/* 43 */
 /*!************************!*\
   !*** ./src/Hacking.js ***!
   \************************/
@@ -30062,6 +30077,33 @@ function calculateWeakenTime(server, hack, int) {
 
 
 /***/ }),
+/* 43 */
+/*!*****************************************!*\
+  !*** ./utils/helpers/exceptionAlert.js ***!
+  \*****************************************/
+/*! exports provided: exceptionAlert */
+/*! exports used: exceptionAlert */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return exceptionAlert; });
+/* harmony import */ var _DialogBox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../DialogBox */ 8);
+
+
+function exceptionAlert(e) {
+    Object(_DialogBox__WEBPACK_IMPORTED_MODULE_0__["dialogBoxCreate"])("Caught an exception: " + e + "<br><br>" +
+                    "Filename: " + (e.fileName || "UNKNOWN FILE NAME") + "<br><br>" +
+                    "Line Number: " + (e.lineNumber || "UNKNOWN LINE NUMBER") + "<br><br>" +
+                    "This is a bug, please report to game developer with this " +
+                    "message as well as details about how to reproduce the bug.<br><br>" +
+                    "If you want to be safe, I suggest refreshing the game WITHOUT saving so that your " +
+                    "safe doesn't get corrupted");
+}
+
+
+
+
+/***/ }),
 /* 44 */
 /*!*************************************!*\
   !*** ./src/NetscriptBladeburner.js ***!
@@ -30152,7 +30194,7 @@ exports.getElementById = getElementById;
 /* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Faction */ 15);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 18);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 17);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 56);
 /* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_6__);
@@ -30162,7 +30204,7 @@ exports.getElementById = getElementById;
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/isString */ 34);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var jsplumb__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! jsplumb */ 226);
+/* harmony import */ var jsplumb__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! jsplumb */ 228);
 /* harmony import */ var jsplumb__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(jsplumb__WEBPACK_IMPORTED_MODULE_10__);
 
 
@@ -31724,7 +31766,7 @@ HackingMission.prototype.finishMission = function(win) {
 /* harmony import */ var _DarkWeb__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./DarkWeb */ 69);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./engine */ 7);
 /* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Fconf */ 40);
-/* harmony import */ var _Hacking__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Hacking */ 43);
+/* harmony import */ var _Hacking__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Hacking */ 42);
 /* harmony import */ var _HelpText__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./HelpText */ 85);
 /* harmony import */ var _HelpText__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_HelpText__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./InteractiveTutorial */ 31);
@@ -31756,7 +31798,7 @@ HackingMission.prototype.finishMission = function(win) {
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 74);
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_27__);
 /* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../utils/LogBox */ 68);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../utils/YesNoBox */ 18);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./ui/postToTerminal */ 6);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__);
 /* harmony import */ var autosize__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! autosize */ 128);
@@ -33952,26 +33994,28 @@ exports.arrayToString = arrayToString;
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ui/numeralFormat */ 12);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
-/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 66);
-/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 4);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 36);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./ui/navigationTracking */ 16);
-/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 2);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 42);
-/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 10);
-/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 26);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 64);
-/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 21);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
+/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 32);
+/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 66);
+/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 4);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 36);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./ui/navigationTracking */ 16);
+/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 2);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 43);
+/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 10);
+/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 26);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_16__);
+/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 64);
+/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_17__);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 21);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_18__);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/YesNoBox */ 18);
 /*
 gang member upgrades - they should be cheaper as the gang gets more  respect/power
 kopelli09/12/2018
@@ -34005,6 +34049,7 @@ balance point to keep them from running out of control
 
 
 
+
 // Constants
 const GangRespectToReputationRatio = 2; //Respect is divided by this to get rep gain
 const MaximumGangMembers = 47;
@@ -34014,7 +34059,7 @@ const AscensionMultiplierRatio = 10 / 100; //Portion upgrade multiplier is kept 
 
 // Switch between territory and management screen with 1 and 2
 $(document).keydown(function(event) {
-    if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_11__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_11__["Page"].Gang) && !_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_18__[/* yesNoBoxOpen */ "e"]) {
+    if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_12__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_12__["Page"].Gang) && !_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_19__[/* yesNoBoxOpen */ "e"]) {
         if (gangMemberFilter != null && gangMemberFilter === document.activeElement) {return;}
         if (event.keyCode === 49) {
             if(gangTerritorySubpage.style.display === "block") {
@@ -34035,7 +34080,7 @@ $(document).mousedown(function(event) {
     if (gangMemberUpgradeBoxOpened) {
         if ( $(event.target).closest("#" + contentId).get(0) == null ) {
             //Delete the box
-            Object(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_16__["removeElement"])(gangMemberUpgradeBox);
+            Object(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_17__["removeElement"])(gangMemberUpgradeBox);
             gangMemberUpgradeBox = null;
             gangMemberUpgradeBoxContent = null;
             gangMemberUpgradeBoxOpened = false;
@@ -34142,9 +34187,9 @@ function processAllGangTerritory(numCycles=1) {
     if (gangStoredTerritoryCycles < GangTerritoryUpdateTimer) {return;}
 
     for (var i = 0; i < GangNames.length; ++i) {
-        var other = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__["getRandomInt"])(0, GangNames.length-1);
+        var other = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_15__["getRandomInt"])(0, GangNames.length-1);
         while(other == i) {
-            other = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__["getRandomInt"])(0, GangNames.length-1);
+            other = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_15__["getRandomInt"])(0, GangNames.length-1);
         }
         var thisPwr = AllGangs[GangNames[i]].power;
         var otherPwr = AllGangs[GangNames[other]].power;
@@ -34261,6 +34306,25 @@ Gang.prototype.processGains = function(numCycles=1) {
     this.storedCycles = 0;
 }
 
+Gang.prototype.canRecruitMember = function() {
+    if (this.members.length >= MaximumGangMembers) { return false; }
+    return (this.respect >= this.getRespectNeededToRecruitMember());
+}
+
+Gang.prototype.getRespectNeededToRecruitMember = function() {
+    // First N gang members are free (can be recruited at 0 respect)
+    const numFreeMembers = 3;
+    if (this.members.length < numFreeMembers) { return 0; }
+
+    const i = this.members.length - (numFreeMembers - 1);
+    return Math.round(0.7 * Math.pow(i, 3) + 0.8 * Math.pow(i, 2));
+}
+
+// Money and Respect gains multiplied by this number (< 1)
+Gang.prototype.getWantedPenalty = function() {
+    return (this.respect) / (this.respect + this.wanted);
+}
+
 Gang.prototype.processExperienceGains = function(numCycles=1) {
     for (var i = 0; i < this.members.length; ++i) {
         this.members[i].gainExperience(numCycles);
@@ -34280,12 +34344,16 @@ Gang.prototype.calculatePower = function() {
     return (0.0005 * memberTotal);
 }
 
+Gang.prototype.killMember = function(memberObj) {
+    // TODO
+}
+
 Gang.prototype.ascendMember = function(memberObj) {
     try {
         //Member.ascend() returns the amount of respect to deduct
         this.respect = Math.min(1, this.respect - memberObj.ascend());
     } catch(e) {
-        Object(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_13__[/* exceptionAlert */ "a"])(e);
+        Object(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_14__[/* exceptionAlert */ "a"])(e);
     }
 }
 
@@ -34388,7 +34456,7 @@ GangMember.prototype.calculateRespectGain = function() {
     if (statWeight <= 0) { return 0; }
     var territoryMult = AllGangs[_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.facName].territory;
     if (territoryMult <= 0) { return 0; }
-    var respectMult = (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.respect) / (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.respect + _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.wanted);
+    var respectMult = _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.getWantedPenalty();
     return 12 * task.baseRespect * statWeight * territoryMult * respectMult;
 }
 
@@ -34425,7 +34493,7 @@ GangMember.prototype.calculateMoneyGain = function() {
     if (statWeight <= 0) {return 0;}
     var territoryMult = AllGangs[_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.facName].territory;
     if (territoryMult <= 0) {return 0;}
-    var respectMult = (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.respect) / (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.respect + _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.wanted);
+    var respectMult = _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.getWantedPenalty();
     return 5 * task.baseMoney * statWeight * territoryMult * respectMult;
 }
 
@@ -34503,7 +34571,7 @@ GangMember.fromJSON = function(value) {
 _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_7__["Reviver"].constructors.GangMember = GangMember;
 
 //Defines tasks that Gang Members can work on
-function GangMemberTask(name="", desc="",
+function GangMemberTask(name="", desc="", isHacking=false, isCombat=false,
                         params={baseRespect: 0, baseWanted: 0, baseMoney: 0,
                                 hackWeight: 0, strWeight: 0, defWeight: 0,
                                 dexWeight: 0, agiWeight: 0, chaWeight: 0,
@@ -34511,11 +34579,17 @@ function GangMemberTask(name="", desc="",
     this.name = name;
     this.desc = desc;
 
+    // Flags that describe whether this Task is applicable for Hacking/Combat gangs
+    this.isHacking = isHacking;
+    this.isCombat = isCombat;
+
+    // Base gain rates for respect/wanted/money
     this.baseRespect    = params.baseRespect ? params.baseRespect   : 0;
     this.baseWanted     = params.baseWanted  ? params.baseWanted    : 0;
     this.baseMoney      = params.baseMoney   ? params.baseMoney     : 0;
 
-    //Weights must add up to 100
+    // Weighting for the effect that each stat has on the tasks effectiveness.
+    // Weights must add up to 100
     this.hackWeight     = params.hackWeight ? params.hackWeight : 0;
     this.strWeight      = params.strWeight  ? params.strWeight  : 0;
     this.defWeight      = params.defWeight  ? params.defWeight  : 0;
@@ -34523,7 +34597,7 @@ function GangMemberTask(name="", desc="",
     this.agiWeight      = params.agiWeight  ? params.agiWeight  : 0;
     this.chaWeight      = params.chaWeight  ? params.chaWeight  : 0;
 
-    //1 - 100
+    // 1 - 100
     this.difficulty     = params.difficulty ? params.difficulty : 1;
 }
 
@@ -34540,12 +34614,12 @@ _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_7__["Reviver"].constructors.GangMemb
 //TODO Human trafficking and an equivalent hacking crime
 const GangMemberTasks = {};
 
-function addGangMemberTask(name, desc, params) {
-    GangMemberTasks[name] = new GangMemberTask(name, desc, params);
+function addGangMemberTask(name, desc, isHacking, isCombat, params) {
+    GangMemberTasks[name] = new GangMemberTask(name, desc, isHacking, isCombat, params);
 }
 
 _data_gangmembertasks__WEBPACK_IMPORTED_MODULE_0__["gangMemberTasksMetadata"].forEach((e) => {
-    addGangMemberTask(e.name, e.desc, e.params);
+    addGangMemberTask(e.name, e.desc, e.isHacking, e.isCombat, e.params);
 });
 
 function GangMemberUpgrade(name="", cost=0, type="w", mults={}) {
@@ -34624,7 +34698,7 @@ function createGangMemberUpgradeBox(initialFilter="") {
         }
 
         for (var i = 1; i < gangMemberUpgradeBoxElements.length; ++i) {
-            Object(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_16__["removeElement"])(gangMemberUpgradeBoxElements[i]);
+            Object(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_17__["removeElement"])(gangMemberUpgradeBoxElements[i]);
         }
         gangMemberUpgradeBoxElements = [gangMemberUpgradeBoxFilter];
 
@@ -34638,7 +34712,7 @@ function createGangMemberUpgradeBox(initialFilter="") {
         }
     } else {
         //New popup
-        gangMemberUpgradeBoxFilter = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("input", {
+        gangMemberUpgradeBoxFilter = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("input", {
             type:"text", placeholder:"Filter gang members",
             value:initialFilter,
             onkeyup:()=>{
@@ -34656,7 +34730,7 @@ function createGangMemberUpgradeBox(initialFilter="") {
             }
         }
 
-        gangMemberUpgradeBox = Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_10__["createPopup"])(boxId, gangMemberUpgradeBoxElements);
+        gangMemberUpgradeBox = Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_11__["createPopup"])(boxId, gangMemberUpgradeBoxElements);
         gangMemberUpgradeBoxContent = document.getElementById(boxId + "-content");
         gangMemberUpgradeBoxOpened = true;
     }
@@ -34664,24 +34738,24 @@ function createGangMemberUpgradeBox(initialFilter="") {
 
 //Create upgrade panels for each individual Gang Member
 function createGangMemberUpgradePanel(memberObj) {
-    var container = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {
+    var container = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("div", {
         border:"1px solid white",
     });
 
-    var header = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("h1", {
+    var header = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("h1", {
         innerText:memberObj.name + " (" + memberObj.task.name + ")"
     });
     container.appendChild(header);
 
-    var text = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("pre", {
+    var text = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("pre", {
         fontSize:"14px", display: "inline-block", width:"20%",
         innerText:
-            "Hack: " + memberObj.hack + " (x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(memberObj.hack_mult, 2) + ")\n" +
-            "Str:  " + memberObj.str  + " (x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(memberObj.str_mult, 2) + ")\n" +
-            "Def:  " + memberObj.def  + " (x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(memberObj.def_mult, 2) + ")\n" +
-            "Dex:  " + memberObj.dex  + " (x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(memberObj.dex_mult, 2) + ")\n" +
-            "Agi:  " + memberObj.agi  + " (x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(memberObj.agi_mult, 2) + ")\n" +
-            "Cha:  " + memberObj.cha  + " (x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(memberObj.cha_mult, 2) + ")\n",
+            "Hack: " + memberObj.hack + " (x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(memberObj.hack_mult, 2) + ")\n" +
+            "Str:  " + memberObj.str  + " (x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(memberObj.str_mult, 2) + ")\n" +
+            "Def:  " + memberObj.def  + " (x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(memberObj.def_mult, 2) + ")\n" +
+            "Dex:  " + memberObj.dex  + " (x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(memberObj.dex_mult, 2) + ")\n" +
+            "Agi:  " + memberObj.agi  + " (x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(memberObj.agi_mult, 2) + ")\n" +
+            "Cha:  " + memberObj.cha  + " (x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(memberObj.cha_mult, 2) + ")\n",
     });
 
     //Already purchased upgrades
@@ -34692,13 +34766,13 @@ function createGangMemberUpgradePanel(memberObj) {
             console.log("ERR: Could not find this upgrade: " + memberObj.upgrades[i]);
             continue;
         }
-        var e = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {
+        var e = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("div", {
             border:"1px solid white", innerText:memberObj.upgrades[i],
             margin:"1px", padding:"1px", tooltip:upg.desc, fontSize:"12px",
         });
         ownedUpgradesElements.push(e);
     }
-    var ownedUpgrades = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {
+    var ownedUpgrades = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("div", {
         display:"inline-block", marginLeft:"6px", width:"75%", innerText:"Purchased Upgrades:",
     });
     for (var i = 0; i < ownedUpgradesElements.length; ++i) {
@@ -34706,7 +34780,7 @@ function createGangMemberUpgradePanel(memberObj) {
     }
     container.appendChild(text);
     container.appendChild(ownedUpgrades);
-    container.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br", {}));
+    container.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("br", {}));
 
     //Upgrade buttons. Only show upgrades that can be afforded
     const weaponUpgrades = [];
@@ -34740,11 +34814,11 @@ function createGangMemberUpgradePanel(memberObj) {
         }
     }
 
-    const weaponDiv   = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {width: "16%", display: "inline-block"});
-    const armorDiv    = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {width: "16%", display: "inline-block"});
-    const vehicleDiv  = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {width: "16%", display: "inline-block"});
-    const rootkitDiv  = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {width: "16%", display: "inline-block"});
-    const augDiv      = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {width: "16%", display: "inline-block"});
+    const weaponDiv   = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("div", {width: "16%", display: "inline-block"});
+    const armorDiv    = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("div", {width: "16%", display: "inline-block"});
+    const vehicleDiv  = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("div", {width: "16%", display: "inline-block"});
+    const rootkitDiv  = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("div", {width: "16%", display: "inline-block"});
+    const augDiv      = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("div", {width: "16%", display: "inline-block"});
     const upgrades = [weaponUpgrades, armorUpgrades, vehicleUpgrades, rootkitUpgrades, augUpgrades];
     const divs = [weaponDiv, armorDiv, vehicleDiv, rootkitDiv, augDiv];
 
@@ -34754,7 +34828,7 @@ function createGangMemberUpgradePanel(memberObj) {
         for (let j = 0; j < upgradeArray.length; ++j) {
             let upg = upgradeArray[j];
             (function (upg, div, memberObj) {
-                div.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("a", {
+                div.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
                     innerText:upg.name + " - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_5__[/* numeralWrapper */ "a"].format(upg.cost, "$0.000a"),
                     class:"a-link-button", margin:"2px",  padding:"2px", display:"block",
                     fontSize:"11px",
@@ -34810,7 +34884,7 @@ function displayGangContent() {
         gangContentCreated = true;
 
         //Create gang container
-        gangContainer = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {
+        gangContainer = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("div", {
             id:"gang-container", class:"generic-menupage-container",
         });
 
@@ -34821,7 +34895,7 @@ function displayGangContent() {
             respect = _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.respect;
 
         //Back button
-        gangContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("a", {
+        gangContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
             class:"a-link-button", display:"inline-block", innerText:"Back",
             clickListener:()=>{
                 _engine__WEBPACK_IMPORTED_MODULE_2__["Engine"].loadFactionContent();
@@ -34831,7 +34905,7 @@ function displayGangContent() {
         }));
 
         //Buttons to switch between panels
-        managementButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("a", {
+        managementButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
             id:"gang-management-subpage-button", class:"a-link-button-inactive",
             display:"inline-block", innerHTML: "Gang Management (1)",
             clickListener:()=>{
@@ -34845,7 +34919,7 @@ function displayGangContent() {
                 return false;
             }
         })
-        territoryButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("a", {
+        territoryButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
             id:"gang-territory-subpage-button", class:"a-link-button",
             display:"inline-block", innerHTML:"Gang Territory (2)",
             clickListener:()=>{
@@ -34863,7 +34937,7 @@ function displayGangContent() {
         gangContainer.appendChild(territoryButton);
 
         //Subpage for managing gang members
-        gangManagementSubpage = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {
+        gangManagementSubpage = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("div", {
             display:"block", id:"gang-management-subpage",
         });
 
@@ -34873,7 +34947,7 @@ function displayGangContent() {
         } else {
             lowerWantedTask = "Vigilante Justice";
         }
-        gangDesc = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {width:"70%",
+        gangDesc = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {width:"70%",
             innerHTML:
             "This page is used to manage your gang members and get an overview of your  " +
             "gang's stats.<br><br>" +
@@ -34890,50 +34964,78 @@ function displayGangContent() {
         });
         gangManagementSubpage.appendChild(gangDesc);
 
-        gangInfo = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {id:"gang-info", width:"70%"});
+        gangInfo = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {id:"gang-info", width:"70%"});
         gangManagementSubpage.appendChild(gangInfo);
 
-        gangRecruitMemberButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("a", {
+        gangRecruitMemberButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
             id:"gang-management-recruit-member-btn", class:"a-link-button-inactive",
             innerHTML:"Recruit Gang Member", display:"inline-block", margin:"10px",
             clickListener:()=>{
-                var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_18__[/* yesNoTxtInpBoxGetYesButton */ "j"])(), noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_18__[/* yesNoTxtInpBoxGetNoButton */ "i"])();
-                yesBtn.innerHTML = "Recruit Gang Member";
-                noBtn.innerHTML = "Cancel";
-                yesBtn.addEventListener("click", ()=>{
-                    var name = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_18__[/* yesNoTxtInpBoxGetInput */ "h"])();
-                    if (name === "") {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_6__["dialogBoxCreate"])("You must enter a name for your Gang member!");
-                    } else {
-                        for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.members.length; ++i) {
-                            if (name == _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.members[i].name) {
-                                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_6__["dialogBoxCreate"])("You already have a gang member with this name!");
-                                return false;
-                            }
+                let popupId = "recruit-gang-member-popup";
+
+                let yesBtn;
+                const txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {
+                    innerText:"Please enter a name for your new Gang member:",
+                });
+                const br = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("br");
+                const nameInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("input", {
+                    onkeyup: (e) => {
+                        if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_8__["KEY"].ENTER) { yesBtn.click(); }
+                    },
+                    placeholder: "Name must be unique",
+                    type: "text",
+                });
+                yesBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+                    class: "a-link-button",
+                    clickListener: () => {
+                        let name = nameInput.value;
+
+                        // Check for already-existing names
+                        let sameNames = _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.members.filter((m) => {
+                            return m.name === name;
+                        });
+                        if (sameNames.length >= 1) {
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_6__["dialogBoxCreate"])("You already have a gang member with this name!");
+                            return false;
                         }
-                        var member = new GangMember(name);
-                        _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.members.push(member);
-                        createGangMemberDisplayElement(member);
-                        updateGangContent();
-                    }
-                    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_18__[/* yesNoTxtInpBoxClose */ "f"])();
+
+                        if (name === "") {
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_6__["dialogBoxCreate"])("You must enter a name for your Gang member!");
+                        } else {
+                            let member = new GangMember(name);
+                            _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.members.push(member);
+                            createGangMemberDisplayElement(member);
+                            updateGangContent();
+                            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_18__["removeElementById"])(popupId);
+                        }
+                        return false;
+                    },
+                    innerText: "Recruit Gang Member",
                 });
-                noBtn.addEventListener("click", ()=>{
-                    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_18__[/* yesNoTxtInpBoxClose */ "f"])();
+                const noBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+                    class: "a-link-button",
+                    clickListener: () => {
+                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_18__["removeElementById"])(popupId);
+                        return false;
+                    },
+                    innerText: "Cancel",
                 });
-                Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_18__[/* yesNoTxtInpBoxCreate */ "g"])("Please enter a name for your new Gang member:");
-                return false;
+                Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_11__["createPopup"])(popupId, [txt, br, nameInput, yesBtn, noBtn]);
             }
         });
         gangManagementSubpage.appendChild(gangRecruitMemberButton);
 
-        //Text for how much reputation is required for recruiting next memberList
-        gangRecruitRequirementText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {color:"red", id:"gang-recruit-requirement-text"});
+        // Text for how much reputation is required for recruiting next memberList
+        gangRecruitRequirementText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {
+            color:"red",
+            id: "gang-recruit-requirement-text",
+            margin: "10px",
+        });
         gangManagementSubpage.appendChild(gangRecruitRequirementText);
 
         //Gang Member List management buttons (Expand/Collapse All, select a single member)
-        gangManagementSubpage.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br", {}));
-        gangExpandAllButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("a", {
+        gangManagementSubpage.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("br", {}));
+        gangExpandAllButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
             class:"a-link-button", display:"inline-block",
             innerHTML:"Expand All",
             clickListener:()=>{
@@ -34947,7 +35049,7 @@ function displayGangContent() {
                 return false;
             }
         });
-        gangCollapseAllButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("a", {
+        gangCollapseAllButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
             class:"a-link-button", display:"inline-block",
             innerHTML:"Collapse All",
             clickListener:()=>{
@@ -34961,13 +35063,13 @@ function displayGangContent() {
                 return false;
             }
         });
-        gangMemberFilter = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("input", {
+        gangMemberFilter = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("input", {
             type:"text", placeholder:"Filter gang members", margin:"5px", padding:"5px",
             onkeyup:()=>{
                 displayGangMemberList();
             }
         });
-        gangManageEquipmentButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("a", {
+        gangManageEquipmentButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
             class:"a-link-button", display:"inline-block",
             innerHTML:"Manage Equipment",
             clickListener:()=>{
@@ -34980,17 +35082,17 @@ function displayGangContent() {
         gangManagementSubpage.appendChild(gangManageEquipmentButton);
 
         //Gang Member list
-        gangMemberList = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("ul", {id:"gang-member-list"});
+        gangMemberList = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("ul", {id:"gang-member-list"});
         displayGangMemberList();
         gangManagementSubpage.appendChild(gangMemberList);
 
         //Subpage for seeing gang territory information
-        gangTerritorySubpage = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {
+        gangTerritorySubpage = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("div", {
             id:"gang-territory-subpage", display:"none"
         });
 
         //Info text for territory page
-        gangTerritoryDescText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {
+        gangTerritoryDescText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {
             width:"70%",
             innerHTML:"This page shows how much territory your Gang controls. This statistic is listed as a percentage, " +
             "which represents how much of the total territory you control.<br><br>" +
@@ -35004,9 +35106,9 @@ function displayGangContent() {
         });
         gangTerritorySubpage.appendChild(gangTerritoryDescText);
 
-        var territoryBorder = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("fieldset", {width:"50%", display:"inline-block"});
+        var territoryBorder = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("fieldset", {width:"50%", display:"inline-block"});
 
-        gangTerritoryInfoText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {id:"gang-territory-info"});
+        gangTerritoryInfoText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {id:"gang-territory-info"});
 
         territoryBorder.appendChild(gangTerritoryInfoText);
         gangTerritorySubpage.appendChild(territoryBorder);
@@ -35020,7 +35122,7 @@ function displayGangContent() {
 }
 
 function displayGangMemberList() {
-    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15__["removeChildrenFromElement"])(gangMemberList);
+    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_16__["removeChildrenFromElement"])(gangMemberList);
     var members = _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.members;
     var filter = gangMemberFilter.value.toString();
     for (var i = 0; i < members.length; ++i) {
@@ -35045,18 +35147,18 @@ function updateGangContent() {
                 //Fix some rounding issues graphically
                 let displayNumber;
                 if (territory <= 0) {
-                    displayNumber = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(0, 2);
+                    displayNumber = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(0, 2);
                 } else if (territory >= 100) {
-                    displayNumber = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(100, 2);
+                    displayNumber = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(100, 2);
                 } else {
-                    displayNumber = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(territory, 2);
+                    displayNumber = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(territory, 2);
                 }
 
                 if (gangname == _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.facName) {
-                    gangTerritoryInfoText.innerHTML += ("<b>" + gangname + "</b><br>(Power: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(gangTerritoryInfo.power, 6) + "): " +
+                    gangTerritoryInfoText.innerHTML += ("<b>" + gangname + "</b><br>(Power: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(gangTerritoryInfo.power, 6) + "): " +
                                        displayNumber + "%<br><br>");
                 } else {
-                    gangTerritoryInfoText.innerHTML += (gangname + "<br>(Power: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(gangTerritoryInfo.power, 6) + "): " +
+                    gangTerritoryInfoText.innerHTML += (gangname + "<br>(Power: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(gangTerritoryInfo.power, 6) + "): " +
                                        displayNumber + "%<br><br>");
                 }
             }
@@ -35071,99 +35173,89 @@ function updateGangContent() {
             } else {
                 rep = faction.playerReputation;
             }
-            Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15__["removeChildrenFromElement"])(gangInfo);
-            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {   //Respect
+            Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_16__["removeChildrenFromElement"])(gangInfo);
+            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {   //Respect
                 display:"inline-block",
-                innerText:"Respect: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.respect, 6) +
-                          " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(5*_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.respectGainRate, 6) + " / sec)",
+                innerText:"Respect: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.respect, 6) +
+                          " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(5*_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.respectGainRate, 6) + " / sec)",
                 tooltip:"Represents the amount of respect your gang has from other gangs and criminal " +
                         "organizations. Your respect affects the amount of money " +
                         "your gang members will earn, and also determines how much " +
                         "reputation you are earning with your gang's corresponding Faction."
             }));
-            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br", {}));
+            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("br", {}));
 
-            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {   //Wanted level
+            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {   //Wanted level
                 display:"inline-block",
-                innerText:"Wanted Level: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.wanted, 6) +
-                          " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(5*_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.wantedGainRate, 6) + " / sec)",
+                innerText:"Wanted Level: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.wanted, 6) +
+                          " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(5*_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.wantedGainRate, 6) + " / sec)",
                 tooltip:"Represents how much the gang is wanted by law enforcement. The higher " +
                         "your gang's wanted level, the harder it will be for your gang members " +
                         "to make money and earn respect. Note that the minimum wanted level is 1."
             }));
-            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br", {}));
+            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("br", {}));
 
-            var wantedPenalty = (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.respect) / (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.respect + _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.wanted);
+            var wantedPenalty = _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.getWantedPenalty();
             wantedPenalty = (1 - wantedPenalty) * 100;
-            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {   //Wanted Level multiplier
+            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {   //Wanted Level multiplier
                 display:"inline-block",
-                innerText:"Wanted Level Penalty: -" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(wantedPenalty, 2) + "%",
+                innerText:`Wanted Level Penalty: -${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(wantedPenalty, 2)}%`,
                 tooltip:"Penalty for respect and money gain rates due to Wanted Level"
             }));
-            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br", {}));
+            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("br", {}));
 
-            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {   //Money gain rate
+            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {   //Money gain rate
                 display:"inline-block",
-                innerText:"Money gain rate: $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(5*_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.moneyGainRate, 2) +
-                          " / sec",
+                innerText: `Money gain rate: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_5__[/* numeralWrapper */ "a"].format(5 * _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.moneyGainRate, "$0.000a")} / sec`,
             }));
-            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br", {}));
+            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("br", {}));
 
             //Fix some rounding issues graphically
             var territoryMult = AllGangs[_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.facName].territory * 100;
             let displayNumber;
             if (territoryMult <= 0) {
-                displayNumber = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(0, 2);
+                displayNumber = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(0, 2);
             } else if (territoryMult >= 100) {
-                displayNumber = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(100, 2);
+                displayNumber = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(100, 2);
             } else {
-                displayNumber = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(territoryMult, 2);
+                displayNumber = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(territoryMult, 2);
             }
-            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {  //Territory multiplier
+            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {  //Territory multiplier
                 display:"inline-block",
-                innerText:"Territory: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(displayNumber, 3) + "%",
+                innerText:`Territory: ${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(displayNumber, 3)}%`,
                 tooltip:"The percentage of total territory your Gang controls"
             }));
-            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br", {}));
+            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("br", {}));
 
-            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {  //Faction reputation
+            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {  //Faction reputation
                 display:"inline-block",
-                innerText:"Faction reputation: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(rep, 3)
+                innerText:"Faction reputation: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(rep, 3)
             }));
-            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br", {}));
+            gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("br", {}));
         } else {
             console.log("ERROR: gang-info DOM element DNE");
         }
 
         //Toggle the 'Recruit member button' if valid
-        var numMembers = _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.members.length;
-        var repCost = 0;
-        if (numMembers > 0) {
-            var repCost = Math.pow(GangRecruitCostMultiplier, numMembers);
-        }
-        var faction = _Faction__WEBPACK_IMPORTED_MODULE_3__[/* Factions */ "b"][_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.facName];
-        if (faction == null) {
-            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_6__["dialogBoxCreate"])("Could not find your gang's faction. This is probably a bug please report to dev");
-            return;
-        }
-        var btn = gangRecruitMemberButton;
+        const numMembers = _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.members.length;
+        const respectCost = _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.getRespectNeededToRecruitMember();
+
+        const btn = gangRecruitMemberButton;
         if (numMembers >= MaximumGangMembers) {
             btn.className = "a-link-button-inactive";
-            gangRecruitRequirementText.style.display = "block";
-            gangRecruitRequirementText.innerHTML =
-                "You have reached the maximum amount of gang members";
-        } else if (faction.playerReputation >= repCost) {
+            gangRecruitRequirementText.style.display = "inline-block";
+            gangRecruitRequirementText.innerHTML = "You have reached the maximum amount of gang members";
+        } else if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.canRecruitMember()) {
             btn.className = "a-link-button";
             gangRecruitRequirementText.style.display = "none";
         } else {
             btn.className = "a-link-button-inactive";
-            gangRecruitRequirementText.style.display = "block";
-            gangRecruitRequirementText.innerHTML =
-                Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(repCost, 2) + " Faction reputation needed to recruit next member";
+            gangRecruitRequirementText.style.display = "inline-block";
+            gangRecruitRequirementText.innerHTML = `${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(respectCost, 2)} respect needed to recruit next member`;
         }
 
         //Update information for each gang member
-        for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.members.length; ++i) {
+        for (let i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.members.length; ++i) {
             updateGangMemberDisplayElement(_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.members[i]);
         }
     }
@@ -35172,51 +35264,76 @@ function updateGangContent() {
 //Takes in a GangMember object
 function createGangMemberDisplayElement(memberObj) {
     if (!gangContentCreated || !_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].inGang()) {return;}
-    var name = memberObj.name;
+    const name = memberObj.name;
 
-    var accordion = Object(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_8__["createAccordionElement"])({
-        id:name + "gang-member",
-        hdrText:name,
+    var accordion = Object(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_9__["createAccordionElement"])({
+        id: name + "gang-member",
+        hdrText: name,
     });
-    var li = accordion[0];
-    var hdr = accordion[1];
-    var gangMemberDiv = accordion[2];
+    const li = accordion[0];
+    const hdr = accordion[1];
+    const gangMemberDiv = accordion[2];
 
-    //Gang member content divided into 3 panels:
-    //Stats Panel
-    var statsDiv = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {
-        id: name + "gang-member-stats", class: "gang-member-info-div",
-        width:"30%", display:"inline"
+    // Gang member content divided into 3 panels:
+    // Panel 1 - Shows member's stats & Ascension stuff
+    const statsDiv = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("div", {
+        class: "gang-member-info-div",
+        id: name + "gang-member-stats",
     });
-    var statsP = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {
-        id:name + "gang-member-stats-text", display:"inline"
+    const statsP = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {
+        id: name + "gang-member-stats-text", display: "inline"
+    });
+    const ascendButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("button", {
+        class: "accordion-button",
+        innerText: "Ascend",
+        clickListener: () => {
+            _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.ascendMember(memberObj);
+            return false;
+        }
+    });
+    const ascendHelpTip = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("div", {
+        backgroundColor: "black",
+        class: "help-tip",
+        clickListener: () => {
+            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_6__["dialogBoxCreate"])("TODO");
+        },
+        innerText: "?"
     });
 
     statsDiv.appendChild(statsP);
-    //statsDiv.appendChild(upgradeButton);
+    statsDiv.appendChild(ascendButton);
+    statsDiv.appendChild(ascendHelpTip);
 
-    //Panel for Selecting task and show respect/wanted gain
-    var taskDiv = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {
-        id: name + "gang-member-task", class:"gang-member-info-div",
-        width:"30%", display:"inline"
+    // Panel 2 - Task Selection & Info
+    const taskDiv = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("div", {
+        class:"gang-member-info-div",
+        id: name + "gang-member-task",
     });
-    var taskSelector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("select", {
-        color:"white", backgroundColor:"black",
-        id:name + "gang-member-task-selector"
+    const taskSelector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("select", {
+        id: name + "gang-member-task-selector",
     });
 
-    var tasks = null;
+    // Get an array of the name of all tasks that are applicable for this Gang
+    let tasks = null;
+    const allTasks = Object.keys(GangMemberTasks);
     if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.isHackingGang) {
-        tasks = ["---", "Ransomware", "Phishing", "Identity Theft", "DDoS Attacks",
-                 "Plant Virus", "Fraud & Counterfeiting","Money Laundering",
-                 "Cyberterrorism", "Ethical Hacking", "Train Combat",
-                 "Train Hacking", "Territory Warfare"];
+        tasks = allTasks.filter((e) => {
+            let task = GangMemberTasks[e];
+            if (task == null) { return false; }
+            if (e === "Unassigned") { return false; }
+            return task.isHacking;
+        });
     } else {
-        tasks = ["---", "Mug People", "Deal Drugs", "Run a Con", "Armed Robbery",
-                 "Traffick Illegal Arms", "Threaten & Blackmail",
-                 "Terrorism", "Vigilante Justice", "Train Combat",
-                 "Train Hacking", "Territory Warfare"];
+        tasks = allTasks.filter((e) => {
+            let task = GangMemberTasks[e];
+            if (task == null) { return false; }
+            if (e === "Unassigned") { return false; }
+            return task.isCombat;
+        });
     }
+    tasks.unshift("---");
+
+    // Create selector for Gang member task
     for (var i = 0; i < tasks.length; ++i) {
         var option = document.createElement("option");
         option.text = tasks[i];
@@ -35228,38 +35345,34 @@ function createGangMemberDisplayElement(memberObj) {
         setGangMemberTaskDescription(memberObj, task);
         updateGangContent();
     });
-    //Set initial task in selector element
+
+    // Set initial task in selector
     if (memberObj.task instanceof GangMemberTask) {
         var taskName = memberObj.task.name;
         var taskIndex = 0;
         for (let i = 0; i < tasks.length; ++i) {
-            if (taskName == tasks[i]) {
+            if (taskName === tasks[i]) {
                 taskIndex = i;
                 break;
             }
         }
         taskSelector.selectedIndex = taskIndex;
+        setGangMemberTaskDescription(memberObj, taskName);
     }
 
-    var gainInfo = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {id:name + "gang-member-gain-info"});
+    var gainInfo = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {id:name + "gang-member-gain-info"});
     taskDiv.appendChild(taskSelector);
     taskDiv.appendChild(gainInfo);
 
     //Panel for Description of task
-    var taskDescDiv = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {
-        id:name + "gang-member-task-desc", class:"gang-member-info-div",
-        width:"30%", display:"inline"
+    var taskDescDiv = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("div", {
+        class:"gang-member-info-div",
+        id: name + "gang-member-task-desc",
     });
 
-    var taskDescP = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {id: name + "gang-member-task-description", display:"inline"});
+    var taskDescP = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {id: name + "gang-member-task-description", display:"inline"});
     taskDescDiv.appendChild(taskDescP);
 
-    statsDiv.style.width = "30%";
-    taskDiv.style.width = "30%";
-    taskDescDiv.style.width = "30%";
-    statsDiv.style.display = "inline";
-    taskDiv.style.display = "inline";
-    taskDescDiv.style.display = "inline";
     gangMemberDiv.appendChild(statsDiv);
     gangMemberDiv.appendChild(taskDiv);
     gangMemberDiv.appendChild(taskDescDiv);
@@ -35277,20 +35390,20 @@ function updateGangMemberDisplayElement(memberObj) {
     var stats = document.getElementById(name + "gang-member-stats-text");
     if (stats) {
         stats.innerHTML =
-            "Hacking: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(memberObj.hack, 0) + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_5__[/* numeralWrapper */ "a"].format(memberObj.hack_exp, '(0.00a)') + " exp)<br>" +
-            "Strength: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(memberObj.str, 0) + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_5__[/* numeralWrapper */ "a"].format(memberObj.str_exp, '(0.00a)') + " exp)<br>" +
-            "Defense: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(memberObj.def, 0) + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_5__[/* numeralWrapper */ "a"].format(memberObj.def_exp, '(0.00a)') + " exp)<br>" +
-            "Dexterity: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(memberObj.dex, 0) + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_5__[/* numeralWrapper */ "a"].format(memberObj.dex_exp, '(0.00a)') + " exp)<br>" +
-            "Agility: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(memberObj.agi, 0) + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_5__[/* numeralWrapper */ "a"].format(memberObj.agi_exp, '(0.00a)') + " exp)<br>" +
-            "Charisma: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(memberObj.cha, 0) + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_5__[/* numeralWrapper */ "a"].format(memberObj.cha_exp, '(0.00a)') + " exp)<br>";
+            "Hacking: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(memberObj.hack, 0) + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_5__[/* numeralWrapper */ "a"].format(memberObj.hack_exp, '(0.00a)') + " exp)<br>" +
+            "Strength: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(memberObj.str, 0) + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_5__[/* numeralWrapper */ "a"].format(memberObj.str_exp, '(0.00a)') + " exp)<br>" +
+            "Defense: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(memberObj.def, 0) + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_5__[/* numeralWrapper */ "a"].format(memberObj.def_exp, '(0.00a)') + " exp)<br>" +
+            "Dexterity: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(memberObj.dex, 0) + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_5__[/* numeralWrapper */ "a"].format(memberObj.dex_exp, '(0.00a)') + " exp)<br>" +
+            "Agility: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(memberObj.agi, 0) + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_5__[/* numeralWrapper */ "a"].format(memberObj.agi_exp, '(0.00a)') + " exp)<br>" +
+            "Charisma: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(memberObj.cha, 0) + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_5__[/* numeralWrapper */ "a"].format(memberObj.cha_exp, '(0.00a)') + " exp)<br>";
     }
 
     var gainInfo = document.getElementById(name + "gang-member-gain-info");
     if (gainInfo) {
         gainInfo.innerHTML =
-            "Money: $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(5*memberObj.calculateMoneyGain(), 2) + " / sec<br>" +
-            "Respect: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(5*memberObj.calculateRespectGain(), 6) + " / sec<br>" +
-            "Wanted Level: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(5*memberObj.calculateWantedLevelGain(), 6) + " / sec<br>";
+            "Money: $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(5*memberObj.calculateMoneyGain(), 2) + " / sec<br>" +
+            "Respect: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(5*memberObj.calculateRespectGain(), 6) + " / sec<br>" +
+            "Wanted Level: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(5*memberObj.calculateWantedLevelGain(), 6) + " / sec<br>";
     }
 }
 
@@ -35299,14 +35412,14 @@ function setGangMemberTaskDescription(memberObj, taskName) {
     var taskDesc = document.getElementById(name + "gang-member-task-description");
     if (taskDesc) {
         var task = GangMemberTasks[taskName];
-        if (task == null) {return;}
+        if (task == null) { task = GangMemberTasks["Unassigned"]; }
         var desc = task.desc;
         taskDesc.innerHTML = desc;
     }
 }
 
 function deleteGangDisplayContent() {
-    if (gangContainer != null) {Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(gangContainer.id);}
+    if (gangContainer != null) {Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_18__["removeElementById"])(gangContainer.id);}
 
     gangContentCreated = false;
     gangContainer = null;
@@ -35955,12 +36068,12 @@ function deleteTextFile(fn, server) {
 /* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Prestige */ 76);
 /* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SourceFile */ 58);
 /* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Terminal */ 47);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 18);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 17);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 26);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/YesNoBox */ 18);
 
 
 
@@ -35979,7 +36092,6 @@ function deleteTextFile(fn, server) {
 //Returns promise
 function writeRedPillLine(line) {
     return new Promise(function(resolve, reject) {
-
         var container = document.getElementById("red-pill-content");
         var pElem = document.createElement("p");
         container.appendChild(pElem);
@@ -36015,6 +36127,10 @@ function writeRedPillLetter(pElem, line, i=0) {
 
 let redPillFlag = false;
 function hackWorldDaemon(currentNodeNumber, flume=false) {
+    // Clear Red Pill screen first
+    var container = document.getElementById("red-pill-content");
+    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8__["removeChildrenFromElement"])(container);
+    
     redPillFlag = true;
     _engine__WEBPACK_IMPORTED_MODULE_1__["Engine"].loadRedPillContent();
     return writeRedPillLine("[ERROR] SEMPOOL INVALID").then(function() {
@@ -36262,7 +36378,7 @@ function createBitNodeYesNoEventListeners(newBitNode, destroyedBitNode, flume=fa
             _Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].gainIntelligenceExp(-5);
         }
         redPillFlag = false;
-        var container = document.getElementById("red-pill-container");
+        var container = document.getElementById("red-pill-content");
         Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8__["removeChildrenFromElement"])(container);
 
         //Set new Bit Node
@@ -36332,7 +36448,7 @@ function createBitNodeYesNoEventListeners(newBitNode, destroyedBitNode, flume=fa
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_16__);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 21);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/YesNoBox */ 18);
 
 
 
@@ -41589,7 +41705,7 @@ function applySourceFile(srcFile) {
 /* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./InteractiveTutorial */ 31);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 18);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 17);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 4);
@@ -42302,7 +42418,7 @@ function getHacknetNode(name) {
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/helpers/createProgressBarText */ 72);
 /* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 42);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 43);
 /* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/uiHelpers/getElementById */ 45);
 /* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/LogBox */ 68);
@@ -42469,7 +42585,7 @@ function addActiveScriptsItem(workerscript) {
         panel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("br"));
         panel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("span", {
             innerText: "Log",
-            class: "active-scripts-button",
+            class: "accordion-button",
             margin: "4px",
             padding: "4px",
             clickListener: () => {
@@ -42479,7 +42595,7 @@ function addActiveScriptsItem(workerscript) {
         }));
         panel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("span", {
             innerText: "Kill Script",
-            class: "active-scripts-button",
+            class: "accordion-button",
             margin: "4px",
             padding: "4px",
             clickListener: () => {
@@ -42776,7 +42892,7 @@ exports.removeElement = removeElement;
 /* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./StockMarket */ 23);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
 /* harmony import */ var _utils_GameOptions__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/GameOptions */ 73);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 18);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 17);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_17__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 4);
@@ -43509,7 +43625,7 @@ exports.clearObject = clearObject;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return logBoxOpened; });
 /* unused harmony export logBoxCurrentScript */
 /* harmony import */ var _src_NetscriptWorker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/NetscriptWorker */ 24);
-/* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./uiHelpers/clearEventListeners */ 18);
+/* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./uiHelpers/clearEventListeners */ 17);
 /* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _helpers_arrayToString__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers/arrayToString */ 48);
 /* harmony import */ var _helpers_arrayToString__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_2__);
@@ -44384,8 +44500,8 @@ exports.isValidIPAddress = isValidIPAddress;
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 36);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 42);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 43);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/YesNoBox */ 18);
 
 
 
@@ -44735,12 +44851,12 @@ function prestigeSourceFile() {
 /* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./SpecialServerIps */ 27);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./ui/numeralFormat */ 12);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 18);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 17);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_16__);
 /* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/IPAddress */ 51);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 2);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/YesNoBox */ 18);
 
 
 
@@ -47039,7 +47155,7 @@ exports.getRandomByte = getRandomByte;
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 4);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 42);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 43);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/helpers/isString */ 34);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_4__);
 
@@ -47538,13 +47654,14 @@ Environment.prototype = {
 /*!*************************************!*\
   !*** ./src/NetscriptJSEvaluator.js ***!
   \*************************************/
-/*! exports provided: makeScriptBlob, executeJSScript */
+/*! exports provided: makeScriptBlob, executeJSScript, _getScriptUrls */
 /*! exports used: executeJSScript */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* unused harmony export makeScriptBlob */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return executeJSScript; });
+/* unused harmony export _getScriptUrls */
 /* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NetscriptEvaluator */ 5);
 
 
@@ -47602,7 +47719,6 @@ async function executeJSScript(scripts = [], workerScript) {
 //
 // - script -- the script for whom we are getting a URL.
 // - scripts -- all the scripts available on this server
-// - envHeader -- the preamble that goes at the start of every NSJS script.
 // - seen -- The modules above this one -- to prevent mutual dependency.
 //
 // TODO We don't make any effort to cache a given module when it is imported at
@@ -47638,7 +47754,8 @@ function _getScriptUrls(script, scripts, seen) {
                 // The top url in the stack is the replacement import file for this script.
                 urlStack.push(...urls);
                 return [prefix, urls[urls.length - 1], suffix].join('');
-            });
+            }
+        );
 
 
         // If we successfully transformed the code, create a blob url for it and
@@ -47672,7 +47789,7 @@ function _getScriptUrls(script, scripts, seen) {
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Server */ 11);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
 /* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/IPAddress */ 51);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/YesNoBox */ 18);
 
 
 
@@ -51966,7 +52083,7 @@ Interpreter.prototype['createPrimitive'] = function(x) {return x;};
 /* harmony import */ var _src_Faction__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/Faction */ 15);
 /* harmony import */ var _src_engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../src/engine */ 7);
 /* harmony import */ var _src_Player__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../src/Player */ 0);
-/* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./uiHelpers/clearEventListeners */ 18);
+/* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./uiHelpers/clearEventListeners */ 17);
 /* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _src_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../src/ui/navigationTracking */ 16);
 /* harmony import */ var _src_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_src_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_4__);
@@ -52053,7 +52170,7 @@ function factionInvitationBoxCreate(faction) {
 /* harmony import */ var _src_Faction__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../src/Faction */ 15);
 /* harmony import */ var _src_Player__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../src/Player */ 0);
 /* harmony import */ var _DialogBox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./DialogBox */ 8);
-/* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./uiHelpers/clearEventListeners */ 18);
+/* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./uiHelpers/clearEventListeners */ 17);
 /* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _StringHelperFunctions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./StringHelperFunctions */ 2);
 /* harmony import */ var _StringHelperFunctions__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_6__);
@@ -52194,7 +52311,7 @@ function infiltrationBoxCreate(inst) {
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 7);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 18);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 17);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 10);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_6__);
@@ -54584,6 +54701,10 @@ exports.isPowerOfTwo = isPowerOfTwo;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Array of metadata for all Gang Member upgrades. Used to construct the global GangMemberUpgrade
+ * objects in Gang.js
+ */
 exports.gangMemberUpgradesMetadata = [
     {
         cost: 1e6,
@@ -54599,19 +54720,19 @@ exports.gangMemberUpgradesMetadata = [
     },
     {
         cost: 25e6,
-        mults: { str: 1.10, def: 1.10, dex: 1.10, agi: 1.10 },
+        mults: { str: 1.1, def: 1.1, dex: 1.1, agi: 1.1 },
         name: "Glock 18C",
         upgType: "w",
     },
     {
         cost: 50e6,
-        mults: { str: 1.12, def: 1.12, agi: 1.10 },
+        mults: { str: 1.12, def: 1.12, agi: 1.1 },
         name: "P90C",
         upgType: "w",
     },
     {
         cost: 60e6,
-        mults: { str: 1.20, def: 1.20 },
+        mults: { str: 1.2, def: 1.2 },
         name: "Steyr AUG",
         upgType: "w",
     },
@@ -54623,13 +54744,13 @@ exports.gangMemberUpgradesMetadata = [
     },
     {
         cost: 150e6,
-        mults: { str: 1.30, def: 1.30 },
+        mults: { str: 1.3, def: 1.3 },
         name: "M15A10 Assault Rifle",
         upgType: "w",
     },
     {
         cost: 225e6,
-        mults: { str: 1.30, dex: 1.30, agi: 1.30 },
+        mults: { str: 1.3, dex: 1.3, agi: 1.3 },
         name: "AWM Sniper Rifle",
         upgType: "w",
     },
@@ -54653,7 +54774,7 @@ exports.gangMemberUpgradesMetadata = [
     },
     {
         cost: 40e6,
-        mults: { def: 1.20 },
+        mults: { def: 1.2 },
         name: "Graphene Plating Armor",
         upgType: "a",
     },
@@ -54689,7 +54810,7 @@ exports.gangMemberUpgradesMetadata = [
     },
     {
         cost: 15e6,
-        mults: { hack: 1.10 },
+        mults: { hack: 1.1 },
         name: "Soulstealer Rootkit",
         upgType: "r",
     },
@@ -54701,13 +54822,13 @@ exports.gangMemberUpgradesMetadata = [
     },
     {
         cost: 10e9,
-        mults: { str: 1.30, dex: 1.30 },
+        mults: { str: 1.3, dex: 1.3 },
         name: "Bionic Arms",
         upgType: "g",
     },
     {
         cost: 10e9,
-        mults: { agi: 1.60 },
+        mults: { agi: 1.6 },
         name: "Bionic Legs",
         upgType: "g",
     },
@@ -54719,25 +54840,25 @@ exports.gangMemberUpgradesMetadata = [
     },
     {
         cost: 20e9,
-        mults: { str: 1.40, def: 1.40 },
+        mults: { str: 1.4, def: 1.4 },
         name: "BrachiBlades",
         upgType: "g",
     },
     {
         cost: 12e9,
-        mults: { str: 1.20, def: 1.20 },
+        mults: { str: 1.2, def: 1.2 },
         name: "Nanofiber Weave",
         upgType: "g",
     },
     {
         cost: 25e9,
-        mults: { str: 1.50, agi: 1.50 },
+        mults: { str: 1.5, agi: 1.5 },
         name: "Synthetic Heart",
         upgType: "g",
     },
     {
         cost: 15e9,
-        mults: { str: 1.30, def: 1.30 },
+        mults: { str: 1.3, def: 1.3 },
         name: "Synfibril Muscle",
         upgType: "g",
     },
@@ -54755,7 +54876,7 @@ exports.gangMemberUpgradesMetadata = [
     },
     {
         cost: 50e9,
-        mults: { str: 1.70, def: 1.70 },
+        mults: { str: 1.7, def: 1.7 },
         name: "Graphene Bone Lacings",
         upgType: "g",
     },
@@ -54773,109 +54894,156 @@ exports.gangMemberUpgradesMetadata = [
 
 "use strict";
 
+/* tslint:disable:max-line-length */
 Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Array of metadata for all Gang Member tasks. Used to construct the global GangMemberTask
+ * objects in Gang.js
+ */
 exports.gangMemberTasksMetadata = [
     {
         desc: "This gang member is currently idle",
+        isCombat: true,
+        isHacking: true,
         name: "Unassigned",
     },
     {
         desc: "Assign this gang member to create and distribute ransomware<br><br>Earns money - Slightly increases respect - Slightly increases wanted level",
+        isCombat: false,
+        isHacking: true,
         name: "Ransomware",
         params: { baseRespect: 0.00005, baseWanted: 0.00001, baseMoney: 1, hackWeight: 100, difficulty: 1 },
     },
     {
         desc: "Assign this gang member to attempt phishing scams and attacks<br><br>Earns money - Slightly increases respect - Slightly increases wanted level",
+        isCombat: false,
+        isHacking: true,
         name: "Phishing",
         params: { baseRespect: 0.00008, baseWanted: 0.001, baseMoney: 2.5, hackWeight: 85, chaWeight: 15, difficulty: 3 },
     },
     {
         desc: "Assign this gang member to attempt identity theft<br><br>Earns money - Increases respect - Increases wanted level",
+        isCombat: false,
+        isHacking: true,
         name: "Identity Theft",
         params: { baseRespect: 0.0001, baseWanted: 0.01, baseMoney: 6, hackWeight: 80, chaWeight: 20, difficulty: 4 },
     },
     {
         desc: "Assign this gang member to carry out DDoS attacks<br><br>Increases respect - Increases wanted level",
+        isCombat: false,
+        isHacking: true,
         name: "DDoS Attacks",
         params: { baseRespect: 0.0004, baseWanted: 0.05, hackWeight: 100, difficulty: 7 },
     },
     {
         desc: "Assign this gang member to create and distribute malicious viruses<br><br>Increases respect - Increases wanted level",
+        isCombat: false,
+        isHacking: true,
         name: "Plant Virus",
         params: { baseRespect: 0.0006, baseWanted: 0.05, hackWeight: 100, difficulty: 10 },
     },
     {
         desc: "Assign this gang member to commit financial fraud and digital counterfeiting<br><br>Earns money - Slightly increases respect - Slightly increases wanted level",
+        isCombat: false,
+        isHacking: true,
         name: "Fraud & Counterfeiting",
         params: { baseRespect: 0.0005, baseWanted: 0.1, baseMoney: 15, hackWeight: 80, chaWeight: 20, difficulty: 17 },
     },
     {
         desc: "Assign this gang member to launder money<br><br>Earns money - Increases respect - Increases wanted level",
+        isCombat: false,
+        isHacking: true,
         name: "Money Laundering",
         params: { baseRespect: 0.0006, baseWanted: 0.2, baseMoney: 40, hackWeight: 75, chaWeight: 25, difficulty: 20 },
     },
     {
         desc: "Assign this gang member to commit acts of cyberterrorism<br><br>Greatly increases respect - Greatly increases wanted level",
+        isCombat: false,
+        isHacking: true,
         name: "Cyberterrorism",
         params: { baseRespect: 0.001, baseWanted: 0.5, hackWeight: 80, chaWeight: 20, difficulty: 33 },
     },
     {
         desc: "Assign this gang member to be an ethical hacker for corporations<br><br>Earns money - Lowers wanted level",
+        isCombat: false,
+        isHacking: true,
         name: "Ethical Hacking",
         params: { baseWanted: -0.001, baseMoney: 1, hackWeight: 90, chaWeight: 10, difficulty: 1 },
     },
     {
         desc: "Assign this gang member to mug random people on the streets<br><br>Earns money - Slightly increases respect - Very slightly increases wanted level",
+        isCombat: true,
+        isHacking: false,
         name: "Mug People",
         params: { baseRespect: 0.00005, baseWanted: 0.00001, baseMoney: 1, strWeight: 25, defWeight: 25, dexWeight: 25, agiWeight: 10, chaWeight: 15, difficulty: 1 },
     },
     {
         desc: "Assign this gang member to sell drugs.<br><br>Earns money - Slightly increases respect - Slightly increases wanted level",
+        isCombat: true,
+        isHacking: false,
         name: "Deal Drugs",
         params: { baseRespect: 0.00008, baseWanted: 0.001, baseMoney: 4, agiWeight: 20, dexWeight: 20, chaWeight: 60, difficulty: 3 },
     },
     {
         desc: "Assign this gang member to run cons<br><br>Earns money - Increases respect - Increases wanted level",
+        isCombat: true,
+        isHacking: false,
         name: "Run a Con",
         params: { baseRespect: 0.00015, baseWanted: 0.01, baseMoney: 10, strWeight: 5, defWeight: 5, agiWeight: 25, dexWeight: 25, chaWeight: 40, difficulty: 10 },
     },
     {
         desc: "Assign this gang member to commit armed robbery on stores, banks and armored cars<br><br>Earns money - Increases respect - Increases wanted level",
+        isCombat: true,
+        isHacking: false,
         name: "Armed Robbery",
         params: { baseRespect: 0.00015, baseWanted: 0.05, baseMoney: 25, hackWeight: 20, strWeight: 15, defWeight: 15, agiWeight: 10, dexWeight: 20, chaWeight: 20, difficulty: 17 },
     },
     {
         desc: "Assign this gang member to traffick illegal arms<br><br>Earns money - Increases respect - Increases wanted level",
+        isCombat: true,
+        isHacking: false,
         name: "Traffick Illegal Arms",
         params: { baseRespect: 0.0003, baseWanted: 0.1, baseMoney: 40, hackWeight: 15, strWeight: 20, defWeight: 20, dexWeight: 20, chaWeight: 75, difficulty: 25 },
     },
     {
         desc: "Assign this gang member to threaten and black mail high-profile targets<br><br>Earns money - Slightly increases respect - Slightly increases wanted level",
+        isCombat: true,
+        isHacking: false,
         name: "Threaten & Blackmail",
         params: { baseRespect: 0.0002, baseWanted: 0.05, baseMoney: 15, hackWeight: 25, strWeight: 25, dexWeight: 25, chaWeight: 25, difficulty: 28 },
     },
     {
         desc: "Assign this gang member to commit acts of terrorism<br><br>Greatly increases respect - Greatly increases wanted level",
+        isCombat: true,
+        isHacking: false,
         name: "Terrorism",
         params: { baseRespect: 0.001, baseWanted: 1, hackWeight: 20, strWeight: 20, defWeight: 20, dexWeight: 20, chaWeight: 20, difficulty: 33 },
     },
     {
         desc: "Assign this gang member to be a vigilante and protect the city from criminals<br><br>Decreases wanted level",
+        isCombat: true,
+        isHacking: true,
         name: "Vigilante Justice",
         params: { baseWanted: -0.001, hackWeight: 20, strWeight: 20, defWeight: 20, dexWeight: 20, agiWeight: 20, difficulty: 1 },
     },
     {
         desc: "Assign this gang member to increase their combat stats (str, def, dex, agi)",
+        isCombat: true,
+        isHacking: true,
         name: "Train Combat",
         params: { strWeight: 25, defWeight: 25, dexWeight: 25, agiWeight: 25, difficulty: 5 },
     },
     {
         desc: "Assign this gang member to train their hacking skills",
+        isCombat: true,
+        isHacking: true,
         name: "Train Hacking",
         params: { hackWeight: 100, difficulty: 8 },
     },
     {
         desc: "Assign this gang member to engage in territorial warfare with other gangs. Members assigned to this task will help increase your gang's territory and will defend your territory from being taken.",
+        isCombat: true,
+        isHacking: true,
         name: "Territory Warfare",
         params: { hackWeight: 15, strWeight: 20, defWeight: 20, dexWeight: 20, agiWeight: 20, chaWeight: 5, difficulty: 3 },
     },
@@ -54899,6 +55067,17 @@ exports.gangMemberTasksMetadata = [
 /* 129 */,
 /* 130 */,
 /* 131 */
+/*!***********************!*\
+  !*** ./css/gang.scss ***!
+  \***********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+/* 132 */,
+/* 133 */
 /*!******************************!*\
   !*** ./css/bladeburner.scss ***!
   \******************************/
@@ -54908,8 +55087,8 @@ exports.gangMemberTasksMetadata = [
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 132 */,
-/* 133 */
+/* 134 */,
+/* 135 */
 /*!************************************!*\
   !*** ./css/companymanagement.scss ***!
   \************************************/
@@ -54919,8 +55098,8 @@ exports.gangMemberTasksMetadata = [
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 134 */,
-/* 135 */
+/* 136 */,
+/* 137 */
 /*!***************************!*\
   !*** ./css/missions.scss ***!
   \***************************/
@@ -54930,8 +55109,8 @@ exports.gangMemberTasksMetadata = [
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 136 */,
-/* 137 */
+/* 138 */,
+/* 139 */
 /*!*************************!*\
   !*** ./css/loader.scss ***!
   \*************************/
@@ -54941,8 +55120,8 @@ exports.gangMemberTasksMetadata = [
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 138 */,
-/* 139 */
+/* 140 */,
+/* 141 */
 /*!**************************************!*\
   !*** ./css/interactivetutorial.scss ***!
   \**************************************/
@@ -54952,8 +55131,8 @@ exports.gangMemberTasksMetadata = [
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 140 */,
-/* 141 */
+/* 142 */,
+/* 143 */
 /*!*****************************!*\
   !*** ./css/popupboxes.scss ***!
   \*****************************/
@@ -54963,8 +55142,8 @@ exports.gangMemberTasksMetadata = [
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 142 */,
-/* 143 */
+/* 144 */,
+/* 145 */
 /*!*********************************!*\
   !*** ./css/workinprogress.scss ***!
   \*********************************/
@@ -54974,8 +55153,8 @@ exports.gangMemberTasksMetadata = [
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 144 */,
-/* 145 */
+/* 146 */,
+/* 147 */
 /*!****************************!*\
   !*** ./css/menupages.scss ***!
   \****************************/
@@ -54985,8 +55164,8 @@ exports.gangMemberTasksMetadata = [
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 146 */,
-/* 147 */
+/* 148 */,
+/* 149 */
 /*!***************************!*\
   !*** ./css/terminal.scss ***!
   \***************************/
@@ -54996,8 +55175,8 @@ exports.gangMemberTasksMetadata = [
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 148 */,
-/* 149 */
+/* 150 */,
+/* 151 */
 /*!***************************!*\
   !*** ./css/mainmenu.scss ***!
   \***************************/
@@ -55007,8 +55186,8 @@ exports.gangMemberTasksMetadata = [
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 150 */,
-/* 151 */
+/* 152 */,
+/* 153 */
 /*!**************************!*\
   !*** ./css/buttons.scss ***!
   \**************************/
@@ -55018,8 +55197,8 @@ exports.gangMemberTasksMetadata = [
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 152 */,
-/* 153 */
+/* 154 */,
+/* 155 */
 /*!*************************!*\
   !*** ./css/styles.scss ***!
   \*************************/
@@ -55029,15 +55208,15 @@ exports.gangMemberTasksMetadata = [
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 154 */,
-/* 155 */,
 /* 156 */,
 /* 157 */,
 /* 158 */,
 /* 159 */,
 /* 160 */,
 /* 161 */,
-/* 162 */
+/* 162 */,
+/* 163 */,
+/* 164 */
 /*!**********************!*\
   !*** ./netscript.js ***!
   \**********************/
@@ -55159,7 +55338,8 @@ let NetscriptFunctions =
     "getCityChaos|switchCity|getStamina|joinBladeburnerFaction|getBonusTime|"  +
 
     // Coding Contract API
-    "codingcontract|attempt|getData|getDescription|getNumTriesRemaining";
+    "codingcontract|attempt|getContractType|getData|getDescription|"           +
+    "getNumTriesRemaining";
 
 var NetscriptHighlightRules = function(options) {
     var keywordMapper = this.createKeywordMapper({
@@ -55870,7 +56050,7 @@ oop.inherits(Mode, TextMode);
     };
 
     this.createWorker = function(session) {
-        var worker = new WorkerClient(["ace"], __webpack_require__(/*! brace/worker/javascript */ 163), "JavaScriptWorker");
+        var worker = new WorkerClient(["ace"], __webpack_require__(/*! brace/worker/javascript */ 165), "JavaScriptWorker");
         worker.attachToDocument(session.getDocument());
 
         worker.on("annotate", function(results) {
@@ -55892,11 +56072,11 @@ exports.Mode = Mode;
 
 
 /***/ }),
-/* 163 */,
-/* 164 */,
 /* 165 */,
 /* 166 */,
-/* 167 */
+/* 167 */,
+/* 168 */,
+/* 169 */
 /*!*****************************************!*\
   !*** ./src/data/codingcontracttypes.ts ***!
   \*****************************************/
@@ -55937,7 +56117,7 @@ exports.codingContractTypesMetadata = [
         },
         difficulty: 1,
         gen: () => {
-            return getRandomInt_1.getRandomInt(500, 9e9);
+            return getRandomInt_1.getRandomInt(500, 1e9);
         },
         name: "Find Largest Prime Factor",
         numTries: 10,
@@ -56366,8 +56546,6 @@ exports.codingContractTypesMetadata = [
 
 
 /***/ }),
-/* 168 */,
-/* 169 */,
 /* 170 */,
 /* 171 */,
 /* 172 */,
@@ -56402,7 +56580,9 @@ exports.codingContractTypesMetadata = [
 /* 201 */,
 /* 202 */,
 /* 203 */,
-/* 204 */
+/* 204 */,
+/* 205 */,
+/* 206 */
 /*!**********************!*\
   !*** util (ignored) ***!
   \**********************/
@@ -56413,7 +56593,7 @@ exports.codingContractTypesMetadata = [
 /* (ignored) */
 
 /***/ }),
-/* 205 */
+/* 207 */
 /*!**********************!*\
   !*** util (ignored) ***!
   \**********************/

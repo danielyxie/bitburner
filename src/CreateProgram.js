@@ -86,7 +86,7 @@ const Programs = {
         level: 1,
         tooltip:"This program creates a portal to the BitNode Nexus (allows you to restart and switch BitNodes)",
         req: function() {return Player.sourceFiles.length > 0 && Player.hacking_skill >= 1},
-        time: CONSTANTS.MillisecondsPerFiveMinutes / 5,
+        time: CONSTANTS.MillisecondsPerFiveMinutes / 20,
     }),
     // special because you can't create it.
     Flight: new Program("fl1ght.exe"),

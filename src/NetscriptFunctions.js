@@ -4085,17 +4085,35 @@ function NetscriptFunctions(workerScript) {
                     return false;
                 }
             },
+            getContractType : function(fn, ip=workerScript.serverIp) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getContractType", CONSTANTS.ScriptCodingContractBaseRamCost / 2);
+                }
+                updateDynamicRam("getContractType", CONSTANTS.ScriptCodingContractBaseRamCost / 2);
+                let contract = getCodingContract(fn, ip);
+                if (contract == null) {
+                    workerScript.log(`ERROR: codingcontract.getData() failed because it could find the specified contract ${fn} on server ${ip}`);
+                    return null;
+                }
+                return contract.getType();
+            },
             getData : function(fn, ip=workerScript.serverIp) {
                 if (workerScript.checkingRam) {
                     return updateStaticRam("getData", CONSTANTS.ScriptCodingContractBaseRamCost / 2);
                 }
                 updateDynamicRam("getData", CONSTANTS.ScriptCodingContractBaseRamCost / 2);
-                var contract = getCodingContract(fn, ip);
+                let contract = getCodingContract(fn, ip);
                 if (contract == null) {
                     workerScript.log(`ERROR: codingcontract.getData() failed because it could find the specified contract ${fn} on server ${ip}`);
                     return null;
                 }
-                return contract.getData();
+                let data = contract.getData();
+                if (data.constructor === Array) {
+                    // Pass a copy
+                    return data.slice();
+                } else {
+                    return data;
+                }
             },
             getDescription : function(fn, ip=workerScript.serverIp) {
                 if (workerScript.checkingRam) {

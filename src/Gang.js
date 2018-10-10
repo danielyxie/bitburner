@@ -300,10 +300,11 @@ Gang.prototype.canRecruitMember = function() {
 }
 
 Gang.prototype.getRespectNeededToRecruitMember = function() {
-    // First 3 members are free
-    if (this.members.length < 3) { return 0; }
+    // First N gang members are free (can be recruited at 0 respect)
+    const numFreeMembers = 3;
+    if (this.members.length < numFreeMembers) { return 0; }
 
-    const i = this.members.length;
+    const i = this.members.length - (numFreeMembers - 1);
     return Math.round(0.7 * Math.pow(i, 3) + 0.8 * Math.pow(i, 2));
 }
 
@@ -558,7 +559,7 @@ GangMember.fromJSON = function(value) {
 Reviver.constructors.GangMember = GangMember;
 
 //Defines tasks that Gang Members can work on
-function GangMemberTask(name="", desc="",
+function GangMemberTask(name="", desc="", isHacking=false, isCombat=false,
                         params={baseRespect: 0, baseWanted: 0, baseMoney: 0,
                                 hackWeight: 0, strWeight: 0, defWeight: 0,
                                 dexWeight: 0, agiWeight: 0, chaWeight: 0,
@@ -566,11 +567,17 @@ function GangMemberTask(name="", desc="",
     this.name = name;
     this.desc = desc;
 
+    // Flags that describe whether this Task is applicable for Hacking/Combat gangs
+    this.isHacking = isHacking;
+    this.isCombat = isCombat;
+
+    // Base gain rates for respect/wanted/money
     this.baseRespect    = params.baseRespect ? params.baseRespect   : 0;
     this.baseWanted     = params.baseWanted  ? params.baseWanted    : 0;
     this.baseMoney      = params.baseMoney   ? params.baseMoney     : 0;
 
-    //Weights must add up to 100
+    // Weighting for the effect that each stat has on the tasks effectiveness.
+    // Weights must add up to 100
     this.hackWeight     = params.hackWeight ? params.hackWeight : 0;
     this.strWeight      = params.strWeight  ? params.strWeight  : 0;
     this.defWeight      = params.defWeight  ? params.defWeight  : 0;
@@ -578,7 +585,7 @@ function GangMemberTask(name="", desc="",
     this.agiWeight      = params.agiWeight  ? params.agiWeight  : 0;
     this.chaWeight      = params.chaWeight  ? params.chaWeight  : 0;
 
-    //1 - 100
+    // 1 - 100
     this.difficulty     = params.difficulty ? params.difficulty : 1;
 }
 
@@ -595,12 +602,12 @@ Reviver.constructors.GangMemberTask = GangMemberTask;
 //TODO Human trafficking and an equivalent hacking crime
 const GangMemberTasks = {};
 
-function addGangMemberTask(name, desc, params) {
-    GangMemberTasks[name] = new GangMemberTask(name, desc, params);
+function addGangMemberTask(name, desc, isHacking, isCombat, params) {
+    GangMemberTasks[name] = new GangMemberTask(name, desc, isHacking, isCombat, params);
 }
 
 gangMemberTasksMetadata.forEach((e) => {
-    addGangMemberTask(e.name, e.desc, e.params);
+    addGangMemberTask(e.name, e.desc, e.isHacking, e.isCombat, e.params);
 });
 
 function GangMemberUpgrade(name="", cost=0, type="w", mults={}) {
@@ -1245,51 +1252,76 @@ function updateGangContent() {
 //Takes in a GangMember object
 function createGangMemberDisplayElement(memberObj) {
     if (!gangContentCreated || !Player.inGang()) {return;}
-    var name = memberObj.name;
+    const name = memberObj.name;
 
     var accordion = createAccordionElement({
-        id:name + "gang-member",
-        hdrText:name,
+        id: name + "gang-member",
+        hdrText: name,
     });
-    var li = accordion[0];
-    var hdr = accordion[1];
-    var gangMemberDiv = accordion[2];
+    const li = accordion[0];
+    const hdr = accordion[1];
+    const gangMemberDiv = accordion[2];
 
-    //Gang member content divided into 3 panels:
-    //Stats Panel
-    var statsDiv = createElement("div", {
-        id: name + "gang-member-stats", class: "gang-member-info-div",
-        width:"30%", display:"inline"
+    // Gang member content divided into 3 panels:
+    // Panel 1 - Shows member's stats & Ascension stuff
+    const statsDiv = createElement("div", {
+        class: "gang-member-info-div",
+        id: name + "gang-member-stats",
     });
-    var statsP = createElement("p", {
-        id:name + "gang-member-stats-text", display:"inline"
+    const statsP = createElement("p", {
+        id: name + "gang-member-stats-text", display: "inline"
+    });
+    const ascendButton = createElement("button", {
+        class: "accordion-button",
+        innerText: "Ascend",
+        clickListener: () => {
+            Player.gang.ascendMember(memberObj);
+            return false;
+        }
+    });
+    const ascendHelpTip = createElement("div", {
+        backgroundColor: "black",
+        class: "help-tip",
+        clickListener: () => {
+            dialogBoxCreate("TODO");
+        },
+        innerText: "?"
     });
 
     statsDiv.appendChild(statsP);
-    //statsDiv.appendChild(upgradeButton);
+    statsDiv.appendChild(ascendButton);
+    statsDiv.appendChild(ascendHelpTip);
 
-    //Panel for Selecting task and show respect/wanted gain
-    var taskDiv = createElement("div", {
-        id: name + "gang-member-task", class:"gang-member-info-div",
-        width:"30%", display:"inline"
+    // Panel 2 - Task Selection & Info
+    const taskDiv = createElement("div", {
+        class:"gang-member-info-div",
+        id: name + "gang-member-task",
     });
-    var taskSelector = createElement("select", {
-        color:"white", backgroundColor:"black",
-        id:name + "gang-member-task-selector"
+    const taskSelector = createElement("select", {
+        id: name + "gang-member-task-selector",
     });
 
-    var tasks = null;
+    // Get an array of the name of all tasks that are applicable for this Gang
+    let tasks = null;
+    const allTasks = Object.keys(GangMemberTasks);
     if (Player.gang.isHackingGang) {
-        tasks = ["---", "Ransomware", "Phishing", "Identity Theft", "DDoS Attacks",
-                 "Plant Virus", "Fraud & Counterfeiting","Money Laundering",
-                 "Cyberterrorism", "Ethical Hacking", "Train Combat",
-                 "Train Hacking", "Territory Warfare"];
+        tasks = allTasks.filter((e) => {
+            let task = GangMemberTasks[e];
+            if (task == null) { return false; }
+            if (e === "Unassigned") { return false; }
+            return task.isHacking;
+        });
     } else {
-        tasks = ["---", "Mug People", "Deal Drugs", "Run a Con", "Armed Robbery",
-                 "Traffick Illegal Arms", "Threaten & Blackmail",
-                 "Terrorism", "Vigilante Justice", "Train Combat",
-                 "Train Hacking", "Territory Warfare"];
+        tasks = allTasks.filter((e) => {
+            let task = GangMemberTasks[e];
+            if (task == null) { return false; }
+            if (e === "Unassigned") { return false; }
+            return task.isCombat;
+        });
     }
+    tasks.unshift("---");
+
+    // Create selector for Gang member task
     for (var i = 0; i < tasks.length; ++i) {
         var option = document.createElement("option");
         option.text = tasks[i];
@@ -1301,17 +1333,19 @@ function createGangMemberDisplayElement(memberObj) {
         setGangMemberTaskDescription(memberObj, task);
         updateGangContent();
     });
-    //Set initial task in selector element
+
+    // Set initial task in selector
     if (memberObj.task instanceof GangMemberTask) {
         var taskName = memberObj.task.name;
         var taskIndex = 0;
         for (let i = 0; i < tasks.length; ++i) {
-            if (taskName == tasks[i]) {
+            if (taskName === tasks[i]) {
                 taskIndex = i;
                 break;
             }
         }
         taskSelector.selectedIndex = taskIndex;
+        setGangMemberTaskDescription(memberObj, taskName);
     }
 
     var gainInfo = createElement("p", {id:name + "gang-member-gain-info"});
@@ -1320,19 +1354,13 @@ function createGangMemberDisplayElement(memberObj) {
 
     //Panel for Description of task
     var taskDescDiv = createElement("div", {
-        id:name + "gang-member-task-desc", class:"gang-member-info-div",
-        width:"30%", display:"inline"
+        class:"gang-member-info-div",
+        id: name + "gang-member-task-desc",
     });
 
     var taskDescP = createElement("p", {id: name + "gang-member-task-description", display:"inline"});
     taskDescDiv.appendChild(taskDescP);
 
-    statsDiv.style.width = "30%";
-    taskDiv.style.width = "30%";
-    taskDescDiv.style.width = "30%";
-    statsDiv.style.display = "inline";
-    taskDiv.style.display = "inline";
-    taskDescDiv.style.display = "inline";
     gangMemberDiv.appendChild(statsDiv);
     gangMemberDiv.appendChild(taskDiv);
     gangMemberDiv.appendChild(taskDescDiv);
@@ -1372,7 +1400,7 @@ function setGangMemberTaskDescription(memberObj, taskName) {
     var taskDesc = document.getElementById(name + "gang-member-task-description");
     if (taskDesc) {
         var task = GangMemberTasks[taskName];
-        if (task == null) {return;}
+        if (task == null) { task = GangMemberTasks["Unassigned"]; }
         var desc = task.desc;
         taskDesc.innerHTML = desc;
     }

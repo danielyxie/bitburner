@@ -25,7 +25,7 @@
       ga('create', 'UA-100157497-1', 'auto');
       ga('send', 'pageview');
     </script>
-<link rel="shortcut icon" href="favicon.ico"><link href="0.css" rel="stylesheet"><link href="dist/engine.css" rel="stylesheet"></head>
+<link rel="shortcut icon" href="favicon.ico"><link href="dist/vendor.css" rel="stylesheet"><link href="dist/engine.css" rel="stylesheet"></head>
 <body>
     <div id="entire-game-container" style="visibility:hidden;">
     <div id="mainmenu-container">
@@ -723,8 +723,8 @@
     <!-- Log Box -->
     <div id="log-box-container">
         <div id="log-box-content">
-            <span id="log-box-close" class="popup-box-button"> Close </span>
-            <span id="log-box-kill-script" class="popup-box-button">Kill Script</span>
+            <button id="log-box-close" class="popup-box-button"> Close </button>
+            <button id="log-box-kill-script" class="popup-box-button">Kill Script</button>
             <p id="log-box-text-header"> </p>
             <p id="log-box-text"> </p>
         </div>
@@ -734,8 +734,8 @@
     <div id="yes-no-box-container" class="popup-box-container">
         <div id="yes-no-box-content" class="popup-box-content">
             <p id="yes-no-box-text"> </p>
-            <span id="yes-no-box-yes" class="popup-box-button"> Yes </span>
-            <span id="yes-no-box-no" class="popup-box-button"> No </span>
+            <button id="yes-no-box-yes" class="popup-box-button"> Yes </button>
+            <button id="yes-no-box-no" class="popup-box-button"> No </button>
         </div>
     </div>
 
@@ -744,8 +744,8 @@
         <div id="yes-no-text-input-box-content" class="popup-box-content">
             <p id="yes-no-text-input-box-text"> </p>
             <input type="text" id="yes-no-text-input-box-input" pattern="[a-zA-Z0-9-_]" maxlength="30" />
-            <span id="yes-no-text-input-box-yes" class="popup-box-button"> Yes </span>
-            <span id="yes-no-text-input-box-no" class="popup-box-button"> No </span>
+            <button id="yes-no-text-input-box-yes" class="popup-box-button"> Yes </button>
+            <button id="yes-no-text-input-box-no" class="popup-box-button"> No </button>
         </div>
     </div>
 
@@ -758,8 +758,8 @@
                 Would you like to join? <br /> <br />
                 Warning: Joining this faction may prevent you from joining other factions during this run!
             </p>
-            <span id="faction-invitation-box-yes" class="popup-box-button"> Yes </span>
-            <span id="faction-invitation-box-no" class="popup-box-button"> No </span>
+            <button id="faction-invitation-box-yes" class="popup-box-button"> Yes </button>
+            <button id="faction-invitation-box-no" class="popup-box-button"> No </button>
         </div>
     </div>
 
@@ -768,9 +768,9 @@
         <div id="infiltration-box-content" class="popup-box-content">
             <p id="infiltration-box-text"> </p>
 
-            <span id="infiltration-box-sell" class="a-link-button"> Sell on Black Market </span> <br /><br />
+            <button id="infiltration-box-sell" class="a-link-button"> Sell on Black Market </button> <br /><br />
             <select id="infiltration-faction-select"> </select> <br />
-            <span id="infiltration-box-faction" class="a-link-button"> Give to Faction for Reputation </span>
+            <button id="infiltration-box-faction" class="a-link-button"> Give to Faction for Reputation </button>
 
         </div>
     </div>
@@ -783,7 +783,7 @@
     <div id="work-in-progress-container" class="generic-fullscreen-container">
         <p id="work-in-progress-text"> </p>
 
-        <span id="work-in-progress-cancel-button"> Cancel Work </span>
+        <button id="work-in-progress-cancel-button"> Cancel Work </button>
     </div>
 
     <!-- Red Pill Container -->
@@ -798,9 +798,9 @@
     <div id="interactive-tutorial-wrapper">
     <div id="interactive-tutorial-container">
         <p id="interactive-tutorial-text"> </p>
-        <span id="interactive-tutorial-exit"> Exit Tutorial </span>
-        <span id="interactive-tutorial-next"> Next </span>
-        <span id="interactive-tutorial-back"> Back </span>
+        <button id="interactive-tutorial-exit"> Exit Tutorial </button>
+        <button id="interactive-tutorial-next"> Next </button>
+        <button id="interactive-tutorial-back"> Back </button>
     </div>
     </div>
 
@@ -839,8 +839,8 @@
             </table>
         </div>
         <div class="character-quick-options">
-            <span id="character-overview-save-button">Save Game</span>
-            <span id="character-overview-options-button">Options</span>
+            <button id="character-overview-save-button">Save Game</button>
+            <button id="character-overview-options-button">Options</button>
         </div>
     </div>
     </div>
@@ -853,7 +853,7 @@
     <!-- Game Options -->
     <div id="game-options-container" class="popup-box-container">
         <div id="game-options-content" class="game-options-box">
-            <span id="game-options-close-button">&times;</span>
+            <button id="game-options-close-button">&times;</button>
             <h1> Game Options </h1>
             <br />
             <div id="game-options-left-panel">

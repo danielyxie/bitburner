@@ -1,3 +1,7 @@
+/**
+ * Defines the parameters that can be used to initialize and describe a GangMemberUpgrade
+ * (defined in Gang.js)
+ */
 export interface IGangMemberUpgradeMetadata {
     cost: number;
     mults: any;
@@ -5,6 +9,10 @@ export interface IGangMemberUpgradeMetadata {
     upgType: string;
 }
 
+/**
+ * Array of metadata for all Gang Member upgrades. Used to construct the global GangMemberUpgrade
+ * objects in Gang.js
+ */
 export const gangMemberUpgradesMetadata: IGangMemberUpgradeMetadata[] = [
     {
         cost: 1e6,
@@ -20,19 +28,19 @@ export const gangMemberUpgradesMetadata: IGangMemberUpgradeMetadata[] = [
     },
     {
         cost: 25e6,
-        mults: {str: 1.10, def: 1.10, dex: 1.10, agi: 1.10},
+        mults: {str: 1.1, def: 1.1, dex: 1.1, agi: 1.1},
         name: "Glock 18C",
         upgType: "w",
     },
     {
         cost: 50e6,
-        mults: {str: 1.12, def: 1.12, agi: 1.10},
+        mults: {str: 1.12, def: 1.12, agi: 1.1},
         name: "P90C",
         upgType: "w",
     },
     {
         cost: 60e6,
-        mults: {str: 1.20, def: 1.20},
+        mults: {str: 1.2, def: 1.2},
         name: "Steyr AUG",
         upgType: "w",
     },
@@ -44,13 +52,13 @@ export const gangMemberUpgradesMetadata: IGangMemberUpgradeMetadata[] = [
     },
     {
         cost: 150e6,
-        mults: {str: 1.30, def: 1.30},
+        mults: {str: 1.3, def: 1.3},
         name: "M15A10 Assault Rifle",
         upgType: "w",
     },
     {
         cost: 225e6,
-        mults: {str: 1.30, dex: 1.30, agi: 1.30},
+        mults: {str: 1.3, dex: 1.3, agi: 1.3},
         name: "AWM Sniper Rifle",
         upgType: "w",
     },
@@ -74,7 +82,7 @@ export const gangMemberUpgradesMetadata: IGangMemberUpgradeMetadata[] = [
     },
     {
         cost: 40e6,
-        mults: {def: 1.20},
+        mults: {def: 1.2},
         name: "Graphene Plating Armor",
         upgType: "a",
     },
@@ -110,7 +118,7 @@ export const gangMemberUpgradesMetadata: IGangMemberUpgradeMetadata[] = [
     },
     {
         cost: 15e6,
-        mults: {hack: 1.10},
+        mults: {hack: 1.1},
         name: "Soulstealer Rootkit",
         upgType: "r",
     },
@@ -122,13 +130,13 @@ export const gangMemberUpgradesMetadata: IGangMemberUpgradeMetadata[] = [
     },
     {
         cost: 10e9,
-        mults: {str: 1.30, dex: 1.30},
+        mults: {str: 1.3, dex: 1.3},
         name: "Bionic Arms",
         upgType: "g",
     },
     {
         cost: 10e9,
-        mults: {agi: 1.60},
+        mults: {agi: 1.6},
         name: "Bionic Legs",
         upgType: "g",
     },
@@ -140,25 +148,25 @@ export const gangMemberUpgradesMetadata: IGangMemberUpgradeMetadata[] = [
     },
     {
         cost: 20e9,
-        mults: {str: 1.40, def: 1.40},
+        mults: {str: 1.4, def: 1.4},
         name: "BrachiBlades",
         upgType: "g",
     },
     {
         cost: 12e9,
-        mults: {str: 1.20, def: 1.20},
+        mults: {str: 1.2, def: 1.2},
         name: "Nanofiber Weave",
         upgType: "g",
     },
     {
         cost: 25e9,
-        mults: {str: 1.50, agi: 1.50},
+        mults: {str: 1.5, agi: 1.5},
         name: "Synthetic Heart",
         upgType: "g",
     },
     {
         cost: 15e9,
-        mults: {str: 1.30, def:1.30},
+        mults: {str: 1.3, def: 1.3},
         name: "Synfibril Muscle",
         upgType: "g",
     },
@@ -176,7 +184,7 @@ export const gangMemberUpgradesMetadata: IGangMemberUpgradeMetadata[] = [
     },
     {
         cost: 50e9,
-        mults: {str: 1.70, def: 1.70},
+        mults: {str: 1.7, def: 1.7},
         name: "Graphene Bone Lacings",
         upgType: "g",
     },

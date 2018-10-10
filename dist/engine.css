@@ -146,6 +146,7 @@ a:visited {
 .help-tip {
   content: '?';
   padding: 1px;
+  margin-top: 5px;
   margin-left: 3px;
   color: #fff;
   border: 1px solid #fff;
@@ -482,7 +483,8 @@ a:visited {
  */
 /* Remove default <button> styling */
 button {
-  border: none; }
+  border: none;
+  background-color: transparent; }
 
 .a-link-button,
 .std-button {
@@ -544,6 +546,28 @@ button {
   .a-link-button-bought:active,
   .std-button-bought:active {
     pointer-events: none; }
+
+/**
+ * This is a button that is meant to be used on accordions (accordion-header and accordion-panel classes)
+ * It has a black background so it does not clash with the default accordion coloring
+ */
+.accordion-button {
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  border-radius: 12px;
+  -webkit-box-shadow: 1px 1px 3px #000;
+  -moz-box-shadow: 1px 1px 3px #000;
+  box-shadow: 1px 1px 3px #000;
+  color: #aaa;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 4px;
+  padding: 4px;
+  background-color: #000; }
+  .accordion-button:hover, .accordion-button:focus {
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer; }
 
 /* COLORS */
 /* Attributes */
@@ -920,24 +944,6 @@ button {
     color: #fff;
     margin-left: 5%; }
 
-.active-scripts-button {
-  -webkit-border-radius: 12px;
-  -moz-border-radius: 12px;
-  border-radius: 12px;
-  -webkit-box-shadow: 1px 1px 3px #000;
-  -moz-box-shadow: 1px 1px 3px #000;
-  box-shadow: 1px 1px 3px #000;
-  color: #aaa;
-  font-size: 16px;
-  font-weight: bold;
-  margin: 4px;
-  padding: 4px;
-  background-color: #000; }
-  .active-scripts-button:hover, .active-scripts-button:focus {
-    color: #fff;
-    text-decoration: none;
-    cursor: pointer; }
-
 /* Hacknet Nodes */
 #hacknet-nodes-container {
   position: fixed;
@@ -1225,18 +1231,6 @@ button {
   color: var(--my-font-color);
   margin: 2px;
   padding: 0; }
-
-/* Gang */
-#gang-container {
-  position: fixed;
-  padding: 6px; }
-
-#gang-management-subpage > p {
-  padding: 4px; }
-
-.gang-member-info-div {
-  float: left;
-  background-color: #555; }
 
 /* COLORS */
 /* Attributes */
@@ -1530,26 +1524,19 @@ button {
     text-decoration: none;
     cursor: pointer; }
 
-/*
-#interactive-tutorial-exit {
-    float: left;
-}
-
-#interactive-tutorial-back {
-    margin-right: 20%;
-    float: right;
-}
-*/
 #interactive-tutorial-exit {
   position: absolute;
   bottom: 0;
-  left: 0; }
+  left: 0;
+  padding: 4px; }
 
 #interactive-tutorial-back {
-  float: left; }
+  float: left;
+  padding: 4px; }
 
 #interactive-tutorial-next {
-  float: right; }
+  float: right;
+  padding: 4px; }
 
 /* COLORS */
 /* Attributes */
@@ -2045,6 +2032,27 @@ button {
   hyphens: auto;
   -webkit-hyphens: auto;
   -moz-hyphens: auto; }
+
+/* COLORS */
+/* Attributes */
+/**
+ * Styling for the Gang mechanic UI (BitNode-2)
+ */
+#gang-container {
+  position: fixed;
+  padding: 6px; }
+  #gang-container select {
+    background-color: black;
+    color: white; }
+
+#gang-management-subpage > p {
+  padding: 4px; }
+
+.gang-member-info-div {
+  background-color: #555;
+  display: inline;
+  float: left;
+  width: 30%; }
 
 
 /*# sourceMappingURL=engine.css.map*/

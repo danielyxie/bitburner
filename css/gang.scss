@@ -1,0 +1,27 @@
+@import "mixins";
+@import "theme";
+
+/**
+ * Styling for the Gang mechanic UI (BitNode-2)
+ */
+
+#gang-container {
+    position: fixed;
+    padding: 6px;
+
+    select {
+        background-color: black;
+        color: white;
+    }
+}
+
+#gang-management-subpage > p {
+    padding: 4px;
+}
+
+.gang-member-info-div {
+    background-color: #555;
+    display: inline;
+    float: left;
+    width: 30%;
+}
