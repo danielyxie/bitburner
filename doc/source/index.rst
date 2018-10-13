@@ -21,6 +21,7 @@ secrets that you've been searching for.
 
     Netscript <netscript>
     Terminal <terminal>
+    Coding Contracts <codingcontracts>
     Keyboard Shortcuts <shortcuts>
     Changelog <changelog>
 

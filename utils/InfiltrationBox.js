@@ -17,7 +17,7 @@ function infiltrationBoxClose() {
 
 function infiltrationBoxOpen() {
     var box = document.getElementById("infiltration-box-container");
-    box.style.display = "block";
+    box.style.display = "flex";
 }
 
 function infiltrationSetText(txt) {
@@ -37,29 +37,30 @@ function infiltrationBoxCreate(inst) {
     Player.gainCharismaExp(inst.chaExpGained * expMultiplier);
     Player.gainIntelligenceExp(inst.intExpGained * expMultiplier);
 
+    const expGainText = ["You gained:",
+                         `${formatNumber(inst.hackingExpGained * expMultiplier, 3)} hacking exp`,
+                         `${formatNumber(inst.strExpGained * expMultiplier, 3)} str exp`,
+                         `${formatNumber(inst.defExpGained * expMultiplier, 3)} def exp`,
+                         `${formatNumber(inst.dexExpGained * expMultiplier, 3)} dex exp`,
+                         `${formatNumber(inst.agiExpGained * expMultiplier, 3)} agi exp`,
+                         `${formatNumber(inst.chaExpGained * expMultiplier, 3)} cha exp`].join("\n");
+
     var totalValue = 0;
     for (var i = 0; i < inst.secretsStolen.length; ++i) {
         totalValue += inst.secretsStolen[i];
     }
     if (totalValue == 0) {
         dialogBoxCreate("You successfully escaped the facility but you did not steal " +
-                        "anything of worth when infiltrating.<br><br>" +
-                        "You gained:<br>" +
-                        formatNumber(inst.hackingExpGained, 3) + " hacking exp<br>" +
-                        formatNumber(inst.strExpGained, 3) + " str exp<br>" +
-                        formatNumber(inst.defExpGained, 3) + " def exp<br>" +
-                        formatNumber(inst.dexExpGained, 3) + " dex exp<br>" +
-                        formatNumber(inst.agiExpGained, 3) + " agi exp<br>" +
-                        formatNumber(inst.chaExpGained, 3) + " cha exp<br>");
+                        "anything of worth when infiltrating.<br><br>" + expGainText);
         return;
     }
     var facValue = totalValue * Player.faction_rep_mult *
                    CONSTANTS.InfiltrationRepValue * BitNodeMultipliers.InfiltrationRep;
     var moneyValue = totalValue * CONSTANTS.InfiltrationMoneyValue * BitNodeMultipliers.InfiltrationMoney;
     infiltrationSetText("You can sell the classified documents and secrets " +
-                        "you stole from " + inst.companyName + " for $" +
-                        formatNumber(moneyValue, 2) + " on the black market or you can give it " +
-                        "to a faction to gain " + formatNumber(facValue, 3) + " reputation with " +
+                        "you stole from " + inst.companyName + " for <span class='money-gold'>$" +
+                        formatNumber(moneyValue, 2) + "</span> on the black market or you can give it " +
+                        "to a faction to gain <span class='light-yellow'>" + formatNumber(facValue, 3) + " reputation</span> with " +
                         "that faction.");
     var selector = document.getElementById("infiltration-faction-select");
     selector.innerHTML = "";
@@ -85,14 +86,8 @@ function infiltrationBoxCreate(inst) {
         if (!e.isTrusted) {return false;}
         Player.gainMoney(moneyValue);
         dialogBoxCreate("You sold the classified information you stole from " + inst.companyName +
-                        " for $" + moneyValue + " on the black market!<br><br>" +
-                        "You gained:<br>" +
-                        formatNumber(inst.hackingExpGained, 3) + " hacking exp<br>" +
-                        formatNumber(inst.strExpGained, 3) + " str exp<br>" +
-                        formatNumber(inst.defExpGained, 3) + " def exp<br>" +
-                        formatNumber(inst.dexExpGained, 3) + " dex exp<br>" +
-                        formatNumber(inst.agiExpGained, 3) + " agi exp<br>" +
-                        formatNumber(inst.chaExpGained, 3) + " cha exp<br>");
+                        " for <span class='money-gold'>$" + formatNumber(moneyValue, 2) + "</span> on the black market!<br><br>" +
+                        expGainText);
         infiltrationBoxClose();
         return false;
     });
@@ -111,14 +106,8 @@ function infiltrationBoxCreate(inst) {
         }
         faction.playerReputation += facValue;
         dialogBoxCreate("You gave the classified information you stole from " + inst.companyName +
-                        " to " + facName + " and gained " + formatNumber(facValue, 3) + " reputation with the faction. <br><br>" +
-                        "You gained:<br>" +
-                        formatNumber(inst.hackingExpGained, 3) + " hacking exp<br>" +
-                        formatNumber(inst.strExpGained, 3) + " str exp<br>" +
-                        formatNumber(inst.defExpGained, 3) + " def exp<br>" +
-                        formatNumber(inst.dexExpGained, 3) + " dex exp<br>" +
-                        formatNumber(inst.agiExpGained, 3) + " agi exp<br>" +
-                        formatNumber(inst.chaExpGained, 3) + " cha exp<br>");
+                        " to " + facName + " and gained <span class='light-yellow'>" + formatNumber(facValue, 3) + " reputation</span> with the faction. <br><br>" +
+                        expGainText);
         infiltrationBoxClose();
         return false;
     });

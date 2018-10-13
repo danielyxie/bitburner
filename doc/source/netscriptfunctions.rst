@@ -129,10 +129,32 @@ enableLog
     Re-enables logging for the given function. If 'ALL' is passed into this function
     as an argument, then it will revert the effects of disableLog('ALL')
 
+isLogEnabled
+^^^^^^^^^^^^
+
+.. js:function:: isLogEnabled(fn)
+
+    :param string fn: Name of function to check
+
+    Returns a boolean indicating whether or not logging is enabled for that
+    function (or 'ALL')
+
+getScriptLogs
+^^^^^^^^^^^^^
+
+.. js:function:: getScriptLogs()
+
+    Returns the script's logs. The logs are returned as an array, where each
+    line is an element in the array. The most recently logged line is at the
+    end of the array.
+
+    Note that there is a maximum number of lines that a script stores in its logs.
+    This is configurable in the game's options.
+
 scan
 ^^^^
 
-.. js:function:: scan(hostname/ip[, hostnames=true])
+.. js:function:: scan(hostname/ip=current ip[, hostnames=true])
 
     :param string hostname/ip: IP or hostname of the server to scan
     :param boolean: Optional boolean specifying whether the function should output hostnames (if true) or IP addresses (if false)
@@ -659,14 +681,14 @@ getNextHacknetNodeCost
 
 .. js:function:: getNextHacknetNodeCost()
 
-    Deprecated (no longer usable). See :doc:`netscripthacknetnodeapi` 
+    Deprecated (no longer usable). See :doc:`netscripthacknetnodeapi`
 
 purchaseHacknetNode
 ^^^^^^^^^^^^^^^^^^^
 
 .. js:function:: purchaseHacknetNode()
 
-    Deprecated (no longer usable). See :doc:`netscripthacknetnodeapi` 
+    Deprecated (no longer usable). See :doc:`netscripthacknetnodeapi`
 
 getPurchasedServerCost
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -757,20 +779,32 @@ write
 
 .. js:function:: write(port/fn, data="", mode="a")
 
-    :param string/number port/fn: Port or text file that will be written to
+    :param string/number port/fn: Port or text file/script that will be written to
     :param string data: Data to write
-    :param string mode: Defines the write mode. Only valid when writing to text files.
+    :param string mode: Defines the write mode. Only valid when writing to text files or scripts.
 
-    This function can be used to either write data to a port or to a text file (.txt).
+    This function can be used to either write data to a port, a text file (.txt), or a script (.script, .js, .ns)
 
-    If the first argument is a number between 1 and 10, then it specifies a port and this function will write *data* to that port. Read
-    about how `Netscript Ports work here <http://bitburner.wikia.com/wiki/Netscript_Ports>`_. The third argument, *mode*, is not used
+    If the first argument is a number between 1 and 20, then it specifies a port and this function will write *data* to that port. Read
+    about how :ref:`netscript_ports` work here. The third argument, *mode*, is not used
     when writing to a port.
 
-    If the first argument is a string, then it specifies the name of a text file (.txt) and this function will write *data* to that text file. If the
-    specified text file does not exist, then it will be created. The third argument *mode, defines how the data will be written to the text file. If *mode*
-    is set to "w", then the data is written in "write" mode which means that it will overwrite all existing data on the text file. If *mode* is set to
-    any other value then the data will be written in "append" mode which means that the data will be added at the end of the text file.
+    If the first argument is a string, then it specifies the name of a text file or script and this function will write *data* to that text file/script. If the
+    specified text file/script does not exist, then it will be created. The third argument *mode*, defines how the data will be written. If *mode*
+    is set to "w", then the data is written in "write" mode which means that it will overwrite all existing data on the text file/script. If *mode* is set to
+    any other value then the data will be written in "append" mode which means that the data will be added at the end of the file.
+
+tryWrite
+^^^^^^^^
+
+.. js:function:: tryWrite(port, data="")
+
+    :param number port: Port to be written to
+    :param string data: Data to try to write
+    :returns: True if the data is successfully written to the port, and false otherwise
+
+    Attempts to write data to the specified Netscript Port. If the port is full, the data will
+    not be written. Otherwise, the data will be written normally
 
 read
 ^^^^
@@ -779,13 +813,13 @@ read
 
     :param string/number port/fn: Port or text file to read from
 
-    This function is used to read data from a port or from a text file (.txt).
+    This function is used to read data from a port, a text file (.txt), or a script (.script, .js, .ns)
 
-    If the argument *port/fn* is a number between 1 and 10, then it specifies a port and it will read data from that port. Read
-    about how `Netscript Ports work here <http://bitburner.wikia.com/wiki/Netscript_Ports>`_. A port is a serialized queue. This function
+    If the argument *port/fn* is a number between 1 and 20, then it specifies a port and it will read data from that port. Read
+    about how :ref:`netscript_ports` work here. A port is a serialized queue. This function
     will remove the first element from that queue and return it. If the queue is empty, then the string "NULL PORT DATA" will be returned.
 
-    If the argument *port/fn* is a string, then it specifies the name of a text file (.txt) and this function will return the data in the specified text file. If
+    If the argument *port/fn* is a string, then it specifies the name of a text file or script and this function will return the data in the specified text file/script. If
     the text file does not exist, an empty string will be returned.
 
 peek
@@ -793,12 +827,12 @@ peek
 
 .. js:function:: peek(port)
 
-    :param number port: Port to peek. Must be an integer between 1 and 10
+    :param number port: Port to peek. Must be an integer between 1 and 20
 
     This function is used to peek at the data from a port. It returns the first element in the specified port
     without removing that element. If the port is empty, the string "NULL PORT DATA" will be returned.
 
-    Read about how `Netscript Ports work here <http://bitburner.wikia.com/wiki/Netscript_Ports>`_.
+    Read about how :ref:`netscript_ports` work here
 
 clear
 ^^^^^
@@ -809,9 +843,20 @@ clear
 
     This function is used to clear data in a `Netscript Ports <http://bitburner.wikia.com/wiki/Netscript_Ports>`_ or a text file.
 
-    If the *port/fn* argument is a number between 1 and 10, then it specifies a port and will clear it (deleting all data from the underlying queue).
+    If the *port/fn* argument is a number between 1 and 20, then it specifies a port and will clear it (deleting all data from the underlying queue).
 
     If the *port/fn* argument is a string, then it specifies the name of a text file (.txt) and will delete all data from that text file.
+
+getPortHandle
+^^^^^^^^^^^^^
+
+.. js:function:: getPortHandle(port)
+
+    :param number port: Port number
+
+    Get a handle to a Netscript Port. See more details here: :ref:`netscript_ports`
+
+    **WARNING:** Port Handles only work in :ref:`netscriptjs`. They will not work in :ref:`netscript1`.
 
 rm
 ^^
@@ -879,29 +924,41 @@ getScriptRam
 getHackTime
 ^^^^^^^^^^^
 
-.. js:function:: getHackTime(hostname/ip)
+.. js:function:: getHackTime(hostname/ip[, hackLvl=current level])
 
     :param string hostname/ip: Hostname or IP of target server
+    :param number hackLvl: Optional hacking level for the calculation. Defaults to player's current hacking level
 
     Returns the amount of time in seconds it takes to execute the *hack()* Netscript function on the target server.
+
+    The function takes in an optional *hackLvl* parameter that can be specified
+    to see what the hack time would be at different hacking levels.
 
 getGrowTime
 ^^^^^^^^^^^
 
-.. js:function:: getGrowTime(hostname/ip)
+.. js:function:: getGrowTime(hostname/ip[, hackLvl=current level])
 
     :param string hostname/ip: Hostname or IP of target server
+    :param number hackLvl: Optional hacking level for the calculation. Defaults to player's current hacking level
 
     Returns the amount of time in seconds it takes to execute the *grow()* Netscript function on the target server.
+
+    The function takes in an optional *hackLvl* parameter that can be specified
+    to see what the grow time would be at different hacking levels.
 
 getWeakenTime
 ^^^^^^^^^^^^^
 
-.. js:function:: getWeakenTime(hostname/ip)
+.. js:function:: getWeakenTime(hostname/ip[, hackLvl=current level])
 
     :param string hostname/ip: Hostname or IP of target server
+    :param number hackLvl: Optional hacking level for the calculation. Defaults to player's current hacking level
 
     Returns the amount of time in seconds it takes to execute the *weaken()* Netscript function on the target server.
+
+    The function takes in an optional *hackLvl* parameter that can be specified
+    to see what the weaken time would be at different hacking levels.
 
 getScriptIncome
 ^^^^^^^^^^^^^^^
@@ -966,92 +1023,38 @@ prompt
     Prompts the player with a dialog box with two options: "Yes" and "No". This function will return true if the player click "Yes" and
     false if the player clicks "No". The script's execution is halted until the player selects one of the options.
 
+wget
+^^^^
 
-Defining your own Functions
----------------------------
+.. js:function:: wget(url, target[, hostname/ip=current ip])
 
-Note that the following information is only applicable for Netscript 1.0.
-:doc:`netscriptjs` allows you to define your functions using native Javascript
-techniques.
+    :param string url: URL to pull data from
+    :param string target: Filename to write data to. Must be script or text file
+    :param string ip: Optional hostname/ip of server for target file.
 
-You can define your own functions in Netscript 1.0 using the following syntax::
+    Retrieves data from a URL and downloads it to a file on the specified server. The data can only
+    be downloaded to a script (.script, .ns, .js) or a text file (.txt). If the file already exists,
+    it will be overwritten by this command.
 
-    function name(args...) {
-        function code here...
-        return some_value
-    }
+    Note that it will not be possible to download data from many websites because they do not allow
+    cross-origin resource sharing (CORS). Example::
 
-Functions should have some return value. Here is an example of defining and using a function::
+        wget("https://raw.githubusercontent.com/danielyxie/bitburner/master/README.md", "game_readme.txt");
 
-    function sum(values) {
-        res = 0;
-        for (i = 0; i < values.length; ++i) {
-            res += values[i];
-        }
-        return res;
-    }
+    **IMPORTANT:** This is an asynchronous function that returns a Promise. The Promise's resolved
+    value will be a boolean indicating whether or not the data was successfully
+    retrieved from the URL. Because the function is async and returns a Promise,
+    it is recommended you use :code:`wget` in :ref:`netscriptjs`.
 
-    print(sum([1, 2, 3, 4, 5]));    //Prints 15
-    print(sum([1, 10]));            //Prints 11
+    In NetscriptJS, you must preface any call to
+    :code:`wget` with the :code:`await` keyword (like you would :code:`hack` or :code:`sleep`).
 
-For those with experience in other languages, especially Javascript, it may be important to note that
-function declarations are not hoisted and must be declared BEFORE you use them.
-For example, the following will cause an error saying `variable hello not defined`::
+    :code:`wget` will still work in :ref:`netscript1`, but the functions execution will not
+    be synchronous (i.e. it may not execute when you expect/want it to). Furthermore, since Promises are not
+    supported in ES5, you will not be able to process the returned value of :code:`wget` in
+    Netscript 1.0.
 
-    print(hello());
+getFavorToDonate
+^^^^^^^^^^^^^^^^
 
-    function hello() {
-        return "world";
-    }
-
-The following will work fine::
-
-    function hello() {
-        return "world";
-    }
-
-    print(hello());     //Prints out "world"
-
-**Note about variable scope in functions:**
-
-Functions can access "global" variables declared outside of the function's scope. However, they cannot change the value of any "global" variables.
-Any changes to "global" variables will only be applied locally to the function.
-
-The following example shows that any change to a "global" variable
-from inside a function only applies in the function's local scope::
-
-    function foo() {
-        i = 5;
-        return "foo";
-    }
-
-    i = 0;
-    print(i);   //Prints 0
-    foo();
-    print(i);   //Prints 0
-
-Furthermore, this also means that any variable that is first defined inside a
-function will NOT be accessible outside of the function as shown in the following example::
-
-    function sum(values) {
-        res = 0;
-        for (i = 0; i < values.length; ++i) {
-            res += values[i];
-        }
-        return res;
-    }
-    print(res);
-
-results in the following runtime error::
-
-    Script runtime error:
-    Server Ip: 75.7.4.1
-    Script name: test.script
-    Args:[]
-    variable res not defined
-
-
-**Other Notes about creating your own functions:**
-
-Defining a function does not create a Javascript function object in the underlying game code. This means that you cannot use any function
-you create in functions such as `Array.sort() <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort>`_ (not yet at least, I'll try to make it work in the future).
+    Returns the amount of Faction favor required to be able to donate to a faction.

@@ -1,78 +1,85 @@
-import {dialogBoxCreate}                        from "../utils/DialogBox";
-import {gameOptionsBoxOpen, gameOptionsBoxClose}from "../utils/GameOptions";
-import {removeChildrenFromElement}              from "../utils/uiHelpers/removeChildrenFromElement";
-import {clearEventListeners}                    from "../utils/uiHelpers/clearEventListeners";
-import {createElement}                          from "../utils/uiHelpers/createElement";
-import {exceptionAlert}                         from "../utils/helpers/exceptionAlert";
-import {removeLoadingScreen}                    from "../utils/uiHelpers/removeLoadingScreen";
-import numeral                                  from "numeral/min/numeral.min";
+import {dialogBoxCreate}                                from "../utils/DialogBox";
+import {gameOptionsBoxOpen, gameOptionsBoxClose}        from "../utils/GameOptions";
+import { getRandomInt }                                 from "../utils/helpers/getRandomInt";
+import {removeChildrenFromElement}                      from "../utils/uiHelpers/removeChildrenFromElement";
+import {clearEventListeners}                            from "../utils/uiHelpers/clearEventListeners";
+import {createElement}                                  from "../utils/uiHelpers/createElement";
+import {exceptionAlert}                                 from "../utils/helpers/exceptionAlert";
+import {removeLoadingScreen}                            from "../utils/uiHelpers/removeLoadingScreen";
+
+import {numeralWrapper}                                 from "./ui/numeralFormat";
+
 import {formatNumber,
         convertTimeMsToTimeElapsedString,
-        replaceAt}                              from "../utils/StringHelperFunctions";
+        replaceAt}                                      from "../utils/StringHelperFunctions";
 import {loxBoxCreate, logBoxUpdateText,
-        logBoxOpened}                           from "../utils/LogBox";
-
-import {updateActiveScriptsItems}               from "./ActiveScriptsUI";
+        logBoxOpened}                                   from "../utils/LogBox";
+import {updateActiveScriptsItems}                       from "./ActiveScriptsUI";
 import {Augmentations, installAugmentations,
         initAugmentations, AugmentationNames,
         displayAugmentationsContent,
-        PlayerOwnedAugmentation}                from "./Augmentations";
+        PlayerOwnedAugmentation}                        from "./Augmentations";
 import {BitNodes, initBitNodes,
-        initBitNodeMultipliers}                 from "./BitNode";
-import {Bladeburner}                            from "./Bladeburner";
-import {CharacterOverview}                      from "./CharacterOverview";
-import {cinematicTextFlag}                      from "./CinematicText";
-import {CompanyPositions, initCompanies}        from "./Company";
-import {Corporation}                            from "./CompanyManagement";
-import {CONSTANTS}                              from "./Constants";
+        initBitNodeMultipliers}                         from "./BitNode";
+import {Bladeburner}                                    from "./Bladeburner";
+import {CharacterOverview}                              from "./CharacterOverview";
+import {cinematicTextFlag}                              from "./CinematicText";
+import {CodingContract, CodingContractRewardType,
+        CodingContractTypes}                            from "./CodingContracts";
+import {CompanyPositions, initCompanies}                from "./Company";
+import {Corporation}                                    from "./CompanyManagement";
+import {CONSTANTS}                                      from "./Constants";
 import {displayCreateProgramContent,
         getNumAvailableCreateProgram,
         initCreateProgramButtons,
-        Programs}                               from "./CreateProgram";
+        Programs}                                       from "./CreateProgram";
 import {displayFactionContent, joinFaction,
         processPassiveFactionRepGain, Factions,
-        inviteToFaction, initFactions}          from "./Faction";
-import {FconfSettings}                          from "./Fconf";
+        inviteToFaction, initFactions}                  from "./Faction";
+import {FconfSettings}                                  from "./Fconf";
 import {displayLocationContent,
-        initLocationButtons}                    from "./Location";
-import {Locations}                              from "./Locations";
+        initLocationButtons}                            from "./Location";
+import {Locations}                                      from "./Locations";
 import {displayGangContent, updateGangContent,
-        Gang}                                   from "./Gang";
+        Gang}                                           from "./Gang";
 import {displayHacknetNodesContent, processAllHacknetNodeEarnings,
-        updateHacknetNodesContent}              from "./HacknetNode";
-import {iTutorialStart}                         from "./InteractiveTutorial";
-import {initLiterature}                         from "./Literature";
-import {checkForMessagesToSend, initMessages}   from "./Message";
-import {inMission, currMission}                 from "./Missions";
+        updateHacknetNodesContent}                      from "./HacknetNode";
+import {iTutorialStart}                                 from "./InteractiveTutorial";
+import {initLiterature}                                 from "./Literature";
+import {checkForMessagesToSend, initMessages}           from "./Message";
+import {inMission, currMission}                         from "./Missions";
 import {initSingularitySFFlags,
-        hasSingularitySF, hasCorporationSF}     from "./NetscriptFunctions";
+        hasSingularitySF, hasCorporationSF}             from "./NetscriptFunctions";
 import {updateOnlineScriptTimes,
-        runScriptsLoop}                         from "./NetscriptWorker";
-import {Player}                                 from "./Player";
+        runScriptsLoop}                                 from "./NetscriptWorker";
+import {Player}                                         from "./Player";
 import {prestigeAugmentation,
-        prestigeSourceFile}                     from "./Prestige";
-import {redPillFlag, hackWorldDaemon}           from "./RedPill";
-import {saveObject, loadGame}                   from "./SaveObject";
+        prestigeSourceFile}                             from "./Prestige";
+import {redPillFlag, hackWorldDaemon}                   from "./RedPill";
+import {saveObject, loadGame}                           from "./SaveObject";
 import {loadAllRunningScripts, scriptEditorInit,
-        updateScriptEditorContent}              from "./Script";
-import {AllServers, Server, initForeignServers} from "./Server";
-import {Settings}                               from "./Settings";
-import {setSettingsLabels}                      from "./ui/setSettingsLabels";
+        updateScriptEditorContent}                      from "./Script";
+import {AllServers, Server, initForeignServers}         from "./Server";
+import {Settings}                                       from "./Settings";
+import {setSettingsLabels}                              from "./ui/setSettingsLabels";
 import {initSourceFiles, SourceFiles,
-        PlayerOwnedSourceFile}                  from "./SourceFile";
-import {SpecialServerIps, initSpecialServerIps} from "./SpecialServerIps";
+        PlayerOwnedSourceFile}                          from "./SourceFile";
+import {SpecialServerIps, initSpecialServerIps}         from "./SpecialServerIps";
 import {StockMarket, StockSymbols,
         SymbolToStockMap, initStockSymbols,
         initSymbolToStockMap, stockMarketCycle,
         updateStockPrices,
-        displayStockMarketContent}              from "./StockMarket";
-import {Terminal, postNetburnerText}            from "./Terminal";
-import {KEY}                                    from "../utils/helpers/keyCodes";
-import {Page, routing}                          from "./ui/navigationTracking";
+        displayStockMarketContent}                      from "./StockMarket";
+import {Terminal, postNetburnerText}                    from "./Terminal";
+import {KEY}                                            from "../utils/helpers/keyCodes";
+import {Page, routing}                                  from "./ui/navigationTracking";
 
 // These should really be imported with the module that is presenting that UI, but because they very much depend on the
 // cascade order, we'll pull them all in here.
+import 'normalize.css';
 import "../css/styles.scss";
+import "../css/buttons.scss";
+import "../css/mainmenu.scss";
 import "../css/terminal.scss";
 import "../css/menupages.scss";
 import "../css/workinprogress.scss";
@@ -150,7 +157,7 @@ $(document).keydown(function(e) {
     }
 });
 
-let Engine = {
+const Engine = {
     version: "",
     Debug: true,
     overview: new CharacterOverview(),
@@ -587,17 +594,17 @@ let Engine = {
             'Money: $' + formatNumber(Player.money.toNumber(), 2) + '<br><br><br>' +
             '<b>Stats</b><br><br>' +
             'Hacking Level: ' + (Player.hacking_skill).toLocaleString() +
-                            ' (' + numeral(Player.hacking_exp).format('(0.000a)') + ' experience)<br>' +
+                            ' (' + numeralWrapper.format(Player.hacking_exp, '(0.000a)') + ' experience)<br>' +
             'Strength:      ' + (Player.strength).toLocaleString() +
-                       ' (' + numeral(Player.strength_exp).format('(0.000a)') + ' experience)<br>' +
+                       ' (' + numeralWrapper.format(Player.strength_exp, '(0.000a)') + ' experience)<br>' +
             'Defense:       ' + (Player.defense).toLocaleString() +
-                      ' (' + numeral(Player.defense_exp).format('(0.000a)')+ ' experience)<br>' +
+                      ' (' + numeralWrapper.format(Player.defense_exp, '(0.000a)') + ' experience)<br>' +
             'Dexterity:     ' + (Player.dexterity).toLocaleString() +
-                       ' (' + numeral(Player.dexterity_exp).format('(0.000a)') + ' experience)<br>' +
+                       ' (' + numeralWrapper.format(Player.dexterity_exp, '(0.000a)') + ' experience)<br>' +
             'Agility:       ' + (Player.agility).toLocaleString() +
-                      ' (' + numeral(Player.agility_exp).format('(0.000a)') + ' experience)<br>' +
+                      ' (' + numeralWrapper.format(Player.agility_exp, '(0.000a)') + ' experience)<br>' +
             'Charisma:      ' + (Player.charisma).toLocaleString() +
-                       ' (' + numeral(Player.charisma_exp).format('(0.000a)') + ' experience)<br>' +
+                       ' (' + numeralWrapper.format(Player.charisma_exp, '(0.000a)') + ' experience)<br>' +
             intText + '<br><br>' +
             '<b>Multipliers</b><br><br>' +
             'Hacking Chance multiplier: ' + formatNumber(Player.hacking_chance_mult * 100, 2) + '%<br>' +
@@ -913,7 +920,6 @@ let Engine = {
     },
 
     updateGame: function(numCycles = 1) {
-        //Update total playtime
         var time = numCycles * Engine._idleSpeed;
         if (Player.totalPlaytime == null) {Player.totalPlaytime = 0;}
         if (Player.playtimeSinceLastAug == null) {Player.playtimeSinceLastAug = 0;}
@@ -923,14 +929,14 @@ let Engine = {
         Player.playtimeSinceLastBitnode += time;
 
         //Start Manual hack
-        if (Player.startAction == true) {
-            Engine._totalActionTime = Player.actionTime;
-            Engine._actionTimeLeft = Player.actionTime;
+        if (Terminal.actionStarted === true) {
+            Engine._totalActionTime = Terminal.actionTime;
+            Engine._actionTimeLeft = Terminal.actionTime;
             Engine._actionInProgress = true;
             Engine._actionProgressBarCount = 1;
             Engine._actionProgressStr = "[                                                  ]";
             Engine._actionTimeStr = "Time left: ";
-            Player.startAction = false;
+            Terminal.actionStarted = false;
         }
 
         //Working
@@ -1003,6 +1009,7 @@ let Engine = {
         stockTick:  30,                     //Update stock prices
         sCr: 1500,
         mechanicProcess: 5,                 //Processes certain mechanics (Corporation, Bladeburner)
+        contractGeneration: 3000            //Generate Coding Contracts
     },
 
     decrementAllCounters: function(numCycles = 1) {
@@ -1147,6 +1154,78 @@ let Engine = {
 
             }
             Engine.Counters.mechanicProcess = 5;
+        }
+
+        if (Engine.Counters.contractGeneration <= 0) {
+            // X% chance of a contract being generated
+            if (Math.random() <= 0.25) {
+                // First select a random problem type
+                const problemTypes = Object.keys(CodingContractTypes);
+                let randIndex = getRandomInt(0, problemTypes.length - 1);
+                let problemType = problemTypes[randIndex];
+
+                // Then select a random reward type. 'Money' will always be the last reward type
+                var reward = {};
+                reward.type = getRandomInt(0, CodingContractRewardType.Money);
+
+                // Change type based on certain conditions
+                var factionsThatAllowHacking = Player.factions.filter((fac) => {
+                    try {
+                        return Factions[fac].getInfo().offerHackingWork;
+                    } catch (e) {
+                        console.error(`Error when trying to filter Hacking Factions for Coding Contract Generation: ${e}`);
+                        return false;
+                    }
+                });
+                if (reward.type === CodingContractRewardType.FactionReputation && factionsThatAllowHacking.length === 0) {
+                    reward.type = CodingContractRewardType.CompanyReputation;
+                }
+                if (reward.type === CodingContractRewardType.FactionReputationAll && factionsThatAllowHacking.length === 0) {
+                    reward.type = CodingContractRewardType.CompanyReputation;
+                }
+                if (reward.type === CodingContractRewardType.CompanyReputation && Player.companyName === "") {
+                    reward.type = CodingContractRewardType.Money;
+                }
+
+                // Add additional information based on the reward type
+                switch (reward.type) {
+                    case CodingContractRewardType.FactionReputation:
+                        // Get a random faction that player is a part of. That
+                        // faction must allow hacking contracts
+                        var numFactions = factionsThatAllowHacking.length;
+                        var randFaction = factionsThatAllowHacking[getRandomInt(0, numFactions - 1)];
+                        reward.name = randFaction;
+                        break;
+                    case CodingContractRewardType.CompanyReputation:
+                        if (Player.companyName !== "") {
+                            reward.name = Player.companyName;
+                        } else {
+                            reward.type = CodingContractRewardType.Money;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
+                // Choose random server
+                const servers = Object.keys(AllServers);
+                randIndex = getRandomInt(0, servers.length - 1);
+                var randServer = AllServers[servers[randIndex]];
+                while (randServer.purchasedByPlayer === true) {
+                    randIndex = getRandomInt(0, servers.length - 1);
+                    randServer = AllServers[servers[randIndex]];
+                }
+
+                let contractFn = `contract-${getRandomInt(0, 1e6)}`;
+                while (randServer.contracts.filter((c) => {return c.fn === contractFn}).length > 0) {
+                    contractFn = `contract-${getRandomInt(0, 1e6)}`;
+                }
+                if (reward.name) { contractFn += `-${reward.name.replace(/\s/g, "")}`; }
+                let contract = new CodingContract(contractFn, problemType, reward);
+
+                randServer.addContract(contract);
+            }
+            Engine.Counters.contractGeneration = 3000;
         }
     },
 
@@ -1324,9 +1403,9 @@ let Engine = {
             Player.lastUpdate = Engine._lastUpdate;
             Engine.start();                 //Run main game loop and Scripts loop
             removeLoadingScreen();
-            dialogBoxCreate("While you were offline, your scripts generated $" +
-                            formatNumber(offlineProductionFromScripts, 2) + " and your Hacknet Nodes generated $" +
-                            formatNumber(offlineProductionFromHacknetNodes, 2));
+            dialogBoxCreate("While you were offline, your scripts generated <span class='money-gold'>$" +
+                            formatNumber(offlineProductionFromScripts, 2) + "</span> and your Hacknet Nodes generated <span class='money-gold'>$" +
+                            formatNumber(offlineProductionFromHacknetNodes, 2) + "</span>");
             //Close main menu accordions for loaded game
             var visibleMenuTabs = [terminal, createScript, activeScripts, stats,
                                    hacknetnodes, city, tutorial, options, dev];

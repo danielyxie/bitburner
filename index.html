@@ -2,19 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Bitburner</title>
+    <title>Bitburner - development</title>
     <link rel="apple-touch-icon" sizes="180x180" href="dist/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="dist/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="dist/favicon-16x16.png">
     <link rel="manifest" href="dist/site.webmanifest">
     <link rel="mask-icon" href="dist/safari-pinned-tab.svg" color="#000000">
-    <link rel="shortcut icon" href="favicon.ico">
     <meta name="apple-mobile-web-app-title" content="Bitburner">
     <meta name="application-name" content="Bitburner">
     <meta name="msapplication-TileColor" content="#000000">
     <meta name="msapplication-config" content="dist/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
-    <link rel="stylesheet" type="text/css" href="dist/engine.css" />
 
     <!-- Google Analytics -->
     <script>
@@ -22,85 +20,86 @@
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
+    </script>
+    <script>
       ga('create', 'UA-100157497-1', 'auto');
       ga('send', 'pageview');
     </script>
-</head>
+<link rel="shortcut icon" href="favicon.ico"><link href="dist/vendor.css" rel="stylesheet"><link href="dist/engine.css" rel="stylesheet"></head>
 <body>
     <div id="entire-game-container" style="visibility:hidden;">
     <div id="mainmenu-container">
         <!-- Main menu -->
-        <ul class="mainmenu">
+        <ul id="mainmenu" class="mainmenu">
             <!-- Hacking dropdown -->
             <li id="hacking-menu-header-li">
-                <a id="hacking-menu-header" class="mainmenu-accordion-header"> Hacking </a>
+                <button id="hacking-menu-header" class="mainmenu-accordion-header"> Hacking </button>
             </li>
             <li id="terminal-tab" class="mainmenu-accordion-panel">
-                <a id="terminal-menu-link"> Terminal </a>
+                <button id="terminal-menu-link"> Terminal </button>
             </li>
             <li id="create-script-tab" class="mainmenu-accordion-panel">
-                <a id="create-script-menu-link"> Create Script </a>
+                <button id="create-script-menu-link"> Create Script </button>
             </li>
             <li id="active-scripts-tab" class="mainmenu-accordion-panel">
-                <a id="active-scripts-menu-link"> Active Scripts </a>
+                <button id="active-scripts-menu-link"> Active Scripts </button>
             </li>
             <li id="create-program-tab" class="mainmenu-accordion-panel">
-                <a id="create-program-menu-link"> Create Program </a>
+                <button id="create-program-menu-link"> Create Program </button>
                 <span id="create-program-notification" class="notification-off"> </span>
             </li>
 
             <!-- Character dropdown -->
             <li id="character-menu-header-li">
-                <a id="character-menu-header" class="mainmenu-accordion-header"> Character </a>
+                <button id="character-menu-header" class="mainmenu-accordion-header"> Character </button>
             </li>
             <li id="stats-tab" class="mainmenu-accordion-panel">
-                <a id="stats-menu-link"> Stats </a>
+                <button id="stats-menu-link"> Stats </button>
             </li>
             <li id="factions-tab" class="mainmenu-accordion-panel">
-                <a id="factions-menu-link"> Factions </a>
+                <button id="factions-menu-link"> Factions </button>
             </li>
             <li id="augmentations-tab" class="mainmenu-accordion-panel">
-                <a id="augmentations-menu-link" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"> Augmentations </a>
+                <button id="augmentations-menu-link" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"> Augmentations </button>
             </li>
             <li id="hacknet-nodes-tab" class="mainmenu-accordion-panel">
-                <a id="hacknet-nodes-menu-link"> Hacknet Nodes </a>
+                <button id="hacknet-nodes-menu-link"> Hacknet Nodes </button>
             </li>
 
             <!-- World dropdown -->
             <li id="world-menu-header-li">
-                <a id="world-menu-header" class="mainmenu-accordion-header">World</a>
+                <button id="world-menu-header" class="mainmenu-accordion-header">World</button>
             </li>
 			<li id="city-tab" class="mainmenu-accordion-panel">
-                <a id="city-menu-link"> City </a>
+                <button id="city-menu-link"> City </button>
             </li>
             <li id="travel-tab" class="mainmenu-accordion-panel">
-                <a id="travel-menu-link">Travel</a>
+                <button id="travel-menu-link"> Travel </button>
             </li>
             <li id="job-tab" class="mainmenu-accordion-panel">
-                <a id="job-menu-link">Job</a>
+                <button id="job-menu-link"> Job </button>
             </li>
             <li id="bladeburner-tab" class="mainmenu-accordion-panel">
-                <a id="bladeburner-menu-link"> Bladeburner </a>
+                <button id="bladeburner-menu-link"> Bladeburner </button>
             </li>
             <li id="corporation-tab" class="mainmenu-accordion-panel">
-                <a id="corporation-menu-link"> Corp </a>
+                <button id="corporation-menu-link"> Corp </button>
             </li>
             <li id="gang-tab" class="mainmenu-accordion-panel">
-                <a id="gang-menu-link"> Gang </a>
+                <button id="gang-menu-link"> Gang </button>
             </li>
 
             <li id="help-menu-header-li">
-                <a id="help-menu-header" class="mainmenu-accordion-header">Help</a>
+                <button id="help-menu-header" class="mainmenu-accordion-header"> Help </button>
             </li>
 			<li id="tutorial-tab" class="mainmenu-accordion-panel">
-				<a id="tutorial-menu-link"> Tutorial </a>
+				<button id="tutorial-menu-link"> Tutorial </button>
 			</li>
             <li id="options-tab" class="mainmenu-accordion-panel">
-                <a id="options-menu-link"> Options </a>
+                <button id="options-menu-link"> Options </button>
             </li>
             <li id="dev-tab" class="mainmenu-accordion-panel">
-                <a id="dev-menu-link"> Dev </a>
+                <button id="dev-menu-link"> Dev </button>
             </li>
         </ul>
     </div>
@@ -188,9 +187,9 @@
         provides information about each script's production. The scripts are categorized by the hostname of the servers on which
         they are running. </p>
         <p id="active-scripts-total-prod">Total online production of
-            Active scripts: <span id="active-scripts-total-production-active">$0.000</span> / sec<br />
-            Total online production since last Aug installation: <span id="active-scripts-total-prod-aug-total">$0.000</span>
-            (<span id="active-scripts-total-prod-aug-avg">$0.000</span> / sec)</p>
+            Active scripts: <span class="money-gold"><span id="active-scripts-total-production-active">$0.000</span> / sec</span><br />
+            Total online production since last Aug installation: <span id="active-scripts-total-prod-aug-total" class="money-gold">$0.000</span>
+            (<span class="money-gold"><span id="active-scripts-total-prod-aug-avg" class="money-gold">$0.000</span> / sec</span>)</p>
 		<ul class="active-scripts-list" id="active-scripts-list" style="list-style: none;">
 		</ul>
 	</div>
@@ -202,20 +201,20 @@
         The Hacknet is a global, decentralized network of machines. It is used by hackers all around
         the world to anonymously share computing power and perform distributed cyberattacks without the
         fear of being traced.
-        <br><br>
+        <br /><br />
         Here, you can purchase a Hacknet Node, a specialized machine that can connect and contribute its
         resources to the Hacknet network. This allows you to take a small percentage of profits
         from hacks performed on the network. Essentially, you are renting out your Node's computing power.
-        <br><br>
+        <br /><br />
         Each Hacknet Node you purchase will passively earn you money. Each Hacknet Node can be upgraded
         in order to increase its computing power and thereby increase the profit you earn from it.
         </p>
         <a id="hacknet-nodes-purchase-button" class="a-link-button"> Purchase Hacknet Node </a>
-        <br>
+        <br />
         <div id="hacknet-nodes-money-multipliers-div">
             <p id="hacknet-nodes-money">
-                <span>Money:</span><span id="hacknet-nodes-player-money"></span><br/>
-                <span>Total Hacknet Node Production:</span><span id="hacknet-nodes-total-production"></span>
+                <span>Money:</span><span id="hacknet-nodes-player-money" class="money-gold"></span><br />
+                <span>Total Hacknet Node Production:</span><span id="hacknet-nodes-total-production" class="money-gold"></span>
             </p>
             <span id="hacknet-nodes-multipliers">
                 <a id="hacknet-nodes-1x-multiplier" class="a-link-button-inactive"> x1 </a>
@@ -626,7 +625,7 @@
         <p id="location-slums-description">
             You have entered the Slums, a poverty-ridden district filled with gangs, criminals, and
             other shadowy entities. The city's government and police have neglected this area for years...
-            <br><br><br>
+            <br /><br /><br />
             In the Slums, you can commit crimes to earn money and experience. Crime attempts are not always
             successful. Your chance at successfully committing a crime is determined by your stats.
         </p>
@@ -673,7 +672,7 @@
 
     <div id="stock-market-container" class="generic-menupage-container">
         <p>
-            Welcome to the World Stock Exchange (WSE)! <br><br>
+            Welcome to the World Stock Exchange (WSE)! <br /><br />
 
             To begin trading, you must first purchase an account. WSE accounts will persist
             after you 'reset' by installing Augmentations.
@@ -686,7 +685,7 @@
             TIX, short for Trade Information eXchange, is the communications protocol supported by the WSE.
             Purchasing access to the TIX API lets you write code to create your own algorithmic/automated
             trading strategies.
-            <br><br>
+            <br /><br />
             If you purchase access to the TIX API, you will retain that access even after
             you 'reset' by installing Augmentations.
         </p>
@@ -696,7 +695,7 @@
         <p>
             Four Sigma's (4S) Market Data Feed provides information about stocks
             that will help your trading strategies.
-            <br><br>
+            <br /><br />
             If you purchase access to 4S Market Data and/or the 4S TIX API, you will
             retain that access even after you 'reset' by installing Augmentations.
         </p>
@@ -714,8 +713,8 @@
         <a id="stock-market-mode" class="a-link-button tooltip"></a>
         <a id="stock-market-expand-tickers" class="a-link-button tooltip">Expand tickers</a>
         <a id="stock-market-collapse-tickers" class="a-link-button tooltip">Collapse tickers</a>
-        <br><br>
-        <input id="stock-market-watchlist-filter" type="text" placeholder="Filter Stocks by symbol (comma-separated list)"> </input>
+        <br /><br />
+        <input id="stock-market-watchlist-filter" type="text" placeholder="Filter Stocks by symbol (comma-separated list)"/>
         <a id="stock-market-watchlist-filter-update" class="a-link-button"> Update Watchlist </a>
         <ul id="stock-market-list" style="list-style:none;">
 		</ul>
@@ -724,8 +723,8 @@
     <!-- Log Box -->
     <div id="log-box-container">
         <div id="log-box-content">
-            <span id="log-box-close" class="popup-box-button"> Close </span>
-            <span id="log-box-kill-script" class="popup-box-button">Kill Script</span>
+            <button id="log-box-close" class="popup-box-button"> Close </button>
+            <button id="log-box-kill-script" class="popup-box-button">Kill Script</button>
             <p id="log-box-text-header"> </p>
             <p id="log-box-text"> </p>
         </div>
@@ -735,8 +734,8 @@
     <div id="yes-no-box-container" class="popup-box-container">
         <div id="yes-no-box-content" class="popup-box-content">
             <p id="yes-no-box-text"> </p>
-            <span id="yes-no-box-yes" class="popup-box-button"> Yes </span>
-            <span id="yes-no-box-no" class="popup-box-button"> No </span>
+            <button id="yes-no-box-yes" class="popup-box-button"> Yes </button>
+            <button id="yes-no-box-no" class="popup-box-button"> No </button>
         </div>
     </div>
 
@@ -745,8 +744,8 @@
         <div id="yes-no-text-input-box-content" class="popup-box-content">
             <p id="yes-no-text-input-box-text"> </p>
             <input type="text" id="yes-no-text-input-box-input" pattern="[a-zA-Z0-9-_]" maxlength="30" />
-            <span id="yes-no-text-input-box-yes" class="popup-box-button"> Yes </span>
-            <span id="yes-no-text-input-box-no" class="popup-box-button"> No </span>
+            <button id="yes-no-text-input-box-yes" class="popup-box-button"> Yes </button>
+            <button id="yes-no-text-input-box-no" class="popup-box-button"> No </button>
         </div>
     </div>
 
@@ -756,11 +755,11 @@
             <p id="faction-invitation-box-text"> </p>
             <p id="faction-invitation-box-message"> </p>
             <p id="faction-invitation-box-warning">
-                Would you like to join? <br> <br>
+                Would you like to join? <br /> <br />
                 Warning: Joining this faction may prevent you from joining other factions during this run!
             </p>
-            <span id="faction-invitation-box-yes" class="popup-box-button"> Yes </span>
-            <span id="faction-invitation-box-no" class="popup-box-button"> No </span>
+            <button id="faction-invitation-box-yes" class="popup-box-button"> Yes </button>
+            <button id="faction-invitation-box-no" class="popup-box-button"> No </button>
         </div>
     </div>
 
@@ -769,9 +768,9 @@
         <div id="infiltration-box-content" class="popup-box-content">
             <p id="infiltration-box-text"> </p>
 
-            <span id="infiltration-box-sell" class="a-link-button"> Sell on Black Market </span> <br><br>
-            <select id="infiltration-faction-select"> </select> <br>
-            <span id="infiltration-box-faction" class="a-link-button"> Give to Faction for Reputation </span>
+            <button id="infiltration-box-sell" class="a-link-button"> Sell on Black Market </button> <br /><br />
+            <select id="infiltration-faction-select"> </select> <br />
+            <button id="infiltration-box-faction" class="a-link-button"> Give to Faction for Reputation </button>
 
         </div>
     </div>
@@ -784,7 +783,7 @@
     <div id="work-in-progress-container" class="generic-fullscreen-container">
         <p id="work-in-progress-text"> </p>
 
-        <span id="work-in-progress-cancel-button"> Cancel Work </span>
+        <button id="work-in-progress-cancel-button"> Cancel Work </button>
     </div>
 
     <!-- Red Pill Container -->
@@ -799,9 +798,9 @@
     <div id="interactive-tutorial-wrapper">
     <div id="interactive-tutorial-container">
         <p id="interactive-tutorial-text"> </p>
-        <span id="interactive-tutorial-exit"> Exit Tutorial </span>
-        <span id="interactive-tutorial-next"> Next </span>
-        <span id="interactive-tutorial-back"> Back </span>
+        <button id="interactive-tutorial-exit"> Exit Tutorial </button>
+        <button id="interactive-tutorial-next"> Next </button>
+        <button id="interactive-tutorial-back"> Back </button>
     </div>
     </div>
 
@@ -840,8 +839,8 @@
             </table>
         </div>
         <div class="character-quick-options">
-            <span id="character-overview-save-button">Save Game</span>
-            <span id="character-overview-options-button">Options</span>
+            <button id="character-overview-save-button">Save Game</button>
+            <button id="character-overview-options-button">Options</button>
         </div>
     </div>
     </div>
@@ -854,9 +853,9 @@
     <!-- Game Options -->
     <div id="game-options-container" class="popup-box-container">
         <div id="game-options-content" class="game-options-box">
-            <span id="game-options-close-button">&times;</span>
+            <button id="game-options-close-button">&times;</button>
             <h1> Game Options </h1>
-            <br>
+            <br />
             <div id="game-options-left-panel">
                 <!-- Netscript execution time -->
                 <fieldset>
@@ -927,7 +926,7 @@
                 <!-- Suppress faction invites -->
                 <fieldset>
                     <label for="settingsSuppressFactionInvites" class="tooltip">Suppress Faction Invites:
-                        <span class="tooltiptext">
+                        <span class="tooltiptexthigh">
                             If this is set, then any faction invites you receive will not appear as popups
                             on the screen. Your outstanding faction invites can be viewed in the 'Factions' page.
                         </span>
@@ -938,7 +937,7 @@
                 <!-- Suppress travel confirmation -->
                 <fieldset>
                     <label for="settingsSuppressTravelConfirmation" class="tooltip">Suppress Travel Confirmation:
-                        <span class="tooltiptext">
+                        <span class="tooltiptexthigh">
                             If this is set, the confirmation message before traveling will not show up. You will automatically be deducted the travel cost as soon as you click.
                         </span>
                     </label>
@@ -949,7 +948,7 @@
                 <!-- Suppress buy aug confirmation -->
                 <fieldset>
                     <label for="settingsSuppressBuyAugmentationConfirmation" class="tooltip">Suppress buy augmentation confirmation:
-                        <span class="tooltiptext">
+                        <span class="tooltiptexthigh">
                             If this is set, the confirmation message before buying augmentation will not show up.
                         </span>
                     </label>
@@ -959,7 +958,7 @@
                 <!-- Hospitalization Popup -->
                 <fieldset>
                     <label for="settingsSuppressHospitalizationPopup" class="tooltip">Suppress Hospitalization popup:
-                        <span class="tooltiptext">
+                        <span class="tooltiptexthigh">
                             If this is set, a popup message will no longer be shown when you are hospitalized after taking too much damage.
                         </span>
                     </label>
@@ -969,13 +968,39 @@
                 <!-- Disable Terminal and Navigation Shortcuts -->
                 <fieldset>
                     <label for="settingsDisableHotkeys" class="tooltip">Disable Hotkeys:
-                        <span class="tooltiptext">
+                        <span class="tooltiptexthigh">
                             If this is set, then most hotkeys (keyboard shortcuts) in the game are disabled.
                             This includes Terminal commands, hotkeys to navigate between different parts of the game,
                             and the "Save and Close (Ctrl + b)" hotkey in the Text Editor.
                         </span>
                     </label>
                     <input type="checkbox" name="settingsDisableHotkeys" id="settingsDisableHotkeys">
+                </fieldset>
+
+                <!-- Locale for displaying numbers -->
+                <fieldset>
+                    <label for="settingsLocale" class="tooltip">Locale:
+                        <span class="tooltiptexthigh">
+                            Sets the locale for displaying numbers. Defaults to 'en'
+                        </span>
+                    </label>
+                    <select name="settingsLocale" id="settingsLocale">
+                        <option value="en">en</option>
+                        <option value="bg">bg</option>
+                        <option value="cs">cs</option>
+                        <option value="da-dk">da-dk</option>
+                        <option value="de">de</option>
+                        <option value="en-au">en-au</option>
+                        <option value="en-gb">en-gb</option>
+                        <option value="es">es</option>
+                        <option value="fr">fr</option>
+                        <option value="hu">hu</option>
+                        <option value="it">it</option>
+                        <option value="lv">lv</option>
+                        <option value="no">no</option>
+                        <option value="pl">pl</option>
+                        <option value="ru">ru</option>
+                    </select>
                 </fieldset>
 
                 <!-- Donate button -->
@@ -998,14 +1023,14 @@
                 <a id="import-game-link" class="a-link-button" style="display:inline-block;width:46%;"> Import Game </a>
                 <a id="debug-delete-scripts-link" class="a-link-button tooltip" style="display:block;width:46%;">
                     (DEBUG) Delete Active Scripts
-                    <span class="tooltiptext">
+                    <span class="tooltiptextleft">
                         Debug option used to forcefully kill all active running scripts, in case there is a bug or some unexpected issue with the game. After
                         using this, save the game and then reload the page.
                     </span>
                 </a>
                 <a id="debug-soft-reset" class="a-link-button tooltip" style="display:block;width:46%;">
                     (DEBUG) Soft Reset
-                    <span class="tooltiptext">
+                    <span class="tooltiptextleft">
                         Perform a soft reset. Resets everything as if you had just purchased an Augmentation.
                     </span>
                 </a>
@@ -1018,8 +1043,15 @@
     <div id="loader" class="loaderoverlay">
         <div class="loaderspinner"></div>
         <div class="loaderlabel">Loading Bitburner...</div>
+        <div id="killAllMessageWrapper" class="killAllMessage killAllMessageWrapperHidden">
+            <script>setTimeout(function(){
+                var w = document.getElementById('killAllMessageWrapper');
+                if (w == null) {return;}
+                w.classList.remove("killAllMessageWrapperHidden");
+                w.classList.add("killAllMessageWrapperShow");
+            }, 2000);</script>
+            <p>If the game fails to load, consider <a href="?noScripts">killing all scripts</a></p>
+        </div>
     </div>
-    <script src="dist/vendor.bundle.js"></script>
-    <script src="dist/engine.bundle.js"></script>
-</body>
+<script type="text/javascript" src="dist/vendor.bundle.js"></script><script type="text/javascript" src="dist/engine.bundle.js"></script></body>
 </html>

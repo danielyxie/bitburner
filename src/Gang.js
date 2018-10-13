@@ -3,6 +3,7 @@ import {Engine}                                 from "./engine";
 import {Faction, Factions,
         displayFactionContent}                  from "./Faction";
 import {Player}                                 from "./Player";
+import {numeralWrapper}                         from "./ui/numeralFormat";
 import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver";
@@ -10,7 +11,6 @@ import {createAccordionElement}                 from "../utils/uiHelpers/createA
 import {createElement}                          from "../utils/uiHelpers/createElement";
 import {createPopup}                            from "../utils/uiHelpers/createPopup";
 import {Page, routing}                          from "./ui/navigationTracking";
-import  numeral                                 from "numeral/min/numeral.min";
 import {formatNumber}                           from "../utils/StringHelperFunctions";
 import {getRandomInt}                           from "../utils/helpers/getRandomInt";
 import {removeChildrenFromElement}              from "../utils/uiHelpers/removeChildrenFromElement";
@@ -892,7 +892,7 @@ function createGangMemberUpgradePanel(memberObj) {
             var upg = upgradeArray[j];
             (function (upg, div, memberObj) {
                 div.appendChild(createElement("a", {
-                    innerText:upg.name + " - " + numeral(upg.cost).format("$0.000a"),
+                    innerText:upg.name + " - " + numeralWrapper.format(upg.cost, "$0.000a"),
                     class:"a-link-button", margin:"2px",  padding:"2px", display:"block",
                     fontSize:"12px",
                     tooltip:upg.desc,
@@ -1411,12 +1411,12 @@ function updateGangMemberDisplayElement(memberObj) {
     var stats = document.getElementById(name + "gang-member-stats-text");
     if (stats) {
         stats.innerHTML =
-            "Hacking: " + formatNumber(memberObj.hack, 0) + " (" + numeral(memberObj.hack_exp).format('(0.00a)') + " exp)<br>" +
-            "Strength: " + formatNumber(memberObj.str, 0) + " (" + numeral(memberObj.str_exp).format('(0.00a)') + " exp)<br>" +
-            "Defense: " + formatNumber(memberObj.def, 0) + " (" + numeral(memberObj.def_exp).format('(0.00a)') + " exp)<br>" +
-            "Dexterity: " + formatNumber(memberObj.dex, 0) + " (" + numeral(memberObj.dex_exp).format('(0.00a)') + " exp)<br>" +
-            "Agility: " + formatNumber(memberObj.agi, 0) + " (" + numeral(memberObj.agi_exp).format('(0.00a)') + " exp)<br>" +
-            "Charisma: " + formatNumber(memberObj.cha, 0) + " (" + numeral(memberObj.cha_exp).format('(0.00a)') + " exp)<br>";
+            "Hacking: " + formatNumber(memberObj.hack, 0) + " (" + numeralWrapper.format(memberObj.hack_exp, '(0.00a)') + " exp)<br>" +
+            "Strength: " + formatNumber(memberObj.str, 0) + " (" + numeralWrapper.format(memberObj.str_exp, '(0.00a)') + " exp)<br>" +
+            "Defense: " + formatNumber(memberObj.def, 0) + " (" + numeralWrapper.format(memberObj.def_exp, '(0.00a)') + " exp)<br>" +
+            "Dexterity: " + formatNumber(memberObj.dex, 0) + " (" + numeralWrapper.format(memberObj.dex_exp, '(0.00a)') + " exp)<br>" +
+            "Agility: " + formatNumber(memberObj.agi, 0) + " (" + numeralWrapper.format(memberObj.agi_exp, '(0.00a)') + " exp)<br>" +
+            "Charisma: " + formatNumber(memberObj.cha, 0) + " (" + numeralWrapper.format(memberObj.cha_exp, '(0.00a)') + " exp)<br>";
     }
 
     var gainInfo = document.getElementById(name + "gang-member-gain-info");

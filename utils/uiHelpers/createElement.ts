@@ -35,6 +35,7 @@ interface ICreateElementListenerOptions {
     clickListener?(this: HTMLElement, ev: MouseEvent): any;
     inputListener?(this: HTMLElement, ev: Event): any;
     onfocus?(this: HTMLElement, ev: FocusEvent): any;
+    onkeydown?(this: HTMLElement, ev: KeyboardEvent): any;
     onkeyup?(this: HTMLElement, ev: KeyboardEvent): any;
 }
 
@@ -147,6 +148,9 @@ function setElementListeners(el: HTMLElement, params: ICreateElementListenerOpti
     }
     if (params.onkeyup !== undefined) {
         el.addEventListener("keyup", params.onkeyup);
+    }
+    if (params.onkeydown !== undefined) {
+        el.addEventListener("keydown", params.onkeydown);
     }
     if (params.onfocus !== undefined) {
         el.addEventListener("focus", params.onfocus);

@@ -3,6 +3,52 @@
 Changelog
 =========
 
+v0.40.5 - 10/09/2018
+--------------------
+* Added codingcontract.getContractType() Netscript function
+* Bug Fix: codingcontract.getData() Netscript function now returns arrays by value rather than reference
+* Bug Fix: Decreased highest possible data value for 'Find Largest Prime Factor' Coding Contract (to avoid hangs when solving it)
+* Bug Fix: Fixed a bug that caused game to freeze during Coding Contract generation
+
+v0.40.4 - 9/29/2018
+-------------------
+* Added new Coding Contracts mechanic. Solve programming problems to earn rewards
+* The write() and read() Netscript functions now work on scripts
+* Added getStockSymbols() Netscript function to the TIX API (by InfraK)
+* Added wget() Netscript function
+* Added bladeburner.getActionRepGain() function to the Netscript Bladeburner API
+* The getLevelUpgradeCost(), getRamUpgradeCost(), and getCoreUpgradeCost() functions in the Hacknet API now return Infinity if the node is at max level. See documentation
+* It is now possible to use freely use angled bracket (<, >) and create DOM elements using tprint()
+* The game's theme colors can now be set through the Terminal configuration (.fconf).
+* You can now switch to the old left-hand main menu bar through the Terminal configuration (.fconf)
+* Bug Fix: grow() percentage is no longer reported as Infinity when a server's money is grown from 0 to X
+* Bug Fix: Infiltration popup now displays the correct amount of exp gained
+
+v0.40.3 - 9/15/2018
+-------------------
+* Bladeburner Changes:
+    * Increased the effect that agi and dexterity have on action time
+    * Starting number of contracts/operations available will be slightly lower
+    * Random events will now happen slightly more often
+    * Slightly increased the rate at which the Overclock skill point cost increases
+* The maximum volatility of stocks is now randomized (randomly generated within a certain range every time the game resets)
+* Increased the range of possible values for initial stock prices
+* b1t_flum3.exe program can now be created immediately at Hacking level 1 (rather than hacking level 5)
+* UI improvements for the character overview panel and the left-hand menu (by mat-jaworski)
+* General UI improvements for displays and Terminal (by mat-jaworski)
+* Added optional parameters to the getHackTime(), getGrowTime(), and getWeakenTime() Netscript functions
+* Added isLogEnabled() and getScriptLogs() Netscript functions
+* Added donateToFaction() Singularity function
+* Updated documentation to reflect the fact that Netscript port handles (getPortHandle()) only works in NetscriptJS (2.0), NOT Netscript 1.0
+* Added tryWrite() Netscript function
+* When working (for a company/faction), experience is gained immediately/continuously rather than all at once when the work is finished
+* Added a setting in .fconf for enabling line-wrap in the Terminal input
+* Adding a game option for changing the locale that most numbers are displayed in (this mostly applies for whenever money is displayed)
+* The randomized parameters of many high-level servers can now take on a higher range of values
+* Many 'foreign' servers (hackable servers that you don't own) now have a randomized amount of RAM
+* Added 'wget' Terminal command
+* Improved the introductory tutorial
+
 v0.40.2 - 8/27/2018
 -------------------
 * Bladeburner Changes:
@@ -17,9 +63,9 @@ v0.40.2 - 8/27/2018
     * There are now, on average, more Synthoid communities in a city
     * If automation is enabled (the feature in Bladeburner console), then switching to another action such as working for a company will now disable the automation
 * Stock Market Changes:
-    *Added a watchlist filter feature to the UI that allows you to specify which stocks to show
-    *Added the Four Sigma (4S) Market Data feed, which provides volatility and price forecast information about stocks
-    *Added the 4S Market Data TIX API, which lets you access the aforementioned data through Netscript
+    * Added a watchlist filter feature to the UI that allows you to specify which stocks to show
+    * Added the Four Sigma (4S) Market Data feed, which provides volatility and price forecast information about stocks
+    * Added the 4S Market Data TIX API, which lets you access the aforementioned data through Netscript
 * There is now a setting for enabling/disabling the popup that appears when you are hospitalized
 * Bug Fix: Stock market should now be correctly initialized in BitNode-8 (by Kline-)
 * Bug Fix: bladeburner.getCurrentAction() should now properly an 'Idle' object rather than null (by Kline-)

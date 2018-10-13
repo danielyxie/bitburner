@@ -1,0 +1,119 @@
+@import "mixins";
+@import "theme";
+
+/**
+ * Styling for the main navigation menu on the left-hand-side
+ */
+
+.mainmenu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 10%;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+
+    border: 0;
+    border-bottom: 1px solid #000;
+    border-radius: 0;
+    background-color: #333;
+}
+
+/* Default buttons */
+.mainmenu > li a,
+.mainmenu > li button {
+    display: block;
+    color: #e6e6e6;
+    background-color: #555;
+    padding: 12px 8px;
+
+    text-decoration: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+}
+
+.mainmenu.classic > li a,
+.mainmenu.classic > li button {
+    padding: 16px;
+}
+
+/* Hovering makes them lighter */
+.mainmenu > li a:hover,
+.mainmenu > li a:hover:not(.active),
+.mainmenu > li a:focus {
+    background-color: #777;
+    color: #fff;
+}
+
+.mainmenu > li button:hover,
+.mainmenu > li button:hover:not(.active) {
+    background-color: #777;
+    color: #fff;
+}
+
+/* Panel headers can become active, and they are "lighter" than the rest */
+.mainmenu > li a.active,
+.mainmenu > li button.active {
+    background-color: #777;
+    color: #fff;
+}
+
+.mainmenu > li a.active:hover,
+.mainmenu > li button.active:hover {
+    background-color: #aaa;
+}
+
+#hacking-menu-header-li,
+#character-menu-header-li,
+#world-menu-header-li,
+#help-menu-header-li {
+    position: relative;
+}
+
+/* Accordion Outline */
+.mainmenu-accordion-header {
+    outline: 2px solid #fff !important;
+}
+
+.mainmenu-accordion-header-classic {
+    border: 2px solid #fff;
+    padding: 16px !important;
+}
+
+/* Plus and minus signs */
+.mainmenu-accordion-header:after {
+    content: '\02795';
+    float: right;
+    font-size: $defaultFontSize * 0.8125;
+    position: absolute;
+    bottom: 25%;
+    right: 3px;
+    color: transparent;
+    text-shadow: 0 0 0 #fff;
+}
+
+.mainmenu-accordion-header-classic:after {
+    content: '\02795';
+    float: right;
+    font-size: $defaultFontSize * 0.8125;
+    color: #fff;
+    margin-left: 5px;
+}
+
+.mainmenu-accordion-header.opened,
+.mainmenu-accordion-header-classic.opened {
+    background-color: #222;
+
+    &:after {
+        content: "\2796";
+    }
+}
+
+/* Slide down transition */
+.mainmenu-accordion-panel {
+    max-height: 0;
+    opacity: 1;
+    transition: max-height 0.2s ease-out;
+}

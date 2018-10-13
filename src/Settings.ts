@@ -20,6 +20,11 @@ interface IDefaultSettings {
     DisableHotkeys: boolean;
 
     /**
+     * Locale used for display numbers
+     */
+    Locale: string;
+
+    /**
      * Limit the number of log entries for each script being executed on each server.
      */
     MaxLogCapacity: number;
@@ -70,27 +75,13 @@ interface ISettings extends IDefaultSettings {
      * TODO: This should really be an enum of allowed values.
      */
     EditorTheme: string;
-
-    /**
-     * The CSS background theme color to apply across the game.
-     */
-    ThemeBackgroundColor: string;
-
-    /**
-     * The CSS text theme color to apply across the game.
-     */
-    ThemeFontColor: string;
-
-    /**
-     * The CSS foreground theme color to apply across the game.
-     */
-    ThemeHighlightColor: string;
 }
 
 const defaultSettings: IDefaultSettings = {
     AutosaveInterval:                    60,
     CodeInstructionRunTime:              50,
     DisableHotkeys:                      false,
+    Locale:                              "en",
     MaxLogCapacity:                      50,
     MaxPortCapacity:                     50,
     SuppressBuyAugmentationConfirmation: false,
@@ -110,6 +101,7 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
     DisableHotkeys:                      defaultSettings.DisableHotkeys,
     EditorKeybinding:                    "ace",
     EditorTheme:                         "Monokai",
+    Locale:                              "en",
     MaxLogCapacity:                      defaultSettings.MaxLogCapacity,
     MaxPortCapacity:                     defaultSettings.MaxPortCapacity,
     SuppressBuyAugmentationConfirmation: defaultSettings.SuppressBuyAugmentationConfirmation,
@@ -117,9 +109,6 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
     SuppressHospitalizationPopup:        defaultSettings.SuppressHospitalizationPopup,
     SuppressMessages:                    defaultSettings.SuppressMessages,
     SuppressTravelConfirmation:          defaultSettings.SuppressTravelConfirmation,
-    ThemeBackgroundColor:                "#000000",
-    ThemeFontColor:                      "#66ff33",
-    ThemeHighlightColor:                 "#ffffff",
     init() {
         Object.assign(Settings, defaultSettings);
     },

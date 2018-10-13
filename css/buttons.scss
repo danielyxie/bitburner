@@ -1,0 +1,84 @@
+@import "mixins";
+@import "theme";
+
+/**
+ * Styling for all buttons
+ *
+ * Includes <button> elements as well as classes that are used
+ * for formatting buttons
+ */
+
+/* Remove default <button> styling */
+button {
+    border: none;
+    background-color: transparent;
+}
+
+.a-link-button,
+.std-button {
+    text-decoration: none;
+    background-color: #555;
+    color: #fff;
+    padding: 3px 5px;
+    margin: 5px;
+    border: 1px solid #333;
+
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+
+    &:hover {
+        background-color: #666;
+    }
+
+    &:active {
+        @include boxShadow(inset 0 1px 4px rgba(0, 0, 0, 0.6));
+    }
+}
+
+.a-link-button-inactive,
+.std-button:disabled {
+    text-decoration: none;
+    background-color: #333;
+    color: #fff;
+    padding: 3px 5px;
+    margin: 5px;
+    border: 1px solid #333;
+    cursor: default;
+
+    &:hover {
+        .tooltiptext,
+        .tooltiptexthigh,
+        .tooltiptextleft {
+            visibility: visible;
+        }
+    }
+
+    &:active {
+        pointer-events: none;
+    }
+}
+
+.a-link-button-bought,
+.std-button-bought {
+    text-decoration: none;
+    background-color: #0a0;
+    color: #fff;
+    padding: 3px 5px;
+    margin: 5px;
+    border: 1px solid #0a0;
+    cursor: default;
+
+    &:hover {
+        .tooltiptext,
+        .tooltiptexthigh,
+        .tooltiptextleft {
+            visibility: visible;
+        }
+    }
+
+    &:active {
+        pointer-events: none;
+    }
+}

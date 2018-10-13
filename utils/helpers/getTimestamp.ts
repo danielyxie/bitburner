@@ -1,5 +1,5 @@
 /**
- * Formats the current time (to the minute).
+ * Returns a MM/DD HH:MM timestamp for the current time
  */
 export function getTimestamp() {
         const d: Date = new Date();

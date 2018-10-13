@@ -3,13 +3,14 @@ import {Locations}                              from "./Locations";
 import {hasWallStreetSF, wallStreetSFLvl}       from "./NetscriptFunctions";
 import {WorkerScript}                           from "./NetscriptWorker";
 import {Player}                                 from "./Player";
+import {Stock}                                  from "./Stock";
 
 import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {clearEventListeners}                    from "../utils/uiHelpers/clearEventListeners";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver";
 import {Page, routing}                          from "./ui/navigationTracking";
-import numeral                                  from "numeral/min/numeral.min";
+import {numeralWrapper}                         from "./ui/numeralFormat";
 import {exceptionAlert}                         from "../utils/helpers/exceptionAlert";
 import {getRandomInt}                           from "../utils/helpers/getRandomInt";
 import {KEY}                                    from "../utils/helpers/keyCodes";
@@ -23,32 +24,6 @@ import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
         yesNoTxtInpBoxClose, yesNoBoxOpen}      from "../utils/YesNoBox";
 
 let StockPriceCap = 1e9; //Put a limit on how high a price can go
-
-function Stock(name, symbol, mv, b, otlkMag, initPrice=10000) {
-    this.symbol     = symbol;
-    this.name       = name;
-    this.price      = initPrice;
-
-    this.playerShares       = 0;
-    this.playerAvgPx        = 0;
-    this.playerShortShares  = 0;
-    this.playerAvgShortPx   = 0;
-    this.mv             = mv;
-    this.b              = b;
-    this.otlkMag        = otlkMag;
-
-    this.posTxtEl       = null;
-}
-
-Stock.prototype.toJSON = function() {
-	return Generic_toJSON("Stock", this);
-}
-
-Stock.fromJSON = function(value) {
-	return Generic_fromJSON(Stock, value.data);
-}
-
-Reviver.constructors.Stock = Stock;
 
 var OrderTypes = {
     LimitBuy: "Limit Buy Order",
@@ -112,7 +87,7 @@ function cancelOrder(params, workerScript=null) {
         //Order properties are passed in. Need to look for the order
         var stockOrders = StockMarket["Orders"][params.stock.symbol];
         var orderTxt = params.stock.symbol + " - " + params.shares + " @ " +
-                       numeral(params.price).format('$0.000a');
+                       numeralWrapper.format(params.price, '$0.000a');
         for (var i = 0; i < stockOrders.length; ++i) {
             var order = stockOrders[i];
             if (params.shares === order.shares &&
@@ -253,135 +228,135 @@ function initStockMarket() {
     }
 
     var ecorp = Locations.AevumECorp;
-    var ecorpStk = new Stock(ecorp, StockSymbols[ecorp], 0.45, true, 19, getRandomInt(20000, 25000));
+    var ecorpStk = new Stock(ecorp, StockSymbols[ecorp], getRandomInt(40, 50)/100, true, 19, getRandomInt(17e3, 28e3));
     StockMarket[ecorp] = ecorpStk;
 
     var megacorp = Locations.Sector12MegaCorp;
-    var megacorpStk = new Stock(megacorp, StockSymbols[megacorp], 0.45, true, 19, getRandomInt(25000, 33000));
+    var megacorpStk = new Stock(megacorp, StockSymbols[megacorp], getRandomInt(40,50)/100, true, 19, getRandomInt(24e3, 34e3));
     StockMarket[megacorp] = megacorpStk;
 
     var blade = Locations.Sector12BladeIndustries;
-    var bladeStk = new Stock(blade, StockSymbols[blade], 0.75, true, 13, getRandomInt(15000, 22000));
+    var bladeStk = new Stock(blade, StockSymbols[blade], getRandomInt(70, 80)/100, true, 13, getRandomInt(12e3, 25e3));
     StockMarket[blade] = bladeStk;
 
     var clarke = Locations.AevumClarkeIncorporated;
-    var clarkeStk = new Stock(clarke, StockSymbols[clarke], 0.7, true, 12, getRandomInt(15000, 20000));
+    var clarkeStk = new Stock(clarke, StockSymbols[clarke], getRandomInt(65, 75)/100, true, 12, getRandomInt(10e3, 25e3));
     StockMarket[clarke] = clarkeStk;
 
     var omnitek = Locations.VolhavenOmniTekIncorporated;
-    var omnitekStk = new Stock(omnitek, StockSymbols[omnitek], 0.65, true, 12, getRandomInt(35000, 40000));
+    var omnitekStk = new Stock(omnitek, StockSymbols[omnitek], getRandomInt(60, 70)/100, true, 12, getRandomInt(32e3, 43e3));
     StockMarket[omnitek] = omnitekStk;
 
     var foursigma = Locations.Sector12FourSigma;
-    var foursigmaStk = new Stock(foursigma, StockSymbols[foursigma], 1.05, true, 17, getRandomInt(60000, 70000));
+    var foursigmaStk = new Stock(foursigma, StockSymbols[foursigma], getRandomInt(100, 110)/100, true, 17, getRandomInt(50e3, 80e3));
     StockMarket[foursigma] = foursigmaStk;
 
     var kuaigong = Locations.ChongqingKuaiGongInternational;
-    var kuaigongStk = new Stock(kuaigong, StockSymbols[kuaigong], 0.8, true, 10, getRandomInt(20000, 24000));
+    var kuaigongStk = new Stock(kuaigong, StockSymbols[kuaigong], getRandomInt(75, 85)/100, true, 10, getRandomInt(16e3, 28e3));
     StockMarket[kuaigong] = kuaigongStk;
 
     var fulcrum = Locations.AevumFulcrumTechnologies;
-    var fulcrumStk = new Stock(fulcrum, StockSymbols[fulcrum], 1.25, true, 16, getRandomInt(30000, 35000));
+    var fulcrumStk = new Stock(fulcrum, StockSymbols[fulcrum], getRandomInt(120, 130)/100, true, 16, getRandomInt(29e3, 36e3));
     StockMarket[fulcrum] = fulcrumStk;
 
     var storm = Locations.IshimaStormTechnologies;
-    var stormStk = new Stock(storm, StockSymbols[storm], 0.85, true, 7, getRandomInt(21000, 24000));
+    var stormStk = new Stock(storm, StockSymbols[storm], getRandomInt(80, 90)/100, true, 7, getRandomInt(20e3, 25e3));
     StockMarket[storm] = stormStk;
 
     var defcomm = Locations.NewTokyoDefComm;
-    var defcommStk = new Stock(defcomm, StockSymbols[defcomm], 0.65, true, 10, getRandomInt(10000, 15000));
+    var defcommStk = new Stock(defcomm, StockSymbols[defcomm], getRandomInt(60, 70)/100, true, 10, getRandomInt(6e3, 19e3));
     StockMarket[defcomm] = defcommStk;
 
     var helios = Locations.VolhavenHeliosLabs;
-    var heliosStk = new Stock(helios, StockSymbols[helios], 0.6, true, 9, getRandomInt(12000, 16000));
+    var heliosStk = new Stock(helios, StockSymbols[helios], getRandomInt(55, 65)/100, true, 9, getRandomInt(10e3, 18e3));
     StockMarket[helios] = heliosStk;
 
     var vitalife = Locations.NewTokyoVitaLife;
-    var vitalifeStk = new Stock(vitalife, StockSymbols[vitalife], 0.75, true, 7, getRandomInt(10000, 12000));
+    var vitalifeStk = new Stock(vitalife, StockSymbols[vitalife], getRandomInt(70, 80)/100, true, 7, getRandomInt(8e3, 14e3));
     StockMarket[vitalife] = vitalifeStk;
 
     var icarus = Locations.Sector12IcarusMicrosystems;
-    var icarusStk = new Stock(icarus, StockSymbols[icarus], 0.65, true, 7.5, getRandomInt(16000, 20000));
+    var icarusStk = new Stock(icarus, StockSymbols[icarus], getRandomInt(60, 70)/100, true, 7.5, getRandomInt(12e3, 24e3));
     StockMarket[icarus] = icarusStk;
 
     var universalenergy = Locations.Sector12UniversalEnergy;
-    var universalenergyStk = new Stock(universalenergy, StockSymbols[universalenergy], 0.55, true, 10, getRandomInt(20000, 25000));
+    var universalenergyStk = new Stock(universalenergy, StockSymbols[universalenergy], getRandomInt(50, 60)/100, true, 10, getRandomInt(16e3, 29e3));
     StockMarket[universalenergy] = universalenergyStk;
 
     var aerocorp = Locations.AevumAeroCorp;
-    var aerocorpStk = new Stock(aerocorp, StockSymbols[aerocorp], 0.6, true, 6, getRandomInt(10000, 15000));
+    var aerocorpStk = new Stock(aerocorp, StockSymbols[aerocorp], getRandomInt(55, 65)/100, true, 6, getRandomInt(8e3, 17e3));
     StockMarket[aerocorp] = aerocorpStk;
 
     var omnia = Locations.VolhavenOmniaCybersystems;
-    var omniaStk = new Stock(omnia, StockSymbols[omnia], 0.7, true, 4.5, getRandomInt(9000, 12000));
+    var omniaStk = new Stock(omnia, StockSymbols[omnia], getRandomInt(65, 75)/100, true, 4.5, getRandomInt(6e3, 15e3));
     StockMarket[omnia] = omniaStk;
 
     var solaris = Locations.ChongqingSolarisSpaceSystems;
-    var solarisStk = new Stock(solaris, StockSymbols[solaris], 0.75, true, 8.5, getRandomInt(18000, 24000));
+    var solarisStk = new Stock(solaris, StockSymbols[solaris], getRandomInt(70, 80)/100, true, 8.5, getRandomInt(14e3, 28e3));
     StockMarket[solaris] = solarisStk;
 
     var globalpharm = Locations.NewTokyoGlobalPharmaceuticals;
-    var globalpharmStk = new Stock(globalpharm, StockSymbols[globalpharm], 0.6, true, 10.5, getRandomInt(18000, 24000));
+    var globalpharmStk = new Stock(globalpharm, StockSymbols[globalpharm], getRandomInt(55, 65)/100, true, 10.5, getRandomInt(12e3, 30e3));
     StockMarket[globalpharm] = globalpharmStk;
 
     var nova = Locations.IshimaNovaMedical;
-    var novaStk = new Stock(nova, StockSymbols[nova], 0.75, true, 5, getRandomInt(18000, 24000));
+    var novaStk = new Stock(nova, StockSymbols[nova], getRandomInt(70, 80)/100, true, 5, getRandomInt(15e3, 27e3));
     StockMarket[nova] = novaStk;
 
     var watchdog = Locations.AevumWatchdogSecurity;
-    var watchdogStk = new Stock(watchdog, StockSymbols[watchdog], 2.5, true, 1.5, getRandomInt(5000, 7500));
+    var watchdogStk = new Stock(watchdog, StockSymbols[watchdog], getRandomInt(240, 260)/100, true, 1.5, getRandomInt(4e3, 8.5e3));
     StockMarket[watchdog] = watchdogStk;
 
     var lexocorp = Locations.VolhavenLexoCorp;
-    var lexocorpStk = new Stock(lexocorp, StockSymbols[lexocorp], 1.25, true, 6, getRandomInt(5000, 7500));
+    var lexocorpStk = new Stock(lexocorp, StockSymbols[lexocorp], getRandomInt(115, 135)/100, true, 6, getRandomInt(4.5e3, 8e3));
     StockMarket[lexocorp] = lexocorpStk;
 
     var rho = Locations.AevumRhoConstruction;
-    var rhoStk = new Stock(rho, StockSymbols[rho], 0.6, true, 1, getRandomInt(3000, 6000));
+    var rhoStk = new Stock(rho, StockSymbols[rho], getRandomInt(50, 70)/100, true, 1, getRandomInt(2e3, 7e3));
     StockMarket[rho] = rhoStk;
 
     var alpha = Locations.Sector12AlphaEnterprises;
-    var alphaStk = new Stock(alpha, StockSymbols[alpha], 1.9, true, 10, getRandomInt(5000, 7500));
+    var alphaStk = new Stock(alpha, StockSymbols[alpha], getRandomInt(175, 205)/100, true, 10, getRandomInt(4e3, 8.5e3));
     StockMarket[alpha] = alphaStk;
 
     var syscore = Locations.VolhavenSysCoreSecurities;
-    var syscoreStk = new Stock(syscore, StockSymbols[syscore], 1.6, true, 3, getRandomInt(4000, 7000))
+    var syscoreStk = new Stock(syscore, StockSymbols[syscore], getRandomInt(150, 170)/100, true, 3, getRandomInt(3e3, 8e3));
     StockMarket[syscore] = syscoreStk;
 
     var computek = Locations.VolhavenCompuTek;
-    var computekStk = new Stock(computek, StockSymbols[computek], 0.9, true, 4, getRandomInt(2000, 5000));
+    var computekStk = new Stock(computek, StockSymbols[computek], getRandomInt(80, 100)/100, true, 4, getRandomInt(1e3, 6e3));
     StockMarket[computek] = computekStk;
 
     var netlink = Locations.AevumNetLinkTechnologies;
-    var netlinkStk = new Stock(netlink, StockSymbols[netlink], 4.2, true, 1, getRandomInt(2000, 4000));
+    var netlinkStk = new Stock(netlink, StockSymbols[netlink], getRandomInt(400, 430)/100, true, 1, getRandomInt(1e3, 5e3));
     StockMarket[netlink] = netlinkStk;
 
     var omega = Locations.IshimaOmegaSoftware;
-    var omegaStk = new Stock(omega, StockSymbols[omega], 1, true, 0.5, getRandomInt(3000, 6000));
+    var omegaStk = new Stock(omega, StockSymbols[omega], getRandomInt(90, 110)/100, true, 0.5, getRandomInt(1e3, 8e3));
     StockMarket[omega] = omegaStk;
 
     var fns = Locations.Sector12FoodNStuff;
-    var fnsStk = new Stock(fns, StockSymbols[fns], 0.75, false, 1, getRandomInt(1000, 4000));
+    var fnsStk = new Stock(fns, StockSymbols[fns], getRandomInt(70, 80)/100, false, 1, getRandomInt(500, 4.5e3));
     StockMarket[fns] = fnsStk;
 
     var sigmacosm = "Sigma Cosmetics";
-    var sigmacosmStk = new Stock(sigmacosm, StockSymbols[sigmacosm], 2.8, true, 0, getRandomInt(2000, 3000));
+    var sigmacosmStk = new Stock(sigmacosm, StockSymbols[sigmacosm], getRandomInt(260, 300)/100, true, 0, getRandomInt(1.5e3, 3.5e3));
     StockMarket[sigmacosm] = sigmacosmStk;
 
     var joesguns = "Joes Guns";
-    var joesgunsStk = new Stock(joesguns, StockSymbols[joesguns], 3.8, true, 1, getRandomInt(500, 1000));
+    var joesgunsStk = new Stock(joesguns, StockSymbols[joesguns], getRandomInt(360, 400)/100, true, 1, getRandomInt(250, 1.5e3));
     StockMarket[joesguns] = joesgunsStk;
 
     var catalyst = "Catalyst Ventures";
-    var catalystStk = new Stock(catalyst, StockSymbols[catalyst], 1.45, true, 13.5, getRandomInt(500, 1000));
+    var catalystStk = new Stock(catalyst, StockSymbols[catalyst], getRandomInt(120, 175)/100, true, 13.5, getRandomInt(250, 1.5e3));
     StockMarket[catalyst] = catalystStk;
 
     var microdyne = "Microdyne Technologies";
-    var microdyneStk = new Stock(microdyne, StockSymbols[microdyne], 0.75, true, 8, getRandomInt(20000, 25000));
+    var microdyneStk = new Stock(microdyne, StockSymbols[microdyne], getRandomInt(70, 80)/100, true, 8, getRandomInt(15e3, 30e3));
     StockMarket[microdyne] = microdyneStk;
 
     var titanlabs = "Titan Laboratories";
-    var titanlabsStk = new Stock(titanlabs, StockSymbols[titanlabs], 0.6, true, 11, getRandomInt(15000, 20000));
+    var titanlabsStk = new Stock(titanlabs, StockSymbols[titanlabs], getRandomInt(50, 70)/100, true, 11, getRandomInt(12e3, 24e3));
     StockMarket[titanlabs] = titanlabsStk;
 
     var orders = {};
@@ -435,7 +410,7 @@ function buyStock(stock, shares) {
     var totalPrice = stock.price * shares;
     if (Player.money.lt(totalPrice + CONSTANTS.StockMarketCommission)) {
         dialogBoxCreate("You do not have enough money to purchase this. You need " +
-                        numeral(totalPrice + CONSTANTS.StockMarketCommission).format('($0.000a)') + ".");
+                        numeralWrapper.format(totalPrice + CONSTANTS.StockMarketCommission, '($0.000a)') + ".");
         return false;
     }
 
@@ -445,9 +420,9 @@ function buyStock(stock, shares) {
     stock.playerShares += shares;
     stock.playerAvgPx = newTotal / stock.playerShares;
     updateStockPlayerPosition(stock);
-    dialogBoxCreate("Bought " + numeral(shares).format('0,0') + " shares of " + stock.symbol + " at " +
-                    numeral(stock.price).format('($0.000a)') + " per share. Paid " +
-                    numeral(CONSTANTS.StockMarketCommission).format('($0.000a)') + " in commission fees.");
+    dialogBoxCreate("Bought " + numeralWrapper.format(shares, '0,0') + " shares of " + stock.symbol + " at " +
+                    numeralWrapper.format(stock.price, '($0.000a)') + " per share. Paid " +
+                    numeralWrapper.format(CONSTANTS.StockMarketCommission, '($0.000a)') + " in commission fees.");
     return true;
 }
 
@@ -468,9 +443,9 @@ function sellStock(stock, shares) {
         stock.playerAvgPx = 0;
     }
     updateStockPlayerPosition(stock);
-    dialogBoxCreate("Sold " + numeral(shares).format('0,0') + " shares of " + stock.symbol + " at " +
-                    numeral(stock.price).format('($0.000a)') + " per share. After commissions, you gained " +
-                    "a total of " + numeral(gains).format('($0.000a)') + ".");
+    dialogBoxCreate("Sold " + numeralWrapper.format(shares, '0,0') + " shares of " + stock.symbol + " at " +
+                    numeralWrapper.format(stock.price, '($0.000a)') + " per share. After commissions, you gained " +
+                    "a total of " + numeralWrapper.format(gains, '($0.000a)') + ".");
     return true;
 }
 
@@ -494,10 +469,10 @@ function shortStock(stock, shares, workerScript=null) {
         if (tixApi) {
             workerScript.scriptRef.log("ERROR: shortStock() failed because you do not have enough " +
                                        "money to purchase this short position. You need " +
-                                       numeral(totalPrice + CONSTANTS.StockMarketCommission).format('($0.000a)') + ".");
+                                       numeralWrapper.format(totalPrice + CONSTANTS.StockMarketCommission, '($0.000a)') + ".");
         } else {
             dialogBoxCreate("You do not have enough money to purchase this short position. You need " +
-                            numeral(totalPrice + CONSTANTS.StockMarketCommission).format('($0.000a)') + ".");
+                            numeralWrapper.format(totalPrice + CONSTANTS.StockMarketCommission, '($0.000a)') + ".");
         }
 
         return false;
@@ -511,14 +486,14 @@ function shortStock(stock, shares, workerScript=null) {
     updateStockPlayerPosition(stock);
     if (tixApi) {
         if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.shortStock == null) {
-            workerScript.scriptRef.log("Bought a short position of " + numeral(shares).format('0,0') + " shares of " + stock.symbol + " at " +
-                                       numeral(stock.price).format('($0.000a)') + " per share. Paid " +
-                                       numeral(CONSTANTS.StockMarketCommission).format('($0.000a)') + " in commission fees.");
+            workerScript.scriptRef.log("Bought a short position of " + numeralWrapper.format(shares, '0,0') + " shares of " + stock.symbol + " at " +
+                                       numeralWrapper.format(stock.price, '($0.000a)') + " per share. Paid " +
+                                       numeralWrapper.format(CONSTANTS.StockMarketCommission, '($0.000a)') + " in commission fees.");
         }
     } else {
-        dialogBoxCreate("Bought a short position of " + numeral(shares).format('0,0') + " shares of " + stock.symbol + " at " +
-                        numeral(stock.price).format('($0.000a)') + " per share. Paid " +
-                        numeral(CONSTANTS.StockMarketCommission).format('($0.000a)') + " in commission fees.");
+        dialogBoxCreate("Bought a short position of " + numeralWrapper.format(shares, '0,0') + " shares of " + stock.symbol + " at " +
+                        numeralWrapper.format(stock.price, '($0.000a)') + " per share. Paid " +
+                        numeralWrapper.format(CONSTANTS.StockMarketCommission, '($0.000a)') + " in commission fees.");
     }
     return true;
 }
@@ -555,14 +530,14 @@ function sellShort(stock, shares, workerScript=null) {
     updateStockPlayerPosition(stock);
     if (tixApi) {
         if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.sellShort == null) {
-            workerScript.scriptRef.log("Sold your short position of " + numeral(shares).format('0,0') + " shares of " + stock.symbol + " at " +
-                                       numeral(stock.price).format('($0.000a)') + " per share. After commissions, you gained " +
-                                       "a total of " + numeral(origCost + profit).format('($0.000a)') + ".");
+            workerScript.scriptRef.log("Sold your short position of " + numeralWrapper.format(shares, '0,0') + " shares of " + stock.symbol + " at " +
+                                       numeralWrapper.format(stock.price, '($0.000a)') + " per share. After commissions, you gained " +
+                                       "a total of " + numeralWrapper.format(origCost + profit, '($0.000a)') + ".");
         }
     } else {
-        dialogBoxCreate("Sold your short position of " + numeral(shares).format('0,0') + " shares of " + stock.symbol + " at " +
-                        numeral(stock.price).format('($0.000a)') + " per share. After commissions, you gained " +
-                        "a total of " + numeral(origCost + profit).format('($0.000a)') + ".");
+        dialogBoxCreate("Sold your short position of " + numeralWrapper.format(shares, '0,0') + " shares of " + stock.symbol + " at " +
+                        numeralWrapper.format(stock.price, '($0.000a)') + " per share. After commissions, you gained " +
+                        "a total of " + numeralWrapper.format(origCost + profit, '($0.000a)') + ".");
     }
 
     return true;
@@ -721,7 +696,7 @@ function displayStockMarketContent() {
     //Purchase WSE Account button
     var wseAccountButton = clearEventListeners("stock-market-buy-account");
     stylePurchaseButton(wseAccountButton, CONSTANTS.WSEAccountCost, Player.hasWseAccount,
-                        "Buy WSE Account - " + numeral(CONSTANTS.WSEAccountCost).format('($0.000a)'),
+                        "Buy WSE Account - " + numeralWrapper.format(CONSTANTS.WSEAccountCost, '($0.000a)'),
                         "WSE Account - Purchased");
     wseAccountButton.addEventListener("click", function() {
         Player.hasWseAccount = true;
@@ -735,7 +710,7 @@ function displayStockMarketContent() {
     //Purchase TIX API Access account
     var tixApiAccessButton = clearEventListeners("stock-market-buy-tix-api");
     stylePurchaseButton(tixApiAccessButton, CONSTANTS.TIXAPICost, Player.hasTixApiAccess,
-                        "Buy Trade Information eXchange (TIX) API Access - " + numeral(CONSTANTS.TIXAPICost).format('($0.000a)'),
+                        "Buy Trade Information eXchange (TIX) API Access - " + numeralWrapper.format(CONSTANTS.TIXAPICost, '($0.000a)'),
                         "TIX API Access - Purchased");
     tixApiAccessButton.addEventListener("click", function() {
         Player.hasTixApiAccess = true;
@@ -747,7 +722,7 @@ function displayStockMarketContent() {
     //Purchase Four Sigma Market Data Feed
     var marketDataButton = clearEventListeners("stock-market-buy-4s-data");
     stylePurchaseButton(marketDataButton, CONSTANTS.MarketData4SCost, Player.has4SData,
-                        "Buy 4S Market Data Access - " + numeral(CONSTANTS.MarketData4SCost).format('($0.000a)'),
+                        "Buy 4S Market Data Access - " + numeralWrapper.format(CONSTANTS.MarketData4SCost, '($0.000a)'),
                         "4S Market Data - Purchased");
     marketDataButton.addEventListener("click", function() {
         Player.has4SData = true;
@@ -785,7 +760,7 @@ function displayStockMarketContent() {
     //Purchase Four Sigma Market Data TIX API (Requires TIX API Access)
     var marketDataTixButton = clearEventListeners("stock-market-buy-4s-tix-api");
     stylePurchaseButton(marketDataTixButton, CONSTANTS.MarketDataTixApi4SCost, Player.has4SDataTixApi,
-                        "Buy 4S Market Data TIX API Access - " + numeral(CONSTANTS.MarketDataTixApi4SCost).format('($0.000a)'),
+                        "Buy 4S Market Data TIX API Access - " + numeralWrapper.format(CONSTANTS.MarketDataTixApi4SCost, '($0.000a)'),
                         "4S Market Data TIX API - Purchased");
     if (Player.hasTixApiAccess) {
         marketDataTixButton.addEventListener("click", function() {
@@ -848,7 +823,7 @@ function displayStockMarketContent() {
         console.log("Creating Stock Market UI");
         commissionText.innerHTML =
             "Commission Fees: Every transaction you make has a " +
-            numeral(CONSTANTS.StockMarketCommission).format('($0.000a)') + " commission fee.<br><br>" +
+            numeralWrapper.format(CONSTANTS.StockMarketCommission, '($0.000a)') + " commission fee.<br><br>" +
             "WARNING: When you reset after installing Augmentations, the Stock Market is reset. " +
             "This means all your positions are lost, so make sure to sell your stocks before installing " +
             "Augmentations!";
@@ -1045,7 +1020,7 @@ function createStockTicker(stock) {
     var li = document.createElement("li"), hdr = document.createElement("button");
     hdr.classList.add("accordion-header");
     hdr.setAttribute("id", tickerId + "-hdr");
-    hdr.innerHTML = stock.name + "  -  " + stock.symbol + "  -  " + numeral(stock.price).format('($0.000a)');
+    hdr.innerHTML = stock.name + "  -  " + stock.symbol + "  -  " + numeralWrapper.format(stock.price, '($0.000a)');
 
     //Div for entire panel
     var stockDiv = document.createElement("div");
@@ -1322,9 +1297,9 @@ function updateStockTicker(stock, increase) {
         }
         return;
     }
-    let hdrText = stock.name + " (" + stock.symbol + ") - " + numeral(stock.price).format('($0.000a)');
+    let hdrText = stock.name + " (" + stock.symbol + ") - " + numeralWrapper.format(stock.price, '($0.000a)');
     if (Player.has4SData) {
-        hdrText += " - Volatility: " + numeral(stock.mv).format('0,0.00') + "%" +
+        hdrText += " - Volatility: " + numeralWrapper.format(stock.mv, '0,0.00') + "%" +
                    " - Price Forecast: ";
         if (stock.b) {
             hdrText += "+".repeat(Math.floor(stock.otlkMag/10) + 1);
@@ -1388,21 +1363,21 @@ function updateStockPlayerPosition(stock) {
         "<h1 class='tooltip stock-market-position-text'>Long Position: " +
         "<span class='tooltiptext'>Shares in the long position will increase " +
         "in value if the price of the corresponding stock increases</span></h1>" +
-        "<br>Shares: " + numeral(stock.playerShares).format('0,0') +
-        "<br>Average Price: " + numeral(stock.playerAvgPx).format('$0.000a') +
-        " (Total Cost: " + numeral(totalCost).format('$0.000a') + ")" +
-        "<br>Profit: " + numeral(gains).format('$0.000a') +
-                     " (" + numeral(percentageGains).format('0.00%') + ")<br><br>";
+        "<br>Shares: " + numeralWrapper.format(stock.playerShares, '0,0') +
+        "<br>Average Price: " + numeralWrapper.format(stock.playerAvgPx, '$0.000a') +
+        " (Total Cost: " + numeralWrapper.format(totalCost, '$0.000a') + ")" +
+        "<br>Profit: " + numeralWrapper.format(gains, '$0.000a') +
+                     " (" + numeralWrapper.format(percentageGains, '0.00%') + ")<br><br>";
         if (Player.bitNodeN === 8 || (hasWallStreetSF && wallStreetSFLvl >= 2)) {
             stock.posTxtEl.innerHTML +=
             "<h1 class='tooltip stock-market-position-text'>Short Position: " +
             "<span class='tooltiptext'>Shares in short position will increase " +
             "in value if the price of the corresponding stock decreases</span></h1>" +
-            "<br>Shares: " + numeral(stock.playerShortShares).format('0,0') +
-            "<br>Average Price: " + numeral(stock.playerAvgShortPx).format('$0.000a') +
-            " (Total Cost: " + numeral(shortTotalCost).format('$0.000a') + ")" +
-            "<br>Profit: " + numeral(shortGains).format('$0.000a') +
-                         " (" + numeral(shortPercentageGains).format('0.00%') + ")" +
+            "<br>Shares: " + numeralWrapper.format(stock.playerShortShares, '0,0') +
+            "<br>Average Price: " + numeralWrapper.format(stock.playerAvgShortPx, '$0.000a') +
+            " (Total Cost: " + numeralWrapper.format(shortTotalCost, '$0.000a') + ")" +
+            "<br>Profit: " + numeralWrapper.format(shortGains, '$0.000a') +
+                         " (" + numeralWrapper.format(shortPercentageGains, '0.00%') + ")" +
             "<br><br><h1 class='stock-market-position-text'>Orders: </h1>";
         }
 
@@ -1465,7 +1440,7 @@ function updateStockOrderList(stock) {
             var posText = (order.pos === PositionTypes.Long ? "Long Position" : "Short Position");
             li.style.color = "white";
             li.innerText = order.type + " - " + posText + " - " +
-                           order.shares + " @ " + numeral(order.price).format('($0.000a)');
+                           order.shares + " @ " + numeralWrapper.format(order.price, '($0.000a)');
 
             var cancelButton = document.createElement("span");
             cancelButton.classList.add("stock-market-order-cancel-btn");

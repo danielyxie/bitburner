@@ -1,7 +1,6 @@
 import {Engine}                         from "./engine";
 import {Player}                         from "./Player";
 import {Settings}                       from "./Settings";
-import {Terminal}                       from "./Terminal";
 import {clearEventListeners}            from "../utils/uiHelpers/clearEventListeners";
 import {createElement}                  from "../utils/uiHelpers/createElement";
 import {createPopup}                    from "../utils/uiHelpers/createPopup";
@@ -62,7 +61,6 @@ function iTutorialStart() {
     }
 
     Engine.loadTerminalContent();
-    Terminal.resetTerminalInput();
 
     //Don't autosave during this interactive tutorial
     Engine.Counters.autoSaveCounter = Infinity;
@@ -270,7 +268,7 @@ function iTutorialEvaluateStep() {
                          "written in the Netscript language, a programming language created for " +
                          "this game. <strong style='background-color:#444;'>There are details about the Netscript language in the documentation, which " +
                          "can be accessed in the 'Tutorial' tab on the main navigation menu. I highly suggest you check " +
-                         "it out after this tutorial. </strong> For now, just copy " +
+                         "it out after this tutorial.</strong> For now, just copy " +
                          "and paste the following code into the script editor: <br><br>" +
                          "while(true) { <br>" +
                          "&nbsp;&nbsp;hack('foodnstuff'); <br>" +

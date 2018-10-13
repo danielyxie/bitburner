@@ -1,14 +1,18 @@
+.. _netscript_misc:
+
 Netscript Miscellaneous
 =======================
 
+.. _netscript_ports:
+
 Netscript Ports
 ---------------
-Netscript ports are endpoints that can be used to communicate between scripts.
+Netscript Ports are endpoints that can be used to communicate between scripts.
 A port is implemented as a sort of serialized queue, where you can only write
 and read one element at a time from the port. When you read data from a port,
 the element that is read is removed from the port.
 
-The :js:func:`read`, :js:func:`write`, :js:func:`clear`, and :js:func:`peek`
+The :js:func:`read`, :js:func:`write`, :js:func:`tryWrite`, :js:func:`clear`, and :js:func:`peek`
 Netscript functions can be used to interact with ports.
 
 Right now, there are only 20 ports for Netscript, denoted by the number 1
@@ -55,9 +59,11 @@ And the data in port 1 will look like::
 
 **Port Handles**
 
+WARNING: Port Handles only work in :ref:`netscriptjs`. They do not work in :ref:`netscript1`
+
 The :js:func:`getPortHandle` Netscript function can be used to get a handle to a Netscript Port.
 This handle allows you to access several new port-related functions and the
-port's underlying data structure, which is just a Javascript array. The functions are:
+port's underlying data structure, which is just a JavaScript array. The functions are:
 
 .. js:method:: NetscriptPort.write(data)
 
@@ -205,36 +211,12 @@ to specify a namespace for the import::
 
 Note that exporting functions is not required.
 
-
-Javascript Math Module
-----------------------
-
-The `Javascript Math Module <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math>`_ is
-supported in Netscript and is used in the same way::
-
-    numThreads = Math.floor(getServerRam("foodnstuff")[1] / 3.4);
-
-Javascript Date Module
-----------------------
-
-The `Javascript Date Module <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date>`_ is supported in Netscript.
-However, since the 'new' operator does not work in Netscript, only the Date module's static functions can be used:
-
-* now()
-* UTC()
-* Parse()
-* Maybe some others I don't know about
-
-Example::
-
-    time = Date.now();
-
-Javascript Number Module
-------------------------
-
-The `Javascript Number module <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number>`_ is supported in Netscript.
-
-Example::
-
-    tprint(Number.isInteger(1));        //True
-    tprint(Number.isInteger(1.534059)); //False
+Standard, Built-In JavaScript Objects
+-------------------------------------
+Standard built-in JavaScript objects such as
+`Math <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math>`_,
+`Date <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date>`_,
+`Number <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number>`_,
+and others are supported as expected based on which version
+of Netscript you use (i.e. :ref:`netscript1` will support built-in objects that are
+defined in ES5, and :ref:`netscriptjs` will support whatever your browser supports).

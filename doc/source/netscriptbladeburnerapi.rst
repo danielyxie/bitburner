@@ -1,9 +1,8 @@
 Netscript Bladeburner API
 =========================
-
 Netscript provides the following API for interacting with the game's Bladeburner mechanic.
 
-The Bladeburner API is **not** immediately available to the palyer and must be unlocked
+The Bladeburner API is **not** immediately available to the player and must be unlocked
 later in the game
 
 **WARNING: This page contains spoilers for the game**
@@ -12,9 +11,9 @@ The Bladeburner API is unlocked in BitNode-7. If you are in BitNode-7, you will
 automatically gain access to this API. Otherwise, you must have Source-File 7 in
 order to use this API in other BitNodes
 
-**Bladeburner API functions must be accessed through the bladeburner namespace**
+**Bladeburner API functions must be accessed through the 'bladeburner' namespace**
 
-In Netscript 1.0::
+In :ref:`netscript1`::
 
     bladeburner.getContractNames();
     bladeburner.startAction("general", "Training");
@@ -146,6 +145,19 @@ getActionEstimatedSuccessChance
     Returns the estimated success chance for the specified action. This chance
     is returned as a decimal value, NOT a percentage (e.g. if you have an estimated
     success chance of 80%, then this function will return 0.80, NOT 80).
+
+getActionRepGain
+----------------
+
+.. js:function:: getActionRepGain(type, name[, level=current level])
+
+    :param string type: Type of action. See :ref:`bladeburner_action_types`
+    :param string name: Name of action. Must be an exact match
+    :param number level: Optional action level at which to calculate the gain
+
+    Returns the average Bladeburner reputation gain for successfully completing
+    the specified action. Note that this value is an 'average' and the real
+    reputation gain may vary slightly from this value.
 
 getActionCountRemaining
 -----------------------

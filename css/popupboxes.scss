@@ -22,16 +22,6 @@
     border: 5px solid var(--my-highlight-color);
     width: 70%;
     max-height: 80%;
-    /*
-    margin: auto;
-    height:auto;
-    max-height:80%;
-    position:absolute;
-    top:0;
-    left:0;
-    bottom:0;
-    right:0;
-    */
     overflow-y: auto;
     color: var(--my-font-color);
 }
@@ -87,6 +77,11 @@
     z-index: 2;
     background-color: var(--my-background-color);
     padding: 10px;
+
+    p span {
+        padding: 0;
+        margin: 0;
+    }
 }
 
 .dialog-box-close-button {
@@ -136,6 +131,11 @@
     display: block;
     padding: 8px;
     margin: 8px;
+}
+
+#infiltration-box-content span {
+    padding: 0;
+    margin: 0;
 }
 
 #infiltration-faction-select {

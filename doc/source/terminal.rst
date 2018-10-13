@@ -285,12 +285,15 @@ except literature files (.lit).
 
 **WARNING: This is permanent and cannot be undone**
 
+
+.. _run_terminal_command:
+
 run
 ^^^
 
     $ run [file name] [-t] [num threads] [args...]
 
-Execute a program or a script.
+Execute a program, script, or :ref:`codingcontracts`.
 
 The '[-t]', '[num threads]', and '[args...]' arguments are only valid when
 running a script. The '-t' flag is used to indicate that the script should
@@ -305,13 +308,17 @@ argument must be separated by a space.
 
 **Examples**
 
-Run a program:
+Run a program::
 
-    run BruteSSH.exe
+    $ run BruteSSH.exe
 
 Run *foo.script* with 50 threads and the arguments [1e3, 0.5, foodnstuff]::
 
-    run foo.script -t 50 1e3 0.5 foodnstuff
+    $ run foo.script -t 50 1e3 0.5 foodnstuff
+
+Run a Coding Contract::
+
+    $ run foo-contract.cct
 
 scan
 ^^^^
@@ -412,3 +419,18 @@ Then it could be removed using::
     $ unalias "r"
 
 It is not necessary to differentiate between global and non-global aliases when using 'unalias'
+
+wget
+^^^^
+
+    $ wget [url] [target file]
+
+Retrieves data from a url and downloads it to a file on the current server.
+The data can only be downloaded to a script (.script, .ns, .js) or a text file
+(.txt). If the target file already exists, it will be overwritten by this command.
+
+Note that will not be possible to download data from many websites because they
+do not allow cross-origin origin sharing (CORS). This includes websites such
+as gist and pastebin. One notable site it will work on is rawgithub. Example::
+
+    $ wget https://raw.githubusercontent.com/danielyxie/bitburner/master/README.md game_readme.txt

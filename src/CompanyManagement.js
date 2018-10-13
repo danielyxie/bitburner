@@ -5,11 +5,12 @@ import {Locations}                                      from "./Locations";
 import {Player}                                         from "./Player";
 
 import Decimal                                          from "decimal.js";
+import {numeralWrapper}                                 from "./ui/numeralFormat";
+
 import {dialogBoxCreate}                                from "../utils/DialogBox";
 import {clearSelector}                                  from "../utils/uiHelpers/clearSelector";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                               from "../utils/JSONReviver";
-import numeral                                          from "numeral/min/numeral.min";
 import {createElement}                                  from "../utils/uiHelpers/createElement";
 import {createPopup}                                    from "../utils/uiHelpers/createPopup";
 import {Page, routing}                                  from "./ui/navigationTracking";
@@ -453,46 +454,46 @@ var IndustryStartingCosts = {
 
 var IndustryDescriptions = {
     Energy: "Engage in the production and distribution of energy.<br><br>" +
-            "Starting cost: " + numeral(IndustryStartingCosts.Energy).format("$0.000a") + "<br>" +
+            "Starting cost: " + numeralWrapper.format(IndustryStartingCosts.Energy, "$0.000a") + "<br>" +
             "Recommended starting Industry: NO",
     Utilities: "Distributes water and provides wastewater services.<br><br>" +
-               "Starting cost: " + numeral(IndustryStartingCosts.Utilities).format("$0.000a") + "<br>" +
+               "Starting cost: " + numeralWrapper.format(IndustryStartingCosts.Utilities, "$0.000a") + "<br>" +
                "Recommended starting Industry: NO",
     Agriculture: "Cultive crops and breed livestock to produce food.<br><br>" +
-                 "Starting cost: " + numeral(IndustryStartingCosts.Agriculture).format("$0.000a") + "<br>" +
+                 "Starting cost: " + numeralWrapper.format(IndustryStartingCosts.Agriculture, "$0.000a") + "<br>" +
                  "Recommended starting Industry: YES",
     Fishing: "Produce food through the breeding and processing of fish and fish products<br><br>" +
-             "Starting cost: " + numeral(IndustryStartingCosts.Fishing).format("$0.000a") + "<br>" +
+             "Starting cost: " + numeralWrapper.format(IndustryStartingCosts.Fishing, "$0.000a") + "<br>" +
              "Recommended starting Industry: NO",
     Mining: "Extract and process metals from the earth.<br><br>" +
-            "Starting cost: " + numeral(IndustryStartingCosts.Mining).format("$0.000a") + "<br>" +
+            "Starting cost: " + numeralWrapper.format(IndustryStartingCosts.Mining, "$0.000a") + "<br>" +
             "Recommended starting Industry: NO",
     Food: "Create your own restaurants all around the world.<br><br>" +
-          "Starting cost: " + numeral(IndustryStartingCosts.Food).format("$0.000a") + "<br>" +
+          "Starting cost: " + numeralWrapper.format(IndustryStartingCosts.Food, "$0.000a") + "<br>" +
           "Recommended starting Industry: YES",
     Tobacco: "Create and distribute tobacco and tobacco-related products.<br><br>" +
-             "Starting cost: " + numeral(IndustryStartingCosts.Tobacco).format("$0.000a") + "<br>" +
+             "Starting cost: " + numeralWrapper.format(IndustryStartingCosts.Tobacco, "$0.000a") + "<br>" +
              "Recommended starting Industry: YES",
     Chemical: "Product industrial chemicals<br><br>" +
-              "Starting cost: " + numeral(IndustryStartingCosts.Chemical).format("$0.000a") + "<br>" +
+              "Starting cost: " + numeralWrapper.format(IndustryStartingCosts.Chemical, "$0.000a") + "<br>" +
               "Recommended starting Industry: NO",
     Pharmaceutical: "Discover, develop, and create new pharmaceutical drugs.<br><br>" +
-                    "Starting cost: " + numeral(IndustryStartingCosts.Pharmaceutical).format("$0.000a") + "<br>" +
+                    "Starting cost: " + numeralWrapper.format(IndustryStartingCosts.Pharmaceutical, "$0.000a") + "<br>" +
                     "Recommended starting Industry: NO",
     Computer: "Develop and manufacture new computer hardware and networking infrastructures.<br><br>" +
-              "Starting cost: " + numeral(IndustryStartingCosts.Computer).format("$0.000a") + "<br>" +
+              "Starting cost: " + numeralWrapper.format(IndustryStartingCosts.Computer, "$0.000a") + "<br>" +
               "Recommended starting Industry: NO",
     Robotics: "Develop and create robots.<br><br>" +
-              "Starting cost: " + numeral(IndustryStartingCosts.Robotics).format("$0.000a") + "<br>" +
+              "Starting cost: " + numeralWrapper.format(IndustryStartingCosts.Robotics, "$0.000a") + "<br>" +
               "Recommended starting Industry: NO",
     Software: "Develop computer software and create AI Cores.<br><br>" +
-              "Starting cost: " + numeral(IndustryStartingCosts.Software).format("$0.000a") + "<br>" +
+              "Starting cost: " + numeralWrapper.format(IndustryStartingCosts.Software, "$0.000a") + "<br>" +
               "Recommended starting Industry: YES",
     Healthcare: "Create and manage hospitals.<br><br>" +
-                "Starting cost: " + numeral(IndustryStartingCosts.Healthcare).format("$0.000a") + "<br>" +
+                "Starting cost: " + numeralWrapper.format(IndustryStartingCosts.Healthcare, "$0.000a") + "<br>" +
                 "Recommended starting Industry: NO",
     RealEstate: "Develop and manage real estate properties.<br><br>" +
-                "Starting cost: " + numeral(IndustryStartingCosts.RealEstate).format("$0.000a") + "<br>" +
+                "Starting cost: " + numeralWrapper.format(IndustryStartingCosts.RealEstate, "$0.000a") + "<br>" +
                 "Recommended starting Industry: NO",
 }
 
@@ -1776,7 +1777,7 @@ Employee.prototype.createUI = function(panel, corporation) {
                   "Experience: " + formatNumber(this.exp, 3) + "<br>" +
                   "Creativity: " + formatNumber(effCre, 3) + "<br>" +
                   "Efficiency: " + formatNumber(effEff, 3) + "<br>" +
-                  "Salary: " + numeral(this.sal).format("$0.000a") + "/ s<br>",
+                  "Salary: " + numeralWrapper.format(this.sal, "$0.000a") + "/ s<br>",
     }));
 
     //Selector for employee position
@@ -1826,7 +1827,7 @@ Employee.prototype.updateUI = function(panel, corporation) {
                       "Experience: " + formatNumber(this.exp, 3) + "<br>" +
                       "Creativity: " + formatNumber(effCre, 3) + "<br>" +
                       "Efficiency: " + formatNumber(effEff, 3) + "<br>" +
-                      "Salary: " + numeral(this.sal).format("$0.000a") + "/ s<br>";
+                      "Salary: " + numeralWrapper.format(this.sal, "$0.000a") + "/ s<br>";
 }
 
 Employee.prototype.toJSON = function() {
@@ -1963,7 +1964,7 @@ OfficeSpace.prototype.findEmployees = function(parentRefs) {
                         "Experience: " + formatNumber(employee.exp, 1) + "<br>" +
                         "Creativity: " + formatNumber(employee.cre, 1) + "<br>" +
                         "Efficiency: " + formatNumber(employee.eff, 1) + "<br>" +
-                        "Salary: " + numeral(employee.sal).format('$0.000a') + " \ s<br>",
+                        "Salary: " + numeralWrapper.format(employee.sal, '$0.000a') + " \ s<br>",
             clickListener:()=>{
                 office.hireEmployee(employee, parentRefs);
                 removeElementById("cmpy-mgmt-hire-employee-popup");
@@ -2155,7 +2156,7 @@ Warehouse.prototype.createUI = function(parentRefs) {
     //Upgrade warehouse size button
     var upgradeCost = WarehouseUpgradeBaseCost * Math.pow(1.07, this.level+1);
     industryWarehouseUpgradeSizeButton = createElement("a", {
-        innerText:"Upgrade Warehouse Size - " + numeral(upgradeCost).format('$0.000a'),
+        innerText:"Upgrade Warehouse Size - " + numeralWrapper.format(upgradeCost, '$0.000a'),
         display:"inline-block",
         class: company.funds.lt(upgradeCost) ? "a-link-button-inactive" : "a-link-button",
         clickListener:()=>{
@@ -2721,9 +2722,9 @@ Warehouse.prototype.createProductUI = function(product, parentRefs) {
                    "Aesthetics: " + formatNumber(product.aes, 3) + "<br>" +
                    "Features: " + formatNumber(product.fea, 3) +
                    cmpAndDmdText + "</span></p><br>" +
-                   "<p class='tooltip'>Est. Production Cost: " + numeral(product.pCost / ProductProductionCostRatio).format("$0.000a") +
+                   "<p class='tooltip'>Est. Production Cost: " + numeralWrapper.format(product.pCost / ProductProductionCostRatio, "$0.000a") +
                    "<span class='tooltiptext'>An estimate of the material cost it takes to create this Product.</span></p><br>" +
-                   "<p class='tooltip'>Est. Market Price: " + numeral(product.pCost + product.rat / product.mku).format("$0.000a") +
+                   "<p class='tooltip'>Est. Market Price: " + numeralWrapper.format(product.pCost + product.rat / product.mku, "$0.000a") +
                    "<span class='tooltiptext'>An estimate of how much consumers are willing to pay for this product. " +
                    "Setting the sale price above this may result in less sales. Setting the sale price below this may result " +
                    "in more sales.</span></p>"
@@ -2740,7 +2741,7 @@ Warehouse.prototype.createProductUI = function(product, parentRefs) {
         if (isString(product.sCost)) {
             sellInnerTextString += (" @ " + product.sCost);
         } else {
-            sellInnerTextString += (" @ " + numeral(product.sCost).format("$0.000a"));
+            sellInnerTextString += (" @ " + numeralWrapper.format(product.sCost, "$0.000a"));
         }
     }
     div.appendChild(createElement("a", {
@@ -3175,9 +3176,9 @@ Corporation.prototype.getInvestment = function() {
     noBtn.addEventListener("click", ()=>{
         return yesNoBoxClose();
     });
-    yesNoBoxCreate("An investment firm has offered you " + numeral(funding).format('$0.000a') +
-                   " in funding in exchange for a " + numeral(percShares*100).format("0.000a") +
-                   "% stake in the company (" + numeral(investShares).format('0.000a') + " shares).<br><br>" +
+    yesNoBoxCreate("An investment firm has offered you " + numeralWrapper.format(funding, '$0.000a') +
+                   " in funding in exchange for a " + numeralWrapper.format(percShares*100, "0.000a") +
+                   "% stake in the company (" + numeralWrapper.format(investShares, '0.000a') + " shares).<br><br>" +
                    "Do you accept or reject this offer?");
 }
 
@@ -3188,11 +3189,11 @@ Corporation.prototype.goPublic = function() {
         innerHTML: "Enter the number of shares you would like to issue " +
                    "for your IPO. These shares will be publicly sold " +
                    "and you will no longer own them. Your Corporation will receive " +
-                   numeral(initialSharePrice).format('$0.000a') + " per share " +
+                   numeralWrapper.format(initialSharePrice, '$0.000a') + " per share " +
                    "(the IPO money will be deposited directly into your Corporation's funds).<br><br>" +
                    "Furthermore, issuing more shares now will help drive up " +
                    "your company's stock price in the future.<br><br>" +
-                   "You have a total of " + numeral(this.numShares).format("0.000a") + " of shares that you can issue.",
+                   "You have a total of " + numeralWrapper.format(this.numShares, "0.000a") + " of shares that you can issue.",
     });
     var yesBtn;
     var input = createElement("input", {
@@ -3532,7 +3533,7 @@ Corporation.prototype.updateUIHeaderTabs = function() {
             content.appendChild(yesBtn);
             container.appendChild(content);
             document.getElementById("entire-game-container").appendChild(container);
-            container.style.display = "block";
+            container.style.display = "flex";
             return false;
         }
     }));
@@ -3635,7 +3636,7 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                     innerHTML: "Enter the number of shares you would like to sell. The money from " +
                                "selling your shares will go directly to you (NOT your Corporation). " +
                                "The current price of your " +
-                               "company's stock is " + numeral(currentStockPrice).format("$0.000a"),
+                               "company's stock is " + numeralWrapper.format(currentStockPrice, "$0.000a"),
                 });
                 var profitIndicator = createElement("p", {});
                 var input = createElement("input", {
@@ -3648,7 +3649,7 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                             profitIndicator.innerText = "You don't have this many shares to sell!";
                         } else {
                             profitIndicator.innerText = "Sell " + numShares + " shares for a total of " +
-                                                        numeral(numShares * currentStockPrice).format('$0.000a');
+                                                        numeralWrapper.format(numShares * currentStockPrice, '$0.000a');
                         }
                     }
                 });
@@ -3702,7 +3703,7 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                     innerHTML: "Enter the number of shares you would like to buy back at market price. To purchase " +
                                "these shares, you must use your own money (NOT your Corporation's funds). " +
                                "The current price of your " +
-                               "company's stock is " + numeral(currentStockPrice).format("$0.000a") +
+                               "company's stock is " + numeralWrapper.format(currentStockPrice, "$0.000a") +
                                ". Your company currently has " + formatNumber(this.issuedShares, 3) + " outstanding stock shares",
                 });
                 var costIndicator = createElement("p", {});
@@ -3719,7 +3720,7 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                         } else {
                             console.log("here");
                             costIndicator.innerText = "Purchase " + numShares + " shares for a total of " +
-                                                      numeral(numShares * currentStockPrice).format('$0.000a');
+                                                      numeralWrapper.format(numShares * currentStockPrice, '$0.000a');
                         }
                     }
                 });
@@ -3734,7 +3735,7 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                             dialogBoxCreate("ERROR: There are not this many oustanding shares to buy back");
                         } else if (shares * tempStockPrice > Player.money) {
                             dialogBoxCreate("ERROR: You do not have enough money to purchase this many shares (you need " +
-                                            numeral(shares * tempStockPrice).format("$0.000a") + ")");
+                                            numeralWrapper.format(shares * tempStockPrice, "$0.000a") + ")");
                         } else {
                             this.numShares += shares;
                             if (isNaN(this.issuedShares)) {
@@ -3958,7 +3959,7 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
 
                 upgradeContainer.appendChild(createElement("div", {
                     class:"cmpy-mgmt-upgrade-div", width:"45%",
-                    innerHTML:upgrade[2] +  " - " + numeral(upgrade[1]).format("$0.000a"),
+                    innerHTML:upgrade[2] +  " - " + numeralWrapper.format(upgrade[1], "$0.000a"),
                     tooltip: upgrade[3],
                     clickListener:()=>{
                         if (corp.funds.lt(upgrade[1])) {
@@ -3990,7 +3991,7 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
             var cost = baseCost * Math.pow(priceMult, corp.upgrades[i]);
             upgradeContainer.appendChild(createElement("div", {
                 class:"cmpy-mgmt-upgrade-div", width:"45%",
-                innerHTML:upgrade[4] + " - " + numeral(cost).format("$0.000a"),
+                innerHTML:upgrade[4] + " - " + numeralWrapper.format(cost, "$0.000a"),
                 tooltip:upgrade[5],
                 clickListener:()=>{
                     if (corp.funds.lt(cost)) {
@@ -4018,14 +4019,14 @@ Corporation.prototype.updateCorporationOverviewContent = function() {
         totalExpenses = new Decimal(0);
 
     var profit = this.revenue.minus(this.expenses).toNumber(),
-        profitStr = profit >= 0 ? numeral(profit).format("$0.000a") : "-" + numeral(-1 * profit).format("$0.000a");
+        profitStr = profit >= 0 ? numeralWrapper.format(profit, "$0.000a") : "-" + numeralWrapper.format(-1 * profit, "$0.000a");
 
-    var txt = "Total Funds: " + numeral(totalFunds.toNumber()).format('$0.000a') + "<br>" +
-              "Total Revenue: " + numeral(this.revenue.toNumber()).format("$0.000a") + " / s<br>" +
-              "Total Expenses: " + numeral(this.expenses.toNumber()).format("$0.000a") + "/ s<br>" +
+    var txt = "Total Funds: " + numeralWrapper.format(totalFunds.toNumber(), '$0.000a') + "<br>" +
+              "Total Revenue: " + numeralWrapper.format(this.revenue.toNumber(), "$0.000a") + " / s<br>" +
+              "Total Expenses: " + numeralWrapper.format(this.expenses.toNumber(), "$0.000a") + "/ s<br>" +
               "Total Profits: " + profitStr + " / s<br>" +
               "Publicly Traded: " + (this.public ? "Yes" : "No") + "<br>" +
-              "Owned Stock Shares: " + numeral(this.numShares).format('0.000a') + "<br>" +
+              "Owned Stock Shares: " + numeralWrapper.format(this.numShares, '0.000a') + "<br>" +
               "Stock Price: " + (this.public ? "$" + formatNumber(this.sharePrice, 2) : "N/A") + "<br><br>";
 
     var prodMult        = this.getProductionMultiplier(),
@@ -4071,7 +4072,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
             var popupId = "cmpy-mgmt-expand-city-popup";
             var text = createElement("p", {
                 innerText: "Would you like to expand into a new city by opening an office? " +
-                           "This would cost " + numeral(OfficeInitialCost).format('$0.000a'),
+                           "This would cost " + numeralWrapper.format(OfficeInitialCost, '$0.000a'),
             });
             var citySelector = createElement("select", {class: "dropdown", margin:"5px"});
             for (var cityName in division.offices) {
@@ -4180,7 +4181,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
             }
             industryOverviewUpgrades.appendChild(createElement("div", {
                 class:"cmpy-mgmt-upgrade-div", display:"inline-block",
-                innerHTML:upgrade[4] + ' - ' + numeral(cost).format("$0.000a"),
+                innerHTML:upgrade[4] + ' - ' + numeralWrapper.format(cost, "$0.000a"),
                 tooltip:upgrade[5],
                 clickListener:()=>{
                     if (corp.funds.lt(cost)) {
@@ -4428,7 +4429,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
             var confirmBtn = createElement("a", {
                 class: this.funds.lt(upgradeCost) ? "a-link-button-inactive" : "a-link-button",
                 display:"inline-block", margin:"4px", innerText:"by 3",
-                tooltip:numeral(upgradeCost).format("$0.000a"),
+                tooltip:numeralWrapper.format(upgradeCost, "$0.000a"),
                 clickListener:()=>{
                     if (this.funds.lt(upgradeCost)) {
                         dialogBoxCreate("You don't have enough company funds to purchase this upgrade!");
@@ -4445,7 +4446,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
             var confirmBtn15 = createElement("a", {
                 class: this.funds.lt(upgradeCost15) ? "a-link-button-inactive" : "a-link-button",
                 display:"inline-block", margin:"4px", innerText:"by 15",
-                tooltip:numeral(upgradeCost15).format("$0.000a"),
+                tooltip:numeralWrapper.format(upgradeCost15, "$0.000a"),
                 clickListener:()=>{
                     if (this.funds.lt(upgradeCost15)) {
                         dialogBoxCreate("You don't have enough company funds to purchase this upgrade!");
@@ -4462,7 +4463,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
             var confirmBtnMax = createElement("a", {
                 class:this.funds.lt(upgradeCostMax) ? "a-link-button-inactive" : "a-link-button",
                 display:"inline-block", margin:"4px", innerText:"by MAX (" + maxNum*OfficeInitialSize + ")",
-                tooltip:numeral(upgradeCostMax).format("$0.000a"),
+                tooltip:numeralWrapper.format(upgradeCostMax, "$0.000a"),
                 clickListener:()=>{
                     if (this.funds.lt(upgradeCostMax)) {
                         dialogBoxCreate("You don't have enough company funds to purchase this upgrade!");
@@ -4511,7 +4512,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                         totalCostTxt.innerText = "Invalid value entered!"
                     } else {
                         var totalCost = input.value * office.employees.length;
-                        totalCostTxt.innerText = "Throwing this party will cost a total of " + numeral(totalCost).format('$0.000a');
+                        totalCostTxt.innerText = "Throwing this party will cost a total of " + numeralWrapper.format(totalCost, '$0.000a');
                     }
                 },
                 onkeyup:(e)=>{
@@ -4726,7 +4727,7 @@ Corporation.prototype.updateDivisionContent = function(division) {
     var vechain = (this.unlockUpgrades[4] === 1);
     //Industry Overview Text
     var profit = division.lastCycleRevenue.minus(division.lastCycleExpenses).toNumber(),
-        profitStr = profit >= 0 ? numeral(profit).format("$0.000a") : "-" + numeral(-1 * profit).format("$0.000a");
+        profitStr = profit >= 0 ? numeralWrapper.format(profit, "$0.000a") : "-" + numeralWrapper.format(-1 * profit, "$0.000a");
     var advertisingInfo = "";
     if (vechain) {
         var advertisingFactors = division.getAdvertisingFactors();
@@ -4745,12 +4746,12 @@ Corporation.prototype.updateDivisionContent = function(division) {
 
     removeChildrenFromElement(industryOverviewText);
     industryOverviewText.appendChild(createElement("p", {
-        innerHTML:"Industry: " + division.type + " (Corp Funds: " + numeral(this.funds.toNumber()).format("$0.000a") + ")<br><br>" +
+        innerHTML:"Industry: " + division.type + " (Corp Funds: " + numeralWrapper.format(this.funds.toNumber(), "$0.000a") + ")<br><br>" +
                   "Awareness: " + formatNumber(division.awareness, 3) + "<br>" +
                   "Popularity: " + formatNumber(division.popularity, 3) +  "<br>" +
                   advertisingInfo + "<br>" +
-                  "Revenue: " + numeral(division.lastCycleRevenue.toNumber()).format("$0.000a") + " / s<br>" +
-                  "Expenses: " + numeral(division.lastCycleExpenses.toNumber()).format("$0.000a") + " /s<br>" +
+                  "Revenue: " + numeralWrapper.format(division.lastCycleRevenue.toNumber(), "$0.000a") + " / s<br>" +
+                  "Expenses: " + numeralWrapper.format(division.lastCycleExpenses.toNumber(), "$0.000a") + " /s<br>" +
                   "Profit: " + profitStr + " / s<br><br>"
     }));
     industryOverviewText.appendChild(createElement("p", {
