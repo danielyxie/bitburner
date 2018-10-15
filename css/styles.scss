@@ -114,6 +114,29 @@ a:visited {
         position: absolute;
         z-index: 99;
     }
+
+    /* Positioned to left of element rather than right */
+    .tooltiptextleft {
+        visibility: hidden;
+        width: 300px;
+        background-color: var(--my-background-color);
+        border: 2px solid var(--my-highlight-color);
+        color: #fff;
+        text-align: center;
+        padding: 4px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-100%, -100%);
+
+         /* Backwards compatibility */
+        -webkit-transform: translate(-100%, -100%);
+        -moz-transform: translate(-100%, -100%);
+        -o-transform: translate(-100%, -100%);
+        -ms-transform: translate(-100%, -100%);
+
+        position: absolute;
+        z-index: 99;
+    }
 }
 
 /* Same thing as a normal tooltip except its a bit higher */
@@ -132,23 +155,6 @@ a:visited {
     z-index: 99;
 }
 
-/* Similar to a normal tooltip except its positioned on the left of the element
-   rather than the right to avoid exceeding the elements normal width */
-.tooltip .tooltiptextleft {
-    visibility: hidden;
-    width: 300px;
-    background-color: var(--my-background-color);
-    border: 2px solid var(--my-highlight-color);
-    color: #fff;
-    text-align: center;
-    padding: 4px;
-    left: 40%;
-    bottom: -10%;
-
-    position: absolute;
-    z-index: 99;
-}
-
 .tooltip:hover .tooltiptext,
 .tooltip:hover .tooltiptexthigh,
 .tooltip:hover .tooltiptextleft {
@@ -157,14 +163,14 @@ a:visited {
 
 /* help tip. Question mark that opens popup with info/details */
 .help-tip {
-    content: '?';
-    padding: 1px;
-    margin-top: 5px;
-    margin-left: 3px;
-    color: #fff;
+    background-color: black;
     border: 1px solid #fff;
     border-radius: 5px;
+    color: #fff;
+    content: '?';
     display: inline-block;
+    margin-left: 3px;
+    padding: 1px;
 }
 
 .help-tip-big {
@@ -413,7 +419,7 @@ a:visited {
 
     &:after {
         content: '\02795'; /* "plus" sign (+) */
-        font-size: $defaultFontSize * 0.8125;
+        font-size: $defaultFontSize * 0.875;
         float: right;
         color: transparent;
         text-shadow: 0 0 0 #fff;
@@ -479,4 +485,8 @@ a:visited {
 
 .charisma-purple {
     color: $my-stat-cha-color;
+}
+
+.smallfont {
+    font-size: $defaultFontSize * 0.8125;
 }

@@ -500,6 +500,14 @@ let CONSTANTS = {
     LatestUpdate:
     `
      v0.41.0
+     * Gang Mechanic Changes (BitNode-2):
+     *** Added new 'ascension' mechanic for Gang Members
+     *** The first three gang members are now 'free' (can be recruited instantly)
+     *** Maximum number of increased Gang Members increased from 20 to 50
+     *** Changed the formula for calculating respect needed to recruit the next gang member
+     *** Added a new category of upgrades for Gang Members: Augmentations
+     *** Non-Augmentation Gang member upgrades are now significantly weaker
+     *** Reputation for your Gang faction can no longer be gained through Infiltration
      * b1t_flum3.exe now takes significantly less time to create
      * Bug Fix: Fixed a bug that sometimes caused a blank black screen when destroying/resetting/switching BitNodes
      * Bug Fix: Netscript calls that throw errors will now no longer cause the 'concurrent calls' error if they are caught in the script. i.e. try/catch should now work properly in scripts

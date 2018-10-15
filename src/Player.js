@@ -1499,7 +1499,7 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
             } else {
                 dialogBoxCreate("Crime successful! <br><br>" +
                                 "You gained:<br>"+
-                                "$" + formatNumber(this.workMoneyGained, 2) + "<br>" +
+                                numeralWrapper.format(this.workMoneyGained, "$0.000a") + "<br>" +
                                 formatNumber(this.workHackExpGained, 4) + " hacking experience <br>" +
                                 formatNumber(this.workStrExpGained, 4) + " strength experience<br>" +
                                 formatNumber(this.workDefExpGained, 4) + " defense experience<br>" +

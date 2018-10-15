@@ -40,8 +40,6 @@ import {FconfSettings}                                  from "./Fconf";
 import {displayLocationContent,
         initLocationButtons}                            from "./Location";
 import {Locations}                                      from "./Locations";
-import {displayGangContent, updateGangContent,
-        Gang}                                           from "./Gang";
 import {displayHacknetNodesContent, processAllHacknetNodeEarnings,
         updateHacknetNodesContent}                      from "./HacknetNode";
 import {iTutorialStart}                                 from "./InteractiveTutorial";
@@ -457,7 +455,7 @@ const Engine = {
     loadGangContent: function() {
         Engine.hideAllContent();
         if (document.getElementById("gang-container") || Player.inGang()) {
-            displayGangContent();
+            Player.gang.displayGangContent();
             routing.navigateTo(Page.Gang);
         } else {
             Engine.loadTerminalContent();
@@ -520,6 +518,9 @@ const Engine = {
             document.getElementById("gang-container").style.display = "none";
         }
 
+        if (Player.inGang()) {
+            Player.gang.clearUI();
+        }
         if (Player.corporation instanceof Corporation) {
             Player.corporation.clearUI();
         }
@@ -556,7 +557,6 @@ const Engine = {
 
     displayCharacterOverviewInfo: function() {
         Engine.overview.update();
-
 
         const save = document.getElementById("character-overview-save-button");
         const flashClass = "flashing-button";
@@ -1076,8 +1076,8 @@ const Engine = {
         }
 
         if (Engine.Counters.updateDisplaysLong <= 0) {
-            if (routing.isOn(Page.Gang)) {
-                updateGangContent();
+            if (routing.isOn(Page.Gang) && Player.inGang()) {
+                Player.gang.updateGangContent();
             } else if (routing.isOn(Page.ScriptEditor)) {
                 updateScriptEditorContent();
             }

@@ -9,6 +9,10 @@
     position: fixed;
     padding: 6px;
 
+    p, pre {
+        font-size: $defaultFontSize * 0.9375;
+    }
+
     select {
         background-color: black;
         color: white;
@@ -24,4 +28,21 @@
     display: inline;
     float: left;
     width: 30%;
+}
+
+/**
+ * Showing owned upgrades in the Equipment Box
+ */
+
+.gang-owned-upgrades-div {
+    display: inline-block;
+    margin-left: 6px;
+    width: 75%;
+}
+
+.gang-owned-upgrade {
+    border: 1px solid white;
+    font-size: 12px;
+    margin: 1px;
+    padding: 1px;
 }

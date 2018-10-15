@@ -99,9 +99,10 @@ button {
     background-color: #000;
 
     &:hover,
-    &:focus {
+    &:active {
         color: #fff;
         text-decoration: none;
         cursor: pointer;
     }
+    /* TODO focus selector? */
 }
