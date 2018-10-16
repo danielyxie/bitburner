@@ -882,12 +882,12 @@ function NetscriptFunctions(workerScript) {
                 }
                 destServer = getServer(ip2);
                 if (destServer == null) {
-                    throw makeRuntimeRejectMsg(workerScript, "ERROR: Invalid hostname/ip passed into scp() command: " + ip);
+                    throw makeRuntimeRejectMsg(workerScript, `ERROR: Invalid hostname/ip passed into scp() command: ${ip2}`);
                 }
 
                 currServ = getServer(ip1);
                 if (currServ == null) {
-                    throw makeRuntimeRejectMsg(workerScript, "Could not find server ip for this script. This is a bug please contact game developer");
+                    throw makeRuntimeRejectMsg(workerScript, `ERROR: Invalid hostname/ip passed into scp() command: ${ip1}`);
                 }
             } else if (arguments.length === 2) {    //scriptname, destination
                 if (scriptname === undefined || ip1 === undefined) {
@@ -895,7 +895,7 @@ function NetscriptFunctions(workerScript) {
                 }
                 destServer = getServer(ip1);
                 if (destServer == null) {
-                    throw makeRuntimeRejectMsg(workerScript, "ERROR: Invalid hostname/ip passed into scp() command: " + ip);
+                    throw makeRuntimeRejectMsg(workerScript, `ERROR: Invalid hostname/ip passed into scp() command: ${ip1}`);
                 }
 
                 currServ = getServer(workerScript.serverIp);

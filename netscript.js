@@ -92,8 +92,9 @@ let NetscriptFunctions =
     "installAugmentations|"                                                    +
 
     // TIX API
-    "getStockPrice|getStockPosition|getStockSymbols|buyStock|sellStock|shortStock|sellShort|"  +
-    "placeOrder|cancelOrder|"                                                  +
+    "getStockPrice|getStockPosition|getStockSymbols|buyStock|sellStock|"       +
+    "shortStock|sellShort|"                                                    +
+    "placeOrder|cancelOrder|getStockVolatility|getStockForecast|"              +
 
     // Hacknet Node API
     "hacknet|numNodes|purchaseNode|getPurchaseNodeCost|getNodeStats|"          +
