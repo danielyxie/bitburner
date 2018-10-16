@@ -1,8 +1,7 @@
 import {BitNodeMultipliers}                from "./BitNodeMultipliers";
 import {CONSTANTS}                         from "./Constants";
 import {Engine}                            from "./engine";
-import {Factions, getNextNeurofluxLevel,
-        factionExists}                     from "./Faction";
+import {Factions, factionExists}           from "./Faction";
 import {hasBladeburnerSF}                  from "./NetscriptFunctions";
 import {addWorkerScript}                   from "./NetscriptWorker";
 import {Player}                            from "./Player";
