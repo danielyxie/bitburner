@@ -742,9 +742,6 @@ function getNextNeurofluxLevel() {
         }
     }
 
-    // Player doesn't have Neuroflux yet, so next level is 1
-    if (currLevel === 0) { return 1; }
-
     // Account for purchased but uninstalled Augmentations
     for (var i = 0; i < Player.queuedAugmentations.length; ++i) {
         if (Player.queuedAugmentations[i].name == AugmentationNames.NeuroFluxGovernor) {
