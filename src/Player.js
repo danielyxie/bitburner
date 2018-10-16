@@ -1912,10 +1912,10 @@ PlayerObject.prototype.reapplyAllAugmentations = function(resetMultipliers=true)
             this.augmentations[i].name = "Hacknet Node NIC Architecture Neural-Upload";
         }
 
-        var augName = this.augmentations[i].name;
+        const augName = this.augmentations[i].name;
         var aug = Augmentations[augName];
         if (aug == null) {
-            console.log("WARNING: Invalid augmentation name");
+            console.log(`WARNING: Invalid augmentation name in Player.reapplyAllAugmentations(). Aug ${augName} will be skipped`);
             continue;
         }
         aug.owned = true;
