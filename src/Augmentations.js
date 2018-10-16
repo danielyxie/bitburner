@@ -1029,9 +1029,25 @@ function initAugmentations() {
              "This is a special augmentation because it can be leveled up infinitely. Each level of this augmentation " +
              "increases ALL of the player's multipliers by 1%."
     });
-    var nextLevel = getNextNeurofluxLevel();
-    NeuroFluxGovernor.level = nextLevel - 1;
-    mult = Math.pow(CONSTANTS.NeuroFluxGovernorLevelMult, NeuroFluxGovernor.level);
+
+    // Set the Augmentation's level to the currently-installed level
+    let currLevel = 0;
+    for (let i = 0; i < Player.augmentations.length; ++i) {
+        if (Player.augmentations[i].name === AugmentationNames.NeuroFluxGovernor) {
+            currLevel = Player.augmentations[i].level;
+        }
+    }
+    NeuroFluxGovernor.level = currLevel;
+
+    // To set the price/rep req of the NeuroFlux, we have to take into account NeuroFlux
+    // levels that are purchased but not yet installed
+    let nextLevel = currLevel;
+    for (let i = 0; i < Player.queuedAugmentations.length; ++i) {
+        if (Player.queuedAugmentations[i].name === AugmentationNames.NeuroFluxGovernor) {
+            ++nextLevel;
+        }
+    }
+    mult = Math.pow(CONSTANTS.NeuroFluxGovernorLevelMult, nextLevel);
     NeuroFluxGovernor.baseRepRequirement = 500 * mult * CONSTANTS.AugmentationRepMultiplier * BitNodeMultipliers.AugmentationRepCost;
     NeuroFluxGovernor.baseCost = 750e3 * mult * CONSTANTS.AugmentationCostMultiplier * BitNodeMultipliers.AugmentationMoneyCost;
     if (augmentationExists(AugmentationNames.NeuroFluxGovernor)) {
@@ -2380,7 +2396,7 @@ function applyAugmentation(aug, reapply=false) {
             return;
     }
 
-    if (aug.name == AugmentationNames.NeuroFluxGovernor) {
+    if (aug.name === AugmentationNames.NeuroFluxGovernor) {
         for (var i = 0; i < Player.augmentations.length; ++i) {
             if (Player.augmentations[i].name == AugmentationNames.NeuroFluxGovernor) {
                 //Already have this aug, just upgrade the level
