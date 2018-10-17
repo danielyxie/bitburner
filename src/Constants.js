@@ -519,6 +519,8 @@ let CONSTANTS = {
      * Bug Fix: Netscript calls that throw errors will now no longer cause the 'concurrent calls' error if they are caught in the script. i.e. try/catch should now work properly in scripts
      * Bug Fix: Fixed a bug where sometimes the NeuroFlux Governor Augmentation level would be incorrectly calculated when the game was loaded
      * Bug Fix: Fixed a bug where calling the scp() Netscript function with invalid hostname/ips would throw an unclear error message
+     * Bug Fix: Bladeburner API function getActionCountRemaining() should now work properly for BlackOps
+     * Bug Fix: Black Ops can no longer be attempted out-of-order or without the required rank via Bladeburner API
      * RAM cost for basic Netscript functions added to documentation (by CBJamo)
      `
 
