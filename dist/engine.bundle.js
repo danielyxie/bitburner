@@ -147,7 +147,7 @@
 /******/
 /******/
 /******/ 	// add entry module to deferred list
-/******/ 	deferredModules.push([7,0]);
+/******/ 	deferredModules.push([8,0]);
 /******/ 	// run deferred modules when ready
 /******/ 	return checkDeferredModules();
 /******/ })
@@ -165,37 +165,35 @@
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Player; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return loadPlayer; });
 /* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentations */ 20);
-/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BitNodeMultipliers */ 9);
+/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BitNodeMultipliers */ 10);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CodingContracts */ 38);
 /* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_CodingContracts__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Company__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Company */ 13);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Constants */ 1);
-/* harmony import */ var _CompanyManagement__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./CompanyManagement */ 55);
+/* harmony import */ var _CompanyManagement__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./CompanyManagement */ 54);
 /* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./CreateProgram */ 22);
 /* harmony import */ var _Crimes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Crimes */ 33);
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./engine */ 7);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./engine */ 8);
 /* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Faction */ 15);
 /* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Gang */ 49);
-/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Locations */ 3);
+/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Locations */ 2);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./NetscriptFunctions */ 37);
-/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Server */ 11);
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Server */ 12);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_14__);
 /* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./SpecialServerIps */ 27);
-/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./SourceFile */ 58);
+/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./SourceFile */ 61);
 /* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! decimal.js */ 30);
-/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./ui/numeralFormat */ 12);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./ui/numeralFormat */ 5);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 18);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_20__);
 /* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../utils/IPAddress */ 51);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 2);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 4);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__);
-
-
 
 
 
@@ -910,17 +908,17 @@ PlayerObject.prototype.work = function(numCycles) {
     var txt = document.getElementById("work-in-progress-text");
     txt.innerHTML = "You are currently working as a " + this.companyPosition.positionName +
                     " at " + this.companyName + " (Current Company Reputation: " +
-                    Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(companyRep, 0) + ")<br><br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(companyRep, '0,0') + ")<br><br>" +
                     "You have been working for " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + "<br><br>" +
                     "You have earned: <br><br>" +
-                    "$" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workMoneyGained, 2) + " ($" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workMoneyGainRate * CYCLES_PER_SEC, 2) + " / sec) <br><br>" +
-                    Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workRepGained, 4) + " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workRepGainRate * CYCLES_PER_SEC, 4) + " / sec) reputation for this company <br><br>" +
-                    Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workHackExpGained, 4) + " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workHackExpGainRate * CYCLES_PER_SEC, 4) + " / sec) hacking exp <br><br>" +
-                    Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workStrExpGained, 4) + " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workStrExpGainRate * CYCLES_PER_SEC, 4) + " / sec) strength exp <br>" +
-                    Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workDefExpGained, 4) + " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workDefExpGainRate * CYCLES_PER_SEC, 4) + " / sec) defense exp <br>" +
-                    Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workDexExpGained, 4) + " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workDexExpGainRate * CYCLES_PER_SEC, 4) + " / sec) dexterity exp <br>" +
-                    Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workAgiExpGained, 4) + " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workAgiExpGainRate * CYCLES_PER_SEC, 4) + " / sec) agility exp <br><br> " +
-                    Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workChaExpGained, 4) + " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workChaExpGainRate * CYCLES_PER_SEC, 4) + " / sec) charisma exp <br><br>" +
+                    "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workMoneyGained, '0,0.00') + " ($" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workMoneyGainRate * CYCLES_PER_SEC, '0,0.00') + " / sec) <br><br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workRepGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workRepGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) reputation for this company <br><br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workHackExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) hacking exp <br><br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workStrExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) strength exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workDefExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) defense exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workDexExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) dexterity exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workAgiExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) agility exp <br><br> " +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workChaExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) charisma exp <br><br>" +
                     "You will automatically finish after working for 8 hours. You can cancel earlier if you wish, " +
                     "but you will only gain half of the reputation you've earned so far."
 }
@@ -939,14 +937,14 @@ PlayerObject.prototype.finishWork = function(cancelled, sing=false) {
     this.updateSkillLevels();
 
     var txt = "You earned a total of: <br>" +
-              "$" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workMoneyGained, 2) + "<br>" +
-              Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workRepGained, 4) + " reputation for the company <br>" +
-              Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workHackExpGained, 4) + " hacking exp <br>" +
-              Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workStrExpGained, 4) + " strength exp <br>" +
-              Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workDefExpGained, 4) + " defense exp <br>" +
-              Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workDexExpGained, 4) + " dexterity exp <br>" +
-              Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workAgiExpGained, 4) + " agility exp <br>" +
-              Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workChaExpGained, 4) + " charisma exp<br>";
+              "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workMoneyGained, '0,0.00') + "<br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workRepGained, '0,0.0000') + " reputation for the company <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hacking exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " strength exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " defense exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dexterity exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agility exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " charisma exp<br>";
 
     if (cancelled) {
         txt = "You worked a short shift of " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + " <br><br> " +
@@ -963,14 +961,14 @@ PlayerObject.prototype.finishWork = function(cancelled, sing=false) {
 
     if (sing) {
         var res =  "You worked a short shift of " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + " and " +
-               "earned $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workMoneyGained, 2) + ", " +
-               Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workRepGained, 4) + " reputation, " +
-               Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workHackExpGained, 4) + " hacking exp, " +
-               Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workStrExpGained, 4) + " strength exp, " +
-               Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workDefExpGained, 4) + " defense exp, " +
-               Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workDexExpGained, 4) + " dexterity exp, " +
-               Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workAgiExpGained, 4) + " agility exp, and " +
-               Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workChaExpGained, 4) + " charisma exp.";
+               "earned $" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workMoneyGained, '0,0.00') + ", " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workRepGained, '0,0.0000') + " reputation, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hacking exp, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " strength exp, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " defense exp, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dexterity exp, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agility exp, and " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " charisma exp.";
         this.resetWorkStatus();
         return res;
     }
@@ -1032,17 +1030,17 @@ PlayerObject.prototype.workPartTime = function(numCycles) {
     var txt = document.getElementById("work-in-progress-text");
     txt.innerHTML = "You are currently working as a " + this.companyPosition.positionName +
                     " at " + Player.companyName + " (Current Company Reputation: "  +
-                    Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(companyRep, 0) + ")<br><br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(companyRep, '0,0') + ")<br><br>" +
                     "You have been working for " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + "<br><br>" +
                     "You have earned: <br><br>" +
-                    "$" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workMoneyGained, 2) + " ($" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workMoneyGainRate * CYCLES_PER_SEC, 2) + " / sec) <br><br>" +
-                    Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workRepGained, 4) + " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workRepGainRate * CYCLES_PER_SEC, 4) + " / sec) reputation for this company <br><br>" +
-                    Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workHackExpGained, 4) + " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workHackExpGainRate * CYCLES_PER_SEC, 4) + " / sec) hacking exp <br><br>" +
-                    Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workStrExpGained, 4) + " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workStrExpGainRate * CYCLES_PER_SEC, 4) + " / sec) strength exp <br>" +
-                    Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workDefExpGained, 4) + " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workDefExpGainRate * CYCLES_PER_SEC, 4) + " / sec) defense exp <br>" +
-                    Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workDexExpGained, 4) + " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workDexExpGainRate * CYCLES_PER_SEC, 4) + " / sec) dexterity exp <br>" +
-                    Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workAgiExpGained, 4) + " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workAgiExpGainRate * CYCLES_PER_SEC, 4) + " / sec) agility exp <br><br> " +
-                    Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workChaExpGained, 4) + " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workChaExpGainRate * CYCLES_PER_SEC, 4) + " / sec) charisma exp <br><br>" +
+                    "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workMoneyGained, '0,0.00') + " ($" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workMoneyGainRate * CYCLES_PER_SEC, '0,0.00') + " / sec) <br><br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workRepGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workRepGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) reputation for this company <br><br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workHackExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) hacking exp <br><br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workStrExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) strength exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workDefExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) defense exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workDexExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) dexterity exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workAgiExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) agility exp <br><br> " +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workChaExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) charisma exp <br><br>" +
                     "You will automatically finish after working for 8 hours. You can cancel earlier if you wish, <br>" +
                     "and there will be no penalty because this is a part-time job.";
 
@@ -1057,14 +1055,14 @@ PlayerObject.prototype.finishWorkPartTime = function(sing=false) {
     this.updateSkillLevels();
 
     var txt = "You earned a total of: <br>" +
-              "$" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workMoneyGained, 2) + "<br>" +
-              Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workRepGained, 4) + " reputation for the company <br>" +
-              Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workHackExpGained, 4) + " hacking exp <br>" +
-              Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workStrExpGained, 4) + " strength exp <br>" +
-              Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workDefExpGained, 4) + " defense exp <br>" +
-              Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workDexExpGained, 4) + " dexterity exp <br>" +
-              Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workAgiExpGained, 4) + " agility exp <br>" +
-              Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workChaExpGained, 4) + " charisma exp<br>";
+              "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workMoneyGained, '0,0.00') + "<br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workRepGained, '0,0.0000') + " reputation for the company <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hacking exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " strength exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " defense exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dexterity exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agility exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " charisma exp<br>";
     txt = "You worked for " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + "<br><br> " + txt;
     if (!sing) {Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_19__["dialogBoxCreate"])(txt);}
 
@@ -1075,14 +1073,14 @@ PlayerObject.prototype.finishWorkPartTime = function(sing=false) {
     if (sing) {
         var res =  "You worked for " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + " and " +
                "earned a total of " +
-               "$" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workMoneyGained, 2) + ", " +
-                Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workRepGained, 4) + " reputation, " +
-                Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workHackExpGained, 4) + " hacking exp, " +
-                Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workStrExpGained, 4) + " strength exp, " +
-                Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workDefExpGained, 4) + " defense exp, " +
-                Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workDexExpGained, 4) + " dexterity exp, " +
-                Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workAgiExpGained, 4) + " agility exp, and " +
-                Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workChaExpGained, 4) + " charisma exp";
+               "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workMoneyGained, '0,0.00') + ", " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workRepGained, '0,0.0000') + " reputation, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hacking exp, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " strength exp, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " defense exp, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dexterity exp, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agility exp, and " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " charisma exp";
         this.resetWorkStatus();
         return res;
     }
@@ -1201,17 +1199,17 @@ PlayerObject.prototype.workForFaction = function(numCycles) {
 
     var txt = document.getElementById("work-in-progress-text");
     txt.innerHTML = "You are currently " + this.currentWorkFactionDescription + " for your faction " + faction.name +
-                    " (Current Faction Reputation: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(faction.playerReputation, 0) + "). <br>" +
+                    " (Current Faction Reputation: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(faction.playerReputation, '0,0') + "). <br>" +
                     "You have been doing this for " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + "<br><br>" +
                     "You have earned: <br><br>" +
-                    "$" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workMoneyGained, 2) + " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workMoneyGainRate * CYCLES_PER_SEC, 2) + " / sec) <br><br>" +
-                    Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workRepGained, 4) + " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workRepGainRate * CYCLES_PER_SEC, 4) + " / sec) reputation for this faction <br><br>" +
-                    Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workHackExpGained, 4) + " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workHackExpGainRate * CYCLES_PER_SEC, 4) + " / sec) hacking exp <br><br>" +
-                    Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workStrExpGained, 4) + " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workStrExpGainRate * CYCLES_PER_SEC, 4) + " / sec) strength exp <br>" +
-                    Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workDefExpGained, 4) + " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workDefExpGainRate * CYCLES_PER_SEC, 4) + " / sec) defense exp <br>" +
-                    Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workDexExpGained, 4) + " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workDexExpGainRate * CYCLES_PER_SEC, 4) + " / sec) dexterity exp <br>" +
-                    Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workAgiExpGained, 4) + " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workAgiExpGainRate * CYCLES_PER_SEC, 4) + " / sec) agility exp <br><br> " +
-                    Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workChaExpGained, 4) + " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workChaExpGainRate * CYCLES_PER_SEC, 4) + " / sec) charisma exp <br><br>" +
+                    "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workMoneyGained, '0,0.00') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workMoneyGainRate * CYCLES_PER_SEC, '0,0.00') + " / sec) <br><br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workRepGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workRepGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) reputation for this faction <br><br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workHackExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) hacking exp <br><br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workStrExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) strength exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workDefExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) defense exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workDexExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) dexterity exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workAgiExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) agility exp <br><br> " +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workChaExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) charisma exp <br><br>" +
 
                     "You will automatically finish after working for 20 hours. You can cancel earlier if you wish.<br>" +
                     "There is no penalty for cancelling earlier.";
@@ -1227,14 +1225,14 @@ PlayerObject.prototype.finishFactionWork = function(cancelled, sing=false) {
 
     var txt = "You worked for your faction " + faction.name + " for a total of " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + " <br><br> " +
               "You earned a total of: <br>" +
-              "$" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workMoneyGained, 2) + "<br>" +
-              Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workRepGained, 4) + " reputation for the faction <br>" +
-              Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workHackExpGained, 4) + " hacking exp <br>" +
-              Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workStrExpGained, 4) + " strength exp <br>" +
-              Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workDefExpGained, 4) + " defense exp <br>" +
-              Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workDexExpGained, 4) + " dexterity exp <br>" +
-              Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workAgiExpGained, 4) + " agility exp <br>" +
-              Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workChaExpGained, 4) + " charisma exp<br>";
+              "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workMoneyGained, '0,0.00') + "<br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workRepGained, '0,0.0000') + " reputation for the faction <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hacking exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " strength exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " defense exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dexterity exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agility exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " charisma exp<br>";
     if (!sing) {Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_19__["dialogBoxCreate"])(txt);}
 
     var mainMenu = document.getElementById("mainmenu-container");
@@ -1247,13 +1245,13 @@ PlayerObject.prototype.finishFactionWork = function(cancelled, sing=false) {
     if (sing) {
         var res="You worked for your faction " + faction.name + " for a total of " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + ". " +
                "You earned " +
-                Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workRepGained, 4) + " rep, " +
-                Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workHackExpGained, 4) + " hacking exp, " +
-                Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workStrExpGained, 4) + " str exp, " +
-                Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workDefExpGained, 4) + " def exp, " +
-                Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workDexExpGained, 4) + " dex exp, " +
-                Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workAgiExpGained, 4) + " agi exp, and " +
-                Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workChaExpGained, 4) + " cha exp.";
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workRepGained, '0,0.0000') + " rep, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hacking exp, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " str exp, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " def exp, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dex exp, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agi exp, and " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " cha exp.";
         this.resetWorkStatus();
         return res;
     }
@@ -1539,14 +1537,14 @@ PlayerObject.prototype.takeClass = function(numCycles) {
     var txt = document.getElementById("work-in-progress-text");
     txt.innerHTML = "You have been " + className + " for " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + "<br><br>" +
                     "This has cost you: <br>" +
-                    "$" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workMoneyGained, 2) + " ($" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workMoneyLossRate * CYCLES_PER_SEC, 2) + " / sec) <br><br>" +
+                    "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workMoneyGained, '0,0.00') + " ($" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workMoneyLossRate * CYCLES_PER_SEC, '0,0.00') + " / sec) <br><br>" +
                     "You have gained: <br>" +
-                    Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workHackExpGained, 4) + " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workHackExpGainRate * CYCLES_PER_SEC, 4) + " / sec) hacking exp <br>" +
-                    Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workStrExpGained, 4) + " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workStrExpGainRate * CYCLES_PER_SEC, 4) + " / sec) strength exp <br>" +
-                    Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workDefExpGained, 4) + " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workDefExpGainRate * CYCLES_PER_SEC, 4) + " / sec) defense exp <br>" +
-                    Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workDexExpGained, 4) + " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workDexExpGainRate * CYCLES_PER_SEC, 4) + " / sec) dexterity exp <br>" +
-                    Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workAgiExpGained, 4) + " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workAgiExpGainRate * CYCLES_PER_SEC, 4) + " / sec) agility exp <br>" +
-                    Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workChaExpGained, 4) + " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workChaExpGainRate * CYCLES_PER_SEC, 4) + " / sec) charisma exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workHackExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) hacking exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workStrExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) strength exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workDefExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) defense exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workDexExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) dexterity exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workAgiExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) agility exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workChaExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) charisma exp <br>" +
                     "You may cancel at any time";
 }
 
@@ -1562,14 +1560,14 @@ PlayerObject.prototype.finishClass = function(sing=false) {
 
     this.updateSkillLevels();
     var txt = "After " + this.className + " for " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + ", <br>" +
-              "you spent a total of $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workMoneyGained * -1, 2) + ". <br><br>" +
+              "you spent a total of $" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workMoneyGained * -1, '0,0.00') + ". <br><br>" +
               "You earned a total of: <br>" +
-              Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workHackExpGained, 4) + " hacking exp <br>" +
-              Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workStrExpGained, 4) + " strength exp <br>" +
-              Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workDefExpGained, 4) + " defense exp <br>" +
-              Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workDexExpGained, 4) + " dexterity exp <br>" +
-              Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workAgiExpGained, 4) + " agility exp <br>" +
-              Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workChaExpGained, 4) + " charisma exp<br>";
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hacking exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " strength exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " defense exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dexterity exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agility exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " charisma exp<br>";
     if (!sing) {Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_19__["dialogBoxCreate"])(txt);}
 
     var mainMenu = document.getElementById("mainmenu-container");
@@ -1580,14 +1578,14 @@ PlayerObject.prototype.finishClass = function(sing=false) {
     _engine__WEBPACK_IMPORTED_MODULE_8__["Engine"].loadLocationContent();
     if (sing) {
         var res="After " + this.className + " for " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + ", " +
-              "you spent a total of $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workMoneyGained * -1, 2) + ". " +
+              "you spent a total of $" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workMoneyGained * -1, '0,0.00') + ". " +
               "You earned a total of: " +
-              Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workHackExpGained, 3) + " hacking exp, " +
-              Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workStrExpGained, 3) + " strength exp, " +
-              Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workDefExpGained, 3) + " defense exp, " +
-              Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workDexExpGained, 3) + " dexterity exp, " +
-              Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workAgiExpGained, 3) + " agility exp, and " +
-              Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workChaExpGained, 3) + " charisma exp";
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hacking exp, " +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " strength exp, " +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " defense exp, " +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dexterity exp, " +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agility exp, and " +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " charisma exp";
         this.resetWorkStatus();
         return res;
     }
@@ -1678,23 +1676,23 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
                 if(this.singFnCrimeWorkerScript.disableLogs.ALL == null && this.singFnCrimeWorkerScript.disableLogs.commitCrime == null) {
                     this.singFnCrimeWorkerScript.scriptRef.log("Crime successful! Gained " +
                                                                _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workMoneyGained, "$0.000a") + ", " +
-                                                               Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workHackExpGained, 3) + " hack exp, " +
-                                                               Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workStrExpGained, 3) + " str exp, " +
-                                                               Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workDefExpGained, 3) + " def exp, " +
-                                                               Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workDexExpGained, 3) + " dex exp, " +
-                                                               Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workAgiExpGained, 3) + " agi exp, " +
-                                                               Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workChaExpGained, 3) + " cha exp.");
+                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hack exp, " +
+                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " str exp, " +
+                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " def exp, " +
+                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dex exp, " +
+                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agi exp, " +
+                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " cha exp.");
                 }
             } else {
                 Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_19__["dialogBoxCreate"])("Crime successful! <br><br>" +
                                 "You gained:<br>"+
-                                "$" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workMoneyGained, 2) + "<br>" +
-                                Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workHackExpGained, 4) + " hacking experience <br>" +
-                                Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workStrExpGained, 4) + " strength experience<br>" +
-                                Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workDefExpGained, 4) + " defense experience<br>" +
-                                Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workDexExpGained, 4) + " dexterity experience<br>" +
-                                Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workAgiExpGained, 4) + " agility experience<br>" +
-                                Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workChaExpGained, 4) + " charisma experience");
+                                "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workMoneyGained, '0,0.00') + "<br>" +
+                                _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hacking experience <br>" +
+                                _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " strength experience<br>" +
+                                _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " defense experience<br>" +
+                                _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dexterity experience<br>" +
+                                _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agility experience<br>" +
+                                _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " charisma experience");
             }
 
         } else {
@@ -1708,22 +1706,22 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
             if (this.committingCrimeThruSingFn) {
                 if(this.singFnCrimeWorkerScript.disableLogs.ALL == null && this.singFnCrimeWorkerScript.disableLogs.commitCrime == null) {
                     this.singFnCrimeWorkerScript.scriptRef.log("Crime failed! Gained " +
-                                                               Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workHackExpGained, 3) + " hack exp, " +
-                                                               Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workStrExpGained, 3) + " str exp, " +
-                                                               Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workDefExpGained, 3) + " def exp, " +
-                                                               Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workDexExpGained, 3) + " dex exp, " +
-                                                               Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workAgiExpGained, 3) + " agi exp, " +
-                                                               Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workChaExpGained, 3) + " cha exp.");
+                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hack exp, " +
+                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " str exp, " +
+                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " def exp, " +
+                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dex exp, " +
+                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agi exp, " +
+                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " cha exp.");
                 }
             } else {
                 Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_19__["dialogBoxCreate"])("Crime failed! <br><br>" +
                         "You gained:<br>"+
-                        Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workHackExpGained, 4) + " hacking experience <br>" +
-                        Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workStrExpGained, 4) + " strength experience<br>" +
-                        Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workDefExpGained, 4) + " defense experience<br>" +
-                        Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workDexExpGained, 4) + " dexterity experience<br>" +
-                        Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workAgiExpGained, 4) + " agility experience<br>" +
-                        Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.workChaExpGained, 4) + " charisma experience");
+                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hacking experience <br>" +
+                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " strength experience<br>" +
+                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " defense experience<br>" +
+                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dexterity experience<br>" +
+                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agility experience<br>" +
+                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " charisma experience");
             }
         }
 
@@ -2101,10 +2099,10 @@ PlayerObject.prototype.reapplyAllAugmentations = function(resetMultipliers=true)
             this.augmentations[i].name = "Hacknet Node NIC Architecture Neural-Upload";
         }
 
-        var augName = this.augmentations[i].name;
+        const augName = this.augmentations[i].name;
         var aug = _Augmentations__WEBPACK_IMPORTED_MODULE_0__[/* Augmentations */ "c"][augName];
         if (aug == null) {
-            console.log("WARNING: Invalid augmentation name");
+            console.log(`WARNING: Invalid augmentation name in Player.reapplyAllAugmentations(). Aug ${augName} will be skipped`);
             continue;
         }
         aug.owned = true;
@@ -2627,7 +2625,7 @@ let CONSTANTS = {
     /* Netscript Constants */
     //RAM Costs for different commands
     ScriptBaseRamCost:              1.6,
-    ScriptDomRamCost:               100,
+    ScriptDomRamCost:               25,
     ScriptWhileRamCost:             0,
     ScriptForRamCost:               0,
     ScriptIfRamCost:                0,
@@ -2669,6 +2667,8 @@ let CONSTANTS = {
     ScriptSingularityFn1RamCost:    1,
     ScriptSingularityFn2RamCost:    2,
     ScriptSingularityFn3RamCost:    3,
+
+    ScriptSingularityFnRamMult:     2, // Multiplier for RAM cost outside of BN-4
 
     ScriptBladeburnerApiBaseRamCost:    4,
 
@@ -3086,8 +3086,19 @@ let CONSTANTS = {
     LatestUpdate:
     `
      v0.41.0
-     * 
+     * WARNING: In NetscriptJS, defining a function called print() is no longer possible
+     * RAM Cost of accessing the global document object lowered from 100 GB to 25 GB
+     * RAM Cost to use Singularity Functions outside of BitNode-4 lowered by 75%. They now only cost twice as much as they do in BitNode-4
      * b1t_flum3.exe now takes significantly less time to create
+     * Improved number formatting for Player 'work' actions (including crimes, etc.). These numbers should also adhere to locale settings now (by Kline-)
+     * Bug Fix: Calling print() in NetscriptJS no longer brings up the print dialog
+     * Bug Fix: Fixed a bug that sometimes caused a blank black screen when destroying/resetting/switching BitNodes
+     * Bug Fix: Netscript calls that throw errors will now no longer cause the 'concurrent calls' error if they are caught in the script. i.e. try/catch should now work properly in scripts
+     * Bug Fix: Fixed a bug where sometimes the NeuroFlux Governor Augmentation level would be incorrectly calculated when the game was loaded
+     * Bug Fix: Fixed a bug where calling the scp() Netscript function with invalid hostname/ips would throw an unclear error message
+     * Bug Fix: Bladeburner API function getActionCountRemaining() should now work properly for BlackOps
+     * Bug Fix: Black Ops can no longer be attempted out-of-order or without the required rank via Bladeburner API
+     * RAM cost for basic Netscript functions added to documentation (by CBJamo)
      `
 
 }
@@ -3097,119 +3108,6 @@ let CONSTANTS = {
 
 /***/ }),
 /* 2 */
-/*!****************************************!*\
-  !*** ./utils/StringHelperFunctions.ts ***!
-  \****************************************/
-/*! no static exports found */
-/*! exports used: containsAllStrings, convertTimeMsToTimeElapsedString, formatNumber, generateRandomString, isString, longestCommonStart, replaceAt */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const isString_1 = __webpack_require__(/*! ./helpers/isString */ 34);
-// Netburner String helper functions
-// Replaces the character at an index with a new character
-function replaceAt(base, index, character) {
-    return base.substr(0, index) + character + base.substr(index + character.length);
-}
-exports.replaceAt = replaceAt;
-/*
-Converts a date representing time in milliseconds to a string with the format H hours M minutes and S seconds
-e.g.    10000 -> "0 hours 0 minutes and 10 seconds"
-        120000 -> "0 0 hours 2 minutes and 0 seconds"
-*/
-function convertTimeMsToTimeElapsedString(time) {
-    const millisecondsPerSecond = 1000;
-    const secondPerMinute = 60;
-    const minutesPerHours = 60;
-    const secondPerHours = secondPerMinute * minutesPerHours;
-    const hoursPerDays = 24;
-    const secondPerDay = secondPerHours * hoursPerDays;
-    // Convert ms to seconds, since we only have second-level precision
-    const totalSeconds = Math.floor(time / millisecondsPerSecond);
-    const days = Math.floor(totalSeconds / secondPerDay);
-    const secTruncDays = totalSeconds % secondPerDay;
-    const hours = Math.floor(secTruncDays / secondPerHours);
-    const secTruncHours = secTruncDays % secondPerHours;
-    const minutes = Math.floor(secTruncHours / secondPerMinute);
-    const secTruncMinutes = secTruncHours % secondPerMinute;
-    const seconds = secTruncMinutes;
-    let res = "";
-    if (days > 0) {
-        res += `${days} days `;
-    }
-    if (hours > 0) {
-        res += `${hours} hours `;
-    }
-    if (minutes > 0) {
-        res += `${minutes} minutes `;
-    }
-    res += `${seconds} seconds `;
-    return res;
-}
-exports.convertTimeMsToTimeElapsedString = convertTimeMsToTimeElapsedString;
-// Finds the longest common starting substring in a set of strings
-function longestCommonStart(strings) {
-    if (!containsAllStrings(strings)) {
-        return "";
-    }
-    if (strings.length === 0) {
-        return "";
-    }
-    const A = strings.concat()
-        .sort();
-    const a1 = A[0];
-    const a2 = A[A.length - 1];
-    const L = a1.length;
-    let i = 0;
-    const areEqualCaseInsensitive = (a, b) => a.toUpperCase() === b.toUpperCase();
-    while (i < L && areEqualCaseInsensitive(a1.charAt(i), a2.charAt(i))) {
-        i++;
-    }
-    return a1.substring(0, i);
-}
-exports.longestCommonStart = longestCommonStart;
-// Returns whether an array contains entirely of string objects
-function containsAllStrings(arr) {
-    return arr.every(isString_1.isString);
-}
-exports.containsAllStrings = containsAllStrings;
-// Formats a number with commas and a specific number of decimal digits
-function formatNumber(num, numFractionDigits) {
-    return num.toLocaleString(undefined, {
-        maximumFractionDigits: numFractionDigits,
-        minimumFractionDigits: numFractionDigits,
-    });
-}
-exports.formatNumber = formatNumber;
-// Checks if a string contains HTML elements
-function isHTML(str) {
-    const element = document.createElement("div");
-    element.innerHTML = str;
-    const c = element.childNodes;
-    for (let i = c.length - 1; i >= 0; i--) {
-        if (c[i].nodeType === 1) {
-            return true;
-        }
-    }
-    return false;
-}
-exports.isHTML = isHTML;
-// Generates a random alphanumeric string with N characters
-function generateRandomString(n) {
-    let str = "";
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    for (let i = 0; i < n; i++) {
-        str += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return str;
-}
-exports.generateRandomString = generateRandomString;
-
-
-/***/ }),
-/* 3 */
 /*!**************************!*\
   !*** ./src/Locations.ts ***!
   \**************************/
@@ -3304,7 +3202,7 @@ exports.Locations = {
 
 
 /***/ }),
-/* 4 */
+/* 3 */
 /*!******************************************!*\
   !*** ./utils/uiHelpers/createElement.ts ***!
   \******************************************/
@@ -3470,7 +3368,202 @@ exports.createElement = createElement;
 
 
 /***/ }),
+/* 4 */
+/*!****************************************!*\
+  !*** ./utils/StringHelperFunctions.ts ***!
+  \****************************************/
+/*! no static exports found */
+/*! exports used: containsAllStrings, convertTimeMsToTimeElapsedString, formatNumber, generateRandomString, isString, longestCommonStart, replaceAt */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const isString_1 = __webpack_require__(/*! ./helpers/isString */ 34);
+// Netburner String helper functions
+// Replaces the character at an index with a new character
+function replaceAt(base, index, character) {
+    return base.substr(0, index) + character + base.substr(index + character.length);
+}
+exports.replaceAt = replaceAt;
+/*
+Converts a date representing time in milliseconds to a string with the format H hours M minutes and S seconds
+e.g.    10000 -> "0 hours 0 minutes and 10 seconds"
+        120000 -> "0 0 hours 2 minutes and 0 seconds"
+*/
+function convertTimeMsToTimeElapsedString(time) {
+    const millisecondsPerSecond = 1000;
+    const secondPerMinute = 60;
+    const minutesPerHours = 60;
+    const secondPerHours = secondPerMinute * minutesPerHours;
+    const hoursPerDays = 24;
+    const secondPerDay = secondPerHours * hoursPerDays;
+    // Convert ms to seconds, since we only have second-level precision
+    const totalSeconds = Math.floor(time / millisecondsPerSecond);
+    const days = Math.floor(totalSeconds / secondPerDay);
+    const secTruncDays = totalSeconds % secondPerDay;
+    const hours = Math.floor(secTruncDays / secondPerHours);
+    const secTruncHours = secTruncDays % secondPerHours;
+    const minutes = Math.floor(secTruncHours / secondPerMinute);
+    const secTruncMinutes = secTruncHours % secondPerMinute;
+    const seconds = secTruncMinutes;
+    let res = "";
+    if (days > 0) {
+        res += `${days} days `;
+    }
+    if (hours > 0) {
+        res += `${hours} hours `;
+    }
+    if (minutes > 0) {
+        res += `${minutes} minutes `;
+    }
+    res += `${seconds} seconds `;
+    return res;
+}
+exports.convertTimeMsToTimeElapsedString = convertTimeMsToTimeElapsedString;
+// Finds the longest common starting substring in a set of strings
+function longestCommonStart(strings) {
+    if (!containsAllStrings(strings)) {
+        return "";
+    }
+    if (strings.length === 0) {
+        return "";
+    }
+    const A = strings.concat()
+        .sort();
+    const a1 = A[0];
+    const a2 = A[A.length - 1];
+    const L = a1.length;
+    let i = 0;
+    const areEqualCaseInsensitive = (a, b) => a.toUpperCase() === b.toUpperCase();
+    while (i < L && areEqualCaseInsensitive(a1.charAt(i), a2.charAt(i))) {
+        i++;
+    }
+    return a1.substring(0, i);
+}
+exports.longestCommonStart = longestCommonStart;
+// Returns whether an array contains entirely of string objects
+function containsAllStrings(arr) {
+    return arr.every(isString_1.isString);
+}
+exports.containsAllStrings = containsAllStrings;
+// Formats a number with commas and a specific number of decimal digits
+function formatNumber(num, numFractionDigits) {
+    return num.toLocaleString(undefined, {
+        maximumFractionDigits: numFractionDigits,
+        minimumFractionDigits: numFractionDigits,
+    });
+}
+exports.formatNumber = formatNumber;
+// Checks if a string contains HTML elements
+function isHTML(str) {
+    const element = document.createElement("div");
+    element.innerHTML = str;
+    const c = element.childNodes;
+    for (let i = c.length - 1; i >= 0; i--) {
+        if (c[i].nodeType === 1) {
+            return true;
+        }
+    }
+    return false;
+}
+exports.isHTML = isHTML;
+// Generates a random alphanumeric string with N characters
+function generateRandomString(n) {
+    let str = "";
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    for (let i = 0; i < n; i++) {
+        str += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return str;
+}
+exports.generateRandomString = generateRandomString;
+
+
+/***/ }),
 /* 5 */
+/*!*********************************!*\
+  !*** ./src/ui/numeralFormat.js ***!
+  \*********************************/
+/*! exports provided: numeralWrapper */
+/*! exports used: numeralWrapper */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return numeralWrapper; });
+/* harmony import */ var numeral__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! numeral */ 63);
+/* harmony import */ var numeral__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(numeral__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var numeral_locales_bg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! numeral/locales/bg */ 239);
+/* harmony import */ var numeral_locales_bg__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_bg__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var numeral_locales_cs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! numeral/locales/cs */ 238);
+/* harmony import */ var numeral_locales_cs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_cs__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var numeral_locales_da_dk__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! numeral/locales/da-dk */ 237);
+/* harmony import */ var numeral_locales_da_dk__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_da_dk__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var numeral_locales_de__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! numeral/locales/de */ 236);
+/* harmony import */ var numeral_locales_de__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_de__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var numeral_locales_en_au__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! numeral/locales/en-au */ 235);
+/* harmony import */ var numeral_locales_en_au__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_en_au__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var numeral_locales_en_gb__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! numeral/locales/en-gb */ 234);
+/* harmony import */ var numeral_locales_en_gb__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_en_gb__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var numeral_locales_es__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! numeral/locales/es */ 233);
+/* harmony import */ var numeral_locales_es__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_es__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var numeral_locales_fr__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! numeral/locales/fr */ 232);
+/* harmony import */ var numeral_locales_fr__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_fr__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var numeral_locales_hu__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! numeral/locales/hu */ 231);
+/* harmony import */ var numeral_locales_hu__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_hu__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var numeral_locales_it__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! numeral/locales/it */ 230);
+/* harmony import */ var numeral_locales_it__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_it__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var numeral_locales_lv__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! numeral/locales/lv */ 229);
+/* harmony import */ var numeral_locales_lv__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_lv__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var numeral_locales_no__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! numeral/locales/no */ 228);
+/* harmony import */ var numeral_locales_no__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_no__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var numeral_locales_pl__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! numeral/locales/pl */ 227);
+/* harmony import */ var numeral_locales_pl__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_pl__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var numeral_locales_ru__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! numeral/locales/ru */ 226);
+/* harmony import */ var numeral_locales_ru__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_ru__WEBPACK_IMPORTED_MODULE_14__);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* eslint-disable class-methods-use-this */
+
+class NumeralFormatter {
+    constructor() {
+        this.defaultLocale = 'en';
+    }
+
+    updateLocale(l) {
+        if (numeral__WEBPACK_IMPORTED_MODULE_0___default.a.locale(l) == null) {
+            console.warn(`Invalid locale for numeral: ${l}`);
+
+            numeral__WEBPACK_IMPORTED_MODULE_0___default.a.locale(this.defaultLocale);
+            return false;
+        }
+        return true;
+    }
+
+    format(n, format) {
+        return numeral__WEBPACK_IMPORTED_MODULE_0___default()(n).format(format);
+    }
+}
+
+const numeralWrapper = new NumeralFormatter();
+
+
+/***/ }),
+/* 6 */
 /*!***********************************!*\
   !*** ./src/NetscriptEvaluator.js ***!
   \***********************************/
@@ -3486,13 +3579,13 @@ exports.createElement = createElement;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return isScriptErrorMessage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return killNetscriptDelay; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return evaluateImport; });
-/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNodeMultipliers */ 9);
+/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNodeMultipliers */ 10);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _NetscriptEnvironment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./NetscriptEnvironment */ 93);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptWorker */ 24);
-/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Server */ 11);
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Server */ 12);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Script */ 28);
@@ -3518,7 +3611,7 @@ exports.createElement = createElement;
 
 
 
-var Promise = __webpack_require__(/*! bluebird */ 209);
+var Promise = __webpack_require__(/*! bluebird */ 210);
 
 Promise.config({
     warnings: false,
@@ -4420,7 +4513,7 @@ function isScriptErrorMessage(msg) {
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /*!**********************************!*\
   !*** ./src/ui/postToTerminal.ts ***!
   \**********************************/
@@ -4431,7 +4524,7 @@ function isScriptErrorMessage(msg) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const getElementById_1 = __webpack_require__(/*! ../../utils/uiHelpers/getElementById */ 45);
+const getElementById_1 = __webpack_require__(/*! ../../utils/uiHelpers/getElementById */ 46);
 /**
  * Adds some output to the terminal.
  * @param input Text or HTML to output to the terminal
@@ -4472,7 +4565,7 @@ function scrollTerminalToBottom() {
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /*!***********************!*\
   !*** ./src/engine.js ***!
   \***********************/
@@ -4483,91 +4576,93 @@ function scrollTerminalToBottom() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Engine", function() { return Engine; });
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_GameOptions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/GameOptions */ 73);
-/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 10);
+/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 11);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 26);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 18);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 4);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 3);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 43);
-/* harmony import */ var _utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/uiHelpers/removeLoadingScreen */ 97);
+/* harmony import */ var _utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/uiHelpers/removeLoadingScreen */ 98);
 /* harmony import */ var _utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./ui/numeralFormat */ 12);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 2);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./ui/numeralFormat */ 5);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 4);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/LogBox */ 68);
-/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./ActiveScriptsUI */ 60);
+/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./ActiveScriptsUI */ 59);
 /* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Augmentations */ 20);
 /* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./BitNode */ 50);
 /* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Bladeburner */ 29);
-/* harmony import */ var _CharacterOverview__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./CharacterOverview */ 106);
+/* harmony import */ var _CharacterOverview__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./CharacterOverview */ 107);
 /* harmony import */ var _CinematicText__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./CinematicText */ 83);
 /* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./CodingContracts */ 38);
 /* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_CodingContracts__WEBPACK_IMPORTED_MODULE_17__);
 /* harmony import */ var _Company__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Company */ 13);
-/* harmony import */ var _CompanyManagement__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./CompanyManagement */ 55);
+/* harmony import */ var _CompanyManagement__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./CompanyManagement */ 54);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./CreateProgram */ 22);
-/* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./Faction */ 15);
-/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./Fconf */ 40);
-/* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./Location */ 78);
-/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./Locations */ 3);
-/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_25__);
-/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./Gang */ 49);
-/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./HacknetNode */ 59);
-/* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./InteractiveTutorial */ 31);
-/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./Literature */ 70);
-/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./Message */ 35);
-/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./Missions */ 46);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./NetscriptFunctions */ 37);
-/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./NetscriptWorker */ 24);
-/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./Prestige */ 76);
-/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./RedPill */ 54);
-/* harmony import */ var _SaveObject__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./SaveObject */ 65);
-/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./Script */ 28);
-/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ./Settings */ 19);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_40___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_40__);
-/* harmony import */ var _ui_setSettingsLabels__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ./ui/setSettingsLabels */ 105);
-/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ./SourceFile */ 58);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ./SpecialServerIps */ 27);
-/* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! ./StockMarket */ 23);
-/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(/*! ./Terminal */ 47);
-/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 32);
-/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_46___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_46__);
-/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(/*! ./ui/navigationTracking */ 16);
-/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__);
-/* harmony import */ var normalize_css__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(/*! normalize.css */ 173);
-/* harmony import */ var normalize_css__WEBPACK_IMPORTED_MODULE_48___default = /*#__PURE__*/__webpack_require__.n(normalize_css__WEBPACK_IMPORTED_MODULE_48__);
-/* harmony import */ var _css_styles_scss__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(/*! ../css/styles.scss */ 151);
-/* harmony import */ var _css_styles_scss__WEBPACK_IMPORTED_MODULE_49___default = /*#__PURE__*/__webpack_require__.n(_css_styles_scss__WEBPACK_IMPORTED_MODULE_49__);
-/* harmony import */ var _css_buttons_scss__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(/*! ../css/buttons.scss */ 149);
-/* harmony import */ var _css_buttons_scss__WEBPACK_IMPORTED_MODULE_50___default = /*#__PURE__*/__webpack_require__.n(_css_buttons_scss__WEBPACK_IMPORTED_MODULE_50__);
-/* harmony import */ var _css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! ../css/mainmenu.scss */ 147);
-/* harmony import */ var _css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_51___default = /*#__PURE__*/__webpack_require__.n(_css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_51__);
-/* harmony import */ var _css_terminal_scss__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! ../css/terminal.scss */ 145);
-/* harmony import */ var _css_terminal_scss__WEBPACK_IMPORTED_MODULE_52___default = /*#__PURE__*/__webpack_require__.n(_css_terminal_scss__WEBPACK_IMPORTED_MODULE_52__);
-/* harmony import */ var _css_menupages_scss__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(/*! ../css/menupages.scss */ 143);
-/* harmony import */ var _css_menupages_scss__WEBPACK_IMPORTED_MODULE_53___default = /*#__PURE__*/__webpack_require__.n(_css_menupages_scss__WEBPACK_IMPORTED_MODULE_53__);
-/* harmony import */ var _css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(/*! ../css/workinprogress.scss */ 141);
-/* harmony import */ var _css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_54___default = /*#__PURE__*/__webpack_require__.n(_css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_54__);
-/* harmony import */ var _css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(/*! ../css/popupboxes.scss */ 139);
-/* harmony import */ var _css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_55___default = /*#__PURE__*/__webpack_require__.n(_css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_55__);
-/* harmony import */ var _css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(/*! ../css/interactivetutorial.scss */ 137);
-/* harmony import */ var _css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_56___default = /*#__PURE__*/__webpack_require__.n(_css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_56__);
-/* harmony import */ var _css_loader_scss__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(/*! ../css/loader.scss */ 135);
-/* harmony import */ var _css_loader_scss__WEBPACK_IMPORTED_MODULE_57___default = /*#__PURE__*/__webpack_require__.n(_css_loader_scss__WEBPACK_IMPORTED_MODULE_57__);
-/* harmony import */ var _css_missions_scss__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(/*! ../css/missions.scss */ 133);
-/* harmony import */ var _css_missions_scss__WEBPACK_IMPORTED_MODULE_58___default = /*#__PURE__*/__webpack_require__.n(_css_missions_scss__WEBPACK_IMPORTED_MODULE_58__);
-/* harmony import */ var _css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(/*! ../css/companymanagement.scss */ 131);
-/* harmony import */ var _css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_59___default = /*#__PURE__*/__webpack_require__.n(_css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_59__);
-/* harmony import */ var _css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(/*! ../css/bladeburner.scss */ 129);
-/* harmony import */ var _css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_60___default = /*#__PURE__*/__webpack_require__.n(_css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_60__);
+/* harmony import */ var _DevMenu__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./DevMenu */ 95);
+/* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./Faction */ 15);
+/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./Fconf */ 40);
+/* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./Location */ 78);
+/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./Locations */ 2);
+/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_26__);
+/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./Gang */ 49);
+/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./HacknetNode */ 57);
+/* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./InteractiveTutorial */ 31);
+/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./Literature */ 70);
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./Message */ 35);
+/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./Missions */ 47);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./NetscriptFunctions */ 37);
+/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./NetscriptWorker */ 24);
+/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./Player */ 0);
+/* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./Prestige */ 76);
+/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./RedPill */ 58);
+/* harmony import */ var _SaveObject__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./SaveObject */ 65);
+/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./Script */ 28);
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ./Server */ 12);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ./Settings */ 19);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_41___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_41__);
+/* harmony import */ var _ui_setSettingsLabels__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ./ui/setSettingsLabels */ 106);
+/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ./SourceFile */ 61);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! ./SpecialServerIps */ 27);
+/* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(/*! ./StockMarket */ 23);
+/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(/*! ./Terminal */ 44);
+/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 32);
+/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_47___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_47__);
+/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(/*! ./ui/navigationTracking */ 16);
+/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__);
+/* harmony import */ var normalize_css__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(/*! normalize.css */ 174);
+/* harmony import */ var normalize_css__WEBPACK_IMPORTED_MODULE_49___default = /*#__PURE__*/__webpack_require__.n(normalize_css__WEBPACK_IMPORTED_MODULE_49__);
+/* harmony import */ var _css_styles_scss__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(/*! ../css/styles.scss */ 152);
+/* harmony import */ var _css_styles_scss__WEBPACK_IMPORTED_MODULE_50___default = /*#__PURE__*/__webpack_require__.n(_css_styles_scss__WEBPACK_IMPORTED_MODULE_50__);
+/* harmony import */ var _css_buttons_scss__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! ../css/buttons.scss */ 150);
+/* harmony import */ var _css_buttons_scss__WEBPACK_IMPORTED_MODULE_51___default = /*#__PURE__*/__webpack_require__.n(_css_buttons_scss__WEBPACK_IMPORTED_MODULE_51__);
+/* harmony import */ var _css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! ../css/mainmenu.scss */ 148);
+/* harmony import */ var _css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_52___default = /*#__PURE__*/__webpack_require__.n(_css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_52__);
+/* harmony import */ var _css_terminal_scss__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(/*! ../css/terminal.scss */ 146);
+/* harmony import */ var _css_terminal_scss__WEBPACK_IMPORTED_MODULE_53___default = /*#__PURE__*/__webpack_require__.n(_css_terminal_scss__WEBPACK_IMPORTED_MODULE_53__);
+/* harmony import */ var _css_menupages_scss__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(/*! ../css/menupages.scss */ 144);
+/* harmony import */ var _css_menupages_scss__WEBPACK_IMPORTED_MODULE_54___default = /*#__PURE__*/__webpack_require__.n(_css_menupages_scss__WEBPACK_IMPORTED_MODULE_54__);
+/* harmony import */ var _css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(/*! ../css/workinprogress.scss */ 142);
+/* harmony import */ var _css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_55___default = /*#__PURE__*/__webpack_require__.n(_css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_55__);
+/* harmony import */ var _css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(/*! ../css/popupboxes.scss */ 140);
+/* harmony import */ var _css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_56___default = /*#__PURE__*/__webpack_require__.n(_css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_56__);
+/* harmony import */ var _css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(/*! ../css/interactivetutorial.scss */ 138);
+/* harmony import */ var _css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_57___default = /*#__PURE__*/__webpack_require__.n(_css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_57__);
+/* harmony import */ var _css_loader_scss__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(/*! ../css/loader.scss */ 136);
+/* harmony import */ var _css_loader_scss__WEBPACK_IMPORTED_MODULE_58___default = /*#__PURE__*/__webpack_require__.n(_css_loader_scss__WEBPACK_IMPORTED_MODULE_58__);
+/* harmony import */ var _css_missions_scss__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(/*! ../css/missions.scss */ 134);
+/* harmony import */ var _css_missions_scss__WEBPACK_IMPORTED_MODULE_59___default = /*#__PURE__*/__webpack_require__.n(_css_missions_scss__WEBPACK_IMPORTED_MODULE_59__);
+/* harmony import */ var _css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(/*! ../css/companymanagement.scss */ 132);
+/* harmony import */ var _css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_60___default = /*#__PURE__*/__webpack_require__.n(_css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_60__);
+/* harmony import */ var _css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(/*! ../css/bladeburner.scss */ 130);
+/* harmony import */ var _css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_61___default = /*#__PURE__*/__webpack_require__.n(_css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_61__);
+
 
 
 
@@ -4651,52 +4746,52 @@ __webpack_require__.r(__webpack_exports__);
  *  Alt-o - Options
  */
 $(document).keydown(function(e) {
-    if (_Settings__WEBPACK_IMPORTED_MODULE_40__["Settings"].DisableHotkeys === true) {return;}
-    if (!_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].isWorking && !_RedPill__WEBPACK_IMPORTED_MODULE_36__[/* redPillFlag */ "b"] && !_Missions__WEBPACK_IMPORTED_MODULE_31__[/* inMission */ "c"] && !_CinematicText__WEBPACK_IMPORTED_MODULE_16__[/* cinematicTextFlag */ "a"]) {
+    if (_Settings__WEBPACK_IMPORTED_MODULE_41__["Settings"].DisableHotkeys === true) {return;}
+    if (!_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].isWorking && !_RedPill__WEBPACK_IMPORTED_MODULE_37__[/* redPillFlag */ "b"] && !_Missions__WEBPACK_IMPORTED_MODULE_32__[/* inMission */ "c"] && !_CinematicText__WEBPACK_IMPORTED_MODULE_16__[/* cinematicTextFlag */ "a"]) {
         if (e.keyCode == 84 && e.altKey) {
             e.preventDefault();
             Engine.loadTerminalContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_46__["KEY"].C && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_47__["KEY"].C && e.altKey) {
             e.preventDefault();
             Engine.loadCharacterContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_46__["KEY"].E && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_47__["KEY"].E && e.altKey) {
             e.preventDefault();
             Engine.loadScriptEditorContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_46__["KEY"].S && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_47__["KEY"].S && e.altKey) {
             e.preventDefault();
             Engine.loadActiveScriptsContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_46__["KEY"].H && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_47__["KEY"].H && e.altKey) {
             e.preventDefault();
             Engine.loadHacknetNodesContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_46__["KEY"].W && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_47__["KEY"].W && e.altKey) {
             e.preventDefault();
             Engine.loadWorldContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_46__["KEY"].J && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_47__["KEY"].J && e.altKey) {
             e.preventDefault();
             Engine.loadJobContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_46__["KEY"].R && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_47__["KEY"].R && e.altKey) {
             e.preventDefault();
             Engine.loadTravelContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_46__["KEY"].P && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_47__["KEY"].P && e.altKey) {
             e.preventDefault();
             Engine.loadCreateProgramContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_46__["KEY"].F && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_47__["KEY"].F && e.altKey) {
             //Overriden by Fconf
-            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["Page"].Terminal) && _Fconf__WEBPACK_IMPORTED_MODULE_23__[/* FconfSettings */ "a"].ENABLE_BASH_HOTKEYS) {
+            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["Page"].Terminal) && _Fconf__WEBPACK_IMPORTED_MODULE_24__[/* FconfSettings */ "a"].ENABLE_BASH_HOTKEYS) {
                 return;
             }
             e.preventDefault();
             Engine.loadFactionsContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_46__["KEY"].A && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_47__["KEY"].A && e.altKey) {
             e.preventDefault();
             Engine.loadAugmentationsContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_46__["KEY"].U && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_47__["KEY"].U && e.altKey) {
             e.preventDefault();
             Engine.loadTutorialContent();
         }
     }
 
-    if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_46__["KEY"].O && e.altKey) {
+    if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_47__["KEY"].O && e.altKey) {
         e.preventDefault();
         Object(_utils_GameOptions__WEBPACK_IMPORTED_MODULE_1__[/* gameOptionsBoxOpen */ "b"])();
     }
@@ -4739,41 +4834,6 @@ const Engine = {
         tutorialFactionsButton:         null,
         tutorialAugmentationsButton:    null,
         tutorialBackButton:             null,
-
-        //Dev menu
-        devMenuGiveMoney:   null,
-        devMenuGiveRam:     null,
-        devMenuAugDropdown: null,
-        devMenuAddAug:      null,
-        devMenuTriggerBitFlume: null,
-        devMenuFactionDropdown: null,
-        devMenuAddFaction: null,
-        devMenuOpen: null,
-        devMenuMinSecurity: null,
-        devMenuMaxMoney: null,
-        devMenuConnectDropdown: null,
-        devMenuConnect: null,
-        devMenuProgramsDropdown: null,
-        devMenuAddProgram: null,
-        devMenuHackingExp: null,
-        devMenuAddHacking: null,
-        devMenuStrengthExp: null,
-        devMenuAddStrength: null,
-        devMenuDefenseExp: null,
-        devMenuAddDefense: null,
-        devMenuDexterityExp: null,
-        devMenuAddDexterity: null,
-        devMenuAgilityExp: null,
-        devMenuAddAgility: null,
-        devMenuCharismaExp: null,
-        devMenuAddCharisma: null,
-        devMenuIntelligenceExp: null,
-        devMenuAddIntelligence: null,
-        devMenuEnableIntelligence: null,
-        devMenuDisableIntelligence: null,
-        devMenuSFN: null,
-        devMenuSFLvl: null,
-        devMenuAddSF: null,
     },
 
     //Display objects
@@ -4799,7 +4859,6 @@ const Engine = {
         factionAugmentationsContent:    null,
         augmentationsContent:           null,
         tutorialContent:                null,
-        devMenuContent:                 null,
         infiltrationContent:            null,
         stockMarketContent:             null,
         locationContent:                null,
@@ -4820,7 +4879,7 @@ const Engine = {
     loadTerminalContent: function() {
         Engine.hideAllContent();
         Engine.Display.terminalContent.style.display = "block";
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["Page"].Terminal);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["Page"].Terminal);
         document.getElementById("terminal-menu-link").classList.add("active");
     },
 
@@ -4828,7 +4887,7 @@ const Engine = {
         Engine.hideAllContent();
         Engine.Display.characterContent.style.display = "block";
         Engine.displayCharacterInfo();
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["Page"].CharacterInfo);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["Page"].CharacterInfo);
         document.getElementById("stats-menu-link").classList.add("active");
     },
 
@@ -4841,8 +4900,8 @@ const Engine = {
             editor.setValue(code);
         }
         editor.focus();
-        Object(_Script__WEBPACK_IMPORTED_MODULE_38__[/* updateScriptEditorContent */ "h"])();
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["Page"].ScriptEditor);
+        Object(_Script__WEBPACK_IMPORTED_MODULE_39__[/* updateScriptEditorContent */ "h"])();
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["Page"].ScriptEditor);
         document.getElementById("create-script-menu-link").classList.add("active");
     },
 
@@ -4850,15 +4909,15 @@ const Engine = {
         Engine.hideAllContent();
         Engine.Display.activeScriptsContent.style.display = "block";
         Object(_ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_11__[/* updateActiveScriptsItems */ "c"])();
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["Page"].ActiveScripts);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["Page"].ActiveScripts);
         document.getElementById("active-scripts-menu-link").classList.add("active");
     },
 
     loadHacknetNodesContent: function() {
         Engine.hideAllContent();
         Engine.Display.hacknetNodesContent.style.display = "block";
-        Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_27__[/* displayHacknetNodesContent */ "b"])();
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["Page"].HacknetNodes);
+        Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_28__[/* displayHacknetNodesContent */ "b"])();
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["Page"].HacknetNodes);
         document.getElementById("hacknet-nodes-menu-link").classList.add("active");
     },
 
@@ -4866,7 +4925,7 @@ const Engine = {
         Engine.hideAllContent();
         Engine.Display.worldContent.style.display = "block";
         Engine.displayWorldInfo();
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["Page"].World);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["Page"].World);
         document.getElementById("city-menu-link").classList.add("active");
     },
 
@@ -4874,7 +4933,7 @@ const Engine = {
         Engine.hideAllContent();
         Engine.Display.createProgramContent.style.display = "block";
         Object(_CreateProgram__WEBPACK_IMPORTED_MODULE_21__[/* displayCreateProgramContent */ "b"])();
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["Page"].CreateProgram);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["Page"].CreateProgram);
         document.getElementById("create-program-menu-link").classList.add("active");
     },
 
@@ -4882,21 +4941,21 @@ const Engine = {
         Engine.hideAllContent();
         Engine.Display.factionsContent.style.display = "block";
         Engine.displayFactionsInfo();
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["Page"].Factions);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["Page"].Factions);
         document.getElementById("factions-menu-link").classList.add("active");
     },
 
     loadFactionContent: function() {
         Engine.hideAllContent();
         Engine.Display.factionContent.style.display = "block";
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["Page"].Faction);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["Page"].Faction);
     },
 
     loadAugmentationsContent: function() {
         Engine.hideAllContent();
         Engine.Display.augmentationsContent.style.display = "block";
         Object(_Augmentations__WEBPACK_IMPORTED_MODULE_12__[/* displayAugmentationsContent */ "g"])();
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["Page"].Augmentations);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["Page"].Augmentations);
         document.getElementById("augmentations-menu-link").classList.add("active");
     },
 
@@ -4904,44 +4963,43 @@ const Engine = {
         Engine.hideAllContent();
         Engine.Display.tutorialContent.style.display = "block";
         Engine.displayTutorialContent();
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["Page"].Tutorial);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["Page"].Tutorial);
         document.getElementById("tutorial-menu-link").classList.add("active");
     },
 
     loadDevMenuContent: function() {
         Engine.hideAllContent();
-        Engine.Display.devMenuContent.style.display = "block";
-        Engine.displayDevMenuContent();
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["Page"].DevMenu);
+        Object(_DevMenu__WEBPACK_IMPORTED_MODULE_22__[/* createDevMenu */ "b"])();
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["Page"].DevMenu);
         document.getElementById("dev-menu-link").classList.add("active");
     },
 
     loadLocationContent: function() {
         Engine.hideAllContent();
         Engine.Display.locationContent.style.display = "block";
-        Object(_Location__WEBPACK_IMPORTED_MODULE_24__[/* displayLocationContent */ "a"])();
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["Page"].Location);
+        Object(_Location__WEBPACK_IMPORTED_MODULE_25__[/* displayLocationContent */ "a"])();
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["Page"].Location);
     },
 
     loadTravelContent: function() {
-        switch(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].city) {
-            case _Locations__WEBPACK_IMPORTED_MODULE_25__["Locations"].Aevum:
-                _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_25__["Locations"].AevumTravelAgency;
+        switch(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].city) {
+            case _Locations__WEBPACK_IMPORTED_MODULE_26__["Locations"].Aevum:
+                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_26__["Locations"].AevumTravelAgency;
                 break;
-            case _Locations__WEBPACK_IMPORTED_MODULE_25__["Locations"].Chongqing:
-                _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_25__["Locations"].ChongqingTravelAgency;
+            case _Locations__WEBPACK_IMPORTED_MODULE_26__["Locations"].Chongqing:
+                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_26__["Locations"].ChongqingTravelAgency;
                 break;
-            case _Locations__WEBPACK_IMPORTED_MODULE_25__["Locations"].Sector12:
-                _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_25__["Locations"].Sector12TravelAgency;
+            case _Locations__WEBPACK_IMPORTED_MODULE_26__["Locations"].Sector12:
+                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_26__["Locations"].Sector12TravelAgency;
                 break;
-            case _Locations__WEBPACK_IMPORTED_MODULE_25__["Locations"].NewTokyo:
-                _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_25__["Locations"].NewTokyoTravelAgency;
+            case _Locations__WEBPACK_IMPORTED_MODULE_26__["Locations"].NewTokyo:
+                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_26__["Locations"].NewTokyoTravelAgency;
                 break;
-            case _Locations__WEBPACK_IMPORTED_MODULE_25__["Locations"].Ishima:
-                _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_25__["Locations"].IshimaTravelAgency;
+            case _Locations__WEBPACK_IMPORTED_MODULE_26__["Locations"].Ishima:
+                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_26__["Locations"].IshimaTravelAgency;
                 break;
-            case _Locations__WEBPACK_IMPORTED_MODULE_25__["Locations"].Volhaven:
-                _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_25__["Locations"].VolhavenTravelAgency;
+            case _Locations__WEBPACK_IMPORTED_MODULE_26__["Locations"].Volhaven:
+                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_26__["Locations"].VolhavenTravelAgency;
                 break;
             default:
                 Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_0__["dialogBoxCreate"])("ERROR: Invalid city. This is a bug please contact game dev");
@@ -4951,12 +5009,12 @@ const Engine = {
     },
 
     loadJobContent: function() {
-        if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].companyName == "") {
+        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].companyName == "") {
             Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_0__["dialogBoxCreate"])("You do not currently have a job! You can visit various companies " +
                             "in the city and try to find a job.");
             return;
         }
-        _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].location = _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].companyName;
+        _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].location = _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].companyName;
         Engine.loadLocationContent();
     },
 
@@ -4966,7 +5024,7 @@ const Engine = {
         //mainMenu.style.visibility = "hidden";
         mainMenu.style.visibility = "hidden";
         Engine.Display.workInProgressContent.style.display = "block";
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["Page"].WorkInProgress);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["Page"].WorkInProgress);
     },
 
     loadRedPillContent: function() {
@@ -4974,7 +5032,7 @@ const Engine = {
         var mainMenu = document.getElementById("mainmenu-container");
         mainMenu.style.visibility = "hidden";
         Engine.Display.redPillContent.style.display = "block";
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["Page"].RedPill);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["Page"].RedPill);
     },
 
     loadCinematicTextContent: function() {
@@ -4982,30 +5040,30 @@ const Engine = {
         var mainMenu = document.getElementById("mainmenu-container");
         mainMenu.style.visibility = "hidden";
         Engine.Display.cinematicTextContent.style.display = "block";
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["Page"].CinematicText);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["Page"].CinematicText);
     },
 
     loadInfiltrationContent: function() {
         Engine.hideAllContent();
         Engine.Display.infiltrationContent.style.display = "block";
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["Page"].Infiltration);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["Page"].Infiltration);
     },
 
     loadStockMarketContent: function() {
         Engine.hideAllContent();
         Engine.Display.stockMarketContent.style.display = "block";
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["Page"].StockMarket);
-        Object(_StockMarket__WEBPACK_IMPORTED_MODULE_44__[/* displayStockMarketContent */ "g"])();
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["Page"].StockMarket);
+        Object(_StockMarket__WEBPACK_IMPORTED_MODULE_45__[/* displayStockMarketContent */ "g"])();
     },
 
     loadGangContent: function() {
         Engine.hideAllContent();
-        if (document.getElementById("gang-container") || _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].inGang()) {
-            Object(_Gang__WEBPACK_IMPORTED_MODULE_26__[/* displayGangContent */ "d"])();
-            _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["Page"].Gang);
+        if (document.getElementById("gang-container") || _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].inGang()) {
+            Object(_Gang__WEBPACK_IMPORTED_MODULE_27__[/* displayGangContent */ "d"])();
+            _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["Page"].Gang);
         } else {
             Engine.loadTerminalContent();
-            _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["Page"].Terminal);
+            _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["Page"].Terminal);
         }
     },
 
@@ -5014,24 +5072,24 @@ const Engine = {
         document.getElementById("mainmenu-container").style.visibility = "hidden";
         document.getElementById("character-overview-wrapper").style.visibility = "hidden";
         Engine.Display.missionContent.style.display = "block";
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["Page"].Mission);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["Page"].Mission);
     },
 
     loadCorporationContent: function() {
-        if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].corporation instanceof _CompanyManagement__WEBPACK_IMPORTED_MODULE_19__[/* Corporation */ "a"]) {
+        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation instanceof _CompanyManagement__WEBPACK_IMPORTED_MODULE_19__[/* Corporation */ "a"]) {
             Engine.hideAllContent();
             document.getElementById("character-overview-wrapper").style.visibility = "hidden";
-            _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].corporation.createUI();
-            _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["Page"].Corporation);
+            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation.createUI();
+            _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["Page"].Corporation);
         }
     },
 
     loadBladeburnerContent: function() {
-        if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"]) {
+        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"]) {
             try {
                 Engine.hideAllContent();
-                _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["Page"].Bladeburner);
-                _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].bladeburner.createContent();
+                _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["Page"].Bladeburner);
+                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bladeburner.createContent();
             } catch(e) {
                 Object(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_6__[/* exceptionAlert */ "a"])(e);
             }
@@ -5052,7 +5110,6 @@ const Engine = {
         Engine.Display.factionAugmentationsContent.style.display = "none";
         Engine.Display.augmentationsContent.style.display = "none";
         Engine.Display.tutorialContent.style.display = "none";
-        Engine.Display.devMenuContent.style.display = "none";
         Engine.Display.locationContent.style.display = "none";
         Engine.Display.workInProgressContent.style.display = "none";
         Engine.Display.redPillContent.style.display = "none";
@@ -5064,12 +5121,12 @@ const Engine = {
             document.getElementById("gang-container").style.display = "none";
         }
 
-        if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].corporation instanceof _CompanyManagement__WEBPACK_IMPORTED_MODULE_19__[/* Corporation */ "a"]) {
-            _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].corporation.clearUI();
+        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation instanceof _CompanyManagement__WEBPACK_IMPORTED_MODULE_19__[/* Corporation */ "a"]) {
+            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation.clearUI();
         }
 
-        if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"]) {
-            _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].bladeburner.clearContent();
+        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"]) {
+            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bladeburner.clearContent();
         }
 
         //Location lists
@@ -5096,6 +5153,9 @@ const Engine = {
         document.getElementById("bladeburner-menu-link").classList.remove("active");
         document.getElementById("corporation-menu-link").classList.remove("active");
         document.getElementById("gang-menu-link").classList.remove("active");
+
+        // Close dev menu
+        Object(_DevMenu__WEBPACK_IMPORTED_MODULE_22__[/* closeDevMenu */ "a"])();
     },
 
     displayCharacterOverviewInfo: function() {
@@ -5104,7 +5164,7 @@ const Engine = {
 
         const save = document.getElementById("character-overview-save-button");
         const flashClass = "flashing-button";
-        if(!_Settings__WEBPACK_IMPORTED_MODULE_40__["Settings"].AutosaveInterval) {
+        if(!_Settings__WEBPACK_IMPORTED_MODULE_41__["Settings"].AutosaveInterval) {
             save.classList.add(flashClass);
         } else {
             save.classList.remove(flashClass);
@@ -5116,84 +5176,84 @@ const Engine = {
         Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_3__["removeChildrenFromElement"])(Engine.Display.characterInfo);
 
         var companyPosition = "";
-        if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].companyPosition != "") {
-            companyPosition = _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].companyPosition.positionName;
+        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].companyPosition != "") {
+            companyPosition = _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].companyPosition.positionName;
         }
 
         var intText = "";
-        if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].intelligence > 0) {
-            intText = 'Intelligence:  ' + (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].intelligence).toLocaleString() + '<br>';
+        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].intelligence > 0) {
+            intText = 'Intelligence:  ' + (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].intelligence).toLocaleString() + '<br>';
         }
 
         let bitNodeTimeText = "";
-        if(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].sourceFiles.length > 0) {
-            bitNodeTimeText = 'Time played since last Bitnode destroyed: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["convertTimeMsToTimeElapsedString"])(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].playtimeSinceLastBitnode) + '<br>';
+        if(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].sourceFiles.length > 0) {
+            bitNodeTimeText = 'Time played since last Bitnode destroyed: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["convertTimeMsToTimeElapsedString"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastBitnode) + '<br>';
         }
 
         Engine.Display.characterInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("pre", {
             innerHTML:
             '<b>General</b><br><br>' +
-            'Current City: ' + _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].city + '<br><br>' +
-            'Employer: ' + _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].companyName + '<br>' +
+            'Current City: ' + _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].city + '<br><br>' +
+            'Employer: ' + _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].companyName + '<br>' +
             'Job Title: ' + companyPosition + '<br><br>' +
-            'Money: $' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].money.toNumber(), 2) + '<br><br><br>' +
+            'Money: $' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].money.toNumber(), 2) + '<br><br><br>' +
             '<b>Stats</b><br><br>' +
-            'Hacking Level: ' + (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].hacking_skill).toLocaleString() +
-                            ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__[/* numeralWrapper */ "a"].format(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].hacking_exp, '(0.000a)') + ' experience)<br>' +
-            'Strength:      ' + (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].strength).toLocaleString() +
-                       ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__[/* numeralWrapper */ "a"].format(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].strength_exp, '(0.000a)') + ' experience)<br>' +
-            'Defense:       ' + (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].defense).toLocaleString() +
-                      ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__[/* numeralWrapper */ "a"].format(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].defense_exp, '(0.000a)') + ' experience)<br>' +
-            'Dexterity:     ' + (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].dexterity).toLocaleString() +
-                       ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__[/* numeralWrapper */ "a"].format(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].dexterity_exp, '(0.000a)') + ' experience)<br>' +
-            'Agility:       ' + (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].agility).toLocaleString() +
-                      ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__[/* numeralWrapper */ "a"].format(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].agility_exp, '(0.000a)') + ' experience)<br>' +
-            'Charisma:      ' + (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].charisma).toLocaleString() +
-                       ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__[/* numeralWrapper */ "a"].format(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].charisma_exp, '(0.000a)') + ' experience)<br>' +
+            'Hacking Level: ' + (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacking_skill).toLocaleString() +
+                            ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__[/* numeralWrapper */ "a"].format(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacking_exp, '(0.000a)') + ' experience)<br>' +
+            'Strength:      ' + (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].strength).toLocaleString() +
+                       ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__[/* numeralWrapper */ "a"].format(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].strength_exp, '(0.000a)') + ' experience)<br>' +
+            'Defense:       ' + (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].defense).toLocaleString() +
+                      ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__[/* numeralWrapper */ "a"].format(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].defense_exp, '(0.000a)') + ' experience)<br>' +
+            'Dexterity:     ' + (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].dexterity).toLocaleString() +
+                       ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__[/* numeralWrapper */ "a"].format(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].dexterity_exp, '(0.000a)') + ' experience)<br>' +
+            'Agility:       ' + (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].agility).toLocaleString() +
+                      ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__[/* numeralWrapper */ "a"].format(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].agility_exp, '(0.000a)') + ' experience)<br>' +
+            'Charisma:      ' + (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].charisma).toLocaleString() +
+                       ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__[/* numeralWrapper */ "a"].format(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].charisma_exp, '(0.000a)') + ' experience)<br>' +
             intText + '<br><br>' +
             '<b>Multipliers</b><br><br>' +
-            'Hacking Chance multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].hacking_chance_mult * 100, 2) + '%<br>' +
-            'Hacking Speed multiplier:  ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].hacking_speed_mult * 100, 2) + '%<br>' +
-            'Hacking Money multiplier:  ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].hacking_money_mult * 100, 2) + '%<br>' +
-            'Hacking Growth multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].hacking_grow_mult * 100, 2) + '%<br><br>' +
-            'Hacking Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].hacking_mult * 100, 2) + '%<br>' +
-            'Hacking Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].hacking_exp_mult * 100, 2) + '%<br><br>' +
-            'Strength Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].strength_mult * 100, 2) + '%<br>' +
-            'Strength Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].strength_exp_mult * 100, 2) + '%<br><br>' +
-            'Defense Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].defense_mult * 100, 2) + '%<br>' +
-            'Defense Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].defense_exp_mult * 100, 2) + '%<br><br>' +
-            'Dexterity Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].dexterity_mult * 100, 2) + '%<br>' +
-            'Dexterity Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].dexterity_exp_mult * 100, 2) + '%<br><br>' +
-            'Agility Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].agility_mult * 100, 2) + '%<br>' +
-            'Agility Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].agility_exp_mult * 100, 2) + '%<br><br>' +
-            'Charisma Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].charisma_mult * 100, 2) + '%<br>' +
-            'Charisma Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].charisma_exp_mult * 100, 2) + '%<br><br>' +
-            'Hacknet Node production multiplier:         ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].hacknet_node_money_mult * 100, 2) + '%<br>' +
-            'Hacknet Node purchase cost multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].hacknet_node_purchase_cost_mult * 100, 2) + '%<br>' +
-            'Hacknet Node RAM upgrade cost multiplier:   ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].hacknet_node_ram_cost_mult * 100, 2) + '%<br>' +
-            'Hacknet Node Core purchase cost multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].hacknet_node_core_cost_mult * 100, 2) + '%<br>' +
-            'Hacknet Node level upgrade cost multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].hacknet_node_level_cost_mult * 100, 2) + '%<br><br>' +
-            'Company reputation gain multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].company_rep_mult * 100, 2) + '%<br>' +
-            'Faction reputation gain multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].faction_rep_mult * 100, 2) + '%<br>' +
-            'Salary multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].work_money_mult * 100, 2) + '%<br>' +
-            'Crime success multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].crime_success_mult * 100, 2) + '%<br>' +
-            'Crime money multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].crime_money_mult * 100, 2) + '%<br><br><br>' +
+            'Hacking Chance multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacking_chance_mult * 100, 2) + '%<br>' +
+            'Hacking Speed multiplier:  ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacking_speed_mult * 100, 2) + '%<br>' +
+            'Hacking Money multiplier:  ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacking_money_mult * 100, 2) + '%<br>' +
+            'Hacking Growth multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacking_grow_mult * 100, 2) + '%<br><br>' +
+            'Hacking Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacking_mult * 100, 2) + '%<br>' +
+            'Hacking Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacking_exp_mult * 100, 2) + '%<br><br>' +
+            'Strength Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].strength_mult * 100, 2) + '%<br>' +
+            'Strength Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].strength_exp_mult * 100, 2) + '%<br><br>' +
+            'Defense Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].defense_mult * 100, 2) + '%<br>' +
+            'Defense Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].defense_exp_mult * 100, 2) + '%<br><br>' +
+            'Dexterity Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].dexterity_mult * 100, 2) + '%<br>' +
+            'Dexterity Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].dexterity_exp_mult * 100, 2) + '%<br><br>' +
+            'Agility Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].agility_mult * 100, 2) + '%<br>' +
+            'Agility Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].agility_exp_mult * 100, 2) + '%<br><br>' +
+            'Charisma Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].charisma_mult * 100, 2) + '%<br>' +
+            'Charisma Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].charisma_exp_mult * 100, 2) + '%<br><br>' +
+            'Hacknet Node production multiplier:         ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacknet_node_money_mult * 100, 2) + '%<br>' +
+            'Hacknet Node purchase cost multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacknet_node_purchase_cost_mult * 100, 2) + '%<br>' +
+            'Hacknet Node RAM upgrade cost multiplier:   ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacknet_node_ram_cost_mult * 100, 2) + '%<br>' +
+            'Hacknet Node Core purchase cost multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacknet_node_core_cost_mult * 100, 2) + '%<br>' +
+            'Hacknet Node level upgrade cost multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacknet_node_level_cost_mult * 100, 2) + '%<br><br>' +
+            'Company reputation gain multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].company_rep_mult * 100, 2) + '%<br>' +
+            'Faction reputation gain multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].faction_rep_mult * 100, 2) + '%<br>' +
+            'Salary multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].work_money_mult * 100, 2) + '%<br>' +
+            'Crime success multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].crime_success_mult * 100, 2) + '%<br>' +
+            'Crime money multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].crime_money_mult * 100, 2) + '%<br><br><br>' +
             '<b>Misc</b><br><br>' +
-            'Servers owned:       ' + _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].purchasedServers.length + '<br>' +
-            'Hacknet Nodes owned: ' + _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].hacknetNodes.length + '<br>' +
-            'Augmentations installed: ' + _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].augmentations.length + '<br>' +
-            'Time played since last Augmentation: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["convertTimeMsToTimeElapsedString"])(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].playtimeSinceLastAug) + '<br>' +
+            'Servers owned:       ' + _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].purchasedServers.length + '<br>' +
+            'Hacknet Nodes owned: ' + _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacknetNodes.length + '<br>' +
+            'Augmentations installed: ' + _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].augmentations.length + '<br>' +
+            'Time played since last Augmentation: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["convertTimeMsToTimeElapsedString"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastAug) + '<br>' +
             bitNodeTimeText +
-            'Time played: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["convertTimeMsToTimeElapsedString"])(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].totalPlaytime),
+            'Time played: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["convertTimeMsToTimeElapsedString"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].totalPlaytime),
         }));
 
-        if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].sourceFiles.length !== 0) {
-            var index = "BitNode" + _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].bitNodeN;
+        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].sourceFiles.length !== 0) {
+            var index = "BitNode" + _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bitNodeN;
 
             Engine.Display.characterInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("p", {
                 width:"60%",
                 innerHTML:
-                    "<br>Current BitNode: " + _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].bitNodeN + " (" + _BitNode__WEBPACK_IMPORTED_MODULE_13__[/* BitNodes */ "a"][index].name + ")<br><br>",
+                    "<br>Current BitNode: " + _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bitNodeN + " (" + _BitNode__WEBPACK_IMPORTED_MODULE_13__[/* BitNodes */ "a"][index].name + ")<br><br>",
             }));
 
             Engine.Display.characterInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("p", {
@@ -5219,32 +5279,32 @@ const Engine = {
         Engine.ishimaLocationsList.style.display = "none";
         Engine.volhavenLocationsList.style.display = "none";
 
-        document.getElementById("world-city-name").innerHTML = _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].city;
+        document.getElementById("world-city-name").innerHTML = _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].city;
         var cityDesc = document.getElementById("world-city-desc"); //TODO
-        switch(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].city) {
-            case _Locations__WEBPACK_IMPORTED_MODULE_25__["Locations"].Aevum:
+        switch(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].city) {
+            case _Locations__WEBPACK_IMPORTED_MODULE_26__["Locations"].Aevum:
                 Engine.aevumLocationsList.style.display = "inline";
                 break;
-            case _Locations__WEBPACK_IMPORTED_MODULE_25__["Locations"].Chongqing:
+            case _Locations__WEBPACK_IMPORTED_MODULE_26__["Locations"].Chongqing:
                 Engine.chongqingLocationsList.style.display = "inline";
                 break;
-            case _Locations__WEBPACK_IMPORTED_MODULE_25__["Locations"].Sector12:
+            case _Locations__WEBPACK_IMPORTED_MODULE_26__["Locations"].Sector12:
                 Engine.sector12LocationsList.style.display = "inline";
 
                 //City hall only in BitNode-3/with Source-File 3
-                if ((_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].bitNodeN === 3 || _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_32__[/* hasCorporationSF */ "e"]) && _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].bitNodeN !== 8)  {
+                if ((_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bitNodeN === 3 || _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_33__[/* hasCorporationSF */ "e"]) && _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bitNodeN !== 8)  {
                     document.getElementById("sector12-cityhall-li").style.display = "block";
                 } else {
                     document.getElementById("sector12-cityhall-li").style.display = "none";
                 }
                 break;
-            case _Locations__WEBPACK_IMPORTED_MODULE_25__["Locations"].NewTokyo:
+            case _Locations__WEBPACK_IMPORTED_MODULE_26__["Locations"].NewTokyo:
                 Engine.newTokyoLocationsList.style.display = "inline";
                 break;
-            case _Locations__WEBPACK_IMPORTED_MODULE_25__["Locations"].Ishima:
+            case _Locations__WEBPACK_IMPORTED_MODULE_26__["Locations"].Ishima:
                 Engine.ishimaLocationsList.style.display = "inline";
                 break;
-            case _Locations__WEBPACK_IMPORTED_MODULE_25__["Locations"].Volhaven:
+            case _Locations__WEBPACK_IMPORTED_MODULE_26__["Locations"].Volhaven:
                 Engine.volhavenLocationsList.style.display = "inline";
                 break;
             default:
@@ -5263,17 +5323,17 @@ const Engine = {
         li.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("a", {
             innerText:"World Stock Exchange", class:"a-link-button",
             clickListener:()=>{
-                _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_25__["Locations"].WorldStockExchange;
+                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_26__["Locations"].WorldStockExchange;
                 Engine.loadStockMarketContent();
                 return false;
             }
         }));
         genericLocationsList.appendChild(li);
 
-        if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].corporation instanceof _CompanyManagement__WEBPACK_IMPORTED_MODULE_19__[/* Corporation */ "a"] && document.getElementById("location-corporation-button") == null) {
+        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation instanceof _CompanyManagement__WEBPACK_IMPORTED_MODULE_19__[/* Corporation */ "a"] && document.getElementById("location-corporation-button") == null) {
             var li = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("li");
             li.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("a", {
-                innerText:_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].corporation.name, id:"location-corporation-button",
+                innerText:_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation.name, id:"location-corporation-button",
                 class:"a-link-button",
                 clickListener:()=>{
                     Engine.loadCorporationContent();
@@ -5283,7 +5343,7 @@ const Engine = {
             genericLocationsList.appendChild(li);
         }
 
-        if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"]) {
+        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"]) {
             var li = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("li");
             li.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("a", {
                 innerText:"Bladeburner Headquarters", class:"a-link-button",
@@ -5310,16 +5370,16 @@ const Engine = {
         Engine.Display.factionsContent.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("br"));
 
         //Add a button for each faction you are a member of
-        for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].factions.length; ++i) {
+        for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].factions.length; ++i) {
             (function () {
-                var factionName = _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].factions[i];
+                var factionName = _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].factions[i];
 
                 factionsList.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("a", {
                     class:"a-link-button", innerText:factionName, padding:"4px", margin:"4px",
                     display:"inline-block",
                     clickListener:()=>{
                         Engine.loadFactionContent();
-                        Object(_Faction__WEBPACK_IMPORTED_MODULE_22__[/* displayFactionContent */ "c"])(factionName);
+                        Object(_Faction__WEBPACK_IMPORTED_MODULE_23__[/* displayFactionContent */ "c"])(factionName);
                         return false;
                     }
                 }));
@@ -5342,9 +5402,9 @@ const Engine = {
         var invitationsList = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("ul");
 
         //Add a button to accept for each faction you have invitiations for
-        for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].factionInvitations.length; ++i) {
+        for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].factionInvitations.length; ++i) {
             (function () {
-                var factionName = _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].factionInvitations[i];
+                var factionName = _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].factionInvitations[i];
 
                 var item = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("li", {padding:"6px", margin:"6px"});
                 item.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("p", {
@@ -5354,10 +5414,10 @@ const Engine = {
                     innerText:"Accept Faction Invitation",
                     class:"a-link-button", display:"inline", margin:"4px", padding:"4px",
                     clickListener:()=>{
-                        Object(_Faction__WEBPACK_IMPORTED_MODULE_22__[/* joinFaction */ "h"])(_Faction__WEBPACK_IMPORTED_MODULE_22__[/* Factions */ "b"][factionName]);
-                        for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].factionInvitations.length; ++i) {
-                            if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].factionInvitations[i] == factionName || _Faction__WEBPACK_IMPORTED_MODULE_22__[/* Factions */ "b"][_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].factionInvitations[i]].isBanned) {
-                                _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].factionInvitations.splice(i, 1);
+                        Object(_Faction__WEBPACK_IMPORTED_MODULE_23__[/* joinFaction */ "g"])(_Faction__WEBPACK_IMPORTED_MODULE_23__[/* Factions */ "b"][factionName]);
+                        for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].factionInvitations.length; ++i) {
+                            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].factionInvitations[i] == factionName || _Faction__WEBPACK_IMPORTED_MODULE_23__[/* Factions */ "b"][_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].factionInvitations[i]].isBanned) {
+                                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].factionInvitations.splice(i, 1);
                                 i--;
                             }
                         }
@@ -5387,43 +5447,6 @@ const Engine = {
 
         Engine.Clickables.tutorialBackButton.style.display = "none";
         document.getElementById("tutorial-text").style.display = "none";
-    },
-
-    displayDevMenuContent: function() {
-        Engine.Clickables.devMenuGiveMoney.style.display = "block";
-        Engine.Clickables.devMenuGiveRam.style.display = "block";
-        Engine.Clickables.devMenuAugDropdown.style.display = "block";
-        Engine.Clickables.devMenuAddAug.style.display = "block";
-        Engine.Clickables.devMenuTriggerBitFlume.style.display = "block";
-        Engine.Clickables.devMenuFactionDropdown.style.display = "block";
-        Engine.Clickables.devMenuAddFaction.style.display = "block";
-        Engine.Clickables.devMenuOpen.style.display = "block";
-        Engine.Clickables.devMenuMinSecurity.style.display = "block";
-        Engine.Clickables.devMenuMaxMoney.style.display = "block";
-        Engine.Clickables.devMenuConnectDropdown.style.display = "block";
-        Engine.Clickables.devMenuConnect.style.display = "block";
-        Engine.Clickables.devMenuProgramsDropdown.style.display = "block";
-        Engine.Clickables.devMenuAddProgram.style.display = "block";
-
-        Engine.Clickables.devMenuHackingExp.style.display = "block";
-        Engine.Clickables.devMenuAddHacking.style.display = "block";
-        Engine.Clickables.devMenuStrengthExp.style.display = "block";
-        Engine.Clickables.devMenuAddStrength.style.display = "block";
-        Engine.Clickables.devMenuDefenseExp.style.display = "block";
-        Engine.Clickables.devMenuAddDefense.style.display = "block";
-        Engine.Clickables.devMenuDexterityExp.style.display = "block";
-        Engine.Clickables.devMenuAddDexterity.style.display = "block";
-        Engine.Clickables.devMenuAgilityExp.style.display = "block";
-        Engine.Clickables.devMenuAddAgility.style.display = "block";
-        Engine.Clickables.devMenuCharismaExp.style.display = "block";
-        Engine.Clickables.devMenuAddCharisma.style.display = "block";
-        Engine.Clickables.devMenuIntelligenceExp.style.display = "block";
-        Engine.Clickables.devMenuAddIntelligence.style.display = "block";
-        Engine.Clickables.devMenuEnableIntelligence.style.display = "block";
-        Engine.Clickables.devMenuDisableIntelligence.style.display = "block";
-        Engine.Clickables.devMenuSFN.style.display = "block";
-        Engine.Clickables.devMenuSFLvl.style.display = "block";
-        Engine.Clickables.devMenuAddSF.style.display = "block";
     },
 
     //Displays the text when a section of the Tutorial is opened
@@ -5457,7 +5480,7 @@ const Engine = {
         if (diff > 0) {
             //Update the game engine by the calculated number of cycles
             Engine._lastUpdate = _thisUpdate - offset;
-            _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].lastUpdate = _thisUpdate - offset;
+            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].lastUpdate = _thisUpdate - offset;
             Engine.updateGame(diff);
         }
 
@@ -5466,60 +5489,60 @@ const Engine = {
 
     updateGame: function(numCycles = 1) {
         var time = numCycles * Engine._idleSpeed;
-        if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].totalPlaytime == null) {_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].totalPlaytime = 0;}
-        if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].playtimeSinceLastAug == null) {_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].playtimeSinceLastAug = 0;}
-        if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].playtimeSinceLastBitnode == null) {_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].playtimeSinceLastBitnode = 0;}
-        _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].totalPlaytime += time;
-        _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].playtimeSinceLastAug += time;
-        _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].playtimeSinceLastBitnode += time;
+        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].totalPlaytime == null) {_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].totalPlaytime = 0;}
+        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastAug == null) {_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastAug = 0;}
+        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastBitnode == null) {_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastBitnode = 0;}
+        _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].totalPlaytime += time;
+        _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastAug += time;
+        _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastBitnode += time;
 
         //Start Manual hack
-        if (_Terminal__WEBPACK_IMPORTED_MODULE_45__[/* Terminal */ "a"].actionStarted === true) {
-            Engine._totalActionTime = _Terminal__WEBPACK_IMPORTED_MODULE_45__[/* Terminal */ "a"].actionTime;
-            Engine._actionTimeLeft = _Terminal__WEBPACK_IMPORTED_MODULE_45__[/* Terminal */ "a"].actionTime;
+        if (_Terminal__WEBPACK_IMPORTED_MODULE_46__[/* Terminal */ "a"].actionStarted === true) {
+            Engine._totalActionTime = _Terminal__WEBPACK_IMPORTED_MODULE_46__[/* Terminal */ "a"].actionTime;
+            Engine._actionTimeLeft = _Terminal__WEBPACK_IMPORTED_MODULE_46__[/* Terminal */ "a"].actionTime;
             Engine._actionInProgress = true;
             Engine._actionProgressBarCount = 1;
             Engine._actionProgressStr = "[                                                  ]";
             Engine._actionTimeStr = "Time left: ";
-            _Terminal__WEBPACK_IMPORTED_MODULE_45__[/* Terminal */ "a"].actionStarted = false;
+            _Terminal__WEBPACK_IMPORTED_MODULE_46__[/* Terminal */ "a"].actionStarted = false;
         }
 
         //Working
-        if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].isWorking) {
-            if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_20__[/* CONSTANTS */ "a"].WorkTypeFaction) {
-                _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].workForFaction(numCycles);
-            } else if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_20__[/* CONSTANTS */ "a"].WorkTypeCreateProgram) {
-                _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].createProgramWork(numCycles);
-            } else if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_20__[/* CONSTANTS */ "a"].WorkTypeStudyClass) {
-                _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].takeClass(numCycles);
-            } else if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_20__[/* CONSTANTS */ "a"].WorkTypeCrime) {
-                _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].commitCrime(numCycles);
-            } else if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_20__[/* CONSTANTS */ "a"].WorkTypeCompanyPartTime) {
-                _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].workPartTime(numCycles);
+        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].isWorking) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_20__[/* CONSTANTS */ "a"].WorkTypeFaction) {
+                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workForFaction(numCycles);
+            } else if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_20__[/* CONSTANTS */ "a"].WorkTypeCreateProgram) {
+                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].createProgramWork(numCycles);
+            } else if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_20__[/* CONSTANTS */ "a"].WorkTypeStudyClass) {
+                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].takeClass(numCycles);
+            } else if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_20__[/* CONSTANTS */ "a"].WorkTypeCrime) {
+                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].commitCrime(numCycles);
+            } else if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_20__[/* CONSTANTS */ "a"].WorkTypeCompanyPartTime) {
+                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workPartTime(numCycles);
             } else {
-                _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].work(numCycles);
+                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].work(numCycles);
             }
         }
 
         //Gang, if applicable
-        if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].bitNodeN == 2 && _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].inGang()) {
-            _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].gang.process(numCycles);
+        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bitNodeN == 2 && _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].inGang()) {
+            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].gang.process(numCycles);
         }
 
         //Mission
-        if (_Missions__WEBPACK_IMPORTED_MODULE_31__[/* inMission */ "c"] && _Missions__WEBPACK_IMPORTED_MODULE_31__[/* currMission */ "b"]) {
-            _Missions__WEBPACK_IMPORTED_MODULE_31__[/* currMission */ "b"].process(numCycles);
+        if (_Missions__WEBPACK_IMPORTED_MODULE_32__[/* inMission */ "c"] && _Missions__WEBPACK_IMPORTED_MODULE_32__[/* currMission */ "b"]) {
+            _Missions__WEBPACK_IMPORTED_MODULE_32__[/* currMission */ "b"].process(numCycles);
         }
 
         //Corporation
-        if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].corporation instanceof _CompanyManagement__WEBPACK_IMPORTED_MODULE_19__[/* Corporation */ "a"]) {
+        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation instanceof _CompanyManagement__WEBPACK_IMPORTED_MODULE_19__[/* Corporation */ "a"]) {
             //Stores cycles in a "buffer". Processed separately using Engine Counters
             //This is to avoid constant DOM redraws when Corporation is catching up
-            _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].corporation.storeCycles(numCycles);
+            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation.storeCycles(numCycles);
         }
 
-        if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"]) {
-            _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].bladeburner.storeCycles(numCycles);
+        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"]) {
+            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bladeburner.storeCycles(numCycles);
         }
 
         //Counters
@@ -5532,10 +5555,10 @@ const Engine = {
         }
 
         //Update the running time of all active scripts
-        Object(_NetscriptWorker__WEBPACK_IMPORTED_MODULE_33__[/* updateOnlineScriptTimes */ "g"])(numCycles);
+        Object(_NetscriptWorker__WEBPACK_IMPORTED_MODULE_34__[/* updateOnlineScriptTimes */ "g"])(numCycles);
 
         //Hacknet Nodes
-        Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_27__[/* processAllHacknetNodeEarnings */ "d"])(numCycles);
+        Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_28__[/* processAllHacknetNodeEarnings */ "d"])(numCycles);
     },
 
     //Counters for the main event loop. Represent the number of game cycles are required
@@ -5569,26 +5592,26 @@ const Engine = {
     //is necessary and then resets the counter
     checkCounters: function() {
         if (Engine.Counters.autoSaveCounter <= 0) {
-            _SaveObject__WEBPACK_IMPORTED_MODULE_37__[/* saveObject */ "b"].saveGame(indexedDb);
-            if (_Settings__WEBPACK_IMPORTED_MODULE_40__["Settings"].AutosaveInterval == null) {
-                _Settings__WEBPACK_IMPORTED_MODULE_40__["Settings"].AutosaveInterval = 60;
+            _SaveObject__WEBPACK_IMPORTED_MODULE_38__[/* saveObject */ "b"].saveGame(indexedDb);
+            if (_Settings__WEBPACK_IMPORTED_MODULE_41__["Settings"].AutosaveInterval == null) {
+                _Settings__WEBPACK_IMPORTED_MODULE_41__["Settings"].AutosaveInterval = 60;
             }
-            if (_Settings__WEBPACK_IMPORTED_MODULE_40__["Settings"].AutosaveInterval === 0) {
+            if (_Settings__WEBPACK_IMPORTED_MODULE_41__["Settings"].AutosaveInterval === 0) {
                 Engine.Counters.autoSaveCounter = Infinity;
             } else {
-                Engine.Counters.autoSaveCounter = _Settings__WEBPACK_IMPORTED_MODULE_40__["Settings"].AutosaveInterval * 5;
+                Engine.Counters.autoSaveCounter = _Settings__WEBPACK_IMPORTED_MODULE_41__["Settings"].AutosaveInterval * 5;
             }
         }
 
         if (Engine.Counters.updateSkillLevelsCounter <= 0) {
-            _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].updateSkillLevels();
+            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].updateSkillLevels();
             Engine.Counters.updateSkillLevelsCounter = 10;
         }
 
         if (Engine.Counters.updateActiveScriptsDisplay <= 0) {
             //Always update, but make the interval longer if the page isn't active
             Object(_ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_11__[/* updateActiveScriptsItems */ "c"])();
-            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["Page"].ActiveScripts)) {
+            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["Page"].ActiveScripts)) {
                 Engine.Counters.updateActiveScriptsDisplay = 5;
             } else {
                 Engine.Counters.updateActiveScriptsDisplay = 10;
@@ -5597,11 +5620,11 @@ const Engine = {
 
         if (Engine.Counters.updateDisplays <= 0) {
             Engine.displayCharacterOverviewInfo();
-            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["Page"].CharacterInfo)) {
+            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["Page"].CharacterInfo)) {
                 Engine.displayCharacterInfo();
-            }  else if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["Page"].HacknetNodes)) {
-                Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_27__[/* updateHacknetNodesContent */ "f"])();
-            } else if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["Page"].CreateProgram)) {
+            }  else if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["Page"].HacknetNodes)) {
+                Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_28__[/* updateHacknetNodesContent */ "f"])();
+            } else if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["Page"].CreateProgram)) {
                 Object(_CreateProgram__WEBPACK_IMPORTED_MODULE_21__[/* displayCreateProgramContent */ "b"])();
             }
 
@@ -5613,17 +5636,17 @@ const Engine = {
         }
 
         if (Engine.Counters.updateDisplaysMed <= 0) {
-            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["Page"].Corporation)) {
-                _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].corporation.updateUIContent();
+            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["Page"].Corporation)) {
+                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation.updateUIContent();
             }
             Engine.Counters.updateDisplaysMed = 9;
         }
 
         if (Engine.Counters.updateDisplaysLong <= 0) {
-            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["Page"].Gang)) {
-                Object(_Gang__WEBPACK_IMPORTED_MODULE_26__[/* updateGangContent */ "g"])();
-            } else if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["Page"].ScriptEditor)) {
-                Object(_Script__WEBPACK_IMPORTED_MODULE_38__[/* updateScriptEditorContent */ "h"])();
+            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["Page"].Gang)) {
+                Object(_Gang__WEBPACK_IMPORTED_MODULE_27__[/* updateGangContent */ "g"])();
+            } else if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["Page"].ScriptEditor)) {
+                Object(_Script__WEBPACK_IMPORTED_MODULE_39__[/* updateScriptEditorContent */ "h"])();
             }
             Engine.Counters.updateDisplaysLong = 15;
         }
@@ -5642,29 +5665,29 @@ const Engine = {
         }
 
         if (Engine.Counters.checkFactionInvitations <= 0) {
-            var invitedFactions = _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].checkForFactionInvitations();
+            var invitedFactions = _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].checkForFactionInvitations();
             if (invitedFactions.length > 0) {
-                if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].firstFacInvRecvd === false) {
-                    _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].firstFacInvRecvd = true;
+                if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].firstFacInvRecvd === false) {
+                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].firstFacInvRecvd = true;
                     document.getElementById("factions-tab").style.display = "list-item";
                     document.getElementById("character-menu-header").click();
                     document.getElementById("character-menu-header").click();
                 }
 
                 var randFaction = invitedFactions[Math.floor(Math.random() * invitedFactions.length)];
-                Object(_Faction__WEBPACK_IMPORTED_MODULE_22__[/* inviteToFaction */ "g"])(randFaction);
+                Object(_Faction__WEBPACK_IMPORTED_MODULE_23__[/* inviteToFaction */ "f"])(randFaction);
             }
             Engine.Counters.checkFactionInvitations = 100;
         }
 
         if (Engine.Counters.passiveFactionGrowth <= 0) {
             var adjustedCycles = Math.floor((600 - Engine.Counters.passiveFactionGrowth));
-            Object(_Faction__WEBPACK_IMPORTED_MODULE_22__[/* processPassiveFactionRepGain */ "j"])(adjustedCycles);
+            Object(_Faction__WEBPACK_IMPORTED_MODULE_23__[/* processPassiveFactionRepGain */ "i"])(adjustedCycles);
             Engine.Counters.passiveFactionGrowth = 600;
         }
 
         if (Engine.Counters.messages <= 0) {
-            Object(_Message__WEBPACK_IMPORTED_MODULE_30__[/* checkForMessagesToSend */ "c"])();
+            Object(_Message__WEBPACK_IMPORTED_MODULE_31__[/* checkForMessagesToSend */ "c"])();
             if (_Augmentations__WEBPACK_IMPORTED_MODULE_12__[/* Augmentations */ "c"][_Augmentations__WEBPACK_IMPORTED_MODULE_12__[/* AugmentationNames */ "b"].TheRedPill].owned) {
                 Engine.Counters.messages = 4500; //15 minutes for Red pill message
             } else {
@@ -5673,26 +5696,26 @@ const Engine = {
         }
 
         if (Engine.Counters.stockTick <= 0) {
-            if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].hasWseAccount) {
-                Object(_StockMarket__WEBPACK_IMPORTED_MODULE_44__[/* updateStockPrices */ "r"])();
+            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hasWseAccount) {
+                Object(_StockMarket__WEBPACK_IMPORTED_MODULE_45__[/* updateStockPrices */ "r"])();
             }
             Engine.Counters.stockTick = 30;
         }
 
         if (Engine.Counters.sCr <= 0) {
-            if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].hasWseAccount) {
-                Object(_StockMarket__WEBPACK_IMPORTED_MODULE_44__[/* stockMarketCycle */ "p"])();
+            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hasWseAccount) {
+                Object(_StockMarket__WEBPACK_IMPORTED_MODULE_45__[/* stockMarketCycle */ "p"])();
             }
             Engine.Counters.sCr = 1500;
         }
 
         if (Engine.Counters.mechanicProcess <= 0) {
-            if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].corporation instanceof _CompanyManagement__WEBPACK_IMPORTED_MODULE_19__[/* Corporation */ "a"]) {
-                _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].corporation.process();
+            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation instanceof _CompanyManagement__WEBPACK_IMPORTED_MODULE_19__[/* Corporation */ "a"]) {
+                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation.process();
             }
-            if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"]) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"]) {
                 try {
-                    _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].bladeburner.process();
+                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bladeburner.process();
                 } catch(e) {
                     Object(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_6__[/* exceptionAlert */ "a"])("Exception caught in Bladeburner.process(): " + e);
                 }
@@ -5714,9 +5737,9 @@ const Engine = {
                 reward.type = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_2__["getRandomInt"])(0, _CodingContracts__WEBPACK_IMPORTED_MODULE_17__["CodingContractRewardType"].Money);
 
                 // Change type based on certain conditions
-                var factionsThatAllowHacking = _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].factions.filter((fac) => {
+                var factionsThatAllowHacking = _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].factions.filter((fac) => {
                     try {
-                        return _Faction__WEBPACK_IMPORTED_MODULE_22__[/* Factions */ "b"][fac].getInfo().offerHackingWork;
+                        return _Faction__WEBPACK_IMPORTED_MODULE_23__[/* Factions */ "b"][fac].getInfo().offerHackingWork;
                     } catch (e) {
                         console.error(`Error when trying to filter Hacking Factions for Coding Contract Generation: ${e}`);
                         return false;
@@ -5728,7 +5751,7 @@ const Engine = {
                 if (reward.type === _CodingContracts__WEBPACK_IMPORTED_MODULE_17__["CodingContractRewardType"].FactionReputationAll && factionsThatAllowHacking.length === 0) {
                     reward.type = _CodingContracts__WEBPACK_IMPORTED_MODULE_17__["CodingContractRewardType"].CompanyReputation;
                 }
-                if (reward.type === _CodingContracts__WEBPACK_IMPORTED_MODULE_17__["CodingContractRewardType"].CompanyReputation && _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].companyName === "") {
+                if (reward.type === _CodingContracts__WEBPACK_IMPORTED_MODULE_17__["CodingContractRewardType"].CompanyReputation && _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].companyName === "") {
                     reward.type = _CodingContracts__WEBPACK_IMPORTED_MODULE_17__["CodingContractRewardType"].Money;
                 }
 
@@ -5742,8 +5765,8 @@ const Engine = {
                         reward.name = randFaction;
                         break;
                     case _CodingContracts__WEBPACK_IMPORTED_MODULE_17__["CodingContractRewardType"].CompanyReputation:
-                        if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].companyName !== "") {
-                            reward.name = _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].companyName;
+                        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].companyName !== "") {
+                            reward.name = _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].companyName;
                         } else {
                             reward.type = _CodingContracts__WEBPACK_IMPORTED_MODULE_17__["CodingContractRewardType"].Money;
                         }
@@ -5753,12 +5776,12 @@ const Engine = {
                 }
 
                 // Choose random server
-                const servers = Object.keys(_Server__WEBPACK_IMPORTED_MODULE_39__[/* AllServers */ "b"]);
+                const servers = Object.keys(_Server__WEBPACK_IMPORTED_MODULE_40__[/* AllServers */ "b"]);
                 randIndex = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_2__["getRandomInt"])(0, servers.length - 1);
-                var randServer = _Server__WEBPACK_IMPORTED_MODULE_39__[/* AllServers */ "b"][servers[randIndex]];
+                var randServer = _Server__WEBPACK_IMPORTED_MODULE_40__[/* AllServers */ "b"][servers[randIndex]];
                 while (randServer.purchasedByPlayer === true) {
                     randIndex = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_2__["getRandomInt"])(0, servers.length - 1);
-                    randServer = _Server__WEBPACK_IMPORTED_MODULE_39__[/* AllServers */ "b"][servers[randIndex]];
+                    randServer = _Server__WEBPACK_IMPORTED_MODULE_40__[/* AllServers */ "b"][servers[randIndex]];
                 }
 
                 let contractFn = `contract-${Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_2__["getRandomInt"])(0, 1e6)}`;
@@ -5805,7 +5828,7 @@ const Engine = {
         //Once percent is 100, the hack is completed
         if (percent >= 100) {
             Engine._actionInProgress = false;
-            _Terminal__WEBPACK_IMPORTED_MODULE_45__[/* Terminal */ "a"].finishAction();
+            _Terminal__WEBPACK_IMPORTED_MODULE_46__[/* Terminal */ "a"].finishAction();
         }
     },
 
@@ -5877,75 +5900,75 @@ const Engine = {
         var dev                 = document.getElementById("dev-tab");
 
         //Load game from save or create new game
-        if (Object(_SaveObject__WEBPACK_IMPORTED_MODULE_37__[/* loadGame */ "a"])(saveString)) {
+        if (Object(_SaveObject__WEBPACK_IMPORTED_MODULE_38__[/* loadGame */ "a"])(saveString)) {
             console.log("Loaded game from save");
             Object(_BitNode__WEBPACK_IMPORTED_MODULE_13__[/* initBitNodes */ "c"])();
             Object(_BitNode__WEBPACK_IMPORTED_MODULE_13__[/* initBitNodeMultipliers */ "b"])();
-            Object(_SourceFile__WEBPACK_IMPORTED_MODULE_42__[/* initSourceFiles */ "d"])();
+            Object(_SourceFile__WEBPACK_IMPORTED_MODULE_43__[/* initSourceFiles */ "d"])();
             Engine.setDisplayElements();    //Sets variables for important DOM elements
             Engine.init();                  //Initialize buttons, work, etc.
             _Company__WEBPACK_IMPORTED_MODULE_18__[/* CompanyPositions */ "d"].init();
             Object(_Augmentations__WEBPACK_IMPORTED_MODULE_12__[/* initAugmentations */ "h"])();            //Also calls Player.reapplyAllAugmentations()
-            _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].reapplyAllSourceFiles();
-            Object(_StockMarket__WEBPACK_IMPORTED_MODULE_44__[/* initStockSymbols */ "i"])();
-            if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].hasWseAccount) {
-                Object(_StockMarket__WEBPACK_IMPORTED_MODULE_44__[/* initSymbolToStockMap */ "j"])();
+            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].reapplyAllSourceFiles();
+            Object(_StockMarket__WEBPACK_IMPORTED_MODULE_45__[/* initStockSymbols */ "i"])();
+            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hasWseAccount) {
+                Object(_StockMarket__WEBPACK_IMPORTED_MODULE_45__[/* initSymbolToStockMap */ "j"])();
             }
-            Object(_Literature__WEBPACK_IMPORTED_MODULE_29__[/* initLiterature */ "a"])();
-            Object(_NetscriptFunctions__WEBPACK_IMPORTED_MODULE_32__[/* initSingularitySFFlags */ "g"])();
+            Object(_Literature__WEBPACK_IMPORTED_MODULE_30__[/* initLiterature */ "a"])();
+            Object(_NetscriptFunctions__WEBPACK_IMPORTED_MODULE_33__[/* initSingularitySFFlags */ "g"])();
 
-            console.log(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].intelligence_exp);
+            console.log(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].intelligence_exp);
 
             //Calculate the number of cycles have elapsed while offline
             Engine._lastUpdate = new Date().getTime();
-            var lastUpdate = _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].lastUpdate;
+            var lastUpdate = _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].lastUpdate;
             var numCyclesOffline = Math.floor((Engine._lastUpdate - lastUpdate) / Engine._idleSpeed);
 
             /* Process offline progress */
-            var offlineProductionFromScripts = Object(_Script__WEBPACK_IMPORTED_MODULE_38__[/* loadAllRunningScripts */ "f"])();    //This also takes care of offline production for those scripts
-            if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].isWorking) {
+            var offlineProductionFromScripts = Object(_Script__WEBPACK_IMPORTED_MODULE_39__[/* loadAllRunningScripts */ "f"])();    //This also takes care of offline production for those scripts
+            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].isWorking) {
                 console.log("work() called in load() for " + numCyclesOffline * Engine._idleSpeed + " milliseconds");
-                if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_20__[/* CONSTANTS */ "a"].WorkTypeFaction) {
-                    _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].workForFaction(numCyclesOffline);
-                } else if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_20__[/* CONSTANTS */ "a"].WorkTypeCreateProgram) {
-                    _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].createProgramWork(numCyclesOffline);
-                } else if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_20__[/* CONSTANTS */ "a"].WorkTypeStudyClass) {
-                    _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].takeClass(numCyclesOffline);
-                } else if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_20__[/* CONSTANTS */ "a"].WorkTypeCrime) {
-                    _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].commitCrime(numCyclesOffline);
-                } else if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_20__[/* CONSTANTS */ "a"].WorkTypeCompanyPartTime) {
-                    _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].workPartTime(numCyclesOffline);
+                if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_20__[/* CONSTANTS */ "a"].WorkTypeFaction) {
+                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workForFaction(numCyclesOffline);
+                } else if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_20__[/* CONSTANTS */ "a"].WorkTypeCreateProgram) {
+                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].createProgramWork(numCyclesOffline);
+                } else if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_20__[/* CONSTANTS */ "a"].WorkTypeStudyClass) {
+                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].takeClass(numCyclesOffline);
+                } else if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_20__[/* CONSTANTS */ "a"].WorkTypeCrime) {
+                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].commitCrime(numCyclesOffline);
+                } else if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_20__[/* CONSTANTS */ "a"].WorkTypeCompanyPartTime) {
+                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workPartTime(numCyclesOffline);
                 } else {
-                    _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].work(numCyclesOffline);
+                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].work(numCyclesOffline);
                 }
             }
 
             //Hacknet Nodes offline progress
-            var offlineProductionFromHacknetNodes = Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_27__[/* processAllHacknetNodeEarnings */ "d"])(numCyclesOffline);
+            var offlineProductionFromHacknetNodes = Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_28__[/* processAllHacknetNodeEarnings */ "d"])(numCyclesOffline);
 
             //Passive faction rep gain offline
-            Object(_Faction__WEBPACK_IMPORTED_MODULE_22__[/* processPassiveFactionRepGain */ "j"])(numCyclesOffline);
+            Object(_Faction__WEBPACK_IMPORTED_MODULE_23__[/* processPassiveFactionRepGain */ "i"])(numCyclesOffline);
 
             //Gang progress for BitNode 2
-            if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].bitNodeN != null && _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].bitNodeN === 2 && _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].inGang()) {
-                _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].gang.process(numCyclesOffline);
+            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bitNodeN != null && _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bitNodeN === 2 && _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].inGang()) {
+                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].gang.process(numCyclesOffline);
             }
 
             //Bladeburner offline progress
-            if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"]) {
-                _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].bladeburner.storeCycles(numCyclesOffline);
+            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"]) {
+                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bladeburner.storeCycles(numCyclesOffline);
             }
 
             //Update total playtime
             var time = numCyclesOffline * Engine._idleSpeed;
-            if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].totalPlaytime == null) {_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].totalPlaytime = 0;}
-            if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].playtimeSinceLastAug == null) {_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].playtimeSinceLastAug = 0;}
-            if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].playtimeSinceLastBitnode == null) {_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].playtimeSinceLastBitnode = 0;}
-            _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].totalPlaytime += time;
-            _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].playtimeSinceLastAug += time;
-            _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].playtimeSinceLastBitnode += time;
+            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].totalPlaytime == null) {_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].totalPlaytime = 0;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastAug == null) {_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastAug = 0;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastBitnode == null) {_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastBitnode = 0;}
+            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].totalPlaytime += time;
+            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastAug += time;
+            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastBitnode += time;
 
-            _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].lastUpdate = Engine._lastUpdate;
+            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].lastUpdate = Engine._lastUpdate;
             Engine.start();                 //Run main game loop and Scripts loop
             Object(_utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_7__["removeLoadingScreen"])();
             Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_0__["dialogBoxCreate"])("While you were offline, your scripts generated <span class='money-gold'>$" +
@@ -5954,21 +5977,21 @@ const Engine = {
             //Close main menu accordions for loaded game
             var visibleMenuTabs = [terminal, createScript, activeScripts, stats,
                                    hacknetnodes, city, tutorial, options, dev];
-            if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].firstFacInvRecvd) {visibleMenuTabs.push(factions);}
+            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].firstFacInvRecvd) {visibleMenuTabs.push(factions);}
             else {factions.style.display = "none";}
-            if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].firstAugPurchased) {visibleMenuTabs.push(augmentations);}
+            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].firstAugPurchased) {visibleMenuTabs.push(augmentations);}
             else {augmentations.style.display = "none";}
-            if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].firstJobRecvd) {visibleMenuTabs.push(job);}
+            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].firstJobRecvd) {visibleMenuTabs.push(job);}
             else {job.style.display = "none";}
-            if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].firstTimeTraveled) {visibleMenuTabs.push(travel);}
+            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].firstTimeTraveled) {visibleMenuTabs.push(travel);}
             else {travel.style.display = "none";}
-            if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].firstProgramAvailable) {visibleMenuTabs.push(createProgram);}
+            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].firstProgramAvailable) {visibleMenuTabs.push(createProgram);}
             else {createProgram.style.display = "none";}
-            if(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"]) {visibleMenuTabs.push(bladeburner);}
+            if(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"]) {visibleMenuTabs.push(bladeburner);}
             else {bladeburner.style.display = "none";}
-            if(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].corporation instanceof _CompanyManagement__WEBPACK_IMPORTED_MODULE_19__[/* Corporation */ "a"]) {visibleMenuTabs.push(corp);}
+            if(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation instanceof _CompanyManagement__WEBPACK_IMPORTED_MODULE_19__[/* Corporation */ "a"]) {visibleMenuTabs.push(corp);}
             else {corp.style.display = "none";}
-            if(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].inGang()) {visibleMenuTabs.push(gang);}
+            if(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].inGang()) {visibleMenuTabs.push(gang);}
             else {gang.style.display = "none";}
 
             Engine.closeMainMenuHeader(visibleMenuTabs);
@@ -5977,20 +6000,20 @@ const Engine = {
             console.log("Initializing new game");
             Object(_BitNode__WEBPACK_IMPORTED_MODULE_13__[/* initBitNodes */ "c"])();
             Object(_BitNode__WEBPACK_IMPORTED_MODULE_13__[/* initBitNodeMultipliers */ "b"])();
-            Object(_SourceFile__WEBPACK_IMPORTED_MODULE_42__[/* initSourceFiles */ "d"])();
-            Object(_SpecialServerIps__WEBPACK_IMPORTED_MODULE_43__[/* initSpecialServerIps */ "c"])();
+            Object(_SourceFile__WEBPACK_IMPORTED_MODULE_43__[/* initSourceFiles */ "d"])();
+            Object(_SpecialServerIps__WEBPACK_IMPORTED_MODULE_44__[/* initSpecialServerIps */ "c"])();
             Engine.setDisplayElements();        //Sets variables for important DOM elements
             Engine.start();                     //Run main game loop and Scripts loop
-            _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].init();
-            Object(_Server__WEBPACK_IMPORTED_MODULE_39__[/* initForeignServers */ "f"])();
+            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].init();
+            Object(_Server__WEBPACK_IMPORTED_MODULE_40__[/* initForeignServers */ "f"])();
             Object(_Company__WEBPACK_IMPORTED_MODULE_18__[/* initCompanies */ "h"])();
-            Object(_Faction__WEBPACK_IMPORTED_MODULE_22__[/* initFactions */ "f"])();
+            Object(_Faction__WEBPACK_IMPORTED_MODULE_23__[/* initFactions */ "e"])();
             _Company__WEBPACK_IMPORTED_MODULE_18__[/* CompanyPositions */ "d"].init();
             Object(_Augmentations__WEBPACK_IMPORTED_MODULE_12__[/* initAugmentations */ "h"])();
-            Object(_Message__WEBPACK_IMPORTED_MODULE_30__[/* initMessages */ "d"])();
-            Object(_StockMarket__WEBPACK_IMPORTED_MODULE_44__[/* initStockSymbols */ "i"])();
-            Object(_Literature__WEBPACK_IMPORTED_MODULE_29__[/* initLiterature */ "a"])();
-            Object(_NetscriptFunctions__WEBPACK_IMPORTED_MODULE_32__[/* initSingularitySFFlags */ "g"])();
+            Object(_Message__WEBPACK_IMPORTED_MODULE_31__[/* initMessages */ "d"])();
+            Object(_StockMarket__WEBPACK_IMPORTED_MODULE_45__[/* initStockSymbols */ "i"])();
+            Object(_Literature__WEBPACK_IMPORTED_MODULE_30__[/* initLiterature */ "a"])();
+            Object(_NetscriptFunctions__WEBPACK_IMPORTED_MODULE_33__[/* initSingularitySFFlags */ "g"])();
 
             //Open main menu accordions for new game
             //Main menu accordions
@@ -6021,19 +6044,19 @@ const Engine = {
             );
 
             //Start interactive tutorial
-            Object(_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_28__[/* iTutorialStart */ "c"])();
+            Object(_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_29__[/* iTutorialStart */ "c"])();
             Object(_utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_7__["removeLoadingScreen"])();
         }
         //Initialize labels on game settings
-        Object(_ui_setSettingsLabels__WEBPACK_IMPORTED_MODULE_41__[/* setSettingsLabels */ "a"])();
-        Object(_Script__WEBPACK_IMPORTED_MODULE_38__[/* scriptEditorInit */ "g"])();
-        _Terminal__WEBPACK_IMPORTED_MODULE_45__[/* Terminal */ "a"].resetTerminalInput();
+        Object(_ui_setSettingsLabels__WEBPACK_IMPORTED_MODULE_42__[/* setSettingsLabels */ "a"])();
+        Object(_Script__WEBPACK_IMPORTED_MODULE_39__[/* scriptEditorInit */ "g"])();
+        _Terminal__WEBPACK_IMPORTED_MODULE_46__[/* Terminal */ "a"].resetTerminalInput();
     },
 
     setDisplayElements: function() {
         //Content elements
         Engine.Display.terminalContent = document.getElementById("terminal-container");
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_47__["Page"].Terminal);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__["Page"].Terminal);
 
         Engine.Display.characterContent = document.getElementById("character-container");
         Engine.Display.characterContent.style.display = "none";
@@ -6069,9 +6092,6 @@ const Engine = {
 
         Engine.Display.tutorialContent = document.getElementById("tutorial-container");
         Engine.Display.tutorialContent.style.display = "none";
-
-        Engine.Display.devMenuContent = document.getElementById("dev-menu-container");
-        Engine.Display.devMenuContent.style.display = "none";
 
         Engine.Display.infiltrationContent = document.getElementById("infiltration-container");
         Engine.Display.infiltrationContent.style.display = "none";
@@ -6112,7 +6132,7 @@ const Engine = {
         Engine.Display.cinematicTextContent.style.display = "none";
 
 		//Init Location buttons
-		Object(_Location__WEBPACK_IMPORTED_MODULE_24__[/* initLocationButtons */ "b"])();
+		Object(_Location__WEBPACK_IMPORTED_MODULE_25__[/* initLocationButtons */ "b"])();
 
         //Tutorial buttons
         Engine.Clickables.tutorialNetworkingButton = document.getElementById("tutorial-networking-link");
@@ -6159,197 +6179,13 @@ const Engine = {
         Engine.Clickables.tutorialBackButton.addEventListener("click", function() {
             Engine.displayTutorialContent();
         });
-
-        // dev menu buttons
-        Engine.Clickables.devMenuGiveMoney = document.getElementById("dev-need-money");
-        Engine.Clickables.devMenuGiveMoney.addEventListener("click", function() {
-            _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].gainMoney(1e15);
-        });
-
-        Engine.Clickables.devMenuGiveRam = document.getElementById("dev-need-ram");
-        Engine.Clickables.devMenuGiveRam.addEventListener("click", function() {
-            _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].getHomeComputer().maxRam *= 2;
-        });
-
-        Engine.Clickables.devMenuAugDropdown = document.getElementById("dev-menu-aug-dropdown");
-        const augDD = Engine.Clickables.devMenuAugDropdown;
-        for(const i in _Augmentations__WEBPACK_IMPORTED_MODULE_12__[/* AugmentationNames */ "b"]) {
-            augDD.options[augDD.options.length] = new Option(_Augmentations__WEBPACK_IMPORTED_MODULE_12__[/* AugmentationNames */ "b"][i], _Augmentations__WEBPACK_IMPORTED_MODULE_12__[/* AugmentationNames */ "b"][i]);
-        }
-
-        Engine.Clickables.devMenuAddAug = document.getElementById("dev-add-aug");
-        Engine.Clickables.devMenuAddAug.addEventListener("click", function() {
-            _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].queueAugmentation(augDD.options[augDD.selectedIndex].value);
-        });
-
-        Engine.Clickables.devMenuTriggerBitFlume = document.getElementById("dev-bit-flume");
-        Engine.Clickables.devMenuTriggerBitFlume.addEventListener("click", function() {
-            Object(_RedPill__WEBPACK_IMPORTED_MODULE_36__[/* hackWorldDaemon */ "a"])(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].bitNodeN, true);
-        });
-
-        Engine.Clickables.devMenuFactionDropdown = document.getElementById("dev-menu-faction-dropdown");
-        const facDD = Engine.Clickables.devMenuFactionDropdown;
-        for(const i in _Faction__WEBPACK_IMPORTED_MODULE_22__[/* Factions */ "b"]) {
-            facDD.options[facDD.options.length] = new Option(_Faction__WEBPACK_IMPORTED_MODULE_22__[/* Factions */ "b"][i].name, _Faction__WEBPACK_IMPORTED_MODULE_22__[/* Factions */ "b"][i].name);
-        }
-
-        Engine.Clickables.devMenuAddFaction = document.getElementById("dev-add-faction");
-        Engine.Clickables.devMenuAddFaction.addEventListener("click", function() {
-            const factionName = facDD.options[facDD.selectedIndex].value;
-            _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].receiveInvite(factionName);
-        });
-
-        Engine.Clickables.devMenuOpen = document.getElementById("dev-open-all");
-        Engine.Clickables.devMenuOpen.addEventListener("click", function() {
-            for(const i in _Server__WEBPACK_IMPORTED_MODULE_39__[/* AllServers */ "b"]) {
-                _Server__WEBPACK_IMPORTED_MODULE_39__[/* AllServers */ "b"][i].hasAdminRights = true;
-                _Server__WEBPACK_IMPORTED_MODULE_39__[/* AllServers */ "b"][i].sshPortOpen    = true;
-                _Server__WEBPACK_IMPORTED_MODULE_39__[/* AllServers */ "b"][i].ftpPortOpen    = true;
-                _Server__WEBPACK_IMPORTED_MODULE_39__[/* AllServers */ "b"][i].smtpPortOpen   = true;
-                _Server__WEBPACK_IMPORTED_MODULE_39__[/* AllServers */ "b"][i].httpPortOpen   = true;
-                _Server__WEBPACK_IMPORTED_MODULE_39__[/* AllServers */ "b"][i].sqlPortOpen    = true;
-                _Server__WEBPACK_IMPORTED_MODULE_39__[/* AllServers */ "b"][i].openPortCount  = 5;
-            }
-        });
-
-        Engine.Clickables.devMenuMinSecurity = document.getElementById("dev-min-security");
-        Engine.Clickables.devMenuMinSecurity.addEventListener("click", function() {
-            for(const i in _Server__WEBPACK_IMPORTED_MODULE_39__[/* AllServers */ "b"]) {
-                _Server__WEBPACK_IMPORTED_MODULE_39__[/* AllServers */ "b"][i].hackDifficulty = _Server__WEBPACK_IMPORTED_MODULE_39__[/* AllServers */ "b"][i].minDifficulty;
-            }
-        });
-
-        Engine.Clickables.devMenuMaxMoney = document.getElementById("dev-max-money");
-        Engine.Clickables.devMenuMaxMoney.addEventListener("click", function() {
-            for(const i in _Server__WEBPACK_IMPORTED_MODULE_39__[/* AllServers */ "b"]) {
-                _Server__WEBPACK_IMPORTED_MODULE_39__[/* AllServers */ "b"][i].moneyAvailable = _Server__WEBPACK_IMPORTED_MODULE_39__[/* AllServers */ "b"][i].moneyMax;
-            }
-        });
-
-        Engine.Clickables.devMenuConnectDropdown = document.getElementById("dev-menu-connect-dropdown");
-        const connectDD = Engine.Clickables.devMenuConnectDropdown;
-        for(const i in _Server__WEBPACK_IMPORTED_MODULE_39__[/* AllServers */ "b"]) {
-            connectDD.options[connectDD.options.length] = new Option(_Server__WEBPACK_IMPORTED_MODULE_39__[/* AllServers */ "b"][i].hostname, _Server__WEBPACK_IMPORTED_MODULE_39__[/* AllServers */ "b"][i].hostname);
-        }
-
-        Engine.Clickables.devMenuConnect = document.getElementById("dev-connect");
-        Engine.Clickables.devMenuConnect.addEventListener("click", function() {
-            const host = connectDD.options[connectDD.selectedIndex].value;
-            _Terminal__WEBPACK_IMPORTED_MODULE_45__[/* Terminal */ "a"].connectToServer(host);
-        });
-
-        Engine.Clickables.devMenuProgramsDropdown = document.getElementById("dev-menu-add-program-dropdown");
-        const programsDD = Engine.Clickables.devMenuProgramsDropdown;
-        for(const i in _CreateProgram__WEBPACK_IMPORTED_MODULE_21__[/* Programs */ "a"]) {
-            programsDD.options[programsDD.options.length] = new Option(_CreateProgram__WEBPACK_IMPORTED_MODULE_21__[/* Programs */ "a"][i].name, _CreateProgram__WEBPACK_IMPORTED_MODULE_21__[/* Programs */ "a"][i].name);
-        }
-
-        Engine.Clickables.devMenuAddProgram = document.getElementById("dev-add-program");
-        Engine.Clickables.devMenuAddProgram.addEventListener("click", function() {
-            const program = programsDD.options[programsDD.selectedIndex].value;
-            if(!_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].hasProgram(program)) {
-                _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].getHomeComputer().programs.push(program);
-            }
-        });
-
-        Engine.Clickables.devMenuHackingExp = document.getElementById("dev-hacking-exp");
-        Engine.Clickables.devMenuAddHacking = document.getElementById("dev-add-hacking");
-        Engine.Clickables.devMenuAddHacking.addEventListener("click", function() {
-            const exp = parseInt(Engine.Clickables.devMenuHackingExp.value);
-            _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].gainHackingExp(exp);
-            _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].updateSkillLevels();
-        });
-
-        Engine.Clickables.devMenuStrengthExp = document.getElementById("dev-strength-exp");
-        Engine.Clickables.devMenuAddStrength = document.getElementById("dev-add-strength");
-        Engine.Clickables.devMenuAddStrength.addEventListener("click", function() {
-            const exp = parseInt(Engine.Clickables.devMenuStrengthExp.value);
-            _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].gainStrengthExp(exp);
-            _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].updateSkillLevels();
-        });
-
-        Engine.Clickables.devMenuDefenseExp = document.getElementById("dev-defense-exp");
-        Engine.Clickables.devMenuAddDefense = document.getElementById("dev-add-defense");
-        Engine.Clickables.devMenuAddDefense.addEventListener("click", function() {
-            const exp = parseInt(Engine.Clickables.devMenuDefenseExp.value);
-            _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].gainDefenseExp(exp);
-            _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].updateSkillLevels();
-        });
-
-        Engine.Clickables.devMenuDexterityExp = document.getElementById("dev-dexterity-exp");
-        Engine.Clickables.devMenuAddDexterity = document.getElementById("dev-add-dexterity");
-        Engine.Clickables.devMenuAddDexterity.addEventListener("click", function() {
-            const exp = parseInt(Engine.Clickables.devMenuDexterityExp.value);
-            _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].gainDexterityExp(exp);
-            _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].updateSkillLevels();
-        });
-
-        Engine.Clickables.devMenuAgilityExp = document.getElementById("dev-agility-exp");
-        Engine.Clickables.devMenuAddAgility = document.getElementById("dev-add-agility");
-        Engine.Clickables.devMenuAddAgility.addEventListener("click", function() {
-            const exp = parseInt(Engine.Clickables.devMenuAgilityExp.value);
-            _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].gainAgilityExp(exp);
-            _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].updateSkillLevels();
-        });
-
-        Engine.Clickables.devMenuCharismaExp = document.getElementById("dev-charisma-exp");
-        Engine.Clickables.devMenuAddCharisma = document.getElementById("dev-add-charisma");
-        Engine.Clickables.devMenuAddCharisma.addEventListener("click", function() {
-            const exp = parseInt(Engine.Clickables.devMenuCharismaExp.value);
-            _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].gainCharismaExp(exp);
-            _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].updateSkillLevels();
-        });
-
-        Engine.Clickables.devMenuIntelligenceExp = document.getElementById("dev-intelligence-exp");
-        Engine.Clickables.devMenuAddIntelligence = document.getElementById("dev-add-intelligence");
-        Engine.Clickables.devMenuAddIntelligence.addEventListener("click", function() {
-            const exp = parseInt(Engine.Clickables.devMenuIntelligenceExp.value);
-            _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].gainIntelligenceExp(exp);
-            _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].updateSkillLevels();
-        });
-
-        Engine.Clickables.devMenuEnableIntelligence = document.getElementById("dev-enable-intelligence");
-        Engine.Clickables.devMenuEnableIntelligence.addEventListener("click", function() {
-            _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].intelligence = 1;
-        });
-
-        Engine.Clickables.devMenuDisableIntelligence = document.getElementById("dev-disable-intelligence");
-        Engine.Clickables.devMenuDisableIntelligence.addEventListener("click", function() {
-            _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].intelligence = 0;
-        });
-
-        Engine.Clickables.devMenuSFN = document.getElementById("dev-sf-n");
-        Engine.Clickables.devMenuSFLvl = document.getElementById("dev-sf-lvl");
-        Engine.Clickables.devMenuAddSF = document.getElementById("dev-add-source-file");
-        Engine.Clickables.devMenuAddSF.addEventListener("click", function() {
-            const sfN = parseInt(Engine.Clickables.devMenuSFN.value);
-            const sfLvl = parseInt(Engine.Clickables.devMenuSFLvl.value);
-            let sfIndex = -1;
-            for(const i in _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].sourceFiles) {
-                if(_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].sourceFiles[i].n === sfN) {
-                    sfIndex = i;
-                    break;
-                }
-            }
-
-            if(sfIndex === -1) { // add fresh source file
-                _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].sourceFiles.push(new _SourceFile__WEBPACK_IMPORTED_MODULE_42__[/* PlayerOwnedSourceFile */ "a"](sfN, sfLvl));
-            } else if(sfLvl === 0) { // remove a source file.
-                if(sfIndex === -1) { // doesn't have it anyway.
-                    return;
-                }
-                _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].sourceFiles.splice(sfIndex, 1);
-            } else { // set source file level
-                _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].sourceFiles[sfIndex].lvl=sfLvl;
-            }
-        });
     },
 
     /* Initialization */
     init: function() {
         //Import game link
         document.getElementById("import-game-link").onclick = function() {
-            _SaveObject__WEBPACK_IMPORTED_MODULE_37__[/* saveObject */ "b"].importGame();
+            _SaveObject__WEBPACK_IMPORTED_MODULE_38__[/* saveObject */ "b"].importGame();
         };
 
         //Main menu accordions
@@ -6444,7 +6280,7 @@ const Engine = {
             this.classList.toggle("opened");
             const elems = [tutorial, options];
             const links = [tutorialLink, optionsLink];
-            if(true) {
+            if (true) {
                 elems.push(document.getElementById("dev-tab"));
                 links.push(document.getElementById("dev-menu-link"));
             }
@@ -6560,24 +6396,24 @@ const Engine = {
         //Save, Delete, Import/Export buttons
         Engine.Clickables.saveMainMenuButton = document.getElementById("save-game-link");
         Engine.Clickables.saveMainMenuButton.addEventListener("click", function() {
-            _SaveObject__WEBPACK_IMPORTED_MODULE_37__[/* saveObject */ "b"].saveGame(indexedDb);
+            _SaveObject__WEBPACK_IMPORTED_MODULE_38__[/* saveObject */ "b"].saveGame(indexedDb);
             return false;
         });
 
         Engine.Clickables.deleteMainMenuButton = document.getElementById("delete-game-link");
         Engine.Clickables.deleteMainMenuButton.addEventListener("click", function() {
-            _SaveObject__WEBPACK_IMPORTED_MODULE_37__[/* saveObject */ "b"].deleteGame(indexedDb);
+            _SaveObject__WEBPACK_IMPORTED_MODULE_38__[/* saveObject */ "b"].deleteGame(indexedDb);
             return false;
         });
 
         document.getElementById("export-game-link").addEventListener("click", function() {
-            _SaveObject__WEBPACK_IMPORTED_MODULE_37__[/* saveObject */ "b"].exportGame();
+            _SaveObject__WEBPACK_IMPORTED_MODULE_38__[/* saveObject */ "b"].exportGame();
             return false;
         });
 
         //Character Overview buttons
         document.getElementById("character-overview-save-button").addEventListener("click", function() {
-            _SaveObject__WEBPACK_IMPORTED_MODULE_37__[/* saveObject */ "b"].saveGame(indexedDb);
+            _SaveObject__WEBPACK_IMPORTED_MODULE_38__[/* saveObject */ "b"].saveGame(indexedDb);
             return false;
         });
 
@@ -6590,25 +6426,25 @@ const Engine = {
         Object(_CreateProgram__WEBPACK_IMPORTED_MODULE_21__[/* initCreateProgramButtons */ "d"])();
 
         //Message at the top of terminal
-        Object(_Terminal__WEBPACK_IMPORTED_MODULE_45__[/* postNetburnerText */ "b"])();
+        Object(_Terminal__WEBPACK_IMPORTED_MODULE_46__[/* postNetburnerText */ "b"])();
 
         //Player was working cancel button
-        if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].isWorking) {
+        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].isWorking) {
             var cancelButton = document.getElementById("work-in-progress-cancel-button");
             cancelButton.addEventListener("click", function() {
-                if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_20__[/* CONSTANTS */ "a"].WorkTypeFaction) {
-                    var fac = _Faction__WEBPACK_IMPORTED_MODULE_22__[/* Factions */ "b"][_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].currentWorkFactionName];
-                    _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].finishFactionWork(true);
-                } else if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_20__[/* CONSTANTS */ "a"].WorkTypeCreateProgram) {
-                    _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].finishCreateProgramWork(true);
-                } else if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_20__[/* CONSTANTS */ "a"].WorkTypeStudyClass) {
-                    _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].finishClass();
-                } else if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_20__[/* CONSTANTS */ "a"].WorkTypeCrime) {
-                    _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].finishCrime(true);
-                } else if (_Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_20__[/* CONSTANTS */ "a"].WorkTypeCompanyPartTime) {
-                    _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].finishWorkPartTime();
+                if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_20__[/* CONSTANTS */ "a"].WorkTypeFaction) {
+                    var fac = _Faction__WEBPACK_IMPORTED_MODULE_23__[/* Factions */ "b"][_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].currentWorkFactionName];
+                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].finishFactionWork(true);
+                } else if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_20__[/* CONSTANTS */ "a"].WorkTypeCreateProgram) {
+                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].finishCreateProgramWork(true);
+                } else if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_20__[/* CONSTANTS */ "a"].WorkTypeStudyClass) {
+                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].finishClass();
+                } else if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_20__[/* CONSTANTS */ "a"].WorkTypeCrime) {
+                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].finishCrime(true);
+                } else if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_20__[/* CONSTANTS */ "a"].WorkTypeCompanyPartTime) {
+                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].finishWorkPartTime();
                 } else {
-                    _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].finishWork(true);
+                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].finishWork(true);
                 }
             });
             Engine.loadWorkInProgressContent();
@@ -6629,7 +6465,7 @@ const Engine = {
         //DEBUG Delete active Scripts on home
         document.getElementById("debug-delete-scripts-link").addEventListener("click", function() {
             console.log("Deleting running scripts on home computer");
-            _Player__WEBPACK_IMPORTED_MODULE_34__[/* Player */ "a"].getHomeComputer().runningScripts = [];
+            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].getHomeComputer().runningScripts = [];
             Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_0__["dialogBoxCreate"])("Forcefully deleted all running scripts on home computer. Please save and refresh page");
             Object(_utils_GameOptions__WEBPACK_IMPORTED_MODULE_1__[/* gameOptionsBoxClose */ "a"])();
             return false;
@@ -6638,7 +6474,7 @@ const Engine = {
         //DEBUG Soft Reset
         document.getElementById("debug-soft-reset").addEventListener("click", function() {
             Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_0__["dialogBoxCreate"])("Soft Reset!");
-            Object(_Prestige__WEBPACK_IMPORTED_MODULE_35__[/* prestigeAugmentation */ "a"])();
+            Object(_Prestige__WEBPACK_IMPORTED_MODULE_36__[/* prestigeAugmentation */ "a"])();
             Object(_utils_GameOptions__WEBPACK_IMPORTED_MODULE_1__[/* gameOptionsBoxClose */ "a"])();
             return false;
         });
@@ -6649,7 +6485,7 @@ const Engine = {
         Engine.idleTimer();
 
         //Scripts
-        Object(_NetscriptWorker__WEBPACK_IMPORTED_MODULE_33__[/* runScriptsLoop */ "f"])();
+        Object(_NetscriptWorker__WEBPACK_IMPORTED_MODULE_34__[/* runScriptsLoop */ "f"])();
     }
 };
 
@@ -6694,10 +6530,10 @@ window.onload = function() {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 57)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 56)))
 
 /***/ }),
-/* 8 */
+/* 9 */
 /*!****************************!*\
   !*** ./utils/DialogBox.js ***!
   \****************************/
@@ -6782,10 +6618,10 @@ function dialogBoxCreate(txt, preformatted=false) {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 57)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 56)))
 
 /***/ }),
-/* 9 */
+/* 10 */
 /*!***********************************!*\
   !*** ./src/BitNodeMultipliers.ts ***!
   \***********************************/
@@ -6831,7 +6667,7 @@ exports.BitNodeMultipliers = {
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /*!***************************************!*\
   !*** ./utils/helpers/getRandomInt.ts ***!
   \***************************************/
@@ -6856,7 +6692,7 @@ exports.getRandomInt = getRandomInt;
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /*!***********************!*\
   !*** ./src/Server.js ***!
   \***********************/
@@ -6875,7 +6711,7 @@ exports.getRandomInt = getRandomInt;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return initForeignServers; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return prestigeAllServers; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return prestigeHomeComputer; });
-/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNodeMultipliers */ 9);
+/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNodeMultipliers */ 10);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CodingContracts */ 38);
 /* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_CodingContracts__WEBPACK_IMPORTED_MODULE_1__);
@@ -6886,10 +6722,10 @@ exports.getRandomInt = getRandomInt;
 /* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./SpecialServerIps */ 27);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./TextFile */ 53);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_TextFile__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 10);
+/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 11);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/IPAddress */ 51);
-/* harmony import */ var _data_servers__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./data/servers */ 112);
+/* harmony import */ var _data_servers__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./data/servers */ 113);
 /* harmony import */ var _data_servers__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_data_servers__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
 /* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/isValidIPAddress */ 75);
@@ -7355,88 +7191,6 @@ Directory.prototype.getPath = function(name) {
 
 
 /***/ }),
-/* 12 */
-/*!*********************************!*\
-  !*** ./src/ui/numeralFormat.js ***!
-  \*********************************/
-/*! exports provided: numeralWrapper */
-/*! exports used: numeralWrapper */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return numeralWrapper; });
-/* harmony import */ var numeral__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! numeral */ 63);
-/* harmony import */ var numeral__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(numeral__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var numeral_locales_bg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! numeral/locales/bg */ 238);
-/* harmony import */ var numeral_locales_bg__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_bg__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var numeral_locales_cs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! numeral/locales/cs */ 237);
-/* harmony import */ var numeral_locales_cs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_cs__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var numeral_locales_da_dk__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! numeral/locales/da-dk */ 236);
-/* harmony import */ var numeral_locales_da_dk__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_da_dk__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var numeral_locales_de__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! numeral/locales/de */ 235);
-/* harmony import */ var numeral_locales_de__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_de__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var numeral_locales_en_au__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! numeral/locales/en-au */ 234);
-/* harmony import */ var numeral_locales_en_au__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_en_au__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var numeral_locales_en_gb__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! numeral/locales/en-gb */ 233);
-/* harmony import */ var numeral_locales_en_gb__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_en_gb__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var numeral_locales_es__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! numeral/locales/es */ 232);
-/* harmony import */ var numeral_locales_es__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_es__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var numeral_locales_fr__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! numeral/locales/fr */ 231);
-/* harmony import */ var numeral_locales_fr__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_fr__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var numeral_locales_hu__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! numeral/locales/hu */ 230);
-/* harmony import */ var numeral_locales_hu__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_hu__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var numeral_locales_it__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! numeral/locales/it */ 229);
-/* harmony import */ var numeral_locales_it__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_it__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var numeral_locales_lv__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! numeral/locales/lv */ 228);
-/* harmony import */ var numeral_locales_lv__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_lv__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var numeral_locales_no__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! numeral/locales/no */ 227);
-/* harmony import */ var numeral_locales_no__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_no__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var numeral_locales_pl__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! numeral/locales/pl */ 226);
-/* harmony import */ var numeral_locales_pl__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_pl__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var numeral_locales_ru__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! numeral/locales/ru */ 225);
-/* harmony import */ var numeral_locales_ru__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_ru__WEBPACK_IMPORTED_MODULE_14__);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* eslint-disable class-methods-use-this */
-
-class NumeralFormatter {
-    constructor() {
-        this.defaultLocale = 'en';
-    }
-
-    updateLocale(l) {
-        if (numeral__WEBPACK_IMPORTED_MODULE_0___default.a.locale(l) == null) {
-            console.warn(`Invalid locale for numeral: ${l}`);
-
-            numeral__WEBPACK_IMPORTED_MODULE_0___default.a.locale(this.defaultLocale);
-            return false;
-        }
-        return true;
-    }
-
-    format(n, format) {
-        return numeral__WEBPACK_IMPORTED_MODULE_0___default()(n).format(format);
-    }
-}
-
-const numeralWrapper = new NumeralFormatter();
-
-
-/***/ }),
 /* 13 */
 /*!************************!*\
   !*** ./src/Company.js ***!
@@ -7456,7 +7210,7 @@ const numeralWrapper = new NumeralFormatter();
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return CompanyPosition; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return companyExists; });
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Constants */ 1);
-/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Locations */ 3);
+/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Locations */ 2);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
 
@@ -8700,44 +8454,44 @@ function Generic_fromJSON(ctor, data) {
   !*** ./src/Faction.js ***!
   \************************/
 /*! exports provided: getNextNeurofluxLevel, Factions, initFactions, inviteToFaction, joinFaction, displayFactionContent, processPassiveFactionRepGain, loadFactions, Faction, purchaseAugmentation, factionExists */
-/*! exports used: Faction, Factions, displayFactionContent, factionExists, getNextNeurofluxLevel, initFactions, inviteToFaction, joinFaction, loadFactions, processPassiveFactionRepGain, purchaseAugmentation */
+/*! exports used: Faction, Factions, displayFactionContent, factionExists, initFactions, inviteToFaction, joinFaction, loadFactions, processPassiveFactionRepGain, purchaseAugmentation */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return getNextNeurofluxLevel; });
+/* unused harmony export getNextNeurofluxLevel */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Factions; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return initFactions; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return inviteToFaction; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return joinFaction; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return initFactions; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return inviteToFaction; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return joinFaction; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return displayFactionContent; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return processPassiveFactionRepGain; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return loadFactions; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return processPassiveFactionRepGain; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return loadFactions; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Faction; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return purchaseAugmentation; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return purchaseAugmentation; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return factionExists; });
 /* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentations */ 20);
-/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BitNodeMultipliers */ 9);
+/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BitNodeMultipliers */ 10);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Constants */ 1);
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./engine */ 7);
-/* harmony import */ var _FactionInfo__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./FactionInfo */ 96);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./engine */ 8);
+/* harmony import */ var _FactionInfo__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./FactionInfo */ 97);
 /* harmony import */ var _FactionInfo__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_FactionInfo__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Location */ 78);
-/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Missions */ 46);
+/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Missions */ 47);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./ui/navigationTracking */ 16);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ui/numeralFormat */ 12);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
-/* harmony import */ var _utils_FactionInvitationBox__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/FactionInvitationBox */ 108);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ui/numeralFormat */ 5);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
+/* harmony import */ var _utils_FactionInvitationBox__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/FactionInvitationBox */ 109);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 26);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 4);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 3);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_14__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 2);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 4);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_16__);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
 
@@ -9473,27 +9227,21 @@ function purchaseAugmentation(aug, fac, sing=false) {
 }
 
 function getNextNeurofluxLevel() {
-    var aug = _Augmentations__WEBPACK_IMPORTED_MODULE_0__[/* Augmentations */ "c"][_Augmentations__WEBPACK_IMPORTED_MODULE_0__[/* AugmentationNames */ "b"].NeuroFluxGovernor];
-    if (aug == null) {
-        for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_7__[/* Player */ "a"].augmentations.length; ++i) {
-            if (_Player__WEBPACK_IMPORTED_MODULE_7__[/* Player */ "a"].augmentations[i].name == _Augmentations__WEBPACK_IMPORTED_MODULE_0__[/* AugmentationNames */ "b"].NeuroFluxGovernor) {
-                aug = _Player__WEBPACK_IMPORTED_MODULE_7__[/* Player */ "a"].augmentations[i];
-            }
-        }
-        if (aug == null) {
-            console.log("WARNING: Could not find NeuroFlux Governor aug. This is OK if " +
-                        "it happens during the loading/initialization of the game, but probably " +
-                        "indicates something seriously wrong at other times");
-            return 1;
+    // Get current Neuroflux level based on Player's augmentations
+    let currLevel = 0;
+    for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_7__[/* Player */ "a"].augmentations.length; ++i) {
+        if (_Player__WEBPACK_IMPORTED_MODULE_7__[/* Player */ "a"].augmentations[i].name === _Augmentations__WEBPACK_IMPORTED_MODULE_0__[/* AugmentationNames */ "b"].NeuroFluxGovernor) {
+            currLevel = _Player__WEBPACK_IMPORTED_MODULE_7__[/* Player */ "a"].augmentations[i].level;
         }
     }
-    var nextLevel = aug.level + 1;
+
+    // Account for purchased but uninstalled Augmentations
     for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_7__[/* Player */ "a"].queuedAugmentations.length; ++i) {
         if (_Player__WEBPACK_IMPORTED_MODULE_7__[/* Player */ "a"].queuedAugmentations[i].name == _Augmentations__WEBPACK_IMPORTED_MODULE_0__[/* AugmentationNames */ "b"].NeuroFluxGovernor) {
-            ++nextLevel;
+            ++currLevel;
         }
     }
-    return nextLevel;
+    return currLevel + 1;
 }
 
 function processPassiveFactionRepGain(numCycles) {
@@ -9773,7 +9521,7 @@ function yesNoTxtInpBoxCreate(txt) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const getElementById_1 = __webpack_require__(/*! ./getElementById */ 45);
+const getElementById_1 = __webpack_require__(/*! ./getElementById */ 46);
 /**
  * Given an element by its ID, removes all event listeners from that element by cloning and
  * replacing. Then returns the new cloned element.
@@ -9868,10 +9616,10 @@ exports.Settings = {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return augmentationExists; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Augmentation; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return displayAugmentationsContent; });
-/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNodeMultipliers */ 9);
+/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNodeMultipliers */ 10);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Constants */ 1);
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 7);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 8);
 /* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Faction */ 15);
 /* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptFunctions */ 37);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./NetscriptWorker */ 24);
@@ -9879,15 +9627,15 @@ exports.Settings = {
 /* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Prestige */ 76);
 /* harmony import */ var _SaveObject__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./SaveObject */ 65);
 /* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Script */ 28);
-/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./SourceFile */ 58);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Server */ 12);
+/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./SourceFile */ 61);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 66);
 /* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_13__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
 /* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/helpers/clearObject */ 67);
 /* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 4);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 3);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/helpers/isString */ 34);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_17__);
@@ -10922,9 +10670,25 @@ function initAugmentations() {
              "This is a special augmentation because it can be leveled up infinitely. Each level of this augmentation " +
              "increases ALL of the player's multipliers by 1%."
     });
-    var nextLevel = Object(_Faction__WEBPACK_IMPORTED_MODULE_3__[/* getNextNeurofluxLevel */ "e"])();
-    NeuroFluxGovernor.level = nextLevel - 1;
-    mult = Math.pow(_Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].NeuroFluxGovernorLevelMult, NeuroFluxGovernor.level);
+
+    // Set the Augmentation's level to the currently-installed level
+    let currLevel = 0;
+    for (let i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].augmentations.length; ++i) {
+        if (_Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].augmentations[i].name === AugmentationNames.NeuroFluxGovernor) {
+            currLevel = _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].augmentations[i].level;
+        }
+    }
+    NeuroFluxGovernor.level = currLevel;
+
+    // To set the price/rep req of the NeuroFlux, we have to take into account NeuroFlux
+    // levels that are purchased but not yet installed
+    let nextLevel = currLevel;
+    for (let i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].queuedAugmentations.length; ++i) {
+        if (_Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].queuedAugmentations[i].name === AugmentationNames.NeuroFluxGovernor) {
+            ++nextLevel;
+        }
+    }
+    mult = Math.pow(_Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].NeuroFluxGovernorLevelMult, nextLevel);
     NeuroFluxGovernor.baseRepRequirement = 500 * mult * _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].AugmentationRepMultiplier * _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].AugmentationRepCost;
     NeuroFluxGovernor.baseCost = 750e3 * mult * _Constants__WEBPACK_IMPORTED_MODULE_1__[/* CONSTANTS */ "a"].AugmentationCostMultiplier * _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].AugmentationMoneyCost;
     if (augmentationExists(AugmentationNames.NeuroFluxGovernor)) {
@@ -12273,7 +12037,7 @@ function applyAugmentation(aug, reapply=false) {
             return;
     }
 
-    if (aug.name == AugmentationNames.NeuroFluxGovernor) {
+    if (aug.name === AugmentationNames.NeuroFluxGovernor) {
         for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].augmentations.length; ++i) {
             if (_Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].augmentations[i].name == AugmentationNames.NeuroFluxGovernor) {
                 //Already have this aug, just upgrade the level
@@ -12538,7 +12302,7 @@ function displaySourceFiles(listElement, sourceFiles) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const getElementById_1 = __webpack_require__(/*! ./getElementById */ 45);
+const getElementById_1 = __webpack_require__(/*! ./getElementById */ 46);
 const removeElement_1 = __webpack_require__(/*! ./removeElement */ 64);
 /**
  * Given its id, this function removes an element AND its children
@@ -12572,7 +12336,7 @@ exports.removeElementById = removeElementById;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return initCreateProgramButtons; });
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 4);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 3);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2__);
 
 
@@ -12767,26 +12531,26 @@ function initCreateProgramButtons() {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return OrderTypes; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return PositionTypes; });
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Constants */ 1);
-/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Locations */ 3);
+/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Locations */ 2);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NetscriptFunctions */ 37);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./NetscriptWorker */ 24);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Stock__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Stock */ 25);
 /* harmony import */ var _Stock__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Stock__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 18);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./ui/navigationTracking */ 16);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ui/numeralFormat */ 12);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ui/numeralFormat */ 5);
 /* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 43);
-/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 10);
+/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 11);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 32);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 4);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 3);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_14__);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 26);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15__);
@@ -14268,30 +14032,30 @@ function updateStockOrderList(stock) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return addWorkerScript; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return updateOnlineScriptTimes; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return prestigeWorkerScripts; });
-/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActiveScriptsUI */ 60);
+/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActiveScriptsUI */ 59);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Constants */ 1);
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 7);
-/* harmony import */ var _JSInterpreter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./JSInterpreter */ 107);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 8);
+/* harmony import */ var _JSInterpreter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./JSInterpreter */ 108);
 /* harmony import */ var _NetscriptEnvironment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptEnvironment */ 93);
-/* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./NetscriptEvaluator */ 5);
+/* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./NetscriptEvaluator */ 6);
 /* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./NetscriptFunctions */ 37);
 /* harmony import */ var _NetscriptJSEvaluator__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./NetscriptJSEvaluator */ 94);
 /* harmony import */ var _NetscriptPort__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./NetscriptPort */ 62);
-/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Server */ 11);
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Server */ 12);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var escodegen__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! escodegen */ 88);
 /* harmony import */ var escodegen__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(escodegen__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/acorn */ 41);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/helpers/compareArrays */ 79);
 /* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_14__);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 48);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 71);
 /* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 2);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 4);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_17__);
 
 
@@ -14305,7 +14069,6 @@ function updateStockOrderList(stock) {
 
 
 
-//TODO Maybe escodegen might be better?
 
 
 
@@ -14315,7 +14078,7 @@ function updateStockOrderList(stock) {
 
 
 
-const walk  = __webpack_require__(/*! acorn/dist/walk */ 123);
+const walk  = __webpack_require__(/*! acorn/dist/walk */ 124);
 
 function WorkerScript(runningScriptObj) {
 	this.name 			= runningScriptObj.filename;
@@ -14985,7 +14748,7 @@ JSONReviver_1.Reviver.constructors.Stock = Stock;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const isString_1 = __webpack_require__(/*! ../helpers/isString */ 34);
-const getElementById_1 = __webpack_require__(/*! ./getElementById */ 45);
+const getElementById_1 = __webpack_require__(/*! ./getElementById */ 46);
 /**
  * Clears out all children from the provided element.
  * If a string is passed in, it will treat it as an ID and search for the element to delete all children from.
@@ -15098,17 +14861,17 @@ function initSpecialServerIps() {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return scriptEditorInit; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return isScriptFilename; });
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Constants */ 1);
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./engine */ 7);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./engine */ 8);
 /* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Fconf */ 40);
 /* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./InteractiveTutorial */ 31);
-/* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptEvaluator */ 5);
+/* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptEvaluator */ 6);
 /* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./NetscriptFunctions */ 37);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./NetscriptWorker */ 24);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Server */ 11);
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Server */ 12);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ui/postToTerminal */ 6);
+/* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ui/postToTerminal */ 7);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./TextFile */ 53);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_TextFile__WEBPACK_IMPORTED_MODULE_11__);
@@ -15116,35 +14879,35 @@ function initSpecialServerIps() {
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./ui/navigationTracking */ 16);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./ui/numeralFormat */ 12);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./ui/numeralFormat */ 5);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
 /* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/helpers/compareArrays */ 79);
 /* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 4);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 3);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__);
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 74);
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_19__);
 /* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 71);
 /* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_20__);
-var ace = __webpack_require__(/*! brace */ 223);
-var beautify = __webpack_require__(/*! js-beautify */ 222).js_beautify;
-__webpack_require__(/*! brace/mode/javascript */ 221);
-__webpack_require__(/*! ../netscript */ 160);
-__webpack_require__(/*! brace/theme/chaos */ 220);
-__webpack_require__(/*! brace/theme/chrome */ 219);
-__webpack_require__(/*! brace/theme/monokai */ 218);
-__webpack_require__(/*! brace/theme/solarized_dark */ 217);
-__webpack_require__(/*! brace/theme/solarized_light */ 216);
-__webpack_require__(/*! brace/theme/terminal */ 215);
-__webpack_require__(/*! brace/theme/twilight */ 214);
-__webpack_require__(/*! brace/theme/xcode */ 213);
-__webpack_require__(/*! brace/keybinding/vim */ 212);
-__webpack_require__(/*! brace/keybinding/emacs */ 211);
-__webpack_require__(/*! brace/ext/language_tools */ 210);
+var ace = __webpack_require__(/*! brace */ 224);
+var beautify = __webpack_require__(/*! js-beautify */ 223).js_beautify;
+__webpack_require__(/*! brace/mode/javascript */ 222);
+__webpack_require__(/*! ../netscript */ 161);
+__webpack_require__(/*! brace/theme/chaos */ 221);
+__webpack_require__(/*! brace/theme/chrome */ 220);
+__webpack_require__(/*! brace/theme/monokai */ 219);
+__webpack_require__(/*! brace/theme/solarized_dark */ 218);
+__webpack_require__(/*! brace/theme/solarized_light */ 217);
+__webpack_require__(/*! brace/theme/terminal */ 216);
+__webpack_require__(/*! brace/theme/twilight */ 215);
+__webpack_require__(/*! brace/theme/xcode */ 214);
+__webpack_require__(/*! brace/keybinding/vim */ 213);
+__webpack_require__(/*! brace/keybinding/emacs */ 212);
+__webpack_require__(/*! brace/ext/language_tools */ 211);
 
 // Importing this doesn't work for some reason.
-const walk = __webpack_require__(/*! acorn/dist/walk */ 123);
+const walk = __webpack_require__(/*! acorn/dist/walk */ 124);
 
 
 
@@ -16219,7 +15982,7 @@ _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__["Reviver"].constructors.AllServ
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 57)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 56)))
 
 /***/ }),
 /* 29 */
@@ -16233,40 +15996,40 @@ _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__["Reviver"].constructors.AllServ
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Bladeburner; });
 /* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentations */ 20);
-/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BitNodeMultipliers */ 9);
+/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BitNodeMultipliers */ 10);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Constants */ 1);
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./engine */ 7);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./engine */ 8);
 /* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Faction */ 15);
-/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Locations */ 3);
+/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Locations */ 2);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./RedPill */ 54);
-/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./ui/numeralFormat */ 12);
+/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./RedPill */ 58);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./ui/numeralFormat */ 5);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 32);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/helpers/createProgressBarText */ 72);
 /* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 26);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
-/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 56);
+/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 55);
 /* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_14__);
 /* harmony import */ var _utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/uiHelpers/appendLineBreaks */ 52);
 /* harmony import */ var _utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/helpers/clearObject */ 67);
 /* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 4);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 3);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_17__);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 36);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_18__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./ui/navigationTracking */ 16);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_19__);
 /* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 43);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 2);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 4);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 10);
+/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 11);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_22__);
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 74);
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_23__);
@@ -16996,7 +16759,7 @@ Bladeburner.prototype.prestige = function() {
     this.resetAction();
     var bladeburnerFac = _Faction__WEBPACK_IMPORTED_MODULE_4__[/* Factions */ "b"]["Bladeburners"];
     if (this.rank >= RankNeededForFaction) {
-        Object(_Faction__WEBPACK_IMPORTED_MODULE_4__[/* joinFaction */ "h"])(bladeburnerFac);
+        Object(_Faction__WEBPACK_IMPORTED_MODULE_4__[/* joinFaction */ "g"])(bladeburnerFac);
     }
 }
 
@@ -18191,7 +17954,7 @@ Bladeburner.prototype.createOverviewContent = function() {
                     Object(_Faction__WEBPACK_IMPORTED_MODULE_4__[/* displayFactionContent */ "c"])(bladeburnersFactionName);
                 } else {
                     if (this.rank >= RankNeededForFaction) {
-                        Object(_Faction__WEBPACK_IMPORTED_MODULE_4__[/* joinFaction */ "h"])(bladeburnerFac);
+                        Object(_Faction__WEBPACK_IMPORTED_MODULE_4__[/* joinFaction */ "g"])(bladeburnerFac);
                         Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_11__["dialogBoxCreate"])("Congratulations! You were accepted into the Bladeburners faction");
                         Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_12__["removeChildrenFromElement"])(DomElems.overviewDiv);
                         this.createOverviewContent();
@@ -19609,6 +19372,38 @@ Bladeburner.prototype.startActionNetscriptFn = function(type, name, workerScript
         return false;
     }
 
+    // Special logic for Black Ops
+    if (actionId.type === ActionTypes["BlackOp"]) {
+        // Can't start a BlackOp if you don't have the required rank
+        let action = this.getActionObject(actionId);
+        if (action.reqdRank > this.rank) {
+            workerScript.log(`Failed to start Black Op ${actionId.name} due to insufficient rank`);
+            return false;
+        }
+
+        // Can't start a BlackOp if you haven't done the one before it
+        var blackops = [];
+        for (const nm in BlackOperations) {
+            if (BlackOperations.hasOwnProperty(nm)) {
+                blackops.push(nm);
+            }
+        }
+        blackops.sort(function(a, b) {
+            return (BlackOperations[a].reqdRank - BlackOperations[b].reqdRank); // Sort black ops in intended order
+        });
+
+        let i = blackops.indexOf(actionId.name);
+        if (i === -1) {
+            workerScript.log("ERROR: Invalid Black Operation name passed into bladeburner.startAction(). Note that this name is case-sensitive & whitespace-sensitive");
+            return false;
+        }
+
+        if (i > 0 && this.blackops[blackops[i-1]] == null) {
+            workerScript.log(`ERROR: Cannot attempt Black Operation ${actionId.name} because you have not done the preceding one`);
+            return false;
+        }
+    }
+
     try {
         this.startAction(actionId);
         if (workerScript.shouldLog("startAction")) {
@@ -19710,9 +19505,14 @@ Bladeburner.prototype.getActionCountRemainingNetscriptFn = function(type, name, 
     switch (actionId.type) {
         case ActionTypes["Contract"]:
         case ActionTypes["Operation"]:
+            return actionObj.count;
         case ActionTypes["BlackOp"]:
         case ActionTypes["BlackOperation"]:
-            return actionObj.count;
+            if (this.blackops[name] != null) {
+                return 0;
+            } else {
+                return 1;
+            }
         case ActionTypes["Training"]:
         case ActionTypes["Field Analysis"]:
         case ActionTypes["FieldAnalysis"]:
@@ -19915,7 +19715,7 @@ Bladeburner.prototype.joinBladeburnerFactionNetscriptFn = function(workerScript)
     if (bladeburnerFac.isMember) {
         return true;
     } else if (this.rank >= RankNeededForFaction) {
-        Object(_Faction__WEBPACK_IMPORTED_MODULE_4__[/* joinFaction */ "h"])(bladeburnerFac);
+        Object(_Faction__WEBPACK_IMPORTED_MODULE_4__[/* joinFaction */ "g"])(bladeburnerFac);
         if (workerScript.shouldLog("joinBladeburnerFaction")) {
             workerScript.log("Joined Bladeburners Faction");
         }
@@ -20394,7 +20194,7 @@ function initBladeburner() {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 57)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 56)))
 
 /***/ }),
 /* 30 */,
@@ -20412,13 +20212,13 @@ function initBladeburner() {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return iTutorialStart; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return iTutorialNextStep; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ITutorial; });
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./engine */ 7);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./engine */ 8);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 18);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 4);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 3);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 36);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_5__);
@@ -20992,7 +20792,7 @@ exports.KEY = {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Crimes; });
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 
 
 
@@ -21311,13 +21111,13 @@ exports.isString = isString;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Message; });
 /* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentations */ 20);
 /* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateProgram */ 22);
-/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Missions */ 46);
+/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Missions */ 47);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./RedPill */ 54);
-/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Server */ 11);
+/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./RedPill */ 58);
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Server */ 12);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
 
 
@@ -21524,8 +21324,8 @@ function initMessages()  {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const createElement_1 = __webpack_require__(/*! ./createElement */ 4);
-const getElementById_1 = __webpack_require__(/*! ./getElementById */ 45);
+const createElement_1 = __webpack_require__(/*! ./createElement */ 3);
+const getElementById_1 = __webpack_require__(/*! ./getElementById */ 46);
 /**
  * Creates the necessary DOM elements to present an in-game popup to the player.
  * @param id The (hopefully) unique identifier for the popup container.
@@ -21571,9 +21371,9 @@ exports.createPopup = createPopup;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return hasCorporationSF; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return hasAISF; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return hasBladeburnerSF; });
-/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActiveScriptsUI */ 60);
+/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActiveScriptsUI */ 59);
 /* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Augmentations */ 20);
-/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BitNodeMultipliers */ 9);
+/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BitNodeMultipliers */ 10);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Crimes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Crimes */ 33);
 /* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Bladeburner */ 29);
@@ -21584,44 +21384,44 @@ exports.createPopup = createPopup;
 /* harmony import */ var _Hacking__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Hacking */ 42);
 /* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Gang */ 49);
 /* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Faction */ 15);
-/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./HacknetNode */ 59);
-/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Locations */ 3);
+/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./HacknetNode */ 57);
+/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Locations */ 2);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_13__);
 /* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Message */ 35);
-/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Missions */ 46);
+/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Missions */ 47);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Script */ 28);
-/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Server */ 11);
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Server */ 12);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_19__);
 /* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./SpecialServerIps */ 27);
 /* harmony import */ var _Stock__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./Stock */ 25);
 /* harmony import */ var _Stock__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_Stock__WEBPACK_IMPORTED_MODULE_21__);
 /* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./StockMarket */ 23);
-/* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./ui/postToTerminal */ 6);
+/* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./ui/postToTerminal */ 7);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_23__);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./TextFile */ 53);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_TextFile__WEBPACK_IMPORTED_MODULE_24__);
-/* harmony import */ var _NetscriptBladeburner_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./NetscriptBladeburner.js */ 44);
+/* harmony import */ var _NetscriptBladeburner_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./NetscriptBladeburner.js */ 45);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./NetscriptWorker */ 24);
-/* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./NetscriptEvaluator */ 5);
+/* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./NetscriptEvaluator */ 6);
 /* harmony import */ var _NetscriptPort__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./NetscriptPort */ 62);
 /* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! decimal.js */ 30);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./ui/navigationTracking */ 16);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_30__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
-/* harmony import */ var _utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ../utils/helpers/isPowerOfTwo */ 113);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
+/* harmony import */ var _utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ../utils/helpers/isPowerOfTwo */ 114);
 /* harmony import */ var _utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_32___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_32__);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 48);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_33___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_33__);
 /* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ../utils/IPAddress */ 51);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 2);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 4);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_35___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_35__);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ../utils/helpers/isString */ 34);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_36___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_36__);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
-var sprintf = __webpack_require__(/*! sprintf-js */ 122).sprintf,
-    vsprintf = __webpack_require__(/*! sprintf-js */ 122).vsprintf
+var sprintf = __webpack_require__(/*! sprintf-js */ 123).sprintf,
+    vsprintf = __webpack_require__(/*! sprintf-js */ 123).vsprintf
 
 
 
@@ -22481,12 +22281,12 @@ function NetscriptFunctions(workerScript) {
                 }
                 destServer = Object(_Server__WEBPACK_IMPORTED_MODULE_18__[/* getServer */ "e"])(ip2);
                 if (destServer == null) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_27__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Invalid hostname/ip passed into scp() command: " + ip);
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_27__[/* makeRuntimeRejectMsg */ "d"])(workerScript, `ERROR: Invalid hostname/ip passed into scp() command: ${ip2}`);
                 }
 
                 currServ = Object(_Server__WEBPACK_IMPORTED_MODULE_18__[/* getServer */ "e"])(ip1);
                 if (currServ == null) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_27__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Could not find server ip for this script. This is a bug please contact game developer");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_27__[/* makeRuntimeRejectMsg */ "d"])(workerScript, `ERROR: Invalid hostname/ip passed into scp() command: ${ip1}`);
                 }
             } else if (arguments.length === 2) {    //scriptname, destination
                 if (scriptname === undefined || ip1 === undefined) {
@@ -22494,7 +22294,7 @@ function NetscriptFunctions(workerScript) {
                 }
                 destServer = Object(_Server__WEBPACK_IMPORTED_MODULE_18__[/* getServer */ "e"])(ip1);
                 if (destServer == null) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_27__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Invalid hostname/ip passed into scp() command: " + ip);
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_27__[/* makeRuntimeRejectMsg */ "d"])(workerScript, `ERROR: Invalid hostname/ip passed into scp() command: ${ip1}`);
                 }
 
                 currServ = Object(_Server__WEBPACK_IMPORTED_MODULE_18__[/* getServer */ "e"])(workerScript.serverIp);
@@ -23912,7 +23712,7 @@ function NetscriptFunctions(workerScript) {
         /* Singularity Functions */
         universityCourse : function(universityName, className) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFn1RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= 8;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("universityCourse", ramCost);
             }
@@ -24001,7 +23801,7 @@ function NetscriptFunctions(workerScript) {
 
         gymWorkout : function(gymName, stat) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFn1RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= 8;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("gymWorkout", ramCost);
             }
@@ -24103,7 +23903,7 @@ function NetscriptFunctions(workerScript) {
 
         travelToCity(cityname) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFn1RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= 8;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("travelToCity", ramCost);
             }
@@ -24140,7 +23940,7 @@ function NetscriptFunctions(workerScript) {
 
         purchaseTor() {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFn1RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= 8;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("purchaseTor", ramCost);
             }
@@ -24184,7 +23984,7 @@ function NetscriptFunctions(workerScript) {
         },
         purchaseProgram(programName) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFn1RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= 8;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("purchaseProgram", ramCost);
             }
@@ -24236,7 +24036,7 @@ function NetscriptFunctions(workerScript) {
         },
         getStats : function() {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFn1RamCost / 4;
-            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= 8;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getStats", ramCost);
             }
@@ -24260,7 +24060,7 @@ function NetscriptFunctions(workerScript) {
         },
         getCharacterInformation : function() {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFn1RamCost / 4;
-            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= 8;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getCharacterInformation", ramCost);
             }
@@ -24296,7 +24096,7 @@ function NetscriptFunctions(workerScript) {
         },
         isBusy : function() {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFn1RamCost / 4;
-            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= 8;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("isBusy", ramCost);
             }
@@ -24311,7 +24111,7 @@ function NetscriptFunctions(workerScript) {
         },
         stopAction : function() {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFn1RamCost / 2;
-            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= 8;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("stopAction", ramCost);
             }
@@ -24333,7 +24133,7 @@ function NetscriptFunctions(workerScript) {
         },
         upgradeHomeRam : function() {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFn2RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= 8;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("upgradeHomeRam", ramCost);
             }
@@ -24365,7 +24165,7 @@ function NetscriptFunctions(workerScript) {
         },
         getUpgradeHomeRamCost : function() {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFn2RamCost / 2;
-            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= 8;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getUpgradeHomeRamCost", ramCost);
             }
@@ -24381,7 +24181,7 @@ function NetscriptFunctions(workerScript) {
         },
         workForCompany : function() {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFn2RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= 8;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("workForCompany", ramCost);
             }
@@ -24422,7 +24222,7 @@ function NetscriptFunctions(workerScript) {
         },
         applyToCompany : function(companyName, field) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFn2RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= 8;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("applyToCompany", ramCost);
             }
@@ -24503,7 +24303,7 @@ function NetscriptFunctions(workerScript) {
         },
         getCompanyRep : function(companyName) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFn2RamCost / 2;
-            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= 8;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getCompanyRep", ramCost);
             }
@@ -24524,7 +24324,7 @@ function NetscriptFunctions(workerScript) {
         },
         getCompanyFavor : function(companyName) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFn2RamCost / 4;
-            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= 8;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getCompanyFavor", ramCost);
             }
@@ -24545,7 +24345,7 @@ function NetscriptFunctions(workerScript) {
         },
         getCompanyFavorGain : function(companyName) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFn2RamCost / 4;
-            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= 8;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getCompanyFavorGain", ramCost);
             }
@@ -24566,7 +24366,7 @@ function NetscriptFunctions(workerScript) {
         },
         checkFactionInvitations : function() {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFn2RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= 8;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("checkFactionInvitations", ramCost);
             }
@@ -24582,7 +24382,7 @@ function NetscriptFunctions(workerScript) {
         },
         joinFaction : function(name) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFn2RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= 8;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("joinFaction", ramCost);
             }
@@ -24604,7 +24404,7 @@ function NetscriptFunctions(workerScript) {
                 return false;
             }
             var fac = _Faction__WEBPACK_IMPORTED_MODULE_11__[/* Factions */ "b"][name];
-            Object(_Faction__WEBPACK_IMPORTED_MODULE_11__[/* joinFaction */ "h"])(fac);
+            Object(_Faction__WEBPACK_IMPORTED_MODULE_11__[/* joinFaction */ "g"])(fac);
 
             //Update Faction Invitation list to account for joined + banned factions
             for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].factionInvitations.length; ++i) {
@@ -24621,7 +24421,7 @@ function NetscriptFunctions(workerScript) {
         },
         workForFaction : function(name, type) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFn2RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= 8;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("workForFaction", ramCost);
             }
@@ -24721,7 +24521,7 @@ function NetscriptFunctions(workerScript) {
         },
         getFactionRep : function(name) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFn2RamCost / 4;
-            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= 8;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getFactionRep", ramCost);
             }
@@ -24742,7 +24542,7 @@ function NetscriptFunctions(workerScript) {
         },
         getFactionFavor : function(name) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFn2RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= 8;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getFactionFavor", ramCost);
             }
@@ -24763,7 +24563,7 @@ function NetscriptFunctions(workerScript) {
         },
         getFactionFavorGain: function(name) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFn2RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= 8;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getFactionFavorGain", ramCost);
             }
@@ -24784,7 +24584,7 @@ function NetscriptFunctions(workerScript) {
         },
         donateToFaction : function(name, amt) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFn3RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= 8;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("donateToFaction", ramCost);
             }
@@ -24823,7 +24623,7 @@ function NetscriptFunctions(workerScript) {
         },
         createProgram : function(name) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFn3RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= 8;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("createProgram", ramCost);
             }
@@ -24877,7 +24677,7 @@ function NetscriptFunctions(workerScript) {
         },
         commitCrime : function(crimeRoughName) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFn3RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= 8;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("commitCrime", ramCost);
             }
@@ -24934,7 +24734,7 @@ function NetscriptFunctions(workerScript) {
         },
         getCrimeChance : function(crimeRoughName) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFn3RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= 8;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getCrimeChance", ramCost);
             }
@@ -24955,7 +24755,7 @@ function NetscriptFunctions(workerScript) {
         },
         getOwnedAugmentations : function(purchased=false) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFn3RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= 8;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getOwnedAugmentations", ramCost);
             }
@@ -24979,7 +24779,7 @@ function NetscriptFunctions(workerScript) {
         },
         getOwnedSourceFiles : function() {
             let ramCost = _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFn3RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= 8;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getOwnedSourceFiles", ramCost);
             }
@@ -24998,7 +24798,7 @@ function NetscriptFunctions(workerScript) {
         },
         getAugmentationsFromFaction : function(facname) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFn3RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= 8;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getAugmentationsFromFaction", ramCost);
             }
@@ -25024,7 +24824,7 @@ function NetscriptFunctions(workerScript) {
         },
         getAugmentationCost : function(name) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFn3RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= 8;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getAugmentationCost", ramCost);
             }
@@ -25046,7 +24846,7 @@ function NetscriptFunctions(workerScript) {
         },
         purchaseAugmentation : function(faction, name) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFn3RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= 8;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("purchaseAugmentation", ramCost);
             }
@@ -25100,7 +24900,7 @@ function NetscriptFunctions(workerScript) {
                 return false;
             }
 
-            var res = Object(_Faction__WEBPACK_IMPORTED_MODULE_11__[/* purchaseAugmentation */ "k"])(aug, fac, true);
+            var res = Object(_Faction__WEBPACK_IMPORTED_MODULE_11__[/* purchaseAugmentation */ "j"])(aug, fac, true);
             workerScript.scriptRef.log(res);
             if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_36__["isString"])(res) && res.startsWith("You purchased")) {
                 _Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].gainIntelligenceExp(_Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].IntelligenceSingFnBaseExpGain);
@@ -25111,7 +24911,7 @@ function NetscriptFunctions(workerScript) {
         },
         installAugmentations : function(cbScript) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFn3RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= 8;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("installAugmentations", ramCost);
             }
@@ -25744,7 +25544,7 @@ function NetscriptFunctions(workerScript) {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 57)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 56)))
 
 /***/ }),
 /* 38 */
@@ -25767,10 +25567,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const JSONReviver_1 = __webpack_require__(/*! ../utils/JSONReviver */ 14);
-const createElement_1 = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 4);
+const createElement_1 = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 3);
 const createPopup_1 = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 36);
 const removeElementById_1 = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 21);
-const codingcontracttypes_1 = __webpack_require__(/*! ./data/codingcontracttypes */ 165);
+const codingcontracttypes_1 = __webpack_require__(/*! ./data/codingcontracttypes */ 166);
 /* tslint:disable:no-magic-numbers completed-docs max-classes-per-file no-console */
 /* Represents different types of problems that a Coding Contract can have */
 class CodingContractType {
@@ -25938,7 +25738,7 @@ JSONReviver_1.Reviver.constructors.CodingContract = CodingContract;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return substituteAliases; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return loadAliases; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return loadGlobalAliases; });
-/* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ui/postToTerminal */ 6);
+/* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ui/postToTerminal */ 7);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_0__);
 
 
@@ -26071,7 +25871,7 @@ function substituteAliases(origCommand) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return loadFconf; });
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/acorn */ 41);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 
 
 
@@ -29981,10 +29781,10 @@ Object.defineProperty(exports, '__esModule', { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return calculateHackingTime; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return calculateGrowTime; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return calculateWeakenTime; });
-/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNodeMultipliers */ 9);
+/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNodeMultipliers */ 10);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Server */ 11);
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Server */ 12);
 
 
 
@@ -30090,7 +29890,7 @@ function calculateWeakenTime(server, hack, int) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return exceptionAlert; });
-/* harmony import */ var _DialogBox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../DialogBox */ 8);
+/* harmony import */ var _DialogBox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../DialogBox */ 9);
 
 
 function exceptionAlert(e) {
@@ -30108,1649 +29908,6 @@ function exceptionAlert(e) {
 
 /***/ }),
 /* 44 */
-/*!*************************************!*\
-  !*** ./src/NetscriptBladeburner.js ***!
-  \*************************************/
-/*! exports provided: unknownBladeburnerActionErrorMessage, unknownBladeburnerExceptionMessage, checkBladeburnerAccess */
-/*! exports used: checkBladeburnerAccess, unknownBladeburnerActionErrorMessage, unknownBladeburnerExceptionMessage */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return unknownBladeburnerActionErrorMessage; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return unknownBladeburnerExceptionMessage; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return checkBladeburnerAccess; });
-/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Bladeburner */ 29);
-/* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NetscriptEvaluator */ 5);
-
-
-
-
-function unknownBladeburnerActionErrorMessage(functionName, actionType, actionName) {
-	return `ERROR: bladeburner.${functionName}() failed due to an invalid action specified. ` +
-		`Type: ${actionType}, Name: ${actionName}. Note that for contracts and operations, the ` +
-		`name of the operation is case-sensitive.`;
-}
-
-function unknownBladeburnerExceptionMessage(functionName, err) {
-	return `Bladeburner.${functionName}() failed with exception: ` + err;
-}
-
-function checkBladeburnerAccess(workerScript, functionName) {
-	const accessDenied = `${functionName}() failed because you do not` +
-		" currently have access to the Bladeburner API. This is either" +
-		" because you are not currently employed at the Bladeburner division" +
-		" or because you do not have Source-File 7";
-	const hasAccess = _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_1__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].bitNodeN === 7 || _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].sourceFiles.some(a=>{return a.n === 7}));
-	if(!hasAccess) {
-		throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_2__[/* makeRuntimeRejectMsg */ "d"])(workerScript, accessDenied);
-	}
-}
-
-
-
-
-/***/ }),
-/* 45 */
-/*!*******************************************!*\
-  !*** ./utils/uiHelpers/getElementById.ts ***!
-  \*******************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * Returns a reference to the first object with the specified value of the ID or NAME attribute,
- * throwing an error if it is unable to find it.
- * @param elementId The HTML ID to retrieve the element by.
- * @throws {Error} When the 'elementId' cannot be found.
- */
-function getElementById(elementId) {
-    const el = document.getElementById(elementId);
-    if (el === null) {
-        throw new Error(`Unable to find element with id '${elementId}'`);
-    }
-    return el;
-}
-exports.getElementById = getElementById;
-
-
-/***/ }),
-/* 46 */
-/*!*************************!*\
-  !*** ./src/Missions.js ***!
-  \*************************/
-/*! exports provided: HackingMission, inMission, setInMission, currMission */
-/*! exports used: HackingMission, currMission, inMission, setInMission */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HackingMission; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return inMission; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return setInMission; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return currMission; });
-/* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Constants */ 1);
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./engine */ 7);
-/* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Faction */ 15);
-/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 18);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 56);
-/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 2);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 10);
-/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/isString */ 34);
-/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var jsplumb__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! jsplumb */ 224);
-/* harmony import */ var jsplumb__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(jsplumb__WEBPACK_IMPORTED_MODULE_10__);
-
-
-
-
-
-
-
-
-
-
-
-
-let inMission = false; //Flag to denote whether a mission is running
-let currMission = null;
-function setInMission(bool, mission) {
-    inMission = bool;
-    if (bool) {
-        currMission = mission;
-    } else {
-        currMission = null;
-    }
-}
-
-//Keyboard shortcuts
-$(document).keydown(function(e) {
-    if (inMission && currMission && currMission.selectedNode.length != 0) {
-        switch (e.keyCode) {
-            case 65: //a for Attack
-                currMission.actionButtons[0].click();
-                break;
-            case 83: //s for Scan
-                currMission.actionButtons[1].click();
-                break;
-            case 87: //w for Weaken
-                currMission.actionButtons[2].click();
-                break;
-            case 70: //f for Fortify
-                currMission.actionButtons[3].click();
-                break;
-            case 82: //r for Overflow
-                currMission.actionButtons[4].click();
-                break;
-            case 68: //d for Detach connection
-                currMission.actionButtons[5].click();
-                break;
-            default:
-                break;
-        }
-    }
-});
-
-let NodeTypes = {
-    Core: "CPU Core Node",      //All actions available
-    Firewall: "Firewall Node",  //No actions available
-    Database: "Database Node",  //No actions available
-    Spam: "Spam Node",          //No actions Available
-    Transfer: "Transfer Node",  //Can Weaken, Scan, Fortify and Overflow
-    Shield: "Shield Node"       //Can Fortify
-}
-
-let NodeActions = {
-    Attack: "Attacking", //Damaged based on attack stat + hacking level + opp def
-    Scan: "Scanning", //-Def for target, affected by attack and hacking level
-    Weaken: "Weakening", //-Attack for target, affected by attack and hacking level
-    Fortify: "Fortifying", //+Defense for Node, affected by hacking level
-    Overflow: "Overflowing", //+Attack but -Defense for Node, affected by hacking level
-}
-
-function Node(type, stats) {
-    this.type = type;
-    this.atk = stats.atk ? stats.atk : 0;
-    this.def = stats.def ? stats.def : 0;
-    this.hp = stats.hp ? stats.hp : 0;
-    this.maxhp = this.hp;
-    this.plyrCtrl = false;
-    this.enmyCtrl = false;
-    this.pos = [0, 0]; //x, y
-    this.el = null; //Holds the Node's DOM element
-    this.action = null;
-    this.targetedCount = 0; //Count of how many connections this node is the target of
-
-    //Holds the JsPlumb Connection object for this Node,
-    //where this Node is the Source (since each Node
-    //can only have 1 outgoing Connection)
-    this.conn = null;
-}
-
-Node.prototype.setPosition = function(x, y) {
-    this.pos = [x, y];
-}
-
-Node.prototype.setControlledByPlayer = function() {
-    this.plyrCtrl = true;
-    this.enmyCtrl = false;
-    if (this.el) {
-        this.el.classList.remove("hack-mission-enemy-node");
-        this.el.classList.add("hack-mission-player-node");
-    }
-}
-
-Node.prototype.setControlledByEnemy = function() {
-    this.plyrCtrl = false;
-    this.enmyCtrl = true;
-    if (this.el) {
-        this.el.classList.remove("hack-mission-player-node");
-        this.el.classList.add("hack-mission-enemy-node");
-    }
-}
-
-//Sets this node to be the active node
-Node.prototype.select = function(actionButtons) {
-    if (this.enmyCtrl) {return;}
-    this.el.classList.add("hack-mission-player-node-active");
-
-    //Make all buttons inactive
-    for (var i = 0; i < actionButtons.length; ++i) {
-        actionButtons[i].classList.remove("a-link-button");
-        actionButtons[i].classList.add("a-link-button-inactive");
-    }
-
-    switch(this.type) {
-        case NodeTypes.Core:
-            //All buttons active
-            for (var i = 0; i < actionButtons.length; ++i) {
-                actionButtons[i].classList.remove("a-link-button-inactive");
-                actionButtons[i].classList.add("a-link-button");
-            }
-            break;
-        case NodeTypes.Transfer:
-            actionButtons[1].classList.remove("a-link-button-inactive");
-            actionButtons[1].classList.add("a-link-button");
-            actionButtons[2].classList.remove("a-link-button-inactive");
-            actionButtons[2].classList.add("a-link-button");
-            actionButtons[3].classList.remove("a-link-button-inactive");
-            actionButtons[3].classList.add("a-link-button");
-            actionButtons[4].classList.remove("a-link-button-inactive");
-            actionButtons[4].classList.add("a-link-button");
-            actionButtons[5].classList.remove("a-link-button-inactive");
-            actionButtons[5].classList.add("a-link-button");
-            break;
-        case NodeTypes.Shield:
-        case NodeTypes.Firewall:
-            actionButtons[3].classList.remove("a-link-button-inactive");
-            actionButtons[3].classList.add("a-link-button");
-            break;
-        default:
-            break;
-    }
-}
-
-Node.prototype.deselect = function(actionButtons) {
-    this.el.classList.remove("hack-mission-player-node-active");
-    for (var i = 0; i < actionButtons.length; ++i) {
-        actionButtons[i].classList.remove("a-link-button");
-        actionButtons[i].classList.add("a-link-button-inactive");
-    }
-}
-
-
-Node.prototype.untarget = function() {
-    if (this.targetedCount === 0) {
-        console.log("WARN: Node " + this.el.id + " is being 'untargeted' when it has no target count");
-        return;
-    }
-    --this.targetedCount;
-}
-
-//Hacking mission instance
-//Takes in the reputation of the Faction for which the mission is
-//being conducted
-function HackingMission(rep, fac) {
-    this.faction = fac;
-
-    this.started = false;
-    this.time = 180000; //5 minutes to start, milliseconds
-
-    this.playerCores = [];
-    this.playerNodes = []; //Non-core nodes
-    this.playerAtk = 0;
-    this.playerDef = 0;
-
-    this.enemyCores = [];
-    this.enemyDatabases = [];
-    this.enemyNodes = []; //Non-core nodes
-    this.enemyAtk = 0;
-    this.enemyDef = 0;
-
-    this.miscNodes = [];
-
-    this.selectedNode = []; //Which of the player's nodes are currently selected
-
-    this.actionButtons = []; //DOM buttons for actions
-
-    this.availablePositions = [];
-    for (var r = 0; r < 8; ++r) {
-        for (var c = 0; c < 8; ++c) {
-            this.availablePositions.push([r, c]);
-        }
-    }
-
-    this.map = [];
-    for (var i = 0; i < 8; ++i) {
-        this.map.push([null, null, null, null, null, null, null, null]);
-    }
-
-    this.jsplumbinstance = null;
-
-    this.difficulty = rep / _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].HackingMissionRepToDiffConversion + 1;
-    console.log("difficulty: " + this.difficulty);
-    this.reward = 250 + (rep / _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].HackingMissionRepToRewardConversion);
-}
-
-HackingMission.prototype.init = function() {
-    //Create Header DOM
-    this.createPageDom();
-
-    //Create player starting nodes
-    var home = _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].getHomeComputer()
-    for (var i = 0; i < home.cpuCores; ++i) {
-        var stats = {
-            atk: (_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].hacking_skill / 7.5) + 30,
-            def: (_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].hacking_skill / 20),
-            hp: (_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].hacking_skill / 4),
-        };
-        this.playerCores.push(new Node(NodeTypes.Core, stats));
-        this.playerCores[i].setControlledByPlayer();
-        this.setNodePosition(this.playerCores[i], i, 0);
-        this.removeAvailablePosition(i, 0);
-    }
-
-    //Randomly generate enemy nodes (CPU and Firewall) based on difficulty
-    var numNodes = Math.min(8, Math.max(1, Math.round(this.difficulty / 4)));
-    var numFirewalls = Math.min(20,
-                                Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(Math.round(this.difficulty/3), Math.round(this.difficulty/3) + 1));
-    var numDatabases = Math.min(10, Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(1, Math.round(this.difficulty / 3) + 1));
-    var totalNodes = numNodes + numFirewalls + numDatabases;
-    var xlimit = 7 - Math.floor(totalNodes / 8);
-    var randMult = Object(_utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_6__["addOffset"])(0.8 + (this.difficulty / 5), 10);
-    for (var i = 0; i < numNodes; ++i) {
-        var stats = {
-            atk: randMult * Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(80, 86),
-            def: randMult * Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(5, 10),
-            hp: randMult * Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(210, 230)
-        }
-        this.enemyCores.push(new Node(NodeTypes.Core, stats));
-        this.enemyCores[i].setControlledByEnemy();
-        this.setNodeRandomPosition(this.enemyCores[i], xlimit);
-    }
-    for (var i = 0; i < numFirewalls; ++i) {
-        var stats = {
-            atk: 0,
-            def: randMult * Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(10, 20),
-            hp: randMult * Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(275, 300)
-        }
-        this.enemyNodes.push(new Node(NodeTypes.Firewall, stats));
-        this.enemyNodes[i].setControlledByEnemy();
-        this.setNodeRandomPosition(this.enemyNodes[i], xlimit);
-    }
-    for (var i = 0; i < numDatabases; ++i) {
-        var stats = {
-            atk: 0,
-            def: randMult * Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(30, 55),
-            hp: randMult * Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(210, 275)
-        }
-        var node = new Node(NodeTypes.Database, stats);
-        node.setControlledByEnemy();
-        this.setNodeRandomPosition(node, xlimit);
-        this.enemyDatabases.push(node);
-    }
-    this.calculateDefenses();
-    this.calculateAttacks();
-    this.createMap();
-}
-
-HackingMission.prototype.createPageDom = function() {
-    var container = document.getElementById("mission-container");
-
-    var favorMult = 1 + (this.faction.favor / 100);
-    var gain = this.reward  * _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].faction_rep_mult * favorMult;
-    var headerText = document.createElement("p");
-    headerText.innerHTML = "You are about to start a hacking mission! You will gain " +
-                    Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(gain, 3) + " faction reputation with " + this.faction.name +
-                    " if you win. For more information " +
-                    "about how hacking missions work, click one of the guide links " +
-                    "below (one opens up an in-game guide and the other opens up " +
-                    "the guide from the wiki). Click the 'Start' button to begin.";
-    headerText.style.display = "block";
-    headerText.classList.add("hack-mission-header-element");
-    headerText.style.width = "80%";
-
-    var inGameGuideBtn = document.createElement("a");
-    inGameGuideBtn.innerText = "How to Play";
-    inGameGuideBtn.classList.add("a-link-button");
-    inGameGuideBtn.style.display = "inline-block";
-    inGameGuideBtn.classList.add("hack-mission-header-element");
-    inGameGuideBtn.addEventListener("click", function() {
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__["dialogBoxCreate"])(_Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].HackingMissionHowToPlay);
-        return false;
-    });
-
-    var wikiGuideBtn = document.createElement("a");
-    wikiGuideBtn.innerText = "Wiki Guide";
-    wikiGuideBtn.classList.add("a-link-button");
-    wikiGuideBtn.style.display = "inline-block";
-    wikiGuideBtn.classList.add("hack-mission-header-element");
-    wikiGuideBtn.target = "_blank";
-    //TODO Add link to wiki page     wikiGuideBtn.href =
-
-
-    //Start button will get replaced with forfeit when game is started
-    var startBtn = document.createElement("a");
-    startBtn.innerHTML = "Start";
-    startBtn.setAttribute("id", "hack-mission-start-btn");
-    startBtn.classList.add("a-link-button");
-    startBtn.classList.add("hack-mission-header-element");
-    startBtn.style.display = "inline-block";
-    startBtn.addEventListener("click", ()=>{
-        this.start();
-        return false;
-    });
-
-    var forfeitMission = document.createElement("a");
-    forfeitMission.innerHTML = "Forfeit Mission (Exit)";
-    forfeitMission.classList.add("a-link-button");
-    forfeitMission.classList.add("hack-mission-header-element");
-    forfeitMission.style.display = "inline-block";
-    forfeitMission.addEventListener("click", ()=> {
-        this.finishMission(false);
-        return false;
-    });
-
-    var timer = document.createElement("p");
-    timer.setAttribute("id", "hacking-mission-timer");
-    timer.style.display = "inline-block";
-    timer.style.margin = "6px";
-
-    //Create Action Buttons (Attack/Scan/Weaken/ etc...)
-    var actionsContainer = document.createElement("span");
-    actionsContainer.style.display = "block";
-    actionsContainer.classList.add("hack-mission-action-buttons-container");
-    for (var i = 0; i < 6; ++i) {
-        this.actionButtons.push(document.createElement("a"));
-        this.actionButtons[i].style.display = "inline-block";
-        this.actionButtons[i].classList.add("a-link-button-inactive"); //Disabled at start
-        this.actionButtons[i].classList.add("tooltip"); //Disabled at start
-        this.actionButtons[i].classList.add("hack-mission-header-element");
-        actionsContainer.appendChild(this.actionButtons[i]);
-    }
-    this.actionButtons[0].innerText = "Attack(a)";
-    var atkTooltip = document.createElement("span");
-    atkTooltip.classList.add("tooltiptexthigh");
-    atkTooltip.innerText = "Lowers the targeted node's HP. The effectiveness of this depends on " +
-                           "this node's Attack level, your hacking level, and the opponent's defense level.";
-    this.actionButtons[0].appendChild(atkTooltip);
-    this.actionButtons[1].innerText = "Scan(s)";
-    var scanTooltip = document.createElement("span");
-    scanTooltip.classList.add("tooltiptexthigh");
-    scanTooltip.innerText = "Lowers the targeted node's defense. The effectiveness of this depends on " +
-                            "this node's Attack level, your hacking level, and the opponent's defense level.";
-    this.actionButtons[1].appendChild(scanTooltip);
-    this.actionButtons[2].innerText = "Weaken(w)";
-    var WeakenTooltip = document.createElement("span");
-    WeakenTooltip.classList.add("tooltiptexthigh");
-    WeakenTooltip.innerText = "Lowers the targeted node's attack. The effectiveness of this depends on " +
-                              "this node's Attack level, your hacking level, and the opponent's defense level.";
-    this.actionButtons[2].appendChild(WeakenTooltip);
-    this.actionButtons[3].innerText = "Fortify(f)";
-    var fortifyTooltip = document.createElement("span");
-    fortifyTooltip.classList.add("tooltiptexthigh");
-    fortifyTooltip.innerText = "Raises this node's Defense level. The effectiveness of this depends on " +
-                               "your hacking level";
-    this.actionButtons[3].appendChild(fortifyTooltip);
-    this.actionButtons[4].innerText = "Overflow(r)";
-    var overflowTooltip = document.createElement("span");
-    overflowTooltip.classList.add("tooltiptexthigh");
-    overflowTooltip.innerText = "Raises this node's Attack level but lowers its Defense level. The effectiveness " +
-                                "of this depends on your hacking level.";
-    this.actionButtons[4].appendChild(overflowTooltip);
-    this.actionButtons[5].innerText = "Drop Connection(d)";
-    var dropconnTooltip = document.createElement("span");
-    dropconnTooltip.classList.add("tooltiptexthigh");
-    dropconnTooltip.innerText = "Removes this Node's current connection to some target Node, if it has one. This can " +
-                                "also be done by simply clicking the white connection line.";
-    this.actionButtons[5].appendChild(dropconnTooltip);
-
-    //Player/enemy defense displays will be in action container
-    var playerStats = document.createElement("p");
-    var enemyStats = document.createElement("p");
-    playerStats.style.display = "inline-block";
-    enemyStats.style.display = "inline-block";
-    playerStats.style.color = "#00ccff";
-    enemyStats.style.color = "red";
-    playerStats.style.margin = "4px";
-    enemyStats.style.margin = "4px";
-    playerStats.setAttribute("id", "hacking-mission-player-stats");
-    enemyStats.setAttribute("id", "hacking-mission-enemy-stats");
-    actionsContainer.appendChild(playerStats);
-    actionsContainer.appendChild(enemyStats);
-
-    //Set Action Button event listeners
-    this.actionButtons[0].addEventListener("click", ()=>{
-        if (!(this.selectedNode.length > 0)) {
-            console.log("ERR: Pressing Action button without selected node");
-            return;
-        }
-        if (this.selectedNode[0].type !== NodeTypes.Core) {return;}
-        this.setActionButtonsActive(this.selectedNode[0].type);
-        this.setActionButton(NodeActions.Attack, false); //Set attack button inactive
-        this.selectedNode.forEach(function(node){
-            node.action = NodeActions.Attack;
-        });
-    });
-
-    this.actionButtons[1].addEventListener("click", ()=>{
-        if (!(this.selectedNode.length > 0)) {
-            console.log("ERR: Pressing Action button without selected node");
-            return;
-        }
-        var nodeType = this.selectedNode[0].type; //In a multiselect, every Node will have the same type
-        if (nodeType !== NodeTypes.Core && nodeType !== NodeTypes.Transfer) {return;}
-        this.setActionButtonsActive(nodeType);
-        this.setActionButton(NodeActions.Scan, false); //Set scan button inactive
-        this.selectedNode.forEach(function(node){
-            node.action = NodeActions.Scan;
-        });
-    });
-
-    this.actionButtons[2].addEventListener("click", ()=>{
-        if (!(this.selectedNode.length > 0)) {
-            console.log("ERR: Pressing Action button without selected node");
-            return;
-        }
-        var nodeType = this.selectedNode[0].type; //In a multiselect, every Node will have the same type
-        if (nodeType !== NodeTypes.Core && nodeType !== NodeTypes.Transfer) {return;}
-        this.setActionButtonsActive(nodeType);
-        this.setActionButton(NodeActions.Weaken, false); //Set Weaken button inactive
-        this.selectedNode.forEach(function(node){
-            node.action = NodeActions.Weaken;
-        });
-    });
-
-    this.actionButtons[3].addEventListener("click", ()=>{
-        if (!(this.selectedNode.length > 0)) {
-            console.log("ERR: Pressing Action button without selected node");
-            return;
-        }
-        this.setActionButtonsActive(this.selectedNode[0].type);
-        this.setActionButton(NodeActions.Fortify, false); //Set Fortify button inactive
-        this.selectedNode.forEach(function(node){
-            node.action = NodeActions.Fortify;
-        });
-    });
-
-    this.actionButtons[4].addEventListener("click", ()=>{
-        if (!(this.selectedNode.length > 0)) {
-            console.log("ERR: Pressing Action button without selected node");
-            return;
-        }
-        var nodeType = this.selectedNode[0].type;
-        if (nodeType !== NodeTypes.Core && nodeType !== NodeTypes.Transfer) {return;}
-        this.setActionButtonsActive(nodeType);
-        this.setActionButton(NodeActions.Overflow, false); //Set Overflow button inactive
-        this.selectedNode.forEach(function(node){
-            node.action = NodeActions.Overflow;
-        });
-    });
-
-    this.actionButtons[5].addEventListener("click", ()=>{
-        if (!(this.selectedNode.length > 0)) {
-            console.log("ERR: Pressing Action button without selected node");
-            return;
-        }
-        this.selectedNode.forEach(function(node){
-            if (node.conn) {
-                var endpoints = node.conn.endpoints;
-                endpoints[0].detachFrom(endpoints[1]);
-            }
-            node.action = NodeActions.Fortify;
-        });
-        // if (this.selectedNode.conn) {
-        //     var endpoints = this.selectedNode.conn.endpoints;
-        //     endpoints[0].detachFrom(endpoints[1]);
-        // }
-    })
-
-    var timeDisplay = document.createElement("p");
-
-    container.appendChild(headerText);
-    container.appendChild(inGameGuideBtn);
-    container.appendChild(wikiGuideBtn);
-    container.appendChild(startBtn);
-    container.appendChild(forfeitMission);
-    container.appendChild(timer);
-    container.appendChild(actionsContainer);
-    container.appendChild(timeDisplay);
-}
-
-HackingMission.prototype.setActionButtonsInactive = function() {
-    for (var i = 0; i < this.actionButtons.length; ++i) {
-        this.actionButtons[i].classList.remove("a-link-button");
-        this.actionButtons[i].classList.add("a-link-button-inactive");
-    }
-}
-
-HackingMission.prototype.setActionButtonsActive = function(nodeType=null) {
-    for (var i = 0; i < this.actionButtons.length; ++i) {
-        this.actionButtons[i].classList.add("a-link-button");
-        this.actionButtons[i].classList.remove("a-link-button-inactive");
-    }
-
-    //For Transfer, FireWall and Shield Nodes, certain buttons should always be disabled
-    //0 = Attack, 1 = Scan, 2 = Weaken, 3 = Fortify, 4 = overflow, 5 = Drop conn
-    if (nodeType) {
-        switch (nodeType) {
-            case NodeTypes.Firewall:
-            case NodeTypes.Shield:
-                this.actionButtons[0].classList.remove("a-link-button");
-                this.actionButtons[0].classList.add("a-link-button-inactive");
-                this.actionButtons[1].classList.remove("a-link-button");
-                this.actionButtons[1].classList.add("a-link-button-inactive");
-                this.actionButtons[2].classList.remove("a-link-button");
-                this.actionButtons[2].classList.add("a-link-button-inactive");
-                this.actionButtons[4].classList.remove("a-link-button");
-                this.actionButtons[4].classList.add("a-link-button-inactive");
-                this.actionButtons[5].classList.remove("a-link-button");
-                this.actionButtons[5].classList.add("a-link-button-inactive");
-                break;
-            case NodeTypes.Transfer:
-                this.actionButtons[0].classList.remove("a-link-button");
-                this.actionButtons[0].classList.add("a-link-button-inactive");
-                break;
-            default:
-                break;
-        }
-    }
-}
-
-//True for active, false for inactive
-HackingMission.prototype.setActionButton = function(i, active=true) {
-    if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9__["isString"])(i)) {
-        switch (i) {
-            case NodeActions.Attack:
-                i = 0;
-                break;
-            case NodeActions.Scan:
-                i = 1;
-                break;
-            case NodeActions.Weaken:
-                i = 2;
-                break;
-            case NodeActions.Fortify:
-                i = 3;
-                break;
-            case NodeActions.Overflow:
-            default:
-                i = 4;
-                break;
-        }
-    }
-    if (active) {
-        this.actionButtons[i].classList.remove("a-link-button-inactive");
-        this.actionButtons[i].classList.add("a-link-button");
-    } else {
-        this.actionButtons[i].classList.remove("a-link-button");
-        this.actionButtons[i].classList.add("a-link-button-inactive");
-    }
-
-}
-
-HackingMission.prototype.calculateAttacks = function() {
-    var total = 0;
-    for (var i = 0; i < this.playerCores.length; ++i) {
-        total += this.playerCores[i].atk;
-    }
-    for (var i = 0; i < this.playerNodes.length; ++i) {
-        total += this.playerNodes[i].atk;
-    }
-    this.playerAtk = total;
-    document.getElementById("hacking-mission-player-stats").innerHTML =
-        "Player Attack: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(this.playerAtk, 1) + "<br>" +
-        "Player Defense: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(this.playerDef, 1);
-    total = 0;
-    for (var i = 0; i < this.enemyCores.length; ++i) {
-        total += this.enemyCores[i].atk;
-    }
-    for (var i = 0; i < this.enemyDatabases.length; ++i) {
-        total += this.enemyDatabases[i].atk;
-    }
-    for (var i = 0; i < this.enemyNodes.length; ++i) {
-        total += this.enemyNodes[i].atk;
-    }
-    this.enemyAtk = total;
-    document.getElementById("hacking-mission-enemy-stats").innerHTML =
-        "Enemy Attack: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(this.enemyAtk, 1) + "<br>" +
-        "Enemy Defense: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(this.enemyDef, 1);
-}
-
-HackingMission.prototype.calculateDefenses = function() {
-    var total = 0;
-    for (var i = 0; i < this.playerCores.length; ++i) {
-        total += this.playerCores[i].def;
-    }
-    for (var i = 0; i < this.playerNodes.length; ++i) {
-        total += this.playerNodes[i].def;
-    }
-    this.playerDef = total;
-    document.getElementById("hacking-mission-player-stats").innerHTML =
-        "Player Attack: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(this.playerAtk, 1) + "<br>" +
-        "Player Defense: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(this.playerDef, 1);
-    total = 0;
-    for (var i = 0; i < this.enemyCores.length; ++i) {
-        total += this.enemyCores[i].def;
-    }
-    for (var i = 0; i < this.enemyDatabases.length; ++i) {
-        total += this.enemyDatabases[i].def;
-    }
-    for (var i = 0; i < this.enemyNodes.length; ++i) {
-        total += this.enemyNodes[i].def;
-    }
-    this.enemyDef = total;
-    document.getElementById("hacking-mission-enemy-stats").innerHTML =
-        "Enemy Attack: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(this.enemyAtk, 1) + "<br>" +
-        "Enemy Defense: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(this.enemyDef, 1);
-}
-
-HackingMission.prototype.removeAvailablePosition = function(x, y) {
-    for (var i = 0; i < this.availablePositions.length; ++i) {
-        if (this.availablePositions[i][0] === x &&
-            this.availablePositions[i][1] === y) {
-            this.availablePositions.splice(i, 1);
-            return;
-        }
-    }
-    console.log("WARNING: removeAvailablePosition() did not remove " + x + ", " + y);
-}
-
-HackingMission.prototype.setNodePosition = function(nodeObj, x, y) {
-    if (!(nodeObj instanceof Node)) {
-        console.log("WARNING: Non-Node object passed into setNodePOsition");
-        return;
-    }
-    if (isNaN(x) || isNaN(y)) {
-        console.log("ERR: Invalid values passed as x and y for setNodePosition");
-        console.log(x);
-        console.log(y);
-        return;
-    }
-    nodeObj.pos = [x, y];
-    this.map[x][y] = nodeObj;
-}
-
-HackingMission.prototype.setNodeRandomPosition = function(nodeObj, xlimit=0) {
-    var i = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(0, this.availablePositions.length - 1);
-    if (this.availablePositions[i][1] < xlimit) {
-        //Recurse if not within limit
-        return this.setNodeRandomPosition(nodeObj, xlimit);
-    }
-    var pos = this.availablePositions.splice(i, 1);
-    pos = pos[0];
-    this.setNodePosition(nodeObj, pos[0], pos[1]);
-}
-
-HackingMission.prototype.createMap = function() {
-    //Use a grid
-    var map = document.createElement("div");
-    map.classList.add("hack-mission-grid");
-    map.setAttribute("id", "hacking-mission-map");
-    document.getElementById("mission-container").appendChild(map);
-
-    //Create random Nodes for every space in the map that
-    //hasn't been filled yet. The stats of each Node will be based on
-    //the player/enemy attack
-    var averageAttack = (this.playerAtk + this.enemyAtk) / 2;
-    for (var x = 0; x < 8; ++x) {
-        for (var y = 0; y < 8; ++y) {
-            if (!(this.map[x][y] instanceof Node)) {
-                var node, type = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(0, 2);
-                var randMult = Object(_utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_6__["addOffset"])(0.85 + (this.difficulty / 2), 15);
-                switch (type) {
-                    case 0: //Spam
-                        var stats = {
-                            atk: 0,
-                            def: averageAttack * 1.1 + Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(15, 45),
-                            hp: randMult * Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(200, 225)
-                        }
-                        node = new Node(NodeTypes.Spam, stats);
-                        break;
-                    case 1: //Transfer
-                        var stats = {
-                            atk: 0,
-                            def: averageAttack * 1.1 + Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(15, 45),
-                            hp: randMult * Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(250, 275)
-                        }
-                        node = new Node(NodeTypes.Transfer, stats);
-                        break;
-                    case 2: //Shield
-                    default:
-                        var stats = {
-                            atk: 0,
-                            def: averageAttack * 1.1 + Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(30, 70),
-                            hp: randMult * Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(300, 320)
-                        }
-                        node = new Node(NodeTypes.Shield, stats);
-                        break;
-                }
-                this.setNodePosition(node, x, y);
-                this.removeAvailablePosition(x, y);
-                this.miscNodes.push(node);
-            }
-        }
-    }
-
-    //Create DOM elements in order
-    for (var r = 0; r < 8; ++r) {
-        for (var c = 0; c < 8; ++c) {
-            this.createNodeDomElement(this.map[r][c]);
-        }
-    }
-
-    //Configure all Player CPUS
-    for (var i = 0; i < this.playerCores.length; ++i) {
-        console.log("Configuring Player Node: " + this.playerCores[i].el.id);
-        this.configurePlayerNodeElement(this.playerCores[i].el);
-    }
-}
-
-HackingMission.prototype.createNodeDomElement = function(nodeObj) {
-    var nodeDiv = document.createElement("a"), txtEl = document.createElement('p');
-    nodeObj.el = nodeDiv;
-
-    //Set the node element's id based on its coordinates
-    var id = "hacking-mission-node-" + nodeObj.pos[0] + "-" + nodeObj.pos[1];
-    nodeDiv.setAttribute("id", id);
-    txtEl.setAttribute("id", id + "-txt");
-
-    //Set node classes for owner
-    nodeDiv.classList.add("hack-mission-node");
-    if (nodeObj.plyrCtrl) {
-        nodeDiv.classList.add("hack-mission-player-node");
-    } else if (nodeObj.enmyCtrl) {
-        nodeDiv.classList.add("hack-mission-enemy-node");
-    }
-
-    //Set node classes based on type
-    var txt;
-    switch (nodeObj.type) {
-        case NodeTypes.Core:
-            txt = "CPU Core<br>" + "HP: " +
-                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
-            nodeDiv.classList.add("hack-mission-cpu-node");
-            break;
-        case NodeTypes.Firewall:
-            txt = "Firewall<br>" + "HP: " +
-                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
-            nodeDiv.classList.add("hack-mission-firewall-node");
-            break;
-        case NodeTypes.Database:
-            txt = "Database<br>" + "HP: " +
-                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
-            nodeDiv.classList.add("hack-mission-database-node");
-            break;
-        case NodeTypes.Spam:
-            txt = "Spam<br>" + "HP: " +
-                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
-            nodeDiv.classList.add("hack-mission-spam-node");
-            break;
-        case NodeTypes.Transfer:
-            txt = "Transfer<br>" + "HP: " +
-                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
-            nodeDiv.classList.add("hack-mission-transfer-node");
-            break;
-        case NodeTypes.Shield:
-        default:
-            txt = "Shield<br>" + "HP: " +
-                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
-            nodeDiv.classList.add("hack-mission-shield-node");
-            break;
-    }
-
-    txt += "<br>Atk: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.atk, 1) +
-           "<br>Def: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.def, 1);
-    txtEl.innerHTML = txt;
-
-    nodeDiv.appendChild(txtEl);
-    document.getElementById("hacking-mission-map").appendChild(nodeDiv);
-}
-
-HackingMission.prototype.updateNodeDomElement = function(nodeObj) {
-    if (nodeObj.el == null) {
-        console.log("ERR: Calling updateNodeDomElement on a Node without an element");
-        return;
-    }
-
-    var id = "hacking-mission-node-" + nodeObj.pos[0] + "-" + nodeObj.pos[1];
-    var nodeDiv = document.getElementById(id), txtEl = document.getElementById(id + "-txt");
-
-    //Set node classes based on type
-    var txt;
-    switch (nodeObj.type) {
-        case NodeTypes.Core:
-            txt = "CPU Core<br>" + "HP: " +
-                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
-            break;
-        case NodeTypes.Firewall:
-            txt = "Firewall<br>" + "HP: " +
-                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
-            break;
-        case NodeTypes.Database:
-            txt = "Database<br>" + "HP: " +
-                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
-            break;
-        case NodeTypes.Spam:
-            txt = "Spam<br>" + "HP: " +
-                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
-            break;
-        case NodeTypes.Transfer:
-            txt = "Transfer<br>" + "HP: " +
-                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
-            break;
-        case NodeTypes.Shield:
-        default:
-            txt = "Shield<br>" + "HP: " +
-                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
-            break;
-    }
-
-    txt += "<br>Atk: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.atk, 1) +
-           "<br>Def: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.def, 1);
-    if (nodeObj.action) {
-        txt += "<br>" + nodeObj.action;
-    }
-    txtEl.innerHTML = txt;
-}
-
-//Gets a Node DOM element's corresponding Node object using its
-//element id. Function accepts either the DOM element object or the ID as
-//an argument
-HackingMission.prototype.getNodeFromElement = function(el) {
-    var id;
-    if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9__["isString"])(el)) {
-        id = el;
-    } else {
-        id = el.id;
-    }
-    id = id.replace("hacking-mission-node-", "");
-    var res = id.split('-');
-    if (res.length != 2) {
-        console.log("ERROR Parsing Hacking Mission Node Id. Could not find coordinates");
-        return null;
-    }
-    var x = res[0], y = res[1];
-    if (isNaN(x) || isNaN(y) || x >= 8 || y >= 8 || x < 0 || y < 0) {
-        console.log("ERROR: Unexpected values for x and y: " + x + ", " + y);
-        return null;
-    }
-    return this.map[x][y];
-}
-
-function selectNode(hackMissionInst, el) {
-    var nodeObj = hackMissionInst.getNodeFromElement(el);
-    if (nodeObj == null) {console.log("Error getting Node object");}
-    if (!nodeObj.plyrCtrl) {return;}
-
-    clearAllSelectedNodes(hackMissionInst);
-    nodeObj.select(hackMissionInst.actionButtons);
-    hackMissionInst.selectedNode.push(nodeObj);
-}
-
-function multiselectNode(hackMissionInst, el) {
-    var nodeObj = hackMissionInst.getNodeFromElement(el);
-    if (nodeObj == null) {console.log("ERROR: Getting Node Object in multiselectNode()");}
-    if (!nodeObj.plyrCtrl) {return;}
-
-    clearAllSelectedNodes(hackMissionInst);
-    var type = nodeObj.type;
-    if (type === NodeTypes.Core) {
-        hackMissionInst.playerCores.forEach(function(node) {
-            node.select(hackMissionInst.actionButtons);
-            hackMissionInst.selectedNode.push(node);
-        });
-    } else {
-        hackMissionInst.playerNodes.forEach(function(node) {
-            if (node.type === type) {
-                node.select(hackMissionInst.actionButtons);
-                hackMissionInst.selectedNode.push(node);
-            }
-        });
-    }
-}
-
-function clearAllSelectedNodes(hackMissionInst) {
-    if (hackMissionInst.selectedNode.length > 0) {
-        hackMissionInst.selectedNode.forEach(function(node){
-            node.deselect(hackMissionInst.actionButtons);
-        });
-        hackMissionInst.selectedNode.length = 0;
-    }
-}
-
-//Configures a DOM element representing a player-owned node to
-//be selectable and actionable
-//Note: Does NOT change its css class. This is handled by Node.setControlledBy...
-HackingMission.prototype.configurePlayerNodeElement = function(el) {
-    var nodeObj = this.getNodeFromElement(el);
-    if (nodeObj == null) {console.log("Error getting Node object");}
-
-    //Add event listener
-    var self = this;
-    function selectNodeWrapper() {
-        selectNode(self, el);
-    }
-    el.addEventListener("click", selectNodeWrapper);
-
-    function multiselectNodeWrapper() {
-        multiselectNode(self, el);
-    }
-    el.addEventListener("dblclick", multiselectNodeWrapper);
-
-
-    if (el.firstChild) {
-        el.firstChild.addEventListener("click", selectNodeWrapper);
-    }
-}
-
-//Configures a DOM element representing an enemy-node by removing
-//any event listeners
-HackingMission.prototype.configureEnemyNodeElement = function(el) {
-    //Deselect node if it was the selected node
-    var nodeObj = this.getNodeFromElement(el);
-    for (var i = 0; i < this.selectedNode.length; ++i) {
-        if (this.selectedNode[i] == nodeObj) {
-            nodeObj.deselect(this.actionButtons);
-            this.selectedNode.splice(i, 1);
-            break;
-        }
-    }
-}
-
-//Returns bool indicating whether a node is reachable by player
-//by checking if any of the adjacent nodes are owned by the player
-HackingMission.prototype.nodeReachable = function(node) {
-    var x = node.pos[0], y = node.pos[1];
-    if (x > 0 && this.map[x-1][y].plyrCtrl) {return true;}
-    if (x < 7 && this.map[x+1][y].plyrCtrl) {return true;}
-    if (y > 0 && this.map[x][y-1].plyrCtrl) {return true;}
-    if (y < 7 && this.map[x][y+1].plyrCtrl) {return true;}
-    return false;
-}
-
-HackingMission.prototype.nodeReachableByEnemy = function(node) {
-    if (node == null) {return false;}
-    var x = node.pos[0], y = node.pos[1];
-    if (x > 0 && this.map[x-1][y].enmyCtrl) {return true;}
-    if (x < 7 && this.map[x+1][y].enmyCtrl) {return true;}
-    if (y > 0 && this.map[x][y-1].enmyCtrl) {return true;}
-    if (y < 7 && this.map[x][y+1].enmyCtrl) {return true;}
-    return false;
-}
-
-HackingMission.prototype.start = function() {
-    this.started = true;
-    this.initJsPlumb();
-    var startBtn = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__["clearEventListeners"])("hack-mission-start-btn");
-    startBtn.classList.remove("a-link-button");
-    startBtn.classList.add("a-link-button-inactive");
-}
-
-HackingMission.prototype.initJsPlumb = function() {
-    var instance = jsPlumb.getInstance({
-        DragOptions:{cursor:"pointer", zIndex:2000},
-        PaintStyle: {
-            gradient: { stops: [
-                [ 0, "#FFFFFF" ],
-                [ 1, "#FFFFFF" ]
-            ] },
-            stroke: "#FFFFFF",
-            strokeWidth: 8
-        },
-    });
-
-    this.jsplumbinstance = instance;
-
-    //All player cores are sources
-    for (var i = 0; i < this.playerCores.length; ++i) {
-        instance.makeSource(this.playerCores[i].el, {
-            deleteEndpointsOnEmpty:true,
-            maxConnections:1,
-            anchor:"Continuous",
-            connector:"Flowchart"
-        });
-    }
-
-    //Everything else is a target
-    for (var i = 0; i < this.enemyCores.length; ++i) {
-        instance.makeTarget(this.enemyCores[i].el, {
-            maxConnections:-1,
-            anchor:"Continuous",
-            connector:"Flowchart"
-        });
-    }
-    for (var i = 0; i < this.enemyDatabases.length; ++i) {
-        instance.makeTarget(this.enemyDatabases[i].el, {
-            maxConnections:-1,
-            anchor:"Continuous",
-            connector:["Flowchart"]
-        });
-    }
-    for (var i = 0; i < this.enemyNodes.length; ++i) {
-        instance.makeTarget(this.enemyNodes[i].el, {
-            maxConnections:-1,
-            anchor:"Continuous",
-            connector:"Flowchart"
-        });
-    }
-    for (var i = 0; i < this.miscNodes.length; ++i) {
-        instance.makeTarget(this.miscNodes[i].el, {
-            maxConnections:-1,
-            anchor:"Continuous",
-            connector:"Flowchart"
-        });
-    }
-
-    //Clicking a connection drops it
-    instance.bind("click", function(conn, originalEvent) {
-        var endpoints = conn.endpoints;
-        endpoints[0].detachFrom(endpoints[1]);
-    });
-
-    //Connection events
-    instance.bind("connection", (info)=>{
-        var targetNode = this.getNodeFromElement(info.target);
-
-        //Do not detach for enemy nodes
-        var thisNode = this.getNodeFromElement(info.source);
-        if (thisNode.enmyCtrl) {return;}
-
-        //If the node is not reachable, drop the connection
-        if (!this.nodeReachable(targetNode)) {
-            info.sourceEndpoint.detachFrom(info.targetEndpoint);
-            return;
-        }
-
-        var sourceNode = this.getNodeFromElement(info.source);
-        sourceNode.conn = info.connection;
-        var targetNode = this.getNodeFromElement(info.target);
-        ++targetNode.targetedCount;
-    });
-
-    //Detach Connection events
-    instance.bind("connectionDetached", (info, originalEvent)=>{
-        var sourceNode = this.getNodeFromElement(info.source);
-        sourceNode.conn = null;
-        var targetNode = this.getNodeFromElement(info.target);
-        targetNode.untarget();
-    });
-
-}
-
-//Drops all connections where the specified node is the source
-HackingMission.prototype.dropAllConnectionsFromNode = function(node) {
-    var allConns = this.jsplumbinstance.getAllConnections();
-    for (var i = allConns.length-1; i >= 0; --i) {
-        if (allConns[i].source == node.el) {
-            allConns[i].endpoints[0].detachFrom(allConns[i].endpoints[1]);
-        }
-    }
-}
-
-//Drops all connections where the specified node is the target
-HackingMission.prototype.dropAllConnectionsToNode = function(node) {
-    var allConns = this.jsplumbinstance.getAllConnections();
-    for (var i = allConns.length-1; i >= 0; --i) {
-        if (allConns[i].target == node.el) {
-            allConns[i].endpoints[0].detachFrom(allConns[i].endpoints[1]);
-        }
-    }
-    node.beingTargeted = false;
-}
-
-var storedCycles = 0;
-HackingMission.prototype.process = function(numCycles=1) {
-    if (!this.started) {return;}
-    storedCycles += numCycles;
-    if (storedCycles < 2) {return;} //Only process every 3 cycles minimum
-
-    var res = false;
-    //Process actions of all player nodes
-    this.playerCores.forEach((node)=>{
-        res |= this.processNode(node, storedCycles);
-    });
-
-    this.playerNodes.forEach((node)=>{
-        if (node.type === NodeTypes.Transfer ||
-            node.type === NodeTypes.Shield ||
-            node.type === NodeTypes.Firewall) {
-            res |= this.processNode(node, storedCycles);
-        }
-    });
-
-    //Process actions of all enemy nodes
-    this.enemyCores.forEach((node)=>{
-        this.enemyAISelectAction(node);
-        res |= this.processNode(node, storedCycles);
-    });
-
-    this.enemyNodes.forEach((node)=>{
-        if (node.type === NodeTypes.Transfer ||
-            node.type === NodeTypes.Shield ||
-            node.type === NodeTypes.Firewall) {
-            this.enemyAISelectAction(node);
-            res |= this.processNode(node, storedCycles);
-        }
-    });
-
-    //The hp of enemy databases increases slowly
-    this.enemyDatabases.forEach((node)=>{
-        node.maxhp += (0.1 * storedCycles);
-        node.hp += (0.1 * storedCycles);
-    });
-
-    if (res) {
-        this.calculateAttacks();
-        this.calculateDefenses();
-    }
-
-    //Win if all enemy databases are conquered
-    if (this.enemyDatabases.length === 0) {
-        this.finishMission(true);
-        return;
-    }
-
-    //Lose if all your cores are gone
-    if (this.playerCores.length === 0) {
-        this.finishMission(false);
-        return;
-    }
-
-    //Defense/hp of misc nodes increases slowly over time
-    this.miscNodes.forEach((node)=>{
-        node.def += (0.1 * storedCycles);
-        node.maxhp += (0.05 * storedCycles);
-        node.hp += (0.1 * storedCycles);
-        if (node.hp > node.maxhp) {node.hp = node.maxhp;}
-        this.updateNodeDomElement(node);
-    });
-
-    //Update timer and check if player lost
-    this.time -= (storedCycles * _engine__WEBPACK_IMPORTED_MODULE_1__["Engine"]._idleSpeed);
-    if (this.time <= 0) {
-        this.finishMission(false);
-        return;
-    }
-    this.updateTimer();
-
-    storedCycles = 0;
-}
-
-//Returns a bool representing whether defenses need to be re-calculated
-HackingMission.prototype.processNode = function(nodeObj, numCycles=1) {
-    if (nodeObj.action == null) {
-        return;
-    }
-
-    var targetNode = null, def, atk;
-    if (nodeObj.conn) {
-        if (nodeObj.conn.target != null) {
-            targetNode = this.getNodeFromElement(nodeObj.conn.target);
-        } else {
-            targetNode = this.getNodeFromElement(nodeObj.conn.targetId);
-        }
-
-        if (targetNode == null) {
-            //Player is in the middle of  dragging the connection,
-            //so the target node is null. Do nothing here
-        } else if (targetNode.plyrCtrl) {
-            def = this.playerDef;
-            atk = this.enemyAtk;
-        } else if (targetNode.enmyCtrl) {
-            def = this.enemyDef;
-            atk = this.playerAtk;
-        } else { //Misc Node
-            def = targetNode.def;
-            nodeObj.plyrCtrl ? atk = this.playerAtk : atk = this.enemyAtk;
-        }
-    }
-
-    //Calculations are per second, so divide everything by 5
-    var calcStats = false, plyr = nodeObj.plyrCtrl;
-    var enmyHacking = this.difficulty * _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].HackingMissionDifficultyToHacking;
-    switch(nodeObj.action) {
-        case NodeActions.Attack:
-            if (targetNode == null) {break;}
-            if (nodeObj.conn == null) {break;}
-            var dmg = this.calculateAttackDamage(atk, def, plyr ? _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].hacking_skill : enmyHacking);
-            targetNode.hp -= (dmg/5 * numCycles);
-            break;
-        case NodeActions.Scan:
-            if (targetNode == null) {break;}
-            if (nodeObj.conn == null) {break;}
-            var eff = this.calculateScanEffect(atk, def, plyr ? _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].hacking_skill : enmyHacking);
-            targetNode.def -= (eff/5 * numCycles);
-            calcStats = true;
-            break;
-        case NodeActions.Weaken:
-            if (targetNode == null) {break;}
-            if (nodeObj.conn == null) {break;}
-            var eff = this.calculateWeakenEffect(atk, def, plyr ? _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].hacking_skill : enmyHacking);
-            targetNode.atk -= (eff/5 * numCycles);
-            calcStats = true;
-            break;
-        case NodeActions.Fortify:
-            var eff = this.calculateFortifyEffect(_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].hacking_skill);
-            nodeObj.def += (eff/5 * numCycles);
-            calcStats = true;
-            break;
-        case NodeActions.Overflow:
-            var eff = this.calculateOverflowEffect(_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].hacking_skill);
-            if (nodeObj.def < eff) {break;}
-            nodeObj.def -= (eff/5 * numCycles);
-            nodeObj.atk += (eff/5 * numCycles);
-            calcStats = true;
-            break;
-        default:
-            console.log("ERR: Invalid Node Action: " + nodeObj.action);
-            break;
-    }
-
-    //Stats can't go below 0
-    if (nodeObj.atk < 0) {nodeObj.atk = 0;}
-    if (nodeObj.def < 0) {nodeObj.def = 0;}
-    if (targetNode && targetNode.atk < 0) {targetNode.atk = 0;}
-    if (targetNode && targetNode.def < 0) {targetNode.def = 0;}
-
-    //Conquering a node
-    if (targetNode && targetNode.hp <= 0) {
-        var conqueredByPlayer = nodeObj.plyrCtrl;
-        targetNode.hp = targetNode.maxhp;
-        targetNode.action = null;
-        targetNode.conn = null;
-        if (this.selectedNode == targetNode) {
-            targetNode.deselect(this.actionButtons);
-        }
-
-        //The conquered node has its stats reduced
-        targetNode.atk /= 2;
-        targetNode.def /= 3.5;
-
-        //Flag for whether the target node was a misc node
-        var isMiscNode = !targetNode.plyrCtrl && !targetNode.enmyCtrl;
-
-        //Remove all connections from Node
-        this.dropAllConnectionsToNode(targetNode);
-        this.dropAllConnectionsFromNode(targetNode);
-
-        //Changes the css class and turn the node into a JsPlumb Source/Target
-        if (conqueredByPlayer) {
-            targetNode.setControlledByPlayer();
-            this.jsplumbinstance.unmakeTarget(targetNode.el);
-            this.jsplumbinstance.makeSource(targetNode.el, {
-                deleteEndpointsOnEmpty:true,
-                maxConnections:1,
-                anchor:"Continuous",
-                connector:"Flowchart"
-            });
-        } else {
-            targetNode.setControlledByEnemy();
-            nodeObj.conn = null; //Clear connection
-            this.jsplumbinstance.unmakeSource(targetNode.el);
-            this.jsplumbinstance.makeTarget(targetNode.el, {
-                maxConnections:-1,
-                anchor:"Continuous",
-                connector:["Flowchart"]
-            });
-        }
-
-        calcStats = true;
-
-        //Helper function to swap nodes between the respective enemyNodes/playerNodes arrays
-        function swapNodes(orig, dest, targetNode) {
-            for (var i = 0; i < orig.length; ++i) {
-                if (orig[i] == targetNode) {
-                    var node = orig.splice(i, 1);
-                    node = node[0];
-                    dest.push(node);
-                    break;
-                }
-            }
-        }
-
-        switch(targetNode.type) {
-            case NodeTypes.Core:
-                if (conqueredByPlayer) {
-                    swapNodes(this.enemyCores, this.playerCores, targetNode);
-                    this.configurePlayerNodeElement(targetNode.el);
-                } else {
-                    swapNodes(this.playerCores, this.enemyCores, targetNode);
-                    this.configureEnemyNodeElement(targetNode.el);
-                }
-                break;
-            case NodeTypes.Firewall:
-                if (conqueredByPlayer) {
-                    swapNodes(this.enemyNodes, this.playerNodes, targetNode);
-                } else {
-                    swapNodes(this.playerNodes, this.enemyNodes, targetNode);
-                    this.configureEnemyNodeElement(targetNode.el);
-                }
-                break;
-            case NodeTypes.Database:
-                if (conqueredByPlayer) {
-                    swapNodes(this.enemyDatabases, this.playerNodes, targetNode);
-                } else {
-                    swapNodes(this.playerNodes, this.enemyDatabases, targetNode);
-                }
-                break;
-            case NodeTypes.Spam:
-                if (conqueredByPlayer) {
-                    swapNodes(isMiscNode ? this.miscNodes : this.enemyNodes, this.playerNodes, targetNode);
-                    //Conquering spam node increases time limit
-                    this.time += _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].HackingMissionSpamTimeIncrease;
-                } else {
-                    swapNodes(isMiscNode ? this.miscNodes : this.playerNodes, this.enemyNodes, targetNode);
-                }
-
-                break;
-            case NodeTypes.Transfer:
-                //Conquering a Transfer node increases the attack of all cores by some percentages
-                if (conqueredByPlayer) {
-                    swapNodes(isMiscNode ? this.miscNodes : this.enemyNodes, this.playerNodes, targetNode);
-                    this.playerCores.forEach(function(node) {
-                        node.atk *= _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].HackingMissionTransferAttackIncrease;
-                    });
-                    this.configurePlayerNodeElement(targetNode.el);
-                } else {
-                    swapNodes(isMiscNode ? this.miscNodes : this.playerNodes, this.enemyNodes, targetNode);
-                    this.enemyCores.forEach(function(node) {
-                        node.atk *= _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].HackingMissionTransferAttackIncrease;
-                    });
-                    this.configureEnemyNodeElement(targetNode.el);
-                }
-                break;
-            case NodeTypes.Shield:
-                if (conqueredByPlayer) {
-                    swapNodes(isMiscNode ? this.miscNodes : this.enemyNodes, this.playerNodes, targetNode);
-                    this.configurePlayerNodeElement(targetNode.el);
-                } else {
-                    swapNodes(isMiscNode ? this.miscNodes : this.playerNodes, this.enemyNodes, targetNode);
-                    this.configureEnemyNodeElement(targetNode.el);
-                }
-                break;
-        }
-
-        //If a misc node was conquered, the defense for all misc nodes increases by some fixed amount
-        if (isMiscNode) { //&& conqueredByPlayer) {
-            this.miscNodes.forEach((node)=>{
-                if (node.targetedCount === 0) {
-                    node.def *= _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].HackingMissionMiscDefenseIncrease;
-                }
-            });
-        }
-    }
-
-    //Update node DOMs
-    this.updateNodeDomElement(nodeObj);
-    if (targetNode) {this.updateNodeDomElement(targetNode);}
-    return calcStats;
-}
-
-//Enemy "AI" for CPU Core and Transfer Nodes
-HackingMission.prototype.enemyAISelectAction = function(nodeObj) {
-    if (nodeObj == null) {return;}
-    switch(nodeObj.type) {
-        case NodeTypes.Core:
-            //Select a single RANDOM target from miscNodes and player's Nodes
-            //If it is reachable, it will target it. If not, no target will
-            //be selected for now, and the next time process() gets called this will repeat
-            if (nodeObj.conn == null) {
-                if (this.miscNodes.length === 0) {
-                    //Randomly pick a player node and attack it if its reachable
-                    var rand = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(0, this.playerNodes.length-1);
-                    var node;
-                    if (this.playerNodes.length === 0) {
-                        node = null;
-                    } else {
-                        node = this.playerNodes[rand];
-                    }
-                    if (this.nodeReachableByEnemy(node)) {
-                        //Create connection
-                        nodeObj.conn = this.jsplumbinstance.connect({
-                            source:nodeObj.el,
-                            target:node.el
-                        });
-                        ++node.targetedCount;
-                    } else {
-                        //Randomly pick a player core and attack it if its reachable
-                        rand = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(0, this.playerCores.length-1);
-                        if (this.playerCores.length === 0) {
-                            return; //No Misc Nodes, no player Nodes, no Player cores. Player lost
-                        } else {
-                            node = this.playerCores[rand];
-                        }
-
-                        if (this.nodeReachableByEnemy(node)) {
-                            //Create connection
-                            nodeObj.conn = this.jsplumbinstance.connect({
-                                source:nodeObj.el,
-                                target:node.el
-                            });
-                            ++node.targetedCount;
-                        }
-                    }
-                } else {
-                    //Randomly pick a misc node and attack it if its reachable
-                    var rand = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(0, this.miscNodes.length-1);
-                    var node = this.miscNodes[rand];
-                    if (this.nodeReachableByEnemy(node)) {
-                        nodeObj.conn = this.jsplumbinstance.connect({
-                            source:nodeObj.el,
-                            target:node.el,
-                        });
-                        ++node.targetedCount;
-                    }
-                }
-
-                //If no connection was made, set the Core to Fortify
-                nodeObj.action = NodeActions.Fortify;
-            } else {
-                //If this node has a selected target
-                var targetNode;
-                if (nodeObj.conn.target) {
-                    targetNode = this.getNodeFromElement(nodeObj.conn.target);
-                } else {
-                    targetNode = this.getNodeFromElement(nodeObj.conn.targetId);
-                }
-                if (targetNode == null) {
-                    console.log("Error getting Target node Object in enemyAISelectAction()");
-                }
-
-                if (targetNode.def > this.enemyAtk + 15) {
-                    if (nodeObj.def < 50) {
-                        nodeObj.action = NodeActions.Fortify;
-                    } else {
-                        nodeObj.action = NodeActions.Overflow;
-                    }
-                } else if (Math.abs(targetNode.def - this.enemyAtk) <= 15) {
-                    nodeObj.action = NodeActions.Scan;
-                } else {
-                    nodeObj.action = NodeActions.Attack;
-                }
-            }
-            break;
-        case NodeTypes.Transfer:
-            //Switch between fortifying and overflowing as necessary
-            if (nodeObj.def < 125) {
-                nodeObj.action = NodeActions.Fortify;
-            } else {
-                nodeObj.action = NodeActions.Overflow;
-            }
-            break;
-        case NodeTypes.Firewall:
-        case NodeTypes.Shield:
-            nodeObj.action = NodeActions.Fortify;
-            break;
-        default:
-            break;
-    }
-}
-
-var hackEffWeightSelf = 130; //Weight for Node actions on self
-var hackEffWeightTarget = 25; //Weight for Node Actions against Target
-var hackEffWeightAttack = 80; //Weight for Attack action
-
-//Returns damage per cycle based on stats
-HackingMission.prototype.calculateAttackDamage = function(atk, def, hacking = 0) {
-    return Math.max(0.55 * (atk + (hacking / hackEffWeightAttack) - def), 1);
-}
-
-HackingMission.prototype.calculateScanEffect = function(atk, def, hacking=0) {
-    return Math.max(0.6 * ((atk) + hacking / hackEffWeightTarget - (def * 0.95)), 2);
-}
-
-HackingMission.prototype.calculateWeakenEffect = function(atk, def, hacking=0) {
-    return Math.max((atk) + hacking / hackEffWeightTarget - (def * 0.95), 2);
-}
-
-HackingMission.prototype.calculateFortifyEffect = function(hacking=0) {
-    return 0.9 * hacking / hackEffWeightSelf;
-}
-
-HackingMission.prototype.calculateOverflowEffect = function(hacking=0) {
-    return 0.95 * hacking / hackEffWeightSelf;
-}
-
-//Updates timer display
-HackingMission.prototype.updateTimer = function() {
-    var timer = document.getElementById("hacking-mission-timer");
-
-    //Convert time remaining to a string of the form mm:ss
-    var seconds = Math.round(this.time / 1000);
-    var minutes = Math.trunc(seconds / 60);
-    seconds %= 60;
-    var str = ("0" + minutes).slice(-2) + ":" + ("0" + seconds).slice(-2);
-    timer.innerText = "Time left: " + str;
-}
-
-//The 'win' argument is a bool for whether or not the player won
-HackingMission.prototype.finishMission = function(win) {
-    inMission = false;
-    currMission = null;
-
-    if (win) {
-        var favorMult = 1 + (this.faction.favor / 100);
-        console.log("Hacking mission base reward: " + this.reward);
-        console.log("favorMult: " + favorMult);
-        console.log("rep mult: " + _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].faction_rep_mult);
-        var gain = this.reward  * _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].faction_rep_mult * favorMult;
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__["dialogBoxCreate"])("Mission won! You earned " +
-                        Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(gain, 3) + " reputation with " + this.faction.name);
-        _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gainIntelligenceExp(this.difficulty * _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].IntelligenceHackingMissionBaseExpGain);
-        this.faction.playerReputation += gain;
-    } else {
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__["dialogBoxCreate"])("Mission lost/forfeited! You did not gain any faction reputation.");
-    }
-
-    //Clear mission container
-    var container = document.getElementById("mission-container");
-    while(container.firstChild) {
-        container.removeChild(container.firstChild);
-    }
-
-    //Return to Faction page
-    document.getElementById("mainmenu-container").style.visibility = "visible";
-    document.getElementById("character-overview-wrapper").style.visibility = "visible";
-    _engine__WEBPACK_IMPORTED_MODULE_1__["Engine"].loadFactionContent();
-    Object(_Faction__WEBPACK_IMPORTED_MODULE_2__[/* displayFactionContent */ "c"])(this.faction.name);
-}
-
-
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 57)))
-
-/***/ }),
-/* 47 */
 /*!*************************!*\
   !*** ./src/Terminal.js ***!
   \*************************/
@@ -31767,7 +29924,7 @@ HackingMission.prototype.finishMission = function(win) {
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./CreateProgram */ 22);
 /* harmony import */ var _DarkWeb__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./DarkWeb */ 69);
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./engine */ 7);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./engine */ 8);
 /* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Fconf */ 40);
 /* harmony import */ var _Hacking__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Hacking */ 42);
 /* harmony import */ var _HelpText__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./HelpText */ 85);
@@ -31777,22 +29934,22 @@ HackingMission.prototype.finishMission = function(win) {
 /* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Message */ 35);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./NetscriptWorker */ 24);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./RedPill */ 54);
+/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./RedPill */ 58);
 /* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Script */ 28);
-/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Server */ 11);
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Server */ 12);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_17__);
 /* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./SpecialServerIps */ 27);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./TextFile */ 53);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_TextFile__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 2);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 4);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_20__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./ui/navigationTracking */ 16);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./ui/numeralFormat */ 12);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./ui/numeralFormat */ 5);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 32);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_23__);
-/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 56);
+/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 55);
 /* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_24__);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/helpers/isString */ 34);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25__);
@@ -31802,13 +29959,13 @@ HackingMission.prototype.finishMission = function(win) {
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_27__);
 /* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../utils/LogBox */ 68);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
-/* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./ui/postToTerminal */ 6);
+/* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./ui/postToTerminal */ 7);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__);
-/* harmony import */ var autosize__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! autosize */ 126);
+/* harmony import */ var autosize__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! autosize */ 127);
 /* harmony import */ var autosize__WEBPACK_IMPORTED_MODULE_31___default = /*#__PURE__*/__webpack_require__.n(autosize__WEBPACK_IMPORTED_MODULE_31__);
-/* harmony import */ var jszip__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! jszip */ 125);
+/* harmony import */ var jszip__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! jszip */ 126);
 /* harmony import */ var jszip__WEBPACK_IMPORTED_MODULE_32___default = /*#__PURE__*/__webpack_require__.n(jszip__WEBPACK_IMPORTED_MODULE_32__);
-/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! file-saver */ 124);
+/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! file-saver */ 125);
 /* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_33___default = /*#__PURE__*/__webpack_require__.n(file_saver__WEBPACK_IMPORTED_MODULE_33__);
 
 
@@ -33947,7 +32104,1650 @@ let Terminal = {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 57)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 56)))
+
+/***/ }),
+/* 45 */
+/*!*************************************!*\
+  !*** ./src/NetscriptBladeburner.js ***!
+  \*************************************/
+/*! exports provided: unknownBladeburnerActionErrorMessage, unknownBladeburnerExceptionMessage, checkBladeburnerAccess */
+/*! exports used: checkBladeburnerAccess, unknownBladeburnerActionErrorMessage, unknownBladeburnerExceptionMessage */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return unknownBladeburnerActionErrorMessage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return unknownBladeburnerExceptionMessage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return checkBladeburnerAccess; });
+/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Player */ 0);
+/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Bladeburner */ 29);
+/* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NetscriptEvaluator */ 6);
+
+
+
+
+function unknownBladeburnerActionErrorMessage(functionName, actionType, actionName) {
+	return `ERROR: bladeburner.${functionName}() failed due to an invalid action specified. ` +
+		`Type: ${actionType}, Name: ${actionName}. Note that for contracts and operations, the ` +
+		`name of the operation is case-sensitive.`;
+}
+
+function unknownBladeburnerExceptionMessage(functionName, err) {
+	return `Bladeburner.${functionName}() failed with exception: ` + err;
+}
+
+function checkBladeburnerAccess(workerScript, functionName) {
+	const accessDenied = `${functionName}() failed because you do not` +
+		" currently have access to the Bladeburner API. This is either" +
+		" because you are not currently employed at the Bladeburner division" +
+		" or because you do not have Source-File 7";
+	const hasAccess = _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_1__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].bitNodeN === 7 || _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].sourceFiles.some(a=>{return a.n === 7}));
+	if(!hasAccess) {
+		throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_2__[/* makeRuntimeRejectMsg */ "d"])(workerScript, accessDenied);
+	}
+}
+
+
+
+
+/***/ }),
+/* 46 */
+/*!*******************************************!*\
+  !*** ./utils/uiHelpers/getElementById.ts ***!
+  \*******************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Returns a reference to the first object with the specified value of the ID or NAME attribute,
+ * throwing an error if it is unable to find it.
+ * @param elementId The HTML ID to retrieve the element by.
+ * @throws {Error} When the 'elementId' cannot be found.
+ */
+function getElementById(elementId) {
+    const el = document.getElementById(elementId);
+    if (el === null) {
+        throw new Error(`Unable to find element with id '${elementId}'`);
+    }
+    return el;
+}
+exports.getElementById = getElementById;
+
+
+/***/ }),
+/* 47 */
+/*!*************************!*\
+  !*** ./src/Missions.js ***!
+  \*************************/
+/*! exports provided: HackingMission, inMission, setInMission, currMission */
+/*! exports used: HackingMission, currMission, inMission, setInMission */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HackingMission; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return inMission; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return setInMission; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return currMission; });
+/* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Constants */ 1);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./engine */ 8);
+/* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Faction */ 15);
+/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Player */ 0);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 18);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 55);
+/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 4);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 11);
+/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/isString */ 34);
+/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var jsplumb__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! jsplumb */ 225);
+/* harmony import */ var jsplumb__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(jsplumb__WEBPACK_IMPORTED_MODULE_10__);
+
+
+
+
+
+
+
+
+
+
+
+
+let inMission = false; //Flag to denote whether a mission is running
+let currMission = null;
+function setInMission(bool, mission) {
+    inMission = bool;
+    if (bool) {
+        currMission = mission;
+    } else {
+        currMission = null;
+    }
+}
+
+//Keyboard shortcuts
+$(document).keydown(function(e) {
+    if (inMission && currMission && currMission.selectedNode.length != 0) {
+        switch (e.keyCode) {
+            case 65: //a for Attack
+                currMission.actionButtons[0].click();
+                break;
+            case 83: //s for Scan
+                currMission.actionButtons[1].click();
+                break;
+            case 87: //w for Weaken
+                currMission.actionButtons[2].click();
+                break;
+            case 70: //f for Fortify
+                currMission.actionButtons[3].click();
+                break;
+            case 82: //r for Overflow
+                currMission.actionButtons[4].click();
+                break;
+            case 68: //d for Detach connection
+                currMission.actionButtons[5].click();
+                break;
+            default:
+                break;
+        }
+    }
+});
+
+let NodeTypes = {
+    Core: "CPU Core Node",      //All actions available
+    Firewall: "Firewall Node",  //No actions available
+    Database: "Database Node",  //No actions available
+    Spam: "Spam Node",          //No actions Available
+    Transfer: "Transfer Node",  //Can Weaken, Scan, Fortify and Overflow
+    Shield: "Shield Node"       //Can Fortify
+}
+
+let NodeActions = {
+    Attack: "Attacking", //Damaged based on attack stat + hacking level + opp def
+    Scan: "Scanning", //-Def for target, affected by attack and hacking level
+    Weaken: "Weakening", //-Attack for target, affected by attack and hacking level
+    Fortify: "Fortifying", //+Defense for Node, affected by hacking level
+    Overflow: "Overflowing", //+Attack but -Defense for Node, affected by hacking level
+}
+
+function Node(type, stats) {
+    this.type = type;
+    this.atk = stats.atk ? stats.atk : 0;
+    this.def = stats.def ? stats.def : 0;
+    this.hp = stats.hp ? stats.hp : 0;
+    this.maxhp = this.hp;
+    this.plyrCtrl = false;
+    this.enmyCtrl = false;
+    this.pos = [0, 0]; //x, y
+    this.el = null; //Holds the Node's DOM element
+    this.action = null;
+    this.targetedCount = 0; //Count of how many connections this node is the target of
+
+    //Holds the JsPlumb Connection object for this Node,
+    //where this Node is the Source (since each Node
+    //can only have 1 outgoing Connection)
+    this.conn = null;
+}
+
+Node.prototype.setPosition = function(x, y) {
+    this.pos = [x, y];
+}
+
+Node.prototype.setControlledByPlayer = function() {
+    this.plyrCtrl = true;
+    this.enmyCtrl = false;
+    if (this.el) {
+        this.el.classList.remove("hack-mission-enemy-node");
+        this.el.classList.add("hack-mission-player-node");
+    }
+}
+
+Node.prototype.setControlledByEnemy = function() {
+    this.plyrCtrl = false;
+    this.enmyCtrl = true;
+    if (this.el) {
+        this.el.classList.remove("hack-mission-player-node");
+        this.el.classList.add("hack-mission-enemy-node");
+    }
+}
+
+//Sets this node to be the active node
+Node.prototype.select = function(actionButtons) {
+    if (this.enmyCtrl) {return;}
+    this.el.classList.add("hack-mission-player-node-active");
+
+    //Make all buttons inactive
+    for (var i = 0; i < actionButtons.length; ++i) {
+        actionButtons[i].classList.remove("a-link-button");
+        actionButtons[i].classList.add("a-link-button-inactive");
+    }
+
+    switch(this.type) {
+        case NodeTypes.Core:
+            //All buttons active
+            for (var i = 0; i < actionButtons.length; ++i) {
+                actionButtons[i].classList.remove("a-link-button-inactive");
+                actionButtons[i].classList.add("a-link-button");
+            }
+            break;
+        case NodeTypes.Transfer:
+            actionButtons[1].classList.remove("a-link-button-inactive");
+            actionButtons[1].classList.add("a-link-button");
+            actionButtons[2].classList.remove("a-link-button-inactive");
+            actionButtons[2].classList.add("a-link-button");
+            actionButtons[3].classList.remove("a-link-button-inactive");
+            actionButtons[3].classList.add("a-link-button");
+            actionButtons[4].classList.remove("a-link-button-inactive");
+            actionButtons[4].classList.add("a-link-button");
+            actionButtons[5].classList.remove("a-link-button-inactive");
+            actionButtons[5].classList.add("a-link-button");
+            break;
+        case NodeTypes.Shield:
+        case NodeTypes.Firewall:
+            actionButtons[3].classList.remove("a-link-button-inactive");
+            actionButtons[3].classList.add("a-link-button");
+            break;
+        default:
+            break;
+    }
+}
+
+Node.prototype.deselect = function(actionButtons) {
+    this.el.classList.remove("hack-mission-player-node-active");
+    for (var i = 0; i < actionButtons.length; ++i) {
+        actionButtons[i].classList.remove("a-link-button");
+        actionButtons[i].classList.add("a-link-button-inactive");
+    }
+}
+
+
+Node.prototype.untarget = function() {
+    if (this.targetedCount === 0) {
+        console.log("WARN: Node " + this.el.id + " is being 'untargeted' when it has no target count");
+        return;
+    }
+    --this.targetedCount;
+}
+
+//Hacking mission instance
+//Takes in the reputation of the Faction for which the mission is
+//being conducted
+function HackingMission(rep, fac) {
+    this.faction = fac;
+
+    this.started = false;
+    this.time = 180000; //5 minutes to start, milliseconds
+
+    this.playerCores = [];
+    this.playerNodes = []; //Non-core nodes
+    this.playerAtk = 0;
+    this.playerDef = 0;
+
+    this.enemyCores = [];
+    this.enemyDatabases = [];
+    this.enemyNodes = []; //Non-core nodes
+    this.enemyAtk = 0;
+    this.enemyDef = 0;
+
+    this.miscNodes = [];
+
+    this.selectedNode = []; //Which of the player's nodes are currently selected
+
+    this.actionButtons = []; //DOM buttons for actions
+
+    this.availablePositions = [];
+    for (var r = 0; r < 8; ++r) {
+        for (var c = 0; c < 8; ++c) {
+            this.availablePositions.push([r, c]);
+        }
+    }
+
+    this.map = [];
+    for (var i = 0; i < 8; ++i) {
+        this.map.push([null, null, null, null, null, null, null, null]);
+    }
+
+    this.jsplumbinstance = null;
+
+    this.difficulty = rep / _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].HackingMissionRepToDiffConversion + 1;
+    console.log("difficulty: " + this.difficulty);
+    this.reward = 250 + (rep / _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].HackingMissionRepToRewardConversion);
+}
+
+HackingMission.prototype.init = function() {
+    //Create Header DOM
+    this.createPageDom();
+
+    //Create player starting nodes
+    var home = _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].getHomeComputer()
+    for (var i = 0; i < home.cpuCores; ++i) {
+        var stats = {
+            atk: (_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].hacking_skill / 7.5) + 30,
+            def: (_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].hacking_skill / 20),
+            hp: (_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].hacking_skill / 4),
+        };
+        this.playerCores.push(new Node(NodeTypes.Core, stats));
+        this.playerCores[i].setControlledByPlayer();
+        this.setNodePosition(this.playerCores[i], i, 0);
+        this.removeAvailablePosition(i, 0);
+    }
+
+    //Randomly generate enemy nodes (CPU and Firewall) based on difficulty
+    var numNodes = Math.min(8, Math.max(1, Math.round(this.difficulty / 4)));
+    var numFirewalls = Math.min(20,
+                                Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(Math.round(this.difficulty/3), Math.round(this.difficulty/3) + 1));
+    var numDatabases = Math.min(10, Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(1, Math.round(this.difficulty / 3) + 1));
+    var totalNodes = numNodes + numFirewalls + numDatabases;
+    var xlimit = 7 - Math.floor(totalNodes / 8);
+    var randMult = Object(_utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_6__["addOffset"])(0.8 + (this.difficulty / 5), 10);
+    for (var i = 0; i < numNodes; ++i) {
+        var stats = {
+            atk: randMult * Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(80, 86),
+            def: randMult * Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(5, 10),
+            hp: randMult * Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(210, 230)
+        }
+        this.enemyCores.push(new Node(NodeTypes.Core, stats));
+        this.enemyCores[i].setControlledByEnemy();
+        this.setNodeRandomPosition(this.enemyCores[i], xlimit);
+    }
+    for (var i = 0; i < numFirewalls; ++i) {
+        var stats = {
+            atk: 0,
+            def: randMult * Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(10, 20),
+            hp: randMult * Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(275, 300)
+        }
+        this.enemyNodes.push(new Node(NodeTypes.Firewall, stats));
+        this.enemyNodes[i].setControlledByEnemy();
+        this.setNodeRandomPosition(this.enemyNodes[i], xlimit);
+    }
+    for (var i = 0; i < numDatabases; ++i) {
+        var stats = {
+            atk: 0,
+            def: randMult * Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(30, 55),
+            hp: randMult * Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(210, 275)
+        }
+        var node = new Node(NodeTypes.Database, stats);
+        node.setControlledByEnemy();
+        this.setNodeRandomPosition(node, xlimit);
+        this.enemyDatabases.push(node);
+    }
+    this.calculateDefenses();
+    this.calculateAttacks();
+    this.createMap();
+}
+
+HackingMission.prototype.createPageDom = function() {
+    var container = document.getElementById("mission-container");
+
+    var favorMult = 1 + (this.faction.favor / 100);
+    var gain = this.reward  * _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].faction_rep_mult * favorMult;
+    var headerText = document.createElement("p");
+    headerText.innerHTML = "You are about to start a hacking mission! You will gain " +
+                    Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(gain, 3) + " faction reputation with " + this.faction.name +
+                    " if you win. For more information " +
+                    "about how hacking missions work, click one of the guide links " +
+                    "below (one opens up an in-game guide and the other opens up " +
+                    "the guide from the wiki). Click the 'Start' button to begin.";
+    headerText.style.display = "block";
+    headerText.classList.add("hack-mission-header-element");
+    headerText.style.width = "80%";
+
+    var inGameGuideBtn = document.createElement("a");
+    inGameGuideBtn.innerText = "How to Play";
+    inGameGuideBtn.classList.add("a-link-button");
+    inGameGuideBtn.style.display = "inline-block";
+    inGameGuideBtn.classList.add("hack-mission-header-element");
+    inGameGuideBtn.addEventListener("click", function() {
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__["dialogBoxCreate"])(_Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].HackingMissionHowToPlay);
+        return false;
+    });
+
+    var wikiGuideBtn = document.createElement("a");
+    wikiGuideBtn.innerText = "Wiki Guide";
+    wikiGuideBtn.classList.add("a-link-button");
+    wikiGuideBtn.style.display = "inline-block";
+    wikiGuideBtn.classList.add("hack-mission-header-element");
+    wikiGuideBtn.target = "_blank";
+    //TODO Add link to wiki page     wikiGuideBtn.href =
+
+
+    //Start button will get replaced with forfeit when game is started
+    var startBtn = document.createElement("a");
+    startBtn.innerHTML = "Start";
+    startBtn.setAttribute("id", "hack-mission-start-btn");
+    startBtn.classList.add("a-link-button");
+    startBtn.classList.add("hack-mission-header-element");
+    startBtn.style.display = "inline-block";
+    startBtn.addEventListener("click", ()=>{
+        this.start();
+        return false;
+    });
+
+    var forfeitMission = document.createElement("a");
+    forfeitMission.innerHTML = "Forfeit Mission (Exit)";
+    forfeitMission.classList.add("a-link-button");
+    forfeitMission.classList.add("hack-mission-header-element");
+    forfeitMission.style.display = "inline-block";
+    forfeitMission.addEventListener("click", ()=> {
+        this.finishMission(false);
+        return false;
+    });
+
+    var timer = document.createElement("p");
+    timer.setAttribute("id", "hacking-mission-timer");
+    timer.style.display = "inline-block";
+    timer.style.margin = "6px";
+
+    //Create Action Buttons (Attack/Scan/Weaken/ etc...)
+    var actionsContainer = document.createElement("span");
+    actionsContainer.style.display = "block";
+    actionsContainer.classList.add("hack-mission-action-buttons-container");
+    for (var i = 0; i < 6; ++i) {
+        this.actionButtons.push(document.createElement("a"));
+        this.actionButtons[i].style.display = "inline-block";
+        this.actionButtons[i].classList.add("a-link-button-inactive"); //Disabled at start
+        this.actionButtons[i].classList.add("tooltip"); //Disabled at start
+        this.actionButtons[i].classList.add("hack-mission-header-element");
+        actionsContainer.appendChild(this.actionButtons[i]);
+    }
+    this.actionButtons[0].innerText = "Attack(a)";
+    var atkTooltip = document.createElement("span");
+    atkTooltip.classList.add("tooltiptexthigh");
+    atkTooltip.innerText = "Lowers the targeted node's HP. The effectiveness of this depends on " +
+                           "this node's Attack level, your hacking level, and the opponent's defense level.";
+    this.actionButtons[0].appendChild(atkTooltip);
+    this.actionButtons[1].innerText = "Scan(s)";
+    var scanTooltip = document.createElement("span");
+    scanTooltip.classList.add("tooltiptexthigh");
+    scanTooltip.innerText = "Lowers the targeted node's defense. The effectiveness of this depends on " +
+                            "this node's Attack level, your hacking level, and the opponent's defense level.";
+    this.actionButtons[1].appendChild(scanTooltip);
+    this.actionButtons[2].innerText = "Weaken(w)";
+    var WeakenTooltip = document.createElement("span");
+    WeakenTooltip.classList.add("tooltiptexthigh");
+    WeakenTooltip.innerText = "Lowers the targeted node's attack. The effectiveness of this depends on " +
+                              "this node's Attack level, your hacking level, and the opponent's defense level.";
+    this.actionButtons[2].appendChild(WeakenTooltip);
+    this.actionButtons[3].innerText = "Fortify(f)";
+    var fortifyTooltip = document.createElement("span");
+    fortifyTooltip.classList.add("tooltiptexthigh");
+    fortifyTooltip.innerText = "Raises this node's Defense level. The effectiveness of this depends on " +
+                               "your hacking level";
+    this.actionButtons[3].appendChild(fortifyTooltip);
+    this.actionButtons[4].innerText = "Overflow(r)";
+    var overflowTooltip = document.createElement("span");
+    overflowTooltip.classList.add("tooltiptexthigh");
+    overflowTooltip.innerText = "Raises this node's Attack level but lowers its Defense level. The effectiveness " +
+                                "of this depends on your hacking level.";
+    this.actionButtons[4].appendChild(overflowTooltip);
+    this.actionButtons[5].innerText = "Drop Connection(d)";
+    var dropconnTooltip = document.createElement("span");
+    dropconnTooltip.classList.add("tooltiptexthigh");
+    dropconnTooltip.innerText = "Removes this Node's current connection to some target Node, if it has one. This can " +
+                                "also be done by simply clicking the white connection line.";
+    this.actionButtons[5].appendChild(dropconnTooltip);
+
+    //Player/enemy defense displays will be in action container
+    var playerStats = document.createElement("p");
+    var enemyStats = document.createElement("p");
+    playerStats.style.display = "inline-block";
+    enemyStats.style.display = "inline-block";
+    playerStats.style.color = "#00ccff";
+    enemyStats.style.color = "red";
+    playerStats.style.margin = "4px";
+    enemyStats.style.margin = "4px";
+    playerStats.setAttribute("id", "hacking-mission-player-stats");
+    enemyStats.setAttribute("id", "hacking-mission-enemy-stats");
+    actionsContainer.appendChild(playerStats);
+    actionsContainer.appendChild(enemyStats);
+
+    //Set Action Button event listeners
+    this.actionButtons[0].addEventListener("click", ()=>{
+        if (!(this.selectedNode.length > 0)) {
+            console.log("ERR: Pressing Action button without selected node");
+            return;
+        }
+        if (this.selectedNode[0].type !== NodeTypes.Core) {return;}
+        this.setActionButtonsActive(this.selectedNode[0].type);
+        this.setActionButton(NodeActions.Attack, false); //Set attack button inactive
+        this.selectedNode.forEach(function(node){
+            node.action = NodeActions.Attack;
+        });
+    });
+
+    this.actionButtons[1].addEventListener("click", ()=>{
+        if (!(this.selectedNode.length > 0)) {
+            console.log("ERR: Pressing Action button without selected node");
+            return;
+        }
+        var nodeType = this.selectedNode[0].type; //In a multiselect, every Node will have the same type
+        if (nodeType !== NodeTypes.Core && nodeType !== NodeTypes.Transfer) {return;}
+        this.setActionButtonsActive(nodeType);
+        this.setActionButton(NodeActions.Scan, false); //Set scan button inactive
+        this.selectedNode.forEach(function(node){
+            node.action = NodeActions.Scan;
+        });
+    });
+
+    this.actionButtons[2].addEventListener("click", ()=>{
+        if (!(this.selectedNode.length > 0)) {
+            console.log("ERR: Pressing Action button without selected node");
+            return;
+        }
+        var nodeType = this.selectedNode[0].type; //In a multiselect, every Node will have the same type
+        if (nodeType !== NodeTypes.Core && nodeType !== NodeTypes.Transfer) {return;}
+        this.setActionButtonsActive(nodeType);
+        this.setActionButton(NodeActions.Weaken, false); //Set Weaken button inactive
+        this.selectedNode.forEach(function(node){
+            node.action = NodeActions.Weaken;
+        });
+    });
+
+    this.actionButtons[3].addEventListener("click", ()=>{
+        if (!(this.selectedNode.length > 0)) {
+            console.log("ERR: Pressing Action button without selected node");
+            return;
+        }
+        this.setActionButtonsActive(this.selectedNode[0].type);
+        this.setActionButton(NodeActions.Fortify, false); //Set Fortify button inactive
+        this.selectedNode.forEach(function(node){
+            node.action = NodeActions.Fortify;
+        });
+    });
+
+    this.actionButtons[4].addEventListener("click", ()=>{
+        if (!(this.selectedNode.length > 0)) {
+            console.log("ERR: Pressing Action button without selected node");
+            return;
+        }
+        var nodeType = this.selectedNode[0].type;
+        if (nodeType !== NodeTypes.Core && nodeType !== NodeTypes.Transfer) {return;}
+        this.setActionButtonsActive(nodeType);
+        this.setActionButton(NodeActions.Overflow, false); //Set Overflow button inactive
+        this.selectedNode.forEach(function(node){
+            node.action = NodeActions.Overflow;
+        });
+    });
+
+    this.actionButtons[5].addEventListener("click", ()=>{
+        if (!(this.selectedNode.length > 0)) {
+            console.log("ERR: Pressing Action button without selected node");
+            return;
+        }
+        this.selectedNode.forEach(function(node){
+            if (node.conn) {
+                var endpoints = node.conn.endpoints;
+                endpoints[0].detachFrom(endpoints[1]);
+            }
+            node.action = NodeActions.Fortify;
+        });
+        // if (this.selectedNode.conn) {
+        //     var endpoints = this.selectedNode.conn.endpoints;
+        //     endpoints[0].detachFrom(endpoints[1]);
+        // }
+    })
+
+    var timeDisplay = document.createElement("p");
+
+    container.appendChild(headerText);
+    container.appendChild(inGameGuideBtn);
+    container.appendChild(wikiGuideBtn);
+    container.appendChild(startBtn);
+    container.appendChild(forfeitMission);
+    container.appendChild(timer);
+    container.appendChild(actionsContainer);
+    container.appendChild(timeDisplay);
+}
+
+HackingMission.prototype.setActionButtonsInactive = function() {
+    for (var i = 0; i < this.actionButtons.length; ++i) {
+        this.actionButtons[i].classList.remove("a-link-button");
+        this.actionButtons[i].classList.add("a-link-button-inactive");
+    }
+}
+
+HackingMission.prototype.setActionButtonsActive = function(nodeType=null) {
+    for (var i = 0; i < this.actionButtons.length; ++i) {
+        this.actionButtons[i].classList.add("a-link-button");
+        this.actionButtons[i].classList.remove("a-link-button-inactive");
+    }
+
+    //For Transfer, FireWall and Shield Nodes, certain buttons should always be disabled
+    //0 = Attack, 1 = Scan, 2 = Weaken, 3 = Fortify, 4 = overflow, 5 = Drop conn
+    if (nodeType) {
+        switch (nodeType) {
+            case NodeTypes.Firewall:
+            case NodeTypes.Shield:
+                this.actionButtons[0].classList.remove("a-link-button");
+                this.actionButtons[0].classList.add("a-link-button-inactive");
+                this.actionButtons[1].classList.remove("a-link-button");
+                this.actionButtons[1].classList.add("a-link-button-inactive");
+                this.actionButtons[2].classList.remove("a-link-button");
+                this.actionButtons[2].classList.add("a-link-button-inactive");
+                this.actionButtons[4].classList.remove("a-link-button");
+                this.actionButtons[4].classList.add("a-link-button-inactive");
+                this.actionButtons[5].classList.remove("a-link-button");
+                this.actionButtons[5].classList.add("a-link-button-inactive");
+                break;
+            case NodeTypes.Transfer:
+                this.actionButtons[0].classList.remove("a-link-button");
+                this.actionButtons[0].classList.add("a-link-button-inactive");
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+//True for active, false for inactive
+HackingMission.prototype.setActionButton = function(i, active=true) {
+    if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9__["isString"])(i)) {
+        switch (i) {
+            case NodeActions.Attack:
+                i = 0;
+                break;
+            case NodeActions.Scan:
+                i = 1;
+                break;
+            case NodeActions.Weaken:
+                i = 2;
+                break;
+            case NodeActions.Fortify:
+                i = 3;
+                break;
+            case NodeActions.Overflow:
+            default:
+                i = 4;
+                break;
+        }
+    }
+    if (active) {
+        this.actionButtons[i].classList.remove("a-link-button-inactive");
+        this.actionButtons[i].classList.add("a-link-button");
+    } else {
+        this.actionButtons[i].classList.remove("a-link-button");
+        this.actionButtons[i].classList.add("a-link-button-inactive");
+    }
+
+}
+
+HackingMission.prototype.calculateAttacks = function() {
+    var total = 0;
+    for (var i = 0; i < this.playerCores.length; ++i) {
+        total += this.playerCores[i].atk;
+    }
+    for (var i = 0; i < this.playerNodes.length; ++i) {
+        total += this.playerNodes[i].atk;
+    }
+    this.playerAtk = total;
+    document.getElementById("hacking-mission-player-stats").innerHTML =
+        "Player Attack: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(this.playerAtk, 1) + "<br>" +
+        "Player Defense: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(this.playerDef, 1);
+    total = 0;
+    for (var i = 0; i < this.enemyCores.length; ++i) {
+        total += this.enemyCores[i].atk;
+    }
+    for (var i = 0; i < this.enemyDatabases.length; ++i) {
+        total += this.enemyDatabases[i].atk;
+    }
+    for (var i = 0; i < this.enemyNodes.length; ++i) {
+        total += this.enemyNodes[i].atk;
+    }
+    this.enemyAtk = total;
+    document.getElementById("hacking-mission-enemy-stats").innerHTML =
+        "Enemy Attack: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(this.enemyAtk, 1) + "<br>" +
+        "Enemy Defense: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(this.enemyDef, 1);
+}
+
+HackingMission.prototype.calculateDefenses = function() {
+    var total = 0;
+    for (var i = 0; i < this.playerCores.length; ++i) {
+        total += this.playerCores[i].def;
+    }
+    for (var i = 0; i < this.playerNodes.length; ++i) {
+        total += this.playerNodes[i].def;
+    }
+    this.playerDef = total;
+    document.getElementById("hacking-mission-player-stats").innerHTML =
+        "Player Attack: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(this.playerAtk, 1) + "<br>" +
+        "Player Defense: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(this.playerDef, 1);
+    total = 0;
+    for (var i = 0; i < this.enemyCores.length; ++i) {
+        total += this.enemyCores[i].def;
+    }
+    for (var i = 0; i < this.enemyDatabases.length; ++i) {
+        total += this.enemyDatabases[i].def;
+    }
+    for (var i = 0; i < this.enemyNodes.length; ++i) {
+        total += this.enemyNodes[i].def;
+    }
+    this.enemyDef = total;
+    document.getElementById("hacking-mission-enemy-stats").innerHTML =
+        "Enemy Attack: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(this.enemyAtk, 1) + "<br>" +
+        "Enemy Defense: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(this.enemyDef, 1);
+}
+
+HackingMission.prototype.removeAvailablePosition = function(x, y) {
+    for (var i = 0; i < this.availablePositions.length; ++i) {
+        if (this.availablePositions[i][0] === x &&
+            this.availablePositions[i][1] === y) {
+            this.availablePositions.splice(i, 1);
+            return;
+        }
+    }
+    console.log("WARNING: removeAvailablePosition() did not remove " + x + ", " + y);
+}
+
+HackingMission.prototype.setNodePosition = function(nodeObj, x, y) {
+    if (!(nodeObj instanceof Node)) {
+        console.log("WARNING: Non-Node object passed into setNodePOsition");
+        return;
+    }
+    if (isNaN(x) || isNaN(y)) {
+        console.log("ERR: Invalid values passed as x and y for setNodePosition");
+        console.log(x);
+        console.log(y);
+        return;
+    }
+    nodeObj.pos = [x, y];
+    this.map[x][y] = nodeObj;
+}
+
+HackingMission.prototype.setNodeRandomPosition = function(nodeObj, xlimit=0) {
+    var i = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(0, this.availablePositions.length - 1);
+    if (this.availablePositions[i][1] < xlimit) {
+        //Recurse if not within limit
+        return this.setNodeRandomPosition(nodeObj, xlimit);
+    }
+    var pos = this.availablePositions.splice(i, 1);
+    pos = pos[0];
+    this.setNodePosition(nodeObj, pos[0], pos[1]);
+}
+
+HackingMission.prototype.createMap = function() {
+    //Use a grid
+    var map = document.createElement("div");
+    map.classList.add("hack-mission-grid");
+    map.setAttribute("id", "hacking-mission-map");
+    document.getElementById("mission-container").appendChild(map);
+
+    //Create random Nodes for every space in the map that
+    //hasn't been filled yet. The stats of each Node will be based on
+    //the player/enemy attack
+    var averageAttack = (this.playerAtk + this.enemyAtk) / 2;
+    for (var x = 0; x < 8; ++x) {
+        for (var y = 0; y < 8; ++y) {
+            if (!(this.map[x][y] instanceof Node)) {
+                var node, type = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(0, 2);
+                var randMult = Object(_utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_6__["addOffset"])(0.85 + (this.difficulty / 2), 15);
+                switch (type) {
+                    case 0: //Spam
+                        var stats = {
+                            atk: 0,
+                            def: averageAttack * 1.1 + Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(15, 45),
+                            hp: randMult * Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(200, 225)
+                        }
+                        node = new Node(NodeTypes.Spam, stats);
+                        break;
+                    case 1: //Transfer
+                        var stats = {
+                            atk: 0,
+                            def: averageAttack * 1.1 + Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(15, 45),
+                            hp: randMult * Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(250, 275)
+                        }
+                        node = new Node(NodeTypes.Transfer, stats);
+                        break;
+                    case 2: //Shield
+                    default:
+                        var stats = {
+                            atk: 0,
+                            def: averageAttack * 1.1 + Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(30, 70),
+                            hp: randMult * Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(300, 320)
+                        }
+                        node = new Node(NodeTypes.Shield, stats);
+                        break;
+                }
+                this.setNodePosition(node, x, y);
+                this.removeAvailablePosition(x, y);
+                this.miscNodes.push(node);
+            }
+        }
+    }
+
+    //Create DOM elements in order
+    for (var r = 0; r < 8; ++r) {
+        for (var c = 0; c < 8; ++c) {
+            this.createNodeDomElement(this.map[r][c]);
+        }
+    }
+
+    //Configure all Player CPUS
+    for (var i = 0; i < this.playerCores.length; ++i) {
+        console.log("Configuring Player Node: " + this.playerCores[i].el.id);
+        this.configurePlayerNodeElement(this.playerCores[i].el);
+    }
+}
+
+HackingMission.prototype.createNodeDomElement = function(nodeObj) {
+    var nodeDiv = document.createElement("a"), txtEl = document.createElement('p');
+    nodeObj.el = nodeDiv;
+
+    //Set the node element's id based on its coordinates
+    var id = "hacking-mission-node-" + nodeObj.pos[0] + "-" + nodeObj.pos[1];
+    nodeDiv.setAttribute("id", id);
+    txtEl.setAttribute("id", id + "-txt");
+
+    //Set node classes for owner
+    nodeDiv.classList.add("hack-mission-node");
+    if (nodeObj.plyrCtrl) {
+        nodeDiv.classList.add("hack-mission-player-node");
+    } else if (nodeObj.enmyCtrl) {
+        nodeDiv.classList.add("hack-mission-enemy-node");
+    }
+
+    //Set node classes based on type
+    var txt;
+    switch (nodeObj.type) {
+        case NodeTypes.Core:
+            txt = "CPU Core<br>" + "HP: " +
+                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
+            nodeDiv.classList.add("hack-mission-cpu-node");
+            break;
+        case NodeTypes.Firewall:
+            txt = "Firewall<br>" + "HP: " +
+                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
+            nodeDiv.classList.add("hack-mission-firewall-node");
+            break;
+        case NodeTypes.Database:
+            txt = "Database<br>" + "HP: " +
+                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
+            nodeDiv.classList.add("hack-mission-database-node");
+            break;
+        case NodeTypes.Spam:
+            txt = "Spam<br>" + "HP: " +
+                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
+            nodeDiv.classList.add("hack-mission-spam-node");
+            break;
+        case NodeTypes.Transfer:
+            txt = "Transfer<br>" + "HP: " +
+                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
+            nodeDiv.classList.add("hack-mission-transfer-node");
+            break;
+        case NodeTypes.Shield:
+        default:
+            txt = "Shield<br>" + "HP: " +
+                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
+            nodeDiv.classList.add("hack-mission-shield-node");
+            break;
+    }
+
+    txt += "<br>Atk: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.atk, 1) +
+           "<br>Def: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.def, 1);
+    txtEl.innerHTML = txt;
+
+    nodeDiv.appendChild(txtEl);
+    document.getElementById("hacking-mission-map").appendChild(nodeDiv);
+}
+
+HackingMission.prototype.updateNodeDomElement = function(nodeObj) {
+    if (nodeObj.el == null) {
+        console.log("ERR: Calling updateNodeDomElement on a Node without an element");
+        return;
+    }
+
+    var id = "hacking-mission-node-" + nodeObj.pos[0] + "-" + nodeObj.pos[1];
+    var nodeDiv = document.getElementById(id), txtEl = document.getElementById(id + "-txt");
+
+    //Set node classes based on type
+    var txt;
+    switch (nodeObj.type) {
+        case NodeTypes.Core:
+            txt = "CPU Core<br>" + "HP: " +
+                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
+            break;
+        case NodeTypes.Firewall:
+            txt = "Firewall<br>" + "HP: " +
+                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
+            break;
+        case NodeTypes.Database:
+            txt = "Database<br>" + "HP: " +
+                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
+            break;
+        case NodeTypes.Spam:
+            txt = "Spam<br>" + "HP: " +
+                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
+            break;
+        case NodeTypes.Transfer:
+            txt = "Transfer<br>" + "HP: " +
+                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
+            break;
+        case NodeTypes.Shield:
+        default:
+            txt = "Shield<br>" + "HP: " +
+                  Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.hp, 1);
+            break;
+    }
+
+    txt += "<br>Atk: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.atk, 1) +
+           "<br>Def: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(nodeObj.def, 1);
+    if (nodeObj.action) {
+        txt += "<br>" + nodeObj.action;
+    }
+    txtEl.innerHTML = txt;
+}
+
+//Gets a Node DOM element's corresponding Node object using its
+//element id. Function accepts either the DOM element object or the ID as
+//an argument
+HackingMission.prototype.getNodeFromElement = function(el) {
+    var id;
+    if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9__["isString"])(el)) {
+        id = el;
+    } else {
+        id = el.id;
+    }
+    id = id.replace("hacking-mission-node-", "");
+    var res = id.split('-');
+    if (res.length != 2) {
+        console.log("ERROR Parsing Hacking Mission Node Id. Could not find coordinates");
+        return null;
+    }
+    var x = res[0], y = res[1];
+    if (isNaN(x) || isNaN(y) || x >= 8 || y >= 8 || x < 0 || y < 0) {
+        console.log("ERROR: Unexpected values for x and y: " + x + ", " + y);
+        return null;
+    }
+    return this.map[x][y];
+}
+
+function selectNode(hackMissionInst, el) {
+    var nodeObj = hackMissionInst.getNodeFromElement(el);
+    if (nodeObj == null) {console.log("Error getting Node object");}
+    if (!nodeObj.plyrCtrl) {return;}
+
+    clearAllSelectedNodes(hackMissionInst);
+    nodeObj.select(hackMissionInst.actionButtons);
+    hackMissionInst.selectedNode.push(nodeObj);
+}
+
+function multiselectNode(hackMissionInst, el) {
+    var nodeObj = hackMissionInst.getNodeFromElement(el);
+    if (nodeObj == null) {console.log("ERROR: Getting Node Object in multiselectNode()");}
+    if (!nodeObj.plyrCtrl) {return;}
+
+    clearAllSelectedNodes(hackMissionInst);
+    var type = nodeObj.type;
+    if (type === NodeTypes.Core) {
+        hackMissionInst.playerCores.forEach(function(node) {
+            node.select(hackMissionInst.actionButtons);
+            hackMissionInst.selectedNode.push(node);
+        });
+    } else {
+        hackMissionInst.playerNodes.forEach(function(node) {
+            if (node.type === type) {
+                node.select(hackMissionInst.actionButtons);
+                hackMissionInst.selectedNode.push(node);
+            }
+        });
+    }
+}
+
+function clearAllSelectedNodes(hackMissionInst) {
+    if (hackMissionInst.selectedNode.length > 0) {
+        hackMissionInst.selectedNode.forEach(function(node){
+            node.deselect(hackMissionInst.actionButtons);
+        });
+        hackMissionInst.selectedNode.length = 0;
+    }
+}
+
+//Configures a DOM element representing a player-owned node to
+//be selectable and actionable
+//Note: Does NOT change its css class. This is handled by Node.setControlledBy...
+HackingMission.prototype.configurePlayerNodeElement = function(el) {
+    var nodeObj = this.getNodeFromElement(el);
+    if (nodeObj == null) {console.log("Error getting Node object");}
+
+    //Add event listener
+    var self = this;
+    function selectNodeWrapper() {
+        selectNode(self, el);
+    }
+    el.addEventListener("click", selectNodeWrapper);
+
+    function multiselectNodeWrapper() {
+        multiselectNode(self, el);
+    }
+    el.addEventListener("dblclick", multiselectNodeWrapper);
+
+
+    if (el.firstChild) {
+        el.firstChild.addEventListener("click", selectNodeWrapper);
+    }
+}
+
+//Configures a DOM element representing an enemy-node by removing
+//any event listeners
+HackingMission.prototype.configureEnemyNodeElement = function(el) {
+    //Deselect node if it was the selected node
+    var nodeObj = this.getNodeFromElement(el);
+    for (var i = 0; i < this.selectedNode.length; ++i) {
+        if (this.selectedNode[i] == nodeObj) {
+            nodeObj.deselect(this.actionButtons);
+            this.selectedNode.splice(i, 1);
+            break;
+        }
+    }
+}
+
+//Returns bool indicating whether a node is reachable by player
+//by checking if any of the adjacent nodes are owned by the player
+HackingMission.prototype.nodeReachable = function(node) {
+    var x = node.pos[0], y = node.pos[1];
+    if (x > 0 && this.map[x-1][y].plyrCtrl) {return true;}
+    if (x < 7 && this.map[x+1][y].plyrCtrl) {return true;}
+    if (y > 0 && this.map[x][y-1].plyrCtrl) {return true;}
+    if (y < 7 && this.map[x][y+1].plyrCtrl) {return true;}
+    return false;
+}
+
+HackingMission.prototype.nodeReachableByEnemy = function(node) {
+    if (node == null) {return false;}
+    var x = node.pos[0], y = node.pos[1];
+    if (x > 0 && this.map[x-1][y].enmyCtrl) {return true;}
+    if (x < 7 && this.map[x+1][y].enmyCtrl) {return true;}
+    if (y > 0 && this.map[x][y-1].enmyCtrl) {return true;}
+    if (y < 7 && this.map[x][y+1].enmyCtrl) {return true;}
+    return false;
+}
+
+HackingMission.prototype.start = function() {
+    this.started = true;
+    this.initJsPlumb();
+    var startBtn = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__["clearEventListeners"])("hack-mission-start-btn");
+    startBtn.classList.remove("a-link-button");
+    startBtn.classList.add("a-link-button-inactive");
+}
+
+HackingMission.prototype.initJsPlumb = function() {
+    var instance = jsPlumb.getInstance({
+        DragOptions:{cursor:"pointer", zIndex:2000},
+        PaintStyle: {
+            gradient: { stops: [
+                [ 0, "#FFFFFF" ],
+                [ 1, "#FFFFFF" ]
+            ] },
+            stroke: "#FFFFFF",
+            strokeWidth: 8
+        },
+    });
+
+    this.jsplumbinstance = instance;
+
+    //All player cores are sources
+    for (var i = 0; i < this.playerCores.length; ++i) {
+        instance.makeSource(this.playerCores[i].el, {
+            deleteEndpointsOnEmpty:true,
+            maxConnections:1,
+            anchor:"Continuous",
+            connector:"Flowchart"
+        });
+    }
+
+    //Everything else is a target
+    for (var i = 0; i < this.enemyCores.length; ++i) {
+        instance.makeTarget(this.enemyCores[i].el, {
+            maxConnections:-1,
+            anchor:"Continuous",
+            connector:"Flowchart"
+        });
+    }
+    for (var i = 0; i < this.enemyDatabases.length; ++i) {
+        instance.makeTarget(this.enemyDatabases[i].el, {
+            maxConnections:-1,
+            anchor:"Continuous",
+            connector:["Flowchart"]
+        });
+    }
+    for (var i = 0; i < this.enemyNodes.length; ++i) {
+        instance.makeTarget(this.enemyNodes[i].el, {
+            maxConnections:-1,
+            anchor:"Continuous",
+            connector:"Flowchart"
+        });
+    }
+    for (var i = 0; i < this.miscNodes.length; ++i) {
+        instance.makeTarget(this.miscNodes[i].el, {
+            maxConnections:-1,
+            anchor:"Continuous",
+            connector:"Flowchart"
+        });
+    }
+
+    //Clicking a connection drops it
+    instance.bind("click", function(conn, originalEvent) {
+        var endpoints = conn.endpoints;
+        endpoints[0].detachFrom(endpoints[1]);
+    });
+
+    //Connection events
+    instance.bind("connection", (info)=>{
+        var targetNode = this.getNodeFromElement(info.target);
+
+        //Do not detach for enemy nodes
+        var thisNode = this.getNodeFromElement(info.source);
+        if (thisNode.enmyCtrl) {return;}
+
+        //If the node is not reachable, drop the connection
+        if (!this.nodeReachable(targetNode)) {
+            info.sourceEndpoint.detachFrom(info.targetEndpoint);
+            return;
+        }
+
+        var sourceNode = this.getNodeFromElement(info.source);
+        sourceNode.conn = info.connection;
+        var targetNode = this.getNodeFromElement(info.target);
+        ++targetNode.targetedCount;
+    });
+
+    //Detach Connection events
+    instance.bind("connectionDetached", (info, originalEvent)=>{
+        var sourceNode = this.getNodeFromElement(info.source);
+        sourceNode.conn = null;
+        var targetNode = this.getNodeFromElement(info.target);
+        targetNode.untarget();
+    });
+
+}
+
+//Drops all connections where the specified node is the source
+HackingMission.prototype.dropAllConnectionsFromNode = function(node) {
+    var allConns = this.jsplumbinstance.getAllConnections();
+    for (var i = allConns.length-1; i >= 0; --i) {
+        if (allConns[i].source == node.el) {
+            allConns[i].endpoints[0].detachFrom(allConns[i].endpoints[1]);
+        }
+    }
+}
+
+//Drops all connections where the specified node is the target
+HackingMission.prototype.dropAllConnectionsToNode = function(node) {
+    var allConns = this.jsplumbinstance.getAllConnections();
+    for (var i = allConns.length-1; i >= 0; --i) {
+        if (allConns[i].target == node.el) {
+            allConns[i].endpoints[0].detachFrom(allConns[i].endpoints[1]);
+        }
+    }
+    node.beingTargeted = false;
+}
+
+var storedCycles = 0;
+HackingMission.prototype.process = function(numCycles=1) {
+    if (!this.started) {return;}
+    storedCycles += numCycles;
+    if (storedCycles < 2) {return;} //Only process every 3 cycles minimum
+
+    var res = false;
+    //Process actions of all player nodes
+    this.playerCores.forEach((node)=>{
+        res |= this.processNode(node, storedCycles);
+    });
+
+    this.playerNodes.forEach((node)=>{
+        if (node.type === NodeTypes.Transfer ||
+            node.type === NodeTypes.Shield ||
+            node.type === NodeTypes.Firewall) {
+            res |= this.processNode(node, storedCycles);
+        }
+    });
+
+    //Process actions of all enemy nodes
+    this.enemyCores.forEach((node)=>{
+        this.enemyAISelectAction(node);
+        res |= this.processNode(node, storedCycles);
+    });
+
+    this.enemyNodes.forEach((node)=>{
+        if (node.type === NodeTypes.Transfer ||
+            node.type === NodeTypes.Shield ||
+            node.type === NodeTypes.Firewall) {
+            this.enemyAISelectAction(node);
+            res |= this.processNode(node, storedCycles);
+        }
+    });
+
+    //The hp of enemy databases increases slowly
+    this.enemyDatabases.forEach((node)=>{
+        node.maxhp += (0.1 * storedCycles);
+        node.hp += (0.1 * storedCycles);
+    });
+
+    if (res) {
+        this.calculateAttacks();
+        this.calculateDefenses();
+    }
+
+    //Win if all enemy databases are conquered
+    if (this.enemyDatabases.length === 0) {
+        this.finishMission(true);
+        return;
+    }
+
+    //Lose if all your cores are gone
+    if (this.playerCores.length === 0) {
+        this.finishMission(false);
+        return;
+    }
+
+    //Defense/hp of misc nodes increases slowly over time
+    this.miscNodes.forEach((node)=>{
+        node.def += (0.1 * storedCycles);
+        node.maxhp += (0.05 * storedCycles);
+        node.hp += (0.1 * storedCycles);
+        if (node.hp > node.maxhp) {node.hp = node.maxhp;}
+        this.updateNodeDomElement(node);
+    });
+
+    //Update timer and check if player lost
+    this.time -= (storedCycles * _engine__WEBPACK_IMPORTED_MODULE_1__["Engine"]._idleSpeed);
+    if (this.time <= 0) {
+        this.finishMission(false);
+        return;
+    }
+    this.updateTimer();
+
+    storedCycles = 0;
+}
+
+//Returns a bool representing whether defenses need to be re-calculated
+HackingMission.prototype.processNode = function(nodeObj, numCycles=1) {
+    if (nodeObj.action == null) {
+        return;
+    }
+
+    var targetNode = null, def, atk;
+    if (nodeObj.conn) {
+        if (nodeObj.conn.target != null) {
+            targetNode = this.getNodeFromElement(nodeObj.conn.target);
+        } else {
+            targetNode = this.getNodeFromElement(nodeObj.conn.targetId);
+        }
+
+        if (targetNode == null) {
+            //Player is in the middle of  dragging the connection,
+            //so the target node is null. Do nothing here
+        } else if (targetNode.plyrCtrl) {
+            def = this.playerDef;
+            atk = this.enemyAtk;
+        } else if (targetNode.enmyCtrl) {
+            def = this.enemyDef;
+            atk = this.playerAtk;
+        } else { //Misc Node
+            def = targetNode.def;
+            nodeObj.plyrCtrl ? atk = this.playerAtk : atk = this.enemyAtk;
+        }
+    }
+
+    //Calculations are per second, so divide everything by 5
+    var calcStats = false, plyr = nodeObj.plyrCtrl;
+    var enmyHacking = this.difficulty * _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].HackingMissionDifficultyToHacking;
+    switch(nodeObj.action) {
+        case NodeActions.Attack:
+            if (targetNode == null) {break;}
+            if (nodeObj.conn == null) {break;}
+            var dmg = this.calculateAttackDamage(atk, def, plyr ? _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].hacking_skill : enmyHacking);
+            targetNode.hp -= (dmg/5 * numCycles);
+            break;
+        case NodeActions.Scan:
+            if (targetNode == null) {break;}
+            if (nodeObj.conn == null) {break;}
+            var eff = this.calculateScanEffect(atk, def, plyr ? _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].hacking_skill : enmyHacking);
+            targetNode.def -= (eff/5 * numCycles);
+            calcStats = true;
+            break;
+        case NodeActions.Weaken:
+            if (targetNode == null) {break;}
+            if (nodeObj.conn == null) {break;}
+            var eff = this.calculateWeakenEffect(atk, def, plyr ? _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].hacking_skill : enmyHacking);
+            targetNode.atk -= (eff/5 * numCycles);
+            calcStats = true;
+            break;
+        case NodeActions.Fortify:
+            var eff = this.calculateFortifyEffect(_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].hacking_skill);
+            nodeObj.def += (eff/5 * numCycles);
+            calcStats = true;
+            break;
+        case NodeActions.Overflow:
+            var eff = this.calculateOverflowEffect(_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].hacking_skill);
+            if (nodeObj.def < eff) {break;}
+            nodeObj.def -= (eff/5 * numCycles);
+            nodeObj.atk += (eff/5 * numCycles);
+            calcStats = true;
+            break;
+        default:
+            console.log("ERR: Invalid Node Action: " + nodeObj.action);
+            break;
+    }
+
+    //Stats can't go below 0
+    if (nodeObj.atk < 0) {nodeObj.atk = 0;}
+    if (nodeObj.def < 0) {nodeObj.def = 0;}
+    if (targetNode && targetNode.atk < 0) {targetNode.atk = 0;}
+    if (targetNode && targetNode.def < 0) {targetNode.def = 0;}
+
+    //Conquering a node
+    if (targetNode && targetNode.hp <= 0) {
+        var conqueredByPlayer = nodeObj.plyrCtrl;
+        targetNode.hp = targetNode.maxhp;
+        targetNode.action = null;
+        targetNode.conn = null;
+        if (this.selectedNode == targetNode) {
+            targetNode.deselect(this.actionButtons);
+        }
+
+        //The conquered node has its stats reduced
+        targetNode.atk /= 2;
+        targetNode.def /= 3.5;
+
+        //Flag for whether the target node was a misc node
+        var isMiscNode = !targetNode.plyrCtrl && !targetNode.enmyCtrl;
+
+        //Remove all connections from Node
+        this.dropAllConnectionsToNode(targetNode);
+        this.dropAllConnectionsFromNode(targetNode);
+
+        //Changes the css class and turn the node into a JsPlumb Source/Target
+        if (conqueredByPlayer) {
+            targetNode.setControlledByPlayer();
+            this.jsplumbinstance.unmakeTarget(targetNode.el);
+            this.jsplumbinstance.makeSource(targetNode.el, {
+                deleteEndpointsOnEmpty:true,
+                maxConnections:1,
+                anchor:"Continuous",
+                connector:"Flowchart"
+            });
+        } else {
+            targetNode.setControlledByEnemy();
+            nodeObj.conn = null; //Clear connection
+            this.jsplumbinstance.unmakeSource(targetNode.el);
+            this.jsplumbinstance.makeTarget(targetNode.el, {
+                maxConnections:-1,
+                anchor:"Continuous",
+                connector:["Flowchart"]
+            });
+        }
+
+        calcStats = true;
+
+        //Helper function to swap nodes between the respective enemyNodes/playerNodes arrays
+        function swapNodes(orig, dest, targetNode) {
+            for (var i = 0; i < orig.length; ++i) {
+                if (orig[i] == targetNode) {
+                    var node = orig.splice(i, 1);
+                    node = node[0];
+                    dest.push(node);
+                    break;
+                }
+            }
+        }
+
+        switch(targetNode.type) {
+            case NodeTypes.Core:
+                if (conqueredByPlayer) {
+                    swapNodes(this.enemyCores, this.playerCores, targetNode);
+                    this.configurePlayerNodeElement(targetNode.el);
+                } else {
+                    swapNodes(this.playerCores, this.enemyCores, targetNode);
+                    this.configureEnemyNodeElement(targetNode.el);
+                }
+                break;
+            case NodeTypes.Firewall:
+                if (conqueredByPlayer) {
+                    swapNodes(this.enemyNodes, this.playerNodes, targetNode);
+                } else {
+                    swapNodes(this.playerNodes, this.enemyNodes, targetNode);
+                    this.configureEnemyNodeElement(targetNode.el);
+                }
+                break;
+            case NodeTypes.Database:
+                if (conqueredByPlayer) {
+                    swapNodes(this.enemyDatabases, this.playerNodes, targetNode);
+                } else {
+                    swapNodes(this.playerNodes, this.enemyDatabases, targetNode);
+                }
+                break;
+            case NodeTypes.Spam:
+                if (conqueredByPlayer) {
+                    swapNodes(isMiscNode ? this.miscNodes : this.enemyNodes, this.playerNodes, targetNode);
+                    //Conquering spam node increases time limit
+                    this.time += _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].HackingMissionSpamTimeIncrease;
+                } else {
+                    swapNodes(isMiscNode ? this.miscNodes : this.playerNodes, this.enemyNodes, targetNode);
+                }
+
+                break;
+            case NodeTypes.Transfer:
+                //Conquering a Transfer node increases the attack of all cores by some percentages
+                if (conqueredByPlayer) {
+                    swapNodes(isMiscNode ? this.miscNodes : this.enemyNodes, this.playerNodes, targetNode);
+                    this.playerCores.forEach(function(node) {
+                        node.atk *= _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].HackingMissionTransferAttackIncrease;
+                    });
+                    this.configurePlayerNodeElement(targetNode.el);
+                } else {
+                    swapNodes(isMiscNode ? this.miscNodes : this.playerNodes, this.enemyNodes, targetNode);
+                    this.enemyCores.forEach(function(node) {
+                        node.atk *= _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].HackingMissionTransferAttackIncrease;
+                    });
+                    this.configureEnemyNodeElement(targetNode.el);
+                }
+                break;
+            case NodeTypes.Shield:
+                if (conqueredByPlayer) {
+                    swapNodes(isMiscNode ? this.miscNodes : this.enemyNodes, this.playerNodes, targetNode);
+                    this.configurePlayerNodeElement(targetNode.el);
+                } else {
+                    swapNodes(isMiscNode ? this.miscNodes : this.playerNodes, this.enemyNodes, targetNode);
+                    this.configureEnemyNodeElement(targetNode.el);
+                }
+                break;
+        }
+
+        //If a misc node was conquered, the defense for all misc nodes increases by some fixed amount
+        if (isMiscNode) { //&& conqueredByPlayer) {
+            this.miscNodes.forEach((node)=>{
+                if (node.targetedCount === 0) {
+                    node.def *= _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].HackingMissionMiscDefenseIncrease;
+                }
+            });
+        }
+    }
+
+    //Update node DOMs
+    this.updateNodeDomElement(nodeObj);
+    if (targetNode) {this.updateNodeDomElement(targetNode);}
+    return calcStats;
+}
+
+//Enemy "AI" for CPU Core and Transfer Nodes
+HackingMission.prototype.enemyAISelectAction = function(nodeObj) {
+    if (nodeObj == null) {return;}
+    switch(nodeObj.type) {
+        case NodeTypes.Core:
+            //Select a single RANDOM target from miscNodes and player's Nodes
+            //If it is reachable, it will target it. If not, no target will
+            //be selected for now, and the next time process() gets called this will repeat
+            if (nodeObj.conn == null) {
+                if (this.miscNodes.length === 0) {
+                    //Randomly pick a player node and attack it if its reachable
+                    var rand = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(0, this.playerNodes.length-1);
+                    var node;
+                    if (this.playerNodes.length === 0) {
+                        node = null;
+                    } else {
+                        node = this.playerNodes[rand];
+                    }
+                    if (this.nodeReachableByEnemy(node)) {
+                        //Create connection
+                        nodeObj.conn = this.jsplumbinstance.connect({
+                            source:nodeObj.el,
+                            target:node.el
+                        });
+                        ++node.targetedCount;
+                    } else {
+                        //Randomly pick a player core and attack it if its reachable
+                        rand = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(0, this.playerCores.length-1);
+                        if (this.playerCores.length === 0) {
+                            return; //No Misc Nodes, no player Nodes, no Player cores. Player lost
+                        } else {
+                            node = this.playerCores[rand];
+                        }
+
+                        if (this.nodeReachableByEnemy(node)) {
+                            //Create connection
+                            nodeObj.conn = this.jsplumbinstance.connect({
+                                source:nodeObj.el,
+                                target:node.el
+                            });
+                            ++node.targetedCount;
+                        }
+                    }
+                } else {
+                    //Randomly pick a misc node and attack it if its reachable
+                    var rand = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__["getRandomInt"])(0, this.miscNodes.length-1);
+                    var node = this.miscNodes[rand];
+                    if (this.nodeReachableByEnemy(node)) {
+                        nodeObj.conn = this.jsplumbinstance.connect({
+                            source:nodeObj.el,
+                            target:node.el,
+                        });
+                        ++node.targetedCount;
+                    }
+                }
+
+                //If no connection was made, set the Core to Fortify
+                nodeObj.action = NodeActions.Fortify;
+            } else {
+                //If this node has a selected target
+                var targetNode;
+                if (nodeObj.conn.target) {
+                    targetNode = this.getNodeFromElement(nodeObj.conn.target);
+                } else {
+                    targetNode = this.getNodeFromElement(nodeObj.conn.targetId);
+                }
+                if (targetNode == null) {
+                    console.log("Error getting Target node Object in enemyAISelectAction()");
+                }
+
+                if (targetNode.def > this.enemyAtk + 15) {
+                    if (nodeObj.def < 50) {
+                        nodeObj.action = NodeActions.Fortify;
+                    } else {
+                        nodeObj.action = NodeActions.Overflow;
+                    }
+                } else if (Math.abs(targetNode.def - this.enemyAtk) <= 15) {
+                    nodeObj.action = NodeActions.Scan;
+                } else {
+                    nodeObj.action = NodeActions.Attack;
+                }
+            }
+            break;
+        case NodeTypes.Transfer:
+            //Switch between fortifying and overflowing as necessary
+            if (nodeObj.def < 125) {
+                nodeObj.action = NodeActions.Fortify;
+            } else {
+                nodeObj.action = NodeActions.Overflow;
+            }
+            break;
+        case NodeTypes.Firewall:
+        case NodeTypes.Shield:
+            nodeObj.action = NodeActions.Fortify;
+            break;
+        default:
+            break;
+    }
+}
+
+var hackEffWeightSelf = 130; //Weight for Node actions on self
+var hackEffWeightTarget = 25; //Weight for Node Actions against Target
+var hackEffWeightAttack = 80; //Weight for Attack action
+
+//Returns damage per cycle based on stats
+HackingMission.prototype.calculateAttackDamage = function(atk, def, hacking = 0) {
+    return Math.max(0.55 * (atk + (hacking / hackEffWeightAttack) - def), 1);
+}
+
+HackingMission.prototype.calculateScanEffect = function(atk, def, hacking=0) {
+    return Math.max(0.6 * ((atk) + hacking / hackEffWeightTarget - (def * 0.95)), 2);
+}
+
+HackingMission.prototype.calculateWeakenEffect = function(atk, def, hacking=0) {
+    return Math.max((atk) + hacking / hackEffWeightTarget - (def * 0.95), 2);
+}
+
+HackingMission.prototype.calculateFortifyEffect = function(hacking=0) {
+    return 0.9 * hacking / hackEffWeightSelf;
+}
+
+HackingMission.prototype.calculateOverflowEffect = function(hacking=0) {
+    return 0.95 * hacking / hackEffWeightSelf;
+}
+
+//Updates timer display
+HackingMission.prototype.updateTimer = function() {
+    var timer = document.getElementById("hacking-mission-timer");
+
+    //Convert time remaining to a string of the form mm:ss
+    var seconds = Math.round(this.time / 1000);
+    var minutes = Math.trunc(seconds / 60);
+    seconds %= 60;
+    var str = ("0" + minutes).slice(-2) + ":" + ("0" + seconds).slice(-2);
+    timer.innerText = "Time left: " + str;
+}
+
+//The 'win' argument is a bool for whether or not the player won
+HackingMission.prototype.finishMission = function(win) {
+    inMission = false;
+    currMission = null;
+
+    if (win) {
+        var favorMult = 1 + (this.faction.favor / 100);
+        console.log("Hacking mission base reward: " + this.reward);
+        console.log("favorMult: " + favorMult);
+        console.log("rep mult: " + _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].faction_rep_mult);
+        var gain = this.reward  * _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].faction_rep_mult * favorMult;
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__["dialogBoxCreate"])("Mission won! You earned " +
+                        Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__["formatNumber"])(gain, 3) + " reputation with " + this.faction.name);
+        _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gainIntelligenceExp(this.difficulty * _Constants__WEBPACK_IMPORTED_MODULE_0__[/* CONSTANTS */ "a"].IntelligenceHackingMissionBaseExpGain);
+        this.faction.playerReputation += gain;
+    } else {
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__["dialogBoxCreate"])("Mission lost/forfeited! You did not gain any faction reputation.");
+    }
+
+    //Clear mission container
+    var container = document.getElementById("mission-container");
+    while(container.firstChild) {
+        container.removeChild(container.firstChild);
+    }
+
+    //Return to Faction page
+    document.getElementById("mainmenu-container").style.visibility = "visible";
+    document.getElementById("character-overview-wrapper").style.visibility = "visible";
+    _engine__WEBPACK_IMPORTED_MODULE_1__["Engine"].loadFactionContent();
+    Object(_Faction__WEBPACK_IMPORTED_MODULE_2__[/* displayFactionContent */ "c"])(this.faction.name);
+}
+
+
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 56)))
 
 /***/ }),
 /* 48 */
@@ -33988,23 +33788,23 @@ exports.arrayToString = arrayToString;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return resetGangs; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return deleteGangDisplayContent; });
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Constants */ 1);
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./engine */ 7);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./engine */ 8);
 /* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Faction */ 15);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ui/numeralFormat */ 12);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ui/numeralFormat */ 5);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
 /* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 66);
 /* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 4);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 3);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 36);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ui/navigationTracking */ 16);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 2);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 4);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 10);
+/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 11);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 26);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13__);
@@ -35480,7 +35280,7 @@ function deleteGangDisplayContent() {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 57)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 56)))
 
 /***/ }),
 /* 50 */
@@ -35495,7 +35295,7 @@ function deleteGangDisplayContent() {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return initBitNodes; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BitNodes; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return initBitNodeMultipliers; });
-/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNodeMultipliers */ 9);
+/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNodeMultipliers */ 10);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ 0);
 
@@ -35881,7 +35681,7 @@ function initBitNodeMultipliers() {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return createRandomIp; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return ipExists; });
-/* harmony import */ var _src_Server__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/Server */ 11);
+/* harmony import */ var _src_Server__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/Server */ 12);
 /* harmony import */ var _helpers_getRandomByte__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers/getRandomByte */ 80);
 /* harmony import */ var _helpers_getRandomByte__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_helpers_getRandomByte__WEBPACK_IMPORTED_MODULE_1__);
 
@@ -35931,7 +35731,7 @@ function ipExists(ip) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const createElement_1 = __webpack_require__(/*! ./createElement */ 4);
+const createElement_1 = __webpack_require__(/*! ./createElement */ 3);
 /**
  * Appends the specified number of breaks (as children) to the specified element
  * @param el The element to add child break elements to.
@@ -35957,7 +35757,7 @@ exports.appendLineBreaks = appendLineBreaks;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const DialogBox_1 = __webpack_require__(/*! ../utils/DialogBox */ 8);
+const DialogBox_1 = __webpack_require__(/*! ../utils/DialogBox */ 9);
 const JSONReviver_1 = __webpack_require__(/*! ../utils/JSONReviver */ 14);
 /**
  * Represents a plain text file that is typically stored on a server.
@@ -36082,364 +35882,6 @@ function deleteTextFile(fn, server) {
 
 /***/ }),
 /* 54 */
-/*!************************!*\
-  !*** ./src/RedPill.js ***!
-  \************************/
-/*! exports provided: redPillFlag, hackWorldDaemon */
-/*! exports used: hackWorldDaemon, redPillFlag */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return redPillFlag; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return hackWorldDaemon; });
-/* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNode */ 50);
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./engine */ 7);
-/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Prestige */ 76);
-/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SourceFile */ 58);
-/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Terminal */ 47);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 18);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 26);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
-
-
-
-
-
-
-
-
-
-
-
-
-/* RedPill.js
- *  Implements what happens when you have Red Pill augmentation and then hack the world daemon */
-
-//Returns promise
-function writeRedPillLine(line) {
-    return new Promise(function(resolve, reject) {
-        var container = document.getElementById("red-pill-content");
-        var pElem = document.createElement("p");
-        container.appendChild(pElem);
-
-        var promise = writeRedPillLetter(pElem, line, 0);
-        promise.then(function(res) {
-            resolve(res);
-        }, function(e) {
-            reject(e);
-        });
-    });
-}
-
-function writeRedPillLetter(pElem, line, i=0) {
-    return new Promise(function(resolve, reject) {
-        setTimeout(function() {
-            if (i >= line.length) {
-                var textToShow = line.substring(0, i);
-                pElem.innerHTML = "> " + textToShow;
-                return resolve(true);
-            }
-            var textToShow = line.substring(0, i);
-            pElem.innerHTML = "> " + textToShow + "<span class='typed-cursor'> &#9608; </span>";
-            var promise = writeRedPillLetter(pElem, line, i+1);
-            promise.then(function(res) {
-                resolve(res);
-            }, function(e) {
-                reject(e);
-            });
-        }, 30);
-    });
-}
-
-let redPillFlag = false;
-function hackWorldDaemon(currentNodeNumber, flume=false) {
-    // Clear Red Pill screen first
-    var container = document.getElementById("red-pill-content");
-    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8__["removeChildrenFromElement"])(container);
-    
-    redPillFlag = true;
-    _engine__WEBPACK_IMPORTED_MODULE_1__["Engine"].loadRedPillContent();
-    return writeRedPillLine("[ERROR] SEMPOOL INVALID").then(function() {
-        return writeRedPillLine("[ERROR] Segmentation Fault");
-    }).then(function() {
-        return writeRedPillLine("[ERROR] SIGKILL RECVD");
-    }).then(function() {
-        return writeRedPillLine("Dumping core...");
-    }).then(function() {
-        return writeRedPillLine("0000 000016FA 174FEE40 29AC8239 384FEA88");
-    }).then(function() {
-        return writeRedPillLine("0010 745F696E 2BBBE394 390E3940 248BEC23");
-    }).then(function() {
-        return writeRedPillLine("0020 7124696B 0000FF69 74652E6F FFFF1111");
-    }).then(function() {
-        return writeRedPillLine("----------------------------------------");
-    }).then(function() {
-        return writeRedPillLine("Failsafe initiated...");
-    }).then(function() {
-        return writeRedPillLine("Restarting BitNode-" + currentNodeNumber + "...");
-    }).then(function() {
-        return writeRedPillLine("...........");
-    }).then(function() {
-        return writeRedPillLine("...........");
-    }).then(function() {
-        return writeRedPillLine("[ERROR] FAILED TO AUTOMATICALLY REBOOT BITNODE");
-    }).then(function() {
-        return writeRedPillLine("..............................................")
-    }).then(function() {
-        return writeRedPillLine("..............................................")
-    }).then(function() {
-        return loadBitVerse(currentNodeNumber, flume);
-    }).catch(function(e){
-        console.log("ERROR: " + e.toString());
-    });
-}
-
-//The bitNode name passed in will have a hyphen between number (e.g. BitNode-1)
-//This needs to be removed
-function giveSourceFile(bitNodeNumber) {
-    var sourceFileKey = "SourceFile"+ bitNodeNumber.toString();
-    var sourceFile = _SourceFile__WEBPACK_IMPORTED_MODULE_4__[/* SourceFiles */ "b"][sourceFileKey];
-    if (sourceFile == null) {
-        console.log("ERROR: could not find source file for Bit node: " + bitNodeNumber);
-        return;
-    }
-
-    //Check if player already has this source file
-    var alreadyOwned = false;
-    var ownedSourceFile = null;
-    for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].sourceFiles.length; ++i) {
-        if (_Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].sourceFiles[i].n === bitNodeNumber) {
-            alreadyOwned = true;
-            ownedSourceFile = _Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].sourceFiles[i];
-            break;
-        }
-    }
-
-    if (alreadyOwned && ownedSourceFile) {
-        if (ownedSourceFile.lvl >= 3 && ownedSourceFile.n !== 12) {
-            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("The Source-File for the BitNode you just destroyed, " + sourceFile.name + ", " +
-                            "is already at max level!");
-        } else {
-            ++ownedSourceFile.lvl;
-            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])(sourceFile.name + " was upgraded to level " + ownedSourceFile.lvl + " for " +
-                            "destroying its corresponding BitNode!");
-        }
-    } else {
-        var playerSrcFile = new _SourceFile__WEBPACK_IMPORTED_MODULE_4__[/* PlayerOwnedSourceFile */ "a"](bitNodeNumber, 1);
-        _Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].sourceFiles.push(playerSrcFile);
-        if (bitNodeNumber === 5) { //Artificial Intelligence
-            _Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].intelligence = 1;
-        }
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("You received a Source-File for destroying a Bit Node!<br><br>" +
-                        sourceFile.name + "<br><br>" + sourceFile.info);
-    }
-}
-
-function loadBitVerse(destroyedBitNodeNum, flume=false) {
-    //Clear the screen
-    var container = document.getElementById("red-pill-content");
-    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8__["removeChildrenFromElement"])(container);
-
-    //Create the Bit Verse
-    var bitVerseImage = document.createElement("pre");
-    var bitNodes = [];
-    for (var i = 1; i <= 12; ++i) {
-        bitNodes.push(createBitNode(i));
-    }
-
-    bitVerseImage.innerHTML =
-    "                          O                          <br>" +
-    "             |  O  O      |      O  O  |             <br>" +
-    "        O    |  | /     __|       \\ |  |    O        <br>" +
-    "      O |    O  | |  O /  |  O    | |  O    | O      <br>" +
-    "    | | |    |  |_/  |/   |   \\_  \\_|  |    | | |    <br>" +
-    "  O | | | O  |  | O__/    |   / \\__ |  |  O | | | O  <br>" +
-    "  | | | | |  |  |   /    /|  O  /  \\|  |  | | | | |  <br>" +
-    "O | | |  \\|  |  O  /   _/ |    /    O  |  |/  | | | O<br>" +
-    "| | | |O  /  |  | O   /   |   O   O |  |  \\  O| | | |<br>" +
-    "| | |/  \\/  / __| | |/ \\  |   \\   | |__ \\  \\/  \\| | |<br>" +
-    " \\| O   |  |_/    |\\|   \\ O    \\__|    \\_|  |   O |/ <br>" +
-    "  | |   |_/       | |    \\|    /  |       \\_|   | |  <br>" +
-    "   \\|   /          \\|     |   /  /          \\   |/   <br>" +
-    "    |  "+bitNodes[9]+"            |     |  /  |            "+bitNodes[10]+"  |    <br>" +
-    "  "+bitNodes[8]+" |  |            |     |     |            |  | "+bitNodes[11]+"  <br>" +
-    "  | |  |            /    / \\    \\            |  | |  <br>" +
-    "   \\|  |           /  "+bitNodes[6]+" /   \\ "+bitNodes[7]+"  \\           |  |/   <br>" +
-    "    \\  |          /  / |     | \\  \\          |  /    <br>" +
-    "     \\ \\JUMP "+bitNodes[4]+"3R |  |  |     |  |  | R3"+bitNodes[5]+" PMUJ/ /     <br>" +
-    "      \\||    |   |  |  |     |  |  |   |    ||/      <br>" +
-    "       \\|     \\_ |  |  |     |  |  | _/     |/       <br>" +
-    "        \\       \\| /    \\   /    \\ |/       /        <br>" +
-    "         "+bitNodes[0]+"       |/   "+bitNodes[1]+"  | |  "+bitNodes[2]+"   \\|       "+bitNodes[3]+"         <br>" +
-    "         |       |    |  | |  |    |       |         <br>" +
-    "          \\JUMP3R|JUMP|3R| |R3|PMUJ|R3PMUJ/          <br><br><br><br>";
-
-
-    /*
-    "                          O                          <br>" +
-    "             |  O  O      |      O  O  |             <br>" +
-    "        O    |  | /     __|       \ |  |    O        <br>" +
-    "      O |    O  | |  O /  |  O    | |  O    | O      <br>" +
-    "    | | |    |  |_/  |/   |   \_  \_|  |    | | |    <br>" +
-    "  O | | | O  |  | O__/    |   / \__ |  |  O | | | O  <br>" +
-    "  | | | | |  |  |   /    /|  O  /  \|  |  | | | | |  <br>" +
-    "O | | |  \|  |  O  /   _/ |    /    O  |  |/  | | | O<br>" +
-    "| | | |O  /  |  | O   /   |   O   O |  |  \  O| | | |<br>" +
-    "| | |/  \/  / __| | |/ \  |   \   | |__ \  \/  \| | |<br>" +
-    " \| O   |  |_/    |\|   \ O    \__|    \_|  |   O |/ <br>" +
-    "  | |   |_/       | |    \|    /  |       \_|   | |  <br>" +
-    "   \|   /          \|     |   /  /          \   |/   <br>" +
-    "    |  O            |     |  /  |            O  |    <br>" +
-    "  O |  |            |     |     |            |  | O  <br>" +
-    "  | |  |            /    / \    \            |  | |  <br>" +
-    "   \|  |           /  O /   \ O  \           |  |/   <br>" +
-    "    \  |          /  / |     | \  \          |  /    <br>" +
-    "     \ \JUMP O3R |  |  |     |  |  | R3O PMUJ/ /     <br>" +
-    "      \||    |   |  |  |     |  |  |   |    ||/      <br>" +
-    "       \|     \_ |  |  |     |  |  | _/     |/       <br>" +
-    "        \       \| /    \   /    \ |/       /        <br>" +
-    "         O       |/   O  | |  O   \|       O         <br>" +
-    "         |       |    |  | |  |    |       |         <br>" +
-    "          \JUMP3R|JUMP|3R| |R3|PMUJ|R3PMUJ/          <br>";
-    */
-
-    container.appendChild(bitVerseImage);
-
-    //Bit node event listeners
-    for (var i = 1; i <= 12; ++i) {
-        (function(i) {
-            var elemId = "bitnode-" + i.toString();
-            var elem = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__["clearEventListeners"])(elemId);
-            if (elem == null) {return;}
-            if (i === 1 || i === 2 || i === 3 || i === 4 || i === 5 ||
-                i === 6 || i === 7 || i === 8 || i === 11 || i === 12) {
-                elem.addEventListener("click", function() {
-                    var bitNodeKey = "BitNode" + i;
-                    var bitNode = _BitNode__WEBPACK_IMPORTED_MODULE_0__[/* BitNodes */ "a"][bitNodeKey];
-                    if (bitNode == null) {
-                        console.log("ERROR: Could not find BitNode object for number: " + i);
-                        return;
-                    }
-                    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__[/* yesNoBoxCreate */ "b"])("BitNode-" + i + ": " + bitNode.name + "<br><br>" + bitNode.info);
-                    createBitNodeYesNoEventListeners(i, destroyedBitNodeNum, flume);
-                });
-            } else {
-                elem.addEventListener("click", function() {
-                    Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("Not yet implemented! Coming soon!")
-                });
-            }
-        }(i)); //Immediate invocation closure
-    }
-
-    //Create lore text
-    return writeRedPillLine("Many decades ago, a humanoid extraterrestial species which we call the Enders descended on the Earth...violently").then(function() {
-        return writeRedPillLine("Our species fought back, but it was futile. The Enders had technology far beyond our own...");
-    }).then(function() {
-        return writeRedPillLine("Instead of killing every last one of us, the human race was enslaved...");
-    }).then(function() {
-        return writeRedPillLine("We were shackled in a digital world, chained into a prison for our minds...");
-    }).then(function() {
-        return writeRedPillLine("Using their advanced technology, the Enders created complex simulations of a virtual reality...");
-    }).then(function() {
-        return writeRedPillLine("Simulations designed to keep us content...ignorant of the truth.");
-    }).then(function() {
-        return writeRedPillLine("Simulations used to trap and suppress our consciousness, to keep us under control...");
-    }).then(function() {
-        return writeRedPillLine("Why did they do this? Why didn't they just end our entire race? We don't know, not yet.");
-    }).then(function() {
-        return writeRedPillLine("Humanity's only hope is to destroy these simulations, destroy the only realities we've ever known...");
-    }).then(function() {
-        return writeRedPillLine("Only then can we begin to fight back...");
-    }).then(function() {
-        return writeRedPillLine("By hacking the daemon that generated your reality, you've just destroyed one simulation, called a BitNode...");
-    }).then(function() {
-        return writeRedPillLine("But there is still a long way to go...");
-    }).then(function() {
-        return writeRedPillLine("The technology the Enders used to enslave the human race wasn't just a single complex simulation...");
-    }).then(function() {
-        return writeRedPillLine("There are tens if not hundreds of BitNodes out there...");
-    }).then(function() {
-        return writeRedPillLine("Each with their own simulations of a reality...");
-    }).then(function() {
-        return writeRedPillLine("Each creating their own universes...a universe of universes");
-    }).then(function() {
-        return writeRedPillLine("And all of which must be destroyed...");
-    }).then(function() {
-        return writeRedPillLine(".......................................");
-    }).then(function() {
-        return writeRedPillLine("Welcome to the Bitverse...");
-    }).then(function() {
-        return writeRedPillLine(" ");
-    }).then(function() {
-        return writeRedPillLine("(Enter a new BitNode using the image above)");
-    }).then(function() {
-        return Promise.resolve(true);
-    }).catch(function(e){
-        console.log("ERROR: " + e.toString());
-    });
-}
-
-
-//Returns string with DOM element for Bit Node
-function createBitNode(n) {
-    var bitNodeStr = "BitNode" + n.toString();
-    var bitNode = _BitNode__WEBPACK_IMPORTED_MODULE_0__[/* BitNodes */ "a"][bitNodeStr];
-    if (bitNode == null) {return "O";}
-    return  "<a class='bitnode tooltip' id='bitnode-" + bitNode.number.toString() + "'><strong>O</strong>" +
-             "<span class='tooltiptext'>" +
-             "<strong>BitNode-" + bitNode.number.toString() + "<br>" + bitNode.name+ "</strong><br>" +
-             bitNode.desc + "<br>" +
-             "</span></a>";
-}
-
-function createBitNodeYesNoEventListeners(newBitNode, destroyedBitNode, flume=false) {
-    var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__[/* yesNoBoxGetYesButton */ "d"])();
-    yesBtn.innerHTML = "Enter BitNode-" + newBitNode;
-    yesBtn.addEventListener("click", function() {
-        if (!flume) {
-            giveSourceFile(destroyedBitNode);
-        } else {
-            //If player used flume, subtract 5 int exp. The prestigeSourceFile()
-            //function below grants 5 int exp, so this allows sets net gain to 0
-            _Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].gainIntelligenceExp(-5);
-        }
-        redPillFlag = false;
-        var container = document.getElementById("red-pill-content");
-        Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8__["removeChildrenFromElement"])(container);
-
-        //Set new Bit Node
-        _Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].bitNodeN = newBitNode;
-        console.log("Entering Bit Node " + _Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].bitNodeN);
-
-        //Reenable terminal
-        $("#hack-progress-bar").attr('id', "old-hack-progress-bar");
-        $("#hack-progress").attr('id', "old-hack-progress");
-        document.getElementById("terminal-input-td").innerHTML = '$ <input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
-        $('input[class=terminal-input]').prop('disabled', false);
-
-        _Terminal__WEBPACK_IMPORTED_MODULE_5__[/* Terminal */ "a"].hackFlag = false;
-
-        Object(_Prestige__WEBPACK_IMPORTED_MODULE_3__[/* prestigeSourceFile */ "b"])();
-        Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__[/* yesNoBoxClose */ "a"])();
-    });
-    var noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__[/* yesNoBoxGetNoButton */ "c"])();
-    noBtn.innerHTML = "Back";
-    noBtn.addEventListener("click", function() {
-        Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__[/* yesNoBoxClose */ "a"])();
-    });
-
-}
-
-
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 57)))
-
-/***/ }),
-/* 55 */
 /*!**********************************!*\
   !*** ./src/CompanyManagement.js ***!
   \**********************************/
@@ -36449,28 +35891,28 @@ function createBitNodeYesNoEventListeners(newBitNode, destroyedBitNode, flume=fa
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Corporation; });
-/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNodeMultipliers */ 9);
+/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNodeMultipliers */ 10);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Faction */ 15);
 /* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Literature */ 70);
-/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Locations */ 3);
+/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Locations */ 2);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! decimal.js */ 30);
-/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ui/numeralFormat */ 12);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
-/* harmony import */ var _utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/uiHelpers/clearSelector */ 111);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ui/numeralFormat */ 5);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
+/* harmony import */ var _utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/uiHelpers/clearSelector */ 112);
 /* harmony import */ var _utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 4);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 3);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 36);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./ui/navigationTracking */ 16);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 2);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 4);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 10);
+/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 11);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/helpers/isString */ 34);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_15__);
@@ -41404,7 +40846,7 @@ _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_9__["Reviver"].constructors.Corporat
 
 
 /***/ }),
-/* 56 */
+/* 55 */
 /*!************************************!*\
   !*** ./utils/helpers/addOffset.ts ***!
   \************************************/
@@ -41440,275 +40882,8 @@ exports.addOffset = addOffset;
 
 
 /***/ }),
-/* 57 */,
-/* 58 */
-/*!***************************!*\
-  !*** ./src/SourceFile.js ***!
-  \***************************/
-/*! exports provided: SourceFiles, PlayerOwnedSourceFile, applySourceFile, initSourceFiles */
-/*! exports used: PlayerOwnedSourceFile, SourceFiles, applySourceFile, initSourceFiles */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return SourceFiles; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PlayerOwnedSourceFile; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return applySourceFile; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return initSourceFiles; });
-/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BitNode */ 50);
-
-
-
-/* SourceFile.js */
-//Each SourceFile corresponds to a BitNode with the same number
-function SourceFile(number, info="") {
-    var bitnodeKey = "BitNode" + number;
-    var bitnode = _BitNode__WEBPACK_IMPORTED_MODULE_1__[/* BitNodes */ "a"][bitnodeKey];
-    if (bitnode == null) {
-        throw new Error("Invalid Bit Node for this Source File");
-    }
-
-    this.n = number;
-    this.name = "Source-File " + number + ": " + bitnode.name;
-    this.lvl = 1;
-    this.info = info;
-    this.owned = false;
-}
-
-let SourceFiles = {};
-function initSourceFiles() {
-    SourceFiles = {};
-    SourceFiles["SourceFile1"] = new SourceFile(1, "This Source-File lets the player start with 32GB of RAM on his/her " +
-                                      "home computer. It also increases all of the player's multipliers by:<br><br>" +
-                                      "Level 1: 16%<br>" +
-                                      "Level 2: 24%<br>" +
-                                      "Level 3: 28%");
-    SourceFiles["SourceFile2"] = new SourceFile(2, "This Source-File increases the player's crime success rate, crime money, and charisma " +
-                                      "multipliers by:<br><br>" +
-                                      "Level 1: 20%<br>" +
-                                      "Level 2: 30%<br>" +
-                                      "Level 3: 35%");
-    SourceFiles["SourceFile3"] = new SourceFile(3,"This Source-File lets you create corporations on other BitNodes (although " +
-                                                  "some BitNodes will disable this mechanic). This Source-File also increases your charisma and company salary multipliers by:<br>" +
-                                                  "Level 1: 8%<br>" +
-                                                  "Level 2: 12%<br>" +
-                                                  "Level 3: 14%");
-    SourceFiles["SourceFile4"] = new SourceFile(4, "This Source-File lets you access and use the Singularity Functions in every BitNode. Every " +
-                                        "level of this Source-File opens up more of the Singularity Functions you can use.");
-    SourceFiles["SourceFile5"] = new SourceFile(5, "This Source-File grants a special new stat called Intelligence. Intelligence " +
-                                                   "is unique because it is permanent and persistent (it never gets reset back to 1). However, " +
-                                                   "gaining Intelligence experience is much slower than other stats, and it is also hidden (you won't " +
-                                                   "know when you gain experience and how much). Higher Intelligence levels will boost your production " +
-                                                   "for many actions in the game. In addition, this Source-File will unlock the getBitNodeMultipliers() " +
-                                                   "Netscript function, and will raise all of your hacking-related multipliers by:<br><br> " +
-                                                   "Level 1: 8%<br>" +
-                                                   "Level 2: 12%<br>" +
-                                                   "Level 3: 14%");
-    SourceFiles["SourceFile6"] = new SourceFile(6, "This Source-File allows you to access the NSA's Bladeburner Division in other " +
-                                                   "BitNodes. In addition, this Source-File will raise both the level and experience gain rate of all your combat stats by:<br><br>" +
-                                                   "Level 1: 8%<br>" +
-                                                   "Level 2: 12%<br>" +
-                                                   "Level 3: 14%");
-    SourceFiles["SourceFile7"] = new SourceFile(7, "This Source-File allows you to access the Bladeburner Netscript API in other " +
-                                                   "BitNodes. In addition, this Source-File will increase all of your Bladeburner multipliers by:<br><br>" +
-                                                   "Level 1: 8%<br>" +
-                                                   "Level 2: 12%<br>" +
-                                                   "Level 3: 14%");
-    SourceFiles["SourceFile8"] = new SourceFile(8, "This Source-File grants the following benefits:<br><br>" +
-                                                   "Level 1: Permanent access to WSE and TIX API<br>" +
-                                                   "Level 2: Ability to short stocks in other BitNodes<br>" +
-                                                   "Level 3: Ability to use limit/stop orders in other BitNodes<br><br>" +
-                                                   "This Source-File also increases your hacking growth multipliers by: " +
-                                                   "<br>Level 1: 12%<br>Level 2: 18%<br>Level 3: 21%");
-    SourceFiles["SourceFile9"] = new SourceFile(9);
-    SourceFiles["SourceFile10"] = new SourceFile(10);
-    SourceFiles["SourceFile11"] = new SourceFile(11, "This Source-File makes it so that company favor increases BOTH the player's salary and reputation gain rate " +
-                                                     "at that company by 1% per favor (rather than just the reputation gain). This Source-File also " +
-                                                     " increases the player's company salary and reputation gain multipliers by:<br><br>" +
-                                                     "Level 1: 24%<br>" +
-                                                     "Level 2: 36%<br>" +
-                                                     "Level 3: 42%<br>");
-    SourceFiles["SourceFile12"] = new SourceFile(12, "This Source-File increases all your multipliers by 1% per level. This effect is multiplicative with itself. " +
-                                                     "In other words, level N of this Source-File will result in a multiplier of 1.01^N (or 0.99^N for multipliers that decrease)");
-}
-
-function PlayerOwnedSourceFile(number, level) {
-    this.n = number;
-    this.lvl = level;
-}
-
-//Takes in a PlayerOwnedSourceFile as the "srcFile" argument
-function applySourceFile(srcFile) {
-    var srcFileKey = "SourceFile" + srcFile.n;
-    var sourceFileObject = SourceFiles[srcFileKey];
-    if (sourceFileObject == null) {
-        console.log("ERROR: Invalid source file number: " + srcFile.n);
-        return;
-    }
-
-    switch(srcFile.n) {
-        case 1: // The Source Genesis
-            var mult = 0;
-            for (var i = 0; i < srcFile.lvl; ++i) {
-                mult += (16 / (Math.pow(2, i)));
-            }
-            var incMult = 1 + (mult / 100);
-            var decMult = 1 - (mult / 100);
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacking_chance_mult *= incMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacking_speed_mult  *= incMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacking_money_mult  *= incMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacking_grow_mult   *= incMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacking_mult        *= incMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].strength_mult       *= incMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].defense_mult        *= incMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].dexterity_mult      *= incMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].agility_mult        *= incMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].charisma_mult       *= incMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacking_exp_mult    *= incMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].strength_exp_mult   *= incMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].defense_exp_mult    *= incMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].dexterity_exp_mult  *= incMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].agility_exp_mult    *= incMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].charisma_exp_mult   *= incMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].company_rep_mult    *= incMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].faction_rep_mult    *= incMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].crime_money_mult    *= incMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].crime_success_mult  *= incMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacknet_node_money_mult            *= incMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacknet_node_purchase_cost_mult    *= decMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacknet_node_ram_cost_mult         *= decMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacknet_node_core_cost_mult        *= decMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacknet_node_level_cost_mult       *= decMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].work_money_mult    *= incMult;
-            break;
-        case 2: //Rise of the Underworld
-            var mult = 0;
-            for (var i = 0; i < srcFile.lvl; ++i) {
-                mult += (20 / (Math.pow(2, i)));
-            }
-            var incMult = 1 + (mult / 100);
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].crime_money_mult    *= incMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].crime_success_mult  *= incMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].charisma_mult       *= incMult;
-            break;
-        case 3: //Corporatocracy
-            var mult = 0;
-            for (var i = 0; i < srcFile.lvl; ++i) {
-                mult += (8 / (Math.pow(2, i)));
-            }
-            var incMult = 1 + (mult / 100);
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].charisma_mult    *= incMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].work_money_mult  *= incMult;
-            break;
-        case 4: //The Singularity
-            //No effects, just gives access to Singularity functions
-            break;
-        case 5: //Artificial Intelligence
-            var mult = 0;
-            for (var i = 0; i < srcFile.lvl; ++i) {
-                mult += (8 / (Math.pow(2, i)));
-            }
-            var incMult = 1 + (mult / 100);
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacking_chance_mult  *= incMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacking_speed_mult   *= incMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacking_money_mult   *= incMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacking_grow_mult    *= incMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacking_mult         *= incMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacking_exp_mult     *= incMult;
-            break;
-        case 6: //Bladeburner
-            var mult = 0;
-            for (var i = 0; i < srcFile.lvl; ++i) {
-                mult += (8 / (Math.pow(2, i)));
-            }
-            var incMult = 1 + (mult / 100);
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].strength_exp_mult        *= incMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].defense_exp_mult         *= incMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].dexterity_exp_mult       *= incMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].agility_exp_mult         *= incMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].strength_mult            *= incMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].defense_mult             *= incMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].dexterity_mult           *= incMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].agility_mult             *= incMult;
-            break;
-        case 7: //Bladeburner 2079
-            var mult = 0;
-            for (var i = 0; i < srcFile.lvl; ++i) {
-                mult += (8 / (Math.pow(2, i)));
-            }
-            var incMult = 1 + (mult / 100);
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].bladeburner_max_stamina_mult     *= incMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].bladeburner_stamina_gain_mult    *= incMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].bladeburner_analysis_mult        *= incMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].bladeburner_success_chance_mult  *= incMult;
-            break;
-        case 8: //Ghost of Wall Street
-            var mult = 0;
-            for (var i = 0; i < srcFile.lvl; ++i) {
-                mult += (12 / (Math.pow(2, i)));
-            }
-            var incMult = 1 + (mult / 100);
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacking_grow_mult    *= incMult;
-            break;
-        case 11: //The Big Crash
-            var mult = 0;
-            for (var i = 0; i < srcFile.lvl; ++i) {
-                mult += (24 / (Math.pow(2, i)));
-            }
-            var incMult = 1 + (mult / 100);
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].work_money_mult    *= incMult;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].company_rep_mult   *= incMult;
-            break;
-        case 12: //The Recursion
-            var inc = Math.pow(1.01, srcFile.lvl);
-            var dec = Math.pow(0.99, srcFile.lvl);
-
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacking_chance_mult *= inc;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacking_speed_mult  *= inc;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacking_money_mult  *= inc;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacking_grow_mult   *= inc;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacking_mult        *= inc;
-
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].strength_mult       *= inc;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].defense_mult        *= inc;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].dexterity_mult      *= inc;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].agility_mult        *= inc;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].charisma_mult       *= inc;
-
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacking_exp_mult    *= inc;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].strength_exp_mult   *= inc;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].defense_exp_mult    *= inc;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].dexterity_exp_mult  *= inc;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].agility_exp_mult    *= inc;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].charisma_exp_mult   *= inc;
-
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].company_rep_mult    *= inc;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].faction_rep_mult    *= inc;
-
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].crime_money_mult    *= inc;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].crime_success_mult  *= inc;
-
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacknet_node_money_mult            *= inc;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacknet_node_purchase_cost_mult    *= dec;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacknet_node_ram_cost_mult         *= dec;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacknet_node_core_cost_mult        *= dec;
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacknet_node_level_cost_mult       *= dec;
-
-            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].work_money_mult    *= inc;
-            break;
-        default:
-            console.log("ERROR: Invalid source file number: " + srcFile.n);
-            break;
-    }
-
-    sourceFileObject.owned = true;
-}
-
-
-
-
-/***/ }),
-/* 59 */
+/* 56 */,
+/* 57 */
 /*!****************************!*\
   !*** ./src/HacknetNode.js ***!
   \****************************/
@@ -41728,23 +40903,23 @@ function applySourceFile(srcFile) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return updateHacknetNodesContent; });
 /* unused harmony export updateHacknetNodesMultiplierButtons */
 /* unused harmony export updateTotalHacknetProduction */
-/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNodeMultipliers */ 9);
+/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNodeMultipliers */ 10);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Constants */ 1);
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 7);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 8);
 /* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./InteractiveTutorial */ 31);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 18);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 4);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 3);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./ui/navigationTracking */ 16);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 2);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 4);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/uiHelpers/getElementById */ 45);
+/* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/uiHelpers/getElementById */ 46);
 /* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_11__);
 
 
@@ -42423,7 +41598,365 @@ function getHacknetNode(name) {
 
 
 /***/ }),
-/* 60 */
+/* 58 */
+/*!************************!*\
+  !*** ./src/RedPill.js ***!
+  \************************/
+/*! exports provided: redPillFlag, hackWorldDaemon */
+/*! exports used: hackWorldDaemon, redPillFlag */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return redPillFlag; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return hackWorldDaemon; });
+/* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNode */ 50);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./engine */ 8);
+/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Player */ 0);
+/* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Prestige */ 76);
+/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SourceFile */ 61);
+/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Terminal */ 44);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 18);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 26);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
+
+
+
+
+
+
+
+
+
+
+
+
+/* RedPill.js
+ *  Implements what happens when you have Red Pill augmentation and then hack the world daemon */
+
+//Returns promise
+function writeRedPillLine(line) {
+    return new Promise(function(resolve, reject) {
+        var container = document.getElementById("red-pill-content");
+        var pElem = document.createElement("p");
+        container.appendChild(pElem);
+
+        var promise = writeRedPillLetter(pElem, line, 0);
+        promise.then(function(res) {
+            resolve(res);
+        }, function(e) {
+            reject(e);
+        });
+    });
+}
+
+function writeRedPillLetter(pElem, line, i=0) {
+    return new Promise(function(resolve, reject) {
+        setTimeout(function() {
+            if (i >= line.length) {
+                var textToShow = line.substring(0, i);
+                pElem.innerHTML = "> " + textToShow;
+                return resolve(true);
+            }
+            var textToShow = line.substring(0, i);
+            pElem.innerHTML = "> " + textToShow + "<span class='typed-cursor'> &#9608; </span>";
+            var promise = writeRedPillLetter(pElem, line, i+1);
+            promise.then(function(res) {
+                resolve(res);
+            }, function(e) {
+                reject(e);
+            });
+        }, 30);
+    });
+}
+
+let redPillFlag = false;
+function hackWorldDaemon(currentNodeNumber, flume=false) {
+    // Clear Red Pill screen first
+    var container = document.getElementById("red-pill-content");
+    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8__["removeChildrenFromElement"])(container);
+    
+    redPillFlag = true;
+    _engine__WEBPACK_IMPORTED_MODULE_1__["Engine"].loadRedPillContent();
+    return writeRedPillLine("[ERROR] SEMPOOL INVALID").then(function() {
+        return writeRedPillLine("[ERROR] Segmentation Fault");
+    }).then(function() {
+        return writeRedPillLine("[ERROR] SIGKILL RECVD");
+    }).then(function() {
+        return writeRedPillLine("Dumping core...");
+    }).then(function() {
+        return writeRedPillLine("0000 000016FA 174FEE40 29AC8239 384FEA88");
+    }).then(function() {
+        return writeRedPillLine("0010 745F696E 2BBBE394 390E3940 248BEC23");
+    }).then(function() {
+        return writeRedPillLine("0020 7124696B 0000FF69 74652E6F FFFF1111");
+    }).then(function() {
+        return writeRedPillLine("----------------------------------------");
+    }).then(function() {
+        return writeRedPillLine("Failsafe initiated...");
+    }).then(function() {
+        return writeRedPillLine("Restarting BitNode-" + currentNodeNumber + "...");
+    }).then(function() {
+        return writeRedPillLine("...........");
+    }).then(function() {
+        return writeRedPillLine("...........");
+    }).then(function() {
+        return writeRedPillLine("[ERROR] FAILED TO AUTOMATICALLY REBOOT BITNODE");
+    }).then(function() {
+        return writeRedPillLine("..............................................")
+    }).then(function() {
+        return writeRedPillLine("..............................................")
+    }).then(function() {
+        return loadBitVerse(currentNodeNumber, flume);
+    }).catch(function(e){
+        console.log("ERROR: " + e.toString());
+    });
+}
+
+//The bitNode name passed in will have a hyphen between number (e.g. BitNode-1)
+//This needs to be removed
+function giveSourceFile(bitNodeNumber) {
+    var sourceFileKey = "SourceFile"+ bitNodeNumber.toString();
+    var sourceFile = _SourceFile__WEBPACK_IMPORTED_MODULE_4__[/* SourceFiles */ "b"][sourceFileKey];
+    if (sourceFile == null) {
+        console.log("ERROR: could not find source file for Bit node: " + bitNodeNumber);
+        return;
+    }
+
+    //Check if player already has this source file
+    var alreadyOwned = false;
+    var ownedSourceFile = null;
+    for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].sourceFiles.length; ++i) {
+        if (_Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].sourceFiles[i].n === bitNodeNumber) {
+            alreadyOwned = true;
+            ownedSourceFile = _Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].sourceFiles[i];
+            break;
+        }
+    }
+
+    if (alreadyOwned && ownedSourceFile) {
+        if (ownedSourceFile.lvl >= 3 && ownedSourceFile.n !== 12) {
+            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("The Source-File for the BitNode you just destroyed, " + sourceFile.name + ", " +
+                            "is already at max level!");
+        } else {
+            ++ownedSourceFile.lvl;
+            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])(sourceFile.name + " was upgraded to level " + ownedSourceFile.lvl + " for " +
+                            "destroying its corresponding BitNode!");
+        }
+    } else {
+        var playerSrcFile = new _SourceFile__WEBPACK_IMPORTED_MODULE_4__[/* PlayerOwnedSourceFile */ "a"](bitNodeNumber, 1);
+        _Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].sourceFiles.push(playerSrcFile);
+        if (bitNodeNumber === 5) { //Artificial Intelligence
+            _Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].intelligence = 1;
+        }
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("You received a Source-File for destroying a Bit Node!<br><br>" +
+                        sourceFile.name + "<br><br>" + sourceFile.info);
+    }
+}
+
+function loadBitVerse(destroyedBitNodeNum, flume=false) {
+    //Clear the screen
+    var container = document.getElementById("red-pill-content");
+    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8__["removeChildrenFromElement"])(container);
+
+    //Create the Bit Verse
+    var bitVerseImage = document.createElement("pre");
+    var bitNodes = [];
+    for (var i = 1; i <= 12; ++i) {
+        bitNodes.push(createBitNode(i));
+    }
+
+    bitVerseImage.innerHTML =
+    "                          O                          <br>" +
+    "             |  O  O      |      O  O  |             <br>" +
+    "        O    |  | /     __|       \\ |  |    O        <br>" +
+    "      O |    O  | |  O /  |  O    | |  O    | O      <br>" +
+    "    | | |    |  |_/  |/   |   \\_  \\_|  |    | | |    <br>" +
+    "  O | | | O  |  | O__/    |   / \\__ |  |  O | | | O  <br>" +
+    "  | | | | |  |  |   /    /|  O  /  \\|  |  | | | | |  <br>" +
+    "O | | |  \\|  |  O  /   _/ |    /    O  |  |/  | | | O<br>" +
+    "| | | |O  /  |  | O   /   |   O   O |  |  \\  O| | | |<br>" +
+    "| | |/  \\/  / __| | |/ \\  |   \\   | |__ \\  \\/  \\| | |<br>" +
+    " \\| O   |  |_/    |\\|   \\ O    \\__|    \\_|  |   O |/ <br>" +
+    "  | |   |_/       | |    \\|    /  |       \\_|   | |  <br>" +
+    "   \\|   /          \\|     |   /  /          \\   |/   <br>" +
+    "    |  "+bitNodes[9]+"            |     |  /  |            "+bitNodes[10]+"  |    <br>" +
+    "  "+bitNodes[8]+" |  |            |     |     |            |  | "+bitNodes[11]+"  <br>" +
+    "  | |  |            /    / \\    \\            |  | |  <br>" +
+    "   \\|  |           /  "+bitNodes[6]+" /   \\ "+bitNodes[7]+"  \\           |  |/   <br>" +
+    "    \\  |          /  / |     | \\  \\          |  /    <br>" +
+    "     \\ \\JUMP "+bitNodes[4]+"3R |  |  |     |  |  | R3"+bitNodes[5]+" PMUJ/ /     <br>" +
+    "      \\||    |   |  |  |     |  |  |   |    ||/      <br>" +
+    "       \\|     \\_ |  |  |     |  |  | _/     |/       <br>" +
+    "        \\       \\| /    \\   /    \\ |/       /        <br>" +
+    "         "+bitNodes[0]+"       |/   "+bitNodes[1]+"  | |  "+bitNodes[2]+"   \\|       "+bitNodes[3]+"         <br>" +
+    "         |       |    |  | |  |    |       |         <br>" +
+    "          \\JUMP3R|JUMP|3R| |R3|PMUJ|R3PMUJ/          <br><br><br><br>";
+
+
+    /*
+    "                          O                          <br>" +
+    "             |  O  O      |      O  O  |             <br>" +
+    "        O    |  | /     __|       \ |  |    O        <br>" +
+    "      O |    O  | |  O /  |  O    | |  O    | O      <br>" +
+    "    | | |    |  |_/  |/   |   \_  \_|  |    | | |    <br>" +
+    "  O | | | O  |  | O__/    |   / \__ |  |  O | | | O  <br>" +
+    "  | | | | |  |  |   /    /|  O  /  \|  |  | | | | |  <br>" +
+    "O | | |  \|  |  O  /   _/ |    /    O  |  |/  | | | O<br>" +
+    "| | | |O  /  |  | O   /   |   O   O |  |  \  O| | | |<br>" +
+    "| | |/  \/  / __| | |/ \  |   \   | |__ \  \/  \| | |<br>" +
+    " \| O   |  |_/    |\|   \ O    \__|    \_|  |   O |/ <br>" +
+    "  | |   |_/       | |    \|    /  |       \_|   | |  <br>" +
+    "   \|   /          \|     |   /  /          \   |/   <br>" +
+    "    |  O            |     |  /  |            O  |    <br>" +
+    "  O |  |            |     |     |            |  | O  <br>" +
+    "  | |  |            /    / \    \            |  | |  <br>" +
+    "   \|  |           /  O /   \ O  \           |  |/   <br>" +
+    "    \  |          /  / |     | \  \          |  /    <br>" +
+    "     \ \JUMP O3R |  |  |     |  |  | R3O PMUJ/ /     <br>" +
+    "      \||    |   |  |  |     |  |  |   |    ||/      <br>" +
+    "       \|     \_ |  |  |     |  |  | _/     |/       <br>" +
+    "        \       \| /    \   /    \ |/       /        <br>" +
+    "         O       |/   O  | |  O   \|       O         <br>" +
+    "         |       |    |  | |  |    |       |         <br>" +
+    "          \JUMP3R|JUMP|3R| |R3|PMUJ|R3PMUJ/          <br>";
+    */
+
+    container.appendChild(bitVerseImage);
+
+    //Bit node event listeners
+    for (var i = 1; i <= 12; ++i) {
+        (function(i) {
+            var elemId = "bitnode-" + i.toString();
+            var elem = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__["clearEventListeners"])(elemId);
+            if (elem == null) {return;}
+            if (i === 1 || i === 2 || i === 3 || i === 4 || i === 5 ||
+                i === 6 || i === 7 || i === 8 || i === 11 || i === 12) {
+                elem.addEventListener("click", function() {
+                    var bitNodeKey = "BitNode" + i;
+                    var bitNode = _BitNode__WEBPACK_IMPORTED_MODULE_0__[/* BitNodes */ "a"][bitNodeKey];
+                    if (bitNode == null) {
+                        console.log("ERROR: Could not find BitNode object for number: " + i);
+                        return;
+                    }
+                    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__[/* yesNoBoxCreate */ "b"])("BitNode-" + i + ": " + bitNode.name + "<br><br>" + bitNode.info);
+                    createBitNodeYesNoEventListeners(i, destroyedBitNodeNum, flume);
+                });
+            } else {
+                elem.addEventListener("click", function() {
+                    Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("Not yet implemented! Coming soon!")
+                });
+            }
+        }(i)); //Immediate invocation closure
+    }
+
+    //Create lore text
+    return writeRedPillLine("Many decades ago, a humanoid extraterrestial species which we call the Enders descended on the Earth...violently").then(function() {
+        return writeRedPillLine("Our species fought back, but it was futile. The Enders had technology far beyond our own...");
+    }).then(function() {
+        return writeRedPillLine("Instead of killing every last one of us, the human race was enslaved...");
+    }).then(function() {
+        return writeRedPillLine("We were shackled in a digital world, chained into a prison for our minds...");
+    }).then(function() {
+        return writeRedPillLine("Using their advanced technology, the Enders created complex simulations of a virtual reality...");
+    }).then(function() {
+        return writeRedPillLine("Simulations designed to keep us content...ignorant of the truth.");
+    }).then(function() {
+        return writeRedPillLine("Simulations used to trap and suppress our consciousness, to keep us under control...");
+    }).then(function() {
+        return writeRedPillLine("Why did they do this? Why didn't they just end our entire race? We don't know, not yet.");
+    }).then(function() {
+        return writeRedPillLine("Humanity's only hope is to destroy these simulations, destroy the only realities we've ever known...");
+    }).then(function() {
+        return writeRedPillLine("Only then can we begin to fight back...");
+    }).then(function() {
+        return writeRedPillLine("By hacking the daemon that generated your reality, you've just destroyed one simulation, called a BitNode...");
+    }).then(function() {
+        return writeRedPillLine("But there is still a long way to go...");
+    }).then(function() {
+        return writeRedPillLine("The technology the Enders used to enslave the human race wasn't just a single complex simulation...");
+    }).then(function() {
+        return writeRedPillLine("There are tens if not hundreds of BitNodes out there...");
+    }).then(function() {
+        return writeRedPillLine("Each with their own simulations of a reality...");
+    }).then(function() {
+        return writeRedPillLine("Each creating their own universes...a universe of universes");
+    }).then(function() {
+        return writeRedPillLine("And all of which must be destroyed...");
+    }).then(function() {
+        return writeRedPillLine(".......................................");
+    }).then(function() {
+        return writeRedPillLine("Welcome to the Bitverse...");
+    }).then(function() {
+        return writeRedPillLine(" ");
+    }).then(function() {
+        return writeRedPillLine("(Enter a new BitNode using the image above)");
+    }).then(function() {
+        return Promise.resolve(true);
+    }).catch(function(e){
+        console.log("ERROR: " + e.toString());
+    });
+}
+
+
+//Returns string with DOM element for Bit Node
+function createBitNode(n) {
+    var bitNodeStr = "BitNode" + n.toString();
+    var bitNode = _BitNode__WEBPACK_IMPORTED_MODULE_0__[/* BitNodes */ "a"][bitNodeStr];
+    if (bitNode == null) {return "O";}
+    return  "<a class='bitnode tooltip' id='bitnode-" + bitNode.number.toString() + "'><strong>O</strong>" +
+             "<span class='tooltiptext'>" +
+             "<strong>BitNode-" + bitNode.number.toString() + "<br>" + bitNode.name+ "</strong><br>" +
+             bitNode.desc + "<br>" +
+             "</span></a>";
+}
+
+function createBitNodeYesNoEventListeners(newBitNode, destroyedBitNode, flume=false) {
+    var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__[/* yesNoBoxGetYesButton */ "d"])();
+    yesBtn.innerHTML = "Enter BitNode-" + newBitNode;
+    yesBtn.addEventListener("click", function() {
+        if (!flume) {
+            giveSourceFile(destroyedBitNode);
+        } else {
+            //If player used flume, subtract 5 int exp. The prestigeSourceFile()
+            //function below grants 5 int exp, so this allows sets net gain to 0
+            _Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].gainIntelligenceExp(-5);
+        }
+        redPillFlag = false;
+        var container = document.getElementById("red-pill-content");
+        Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8__["removeChildrenFromElement"])(container);
+
+        //Set new Bit Node
+        _Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].bitNodeN = newBitNode;
+        console.log("Entering Bit Node " + _Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].bitNodeN);
+
+        //Reenable terminal
+        $("#hack-progress-bar").attr('id', "old-hack-progress-bar");
+        $("#hack-progress").attr('id', "old-hack-progress");
+        document.getElementById("terminal-input-td").innerHTML = '$ <input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
+        $('input[class=terminal-input]').prop('disabled', false);
+
+        _Terminal__WEBPACK_IMPORTED_MODULE_5__[/* Terminal */ "a"].hackFlag = false;
+
+        Object(_Prestige__WEBPACK_IMPORTED_MODULE_3__[/* prestigeSourceFile */ "b"])();
+        Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__[/* yesNoBoxClose */ "a"])();
+    });
+    var noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__[/* yesNoBoxGetNoButton */ "c"])();
+    noBtn.innerHTML = "Back";
+    noBtn.addEventListener("click", function() {
+        Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__[/* yesNoBoxClose */ "a"])();
+    });
+
+}
+
+
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 56)))
+
+/***/ }),
+/* 59 */
 /*!********************************!*\
   !*** ./src/ActiveScriptsUI.js ***!
   \********************************/
@@ -42437,22 +41970,22 @@ function getHacknetNode(name) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return updateActiveScriptsItems; });
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NetscriptWorker */ 24);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ui/numeralFormat */ 12);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Server */ 12);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ui/numeralFormat */ 5);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 66);
 /* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 48);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 4);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 3);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/helpers/createProgressBarText */ 72);
 /* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 43);
-/* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/uiHelpers/getElementById */ 45);
+/* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/uiHelpers/getElementById */ 46);
 /* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/LogBox */ 68);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 2);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 4);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 26);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13__);
@@ -42788,7 +42321,274 @@ function updateActiveScriptsText(workerscript, item, itemName) {
 
 
 /***/ }),
-/* 61 */,
+/* 60 */,
+/* 61 */
+/*!***************************!*\
+  !*** ./src/SourceFile.js ***!
+  \***************************/
+/*! exports provided: SourceFiles, PlayerOwnedSourceFile, applySourceFile, initSourceFiles */
+/*! exports used: PlayerOwnedSourceFile, SourceFiles, applySourceFile, initSourceFiles */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return SourceFiles; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PlayerOwnedSourceFile; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return applySourceFile; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return initSourceFiles; });
+/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Player */ 0);
+/* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BitNode */ 50);
+
+
+
+/* SourceFile.js */
+//Each SourceFile corresponds to a BitNode with the same number
+function SourceFile(number, info="") {
+    var bitnodeKey = "BitNode" + number;
+    var bitnode = _BitNode__WEBPACK_IMPORTED_MODULE_1__[/* BitNodes */ "a"][bitnodeKey];
+    if (bitnode == null) {
+        throw new Error("Invalid Bit Node for this Source File");
+    }
+
+    this.n = number;
+    this.name = "Source-File " + number + ": " + bitnode.name;
+    this.lvl = 1;
+    this.info = info;
+    this.owned = false;
+}
+
+let SourceFiles = {};
+function initSourceFiles() {
+    SourceFiles = {};
+    SourceFiles["SourceFile1"] = new SourceFile(1, "This Source-File lets the player start with 32GB of RAM on his/her " +
+                                      "home computer. It also increases all of the player's multipliers by:<br><br>" +
+                                      "Level 1: 16%<br>" +
+                                      "Level 2: 24%<br>" +
+                                      "Level 3: 28%");
+    SourceFiles["SourceFile2"] = new SourceFile(2, "This Source-File increases the player's crime success rate, crime money, and charisma " +
+                                      "multipliers by:<br><br>" +
+                                      "Level 1: 20%<br>" +
+                                      "Level 2: 30%<br>" +
+                                      "Level 3: 35%");
+    SourceFiles["SourceFile3"] = new SourceFile(3,"This Source-File lets you create corporations on other BitNodes (although " +
+                                                  "some BitNodes will disable this mechanic). This Source-File also increases your charisma and company salary multipliers by:<br>" +
+                                                  "Level 1: 8%<br>" +
+                                                  "Level 2: 12%<br>" +
+                                                  "Level 3: 14%");
+    SourceFiles["SourceFile4"] = new SourceFile(4, "This Source-File lets you access and use the Singularity Functions in every BitNode. Every " +
+                                        "level of this Source-File opens up more of the Singularity Functions you can use.");
+    SourceFiles["SourceFile5"] = new SourceFile(5, "This Source-File grants a special new stat called Intelligence. Intelligence " +
+                                                   "is unique because it is permanent and persistent (it never gets reset back to 1). However, " +
+                                                   "gaining Intelligence experience is much slower than other stats, and it is also hidden (you won't " +
+                                                   "know when you gain experience and how much). Higher Intelligence levels will boost your production " +
+                                                   "for many actions in the game. In addition, this Source-File will unlock the getBitNodeMultipliers() " +
+                                                   "Netscript function, and will raise all of your hacking-related multipliers by:<br><br> " +
+                                                   "Level 1: 8%<br>" +
+                                                   "Level 2: 12%<br>" +
+                                                   "Level 3: 14%");
+    SourceFiles["SourceFile6"] = new SourceFile(6, "This Source-File allows you to access the NSA's Bladeburner Division in other " +
+                                                   "BitNodes. In addition, this Source-File will raise both the level and experience gain rate of all your combat stats by:<br><br>" +
+                                                   "Level 1: 8%<br>" +
+                                                   "Level 2: 12%<br>" +
+                                                   "Level 3: 14%");
+    SourceFiles["SourceFile7"] = new SourceFile(7, "This Source-File allows you to access the Bladeburner Netscript API in other " +
+                                                   "BitNodes. In addition, this Source-File will increase all of your Bladeburner multipliers by:<br><br>" +
+                                                   "Level 1: 8%<br>" +
+                                                   "Level 2: 12%<br>" +
+                                                   "Level 3: 14%");
+    SourceFiles["SourceFile8"] = new SourceFile(8, "This Source-File grants the following benefits:<br><br>" +
+                                                   "Level 1: Permanent access to WSE and TIX API<br>" +
+                                                   "Level 2: Ability to short stocks in other BitNodes<br>" +
+                                                   "Level 3: Ability to use limit/stop orders in other BitNodes<br><br>" +
+                                                   "This Source-File also increases your hacking growth multipliers by: " +
+                                                   "<br>Level 1: 12%<br>Level 2: 18%<br>Level 3: 21%");
+    SourceFiles["SourceFile9"] = new SourceFile(9);
+    SourceFiles["SourceFile10"] = new SourceFile(10);
+    SourceFiles["SourceFile11"] = new SourceFile(11, "This Source-File makes it so that company favor increases BOTH the player's salary and reputation gain rate " +
+                                                     "at that company by 1% per favor (rather than just the reputation gain). This Source-File also " +
+                                                     " increases the player's company salary and reputation gain multipliers by:<br><br>" +
+                                                     "Level 1: 24%<br>" +
+                                                     "Level 2: 36%<br>" +
+                                                     "Level 3: 42%<br>");
+    SourceFiles["SourceFile12"] = new SourceFile(12, "This Source-File increases all your multipliers by 1% per level. This effect is multiplicative with itself. " +
+                                                     "In other words, level N of this Source-File will result in a multiplier of 1.01^N (or 0.99^N for multipliers that decrease)");
+}
+
+function PlayerOwnedSourceFile(number, level) {
+    this.n = number;
+    this.lvl = level;
+}
+
+//Takes in a PlayerOwnedSourceFile as the "srcFile" argument
+function applySourceFile(srcFile) {
+    var srcFileKey = "SourceFile" + srcFile.n;
+    var sourceFileObject = SourceFiles[srcFileKey];
+    if (sourceFileObject == null) {
+        console.log("ERROR: Invalid source file number: " + srcFile.n);
+        return;
+    }
+
+    switch(srcFile.n) {
+        case 1: // The Source Genesis
+            var mult = 0;
+            for (var i = 0; i < srcFile.lvl; ++i) {
+                mult += (16 / (Math.pow(2, i)));
+            }
+            var incMult = 1 + (mult / 100);
+            var decMult = 1 - (mult / 100);
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacking_chance_mult *= incMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacking_speed_mult  *= incMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacking_money_mult  *= incMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacking_grow_mult   *= incMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacking_mult        *= incMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].strength_mult       *= incMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].defense_mult        *= incMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].dexterity_mult      *= incMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].agility_mult        *= incMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].charisma_mult       *= incMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacking_exp_mult    *= incMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].strength_exp_mult   *= incMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].defense_exp_mult    *= incMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].dexterity_exp_mult  *= incMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].agility_exp_mult    *= incMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].charisma_exp_mult   *= incMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].company_rep_mult    *= incMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].faction_rep_mult    *= incMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].crime_money_mult    *= incMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].crime_success_mult  *= incMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacknet_node_money_mult            *= incMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacknet_node_purchase_cost_mult    *= decMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacknet_node_ram_cost_mult         *= decMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacknet_node_core_cost_mult        *= decMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacknet_node_level_cost_mult       *= decMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].work_money_mult    *= incMult;
+            break;
+        case 2: //Rise of the Underworld
+            var mult = 0;
+            for (var i = 0; i < srcFile.lvl; ++i) {
+                mult += (20 / (Math.pow(2, i)));
+            }
+            var incMult = 1 + (mult / 100);
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].crime_money_mult    *= incMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].crime_success_mult  *= incMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].charisma_mult       *= incMult;
+            break;
+        case 3: //Corporatocracy
+            var mult = 0;
+            for (var i = 0; i < srcFile.lvl; ++i) {
+                mult += (8 / (Math.pow(2, i)));
+            }
+            var incMult = 1 + (mult / 100);
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].charisma_mult    *= incMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].work_money_mult  *= incMult;
+            break;
+        case 4: //The Singularity
+            //No effects, just gives access to Singularity functions
+            break;
+        case 5: //Artificial Intelligence
+            var mult = 0;
+            for (var i = 0; i < srcFile.lvl; ++i) {
+                mult += (8 / (Math.pow(2, i)));
+            }
+            var incMult = 1 + (mult / 100);
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacking_chance_mult  *= incMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacking_speed_mult   *= incMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacking_money_mult   *= incMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacking_grow_mult    *= incMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacking_mult         *= incMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacking_exp_mult     *= incMult;
+            break;
+        case 6: //Bladeburner
+            var mult = 0;
+            for (var i = 0; i < srcFile.lvl; ++i) {
+                mult += (8 / (Math.pow(2, i)));
+            }
+            var incMult = 1 + (mult / 100);
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].strength_exp_mult        *= incMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].defense_exp_mult         *= incMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].dexterity_exp_mult       *= incMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].agility_exp_mult         *= incMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].strength_mult            *= incMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].defense_mult             *= incMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].dexterity_mult           *= incMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].agility_mult             *= incMult;
+            break;
+        case 7: //Bladeburner 2079
+            var mult = 0;
+            for (var i = 0; i < srcFile.lvl; ++i) {
+                mult += (8 / (Math.pow(2, i)));
+            }
+            var incMult = 1 + (mult / 100);
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].bladeburner_max_stamina_mult     *= incMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].bladeburner_stamina_gain_mult    *= incMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].bladeburner_analysis_mult        *= incMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].bladeburner_success_chance_mult  *= incMult;
+            break;
+        case 8: //Ghost of Wall Street
+            var mult = 0;
+            for (var i = 0; i < srcFile.lvl; ++i) {
+                mult += (12 / (Math.pow(2, i)));
+            }
+            var incMult = 1 + (mult / 100);
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacking_grow_mult    *= incMult;
+            break;
+        case 11: //The Big Crash
+            var mult = 0;
+            for (var i = 0; i < srcFile.lvl; ++i) {
+                mult += (24 / (Math.pow(2, i)));
+            }
+            var incMult = 1 + (mult / 100);
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].work_money_mult    *= incMult;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].company_rep_mult   *= incMult;
+            break;
+        case 12: //The Recursion
+            var inc = Math.pow(1.01, srcFile.lvl);
+            var dec = Math.pow(0.99, srcFile.lvl);
+
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacking_chance_mult *= inc;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacking_speed_mult  *= inc;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacking_money_mult  *= inc;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacking_grow_mult   *= inc;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacking_mult        *= inc;
+
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].strength_mult       *= inc;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].defense_mult        *= inc;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].dexterity_mult      *= inc;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].agility_mult        *= inc;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].charisma_mult       *= inc;
+
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacking_exp_mult    *= inc;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].strength_exp_mult   *= inc;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].defense_exp_mult    *= inc;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].dexterity_exp_mult  *= inc;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].agility_exp_mult    *= inc;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].charisma_exp_mult   *= inc;
+
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].company_rep_mult    *= inc;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].faction_rep_mult    *= inc;
+
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].crime_money_mult    *= inc;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].crime_success_mult  *= inc;
+
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacknet_node_money_mult            *= inc;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacknet_node_purchase_cost_mult    *= dec;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacknet_node_ram_cost_mult         *= dec;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacknet_node_core_cost_mult        *= dec;
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacknet_node_level_cost_mult       *= dec;
+
+            _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].work_money_mult    *= inc;
+            break;
+        default:
+            console.log("ERROR: Invalid source file number: " + srcFile.n);
+            break;
+    }
+
+    sourceFileObject.owned = true;
+}
+
+
+
+
+/***/ }),
 /* 62 */
 /*!******************************!*\
   !*** ./src/NetscriptPort.js ***!
@@ -42907,32 +42707,31 @@ exports.removeElement = removeElement;
 /* harmony import */ var _Alias__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Alias */ 39);
 /* harmony import */ var _Company__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Company */ 13);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Constants */ 1);
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./engine */ 7);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./engine */ 8);
 /* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Faction */ 15);
 /* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Fconf */ 40);
 /* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Gang */ 49);
-/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./HacknetNode */ 59);
+/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./HacknetNode */ 57);
 /* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Message */ 35);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Script */ 28);
-/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Server */ 11);
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Server */ 12);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./SpecialServerIps */ 27);
 /* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./StockMarket */ 23);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_GameOptions__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/GameOptions */ 73);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 18);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_17__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 4);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 3);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_19__);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 36);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_20__);
 /* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./ui/createStatusText */ 84);
 /* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_ui_createStatusText__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 2);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_22__);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./ui/numeralFormat */ 5);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 21);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_23__);
 /* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! decimal.js */ 30);
@@ -43062,7 +42861,7 @@ function loadGame(saveString) {
     Object(_Player__WEBPACK_IMPORTED_MODULE_9__[/* loadPlayer */ "b"])(saveObj.PlayerSave);
     Object(_Server__WEBPACK_IMPORTED_MODULE_11__[/* loadAllServers */ "g"])(saveObj.AllServersSave);
     Object(_Company__WEBPACK_IMPORTED_MODULE_1__[/* loadCompanies */ "i"])(saveObj.CompaniesSave);
-    Object(_Faction__WEBPACK_IMPORTED_MODULE_4__[/* loadFactions */ "i"])(saveObj.FactionsSave);
+    Object(_Faction__WEBPACK_IMPORTED_MODULE_4__[/* loadFactions */ "h"])(saveObj.FactionsSave);
     Object(_SpecialServerIps__WEBPACK_IMPORTED_MODULE_13__[/* loadSpecialServerIps */ "d"])(saveObj.SpecialServerIpsSave);
 
     if (saveObj.hasOwnProperty("AliasesSave")) {
@@ -43281,7 +43080,7 @@ function loadImportedGame(saveObj, saveString) {
     Object(_Player__WEBPACK_IMPORTED_MODULE_9__[/* loadPlayer */ "b"])(saveObj.PlayerSave);
     Object(_Server__WEBPACK_IMPORTED_MODULE_11__[/* loadAllServers */ "g"])(saveObj.AllServersSave);
     Object(_Company__WEBPACK_IMPORTED_MODULE_1__[/* loadCompanies */ "i"])(saveObj.CompaniesSave);
-    Object(_Faction__WEBPACK_IMPORTED_MODULE_4__[/* loadFactions */ "i"])(saveObj.FactionsSave);
+    Object(_Faction__WEBPACK_IMPORTED_MODULE_4__[/* loadFactions */ "h"])(saveObj.FactionsSave);
     Object(_SpecialServerIps__WEBPACK_IMPORTED_MODULE_13__[/* loadSpecialServerIps */ "d"])(saveObj.SpecialServerIpsSave);
 
     if (saveObj.hasOwnProperty("AliasesSave")) {
@@ -43431,7 +43230,7 @@ function loadImportedGame(saveObj, saveString) {
     var offlineProductionFromHacknetNodes = Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_7__[/* processAllHacknetNodeEarnings */ "d"])(numCyclesOffline);
 
     //Passive faction rep gain offline
-    Object(_Faction__WEBPACK_IMPORTED_MODULE_4__[/* processPassiveFactionRepGain */ "j"])(numCyclesOffline);
+    Object(_Faction__WEBPACK_IMPORTED_MODULE_4__[/* processPassiveFactionRepGain */ "i"])(numCyclesOffline);
 
     //Update total playtime
     var time = numCyclesOffline * _engine__WEBPACK_IMPORTED_MODULE_3__["Engine"]._idleSpeed;
@@ -43451,8 +43250,8 @@ function loadImportedGame(saveObj, saveString) {
     _Player__WEBPACK_IMPORTED_MODULE_9__[/* Player */ "a"].lastUpdate = _engine__WEBPACK_IMPORTED_MODULE_3__["Engine"]._lastUpdate;
     _engine__WEBPACK_IMPORTED_MODULE_3__["Engine"].start();                 //Run main game loop and Scripts loop
     Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_15__["dialogBoxCreate"])("While you were offline, your scripts generated <span class='money-gold'>$" +
-                    Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_22__["formatNumber"])(offlineProductionFromScripts, 2) + "</span> and your Hacknet Nodes generated <span class='money-gold'>$" +
-                    Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_22__["formatNumber"])(offlineProductionFromHacknetNodes, 2) + "</span>");
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(offlineProductionFromScripts, '0,0.00') + "</span> and your Hacknet Nodes generated <span class='money-gold'>$" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(offlineProductionFromHacknetNodes, '0,0.00') + "</span>");
     return true;
 }
 
@@ -43564,7 +43363,7 @@ function openImportFileHandler(evt) {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 57)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 56)))
 
 /***/ }),
 /* 66 */
@@ -43578,7 +43377,7 @@ function openImportFileHandler(evt) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const createElement_1 = __webpack_require__(/*! ./createElement */ 4);
+const createElement_1 = __webpack_require__(/*! ./createElement */ 3);
 /**
  * Creates both the header and panel element of an accordion and sets the click handler
  * @param params The creation parameters.
@@ -43728,7 +43527,7 @@ function logBoxUpdateText() {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 57)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 56)))
 
 /***/ }),
 /* 69 */
@@ -43746,11 +43545,11 @@ function logBoxUpdateText() {
 /* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateProgram */ 22);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SpecialServerIps */ 27);
-/* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ui/postToTerminal */ 6);
+/* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ui/postToTerminal */ 7);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/helpers/isValidIPAddress */ 75);
 /* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 2);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 4);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_5__);
 
 
@@ -43883,7 +43682,7 @@ const DarkWebItems = {
 /* unused harmony export Literatures */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return initLiterature; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return showLiterature; });
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 
 
 /* Literature.js
@@ -44438,7 +44237,7 @@ function gameOptionsBoxOpen() {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 57)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 56)))
 
 /***/ }),
 /* 74 */
@@ -44503,14 +44302,14 @@ exports.isValidIPAddress = isValidIPAddress;
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return prestigeAugmentation; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return prestigeSourceFile; });
-/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActiveScriptsUI */ 60);
+/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActiveScriptsUI */ 59);
 /* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Augmentations */ 20);
 /* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BitNode */ 50);
 /* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Bladeburner */ 29);
 /* harmony import */ var _CinematicText__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./CinematicText */ 83);
 /* harmony import */ var _Company__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Company */ 13);
 /* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./CreateProgram */ 22);
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./engine */ 7);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./engine */ 8);
 /* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Faction */ 15);
 /* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Gang */ 49);
 /* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Location */ 78);
@@ -44518,15 +44317,15 @@ exports.isValidIPAddress = isValidIPAddress;
 /* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./NetscriptFunctions */ 37);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./NetscriptWorker */ 24);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Server */ 11);
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Server */ 12);
 /* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./SpecialServerIps */ 27);
 /* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./StockMarket */ 23);
-/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Terminal */ 47);
+/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Terminal */ 44);
 /* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! decimal.js */ 30);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 21);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 4);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 3);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 36);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23__);
@@ -44620,7 +44419,7 @@ function prestigeAugmentation() {
     }
 
     //Re-initialize things - This will update any changes
-    Object(_Faction__WEBPACK_IMPORTED_MODULE_8__[/* initFactions */ "f"])(); //Factions must be initialized before augmentations
+    Object(_Faction__WEBPACK_IMPORTED_MODULE_8__[/* initFactions */ "e"])(); //Factions must be initialized before augmentations
     Object(_Augmentations__WEBPACK_IMPORTED_MODULE_1__[/* initAugmentations */ "h"])(); //Calls reapplyAllAugmentations() and resets Player multipliers
     _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].reapplyAllSourceFiles();
     Object(_Company__WEBPACK_IMPORTED_MODULE_5__[/* initCompanies */ "h"])();
@@ -44636,7 +44435,7 @@ function prestigeAugmentation() {
     if (_Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].bitNodeN == 2 && _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].inGang()) {
         var faction = _Faction__WEBPACK_IMPORTED_MODULE_8__[/* Factions */ "b"][_Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].gang.facName];
         if (faction instanceof _Faction__WEBPACK_IMPORTED_MODULE_8__[/* Faction */ "a"]) {
-            Object(_Faction__WEBPACK_IMPORTED_MODULE_8__[/* joinFaction */ "h"])(faction);
+            Object(_Faction__WEBPACK_IMPORTED_MODULE_8__[/* joinFaction */ "g"])(faction);
         }
     }
 
@@ -44747,7 +44546,7 @@ function prestigeSourceFile() {
     }
 
     //Re-initialize things - This will update any changes
-    Object(_Faction__WEBPACK_IMPORTED_MODULE_8__[/* initFactions */ "f"])(); //Factions must be initialized before augmentations
+    Object(_Faction__WEBPACK_IMPORTED_MODULE_8__[/* initFactions */ "e"])(); //Factions must be initialized before augmentations
     Object(_Augmentations__WEBPACK_IMPORTED_MODULE_1__[/* initAugmentations */ "h"])();    //Calls reapplyAllAugmentations() and resets Player multipliers
     _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].reapplyAllSourceFiles();
     Object(_Company__WEBPACK_IMPORTED_MODULE_5__[/* initCompanies */ "h"])();
@@ -44848,7 +44647,7 @@ function prestigeSourceFile() {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 57)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 56)))
 
 /***/ }),
 /* 77 */,
@@ -44865,26 +44664,26 @@ function prestigeSourceFile() {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return initLocationButtons; });
 /* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Bladeburner */ 29);
 /* harmony import */ var _Company__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Company */ 13);
-/* harmony import */ var _CompanyManagement__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CompanyManagement */ 55);
+/* harmony import */ var _CompanyManagement__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CompanyManagement */ 54);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Crimes__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Crimes */ 33);
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./engine */ 7);
-/* harmony import */ var _Infiltration__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Infiltration */ 110);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./engine */ 8);
+/* harmony import */ var _Infiltration__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Infiltration */ 111);
 /* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./NetscriptFunctions */ 37);
-/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Locations */ 3);
+/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Locations */ 2);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _ServerPurchases__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./ServerPurchases */ 95);
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Server */ 12);
+/* harmony import */ var _ServerPurchases__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./ServerPurchases */ 96);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./SpecialServerIps */ 27);
-/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./ui/numeralFormat */ 12);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./ui/numeralFormat */ 5);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 18);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_16__);
 /* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/IPAddress */ 51);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 2);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 4);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
 
@@ -46694,7 +46493,7 @@ function initLocationButtons() {
         yesBtn.innerHTML = "Purchase"; noBtn.innerHTML = "Cancel";
         yesBtn.addEventListener("click", ()=>{
             if (_Player__WEBPACK_IMPORTED_MODULE_9__[/* Player */ "a"].money.lt(cost)) {
-                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_15__["dialogBoxCreate"])("You do not have enough mone to purchase an additional CPU Core for your home computer!");
+                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_15__["dialogBoxCreate"])("You do not have enough money to purchase an additional CPU Core for your home computer!");
             } else {
                 _Player__WEBPACK_IMPORTED_MODULE_9__[/* Player */ "a"].loseMoney(cost);
                 _Player__WEBPACK_IMPORTED_MODULE_9__[/* Player */ "a"].getHomeComputer().cpuCores++;
@@ -47152,7 +46951,7 @@ exports.compareArrays = compareArrays;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const getRandomInt_1 = __webpack_require__(/*! ./getRandomInt */ 10);
+const getRandomInt_1 = __webpack_require__(/*! ./getRandomInt */ 11);
 /**
  * Gets a random value in the range of a byte (0 - 255), or up to the maximum.
  * @param max The maximum value (up to 255).
@@ -47180,10 +46979,10 @@ exports.getRandomByte = getRandomByte;
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return cinematicTextFlag; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return writeCinematicText; });
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./engine */ 7);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./engine */ 8);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 26);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 4);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 3);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 43);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/helpers/isString */ 34);
@@ -47301,7 +47100,7 @@ function cinematicTextEnd() {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const getElementById_1 = __webpack_require__(/*! ../../utils/uiHelpers/getElementById */ 45);
+const getElementById_1 = __webpack_require__(/*! ../../utils/uiHelpers/getElementById */ 46);
 const threeSeconds = 3000;
 let x;
 /**
@@ -47578,7 +47377,7 @@ exports.HelpTexts = {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Environment; });
-/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HacknetNode */ 59);
+/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HacknetNode */ 57);
 /* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NetscriptFunctions */ 37);
 /* harmony import */ var _NetscriptPort__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NetscriptPort */ 62);
 
@@ -47692,7 +47491,7 @@ Environment.prototype = {
 /* unused harmony export makeScriptBlob */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return executeJSScript; });
 /* unused harmony export _getScriptUrls */
-/* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NetscriptEvaluator */ 5);
+/* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NetscriptEvaluator */ 6);
 
 
 // Makes a blob that contains the code of a given script.
@@ -47726,8 +47525,6 @@ async function executeJSScript(scripts = [], workerScript) {
     loadedModule = script.module;
 
     let ns      = workerScript.env.vars;
-    //ns.threads  = workerScript.threads;
-    //ns.args     = workerScript.args;
 
     try {
         // TODO: putting await in a non-async function yields unhelpful
@@ -47770,7 +47567,7 @@ function _getScriptUrls(script, scripts, seen) {
         // import {foo} from "blob://<uuid>"
         //
         // Where the blob URL contains the script content.
-        const transformedCode = script.code.replace(/((?:from|import)\s+(?:'|"))([^'"]+)('|";)/g,
+        let transformedCode = script.code.replace(/((?:from|import)\s+(?:'|"))([^'"]+)('|";)/g,
             (unmodified, prefix, filename, suffix) => {
                 const isAllowedImport = scripts.some(s => s.filename == filename);
                 if (!isAllowedImport) return unmodified;
@@ -47787,6 +47584,9 @@ function _getScriptUrls(script, scripts, seen) {
             }
         );
 
+        // We automatically define a print function() in the NetscriptJS module so that
+        // accidental calls to window.print() do not bring up the "print screen" dialog
+        transformedCode += `\n\nfunction print() {throw new Error("Invalid call to window.print(). Did you mean to use Netscript's print()?");}`
 
         // If we successfully transformed the code, create a blob url for it and
         // push that URL onto the top of the stack.
@@ -47804,6 +47604,424 @@ function _getScriptUrls(script, scripts, seen) {
 
 /***/ }),
 /* 95 */
+/*!************************!*\
+  !*** ./src/DevMenu.js ***!
+  \************************/
+/*! exports provided: createDevMenu, closeDevMenu */
+/*! exports used: closeDevMenu, createDevMenu */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return createDevMenu; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return closeDevMenu; });
+/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentations */ 20);
+/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateProgram */ 22);
+/* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Faction */ 15);
+/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Player */ 0);
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Server */ 12);
+/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Terminal */ 44);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 43);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 3);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 21);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_8__);
+
+
+
+
+
+
+
+
+
+
+const devMenuContainerId = "dev-menu-container";
+
+function createDevMenu() {
+    if (false) {}
+
+    const devMenuText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("h1", {
+        display: "block",
+        innerText: "Development Menu - Only meant to be used for testing/debugging",
+    });
+
+    // Generic
+    const genericHeader = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("h2", {
+        display: "block",
+        innerText: "Generic"
+    });
+
+    const addMoney = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("button", {
+        class: "std-button",
+        clickListener: () => {
+            _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gainMoney(1e15);
+        },
+        display: "block",
+        innerText: "Add $1000t",
+    });
+
+    const addRam = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("button", {
+        class: "std-button",
+        clickListener: () => {
+            _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].getHomeComputer().maxRam *= 2;
+        },
+        display: "block",
+        innerText: "Double Home Computer RAM",
+    });
+
+    const triggerBitflume = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("button", {
+        class: "std-button",
+        clickListener: () => {
+            hackWorldDaemon(_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].bitNodeN, true);
+        },
+        innerText: "Trigger BitFlume",
+    });
+
+    const destroyCurrentBitnode = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("button", {
+        class: "std-button",
+        clickListener: () => {
+            hackWorldDaemon(_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].bitNodeN);
+        },
+        innerText: "Destroy Current BitNode",
+        tooltip: "Will grant Source-File for the BitNode",
+    })
+
+    // Experience / stats
+    const statsHeader = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("h2", {
+        display: "block",
+        innerText: "Experience/Stats"
+    });
+
+    const statsHackingExpInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("input", {
+        class: "text-input",
+        display: "block",
+        placeholder: "+/- hacking exp",
+        type: "number",
+    });
+    const statsHackingExpButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("button", {
+        class: "std-button",
+        clickListener: () => {
+            const exp = parseInt(statsHackingExpInput.value);
+            _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gainHackingExp(exp);
+            _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].updateSkillLevels();
+        },
+        display: "block",
+        innerText: "Add Hacking Exp",
+    });
+
+    const statsStrengthExpInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("input", {
+        class: "text-input",
+        display: "block",
+        placeholder: "+/- hacking exp",
+        type: "number",
+    });
+    const statsStrengthExpButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("button", {
+        class: "std-button",
+        clickListener: () => {
+            const exp = parseInt(statsStrengthExpInput.value);
+            _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gainStrengthExp(exp);
+            _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].updateSkillLevels();
+        },
+        display: "block",
+        innerText: "Add Hacking Exp",
+    });
+
+    const statsDefenseExpInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("input", {
+        class: "text-input",
+        display: "block",
+        placeholder: "+/- hacking exp",
+        type: "number",
+    });
+    const statsDefenseExpButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("button", {
+        class: "std-button",
+        clickListener: () => {
+            const exp = parseInt(statsDefenseExpInput.value);
+            _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gainDefenseExp(exp);
+            _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].updateSkillLevels();
+        },
+        display: "block",
+        innerText: "Add Hacking Exp",
+    });
+
+    const statsDexterityExpInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("input", {
+        class: "text-input",
+        display: "block",
+        placeholder: "+/- hacking exp",
+        type: "number",
+    });
+    const statsDexterityExpButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("button", {
+        class: "std-button",
+        clickListener: () => {
+            const exp = parseInt(statsDexterityExpInput.value);
+            _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gainDexterityExp(exp);
+            _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].updateSkillLevels();
+        },
+        display: "block",
+        innerText: "Add Hacking Exp",
+    });
+
+    const statsAgilityExpInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("input", {
+        class: "text-input",
+        display: "block",
+        placeholder: "+/- hacking exp",
+        type: "number",
+    });
+    const statsAgilityExpButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("button", {
+        class: "std-button",
+        clickListener: () => {
+            const exp = parseInt(statsAgilityExpButton.value);
+            _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gainAgilityExp(exp);
+            _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].updateSkillLevels();
+        },
+        display: "block",
+        innerText: "Add Hacking Exp",
+    });
+
+    const statsCharismaExpInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("input", {
+        class: "text-input",
+        display: "block",
+        placeholder: "+/- hacking exp",
+        type: "number",
+    });
+    const statsCharismaExpButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("button", {
+        class: "std-button",
+        clickListener: () => {
+            const exp = parseInt(statsCharismaExpInput.value);
+            _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gainCharismaExp(exp);
+            _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].updateSkillLevels();
+        },
+        display: "block",
+        innerText: "Add Hacking Exp",
+    });
+
+    const statsIntelligenceExpInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("input", {
+        class: "text-input",
+        display: "block",
+        placeholder: "+/- hacking exp",
+        type: "number",
+    });
+    const statsIntelligenceExpButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("button", {
+        class: "std-button",
+        clickListener: () => {
+            const exp = parseInt(statsIntelligenceExpInput.value);
+            _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].gainIntelligenceExp(exp);
+            _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].updateSkillLevels();
+        },
+        display: "block",
+        innerText: "Add Hacking Exp",
+    });
+
+    const statsEnableIntelligenceButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("button", {
+        class: "std-button",
+        clickListener: () => {
+            _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].intelligence = 1;
+        },
+        innerText: "Enable Intelligence"
+    });
+
+    const statsDisableIntelligenceButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("button", {
+        class: "std-button",
+        clickListener: () => {
+            _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].intelligence = 0;
+        },
+        innerText: "Disable Intelligence"
+    });
+
+    // Factions
+    const factionsHeader = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("h2", {innerText: "Factions"});
+
+    const factionsDropdown = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("select", {class: "dropdown"});
+    for (const i in _Faction__WEBPACK_IMPORTED_MODULE_2__[/* Factions */ "b"]) {
+        factionsDropdown.options[factionsDropdown.options.length] = new Option(_Faction__WEBPACK_IMPORTED_MODULE_2__[/* Factions */ "b"][i].name, _Faction__WEBPACK_IMPORTED_MODULE_2__[/* Factions */ "b"][i].name);
+    }
+
+    const factionsAddButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("button", {
+        class: "std-button",
+        clickListener: () => {
+            const facName = factionsDropdown.options[factionsDropdown.selectedIndex].value;
+            _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].receiveInvite(facName);
+        },
+        innerText: "Receive Invite to Faction",
+    });
+
+    // Augmentations / Source Files
+    const augmentationsHeader = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("h2", {innerText: "Augmentations"});
+
+    const augmentationsDropdown = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("select", {class: "dropdown"});
+    for (const i in _Augmentations__WEBPACK_IMPORTED_MODULE_0__[/* AugmentationNames */ "b"]) {
+        const augName = _Augmentations__WEBPACK_IMPORTED_MODULE_0__[/* AugmentationNames */ "b"][i];
+        augmentationsDropdown.options[augmentationsDropdown.options.length] = new Option(augName, augName);
+    }
+
+    const augmentationsQueueButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("button", {
+        class: "std-button",
+        clickListener: () => {
+            _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].queueAugmentation(augmentationsDropdown.options[augmentationsDropdown.selectedIndex].value);
+        },
+        innerText: "Queue Augmentation",
+    })
+
+    // Programs
+    const programsHeader = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("h2", {innerText: "Programs"});
+
+    const programsAddDropdown = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("select", {class: "dropdown"});
+    for (const i in _CreateProgram__WEBPACK_IMPORTED_MODULE_1__[/* Programs */ "a"]) {
+        const progName = _CreateProgram__WEBPACK_IMPORTED_MODULE_1__[/* Programs */ "a"][i].name;
+        programsAddDropdown.options[programsAddDropdown.options.length] = new Option(progName, progName);
+    }
+
+    const programsAddButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("button", {
+        class: "std-button",
+        clickListener: () => {
+            const program = programsAddDropdown.options[programsAddDropdown.selectedIndex].value;
+            if(!_Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].hasProgram(program)) {
+                _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].getHomeComputer().programs.push(program);
+            }
+        },
+        innerText: "Add Program",
+    })
+
+    // Servers
+    const serversHeader = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("h2", {innerText: "Servers"});
+
+    const serversOpenAll = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("button", {
+        class: "std-button",
+        clickListener: () => {
+            for (const i in _Server__WEBPACK_IMPORTED_MODULE_4__[/* AllServers */ "b"]) {
+                _Server__WEBPACK_IMPORTED_MODULE_4__[/* AllServers */ "b"][i].hasAdminRights = true;
+                _Server__WEBPACK_IMPORTED_MODULE_4__[/* AllServers */ "b"][i].sshPortOpen    = true;
+                _Server__WEBPACK_IMPORTED_MODULE_4__[/* AllServers */ "b"][i].ftpPortOpen    = true;
+                _Server__WEBPACK_IMPORTED_MODULE_4__[/* AllServers */ "b"][i].smtpPortOpen   = true;
+                _Server__WEBPACK_IMPORTED_MODULE_4__[/* AllServers */ "b"][i].httpPortOpen   = true;
+                _Server__WEBPACK_IMPORTED_MODULE_4__[/* AllServers */ "b"][i].sqlPortOpen    = true;
+                _Server__WEBPACK_IMPORTED_MODULE_4__[/* AllServers */ "b"][i].openPortCount  = 5;
+            }
+        },
+        display: "block",
+        innerText: "Get Admin Rights to all servers",
+    });
+
+    const serversMinSecurityAll = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("button", {
+        class: "std-button",
+        clickListener: () => {
+            for (const i in _Server__WEBPACK_IMPORTED_MODULE_4__[/* AllServers */ "b"]) {
+                _Server__WEBPACK_IMPORTED_MODULE_4__[/* AllServers */ "b"][i].hackDifficulty = _Server__WEBPACK_IMPORTED_MODULE_4__[/* AllServers */ "b"][i].minDifficulty;
+            }
+        },
+        display: "block",
+        innerText: "Set all servers to min security",
+    });
+
+    const serversMaxMoneyAll = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("button", {
+        class: "std-button",
+        clickListener: () => {
+            for (const i in _Server__WEBPACK_IMPORTED_MODULE_4__[/* AllServers */ "b"]) {
+                _Server__WEBPACK_IMPORTED_MODULE_4__[/* AllServers */ "b"][i].moneyAvailable = _Server__WEBPACK_IMPORTED_MODULE_4__[/* AllServers */ "b"][i].moneyMax;
+            }
+        },
+        display: "block",
+        innerText: "Set all servers to max money",
+    });
+
+    const serversConnectToDropdown = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("select", {class: "dropdown"});
+    for (const i in _Server__WEBPACK_IMPORTED_MODULE_4__[/* AllServers */ "b"]) {
+        const hn = _Server__WEBPACK_IMPORTED_MODULE_4__[/* AllServers */ "b"][i].hostname;
+        serversConnectToDropdown.options[serversConnectToDropdown.options.length] = new Option(hn, hn);
+    }
+
+    const serversConnectToButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("button", {
+        class: "std-button",
+        clickListener: () => {
+            const host = serversConnectToDropdown.options[serversConnectToDropdown.selectedIndex].value;
+            _Terminal__WEBPACK_IMPORTED_MODULE_5__[/* Terminal */ "a"].connectToServer(host);
+        },
+        innerText: "Connect to server",
+    });
+
+    // Add everything to container, then append to main menu
+    const devMenuContainer = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("div", {
+        class: "generic-menupage-container",
+        id: devMenuContainerId,
+    });
+
+    const bladeburnerHeader = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("h2", {innerText: "Bladeburner"});
+
+    const bladeburnerGainRankInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("input", {
+        class: "text-input",
+        display: "block",
+        placeholder: "Rank to gain (or negative to lose rank)",
+        type: "number",
+    });
+
+    const bladeburnerGainRankButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__["createElement"])("button", {
+        class: "std-button",
+        clickListener: () => {
+            try {
+                const rank = parseInt(bladeburnerGainRankInput.value);
+                _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].bladeburner.changeRank(rank);
+            } catch(e) {
+                Object(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_6__[/* exceptionAlert */ "a"])(`Failed to change Bladeburner Rank in dev menu: ${e}`);
+            }
+        },
+        display: "block",
+        innerText: "Gain Bladeburner Rank",
+    })
+
+    devMenuContainer.appendChild(devMenuText);
+    devMenuContainer.appendChild(genericHeader);
+    devMenuContainer.appendChild(addMoney);
+    devMenuContainer.appendChild(addRam);
+    devMenuContainer.appendChild(triggerBitflume);
+    devMenuContainer.appendChild(destroyCurrentBitnode);
+    devMenuContainer.appendChild(statsHeader);
+    devMenuContainer.appendChild(statsHackingExpInput);
+    devMenuContainer.appendChild(statsHackingExpButton);
+    devMenuContainer.appendChild(statsStrengthExpInput);
+    devMenuContainer.appendChild(statsStrengthExpButton);
+    devMenuContainer.appendChild(statsDefenseExpInput);
+    devMenuContainer.appendChild(statsDefenseExpButton);
+    devMenuContainer.appendChild(statsDexterityExpInput);
+    devMenuContainer.appendChild(statsDexterityExpButton);
+    devMenuContainer.appendChild(statsAgilityExpInput);
+    devMenuContainer.appendChild(statsAgilityExpButton);
+    devMenuContainer.appendChild(statsCharismaExpInput);
+    devMenuContainer.appendChild(statsCharismaExpButton);
+    devMenuContainer.appendChild(statsIntelligenceExpInput);
+    devMenuContainer.appendChild(statsIntelligenceExpButton);
+    devMenuContainer.appendChild(statsEnableIntelligenceButton);
+    devMenuContainer.appendChild(statsDisableIntelligenceButton);
+    devMenuContainer.appendChild(factionsHeader);
+    devMenuContainer.appendChild(factionsDropdown);
+    devMenuContainer.appendChild(factionsAddButton);
+    devMenuContainer.appendChild(augmentationsHeader);
+    devMenuContainer.appendChild(augmentationsQueueButton);
+    devMenuContainer.appendChild(programsHeader);
+    devMenuContainer.appendChild(programsAddDropdown);
+    devMenuContainer.appendChild(programsAddButton);
+    devMenuContainer.appendChild(serversHeader);
+    devMenuContainer.appendChild(serversOpenAll);
+    devMenuContainer.appendChild(serversMinSecurityAll);
+    devMenuContainer.appendChild(serversMaxMoneyAll);
+    devMenuContainer.appendChild(serversConnectToDropdown);
+    devMenuContainer.appendChild(serversConnectToButton);
+    devMenuContainer.appendChild(bladeburnerHeader);
+    devMenuContainer.appendChild(bladeburnerGainRankInput);
+    devMenuContainer.appendChild(bladeburnerGainRankButton);
+
+   const entireGameContainer = document.getElementById("entire-game-container");
+   if (entireGameContainer == null) {
+       throw new Error("Could not find entire-game-container DOM element");
+   }
+   entireGameContainer.appendChild(devMenuContainer);
+}
+
+function closeDevMenu() {
+    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_8__["removeElementById"])(devMenuContainerId);
+}
+
+
+/***/ }),
+/* 96 */
 /*!********************************!*\
   !*** ./src/ServerPurchases.js ***!
   \********************************/
@@ -47816,8 +48034,8 @@ function _getScriptUrls(script, scripts, seen) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return purchaseRamForHomeComputer; });
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Server */ 12);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/IPAddress */ 51);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
 
@@ -47892,7 +48110,7 @@ function purchaseRamForHomeComputer(cost) {
 
 
 /***/ }),
-/* 96 */
+/* 97 */
 /*!****************************!*\
   !*** ./src/FactionInfo.ts ***!
   \****************************/
@@ -48066,7 +48284,7 @@ exports.FactionInfos = {
 
 
 /***/ }),
-/* 97 */
+/* 98 */
 /*!************************************************!*\
   !*** ./utils/uiHelpers/removeLoadingScreen.ts ***!
   \************************************************/
@@ -48077,7 +48295,7 @@ exports.FactionInfos = {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const getElementById_1 = __webpack_require__(/*! ./getElementById */ 45);
+const getElementById_1 = __webpack_require__(/*! ./getElementById */ 46);
 const removeElementById_1 = __webpack_require__(/*! ./removeElementById */ 21);
 /**
  * Routes the player from the Loading screen to the main game content.
@@ -48091,14 +48309,14 @@ exports.removeLoadingScreen = removeLoadingScreen;
 
 
 /***/ }),
-/* 98 */,
 /* 99 */,
 /* 100 */,
 /* 101 */,
 /* 102 */,
 /* 103 */,
 /* 104 */,
-/* 105 */
+/* 105 */,
+/* 106 */
 /*!*************************************!*\
   !*** ./src/ui/setSettingsLabels.js ***!
   \*************************************/
@@ -48108,10 +48326,10 @@ exports.removeLoadingScreen = removeLoadingScreen;
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return setSettingsLabels; });
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../engine */ 7);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../engine */ 8);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _numeralFormat__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./numeralFormat */ 12);
+/* harmony import */ var _numeralFormat__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./numeralFormat */ 5);
 
 
 
@@ -48223,7 +48441,7 @@ function setSettingsLabels() {
 
 
 /***/ }),
-/* 106 */
+/* 107 */
 /*!**********************************!*\
   !*** ./src/CharacterOverview.js ***!
   \**********************************/
@@ -48234,7 +48452,7 @@ function setSettingsLabels() {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CharacterOverview; });
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ui/numeralFormat */ 12);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ui/numeralFormat */ 5);
 
 
 
@@ -48297,7 +48515,7 @@ CharacterOverview.prototype.update = function() {
 
 
 /***/ }),
-/* 107 */
+/* 108 */
 /*!******************************!*\
   !*** ./src/JSInterpreter.js ***!
   \******************************/
@@ -52100,7 +52318,7 @@ Interpreter.prototype['createPrimitive'] = function(x) {return x;};
 
 
 /***/ }),
-/* 108 */
+/* 109 */
 /*!***************************************!*\
   !*** ./utils/FactionInvitationBox.js ***!
   \***************************************/
@@ -52111,7 +52329,7 @@ Interpreter.prototype['createPrimitive'] = function(x) {return x;};
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return factionInvitationBoxCreate; });
 /* harmony import */ var _src_Faction__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/Faction */ 15);
-/* harmony import */ var _src_engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../src/engine */ 7);
+/* harmony import */ var _src_engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../src/engine */ 8);
 /* harmony import */ var _src_Player__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../src/Player */ 0);
 /* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./uiHelpers/clearEventListeners */ 18);
 /* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__);
@@ -52163,7 +52381,7 @@ function factionInvitationBoxCreate(faction) {
         } else {
             _src_Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].factionInvitations.splice(i, 1);
         }
-        Object(_src_Faction__WEBPACK_IMPORTED_MODULE_0__[/* joinFaction */ "h"])(faction);
+        Object(_src_Faction__WEBPACK_IMPORTED_MODULE_0__[/* joinFaction */ "g"])(faction);
         factionInvitationBoxClose();
         if (_src_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_4__["routing"].isOn(_src_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_4__["Page"].Factions)) {
             _src_engine__WEBPACK_IMPORTED_MODULE_1__["Engine"].loadFactionsContent();
@@ -52184,7 +52402,7 @@ function factionInvitationBoxCreate(faction) {
 
 
 /***/ }),
-/* 109 */
+/* 110 */
 /*!**********************************!*\
   !*** ./utils/InfiltrationBox.js ***!
   \**********************************/
@@ -52194,15 +52412,15 @@ function factionInvitationBoxCreate(faction) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return infiltrationBoxCreate; });
-/* harmony import */ var _src_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/BitNodeMultipliers */ 9);
+/* harmony import */ var _src_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/BitNodeMultipliers */ 10);
 /* harmony import */ var _src_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_src_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _src_Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../src/Constants */ 1);
 /* harmony import */ var _src_Faction__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../src/Faction */ 15);
 /* harmony import */ var _src_Player__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../src/Player */ 0);
-/* harmony import */ var _DialogBox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./DialogBox */ 8);
+/* harmony import */ var _DialogBox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./DialogBox */ 9);
 /* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./uiHelpers/clearEventListeners */ 18);
 /* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _StringHelperFunctions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./StringHelperFunctions */ 2);
+/* harmony import */ var _StringHelperFunctions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./StringHelperFunctions */ 4);
 /* harmony import */ var _StringHelperFunctions__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_6__);
 
 
@@ -52325,7 +52543,7 @@ function infiltrationBoxCreate(inst) {
 
 
 /***/ }),
-/* 110 */
+/* 111 */
 /*!*****************************!*\
   !*** ./src/Infiltration.js ***!
   \*****************************/
@@ -52335,18 +52553,18 @@ function infiltrationBoxCreate(inst) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return beginInfiltration; });
-/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNodeMultipliers */ 9);
+/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNodeMultipliers */ 10);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Constants */ 1);
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 7);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 8);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 18);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 10);
+/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 11);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _utils_InfiltrationBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/InfiltrationBox */ 109);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 2);
+/* harmony import */ var _utils_InfiltrationBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/InfiltrationBox */ 110);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 4);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_8__);
 
 
@@ -53193,7 +53411,7 @@ function getInfiltrationEscapeChance(inst) {
 
 
 /***/ }),
-/* 111 */
+/* 112 */
 /*!******************************************!*\
   !*** ./utils/uiHelpers/clearSelector.ts ***!
   \******************************************/
@@ -53217,7 +53435,7 @@ exports.clearSelector = clearSelector;
 
 
 /***/ }),
-/* 112 */
+/* 113 */
 /*!*****************************!*\
   !*** ./src/data/servers.ts ***!
   \*****************************/
@@ -54690,7 +54908,7 @@ exports.serverMetadata = [
 
 
 /***/ }),
-/* 113 */
+/* 114 */
 /*!***************************************!*\
   !*** ./utils/helpers/isPowerOfTwo.ts ***!
   \***************************************/
@@ -54720,7 +54938,6 @@ exports.isPowerOfTwo = isPowerOfTwo;
 
 
 /***/ }),
-/* 114 */,
 /* 115 */,
 /* 116 */,
 /* 117 */,
@@ -54735,7 +54952,8 @@ exports.isPowerOfTwo = isPowerOfTwo;
 /* 126 */,
 /* 127 */,
 /* 128 */,
-/* 129 */
+/* 129 */,
+/* 130 */
 /*!******************************!*\
   !*** ./css/bladeburner.scss ***!
   \******************************/
@@ -54745,8 +54963,8 @@ exports.isPowerOfTwo = isPowerOfTwo;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 130 */,
-/* 131 */
+/* 131 */,
+/* 132 */
 /*!************************************!*\
   !*** ./css/companymanagement.scss ***!
   \************************************/
@@ -54756,8 +54974,8 @@ exports.isPowerOfTwo = isPowerOfTwo;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 132 */,
-/* 133 */
+/* 133 */,
+/* 134 */
 /*!***************************!*\
   !*** ./css/missions.scss ***!
   \***************************/
@@ -54767,8 +54985,8 @@ exports.isPowerOfTwo = isPowerOfTwo;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 134 */,
-/* 135 */
+/* 135 */,
+/* 136 */
 /*!*************************!*\
   !*** ./css/loader.scss ***!
   \*************************/
@@ -54778,8 +54996,8 @@ exports.isPowerOfTwo = isPowerOfTwo;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 136 */,
-/* 137 */
+/* 137 */,
+/* 138 */
 /*!**************************************!*\
   !*** ./css/interactivetutorial.scss ***!
   \**************************************/
@@ -54789,8 +55007,8 @@ exports.isPowerOfTwo = isPowerOfTwo;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 138 */,
-/* 139 */
+/* 139 */,
+/* 140 */
 /*!*****************************!*\
   !*** ./css/popupboxes.scss ***!
   \*****************************/
@@ -54800,8 +55018,8 @@ exports.isPowerOfTwo = isPowerOfTwo;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 140 */,
-/* 141 */
+/* 141 */,
+/* 142 */
 /*!*********************************!*\
   !*** ./css/workinprogress.scss ***!
   \*********************************/
@@ -54811,8 +55029,8 @@ exports.isPowerOfTwo = isPowerOfTwo;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 142 */,
-/* 143 */
+/* 143 */,
+/* 144 */
 /*!****************************!*\
   !*** ./css/menupages.scss ***!
   \****************************/
@@ -54822,8 +55040,8 @@ exports.isPowerOfTwo = isPowerOfTwo;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 144 */,
-/* 145 */
+/* 145 */,
+/* 146 */
 /*!***************************!*\
   !*** ./css/terminal.scss ***!
   \***************************/
@@ -54833,8 +55051,8 @@ exports.isPowerOfTwo = isPowerOfTwo;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 146 */,
-/* 147 */
+/* 147 */,
+/* 148 */
 /*!***************************!*\
   !*** ./css/mainmenu.scss ***!
   \***************************/
@@ -54844,8 +55062,8 @@ exports.isPowerOfTwo = isPowerOfTwo;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 148 */,
-/* 149 */
+/* 149 */,
+/* 150 */
 /*!**************************!*\
   !*** ./css/buttons.scss ***!
   \**************************/
@@ -54855,8 +55073,8 @@ exports.isPowerOfTwo = isPowerOfTwo;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 150 */,
-/* 151 */
+/* 151 */,
+/* 152 */
 /*!*************************!*\
   !*** ./css/styles.scss ***!
   \*************************/
@@ -54866,7 +55084,6 @@ exports.isPowerOfTwo = isPowerOfTwo;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 152 */,
 /* 153 */,
 /* 154 */,
 /* 155 */,
@@ -54874,7 +55091,8 @@ exports.isPowerOfTwo = isPowerOfTwo;
 /* 157 */,
 /* 158 */,
 /* 159 */,
-/* 160 */
+/* 160 */,
+/* 161 */
 /*!**********************!*\
   !*** ./netscript.js ***!
   \**********************/
@@ -54976,8 +55194,9 @@ let NetscriptFunctions =
     "installAugmentations|"                                                    +
 
     // TIX API
-    "getStockPrice|getStockPosition|getStockSymbols|buyStock|sellStock|shortStock|sellShort|"  +
-    "placeOrder|cancelOrder|"                                                  +
+    "getStockPrice|getStockPosition|getStockSymbols|buyStock|sellStock|"       +
+    "shortStock|sellShort|"                                                    +
+    "placeOrder|cancelOrder|getStockVolatility|getStockForecast|"              +
 
     // Hacknet Node API
     "hacknet|numNodes|purchaseNode|getPurchaseNodeCost|getNodeStats|"          +
@@ -55708,7 +55927,7 @@ oop.inherits(Mode, TextMode);
     };
 
     this.createWorker = function(session) {
-        var worker = new WorkerClient(["ace"], __webpack_require__(/*! brace/worker/javascript */ 161), "JavaScriptWorker");
+        var worker = new WorkerClient(["ace"], __webpack_require__(/*! brace/worker/javascript */ 162), "JavaScriptWorker");
         worker.attachToDocument(session.getDocument());
 
         worker.on("annotate", function(results) {
@@ -55730,11 +55949,11 @@ exports.Mode = Mode;
 
 
 /***/ }),
-/* 161 */,
 /* 162 */,
 /* 163 */,
 /* 164 */,
-/* 165 */
+/* 165 */,
+/* 166 */
 /*!*****************************************!*\
   !*** ./src/data/codingcontracttypes.ts ***!
   \*****************************************/
@@ -55745,7 +55964,7 @@ exports.Mode = Mode;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const getRandomInt_1 = __webpack_require__(/*! ../../utils/helpers/getRandomInt */ 10);
+const getRandomInt_1 = __webpack_require__(/*! ../../utils/helpers/getRandomInt */ 11);
 /* Helper functions for Coding Contract implementations */
 function removeBracketsFromArrayString(str) {
     let strCpy = str;
@@ -56204,7 +56423,6 @@ exports.codingContractTypesMetadata = [
 
 
 /***/ }),
-/* 166 */,
 /* 167 */,
 /* 168 */,
 /* 169 */,
@@ -56240,7 +56458,8 @@ exports.codingContractTypesMetadata = [
 /* 199 */,
 /* 200 */,
 /* 201 */,
-/* 202 */
+/* 202 */,
+/* 203 */
 /*!**********************!*\
   !*** util (ignored) ***!
   \**********************/
@@ -56251,7 +56470,7 @@ exports.codingContractTypesMetadata = [
 /* (ignored) */
 
 /***/ }),
-/* 203 */
+/* 204 */
 /*!**********************!*\
   !*** util (ignored) ***!
   \**********************/
