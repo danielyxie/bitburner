@@ -48,7 +48,7 @@ let CONSTANTS = {
     /* Netscript Constants */
     //RAM Costs for different commands
     ScriptBaseRamCost:              1.6,
-    ScriptDomRamCost:               100,
+    ScriptDomRamCost:               25,
     ScriptWhileRamCost:             0,
     ScriptForRamCost:               0,
     ScriptIfRamCost:                0,
@@ -90,6 +90,8 @@ let CONSTANTS = {
     ScriptSingularityFn1RamCost:    1,
     ScriptSingularityFn2RamCost:    2,
     ScriptSingularityFn3RamCost:    3,
+
+    ScriptSingularityFnRamMult:     2, // Multiplier for RAM cost outside of BN-4
 
     ScriptBladeburnerApiBaseRamCost:    4,
 
@@ -500,6 +502,7 @@ let CONSTANTS = {
     LatestUpdate:
     `
      v0.41.0
+     * WARNING: In NetscriptJS, defining a function called print() is no longer possible
      * Gang Mechanic Changes (BitNode-2):
      *** Added new 'ascension' mechanic for Gang Members
      *** The first three gang members are now 'free' (can be recruited instantly)
@@ -508,9 +511,18 @@ let CONSTANTS = {
      *** Added a new category of upgrades for Gang Members: Augmentations
      *** Non-Augmentation Gang member upgrades are now significantly weaker
      *** Reputation for your Gang faction can no longer be gained through Infiltration
+     * RAM Cost of accessing the global document object lowered from 100 GB to 25 GB
+     * RAM Cost to use Singularity Functions outside of BitNode-4 lowered by 75%. They now only cost twice as much as they do in BitNode-4
      * b1t_flum3.exe now takes significantly less time to create
+     * Improved number formatting for Player 'work' actions (including crimes, etc.). These numbers should also adhere to locale settings now (by Kline-)
+     * Bug Fix: Calling print() in NetscriptJS no longer brings up the print dialog
      * Bug Fix: Fixed a bug that sometimes caused a blank black screen when destroying/resetting/switching BitNodes
      * Bug Fix: Netscript calls that throw errors will now no longer cause the 'concurrent calls' error if they are caught in the script. i.e. try/catch should now work properly in scripts
+     * Bug Fix: Fixed a bug where sometimes the NeuroFlux Governor Augmentation level would be incorrectly calculated when the game was loaded
+     * Bug Fix: Fixed a bug where calling the scp() Netscript function with invalid hostname/ips would throw an unclear error message
+     * Bug Fix: Bladeburner API function getActionCountRemaining() should now work properly for BlackOps
+     * Bug Fix: Black Ops can no longer be attempted out-of-order or without the required rank via Bladeburner API
+     * RAM cost for basic Netscript functions added to documentation (by CBJamo)
      `
 
 }

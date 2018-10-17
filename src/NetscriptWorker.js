@@ -14,7 +14,6 @@ import {NetscriptPort}                      from "./NetscriptPort";
 import {AllServers}                         from "./Server";
 import {Settings}                           from "./Settings";
 
-//TODO Maybe escodegen might be better?
 import {generate}                           from 'escodegen';
 
 import {parse, Node}                        from "../utils/acorn";

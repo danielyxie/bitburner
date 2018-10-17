@@ -94,7 +94,8 @@ a:visited {
 /* Tool tips (when hovering over an element */
 .tooltip {
   display: inline-block;
-  position: relative; }
+  position: relative;
+  /* Positioned to left of element rather than right */ }
   .tooltip .tooltiptext {
     visibility: hidden;
     width: 300px;
@@ -105,6 +106,24 @@ a:visited {
     padding: 4px;
     left: 101%;
     pointer-events: none;
+    position: absolute;
+    z-index: 99; }
+  .tooltip .tooltiptextleft {
+    visibility: hidden;
+    width: 300px;
+    background-color: var(--my-background-color);
+    border: 2px solid var(--my-highlight-color);
+    color: #fff;
+    text-align: center;
+    padding: 4px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-100%, -100%);
+    /* Backwards compatibility */
+    -webkit-transform: translate(-100%, -100%);
+    -moz-transform: translate(-100%, -100%);
+    -o-transform: translate(-100%, -100%);
+    -ms-transform: translate(-100%, -100%);
     position: absolute;
     z-index: 99; }
 
@@ -122,21 +141,6 @@ a:visited {
   position: absolute;
   z-index: 99; }
 
-/* Similar to a normal tooltip except its positioned on the left of the element
-   rather than the right to avoid exceeding the elements normal width */
-.tooltip .tooltiptextleft {
-  visibility: hidden;
-  width: 300px;
-  background-color: var(--my-background-color);
-  border: 2px solid var(--my-highlight-color);
-  color: #fff;
-  text-align: center;
-  padding: 4px;
-  left: 40%;
-  bottom: -10%;
-  position: absolute;
-  z-index: 99; }
-
 .tooltip:hover .tooltiptext,
 .tooltip:hover .tooltiptexthigh,
 .tooltip:hover .tooltiptextleft {
@@ -144,14 +148,14 @@ a:visited {
 
 /* help tip. Question mark that opens popup with info/details */
 .help-tip {
-  content: '?';
-  padding: 1px;
-  margin-top: 5px;
-  margin-left: 3px;
-  color: #fff;
+  background-color: black;
   border: 1px solid #fff;
   border-radius: 5px;
-  display: inline-block; }
+  color: #fff;
+  content: '?';
+  display: inline-block;
+  margin-left: 3px;
+  padding: 1px; }
 
 .help-tip-big {
   content: '?';
@@ -419,7 +423,7 @@ a:visited {
   .accordion-header:after {
     content: '\2795';
     /* "plus" sign (+) */
-    font-size: 13px;
+    font-size: 14px;
     float: right;
     color: transparent;
     text-shadow: 0 0 0 #fff;
@@ -472,6 +476,9 @@ a:visited {
 
 .charisma-purple {
   color: #a671d1; }
+
+.smallfont {
+  font-size: 13px; }
 
 /* COLORS */
 /* Attributes */
@@ -563,8 +570,9 @@ button {
   font-weight: bold;
   margin: 4px;
   padding: 4px;
-  background-color: #000; }
-  .accordion-button:hover, .accordion-button:focus {
+  background-color: #000;
+  /* TODO focus selector? */ }
+  .accordion-button:hover, .accordion-button:active {
     color: #fff;
     text-decoration: none;
     cursor: pointer; }
@@ -2041,6 +2049,8 @@ button {
 #gang-container {
   position: fixed;
   padding: 6px; }
+  #gang-container p, #gang-container pre {
+    font-size: 15px; }
   #gang-container select {
     background-color: black;
     color: white; }
@@ -2053,6 +2063,20 @@ button {
   display: inline;
   float: left;
   width: 30%; }
+
+/**
+ * Showing owned upgrades in the Equipment Box
+ */
+.gang-owned-upgrades-div {
+  display: inline-block;
+  margin-left: 6px;
+  width: 75%; }
+
+.gang-owned-upgrade {
+  border: 1px solid white;
+  font-size: 12px;
+  margin: 1px;
+  padding: 1px; }
 
 
 /*# sourceMappingURL=engine.css.map*/

@@ -13,6 +13,7 @@ hack
 
     :param string hostname/ip: IP or hostname of the target server to hack
     :returns: The amount of money stolen if the hack is successful, and zero otherwise
+    :RAM cost: 0.1 GB
 
     Function that is used to try and hack servers to steal money and gain hacking experience. The runtime for this command depends
     on your hacking level and the target server's security level. In order to hack a server you must first gain root access
@@ -35,6 +36,7 @@ grow
 
     :param string hostname/ip: IP or hostname of the target server to grow
     :returns: The number by which the money on the server was multiplied for the growth
+    :RAM cost: 0.15 GB
 
     Use your hacking skills to increase the amount of money available on a server. The runtime for this command depends on your hacking
     level and the target server's security level. When grow() completes, the money available on a target server will be increased by a
@@ -57,6 +59,7 @@ weaken
     :param string hostname.ip: IP or hostname of the target server to weaken
     :returns: The amount by which the target server's security level was decreased. This is equivalent to 0.05 multiplied
               by the number of script threads
+    :RAM cost: 0.15 GB
 
     Use your hacking skills to attack a server's security, lowering the server's security level. The runtime for this command
     depends on your hacking level and the target server's security level. This function lowers the security level of the target
@@ -75,6 +78,7 @@ sleep
 .. js:function:: sleep(n)
 
     :param number n: Number of milliseconds to sleep
+    :RAM cost: 0 GB
 
     Suspends the script for n milliseconds.
 
@@ -84,6 +88,7 @@ print
 .. js:function:: print(x)
 
     :param x: Value to be printed
+    :RAM cost: 0 GB
 
     Prints a value or a variable to the script's logs.
 
@@ -93,6 +98,7 @@ tprint
 .. js:function:: tprint(x)
 
     :param x: Value to be printed
+    :RAM cost: 0 GB
 
     Prints a value or a variable to the Terminal
 
@@ -100,6 +106,8 @@ clearLog
 ^^^^^^^^
 
 .. js:function:: clearLog()
+
+    :RAM cost: 0 GB
 
     Clears the script's logs
 
@@ -109,6 +117,7 @@ disableLog
 .. js:function:: disableLog(fn)
 
     :param string fn: Name of function for which to disable logging
+    :RAM cost: 0 GB
 
     Disables logging for the given function. Logging can be disabled for
     all functions by passing 'ALL' as the argument.
@@ -125,6 +134,7 @@ enableLog
 .. js:function:: enableLog(fn)
 
     :param string fn: Name of function for which to enable logging
+    :RAM cost: 0 GB
 
     Re-enables logging for the given function. If 'ALL' is passed into this function
     as an argument, then it will revert the effects of disableLog('ALL')
@@ -135,6 +145,7 @@ isLogEnabled
 .. js:function:: isLogEnabled(fn)
 
     :param string fn: Name of function to check
+    :RAM cost: 0 GB
 
     Returns a boolean indicating whether or not logging is enabled for that
     function (or 'ALL')
@@ -143,6 +154,8 @@ getScriptLogs
 ^^^^^^^^^^^^^
 
 .. js:function:: getScriptLogs()
+
+    :RAM cost: 0 GB
 
     Returns the script's logs. The logs are returned as an array, where each
     line is an element in the array. The most recently logged line is at the
@@ -158,6 +171,7 @@ scan
 
     :param string hostname/ip: IP or hostname of the server to scan
     :param boolean: Optional boolean specifying whether the function should output hostnames (if true) or IP addresses (if false)
+    :RAM cost: 0.2 GB
 
     Returns an array containing the hostnames or IPs of all servers that are one node way from the specified target server. The
     hostnames/IPs in the returned array are strings.
@@ -168,6 +182,7 @@ nuke
 .. js:function:: nuke(hostname/ip)
 
     :param string hostname/ip: IP or hostname of the target server
+    :RAM cost: 0 GB
 
     Runs the NUKE.exe program on the target server. NUKE.exe must exist on your home computer.
 
@@ -181,6 +196,7 @@ brutessh
 .. js:function:: brutessh(hostname/ip)
 
     :param string hostname/ip: IP or hostname of the target server
+    :RAM cost: 0 GB
 
     Runs the BruteSSH.exe program on the target server. BruteSSH.exe must exist on your home computer.
 
@@ -194,6 +210,7 @@ ftpcrack
 .. js:function:: ftpcrack(hostname/ip)
 
     :param string hostname/ip: IP or hostname of the target server
+    :RAM cost: 0 GB
 
     Runs the FTPCrack.exe program on the target server. FTPCrack.exe must exist on your home computer.
 
@@ -207,6 +224,7 @@ relaysmtp
 .. js:function:: relaysmtp(hostname/ip)
 
     :param string hostname/ip: IP or hostname of the target server
+    :RAM cost: 0 GB
 
     Runs the relaySMTP.exe program on the target server. relaySMTP.exe must exist on your home computer.
 
@@ -220,6 +238,7 @@ httpworm
 .. js:function:: httpworm(hostname/ip)
 
     :param string hostname/ip: IP or hostname of the target server
+    :RAM cost: 0 GB
 
     Runs the HTTPWorm.exe program on the target server. HTTPWorm.exe must exist on your home computer.
 
@@ -233,6 +252,7 @@ sqlinject
 .. js:function:: sqlinject(hostname/ip)
 
     :param string hostname/ip: IP or hostname of the target server
+    :RAM cost: 0 GB
 
     Runs the SQLInject.exe program on the target server. SQLInject.exe must exist on your home computer.
 
@@ -250,6 +270,7 @@ run
     :param args...:
         Additional arguments to pass into the new script that is being run. Note that if any arguments are being
         passed into the new script, then the second argument *numThreads* must be filled in with a value.
+    :RAM cost: 1 GB
 
     Run a script as a separate process. This function can only be used to run scripts located on the current server (the server
     running the script that calls this function).
@@ -282,6 +303,7 @@ exec
     :param args...:
         Additional arguments to pass into the new script that is being run. Note that if any arguments are being
         passed into the new script, then the third argument *numThreads* must be filled in with a value.
+    :RAM cost: 1.3 GB
 
     Run a script as a separate process on a specified server. This is similar to the *run* function except
     that it can be used to run a script on any server, instead of just the current server.
@@ -311,6 +333,7 @@ spawn
     :param number numThreads: Number of threads to spawn new script with. Will be rounded to nearest integer
     :param args...:
         Additional arguments to pass into the new script that is being run.
+    :RAM cost: 2 GB
 
     Terminates the current script, and then after a delay of about 20 seconds it will execute the newly-specified script.
     The purpose of this function is to execute a new script without being constrained by the RAM usage of the current one.
@@ -330,6 +353,7 @@ kill
     :param string script: Filename of the script to kill
     :param string hostname/ip: IP or hostname of the server on which to kill the script
     :param args...: Arguments to identify which script to kill
+    :RAM cost: 0.5 GB
 
     Kills the script on the target server specified by the script's name and arguments. Remember that scripts
     are uniquely identified by both their name and arguments. For example, if *foo.script* is run with the argument 1, then this
@@ -357,6 +381,7 @@ killall
 .. js:function:: killall(hostname/ip)
 
     :param string hostname/ip: IP or hostname of the server on which to kill all scripts
+    :RAM cost: 0.5 GB
 
     Kills all running scripts on the specified server. This function returns true if any scripts were killed, and
     false otherwise. In other words, it will return true if there are any scripts running on the target server.
@@ -366,6 +391,8 @@ exit
 ^^^^
 
 .. js:function:: exit()
+
+    :RAM cost: 0 GB
 
     Terminates the current script immediately
 
@@ -379,6 +406,7 @@ scp
         Hostname or IP of the source server, which is the server from which the file will be copied.
         This argument is optional and if it's omitted the source will be the current server.
     :param string destination: Hostname or IP of the destination server, which is the server to which the file will be copied.
+    :RAM cost: 0.6 GB
 
     Copies a script or literature (.lit) file(s) to another server. The *files* argument can be either a string specifying a
     single file to copy, or an array of strings specifying multiple files to copy.
@@ -405,6 +433,7 @@ ls
 
     :param string hostname/ip: Hostname or IP of the target server
     :param string grep: a substring to search for in the filename
+    :RAM cost: 0 GB
 
     Returns an array with the filenames of all files on the specified server (as strings). The returned array
     is sorted in alphabetic order
@@ -416,6 +445,7 @@ ps
 
     :param string ip: Hostname or IP address of the target server.
                       If not specified, it will be the current server's IP by default
+    :RAM cost: 0 GB
 
     Returns an array with general information about all scripts running on the specified
     target server. The information for each server is given in an object with
@@ -443,6 +473,7 @@ hasRootAccess
 .. js:function:: hasRootAccess(hostname/ip)
 
     :param string hostname/ip: Hostname or IP of the target server
+    :RAM cost: 0.05 GB
 
     Returns a boolean indicating whether or not the player has root access to the specified target server.
 
@@ -457,6 +488,8 @@ getHostname
 
 .. js:function:: getHostname()
 
+    :RAM cost: 0.05 GB
+
     Returns a string with the hostname of the server that the script is running on
 
 getHackingLevel
@@ -464,12 +497,16 @@ getHackingLevel
 
 .. js:function:: getHackingLevel()
 
+    :RAM cost: 0.05 GB
+
     Returns the player's current hacking level
 
 getHackingMultipliers
 ^^^^^^^^^^^^^^^^^^^^^
 
 .. js:function:: getHackingMultipliers()
+
+    :RAM cost: 4 GB
 
     Returns an object containing the Player's hacking related multipliers. These multipliers are
     returned in fractional forms, not percentages (e.g. 1.5 instead of 150%). The object has the following structure::
@@ -491,6 +528,8 @@ getHacknetMultipliers
 ^^^^^^^^^^^^^^^^^^^^^
 
 .. js:function:: getHacknetMultipliers()
+
+    :RAM cost: 4 GB
 
     Returns an object containing the Player's hacknet related multipliers. These multipliers are
     returned in fractional forms, not percentages (e.g. 1.5 instead of 150%). The object has the following structure::
@@ -517,6 +556,7 @@ getServerMoneyAvailable
 .. js:function:: getServerMoneyAvailable(hostname/ip)
 
     :param string hostname/ip: Hostname or IP of target server
+    :RAM cost: 0.1 GB
 
     Returns the amount of money available on a server. **Running this function on the home computer will return
     the player's money.**
@@ -532,6 +572,7 @@ getServerMaxMoney
 .. js:function:: getServerMaxMoney(hostname/ip)
 
     :param string hostname/ip: Hostname or IP of target server
+    :RAM cost: 0.1 GB
 
     Returns the maximum amount of money that can be available on a server
 
@@ -541,6 +582,7 @@ getServerGrowth
 .. js:function:: getServerGrowth(hostname/ip)
 
     :param string hostname/ip: Hostname or IP of target server
+    :RAM cost: 0.1 GB
 
     Returns the server's instrinsic "growth parameter". This growth parameter is a number
     between 1 and 100 that represents how quickly the server's money grows. This parameter affects the
@@ -553,6 +595,7 @@ getServerSecurityLevel
 .. js:function:: getServerSecurityLevel(hostname/ip)
 
     :param string hostname/ip: Hostname or IP of target server
+    :RAM cost: 0.1 GB
 
     Returns the security level of the target server. A server's security level is denoted by a number, typically
     between 1 and 100 (but it can go above 100).
@@ -563,6 +606,7 @@ getServerBaseSecurityLevel
 .. js:function:: getServerBaseSecurityLevel(hostname/ip)
 
     :param string hostname/ip: Hostname or IP of target server
+    :RAM cost: 0.1 GB
 
     Returns the base security level of the target server. This is the security level that the server starts out with.
     This is different than *getServerSecurityLevel()* because *getServerSecurityLevel()* returns the current
@@ -575,6 +619,7 @@ getServerMinSecurityLevel
 .. js:function:: getServerMinSecurityLevel(hostname/ip)
 
     :param string hostname/ip: Hostname or IP of target server
+    :RAM cost: 0.1 GB
 
     Returns the minimum security level of the target server
 
@@ -584,6 +629,7 @@ getServerRequiredHackingLevel
 .. js:function:: getServerRequiredHackingLevel(hostname/ip)
 
     :param string hostname/ip: Hostname or IP of target server
+    :RAM cost: 0.1 GB
 
     Returns the required hacking level of the target server
 
@@ -593,6 +639,7 @@ getServerNumPortsRequired
 .. js:function:: getServerNumPortsRequired(hostname/ip)
 
     :param string hostname/ip: Hostname or IP of target server
+    :RAM cost: 0.1 GB
 
     Returns the number of open ports required to successfully run NUKE.exe on the specified server.
 
@@ -602,6 +649,7 @@ getServerRam
 .. js:function:: getServerRam(hostname/ip)
 
     :param string hostname/ip: Hostname or IP of target server
+    :RAM cost: 0.1 GB
 
     Returns an array with two elements that gives information about a server's memory (RAM). The first
     element in the array is the amount of RAM that the server has total (in GB). The second element in
@@ -619,6 +667,7 @@ serverExists
 .. js:function:: serverExists(hostname/ip)
 
     :param string hostname/ip: Hostname or IP of target server
+    :RAM cost: 0.1 GB
 
     Returns a boolean denoting whether or not the specified server exists
 
@@ -631,6 +680,7 @@ fileExists
     :param string hostname/ip:
         Hostname or IP of target server. This is optional. If it is not specified then the
         function will use the current server as the target server
+    :RAM cost: 0.1 GB
 
     Returns a boolean indicating whether the specified file exists on the target server. The filename
     for scripts is case-sensitive, but for other types of files it is not. For example, *fileExists("brutessh.exe")*
@@ -655,6 +705,7 @@ isRunning
     :param string filename: Filename of script to check. This is case-sensitive.
     :param string hostname/ip: Hostname or IP of target server
     :param args...: Arguments to specify/identify which scripts to search for
+    :RAM cost: 0.1 GB
 
     Returns a boolean indicating whether the specified script is running on the target server. Remember that a script is
     uniquely identified by both its name and its arguments.
@@ -681,6 +732,8 @@ getNextHacknetNodeCost
 
 .. js:function:: getNextHacknetNodeCost()
 
+    :RAM cost: 0 GB
+
     Deprecated (no longer usable). See :doc:`netscripthacknetnodeapi`
 
 purchaseHacknetNode
@@ -688,12 +741,16 @@ purchaseHacknetNode
 
 .. js:function:: purchaseHacknetNode()
 
+    :RAM cost: 0 GB
+
     Deprecated (no longer usable). See :doc:`netscripthacknetnodeapi`
 
 getPurchasedServerCost
 ^^^^^^^^^^^^^^^^^^^^^^
 
 .. js:function:: getPurchasedServerCost(ram)
+
+    :RAM cost: 0.25 GB
 
     :param number ram: Amount of RAM of a potential purchased server. Must be a power of 2 (2, 4, 8, 16, etc.). Maximum value of 1048576 (2^20)
 
@@ -712,6 +769,7 @@ purchaseServer
 
     :param string hostname: Hostname of the purchased server
     :param number ram: Amount of RAM of the purchased server. Must be a power of 2 (2, 4, 8, 16, etc.). Maximum value of 1048576 (2^20)
+    :RAM cost: 2.25 GB
 
     Purchased a server with the specified hostname and amount of RAM.
 
@@ -741,6 +799,7 @@ deleteServer
 .. js:function:: deleteServer(hostname)
 
     :param string hostname: Hostname of the server to delete
+    :RAM cost: 2.25 GB
 
     Deletes one of your purchased servers, which is specified by its hostname.
 
@@ -757,6 +816,7 @@ getPurchasedServers
     :param boolean hostname:
         Specifies whether hostnames or IP addresses should be returned. If it's true then hostnames will be returned, and if false
         then IPs will be returned. If this argument is omitted then it is true by default
+    :RAM cost: 2.25 GB
 
     Returns an array with either the hostnames or IPs of all of the servers you have purchased.
 
@@ -765,12 +825,16 @@ getPurchasedServerLimit
 
 .. js:function:: getPurchasedServerLimit()
 
+    :RAM cost: 0.05 GB
+
     Returns the maximum number of servers you can purchase
 
 getPurchasedServerMaxRam
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. js:function:: getPurchasedServerMaxRam()
+
+    :RAM cost: 0.05 GB
 
     Returns the maximum RAM that a purchased server can have
 
@@ -782,6 +846,7 @@ write
     :param string/number port/fn: Port or text file/script that will be written to
     :param string data: Data to write
     :param string mode: Defines the write mode. Only valid when writing to text files or scripts.
+    :RAM cost: 1 GB
 
     This function can be used to either write data to a port, a text file (.txt), or a script (.script, .js, .ns)
 
@@ -802,6 +867,7 @@ tryWrite
     :param number port: Port to be written to
     :param string data: Data to try to write
     :returns: True if the data is successfully written to the port, and false otherwise
+    :RAM cost: 1 GB
 
     Attempts to write data to the specified Netscript Port. If the port is full, the data will
     not be written. Otherwise, the data will be written normally
@@ -812,6 +878,7 @@ read
 .. js:function:: read(port/fn)
 
     :param string/number port/fn: Port or text file to read from
+    :RAM cost: 1 GB
 
     This function is used to read data from a port, a text file (.txt), or a script (.script, .js, .ns)
 
@@ -828,6 +895,7 @@ peek
 .. js:function:: peek(port)
 
     :param number port: Port to peek. Must be an integer between 1 and 20
+    :RAM cost: 1 GB
 
     This function is used to peek at the data from a port. It returns the first element in the specified port
     without removing that element. If the port is empty, the string "NULL PORT DATA" will be returned.
@@ -840,6 +908,7 @@ clear
 .. js:function:: clear(port/fn)
 
     :param string/number port/fn: Port or text file to clear
+    :RAM cost: 1 GB
 
     This function is used to clear data in a `Netscript Ports <http://bitburner.wikia.com/wiki/Netscript_Ports>`_ or a text file.
 
@@ -853,6 +922,7 @@ getPortHandle
 .. js:function:: getPortHandle(port)
 
     :param number port: Port number
+    :RAM cost: 10 GB
 
     Get a handle to a Netscript Port. See more details here: :ref:`netscript_ports`
 
@@ -865,6 +935,7 @@ rm
 
     :param string fn: Filename of file to remove. Must include the extension
     :returns: True if it successfully deletes the file, and false otherwise
+    :RAM cost: 1 GB
 
     Removes the specified file from the current server. This function works for every file type except message (.msg) files.
 
@@ -875,6 +946,7 @@ scriptRunning
 
     :param string scriptname: Filename of script to check. This is case-sensitive.
     :param string hostname/ip: Hostname or IP of target server
+    :RAM cost: 1 GB
 
     Returns a boolean indicating whether any instance of the specified script is running on the target server, regardless of
     its arguments.
@@ -899,6 +971,7 @@ scriptKill
 
     :param string scriptname: Filename of script to kill. This is case-sensitive.
     :param string hostname/ip: Hostname or IP of target server
+    :RAM cost: 1 GB
 
     Kills all scripts with the specified filename on the target server specified by *hostname/ip*, regardless of arguments. Returns
     true if one or more scripts were successfully killed, and false if none were.
@@ -907,6 +980,8 @@ getScriptName
 ^^^^^^^^^^^^^
 
 .. js:function:: getScriptName()
+
+    :RAM cost: 0 GB
 
     Returns the current script name
 
@@ -917,6 +992,7 @@ getScriptRam
 
     :param string scriptname: Filename of script. This is case-sensitive.
     :param string hostname/ip: Hostname or IP of target server the script is located on. This is optional, If it is not specified then the function will se the current server as the target server.
+    :RAM cost: 0.1 GB
 
     Returns the amount of RAM required to run the specified script on the target server. Returns
     0 if the script does not exist.
@@ -928,6 +1004,7 @@ getHackTime
 
     :param string hostname/ip: Hostname or IP of target server
     :param number hackLvl: Optional hacking level for the calculation. Defaults to player's current hacking level
+    :RAM cost: 0.05 GB
 
     Returns the amount of time in seconds it takes to execute the *hack()* Netscript function on the target server.
 
@@ -941,6 +1018,7 @@ getGrowTime
 
     :param string hostname/ip: Hostname or IP of target server
     :param number hackLvl: Optional hacking level for the calculation. Defaults to player's current hacking level
+    :RAM cost: 0.05 GB
 
     Returns the amount of time in seconds it takes to execute the *grow()* Netscript function on the target server.
 
@@ -954,6 +1032,7 @@ getWeakenTime
 
     :param string hostname/ip: Hostname or IP of target server
     :param number hackLvl: Optional hacking level for the calculation. Defaults to player's current hacking level
+    :RAM cost: 0.05 GB
 
     Returns the amount of time in seconds it takes to execute the *weaken()* Netscript function on the target server.
 
@@ -968,6 +1047,7 @@ getScriptIncome
     :param string scriptname: Filename of script
     :param string hostname/ip: Server on which script is running
     :param args...: Arguments that the script is running with
+    :RAM cost: 0.1 GB
 
     Returns the amount of income the specified script generates while online (when the game is open, does not apply for offline income).
     Remember that a script is uniquely identified by both its name and its arguments. So for example if you ran a script with the arguments
@@ -986,6 +1066,7 @@ getScriptExpGain
     :param string scriptname: Filename of script
     :param string hostname/ip: Server on which script is running
     :param args...: Arguments that the script is running with
+    :RAM cost: 0.1 GB
 
     Returns the amount of hacking experience the specified script generates while online (when the game is open, does not apply for offline experience gains).
     Remember that a script is uniquely identified by both its name and its arguments.
@@ -997,6 +1078,8 @@ getTimeSinceLastAug
 
 .. js:function:: getTimeSinceLastAug()
 
+    :RAM cost: 0.05 GB
+
     Returns the amount of time in milliseconds that have passed since you last installed Augmentations
 
 sprintf
@@ -1004,12 +1087,16 @@ sprintf
 
 .. js:function:: sprintf()
 
+    :RAM cost: 0 GB
+
     See `this link <https://github.com/alexei/sprintf.js>`_ for details.
 
 vsprintf
 ^^^^^^^^
 
 .. js:function:: vsprintf()
+
+    :RAM cost: 0 GB
 
     See `this link <https://github.com/alexei/sprintf.js>`_ for details.
 
@@ -1019,6 +1106,7 @@ prompt
 .. js:function:: prompt(txt)
 
     :param string txt: Text to appear in the prompt dialog box
+    :RAM cost: 0 GB
 
     Prompts the player with a dialog box with two options: "Yes" and "No". This function will return true if the player click "Yes" and
     false if the player clicks "No". The script's execution is halted until the player selects one of the options.
@@ -1031,6 +1119,7 @@ wget
     :param string url: URL to pull data from
     :param string target: Filename to write data to. Must be script or text file
     :param string ip: Optional hostname/ip of server for target file.
+    :RAM cost: 0 GB
 
     Retrieves data from a URL and downloads it to a file on the specified server. The data can only
     be downloaded to a script (.script, .ns, .js) or a text file (.txt). If the file already exists,
@@ -1056,5 +1145,7 @@ wget
 
 getFavorToDonate
 ^^^^^^^^^^^^^^^^
+
+    :RAM cost: 0.1 GB
 
     Returns the amount of Faction favor required to be able to donate to a faction.

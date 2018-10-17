@@ -882,12 +882,12 @@ function NetscriptFunctions(workerScript) {
                 }
                 destServer = getServer(ip2);
                 if (destServer == null) {
-                    throw makeRuntimeRejectMsg(workerScript, "ERROR: Invalid hostname/ip passed into scp() command: " + ip);
+                    throw makeRuntimeRejectMsg(workerScript, `ERROR: Invalid hostname/ip passed into scp() command: ${ip2}`);
                 }
 
                 currServ = getServer(ip1);
                 if (currServ == null) {
-                    throw makeRuntimeRejectMsg(workerScript, "Could not find server ip for this script. This is a bug please contact game developer");
+                    throw makeRuntimeRejectMsg(workerScript, `ERROR: Invalid hostname/ip passed into scp() command: ${ip1}`);
                 }
             } else if (arguments.length === 2) {    //scriptname, destination
                 if (scriptname === undefined || ip1 === undefined) {
@@ -895,7 +895,7 @@ function NetscriptFunctions(workerScript) {
                 }
                 destServer = getServer(ip1);
                 if (destServer == null) {
-                    throw makeRuntimeRejectMsg(workerScript, "ERROR: Invalid hostname/ip passed into scp() command: " + ip);
+                    throw makeRuntimeRejectMsg(workerScript, `ERROR: Invalid hostname/ip passed into scp() command: ${ip1}`);
                 }
 
                 currServ = getServer(workerScript.serverIp);
@@ -2313,7 +2313,7 @@ function NetscriptFunctions(workerScript) {
         /* Singularity Functions */
         universityCourse : function(universityName, className) {
             var ramCost = CONSTANTS.ScriptSingularityFn1RamCost;
-            if (Player.bitNodeN !== 4) {ramCost *= 8;}
+            if (Player.bitNodeN !== 4) {ramCost *= CONSTANTS.ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("universityCourse", ramCost);
             }
@@ -2402,7 +2402,7 @@ function NetscriptFunctions(workerScript) {
 
         gymWorkout : function(gymName, stat) {
             var ramCost = CONSTANTS.ScriptSingularityFn1RamCost;
-            if (Player.bitNodeN !== 4) {ramCost *= 8;}
+            if (Player.bitNodeN !== 4) {ramCost *= CONSTANTS.ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("gymWorkout", ramCost);
             }
@@ -2504,7 +2504,7 @@ function NetscriptFunctions(workerScript) {
 
         travelToCity(cityname) {
             var ramCost = CONSTANTS.ScriptSingularityFn1RamCost;
-            if (Player.bitNodeN !== 4) {ramCost *= 8;}
+            if (Player.bitNodeN !== 4) {ramCost *= CONSTANTS.ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("travelToCity", ramCost);
             }
@@ -2541,7 +2541,7 @@ function NetscriptFunctions(workerScript) {
 
         purchaseTor() {
             var ramCost = CONSTANTS.ScriptSingularityFn1RamCost;
-            if (Player.bitNodeN !== 4) {ramCost *= 8;}
+            if (Player.bitNodeN !== 4) {ramCost *= CONSTANTS.ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("purchaseTor", ramCost);
             }
@@ -2585,7 +2585,7 @@ function NetscriptFunctions(workerScript) {
         },
         purchaseProgram(programName) {
             var ramCost = CONSTANTS.ScriptSingularityFn1RamCost;
-            if (Player.bitNodeN !== 4) {ramCost *= 8;}
+            if (Player.bitNodeN !== 4) {ramCost *= CONSTANTS.ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("purchaseProgram", ramCost);
             }
@@ -2637,7 +2637,7 @@ function NetscriptFunctions(workerScript) {
         },
         getStats : function() {
             var ramCost = CONSTANTS.ScriptSingularityFn1RamCost / 4;
-            if (Player.bitNodeN !== 4) {ramCost *= 8;}
+            if (Player.bitNodeN !== 4) {ramCost *= CONSTANTS.ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getStats", ramCost);
             }
@@ -2661,7 +2661,7 @@ function NetscriptFunctions(workerScript) {
         },
         getCharacterInformation : function() {
             var ramCost = CONSTANTS.ScriptSingularityFn1RamCost / 4;
-            if (Player.bitNodeN !== 4) {ramCost *= 8;}
+            if (Player.bitNodeN !== 4) {ramCost *= CONSTANTS.ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getCharacterInformation", ramCost);
             }
@@ -2697,7 +2697,7 @@ function NetscriptFunctions(workerScript) {
         },
         isBusy : function() {
             var ramCost = CONSTANTS.ScriptSingularityFn1RamCost / 4;
-            if (Player.bitNodeN !== 4) {ramCost *= 8;}
+            if (Player.bitNodeN !== 4) {ramCost *= CONSTANTS.ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("isBusy", ramCost);
             }
@@ -2712,7 +2712,7 @@ function NetscriptFunctions(workerScript) {
         },
         stopAction : function() {
             var ramCost = CONSTANTS.ScriptSingularityFn1RamCost / 2;
-            if (Player.bitNodeN !== 4) {ramCost *= 8;}
+            if (Player.bitNodeN !== 4) {ramCost *= CONSTANTS.ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("stopAction", ramCost);
             }
@@ -2734,7 +2734,7 @@ function NetscriptFunctions(workerScript) {
         },
         upgradeHomeRam : function() {
             var ramCost = CONSTANTS.ScriptSingularityFn2RamCost;
-            if (Player.bitNodeN !== 4) {ramCost *= 8;}
+            if (Player.bitNodeN !== 4) {ramCost *= CONSTANTS.ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("upgradeHomeRam", ramCost);
             }
@@ -2766,7 +2766,7 @@ function NetscriptFunctions(workerScript) {
         },
         getUpgradeHomeRamCost : function() {
             var ramCost = CONSTANTS.ScriptSingularityFn2RamCost / 2;
-            if (Player.bitNodeN !== 4) {ramCost *= 8;}
+            if (Player.bitNodeN !== 4) {ramCost *= CONSTANTS.ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getUpgradeHomeRamCost", ramCost);
             }
@@ -2782,7 +2782,7 @@ function NetscriptFunctions(workerScript) {
         },
         workForCompany : function() {
             var ramCost = CONSTANTS.ScriptSingularityFn2RamCost;
-            if (Player.bitNodeN !== 4) {ramCost *= 8;}
+            if (Player.bitNodeN !== 4) {ramCost *= CONSTANTS.ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("workForCompany", ramCost);
             }
@@ -2823,7 +2823,7 @@ function NetscriptFunctions(workerScript) {
         },
         applyToCompany : function(companyName, field) {
             var ramCost = CONSTANTS.ScriptSingularityFn2RamCost;
-            if (Player.bitNodeN !== 4) {ramCost *= 8;}
+            if (Player.bitNodeN !== 4) {ramCost *= CONSTANTS.ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("applyToCompany", ramCost);
             }
@@ -2904,7 +2904,7 @@ function NetscriptFunctions(workerScript) {
         },
         getCompanyRep : function(companyName) {
             var ramCost = CONSTANTS.ScriptSingularityFn2RamCost / 2;
-            if (Player.bitNodeN !== 4) {ramCost *= 8;}
+            if (Player.bitNodeN !== 4) {ramCost *= CONSTANTS.ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getCompanyRep", ramCost);
             }
@@ -2925,7 +2925,7 @@ function NetscriptFunctions(workerScript) {
         },
         getCompanyFavor : function(companyName) {
             var ramCost = CONSTANTS.ScriptSingularityFn2RamCost / 4;
-            if (Player.bitNodeN !== 4) {ramCost *= 8;}
+            if (Player.bitNodeN !== 4) {ramCost *= CONSTANTS.ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getCompanyFavor", ramCost);
             }
@@ -2946,7 +2946,7 @@ function NetscriptFunctions(workerScript) {
         },
         getCompanyFavorGain : function(companyName) {
             var ramCost = CONSTANTS.ScriptSingularityFn2RamCost / 4;
-            if (Player.bitNodeN !== 4) {ramCost *= 8;}
+            if (Player.bitNodeN !== 4) {ramCost *= CONSTANTS.ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getCompanyFavorGain", ramCost);
             }
@@ -2967,7 +2967,7 @@ function NetscriptFunctions(workerScript) {
         },
         checkFactionInvitations : function() {
             var ramCost = CONSTANTS.ScriptSingularityFn2RamCost;
-            if (Player.bitNodeN !== 4) {ramCost *= 8;}
+            if (Player.bitNodeN !== 4) {ramCost *= CONSTANTS.ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("checkFactionInvitations", ramCost);
             }
@@ -2983,7 +2983,7 @@ function NetscriptFunctions(workerScript) {
         },
         joinFaction : function(name) {
             var ramCost = CONSTANTS.ScriptSingularityFn2RamCost;
-            if (Player.bitNodeN !== 4) {ramCost *= 8;}
+            if (Player.bitNodeN !== 4) {ramCost *= CONSTANTS.ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("joinFaction", ramCost);
             }
@@ -3022,7 +3022,7 @@ function NetscriptFunctions(workerScript) {
         },
         workForFaction : function(name, type) {
             var ramCost = CONSTANTS.ScriptSingularityFn2RamCost;
-            if (Player.bitNodeN !== 4) {ramCost *= 8;}
+            if (Player.bitNodeN !== 4) {ramCost *= CONSTANTS.ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("workForFaction", ramCost);
             }
@@ -3122,7 +3122,7 @@ function NetscriptFunctions(workerScript) {
         },
         getFactionRep : function(name) {
             var ramCost = CONSTANTS.ScriptSingularityFn2RamCost / 4;
-            if (Player.bitNodeN !== 4) {ramCost *= 8;}
+            if (Player.bitNodeN !== 4) {ramCost *= CONSTANTS.ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getFactionRep", ramCost);
             }
@@ -3143,7 +3143,7 @@ function NetscriptFunctions(workerScript) {
         },
         getFactionFavor : function(name) {
             var ramCost = CONSTANTS.ScriptSingularityFn2RamCost;
-            if (Player.bitNodeN !== 4) {ramCost *= 8;}
+            if (Player.bitNodeN !== 4) {ramCost *= CONSTANTS.ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getFactionFavor", ramCost);
             }
@@ -3164,7 +3164,7 @@ function NetscriptFunctions(workerScript) {
         },
         getFactionFavorGain: function(name) {
             var ramCost = CONSTANTS.ScriptSingularityFn2RamCost;
-            if (Player.bitNodeN !== 4) {ramCost *= 8;}
+            if (Player.bitNodeN !== 4) {ramCost *= CONSTANTS.ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getFactionFavorGain", ramCost);
             }
@@ -3185,7 +3185,7 @@ function NetscriptFunctions(workerScript) {
         },
         donateToFaction : function(name, amt) {
             var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
-            if (Player.bitNodeN !== 4) {ramCost *= 8;}
+            if (Player.bitNodeN !== 4) {ramCost *= CONSTANTS.ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("donateToFaction", ramCost);
             }
@@ -3224,7 +3224,7 @@ function NetscriptFunctions(workerScript) {
         },
         createProgram : function(name) {
             var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
-            if (Player.bitNodeN !== 4) {ramCost *= 8;}
+            if (Player.bitNodeN !== 4) {ramCost *= CONSTANTS.ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("createProgram", ramCost);
             }
@@ -3278,7 +3278,7 @@ function NetscriptFunctions(workerScript) {
         },
         commitCrime : function(crimeRoughName) {
             var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
-            if (Player.bitNodeN !== 4) {ramCost *= 8;}
+            if (Player.bitNodeN !== 4) {ramCost *= CONSTANTS.ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("commitCrime", ramCost);
             }
@@ -3335,7 +3335,7 @@ function NetscriptFunctions(workerScript) {
         },
         getCrimeChance : function(crimeRoughName) {
             var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
-            if (Player.bitNodeN !== 4) {ramCost *= 8;}
+            if (Player.bitNodeN !== 4) {ramCost *= CONSTANTS.ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getCrimeChance", ramCost);
             }
@@ -3356,7 +3356,7 @@ function NetscriptFunctions(workerScript) {
         },
         getOwnedAugmentations : function(purchased=false) {
             var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
-            if (Player.bitNodeN !== 4) {ramCost *= 8;}
+            if (Player.bitNodeN !== 4) {ramCost *= CONSTANTS.ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getOwnedAugmentations", ramCost);
             }
@@ -3380,7 +3380,7 @@ function NetscriptFunctions(workerScript) {
         },
         getOwnedSourceFiles : function() {
             let ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
-            if (Player.bitNodeN !== 4) {ramCost *= 8;}
+            if (Player.bitNodeN !== 4) {ramCost *= CONSTANTS.ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getOwnedSourceFiles", ramCost);
             }
@@ -3399,7 +3399,7 @@ function NetscriptFunctions(workerScript) {
         },
         getAugmentationsFromFaction : function(facname) {
             var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
-            if (Player.bitNodeN !== 4) {ramCost *= 8;}
+            if (Player.bitNodeN !== 4) {ramCost *= CONSTANTS.ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getAugmentationsFromFaction", ramCost);
             }
@@ -3425,7 +3425,7 @@ function NetscriptFunctions(workerScript) {
         },
         getAugmentationCost : function(name) {
             var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
-            if (Player.bitNodeN !== 4) {ramCost *= 8;}
+            if (Player.bitNodeN !== 4) {ramCost *= CONSTANTS.ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getAugmentationCost", ramCost);
             }
@@ -3447,7 +3447,7 @@ function NetscriptFunctions(workerScript) {
         },
         purchaseAugmentation : function(faction, name) {
             var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
-            if (Player.bitNodeN !== 4) {ramCost *= 8;}
+            if (Player.bitNodeN !== 4) {ramCost *= CONSTANTS.ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("purchaseAugmentation", ramCost);
             }
@@ -3512,7 +3512,7 @@ function NetscriptFunctions(workerScript) {
         },
         installAugmentations : function(cbScript) {
             var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
-            if (Player.bitNodeN !== 4) {ramCost *= 8;}
+            if (Player.bitNodeN !== 4) {ramCost *= CONSTANTS.ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("installAugmentations", ramCost);
             }
