@@ -42,7 +42,7 @@ import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
 const GangRespectToReputationRatio = 2; // Respect is divided by this to get rep gain
 const MaximumGangMembers = 50;
 const GangRecruitCostMultiplier = 2;
-const GangTerritoryUpdateTimer = 150;
+const CyclesPerTerritoryAndPowerUpdate = 100;
 const AscensionMultiplierRatio = 10 / 100; // Portion of upgrade multiplier that is kept after ascending
 
 // Switch between territory and management screen with 1 and 2
@@ -147,62 +147,9 @@ export function loadAllGangs(saveString) {
     AllGangs = JSON.parse(saveString, Reviver);
 }
 
-//Power is an estimate of a gang's ability to gain/defend territory
-let gangStoredPowerCycles = 0;
-function processAllGangPowerGains(numCycles=1) {
-    if (!Player.inGang()) {return;}
-    gangStoredPowerCycles += numCycles;
-    if (gangStoredPowerCycles < 150) {return;}
-    var playerGangName = Player.gang.facName;
-    for (var name in AllGangs) {
-        if (AllGangs.hasOwnProperty(name)) {
-            if (name == playerGangName) {
-                AllGangs[name].power += Player.gang.calculatePower();
-            } else {
-                var gain = Math.random() * 0.02; //TODO Adjust as necessary
-                AllGangs[name].power += (gain);
-            }
-        }
-    }
-
-    gangStoredPowerCycles -= 150;
-}
-
-let gangStoredTerritoryCycles = 0;
-function processAllGangTerritory(numCycles=1) {
-    if (!Player.inGang()) {return;}
-    gangStoredTerritoryCycles += numCycles;
-    if (gangStoredTerritoryCycles < GangTerritoryUpdateTimer) {return;}
-
-    for (var i = 0; i < GangNames.length; ++i) {
-        var other = getRandomInt(0, GangNames.length-1);
-        while(other == i) {
-            other = getRandomInt(0, GangNames.length-1);
-        }
-        var thisPwr = AllGangs[GangNames[i]].power;
-        var otherPwr = AllGangs[GangNames[other]].power;
-        var thisChance = thisPwr / (thisPwr + otherPwr);
-
-        if (Math.random() < thisChance) {
-            if (AllGangs[GangNames[other]].territory <= 0) {
-                return;
-            }
-            AllGangs[GangNames[i]].territory += 0.0001;
-            AllGangs[GangNames[other]].territory -= 0.0001;
-        } else {
-            if (AllGangs[GangNames[i]].territory <= 0) {
-                return;
-            }
-            AllGangs[GangNames[i]].territory -= 0.0001;
-            AllGangs[GangNames[other]].territory += 0.0001;
-        }
-    }
-
-    gangStoredTerritoryCycles -= GangTerritoryUpdateTimer;
-}
-
-/*  faction - Name of corresponding faction
-    hacking - Boolean indicating whether its a hacking gang or not
+/**
+ * @param facName - Name of corresponding faction
+ * @param hacking - Boolean indicating whether or not its a hacking gang
  */
 export function Gang(facName, hacking=false) {
     this.facName    = facName;
@@ -217,9 +164,16 @@ export function Gang(facName, hacking=false) {
     this.wantedGainRate = 0;
     this.moneyGainRate = 0;
 
-    //When processing gains, this stores the number of cycles until some
-    //limit is reached, and then calculates and applies the gains only at that limit
+    // When processing gains, this stores the number of cycles until some
+    // limit is reached, and then calculates and applies the gains only at that limit
     this.storedCycles   = 0;
+
+    // Separate variable to keep track of cycles for Territry + Power gang, which
+    // happens on a slower "clock" than normal processing
+    this.storedTerritoryAndPowerCycles = 0;
+
+    this.territoryClashChance = 0;
+    this.territoryWarfareEngaged = false;
 }
 
 Gang.prototype.process = function(numCycles=1) {
@@ -237,13 +191,11 @@ Gang.prototype.process = function(numCycles=1) {
     try {
         this.processGains(cycles);
         this.processExperienceGains(cycles);
-        processAllGangPowerGains(cycles);
-        processAllGangTerritory(cycles);
+        this.processTerritoryAndPowerGains(cycles);
         this.storedCycles -= cycles;
     } catch(e) {
         exceptionAlert(`Exception caught when processing Gang: ${e}`);
     }
-
 }
 
 Gang.prototype.processGains = function(numCycles=1) {
@@ -300,6 +252,64 @@ Gang.prototype.processGains = function(numCycles=1) {
     } else {
         console.warn("ERROR: respectGains is NaN");
     }
+}
+
+Gang.prototype.processTerritoryAndPowerGains = function(numCycles=1) {
+    this.storedTerritoryAndPowerCycles += numCycles;
+    if (this.storedTerritoryAndPowerCycles < CyclesPerTerritoryAndPowerUpdate) { return; }
+
+    // Process power first
+    var gangName = this.facName;
+    for (const name in AllGangs) {
+        if (AllGangs.hasOwnProperty(name)) {
+            if (name == gangName) {
+                AllGangs[name].power += this.calculatePower();
+            } else {
+                var gain = Math.random() * 0.02; //TODO Adjust as necessary
+                AllGangs[name].power += (gain);
+            }
+        }
+    }
+
+    // Determine if territory should be processed
+    if (!this.territoryWarfareEngaged) { return; }
+
+    // Then process territory
+    for (var i = 0; i < GangNames.length; ++i) {
+        const others = GangNames.filter((e) => {
+            return e !== i;
+        });
+        const other = getRandomInt(0, others.length - 1);
+
+        const thisGang = GangNames[i];
+        const otherGang = others[other];
+
+        // If either of the gangs involved in this clash is the player, determine
+        // whether to skip or process it using the clash chance
+        if (thisGang === gangName || otherGang === gangName) {
+            if (!(Math.random() <= this.territoryClashChance)) { continue; }
+        }
+
+        const thisPwr = AllGangs[thisGang].power;
+        const otherPwr = AllGangs[otherGang].power;
+        const thisChance = thisPwr / (thisPwr + otherPwr);
+
+        if (Math.random() < thisChance) {
+            if (AllGangs[otherGang].territory <= 0) {
+                return;
+            }
+            AllGangs[thisGang].territory += 0.0001;
+            AllGangs[otherGang].territory -= 0.0001;
+        } else {
+            if (AllGangs[thisGang].territory <= 0) {
+                return;
+            }
+            AllGangs[thisGang].territory -= 0.0001;
+            AllGangs[otherGang].territory += 0.0001;
+        }
+    }
+
+    this.storedTerritoryAndPowerCycles -= CyclesPerTerritoryAndPowerUpdate;
 }
 
 Gang.prototype.canRecruitMember = function() {
@@ -947,7 +957,7 @@ const UIElems = {
     gangMemberFilter:           null,
     gangManageEquipmentButton:  null,
     gangMemberList:             null,
-    gangMemberPanels:           null,
+    gangMemberPanels:           {},
 
     // Gang Equipment Upgrade Elements
     gangMemberUpgradeBoxOpened:     false,
@@ -958,6 +968,9 @@ const UIElems = {
 
     // Gang Territory Elements
     gangTerritoryDescText: null,
+    gangTerritoryWarfareCheckbox: null,
+    gangTerritoryWarfareCheckboxLabel: null,
+    gangTerritoryWarfareClashChance: null,
     gangTerritoryInfoText: null,
 }
 
@@ -1178,7 +1191,7 @@ Gang.prototype.displayGangContent = function() {
             width:"70%",
             innerHTML:"This page shows how much territory your Gang controls. This statistic is listed as a percentage, " +
             "which represents how much of the total territory you control.<br><br>" +
-            "Territory gain and loss is processed automatically and is updated every ~30 seconds. Your chances " +
+            "Territory gain and loss is processed automatically and is updated every ~20 seconds. Your chances " +
             "to gain and lose territory depend on your Gang's power, which is listed in the display below. " +
             "Your gang's power is determined by the stats of all Gang members you have assigned to the " +
             "'Territory Warfare' task. Gang members that are not assigned to this task do not contribute to " +
@@ -1188,9 +1201,36 @@ Gang.prototype.displayGangContent = function() {
         });
         UIElems.gangTerritorySubpage.appendChild(UIElems.gangTerritoryDescText);
 
-        var territoryBorder = createElement("fieldset", {width:"50%", display:"inline-block"});
+        // Checkbox for Engaging in Territory Warfare
+        UIElems.gangTerritoryWarfareCheckbox = createElement("input", {
+            display: "inline-block",
+            id: "gang-management-territory-warfare-checkbox",
+            changeListener: () => {
+                this.territoryWarfareEngaged = UIElems.gangTerritoryWarfareCheckbox.checked;
+            },
+            margin: "2px",
+            type: "checkbox",
+        });
+        UIElems.gangTerritoryWarfareCheckbox.checked = this.territoryWarfareEngaged;
 
-        UIElems.gangTerritoryInfoText = createElement("p", {id:"gang-territory-info"});
+        UIElems.gangTerritoryWarfareCheckboxLabel = createElement("label", {
+            color: "white",
+            for: "gang-management-territory-warfare-checkbox",
+            innerText: "Engage in Territory Warfare",
+            tooltip: "Test",
+        });
+        UIElems.gangTerritorySubpage.appendChild(UIElems.gangTerritoryWarfareCheckbox);
+        UIElems.gangTerritorySubpage.appendChild(UIElems.gangTerritoryWarfareCheckboxLabel);
+
+        // Territory Clash chance
+        UIElems.gangTerritoryWarfareClashChance = createElement("p");
+        UIElems.gangTerritorySubpage.appendChild(UIElems.gangTerritoryWarfareClashChance);
+
+        // Territory info (percentages of territory owned for each gang)
+        UIElems.gangTerritorySubpage.appendChild(createElement("br"));
+        var territoryBorder = createElement("fieldset", {width:"50%", display:"block"});
+
+        UIElems.gangTerritoryInfoText = createElement("p");
 
         territoryBorder.appendChild(UIElems.gangTerritoryInfoText);
         UIElems.gangTerritorySubpage.appendChild(territoryBorder);
@@ -1205,6 +1245,7 @@ Gang.prototype.displayGangContent = function() {
 
 Gang.prototype.displayGangMemberList = function() {
     removeChildrenFromElement(UIElems.gangMemberList);
+    UIElems.gangMemberPanels = {};
     const members = this.members;
     const filter = UIElems.gangMemberFilter.value.toString();
     for (var i = 0; i < members.length; ++i) {
@@ -1217,13 +1258,17 @@ Gang.prototype.displayGangMemberList = function() {
 Gang.prototype.updateGangContent = function() {
     if (!UIElems.gangContentCreated) { return; }
 
-    if(UIElems.gangTerritorySubpage.style.display === "block") {
-        //Update territory information
+    if (UIElems.gangTerritorySubpage.style.display === "block") {
+        // Territory Warfare Clash Chance
+        UIElems.gangTerritoryWarfareClashChance.innerText =
+            `Territory Clash Chance: ${numeralWrapper.format(this.gangTerritoryWarfareClashChance, '0.000%')}`;
+
+        // Update territory information
         UIElems.gangTerritoryInfoText.innerHTML = "";
         for (var gangname in AllGangs) {
             if (AllGangs.hasOwnProperty(gangname)) {
                 var gangTerritoryInfo = AllGangs[gangname];
-                let territory = gangTerritoryInfo.territory*100;
+                let territory = gangTerritoryInfo.territory * 100;
 
                 //Fix some rounding issues graphically
                 let displayNumber;
@@ -1356,6 +1401,10 @@ Gang.prototype.createGangMemberDisplayElement = function(memberObj) {
     if (!UIElems.gangContentCreated) { return; }
     const name = memberObj.name;
 
+    // Clear/Update the UIElems map to keep track of this gang member's panel
+    UIElems.gangMemberPanels[name] = {};
+
+    // Create the accordion
     var accordion = createAccordionElement({
         id: name + "gang-member",
         hdrText: name,
@@ -1363,6 +1412,8 @@ Gang.prototype.createGangMemberDisplayElement = function(memberObj) {
     const li = accordion[0];
     const hdr = accordion[1];
     const gangMemberDiv = accordion[2];
+
+    UIElems.gangMemberPanels[name]["panel"] = gangMemberDiv;
 
     // Gang member content divided into 3 panels:
     // Panel 1 - Shows member's stats & Ascension stuff
@@ -1376,6 +1427,7 @@ Gang.prototype.createGangMemberDisplayElement = function(memberObj) {
                        `Ag: x${numeralWrapper.format(memberObj.agi_mult * memberObj.agi_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.agi_mult, "0,0.00")} Up, x${numeralWrapper.format(memberObj.agi_asc_mult, "0,0.00")} Asc)`,
                        `Ch: x${numeralWrapper.format(memberObj.cha_mult * memberObj.cha_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.cha_mult, "0,0.00")} Up, x${numeralWrapper.format(memberObj.cha_asc_mult, "0,0.00")} Asc)`].join("<br>"),
     });
+    UIElems.gangMemberPanels[name]["statsDiv"] = statsDiv;
     const statsP = createElement("pre", {
         display: "inline",
         id: name + "gang-member-stats-text",
@@ -1518,7 +1570,7 @@ Gang.prototype.updateGangMemberDisplayElement = function(memberObj) {
     if (!UIElems.gangContentCreated || !Player.inGang()) {return;}
     var name = memberObj.name;
 
-    //TODO Add upgrade information
+    // Update stats + exp
     var stats = document.getElementById(name + "gang-member-stats-text");
     if (stats) {
         stats.innerText =
@@ -1530,6 +1582,22 @@ Gang.prototype.updateGangMemberDisplayElement = function(memberObj) {
              `Charisma: ${formatNumber(memberObj.cha, 0)} (${numeralWrapper.format(memberObj.cha_exp, '(0.00a)')} exp)`].join("\n");
     }
 
+    // Update tooltip for stat multipliers
+    const panel = UIElems.gangMemberPanels[name];
+    if (panel) {
+        const statsDiv = panel["statsDiv"];
+        if (statsDiv) {
+            statsDiv.firstChild.innerHTML =
+                [`Hk: x${numeralWrapper.format(memberObj.hack_mult * memberObj.hack_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.hack_mult, "0,0.00")} Up, x${numeralWrapper.format(memberObj.hack_asc_mult, "0,0.00")} Asc)`,
+                `St: x${numeralWrapper.format(memberObj.str_mult * memberObj.str_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.str_mult, "0,0.00")} Up, x${numeralWrapper.format(memberObj.str_asc_mult, "0,0.00")} Asc)`,
+                `Df: x${numeralWrapper.format(memberObj.def_mult * memberObj.def_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.def_mult, "0,0.00")} Up, x${numeralWrapper.format(memberObj.def_asc_mult, "0,0.00")} Asc)`,
+                `Dx: x${numeralWrapper.format(memberObj.dex_mult * memberObj.dex_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.dex_mult, "0,0.00")} Up, x${numeralWrapper.format(memberObj.dex_asc_mult, "0,0.00")} Asc)`,
+                `Ag: x${numeralWrapper.format(memberObj.agi_mult * memberObj.agi_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.agi_mult, "0,0.00")} Up, x${numeralWrapper.format(memberObj.agi_asc_mult, "0,0.00")} Asc)`,
+                `Ch: x${numeralWrapper.format(memberObj.cha_mult * memberObj.cha_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.cha_mult, "0,0.00")} Up, x${numeralWrapper.format(memberObj.cha_asc_mult, "0,0.00")} Asc)`].join("<br>");
+        }
+    }
+
+    // Update info about gang member's earnings/gains
     var gainInfo = document.getElementById(name + "gang-member-gain-info");
     if (gainInfo) {
         gainInfo.innerHTML =
@@ -1556,7 +1624,9 @@ Gang.prototype.clearUI = function() {
 
     for (const prop in UIElems) {
         UIElems[prop] = null;
-        UIElems.gangContentCreated = false;
-        UIElems.gangMemberUpgradeBoxOpened = false;
     }
+
+    UIElems.gangContentCreated = false;
+    UIElems.gangMemberUpgradeBoxOpened = false;
+    UIElems.gangMemberPanels = {};
 }
