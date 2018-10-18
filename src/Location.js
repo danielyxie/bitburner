@@ -1811,7 +1811,7 @@ function initLocationButtons() {
         yesBtn.innerHTML = "Purchase"; noBtn.innerHTML = "Cancel";
         yesBtn.addEventListener("click", ()=>{
             if (Player.money.lt(cost)) {
-                dialogBoxCreate("You do not have enough mone to purchase an additional CPU Core for your home computer!");
+                dialogBoxCreate("You do not have enough money to purchase an additional CPU Core for your home computer!");
             } else {
                 Player.loseMoney(cost);
                 Player.getHomeComputer().cpuCores++;

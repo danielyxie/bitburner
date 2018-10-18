@@ -154,6 +154,10 @@ export class CodingContract {
         return CodingContractTypes[this.type].numTries;
     }
 
+    getType(): string {
+        return CodingContractTypes[this.type].name;
+    }
+
     isSolution(solution: string): boolean {
         return CodingContractTypes[this.type].solver(this.data, solution);
     }

@@ -92,8 +92,9 @@ let NetscriptFunctions =
     "installAugmentations|"                                                    +
 
     // TIX API
-    "getStockPrice|getStockPosition|getStockSymbols|buyStock|sellStock|shortStock|sellShort|"  +
-    "placeOrder|cancelOrder|"                                                  +
+    "getStockPrice|getStockPosition|getStockSymbols|buyStock|sellStock|"       +
+    "shortStock|sellShort|"                                                    +
+    "placeOrder|cancelOrder|getStockVolatility|getStockForecast|"              +
 
     // Hacknet Node API
     "hacknet|numNodes|purchaseNode|getPurchaseNodeCost|getNodeStats|"          +
@@ -112,7 +113,8 @@ let NetscriptFunctions =
     "getCityChaos|switchCity|getStamina|joinBladeburnerFaction|getBonusTime|"  +
 
     // Coding Contract API
-    "codingcontract|attempt|getData|getDescription|getNumTriesRemaining";
+    "codingcontract|attempt|getContractType|getData|getDescription|"           +
+    "getNumTriesRemaining";
 
 var NetscriptHighlightRules = function(options) {
     var keywordMapper = this.createKeywordMapper({

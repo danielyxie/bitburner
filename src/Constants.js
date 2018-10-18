@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.40.4",
+    Version:                "0.40.5",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -48,7 +48,7 @@ let CONSTANTS = {
     /* Netscript Constants */
     //RAM Costs for different commands
     ScriptBaseRamCost:              1.6,
-    ScriptDomRamCost:               100,
+    ScriptDomRamCost:               25,
     ScriptWhileRamCost:             0,
     ScriptForRamCost:               0,
     ScriptIfRamCost:                0,
@@ -90,6 +90,8 @@ let CONSTANTS = {
     ScriptSingularityFn1RamCost:    1,
     ScriptSingularityFn2RamCost:    2,
     ScriptSingularityFn3RamCost:    3,
+
+    ScriptSingularityFnRamMult:     2, // Multiplier for RAM cost outside of BN-4
 
     ScriptBladeburnerApiBaseRamCost:    4,
 
@@ -506,18 +508,20 @@ let CONSTANTS = {
 
     LatestUpdate:
     `
-     v0.40.4
-     * Added new Coding Contracts mechanic. Solve programming problems to earn rewards
-     * The write() and read() Netscript functions now work on scripts
-     * Added getStockSymbols() Netscript function to the TIX API (by InfraK)
-     * Added wget() Netscript function
-     * Added bladeburner.getActionRepGain() function to the Netscript Bladeburner API
-     * The getLevelUpgradeCost(), getRamUpgradeCost(), and getCoreUpgradeCost() functions in the Hacknet API now return Infinity if the node is at max level. See documentation
-     * It is now possible to use freely use angled bracket (<, >) and create DOM elements using tprint()
-     * The game's theme colors can now be set through the Terminal configuration (.fconf).
-     * You can now switch to the old left-hand main menu bar through the Terminal configuration (.fconf)
-     * Bug Fix: grow() percentage is no longer reported as Infinity when a server's money is grown from 0 to X
-     * Bug Fix: Infiltration popup now displays the correct amount of exp gained
+     v0.41.0
+     * WARNING: In NetscriptJS, defining a function called print() is no longer possible
+     * RAM Cost of accessing the global document object lowered from 100 GB to 25 GB
+     * RAM Cost to use Singularity Functions outside of BitNode-4 lowered by 75%. They now only cost twice as much as they do in BitNode-4
+     * b1t_flum3.exe now takes significantly less time to create
+     * Improved number formatting for Player 'work' actions (including crimes, etc.). These numbers should also adhere to locale settings now (by Kline-)
+     * Bug Fix: Calling print() in NetscriptJS no longer brings up the print dialog
+     * Bug Fix: Fixed a bug that sometimes caused a blank black screen when destroying/resetting/switching BitNodes
+     * Bug Fix: Netscript calls that throw errors will now no longer cause the 'concurrent calls' error if they are caught in the script. i.e. try/catch should now work properly in scripts
+     * Bug Fix: Fixed a bug where sometimes the NeuroFlux Governor Augmentation level would be incorrectly calculated when the game was loaded
+     * Bug Fix: Fixed a bug where calling the scp() Netscript function with invalid hostname/ips would throw an unclear error message
+     * Bug Fix: Bladeburner API function getActionCountRemaining() should now work properly for BlackOps
+     * Bug Fix: Black Ops can no longer be attempted out-of-order or without the required rank via Bladeburner API
+     * RAM cost for basic Netscript functions added to documentation (by CBJamo)
      `
 
 }
