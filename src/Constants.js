@@ -93,6 +93,8 @@ let CONSTANTS = {
 
     ScriptSingularityFnRamMult:     2, // Multiplier for RAM cost outside of BN-4
 
+    ScriptGangApiBaseRamCost:   4,
+
     ScriptBladeburnerApiBaseRamCost:    4,
 
     NumNetscriptPorts:              20,
@@ -511,6 +513,8 @@ let CONSTANTS = {
      *** Added a new category of upgrades for Gang Members: Augmentations
      *** Non-Augmentation Gang member upgrades are now significantly weaker
      *** Reputation for your Gang faction can no longer be gained through Infiltration
+     *** Re-worked the territory 'warfare' mechanic so that player can choose when to engage in it
+     *** Player's faction reputation multiplier no longer affects reputation gang from earning respect
      * RAM Cost of accessing the global document object lowered from 100 GB to 25 GB
      * RAM Cost to use Singularity Functions outside of BitNode-4 lowered by 75%. They now only cost twice as much as they do in BitNode-4
      * b1t_flum3.exe now takes significantly less time to create

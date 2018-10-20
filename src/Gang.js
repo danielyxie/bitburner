@@ -16,7 +16,6 @@ import {gangMemberUpgradesMetadata}             from "./data/gangmemberupgrades"
 import {Engine}                                 from "./engine";
 import {Faction, Factions,
         displayFactionContent}                  from "./Faction";
-import {Player}                                 from "./Player";
 import {numeralWrapper}                         from "./ui/numeralFormat";
 import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {Reviver, Generic_toJSON,
@@ -156,7 +155,6 @@ export function Gang(facName, hacking=false) {
     this.members    = [];  //Array of GangMembers
     this.wanted     = 1;
     this.respect    = 1;
-    this.power      = 0;
 
     this.isHackingGang = hacking;
 
@@ -174,9 +172,19 @@ export function Gang(facName, hacking=false) {
 
     this.territoryClashChance = 0;
     this.territoryWarfareEngaged = false;
+
+    this.notifyMemberDeath = true;
 }
 
-Gang.prototype.process = function(numCycles=1) {
+Gang.prototype.power() = function() {
+    return AllGangs[this.facName].power;
+}
+
+Gang.prototype.getTerritory = function() {
+    return AllGangs[this.facName].territory;
+}
+
+Gang.prototype.process = function(numCycles=1, player) {
     const CyclesPerSecond = 1000 / Engine._idleSpeed;
 
     if (isNaN(numCycles)) {
@@ -189,7 +197,7 @@ Gang.prototype.process = function(numCycles=1) {
     const cycles = Math.min(this.storedCycles, 10 * CyclesPerSecond);
 
     try {
-        this.processGains(cycles);
+        this.processGains(cycles, player);
         this.processExperienceGains(cycles);
         this.processTerritoryAndPowerGains(cycles);
         this.storedCycles -= cycles;
@@ -198,13 +206,13 @@ Gang.prototype.process = function(numCycles=1) {
     }
 }
 
-Gang.prototype.processGains = function(numCycles=1) {
+Gang.prototype.processGains = function(numCycles=1, player) {
     //Get gains per cycle
     var moneyGains = 0, respectGains = 0, wantedLevelGains = 0;
     for (var i = 0; i < this.members.length; ++i) {
-        respectGains += (this.members[i].calculateRespectGain());
-        wantedLevelGains += (this.members[i].calculateWantedLevelGain());
-        moneyGains += (this.members[i].calculateMoneyGain());
+        respectGains += (this.members[i].calculateRespectGain(this));
+        wantedLevelGains += (this.members[i].calculateWantedLevelGain(this));
+        moneyGains += (this.members[i].calculateMoneyGain(this));
     }
     this.respectGainRate = respectGains;
     this.wantedGainRate = wantedLevelGains;
@@ -219,12 +227,12 @@ Gang.prototype.processGains = function(numCycles=1) {
             dialogBoxCreate("ERROR: Could not get Faction associates with your gang. This is a bug, please report to game dev");
         } else {
             var favorMult = 1 + (fac.favor / 100);
-            fac.playerReputation += ((Player.faction_rep_mult * gain * favorMult) / GangRespectToReputationRatio);
+            fac.playerReputation += ((player.faction_rep_mult * gain * favorMult) / GangRespectToReputationRatio);
         }
 
         // Keep track of respect gained per member
         for (let i = 0; i < this.members.length; ++i) {
-            this.members[i].recordEarnedRespect(numCycles);
+            this.members[i].recordEarnedRespect(numCycles, this);
         }
     } else {
         console.warn("respectGains calculated to be NaN");
@@ -248,7 +256,7 @@ Gang.prototype.processGains = function(numCycles=1) {
         console.warn("ERROR: wantedLevelGains is NaN");
     }
     if (typeof moneyGains === "number") {
-        Player.gainMoney(moneyGains * numCycles);
+        player.gainMoney(moneyGains * numCycles);
     } else {
         console.warn("ERROR: respectGains is NaN");
     }
@@ -257,6 +265,7 @@ Gang.prototype.processGains = function(numCycles=1) {
 Gang.prototype.processTerritoryAndPowerGains = function(numCycles=1) {
     this.storedTerritoryAndPowerCycles += numCycles;
     if (this.storedTerritoryAndPowerCycles < CyclesPerTerritoryAndPowerUpdate) { return; }
+    this.storedTerritoryAndPowerCycles -= CyclesPerTerritoryAndPowerUpdate;
 
     // Process power first
     var gangName = this.facName;
@@ -265,14 +274,22 @@ Gang.prototype.processTerritoryAndPowerGains = function(numCycles=1) {
             if (name == gangName) {
                 AllGangs[name].power += this.calculatePower();
             } else {
-                var gain = Math.random() * 0.02; //TODO Adjust as necessary
-                AllGangs[name].power += (gain);
+                // Adjust these parameters as necessary
+                const additiveGain = Math.random() * AllGangs[name].territory;
+                AllGangs[name].power += (additiveGain);
+                AllGangs[name].power *= 1.01;
             }
         }
     }
 
     // Determine if territory should be processed
-    if (!this.territoryWarfareEngaged) { return; }
+    if (this.territoryWarfareEngaged) {
+        this.territoryClashChance = 1;
+    } else if (this.territoryClashChance > 0) {
+        // Engagement turned off, but still a positive clash chance. So there's
+        // still a chance of clashing but it slowly goes down over time
+        this.territoryClashChance = Math.max(0, this.territoryClashChance - 0.005);
+    }
 
     // Then process territory
     for (var i = 0; i < GangNames.length; ++i) {
@@ -287,7 +304,7 @@ Gang.prototype.processTerritoryAndPowerGains = function(numCycles=1) {
         // If either of the gangs involved in this clash is the player, determine
         // whether to skip or process it using the clash chance
         if (thisGang === gangName || otherGang === gangName) {
-            if (!(Math.random() <= this.territoryClashChance)) { continue; }
+            if (!(Math.random() < this.territoryClashChance)) { continue; }
         }
 
         const thisPwr = AllGangs[thisGang].power;
@@ -300,16 +317,28 @@ Gang.prototype.processTerritoryAndPowerGains = function(numCycles=1) {
             }
             AllGangs[thisGang].territory += 0.0001;
             AllGangs[otherGang].territory -= 0.0001;
+            if (thisGang === gangName) {
+                this.clash(true); // Player won
+            } else if (otherGang === gangName) {
+                this.clash(false); // Player lost
+            } else {
+                AllGangs[otherGang].power *= (1 / 1.01);
+            }
         } else {
             if (AllGangs[thisGang].territory <= 0) {
                 return;
             }
             AllGangs[thisGang].territory -= 0.0001;
             AllGangs[otherGang].territory += 0.0001;
+            if (thisGang === gangName) {
+                this.clash(false); // Player lost
+            } else if (otherGang === gangName) {
+                this.clash(true); // Player won
+            } else {
+                AllGangs[thisGang].power *= (1 / 1.01);
+            }
         }
     }
-
-    this.storedTerritoryAndPowerCycles -= CyclesPerTerritoryAndPowerUpdate;
 }
 
 Gang.prototype.canRecruitMember = function() {
@@ -324,6 +353,24 @@ Gang.prototype.getRespectNeededToRecruitMember = function() {
 
     const i = this.members.length - (numFreeMembers - 1);
     return Math.round(0.7 * Math.pow(i, 3) + 0.8 * Math.pow(i, 2));
+}
+
+Gang.prototype.recruitMember = function(name) {
+    if (name === "" || !this.canRecruitMember()) { return false; }
+
+    // Check for already-existing names
+    let sameNames = this.members.filter((m) => {
+        return m.name === name;
+    });
+    if (sameNames.length >= 1) { return false; }
+
+    let member = new GangMember(name);
+    this.members.push(member);
+    if (routing.isOn(Page.Gang)) {
+        this.createGangMemberDisplayElement(member);
+        this.updateGangContent();
+    }
+    return true;
 }
 
 // Money and Respect gains multiplied by this number (< 1)
@@ -344,14 +391,61 @@ Gang.prototype.calculatePower = function() {
     for (var i = 0; i < this.members.length; ++i) {
         if (this.members[i].task instanceof GangMemberTask &&
             this.members[i].task.name == "Territory Warfare") {
-            memberTotal += this.members[i].calculatePower();
+            const gain = this.members[i].calculatePower();
+            memberTotal += gain;
         }
     }
     return (0.0005 * memberTotal);
 }
 
+Gang.prototype.clash = function(won=false) {
+    // Determine if a gang member should die
+    let baseDeathChance;
+    won ? baseDeathChance = 0.05 : baseDeathChance = 0.1;
+
+    // If the clash was lost, the player loses a small percentage of power
+    if (!won) {
+        AllGangs[this.facName].power *= 0.98;
+    }
+
+    for (let i = this.members.length - 1; i >= 0; --i) {
+        const member = this.members[i];
+
+        // Only members assigned to Territory Warfare can die
+        if (member.task.name !== "Territory Warfare") { continue; }
+
+        // Chance to die is decreased based on defense
+        const modifiedDeathChance = baseDeathChance / Math.pow(def, 0.25);
+        if (Math.random() < modifiedDeathChance) {
+            this.killMember(member);
+        }
+    }
+}
+
 Gang.prototype.killMember = function(memberObj) {
-    // TODO
+    const gangName = this.facName;
+
+    // Player loses a percentage of total respect, plus whatever respect that member has earned
+    const totalRespect = this.gang.respect;
+    const lostRespect = (0.05 * totalRespect) + memberObj.earnedRespect;
+    this.gang.respect = Math.max(0, totalRespect - lostRespect);
+
+    for (let i = 0; i < this.members.length; ++i) {
+        if (memberObj.name === this.members[i].name) {
+            this.members.splice(i, 1);
+            break;
+        }
+    }
+
+    // Notify of death
+    if (this.notifyMemberDeath) {
+        dialogBoxCreate(`${memberObj.name} was killed in a gang clash! You lost ${lostRespect} respect`);
+    }
+
+    // Update UI
+    if (routing.isOn(Page.Gang)) {
+        this.displayGangMemberList();
+    }
 }
 
 Gang.prototype.ascendMember = function(memberObj) {
@@ -378,6 +472,28 @@ Gang.prototype.ascendMember = function(memberObj) {
     } catch(e) {
         exceptionAlert(e);
     }
+}
+
+// Returns only valid tasks for this gang. Excludes 'Unassigned'
+Gang.prototype.getAllTaskNames = function() {
+    let tasks = [];
+    const allTasks = Object.keys(GangMemberTasks);
+    if (this.isHackingGang) {
+        tasks = allTasks.filter((e) => {
+            let task = GangMemberTasks[e];
+            if (task == null) { return false; }
+            if (e === "Unassigned") { return false; }
+            return task.isHacking;
+        });
+    } else {
+        tasks = allTasks.filter((e) => {
+            let task = GangMemberTasks[e];
+            if (task == null) { return false; }
+            if (e === "Unassigned") { return false; }
+            return task.isCombat;
+        });
+    }
+    return tasks;
 }
 
 Gang.prototype.toJSON = function() {
@@ -466,7 +582,7 @@ GangMember.prototype.unassignFromTask = function() {
 }
 
 //Gains are per cycle
-GangMember.prototype.calculateRespectGain = function() {
+GangMember.prototype.calculateRespectGain = function(gang) {
     var task = this.task;
     if (task == null || !(task instanceof GangMemberTask) || task.baseRespect === 0) {return 0;}
     var statWeight =    (task.hackWeight/100) * this.hack +
@@ -477,13 +593,13 @@ GangMember.prototype.calculateRespectGain = function() {
                         (task.chaWeight/100) * this.cha;
     statWeight -= (3.5 * task.difficulty);
     if (statWeight <= 0) { return 0; }
-    var territoryMult = AllGangs[Player.gang.facName].territory;
+    var territoryMult = AllGangs[gang.facName].territory;
     if (territoryMult <= 0) { return 0; }
-    var respectMult = Player.gang.getWantedPenalty();
+    var respectMult = gang.getWantedPenalty();
     return 12 * task.baseRespect * statWeight * territoryMult * respectMult;
 }
 
-GangMember.prototype.calculateWantedLevelGain = function() {
+GangMember.prototype.calculateWantedLevelGain = function(gang) {
     var task = this.task;
     if (task == null || !(task instanceof GangMemberTask) || task.baseWanted === 0) {return 0;}
     var statWeight =    (task.hackWeight/100) * this.hack +
@@ -494,7 +610,7 @@ GangMember.prototype.calculateWantedLevelGain = function() {
                         (task.chaWeight/100) * this.cha;
     statWeight -= (3.5 * task.difficulty);
     if (statWeight <= 0) {return 0;}
-    var territoryMult = AllGangs[Player.gang.facName].territory;
+    var territoryMult = AllGangs[gang.facName].territory;
     if (territoryMult <= 0) {return 0;}
     if (task.baseWanted < 0) {
         return task.baseWanted * statWeight * territoryMult;
@@ -503,7 +619,7 @@ GangMember.prototype.calculateWantedLevelGain = function() {
     }
 }
 
-GangMember.prototype.calculateMoneyGain = function() {
+GangMember.prototype.calculateMoneyGain = function(gang) {
     var task = this.task;
     if (task == null || !(task instanceof GangMemberTask) || task.baseMoney === 0) {return 0;}
     var statWeight =    (task.hackWeight/100) * this.hack +
@@ -514,9 +630,9 @@ GangMember.prototype.calculateMoneyGain = function() {
                         (task.chaWeight/100) * this.cha;
     statWeight -= (3.5 * task.difficulty);
     if (statWeight <= 0) {return 0;}
-    var territoryMult = AllGangs[Player.gang.facName].territory;
+    var territoryMult = AllGangs[gang.facName].territory;
     if (territoryMult <= 0) {return 0;}
-    var respectMult = Player.gang.getWantedPenalty();
+    var respectMult = gang.getWantedPenalty();
     return 5 * task.baseMoney * statWeight * territoryMult * respectMult;
 }
 
@@ -531,8 +647,8 @@ GangMember.prototype.gainExperience = function(numCycles=1) {
     this.cha_exp    += (task.chaWeight / 1500) * task.difficulty * numCycles;
 }
 
-GangMember.prototype.recordEarnedRespect = function(numCycles=1) {
-    this.earnedRespect += (this.calculateRespectGain() * numCycles);
+GangMember.prototype.recordEarnedRespect = function(numCycles=1, gang) {
+    this.earnedRespect += (this.calculateRespectGain(gang) * numCycles);
 }
 
 GangMember.prototype.ascend = function() {
@@ -614,6 +730,24 @@ GangMember.prototype.getAscensionResults = function() {
         dex:  (Math.max(0, dex - 1) * AscensionMultiplierRatio),
         agi:  (Math.max(0, agi - 1) * AscensionMultiplierRatio),
         cha:  (Math.max(0, cha - 1) * AscensionMultiplierRatio),
+    }
+}
+
+GangMember.prototype.buyUpgrade = function(upg, player, gang) {
+    if (!(upg instanceof GangMemberUpgrade)) {
+        throw new Error(`Invalid 'upg' argument passed into GangMember.buyUpgrade`);
+    }
+    if (player.money.lt(upg.cost)) { return false; }
+    player.loseMoney(upg.cost);
+    if (upg.type === "g") {
+        this.augmentations.push(upg.name);
+    } else {
+        this.upgrades.push(upg.name);
+    }
+    upg.apply(this);
+    if (routing.isOn(Page.Gang) && UIElems.gangMemberUpgradeBoxOpened) {
+        var initFilterValue = UIElems.gangMemberUpgradeBoxFilter.value.toString();
+        gang.createGangMemberUpgradeBox(player, initFilterValue);
     }
 }
 
@@ -744,7 +878,7 @@ gangMemberUpgradesMetadata.forEach((e) => {
 });
 
 // Create a pop-up box that lets player purchase upgrades
-Gang.prototype.createGangMemberUpgradeBox = function(initialFilter="") {
+Gang.prototype.createGangMemberUpgradeBox = function(player, initialFilter="") {
     const boxId = "gang-member-upgrade-popup-box";
     if (UIElems.gangMemberUpgradeBoxOpened) {
         //Already opened, refreshing
@@ -759,9 +893,9 @@ Gang.prototype.createGangMemberUpgradeBox = function(initialFilter="") {
         UIElems.gangMemberUpgradeBoxElements = [UIElems.gangMemberUpgradeBoxFilter];
 
         var filter = UIElems.gangMemberUpgradeBoxFilter.value.toString();
-        for (var i = 0; i < Player.gang.members.length; ++i) {
-            if (Player.gang.members[i].name.indexOf(filter) > -1 || Player.gang.members[i].task.name.indexOf(filter) > -1) {
-                var newPanel = Player.gang.members[i].createGangMemberUpgradePanel(this);
+        for (var i = 0; i < this.members.length; ++i) {
+            if (this.members[i].name.indexOf(filter) > -1 || this.members[i].task.name.indexOf(filter) > -1) {
+                var newPanel = this.members[i].createGangMemberUpgradePanel(this, player);
                 UIElems.gangMemberUpgradeBoxContent.appendChild(newPanel);
                 UIElems.gangMemberUpgradeBoxElements.push(newPanel);
             }
@@ -773,7 +907,7 @@ Gang.prototype.createGangMemberUpgradeBox = function(initialFilter="") {
             value:initialFilter,
             onkeyup:()=>{
                 var filterValue = UIElems.gangMemberUpgradeBoxFilter.value.toString();
-                this.createGangMemberUpgradeBox(filterValue);
+                this.createGangMemberUpgradeBox(player, filterValue);
             }
         });
 
@@ -782,7 +916,7 @@ Gang.prototype.createGangMemberUpgradeBox = function(initialFilter="") {
         var filter = UIElems.gangMemberUpgradeBoxFilter.value.toString();
         for (var i = 0; i < this.members.length; ++i) {
             if (this.members[i].name.indexOf(filter) > -1 || this.members[i].task.name.indexOf(filter) > -1) {
-                UIElems.gangMemberUpgradeBoxElements.push(this.members[i].createGangMemberUpgradePanel(this));
+                UIElems.gangMemberUpgradeBoxElements.push(this.members[i].createGangMemberUpgradePanel(this, player));
             }
         }
 
@@ -793,7 +927,7 @@ Gang.prototype.createGangMemberUpgradeBox = function(initialFilter="") {
 }
 
 //Create upgrade panels for each individual Gang Member
-GangMember.prototype.createGangMemberUpgradePanel = function(gangObj) {
+GangMember.prototype.createGangMemberUpgradePanel = function(gangObj, player) {
     var container = createElement("div", {
         border:"1px solid white",
     });
@@ -850,7 +984,7 @@ GangMember.prototype.createGangMemberUpgradePanel = function(gangObj) {
     for (let upgName in GangMemberUpgrades) {
         if (GangMemberUpgrades.hasOwnProperty(upgName)) {
             let upg = GangMemberUpgrades[upgName];
-            if (Player.money.lt(upg.cost)) { continue; }
+            if (player.money.lt(upg.cost)) { continue; }
             if (this.upgrades.includes(upgName) || this.augmentations.includes(upgName)) { continue; }
             switch (upg.type) {
                 case "w":
@@ -902,16 +1036,7 @@ GangMember.prototype.createGangMemberUpgradePanel = function(gangObj) {
                     class:"a-link-button", margin:"2px",  padding:"2px", display:"block",
                     fontSize:"11px",
                     clickListener:()=>{
-                        if (Player.money.lt(upg.cost)) { return false; }
-                        Player.loseMoney(upg.cost);
-                        if (upg.type === "g") {
-                            memberObj.augmentations.push(upg.name);
-                        } else {
-                            memberObj.upgrades.push(upg.name);
-                        }
-                        upg.apply(memberObj);
-                        var initFilterValue = UIElems.gangMemberUpgradeBoxFilter.value.toString();
-                        gangObj.createGangMemberUpgradeBox(initFilterValue);
+                        memberObj.buyUpgrade(upg, player, gangObj);
                         return false;
                     }
                 }
@@ -971,10 +1096,12 @@ const UIElems = {
     gangTerritoryWarfareCheckbox: null,
     gangTerritoryWarfareCheckboxLabel: null,
     gangTerritoryWarfareClashChance: null,
+    gangTerritoryDeathNotifyCheckbox: null,
+    gangTerritoryDeathNotifyCheckboxLabel: null,
     gangTerritoryInfoText: null,
 }
 
-Gang.prototype.displayGangContent = function() {
+Gang.prototype.displayGangContent = function(player) {
     if (!UIElems.gangContentCreated || UIElems.gangContainer == null) {
         UIElems.gangContentCreated = true;
 
@@ -1084,25 +1211,21 @@ Gang.prototype.displayGangContent = function() {
                     class: "std-button",
                     clickListener: () => {
                         let name = nameInput.value;
-
-                        // Check for already-existing names
-                        let sameNames = this.members.filter((m) => {
-                            return m.name === name;
-                        });
-                        if (sameNames.length >= 1) {
-                            dialogBoxCreate("You already have a gang member with this name!");
+                        if (name === "") {
+                            dialogBoxCreate("You must enter a name for your Gang member!");
+                            return false;
+                        }
+                        if (!this.canRecruitMember()) {
+                            dialogBoxCreate("You cannot recruit another Gang member!");
                             return false;
                         }
 
-                        if (name === "") {
-                            dialogBoxCreate("You must enter a name for your Gang member!");
-                        } else {
-                            let member = new GangMember(name);
-                            this.members.push(member);
-                            this.createGangMemberDisplayElement(member);
-                            this.updateGangContent();
-                            removeElementById(popupId);
+                        // At this point, the only way this can fail is if you already
+                        // have a gang member with the same name
+                        if (!this.recruitMember(name)) {
+                            dialogBoxCreate("You already have a gang member with this name!");
                         }
+
                         return false;
                     },
                     innerText: "Recruit Gang Member",
@@ -1168,7 +1291,7 @@ Gang.prototype.displayGangContent = function() {
             class:"a-link-button", display:"inline-block",
             innerHTML:"Manage Equipment",
             clickListener: () => {
-                this.createGangMemberUpgradeBox();
+                this.createGangMemberUpgradeBox(player);
             }
         });
         UIElems.gangManagementSubpage.appendChild(UIElems.gangExpandAllButton);
@@ -1189,13 +1312,16 @@ Gang.prototype.displayGangContent = function() {
         //Info text for territory page
         UIElems.gangTerritoryDescText = createElement("p", {
             width:"70%",
-            innerHTML:"This page shows how much territory your Gang controls. This statistic is listed as a percentage, " +
+            innerHTML:
+            "This page shows how much territory your Gang controls. This statistic is listed as a percentage, " +
             "which represents how much of the total territory you control.<br><br>" +
-            "Territory gain and loss is processed automatically and is updated every ~20 seconds. Your chances " +
-            "to gain and lose territory depend on your Gang's power, which is listed in the display below. " +
-            "Your gang's power is determined by the stats of all Gang members you have assigned to the " +
-            "'Territory Warfare' task. Gang members that are not assigned to this task do not contribute to " +
-            "your Gang's power.<br><br>" +
+            "Every ~20 seconds, your gang has a chance to 'clash' with other gangs. Your chance " +
+            "to win a clash depends on your gang's power, which is listed in the display below. " +
+            "Your gang's power slowly accumulates over time. The accumulation rate is determined by the stats " +
+            "of all Gang members you have assigned to the 'Territory Warfare' task. Gang members that are not " +
+            "assigned to this task do not contribute to your gang's power.<br><br>" +
+            "NOTE: Gang members assigned to 'Territory Warfare' can be killed during clashes. This can happen regardless of whether you win " +
+            "or lose the clash. A gang member being killed results in both respect and power loss for your gang.<br><br>" +
             "The amount of territory you have affects all aspects of your Gang members' production, including " +
             "money, respect, and wanted level. It is very beneficial to have high territory control.<br><br>"
         });
@@ -1215,20 +1341,64 @@ Gang.prototype.displayGangContent = function() {
 
         UIElems.gangTerritoryWarfareCheckboxLabel = createElement("label", {
             color: "white",
+            display: "inline-block",
             for: "gang-management-territory-warfare-checkbox",
             innerText: "Engage in Territory Warfare",
-            tooltip: "Test",
+            tooltip: "Engaging in Territory Warfare sets your clash chance to 100%. " +
+                     "Disengaging will cause your clash chance to gradually decrease until " +
+                     "it reaches 0%",
         });
         UIElems.gangTerritorySubpage.appendChild(UIElems.gangTerritoryWarfareCheckbox);
         UIElems.gangTerritorySubpage.appendChild(UIElems.gangTerritoryWarfareCheckboxLabel);
 
         // Territory Clash chance
-        UIElems.gangTerritoryWarfareClashChance = createElement("p");
+        UIElems.gangTerritorySubpage.appendChild(createElement("br"));
+        UIElems.gangTerritoryWarfareClashChance = createElement("p", {display: "inline-block"});
         UIElems.gangTerritorySubpage.appendChild(UIElems.gangTerritoryWarfareClashChance);
+
+        UIElems.gangTerritorySubpage.appendChild(createElement("div", {
+            class: "help-tip",
+            display: "inline-block",
+            innerText: "?",
+            clickListener: () => {
+                dialogBoxCreate("This percentage represents the chance you have of 'clashing' with " +
+                                "with another gang. If you do not wish to gain/lose territory, " +
+                                "then keep this percentage at 0% by not engaging in territory " +
+                                "warfare.")
+            },
+        }));
+
+        // Checkbox for whether player wants to be notified of gang member death
+        UIElems.gangTerritoryDeathNotifyCheckbox = createElement("input", {
+            display: "inline-block",
+            id: "gang-management-notify-member-death-checkbox",
+            changeListener: () => {
+                this.notifyMemberDeath = UIElems.gangTerritoryDeathNotifyCheckbox.checked;
+            },
+            margin: "2px",
+            type: "checkbox",
+        });
+        UIElems.gangTerritoryDeathNotifyCheckbox.checked = this.notifyMemberDeath;
+
+        UIElems.gangTerritoryDeathNotifyCheckboxLabel = createElement("label", {
+            color: "white",
+            display: "inline-block",
+            for: "gang-management-notify-member-death-checkbox",
+            innerText: "Notify about Gang Member Deaths",
+            tooltip: "If this is enabled, then you will receive a pop-up notifying you " +
+                     "whenever one of your Gang Members dies in a territory clash.",
+        });
+        UIElems.gangTerritorySubpage.appendChild(createElement("br"));
+        UIElems.gangTerritorySubpage.appendChild(UIElems.gangTerritoryDeathNotifyCheckbox);
+        UIElems.gangTerritorySubpage.appendChild(UIElems.gangTerritoryDeathNotifyCheckboxLabel);
 
         // Territory info (percentages of territory owned for each gang)
         UIElems.gangTerritorySubpage.appendChild(createElement("br"));
-        var territoryBorder = createElement("fieldset", {width:"50%", display:"block"});
+        var territoryBorder = createElement("fieldset", {
+            display:"block",
+            margin: "6px",
+            width:"50%",
+        });
 
         UIElems.gangTerritoryInfoText = createElement("p");
 
@@ -1261,7 +1431,7 @@ Gang.prototype.updateGangContent = function() {
     if (UIElems.gangTerritorySubpage.style.display === "block") {
         // Territory Warfare Clash Chance
         UIElems.gangTerritoryWarfareClashChance.innerText =
-            `Territory Clash Chance: ${numeralWrapper.format(this.gangTerritoryWarfareClashChance, '0.000%')}`;
+            `Territory Clash Chance: ${numeralWrapper.format(this.territoryClashChance, '0.000%')}`;
 
         // Update territory information
         UIElems.gangTerritoryInfoText.innerHTML = "";
@@ -1496,23 +1666,7 @@ Gang.prototype.createGangMemberDisplayElement = function(memberObj) {
     });
 
     // Get an array of the name of all tasks that are applicable for this Gang
-    let tasks = null;
-    const allTasks = Object.keys(GangMemberTasks);
-    if (Player.gang.isHackingGang) {
-        tasks = allTasks.filter((e) => {
-            let task = GangMemberTasks[e];
-            if (task == null) { return false; }
-            if (e === "Unassigned") { return false; }
-            return task.isHacking;
-        });
-    } else {
-        tasks = allTasks.filter((e) => {
-            let task = GangMemberTasks[e];
-            if (task == null) { return false; }
-            if (e === "Unassigned") { return false; }
-            return task.isCombat;
-        });
-    }
+    let tasks = this.getAllTaskNames();
     tasks.unshift("---");
 
     // Create selector for Gang member task
@@ -1567,7 +1721,7 @@ Gang.prototype.createGangMemberDisplayElement = function(memberObj) {
 }
 
 Gang.prototype.updateGangMemberDisplayElement = function(memberObj) {
-    if (!UIElems.gangContentCreated || !Player.inGang()) {return;}
+    if (!UIElems.gangContentCreated) { return; }
     var name = memberObj.name;
 
     // Update stats + exp
@@ -1601,9 +1755,9 @@ Gang.prototype.updateGangMemberDisplayElement = function(memberObj) {
     var gainInfo = document.getElementById(name + "gang-member-gain-info");
     if (gainInfo) {
         gainInfo.innerHTML =
-            [`Money: $ ${formatNumber(5*memberObj.calculateMoneyGain(), 2)} / sec`,
-             `Respect: ${formatNumber(5*memberObj.calculateRespectGain(), 6)} / sec`,
-             `Wanted Level: ${formatNumber(5*memberObj.calculateWantedLevelGain(), 6)} / sec`,
+            [`Money: $ ${formatNumber(5*memberObj.calculateMoneyGain(this), 2)} / sec`,
+             `Respect: ${formatNumber(5*memberObj.calculateRespectGain(this), 6)} / sec`,
+             `Wanted Level: ${formatNumber(5*memberObj.calculateWantedLevelGain(this), 6)} / sec`,
              `Total Respect Earned: ${formatNumber(memberObj.earnedRespect, 6)}`].join("<br>");
     }
 }

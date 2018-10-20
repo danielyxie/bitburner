@@ -9,7 +9,7 @@ function unknownBladeburnerActionErrorMessage(functionName, actionType, actionNa
 }
 
 function unknownBladeburnerExceptionMessage(functionName, err) {
-	return `Bladeburner.${functionName}() failed with exception: ` + err;
+	return `bladeburner.${functionName}() failed with exception: ` + err;
 }
 
 function checkBladeburnerAccess(workerScript, functionName) {

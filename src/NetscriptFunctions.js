@@ -46,7 +46,8 @@ import {TextFile, getTextFile, createTextFile}      from "./TextFile";
 
 import {unknownBladeburnerActionErrorMessage,
         unknownBladeburnerExceptionMessage,
-        checkBladeburnerAccess}                     from "./NetscriptBladeburner.js";
+        checkBladeburnerAccess}                     from "./NetscriptBladeburner";
+import * as nsGang                                  from "./NetscriptGang";
 import {WorkerScript, workerScripts,
         killWorkerScript, NetscriptPorts}           from "./NetscriptWorker";
 import {makeRuntimeRejectMsg, netscriptDelay,
@@ -1101,7 +1102,7 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "ps() failed. Invalid IP or hostname passed in: " + ip);
             }
             const processes = [];
-            for(const i in server.runningScripts) {
+            for (const i in server.runningScripts) {
                 const script = server.runningScripts[i];
                 processes.push({filename:script.filename, threads: script.threads, args: script.args.slice()})
             }
@@ -3534,7 +3535,196 @@ function NetscriptFunctions(workerScript) {
             return true;
         },
 
-        //Bladeburner API
+        // Gang API
+        gang : {
+            getMemberNames : function() {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getMemberNames", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                }
+                updateDynamicRam("getMemberNames", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                nsGang.checkGangApiAccess(workerScript, "getMemberNames");
+
+                try {
+                    const names = [];
+                    for (const member of Player.gang.members) {
+                        names.push(member.name);
+                    }
+                    return names;
+                } catch(e) {
+                    throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("getMemberNames", e));
+                }
+            },
+            getGangInformation : function() {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getGangInformation", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                }
+                updateDynamicRam("getGangInformation", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                nsGang.checkGangApiAccess(workerScript, "getGangInformation");
+
+                try {
+                    return {
+                        faction:                    Player.gang.facName,
+                        isHacking:                  Player.gang.isHackingGang,
+                        moneyGainRate:              Player.gang.moneyGainRate,
+                        power:                      Player.gang.getPower(),
+                        respect:                    Player.gang.respect,
+                        respectGainRate:            Player.gang.respectGainRate,
+                        territory:                  Player.gang.getTerritory(),
+                        territoryClashChance:       Player.gang.territoryClashChance,
+                        territoryWarfareEngaged:    Player.gang.territoryWarfareEngaged,
+                        wantedLevel:                Player.gang.wanted,
+                        wantedLevelGainRate:        Player.gang.wantedGainRate,
+                    }
+                } catch(e) {
+                    throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("getGangInformation", e));
+                }
+            },
+            getMemberInformation : function(name) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getMemberInformation", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                }
+                updateDynamicRam("getMemberInformation", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                nsGang.checkGangApiAccess(workerScript, "getMemberInformation");
+
+                try {
+                    for (const member of Player.gang.members) {
+                        if (member.name === name) {
+                            return {
+                                agility:                member.agi,
+                                agilityEquipMult:       member.agi_mult,
+                                agilityAscensionMult:   member.agi_asc_mult,
+                                charisma:               member.cha,
+                                defense:                member.def,
+                                dexterity:              member.dex,
+                                hacking:                member.hack,
+                                strength:               member.str
+                                task:                   member.task.name,
+                            }
+                        }
+                    }
+
+                    return {}; // Member could not be found
+                } catch(e) {
+                    throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("getMemberInformation", e));
+                }
+            },
+            canRecruitMember : function() {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("canRecruitMember", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                }
+                updateDynamicRam("canRecruitMember", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                nsGang.checkGangApiAccess(workerScript, "canRecruitMember");
+
+                try {
+
+                } catch(e) {
+                    throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("canRecruitMember", e));
+                }
+            },
+            recruitMember : function() {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("recruitMember", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                }
+                updateDynamicRam("recruitMember", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                nsGang.checkGangApiAccess(workerScript, "recruitMember");
+
+                try {
+
+                } catch(e) {
+                    throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("recruitMember", e));
+                }
+            },
+            getTaskNames : function() {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getTaskNames", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                }
+                updateDynamicRam("getTaskNames", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                nsGang.checkGangApiAccess(workerScript, "getTaskNames");
+
+                try {
+
+                } catch(e) {
+                    throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("getTaskNames", e));
+                }
+            },
+            setMemberTask : function() {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("setMemberTask", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                }
+                updateDynamicRam("setMemberTask", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                nsGang.checkGangApiAccess(workerScript, "setMemberTask");
+
+                try {
+
+                } catch(e) {
+                    throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("setMemberTask", e));
+                }
+            },
+            getEquipmentNames : function() {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getEquipmentNames", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                }
+                updateDynamicRam("getEquipmentNames", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                nsGang.checkGangApiAccess(workerScript, "getEquipmentNames");
+
+                try {
+
+                } catch(e) {
+                    throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("getEquipmentNames", e));
+                }
+            },
+            getEquipmentCost : function() {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getEquipmentCost", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                }
+                updateDynamicRam("getEquipmentCost", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                nsGang.checkGangApiAccess(workerScript, "getEquipmentCost");
+
+                try {
+
+                } catch(e) {
+                    throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("getEquipmentCost", e));
+                }
+            },
+            purchaseEquipment : function() {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("purchaseEquipment", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                }
+                updateDynamicRam("purchaseEquipment", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                nsGang.checkGangApiAccess(workerScript, "purchaseEquipment");
+
+                try {
+
+                } catch(e) {
+                    throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("purchaseEquipment", e));
+                }
+            },
+            setTerritoryWarfare : function(engage) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("setTerritoryWarfare", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                }
+                updateDynamicRam("setTerritoryWarfare", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                nsGang.checkGangApiAccess(workerScript, "setTerritoryWarfare");
+
+                try {
+
+                } catch(e) {
+                    throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("setTerritoryWarfare", e));
+                }
+            },
+            getBonusTime : function() {
+                if (workerScript.checkingRam) { return 0; }
+                nsGang.checkGangApiAccess(workerScript, "getBonusTime");
+
+                try {
+                    return Math.round(Player.gang.storedCycles / 5);
+                } catch(e) {
+                    throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("getBonusTime", e));
+                }
+            },
+        }, // end gang namespace
+
+        // Bladeburner API
         bladeburner : {
             getContractNames : function() {
                 if (workerScript.checkingRam) {
