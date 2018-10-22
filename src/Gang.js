@@ -1,11 +1,6 @@
 /*
 gang member upgrades - they should be cheaper as the gang gets more  respect/power
-kopelli09/12/2018
-Another gang-related idea (and perhaps I'm not seeing it in the code) - gangs can lose power. Seems odd that the player's power can drop by removing members, but the other gangs are forever gaining power...
-Grub09/12/2018
-Maybe add a % chance of other gangs clashing?
-assign gangs a number of gang members and each clash kills a number of gang members based on each one's power
-and they lose a proportionate number of members
+
 Also add police clashes
 balance point to keep them from running out of control
 */
@@ -39,7 +34,7 @@ import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
 
 // Constants
 const GangRespectToReputationRatio = 2; // Respect is divided by this to get rep gain
-const MaximumGangMembers = 50;
+const MaximumGangMembers = 40;
 const GangRecruitCostMultiplier = 2;
 const CyclesPerTerritoryAndPowerUpdate = 100;
 const AscensionMultiplierRatio = 10 / 100; // Portion of upgrade multiplier that is kept after ascending
@@ -176,7 +171,7 @@ export function Gang(facName, hacking=false) {
     this.notifyMemberDeath = true;
 }
 
-Gang.prototype.power() = function() {
+Gang.prototype.getPower = function() {
     return AllGangs[this.facName].power;
 }
 
@@ -275,9 +270,9 @@ Gang.prototype.processTerritoryAndPowerGains = function(numCycles=1) {
                 AllGangs[name].power += this.calculatePower();
             } else {
                 // Adjust these parameters as necessary
-                const additiveGain = Math.random() * AllGangs[name].territory;
+                const additiveGain = 0.5 * Math.random() * AllGangs[name].territory;
                 AllGangs[name].power += (additiveGain);
-                AllGangs[name].power *= 1.01;
+                AllGangs[name].power *= 1.009;
             }
         }
     }
@@ -448,7 +443,7 @@ Gang.prototype.killMember = function(memberObj) {
     }
 }
 
-Gang.prototype.ascendMember = function(memberObj) {
+Gang.prototype.ascendMember = function(memberObj, workerScript) {
     try {
         /**
          * res is an object with the following format:
@@ -459,19 +454,40 @@ Gang.prototype.ascendMember = function(memberObj) {
          */
         const res = memberObj.ascend();
         this.respect = Math.max(1, this.respect - res.respect);
-        dialogBoxCreate([`You ascended ${memberObj.name}!`,
-                         `Your gang lost ${numeralWrapper.format(res.respect, "0.000a")} respect`,
-                         `${memberObj.name} gained the following stat multipliers for ascending:`,
-                         `Hacking: ${res.hack}`,
-                         `Strength: ${res.str}`,
-                         `Defense: ${res.def}`,
-                         `Dexterity: ${res.dex}`,
-                         `Agility: ${res.agi}`,
-                         `Charisma: ${res.cha}`].join("<br>"));
-        this.displayGangMemberList();
+        if (workerScript == null) {
+            dialogBoxCreate([`You ascended ${memberObj.name}!`,
+                             `Your gang lost ${numeralWrapper.format(res.respect, "0.000a")} respect`,
+                             `${memberObj.name} gained the following stat multipliers for ascending:`,
+                             `Hacking: ${res.hack}`,
+                             `Strength: ${res.str}`,
+                             `Defense: ${res.def}`,
+                             `Dexterity: ${res.dex}`,
+                             `Agility: ${res.agi}`,
+                             `Charisma: ${res.cha}`].join("<br>"));
+        } else {
+            workerScript.log(`Ascended Gang member ${memberObj.name}`);
+        }
+        if (routing.isOn(Page.Gang)) {
+            this.displayGangMemberList();
+        }
     } catch(e) {
-        exceptionAlert(e);
+        if (workerScript == null) {
+            exceptionAlert(e);
+        } else {
+            throw e; // Re-throw, will be caught in the Netscript Function
+        }
     }
+}
+
+// Cost of upgrade gets cheaper as gang increases in respect + power
+Gang.prototype.getDiscount = function() {
+    const power = this.getPower();
+    const respect = this.respect;
+
+    const respectLinearFac = 5e6;
+    const powerLinearFac = 1e6;
+    const discount = Math.pow(respect, 0.01) + respect / respectLinearFac + Math.pow(power, 0.01) + power / powerLinearFac - 1;
+    return Math.max(1, discount);
 }
 
 // Returns only valid tasks for this gang. Excludes 'Unassigned'
@@ -494,6 +510,15 @@ Gang.prototype.getAllTaskNames = function() {
         });
     }
     return tasks;
+}
+
+Gang.prototype.getAllUpgradeNames = function() {
+    return Object.keys(GangMemberUpgrades);
+}
+
+Gang.prototype.getUpgradeCost = function(upgName) {
+    if (GangMemberUpgrades[upgName] == null) { return Infinity; }
+    return GangMemberUpgrades[upgName].getCost(this);
 }
 
 Gang.prototype.toJSON = function() {
@@ -567,8 +592,10 @@ GangMember.prototype.calculatePower = function() {
 GangMember.prototype.assignToTask = function(taskName) {
     if (GangMemberTasks.hasOwnProperty(taskName)) {
         this.task = GangMemberTasks[taskName];
+        return true;
     } else {
         this.task = GangMemberTasks["Unassigned"];
+        return false;
     }
 }
 
@@ -734,11 +761,14 @@ GangMember.prototype.getAscensionResults = function() {
 }
 
 GangMember.prototype.buyUpgrade = function(upg, player, gang) {
-    if (!(upg instanceof GangMemberUpgrade)) {
-        throw new Error(`Invalid 'upg' argument passed into GangMember.buyUpgrade`);
+    if (typeof upg === 'string') {
+        upg = GangMemberUpgrades[upg];
     }
-    if (player.money.lt(upg.cost)) { return false; }
-    player.loseMoney(upg.cost);
+    if (!(upg instanceof GangMemberUpgrade)) {
+        return false;
+    }
+    if (player.money.lt(upg.getCost(gang))) { return false; }
+    player.loseMoney(upg.getCost(gang));
     if (upg.type === "g") {
         this.augmentations.push(upg.name);
     } else {
@@ -749,6 +779,7 @@ GangMember.prototype.buyUpgrade = function(upg, player, gang) {
         var initFilterValue = UIElems.gangMemberUpgradeBoxFilter.value.toString();
         gang.createGangMemberUpgradeBox(player, initFilterValue);
     }
+    return true;
 }
 
 GangMember.prototype.toJSON = function() {
@@ -822,6 +853,11 @@ function GangMemberUpgrade(name="", cost=0, type="w", mults={}) {
     this.createDescription();
 }
 
+GangMemberUpgrade.prototype.getCost = function(gang) {
+    const discount = gang.getDiscount();
+    return this.cost / discount;
+}
+
 GangMemberUpgrade.prototype.createDescription = function() {
     const lines = ["Increases:"];
     if (this.mults.str != null) {
@@ -887,10 +923,10 @@ Gang.prototype.createGangMemberUpgradeBox = function(player, initialFilter="") {
             return;
         }
 
-        for (var i = 1; i < UIElems.gangMemberUpgradeBoxElements.length; ++i) {
+        for (var i = 2; i < UIElems.gangMemberUpgradeBoxElements.length; ++i) {
             removeElement(UIElems.gangMemberUpgradeBoxElements[i]);
         }
-        UIElems.gangMemberUpgradeBoxElements = [UIElems.gangMemberUpgradeBoxFilter];
+        UIElems.gangMemberUpgradeBoxElements = [UIElems.gangMemberUpgradeBoxFilter, UIElems.gangMemberUpgradeBoxDiscount];
 
         var filter = UIElems.gangMemberUpgradeBoxFilter.value.toString();
         for (var i = 0; i < this.members.length; ++i) {
@@ -911,7 +947,14 @@ Gang.prototype.createGangMemberUpgradeBox = function(player, initialFilter="") {
             }
         });
 
-        UIElems.gangMemberUpgradeBoxElements = [UIElems.gangMemberUpgradeBoxFilter];
+        UIElems.gangMemberUpgradeBoxDiscount = createElement("p", {
+            innerText: "Discount: -" + numeralWrapper.format(1 - 1 / this.getDiscount(), "0.00%"),
+            marginLeft: "6px",
+            tooltip: "You get a discount on equipment and upgrades based on your gang's " +
+                     "respect and power. More respect and power leads to more discounts."
+        });
+
+        UIElems.gangMemberUpgradeBoxElements = [UIElems.gangMemberUpgradeBoxFilter, UIElems.gangMemberUpgradeBoxDiscount];
 
         var filter = UIElems.gangMemberUpgradeBoxFilter.value.toString();
         for (var i = 0; i < this.members.length; ++i) {
@@ -984,7 +1027,7 @@ GangMember.prototype.createGangMemberUpgradePanel = function(gangObj, player) {
     for (let upgName in GangMemberUpgrades) {
         if (GangMemberUpgrades.hasOwnProperty(upgName)) {
             let upg = GangMemberUpgrades[upgName];
-            if (player.money.lt(upg.cost)) { continue; }
+            if (player.money.lt(upg.getCost(gangObj))) { continue; }
             if (this.upgrades.includes(upgName) || this.augmentations.includes(upgName)) { continue; }
             switch (upg.type) {
                 case "w":
@@ -1030,10 +1073,10 @@ GangMember.prototype.createGangMemberUpgradePanel = function(gangObj, player) {
         let div = divs[i];
         for (let j = 0; j < upgradeArray.length; ++j) {
             let upg = upgradeArray[j];
-            (function (upg, div, memberObj, i) {
+            (function (upg, div, memberObj, i, gang) {
                 let createElementParams = {
-                    innerText:upg.name + " - " + numeralWrapper.format(upg.cost, "$0.000a"),
-                    class:"a-link-button", margin:"2px",  padding:"2px", display:"block",
+                    innerText: upg.name + " - " + numeralWrapper.format(upg.getCost(gang), "$0.000a"),
+                    class: "a-link-button", margin:"2px",  padding:"2px", display:"block",
                     fontSize:"11px",
                     clickListener:()=>{
                         memberObj.buyUpgrade(upg, player, gangObj);
@@ -1048,7 +1091,7 @@ GangMember.prototype.createGangMemberUpgradePanel = function(gangObj, player) {
                     createElementParams.tooltip = upg.desc;
                 }
                 div.appendChild(createElement("a", createElementParams));
-            })(upg, div, this, i);
+            })(upg, div, this, i, gangObj);
         }
     }
 
@@ -1089,6 +1132,7 @@ const UIElems = {
     gangMemberUpgradeBox:           null,
     gangMemberUpgradeBoxContent:    null,
     gangMemberUpgradeBoxFilter:     null,
+    gangMemberUpgradeBoxDiscount:   null,
     gangMemberUpgradeBoxElements:   null,
 
     // Gang Territory Elements
@@ -1190,7 +1234,7 @@ Gang.prototype.displayGangContent = function(player) {
         UIElems.gangManagementSubpage.appendChild(UIElems.gangInfo);
 
         UIElems.gangRecruitMemberButton = createElement("a", {
-            id:"gang-management-recruit-member-btn", class:"a-link-button-inactive",
+            id: "gang-management-recruit-member-btn", class:"a-link-button-inactive",
             innerHTML:"Recruit Gang Member", display:"inline-block", margin:"10px",
             clickListener:()=>{
                 const popupId = "recruit-gang-member-popup";
@@ -1224,8 +1268,10 @@ Gang.prototype.displayGangContent = function(player) {
                         // have a gang member with the same name
                         if (!this.recruitMember(name)) {
                             dialogBoxCreate("You already have a gang member with this name!");
+                            return false;
                         }
 
+                        removeElementById(popupId);
                         return false;
                     },
                     innerText: "Recruit Gang Member",
@@ -1428,10 +1474,18 @@ Gang.prototype.displayGangMemberList = function() {
 Gang.prototype.updateGangContent = function() {
     if (!UIElems.gangContentCreated) { return; }
 
+    if (UIElems.gangMemberUpgradeBoxOpened) {
+        UIElems.gangMemberUpgradeBoxDiscount.childNodes[0].nodeValue =
+            "Discount: -" + numeralWrapper.format(1 - 1 / this.getDiscount(), "0.00%");
+    }
+
     if (UIElems.gangTerritorySubpage.style.display === "block") {
         // Territory Warfare Clash Chance
         UIElems.gangTerritoryWarfareClashChance.innerText =
             `Territory Clash Chance: ${numeralWrapper.format(this.territoryClashChance, '0.000%')}`;
+
+        // Engaged in Territory Warfare checkbox
+        UIElems.gangTerritoryWarfareCheckbox.checked = this.territoryWarfareEngaged;
 
         // Update territory information
         UIElems.gangTerritoryInfoText.innerHTML = "";
@@ -1590,12 +1644,12 @@ Gang.prototype.createGangMemberDisplayElement = function(memberObj) {
     const statsDiv = createElement("div", {
         class: "gang-member-info-div",
         id: name + "gang-member-stats",
-        tooltipsmall: [`Hk: x${numeralWrapper.format(memberObj.hack_mult * memberObj.hack_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.hack_mult, "0,0.00")} Up, x${numeralWrapper.format(memberObj.hack_asc_mult, "0,0.00")} Asc)`,
-                       `St: x${numeralWrapper.format(memberObj.str_mult * memberObj.str_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.str_mult, "0,0.00")} Up, x${numeralWrapper.format(memberObj.str_asc_mult, "0,0.00")} Asc)`,
-                       `Df: x${numeralWrapper.format(memberObj.def_mult * memberObj.def_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.def_mult, "0,0.00")} Up, x${numeralWrapper.format(memberObj.def_asc_mult, "0,0.00")} Asc)`,
-                       `Dx: x${numeralWrapper.format(memberObj.dex_mult * memberObj.dex_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.dex_mult, "0,0.00")} Up, x${numeralWrapper.format(memberObj.dex_asc_mult, "0,0.00")} Asc)`,
-                       `Ag: x${numeralWrapper.format(memberObj.agi_mult * memberObj.agi_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.agi_mult, "0,0.00")} Up, x${numeralWrapper.format(memberObj.agi_asc_mult, "0,0.00")} Asc)`,
-                       `Ch: x${numeralWrapper.format(memberObj.cha_mult * memberObj.cha_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.cha_mult, "0,0.00")} Up, x${numeralWrapper.format(memberObj.cha_asc_mult, "0,0.00")} Asc)`].join("<br>"),
+        tooltipsmall: [`Hk: x${numeralWrapper.format(memberObj.hack_mult * memberObj.hack_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.hack_mult, "0,0.00")} Eq, x${numeralWrapper.format(memberObj.hack_asc_mult, "0,0.00")} Asc)`,
+                       `St: x${numeralWrapper.format(memberObj.str_mult * memberObj.str_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.str_mult, "0,0.00")} Eq, x${numeralWrapper.format(memberObj.str_asc_mult, "0,0.00")} Asc)`,
+                       `Df: x${numeralWrapper.format(memberObj.def_mult * memberObj.def_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.def_mult, "0,0.00")} Eq, x${numeralWrapper.format(memberObj.def_asc_mult, "0,0.00")} Asc)`,
+                       `Dx: x${numeralWrapper.format(memberObj.dex_mult * memberObj.dex_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.dex_mult, "0,0.00")} Eq, x${numeralWrapper.format(memberObj.dex_asc_mult, "0,0.00")} Asc)`,
+                       `Ag: x${numeralWrapper.format(memberObj.agi_mult * memberObj.agi_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.agi_mult, "0,0.00")} Eq, x${numeralWrapper.format(memberObj.agi_asc_mult, "0,0.00")} Asc)`,
+                       `Ch: x${numeralWrapper.format(memberObj.cha_mult * memberObj.cha_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.cha_mult, "0,0.00")} Eq, x${numeralWrapper.format(memberObj.cha_asc_mult, "0,0.00")} Asc)`].join("<br>"),
     });
     UIElems.gangMemberPanels[name]["statsDiv"] = statsDiv;
     const statsP = createElement("pre", {
@@ -1742,12 +1796,12 @@ Gang.prototype.updateGangMemberDisplayElement = function(memberObj) {
         const statsDiv = panel["statsDiv"];
         if (statsDiv) {
             statsDiv.firstChild.innerHTML =
-                [`Hk: x${numeralWrapper.format(memberObj.hack_mult * memberObj.hack_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.hack_mult, "0,0.00")} Up, x${numeralWrapper.format(memberObj.hack_asc_mult, "0,0.00")} Asc)`,
-                `St: x${numeralWrapper.format(memberObj.str_mult * memberObj.str_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.str_mult, "0,0.00")} Up, x${numeralWrapper.format(memberObj.str_asc_mult, "0,0.00")} Asc)`,
-                `Df: x${numeralWrapper.format(memberObj.def_mult * memberObj.def_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.def_mult, "0,0.00")} Up, x${numeralWrapper.format(memberObj.def_asc_mult, "0,0.00")} Asc)`,
-                `Dx: x${numeralWrapper.format(memberObj.dex_mult * memberObj.dex_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.dex_mult, "0,0.00")} Up, x${numeralWrapper.format(memberObj.dex_asc_mult, "0,0.00")} Asc)`,
-                `Ag: x${numeralWrapper.format(memberObj.agi_mult * memberObj.agi_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.agi_mult, "0,0.00")} Up, x${numeralWrapper.format(memberObj.agi_asc_mult, "0,0.00")} Asc)`,
-                `Ch: x${numeralWrapper.format(memberObj.cha_mult * memberObj.cha_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.cha_mult, "0,0.00")} Up, x${numeralWrapper.format(memberObj.cha_asc_mult, "0,0.00")} Asc)`].join("<br>");
+                [`Hk: x${numeralWrapper.format(memberObj.hack_mult * memberObj.hack_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.hack_mult, "0,0.00")} Eq, x${numeralWrapper.format(memberObj.hack_asc_mult, "0,0.00")} Asc)`,
+                `St: x${numeralWrapper.format(memberObj.str_mult * memberObj.str_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.str_mult, "0,0.00")} Eq, x${numeralWrapper.format(memberObj.str_asc_mult, "0,0.00")} Asc)`,
+                `Df: x${numeralWrapper.format(memberObj.def_mult * memberObj.def_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.def_mult, "0,0.00")} Eq, x${numeralWrapper.format(memberObj.def_asc_mult, "0,0.00")} Asc)`,
+                `Dx: x${numeralWrapper.format(memberObj.dex_mult * memberObj.dex_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.dex_mult, "0,0.00")} Eq, x${numeralWrapper.format(memberObj.dex_asc_mult, "0,0.00")} Asc)`,
+                `Ag: x${numeralWrapper.format(memberObj.agi_mult * memberObj.agi_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.agi_mult, "0,0.00")} Eq, x${numeralWrapper.format(memberObj.agi_asc_mult, "0,0.00")} Asc)`,
+                `Ch: x${numeralWrapper.format(memberObj.cha_mult * memberObj.cha_asc_mult, "0,0.00")}(x${numeralWrapper.format(memberObj.cha_mult, "0,0.00")} Eq, x${numeralWrapper.format(memberObj.cha_asc_mult, "0,0.00")} Asc)`].join("<br>");
         }
     }
 

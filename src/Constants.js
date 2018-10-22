@@ -506,15 +506,18 @@ let CONSTANTS = {
      v0.41.0
      * WARNING: In NetscriptJS, defining a function called print() is no longer possible
      * Gang Mechanic Changes (BitNode-2):
+     *** Added a Gang Netscript API
      *** Added new 'ascension' mechanic for Gang Members
      *** The first three gang members are now 'free' (can be recruited instantly)
-     *** Maximum number of increased Gang Members increased from 20 to 50
+     *** Maximum number of increased Gang Members increased from 20 to 40
      *** Changed the formula for calculating respect needed to recruit the next gang member
      *** Added a new category of upgrades for Gang Members: Augmentations
      *** Non-Augmentation Gang member upgrades are now significantly weaker
      *** Reputation for your Gang faction can no longer be gained through Infiltration
      *** Re-worked the territory 'warfare' mechanic so that player can choose when to engage in it
-     *** Player's faction reputation multiplier no longer affects reputation gang from earning respect
+     *** Gang Members can now be killed during territory 'warfare'
+     *** Changed BitNode-2 Multipliers to make hacking slightly less profitable
+     *** Gang Member Equipment + Upgrades now get cheaper as your gang grows in power and respect
      * RAM Cost of accessing the global document object lowered from 100 GB to 25 GB
      * RAM Cost to use Singularity Functions outside of BitNode-4 lowered by 75%. They now only cost twice as much as they do in BitNode-4
      * b1t_flum3.exe now takes significantly less time to create

@@ -3593,16 +3593,29 @@ function NetscriptFunctions(workerScript) {
                                 agility:                member.agi,
                                 agilityEquipMult:       member.agi_mult,
                                 agilityAscensionMult:   member.agi_asc_mult,
+                                augmentation:           member.augmentations.slice(),
                                 charisma:               member.cha,
+                                charismaEquipMult:      member.cha_mult,
+                                charismaAscensionMult:  member.cha_asc_mult,
                                 defense:                member.def,
+                                defenseEquipMult:       member.def_mult,
+                                defenseAscensionMult:   member.def_asc_mult,
                                 dexterity:              member.dex,
+                                dexterityEquipMult:     member.dex_mult,
+                                dexterityAscensionMult: member.dex_asc_mult,
+                                equipment:              member.upgrades.slice(),
                                 hacking:                member.hack,
-                                strength:               member.str
+                                hackingEquipMult:       member.hack_mult,
+                                hackingAscensionMult:   member.hack_asc_mult,
+                                strength:               member.str,
+                                strengthEquipMult:      member.str_mult,
+                                strengthAscensionMult:  member.str_asc_mult,
                                 task:                   member.task.name,
                             }
                         }
                     }
 
+                    workerScript.log(`Invalid argument passed to gang.getMemberInformation(). No gang member could be found with name ${name}`);
                     return {}; // Member could not be found
                 } catch(e) {
                     throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("getMemberInformation", e));
@@ -3616,12 +3629,12 @@ function NetscriptFunctions(workerScript) {
                 nsGang.checkGangApiAccess(workerScript, "canRecruitMember");
 
                 try {
-
+                    return Player.gang.canRecruitMember();
                 } catch(e) {
                     throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("canRecruitMember", e));
                 }
             },
-            recruitMember : function() {
+            recruitMember : function(name) {
                 if (workerScript.checkingRam) {
                     return updateStaticRam("recruitMember", CONSTANTS.ScriptGangApiBaseRamCost / 2);
                 }
@@ -3629,7 +3642,7 @@ function NetscriptFunctions(workerScript) {
                 nsGang.checkGangApiAccess(workerScript, "recruitMember");
 
                 try {
-
+                    return Player.gang.recruitMember(name);
                 } catch(e) {
                     throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("recruitMember", e));
                 }
@@ -3642,12 +3655,14 @@ function NetscriptFunctions(workerScript) {
                 nsGang.checkGangApiAccess(workerScript, "getTaskNames");
 
                 try {
-
+                    const tasks = Player.gang.getAllTaskNames();
+                    tasks.unshift("Unassigned");
+                    return tasks;
                 } catch(e) {
                     throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("getTaskNames", e));
                 }
             },
-            setMemberTask : function() {
+            setMemberTask : function(memberName, taskName) {
                 if (workerScript.checkingRam) {
                     return updateStaticRam("setMemberTask", CONSTANTS.ScriptGangApiBaseRamCost / 2);
                 }
@@ -3655,7 +3670,14 @@ function NetscriptFunctions(workerScript) {
                 nsGang.checkGangApiAccess(workerScript, "setMemberTask");
 
                 try {
+                    for (const member of Player.gang.members) {
+                        if (member.name === memberName) {
+                            return member.assignToTask(taskName);
+                        }
+                    }
 
+                    workerScript.log(`Invalid argument passed to gang.setMemberTask(). No gang member could be found with name ${memberName}`);
+                    return false;
                 } catch(e) {
                     throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("setMemberTask", e));
                 }
@@ -3668,12 +3690,12 @@ function NetscriptFunctions(workerScript) {
                 nsGang.checkGangApiAccess(workerScript, "getEquipmentNames");
 
                 try {
-
+                    return Player.gang.getAllUpgradeNames();
                 } catch(e) {
                     throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("getEquipmentNames", e));
                 }
             },
-            getEquipmentCost : function() {
+            getEquipmentCost : function(equipName) {
                 if (workerScript.checkingRam) {
                     return updateStaticRam("getEquipmentCost", CONSTANTS.ScriptGangApiBaseRamCost / 2);
                 }
@@ -3681,12 +3703,12 @@ function NetscriptFunctions(workerScript) {
                 nsGang.checkGangApiAccess(workerScript, "getEquipmentCost");
 
                 try {
-
+                    return Player.gang.getUpgradeCost(equipName);
                 } catch(e) {
                     throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("getEquipmentCost", e));
                 }
             },
-            purchaseEquipment : function() {
+            purchaseEquipment : function(memberName, equipName) {
                 if (workerScript.checkingRam) {
                     return updateStaticRam("purchaseEquipment", CONSTANTS.ScriptGangApiBaseRamCost / 2);
                 }
@@ -3694,9 +3716,36 @@ function NetscriptFunctions(workerScript) {
                 nsGang.checkGangApiAccess(workerScript, "purchaseEquipment");
 
                 try {
+                    for (const member in Player.gang.members) {
+                        if (member.name === memberName) {
+                            return member.buyUpgrade(equipName, Player, Player.gang);
+                        }
+                    }
 
+                    workerScript.log(`Invalid argument passed to gang.purchaseEquipment(). No gang member could be found with name ${memberName}`);
+                    return false;
                 } catch(e) {
                     throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("purchaseEquipment", e));
+                }
+            },
+            ascendMember : function(name) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("ascendMember", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                }
+                updateDynamicRam("ascendMember", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                nsGang.checkGangApiAccess(workerScript, "ascendMember");
+
+                try {
+                    for (const member in Player.gang.members) {
+                        if (member.name === name) {
+                            return Player.gang.ascendMember(member, workerScript);
+                        }
+                    }
+
+                    workerScript.log(`Invalid argument passed to gang.ascendMember(). No gang member could be found with name ${memberName}`);
+                    return false;
+                } catch(e) {
+                    throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("ascendMember", e));
                 }
             },
             setTerritoryWarfare : function(engage) {
@@ -3707,7 +3756,11 @@ function NetscriptFunctions(workerScript) {
                 nsGang.checkGangApiAccess(workerScript, "setTerritoryWarfare");
 
                 try {
-
+                    if (engage) {
+                        Player.gang.territoryWarfareEngaged = true;
+                    } else {
+                        Player.gang.territoryWarfareEngaged = false;
+                    }
                 } catch(e) {
                     throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("setTerritoryWarfare", e));
                 }
