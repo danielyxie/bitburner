@@ -316,12 +316,7 @@ export function createDevMenu() {
         innerText: "Connect to server",
     });
 
-    // Add everything to container, then append to main menu
-    const devMenuContainer = createElement("div", {
-        class: "generic-menupage-container",
-        id: devMenuContainerId,
-    });
-
+    // Bladeburner
     const bladeburnerHeader = createElement("h2", {innerText: "Bladeburner"});
 
     const bladeburnerGainRankInput = createElement("input", {
@@ -343,7 +338,37 @@ export function createDevMenu() {
         },
         display: "block",
         innerText: "Gain Bladeburner Rank",
+    });
+
+    // Gang
+    const gangHeader = createElement("h2", {innerText: "Gang"});
+
+    const gangStoredCyclesInput = createElement("input", {
+        class: "text-input",
+        display: "block",
+        placeholder: "# Cycles to add",
+        type: "number",
+    });
+
+    const gangAddStoredCycles = createElement("button", {
+        class: "std-button",
+        clickListener: () => {
+            try {
+                const cycles = parseInt(gangStoredCyclesInput.value);
+                Player.gang.storedCycles += cycles;
+            } catch(e) {
+                exceptionAlert(`Failed to add stored cycles to gang mechanic: ${e}`);
+            }
+        },
+        display: "block",
+        innerText: "Add cycles to Gang mechanic",
     })
+
+    // Add everything to container, then append to main menu
+    const devMenuContainer = createElement("div", {
+        class: "generic-menupage-container",
+        id: devMenuContainerId,
+    });
 
     devMenuContainer.appendChild(devMenuText);
     devMenuContainer.appendChild(genericHeader);
@@ -393,6 +418,9 @@ export function createDevMenu() {
     devMenuContainer.appendChild(bladeburnerHeader);
     devMenuContainer.appendChild(bladeburnerGainRankInput);
     devMenuContainer.appendChild(bladeburnerGainRankButton);
+    devMenuContainer.appendChild(gangHeader);
+    devMenuContainer.appendChild(gangStoredCyclesInput);
+    devMenuContainer.appendChild(gangAddStoredCycles);
 
    const entireGameContainer = document.getElementById("entire-game-container");
    if (entireGameContainer == null) {

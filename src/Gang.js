@@ -269,10 +269,16 @@ Gang.prototype.processTerritoryAndPowerGains = function(numCycles=1) {
             if (name == gangName) {
                 AllGangs[name].power += this.calculatePower();
             } else {
-                // Adjust these parameters as necessary
-                const additiveGain = 0.5 * Math.random() * AllGangs[name].territory;
-                AllGangs[name].power += (additiveGain);
-                AllGangs[name].power *= 1.009;
+                // All NPC gangs get random power gains
+                const gainRoll = Math.random();
+                if (gainRoll < 0.5) {
+                    // Multiplicative gain (50% chance)
+                    AllGangs[name].power *= 1.008;
+                } else {
+                    // Additive gain (50% chance)
+                    const additiveGain = 0.5 * gainRoll * AllGangs[name].territory;
+                    AllGangs[name].power += (additiveGain);
+                }
             }
         }
     }
@@ -470,6 +476,7 @@ Gang.prototype.ascendMember = function(memberObj, workerScript) {
         if (routing.isOn(Page.Gang)) {
             this.displayGangMemberList();
         }
+        return res;
     } catch(e) {
         if (workerScript == null) {
             exceptionAlert(e);

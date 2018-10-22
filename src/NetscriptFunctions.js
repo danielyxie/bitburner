@@ -3593,7 +3593,7 @@ function NetscriptFunctions(workerScript) {
                                 agility:                member.agi,
                                 agilityEquipMult:       member.agi_mult,
                                 agilityAscensionMult:   member.agi_asc_mult,
-                                augmentation:           member.augmentations.slice(),
+                                augmentations:          member.augmentations.slice(),
                                 charisma:               member.cha,
                                 charismaEquipMult:      member.cha_mult,
                                 charismaAscensionMult:  member.cha_asc_mult,
