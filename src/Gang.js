@@ -1,6 +1,4 @@
 /*
-gang member upgrades - they should be cheaper as the gang gets more  respect/power
-
 Also add police clashes
 balance point to keep them from running out of control
 */
@@ -37,7 +35,7 @@ const GangRespectToReputationRatio = 2; // Respect is divided by this to get rep
 const MaximumGangMembers = 40;
 const GangRecruitCostMultiplier = 2;
 const CyclesPerTerritoryAndPowerUpdate = 100;
-const AscensionMultiplierRatio = 10 / 100; // Portion of upgrade multiplier that is kept after ascending
+const AscensionMultiplierRatio = 15 / 100; // Portion of upgrade multiplier that is kept after ascending
 
 // Switch between territory and management screen with 1 and 2
 $(document).keydown(function(event) {
@@ -395,13 +393,13 @@ Gang.prototype.calculatePower = function() {
             memberTotal += gain;
         }
     }
-    return (0.0005 * memberTotal);
+    return (0.001 * memberTotal);
 }
 
 Gang.prototype.clash = function(won=false) {
     // Determine if a gang member should die
     let baseDeathChance;
-    won ? baseDeathChance = 0.05 : baseDeathChance = 0.1;
+    won ? baseDeathChance = 0.03 : baseDeathChance = 0.06;
 
     // If the clash was lost, the player loses a small percentage of power
     if (!won) {
@@ -415,7 +413,7 @@ Gang.prototype.clash = function(won=false) {
         if (member.task !== "Territory Warfare") { continue; }
 
         // Chance to die is decreased based on defense
-        const modifiedDeathChance = baseDeathChance / Math.pow(def, 0.25);
+        const modifiedDeathChance = baseDeathChance / Math.pow(member.def, 0.25);
         if (Math.random() < modifiedDeathChance) {
             this.killMember(member);
         }
@@ -426,9 +424,9 @@ Gang.prototype.killMember = function(memberObj) {
     const gangName = this.facName;
 
     // Player loses a percentage of total respect, plus whatever respect that member has earned
-    const totalRespect = this.gang.respect;
+    const totalRespect = this.respect;
     const lostRespect = (0.05 * totalRespect) + memberObj.earnedRespect;
-    this.gang.respect = Math.max(0, totalRespect - lostRespect);
+    this.respect = Math.max(0, totalRespect - lostRespect);
 
     for (let i = 0; i < this.members.length; ++i) {
         if (memberObj.name === this.members[i].name) {
@@ -461,14 +459,16 @@ Gang.prototype.ascendMember = function(memberObj, workerScript) {
         this.respect = Math.max(1, this.respect - res.respect);
         if (workerScript == null) {
             dialogBoxCreate([`You ascended ${memberObj.name}!`,
+                             "",
                              `Your gang lost ${numeralWrapper.format(res.respect, "0.000a")} respect`,
+                             "",
                              `${memberObj.name} gained the following stat multipliers for ascending:`,
-                             `Hacking: ${res.hack}`,
-                             `Strength: ${res.str}`,
-                             `Defense: ${res.def}`,
-                             `Dexterity: ${res.dex}`,
-                             `Agility: ${res.agi}`,
-                             `Charisma: ${res.cha}`].join("<br>"));
+                             `Hacking: ${numeralWrapper.format(res.hack, "0.000%")}`,
+                             `Strength: ${numeralWrapper.format(res.str, "0.000%")}`,
+                             `Defense: ${numeralWrapper.format(res.def, "0.000%")}`,
+                             `Dexterity: ${numeralWrapper.format(res.dex, "0.000%")}`,
+                             `Agility: ${numeralWrapper.format(res.agi, "0.000%")}`,
+                             `Charisma: ${numeralWrapper.format(res.cha, "0.000%")}`].join("<br>"));
         } else {
             workerScript.log(`Ascended Gang member ${memberObj.name}`);
         }
@@ -667,7 +667,7 @@ GangMember.prototype.calculateMoneyGain = function(gang) {
                         (task.dexWeight/100) * this.dex +
                         (task.agiWeight/100) * this.agi +
                         (task.chaWeight/100) * this.cha;
-    statWeight -= (3.5 * task.difficulty);
+    statWeight -= (3.2 * task.difficulty);
     if (statWeight <= 0) { return 0; }
     const territoryMult = Math.pow(AllGangs[gang.facName].territory * 100, task.territory.money) / 100;
     if (isNaN(territoryMult) || territoryMult <= 0) { return 0; }
@@ -677,13 +677,16 @@ GangMember.prototype.calculateMoneyGain = function(gang) {
 
 GangMember.prototype.gainExperience = function(numCycles=1) {
     const task = this.getTask();
-    if (task == null || !(task instanceof GangMemberTask)) {return;}
-    this.hack_exp   += (task.hackWeight / 1500) * task.difficulty * numCycles;
-    this.str_exp    += (task.strWeight / 1500) * task.difficulty * numCycles;
-    this.def_exp    += (task.defWeight / 1500) * task.difficulty * numCycles;
-    this.dex_exp    += (task.dexWeight / 1500) * task.difficulty * numCycles;
-    this.agi_exp    += (task.agiWeight / 1500) * task.difficulty * numCycles;
-    this.cha_exp    += (task.chaWeight / 1500) * task.difficulty * numCycles;
+    if (task == null || !(task instanceof GangMemberTask) || task === GangMemberTasks["Unassigned"]) {return;}
+    const difficultyMult = Math.pow(task.difficulty, 0.8);
+    const difficultyPerCycles = difficultyMult * numCycles;
+    const weightDivisor = 1500;
+    this.hack_exp   += (task.hackWeight / weightDivisor) * difficultyPerCycles;
+    this.str_exp    += (task.strWeight / weightDivisor) * difficultyPerCycles;
+    this.def_exp    += (task.defWeight / weightDivisor) * difficultyPerCycles;
+    this.dex_exp    += (task.dexWeight / weightDivisor) * difficultyPerCycles;
+    this.agi_exp    += (task.agiWeight / weightDivisor) * difficultyPerCycles;
+    this.cha_exp    += (task.chaWeight / weightDivisor) * difficultyPerCycles;
 }
 
 GangMember.prototype.recordEarnedRespect = function(numCycles=1, gang) {
@@ -855,7 +858,6 @@ GangMemberTask.fromJSON = function(value) {
 
 Reviver.constructors.GangMemberTask = GangMemberTask;
 
-//TODO Human trafficking and an equivalent hacking crime
 const GangMemberTasks = {};
 
 function addGangMemberTask(name, desc, isHacking, isCombat, params) {
@@ -1688,6 +1690,9 @@ Gang.prototype.createGangMemberDisplayElement = function(memberObj) {
             const txt = createElement("pre", {
                innerText: ["Are you sure you want to ascend this member? (S)he will lose all of",
                            "his non-Augmentation upgrades and his/her stats will reset back to 1.",
+                           "",
+                           `Furthermore, your gang will lose ${numeralWrapper.format(memberObj.earnedRespect, "0.000000")} respect`,
+                           "",
                            "In return, (s)he will gain the following permanent boost to stat multipliers:\n",
                            `Hacking: +${numeralWrapper.format(ascendBenefits.hack, "0.00%")}`,
                            `Strength: +${numeralWrapper.format(ascendBenefits.str, "0.00%")}`,
@@ -1720,8 +1725,12 @@ Gang.prototype.createGangMemberDisplayElement = function(memberObj) {
     const ascendHelpTip = createElement("div", {
         class: "help-tip",
         clickListener: () => {
-            dialogBoxCreate(["TODO Ascending a Gang Member resets the member's progress and stats in exchange",
-                             "for a permanent boost to their stat multipliers. "].join(" "));
+            dialogBoxCreate(["Ascending a Gang Member resets the member's progress and stats in exchange",
+                             "for a permanent boost to their stat multipliers.",
+                             "<br><br>The additional stat multiplier that the Gang Member gains upon ascension",
+                             "is based on the amount of multipliers the member has from non-Augmentation Equipment.",
+                             "<br><br>Upon ascension, the member will lose all of its non-Augmentation Equipment and your",
+                             "gang will lose respect equal to the total respect earned by the member."].join(" "));
         },
         innerText: "?",
         marginTop: "5px",
