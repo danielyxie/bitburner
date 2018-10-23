@@ -314,8 +314,8 @@ function prestigeSourceFile() {
         stockMarketList.removeChild(stockMarketList.firstChild);
     }
 
+    if (Player.inGang()) { Player.gang.clearUI(); }
     Player.gang = null;
-    deleteGangDisplayContent();
     Player.corporation = null;
     Player.bladeburner = null;
 

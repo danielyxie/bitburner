@@ -28,10 +28,6 @@ import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
         yesNoTxtInpBoxClose}                    from "../utils/YesNoBox";
 
 function displayLocationContent() {
-	if (Engine.Debug) {
-		console.log("displayLocationContent() called with location " + Player.location)
-	}
-
     var returnToWorld           = document.getElementById("location-return-to-world-button");
 
     var locationName            = document.getElementById("location-name");
@@ -1811,7 +1807,7 @@ function initLocationButtons() {
         yesBtn.innerHTML = "Purchase"; noBtn.innerHTML = "Cancel";
         yesBtn.addEventListener("click", ()=>{
             if (Player.money.lt(cost)) {
-                dialogBoxCreate("You do not have enough mone to purchase an additional CPU Core for your home computer!");
+                dialogBoxCreate("You do not have enough money to purchase an additional CPU Core for your home computer!");
             } else {
                 Player.loseMoney(cost);
                 Player.getHomeComputer().cpuCores++;
