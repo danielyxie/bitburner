@@ -28,9 +28,7 @@ function initBitNodes() {
                             "left behind from the collapse of Western government in the 2050's. As society and civlization broke down, " +
                             "people quickly succumbed to the innate human impulse of evil and savagery. The organized crime " +
                             "factions quickly rose to the top of the modern world.<br><br>" +
-                            "In this BitNode:<br><br>" +
-                            "Your hacking level is reduced by 25%<br>"  +
-                            "The growth rate and maximum amount of money available on servers is significantly decreased<br>" +
+                            "In this BitNode:<br><br>The maximum amount of money available on a server is significantly decreased<br>" +
                             "The amount of money gained from crimes and Infiltration is tripled<br>" +
                             "Certain Factions (Slum Snakes, Tetrads, The Syndicate, The Dark Army, Speakers for the Dead, " +
                             "NiteSec, The Black Hand) give the player the ability to form and manage their own gangs. These gangs " +
@@ -216,8 +214,6 @@ function initBitNodeMultipliers() {
         case 1: //Source Genesis (every multiplier is 1)
             break;
         case 2: //Rise of the Underworld
-            BitNodeMultipliers.HackingLevelMultiplier   = 0.75;
-            BitNodeMultipliers.ServerGrowthRate         = 0.75;
             BitNodeMultipliers.ServerMaxMoney           = 0.2;
             BitNodeMultipliers.ServerStartingMoney      = 0.4;
             BitNodeMultipliers.CrimeMoney               = 3;

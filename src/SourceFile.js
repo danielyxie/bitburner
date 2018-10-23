@@ -27,9 +27,9 @@ function initSourceFiles() {
                                       "Level 3: 28%");
     SourceFiles["SourceFile2"] = new SourceFile(2, "This Source-File increases the player's crime success rate, crime money, and charisma " +
                                       "multipliers by:<br><br>" +
-                                      "Level 1: 24%<br>" +
-                                      "Level 2: 36%<br>" +
-                                      "Level 3: 42%");
+                                      "Level 1: 20%<br>" +
+                                      "Level 2: 30%<br>" +
+                                      "Level 3: 35%");
     SourceFiles["SourceFile3"] = new SourceFile(3,"This Source-File lets you create corporations on other BitNodes (although " +
                                                   "some BitNodes will disable this mechanic). This Source-File also increases your charisma and company salary multipliers by:<br>" +
                                                   "Level 1: 8%<br>" +
@@ -126,7 +126,7 @@ function applySourceFile(srcFile) {
         case 2: //Rise of the Underworld
             var mult = 0;
             for (var i = 0; i < srcFile.lvl; ++i) {
-                mult += (24 / (Math.pow(2, i)));
+                mult += (20 / (Math.pow(2, i)));
             }
             var incMult = 1 + (mult / 100);
             Player.crime_money_mult    *= incMult;

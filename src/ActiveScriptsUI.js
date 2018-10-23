@@ -152,7 +152,7 @@ function addActiveScriptsItem(workerscript) {
         panel.appendChild(createElement("br"));
         panel.appendChild(createElement("span", {
             innerText: "Log",
-            class: "accordion-button",
+            class: "active-scripts-button",
             margin: "4px",
             padding: "4px",
             clickListener: () => {
@@ -162,7 +162,7 @@ function addActiveScriptsItem(workerscript) {
         }));
         panel.appendChild(createElement("span", {
             innerText: "Kill Script",
-            class: "accordion-button",
+            class: "active-scripts-button",
             margin: "4px",
             padding: "4px",
             clickListener: () => {

@@ -24,7 +24,7 @@ import {Reviver, Generic_toJSON,
 import {createElement}                          from "../utils/uiHelpers/createElement";
 import {createPopup}                            from "../utils/uiHelpers/createPopup";
 import {createStatusText}                       from "./ui/createStatusText";
-import {numeralWrapper}                         from "./ui/numeralFormat";
+import {formatNumber}                           from "../utils/StringHelperFunctions";
 import {removeElementById}                      from "../utils/uiHelpers/removeElementById";
 
 import Decimal                                  from "decimal.js";
@@ -517,8 +517,8 @@ function loadImportedGame(saveObj, saveString) {
     Player.lastUpdate = Engine._lastUpdate;
     Engine.start();                 //Run main game loop and Scripts loop
     dialogBoxCreate("While you were offline, your scripts generated <span class='money-gold'>$" +
-                    numeralWrapper.format(offlineProductionFromScripts, '0,0.00') + "</span> and your Hacknet Nodes generated <span class='money-gold'>$" +
-                    numeralWrapper.format(offlineProductionFromHacknetNodes, '0,0.00') + "</span>");
+                    formatNumber(offlineProductionFromScripts, 2) + "</span> and your Hacknet Nodes generated <span class='money-gold'>$" +
+                    formatNumber(offlineProductionFromHacknetNodes, 2) + "</span>");
     return true;
 }
 

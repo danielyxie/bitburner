@@ -14,7 +14,7 @@ You can use the Singularity Functions in other BitNodes if and only if you have 
 Source-File 4 will open up additional Singularity Functions that you can use in other BitNodes. If your Source-File 4 is upgraded all the way to
 level 3, then you will be able to access all of the Singularity Functions.
 
-Note that Singularity Functions require twice as much RAM outside of BitNode-4
+Note that Singularity Functions require a lot of RAM outside of BitNode-4 (their RAM costs are multiplied by 10 if you are not in BitNode-4)
 
 universityCourse
 ----------------
@@ -422,7 +422,7 @@ donateToFaction
 
     Attempts to donate money to the specified faction in exchange for reputation.
     Returns true if you successfully donate the money, and false otherwise.
-
+        
 createProgram
 -------------
 

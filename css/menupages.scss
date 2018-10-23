@@ -248,6 +248,25 @@
     }
 }
 
+.active-scripts-button {
+    @include borderRadius(12px);
+    @include boxShadow(1px 1px 3px #000);
+
+    color: #aaa;
+    font-size: $defaultFontSize;
+    font-weight: bold;
+    margin: 4px;
+    padding: 4px;
+    background-color: #000;
+
+    &:hover,
+    &:focus {
+        color: #fff;
+        text-decoration: none;
+        cursor: pointer;
+    }
+}
+
 /* Hacknet Nodes */
 #hacknet-nodes-container {
     position: fixed;
@@ -603,4 +622,19 @@
     color: var(--my-font-color);
     margin: 2px;
     padding: 0;
+}
+
+/* Gang */
+#gang-container {
+    position: fixed;
+    padding: 6px;
+}
+
+#gang-management-subpage > p {
+    padding: 4px;
+}
+
+.gang-member-info-div {
+    float: left;
+    background-color: #555;
 }
