@@ -518,6 +518,7 @@ let CONSTANTS = {
      *** Gang Members can now be killed during territory 'warfare'
      *** Changed BitNode-2 Multipliers to make hacking slightly less profitable
      *** Gang Member Equipment + Upgrades now get cheaper as your gang grows in power and respect
+     *** The effects of Source-File 2 are now slightly more powerful
      * RAM Cost of accessing the global document object lowered from 100 GB to 25 GB
      * RAM Cost to use Singularity Functions outside of BitNode-4 lowered by 75%. They now only cost twice as much as they do in BitNode-4
      * b1t_flum3.exe now takes significantly less time to create

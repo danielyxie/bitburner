@@ -390,8 +390,7 @@ Gang.prototype.processExperienceGains = function(numCycles=1) {
 Gang.prototype.calculatePower = function() {
     var memberTotal = 0;
     for (var i = 0; i < this.members.length; ++i) {
-        if (this.members[i].task instanceof GangMemberTask &&
-            this.members[i].task.name == "Territory Warfare") {
+        if (GangMemberTasks.hasOwnProperty(this.members[i].task) && this.members[i].task == "Territory Warfare") {
             const gain = this.members[i].calculatePower();
             memberTotal += gain;
         }
@@ -413,7 +412,7 @@ Gang.prototype.clash = function(won=false) {
         const member = this.members[i];
 
         // Only members assigned to Territory Warfare can die
-        if (member.task.name !== "Territory Warfare") { continue; }
+        if (member.task !== "Territory Warfare") { continue; }
 
         // Chance to die is decreased based on defense
         const modifiedDeathChance = baseDeathChance / Math.pow(def, 0.25);
@@ -541,7 +540,7 @@ Reviver.constructors.Gang = Gang;
 /*** Gang Member object ***/
 function GangMember(name) {
     this.name   = name;
-    this.task   = GangMemberTasks["Unassigned"]; //GangMemberTask object
+    this.task   = "Unassigned"; //GangMemberTask object
 
     this.earnedRespect = 0;
 
@@ -592,32 +591,38 @@ GangMember.prototype.updateSkillLevels = function() {
 }
 
 GangMember.prototype.calculatePower = function() {
-    return (this.hack + this.str + this.def +
-            this.dex + this.agi + this.cha) / 100;
+    return (this.hack + this.str + this.def + this.dex + this.agi + this.cha) / 95;
 }
 
 GangMember.prototype.assignToTask = function(taskName) {
     if (GangMemberTasks.hasOwnProperty(taskName)) {
-        this.task = GangMemberTasks[taskName];
+        this.task = taskName;
         return true;
     } else {
-        this.task = GangMemberTasks["Unassigned"];
+        this.task = "Unassigned";
         return false;
     }
 }
 
 GangMember.prototype.unassignFromTask = function() {
-    if (GangMemberTasks.hasOwnProperty("Unassigned")) {
-        this.task = GangMemberTasks["Unassigned"];
-    } else {
-        console.log("ERROR: Can't find Unassigned Gang member task");
-        this.task = null;
+    this.task = "Unassigned";
+}
+
+GangMember.prototype.getTask = function() {
+    // Backwards compatibility
+    if (this.task instanceof GangMemberTask) {
+        this.task = this.task.name;
     }
+
+    if (GangMemberTasks.hasOwnProperty(this.task)) {
+        return GangMemberTasks[this.task];
+    }
+    return GangMemberTasks["Unassigned"];
 }
 
 //Gains are per cycle
 GangMember.prototype.calculateRespectGain = function(gang) {
-    var task = this.task;
+    const task = this.getTask();
     if (task == null || !(task instanceof GangMemberTask) || task.baseRespect === 0) {return 0;}
     var statWeight =    (task.hackWeight/100) * this.hack +
                         (task.strWeight/100) * this.str +
@@ -625,16 +630,16 @@ GangMember.prototype.calculateRespectGain = function(gang) {
                         (task.dexWeight/100) * this.dex +
                         (task.agiWeight/100) * this.agi +
                         (task.chaWeight/100) * this.cha;
-    statWeight -= (3.5 * task.difficulty);
+    statWeight -= (4 * task.difficulty);
     if (statWeight <= 0) { return 0; }
-    var territoryMult = AllGangs[gang.facName].territory;
-    if (territoryMult <= 0) { return 0; }
+    const territoryMult = Math.pow(AllGangs[gang.facName].territory * 100, task.territory.respect) / 100;
+    if (isNaN(territoryMult) || territoryMult <= 0) { return 0; }
     var respectMult = gang.getWantedPenalty();
     return 12 * task.baseRespect * statWeight * territoryMult * respectMult;
 }
 
 GangMember.prototype.calculateWantedLevelGain = function(gang) {
-    var task = this.task;
+    const task = this.getTask();
     if (task == null || !(task instanceof GangMemberTask) || task.baseWanted === 0) {return 0;}
     var statWeight =    (task.hackWeight/100) * this.hack +
                         (task.strWeight/100) * this.str +
@@ -643,9 +648,9 @@ GangMember.prototype.calculateWantedLevelGain = function(gang) {
                         (task.agiWeight/100) * this.agi +
                         (task.chaWeight/100) * this.cha;
     statWeight -= (3.5 * task.difficulty);
-    if (statWeight <= 0) {return 0;}
-    var territoryMult = AllGangs[gang.facName].territory;
-    if (territoryMult <= 0) {return 0;}
+    if (statWeight <= 0) { return 0; }
+    const territoryMult = Math.pow(AllGangs[gang.facName].territory * 100, task.territory.wanted) / 100;
+    if (isNaN(territoryMult) || territoryMult <= 0) { return 0; }
     if (task.baseWanted < 0) {
         return task.baseWanted * statWeight * territoryMult;
     } else {
@@ -654,7 +659,7 @@ GangMember.prototype.calculateWantedLevelGain = function(gang) {
 }
 
 GangMember.prototype.calculateMoneyGain = function(gang) {
-    var task = this.task;
+    const task = this.getTask();
     if (task == null || !(task instanceof GangMemberTask) || task.baseMoney === 0) {return 0;}
     var statWeight =    (task.hackWeight/100) * this.hack +
                         (task.strWeight/100) * this.str +
@@ -663,15 +668,15 @@ GangMember.prototype.calculateMoneyGain = function(gang) {
                         (task.agiWeight/100) * this.agi +
                         (task.chaWeight/100) * this.cha;
     statWeight -= (3.5 * task.difficulty);
-    if (statWeight <= 0) {return 0;}
-    var territoryMult = AllGangs[gang.facName].territory;
-    if (territoryMult <= 0) {return 0;}
+    if (statWeight <= 0) { return 0; }
+    const territoryMult = Math.pow(AllGangs[gang.facName].territory * 100, task.territory.money) / 100;
+    if (isNaN(territoryMult) || territoryMult <= 0) { return 0; }
     var respectMult = gang.getWantedPenalty();
     return 5 * task.baseMoney * statWeight * territoryMult * respectMult;
 }
 
 GangMember.prototype.gainExperience = function(numCycles=1) {
-    var task = this.task;
+    const task = this.getTask();
     if (task == null || !(task instanceof GangMemberTask)) {return;}
     this.hack_exp   += (task.hackWeight / 1500) * task.difficulty * numCycles;
     this.str_exp    += (task.strWeight / 1500) * task.difficulty * numCycles;
@@ -826,8 +831,18 @@ function GangMemberTask(name="", desc="", isHacking=false, isCombat=false,
     this.agiWeight      = params.agiWeight  ? params.agiWeight  : 0;
     this.chaWeight      = params.chaWeight  ? params.chaWeight  : 0;
 
+    if (Math.round(this.hackWeight + this.strWeight + this.defWeight + this.dexWeight + this.agiWeight + this.chaWeight) != 100) {
+        throw new Error(`GangMemberTask ${this.name} weights do not add up to 100`);
+    }
+
     // 1 - 100
     this.difficulty     = params.difficulty ? params.difficulty : 1;
+
+    // Territory Factors. Exponential factors that dictate how territory affects gains
+    // Formula: Territory Mutiplier = (Territory * 100) ^ factor / 100
+    // So factor should be > 1 if something should scale exponentially with territory
+    // and should be < 1 if it should have diminshing returns
+    this.territory      = params.territory ? params.territory : {money: 1, respect: 1, wanted: 1};
 }
 
 GangMemberTask.prototype.toJSON = function() {
@@ -937,7 +952,7 @@ Gang.prototype.createGangMemberUpgradeBox = function(player, initialFilter="") {
 
         var filter = UIElems.gangMemberUpgradeBoxFilter.value.toString();
         for (var i = 0; i < this.members.length; ++i) {
-            if (this.members[i].name.indexOf(filter) > -1 || this.members[i].task.name.indexOf(filter) > -1) {
+            if (this.members[i].name.indexOf(filter) > -1 || this.members[i].task.indexOf(filter) > -1) {
                 var newPanel = this.members[i].createGangMemberUpgradePanel(this, player);
                 UIElems.gangMemberUpgradeBoxContent.appendChild(newPanel);
                 UIElems.gangMemberUpgradeBoxElements.push(newPanel);
@@ -965,7 +980,7 @@ Gang.prototype.createGangMemberUpgradeBox = function(player, initialFilter="") {
 
         var filter = UIElems.gangMemberUpgradeBoxFilter.value.toString();
         for (var i = 0; i < this.members.length; ++i) {
-            if (this.members[i].name.indexOf(filter) > -1 || this.members[i].task.name.indexOf(filter) > -1) {
+            if (this.members[i].name.indexOf(filter) > -1 || this.members[i].task.indexOf(filter) > -1) {
                 UIElems.gangMemberUpgradeBoxElements.push(this.members[i].createGangMemberUpgradePanel(this, player));
             }
         }
@@ -983,7 +998,7 @@ GangMember.prototype.createGangMemberUpgradePanel = function(gangObj, player) {
     });
 
     var header = createElement("h1", {
-        innerText: this.name + " (" + this.task.name + ")"
+        innerText: this.name + " (" + this.task + ")"
     });
     container.appendChild(header);
 
@@ -1472,7 +1487,7 @@ Gang.prototype.displayGangMemberList = function() {
     const members = this.members;
     const filter = UIElems.gangMemberFilter.value.toString();
     for (var i = 0; i < members.length; ++i) {
-        if (members[i].name.indexOf(filter) > -1 || members[i].task.name.indexOf(filter) > -1) {
+        if (members[i].name.indexOf(filter) > -1 || members[i].task.indexOf(filter) > -1) {
             this.createGangMemberDisplayElement(members[i]);
         }
     }
@@ -1744,8 +1759,8 @@ Gang.prototype.createGangMemberDisplayElement = function(memberObj) {
     });
 
     // Set initial task in selector
-    if (memberObj.task instanceof GangMemberTask) {
-        var taskName = memberObj.task.name;
+    if (GangMemberTasks.hasOwnProperty(memberObj.task)) {
+        var taskName = memberObj.task;
         var taskIndex = 0;
         for (let i = 0; i < tasks.length; ++i) {
             if (taskName === tasks[i]) {

@@ -321,7 +321,6 @@ export function createDevMenu() {
 
     const bladeburnerGainRankInput = createElement("input", {
         class: "text-input",
-        display: "block",
         placeholder: "Rank to gain (or negative to lose rank)",
         type: "number",
     });
@@ -336,7 +335,6 @@ export function createDevMenu() {
                 exceptionAlert(`Failed to change Bladeburner Rank in dev menu: ${e}`);
             }
         },
-        display: "block",
         innerText: "Gain Bladeburner Rank",
     });
 
@@ -345,7 +343,6 @@ export function createDevMenu() {
 
     const gangStoredCyclesInput = createElement("input", {
         class: "text-input",
-        display: "block",
         placeholder: "# Cycles to add",
         type: "number",
     });
@@ -360,7 +357,6 @@ export function createDevMenu() {
                 exceptionAlert(`Failed to add stored cycles to gang mechanic: ${e}`);
             }
         },
-        display: "block",
         innerText: "Add cycles to Gang mechanic",
     })
 
@@ -418,9 +414,11 @@ export function createDevMenu() {
     devMenuContainer.appendChild(bladeburnerHeader);
     devMenuContainer.appendChild(bladeburnerGainRankInput);
     devMenuContainer.appendChild(bladeburnerGainRankButton);
+    devMenuContainer.appendChild(createElement("br"));
     devMenuContainer.appendChild(gangHeader);
     devMenuContainer.appendChild(gangStoredCyclesInput);
     devMenuContainer.appendChild(gangAddStoredCycles);
+    devMenuContainer.appendChild(createElement("br"));
 
    const entireGameContainer = document.getElementById("entire-game-container");
    if (entireGameContainer == null) {
