@@ -1768,8 +1768,9 @@ Bladeburner.prototype.createOverviewContent = function() {
     });
 
     DomElems.overviewStaminaHelpTip = createElement("div", {
-        innerText:"?", class:"help-tip",
-        clickListener:()=>{
+        class:"help-tip",
+        innerText:"?",
+        clickListener: ()=> {
             dialogBoxCreate("Performing actions will use up your stamina.<br><br>" +
                             "Your max stamina is determined primarily by your agility stat.<br><br>" +
                             "Your stamina gain rate is determined by both your agility and your " +
@@ -1781,7 +1782,7 @@ Bladeburner.prototype.createOverviewContent = function() {
                             "your success rate would be multipled by 85% (100 - 15).<br><br>" +
                             "Your max stamina and stamina gain rate can also be increased by " +
                             "training, or through skills and Augmentation upgrades.");
-        }
+        },
     });
 
     DomElems.overviewGen1 = createElement("p", {
@@ -1831,7 +1832,7 @@ Bladeburner.prototype.createOverviewContent = function() {
       innerText: "Bonus time: ",
       display: "inline-block",
       tooltip: "You gain bonus time while offline or when the game is inactive (e.g. when the tab is throttled by browser). " +
-        "Bonus time makes the Bladeburner mechanic progress faster, up to 5x the normal speed."
+               "Bonus time makes the Bladeburner mechanic progress faster, up to 5x the normal speed."
     });
     DomElems.overviewSkillPoints = createElement("p", {display:"block"});
 
@@ -3335,6 +3336,38 @@ Bladeburner.prototype.startActionNetscriptFn = function(type, name, workerScript
         return false;
     }
 
+    // Special logic for Black Ops
+    if (actionId.type === ActionTypes["BlackOp"]) {
+        // Can't start a BlackOp if you don't have the required rank
+        let action = this.getActionObject(actionId);
+        if (action.reqdRank > this.rank) {
+            workerScript.log(`Failed to start Black Op ${actionId.name} due to insufficient rank`);
+            return false;
+        }
+
+        // Can't start a BlackOp if you haven't done the one before it
+        var blackops = [];
+        for (const nm in BlackOperations) {
+            if (BlackOperations.hasOwnProperty(nm)) {
+                blackops.push(nm);
+            }
+        }
+        blackops.sort(function(a, b) {
+            return (BlackOperations[a].reqdRank - BlackOperations[b].reqdRank); // Sort black ops in intended order
+        });
+
+        let i = blackops.indexOf(actionId.name);
+        if (i === -1) {
+            workerScript.log("ERROR: Invalid Black Operation name passed into bladeburner.startAction(). Note that this name is case-sensitive & whitespace-sensitive");
+            return false;
+        }
+
+        if (i > 0 && this.blackops[blackops[i-1]] == null) {
+            workerScript.log(`ERROR: Cannot attempt Black Operation ${actionId.name} because you have not done the preceding one`);
+            return false;
+        }
+    }
+
     try {
         this.startAction(actionId);
         if (workerScript.shouldLog("startAction")) {
@@ -3436,9 +3469,14 @@ Bladeburner.prototype.getActionCountRemainingNetscriptFn = function(type, name, 
     switch (actionId.type) {
         case ActionTypes["Contract"]:
         case ActionTypes["Operation"]:
+            return actionObj.count;
         case ActionTypes["BlackOp"]:
         case ActionTypes["BlackOperation"]:
-            return actionObj.count;
+            if (this.blackops[name] != null) {
+                return 0;
+            } else {
+                return 1;
+            }
         case ActionTypes["Training"]:
         case ActionTypes["Field Analysis"]:
         case ActionTypes["FieldAnalysis"]:
