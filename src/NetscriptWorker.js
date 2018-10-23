@@ -14,7 +14,6 @@ import {NetscriptPort}                      from "./NetscriptPort";
 import {AllServers}                         from "./Server";
 import {Settings}                           from "./Settings";
 
-//TODO Maybe escodegen might be better?
 import {generate}                           from 'escodegen';
 
 import {parse, Node}                        from "../utils/acorn";
@@ -138,7 +137,18 @@ function startNetscript2Script(workerScript) {
                 throw workerScript;
             }
             runningFn = propName;
-            let result = f(...args);
+
+            // If the function throws an error, clear the runningFn flag first, and then re-throw it
+            // This allows people to properly catch errors thrown by NS functions without getting
+            // the concurrent call error above
+            let result;
+            try {
+                result = f(...args);
+            } catch(e) {
+                runningFn = null;
+                throw(e);
+            }
+
             if (result && result.finally !== undefined) {
                 return result.finally(function () {
                     runningFn = null;

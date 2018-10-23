@@ -27,4 +27,6 @@ export const KEY: IMap<number> = {
     U:              85,
     UPARROW:        38,
     W:              87,
+    "1":            49,
+    "2":            50,
 };

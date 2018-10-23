@@ -25,5 +25,6 @@ to reach out to the developer!
     Trade Information eXchange (TIX) API <netscriptixapi>
     Singularity Functions <netscriptsingularityfunctions>
     Bladeburner API <netscriptbladeburnerapi>
+    Gang API <netscriptgangapi>
     Coding Contract API <netscriptcodingcontractapi>
     Miscellaneous <netscriptmisc>
