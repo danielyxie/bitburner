@@ -18,6 +18,7 @@ import {yesNoBoxCreate, yesNoBoxGetYesButton,
 //Returns promise
 function writeRedPillLine(line) {
     return new Promise(function(resolve, reject) {
+
         var container = document.getElementById("red-pill-content");
         var pElem = document.createElement("p");
         container.appendChild(pElem);
@@ -53,10 +54,6 @@ function writeRedPillLetter(pElem, line, i=0) {
 
 let redPillFlag = false;
 function hackWorldDaemon(currentNodeNumber, flume=false) {
-    // Clear Red Pill screen first
-    var container = document.getElementById("red-pill-content");
-    removeChildrenFromElement(container);
-    
     redPillFlag = true;
     Engine.loadRedPillContent();
     return writeRedPillLine("[ERROR] SEMPOOL INVALID").then(function() {
@@ -304,7 +301,7 @@ function createBitNodeYesNoEventListeners(newBitNode, destroyedBitNode, flume=fa
             Player.gainIntelligenceExp(-5);
         }
         redPillFlag = false;
-        var container = document.getElementById("red-pill-content");
+        var container = document.getElementById("red-pill-container");
         removeChildrenFromElement(container);
 
         //Set new Bit Node

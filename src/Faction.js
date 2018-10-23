@@ -734,21 +734,27 @@ function purchaseAugmentation(aug, fac, sing=false) {
 }
 
 function getNextNeurofluxLevel() {
-    // Get current Neuroflux level based on Player's augmentations
-    let currLevel = 0;
-    for (var i = 0; i < Player.augmentations.length; ++i) {
-        if (Player.augmentations[i].name === AugmentationNames.NeuroFluxGovernor) {
-            currLevel = Player.augmentations[i].level;
+    var aug = Augmentations[AugmentationNames.NeuroFluxGovernor];
+    if (aug == null) {
+        for (var i = 0; i < Player.augmentations.length; ++i) {
+            if (Player.augmentations[i].name == AugmentationNames.NeuroFluxGovernor) {
+                aug = Player.augmentations[i];
+            }
+        }
+        if (aug == null) {
+            console.log("WARNING: Could not find NeuroFlux Governor aug. This is OK if " +
+                        "it happens during the loading/initialization of the game, but probably " +
+                        "indicates something seriously wrong at other times");
+            return 1;
         }
     }
-
-    // Account for purchased but uninstalled Augmentations
+    var nextLevel = aug.level + 1;
     for (var i = 0; i < Player.queuedAugmentations.length; ++i) {
         if (Player.queuedAugmentations[i].name == AugmentationNames.NeuroFluxGovernor) {
-            ++currLevel;
+            ++nextLevel;
         }
     }
-    return currLevel + 1;
+    return nextLevel;
 }
 
 function processPassiveFactionRepGain(numCycles) {

@@ -82,27 +82,3 @@ button {
         pointer-events: none;
     }
 }
-
-/**
- * This is a button that is meant to be used on accordions (accordion-header and accordion-panel classes)
- * It has a black background so it does not clash with the default accordion coloring
- */
-.accordion-button {
-    @include borderRadius(12px);
-    @include boxShadow(1px 1px 3px #000);
-
-    color: #aaa;
-    font-size: $defaultFontSize;
-    font-weight: bold;
-    margin: 4px;
-    padding: 4px;
-    background-color: #000;
-
-    &:hover,
-    &:active {
-        color: #fff;
-        text-decoration: none;
-        cursor: pointer;
-    }
-    /* TODO focus selector? */
-}

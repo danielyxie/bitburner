@@ -65,8 +65,7 @@ function infiltrationBoxCreate(inst) {
     var selector = document.getElementById("infiltration-faction-select");
     selector.innerHTML = "";
     for (let i = 0; i < Player.factions.length; ++i) {
-        if (Player.factions[i] === "Bladeburners") { continue; }
-        if (Player.inGang() && Player.gang.facName === Player.factions[i]) { continue; }
+        if (Player.factions[i] === "Bladeburners") {continue;}
         selector.innerHTML += "<option value='" + Player.factions[i] +
                                "'>" + Player.factions[i] + "</option>";
     }

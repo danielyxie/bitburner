@@ -219,8 +219,7 @@ function scriptEditorInit() {
                     });
 
                     //Get functions from namespaces
-                    const namespaces = ["bladeburner", "hacknet", "codingcontract", "gang"];
-                    if (namespaces.includes(name)) {
+                    if (name === "bladeburner" || name === "hacknet") {
                         let namespace       = fns[name];
                         if (typeof namespace !== "object") {continue;}
                         let namespaceFns    = Object.keys(namespace);
@@ -558,8 +557,6 @@ async function parseOnlyRamCalculate(server, code, workerScript) {
                     func = workerScript.env.vars.bladeburner[ref];
                 } else if (ref in workerScript.env.vars.codingcontract) {
                     func = workerScript.env.vars.codingcontract[ref];
-                } else if (ref in workerScript.env.vars.gang) {
-                    func = workerScript.env.vars.gang[ref];
                 } else {
                     func = workerScript.env.get(ref);
                 }

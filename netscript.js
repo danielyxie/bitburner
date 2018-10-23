@@ -92,23 +92,15 @@ let NetscriptFunctions =
     "installAugmentations|"                                                    +
 
     // TIX API
-    "getStockPrice|getStockPosition|getStockSymbols|buyStock|sellStock|"       +
-    "shortStock|sellShort|"                                                    +
-    "placeOrder|cancelOrder|getStockVolatility|getStockForecast|"              +
+    "getStockPrice|getStockPosition|getStockSymbols|buyStock|sellStock|shortStock|sellShort|"  +
+    "placeOrder|cancelOrder|"                                                  +
 
     // Hacknet Node API
     "hacknet|numNodes|purchaseNode|getPurchaseNodeCost|getNodeStats|"          +
     "upgradeLevel|upgradeRam|upgradeCore|getLevelUpgradeCost|"                 +
     "getRamUpgradeCost|getCoreUpgradeCost|"                                    +
 
-    // Gang API
-    "gang|"                                                                    +
-    "getMemberNames|getGangInformation|getMemberInformation|canRecruitMember|" +
-    "recruitMember|getTaskNames|setMemberTask|getEquipmentNames|"              +
-    "getEquipmentCost|purchaseEquipment|ascendMember|setTerritoryWarfare|"     +
-    "getBonusTime|"                                                            +
-
-    // Bladeburner API
+    // Bladeburner functions
     "bladeburner|getContractNames|getOperationNames|getBlackOpNames|"          +
     "getGeneralActionNames|getSkillNames|startAction|stopBladeburnerAction|"   +
     "getActionTime|getActionEstimatedSuccessChance|getActionCountRemaining|"   +

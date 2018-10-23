@@ -31,6 +31,8 @@ export async function executeJSScript(scripts = [], workerScript) {
     loadedModule = script.module;
 
     let ns      = workerScript.env.vars;
+    //ns.threads  = workerScript.threads;
+    //ns.args     = workerScript.args;
 
     try {
         // TODO: putting await in a non-async function yields unhelpful
@@ -73,7 +75,7 @@ export function _getScriptUrls(script, scripts, seen) {
         // import {foo} from "blob://<uuid>"
         //
         // Where the blob URL contains the script content.
-        let transformedCode = script.code.replace(/((?:from|import)\s+(?:'|"))([^'"]+)('|";)/g,
+        const transformedCode = script.code.replace(/((?:from|import)\s+(?:'|"))([^'"]+)('|";)/g,
             (unmodified, prefix, filename, suffix) => {
                 const isAllowedImport = scripts.some(s => s.filename == filename);
                 if (!isAllowedImport) return unmodified;
@@ -90,9 +92,6 @@ export function _getScriptUrls(script, scripts, seen) {
             }
         );
 
-        // We automatically define a print function() in the NetscriptJS module so that
-        // accidental calls to window.print() do not bring up the "print screen" dialog
-        transformedCode += `\n\nfunction print() {throw new Error("Invalid call to window.print(). Did you mean to use Netscript's print()?");}`
 
         // If we successfully transformed the code, create a blob url for it and
         // push that URL onto the top of the stack.
