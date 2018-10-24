@@ -287,7 +287,7 @@ Gang.prototype.processTerritoryAndPowerGains = function(numCycles=1) {
     } else if (this.territoryClashChance > 0) {
         // Engagement turned off, but still a positive clash chance. So there's
         // still a chance of clashing but it slowly goes down over time
-        this.territoryClashChance = Math.max(0, this.territoryClashChance - 0.005);
+        this.territoryClashChance = Math.max(0, this.territoryClashChance - 0.01);
     }
 
     // Then process territory
@@ -393,18 +393,21 @@ Gang.prototype.calculatePower = function() {
             memberTotal += gain;
         }
     }
-    return (0.001 * memberTotal);
+    return (0.015 * this.getTerritory() * memberTotal);
 }
 
 Gang.prototype.clash = function(won=false) {
     // Determine if a gang member should die
-    let baseDeathChance;
-    won ? baseDeathChance = 0.03 : baseDeathChance = 0.06;
+    let baseDeathChance = 0.01;
+    if (won) { baseDeathChance /= 2; }
 
     // If the clash was lost, the player loses a small percentage of power
     if (!won) {
-        AllGangs[this.facName].power *= 0.98;
+        AllGangs[this.facName].power *= (1 / 1.01);
     }
+
+    // Deaths can only occur during X% of clashes
+    if (Math.random() < 0.75) { return; }
 
     for (let i = this.members.length - 1; i >= 0; --i) {
         const member = this.members[i];
@@ -413,7 +416,7 @@ Gang.prototype.clash = function(won=false) {
         if (member.task !== "Territory Warfare") { continue; }
 
         // Chance to die is decreased based on defense
-        const modifiedDeathChance = baseDeathChance / Math.pow(member.def, 0.25);
+        const modifiedDeathChance = baseDeathChance / Math.pow(member.def, 0.6);
         if (Math.random() < modifiedDeathChance) {
             this.killMember(member);
         }
@@ -678,7 +681,7 @@ GangMember.prototype.calculateMoneyGain = function(gang) {
 GangMember.prototype.gainExperience = function(numCycles=1) {
     const task = this.getTask();
     if (task == null || !(task instanceof GangMemberTask) || task === GangMemberTasks["Unassigned"]) {return;}
-    const difficultyMult = Math.pow(task.difficulty, 0.8);
+    const difficultyMult = Math.pow(task.difficulty, 0.9);
     const difficultyPerCycles = difficultyMult * numCycles;
     const weightDivisor = 1500;
     this.hack_exp   += (task.hackWeight / weightDivisor) * difficultyPerCycles;

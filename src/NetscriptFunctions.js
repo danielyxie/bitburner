@@ -3332,7 +3332,7 @@ function NetscriptFunctions(workerScript) {
             if(workerScript.disableLogs.ALL == null && workerScript.disableLogs.commitCrime == null) {
                 workerScript.scriptRef.log("Attempting to commit crime: "+crime.name+"...");
             }
-            return crime.commit(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
+            return crime.commit(1, {workerscript: workerScript});
         },
         getCrimeChance : function(crimeRoughName) {
             var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
@@ -3539,9 +3539,9 @@ function NetscriptFunctions(workerScript) {
         gang : {
             getMemberNames : function() {
                 if (workerScript.checkingRam) {
-                    return updateStaticRam("getMemberNames", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                    return updateStaticRam("getMemberNames", CONSTANTS.ScriptGangApiBaseRamCost / 4);
                 }
-                updateDynamicRam("getMemberNames", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                updateDynamicRam("getMemberNames", CONSTANTS.ScriptGangApiBaseRamCost / 4);
                 nsGang.checkGangApiAccess(workerScript, "getMemberNames");
 
                 try {
@@ -3623,9 +3623,9 @@ function NetscriptFunctions(workerScript) {
             },
             canRecruitMember : function() {
                 if (workerScript.checkingRam) {
-                    return updateStaticRam("canRecruitMember", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                    return updateStaticRam("canRecruitMember", CONSTANTS.ScriptGangApiBaseRamCost / 4);
                 }
-                updateDynamicRam("canRecruitMember", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                updateDynamicRam("canRecruitMember", CONSTANTS.ScriptGangApiBaseRamCost / 4);
                 nsGang.checkGangApiAccess(workerScript, "canRecruitMember");
 
                 try {
@@ -3649,9 +3649,9 @@ function NetscriptFunctions(workerScript) {
             },
             getTaskNames : function() {
                 if (workerScript.checkingRam) {
-                    return updateStaticRam("getTaskNames", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                    return updateStaticRam("getTaskNames", CONSTANTS.ScriptGangApiBaseRamCost / 4);
                 }
-                updateDynamicRam("getTaskNames", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                updateDynamicRam("getTaskNames", CONSTANTS.ScriptGangApiBaseRamCost / 4);
                 nsGang.checkGangApiAccess(workerScript, "getTaskNames");
 
                 try {
@@ -3684,9 +3684,9 @@ function NetscriptFunctions(workerScript) {
             },
             getEquipmentNames : function() {
                 if (workerScript.checkingRam) {
-                    return updateStaticRam("getEquipmentNames", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                    return updateStaticRam("getEquipmentNames", CONSTANTS.ScriptGangApiBaseRamCost / 4);
                 }
-                updateDynamicRam("getEquipmentNames", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                updateDynamicRam("getEquipmentNames", CONSTANTS.ScriptGangApiBaseRamCost / 4);
                 nsGang.checkGangApiAccess(workerScript, "getEquipmentNames");
 
                 try {
@@ -3710,9 +3710,9 @@ function NetscriptFunctions(workerScript) {
             },
             purchaseEquipment : function(memberName, equipName) {
                 if (workerScript.checkingRam) {
-                    return updateStaticRam("purchaseEquipment", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                    return updateStaticRam("purchaseEquipment", CONSTANTS.ScriptGangApiBaseRamCost);
                 }
-                updateDynamicRam("purchaseEquipment", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                updateDynamicRam("purchaseEquipment", CONSTANTS.ScriptGangApiBaseRamCost);
                 nsGang.checkGangApiAccess(workerScript, "purchaseEquipment");
 
                 try {
@@ -3730,9 +3730,9 @@ function NetscriptFunctions(workerScript) {
             },
             ascendMember : function(name) {
                 if (workerScript.checkingRam) {
-                    return updateStaticRam("ascendMember", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                    return updateStaticRam("ascendMember", CONSTANTS.ScriptGangApiBaseRamCost);
                 }
-                updateDynamicRam("ascendMember", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                updateDynamicRam("ascendMember", CONSTANTS.ScriptGangApiBaseRamCost);
                 nsGang.checkGangApiAccess(workerScript, "ascendMember");
 
                 try {
