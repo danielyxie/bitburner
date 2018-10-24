@@ -265,13 +265,20 @@ export const gangMemberTasksMetadata: IGangMemberTaskMetadata[] = [
         params: {hackWeight: 100, difficulty: 8},
     },
     {
+        desc: "Assign this gang member to train their charisma",
+        isCombat: true,
+        isHacking: true,
+        name: "Train Charisma",
+        params: {chaWeight: 100, difficulty: 8},
+    },
+    {
         desc: "Assign this gang member to engage in territorial warfare with other gangs. Members assigned to this task will help increase your gang's territory and will defend your territory from being taken.",
         isCombat: true,
         isHacking: true,
         name: "Territory Warfare",
         params: {
             hackWeight: 15, strWeight: 20, defWeight: 20, dexWeight: 20, agiWeight: 20, chaWeight: 5,
-            difficulty: 3
+            difficulty: 5
         },
     },
 ];
