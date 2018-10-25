@@ -113,7 +113,7 @@ export const gangMemberTasksMetadata: IGangMemberTaskMetadata[] = [
         isHacking: false,
         name: "Mug People",
         params: {
-            baseRespect: 0.00005, baseWanted: 0.00001, baseMoney: 1.2,
+            baseRespect: 0.00005, baseWanted: 0.00005, baseMoney: 1.2,
             strWeight: 25, defWeight: 25, dexWeight: 25, agiWeight: 10, chaWeight: 15,
             difficulty: 1,
         },
@@ -124,11 +124,11 @@ export const gangMemberTasksMetadata: IGangMemberTaskMetadata[] = [
         isHacking: false,
         name: "Deal Drugs",
         params: {
-            baseRespect: 0.00006, baseWanted: 0.0015, baseMoney: 5,
+            baseRespect: 0.00006, baseWanted: 0.002, baseMoney: 5,
             agiWeight: 20, dexWeight: 20, chaWeight: 60,
             difficulty: 3.5,
             territory: {
-                money: 1.25,
+                money: 1.2,
                 respect: 1,
                 wanted: 1.15,
             },
@@ -140,7 +140,7 @@ export const gangMemberTasksMetadata: IGangMemberTaskMetadata[] = [
         isHacking: false,
         name: "Strongarm Civilians",
         params: {
-            baseRespect: 0.00004, baseWanted: 0.002, baseMoney: 2.5,
+            baseRespect: 0.00004, baseWanted: 0.0035, baseMoney: 2.5,
             hackWeight: 10, strWeight: 25, defWeight: 25, dexWeight: 20, agiWeight: 10, chaWeight: 10,
             difficulty: 5,
             territory: {
@@ -156,7 +156,7 @@ export const gangMemberTasksMetadata: IGangMemberTaskMetadata[] = [
         isHacking: false,
         name: "Run a Con",
         params: {
-            baseRespect: 0.00012, baseWanted: 0.015, baseMoney: 12.5,
+            baseRespect: 0.00012, baseWanted: 0.04, baseMoney: 15,
             strWeight: 5, defWeight: 5, agiWeight: 25, dexWeight: 25, chaWeight: 40,
             difficulty: 14,
         },
@@ -167,7 +167,7 @@ export const gangMemberTasksMetadata: IGangMemberTaskMetadata[] = [
         isHacking: false,
         name: "Armed Robbery",
         params: {
-            baseRespect: 0.00014, baseWanted: 0.075, baseMoney: 32,
+            baseRespect: 0.00014, baseWanted: 0.08, baseMoney: 38,
             hackWeight: 20, strWeight: 15, defWeight: 15, agiWeight: 10, dexWeight: 20, chaWeight: 20,
             difficulty: 20,
         },
@@ -178,7 +178,7 @@ export const gangMemberTasksMetadata: IGangMemberTaskMetadata[] = [
         isHacking: false,
         name: "Traffick Illegal Arms",
         params: {
-            baseRespect: 0.0002, baseWanted: 0.15, baseMoney: 50,
+            baseRespect: 0.0002, baseWanted: 0.18, baseMoney: 58,
             hackWeight: 15, strWeight: 20, defWeight: 20, dexWeight: 20, chaWeight: 25,
             difficulty: 32,
             territory: {
@@ -194,7 +194,7 @@ export const gangMemberTasksMetadata: IGangMemberTaskMetadata[] = [
         isHacking: false,
         name: "Threaten & Blackmail",
         params: {
-            baseRespect: 0.0002, baseWanted: 0.075, baseMoney: 20,
+            baseRespect: 0.0002, baseWanted: 0.1, baseMoney: 24,
             hackWeight: 25, strWeight: 25, dexWeight: 25, chaWeight: 25,
             difficulty: 28,
         },
@@ -205,7 +205,7 @@ export const gangMemberTasksMetadata: IGangMemberTaskMetadata[] = [
         isHacking: false,
         name: "Human Trafficking",
         params: {
-            baseRespect: 0.005, baseWanted: 0.3, baseMoney: 100,
+            baseRespect: 0.005, baseWanted: 0.4, baseMoney: 120,
             hackWeight: 30, strWeight: 5, defWeight: 5, dexWeight: 30, chaWeight: 30,
             difficulty: 36,
             territory: {
@@ -221,7 +221,7 @@ export const gangMemberTasksMetadata: IGangMemberTaskMetadata[] = [
         isHacking: false,
         name: "Terrorism",
         params: {
-            baseRespect: 0.001, baseWanted: 1.5,
+            baseRespect: 0.01, baseWanted: 1.5,
             hackWeight: 20, strWeight: 20, defWeight: 20, dexWeight: 20, chaWeight: 20,
             difficulty: 36,
             territory: {

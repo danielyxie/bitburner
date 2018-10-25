@@ -508,7 +508,7 @@ let CONSTANTS = {
      *** Added a Gang Netscript API
      *** Added new 'ascension' mechanic for Gang Members
      *** The first three gang members are now 'free' (can be recruited instantly)
-     *** Maximum number of increased Gang Members increased from 20 to 40
+     *** Maximum number of increased Gang Members increased from 20 to 30
      *** Changed the formula for calculating respect needed to recruit the next gang member
      *** Added a new category of upgrades for Gang Members: Augmentations
      *** Non-Augmentation Gang member upgrades are now significantly weaker

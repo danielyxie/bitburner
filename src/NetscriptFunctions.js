@@ -3579,6 +3579,19 @@ function NetscriptFunctions(workerScript) {
                     throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("getGangInformation", e));
                 }
             },
+            getOtherGangInformation : function() {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getOtherGangInformation", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                }
+                updateDynamicRam("getOtherGangInformation", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                nsGang.checkGangApiAccess(workerScript, "getOtherGangInformation");
+
+                try {
+                    return Object.assign(AllGangs);
+                } catch(e) {
+                    throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("getOtherGangInformation", e));
+                }
+            },
             getMemberInformation : function(name) {
                 if (workerScript.checkingRam) {
                     return updateStaticRam("getMemberInformation", CONSTANTS.ScriptGangApiBaseRamCost / 2);

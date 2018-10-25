@@ -32,7 +32,7 @@ import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
 
 // Constants
 const GangRespectToReputationRatio = 2; // Respect is divided by this to get rep gain
-const MaximumGangMembers = 40;
+const MaximumGangMembers = 30;
 const GangRecruitCostMultiplier = 2;
 const CyclesPerTerritoryAndPowerUpdate = 100;
 const AscensionMultiplierRatio = 15 / 100; // Portion of upgrade multiplier that is kept after ascending
@@ -185,9 +185,9 @@ Gang.prototype.process = function(numCycles=1, player) {
     }
     this.storedCycles += numCycles;
 
-    // Only process if there are at least 3 seconds, and at most 10 seconds
-    if (this.storedCycles < 3 * CyclesPerSecond);
-    const cycles = Math.min(this.storedCycles, 10 * CyclesPerSecond);
+    // Only process if there are at least 2 seconds, and at most 5 seconds
+    if (this.storedCycles < 2 * CyclesPerSecond) { return; }
+    const cycles = Math.min(this.storedCycles, 5 * CyclesPerSecond);
 
     try {
         this.processGains(cycles, player);
@@ -271,7 +271,9 @@ Gang.prototype.processTerritoryAndPowerGains = function(numCycles=1) {
                 const gainRoll = Math.random();
                 if (gainRoll < 0.5) {
                     // Multiplicative gain (50% chance)
-                    AllGangs[name].power *= 1.008;
+                    // This is capped per cycle, to prevent it from getting out of control
+                    const multiplicativeGain = AllGangs[name].power * 0.008;
+                    AllGangs[name].power += Math.min(1, multiplicativeGain);
                 } else {
                     // Additive gain (50% chance)
                     const additiveGain = 0.5 * gainRoll * AllGangs[name].territory;
@@ -351,7 +353,7 @@ Gang.prototype.getRespectNeededToRecruitMember = function() {
     if (this.members.length < numFreeMembers) { return 0; }
 
     const i = this.members.length - (numFreeMembers - 1);
-    return Math.round(0.7 * Math.pow(i, 3) + 0.8 * Math.pow(i, 2));
+    return Math.round(0.9 * Math.pow(i, 3) + Math.pow(i, 2));
 }
 
 Gang.prototype.recruitMember = function(name) {
@@ -403,11 +405,11 @@ Gang.prototype.clash = function(won=false) {
 
     // If the clash was lost, the player loses a small percentage of power
     if (!won) {
-        AllGangs[this.facName].power *= (1 / 1.01);
+        AllGangs[this.facName].power *= (1 / 1.008);
     }
 
     // Deaths can only occur during X% of clashes
-    if (Math.random() < 0.75) { return; }
+    if (Math.random() < 0.65) { return; }
 
     for (let i = this.members.length - 1; i >= 0; --i) {
         const member = this.members[i];
@@ -638,7 +640,7 @@ GangMember.prototype.calculateRespectGain = function(gang) {
     const territoryMult = Math.pow(AllGangs[gang.facName].territory * 100, task.territory.respect) / 100;
     if (isNaN(territoryMult) || territoryMult <= 0) { return 0; }
     var respectMult = gang.getWantedPenalty();
-    return 12 * task.baseRespect * statWeight * territoryMult * respectMult;
+    return 11 * task.baseRespect * statWeight * territoryMult * respectMult;
 }
 
 GangMember.prototype.calculateWantedLevelGain = function(gang) {
@@ -655,9 +657,9 @@ GangMember.prototype.calculateWantedLevelGain = function(gang) {
     const territoryMult = Math.pow(AllGangs[gang.facName].territory * 100, task.territory.wanted) / 100;
     if (isNaN(territoryMult) || territoryMult <= 0) { return 0; }
     if (task.baseWanted < 0) {
-        return task.baseWanted * statWeight * territoryMult;
+        return 0.5 * task.baseWanted * statWeight * territoryMult;
     } else {
-        return 6 * task.baseWanted / (3 * statWeight * territoryMult);
+        return 7 * task.baseWanted / (3 * statWeight * territoryMult);
     }
 }
 
@@ -1010,12 +1012,12 @@ GangMember.prototype.createGangMemberUpgradePanel = function(gangObj, player) {
     var text = createElement("pre", {
         fontSize:"14px", display: "inline-block", width:"20%",
         innerText:
-            "Hack: " + this.hack + " (x" + formatNumber(this.hack_mult, 2) + ")\n" +
-            "Str:  " + this.str  + " (x" + formatNumber(this.str_mult, 2) + ")\n" +
-            "Def:  " + this.def  + " (x" + formatNumber(this.def_mult, 2) + ")\n" +
-            "Dex:  " + this.dex  + " (x" + formatNumber(this.dex_mult, 2) + ")\n" +
-            "Agi:  " + this.agi  + " (x" + formatNumber(this.agi_mult, 2) + ")\n" +
-            "Cha:  " + this.cha  + " (x" + formatNumber(this.cha_mult, 2) + ")\n",
+            "Hack: " + this.hack + " (x" + formatNumber(this.hack_mult * this.hack_asc_mult, 2) + ")\n" +
+            "Str:  " + this.str  + " (x" + formatNumber(this.str_mult * this.str_asc_mult, 2) + ")\n" +
+            "Def:  " + this.def  + " (x" + formatNumber(this.def_mult * this.def_asc_mult, 2) + ")\n" +
+            "Dex:  " + this.dex  + " (x" + formatNumber(this.dex_mult * this.dex_asc_mult, 2) + ")\n" +
+            "Agi:  " + this.agi  + " (x" + formatNumber(this.agi_mult * this.agi_asc_mult, 2) + ")\n" +
+            "Cha:  " + this.cha  + " (x" + formatNumber(this.cha_mult * this.cha_asc_mult, 2) + ")\n",
     });
 
     //Already purchased upgrades
@@ -1253,7 +1255,8 @@ Gang.prototype.displayGangContent = function(player) {
             "task to lower your wanted level. <br><br>" +
             "Installing Augmentations does NOT reset your progress with your Gang. " +
             "Furthermore, after installing Augmentations, you will " +
-            "automatically be a member of whatever Faction you created your gang with.<br><br>"
+            "automatically be a member of whatever Faction you created your gang with.<br><br>" +
+            "You can also manage your gang programmatically through Netscript using the Gang API"
         });
         UIElems.gangManagementSubpage.appendChild(UIElems.gangDesc);
 
@@ -1392,7 +1395,8 @@ Gang.prototype.displayGangContent = function(player) {
             "to win a clash depends on your gang's power, which is listed in the display below. " +
             "Your gang's power slowly accumulates over time. The accumulation rate is determined by the stats " +
             "of all Gang members you have assigned to the 'Territory Warfare' task. Gang members that are not " +
-            "assigned to this task do not contribute to your gang's power.<br><br>" +
+            "assigned to this task do not contribute to your gang's power. Your gang also loses a small amount " +
+            "of power whenever you lose a clash<br><br>" +
             "NOTE: Gang members assigned to 'Territory Warfare' can be killed during clashes. This can happen regardless of whether you win " +
             "or lose the clash. A gang member being killed results in both respect and power loss for your gang.<br><br>" +
             "The amount of territory you have affects all aspects of your Gang members' production, including " +
@@ -1615,7 +1619,7 @@ Gang.prototype.updateGangContent = function() {
                 innerText: `Bonus time(s): ${this.storedCycles / CyclesPerSecond}`,
                 display: "inline-block",
                 tooltip: "You gain bonus time while offline or when the game is inactive (e.g. when the tab is throttled by the browser). " +
-                         "Bonus time makes the Gang mechanic progress faster, up to 10x the normal speed",
+                         "Bonus time makes the Gang mechanic progress faster, up to 5x the normal speed",
             }));
             UIElems.gangInfo.appendChild(createElement("br"));
         } else {
