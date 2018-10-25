@@ -23,8 +23,8 @@ secrets that you've been searching for.
     Terminal <terminal>
     Coding Contracts <codingcontracts>
     Keyboard Shortcuts <shortcuts>
+    Game Frozen or Stuck? <gamefrozen>
     Changelog <changelog>
-
 
 Indices and tables
 ==================
