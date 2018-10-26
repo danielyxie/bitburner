@@ -9,6 +9,9 @@ import {prestigeAugmentation}              from "./Prestige";
 import {saveObject}                        from "./SaveObject";
 import {Script, RunningScript}             from "./Script";
 import {Server}                            from "./Server";
+import {OwnedAugmentationsOrderSetting}    from "./SettingEnums";
+import {Settings}                          from "./Settings";
+
 import {SourceFiles}                       from "./SourceFile";
 import {dialogBoxCreate}                   from "../utils/DialogBox";
 import {createAccordionElement}            from "../utils/uiHelpers/createAccordionElement";
@@ -2570,7 +2573,7 @@ function displayAugmentationsContent() {
     }));
 
     //Sort Buttons
-    Engine.Display.augmentationsContent.appendChild(createElement("a", {
+    const sortInOrderButton = createElement("a", {
         class:"a-link-button", fontSize:"14px", innerText:"Sort in Order",
         tooltip:"Sorts the Augmentations alphabetically and Source Files in numerical order (1, 2, 3,...)",
         clickListener:()=>{
@@ -2587,22 +2590,31 @@ function displayAugmentationsContent() {
             });
             displaySourceFiles(augmentationsList, sourceFiles);
             displayAugmentations(augmentationsList, augs);
-        }
-    }));
 
-    Engine.Display.augmentationsContent.appendChild(createElement("a", {
+            Settings.OwnedAugmentationsOrder = OwnedAugmentationsOrderSetting.Alphabetically;
+        }
+    });
+    Engine.Display.augmentationsContent.appendChild(sortInOrderButton);
+
+    const sortByAcquirementTimeButton = createElement("a", {
         class:"a-link-button", fontSize:"14px", innerText:"Sort by Acquirement Time",
         tooltip:"Sorts the Augmentations and Source Files based on when you acquired them (same as default)",
         clickListener:()=>{
             removeChildrenFromElement(augmentationsList);
             displaySourceFiles(augmentationsList, Player.sourceFiles);
             displayAugmentations(augmentationsList, Player.augmentations);
+
+            Settings.OwnedAugmentationsOrder = OwnedAugmentationsOrderSetting.AcquirementTime;
         }
-    }));
+    });
+    Engine.Display.augmentationsContent.appendChild(sortByAcquirementTimeButton);
 
     //Source Files - Temporary...Will probably put in a separate pane Later
-    displaySourceFiles(augmentationsList, Player.sourceFiles);
-    displayAugmentations(augmentationsList, Player.augmentations);
+    if (Settings.OwnedAugmentationsOrder === OwnedAugmentationsOrderSetting.Alphabetically) {
+        sortInOrderButton.click();
+    } else {
+        sortByAcquirementTimeButton.click();
+    }
     Engine.Display.augmentationsContent.appendChild(augmentationsList);
 }
 
