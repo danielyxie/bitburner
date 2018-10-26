@@ -1,4 +1,5 @@
 import { ISelfInitializer, ISelfLoading } from "./types";
+import { OwnedAugmentationsOrderSetting, PurchaseAugmentationsOrderSetting } from "./SettingEnums";
 
 /**
  * Represents the default settings the player could customize.
@@ -75,6 +76,16 @@ interface ISettings extends IDefaultSettings {
      * TODO: This should really be an enum of allowed values.
      */
     EditorTheme: string;
+
+    /**
+     * What order the player's owned Augmentations/Source Files should be displayed in
+     */
+    OwnedAugmentationsOrder: OwnedAugmentationsOrderSetting;
+
+    /**
+     * What order the Augmentations should be displayed in when purchasing from a Faction
+     */
+    PurchaseAugmentationsOrder: PurchaseAugmentationsOrderSetting;
 }
 
 const defaultSettings: IDefaultSettings = {
@@ -104,6 +115,8 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
     Locale:                              "en",
     MaxLogCapacity:                      defaultSettings.MaxLogCapacity,
     MaxPortCapacity:                     defaultSettings.MaxPortCapacity,
+    OwnedAugmentationsOrder:             OwnedAugmentationsOrderSetting.AcquirementTime,
+    PurchaseAugmentationsOrder:          PurchaseAugmentationsOrderSetting.Default,
     SuppressBuyAugmentationConfirmation: defaultSettings.SuppressBuyAugmentationConfirmation,
     SuppressFactionInvites:              defaultSettings.SuppressFactionInvites,
     SuppressHospitalizationPopup:        defaultSettings.SuppressHospitalizationPopup,
