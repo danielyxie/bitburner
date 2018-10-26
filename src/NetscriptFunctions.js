@@ -156,7 +156,14 @@ function NetscriptFunctions(workerScript) {
     var updateDynamicRam = function(fnName, ramCost) {
         if (workerScript.dynamicLoadedFns[fnName]) {return;}
         workerScript.dynamicLoadedFns[fnName] = true;
-        workerScript.dynamicRamUsage += ramCost;
+
+        const threads = workerScript.scriptRef.threads;
+        if (typeof threads !== 'number') {
+            console.warn(`WorkerScript detected NaN for threadcount for ${workerScript.name} on ${workerScript.serverIp}`);
+            threads = 1;
+        }
+
+        workerScript.dynamicRamUsage += (ramCost * threads);
         if (workerScript.dynamicRamUsage > 1.01 * workerScript.ramUsage) {
             throw makeRuntimeRejectMsg(workerScript,
                                        "Dynamic RAM usage calculated to be greater than initial RAM usage on fn: " + fnName +
@@ -2684,7 +2691,7 @@ function NetscriptFunctions(workerScript) {
                 company:            Player.companyName,
                 factions:           Player.factions.slice(),
                 jobTitle:           companyPositionTitle,
-                mults: {
+                mult: {
                     agility:        Player.agility_mult,
                     agilityExp:     Player.agility_exp_mult,
                     companyRep:     Player.company_rep_mult,
