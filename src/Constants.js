@@ -523,6 +523,7 @@ let CONSTANTS = {
      * b1t_flum3.exe now takes significantly less time to create
      * Crimes commited through Singularity function no longer give half money/exp
      * Improved number formatting for Player 'work' actions (including crimes, etc.). These numbers should also adhere to locale settings now (by Kline-)
+     * The order that Augmentations are listed in (when purchasing from Faction and viewing your Augmentations) is now saved and persists when choosing different orders 
      * Bug Fix: Calling print() in NetscriptJS no longer brings up the print dialog
      * Bug Fix: Fixed a bug that sometimes caused a blank black screen when destroying/resetting/switching BitNodes
      * Bug Fix: Netscript calls that throw errors will now no longer cause the 'concurrent calls' error if they are caught in the script. i.e. try/catch should now work properly in scripts
