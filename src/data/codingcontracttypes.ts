@@ -248,7 +248,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
                 if (Math.random() < 0.2) {
                     arr[i] = 0; // 20% chance of being 0
                 } else {
-                    arr[i] = getRandomInt(0, 24);
+                    arr[i] = getRandomInt(0, 10);
                 }
             }
 

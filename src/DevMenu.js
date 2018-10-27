@@ -431,6 +431,8 @@ export function createDevMenu() {
     devMenuContainer.appendChild(gangStoredCyclesInput);
     devMenuContainer.appendChild(gangAddStoredCycles);
     devMenuContainer.appendChild(createElement("br"));
+    devMenuContainer.appendChild(contractsHeader);
+    devMenuContainer.appendChild(generateRandomContractBtn);
 
    const entireGameContainer = document.getElementById("entire-game-container");
    if (entireGameContainer == null) {
