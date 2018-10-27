@@ -230,8 +230,11 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         desc: (arr: number[]) => {
             return ["You are given the following array of integers:\n\n",
                     `${arr}\n\n`,
-                    "Each element in the array represents your maximum jump length",
-                    "at that position. Assuming you are initially positioned",
+                    "Each element in the array represents your MAXIMUM jump length",
+                    "at that position. This means that if you are at position i and your",
+                    "maximum jump length is n, you can jump to any position from",
+                    "i to i+n.",
+                    "\n\nAssuming you are initially positioned",
                     "at the start of the array, determine whether you are",
                     "able to reach the last index exactly.\n\n",
                     "Your answer should be submitted as 1 or 0, representing true and false respectively"].join(" ");
@@ -242,7 +245,11 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
             const arr: number[] = [];
             arr.length = len;
             for (let i: number = 0; i < arr.length; ++i) {
-                arr[i] = getRandomInt(0, 24);
+                if (Math.random() < 0.2) {
+                    arr[i] = 0; // 20% chance of being 0
+                } else {
+                    arr[i] = getRandomInt(0, 24);
+                }
             }
 
             return arr;
@@ -278,7 +285,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         difficulty: 3,
         gen: () => {
             const intervals: number[][] = [];
-            const numIntervals: number = getRandomInt(1, 15);
+            const numIntervals: number = getRandomInt(1, 20);
             for (let i: number = 0; i < numIntervals; ++i) {
                 const start: number = getRandomInt(1, 25);
                 const end: number = start + getRandomInt(1, 10);
@@ -322,8 +329,11 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
                     "an array with all possible valid IP address combinations",
                     "that can be created from the string:\n\n",
                     `${data}\n\n`,
-                    "Example:\n\n",
-                    "25525511135 -> [255.255.11.135, 255.255.111.35]"].join(" ");
+                    "Note that an octet cannot begin with a '0' unless the number",
+                    "itself is actually 0. For example, '192.168.010.1' is not a valid IP.\n\n",
+                    "Examples:\n\n",
+                    "25525511135 -> [255.255.11.135, 255.255.111.35]\n",
+                    "1938718066 -> [193.87.180.66]"].join(" ");
         },
         difficulty: 3,
         gen: () => {
