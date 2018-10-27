@@ -46,7 +46,8 @@ import {TextFile, getTextFile, createTextFile}      from "./TextFile";
 
 import {unknownBladeburnerActionErrorMessage,
         unknownBladeburnerExceptionMessage,
-        checkBladeburnerAccess}                     from "./NetscriptBladeburner.js";
+        checkBladeburnerAccess}                     from "./NetscriptBladeburner";
+import * as nsGang                                  from "./NetscriptGang";
 import {WorkerScript, workerScripts,
         killWorkerScript, NetscriptPorts}           from "./NetscriptWorker";
 import {makeRuntimeRejectMsg, netscriptDelay,
@@ -155,7 +156,14 @@ function NetscriptFunctions(workerScript) {
     var updateDynamicRam = function(fnName, ramCost) {
         if (workerScript.dynamicLoadedFns[fnName]) {return;}
         workerScript.dynamicLoadedFns[fnName] = true;
-        workerScript.dynamicRamUsage += ramCost;
+
+        const threads = workerScript.scriptRef.threads;
+        if (typeof threads !== 'number') {
+            console.warn(`WorkerScript detected NaN for threadcount for ${workerScript.name} on ${workerScript.serverIp}`);
+            threads = 1;
+        }
+
+        workerScript.dynamicRamUsage += (ramCost * threads);
         if (workerScript.dynamicRamUsage > 1.01 * workerScript.ramUsage) {
             throw makeRuntimeRejectMsg(workerScript,
                                        "Dynamic RAM usage calculated to be greater than initial RAM usage on fn: " + fnName +
@@ -1101,7 +1109,7 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "ps() failed. Invalid IP or hostname passed in: " + ip);
             }
             const processes = [];
-            for(const i in server.runningScripts) {
+            for (const i in server.runningScripts) {
                 const script = server.runningScripts[i];
                 processes.push({filename:script.filename, threads: script.threads, args: script.args.slice()})
             }
@@ -2679,12 +2687,29 @@ function NetscriptFunctions(workerScript) {
             }
             return {
                 bitnode:            Player.bitNodeN,
-                company:            Player.companyName,
-                jobTitle:           companyPositionTitle,
                 city:               Player.city,
+                company:            Player.companyName,
                 factions:           Player.factions.slice(),
-                tor:                SpecialServerIps.hasOwnProperty("Darkweb Server"),
+                jobTitle:           companyPositionTitle,
+                mult: {
+                    agility:        Player.agility_mult,
+                    agilityExp:     Player.agility_exp_mult,
+                    companyRep:     Player.company_rep_mult,
+                    crimeMoney:     Player.crime_money_mult,
+                    crimeSuccess:   Player.crime_success_mult,
+                    defense:        Player.defense_mult,
+                    defenseExp:     Player.defense_exp_mult,
+                    dexterity:      Player.dexterity_mult,
+                    dexterityExp:   Player.dexterity_exp_mult,
+                    factionRep:     Player.faction_rep_mult,
+                    hacking:        Player.hacking_mult,
+                    hackingExp:     Player.hacking_exp_mult,
+                    strength:       Player.strength_mult,
+                    strengthExp:    Player.strength_exp_mult,
+                    workMoney:      Player.work_money_mult,
+                },
                 timeWorked:         Player.timeWorked,
+                tor:                SpecialServerIps.hasOwnProperty("Darkweb Server"),
                 workHackExpGain:    Player.workHackExpGained,
                 workStrExpGain:     Player.workStrExpGained,
                 workDefExpGain:     Player.workDefExpGained,
@@ -3331,7 +3356,7 @@ function NetscriptFunctions(workerScript) {
             if(workerScript.disableLogs.ALL == null && workerScript.disableLogs.commitCrime == null) {
                 workerScript.scriptRef.log("Attempting to commit crime: "+crime.name+"...");
             }
-            return crime.commit(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
+            return crime.commit(1, {workerscript: workerScript});
         },
         getCrimeChance : function(crimeRoughName) {
             var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
@@ -3534,7 +3559,262 @@ function NetscriptFunctions(workerScript) {
             return true;
         },
 
-        //Bladeburner API
+        // Gang API
+        gang : {
+            getMemberNames : function() {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getMemberNames", CONSTANTS.ScriptGangApiBaseRamCost / 4);
+                }
+                updateDynamicRam("getMemberNames", CONSTANTS.ScriptGangApiBaseRamCost / 4);
+                nsGang.checkGangApiAccess(workerScript, "getMemberNames");
+
+                try {
+                    const names = [];
+                    for (const member of Player.gang.members) {
+                        names.push(member.name);
+                    }
+                    return names;
+                } catch(e) {
+                    throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("getMemberNames", e));
+                }
+            },
+            getGangInformation : function() {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getGangInformation", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                }
+                updateDynamicRam("getGangInformation", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                nsGang.checkGangApiAccess(workerScript, "getGangInformation");
+
+                try {
+                    return {
+                        faction:                    Player.gang.facName,
+                        isHacking:                  Player.gang.isHackingGang,
+                        moneyGainRate:              Player.gang.moneyGainRate,
+                        power:                      Player.gang.getPower(),
+                        respect:                    Player.gang.respect,
+                        respectGainRate:            Player.gang.respectGainRate,
+                        territory:                  Player.gang.getTerritory(),
+                        territoryClashChance:       Player.gang.territoryClashChance,
+                        territoryWarfareEngaged:    Player.gang.territoryWarfareEngaged,
+                        wantedLevel:                Player.gang.wanted,
+                        wantedLevelGainRate:        Player.gang.wantedGainRate,
+                    }
+                } catch(e) {
+                    throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("getGangInformation", e));
+                }
+            },
+            getOtherGangInformation : function() {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getOtherGangInformation", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                }
+                updateDynamicRam("getOtherGangInformation", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                nsGang.checkGangApiAccess(workerScript, "getOtherGangInformation");
+
+                try {
+                    return Object.assign(AllGangs);
+                } catch(e) {
+                    throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("getOtherGangInformation", e));
+                }
+            },
+            getMemberInformation : function(name) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getMemberInformation", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                }
+                updateDynamicRam("getMemberInformation", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                nsGang.checkGangApiAccess(workerScript, "getMemberInformation");
+
+                try {
+                    for (const member of Player.gang.members) {
+                        if (member.name === name) {
+                            return {
+                                agility:                member.agi,
+                                agilityEquipMult:       member.agi_mult,
+                                agilityAscensionMult:   member.agi_asc_mult,
+                                augmentations:          member.augmentations.slice(),
+                                charisma:               member.cha,
+                                charismaEquipMult:      member.cha_mult,
+                                charismaAscensionMult:  member.cha_asc_mult,
+                                defense:                member.def,
+                                defenseEquipMult:       member.def_mult,
+                                defenseAscensionMult:   member.def_asc_mult,
+                                dexterity:              member.dex,
+                                dexterityEquipMult:     member.dex_mult,
+                                dexterityAscensionMult: member.dex_asc_mult,
+                                equipment:              member.upgrades.slice(),
+                                hacking:                member.hack,
+                                hackingEquipMult:       member.hack_mult,
+                                hackingAscensionMult:   member.hack_asc_mult,
+                                strength:               member.str,
+                                strengthEquipMult:      member.str_mult,
+                                strengthAscensionMult:  member.str_asc_mult,
+                                task:                   member.task.name,
+                            }
+                        }
+                    }
+
+                    workerScript.log(`Invalid argument passed to gang.getMemberInformation(). No gang member could be found with name ${name}`);
+                    return {}; // Member could not be found
+                } catch(e) {
+                    throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("getMemberInformation", e));
+                }
+            },
+            canRecruitMember : function() {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("canRecruitMember", CONSTANTS.ScriptGangApiBaseRamCost / 4);
+                }
+                updateDynamicRam("canRecruitMember", CONSTANTS.ScriptGangApiBaseRamCost / 4);
+                nsGang.checkGangApiAccess(workerScript, "canRecruitMember");
+
+                try {
+                    return Player.gang.canRecruitMember();
+                } catch(e) {
+                    throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("canRecruitMember", e));
+                }
+            },
+            recruitMember : function(name) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("recruitMember", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                }
+                updateDynamicRam("recruitMember", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                nsGang.checkGangApiAccess(workerScript, "recruitMember");
+
+                try {
+                    return Player.gang.recruitMember(name);
+                } catch(e) {
+                    throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("recruitMember", e));
+                }
+            },
+            getTaskNames : function() {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getTaskNames", CONSTANTS.ScriptGangApiBaseRamCost / 4);
+                }
+                updateDynamicRam("getTaskNames", CONSTANTS.ScriptGangApiBaseRamCost / 4);
+                nsGang.checkGangApiAccess(workerScript, "getTaskNames");
+
+                try {
+                    const tasks = Player.gang.getAllTaskNames();
+                    tasks.unshift("Unassigned");
+                    return tasks;
+                } catch(e) {
+                    throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("getTaskNames", e));
+                }
+            },
+            setMemberTask : function(memberName, taskName) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("setMemberTask", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                }
+                updateDynamicRam("setMemberTask", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                nsGang.checkGangApiAccess(workerScript, "setMemberTask");
+
+                try {
+                    for (const member of Player.gang.members) {
+                        if (member.name === memberName) {
+                            return member.assignToTask(taskName);
+                        }
+                    }
+
+                    workerScript.log(`Invalid argument passed to gang.setMemberTask(). No gang member could be found with name ${memberName}`);
+                    return false;
+                } catch(e) {
+                    throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("setMemberTask", e));
+                }
+            },
+            getEquipmentNames : function() {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getEquipmentNames", CONSTANTS.ScriptGangApiBaseRamCost / 4);
+                }
+                updateDynamicRam("getEquipmentNames", CONSTANTS.ScriptGangApiBaseRamCost / 4);
+                nsGang.checkGangApiAccess(workerScript, "getEquipmentNames");
+
+                try {
+                    return Player.gang.getAllUpgradeNames();
+                } catch(e) {
+                    throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("getEquipmentNames", e));
+                }
+            },
+            getEquipmentCost : function(equipName) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getEquipmentCost", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                }
+                updateDynamicRam("getEquipmentCost", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                nsGang.checkGangApiAccess(workerScript, "getEquipmentCost");
+
+                try {
+                    return Player.gang.getUpgradeCost(equipName);
+                } catch(e) {
+                    throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("getEquipmentCost", e));
+                }
+            },
+            purchaseEquipment : function(memberName, equipName) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("purchaseEquipment", CONSTANTS.ScriptGangApiBaseRamCost);
+                }
+                updateDynamicRam("purchaseEquipment", CONSTANTS.ScriptGangApiBaseRamCost);
+                nsGang.checkGangApiAccess(workerScript, "purchaseEquipment");
+
+                try {
+                    for (const member in Player.gang.members) {
+                        if (member.name === memberName) {
+                            return member.buyUpgrade(equipName, Player, Player.gang);
+                        }
+                    }
+
+                    workerScript.log(`Invalid argument passed to gang.purchaseEquipment(). No gang member could be found with name ${memberName}`);
+                    return false;
+                } catch(e) {
+                    throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("purchaseEquipment", e));
+                }
+            },
+            ascendMember : function(name) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("ascendMember", CONSTANTS.ScriptGangApiBaseRamCost);
+                }
+                updateDynamicRam("ascendMember", CONSTANTS.ScriptGangApiBaseRamCost);
+                nsGang.checkGangApiAccess(workerScript, "ascendMember");
+
+                try {
+                    for (const member in Player.gang.members) {
+                        if (member.name === name) {
+                            return Player.gang.ascendMember(member, workerScript);
+                        }
+                    }
+
+                    workerScript.log(`Invalid argument passed to gang.ascendMember(). No gang member could be found with name ${memberName}`);
+                    return false;
+                } catch(e) {
+                    throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("ascendMember", e));
+                }
+            },
+            setTerritoryWarfare : function(engage) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("setTerritoryWarfare", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                }
+                updateDynamicRam("setTerritoryWarfare", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                nsGang.checkGangApiAccess(workerScript, "setTerritoryWarfare");
+
+                try {
+                    if (engage) {
+                        Player.gang.territoryWarfareEngaged = true;
+                    } else {
+                        Player.gang.territoryWarfareEngaged = false;
+                    }
+                } catch(e) {
+                    throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("setTerritoryWarfare", e));
+                }
+            },
+            getBonusTime : function() {
+                if (workerScript.checkingRam) { return 0; }
+                nsGang.checkGangApiAccess(workerScript, "getBonusTime");
+
+                try {
+                    return Math.round(Player.gang.storedCycles / 5);
+                } catch(e) {
+                    throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("getBonusTime", e));
+                }
+            },
+        }, // end gang namespace
+
+        // Bladeburner API
         bladeburner : {
             getContractNames : function() {
                 if (workerScript.checkingRam) {

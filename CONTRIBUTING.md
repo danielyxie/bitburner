@@ -22,6 +22,9 @@ heard:
 The recommended method for reporting a bug is by opening a
 [Github Issue](https://github.com/danielyxie/bitburner/issues).
 
+Alternatively, you can post a bug by creating a post on the
+[game's subreddit](https://www.reddit.com/r/Bitburner/).
+
 Before submitting a bug report, please check to make sure the bug has not
 already been reported as an [Issue](https://github.com/danielyxie/bitburner/issues).
 
@@ -29,6 +32,7 @@ already been reported as an [Issue](https://github.com/danielyxie/bitburner/issu
 
   * **Use a clear and descriptive title** for the issue
   * **State your browser, your browser's version, and your computer's OS**
+  * **Attach your save file**, if you think it would help solve the issue
   * **Provide instructions on how to reproduce the bug** in as much detail
     as possible. If you cannot reliably reproduce the bug, then just try
     your best to explain what was happening when the bug occurred

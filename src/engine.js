@@ -41,8 +41,6 @@ import {FconfSettings}                                  from "./Fconf";
 import {displayLocationContent,
         initLocationButtons}                            from "./Location";
 import {Locations}                                      from "./Locations";
-import {displayGangContent, updateGangContent,
-        Gang}                                           from "./Gang";
 import {displayHacknetNodesContent, processAllHacknetNodeEarnings,
         updateHacknetNodesContent}                      from "./HacknetNode";
 import {iTutorialStart}                                 from "./InteractiveTutorial";
@@ -90,6 +88,7 @@ import "../css/loader.scss";
 import "../css/missions.scss";
 import "../css/companymanagement.scss";
 import "../css/bladeburner.scss";
+import "../css/gang.scss";
 
 /* Shortcuts to navigate through the game
  *  Alt-t - Terminal
@@ -420,7 +419,7 @@ const Engine = {
     loadGangContent: function() {
         Engine.hideAllContent();
         if (document.getElementById("gang-container") || Player.inGang()) {
-            displayGangContent();
+            Player.gang.displayGangContent(Player);
             routing.navigateTo(Page.Gang);
         } else {
             Engine.loadTerminalContent();
@@ -482,6 +481,9 @@ const Engine = {
             document.getElementById("gang-container").style.display = "none";
         }
 
+        if (Player.inGang()) {
+            Player.gang.clearUI();
+        }
         if (Player.corporation instanceof Corporation) {
             Player.corporation.clearUI();
         }
@@ -521,7 +523,6 @@ const Engine = {
 
     displayCharacterOverviewInfo: function() {
         Engine.overview.update();
-
 
         const save = document.getElementById("character-overview-save-button");
         const flashClass = "flashing-button";
@@ -887,7 +888,7 @@ const Engine = {
 
         //Gang, if applicable
         if (Player.bitNodeN == 2 && Player.inGang()) {
-            Player.gang.process(numCycles);
+            Player.gang.process(numCycles, Player);
         }
 
         //Mission
@@ -1004,8 +1005,8 @@ const Engine = {
         }
 
         if (Engine.Counters.updateDisplaysLong <= 0) {
-            if (routing.isOn(Page.Gang)) {
-                updateGangContent();
+            if (routing.isOn(Page.Gang) && Player.inGang()) {
+                Player.gang.updateGangContent();
             } else if (routing.isOn(Page.ScriptEditor)) {
                 updateScriptEditorContent();
             }
@@ -1312,7 +1313,7 @@ const Engine = {
 
             //Gang progress for BitNode 2
             if (Player.bitNodeN != null && Player.bitNodeN === 2 && Player.inGang()) {
-                Player.gang.process(numCyclesOffline);
+                Player.gang.process(numCyclesOffline, Player);
             }
 
             //Bladeburner offline progress

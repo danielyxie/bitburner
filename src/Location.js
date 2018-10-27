@@ -28,10 +28,6 @@ import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
         yesNoTxtInpBoxClose}                    from "../utils/YesNoBox";
 
 function displayLocationContent() {
-	if (Engine.Debug) {
-		console.log("displayLocationContent() called with location " + Player.location)
-	}
-
     var returnToWorld           = document.getElementById("location-return-to-world-button");
 
     var locationName            = document.getElementById("location-name");

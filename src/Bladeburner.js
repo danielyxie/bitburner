@@ -1768,8 +1768,9 @@ Bladeburner.prototype.createOverviewContent = function() {
     });
 
     DomElems.overviewStaminaHelpTip = createElement("div", {
-        innerText:"?", class:"help-tip",
-        clickListener:()=>{
+        class:"help-tip",
+        innerText:"?",
+        clickListener: ()=> {
             dialogBoxCreate("Performing actions will use up your stamina.<br><br>" +
                             "Your max stamina is determined primarily by your agility stat.<br><br>" +
                             "Your stamina gain rate is determined by both your agility and your " +
@@ -1781,7 +1782,7 @@ Bladeburner.prototype.createOverviewContent = function() {
                             "your success rate would be multipled by 85% (100 - 15).<br><br>" +
                             "Your max stamina and stamina gain rate can also be increased by " +
                             "training, or through skills and Augmentation upgrades.");
-        }
+        },
     });
 
     DomElems.overviewGen1 = createElement("p", {
@@ -1831,7 +1832,7 @@ Bladeburner.prototype.createOverviewContent = function() {
       innerText: "Bonus time: ",
       display: "inline-block",
       tooltip: "You gain bonus time while offline or when the game is inactive (e.g. when the tab is throttled by browser). " +
-        "Bonus time makes the Bladeburner mechanic progress faster, up to 5x the normal speed."
+               "Bonus time makes the Bladeburner mechanic progress faster, up to 5x the normal speed."
     });
     DomElems.overviewSkillPoints = createElement("p", {display:"block"});
 

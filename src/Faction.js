@@ -7,6 +7,7 @@ import {FactionInfos}                           from "./FactionInfo";
 import {Locations}                              from "./Location";
 import {HackingMission, setInMission}           from "./Missions";
 import {Player}                                 from "./Player";
+import {PurchaseAugmentationsOrderSetting}      from "./SettingEnums";
 import {Settings}                               from "./Settings";
 
 import {Page, routing}                          from "./ui/navigationTracking";
@@ -446,7 +447,6 @@ function displayFactionContent(factionName) {
     }
 }
 
-var sortOption = null;
 function displayFactionAugmentations(factionName) {
     var faction = Factions[factionName];
     if (faction == null) {
@@ -481,10 +481,10 @@ function displayFactionAugmentations(factionName) {
     var augmentationsList = createElement("ul");
 
     //Sort buttons
-    var sortByCostBtn = createElement("a", {
+    const sortByCostBtn = createElement("a", {
         innerText:"Sort by Cost", class:"a-link-button",
         clickListener:()=>{
-            sortOption = "cost";
+            Settings.PurchaseAugmentationsOrder = PurchaseAugmentationsOrderSetting.Cost;
             var augs = faction.augmentations.slice();
             augs.sort((augName1, augName2)=>{
                 var aug1 = Augmentations[augName1], aug2 = Augmentations[augName2];
@@ -497,10 +497,10 @@ function displayFactionAugmentations(factionName) {
             createFactionAugmentationDisplayElements(augmentationsList, augs, faction);
         }
     });
-    var sortByRepBtn = createElement("a", {
+    const sortByRepBtn = createElement("a", {
         innerText:"Sort by Reputation", class:"a-link-button",
         clickListener:()=>{
-            sortOption = "reputation";
+            Settings.PurchaseAugmentationsOrder = PurchaseAugmentationsOrderSetting.Reputation;
             var augs = faction.augmentations.slice();
             augs.sort((augName1, augName2)=>{
                 var aug1 = Augmentations[augName1], aug2 = Augmentations[augName2];
@@ -513,10 +513,10 @@ function displayFactionAugmentations(factionName) {
             createFactionAugmentationDisplayElements(augmentationsList, augs, faction);
         }
     });
-    var defaultSortBtn = createElement("a", {
+    const defaultSortBtn = createElement("a", {
         innerText:"Sort by Default Order", class:"a-link-button",
         clickListener:()=>{
-            sortOption = "default";
+            Settings.PurchaseAugmentationsOrder = PurchaseAugmentationsOrderSetting.Default;
             removeChildrenFromElement(augmentationsList);
             createFactionAugmentationDisplayElements(augmentationsList, faction.augmentations, faction);
         }
@@ -524,11 +524,11 @@ function displayFactionAugmentations(factionName) {
     elements.push(sortByCostBtn);
     elements.push(sortByRepBtn);
     elements.push(defaultSortBtn);
-    switch(sortOption) {
-        case "cost":
+    switch(Settings.PurchaseAugmentationsOrder) {
+        case PurchaseAugmentationsOrderSetting.Cost:
             sortByCostBtn.click();
             break;
-        case "reputation":
+        case PurchaseAugmentationsOrderSetting.Reputation:
             sortByRepBtn.click();
             break;
         default:

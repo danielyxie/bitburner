@@ -3,6 +3,7 @@ import {Programs}           from "./CreateProgram"
 import {Factions}           from "./Faction";
 import {Player}             from "./Player";
 import {AllServers}         from "./Server";
+import {hackWorldDaemon}    from "./RedPill";
 import {Terminal}           from "./Terminal";
 import {exceptionAlert}     from "../utils/helpers/exceptionAlert";
 import {createElement}      from "../utils/uiHelpers/createElement";
@@ -69,7 +70,7 @@ export function createDevMenu() {
 
     const statsHackingExpInput = createElement("input", {
         class: "text-input",
-        display: "block",
+        margin: "5px",
         placeholder: "+/- hacking exp",
         type: "number",
     });
@@ -80,14 +81,13 @@ export function createDevMenu() {
             Player.gainHackingExp(exp);
             Player.updateSkillLevels();
         },
-        display: "block",
         innerText: "Add Hacking Exp",
     });
 
     const statsStrengthExpInput = createElement("input", {
         class: "text-input",
-        display: "block",
-        placeholder: "+/- hacking exp",
+        margin: "5px",
+        placeholder: "+/- strength exp",
         type: "number",
     });
     const statsStrengthExpButton = createElement("button", {
@@ -97,14 +97,13 @@ export function createDevMenu() {
             Player.gainStrengthExp(exp);
             Player.updateSkillLevels();
         },
-        display: "block",
-        innerText: "Add Hacking Exp",
+        innerText: "Add Strength Exp",
     });
 
     const statsDefenseExpInput = createElement("input", {
         class: "text-input",
-        display: "block",
-        placeholder: "+/- hacking exp",
+        margin: "5px",
+        placeholder: "+/- defense exp",
         type: "number",
     });
     const statsDefenseExpButton = createElement("button", {
@@ -114,14 +113,13 @@ export function createDevMenu() {
             Player.gainDefenseExp(exp);
             Player.updateSkillLevels();
         },
-        display: "block",
-        innerText: "Add Hacking Exp",
+        innerText: "Add Defense Exp",
     });
 
     const statsDexterityExpInput = createElement("input", {
         class: "text-input",
-        display: "block",
-        placeholder: "+/- hacking exp",
+        margin: "5px",
+        placeholder: "+/- dexterity exp",
         type: "number",
     });
     const statsDexterityExpButton = createElement("button", {
@@ -131,31 +129,29 @@ export function createDevMenu() {
             Player.gainDexterityExp(exp);
             Player.updateSkillLevels();
         },
-        display: "block",
-        innerText: "Add Hacking Exp",
+        innerText: "Add Dexterity Exp",
     });
 
     const statsAgilityExpInput = createElement("input", {
         class: "text-input",
-        display: "block",
-        placeholder: "+/- hacking exp",
+        margin: "5px",
+        placeholder: "+/- agility exp",
         type: "number",
     });
     const statsAgilityExpButton = createElement("button", {
         class: "std-button",
         clickListener: () => {
-            const exp = parseInt(statsAgilityExpButton.value);
+            const exp = parseInt(statsAgilityExpInput.value);
             Player.gainAgilityExp(exp);
             Player.updateSkillLevels();
         },
-        display: "block",
-        innerText: "Add Hacking Exp",
+        innerText: "Add Agility Exp",
     });
 
     const statsCharismaExpInput = createElement("input", {
         class: "text-input",
-        display: "block",
-        placeholder: "+/- hacking exp",
+        margin: "5px",
+        placeholder: "+/- charisma exp",
         type: "number",
     });
     const statsCharismaExpButton = createElement("button", {
@@ -165,14 +161,13 @@ export function createDevMenu() {
             Player.gainCharismaExp(exp);
             Player.updateSkillLevels();
         },
-        display: "block",
-        innerText: "Add Hacking Exp",
+        innerText: "Add Charisma Exp",
     });
 
     const statsIntelligenceExpInput = createElement("input", {
         class: "text-input",
-        display: "block",
-        placeholder: "+/- hacking exp",
+        margin: "5px",
+        placeholder: "+/- intelligence exp",
         type: "number",
     });
     const statsIntelligenceExpButton = createElement("button", {
@@ -182,8 +177,7 @@ export function createDevMenu() {
             Player.gainIntelligenceExp(exp);
             Player.updateSkillLevels();
         },
-        display: "block",
-        innerText: "Add Hacking Exp",
+        innerText: "Add Intelligence Exp",
     });
 
     const statsEnableIntelligenceButton = createElement("button", {
@@ -205,7 +199,10 @@ export function createDevMenu() {
     // Factions
     const factionsHeader = createElement("h2", {innerText: "Factions"});
 
-    const factionsDropdown = createElement("select", {class: "dropdown"});
+    const factionsDropdown = createElement("select", {
+        class: "dropdown",
+        margin: "5px",
+    });
     for (const i in Factions) {
         factionsDropdown.options[factionsDropdown.options.length] = new Option(Factions[i].name, Factions[i].name);
     }
@@ -222,7 +219,10 @@ export function createDevMenu() {
     // Augmentations / Source Files
     const augmentationsHeader = createElement("h2", {innerText: "Augmentations"});
 
-    const augmentationsDropdown = createElement("select", {class: "dropdown"});
+    const augmentationsDropdown = createElement("select", {
+        class: "dropdown",
+        margin: "5px",
+    });
     for (const i in AugmentationNames) {
         const augName = AugmentationNames[i];
         augmentationsDropdown.options[augmentationsDropdown.options.length] = new Option(augName, augName);
@@ -239,7 +239,10 @@ export function createDevMenu() {
     // Programs
     const programsHeader = createElement("h2", {innerText: "Programs"});
 
-    const programsAddDropdown = createElement("select", {class: "dropdown"});
+    const programsAddDropdown = createElement("select", {
+        class: "dropdown",
+        margin: "5px",
+    });
     for (const i in Programs) {
         const progName = Programs[i].name;
         programsAddDropdown.options[programsAddDropdown.options.length] = new Option(progName, progName);
@@ -313,17 +316,11 @@ export function createDevMenu() {
         innerText: "Connect to server",
     });
 
-    // Add everything to container, then append to main menu
-    const devMenuContainer = createElement("div", {
-        class: "generic-menupage-container",
-        id: devMenuContainerId,
-    });
-
+    // Bladeburner
     const bladeburnerHeader = createElement("h2", {innerText: "Bladeburner"});
 
     const bladeburnerGainRankInput = createElement("input", {
         class: "text-input",
-        display: "block",
         placeholder: "Rank to gain (or negative to lose rank)",
         type: "number",
     });
@@ -338,9 +335,36 @@ export function createDevMenu() {
                 exceptionAlert(`Failed to change Bladeburner Rank in dev menu: ${e}`);
             }
         },
-        display: "block",
         innerText: "Gain Bladeburner Rank",
+    });
+
+    // Gang
+    const gangHeader = createElement("h2", {innerText: "Gang"});
+
+    const gangStoredCyclesInput = createElement("input", {
+        class: "text-input",
+        placeholder: "# Cycles to add",
+        type: "number",
+    });
+
+    const gangAddStoredCycles = createElement("button", {
+        class: "std-button",
+        clickListener: () => {
+            try {
+                const cycles = parseInt(gangStoredCyclesInput.value);
+                Player.gang.storedCycles += cycles;
+            } catch(e) {
+                exceptionAlert(`Failed to add stored cycles to gang mechanic: ${e}`);
+            }
+        },
+        innerText: "Add cycles to Gang mechanic",
     })
+
+    // Add everything to container, then append to main menu
+    const devMenuContainer = createElement("div", {
+        class: "generic-menupage-container",
+        id: devMenuContainerId,
+    });
 
     devMenuContainer.appendChild(devMenuText);
     devMenuContainer.appendChild(genericHeader);
@@ -351,24 +375,32 @@ export function createDevMenu() {
     devMenuContainer.appendChild(statsHeader);
     devMenuContainer.appendChild(statsHackingExpInput);
     devMenuContainer.appendChild(statsHackingExpButton);
+    devMenuContainer.appendChild(createElement("br"));
     devMenuContainer.appendChild(statsStrengthExpInput);
     devMenuContainer.appendChild(statsStrengthExpButton);
+    devMenuContainer.appendChild(createElement("br"));
     devMenuContainer.appendChild(statsDefenseExpInput);
     devMenuContainer.appendChild(statsDefenseExpButton);
+    devMenuContainer.appendChild(createElement("br"));
     devMenuContainer.appendChild(statsDexterityExpInput);
     devMenuContainer.appendChild(statsDexterityExpButton);
+    devMenuContainer.appendChild(createElement("br"));
     devMenuContainer.appendChild(statsAgilityExpInput);
     devMenuContainer.appendChild(statsAgilityExpButton);
+    devMenuContainer.appendChild(createElement("br"));
     devMenuContainer.appendChild(statsCharismaExpInput);
     devMenuContainer.appendChild(statsCharismaExpButton);
+    devMenuContainer.appendChild(createElement("br"));
     devMenuContainer.appendChild(statsIntelligenceExpInput);
     devMenuContainer.appendChild(statsIntelligenceExpButton);
+    devMenuContainer.appendChild(createElement("br"));
     devMenuContainer.appendChild(statsEnableIntelligenceButton);
     devMenuContainer.appendChild(statsDisableIntelligenceButton);
     devMenuContainer.appendChild(factionsHeader);
     devMenuContainer.appendChild(factionsDropdown);
     devMenuContainer.appendChild(factionsAddButton);
     devMenuContainer.appendChild(augmentationsHeader);
+    devMenuContainer.appendChild(augmentationsDropdown);
     devMenuContainer.appendChild(augmentationsQueueButton);
     devMenuContainer.appendChild(programsHeader);
     devMenuContainer.appendChild(programsAddDropdown);
@@ -382,6 +414,11 @@ export function createDevMenu() {
     devMenuContainer.appendChild(bladeburnerHeader);
     devMenuContainer.appendChild(bladeburnerGainRankInput);
     devMenuContainer.appendChild(bladeburnerGainRankButton);
+    devMenuContainer.appendChild(createElement("br"));
+    devMenuContainer.appendChild(gangHeader);
+    devMenuContainer.appendChild(gangStoredCyclesInput);
+    devMenuContainer.appendChild(gangAddStoredCycles);
+    devMenuContainer.appendChild(createElement("br"));
 
    const entireGameContainer = document.getElementById("entire-game-container");
    if (entireGameContainer == null) {
