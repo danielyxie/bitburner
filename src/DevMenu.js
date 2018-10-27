@@ -1,13 +1,14 @@
-import {AugmentationNames}  from "./Augmentations"
-import {Programs}           from "./CreateProgram"
-import {Factions}           from "./Faction";
-import {Player}             from "./Player";
-import {AllServers}         from "./Server";
-import {hackWorldDaemon}    from "./RedPill";
-import {Terminal}           from "./Terminal";
-import {exceptionAlert}     from "../utils/helpers/exceptionAlert";
-import {createElement}      from "../utils/uiHelpers/createElement";
-import {removeElementById}  from "../utils/uiHelpers/removeElementById";
+import {AugmentationNames}      from "./Augmentations";
+import {generateRandomContract} from "./CodingContractGenerator";
+import {Programs}               from "./CreateProgram";
+import {Factions}               from "./Faction";
+import {Player}                 from "./Player";
+import {AllServers}             from "./Server";
+import {hackWorldDaemon}        from "./RedPill";
+import {Terminal}               from "./Terminal";
+import {exceptionAlert}         from "../utils/helpers/exceptionAlert";
+import {createElement}          from "../utils/uiHelpers/createElement";
+import {removeElementById}      from "../utils/uiHelpers/removeElementById";
 
 const devMenuContainerId = "dev-menu-container";
 
@@ -60,7 +61,7 @@ export function createDevMenu() {
         },
         innerText: "Destroy Current BitNode",
         tooltip: "Will grant Source-File for the BitNode",
-    })
+    });
 
     // Experience / stats
     const statsHeader = createElement("h2", {
@@ -358,7 +359,18 @@ export function createDevMenu() {
             }
         },
         innerText: "Add cycles to Gang mechanic",
-    })
+    });
+
+    // Coding Contracts
+    const contractsHeader = createElement("h2", {innerText: "Coding Contracts"});
+
+    const generateRandomContractBtn = createElement("button", {
+        class: "std-button",
+        clickListener: () => {
+            generateRandomContract();
+        },
+        innerText: "Generate Random Contract",
+    });
 
     // Add everything to container, then append to main menu
     const devMenuContainer = createElement("div", {
