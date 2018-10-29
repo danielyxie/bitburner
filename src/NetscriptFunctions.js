@@ -107,8 +107,13 @@ var possibleLogs = {
     getServerGrowth: true,
     getServerNumPortsRequired: true,
     getServerRam: true,
+    // TIX API
     buyStock: true,
     sellStock: true,
+    shortStock: true,
+    sellShort: true,
+
+    // Singularity Functions
     purchaseServer: true,
     deleteServer: true,
     universityCourse: true,
@@ -125,12 +130,18 @@ var possibleLogs = {
     donateToFaction: true,
     createProgram: true,
     commitCrime: true,
-    shortStock: true,
-    sellShort: true,
+
+    // Bladeburner API
     startAction: true,
     upgradeSkill: true,
     setTeamSize: true,
     joinBladeburnerFaction: true,
+
+    // Gang API
+    recruitMember: true,
+    setMemberTask: true,
+    purchaseEquipment: true,
+    setTerritoryWarfare: true,
 }
 
 //Used to check and set flags for every Source File, despite the name of the function
@@ -3647,7 +3658,7 @@ function NetscriptFunctions(workerScript) {
                                 strength:               member.str,
                                 strengthEquipMult:      member.str_mult,
                                 strengthAscensionMult:  member.str_asc_mult,
-                                task:                   member.task.name,
+                                task:                   member.task,
                             }
                         }
                     }
@@ -3679,7 +3690,16 @@ function NetscriptFunctions(workerScript) {
                 nsGang.checkGangApiAccess(workerScript, "recruitMember");
 
                 try {
-                    return Player.gang.recruitMember(name);
+                    const res = Player.gang.recruitMember(name);
+                    if (workerScript.shouldLog("recruitMember")) {
+                        if (res) {
+                            workerScript.log(`Successfully recruited Gang Member ${name}`);
+                        } else {
+                            workerScript.log(`Failed to recruit Gang Member ${name}`);
+                        }
+                    }
+
+                    return res;
                 } catch(e) {
                     throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("recruitMember", e));
                 }
@@ -3709,7 +3729,16 @@ function NetscriptFunctions(workerScript) {
                 try {
                     for (const member of Player.gang.members) {
                         if (member.name === memberName) {
-                            return member.assignToTask(taskName);
+                            const res = member.assignToTask(taskName);
+                            if (workerScript.shouldLog("setMemberTask")) {
+                                if (res) {
+                                    workerScript.log(`Successfully assigned Gang Member ${memberName} to ${taskName} task`);
+                                } else {
+                                    workerScript.log(`Failed to assign Gang Member ${memberName} to ${taskName} task. ${memberName} is now Unassigned`);
+                                }
+                            }
+
+                            return res;
                         }
                     }
 
@@ -3755,7 +3784,16 @@ function NetscriptFunctions(workerScript) {
                 try {
                     for (const member in Player.gang.members) {
                         if (member.name === memberName) {
-                            return member.buyUpgrade(equipName, Player, Player.gang);
+                            const res = member.buyUpgrade(equipName, Player, Player.gang);
+                            if (workerScript.shouldLog("purchaseEquipment")) {
+                                if (res) {
+                                    workerScript.log(`Purchased ${equipName} for Gang member ${memberName}`);
+                                } else {
+                                    workerScript.log(`Failed to purchase ${equipName} for Gang member ${memberName}`);
+                                }
+                            }
+
+                            return res;
                         }
                     }
 
@@ -3795,8 +3833,14 @@ function NetscriptFunctions(workerScript) {
                 try {
                     if (engage) {
                         Player.gang.territoryWarfareEngaged = true;
+                        if (workerScript.shouldLog("setTerritoryWarfare")) {
+                            workerScript.log("Engaging in Gang Territory Warfare");
+                        }
                     } else {
                         Player.gang.territoryWarfareEngaged = false;
+                        if (workerScript.shouldLog("setTerritoryWarfare")) {
+                            workerScript.log("Disengaging in Gang Territory Warfare");
+                        }
                     }
                 } catch(e) {
                     throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("setTerritoryWarfare", e));
