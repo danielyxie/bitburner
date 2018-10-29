@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.40.5",
+    Version:                "0.41.0",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -48,7 +48,7 @@ let CONSTANTS = {
     /* Netscript Constants */
     //RAM Costs for different commands
     ScriptBaseRamCost:              1.6,
-    ScriptDomRamCost:               100,
+    ScriptDomRamCost:               25,
     ScriptWhileRamCost:             0,
     ScriptForRamCost:               0,
     ScriptIfRamCost:                0,
@@ -90,6 +90,10 @@ let CONSTANTS = {
     ScriptSingularityFn1RamCost:    1,
     ScriptSingularityFn2RamCost:    2,
     ScriptSingularityFn3RamCost:    3,
+
+    ScriptSingularityFnRamMult:     2, // Multiplier for RAM cost outside of BN-4
+
+    ScriptGangApiBaseRamCost:   4,
 
     ScriptBladeburnerApiBaseRamCost:    4,
 
@@ -191,13 +195,6 @@ let CONSTANTS = {
                              "-Miscellaneous Nodes slowly raise their defense over time<br><br>" +
                              "-Nodes slowly regenerate health over time.",
 
-
-    /* Gang constant */
-    GangRespectToReputationRatio: 2, //Respect is divided by this to get rep gain
-    MaximumGangMembers: 20,
-    GangRecruitCostMultiplier: 2,
-    GangTerritoryUpdateTimer: 150,
-
     /* Time Constants */
     MillisecondsPer20Hours: 72000000,
     GameCyclesPer20Hours: 72000000 / 200,
@@ -256,7 +253,6 @@ let CONSTANTS = {
     ClassLeadershipBaseCost: 320,
     ClassGymBaseCost: 120,
 
-    CrimeSingFnDivider: 2, //Factor by which exp/profit is reduced when commiting crime through Sing Fn
     CrimeShoplift: "shoplift",
     CrimeRobStore: "rob a store",
     CrimeMug: "mug someone",
@@ -507,11 +503,37 @@ let CONSTANTS = {
     LatestUpdate:
     `
      v0.41.0
+     * WARNING: In NetscriptJS, defining a function called print() is no longer possible
+     * Gang Mechanic Changes (BitNode-2):
+     *** Added a Gang Netscript API
+     *** Added new 'ascension' mechanic for Gang Members
+     *** The first three gang members are now 'free' (can be recruited instantly)
+     *** Maximum number of increased Gang Members increased from 20 to 30
+     *** Changed the formula for calculating respect needed to recruit the next gang member
+     *** Added a new category of upgrades for Gang Members: Augmentations
+     *** Non-Augmentation Gang member upgrades are now significantly weaker
+     *** Reputation for your Gang faction can no longer be gained through Infiltration
+     *** Re-worked the territory 'warfare' mechanic so that player can choose when to engage in it
+     *** Gang Members can now be killed during territory 'warfare'
+     *** Changed BitNode-2 Multipliers to make hacking slightly less profitable
+     *** Gang Member Equipment + Upgrades now get cheaper as your gang grows in power and respect
+     *** The effects of Source-File 2 are now slightly more powerful
+     * RAM Cost of accessing the global document object lowered from 100 GB to 25 GB
+     * RAM Cost to use Singularity Functions outside of BitNode-4 lowered by 75%. They now only cost twice as much as they do in BitNode-4
      * b1t_flum3.exe now takes significantly less time to create
+     * Crimes commited through Singularity function no longer give half money/exp
+     * Improved number formatting for Player 'work' actions (including crimes, etc.). These numbers should also adhere to locale settings now (by Kline-)
+     * The order that Augmentations are listed in (when purchasing from Faction and viewing your Augmentations) is now saved and persists when choosing different orders
+     * getCharacterInformation() Singularity function now returns multiplier information (from Augmentations/Source Files)
+     * Bug Fix: Calling print() in NetscriptJS no longer brings up the print dialog
      * Bug Fix: Fixed a bug that sometimes caused a blank black screen when destroying/resetting/switching BitNodes
      * Bug Fix: Netscript calls that throw errors will now no longer cause the 'concurrent calls' error if they are caught in the script. i.e. try/catch should now work properly in scripts
      * Bug Fix: Fixed a bug where sometimes the NeuroFlux Governor Augmentation level would be incorrectly calculated when the game was loaded
      * Bug Fix: Fixed a bug where calling the scp() Netscript function with invalid hostname/ips would throw an unclear error message
+     * Bug Fix: Bladeburner API function getActionCountRemaining() should now work properly for BlackOps
+     * Bug Fix: Black Ops can no longer be attempted out-of-order or without the required rank via Bladeburner API
+     * Bug Fix: Dynamic RAM Calculation now properly accounts for number of threads
+     * RAM cost for basic Netscript functions added to documentation (by CBJamo)
      `
 
 }

@@ -101,7 +101,14 @@ let NetscriptFunctions =
     "upgradeLevel|upgradeRam|upgradeCore|getLevelUpgradeCost|"                 +
     "getRamUpgradeCost|getCoreUpgradeCost|"                                    +
 
-    // Bladeburner functions
+    // Gang API
+    "gang|"                                                                    +
+    "getMemberNames|getGangInformation|getMemberInformation|canRecruitMember|" +
+    "recruitMember|getTaskNames|setMemberTask|getEquipmentNames|"              +
+    "getEquipmentCost|purchaseEquipment|ascendMember|setTerritoryWarfare|"     +
+    "getBonusTime|"                                                            +
+
+    // Bladeburner API
     "bladeburner|getContractNames|getOperationNames|getBlackOpNames|"          +
     "getGeneralActionNames|getSkillNames|startAction|stopBladeburnerAction|"   +
     "getActionTime|getActionEstimatedSuccessChance|getActionCountRemaining|"   +
