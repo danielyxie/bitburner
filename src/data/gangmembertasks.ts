@@ -205,7 +205,7 @@ export const gangMemberTasksMetadata: IGangMemberTaskMetadata[] = [
         isHacking: false,
         name: "Human Trafficking",
         params: {
-            baseRespect: 0.005, baseWanted: 0.4, baseMoney: 120,
+            baseRespect: 0.004, baseWanted: 1, baseMoney: 120,
             hackWeight: 30, strWeight: 5, defWeight: 5, dexWeight: 30, chaWeight: 30,
             difficulty: 36,
             territory: {
@@ -221,7 +221,7 @@ export const gangMemberTasksMetadata: IGangMemberTaskMetadata[] = [
         isHacking: false,
         name: "Terrorism",
         params: {
-            baseRespect: 0.01, baseWanted: 1.5,
+            baseRespect: 0.01, baseWanted: 5,
             hackWeight: 20, strWeight: 20, defWeight: 20, dexWeight: 20, chaWeight: 20,
             difficulty: 36,
             territory: {

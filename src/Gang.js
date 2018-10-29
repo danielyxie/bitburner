@@ -31,7 +31,7 @@ import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
         yesNoTxtInpBoxClose, yesNoBoxOpen}      from "../utils/YesNoBox";
 
 // Constants
-const GangRespectToReputationRatio = 2; // Respect is divided by this to get rep gain
+const GangRespectToReputationRatio = 5; // Respect is divided by this to get rep gain
 const MaximumGangMembers = 30;
 const GangRecruitCostMultiplier = 2;
 const CyclesPerTerritoryAndPowerUpdate = 100;
@@ -273,7 +273,7 @@ Gang.prototype.processTerritoryAndPowerGains = function(numCycles=1) {
                     // Multiplicative gain (50% chance)
                     // This is capped per cycle, to prevent it from getting out of control
                     const multiplicativeGain = AllGangs[name].power * 0.008;
-                    AllGangs[name].power += Math.min(1, multiplicativeGain);
+                    AllGangs[name].power += Math.min(0.9, multiplicativeGain);
                 } else {
                     // Additive gain (50% chance)
                     const additiveGain = 0.5 * gainRoll * AllGangs[name].territory;
@@ -357,6 +357,7 @@ Gang.prototype.getRespectNeededToRecruitMember = function() {
 }
 
 Gang.prototype.recruitMember = function(name) {
+    name = String(name);
     if (name === "" || !this.canRecruitMember()) { return false; }
 
     // Check for already-existing names
