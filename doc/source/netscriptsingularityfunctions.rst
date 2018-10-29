@@ -500,8 +500,6 @@ commitCrime
     This function is used to automatically attempt to commit crimes. If you are already in the middle of some 'working' action
     (such as working for a company or training at a gym), then running this function will automatically cancel that action and give you your earnings.
 
-    Note that crimes committed using this function will have all of their earnings halved (this applied for both money and experience!)
-
     This function returns the number of seconds it takes to attempt the specified crime (e.g It takes 60 seconds to attempt the 'Rob Store' crime,
     so running *commitCrime('rob store')* will return 60).
 

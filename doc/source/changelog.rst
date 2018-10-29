@@ -23,7 +23,7 @@ v0.41.0 - 10/29/2018
 * RAM Cost of accessing the global document object lowered from 100 GB to 25 GB
 * RAM Cost to use Singularity Functions outside of BitNode-4 lowered by 75%. They now only cost twice as much as they do in BitNode-4
 * b1t_flum3.exe now takes significantly less time to create
-* Crimes commited through Singularity function no longer give half money/exp
+* Crimes commited through Singularity function no longer give half money/exp (there is now no penalty)
 * Improved number formatting for Player 'work' actions (including crimes, etc.). These numbers should also adhere to locale settings now (by Kline-)
 * The order that Augmentations are listed in (when purchasing from Faction and viewing your Augmentations) is now saved and persists when choosing different orders
 * getCharacterInformation() Singularity function now returns multiplier information (from Augmentations/Source Files)

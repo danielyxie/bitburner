@@ -841,7 +841,7 @@ function GangMemberTask(name="", desc="", isHacking=false, isCombat=false,
     this.chaWeight      = params.chaWeight  ? params.chaWeight  : 0;
 
     if (Math.round(this.hackWeight + this.strWeight + this.defWeight + this.dexWeight + this.agiWeight + this.chaWeight) != 100) {
-        throw new Error(`GangMemberTask ${this.name} weights do not add up to 100`);
+        console.error(`GangMemberTask ${this.name} weights do not add up to 100`);
     }
 
     // 1 - 100
