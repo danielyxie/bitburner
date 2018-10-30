@@ -1,4 +1,5 @@
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import { getRandomInt } from "../utils/helpers/getRandomInt";
 
 /**
  * Represents the valuation of a company in the World Stock Exchange.
@@ -15,6 +16,11 @@ export class Stock {
      * Bear or bull (more likely to go up or down, based on otlkMag)
      */
     b: boolean;
+
+    /**
+     * Maximum price of a stock (per share)
+     */
+    readonly cap: number;
 
     /**
      * Maximum volatility
@@ -83,6 +89,7 @@ export class Stock {
         this.mv                 = mv;
         this.b                  = b;
         this.otlkMag            = otlkMag;
+        this.cap                = getRandomInt(initPrice * 1e3, initPrice * 25e3);
 
         this.posTxtEl           = null;
     }

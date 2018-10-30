@@ -35,10 +35,9 @@ import {Server, getServer, AddToAllServers,
 import {Settings}                                   from "./Settings";
 import {SpecialServerIps}                           from "./SpecialServerIps";
 import {Stock}                                      from "./Stock";
-import {StockMarket, StockSymbols, SymbolToStockMap, initStockSymbols,
-        initStockMarket, initSymbolToStockMap, stockMarketCycle, buyStock,
-        sellStock, updateStockPrices, displayStockMarketContent,
-        updateStockTicker, updateStockPlayerPosition,
+import {StockMarket, StockSymbols, SymbolToStockMap,
+        initStockMarket, initSymbolToStockMap, buyStock,
+        sellStock, updateStockPlayerPosition,
         shortStock, sellShort, OrderTypes,
         PositionTypes, placeOrder, cancelOrder}     from "./StockMarket";
 import {post}                                       from "./ui/postToTerminal";

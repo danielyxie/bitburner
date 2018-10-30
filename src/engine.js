@@ -66,7 +66,7 @@ import {SpecialServerIps, initSpecialServerIps}         from "./SpecialServerIps
 import {StockMarket, StockSymbols,
         SymbolToStockMap, initStockSymbols,
         initSymbolToStockMap, stockMarketCycle,
-        updateStockPrices,
+        processStockPrices,
         displayStockMarketContent}                      from "./StockMarket";
 import {Terminal, postNetburnerText}                    from "./Terminal";
 import {KEY}                                            from "../utils/helpers/keyCodes";
@@ -885,6 +885,11 @@ const Engine = {
             }
         }
 
+        // Update stock prices
+        if (Player.hasWseAccount) {
+            processStockPrices(numCycles);
+        }
+
         //Gang, if applicable
         if (Player.bitNodeN == 2 && Player.inGang()) {
             Player.gang.process(numCycles, Player);
@@ -935,7 +940,6 @@ const Engine = {
         checkFactionInvitations: 100,       //Check whether you qualify for any faction invitations
         passiveFactionGrowth: 600,
         messages: 150,
-        stockTick:  30,                     //Update stock prices
         sCr: 1500,
         mechanicProcess: 5,                 //Processes certain mechanics (Corporation, Bladeburner)
         contractGeneration: 3000            //Generate Coding Contracts
@@ -1054,13 +1058,6 @@ const Engine = {
             } else {
                 Engine.Counters.messages = 150;
             }
-        }
-
-        if (Engine.Counters.stockTick <= 0) {
-            if (Player.hasWseAccount) {
-                updateStockPrices();
-            }
-            Engine.Counters.stockTick = 30;
         }
 
         if (Engine.Counters.sCr <= 0) {
