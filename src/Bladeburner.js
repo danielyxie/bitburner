@@ -3497,7 +3497,7 @@ Bladeburner.prototype.getActionCountRemainingNetscriptFn = function(type, name, 
     switch (actionId.type) {
         case ActionTypes["Contract"]:
         case ActionTypes["Operation"]:
-            return actionObj.count;
+            return Math.floor( actionObj.count );
         case ActionTypes["BlackOp"]:
         case ActionTypes["BlackOperation"]:
             if (this.blackops[name] != null) {
