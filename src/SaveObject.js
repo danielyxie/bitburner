@@ -198,15 +198,11 @@ function loadGame(saveString) {
                     //that everything should be available
                     Player.firstFacInvRecvd = true;
                     Player.firstAugPurchased = true;
-                    Player.firstJobRecvd = true;
                     Player.firstTimeTraveled = true;
                     Player.firstProgramAvailable = true;
                 } else  {
                     if (Player.factions.length > 0 || Player.factionInvitations.length > 0) {
                         Player.firstFacInvRecvd = true;
-                    }
-                    if (Player.companyName !== "" || Player.companyPosition !== "") {
-                        Player.firstJobRecvd = true;
                     }
                     if (Player.hacking_skill >= 25) {
                         Player.firstScriptAvailable = true;
@@ -417,15 +413,11 @@ function loadImportedGame(saveObj, saveString) {
                     //that everything should be available
                     Player.firstFacInvRecvd = true;
                     Player.firstAugPurchased = true;
-                    Player.firstJobRecvd = true;
                     Player.firstTimeTraveled = true;
                     Player.firstProgramAvailable = true;
                 } else  {
                     if (Player.factions.length > 0 || Player.factionInvitations.length > 0) {
                         Player.firstFacInvRecvd = true;
-                    }
-                    if (Player.companyName !== "" || Player.companyPosition !== "") {
-                        Player.firstJobRecvd = true;
                     }
                     if (Player.hacking_skill >= 25) {
                         Player.firstScriptAvailable = true;

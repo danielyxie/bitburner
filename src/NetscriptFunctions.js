@@ -106,11 +106,14 @@ var possibleLogs = {
     getServerGrowth: true,
     getServerNumPortsRequired: true,
     getServerRam: true,
+
     // TIX API
     buyStock: true,
     sellStock: true,
     shortStock: true,
     sellShort: true,
+    purchase4SMarketData: true,
+    purchase4SMarketDataTixApi: true,
 
     // Singularity Functions
     purchaseServer: true,
@@ -545,8 +548,14 @@ function NetscriptFunctions(workerScript) {
             }
             return workerScript.disableLogs[fn] ? false : true;
         },
-        getScriptLogs : function() {
+        getScriptLogs : function(fn, ip) {
             if (workerScript.checkingRam) {return 0;}
+
+            if (fn != null && typeof fn === 'string') {
+                // Get Logs of another script
+                if (ip == null) { ip = workerScript.serverIp; }
+            }
+
             return workerScript.scriptRef.logs.slice();
         },
         nuke : function(ip){
@@ -1695,6 +1704,68 @@ function NetscriptFunctions(workerScript) {
             var forecast = 50;
             stock.b ? forecast += stock.otlkMag : forecast -= stock.otlkMag;
             return forecast / 100; //Convert from percentage to decimal
+        },
+        purchase4SMarketData : function() {
+            if (workerScript.checkingRam) {
+                return updateStaticRam("purchase4SMarketData", CONSTANTS.ScriptBuySellStockRamCost);
+            }
+            updateDynamicRam("purchase4SMarketData", CONSTANTS.ScriptBuySellStockRamCost);
+
+            if (!Player.hasTixApiAccess) {
+                throw makeRuntimeRejectMsg(workerScript, "You don't have TIX API Access! Cannot use purchase4SMarketData()");
+            }
+
+            if (Player.Player.has4SData) {
+                if (workerScript.shouldLog("purchase4SMarketData")) {
+                    workerScript.log("Already purchased 4S Market Data");
+                }
+                return true;
+            }
+
+            if (Player.money.lt(CONSTANTS.MarketData4SCost)) {
+                if (workerScript.shouldLog("purchase4SMarketData")) {
+                    workerScript.log("Failed to purchase 4S Market Data - Not enough money");
+                }
+                return false;
+            }
+
+            Player.has4SData = true;
+            Player.loseMoney(CONSTANTS.MarketData4SCost);
+            if (workerScript.shouldLog("purchase4SMarketData")) {
+                workerScript.log("Purchased 4S Market Data");
+            }
+            return true;
+        },
+        purchase4SMarketDataTixApi : function() {
+            if (workerScript.checkingRam) {
+                return updateStaticRam("purchase4SMarketDataTixApi", CONSTANTS.ScriptBuySellStockRamCost);
+            }
+            updateDynamicRam("purchase4SMarketDataTixApi", CONSTANTS.ScriptBuySellStockRamCost);
+
+            if (!Player.hasTixApiAccess) {
+                throw makeRuntimeRejectMsg(workerScript, "You don't have TIX API Access! Cannot use purchase4SMarketDataTixApi()");
+            }
+
+            if (Player.has4SDataTixApi) {
+                if (workerScript.shouldLog("purchase4SMarketDataTixApi")) {
+                    workerScript.log("Already purchased 4S Market Data TIX API");
+                }
+                return true;
+            }
+
+            if (Player.money.lt(CONSTANTS.MarketDataTixApi4SCost)) {
+                if (workerScript.shouldLog("purchase4SMarketDataTixApi")) {
+                    workerScript.log("Failed to purchase 4S Market Data TIX API - Not enough money");
+                }
+                return false;
+            }
+
+            Player.has4SDataTixApi = true;
+            Player.loseMoney(CONSTANTS.MarketDataTixApi4SCost);
+            if (workerScript.shouldLog("purchase4SMarketDataTixApi")) {
+                workerScript.log("Purchased 4S Market Data TIX API");
+            }
+            return true;
         },
         getPurchasedServerLimit : function() {
             if (workerScript.checkingRam) {
