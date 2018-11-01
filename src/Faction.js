@@ -394,7 +394,6 @@ function displayFactionContent(factionName) {
                         var hacking = false;
                         if (factionName === "NiteSec" || factionName === "The Black Hand") {hacking = true;}
                         Player.startGang(factionName, hacking);
-                        document.getElementById("gang-tab").style.display = "list-item";
                         document.getElementById("world-menu-header").click();
                         document.getElementById("world-menu-header").click();
                         Engine.loadGangContent();

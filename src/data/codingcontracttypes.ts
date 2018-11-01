@@ -105,7 +105,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
                     "    2 + 2\n",
                     "    2 + 1 + 1\n",
                     "    1 + 1 + 1 + 1\n\n",
-                    `How many different ways can ${n} be written as a sum of at least`,
+                    `How many different ways can the number ${n} be written as a sum of at least`,
                     "two positive integers?"].join(" ");
         },
         difficulty: 1.5,
@@ -387,8 +387,8 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
     },
     {
         desc: (data: number[]) => {
-            return ["You are given the following array of stock prices where the i-th element",
-                    "represents the stock price on day i:\n\n",
+            return ["You are given the following array of stock prices (which are numbers)",
+                    "where the i-th element represents the stock price on day i:\n\n",
                     `${data}\n\n`,
                     "Determine the maximum possible profit you can earn using at most",
                     "one transaction (i.e. you can only buy and sell the stock once). If no profit can be made",
@@ -421,8 +421,8 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
     },
     {
         desc: (data: number[]) => {
-            return ["You are given the following array of stock prices where the i-th element",
-                    "represents the stock price on day i:\n\n",
+            return ["You are given the following array of stock prices (which are numbers)",
+                    "where the i-th element represents the stock price on day i:\n\n",
                     `${data}\n\n`,
                     "Determine the maximum possible profit you can earn using as many",
                     "transactions as you'd like. A transaction is defined as buying",
@@ -455,8 +455,8 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
     },
     {
         desc: (data: number[]) => {
-            return ["You are given the following array of stock prices where the i-th element",
-                    "represents the stock price on day i:\n\n",
+            return ["You are given the following array of stock prices (which are numbers)",
+                    "where the i-th element represents the stock price on day i:\n\n",
                     `${data}\n\n`,
                     "Determine the maximum possible profit you can earn using at most",
                     "two transactions. A transaction is defined as buying",

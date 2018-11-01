@@ -1953,7 +1953,6 @@ function initLocationButtons() {
                 name:companyName,
             });
             displayLocationContent();
-            document.getElementById("corporation-tab").style.display = "list-item";
             document.getElementById("world-menu-header").click();
             document.getElementById("world-menu-header").click();
             dialogBoxCreate("Congratulations! You just started your own corporation. You can visit " +
@@ -1983,7 +1982,6 @@ function initLocationButtons() {
                 Player.bladeburner = new Bladeburner({new:true});
                 dialogBoxCreate("You have been accepted into the Bladeburner division!");
                 displayLocationContent();
-                document.getElementById("bladeburner-tab").style.display = "list-item";
                 document.getElementById("world-menu-header").click();
                 document.getElementById("world-menu-header").click();
             } else {

@@ -503,15 +503,24 @@ let CONSTANTS = {
     LatestUpdate:
     `
      v0.41.1
+     * IMPORTANT - Netscript Changes:
+     ** purchaseTor() now returns true if you already have a TOR router (it used to return false)
+     ** Added purchase4SMarketData() and purchase4SMarketDataTixApi() functions
+
      * Stock Market changes:
-     *** Stocks now have "maximum prices"
-     *** If a stock reaches its "maximum price", it will most likely drop in value (although it might still rise)
-     *** Each stock has its own, unique maximum price
-     *** Maximum price for each stock are randomly generated and change during each 'reset'
-     *** Stock Market cycles are now accumulated/stored, much like it is for Gangs and Bladeburners
-     *** Accumulated/stored cycles cause stock prices to update up to 50% faster (from every 6 seconds to 4 seconds)
-     ****** This means that after coming back from being offline, stock prices will update faster to make up for offline time
-     
+     ** Stocks now have "maximum prices"
+     ** If a stock reaches its "maximum price", it will most likely drop in value (although it might still rise)
+     ** Each stock has its own, unique maximum price
+     ** Maximum price for each stock are randomly generated and change during each 'reset'
+     ** Stock Market cycles are now accumulated/stored, much like it is for Gangs and Bladeburners
+     ** Accumulated/stored cycles cause stock prices to update up to 50% faster (from every 6 seconds to 4 seconds)
+     *** This means that after coming back from being offline, stock prices will update faster to make up for offline time
+
+     * Decreased the Hacking Level multiplier for BitNodes 6 and 7 to 0.4 (from 0.5)
+     * Bladeburner console history is now saved and persists when switching screens or closing/reopening the game
+     * b1t_flum3.exe is no longer removed from your home computer upon reset
+     * Added main menu link for the Stock Market
+     * Job main menu link only appears if you actually have a job
      `
 
 }

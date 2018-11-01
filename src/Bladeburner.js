@@ -74,7 +74,6 @@ var ContractBaseMoneyGain       = 50e3; //Base Money Gained per contract
 var ActiveActionCssClass        = "bladeburner-active-action";
 
 //Console related stuff
-var consoleHistory = []; //Console command history
 var consoleHistoryIndex = 0;
 var consoleHelpText = {
     helpList:"Use 'help [command]' to get more information about a particular Bladeburner console command.<br><br>" +
@@ -153,6 +152,7 @@ $(document).keydown(function(event) {
         //}
 
         if (!(Player.bladeburner instanceof Bladeburner)) {return;}
+        let consoleHistory = Player.bladeburner.consoleHistory;
 
         //NOTE: Keycodes imported from Terminal.js
         if (event.keyCode === KEY.ENTER) {
@@ -711,6 +711,9 @@ function Bladeburner(params={}) {
     this.automateThreshHigh = 0; //Stamina Threshold
     this.automateActionLow = 0;
     this.automateThreshLow = 0; //Stamina Threshold
+
+    //Console command history
+    this.consoleHistory = [];
 
     //Initialization
     initBladeburner();
@@ -1740,6 +1743,9 @@ Bladeburner.prototype.createContent = function() {
 
     this.postToConsole("Bladeburner Console BETA");
     this.postToConsole("Type 'help' to see console commands");
+    for (let i = 0; i < this.consoleHistory.length; ++i) {
+        this.postToConsole(this.consoleHistory[i]);
+    }
     DomElems.consoleInput.focus();
 }
 
@@ -2764,13 +2770,13 @@ Bladeburner.prototype.log = function(input) {
 Bladeburner.prototype.executeConsoleCommands = function(commands) {
     try {
         //Console History
-        if (consoleHistory[consoleHistory.length-1] != commands) {
-            consoleHistory.push(commands);
-            if (consoleHistory.length > 50) {
-                consoleHistory.splice(0, 1);
+        if (this.consoleHistory[this.consoleHistory.length-1] != commands) {
+            this.consoleHistory.push(commands);
+            if (this.consoleHistory.length > 50) {
+                this.consoleHistory.splice(0, 1);
             }
         }
-        consoleHistoryIndex = consoleHistory.length;
+        consoleHistoryIndex = this.consoleHistory.length;
 
         var arrayOfCommands = commands.split(";");
         for (var i = 0; i < arrayOfCommands.length; ++i) {

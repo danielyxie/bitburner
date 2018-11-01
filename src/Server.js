@@ -344,12 +344,15 @@ function processSingleServerGrowth(server, numCycles) {
 }
 
 function prestigeHomeComputer(homeComp) {
+    const hasBitflume = homeComp.programs.includes(Programs.BitFlume.name);
+
     homeComp.programs.length = 0; //Remove programs
     homeComp.runningScripts = [];
     homeComp.serversOnNetwork = [];
     homeComp.isConnectedTo = true;
     homeComp.ramUsed = 0;
     homeComp.programs.push(Programs.NukeProgram.name);
+    if (hasBitflume) { homeComp.programs.push(Programs.BitFlume.name); }
 
     //Update RAM usage on all scripts
     homeComp.scripts.forEach(function(script) {

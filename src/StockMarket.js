@@ -743,6 +743,7 @@ function displayStockMarketContent() {
                         "Buy 4S Market Data Access - " + numeralWrapper.format(CONSTANTS.MarketData4SCost, '($0.000a)'),
                         "4S Market Data - Purchased");
     marketDataButton.addEventListener("click", function() {
+        if (Player.money.lt(CONSTANTS.MarketData4SCost)) { return false; }
         Player.has4SData = true;
         Player.loseMoney(CONSTANTS.MarketData4SCost);
         displayStockMarketContent();
@@ -782,6 +783,7 @@ function displayStockMarketContent() {
                         "4S Market Data TIX API - Purchased");
     if (Player.hasTixApiAccess) {
         marketDataTixButton.addEventListener("click", function() {
+            if (Player.money.lt(CONSTANTS.MarketDataTixApi4SCost)) { return false; }
             Player.has4SDataTixApi = true;
             Player.loseMoney(CONSTANTS.MarketDataTixApi4SCost);
             displayStockMarketContent();
