@@ -2,7 +2,7 @@ Netscript Trade Information eXchange (TIX) API
 ==============================================
 
 The Trade Information eXchange (TIX) is the communications protocol supported by the World Stock Exchange (WSE).
-The WESE provides an API that allows you to automatically communicate with the
+The WSE provides an API that allows you to automatically communicate with the
 `Stock Market <http://bitburner.wikia.com/wiki/Stock_Market>`_. This API lets you write code using Netscript
 to build automated trading systems and create your own algorithmic trading strategies. Access to this
 TIX API can be purchased by visiting the World Stock Exchange in-game.
@@ -11,7 +11,7 @@ Access to the TIX API currently costs $5 billion. After you purchase it, you wil
 access even after you 'reset' by installing Augmentations
 
 getStockSymbols
--------------
+---------------
 
 .. js:function:: getStockSymbols()
 
@@ -214,3 +214,23 @@ getStockForecast
     In other words, if this function returned 0.30 for a stock, then this means
     that the stock's price has a 30% chance of increasing and a 70% chance of
     decreasing during the next tick.
+
+purchase4SMarketData
+--------------------
+
+.. js:function:: purchase4SMarketData()
+
+    Purchase 4S Market Data Access.
+
+    Returns true if you successfully purchased it or if you already have access.
+    Returns false otherwise.
+
+purchase4SMarketDataTixApi
+--------------------------
+
+.. js:function:: purchase4SMarketDataTixApi()
+
+    Purchase 4S Market Data TIX API Access.
+
+    Returns true if you successfully purchased it or if you already have access.
+    Returns false otherwise.

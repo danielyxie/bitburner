@@ -1715,7 +1715,7 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "You don't have TIX API Access! Cannot use purchase4SMarketData()");
             }
 
-            if (Player.Player.has4SData) {
+            if (Player.has4SData) {
                 if (workerScript.shouldLog("purchase4SMarketData")) {
                     workerScript.log("Already purchased 4S Market Data");
                 }
@@ -1794,7 +1794,7 @@ function NetscriptFunctions(workerScript) {
                 cost = getPurchaseServerRamCostGuard(ram);
             } catch (e) {
                 workerScript.scriptRef.log("ERROR: 'getPurchasedServerCost()' " + e.message);
-                return "";
+                return Infinity;
             }
 
             return cost;

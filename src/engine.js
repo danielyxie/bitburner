@@ -1246,6 +1246,11 @@ const Engine = {
             //Passive faction rep gain offline
             processPassiveFactionRepGain(numCyclesOffline);
 
+            // Stock Market offline progress
+            if (Player.hasWseAccount) {
+                processStockPrices(numCyclesOffline);
+            }
+
             //Gang progress for BitNode 2
             if (Player.bitNodeN != null && Player.bitNodeN === 2 && Player.inGang()) {
                 Player.gang.process(numCyclesOffline, Player);
