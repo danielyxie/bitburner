@@ -505,6 +505,7 @@ let CONSTANTS = {
      v0.41.1
      * IMPORTANT - Netscript Changes:
      ** purchaseTor() now returns true if you already have a TOR router (it used to return false)
+     ** getPurchasedServerCost() now returns Infinity if the specified RAM is an invalid amount or is greater than the max amount of RAM (2 ^ 20 GB)
      ** Added purchase4SMarketData() and purchase4SMarketDataTixApi() functions
 
      * Stock Market changes:
@@ -518,9 +519,11 @@ let CONSTANTS = {
 
      * Decreased the Hacking Level multiplier for BitNodes 6 and 7 to 0.4 (from 0.5)
      * Bladeburner console history is now saved and persists when switching screens or closing/reopening the game
+     * In Bladeburner, if your stamina reaches 0 your current action will be cancelled
      * b1t_flum3.exe is no longer removed from your home computer upon reset
-     * Added main menu link for the Stock Market
+     * Added main menu link for the Stock Market (once you've purchased an account)
      * Job main menu link only appears if you actually have a job
+     * Bug Fix: After installing Augs, the "Portfolio Mode" button on the Stock Market page should be properly reset
      `
 
 }
