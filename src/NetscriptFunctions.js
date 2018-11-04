@@ -554,6 +554,22 @@ function NetscriptFunctions(workerScript) {
             if (fn != null && typeof fn === 'string') {
                 // Get Logs of another script
                 if (ip == null) { ip = workerScript.serverIp; }
+                const server = getServer(ip);
+                if (server == null) {
+                    workerScript.log(`getScriptLogs() failed. Invalid IP or hostname passed in: ${ip}`);
+                    throw makeRuntimeRejectMsg(workerScript, `getScriptLogs() failed. Invalid IP or hostname passed in: ${ip}`);
+                }
+
+                let argsForTarget = [];
+                for (let i = 2; i < arguments.length; ++i) {
+                    argsForTarget.push(arguments[i]);
+                }
+                const runningScriptObj = findRunningScript(fn, argsForTarget, server);
+                if (runningScriptObj == null) {
+                    workerScript.scriptRef.log(`getScriptLogs() failed. No such script ${fn} on ${server.hostname} with args: ${arrayToString(argsForTarget)}`);
+                    return "";
+                }
+                return runningScriptObj.logs.slice();
             }
 
             return workerScript.scriptRef.logs.slice();
@@ -809,7 +825,7 @@ function NetscriptFunctions(workerScript) {
             }
             NetscriptFunctions(workerScript).exit();
         },
-        kill : function(filename,ip) {
+        kill : function(filename, ip) {
             if (workerScript.checkingRam) {
                 return updateStaticRam("kill", CONSTANTS.ScriptKillRamCost);
             }

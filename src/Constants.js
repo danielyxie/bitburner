@@ -507,6 +507,7 @@ let CONSTANTS = {
      ** purchaseTor() now returns true if you already have a TOR router (it used to return false)
      ** getPurchasedServerCost() now returns Infinity if the specified RAM is an invalid amount or is greater than the max amount of RAM (2 ^ 20 GB)
      ** Added purchase4SMarketData() and purchase4SMarketDataTixApi() functions
+     ** getScriptLogs() now takes in optional arguments that let you get the logs of another script
 
      * Stock Market changes:
      ** Stocks now have "maximum prices"
