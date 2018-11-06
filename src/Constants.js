@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.41.0",
+    Version:                "0.41.1",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -510,7 +510,7 @@ let CONSTANTS = {
      ** getScriptLogs() now takes in optional arguments that let you get the logs of another script
 
      * Stock Market changes:
-     ** Stocks now have "maximum prices"
+     ** Stocks now have "maximum prices". These are hidden from the player
      ** If a stock reaches its "maximum price", it will most likely drop in value (although it might still rise)
      ** Each stock has its own, unique maximum price
      ** Maximum price for each stock are randomly generated and change during each 'reset'
@@ -525,6 +525,7 @@ let CONSTANTS = {
      * Added main menu link for the Stock Market (once you've purchased an account)
      * Job main menu link only appears if you actually have a job
      * Bug Fix: After installing Augs, the "Portfolio Mode" button on the Stock Market page should be properly reset
+     * Bug Fix: bladeburner.getActionCountRemaining()'s return value is now rounded down (by Kline-)
      `
 
 }

@@ -3,6 +3,32 @@
 Changelog
 =========
 
+v0.41.1 - 11/5/2018
+-------------------
+* IMPORTANT - Netscript Changes:
+    * purchaseTor() now returns true if you already have a TOR router (it used to return false)
+    * getPurchasedServerCost() now returns Infinity if the specified RAM is an invalid amount or is greater than the max amount of RAM (2 ^ 20 GB)
+    * Added purchase4SMarketData() and purchase4SMarketDataTixApi() functions
+    * getScriptLogs() now takes in optional arguments that let you get the logs of another script
+
+* Stock Market changes:
+    * Stocks now have "maximum prices". These are hidden from the player
+    * If a stock reaches its "maximum price", it will most likely drop in value (although it might still rise)
+    * Each stock has its own, unique maximum price
+    * Maximum price for each stock are randomly generated and change during each 'reset'
+    * Stock Market cycles are now accumulated/stored, much like it is for Gangs and Bladeburners
+    * Accumulated/stored cycles cause stock prices to update up to 50% faster (from every 6 seconds to 4 seconds)
+        * This means that after coming back from being offline, stock prices will update faster to make up for offline time
+
+* Decreased the Hacking Level multiplier for BitNodes 6 and 7 to 0.4 (from 0.5)
+* Bladeburner console history is now saved and persists when switching screens or closing/reopening the game
+* In Bladeburner, if your stamina reaches 0 your current action will be cancelled
+* b1t_flum3.exe is no longer removed from your home computer upon reset
+* Added main menu link for the Stock Market (once you've purchased an account)
+* Job main menu link only appears if you actually have a job
+* Bug Fix: After installing Augs, the "Portfolio Mode" button on the Stock Market page should be properly reset
+* Bug Fix: bladeburner.getActionCountRemaining()'s return value is now rounded down (by Kline-)
+
 v0.41.0 - 10/29/2018
 --------------------
 * WARNING: In NetscriptJS, defining a function called print() is no longer possible

@@ -3903,7 +3903,7 @@ function NetscriptFunctions(workerScript) {
                         }
                     }
 
-                    workerScript.log(`Invalid argument passed to gang.ascendMember(). No gang member could be found with name ${memberName}`);
+                    workerScript.log(`Invalid argument passed to gang.ascendMember(). No gang member could be found with name ${name}`);
                     return false;
                 } catch(e) {
                     throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("ascendMember", e));
