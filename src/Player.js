@@ -191,7 +191,6 @@ function PlayerObject() {
     //Flags for determining whether certain "thresholds" have been achieved
     this.firstFacInvRecvd = false;
     this.firstAugPurchased = false;
-    this.firstJobRecvd = false;
     this.firstTimeTraveled = false;
     this.firstProgramAvailable = false;
 
@@ -1687,12 +1686,8 @@ PlayerObject.prototype.applyForJob = function(entryPosType, sing=false) {
     this.companyName = company.companyName;
     this.companyPosition = pos;
 
-    if (this.firstJobRecvd === false) {
-        this.firstJobRecvd = true;
-        document.getElementById("job-tab").style.display = "list-item";
-        document.getElementById("world-menu-header").click();
-        document.getElementById("world-menu-header").click();
-    }
+    document.getElementById("world-menu-header").click();
+    document.getElementById("world-menu-header").click();
 
     if (leaveCompany) {
         if (sing) {return true;}
@@ -1797,14 +1792,10 @@ PlayerObject.prototype.applyForAgentJob = function(sing=false) {
 PlayerObject.prototype.applyForEmployeeJob = function(sing=false) {
 	var company = Companies[this.location]; //Company being applied to
     if (this.isQualified(company, CompanyPositions.Employee)) {
-        if (this.firstJobRecvd === false) {
-            this.firstJobRecvd = true;
-            document.getElementById("job-tab").style.display = "list-item";
-            document.getElementById("world-menu-header").click();
-            document.getElementById("world-menu-header").click();
-        }
         this.companyName = company.companyName;
         this.companyPosition = CompanyPositions.Employee;
+        document.getElementById("world-menu-header").click();
+        document.getElementById("world-menu-header").click();
         if (sing) {return true;}
         dialogBoxCreate("Congratulations, you are now employed at " + this.companyName);
         Engine.loadLocationContent();
@@ -1817,14 +1808,10 @@ PlayerObject.prototype.applyForEmployeeJob = function(sing=false) {
 PlayerObject.prototype.applyForPartTimeEmployeeJob = function(sing=false) {
 	var company = Companies[this.location]; //Company being applied to
     if (this.isQualified(company, CompanyPositions.PartTimeEmployee)) {
-        if (this.firstJobRecvd === false) {
-            this.firstJobRecvd = true;
-            document.getElementById("job-tab").style.display = "list-item";
-            document.getElementById("world-menu-header").click();
-            document.getElementById("world-menu-header").click();
-        }
         this.companyName = company.companyName;
         this.companyPosition = CompanyPositions.PartTimeEmployee;
+        document.getElementById("world-menu-header").click();
+        document.getElementById("world-menu-header").click();
         if (sing) {return true;}
         dialogBoxCreate("Congratulations, you are now employed part-time at " + this.companyName);
         Engine.loadLocationContent();
@@ -1837,14 +1824,10 @@ PlayerObject.prototype.applyForPartTimeEmployeeJob = function(sing=false) {
 PlayerObject.prototype.applyForWaiterJob = function(sing=false) {
 	var company = Companies[this.location]; //Company being applied to
     if (this.isQualified(company, CompanyPositions.Waiter)) {
-        if (this.firstJobRecvd === false) {
-            this.firstJobRecvd = true;
-            document.getElementById("job-tab").style.display = "list-item";
-            document.getElementById("world-menu-header").click();
-            document.getElementById("world-menu-header").click();
-        }
         this.companyName = company.companyName;
         this.companyPosition = CompanyPositions.Waiter;
+        document.getElementById("world-menu-header").click();
+        document.getElementById("world-menu-header").click();
         if (sing) {return true;}
         dialogBoxCreate("Congratulations, you are now employed as a waiter at " + this.companyName);
         Engine.loadLocationContent();
@@ -1857,14 +1840,10 @@ PlayerObject.prototype.applyForWaiterJob = function(sing=false) {
 PlayerObject.prototype.applyForPartTimeWaiterJob = function(sing=false) {
 	var company = Companies[this.location]; //Company being applied to
     if (this.isQualified(company, CompanyPositions.PartTimeWaiter)) {
-        if (this.firstJobRecvd === false) {
-            this.firstJobRecvd = true;
-            document.getElementById("job-tab").style.display = "list-item";
-            document.getElementById("world-menu-header").click();
-            document.getElementById("world-menu-header").click();
-        }
         this.companyName = company.companyName;
         this.companyPosition = CompanyPositions.PartTimeWaiter;
+        document.getElementById("world-menu-header").click();
+        document.getElementById("world-menu-header").click();
         if (sing) {return true;}
         dialogBoxCreate("Congratulations, you are now employed as a part-time waiter at " + this.companyName);
         Engine.loadLocationContent();
