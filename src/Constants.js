@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.41.0",
+    Version:                "0.41.1",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -502,38 +502,31 @@ let CONSTANTS = {
 
     LatestUpdate:
     `
-     v0.41.0
-     * WARNING: In NetscriptJS, defining a function called print() is no longer possible
-     * Gang Mechanic Changes (BitNode-2):
-     *** Added a Gang Netscript API
-     *** Added new 'ascension' mechanic for Gang Members
-     *** The first three gang members are now 'free' (can be recruited instantly)
-     *** Maximum number of increased Gang Members increased from 20 to 30
-     *** Changed the formula for calculating respect needed to recruit the next gang member
-     *** Added a new category of upgrades for Gang Members: Augmentations
-     *** Non-Augmentation Gang member upgrades are now significantly weaker
-     *** Reputation for your Gang faction can no longer be gained through Infiltration
-     *** Re-worked the territory 'warfare' mechanic so that player can choose when to engage in it
-     *** Gang Members can now be killed during territory 'warfare'
-     *** Changed BitNode-2 Multipliers to make hacking slightly less profitable
-     *** Gang Member Equipment + Upgrades now get cheaper as your gang grows in power and respect
-     *** The effects of Source-File 2 are now slightly more powerful
-     * RAM Cost of accessing the global document object lowered from 100 GB to 25 GB
-     * RAM Cost to use Singularity Functions outside of BitNode-4 lowered by 75%. They now only cost twice as much as they do in BitNode-4
-     * b1t_flum3.exe now takes significantly less time to create
-     * Crimes commited through Singularity function no longer give half money/exp
-     * Improved number formatting for Player 'work' actions (including crimes, etc.). These numbers should also adhere to locale settings now (by Kline-)
-     * The order that Augmentations are listed in (when purchasing from Faction and viewing your Augmentations) is now saved and persists when choosing different orders
-     * getCharacterInformation() Singularity function now returns multiplier information (from Augmentations/Source Files)
-     * Bug Fix: Calling print() in NetscriptJS no longer brings up the print dialog
-     * Bug Fix: Fixed a bug that sometimes caused a blank black screen when destroying/resetting/switching BitNodes
-     * Bug Fix: Netscript calls that throw errors will now no longer cause the 'concurrent calls' error if they are caught in the script. i.e. try/catch should now work properly in scripts
-     * Bug Fix: Fixed a bug where sometimes the NeuroFlux Governor Augmentation level would be incorrectly calculated when the game was loaded
-     * Bug Fix: Fixed a bug where calling the scp() Netscript function with invalid hostname/ips would throw an unclear error message
-     * Bug Fix: Bladeburner API function getActionCountRemaining() should now work properly for BlackOps
-     * Bug Fix: Black Ops can no longer be attempted out-of-order or without the required rank via Bladeburner API
-     * Bug Fix: Dynamic RAM Calculation now properly accounts for number of threads
-     * RAM cost for basic Netscript functions added to documentation (by CBJamo)
+     v0.41.1
+     * IMPORTANT - Netscript Changes:
+     ** purchaseTor() now returns true if you already have a TOR router (it used to return false)
+     ** getPurchasedServerCost() now returns Infinity if the specified RAM is an invalid amount or is greater than the max amount of RAM (2 ^ 20 GB)
+     ** Added purchase4SMarketData() and purchase4SMarketDataTixApi() functions
+     ** getScriptLogs() now takes in optional arguments that let you get the logs of another script
+
+     * Stock Market changes:
+     ** Stocks now have "maximum prices". These are hidden from the player
+     ** If a stock reaches its "maximum price", it will most likely drop in value (although it might still rise)
+     ** Each stock has its own, unique maximum price
+     ** Maximum price for each stock are randomly generated and change during each 'reset'
+     ** Stock Market cycles are now accumulated/stored, much like it is for Gangs and Bladeburners
+     ** Accumulated/stored cycles cause stock prices to update up to 50% faster (from every 6 seconds to 4 seconds)
+     *** This means that after coming back from being offline, stock prices will update faster to make up for offline time
+
+     * Decreased the Hacking Level multiplier for BitNodes 6 and 7 to 0.4 (from 0.5)
+     * Bladeburner console history is now saved and persists when switching screens or closing/reopening the game
+     * In Bladeburner, if your stamina reaches 0 your current action will be cancelled
+     * b1t_flum3.exe is no longer removed from your home computer upon reset
+     * Added main menu link for the Stock Market (once you've purchased an account)
+     * Job main menu link only appears if you actually have a job
+     * Bug Fix: Netscript Gang API functions purchaseEquipment() and ascendMember() should now work properly
+     * Bug Fix: After installing Augs, the "Portfolio Mode" button on the Stock Market page should be properly reset
+     * Bug Fix: bladeburner.getActionCountRemaining()'s return value is now rounded down (by Kline-)
      `
 
 }

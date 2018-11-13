@@ -148,6 +148,10 @@ function prestigeAugmentation() {
     Terminal.resetTerminalInput();
     Engine.loadTerminalContent();
 
+    // Refresh Main Menu (the 'World' menu, specifically)
+    document.getElementById("world-menu-header").click();
+    document.getElementById("world-menu-header").click();
+
     //Red Pill
     if (augmentationExists(AugmentationNames.TheRedPill) &&
         Augmentations[AugmentationNames.TheRedPill].owned) {
@@ -318,6 +322,10 @@ function prestigeSourceFile() {
     Player.gang = null;
     Player.corporation = null;
     Player.bladeburner = null;
+
+    // Refresh Main Menu (the 'World' menu, specifically)
+    document.getElementById("world-menu-header").click();
+    document.getElementById("world-menu-header").click();
 
     //Gain int exp
     Player.gainIntelligenceExp(5);
