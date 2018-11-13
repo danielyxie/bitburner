@@ -3868,7 +3868,7 @@ function NetscriptFunctions(workerScript) {
                 nsGang.checkGangApiAccess(workerScript, "purchaseEquipment");
 
                 try {
-                    for (const member in Player.gang.members) {
+                    for (const member of Player.gang.members) {
                         if (member.name === memberName) {
                             const res = member.buyUpgrade(equipName, Player, Player.gang);
                             if (workerScript.shouldLog("purchaseEquipment")) {
@@ -3897,7 +3897,7 @@ function NetscriptFunctions(workerScript) {
                 nsGang.checkGangApiAccess(workerScript, "ascendMember");
 
                 try {
-                    for (const member in Player.gang.members) {
+                    for (const member of Player.gang.members) {
                         if (member.name === name) {
                             return Player.gang.ascendMember(member, workerScript);
                         }

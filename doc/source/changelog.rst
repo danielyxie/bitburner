@@ -26,6 +26,7 @@ v0.41.1 - 11/5/2018
 * b1t_flum3.exe is no longer removed from your home computer upon reset
 * Added main menu link for the Stock Market (once you've purchased an account)
 * Job main menu link only appears if you actually have a job
+* Bug Fix: Netscript Gang API functions purchaseEquipment() and ascendMember() should now work properly
 * Bug Fix: After installing Augs, the "Portfolio Mode" button on the Stock Market page should be properly reset
 * Bug Fix: bladeburner.getActionCountRemaining()'s return value is now rounded down (by Kline-)
 
