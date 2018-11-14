@@ -466,7 +466,7 @@ async function parseOnlyRamCalculate(server, code, workerScript) {
             const nextModule = parseQueue.shift();
 
             let code;
-            if (nextModule.startsWith("https://")) {
+            if (nextModule.startsWith("https://") || nextModule.startsWith("http://")) {
                 try {
                     const module = await eval('import(nextModule)');
                     code = "";
