@@ -2138,14 +2138,18 @@ function NetscriptFunctions(workerScript) {
             }
             return port;
         },
-        rm : function(fn) {
+        rm : function(fn, ip) {
             if (workerScript.checkingRam) {
                 return updateStaticRam("rm", CONSTANTS.ScriptReadWriteRamCost);
             }
             updateDynamicRam("rm", CONSTANTS.ScriptReadWriteRamCost);
-            var s = getServer(workerScript.serverIp);
+
+            if (ip == null || ip === "") {
+                ip = workerScript.serverIp;
+            }
+            var s = getServer(ip);
             if (s == null) {
-                throw makeRuntimeRejectMsg(workerScript, "Error getting Server for this script in clear(). This is a bug please contact game dev");
+                throw makeRuntimeRejectMsg(workerScript, `Invalid server specified for rm(): ${ip}`);
             }
 
             if (fn.includes(".exe")) {
@@ -3930,6 +3934,27 @@ function NetscriptFunctions(workerScript) {
                     }
                 } catch(e) {
                     throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("setTerritoryWarfare", e));
+                }
+            },
+            getChanceToWinClash : function(otherGang) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getChanceToWinClash", CONSTANTS.ScriptGangApiBaseRamCost);
+                }
+                updateDynamicRam("getChanceToWinClash", CONSTANTS.ScriptGangApiBaseRamCost);
+                nsGang.checkGangApiAccess(workerScript, "getChanceToWinClash");
+
+                try {
+                    if (AllGangs[otherGang] == null) {
+                        workerScript.log(`Invalid gang specified in gang.getChanceToWinClash() : ${otherGang}`);
+                        return 0;
+                    }
+
+                    const playerPower = AllGangs[Player.gang.facName].power;
+                    const otherPower = AllGangs[otherGang].power;
+
+                    return playerPower / (otherPower + playerPower);
+                } catch(e) {
+                    throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("getChanceToWinClash", e));
                 }
             },
             getBonusTime : function() {

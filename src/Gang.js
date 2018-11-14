@@ -1521,9 +1521,10 @@ Gang.prototype.updateGangContent = function() {
 
         // Update territory information
         UIElems.gangTerritoryInfoText.innerHTML = "";
-        for (var gangname in AllGangs) {
+        const playerPower = AllGangs[this.facName].power;
+        for (const gangname in AllGangs) {
             if (AllGangs.hasOwnProperty(gangname)) {
-                var gangTerritoryInfo = AllGangs[gangname];
+                const gangTerritoryInfo = AllGangs[gangname];
                 let territory = gangTerritoryInfo.territory * 100;
 
                 //Fix some rounding issues graphically
@@ -1536,12 +1537,16 @@ Gang.prototype.updateGangContent = function() {
                     displayNumber = formatNumber(territory, 2);
                 }
 
-                if (gangname == this.facName) {
-                    UIElems.gangTerritoryInfoText.innerHTML += ("<b>" + gangname + "</b><br>(Power: " + formatNumber(gangTerritoryInfo.power, 6) + "): " +
-                                       displayNumber + "%<br><br>");
+                if (gangname === this.facName) {
+                    let newHTML = `<b><u>${gangname}</u></b><br>Power: ${formatNumber(gangTerritoryInfo.power, 6)}<br>`;
+                    newHTML += `Territory: ${displayNumber}%<br><br>`;
+                    UIElems.gangTerritoryInfoText.innerHTML += newHTML;
                 } else {
-                    UIElems.gangTerritoryInfoText.innerHTML += (gangname + "<br>(Power: " + formatNumber(gangTerritoryInfo.power, 6) + "): " +
-                                       displayNumber + "%<br><br>");
+                    const clashVictoryChance = playerPower / (gangTerritoryInfo.power + playerPower);
+                    let newHTML = `<u>${gangname}</u><br>Power: ${formatNumber(gangTerritoryInfo.power, 6)}<br>`;
+                    newHTML += `Territory: ${displayNumber}%<br>`;
+                    newHTML += `Chance to win clash with this gang: ${numeralWrapper.format(clashVictoryChance, "0.000%")}<br><br>`;
+                    UIElems.gangTerritoryInfoText.innerHTML += newHTML;
                 }
             }
         }

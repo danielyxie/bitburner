@@ -107,7 +107,7 @@ let NetscriptFunctions =
     "getMemberNames|getGangInformation|getMemberInformation|canRecruitMember|" +
     "recruitMember|getTaskNames|setMemberTask|getEquipmentNames|"              +
     "getEquipmentCost|purchaseEquipment|ascendMember|setTerritoryWarfare|"     +
-    "getBonusTime|"                                                            +
+    "getChanceToWinClash|getBonusTime|"                                        +
 
     // Bladeburner API
     "bladeburner|getContractNames|getOperationNames|getBlackOpNames|"          +
