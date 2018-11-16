@@ -8,8 +8,10 @@ import {Augmentations, Augmentation,
 import {BitNodeMultipliers}                         from "./BitNodeMultipliers";
 import {determineCrimeSuccess, findCrime}           from "./Crimes";
 import {Bladeburner}                                from "./Bladeburner";
-import {Companies, Company, CompanyPosition,
-        CompanyPositions, companyExists}            from "./Company";
+import {Company}                                    from "./Company/Company";
+import {Companies, companyExists}                   from "./Company/Companies";
+import {CompanyPosition}                            from "./Company/CompanyPosition";
+import {CompanyPositions}                           from "./Company/CompanyPositions";
 import {CONSTANTS}                                  from "./Constants";
 import {Programs}                                   from "./CreateProgram";
 import {DarkWebItems}                               from "./DarkWeb";
@@ -2692,8 +2694,8 @@ function NetscriptFunctions(workerScript) {
             }
 
             var companyPositionTitle = "";
-            if (Player.companyPosition instanceof CompanyPosition) {
-                companyPositionTitle = Player.companyPosition.positionName;
+            if (CompanyPositions[Player.companyPosition] instanceof CompanyPosition) {
+                companyPositionTitle = Player.companyPosition;
             }
             return {
                 bitnode:            Player.bitNodeN,
@@ -2834,7 +2836,8 @@ function NetscriptFunctions(workerScript) {
                 return;
             }
 
-            if (Player.companyPosition == "" || !(Player.companyPosition instanceof CompanyPosition)) {
+            const companyPosition = CompanyPositions[Player.companyPosition];
+            if (Player.companyPosition === "" || !(companyPosition instanceof CompanyPosition)) {
                 workerScript.scriptRef.log("ERROR: workForCompany() failed because you do not have a job");
                 return false;
             }
@@ -2846,13 +2849,13 @@ function NetscriptFunctions(workerScript) {
                 }
             }
 
-            if (Player.companyPosition.isPartTimeJob()) {
+            if (companyPosition.isPartTimeJob()) {
                 Player.startWorkPartTime();
             } else {
                 Player.startWork();
             }
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.workForCompany == null) {
-                workerScript.scriptRef.log("Began working at " + Player.companyName + " as a " + Player.companyPosition.positionName);
+                workerScript.log(`Began working at ${Player.companyName} as a ${Player.companyPosition}`);
             }
             return true;
         },
@@ -2928,11 +2931,11 @@ function NetscriptFunctions(workerScript) {
             }
             if (res) {
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.applyToCompany == null) {
-                    workerScript.scriptRef.log("You were offered a new job at " + companyName + " as a " + Player.companyPosition.positionName);
+                    workerScript.log(`You were offered a new job at ${companyName} as a ${Player.companyPosition}`);
                 }
             } else {
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.applyToCompany == null) {
-                    workerScript.scriptRef.log("You failed to get a new job/promotion at " + companyName + " in the " + field + " field.");
+                    workerScript.log(`You failed to get a new job/promotion at ${companyName} in the ${field} field.`);
                 }
             }
             return res;

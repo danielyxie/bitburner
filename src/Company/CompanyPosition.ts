@@ -1,12 +1,12 @@
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "/utils/JSONReviver";
-import { CONSTANTS } from "/src/Constants";
-import * as names from "/src/Company/data/companypositionname";
+import { CONSTANTS } from "../Constants";
+import * as names from "./data/CompanyPositionNames";
 
 /* tslint:disable:completed-docs */
 
-interface ConstructorParams {
-    name: string,
-    baseSalary: number,
+export interface IConstructorParams {
+    name: string;
+    nextPosition: string | null;
+    baseSalary: number;
     repMultiplier: number;
 
     reqdHacking?: number;
@@ -34,16 +34,14 @@ interface ConstructorParams {
 
 export class CompanyPosition {
     /**
-     * Initializes a CompanyPosition object from a JSON save state
-     */
-    static fromJSON(value: any): CompanyPosition {
-        return Generic_fromJSON(CompanyPosition, value.data);
-    }
-
-    /**
      * Position title
      */
-    positionName: string;
+    name: string;
+
+    /**
+     * Title of next position to be promoted to
+     */
+    nextPosition: string | null;
 
     /**
      * Base salary for this position ($ per 200ms game cycle)
@@ -54,7 +52,7 @@ export class CompanyPosition {
     /**
      * Reputation multiplier
      */
-    positionMultiplier: number;
+    repMultiplier: number;
 
     /**
      * Required stats to earn this position
@@ -91,18 +89,19 @@ export class CompanyPosition {
     agilityExpGain: number;
     charismaExpGain: number;
 
-    constructor(p: ConstructorParams) {
+    constructor(p: IConstructorParams) {
         this.name               = p.name;
+        this.nextPosition       = p.nextPosition;
         this.baseSalary         = p.baseSalary;
         this.repMultiplier      = p.repMultiplier;
 
-        this.reqdHacking    = (p.reqdHacking != null)    ?  p.reqdHacking    : 0;
-        this.reqdStrength   = (p.reqdStrength != null)   ?  p.reqdStrength   : 0;
-        this.reqdDefense    = (p.reqdDefense != null)    ?  p.reqdDefense    : 0;
-        this.reqdDexterity  = (p.reqdDexterity != null)  ?  p.reqdDexterity  : 0;
-        this.reqdAgility    = (p.reqdAgility != null)    ?  p.reqdAgility    : 0;
-        this.reqdCharisma   = (p.reqdCharisma != null)   ?  p.reqdCharisma   : 0;
-        this.reqdReputation = (p.reqdReputation != null) ?  p.reqdReputation : 0;
+        this.requiredHacking    = (p.reqdHacking != null)    ?  p.reqdHacking    : 0;
+        this.requiredStrength   = (p.reqdStrength != null)   ?  p.reqdStrength   : 0;
+        this.requiredDefense    = (p.reqdDefense != null)    ?  p.reqdDefense    : 0;
+        this.requiredDexterity  = (p.reqdDexterity != null)  ?  p.reqdDexterity  : 0;
+        this.requiredAgility    = (p.reqdAgility != null)    ?  p.reqdAgility    : 0;
+        this.requiredCharisma   = (p.reqdCharisma != null)   ?  p.reqdCharisma   : 0;
+        this.requiredReputation = (p.reqdReputation != null) ?  p.reqdReputation : 0;
 
         this.hackingEffectiveness   = (p.hackingEffectiveness != null)      ?  p.hackingEffectiveness   : 0;
         this.strengthEffectiveness  = (p.strengthEffectiveness != null)     ?  p.strengthEffectiveness  : 0;
@@ -132,7 +131,7 @@ export class CompanyPosition {
         const agiRatio: number  = this.agilityEffectiveness   * agi  / CONSTANTS.MaxSkillLevel;
         const chaRatio: number  = this.charismaEffectiveness  * cha  / CONSTANTS.MaxSkillLevel;
 
-        let reputationGain: number = this.positionMultiplier * (hackRatio + strRatio + defRatio + dexRatio + agiRatio + chaRatio) / 100;
+        let reputationGain: number = this.repMultiplier * (hackRatio + strRatio + defRatio + dexRatio + agiRatio + chaRatio) / 100;
         if (isNaN(reputationGain)) {
             console.error("Company reputation gain calculated to be NaN");
             reputationGain = 0;
@@ -180,13 +179,4 @@ export class CompanyPosition {
     isPartTimeJob(): boolean {
         return names.PartTimeCompanyPositions.includes(this.name);
     }
-
-    /**
-     * Serialize the current file to a JSON save state.
-     */
-    toJSON(): any {
-        return Generic_toJSON("CompanyPosition", this);
-    }
 }
-
-Reviver.constructors.CompanyPosition = CompanyPosition;

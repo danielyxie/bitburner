@@ -1,6 +1,8 @@
 import {Bladeburner}                            from "./Bladeburner";
-import {CompanyPositions, initCompanies,
-        Companies, getJobRequirementText}       from "./Company";
+import {CompanyPositions}                       from "./Company/CompanyPositions";
+import {Companies}                              from "./Company/Companies";
+import {getJobRequirementText}                  from "./Company/GetJobRequirementText";
+import * as posNames                            from "./Company/data/CompanyPositionNames";
 import {Corporation}                            from "./CompanyManagement";
 import {CONSTANTS}                              from "./Constants";
 import {Crimes}                                 from "./Crimes";
@@ -241,7 +243,7 @@ function displayLocationContent() {
         locationTxtDiv1.style.display = "block";
         locationTxtDiv2.style.display = "block";
         locationTxtDiv3.style.display = "block";
-        jobTitle.innerHTML = "Job Title: " + Player.companyPosition.positionName;
+        jobTitle.innerHTML = "Job Title: " + Player.companyPosition;
         var repGain = company.getFavorGain();
         if (repGain.length != 2) {repGain = 0;}
         repGain = repGain[0];
@@ -301,19 +303,19 @@ function displayLocationContent() {
     var hospitalTreatmentCost = (Player.max_hp - Player.hp) * CONSTANTS.HospitalCostPerHp;
 
     //Set tooltip for job requirements
-    setJobRequirementTooltip(loc, CompanyPositions.SoftwareIntern, softwareJob);
-    setJobRequirementTooltip(loc, CompanyPositions.SoftwareConsultant, softwareConsultantJob);
-    setJobRequirementTooltip(loc, CompanyPositions.ITIntern, itJob);
-    setJobRequirementTooltip(loc, CompanyPositions.SecurityEngineer, securityEngineerJob);
-    setJobRequirementTooltip(loc, CompanyPositions.NetworkEngineer, networkEngineerJob);
-    setJobRequirementTooltip(loc, CompanyPositions.BusinessIntern, businessJob);
-    setJobRequirementTooltip(loc, CompanyPositions.BusinessConsultant, businessConsultantJob);
-    setJobRequirementTooltip(loc, CompanyPositions.SecurityGuard, securityJob);
-    setJobRequirementTooltip(loc, CompanyPositions.FieldAgent, agentJob);
-    setJobRequirementTooltip(loc, CompanyPositions.Employee, employeeJob);
-    setJobRequirementTooltip(loc, CompanyPositions.PartTimeEmployee, employeePartTimeJob);
-    setJobRequirementTooltip(loc, CompanyPositions.Waiter, waiterJob);
-    setJobRequirementTooltip(loc, CompanyPositions.PartTimeWaiter, waiterPartTimeJob);
+    setJobRequirementTooltip(loc, CompanyPositions[posNames.SoftwareCompanyPositions[0]], softwareJob);
+    setJobRequirementTooltip(loc, CompanyPositions[posNames.SoftwareConsultantCompanyPositions[0]], softwareConsultantJob);
+    setJobRequirementTooltip(loc, CompanyPositions[posNames.ITCompanyPositions[0]], itJob);
+    setJobRequirementTooltip(loc, CompanyPositions[posNames.SecurityEngineerCompanyPositions[0]], securityEngineerJob);
+    setJobRequirementTooltip(loc, CompanyPositions[posNames.NetworkEngineerCompanyPositions[0]], networkEngineerJob);
+    setJobRequirementTooltip(loc, CompanyPositions[posNames.BusinessCompanyPositions[0]], businessJob);
+    setJobRequirementTooltip(loc, CompanyPositions[posNames.BusinessConsultantCompanyPositions[0]], businessConsultantJob);
+    setJobRequirementTooltip(loc, CompanyPositions[posNames.SecurityCompanyPositions[0]], securityJob);
+    setJobRequirementTooltip(loc, CompanyPositions[posNames.AgentCompanyPositions[0]], agentJob);
+    setJobRequirementTooltip(loc, CompanyPositions[posNames.MiscCompanyPositions[1]], employeeJob);
+    setJobRequirementTooltip(loc, CompanyPositions[posNames.PartTimeCompanyPositions[1]], employeePartTimeJob);
+    setJobRequirementTooltip(loc, CompanyPositions[posNames.MiscCompanyPositions[0]], waiterJob);
+    setJobRequirementTooltip(loc, CompanyPositions[posNames.PartTimeCompanyPositions[0]], waiterPartTimeJob);
 
     switch (loc) {
         case Locations.AevumTravelAgency:
@@ -1030,18 +1032,18 @@ function displayLocationContent() {
             console.log("ERROR: INVALID LOCATION");
     }
 
-    //Make the "Apply to be Employee and Waiter" texts disappear if you already hold the job
-    //Includes part-time stuff
+    // Make the "Apply to be Employee and Waiter" texts disappear if you already hold the job
+    // Includes part-time stuff
     if (loc == Player.companyName) {
         var currPos = Player.companyPosition;
 
-        if (currPos.positionName == CompanyPositions.Employee.positionName) {
+        if (currPos.name == "Employee") {
             employeeJob.style.display = "none";
-        } else if (currPos.positionName == CompanyPositions.Waiter.positionName) {
+        } else if (currPos.name == "Waiter") {
             waiterJob.style.display = "none";
-        } else if (currPos.positionName == CompanyPositions.PartTimeEmployee.positionName) {
+        } else if (currPos.name == "Part-time Employee") {
             employeePartTimeJob.style.display = "none";
-        } else if (currPos.positionName == CompanyPositions.PartTimeWaiter.positionName) {
+        } else if (currPos.name == "Part-time Waiter") {
             waiterPartTimeJob.style.display = "none";
         }
     }

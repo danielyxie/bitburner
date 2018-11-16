@@ -1,3 +1,5 @@
+// Defs for job titles, stored in arrays and categorized by job "type"
+
 export const SoftwareCompanyPositions: string[] = [
     "Software Engineering Intern",
     "Junior Software Engineer",
@@ -35,8 +37,9 @@ export const BusinessCompanyPositions: string[] = [
 ];
 
 export const SecurityCompanyPositions: string[] = [
-    "Security Guard",
     "Police Officer",
+    "Police Chief",
+    "Security Guard",
     "Security Officer",
     "Security Supervisor",
     "Head of Security"
@@ -46,6 +49,11 @@ export const AgentCompanyPositions: string[] = [
     "Field Agent",
     "Secret Agent",
     "Special Operative"
+];
+
+export const MiscCompanyPositions: string[] = [
+    "Waiter",
+    "Employee"
 ];
 
 export const SoftwareConsultantCompanyPositions: string[] = [

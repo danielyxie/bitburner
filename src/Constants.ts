@@ -1,4 +1,6 @@
-let CONSTANTS = {
+import {IMap} from "./types";
+
+export let CONSTANTS: IMap<any> = {
     Version:                "0.41.0",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
@@ -511,9 +513,7 @@ let CONSTANTS = {
      *** Stock Market cycles are now accumulated/stored, much like it is for Gangs and Bladeburners
      *** Accumulated/stored cycles cause stock prices to update up to 50% faster (from every 6 seconds to 4 seconds)
      ****** This means that after coming back from being offline, stock prices will update faster to make up for offline time
-     
+
      `
 
 }
-
-export {CONSTANTS};
