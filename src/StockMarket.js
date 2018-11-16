@@ -547,7 +547,7 @@ function sellShort(stock, shares, workerScript=null) {
 }
 
 function processStockPrices(numCycles=1) {
-    if (isNaN(StockMarket.storedCycles)) { StockMarket.storedCycles = 0; }
+    if (StockMarket.storedCycles == null || isNaN(StockMarket.storedCycles)) { StockMarket.storedCycles = 0; }
     StockMarket.storedCycles += numCycles;
 
     // Stock Prices updated every 6 seconds on average. But if there are stored
@@ -572,10 +572,10 @@ function processStockPrices(numCycles=1) {
 
             var chc = 50;
             if (stock.b) {
-                chc = (chc + stock.otlkMag)/100;
+                chc = (chc + stock.otlkMag) / 100;
                 if (isNaN(chc)) {chc = 0.5;}
             } else {
-                chc = (chc - stock.otlkMag)/100;
+                chc = (chc - stock.otlkMag) / 100;
                 if (isNaN(chc)) {chc = 0.5;}
             }
             if (stock.price >= stock.cap) {
@@ -743,6 +743,7 @@ function displayStockMarketContent() {
                         "Buy 4S Market Data Access - " + numeralWrapper.format(CONSTANTS.MarketData4SCost, '($0.000a)'),
                         "4S Market Data - Purchased");
     marketDataButton.addEventListener("click", function() {
+        if (Player.money.lt(CONSTANTS.MarketData4SCost)) { return false; }
         Player.has4SData = true;
         Player.loseMoney(CONSTANTS.MarketData4SCost);
         displayStockMarketContent();
@@ -782,6 +783,7 @@ function displayStockMarketContent() {
                         "4S Market Data TIX API - Purchased");
     if (Player.hasTixApiAccess) {
         marketDataTixButton.addEventListener("click", function() {
+            if (Player.money.lt(CONSTANTS.MarketDataTixApi4SCost)) { return false; }
             Player.has4SDataTixApi = true;
             Player.loseMoney(CONSTANTS.MarketDataTixApi4SCost);
             displayStockMarketContent();
@@ -893,6 +895,7 @@ function displayStockMarketContent() {
 
         //Switch to Portfolio Mode Button
         if (modeBtn) {
+            stockMarketPortfolioMode = false;
             modeBtn.innerHTML = "Switch to 'Portfolio' Mode" +
                 "<span class='tooltiptext'>Displays only the stocks for which you have shares or orders</span>";
             modeBtn.addEventListener("click", switchToPortfolioMode);

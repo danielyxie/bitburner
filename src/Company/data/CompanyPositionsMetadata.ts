@@ -185,7 +185,7 @@ export const companyPositionMetadata: IConstructorParams[] = [
         baseSalary: 410,
         charismaEffectiveness: 20,
         charismaExpGain: 0.1,
-        hackingEffectiveness: 0.80,
+        hackingEffectiveness: 80,
         hackingExpGain: 0.5,
         reqdCharisma: 76,
         reqdHacking: 251,
@@ -419,7 +419,7 @@ export const companyPositionMetadata: IConstructorParams[] = [
     },
     {
         name: posNames.AgentCompanyPositions[0], // Field Agent
-        nextPosition: posNames.AgentCompanyPositions[0], // Secret Agent
+        nextPosition: posNames.AgentCompanyPositions[1], // Secret Agent
         baseSalary: 330,
         hackingEffectiveness: 10,
         strengthEffectiveness: 15,
@@ -443,8 +443,8 @@ export const companyPositionMetadata: IConstructorParams[] = [
         repMultiplier: 1,
     },
     {
-        name: posNames.AgentCompanyPositions[0], // Secret Agent
-        nextPosition: posNames.AgentCompanyPositions[0], // Special Operative
+        name: posNames.AgentCompanyPositions[1], // Secret Agent
+        nextPosition: posNames.AgentCompanyPositions[2], // Special Operative
         baseSalary: 990,
         hackingEffectiveness: 15,
         strengthEffectiveness: 15,
@@ -468,7 +468,7 @@ export const companyPositionMetadata: IConstructorParams[] = [
         repMultiplier: 1.25,
     },
     {
-        name: posNames.AgentCompanyPositions[0], // Special Operative
+        name: posNames.AgentCompanyPositions[2], // Special Operative
         nextPosition: null,
         baseSalary: 2000,
         hackingEffectiveness: 15,
@@ -558,7 +558,7 @@ export const companyPositionMetadata: IConstructorParams[] = [
         repMultiplier: 1,
     },
     {
-        name: posNames.BusinessConsultantCompanyPositions[0], // Senior Business Consultant
+        name: posNames.BusinessConsultantCompanyPositions[1], // Senior Business Consultant
         nextPosition: null,
         baseSalary: 525,
         hackingEffectiveness: 15,

@@ -100,7 +100,7 @@ getMemberInformation
             agility:                Agility stat
             agilityEquipMult:       Agility multiplier from equipment. Decimal form
             agilityAscensionMult:   Agility multiplier from ascension. Decimal form
-            augmentation:           Array of names of all owned Augmentations
+            augmentations:          Array of names of all owned Augmentations
             charisma:               Charisma stat
             charismaEquipMult:      Charisma multiplier from equipment. Decimal form
             charismaAscensionMult:  Charisma multiplier from ascension. Decimal form
@@ -233,6 +233,17 @@ setTerritoryWarfare
     :param bool engage: Whether or not to engage in territory warfare
 
     Set whether or not the gang should engage in territory warfare
+
+getChanceToWinClash
+-------------------
+
+.. js:function:: getChanceToWinClash(gangName)
+
+    :param string gangName: Target gang
+
+    Returns the chance you have to win a clash with the specified gang. The chance
+    is returned in decimal form, not percentage
+
 
 getBonusTime
 ------------

@@ -110,6 +110,31 @@ BitburnerSaveObject.prototype.saveGame = function(db) {
     createStatusText("Game saved!");
 }
 
+// Makes necessary changes to the loaded/imported data to ensure
+// the game stills works with new versions
+function evaluateVersionCompatibility(ver) {
+    // This version refactored the Company/job-related code
+    if (ver <= "0.41.2") {
+        // Player's company position is now a string
+        if (Player.companyPosition != null && typeof Player.companyPosition !== "string") {
+            console.log("Changed Player.companyPosition value to be compatible with v0.41.2");
+            Player.companyPosition = Player.companyPosition.positionName;
+            if (Player.companyPosition == null) {
+                Player.companyPosition = "";
+            }
+        }
+
+        // The "companyName" property of all Companies is renamed to "name"
+        for (var companyName in Companies) {
+            const company = Companies[companyName];
+            if (company.name == null && company.companyName != null) {
+                console.log("Changed company name property to be compatible with v0.41.2");
+                company.name = company.companyName;
+            }
+        }
+    }
+}
+
 function loadGame(saveString) {
     if (saveString === "" || saveString == null || saveString === undefined) {
         if (!window.localStorage.getItem("bitburnerSave")) {
@@ -187,23 +212,8 @@ function loadGame(saveString) {
     if (saveObj.hasOwnProperty("VersionSave")) {
         try {
             var ver = JSON.parse(saveObj.VersionSave, Reviver);
-            // This version refactored the Company/job-related code
-            if (ver < "0.41.2") {
-                // Player's company position is now a string
-                if (Player.companyPosition !== "" || Player.companyPosition instanceof CompanyPosition) {
-                    console.log("Changed Player.companyPosition value to be compatible with v0.41.2");
-                    Player.companyPosition = Player.companyPosition.positionName;
-                }
+            evaluateVersionCompatibility(ver);
 
-                // The "companyName" property of all Companies is renamed to "name"
-                for (var companyName in Companies) {
-                    const company = Companies[companyName];
-                    if (company.name == null && company.companyName != null) {
-                        console.log("Changed company name property to be compatible with v0.41.2");
-                        company.name = company.companyName;
-                    }
-                }
-            }
             if (window.location.href.toLowerCase().includes("bitburner-beta")) {
                 //Beta branch, always show changes
                 createBetaUpdateText();
@@ -301,23 +311,7 @@ function loadImportedGame(saveObj, saveString) {
         if (tempSaveObj.hasOwnProperty("VersionSave")) {
             try {
                 var ver = JSON.parse(tempSaveObj.VersionSave, Reviver);
-                // This version refactored the Company/job-related code
-                if (ver < "0.41.2") {
-                    // Player's company position is now a string
-                    if (Player.companyPosition !== "" || Player.companyPosition instanceof CompanyPosition) {
-                        console.log("Changed Player.companyPosition value to be compatible with v0.41.2");
-                        Player.companyPosition = Player.companyPosition.positionName;
-                    }
-
-                    // The "companyName" property of all Companies is renamed to "name"
-                    for (var companyName in Companies) {
-                        const company = Companies[companyName];
-                        if (company.name == null && company.companyName != null) {
-                            console.log("Changed company name property to be compatible with v0.41.2");
-                            company.name = company.companyName;
-                        }
-                    }
-                }
+                evaluateVersionCompatibility(ver);
             } catch(e) {
                 console.error("Parsing Version save failed: " + e);
             }
@@ -400,23 +394,8 @@ function loadImportedGame(saveObj, saveString) {
     if (saveObj.hasOwnProperty("VersionSave")) {
         try {
             var ver = JSON.parse(saveObj.VersionSave, Reviver);
-            // This version refactored the Company/job-related code
-            if (ver < "0.41.2") {
-                // Player's company position is now a string
-                if (Player.companyPosition !== "" || Player.companyPosition instanceof CompanyPosition) {
-                    console.log("Changed Player.companyPosition value to be compatible with v0.41.2");
-                    Player.companyPosition = Player.companyPosition.positionName;
-                }
+            evaluateVersionCompatibility(ver);
 
-                // The "companyName" property of all Companies is renamed to "name"
-                for (var companyName in Companies) {
-                    const company = Companies[companyName];
-                    if (company.name == null && company.companyName != null) {
-                        console.log("Changed company name property to be compatible with v0.41.2");
-                        company.name = company.companyName;
-                    }
-                }
-            }
             if (ver != CONSTANTS.Version) {
                 createNewUpdateText();
             }

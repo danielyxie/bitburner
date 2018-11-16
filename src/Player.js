@@ -8,6 +8,7 @@ import {Companies}                              from "./Company/Companies";
 import {getNextCompanyPosition}                 from "./Company/GetNextCompanyPosition";
 import {getJobRequirementText}                  from "./Company/GetJobRequirementText";
 import {CompanyPositions}                       from "./Company/CompanyPositions";
+import * as posNames                            from "./Company/data/CompanyPositionNames";
 import {CONSTANTS}                              from "./Constants";
 import {Corporation}                            from "./CompanyManagement";
 import {Programs}                               from "./CreateProgram";
@@ -193,7 +194,6 @@ function PlayerObject() {
     //Flags for determining whether certain "thresholds" have been achieved
     this.firstFacInvRecvd = false;
     this.firstAugPurchased = false;
-    this.firstJobRecvd = false;
     this.firstTimeTraveled = false;
     this.firstProgramAvailable = false;
 
@@ -1749,6 +1749,9 @@ PlayerObject.prototype.applyForJob = function(entryPosType, sing=false) {
     this.companyName = company.name;
     this.companyPosition = pos.name;
 
+    document.getElementById("world-menu-header").click();
+    document.getElementById("world-menu-header").click();
+
     if (leaveCompany) {
         if (sing) { return true; }
         dialogBoxCreate([`Congratulations! You were offered a new job at ${this.companyName} as a ${pos.name}!`,
@@ -1794,21 +1797,21 @@ PlayerObject.prototype.getNextCompanyPosition = function(company, entryPosType) 
 }
 
 PlayerObject.prototype.applyForSoftwareJob = function(sing=false) {
-    return this.applyForJob(CompanyPositions.SoftwareIntern, sing);
+    return this.applyForJob(CompanyPositions[posNames.SoftwareCompanyPositions[0]], sing);
 }
 
 PlayerObject.prototype.applyForSoftwareConsultantJob = function(sing=false) {
-    return this.applyForJob(CompanyPositions.SoftwareConsultant, sing);
+    return this.applyForJob(CompanyPositions[posNames.SoftwareConsultantCompanyPositions[0]], sing);
 }
 
 PlayerObject.prototype.applyForItJob = function(sing=false) {
-	return this.applyForJob(CompanyPositions.ITIntern, sing);
+	return this.applyForJob(CompanyPositions[posNames.ITCompanyPositions[0]], sing);
 }
 
 PlayerObject.prototype.applyForSecurityEngineerJob = function(sing=false) {
     var company = Companies[this.location]; //Company being applied to
-    if (this.isQualified(company, CompanyPositions.SecurityEngineer)) {
-        return this.applyForJob(CompanyPositions.SecurityEngineer, sing);
+    if (this.isQualified(company, CompanyPositions[posNames.SecurityEngineerCompanyPositions[0]])) {
+        return this.applyForJob(CompanyPositions[posNames.SecurityEngineerCompanyPositions[0]], sing);
     } else {
         if (sing) {return false;}
         dialogBoxCreate("Unforunately, you do not qualify for this position");
@@ -1817,8 +1820,8 @@ PlayerObject.prototype.applyForSecurityEngineerJob = function(sing=false) {
 
 PlayerObject.prototype.applyForNetworkEngineerJob = function(sing=false) {
 	var company = Companies[this.location]; //Company being applied to
-    if (this.isQualified(company, CompanyPositions.NetworkEngineer)) {
-        return this.applyForJob(CompanyPositions.NetworkEngineer, sing);
+    if (this.isQualified(company, CompanyPositions[posNames.NetworkEngineerCompanyPositions[0]])) {
+        return this.applyForJob(CompanyPositions[posNames.NetworkEngineerCompanyPositions[0]], sing);
     } else {
         if (sing) {return false;}
         dialogBoxCreate("Unforunately, you do not qualify for this position");
@@ -1826,22 +1829,23 @@ PlayerObject.prototype.applyForNetworkEngineerJob = function(sing=false) {
 }
 
 PlayerObject.prototype.applyForBusinessJob = function(sing=false) {
-	return this.applyForJob(CompanyPositions.BusinessIntern, sing);
+	return this.applyForJob(CompanyPositions[posNames.BusinessCompanyPositions[0]], sing);
 }
 
 PlayerObject.prototype.applyForBusinessConsultantJob = function(sing=false) {
-    return this.applyForJob(CompanyPositions.BusinessConsultant, sing);
+    return this.applyForJob(CompanyPositions[posNames.BusinessConsultantCompanyPositions[0]], sing);
 }
 
 PlayerObject.prototype.applyForSecurityJob = function(sing=false) {
-    //TODO If case for POlice departments
-	return this.applyForJob(CompanyPositions.SecurityGuard, sing);
+    // TODO Police Jobs
+    // Indexing starts at 2 because 0 is for police officer
+	return this.applyForJob(CompanyPositions[posNames.SecurityCompanyPositions[2]], sing);
 }
 
 PlayerObject.prototype.applyForAgentJob = function(sing=false) {
 	var company = Companies[this.location]; //Company being applied to
-    if (this.isQualified(company, CompanyPositions.FieldAgent)) {
-        return this.applyForJob(CompanyPositions.FieldAgent, sing);
+    if (this.isQualified(company, CompanyPositions[posNames.AgentCompanyPositions[0]])) {
+        return this.applyForJob(CompanyPositions[posNames.AgentCompanyPositions[0]], sing);
     } else {
         if (sing) {return false;}
         dialogBoxCreate("Unforunately, you do not qualify for this position");
@@ -1850,15 +1854,11 @@ PlayerObject.prototype.applyForAgentJob = function(sing=false) {
 
 PlayerObject.prototype.applyForEmployeeJob = function(sing=false) {
 	var company = Companies[this.location]; //Company being applied to
-    if (this.isQualified(company, CompanyPositions.Employee)) {
-        if (this.firstJobRecvd === false) {
-            this.firstJobRecvd = true;
-            document.getElementById("job-tab").style.display = "list-item";
-            document.getElementById("world-menu-header").click();
-            document.getElementById("world-menu-header").click();
-        }
+    if (this.isQualified(company, CompanyPositions[posNames.MiscCompanyPositions[1]])) {
         this.companyName = company.companyName;
-        this.companyPosition = CompanyPositions.Employee;
+        this.companyPosition = CompanyPositions[posNames.MiscCompanyPositions[1]];
+        document.getElementById("world-menu-header").click();
+        document.getElementById("world-menu-header").click();
         if (sing) {return true;}
         dialogBoxCreate("Congratulations, you are now employed at " + this.companyName);
         Engine.loadLocationContent();
@@ -1870,15 +1870,11 @@ PlayerObject.prototype.applyForEmployeeJob = function(sing=false) {
 
 PlayerObject.prototype.applyForPartTimeEmployeeJob = function(sing=false) {
 	var company = Companies[this.location]; //Company being applied to
-    if (this.isQualified(company, CompanyPositions.PartTimeEmployee)) {
-        if (this.firstJobRecvd === false) {
-            this.firstJobRecvd = true;
-            document.getElementById("job-tab").style.display = "list-item";
-            document.getElementById("world-menu-header").click();
-            document.getElementById("world-menu-header").click();
-        }
+    if (this.isQualified(company, CompanyPositions[posNames.PartTimeCompanyPositions[1]])) {
         this.companyName = company.companyName;
-        this.companyPosition = CompanyPositions.PartTimeEmployee;
+        this.companyPosition = CompanyPositions[posNames.PartTimeCompanyPositions[1]];
+        document.getElementById("world-menu-header").click();
+        document.getElementById("world-menu-header").click();
         if (sing) {return true;}
         dialogBoxCreate("Congratulations, you are now employed part-time at " + this.companyName);
         Engine.loadLocationContent();
@@ -1890,15 +1886,11 @@ PlayerObject.prototype.applyForPartTimeEmployeeJob = function(sing=false) {
 
 PlayerObject.prototype.applyForWaiterJob = function(sing=false) {
 	var company = Companies[this.location]; //Company being applied to
-    if (this.isQualified(company, CompanyPositions.Waiter)) {
-        if (this.firstJobRecvd === false) {
-            this.firstJobRecvd = true;
-            document.getElementById("job-tab").style.display = "list-item";
-            document.getElementById("world-menu-header").click();
-            document.getElementById("world-menu-header").click();
-        }
+    if (this.isQualified(company, CompanyPositions[posNames.MiscCompanyPositions[0]])) {
         this.companyName = company.companyName;
-        this.companyPosition = CompanyPositions.Waiter;
+        this.companyPosition = CompanyPositions[posNames.MiscCompanyPositions[0]];
+        document.getElementById("world-menu-header").click();
+        document.getElementById("world-menu-header").click();
         if (sing) {return true;}
         dialogBoxCreate("Congratulations, you are now employed as a waiter at " + this.companyName);
         Engine.loadLocationContent();
@@ -1910,15 +1902,11 @@ PlayerObject.prototype.applyForWaiterJob = function(sing=false) {
 
 PlayerObject.prototype.applyForPartTimeWaiterJob = function(sing=false) {
 	var company = Companies[this.location]; //Company being applied to
-    if (this.isQualified(company, CompanyPositions.PartTimeWaiter)) {
-        if (this.firstJobRecvd === false) {
-            this.firstJobRecvd = true;
-            document.getElementById("job-tab").style.display = "list-item";
-            document.getElementById("world-menu-header").click();
-            document.getElementById("world-menu-header").click();
-        }
+    if (this.isQualified(company, CompanyPositions[posNames.PartTimeCompanyPositions[0]])) {
         this.companyName = company.companyName;
-        this.companyPosition = CompanyPositions.PartTimeWaiter;
+        this.companyPosition = CompanyPositions[posNames.PartTimeCompanyPositions[0]];
+        document.getElementById("world-menu-header").click();
+        document.getElementById("world-menu-header").click();
         if (sing) {return true;}
         dialogBoxCreate("Congratulations, you are now employed as a part-time waiter at " + this.companyName);
         Engine.loadLocationContent();

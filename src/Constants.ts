@@ -1,7 +1,7 @@
 import {IMap} from "./types";
 
 export let CONSTANTS: IMap<any> = {
-    Version:                "0.41.0",
+    Version:                "0.41.2",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -504,16 +504,13 @@ export let CONSTANTS: IMap<any> = {
 
     LatestUpdate:
     `
-     v0.41.1
-     * Stock Market changes:
-     *** Stocks now have "maximum prices"
-     *** If a stock reaches its "maximum price", it will most likely drop in value (although it might still rise)
-     *** Each stock has its own, unique maximum price
-     *** Maximum price for each stock are randomly generated and change during each 'reset'
-     *** Stock Market cycles are now accumulated/stored, much like it is for Gangs and Bladeburners
-     *** Accumulated/stored cycles cause stock prices to update up to 50% faster (from every 6 seconds to 4 seconds)
-     ****** This means that after coming back from being offline, stock prices will update faster to make up for offline time
+     v0.41.2
+     * IMPORTANT - Netscript Changes:
+     ** rm() now takes an optional parameter that lets you specify on which server to delete the file
 
+     * Gang Changes:
+     ** UI now displays your chance to win a clash with other gangs
+     ** Added getChanceToWinClash() function to the Gang API
      `
 
 }

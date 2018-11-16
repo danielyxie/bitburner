@@ -167,11 +167,11 @@
 /* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentations */ 21);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BitNodeMultipliers */ 10);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CodingContracts */ 38);
+/* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CodingContracts */ 40);
 /* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_CodingContracts__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Company/Company */ 69);
 /* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Company_Company__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Company/Companies */ 17);
+/* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Company/Companies */ 18);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _Company_GetNextCompanyPosition__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Company/GetNextCompanyPosition */ 92);
 /* harmony import */ var _Company_GetNextCompanyPosition__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Company_GetNextCompanyPosition__WEBPACK_IMPORTED_MODULE_5__);
@@ -179,31 +179,33 @@
 /* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Company/CompanyPositions */ 25);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Constants */ 1);
-/* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _CompanyManagement__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./CompanyManagement */ 58);
-/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./CreateProgram */ 22);
-/* harmony import */ var _Crimes__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Crimes */ 34);
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./engine */ 8);
-/* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Faction */ 12);
-/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Gang */ 52);
-/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Locations */ 4);
-/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./NetscriptFunctions */ 40);
-/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Settings */ 19);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./SpecialServerIps */ 28);
-/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./SourceFile */ 64);
-/* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! decimal.js */ 31);
-/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./ui/numeralFormat */ 5);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_24__);
-/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/IPAddress */ 55);
-/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_27__);
+/* harmony import */ var _Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Company/data/CompanyPositionNames */ 34);
+/* harmony import */ var _Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Constants */ 1);
+/* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _CompanyManagement__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./CompanyManagement */ 56);
+/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./CreateProgram */ 23);
+/* harmony import */ var _Crimes__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Crimes */ 35);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./engine */ 8);
+/* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Faction */ 12);
+/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Gang */ 47);
+/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Locations */ 5);
+/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_16__);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./NetscriptFunctions */ 41);
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Server */ 11);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Settings */ 19);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_19__);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./SpecialServerIps */ 30);
+/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./SourceFile */ 64);
+/* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! decimal.js */ 31);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_25__);
+/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/IPAddress */ 55);
+/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_28__);
 
 
 
@@ -233,7 +235,8 @@
 
 
 
-const CYCLES_PER_SEC = 1000 / _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].MilliPerCycle;
+
+const CYCLES_PER_SEC = 1000 / _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].MilliPerCycle;
 
 function PlayerObject() {
     //Skills and stats
@@ -286,15 +289,15 @@ function PlayerObject() {
     this.faction_rep_mult    = 1;
 
     //Money
-    this.money           = new decimal_js__WEBPACK_IMPORTED_MODULE_21__[/* default */ "a"](1000);
-    this.total_money     = new decimal_js__WEBPACK_IMPORTED_MODULE_21__[/* default */ "a"](0);   //Total money ever earned in this "simulation"
-    this.lifetime_money  = new decimal_js__WEBPACK_IMPORTED_MODULE_21__[/* default */ "a"](0);   //Total money ever earned
+    this.money           = new decimal_js__WEBPACK_IMPORTED_MODULE_22__[/* default */ "a"](1000);
+    this.total_money     = new decimal_js__WEBPACK_IMPORTED_MODULE_22__[/* default */ "a"](0);   //Total money ever earned in this "simulation"
+    this.lifetime_money  = new decimal_js__WEBPACK_IMPORTED_MODULE_22__[/* default */ "a"](0);   //Total money ever earned
 
     //IP Address of Starting (home) computer
     this.homeComputer = "";
 
 	//Location information
-	this.city 			= _Locations__WEBPACK_IMPORTED_MODULE_15__["Locations"].Sector12;
+	this.city 			= _Locations__WEBPACK_IMPORTED_MODULE_16__["Locations"].Sector12;
 	this.location 		= "";
 
     //Company Information
@@ -395,7 +398,6 @@ function PlayerObject() {
     //Flags for determining whether certain "thresholds" have been achieved
     this.firstFacInvRecvd = false;
     this.firstAugPurchased = false;
-    this.firstJobRecvd = false;
     this.firstTimeTraveled = false;
     this.firstProgramAvailable = false;
 
@@ -414,15 +416,15 @@ function PlayerObject() {
 
 PlayerObject.prototype.init = function() {
     /* Initialize Player's home computer */
-    var t_homeComp = new _Server__WEBPACK_IMPORTED_MODULE_17__[/* Server */ "d"]({
-        ip:Object(_utils_IPAddress__WEBPACK_IMPORTED_MODULE_25__[/* createRandomIp */ "a"])(), hostname:"home", organizationName:"Home PC",
+    var t_homeComp = new _Server__WEBPACK_IMPORTED_MODULE_18__[/* Server */ "d"]({
+        ip:Object(_utils_IPAddress__WEBPACK_IMPORTED_MODULE_26__[/* createRandomIp */ "a"])(), hostname:"home", organizationName:"Home PC",
         isConnectedTo:true, adminRights:true, purchasedByPlayer:true, maxRam:8
     });
     this.homeComputer = t_homeComp.ip;
     this.currentServer = t_homeComp.ip;
-    Object(_Server__WEBPACK_IMPORTED_MODULE_17__[/* AddToAllServers */ "a"])(t_homeComp);
+    Object(_Server__WEBPACK_IMPORTED_MODULE_18__[/* AddToAllServers */ "a"])(t_homeComp);
 
-    this.getHomeComputer().programs.push(_CreateProgram__WEBPACK_IMPORTED_MODULE_10__[/* Programs */ "a"].NukeProgram.name);
+    this.getHomeComputer().programs.push(_CreateProgram__WEBPACK_IMPORTED_MODULE_11__[/* Programs */ "a"].NukeProgram.name);
 }
 
 PlayerObject.prototype.prestigeAugmentation = function() {
@@ -450,9 +452,9 @@ PlayerObject.prototype.prestigeAugmentation = function() {
     this.agility_exp = 0;
     this.charisma_exp = 0;
 
-    this.money = new decimal_js__WEBPACK_IMPORTED_MODULE_21__[/* default */ "a"](1000);
+    this.money = new decimal_js__WEBPACK_IMPORTED_MODULE_22__[/* default */ "a"](1000);
 
-    this.city = _Locations__WEBPACK_IMPORTED_MODULE_15__["Locations"].Sector12;
+    this.city = _Locations__WEBPACK_IMPORTED_MODULE_16__["Locations"].Sector12;
     this.location = "";
 
     this.companyName = "";
@@ -530,9 +532,9 @@ PlayerObject.prototype.prestigeSourceFile = function() {
     this.agility_exp = 0;
     this.charisma_exp = 0;
 
-    this.money = new decimal_js__WEBPACK_IMPORTED_MODULE_21__[/* default */ "a"](1000);
+    this.money = new decimal_js__WEBPACK_IMPORTED_MODULE_22__[/* default */ "a"](1000);
 
-    this.city = _Locations__WEBPACK_IMPORTED_MODULE_15__["Locations"].Sector12;
+    this.city = _Locations__WEBPACK_IMPORTED_MODULE_16__["Locations"].Sector12;
     this.location = "";
 
     this.companyName = "";
@@ -580,7 +582,7 @@ PlayerObject.prototype.prestigeSourceFile = function() {
 
     //Gang
     this.gang = null;
-    Object(_Gang__WEBPACK_IMPORTED_MODULE_14__[/* resetGangs */ "d"])();
+    Object(_Gang__WEBPACK_IMPORTED_MODULE_15__[/* resetGangs */ "d"])();
 
     //Reset Stock market
     this.hasWseAccount = false;
@@ -589,7 +591,7 @@ PlayerObject.prototype.prestigeSourceFile = function() {
     this.has4SDataTixApi = false;
 
     //BitNode 3: Corporatocracy
-    if (this.bitNodeN === 3) {this.money = new decimal_js__WEBPACK_IMPORTED_MODULE_21__[/* default */ "a"](150e9);}
+    if (this.bitNodeN === 3) {this.money = new decimal_js__WEBPACK_IMPORTED_MODULE_22__[/* default */ "a"](150e9);}
     this.corporation = 0;
 
     this.playtimeSinceLastAug = 0;
@@ -601,11 +603,11 @@ PlayerObject.prototype.prestigeSourceFile = function() {
 }
 
 PlayerObject.prototype.getCurrentServer = function() {
-    return _Server__WEBPACK_IMPORTED_MODULE_17__[/* AllServers */ "b"][this.currentServer];
+    return _Server__WEBPACK_IMPORTED_MODULE_18__[/* AllServers */ "b"][this.currentServer];
 }
 
 PlayerObject.prototype.getHomeComputer = function() {
-    return _Server__WEBPACK_IMPORTED_MODULE_17__[/* AllServers */ "b"][this.homeComputer];
+    return _Server__WEBPACK_IMPORTED_MODULE_18__[/* AllServers */ "b"][this.homeComputer];
 }
 
 PlayerObject.prototype.getUpgradeHomeRamCost = function() {
@@ -616,7 +618,7 @@ PlayerObject.prototype.getUpgradeHomeRamCost = function() {
     //Calculate cost
     //Have cost increase by some percentage each time RAM has been upgraded
     const mult = Math.pow(1.58, numUpgrades);
-    var cost = currentRam * _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].BaseCostFor1GBOfRamHome * mult;
+    var cost = currentRam * _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].BaseCostFor1GBOfRamHome * mult;
     return cost;
 }
 
@@ -789,7 +791,7 @@ PlayerObject.prototype.gainIntelligenceExp = function(exp) {
     if (isNaN(exp)) {
         console.log("ERROR: NaN passed into Player.gainIntelligenceExp()"); return;
     }
-    if (_NetscriptFunctions__WEBPACK_IMPORTED_MODULE_16__[/* hasAISF */ "b"] || this.intelligence > 0) {
+    if (_NetscriptFunctions__WEBPACK_IMPORTED_MODULE_17__[/* hasAISF */ "b"] || this.intelligence > 0) {
         this.intelligence_exp += exp;
     } else {
         console.log("Not gaining intelligence experience bc it hasn't been unlocked yet");
@@ -869,7 +871,7 @@ PlayerObject.prototype.processWorkEarnings = function(numCycles=1) {
 PlayerObject.prototype.startWork = function() {
     this.resetWorkStatus();
     this.isWorking = true;
-    this.workType = _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].WorkTypeCompany;
+    this.workType = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].WorkTypeCompany;
 
     this.workHackExpGainRate    = this.getWorkHackExpGain();
     this.workStrExpGainRate     = this.getWorkStrExpGain();
@@ -880,10 +882,10 @@ PlayerObject.prototype.startWork = function() {
     this.workRepGainRate        = this.getWorkRepGain();
     this.workMoneyGainRate      = this.getWorkMoneyGain();
 
-    this.timeNeededToCompleteWork = _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].MillisecondsPer8Hours;
+    this.timeNeededToCompleteWork = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].MillisecondsPer8Hours;
 
     //Remove all old event listeners from Cancel button
-    var newCancelButton = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_24__["clearEventListeners"])("work-in-progress-cancel-button");
+    var newCancelButton = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_25__["clearEventListeners"])("work-in-progress-cancel-button");
     newCancelButton.innerHTML = "Cancel Work";
     newCancelButton.addEventListener("click", function() {
         Player.finishWork(true);
@@ -891,24 +893,24 @@ PlayerObject.prototype.startWork = function() {
     });
 
     //Display Work In Progress Screen
-    _engine__WEBPACK_IMPORTED_MODULE_12__["Engine"].loadWorkInProgressContent();
+    _engine__WEBPACK_IMPORTED_MODULE_13__["Engine"].loadWorkInProgressContent();
 }
 
 PlayerObject.prototype.work = function(numCycles) {
     //Cap the number of cycles being processed to whatever would put you at
     //the work time limit (8 hours)
     var overMax = false;
-    if (this.timeWorked + (_engine__WEBPACK_IMPORTED_MODULE_12__["Engine"]._idleSpeed * numCycles) >= _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].MillisecondsPer8Hours) {
+    if (this.timeWorked + (_engine__WEBPACK_IMPORTED_MODULE_13__["Engine"]._idleSpeed * numCycles) >= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].MillisecondsPer8Hours) {
         overMax = true;
-        numCycles = Math.round((_Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].MillisecondsPer8Hours - this.timeWorked) / _engine__WEBPACK_IMPORTED_MODULE_12__["Engine"]._idleSpeed);
+        numCycles = Math.round((_Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].MillisecondsPer8Hours - this.timeWorked) / _engine__WEBPACK_IMPORTED_MODULE_13__["Engine"]._idleSpeed);
     }
-    this.timeWorked += _engine__WEBPACK_IMPORTED_MODULE_12__["Engine"]._idleSpeed * numCycles;
+    this.timeWorked += _engine__WEBPACK_IMPORTED_MODULE_13__["Engine"]._idleSpeed * numCycles;
 
     this.workRepGainRate    = this.getWorkRepGain();
     this.processWorkEarnings(numCycles);
 
     //If timeWorked == 8 hours, then finish. You can only gain 8 hours worth of exp and money
-    if (overMax || this.timeWorked >= _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].MillisecondsPer8Hours) {
+    if (overMax || this.timeWorked >= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].MillisecondsPer8Hours) {
         return this.finishWork(false);
     }
 
@@ -922,17 +924,17 @@ PlayerObject.prototype.work = function(numCycles) {
     var txt = document.getElementById("work-in-progress-text");
     txt.innerHTML = "You are currently working as a " + this.companyPosition +
                     " at " + this.companyName + " (Current Company Reputation: " +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(companyRep, '0,0') + ")<br><br>" +
-                    "You have been working for " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_27__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + "<br><br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(companyRep, '0,0') + ")<br><br>" +
+                    "You have been working for " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_28__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + "<br><br>" +
                     "You have earned: <br><br>" +
-                    "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workMoneyGained, '0,0.00') + " ($" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workMoneyGainRate * CYCLES_PER_SEC, '0,0.00') + " / sec) <br><br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workRepGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workRepGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) reputation for this company <br><br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workHackExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) hacking exp <br><br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workStrExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) strength exp <br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workDefExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) defense exp <br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workDexExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) dexterity exp <br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workAgiExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) agility exp <br><br> " +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workChaExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) charisma exp <br><br>" +
+                    "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workMoneyGained, '0,0.00') + " ($" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workMoneyGainRate * CYCLES_PER_SEC, '0,0.00') + " / sec) <br><br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workRepGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workRepGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) reputation for this company <br><br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workHackExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) hacking exp <br><br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workStrExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) strength exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workDefExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) defense exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workDexExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) dexterity exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workAgiExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) agility exp <br><br> " +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workChaExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) charisma exp <br><br>" +
                     "You will automatically finish after working for 8 hours. You can cancel earlier if you wish, " +
                     "but you will only gain half of the reputation you've earned so far."
 }
@@ -951,38 +953,38 @@ PlayerObject.prototype.finishWork = function(cancelled, sing=false) {
     this.updateSkillLevels();
 
     var txt = "You earned a total of: <br>" +
-              "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workMoneyGained, '0,0.00') + "<br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workRepGained, '0,0.0000') + " reputation for the company <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hacking exp <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " strength exp <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " defense exp <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dexterity exp <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agility exp <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " charisma exp<br>";
+              "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workMoneyGained, '0,0.00') + "<br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workRepGained, '0,0.0000') + " reputation for the company <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hacking exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " strength exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " defense exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dexterity exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agility exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " charisma exp<br>";
 
     if (cancelled) {
-        txt = "You worked a short shift of " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_27__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + " <br><br> " +
+        txt = "You worked a short shift of " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_28__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + " <br><br> " +
               "Since you cancelled your work early, you only gained half of the reputation you earned. <br><br>" + txt;
     } else {
         txt = "You worked a full shift of 8 hours! <br><br> " + txt;
     }
-    if (!sing) {Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_23__["dialogBoxCreate"])(txt);}
+    if (!sing) {Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_24__["dialogBoxCreate"])(txt);}
 
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
     this.isWorking = false;
-    _engine__WEBPACK_IMPORTED_MODULE_12__["Engine"].loadLocationContent();
+    _engine__WEBPACK_IMPORTED_MODULE_13__["Engine"].loadLocationContent();
 
     if (sing) {
-        var res =  "You worked a short shift of " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_27__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + " and " +
-               "earned $" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workMoneyGained, '0,0.00') + ", " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workRepGained, '0,0.0000') + " reputation, " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hacking exp, " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " strength exp, " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " defense exp, " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dexterity exp, " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agility exp, and " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " charisma exp.";
+        var res =  "You worked a short shift of " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_28__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + " and " +
+               "earned $" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workMoneyGained, '0,0.00') + ", " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workRepGained, '0,0.0000') + " reputation, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hacking exp, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " strength exp, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " defense exp, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dexterity exp, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agility exp, and " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " charisma exp.";
         this.resetWorkStatus();
         return res;
     }
@@ -992,7 +994,7 @@ PlayerObject.prototype.finishWork = function(cancelled, sing=false) {
 PlayerObject.prototype.startWorkPartTime = function() {
     this.resetWorkStatus();
     this.isWorking = true;
-    this.workType = _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].WorkTypeCompanyPartTime;
+    this.workType = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].WorkTypeCompanyPartTime;
 
     this.workHackExpGainRate    = this.getWorkHackExpGain();
     this.workStrExpGainRate     = this.getWorkStrExpGain();
@@ -1003,9 +1005,9 @@ PlayerObject.prototype.startWorkPartTime = function() {
     this.workRepGainRate        = this.getWorkRepGain();
     this.workMoneyGainRate      = this.getWorkMoneyGain();
 
-    this.timeNeededToCompleteWork = _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].MillisecondsPer8Hours;
+    this.timeNeededToCompleteWork = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].MillisecondsPer8Hours;
 
-    var newCancelButton = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_24__["clearEventListeners"])("work-in-progress-cancel-button");
+    var newCancelButton = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_25__["clearEventListeners"])("work-in-progress-cancel-button");
     newCancelButton.innerHTML = "Stop Working";
     newCancelButton.addEventListener("click", function() {
         Player.finishWorkPartTime();
@@ -1013,24 +1015,24 @@ PlayerObject.prototype.startWorkPartTime = function() {
     });
 
     //Display Work In Progress Screen
-    _engine__WEBPACK_IMPORTED_MODULE_12__["Engine"].loadWorkInProgressContent();
+    _engine__WEBPACK_IMPORTED_MODULE_13__["Engine"].loadWorkInProgressContent();
 }
 
 PlayerObject.prototype.workPartTime = function(numCycles) {
     //Cap the number of cycles being processed to whatever would put you at the
     //work time limit (8 hours)
     var overMax = false;
-    if (this.timeWorked + (_engine__WEBPACK_IMPORTED_MODULE_12__["Engine"]._idleSpeed * numCycles) >= _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].MillisecondsPer8Hours) {
+    if (this.timeWorked + (_engine__WEBPACK_IMPORTED_MODULE_13__["Engine"]._idleSpeed * numCycles) >= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].MillisecondsPer8Hours) {
         overMax = true;
-        numCycles = Math.round((_Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].MillisecondsPer8Hours - this.timeWorked) / _engine__WEBPACK_IMPORTED_MODULE_12__["Engine"]._idleSpeed);
+        numCycles = Math.round((_Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].MillisecondsPer8Hours - this.timeWorked) / _engine__WEBPACK_IMPORTED_MODULE_13__["Engine"]._idleSpeed);
     }
-    this.timeWorked += _engine__WEBPACK_IMPORTED_MODULE_12__["Engine"]._idleSpeed * numCycles;
+    this.timeWorked += _engine__WEBPACK_IMPORTED_MODULE_13__["Engine"]._idleSpeed * numCycles;
 
     this.workRepGainRate    = this.getWorkRepGain();
     this.processWorkEarnings(numCycles);
 
     //If timeWorked == 8 hours, then finish. You can only gain 8 hours worth of exp and money
-    if (overMax || this.timeWorked >= _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].MillisecondsPer8Hours) {
+    if (overMax || this.timeWorked >= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].MillisecondsPer8Hours) {
         return this.finishWorkPartTime();
     }
 
@@ -1044,17 +1046,17 @@ PlayerObject.prototype.workPartTime = function(numCycles) {
     var txt = document.getElementById("work-in-progress-text");
     txt.innerHTML = "You are currently working as a " + this.companyPosition +
                     " at " + Player.companyName + " (Current Company Reputation: "  +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(companyRep, '0,0') + ")<br><br>" +
-                    "You have been working for " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_27__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + "<br><br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(companyRep, '0,0') + ")<br><br>" +
+                    "You have been working for " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_28__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + "<br><br>" +
                     "You have earned: <br><br>" +
-                    "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workMoneyGained, '0,0.00') + " ($" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workMoneyGainRate * CYCLES_PER_SEC, '0,0.00') + " / sec) <br><br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workRepGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workRepGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) reputation for this company <br><br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workHackExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) hacking exp <br><br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workStrExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) strength exp <br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workDefExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) defense exp <br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workDexExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) dexterity exp <br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workAgiExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) agility exp <br><br> " +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workChaExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) charisma exp <br><br>" +
+                    "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workMoneyGained, '0,0.00') + " ($" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workMoneyGainRate * CYCLES_PER_SEC, '0,0.00') + " / sec) <br><br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workRepGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workRepGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) reputation for this company <br><br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workHackExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) hacking exp <br><br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workStrExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) strength exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workDefExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) defense exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workDexExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) dexterity exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workAgiExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) agility exp <br><br> " +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workChaExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) charisma exp <br><br>" +
                     "You will automatically finish after working for 8 hours. You can cancel earlier if you wish, <br>" +
                     "and there will be no penalty because this is a part-time job.";
 
@@ -1069,32 +1071,32 @@ PlayerObject.prototype.finishWorkPartTime = function(sing=false) {
     this.updateSkillLevels();
 
     var txt = "You earned a total of: <br>" +
-              "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workMoneyGained, '0,0.00') + "<br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workRepGained, '0,0.0000') + " reputation for the company <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hacking exp <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " strength exp <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " defense exp <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dexterity exp <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agility exp <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " charisma exp<br>";
-    txt = "You worked for " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_27__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + "<br><br> " + txt;
-    if (!sing) {Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_23__["dialogBoxCreate"])(txt);}
+              "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workMoneyGained, '0,0.00') + "<br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workRepGained, '0,0.0000') + " reputation for the company <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hacking exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " strength exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " defense exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dexterity exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agility exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " charisma exp<br>";
+    txt = "You worked for " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_28__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + "<br><br> " + txt;
+    if (!sing) {Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_24__["dialogBoxCreate"])(txt);}
 
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
     this.isWorking = false;
-    _engine__WEBPACK_IMPORTED_MODULE_12__["Engine"].loadLocationContent();
+    _engine__WEBPACK_IMPORTED_MODULE_13__["Engine"].loadLocationContent();
     if (sing) {
-        var res =  "You worked for " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_27__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + " and " +
+        var res =  "You worked for " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_28__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + " and " +
                "earned a total of " +
-               "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workMoneyGained, '0,0.00') + ", " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workRepGained, '0,0.0000') + " reputation, " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hacking exp, " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " strength exp, " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " defense exp, " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dexterity exp, " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agility exp, and " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " charisma exp";
+               "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workMoneyGained, '0,0.00') + ", " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workRepGained, '0,0.0000') + " reputation, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hacking exp, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " strength exp, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " defense exp, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dexterity exp, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agility exp, and " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " charisma exp";
         this.resetWorkStatus();
         return res;
     }
@@ -1110,12 +1112,12 @@ PlayerObject.prototype.startFactionWork = function(faction) {
     this.workRepGainRate *= _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__["BitNodeMultipliers"].FactionWorkRepGain;
 
     this.isWorking = true;
-    this.workType = _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].WorkTypeFaction;
+    this.workType = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].WorkTypeFaction;
     this.currentWorkFactionName = faction.name;
 
-    this.timeNeededToCompleteWork = _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].MillisecondsPer20Hours;
+    this.timeNeededToCompleteWork = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].MillisecondsPer20Hours;
 
-    var cancelButton = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_24__["clearEventListeners"])("work-in-progress-cancel-button");
+    var cancelButton = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_25__["clearEventListeners"])("work-in-progress-cancel-button");
     cancelButton.innerHTML = "Stop Faction Work";
     cancelButton.addEventListener("click", function() {
         Player.finishFactionWork(true);
@@ -1123,16 +1125,16 @@ PlayerObject.prototype.startFactionWork = function(faction) {
     });
 
     //Display Work In Progress Screen
-    _engine__WEBPACK_IMPORTED_MODULE_12__["Engine"].loadWorkInProgressContent();
+    _engine__WEBPACK_IMPORTED_MODULE_13__["Engine"].loadWorkInProgressContent();
 }
 
 PlayerObject.prototype.startFactionHackWork = function(faction) {
     this.resetWorkStatus();
 
     this.workHackExpGainRate = .15 * this.hacking_exp_mult * _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__["BitNodeMultipliers"].FactionWorkExpGain;
-    this.workRepGainRate = this.workRepGainRate = (this.hacking_skill + this.intelligence) / _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].MaxSkillLevel * this.faction_rep_mult;
+    this.workRepGainRate = this.workRepGainRate = (this.hacking_skill + this.intelligence) / _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].MaxSkillLevel * this.faction_rep_mult;
 
-    this.factionWorkType = _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].FactionWorkHacking;
+    this.factionWorkType = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].FactionWorkHacking;
     this.currentWorkFactionDescription = "carrying out hacking contracts";
 
     this.startFactionWork(faction);
@@ -1149,7 +1151,7 @@ PlayerObject.prototype.startFactionFieldWork = function(faction) {
     this.workChaExpGainRate     = .1 * this.charisma_exp_mult * _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__["BitNodeMultipliers"].FactionWorkExpGain;
     this.workRepGainRate        = this.getFactionFieldWorkRepGain();
 
-    this.factionWorkType = _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].FactionWorkField;
+    this.factionWorkType = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].FactionWorkField;
     this.currentWorkFactionDescription = "carrying out field missions"
 
     this.startFactionWork(faction);
@@ -1166,24 +1168,24 @@ PlayerObject.prototype.startFactionSecurityWork = function(faction) {
     this.workChaExpGainRate     = 0.00 * this.charisma_exp_mult * _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__["BitNodeMultipliers"].FactionWorkExpGain;
     this.workRepGainRate        = this.getFactionSecurityWorkRepGain();
 
-    this.factionWorkType = _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].FactionWorkSecurity;
+    this.factionWorkType = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].FactionWorkSecurity;
     this.currentWorkFactionDescription = "performing security detail"
 
     this.startFactionWork(faction);
 }
 
 PlayerObject.prototype.workForFaction = function(numCycles) {
-    var faction = _Faction__WEBPACK_IMPORTED_MODULE_13__[/* Factions */ "b"][this.currentWorkFactionName];
+    var faction = _Faction__WEBPACK_IMPORTED_MODULE_14__[/* Factions */ "b"][this.currentWorkFactionName];
 
     //Constantly update the rep gain rate
     switch (this.factionWorkType) {
-        case _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].FactionWorkHacking:
-            this.workRepGainRate = (this.hacking_skill + this.intelligence) / _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].MaxSkillLevel * this.faction_rep_mult;
+        case _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].FactionWorkHacking:
+            this.workRepGainRate = (this.hacking_skill + this.intelligence) / _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].MaxSkillLevel * this.faction_rep_mult;
             break;
-        case _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].FactionWorkField:
+        case _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].FactionWorkField:
             this.workRepGainRate = this.getFactionFieldWorkRepGain();
             break;
-        case _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].FactionWorkSecurity:
+        case _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].FactionWorkSecurity:
             this.workRepGainRate = this.getFactionSecurityWorkRepGain();
             break;
         default:
@@ -1198,74 +1200,74 @@ PlayerObject.prototype.workForFaction = function(numCycles) {
 
     //Cap the number of cycles being processed to whatever would put you at limit (20 hours)
     var overMax = false;
-    if (this.timeWorked + (_engine__WEBPACK_IMPORTED_MODULE_12__["Engine"]._idleSpeed * numCycles) >= _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].MillisecondsPer20Hours) {
+    if (this.timeWorked + (_engine__WEBPACK_IMPORTED_MODULE_13__["Engine"]._idleSpeed * numCycles) >= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].MillisecondsPer20Hours) {
         overMax = true;
-        numCycles = Math.round((_Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].MillisecondsPer20Hours - this.timeWorked) / _engine__WEBPACK_IMPORTED_MODULE_12__["Engine"]._idleSpeed);
+        numCycles = Math.round((_Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].MillisecondsPer20Hours - this.timeWorked) / _engine__WEBPACK_IMPORTED_MODULE_13__["Engine"]._idleSpeed);
     }
-    this.timeWorked += _engine__WEBPACK_IMPORTED_MODULE_12__["Engine"]._idleSpeed * numCycles;
+    this.timeWorked += _engine__WEBPACK_IMPORTED_MODULE_13__["Engine"]._idleSpeed * numCycles;
 
     this.processWorkEarnings(numCycles);
 
     //If timeWorked == 20 hours, then finish. You can only work for the faction for 20 hours
-    if (overMax || this.timeWorked >= _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].MillisecondsPer20Hours) {
+    if (overMax || this.timeWorked >= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].MillisecondsPer20Hours) {
         return this.finishFactionWork(false);
     }
 
     var txt = document.getElementById("work-in-progress-text");
     txt.innerHTML = "You are currently " + this.currentWorkFactionDescription + " for your faction " + faction.name +
-                    " (Current Faction Reputation: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(faction.playerReputation, '0,0') + "). <br>" +
-                    "You have been doing this for " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_27__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + "<br><br>" +
+                    " (Current Faction Reputation: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(faction.playerReputation, '0,0') + "). <br>" +
+                    "You have been doing this for " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_28__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + "<br><br>" +
                     "You have earned: <br><br>" +
-                    "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workMoneyGained, '0,0.00') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workMoneyGainRate * CYCLES_PER_SEC, '0,0.00') + " / sec) <br><br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workRepGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workRepGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) reputation for this faction <br><br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workHackExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) hacking exp <br><br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workStrExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) strength exp <br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workDefExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) defense exp <br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workDexExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) dexterity exp <br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workAgiExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) agility exp <br><br> " +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workChaExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) charisma exp <br><br>" +
+                    "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workMoneyGained, '0,0.00') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workMoneyGainRate * CYCLES_PER_SEC, '0,0.00') + " / sec) <br><br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workRepGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workRepGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) reputation for this faction <br><br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workHackExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) hacking exp <br><br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workStrExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) strength exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workDefExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) defense exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workDexExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) dexterity exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workAgiExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) agility exp <br><br> " +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workChaExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) charisma exp <br><br>" +
 
                     "You will automatically finish after working for 20 hours. You can cancel earlier if you wish.<br>" +
                     "There is no penalty for cancelling earlier.";
 }
 
 PlayerObject.prototype.finishFactionWork = function(cancelled, sing=false) {
-    var faction = _Faction__WEBPACK_IMPORTED_MODULE_13__[/* Factions */ "b"][this.currentWorkFactionName];
+    var faction = _Faction__WEBPACK_IMPORTED_MODULE_14__[/* Factions */ "b"][this.currentWorkFactionName];
     faction.playerReputation += (this.workRepGained);
 
     this.gainMoney(this.workMoneyGained);
 
     this.updateSkillLevels();
 
-    var txt = "You worked for your faction " + faction.name + " for a total of " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_27__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + " <br><br> " +
+    var txt = "You worked for your faction " + faction.name + " for a total of " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_28__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + " <br><br> " +
               "You earned a total of: <br>" +
-              "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workMoneyGained, '0,0.00') + "<br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workRepGained, '0,0.0000') + " reputation for the faction <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hacking exp <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " strength exp <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " defense exp <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dexterity exp <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agility exp <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " charisma exp<br>";
-    if (!sing) {Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_23__["dialogBoxCreate"])(txt);}
+              "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workMoneyGained, '0,0.00') + "<br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workRepGained, '0,0.0000') + " reputation for the faction <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hacking exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " strength exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " defense exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dexterity exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agility exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " charisma exp<br>";
+    if (!sing) {Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_24__["dialogBoxCreate"])(txt);}
 
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
 
     this.isWorking = false;
 
-    _engine__WEBPACK_IMPORTED_MODULE_12__["Engine"].loadFactionContent();
-    Object(_Faction__WEBPACK_IMPORTED_MODULE_13__[/* displayFactionContent */ "c"])(faction.name);
+    _engine__WEBPACK_IMPORTED_MODULE_13__["Engine"].loadFactionContent();
+    Object(_Faction__WEBPACK_IMPORTED_MODULE_14__[/* displayFactionContent */ "c"])(faction.name);
     if (sing) {
-        var res="You worked for your faction " + faction.name + " for a total of " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_27__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + ". " +
+        var res="You worked for your faction " + faction.name + " for a total of " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_28__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + ". " +
                "You earned " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workRepGained, '0,0.0000') + " rep, " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hacking exp, " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " str exp, " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " def exp, " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dex exp, " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agi exp, and " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " cha exp.";
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workRepGained, '0,0.0000') + " rep, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hacking exp, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " str exp, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " def exp, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dex exp, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agi exp, and " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " cha exp.";
         this.resetWorkStatus();
         return res;
     }
@@ -1277,7 +1279,7 @@ PlayerObject.prototype.getWorkMoneyGain = function() {
     // If player has SF-11, calculate salary multiplier from favor
     let bn11Mult = 1;
     const company = _Company_Companies__WEBPACK_IMPORTED_MODULE_4__["Companies"][this.companyName];
-    if (_NetscriptFunctions__WEBPACK_IMPORTED_MODULE_16__[/* hasBn11SF */ "d"]) { bn11Mult = 1 + (company.favor / 100); }
+    if (_NetscriptFunctions__WEBPACK_IMPORTED_MODULE_17__[/* hasBn11SF */ "d"]) { bn11Mult = 1 + (company.favor / 100); }
 
     // Get base salary
     const companyPosition = _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"][this.companyPosition];
@@ -1389,7 +1391,7 @@ PlayerObject.prototype.getWorkRepGain = function() {
                                                                       this.agility, this.charisma);
 
     //Intelligence provides a flat bonus to job performance
-    jobPerformance += (this.intelligence / _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].MaxSkillLevel);
+    jobPerformance += (this.intelligence / _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].MaxSkillLevel);
 
     //Update reputation gain rate to account for company favor
     var favorMult = 1 + (company.favor / 100);
@@ -1398,22 +1400,22 @@ PlayerObject.prototype.getWorkRepGain = function() {
 }
 
 PlayerObject.prototype.getFactionSecurityWorkRepGain = function() {
-    var t = 0.9 * (this.hacking_skill  / _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].MaxSkillLevel +
-                   this.strength       / _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].MaxSkillLevel +
-                   this.defense        / _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].MaxSkillLevel +
-                   this.dexterity      / _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].MaxSkillLevel +
-                   this.agility        / _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].MaxSkillLevel) / 4.5;
+    var t = 0.9 * (this.hacking_skill  / _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].MaxSkillLevel +
+                   this.strength       / _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].MaxSkillLevel +
+                   this.defense        / _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].MaxSkillLevel +
+                   this.dexterity      / _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].MaxSkillLevel +
+                   this.agility        / _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].MaxSkillLevel) / 4.5;
     return t * this.faction_rep_mult;
 }
 
 PlayerObject.prototype.getFactionFieldWorkRepGain = function() {
-    var t = 0.9 * (this.hacking_skill  / _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].MaxSkillLevel +
-                   this.strength       / _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].MaxSkillLevel +
-                   this.defense        / _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].MaxSkillLevel +
-                   this.dexterity      / _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].MaxSkillLevel +
-                   this.agility        / _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].MaxSkillLevel +
-                   this.charisma       / _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].MaxSkillLevel +
-                   this.intelligence   / _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].MaxSkillLevel) / 5.5;
+    var t = 0.9 * (this.hacking_skill  / _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].MaxSkillLevel +
+                   this.strength       / _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].MaxSkillLevel +
+                   this.defense        / _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].MaxSkillLevel +
+                   this.dexterity      / _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].MaxSkillLevel +
+                   this.agility        / _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].MaxSkillLevel +
+                   this.charisma       / _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].MaxSkillLevel +
+                   this.intelligence   / _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].MaxSkillLevel) / 5.5;
     return t * this.faction_rep_mult;
 }
 
@@ -1421,7 +1423,7 @@ PlayerObject.prototype.getFactionFieldWorkRepGain = function() {
 PlayerObject.prototype.startCreateProgramWork = function(programName, time, reqLevel) {
     this.resetWorkStatus();
     this.isWorking = true;
-    this.workType = _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].WorkTypeCreateProgram;
+    this.workType = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].WorkTypeCreateProgram;
 
     //Time needed to complete work affected by hacking skill (linearly based on
     //ratio of (your skill - required level) to MAX skill)
@@ -1446,7 +1448,7 @@ PlayerObject.prototype.startCreateProgramWork = function(programName, time, reqL
 
     this.createProgramName = programName;
 
-    var cancelButton = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_24__["clearEventListeners"])("work-in-progress-cancel-button");
+    var cancelButton = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_25__["clearEventListeners"])("work-in-progress-cancel-button");
     cancelButton.innerHTML = "Cancel work on creating program";
     cancelButton.addEventListener("click", function() {
         Player.finishCreateProgramWork(true);
@@ -1454,7 +1456,7 @@ PlayerObject.prototype.startCreateProgramWork = function(programName, time, reqL
     });
 
     //Display Work In Progress Screen
-    _engine__WEBPACK_IMPORTED_MODULE_12__["Engine"].loadWorkInProgressContent();
+    _engine__WEBPACK_IMPORTED_MODULE_13__["Engine"].loadWorkInProgressContent();
 }
 
 PlayerObject.prototype.createProgramWork = function(numCycles) {
@@ -1464,8 +1466,8 @@ PlayerObject.prototype.createProgramWork = function(numCycles) {
     skillMult = 1 + ((skillMult - 1) / 5); //The divider constant can be adjusted as necessary
 
     //Skill multiplier directly applied to "time worked"
-    this.timeWorked += (_engine__WEBPACK_IMPORTED_MODULE_12__["Engine"]._idleSpeed * numCycles);
-    this.timeWorkedCreateProgram += (_engine__WEBPACK_IMPORTED_MODULE_12__["Engine"]._idleSpeed * numCycles * skillMult);
+    this.timeWorked += (_engine__WEBPACK_IMPORTED_MODULE_13__["Engine"]._idleSpeed * numCycles);
+    this.timeWorkedCreateProgram += (_engine__WEBPACK_IMPORTED_MODULE_13__["Engine"]._idleSpeed * numCycles * skillMult);
     var programName = this.createProgramName;
 
     if (this.timeWorkedCreateProgram >= this.timeNeededToCompleteWork) {
@@ -1474,7 +1476,7 @@ PlayerObject.prototype.createProgramWork = function(numCycles) {
 
     var txt = document.getElementById("work-in-progress-text");
     txt.innerHTML = "You are currently working on coding " + programName + ".<br><br> " +
-                    "You have been working for " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_27__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + "<br><br>" +
+                    "You have been working for " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_28__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + "<br><br>" +
                     "The program is " + (this.timeWorkedCreateProgram / this.timeNeededToCompleteWork * 100).toFixed(2) + "% complete. <br>" +
                     "If you cancel, your work will be saved and you can come back to complete the program later.";
 }
@@ -1482,7 +1484,7 @@ PlayerObject.prototype.createProgramWork = function(numCycles) {
 PlayerObject.prototype.finishCreateProgramWork = function(cancelled, sing=false) {
     var programName = this.createProgramName;
     if (cancelled === false) {
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_23__["dialogBoxCreate"])("You've finished creating " + programName + "!<br>" +
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_24__["dialogBoxCreate"])("You've finished creating " + programName + "!<br>" +
                         "The new program can be found on your home computer.");
 
         this.getHomeComputer().programs.push(programName);
@@ -1493,7 +1495,7 @@ PlayerObject.prototype.finishCreateProgramWork = function(cancelled, sing=false)
     }
 
     if (!cancelled) {
-        this.gainIntelligenceExp(this.createProgramReqLvl / _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].IntelligenceProgramBaseExpGain);
+        this.gainIntelligenceExp(this.createProgramReqLvl / _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].IntelligenceProgramBaseExpGain);
     }
 
     var mainMenu = document.getElementById("mainmenu-container");
@@ -1501,7 +1503,7 @@ PlayerObject.prototype.finishCreateProgramWork = function(cancelled, sing=false)
 
     this.isWorking = false;
 
-    _engine__WEBPACK_IMPORTED_MODULE_12__["Engine"].loadTerminalContent();
+    _engine__WEBPACK_IMPORTED_MODULE_13__["Engine"].loadTerminalContent();
     this.resetWorkStatus();
 }
 
@@ -1509,11 +1511,11 @@ PlayerObject.prototype.finishCreateProgramWork = function(cancelled, sing=false)
 PlayerObject.prototype.startClass = function(costMult, expMult, className) {
     this.resetWorkStatus();
     this.isWorking = true;
-    this.workType = _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].WorkTypeStudyClass;
+    this.workType = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].WorkTypeStudyClass;
 
     this.className = className;
 
-    var gameCPS = 1000 / _engine__WEBPACK_IMPORTED_MODULE_12__["Engine"]._idleSpeed;
+    var gameCPS = 1000 / _engine__WEBPACK_IMPORTED_MODULE_13__["Engine"]._idleSpeed;
 
     //Base exp gains per second
     var baseStudyComputerScienceExp = 0.5;
@@ -1528,43 +1530,43 @@ PlayerObject.prototype.startClass = function(costMult, expMult, className) {
     var cost = 0;
     var hackExp = 0, strExp = 0, defExp = 0, dexExp = 0, agiExp = 0, chaExp = 0;
     switch (className) {
-        case _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].ClassStudyComputerScience:
+        case _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ClassStudyComputerScience:
             hackExp = baseStudyComputerScienceExp * expMult / gameCPS;
             break;
-        case _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].ClassDataStructures:
-            cost = _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].ClassDataStructuresBaseCost * costMult / gameCPS;
+        case _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ClassDataStructures:
+            cost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ClassDataStructuresBaseCost * costMult / gameCPS;
             hackExp = baseDataStructuresExp * expMult / gameCPS;
             break;
-        case _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].ClassNetworks:
-            cost = _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].ClassNetworksBaseCost * costMult / gameCPS;
+        case _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ClassNetworks:
+            cost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ClassNetworksBaseCost * costMult / gameCPS;
             hackExp = baseNetworksExp * expMult / gameCPS;
             break;
-        case _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].ClassAlgorithms:
-            cost = _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].ClassAlgorithmsBaseCost * costMult / gameCPS;
+        case _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ClassAlgorithms:
+            cost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ClassAlgorithmsBaseCost * costMult / gameCPS;
             hackExp = baseAlgorithmsExp * expMult / gameCPS;
             break;
-        case _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].ClassManagement:
-            cost = _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].ClassManagementBaseCost * costMult / gameCPS;
+        case _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ClassManagement:
+            cost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ClassManagementBaseCost * costMult / gameCPS;
             chaExp = baseManagementExp * expMult / gameCPS;
             break;
-        case _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].ClassLeadership:
-            cost = _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].ClassLeadershipBaseCost * costMult / gameCPS;
+        case _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ClassLeadership:
+            cost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ClassLeadershipBaseCost * costMult / gameCPS;
             chaExp = baseLeadershipExp * expMult / gameCPS;
             break;
-        case _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].ClassGymStrength:
-            cost = _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].ClassGymBaseCost * costMult / gameCPS;
+        case _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ClassGymStrength:
+            cost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ClassGymBaseCost * costMult / gameCPS;
             strExp = baseGymExp * expMult / gameCPS;
             break;
-        case _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].ClassGymDefense:
-            cost = _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].ClassGymBaseCost * costMult / gameCPS;
+        case _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ClassGymDefense:
+            cost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ClassGymBaseCost * costMult / gameCPS;
             defExp = baseGymExp * expMult / gameCPS;
             break;
-        case _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].ClassGymDexterity:
-            cost = _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].ClassGymBaseCost * costMult / gameCPS;
+        case _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ClassGymDexterity:
+            cost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ClassGymBaseCost * costMult / gameCPS;
             dexExp = baseGymExp * expMult / gameCPS;
             break;
-        case _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].ClassGymAgility:
-            cost = _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].ClassGymBaseCost * costMult / gameCPS;
+        case _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ClassGymAgility:
+            cost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ClassGymBaseCost * costMult / gameCPS;
             agiExp = baseGymExp * expMult / gameCPS;
             break;
         default:
@@ -1580,11 +1582,11 @@ PlayerObject.prototype.startClass = function(costMult, expMult, className) {
     this.workAgiExpGainRate     = agiExp * this.agility_exp_mult * _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__["BitNodeMultipliers"].ClassGymExpGain;;
     this.workChaExpGainRate     = chaExp * this.charisma_exp_mult * _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__["BitNodeMultipliers"].ClassGymExpGain;;
 
-    var cancelButton = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_24__["clearEventListeners"])("work-in-progress-cancel-button");
-    if (className == _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].ClassGymStrength ||
-        className == _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].ClassGymDefense ||
-        className == _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].ClassGymDexterity ||
-        className == _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].ClassGymAgility) {
+    var cancelButton = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_25__["clearEventListeners"])("work-in-progress-cancel-button");
+    if (className == _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ClassGymStrength ||
+        className == _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ClassGymDefense ||
+        className == _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ClassGymDexterity ||
+        className == _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ClassGymAgility) {
         cancelButton.innerHTML = "Stop training at gym";
     } else {
         cancelButton.innerHTML = "Stop taking course";
@@ -1595,33 +1597,33 @@ PlayerObject.prototype.startClass = function(costMult, expMult, className) {
     });
 
     //Display Work In Progress Screen
-    _engine__WEBPACK_IMPORTED_MODULE_12__["Engine"].loadWorkInProgressContent();
+    _engine__WEBPACK_IMPORTED_MODULE_13__["Engine"].loadWorkInProgressContent();
 }
 
 PlayerObject.prototype.takeClass = function(numCycles) {
-    this.timeWorked += _engine__WEBPACK_IMPORTED_MODULE_12__["Engine"]._idleSpeed * numCycles;
+    this.timeWorked += _engine__WEBPACK_IMPORTED_MODULE_13__["Engine"]._idleSpeed * numCycles;
     var className = this.className;
 
     this.processWorkEarnings(numCycles);
 
     var txt = document.getElementById("work-in-progress-text");
-    txt.innerHTML = "You have been " + className + " for " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_27__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + "<br><br>" +
+    txt.innerHTML = "You have been " + className + " for " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_28__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + "<br><br>" +
                     "This has cost you: <br>" +
-                    "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workMoneyGained, '0,0.00') + " ($" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workMoneyLossRate * CYCLES_PER_SEC, '0,0.00') + " / sec) <br><br>" +
+                    "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workMoneyGained, '0,0.00') + " ($" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workMoneyLossRate * CYCLES_PER_SEC, '0,0.00') + " / sec) <br><br>" +
                     "You have gained: <br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workHackExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) hacking exp <br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workStrExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) strength exp <br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workDefExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) defense exp <br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workDexExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) dexterity exp <br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workAgiExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) agility exp <br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workChaExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) charisma exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workHackExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) hacking exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workStrExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) strength exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workDefExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) defense exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workDexExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) dexterity exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workAgiExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) agility exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workChaExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) charisma exp <br>" +
                     "You may cancel at any time";
 }
 
 //The 'sing' argument defines whether or not this function was called
 //through a Singularity Netscript function
 PlayerObject.prototype.finishClass = function(sing=false) {
-    this.gainIntelligenceExp(_Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].IntelligenceClassBaseExpGain * Math.round(this.timeWorked / 1000));
+    this.gainIntelligenceExp(_Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].IntelligenceClassBaseExpGain * Math.round(this.timeWorked / 1000));
 
     if (this.workMoneyGained > 0) {
         throw new Error("ERR: Somehow gained money while taking class");
@@ -1629,33 +1631,33 @@ PlayerObject.prototype.finishClass = function(sing=false) {
     this.loseMoney(this.workMoneyGained * -1);
 
     this.updateSkillLevels();
-    var txt = "After " + this.className + " for " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_27__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + ", <br>" +
-              "you spent a total of $" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workMoneyGained * -1, '0,0.00') + ". <br><br>" +
+    var txt = "After " + this.className + " for " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_28__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + ", <br>" +
+              "you spent a total of $" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workMoneyGained * -1, '0,0.00') + ". <br><br>" +
               "You earned a total of: <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hacking exp <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " strength exp <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " defense exp <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dexterity exp <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agility exp <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " charisma exp<br>";
-    if (!sing) {Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_23__["dialogBoxCreate"])(txt);}
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hacking exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " strength exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " defense exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dexterity exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agility exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " charisma exp<br>";
+    if (!sing) {Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_24__["dialogBoxCreate"])(txt);}
 
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
 
     this.isWorking = false;
 
-    _engine__WEBPACK_IMPORTED_MODULE_12__["Engine"].loadLocationContent();
+    _engine__WEBPACK_IMPORTED_MODULE_13__["Engine"].loadLocationContent();
     if (sing) {
-        var res="After " + this.className + " for " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_27__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + ", " +
-              "you spent a total of $" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workMoneyGained * -1, '0,0.00') + ". " +
+        var res="After " + this.className + " for " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_28__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + ", " +
+              "you spent a total of $" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workMoneyGained * -1, '0,0.00') + ". " +
               "You earned a total of: " +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hacking exp, " +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " strength exp, " +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " defense exp, " +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dexterity exp, " +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agility exp, and " +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " charisma exp";
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hacking exp, " +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " strength exp, " +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " defense exp, " +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dexterity exp, " +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agility exp, and " +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " charisma exp";
         this.resetWorkStatus();
         return res;
     }
@@ -1666,7 +1668,7 @@ PlayerObject.prototype.finishClass = function(sing=false) {
 PlayerObject.prototype.startCrime = function(hackExp, strExp, defExp, dexExp, agiExp, chaExp, money, time, singParams=null) {
     this.resetWorkStatus();
     this.isWorking = true;
-    this.workType = _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].WorkTypeCrime;
+    this.workType = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].WorkTypeCrime;
 
     if (singParams && singParams.workerscript) {
         this.committingCrimeThruSingFn = true;
@@ -1684,7 +1686,7 @@ PlayerObject.prototype.startCrime = function(hackExp, strExp, defExp, dexExp, ag
     this.timeNeededToCompleteWork = time;
 
     //Remove all old event listeners from Cancel button
-    var newCancelButton = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_24__["clearEventListeners"])("work-in-progress-cancel-button")
+    var newCancelButton = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_25__["clearEventListeners"])("work-in-progress-cancel-button")
     newCancelButton.innerHTML = "Cancel crime"
     newCancelButton.addEventListener("click", function() {
         Player.finishCrime(true);
@@ -1692,11 +1694,11 @@ PlayerObject.prototype.startCrime = function(hackExp, strExp, defExp, dexExp, ag
     });
 
     //Display Work In Progress Screen
-    _engine__WEBPACK_IMPORTED_MODULE_12__["Engine"].loadWorkInProgressContent();
+    _engine__WEBPACK_IMPORTED_MODULE_13__["Engine"].loadWorkInProgressContent();
 }
 
 PlayerObject.prototype.commitCrime = function (numCycles) {
-    this.timeWorked += _engine__WEBPACK_IMPORTED_MODULE_12__["Engine"]._idleSpeed * numCycles;
+    this.timeWorked += _engine__WEBPACK_IMPORTED_MODULE_13__["Engine"]._idleSpeed * numCycles;
 
     if (this.timeWorked >= this.timeNeededToCompleteWork) {this.finishCrime(false); return;}
 
@@ -1708,7 +1710,7 @@ PlayerObject.prototype.commitCrime = function (numCycles) {
 
     var txt = document.getElementById("work-in-progress-text");
     txt.innerHTML = "You are attempting to " + this.crimeType + ".<br>" +
-                    "Time remaining: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_27__["convertTimeMsToTimeElapsedString"])(this.timeNeededToCompleteWork - this.timeWorked) + "<br>" +
+                    "Time remaining: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_28__["convertTimeMsToTimeElapsedString"])(this.timeNeededToCompleteWork - this.timeWorked) + "<br>" +
                     progressBar.replace( / /g, "&nbsp;" );
 }
 
@@ -1716,18 +1718,18 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
     //Determine crime success/failure
     if (!cancelled) {
         var statusText = ""; //TODO, unique message for each crime when you succeed
-        if (Object(_Crimes__WEBPACK_IMPORTED_MODULE_11__[/* determineCrimeSuccess */ "b"])(this.crimeType, this.workMoneyGained)) {
+        if (Object(_Crimes__WEBPACK_IMPORTED_MODULE_12__[/* determineCrimeSuccess */ "b"])(this.crimeType, this.workMoneyGained)) {
             //Handle Karma and crime statistics
             let crime = null;
-            for(const i in _Crimes__WEBPACK_IMPORTED_MODULE_11__[/* Crimes */ "a"]) {
-                if(_Crimes__WEBPACK_IMPORTED_MODULE_11__[/* Crimes */ "a"][i].type == this.crimeType) {
-                    crime = _Crimes__WEBPACK_IMPORTED_MODULE_11__[/* Crimes */ "a"][i];
+            for(const i in _Crimes__WEBPACK_IMPORTED_MODULE_12__[/* Crimes */ "a"]) {
+                if(_Crimes__WEBPACK_IMPORTED_MODULE_12__[/* Crimes */ "a"][i].type == this.crimeType) {
+                    crime = _Crimes__WEBPACK_IMPORTED_MODULE_12__[/* Crimes */ "a"][i];
                     break;
                 }
             }
             if(crime == null) {
                 console.log(this.crimeType);
-                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_23__["dialogBoxCreate"])("ERR: Unrecognized crime type. This is probably a bug please contact the developer");
+                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_24__["dialogBoxCreate"])("ERR: Unrecognized crime type. This is probably a bug please contact the developer");
             }
             this.karma -= crime.karma;
             this.numPeopleKilled += crime.kills;
@@ -1745,24 +1747,24 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
             if (this.committingCrimeThruSingFn) {
                 if(this.singFnCrimeWorkerScript.disableLogs.ALL == null && this.singFnCrimeWorkerScript.disableLogs.commitCrime == null) {
                     this.singFnCrimeWorkerScript.scriptRef.log("Crime successful! Gained " +
-                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workMoneyGained, "$0.000a") + ", " +
-                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hack exp, " +
-                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " str exp, " +
-                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " def exp, " +
-                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dex exp, " +
-                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agi exp, " +
-                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " cha exp.");
+                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workMoneyGained, "$0.000a") + ", " +
+                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hack exp, " +
+                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " str exp, " +
+                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " def exp, " +
+                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dex exp, " +
+                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agi exp, " +
+                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " cha exp.");
                 }
             } else {
-                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_23__["dialogBoxCreate"])("Crime successful! <br><br>" +
+                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_24__["dialogBoxCreate"])("Crime successful! <br><br>" +
                                 "You gained:<br>"+
-                                "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workMoneyGained, '0,0.00') + "<br>" +
-                                _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hacking experience <br>" +
-                                _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " strength experience<br>" +
-                                _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " defense experience<br>" +
-                                _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dexterity experience<br>" +
-                                _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agility experience<br>" +
-                                _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " charisma experience");
+                                "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workMoneyGained, '0,0.00') + "<br>" +
+                                _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hacking experience <br>" +
+                                _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " strength experience<br>" +
+                                _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " defense experience<br>" +
+                                _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dexterity experience<br>" +
+                                _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agility experience<br>" +
+                                _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " charisma experience");
             }
 
         } else {
@@ -1776,22 +1778,22 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
             if (this.committingCrimeThruSingFn) {
                 if(this.singFnCrimeWorkerScript.disableLogs.ALL == null && this.singFnCrimeWorkerScript.disableLogs.commitCrime == null) {
                     this.singFnCrimeWorkerScript.scriptRef.log("Crime failed! Gained " +
-                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hack exp, " +
-                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " str exp, " +
-                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " def exp, " +
-                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dex exp, " +
-                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agi exp, " +
-                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " cha exp.");
+                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hack exp, " +
+                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " str exp, " +
+                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " def exp, " +
+                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dex exp, " +
+                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agi exp, " +
+                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " cha exp.");
                 }
             } else {
-                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_23__["dialogBoxCreate"])("Crime failed! <br><br>" +
+                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_24__["dialogBoxCreate"])("Crime failed! <br><br>" +
                         "You gained:<br>"+
-                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hacking experience <br>" +
-                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " strength experience<br>" +
-                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " defense experience<br>" +
-                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dexterity experience<br>" +
-                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agility experience<br>" +
-                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " charisma experience");
+                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hacking experience <br>" +
+                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " strength experience<br>" +
+                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " defense experience<br>" +
+                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dexterity experience<br>" +
+                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agility experience<br>" +
+                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " charisma experience");
             }
         }
 
@@ -1808,7 +1810,7 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
     mainMenu.style.visibility = "visible";
     this.isWorking = false;
     this.resetWorkStatus();
-    _engine__WEBPACK_IMPORTED_MODULE_12__["Engine"].loadLocationContent();
+    _engine__WEBPACK_IMPORTED_MODULE_13__["Engine"].loadLocationContent();
 }
 
 //Cancels the player's current "work" assignment and gives the proper rewards
@@ -1817,22 +1819,22 @@ PlayerObject.prototype.singularityStopWork = function() {
     if (!this.isWorking) {return "";}
     var res; //Earnings text for work
     switch (this.workType) {
-        case _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].WorkTypeStudyClass:
+        case _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].WorkTypeStudyClass:
             res =  this.finishClass(true);
             break;
-        case _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].WorkTypeCompany:
+        case _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].WorkTypeCompany:
             res = this.finishWork(true, true);
             break;
-        case _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].WorkTypeCompanyPartTime:
+        case _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].WorkTypeCompanyPartTime:
             res = this.finishWorkPartTime(true);
             break;
-        case _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].WorkTypeFaction:
+        case _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].WorkTypeFaction:
             res = this.finishFactionWork(true, true);
             break;
-        case _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].WorkTypeCreateProgram:
+        case _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].WorkTypeCreateProgram:
             res = this.finishCreateProgramWork(true, true);
             break;
-        case _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].WorkTypeCrime:
+        case _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].WorkTypeCrime:
             res = this.finishCrime(true);
             break;
         default:
@@ -1855,15 +1857,15 @@ PlayerObject.prototype.takeDamage = function(amt) {
 }
 
 PlayerObject.prototype.hospitalize = function() {
-    if (_Settings__WEBPACK_IMPORTED_MODULE_18__["Settings"].SuppressHospitalizationPopup === false) {
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_23__["dialogBoxCreate"])(
+    if (_Settings__WEBPACK_IMPORTED_MODULE_19__["Settings"].SuppressHospitalizationPopup === false) {
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_24__["dialogBoxCreate"])(
             "You were in critical condition! You were taken to the hospital where " +
             "luckily they were able to save your life. You were charged " +
-            _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(this.max_hp * _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].HospitalCostPerHp, '$0.000a')
+            _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(this.max_hp * _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].HospitalCostPerHp, '$0.000a')
         );
     }
 
-    this.loseMoney(this.max_hp * _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].HospitalCostPerHp);
+    this.loseMoney(this.max_hp * _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].HospitalCostPerHp);
     this.hp = this.max_hp;
 }
 
@@ -1895,7 +1897,7 @@ PlayerObject.prototype.applyForJob = function(entryPosType, sing=false) {
     if (!this.isQualified(company, pos)) {
         var reqText = Object(_Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_6__["getJobRequirementText"])(company, pos);
         if (sing) {return false;}
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_23__["dialogBoxCreate"])("Unforunately, you do not qualify for this position<br>" + reqText);
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_24__["dialogBoxCreate"])("Unforunately, you do not qualify for this position<br>" + reqText);
         return;
     }
 
@@ -1922,14 +1924,14 @@ PlayerObject.prototype.applyForJob = function(entryPosType, sing=false) {
             var nextPos = Object(_Company_GetNextCompanyPosition__WEBPACK_IMPORTED_MODULE_5__["getNextCompanyPosition"])(pos);
             if (nextPos == null) {
                 if (sing) {return false;}
-                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_23__["dialogBoxCreate"])("You are already at the highest position for your field! No promotion available");
+                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_24__["dialogBoxCreate"])("You are already at the highest position for your field! No promotion available");
             } else if (company.hasPosition(nextPos)) {
                 if (sing) {return false;}
                 var reqText = Object(_Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_6__["getJobRequirementText"])(company, nextPos);
-                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_23__["dialogBoxCreate"])("Unfortunately, you do not qualify for a promotion<br>" + reqText);
+                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_24__["dialogBoxCreate"])("Unfortunately, you do not qualify for a promotion<br>" + reqText);
             } else {
                 if (sing) {return false;}
-                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_23__["dialogBoxCreate"])("You are already at the highest position for your field! No promotion available");
+                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_24__["dialogBoxCreate"])("You are already at the highest position for your field! No promotion available");
             }
             return; //Same job, do nothing
         }
@@ -1951,16 +1953,19 @@ PlayerObject.prototype.applyForJob = function(entryPosType, sing=false) {
     this.companyName = company.name;
     this.companyPosition = pos.name;
 
+    document.getElementById("world-menu-header").click();
+    document.getElementById("world-menu-header").click();
+
     if (leaveCompany) {
         if (sing) { return true; }
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_23__["dialogBoxCreate"])([`Congratulations! You were offered a new job at ${this.companyName} as a ${pos.name}!`,
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_24__["dialogBoxCreate"])([`Congratulations! You were offered a new job at ${this.companyName} as a ${pos.name}!`,
                          `You lost 1000 reputation at your old company ${oldCompanyName} because you left.`].join("<br>"));
     } else {
         if (sing) { return true; }
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_23__["dialogBoxCreate"])("Congratulations! You were offered a new job at " + this.companyName + " as a " + pos.name + "!");
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_24__["dialogBoxCreate"])("Congratulations! You were offered a new job at " + this.companyName + " as a " + pos.name + "!");
     }
 
-    _engine__WEBPACK_IMPORTED_MODULE_12__["Engine"].loadLocationContent();
+    _engine__WEBPACK_IMPORTED_MODULE_13__["Engine"].loadLocationContent();
 }
 
 //Returns your next position at a company given the field (software, business, etc.)
@@ -1996,137 +2001,122 @@ PlayerObject.prototype.getNextCompanyPosition = function(company, entryPosType) 
 }
 
 PlayerObject.prototype.applyForSoftwareJob = function(sing=false) {
-    return this.applyForJob(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"].SoftwareIntern, sing);
+    return this.applyForJob(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"][_Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_8__["SoftwareCompanyPositions"][0]], sing);
 }
 
 PlayerObject.prototype.applyForSoftwareConsultantJob = function(sing=false) {
-    return this.applyForJob(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"].SoftwareConsultant, sing);
+    return this.applyForJob(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"][_Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_8__["SoftwareConsultantCompanyPositions"][0]], sing);
 }
 
 PlayerObject.prototype.applyForItJob = function(sing=false) {
-	return this.applyForJob(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"].ITIntern, sing);
+	return this.applyForJob(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"][_Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_8__["ITCompanyPositions"][0]], sing);
 }
 
 PlayerObject.prototype.applyForSecurityEngineerJob = function(sing=false) {
     var company = _Company_Companies__WEBPACK_IMPORTED_MODULE_4__["Companies"][this.location]; //Company being applied to
-    if (this.isQualified(company, _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"].SecurityEngineer)) {
-        return this.applyForJob(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"].SecurityEngineer, sing);
+    if (this.isQualified(company, _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"][_Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_8__["SecurityEngineerCompanyPositions"][0]])) {
+        return this.applyForJob(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"][_Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_8__["SecurityEngineerCompanyPositions"][0]], sing);
     } else {
         if (sing) {return false;}
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_23__["dialogBoxCreate"])("Unforunately, you do not qualify for this position");
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_24__["dialogBoxCreate"])("Unforunately, you do not qualify for this position");
     }
 }
 
 PlayerObject.prototype.applyForNetworkEngineerJob = function(sing=false) {
 	var company = _Company_Companies__WEBPACK_IMPORTED_MODULE_4__["Companies"][this.location]; //Company being applied to
-    if (this.isQualified(company, _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"].NetworkEngineer)) {
-        return this.applyForJob(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"].NetworkEngineer, sing);
+    if (this.isQualified(company, _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"][_Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_8__["NetworkEngineerCompanyPositions"][0]])) {
+        return this.applyForJob(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"][_Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_8__["NetworkEngineerCompanyPositions"][0]], sing);
     } else {
         if (sing) {return false;}
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_23__["dialogBoxCreate"])("Unforunately, you do not qualify for this position");
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_24__["dialogBoxCreate"])("Unforunately, you do not qualify for this position");
     }
 }
 
 PlayerObject.prototype.applyForBusinessJob = function(sing=false) {
-	return this.applyForJob(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"].BusinessIntern, sing);
+	return this.applyForJob(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"][_Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_8__["BusinessCompanyPositions"][0]], sing);
 }
 
 PlayerObject.prototype.applyForBusinessConsultantJob = function(sing=false) {
-    return this.applyForJob(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"].BusinessConsultant, sing);
+    return this.applyForJob(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"][_Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_8__["BusinessConsultantCompanyPositions"][0]], sing);
 }
 
 PlayerObject.prototype.applyForSecurityJob = function(sing=false) {
-    //TODO If case for POlice departments
-	return this.applyForJob(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"].SecurityGuard, sing);
+    // TODO Police Jobs
+    // Indexing starts at 2 because 0 is for police officer
+	return this.applyForJob(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"][_Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_8__["SecurityCompanyPositions"][2]], sing);
 }
 
 PlayerObject.prototype.applyForAgentJob = function(sing=false) {
 	var company = _Company_Companies__WEBPACK_IMPORTED_MODULE_4__["Companies"][this.location]; //Company being applied to
-    if (this.isQualified(company, _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"].FieldAgent)) {
-        return this.applyForJob(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"].FieldAgent, sing);
+    if (this.isQualified(company, _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"][_Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_8__["AgentCompanyPositions"][0]])) {
+        return this.applyForJob(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"][_Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_8__["AgentCompanyPositions"][0]], sing);
     } else {
         if (sing) {return false;}
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_23__["dialogBoxCreate"])("Unforunately, you do not qualify for this position");
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_24__["dialogBoxCreate"])("Unforunately, you do not qualify for this position");
     }
 }
 
 PlayerObject.prototype.applyForEmployeeJob = function(sing=false) {
 	var company = _Company_Companies__WEBPACK_IMPORTED_MODULE_4__["Companies"][this.location]; //Company being applied to
-    if (this.isQualified(company, _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"].Employee)) {
-        if (this.firstJobRecvd === false) {
-            this.firstJobRecvd = true;
-            document.getElementById("job-tab").style.display = "list-item";
-            document.getElementById("world-menu-header").click();
-            document.getElementById("world-menu-header").click();
-        }
+    if (this.isQualified(company, _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"][_Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_8__["MiscCompanyPositions"][1]])) {
         this.companyName = company.companyName;
-        this.companyPosition = _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"].Employee;
+        this.companyPosition = _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"][_Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_8__["MiscCompanyPositions"][1]];
+        document.getElementById("world-menu-header").click();
+        document.getElementById("world-menu-header").click();
         if (sing) {return true;}
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_23__["dialogBoxCreate"])("Congratulations, you are now employed at " + this.companyName);
-        _engine__WEBPACK_IMPORTED_MODULE_12__["Engine"].loadLocationContent();
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_24__["dialogBoxCreate"])("Congratulations, you are now employed at " + this.companyName);
+        _engine__WEBPACK_IMPORTED_MODULE_13__["Engine"].loadLocationContent();
     } else {
         if (sing) {return false;}
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_23__["dialogBoxCreate"])("Unforunately, you do not qualify for this position");
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_24__["dialogBoxCreate"])("Unforunately, you do not qualify for this position");
     }
 }
 
 PlayerObject.prototype.applyForPartTimeEmployeeJob = function(sing=false) {
 	var company = _Company_Companies__WEBPACK_IMPORTED_MODULE_4__["Companies"][this.location]; //Company being applied to
-    if (this.isQualified(company, _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"].PartTimeEmployee)) {
-        if (this.firstJobRecvd === false) {
-            this.firstJobRecvd = true;
-            document.getElementById("job-tab").style.display = "list-item";
-            document.getElementById("world-menu-header").click();
-            document.getElementById("world-menu-header").click();
-        }
+    if (this.isQualified(company, _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"][_Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_8__["PartTimeCompanyPositions"][1]])) {
         this.companyName = company.companyName;
-        this.companyPosition = _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"].PartTimeEmployee;
+        this.companyPosition = _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"][_Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_8__["PartTimeCompanyPositions"][1]];
+        document.getElementById("world-menu-header").click();
+        document.getElementById("world-menu-header").click();
         if (sing) {return true;}
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_23__["dialogBoxCreate"])("Congratulations, you are now employed part-time at " + this.companyName);
-        _engine__WEBPACK_IMPORTED_MODULE_12__["Engine"].loadLocationContent();
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_24__["dialogBoxCreate"])("Congratulations, you are now employed part-time at " + this.companyName);
+        _engine__WEBPACK_IMPORTED_MODULE_13__["Engine"].loadLocationContent();
     } else {
         if (sing) {return false;}
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_23__["dialogBoxCreate"])("Unforunately, you do not qualify for this position");
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_24__["dialogBoxCreate"])("Unforunately, you do not qualify for this position");
     }
 }
 
 PlayerObject.prototype.applyForWaiterJob = function(sing=false) {
 	var company = _Company_Companies__WEBPACK_IMPORTED_MODULE_4__["Companies"][this.location]; //Company being applied to
-    if (this.isQualified(company, _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"].Waiter)) {
-        if (this.firstJobRecvd === false) {
-            this.firstJobRecvd = true;
-            document.getElementById("job-tab").style.display = "list-item";
-            document.getElementById("world-menu-header").click();
-            document.getElementById("world-menu-header").click();
-        }
+    if (this.isQualified(company, _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"][_Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_8__["MiscCompanyPositions"][0]])) {
         this.companyName = company.companyName;
-        this.companyPosition = _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"].Waiter;
+        this.companyPosition = _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"][_Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_8__["MiscCompanyPositions"][0]];
+        document.getElementById("world-menu-header").click();
+        document.getElementById("world-menu-header").click();
         if (sing) {return true;}
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_23__["dialogBoxCreate"])("Congratulations, you are now employed as a waiter at " + this.companyName);
-        _engine__WEBPACK_IMPORTED_MODULE_12__["Engine"].loadLocationContent();
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_24__["dialogBoxCreate"])("Congratulations, you are now employed as a waiter at " + this.companyName);
+        _engine__WEBPACK_IMPORTED_MODULE_13__["Engine"].loadLocationContent();
     } else {
         if (sing) {return false;}
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_23__["dialogBoxCreate"])("Unforunately, you do not qualify for this position");
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_24__["dialogBoxCreate"])("Unforunately, you do not qualify for this position");
     }
 }
 
 PlayerObject.prototype.applyForPartTimeWaiterJob = function(sing=false) {
 	var company = _Company_Companies__WEBPACK_IMPORTED_MODULE_4__["Companies"][this.location]; //Company being applied to
-    if (this.isQualified(company, _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"].PartTimeWaiter)) {
-        if (this.firstJobRecvd === false) {
-            this.firstJobRecvd = true;
-            document.getElementById("job-tab").style.display = "list-item";
-            document.getElementById("world-menu-header").click();
-            document.getElementById("world-menu-header").click();
-        }
+    if (this.isQualified(company, _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"][_Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_8__["PartTimeCompanyPositions"][0]])) {
         this.companyName = company.companyName;
-        this.companyPosition = _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"].PartTimeWaiter;
+        this.companyPosition = _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"][_Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_8__["PartTimeCompanyPositions"][0]];
+        document.getElementById("world-menu-header").click();
+        document.getElementById("world-menu-header").click();
         if (sing) {return true;}
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_23__["dialogBoxCreate"])("Congratulations, you are now employed as a part-time waiter at " + this.companyName);
-        _engine__WEBPACK_IMPORTED_MODULE_12__["Engine"].loadLocationContent();
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_24__["dialogBoxCreate"])("Congratulations, you are now employed as a part-time waiter at " + this.companyName);
+        _engine__WEBPACK_IMPORTED_MODULE_13__["Engine"].loadLocationContent();
     } else {
         if (sing) {return false;}
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_23__["dialogBoxCreate"])("Unforunately, you do not qualify for this position");
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_24__["dialogBoxCreate"])("Unforunately, you do not qualify for this position");
     }
 }
 
@@ -2189,12 +2179,12 @@ PlayerObject.prototype.reapplyAllSourceFiles = function() {
 
     for (let i = 0; i < this.sourceFiles.length; ++i) {
         var srcFileKey = "SourceFile" + this.sourceFiles[i].n;
-        var sourceFileObject = _SourceFile__WEBPACK_IMPORTED_MODULE_20__[/* SourceFiles */ "b"][srcFileKey];
+        var sourceFileObject = _SourceFile__WEBPACK_IMPORTED_MODULE_21__[/* SourceFiles */ "b"][srcFileKey];
         if (sourceFileObject == null) {
             console.log("ERROR: Invalid source file number: " + this.sourceFiles[i].n);
             continue;
         }
-        Object(_SourceFile__WEBPACK_IMPORTED_MODULE_20__[/* applySourceFile */ "c"])(this.sourceFiles[i]);
+        Object(_SourceFile__WEBPACK_IMPORTED_MODULE_21__[/* applySourceFile */ "c"])(this.sourceFiles[i]);
     }
 }
 
@@ -2214,7 +2204,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     }
 
     //Illuminati
-    var illuminatiFac = _Faction__WEBPACK_IMPORTED_MODULE_13__[/* Factions */ "b"]["Illuminati"];
+    var illuminatiFac = _Faction__WEBPACK_IMPORTED_MODULE_14__[/* Factions */ "b"]["Illuminati"];
     if (!illuminatiFac.isBanned && !illuminatiFac.isMember && !illuminatiFac.alreadyInvited &&
         numAugmentations >= 30 &&
         this.money.gte(150000000000) &&
@@ -2225,7 +2215,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     }
 
     //Daedalus
-    var daedalusFac = _Faction__WEBPACK_IMPORTED_MODULE_13__[/* Factions */ "b"]["Daedalus"];
+    var daedalusFac = _Faction__WEBPACK_IMPORTED_MODULE_14__[/* Factions */ "b"]["Daedalus"];
     if (!daedalusFac.isBanned && !daedalusFac.isMember && !daedalusFac.alreadyInvited &&
         numAugmentations >= 30 &&
         this.money.gte(100000000000) &&
@@ -2236,7 +2226,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     }
 
     //The Covenant
-    var covenantFac = _Faction__WEBPACK_IMPORTED_MODULE_13__[/* Factions */ "b"]["The Covenant"];
+    var covenantFac = _Faction__WEBPACK_IMPORTED_MODULE_14__[/* Factions */ "b"]["The Covenant"];
     if (!covenantFac.isBanned && !covenantFac.isMember && !covenantFac.alreadyInvited &&
         numAugmentations >= 30 &&
         this.money.gte(75000000000) &&
@@ -2249,88 +2239,88 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     }
 
     //ECorp
-    var ecorpFac = _Faction__WEBPACK_IMPORTED_MODULE_13__[/* Factions */ "b"]["ECorp"];
+    var ecorpFac = _Faction__WEBPACK_IMPORTED_MODULE_14__[/* Factions */ "b"]["ECorp"];
     if (!ecorpFac.isBanned && !ecorpFac.isMember && !ecorpFac.alreadyInvited &&
-        this.companyName == _Locations__WEBPACK_IMPORTED_MODULE_15__["Locations"].AevumECorp && companyRep >= _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].CorpFactionRepRequirement) {
+        this.companyName == _Locations__WEBPACK_IMPORTED_MODULE_16__["Locations"].AevumECorp && companyRep >= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].CorpFactionRepRequirement) {
         invitedFactions.push(ecorpFac);
     }
 
     //MegaCorp
-    var megacorpFac = _Faction__WEBPACK_IMPORTED_MODULE_13__[/* Factions */ "b"]["MegaCorp"];
+    var megacorpFac = _Faction__WEBPACK_IMPORTED_MODULE_14__[/* Factions */ "b"]["MegaCorp"];
     if (!megacorpFac.isBanned && !megacorpFac.isMember && !megacorpFac.alreadyInvited &&
-        this.companyName == _Locations__WEBPACK_IMPORTED_MODULE_15__["Locations"].Sector12MegaCorp && companyRep >= _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].CorpFactionRepRequirement) {
+        this.companyName == _Locations__WEBPACK_IMPORTED_MODULE_16__["Locations"].Sector12MegaCorp && companyRep >= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].CorpFactionRepRequirement) {
         invitedFactions.push(megacorpFac);
     }
 
     //Bachman & Associates
-    var bachmanandassociatesFac = _Faction__WEBPACK_IMPORTED_MODULE_13__[/* Factions */ "b"]["Bachman & Associates"];
+    var bachmanandassociatesFac = _Faction__WEBPACK_IMPORTED_MODULE_14__[/* Factions */ "b"]["Bachman & Associates"];
     if (!bachmanandassociatesFac.isBanned && !bachmanandassociatesFac.isMember &&
         !bachmanandassociatesFac.alreadyInvited &&
-        this.companyName == _Locations__WEBPACK_IMPORTED_MODULE_15__["Locations"].AevumBachmanAndAssociates && companyRep >= _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].CorpFactionRepRequirement) {
+        this.companyName == _Locations__WEBPACK_IMPORTED_MODULE_16__["Locations"].AevumBachmanAndAssociates && companyRep >= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].CorpFactionRepRequirement) {
         invitedFactions.push(bachmanandassociatesFac);
     }
 
     //Blade Industries
-    var bladeindustriesFac = _Faction__WEBPACK_IMPORTED_MODULE_13__[/* Factions */ "b"]["Blade Industries"];
+    var bladeindustriesFac = _Faction__WEBPACK_IMPORTED_MODULE_14__[/* Factions */ "b"]["Blade Industries"];
     if (!bladeindustriesFac.isBanned && !bladeindustriesFac.isMember && !bladeindustriesFac.alreadyInvited &&
-        this.companyName == _Locations__WEBPACK_IMPORTED_MODULE_15__["Locations"].Sector12BladeIndustries && companyRep >= _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].CorpFactionRepRequirement) {
+        this.companyName == _Locations__WEBPACK_IMPORTED_MODULE_16__["Locations"].Sector12BladeIndustries && companyRep >= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].CorpFactionRepRequirement) {
         invitedFactions.push(bladeindustriesFac);
     }
 
     //NWO
-    var nwoFac = _Faction__WEBPACK_IMPORTED_MODULE_13__[/* Factions */ "b"]["NWO"];
+    var nwoFac = _Faction__WEBPACK_IMPORTED_MODULE_14__[/* Factions */ "b"]["NWO"];
     if (!nwoFac.isBanned && !nwoFac.isMember && !nwoFac.alreadyInvited &&
-        this.companyName == _Locations__WEBPACK_IMPORTED_MODULE_15__["Locations"].VolhavenNWO && companyRep >= _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].CorpFactionRepRequirement) {
+        this.companyName == _Locations__WEBPACK_IMPORTED_MODULE_16__["Locations"].VolhavenNWO && companyRep >= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].CorpFactionRepRequirement) {
         invitedFactions.push(nwoFac);
     }
 
     //Clarke Incorporated
-    var clarkeincorporatedFac = _Faction__WEBPACK_IMPORTED_MODULE_13__[/* Factions */ "b"]["Clarke Incorporated"];
+    var clarkeincorporatedFac = _Faction__WEBPACK_IMPORTED_MODULE_14__[/* Factions */ "b"]["Clarke Incorporated"];
     if (!clarkeincorporatedFac.isBanned && !clarkeincorporatedFac.isMember && !clarkeincorporatedFac.alreadyInvited &&
-        this.companyName == _Locations__WEBPACK_IMPORTED_MODULE_15__["Locations"].AevumClarkeIncorporated && companyRep >= _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].CorpFactionRepRequirement) {
+        this.companyName == _Locations__WEBPACK_IMPORTED_MODULE_16__["Locations"].AevumClarkeIncorporated && companyRep >= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].CorpFactionRepRequirement) {
         invitedFactions.push(clarkeincorporatedFac);
     }
 
     //OmniTek Incorporated
-    var omnitekincorporatedFac = _Faction__WEBPACK_IMPORTED_MODULE_13__[/* Factions */ "b"]["OmniTek Incorporated"];
+    var omnitekincorporatedFac = _Faction__WEBPACK_IMPORTED_MODULE_14__[/* Factions */ "b"]["OmniTek Incorporated"];
     if (!omnitekincorporatedFac.isBanned && !omnitekincorporatedFac.isMember && !omnitekincorporatedFac.alreadyInvited &&
-        this.companyName == _Locations__WEBPACK_IMPORTED_MODULE_15__["Locations"].VolhavenOmniTekIncorporated && companyRep >= _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].CorpFactionRepRequirement) {
+        this.companyName == _Locations__WEBPACK_IMPORTED_MODULE_16__["Locations"].VolhavenOmniTekIncorporated && companyRep >= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].CorpFactionRepRequirement) {
         invitedFactions.push(omnitekincorporatedFac);
     }
 
     //Four Sigma
-    var foursigmaFac = _Faction__WEBPACK_IMPORTED_MODULE_13__[/* Factions */ "b"]["Four Sigma"];
+    var foursigmaFac = _Faction__WEBPACK_IMPORTED_MODULE_14__[/* Factions */ "b"]["Four Sigma"];
     if (!foursigmaFac.isBanned && !foursigmaFac.isMember && !foursigmaFac.alreadyInvited &&
-        this.companyName == _Locations__WEBPACK_IMPORTED_MODULE_15__["Locations"].Sector12FourSigma && companyRep >= _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].CorpFactionRepRequirement) {
+        this.companyName == _Locations__WEBPACK_IMPORTED_MODULE_16__["Locations"].Sector12FourSigma && companyRep >= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].CorpFactionRepRequirement) {
         invitedFactions.push(foursigmaFac);
     }
 
     //KuaiGong International
-    var kuaigonginternationalFac = _Faction__WEBPACK_IMPORTED_MODULE_13__[/* Factions */ "b"]["KuaiGong International"];
+    var kuaigonginternationalFac = _Faction__WEBPACK_IMPORTED_MODULE_14__[/* Factions */ "b"]["KuaiGong International"];
     if (!kuaigonginternationalFac.isBanned && !kuaigonginternationalFac.isMember &&
         !kuaigonginternationalFac.alreadyInvited &&
-        this.companyName == _Locations__WEBPACK_IMPORTED_MODULE_15__["Locations"].ChongqingKuaiGongInternational && companyRep >= _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].CorpFactionRepRequirement) {
+        this.companyName == _Locations__WEBPACK_IMPORTED_MODULE_16__["Locations"].ChongqingKuaiGongInternational && companyRep >= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].CorpFactionRepRequirement) {
         invitedFactions.push(kuaigonginternationalFac);
     }
 
     //Fulcrum Secret Technologies - If u've unlocked fulcrum secret technolgoies server and have a high rep with the company
-    var fulcrumsecrettechonologiesFac = _Faction__WEBPACK_IMPORTED_MODULE_13__[/* Factions */ "b"]["Fulcrum Secret Technologies"];
-    var fulcrumSecretServer = _Server__WEBPACK_IMPORTED_MODULE_17__[/* AllServers */ "b"][_SpecialServerIps__WEBPACK_IMPORTED_MODULE_19__[/* SpecialServerIps */ "a"][_SpecialServerIps__WEBPACK_IMPORTED_MODULE_19__[/* SpecialServerNames */ "b"].FulcrumSecretTechnologies]];
+    var fulcrumsecrettechonologiesFac = _Faction__WEBPACK_IMPORTED_MODULE_14__[/* Factions */ "b"]["Fulcrum Secret Technologies"];
+    var fulcrumSecretServer = _Server__WEBPACK_IMPORTED_MODULE_18__[/* AllServers */ "b"][_SpecialServerIps__WEBPACK_IMPORTED_MODULE_20__[/* SpecialServerIps */ "a"][_SpecialServerIps__WEBPACK_IMPORTED_MODULE_20__[/* SpecialServerNames */ "b"].FulcrumSecretTechnologies]];
     if (fulcrumSecretServer == null) {
         console.log("ERROR: Could not find Fulcrum Secret Technologies Server");
     } else {
         if (!fulcrumsecrettechonologiesFac.isBanned && !fulcrumsecrettechonologiesFac.isMember &&
             !fulcrumsecrettechonologiesFac.alreadyInvited &&
             fulcrumSecretServer.manuallyHacked &&
-            this.companyName == _Locations__WEBPACK_IMPORTED_MODULE_15__["Locations"].AevumFulcrumTechnologies && companyRep >= 250000) {
+            this.companyName == _Locations__WEBPACK_IMPORTED_MODULE_16__["Locations"].AevumFulcrumTechnologies && companyRep >= 250000) {
             invitedFactions.push(fulcrumsecrettechonologiesFac);
         }
     }
 
     //BitRunners
-    var bitrunnersFac = _Faction__WEBPACK_IMPORTED_MODULE_13__[/* Factions */ "b"]["BitRunners"];
+    var bitrunnersFac = _Faction__WEBPACK_IMPORTED_MODULE_14__[/* Factions */ "b"]["BitRunners"];
     var homeComp = this.getHomeComputer();
-    var bitrunnersServer = _Server__WEBPACK_IMPORTED_MODULE_17__[/* AllServers */ "b"][_SpecialServerIps__WEBPACK_IMPORTED_MODULE_19__[/* SpecialServerIps */ "a"][_SpecialServerIps__WEBPACK_IMPORTED_MODULE_19__[/* SpecialServerNames */ "b"].BitRunnersServer]];
+    var bitrunnersServer = _Server__WEBPACK_IMPORTED_MODULE_18__[/* AllServers */ "b"][_SpecialServerIps__WEBPACK_IMPORTED_MODULE_20__[/* SpecialServerIps */ "a"][_SpecialServerIps__WEBPACK_IMPORTED_MODULE_20__[/* SpecialServerNames */ "b"].BitRunnersServer]];
     if (bitrunnersServer == null) {
         console.log("ERROR: Could not find BitRunners Server");
     } else if (!bitrunnersFac.isBanned && !bitrunnersFac.isMember && bitrunnersServer.manuallyHacked &&
@@ -2339,8 +2329,8 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     }
 
     //The Black Hand
-    var theblackhandFac = _Faction__WEBPACK_IMPORTED_MODULE_13__[/* Factions */ "b"]["The Black Hand"];
-    var blackhandServer = _Server__WEBPACK_IMPORTED_MODULE_17__[/* AllServers */ "b"][_SpecialServerIps__WEBPACK_IMPORTED_MODULE_19__[/* SpecialServerIps */ "a"][_SpecialServerIps__WEBPACK_IMPORTED_MODULE_19__[/* SpecialServerNames */ "b"].TheBlackHandServer]];
+    var theblackhandFac = _Faction__WEBPACK_IMPORTED_MODULE_14__[/* Factions */ "b"]["The Black Hand"];
+    var blackhandServer = _Server__WEBPACK_IMPORTED_MODULE_18__[/* AllServers */ "b"][_SpecialServerIps__WEBPACK_IMPORTED_MODULE_20__[/* SpecialServerIps */ "a"][_SpecialServerIps__WEBPACK_IMPORTED_MODULE_20__[/* SpecialServerNames */ "b"].TheBlackHandServer]];
     if (blackhandServer == null) {
         console.log("ERROR: Could not find The Black Hand Server");
     } else if (!theblackhandFac.isBanned && !theblackhandFac.isMember && blackhandServer.manuallyHacked &&
@@ -2349,8 +2339,8 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     }
 
     //NiteSec
-    var nitesecFac = _Faction__WEBPACK_IMPORTED_MODULE_13__[/* Factions */ "b"]["NiteSec"];
-    var nitesecServer = _Server__WEBPACK_IMPORTED_MODULE_17__[/* AllServers */ "b"][_SpecialServerIps__WEBPACK_IMPORTED_MODULE_19__[/* SpecialServerIps */ "a"][_SpecialServerIps__WEBPACK_IMPORTED_MODULE_19__[/* SpecialServerNames */ "b"].NiteSecServer]];
+    var nitesecFac = _Faction__WEBPACK_IMPORTED_MODULE_14__[/* Factions */ "b"]["NiteSec"];
+    var nitesecServer = _Server__WEBPACK_IMPORTED_MODULE_18__[/* AllServers */ "b"][_SpecialServerIps__WEBPACK_IMPORTED_MODULE_20__[/* SpecialServerIps */ "a"][_SpecialServerIps__WEBPACK_IMPORTED_MODULE_20__[/* SpecialServerNames */ "b"].NiteSecServer]];
     if (nitesecServer == null) {
         console.log("ERROR: Could not find NiteSec Server");
     } else if (!nitesecFac.isBanned && !nitesecFac.isMember && nitesecServer.manuallyHacked &&
@@ -2359,80 +2349,80 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     }
 
     //Chongqing
-    var chongqingFac = _Faction__WEBPACK_IMPORTED_MODULE_13__[/* Factions */ "b"]["Chongqing"];
+    var chongqingFac = _Faction__WEBPACK_IMPORTED_MODULE_14__[/* Factions */ "b"]["Chongqing"];
     if (!chongqingFac.isBanned && !chongqingFac.isMember && !chongqingFac.alreadyInvited &&
-        this.money.gte(20000000) && this.city == _Locations__WEBPACK_IMPORTED_MODULE_15__["Locations"].Chongqing) {
+        this.money.gte(20000000) && this.city == _Locations__WEBPACK_IMPORTED_MODULE_16__["Locations"].Chongqing) {
         invitedFactions.push(chongqingFac);
     }
 
     //Sector-12
-    var sector12Fac = _Faction__WEBPACK_IMPORTED_MODULE_13__[/* Factions */ "b"]["Sector-12"];
+    var sector12Fac = _Faction__WEBPACK_IMPORTED_MODULE_14__[/* Factions */ "b"]["Sector-12"];
     if (!sector12Fac.isBanned && !sector12Fac.isMember && !sector12Fac.alreadyInvited &&
-        this.money.gte(15000000) && this.city == _Locations__WEBPACK_IMPORTED_MODULE_15__["Locations"].Sector12) {
+        this.money.gte(15000000) && this.city == _Locations__WEBPACK_IMPORTED_MODULE_16__["Locations"].Sector12) {
         invitedFactions.push(sector12Fac);
     }
 
     //New Tokyo
-    var newtokyoFac = _Faction__WEBPACK_IMPORTED_MODULE_13__[/* Factions */ "b"]["New Tokyo"];
+    var newtokyoFac = _Faction__WEBPACK_IMPORTED_MODULE_14__[/* Factions */ "b"]["New Tokyo"];
     if (!newtokyoFac.isBanned && !newtokyoFac.isMember && !newtokyoFac.alreadyInvited &&
-        this.money.gte(20000000) && this.city == _Locations__WEBPACK_IMPORTED_MODULE_15__["Locations"].NewTokyo) {
+        this.money.gte(20000000) && this.city == _Locations__WEBPACK_IMPORTED_MODULE_16__["Locations"].NewTokyo) {
         invitedFactions.push(newtokyoFac);
     }
 
     //Aevum
-    var aevumFac = _Faction__WEBPACK_IMPORTED_MODULE_13__[/* Factions */ "b"]["Aevum"];
+    var aevumFac = _Faction__WEBPACK_IMPORTED_MODULE_14__[/* Factions */ "b"]["Aevum"];
     if (!aevumFac.isBanned && !aevumFac.isMember  && !aevumFac.alreadyInvited &&
-        this.money.gte(40000000) && this.city == _Locations__WEBPACK_IMPORTED_MODULE_15__["Locations"].Aevum) {
+        this.money.gte(40000000) && this.city == _Locations__WEBPACK_IMPORTED_MODULE_16__["Locations"].Aevum) {
         invitedFactions.push(aevumFac);
     }
 
     //Ishima
-    var ishimaFac = _Faction__WEBPACK_IMPORTED_MODULE_13__[/* Factions */ "b"]["Ishima"];
+    var ishimaFac = _Faction__WEBPACK_IMPORTED_MODULE_14__[/* Factions */ "b"]["Ishima"];
     if (!ishimaFac.isBanned && !ishimaFac.isMember && !ishimaFac.alreadyInvited &&
-        this.money.gte(30000000) && this.city == _Locations__WEBPACK_IMPORTED_MODULE_15__["Locations"].Ishima) {
+        this.money.gte(30000000) && this.city == _Locations__WEBPACK_IMPORTED_MODULE_16__["Locations"].Ishima) {
         invitedFactions.push(ishimaFac);
     }
 
     //Volhaven
-    var volhavenFac = _Faction__WEBPACK_IMPORTED_MODULE_13__[/* Factions */ "b"]["Volhaven"];
+    var volhavenFac = _Faction__WEBPACK_IMPORTED_MODULE_14__[/* Factions */ "b"]["Volhaven"];
     if (!volhavenFac.isBanned && !volhavenFac.isMember && !volhavenFac.alreadyInvited &&
-        this.money.gte(50000000) && this.city == _Locations__WEBPACK_IMPORTED_MODULE_15__["Locations"].Volhaven) {
+        this.money.gte(50000000) && this.city == _Locations__WEBPACK_IMPORTED_MODULE_16__["Locations"].Volhaven) {
         invitedFactions.push(volhavenFac);
     }
 
     //Speakers for the Dead
-    var speakersforthedeadFac = _Faction__WEBPACK_IMPORTED_MODULE_13__[/* Factions */ "b"]["Speakers for the Dead"];
+    var speakersforthedeadFac = _Faction__WEBPACK_IMPORTED_MODULE_14__[/* Factions */ "b"]["Speakers for the Dead"];
     if (!speakersforthedeadFac.isBanned && !speakersforthedeadFac.isMember && !speakersforthedeadFac.alreadyInvited &&
         this.hacking_skill >= 100 && this.strength >= 300 && this.defense >= 300 &&
         this.dexterity >= 300 && this.agility >= 300 && this.numPeopleKilled >= 30 &&
-        this.karma <= -45 && this.companyName != _Locations__WEBPACK_IMPORTED_MODULE_15__["Locations"].Sector12CIA &&
-        this.companyName != _Locations__WEBPACK_IMPORTED_MODULE_15__["Locations"].Sector12NSA) {
+        this.karma <= -45 && this.companyName != _Locations__WEBPACK_IMPORTED_MODULE_16__["Locations"].Sector12CIA &&
+        this.companyName != _Locations__WEBPACK_IMPORTED_MODULE_16__["Locations"].Sector12NSA) {
         invitedFactions.push(speakersforthedeadFac);
     }
 
     //The Dark Army
-    var thedarkarmyFac = _Faction__WEBPACK_IMPORTED_MODULE_13__[/* Factions */ "b"]["The Dark Army"];
+    var thedarkarmyFac = _Faction__WEBPACK_IMPORTED_MODULE_14__[/* Factions */ "b"]["The Dark Army"];
     if (!thedarkarmyFac.isBanned && !thedarkarmyFac.isMember && !thedarkarmyFac.alreadyInvited &&
         this.hacking_skill >= 300 && this.strength >= 300 && this.defense >= 300 &&
-        this.dexterity >= 300 && this.agility >= 300 && this.city == _Locations__WEBPACK_IMPORTED_MODULE_15__["Locations"].Chongqing &&
-        this.numPeopleKilled >= 5 && this.karma <= -45 && this.companyName != _Locations__WEBPACK_IMPORTED_MODULE_15__["Locations"].Sector12CIA &&
-        this.companyName != _Locations__WEBPACK_IMPORTED_MODULE_15__["Locations"].Sector12NSA) {
+        this.dexterity >= 300 && this.agility >= 300 && this.city == _Locations__WEBPACK_IMPORTED_MODULE_16__["Locations"].Chongqing &&
+        this.numPeopleKilled >= 5 && this.karma <= -45 && this.companyName != _Locations__WEBPACK_IMPORTED_MODULE_16__["Locations"].Sector12CIA &&
+        this.companyName != _Locations__WEBPACK_IMPORTED_MODULE_16__["Locations"].Sector12NSA) {
         invitedFactions.push(thedarkarmyFac);
     }
 
     //The Syndicate
-    var thesyndicateFac = _Faction__WEBPACK_IMPORTED_MODULE_13__[/* Factions */ "b"]["The Syndicate"];
+    var thesyndicateFac = _Faction__WEBPACK_IMPORTED_MODULE_14__[/* Factions */ "b"]["The Syndicate"];
     if (!thesyndicateFac.isBanned && !thesyndicateFac.isMember && !thesyndicateFac.alreadyInvited &&
         this.hacking_skill >= 200 && this.strength >= 200 && this.defense >= 200 &&
         this.dexterity >= 200 && this.agility >= 200 &&
-        (this.city == _Locations__WEBPACK_IMPORTED_MODULE_15__["Locations"].Aevum || this.city == _Locations__WEBPACK_IMPORTED_MODULE_15__["Locations"].Sector12) &&
+        (this.city == _Locations__WEBPACK_IMPORTED_MODULE_16__["Locations"].Aevum || this.city == _Locations__WEBPACK_IMPORTED_MODULE_16__["Locations"].Sector12) &&
         this.money.gte(10000000) && this.karma <= -90 &&
-        this.companyName != _Locations__WEBPACK_IMPORTED_MODULE_15__["Locations"].Sector12CIA && this.companyName != _Locations__WEBPACK_IMPORTED_MODULE_15__["Locations"].Sector12NSA) {
+        this.companyName != _Locations__WEBPACK_IMPORTED_MODULE_16__["Locations"].Sector12CIA && this.companyName != _Locations__WEBPACK_IMPORTED_MODULE_16__["Locations"].Sector12NSA) {
         invitedFactions.push(thesyndicateFac);
     }
 
     //Silhouette
-    var silhouetteFac = _Faction__WEBPACK_IMPORTED_MODULE_13__[/* Factions */ "b"]["Silhouette"];
+    var silhouetteFac = _Faction__WEBPACK_IMPORTED_MODULE_14__[/* Factions */ "b"]["Silhouette"];
     const companyPosition = _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__["CompanyPositions"][this.companyPosition];
     if (!silhouetteFac.isBanned && !silhouetteFac.isMember && !silhouetteFac.alreadyInvited &&
         companyPosition != null &&
@@ -2444,16 +2434,16 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     }
 
     //Tetrads
-    var tetradsFac = _Faction__WEBPACK_IMPORTED_MODULE_13__[/* Factions */ "b"]["Tetrads"];
+    var tetradsFac = _Faction__WEBPACK_IMPORTED_MODULE_14__[/* Factions */ "b"]["Tetrads"];
     if (!tetradsFac.isBanned && !tetradsFac.isMember && !tetradsFac.alreadyInvited &&
-        (this.city == _Locations__WEBPACK_IMPORTED_MODULE_15__["Locations"].Chongqing || this.city == _Locations__WEBPACK_IMPORTED_MODULE_15__["Locations"].NewTokyo ||
-        this.city == _Locations__WEBPACK_IMPORTED_MODULE_15__["Locations"].Ishima) && this.strength >= 75 && this.defense >= 75 &&
+        (this.city == _Locations__WEBPACK_IMPORTED_MODULE_16__["Locations"].Chongqing || this.city == _Locations__WEBPACK_IMPORTED_MODULE_16__["Locations"].NewTokyo ||
+        this.city == _Locations__WEBPACK_IMPORTED_MODULE_16__["Locations"].Ishima) && this.strength >= 75 && this.defense >= 75 &&
         this.dexterity >= 75 && this.agility >= 75 && this.karma <= -18) {
         invitedFactions.push(tetradsFac);
     }
 
     //SlumSnakes
-    var slumsnakesFac = _Faction__WEBPACK_IMPORTED_MODULE_13__[/* Factions */ "b"]["Slum Snakes"];
+    var slumsnakesFac = _Faction__WEBPACK_IMPORTED_MODULE_14__[/* Factions */ "b"]["Slum Snakes"];
     if (!slumsnakesFac.isBanned && !slumsnakesFac.isMember && !slumsnakesFac.alreadyInvited &&
         this.strength >= 30 && this.defense >= 30 && this.dexterity >= 30 &&
         this.agility >= 30 && this.karma <= -9 && this.money.gte(1000000)) {
@@ -2461,7 +2451,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     }
 
     //Netburners
-    var netburnersFac = _Faction__WEBPACK_IMPORTED_MODULE_13__[/* Factions */ "b"]["Netburners"];
+    var netburnersFac = _Faction__WEBPACK_IMPORTED_MODULE_14__[/* Factions */ "b"]["Netburners"];
     var totalHacknetRam = 0;
     var totalHacknetCores = 0;
     var totalHacknetLevels = 0;
@@ -2477,17 +2467,17 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     }
 
     //Tian Di Hui
-    var tiandihuiFac = _Faction__WEBPACK_IMPORTED_MODULE_13__[/* Factions */ "b"]["Tian Di Hui"];
+    var tiandihuiFac = _Faction__WEBPACK_IMPORTED_MODULE_14__[/* Factions */ "b"]["Tian Di Hui"];
     if (!tiandihuiFac.isBanned &&  !tiandihuiFac.isMember && !tiandihuiFac.alreadyInvited &&
         this.money.gte(1000000) && this.hacking_skill >= 50 &&
-        (this.city == _Locations__WEBPACK_IMPORTED_MODULE_15__["Locations"].Chongqing || this.city == _Locations__WEBPACK_IMPORTED_MODULE_15__["Locations"].NewTokyo ||
-         this.city == _Locations__WEBPACK_IMPORTED_MODULE_15__["Locations"].Ishima)) {
+        (this.city == _Locations__WEBPACK_IMPORTED_MODULE_16__["Locations"].Chongqing || this.city == _Locations__WEBPACK_IMPORTED_MODULE_16__["Locations"].NewTokyo ||
+         this.city == _Locations__WEBPACK_IMPORTED_MODULE_16__["Locations"].Ishima)) {
         invitedFactions.push(tiandihuiFac);
     }
 
     //CyberSec
-    var cybersecFac = _Faction__WEBPACK_IMPORTED_MODULE_13__[/* Factions */ "b"]["CyberSec"];
-    var cybersecServer = _Server__WEBPACK_IMPORTED_MODULE_17__[/* AllServers */ "b"][_SpecialServerIps__WEBPACK_IMPORTED_MODULE_19__[/* SpecialServerIps */ "a"][_SpecialServerIps__WEBPACK_IMPORTED_MODULE_19__[/* SpecialServerNames */ "b"].CyberSecServer]];
+    var cybersecFac = _Faction__WEBPACK_IMPORTED_MODULE_14__[/* Factions */ "b"]["CyberSec"];
+    var cybersecServer = _Server__WEBPACK_IMPORTED_MODULE_18__[/* AllServers */ "b"][_SpecialServerIps__WEBPACK_IMPORTED_MODULE_20__[/* SpecialServerIps */ "a"][_SpecialServerIps__WEBPACK_IMPORTED_MODULE_20__[/* SpecialServerNames */ "b"].CyberSecServer]];
     if (cybersecServer == null) {
         console.log("ERROR: Could not find CyberSec Server");
     } else if (!cybersecFac.isBanned && !cybersecFac.isMember && cybersecServer.manuallyHacked &&
@@ -2503,11 +2493,11 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
 //Returns true if Player is in a gang and false otherwise
 PlayerObject.prototype.inGang = function() {
     if (this.gang == null || this.gang == undefined) {return false;}
-    return (this.gang instanceof _Gang__WEBPACK_IMPORTED_MODULE_14__[/* Gang */ "b"]);
+    return (this.gang instanceof _Gang__WEBPACK_IMPORTED_MODULE_15__[/* Gang */ "b"]);
 }
 
 PlayerObject.prototype.startGang = function(factionName, hacking) {
-    this.gang = new _Gang__WEBPACK_IMPORTED_MODULE_14__[/* Gang */ "b"](factionName, hacking);
+    this.gang = new _Gang__WEBPACK_IMPORTED_MODULE_15__[/* Gang */ "b"](factionName, hacking);
 }
 
 /************* BitNodes **************/
@@ -2543,16 +2533,16 @@ PlayerObject.prototype.gainCodingContractReward = function(reward, difficulty=1)
     /* eslint-disable no-case-declarations */
     switch (reward.type) {
         case _CodingContracts__WEBPACK_IMPORTED_MODULE_2__["CodingContractRewardType"].FactionReputation:
-            if (reward.name == null || !(_Faction__WEBPACK_IMPORTED_MODULE_13__[/* Factions */ "b"][reward.name] instanceof _Faction__WEBPACK_IMPORTED_MODULE_13__[/* Faction */ "a"])) {
+            if (reward.name == null || !(_Faction__WEBPACK_IMPORTED_MODULE_14__[/* Factions */ "b"][reward.name] instanceof _Faction__WEBPACK_IMPORTED_MODULE_14__[/* Faction */ "a"])) {
                 // If no/invalid faction was designated, just give rewards to all factions
                 reward.type = _CodingContracts__WEBPACK_IMPORTED_MODULE_2__["CodingContractRewardType"].FactionReputationAll;
                 return this.gainCodingContractReward(reward);
             }
-            var repGain = _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].CodingContractBaseFactionRepGain * difficulty;
-            _Faction__WEBPACK_IMPORTED_MODULE_13__[/* Factions */ "b"][reward.name].playerReputation += repGain;
+            var repGain = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].CodingContractBaseFactionRepGain * difficulty;
+            _Faction__WEBPACK_IMPORTED_MODULE_14__[/* Factions */ "b"][reward.name].playerReputation += repGain;
             return `Gained ${repGain} faction reputation for ${reward.name}`;
         case _CodingContracts__WEBPACK_IMPORTED_MODULE_2__["CodingContractRewardType"].FactionReputationAll:
-            const totalGain = _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].CodingContractBaseFactionRepGain * difficulty;
+            const totalGain = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].CodingContractBaseFactionRepGain * difficulty;
 
             // Ignore Bladeburners and other special factions for this calculation
             const specialFactions = ["Bladeburners"];
@@ -2569,8 +2559,8 @@ PlayerObject.prototype.gainCodingContractReward = function(reward, difficulty=1)
 
             const gainPerFaction = Math.floor(totalGain / factions.length);
             for (const facName of factions) {
-                if (!(_Faction__WEBPACK_IMPORTED_MODULE_13__[/* Factions */ "b"][facName] instanceof _Faction__WEBPACK_IMPORTED_MODULE_13__[/* Faction */ "a"])) { continue; }
-                _Faction__WEBPACK_IMPORTED_MODULE_13__[/* Factions */ "b"][facName].playerReputation += gainPerFaction;
+                if (!(_Faction__WEBPACK_IMPORTED_MODULE_14__[/* Factions */ "b"][facName] instanceof _Faction__WEBPACK_IMPORTED_MODULE_14__[/* Faction */ "a"])) { continue; }
+                _Faction__WEBPACK_IMPORTED_MODULE_14__[/* Factions */ "b"][facName].playerReputation += gainPerFaction;
             }
             return `Gained ${gainPerFaction} reputation for each of the following factions: ${factions.toString()}`;
             break;
@@ -2580,15 +2570,15 @@ PlayerObject.prototype.gainCodingContractReward = function(reward, difficulty=1)
                 reward.type = _CodingContracts__WEBPACK_IMPORTED_MODULE_2__["CodingContractRewardType"].FactionReputationAll;
                 return this.gainCodingContractReward(reward);
             }
-            var repGain = _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].CodingContractBaseCompanyRepGain * difficulty;
+            var repGain = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].CodingContractBaseCompanyRepGain * difficulty;
             _Company_Companies__WEBPACK_IMPORTED_MODULE_4__["Companies"][reward.name].playerReputation += repGain;
             return `Gained ${repGain} company reputation for ${reward.name}`;
             break;
         case _CodingContracts__WEBPACK_IMPORTED_MODULE_2__["CodingContractRewardType"].Money:
         default:
-            var moneyGain = _Constants__WEBPACK_IMPORTED_MODULE_8__["CONSTANTS"].CodingContractBaseMoneyGain * difficulty;
+            var moneyGain = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].CodingContractBaseMoneyGain * difficulty;
             this.gainMoney(moneyGain);
-            return `Gained ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(moneyGain, '$0.000a')}`;
+            return `Gained ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(moneyGain, '$0.000a')}`;
             break;
     }
     /* eslint-enable no-case-declarations */
@@ -2596,37 +2586,37 @@ PlayerObject.prototype.gainCodingContractReward = function(reward, difficulty=1)
 
 /* Functions for saving and loading the Player data */
 function loadPlayer(saveString) {
-    Player  = JSON.parse(saveString, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_26__["Reviver"]);
+    Player  = JSON.parse(saveString, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_27__["Reviver"]);
 
     //Parse Decimal.js objects
-    Player.money = new decimal_js__WEBPACK_IMPORTED_MODULE_21__[/* default */ "a"](Player.money);
-    Player.total_money = new decimal_js__WEBPACK_IMPORTED_MODULE_21__[/* default */ "a"](Player.total_money);
-    Player.lifetime_money = new decimal_js__WEBPACK_IMPORTED_MODULE_21__[/* default */ "a"](Player.lifetime_money);
+    Player.money = new decimal_js__WEBPACK_IMPORTED_MODULE_22__[/* default */ "a"](Player.money);
+    Player.total_money = new decimal_js__WEBPACK_IMPORTED_MODULE_22__[/* default */ "a"](Player.total_money);
+    Player.lifetime_money = new decimal_js__WEBPACK_IMPORTED_MODULE_22__[/* default */ "a"](Player.lifetime_money);
 
-    if (Player.corporation instanceof _CompanyManagement__WEBPACK_IMPORTED_MODULE_9__[/* Corporation */ "a"]) {
-        Player.corporation.funds = new decimal_js__WEBPACK_IMPORTED_MODULE_21__[/* default */ "a"](Player.corporation.funds);
-        Player.corporation.revenue = new decimal_js__WEBPACK_IMPORTED_MODULE_21__[/* default */ "a"](Player.corporation.revenue);
-        Player.corporation.expenses = new decimal_js__WEBPACK_IMPORTED_MODULE_21__[/* default */ "a"](Player.corporation.expenses);
+    if (Player.corporation instanceof _CompanyManagement__WEBPACK_IMPORTED_MODULE_10__[/* Corporation */ "a"]) {
+        Player.corporation.funds = new decimal_js__WEBPACK_IMPORTED_MODULE_22__[/* default */ "a"](Player.corporation.funds);
+        Player.corporation.revenue = new decimal_js__WEBPACK_IMPORTED_MODULE_22__[/* default */ "a"](Player.corporation.revenue);
+        Player.corporation.expenses = new decimal_js__WEBPACK_IMPORTED_MODULE_22__[/* default */ "a"](Player.corporation.expenses);
 
         for (var i = 0; i < Player.corporation.divisions.length; ++i) {
             var ind = Player.corporation.divisions[i];
-            ind.lastCycleRevenue = new decimal_js__WEBPACK_IMPORTED_MODULE_21__[/* default */ "a"](ind.lastCycleRevenue);
-            ind.lastCycleExpenses = new decimal_js__WEBPACK_IMPORTED_MODULE_21__[/* default */ "a"](ind.lastCycleExpenses);
-            ind.thisCycleRevenue = new decimal_js__WEBPACK_IMPORTED_MODULE_21__[/* default */ "a"](ind.thisCycleRevenue);
-            ind.thisCycleExpenses = new decimal_js__WEBPACK_IMPORTED_MODULE_21__[/* default */ "a"](ind.thisCycleExpenses);
+            ind.lastCycleRevenue = new decimal_js__WEBPACK_IMPORTED_MODULE_22__[/* default */ "a"](ind.lastCycleRevenue);
+            ind.lastCycleExpenses = new decimal_js__WEBPACK_IMPORTED_MODULE_22__[/* default */ "a"](ind.lastCycleExpenses);
+            ind.thisCycleRevenue = new decimal_js__WEBPACK_IMPORTED_MODULE_22__[/* default */ "a"](ind.thisCycleRevenue);
+            ind.thisCycleExpenses = new decimal_js__WEBPACK_IMPORTED_MODULE_22__[/* default */ "a"](ind.thisCycleExpenses);
         }
     }
 }
 
 PlayerObject.prototype.toJSON = function() {
-    return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_26__["Generic_toJSON"])("PlayerObject", this);
+    return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_27__["Generic_toJSON"])("PlayerObject", this);
 }
 
 PlayerObject.fromJSON = function(value) {
-    return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_26__["Generic_fromJSON"])(PlayerObject, value.data);
+    return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_27__["Generic_fromJSON"])(PlayerObject, value.data);
 }
 
-_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_26__["Reviver"].constructors.PlayerObject = PlayerObject;
+_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_27__["Reviver"].constructors.PlayerObject = PlayerObject;
 
 let Player = new PlayerObject();
 
@@ -2645,7 +2635,7 @@ let Player = new PlayerObject();
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CONSTANTS = {
-    Version: "0.41.0",
+    Version: "0.41.2",
     //Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
     //the player will have this level assuming no multipliers. Multipliers can cause skills to go above this.
@@ -3103,16 +3093,13 @@ exports.CONSTANTS = {
         "RAM and CPU Core Upgrades on your home computer<br>" +
         "World Stock Exchange account and TIX API Access<br>",
     LatestUpdate: `
-     v0.41.1
-     * Stock Market changes:
-     *** Stocks now have "maximum prices"
-     *** If a stock reaches its "maximum price", it will most likely drop in value (although it might still rise)
-     *** Each stock has its own, unique maximum price
-     *** Maximum price for each stock are randomly generated and change during each 'reset'
-     *** Stock Market cycles are now accumulated/stored, much like it is for Gangs and Bladeburners
-     *** Accumulated/stored cycles cause stock prices to update up to 50% faster (from every 6 seconds to 4 seconds)
-     ****** This means that after coming back from being offline, stock prices will update faster to make up for offline time
+     v0.41.2
+     * IMPORTANT - Netscript Changes:
+     ** rm() now takes an optional parameter that lets you specify on which server to delete the file
 
+     * Gang Changes:
+     ** UI now displays your chance to win a clash with other gangs
+     ** Added getChanceToWinClash() function to the Gang API
      `
 };
 
@@ -3302,7 +3289,7 @@ exports.createElement = createElement;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const isString_1 = __webpack_require__(/*! ./helpers/isString */ 35);
+const isString_1 = __webpack_require__(/*! ./helpers/isString */ 36);
 // Netburner String helper functions
 // Replaces the character at an index with a new character
 function replaceAt(base, index, character) {
@@ -3405,6 +3392,88 @@ exports.generateRandomString = generateRandomString;
 
 /***/ }),
 /* 4 */
+/*!*********************************!*\
+  !*** ./src/ui/numeralFormat.js ***!
+  \*********************************/
+/*! exports provided: numeralWrapper */
+/*! exports used: numeralWrapper */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return numeralWrapper; });
+/* harmony import */ var numeral__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! numeral */ 68);
+/* harmony import */ var numeral__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(numeral__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var numeral_locales_bg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! numeral/locales/bg */ 257);
+/* harmony import */ var numeral_locales_bg__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_bg__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var numeral_locales_cs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! numeral/locales/cs */ 256);
+/* harmony import */ var numeral_locales_cs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_cs__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var numeral_locales_da_dk__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! numeral/locales/da-dk */ 255);
+/* harmony import */ var numeral_locales_da_dk__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_da_dk__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var numeral_locales_de__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! numeral/locales/de */ 254);
+/* harmony import */ var numeral_locales_de__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_de__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var numeral_locales_en_au__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! numeral/locales/en-au */ 253);
+/* harmony import */ var numeral_locales_en_au__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_en_au__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var numeral_locales_en_gb__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! numeral/locales/en-gb */ 252);
+/* harmony import */ var numeral_locales_en_gb__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_en_gb__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var numeral_locales_es__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! numeral/locales/es */ 251);
+/* harmony import */ var numeral_locales_es__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_es__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var numeral_locales_fr__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! numeral/locales/fr */ 250);
+/* harmony import */ var numeral_locales_fr__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_fr__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var numeral_locales_hu__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! numeral/locales/hu */ 249);
+/* harmony import */ var numeral_locales_hu__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_hu__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var numeral_locales_it__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! numeral/locales/it */ 248);
+/* harmony import */ var numeral_locales_it__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_it__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var numeral_locales_lv__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! numeral/locales/lv */ 247);
+/* harmony import */ var numeral_locales_lv__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_lv__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var numeral_locales_no__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! numeral/locales/no */ 246);
+/* harmony import */ var numeral_locales_no__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_no__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var numeral_locales_pl__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! numeral/locales/pl */ 245);
+/* harmony import */ var numeral_locales_pl__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_pl__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var numeral_locales_ru__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! numeral/locales/ru */ 244);
+/* harmony import */ var numeral_locales_ru__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_ru__WEBPACK_IMPORTED_MODULE_14__);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* eslint-disable class-methods-use-this */
+
+class NumeralFormatter {
+    constructor() {
+        this.defaultLocale = 'en';
+    }
+
+    updateLocale(l) {
+        if (numeral__WEBPACK_IMPORTED_MODULE_0___default.a.locale(l) == null) {
+            console.warn(`Invalid locale for numeral: ${l}`);
+
+            numeral__WEBPACK_IMPORTED_MODULE_0___default.a.locale(this.defaultLocale);
+            return false;
+        }
+        return true;
+    }
+
+    format(n, format) {
+        return numeral__WEBPACK_IMPORTED_MODULE_0___default()(n).format(format);
+    }
+}
+
+const numeralWrapper = new NumeralFormatter();
+
+
+/***/ }),
+/* 5 */
 /*!**************************!*\
   !*** ./src/Locations.ts ***!
   \**************************/
@@ -3499,88 +3568,6 @@ exports.Locations = {
 
 
 /***/ }),
-/* 5 */
-/*!*********************************!*\
-  !*** ./src/ui/numeralFormat.js ***!
-  \*********************************/
-/*! exports provided: numeralWrapper */
-/*! exports used: numeralWrapper */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return numeralWrapper; });
-/* harmony import */ var numeral__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! numeral */ 68);
-/* harmony import */ var numeral__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(numeral__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var numeral_locales_bg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! numeral/locales/bg */ 255);
-/* harmony import */ var numeral_locales_bg__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_bg__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var numeral_locales_cs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! numeral/locales/cs */ 254);
-/* harmony import */ var numeral_locales_cs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_cs__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var numeral_locales_da_dk__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! numeral/locales/da-dk */ 253);
-/* harmony import */ var numeral_locales_da_dk__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_da_dk__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var numeral_locales_de__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! numeral/locales/de */ 252);
-/* harmony import */ var numeral_locales_de__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_de__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var numeral_locales_en_au__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! numeral/locales/en-au */ 251);
-/* harmony import */ var numeral_locales_en_au__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_en_au__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var numeral_locales_en_gb__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! numeral/locales/en-gb */ 250);
-/* harmony import */ var numeral_locales_en_gb__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_en_gb__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var numeral_locales_es__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! numeral/locales/es */ 249);
-/* harmony import */ var numeral_locales_es__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_es__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var numeral_locales_fr__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! numeral/locales/fr */ 248);
-/* harmony import */ var numeral_locales_fr__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_fr__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var numeral_locales_hu__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! numeral/locales/hu */ 247);
-/* harmony import */ var numeral_locales_hu__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_hu__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var numeral_locales_it__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! numeral/locales/it */ 246);
-/* harmony import */ var numeral_locales_it__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_it__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var numeral_locales_lv__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! numeral/locales/lv */ 245);
-/* harmony import */ var numeral_locales_lv__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_lv__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var numeral_locales_no__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! numeral/locales/no */ 244);
-/* harmony import */ var numeral_locales_no__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_no__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var numeral_locales_pl__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! numeral/locales/pl */ 243);
-/* harmony import */ var numeral_locales_pl__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_pl__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var numeral_locales_ru__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! numeral/locales/ru */ 242);
-/* harmony import */ var numeral_locales_ru__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_ru__WEBPACK_IMPORTED_MODULE_14__);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* eslint-disable class-methods-use-this */
-
-class NumeralFormatter {
-    constructor() {
-        this.defaultLocale = 'en';
-    }
-
-    updateLocale(l) {
-        if (numeral__WEBPACK_IMPORTED_MODULE_0___default.a.locale(l) == null) {
-            console.warn(`Invalid locale for numeral: ${l}`);
-
-            numeral__WEBPACK_IMPORTED_MODULE_0___default.a.locale(this.defaultLocale);
-            return false;
-        }
-        return true;
-    }
-
-    format(n, format) {
-        return numeral__WEBPACK_IMPORTED_MODULE_0___default()(n).format(format);
-    }
-}
-
-const numeralWrapper = new NumeralFormatter();
-
-
-/***/ }),
 /* 6 */
 /*!***********************************!*\
   !*** ./src/NetscriptEvaluator.js ***!
@@ -3607,14 +3594,14 @@ const numeralWrapper = new NumeralFormatter();
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Server */ 11);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Script */ 29);
-/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/acorn */ 44);
+/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Script */ 28);
+/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/acorn */ 45);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 50);
+/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 51);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/helpers/isValidIPAddress */ 81);
 /* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/helpers/isString */ 35);
+/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/helpers/isString */ 36);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_11__);
 
 
@@ -3630,7 +3617,7 @@ const numeralWrapper = new NumeralFormatter();
 
 
 
-var Promise = __webpack_require__(/*! bluebird */ 226);
+var Promise = __webpack_require__(/*! bluebird */ 228);
 
 Promise.config({
     warnings: false,
@@ -4543,7 +4530,7 @@ function isScriptErrorMessage(msg) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const getElementById_1 = __webpack_require__(/*! ../../utils/uiHelpers/getElementById */ 48);
+const getElementById_1 = __webpack_require__(/*! ../../utils/uiHelpers/getElementById */ 50);
 /**
  * Adds some output to the terminal.
  * @param input Text or HTML to output to the terminal
@@ -4596,7 +4583,7 @@ function scrollTerminalToBottom() {
 __webpack_require__.r(__webpack_exports__);
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Engine", function() { return Engine; });
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_GameOptions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/GameOptions */ 79);
+/* harmony import */ var _utils_GameOptions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/GameOptions */ 78);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 15);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 27);
@@ -4605,86 +4592,88 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 43);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 44);
 /* harmony import */ var _utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/uiHelpers/removeLoadingScreen */ 107);
 /* harmony import */ var _utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./ui/numeralFormat */ 5);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/LogBox */ 74);
+/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/LogBox */ 73);
 /* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./ActiveScriptsUI */ 62);
 /* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Augmentations */ 21);
 /* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./BitNode */ 54);
-/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Bladeburner */ 30);
+/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Bladeburner */ 29);
 /* harmony import */ var _CharacterOverview__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./CharacterOverview */ 116);
 /* harmony import */ var _CinematicText__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./CinematicText */ 91);
 /* harmony import */ var _CodingContractGenerator__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./CodingContractGenerator */ 90);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Company/CompanyPositions */ 25);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Company/Companies */ 17);
+/* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Company/Companies */ 18);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var _CompanyManagement__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./CompanyManagement */ 58);
+/* harmony import */ var _CompanyManagement__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./CompanyManagement */ 56);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./CreateProgram */ 22);
+/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./CreateProgram */ 23);
 /* harmony import */ var _DevMenu__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./DevMenu */ 104);
 /* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./Faction */ 12);
-/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./Fconf */ 42);
+/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./Fconf */ 43);
 /* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./Location */ 84);
-/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./Locations */ 4);
+/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./Locations */ 5);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_27__);
 /* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./HacknetNode */ 61);
 /* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./InteractiveTutorial */ 33);
-/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./Literature */ 76);
-/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./Message */ 36);
-/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./Missions */ 49);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./NetscriptFunctions */ 40);
+/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./Literature */ 75);
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./Message */ 37);
+/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./Missions */ 52);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./NetscriptFunctions */ 41);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./NetscriptWorker */ 24);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./Prestige */ 82);
 /* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./RedPill */ 53);
 /* harmony import */ var _SaveObject__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./SaveObject */ 70);
-/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./Script */ 29);
+/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./Script */ 28);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ./Server */ 11);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ./Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_41___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_41__);
 /* harmony import */ var _ui_setSettingsLabels__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ./ui/setSettingsLabels */ 115);
 /* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ./SourceFile */ 64);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! ./SpecialServerIps */ 28);
-/* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(/*! ./StockMarket */ 23);
-/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(/*! ./Terminal */ 46);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! ./SpecialServerIps */ 30);
+/* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(/*! ./StockMarket */ 22);
+/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(/*! ./Terminal */ 48);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 32);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_47___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_47__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(/*! ./ui/navigationTracking */ 13);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_48__);
-/* harmony import */ var normalize_css__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(/*! normalize.css */ 190);
+/* harmony import */ var normalize_css__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(/*! normalize.css */ 192);
 /* harmony import */ var normalize_css__WEBPACK_IMPORTED_MODULE_49___default = /*#__PURE__*/__webpack_require__.n(normalize_css__WEBPACK_IMPORTED_MODULE_49__);
-/* harmony import */ var _css_styles_scss__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(/*! ../css/styles.scss */ 165);
+/* harmony import */ var _css_styles_scss__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(/*! ../css/styles.scss */ 167);
 /* harmony import */ var _css_styles_scss__WEBPACK_IMPORTED_MODULE_50___default = /*#__PURE__*/__webpack_require__.n(_css_styles_scss__WEBPACK_IMPORTED_MODULE_50__);
-/* harmony import */ var _css_buttons_scss__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! ../css/buttons.scss */ 163);
+/* harmony import */ var _css_buttons_scss__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! ../css/buttons.scss */ 165);
 /* harmony import */ var _css_buttons_scss__WEBPACK_IMPORTED_MODULE_51___default = /*#__PURE__*/__webpack_require__.n(_css_buttons_scss__WEBPACK_IMPORTED_MODULE_51__);
-/* harmony import */ var _css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! ../css/mainmenu.scss */ 161);
+/* harmony import */ var _css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! ../css/mainmenu.scss */ 163);
 /* harmony import */ var _css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_52___default = /*#__PURE__*/__webpack_require__.n(_css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_52__);
-/* harmony import */ var _css_terminal_scss__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(/*! ../css/terminal.scss */ 159);
-/* harmony import */ var _css_terminal_scss__WEBPACK_IMPORTED_MODULE_53___default = /*#__PURE__*/__webpack_require__.n(_css_terminal_scss__WEBPACK_IMPORTED_MODULE_53__);
-/* harmony import */ var _css_menupages_scss__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(/*! ../css/menupages.scss */ 157);
-/* harmony import */ var _css_menupages_scss__WEBPACK_IMPORTED_MODULE_54___default = /*#__PURE__*/__webpack_require__.n(_css_menupages_scss__WEBPACK_IMPORTED_MODULE_54__);
-/* harmony import */ var _css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(/*! ../css/workinprogress.scss */ 155);
-/* harmony import */ var _css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_55___default = /*#__PURE__*/__webpack_require__.n(_css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_55__);
-/* harmony import */ var _css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(/*! ../css/popupboxes.scss */ 153);
-/* harmony import */ var _css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_56___default = /*#__PURE__*/__webpack_require__.n(_css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_56__);
-/* harmony import */ var _css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(/*! ../css/interactivetutorial.scss */ 151);
-/* harmony import */ var _css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_57___default = /*#__PURE__*/__webpack_require__.n(_css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_57__);
-/* harmony import */ var _css_loader_scss__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(/*! ../css/loader.scss */ 149);
-/* harmony import */ var _css_loader_scss__WEBPACK_IMPORTED_MODULE_58___default = /*#__PURE__*/__webpack_require__.n(_css_loader_scss__WEBPACK_IMPORTED_MODULE_58__);
-/* harmony import */ var _css_missions_scss__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(/*! ../css/missions.scss */ 147);
-/* harmony import */ var _css_missions_scss__WEBPACK_IMPORTED_MODULE_59___default = /*#__PURE__*/__webpack_require__.n(_css_missions_scss__WEBPACK_IMPORTED_MODULE_59__);
-/* harmony import */ var _css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(/*! ../css/companymanagement.scss */ 145);
-/* harmony import */ var _css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_60___default = /*#__PURE__*/__webpack_require__.n(_css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_60__);
-/* harmony import */ var _css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(/*! ../css/bladeburner.scss */ 143);
-/* harmony import */ var _css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_61___default = /*#__PURE__*/__webpack_require__.n(_css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_61__);
-/* harmony import */ var _css_gang_scss__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(/*! ../css/gang.scss */ 141);
-/* harmony import */ var _css_gang_scss__WEBPACK_IMPORTED_MODULE_62___default = /*#__PURE__*/__webpack_require__.n(_css_gang_scss__WEBPACK_IMPORTED_MODULE_62__);
+/* harmony import */ var _css_characteroverview_scss__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(/*! ../css/characteroverview.scss */ 161);
+/* harmony import */ var _css_characteroverview_scss__WEBPACK_IMPORTED_MODULE_53___default = /*#__PURE__*/__webpack_require__.n(_css_characteroverview_scss__WEBPACK_IMPORTED_MODULE_53__);
+/* harmony import */ var _css_terminal_scss__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(/*! ../css/terminal.scss */ 159);
+/* harmony import */ var _css_terminal_scss__WEBPACK_IMPORTED_MODULE_54___default = /*#__PURE__*/__webpack_require__.n(_css_terminal_scss__WEBPACK_IMPORTED_MODULE_54__);
+/* harmony import */ var _css_menupages_scss__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(/*! ../css/menupages.scss */ 157);
+/* harmony import */ var _css_menupages_scss__WEBPACK_IMPORTED_MODULE_55___default = /*#__PURE__*/__webpack_require__.n(_css_menupages_scss__WEBPACK_IMPORTED_MODULE_55__);
+/* harmony import */ var _css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(/*! ../css/workinprogress.scss */ 155);
+/* harmony import */ var _css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_56___default = /*#__PURE__*/__webpack_require__.n(_css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_56__);
+/* harmony import */ var _css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(/*! ../css/popupboxes.scss */ 153);
+/* harmony import */ var _css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_57___default = /*#__PURE__*/__webpack_require__.n(_css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_57__);
+/* harmony import */ var _css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(/*! ../css/interactivetutorial.scss */ 151);
+/* harmony import */ var _css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_58___default = /*#__PURE__*/__webpack_require__.n(_css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_58__);
+/* harmony import */ var _css_loader_scss__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(/*! ../css/loader.scss */ 149);
+/* harmony import */ var _css_loader_scss__WEBPACK_IMPORTED_MODULE_59___default = /*#__PURE__*/__webpack_require__.n(_css_loader_scss__WEBPACK_IMPORTED_MODULE_59__);
+/* harmony import */ var _css_missions_scss__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(/*! ../css/missions.scss */ 147);
+/* harmony import */ var _css_missions_scss__WEBPACK_IMPORTED_MODULE_60___default = /*#__PURE__*/__webpack_require__.n(_css_missions_scss__WEBPACK_IMPORTED_MODULE_60__);
+/* harmony import */ var _css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(/*! ../css/companymanagement.scss */ 145);
+/* harmony import */ var _css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_61___default = /*#__PURE__*/__webpack_require__.n(_css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_61__);
+/* harmony import */ var _css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(/*! ../css/bladeburner.scss */ 143);
+/* harmony import */ var _css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_62___default = /*#__PURE__*/__webpack_require__.n(_css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_62__);
+/* harmony import */ var _css_gang_scss__WEBPACK_IMPORTED_MODULE_63__ = __webpack_require__(/*! ../css/gang.scss */ 141);
+/* harmony import */ var _css_gang_scss__WEBPACK_IMPORTED_MODULE_63___default = /*#__PURE__*/__webpack_require__.n(_css_gang_scss__WEBPACK_IMPORTED_MODULE_63__);
 
 
 
@@ -4739,6 +4728,7 @@ __webpack_require__.r(__webpack_exports__);
 
 // These should really be imported with the module that is presenting that UI, but because they very much depend on the
 // cascade order, we'll pull them all in here.
+
 
 
 
@@ -4837,6 +4827,7 @@ const Engine = {
         worldMainMenuButton:            null,
         travelMainMenuButton:           null,
         jobMainMenuButton:              null,
+        stockmarketMainMenuButton:      null,
         createProgramMainMenuButton:    null,
         factionsMainMenuButton:         null,
         augmentationsMainMenuButton:    null,
@@ -5851,6 +5842,7 @@ const Engine = {
         var city                = document.getElementById("city-tab");
         var travel              = document.getElementById("travel-tab");
         var job                 = document.getElementById("job-tab");
+        var stockmarket         = document.getElementById("stock-market-tab");
         var bladeburner         = document.getElementById("bladeburner-tab");
         var corp                = document.getElementById("corporation-tab");
         var gang                = document.getElementById("gang-tab");
@@ -5907,6 +5899,11 @@ const Engine = {
             //Passive faction rep gain offline
             Object(_Faction__WEBPACK_IMPORTED_MODULE_24__[/* processPassiveFactionRepGain */ "i"])(numCyclesOffline);
 
+            // Stock Market offline progress
+            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hasWseAccount) {
+                Object(_StockMarket__WEBPACK_IMPORTED_MODULE_45__[/* processStockPrices */ "m"])(numCyclesOffline);
+            }
+
             //Gang progress for BitNode 2
             if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bitNodeN != null && _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bitNodeN === 2 && _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].inGang()) {
                 _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].gang.process(numCyclesOffline, _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"]);
@@ -5939,12 +5936,14 @@ const Engine = {
             else {factions.style.display = "none";}
             if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].firstAugPurchased) {visibleMenuTabs.push(augmentations);}
             else {augmentations.style.display = "none";}
-            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].firstJobRecvd) {visibleMenuTabs.push(job);}
+            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].companyPosition !== "") {visibleMenuTabs.push(job);}
             else {job.style.display = "none";}
             if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].firstTimeTraveled) {visibleMenuTabs.push(travel);}
             else {travel.style.display = "none";}
             if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].firstProgramAvailable) {visibleMenuTabs.push(createProgram);}
             else {createProgram.style.display = "none";}
+            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hasWseAccount) {visibleMenuTabs.push(stockmarket);}
+            else {stockmarket.style.display = "none";}
             if(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"]) {visibleMenuTabs.push(bladeburner);}
             else {bladeburner.style.display = "none";}
             if(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation instanceof _CompanyManagement__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"]) {visibleMenuTabs.push(corp);}
@@ -5987,6 +5986,7 @@ const Engine = {
             factions.style.display = "none";
             augmentations.style.display = "none";
             job.style.display = "none";
+            stockmarket.style.display = "none";
             travel.style.display = "none";
             createProgram.style.display = "none";
             bladeburner.style.display = "none";
@@ -6203,28 +6203,38 @@ const Engine = {
         }
 
         worldHdr.onclick = function() {
-            var city            = document.getElementById("city-tab");
-            var cityLink        = document.getElementById("city-menu-link");
-            var travel          = document.getElementById("travel-tab");
-            var travelLink      = document.getElementById("travel-menu-link");
-            var job             = document.getElementById("job-tab");
-            var jobLink         = document.getElementById("job-menu-link");
-            var bladeburner     = document.getElementById("bladeburner-tab");
-            var bladeburnerLink = document.getElementById("bladeburner-menu-link");
-            var corporation            = document.getElementById("corporation-tab");
-            var corporationLink        = document.getElementById("corporation-menu-link");
-            var gang            = document.getElementById("gang-tab");
-            var gangLink        = document.getElementById("gang-menu-link");
+            var city                = document.getElementById("city-tab");
+            var cityLink            = document.getElementById("city-menu-link");
+            var travel              = document.getElementById("travel-tab");
+            var travelLink          = document.getElementById("travel-menu-link");
+            var job                 = document.getElementById("job-tab");
+            var jobLink             = document.getElementById("job-menu-link");
+            var stockmarket         = document.getElementById("stock-market-tab");
+            var stockmarketLink     = document.getElementById("stock-market-menu-link");
+            var bladeburner         = document.getElementById("bladeburner-tab");
+            var bladeburnerLink     = document.getElementById("bladeburner-menu-link");
+            var corporation         = document.getElementById("corporation-tab");
+            var corporationLink     = document.getElementById("corporation-menu-link");
+            var gang                = document.getElementById("gang-tab");
+            var gangLink            = document.getElementById("gang-menu-link");
+
+            // Determine whether certain links should show up
+            job.style.display           = _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].companyPosition !== ""             ? "list-item" : "none";
+            stockmarket.style.display   = _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hasWseAccount                      ? "list-item" : "none";
+            bladeburner.style.display   = _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"] ? "list-item" : "none";
+            corporation.style.display   = _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation instanceof _CompanyManagement__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"] ? "list-item" : "none";
+            gang.style.display          = _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].inGang()                           ? "list-item" : "none";
+
             this.classList.toggle("opened");
             if (city.style.maxHeight) {
                 Engine.toggleMainMenuHeader(false,
-                    [city, travel, job, bladeburner, corporation, gang],
-                    [cityLink, travelLink, jobLink, bladeburnerLink, corporationLink, gangLink]
+                    [city, travel, job, stockmarket, bladeburner, corporation, gang],
+                    [cityLink, travelLink, jobLink, stockmarketLink, bladeburnerLink, corporationLink, gangLink]
                 );
             } else {
                 Engine.toggleMainMenuHeader(true,
-                    [city, travel, job, bladeburner, corporation, gang],
-                    [cityLink, travelLink, jobLink, bladeburnerLink, corporationLink, gangLink]
+                    [city, travel, job, stockmarket, bladeburner, corporation, gang],
+                    [cityLink, travelLink, jobLink, stockmarketLink, bladeburnerLink, corporationLink, gangLink]
                 );
             }
         }
@@ -6294,6 +6304,12 @@ const Engine = {
         Engine.Clickables.jobMainMenuButton = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_4__["clearEventListeners"])("job-menu-link");
         Engine.Clickables.jobMainMenuButton.addEventListener("click", function() {
             Engine.loadJobContent();
+            return false;
+        });
+
+        Engine.Clickables.stockmarketMainMenuButton = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_4__["clearEventListeners"])("stock-market-menu-link");
+        Engine.Clickables.stockmarketMainMenuButton.addEventListener("click", function() {
+            Engine.loadStockMarketContent();
             return false;
         });
 
@@ -6645,15 +6661,15 @@ exports.BitNodeMultipliers = {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return prestigeHomeComputer; });
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNodeMultipliers */ 10);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CodingContracts */ 38);
+/* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CodingContracts */ 40);
 /* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_CodingContracts__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Script */ 29);
-/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./CreateProgram */ 22);
+/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Script */ 28);
+/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./CreateProgram */ 23);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./SpecialServerIps */ 28);
-/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./TextFile */ 57);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./SpecialServerIps */ 30);
+/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./TextFile */ 58);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_TextFile__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 15);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__);
@@ -7008,12 +7024,15 @@ function processSingleServerGrowth(server, numCycles) {
 }
 
 function prestigeHomeComputer(homeComp) {
+    const hasBitflume = homeComp.programs.includes(_CreateProgram__WEBPACK_IMPORTED_MODULE_4__[/* Programs */ "a"].BitFlume.name);
+
     homeComp.programs.length = 0; //Remove programs
     homeComp.runningScripts = [];
     homeComp.serversOnNetwork = [];
     homeComp.isConnectedTo = true;
     homeComp.ramUsed = 0;
     homeComp.programs.push(_CreateProgram__WEBPACK_IMPORTED_MODULE_4__[/* Programs */ "a"].NukeProgram.name);
+    if (hasBitflume) { homeComp.programs.push(_CreateProgram__WEBPACK_IMPORTED_MODULE_4__[/* Programs */ "a"].BitFlume.name); }
 
     //Update RAM usage on all scripts
     homeComp.scripts.forEach(function(script) {
@@ -7153,7 +7172,7 @@ Directory.prototype.getPath = function(name) {
 /* harmony import */ var _FactionInfo__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./FactionInfo */ 106);
 /* harmony import */ var _FactionInfo__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_FactionInfo__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Location */ 84);
-/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Missions */ 49);
+/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Missions */ 52);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _SettingEnums__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./SettingEnums */ 67);
 /* harmony import */ var _SettingEnums__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_SettingEnums__WEBPACK_IMPORTED_MODULE_8__);
@@ -7161,7 +7180,7 @@ Directory.prototype.getPath = function(name) {
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ui/navigationTracking */ 13);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./ui/numeralFormat */ 5);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_FactionInvitationBox__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/FactionInvitationBox */ 118);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 27);
@@ -7171,7 +7190,7 @@ Directory.prototype.getPath = function(name) {
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/YesNoBox */ 18);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
 
 
 
@@ -7565,7 +7584,6 @@ function displayFactionContent(factionName) {
                         var hacking = false;
                         if (factionName === "NiteSec" || factionName === "The Black Hand") {hacking = true;}
                         _Player__WEBPACK_IMPORTED_MODULE_7__[/* Player */ "a"].startGang(factionName, hacking);
-                        document.getElementById("gang-tab").style.display = "list-item";
                         document.getElementById("world-menu-header").click();
                         document.getElementById("world-menu-header").click();
                         _engine__WEBPACK_IMPORTED_MODULE_3__["Engine"].loadGangContent();
@@ -8201,7 +8219,7 @@ exports.getRandomInt = getRandomInt;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const getElementById_1 = __webpack_require__(/*! ./getElementById */ 48);
+const getElementById_1 = __webpack_require__(/*! ./getElementById */ 50);
 /**
  * Given an element by its ID, removes all event listeners from that element by cloning and
  * replacing. Then returns the new cloned element.
@@ -8227,49 +8245,6 @@ exports.clearEventListeners = clearEventListeners;
 
 /***/ }),
 /* 17 */
-/*!**********************************!*\
-  !*** ./src/Company/Companies.ts ***!
-  \**********************************/
-/*! no static exports found */
-/*! exports used: Companies, companyExists, initCompanies, loadCompanies */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-// Constructs all CompanyPosition objects using the metadata in data/companypositions.ts
-const CompaniesMetadata_1 = __webpack_require__(/*! ./data/CompaniesMetadata */ 182);
-const Company_1 = __webpack_require__(/*! ./Company */ 69);
-const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 14);
-exports.Companies = {};
-function addCompany(params) {
-    if (exports.Companies[params.name] != null) {
-        console.warn(`Duplicate Company Position being defined: ${params.name}`);
-    }
-    exports.Companies[params.name] = new Company_1.Company(params);
-}
-// Used to initialize new Company objects for the Companies map
-// Called when creating new game or after a prestige/reset
-function initCompanies() {
-    CompaniesMetadata_1.companiesMetadata.forEach((e) => {
-        addCompany(e);
-    });
-}
-exports.initCompanies = initCompanies;
-// Used to load Companies map from a save
-function loadCompanies(saveString) {
-    exports.Companies = JSON.parse(saveString, JSONReviver_1.Reviver);
-}
-exports.loadCompanies = loadCompanies;
-// Utility function to check if a string is valid company name
-function companyExists(name) {
-    return exports.Companies.hasOwnProperty(name);
-}
-exports.companyExists = companyExists;
-
-
-/***/ }),
-/* 18 */
 /*!***************************!*\
   !*** ./utils/YesNoBox.js ***!
   \***************************/
@@ -8379,6 +8354,49 @@ function yesNoTxtInpBoxCreate(txt) {
 
 
 /***/ }),
+/* 18 */
+/*!**********************************!*\
+  !*** ./src/Company/Companies.ts ***!
+  \**********************************/
+/*! no static exports found */
+/*! exports used: Companies, companyExists, initCompanies, loadCompanies */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+// Constructs all CompanyPosition objects using the metadata in data/companypositions.ts
+const CompaniesMetadata_1 = __webpack_require__(/*! ./data/CompaniesMetadata */ 184);
+const Company_1 = __webpack_require__(/*! ./Company */ 69);
+const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 14);
+exports.Companies = {};
+function addCompany(params) {
+    if (exports.Companies[params.name] != null) {
+        console.warn(`Duplicate Company Position being defined: ${params.name}`);
+    }
+    exports.Companies[params.name] = new Company_1.Company(params);
+}
+// Used to initialize new Company objects for the Companies map
+// Called when creating new game or after a prestige/reset
+function initCompanies() {
+    CompaniesMetadata_1.companiesMetadata.forEach((e) => {
+        addCompany(e);
+    });
+}
+exports.initCompanies = initCompanies;
+// Used to load Companies map from a save
+function loadCompanies(saveString) {
+    exports.Companies = JSON.parse(saveString, JSONReviver_1.Reviver);
+}
+exports.loadCompanies = loadCompanies;
+// Utility function to check if a string is valid company name
+function companyExists(name) {
+    return exports.Companies.hasOwnProperty(name);
+}
+exports.companyExists = companyExists;
+
+
+/***/ }),
 /* 19 */
 /*!*************************!*\
   !*** ./src/Settings.ts ***!
@@ -8445,7 +8463,7 @@ exports.Settings = {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const getElementById_1 = __webpack_require__(/*! ./getElementById */ 48);
+const getElementById_1 = __webpack_require__(/*! ./getElementById */ 50);
 const removeElement_1 = __webpack_require__(/*! ./removeElement */ 65);
 /**
  * Given its id, this function removes an element AND its children
@@ -8488,12 +8506,12 @@ exports.removeElementById = removeElementById;
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 8);
 /* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Faction */ 12);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptFunctions */ 40);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptFunctions */ 41);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./NetscriptWorker */ 24);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Prestige */ 82);
 /* harmony import */ var _SaveObject__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./SaveObject */ 70);
-/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Script */ 29);
+/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Script */ 28);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Server */ 11);
 /* harmony import */ var _SettingEnums__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./SettingEnums */ 67);
 /* harmony import */ var _SettingEnums__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_SettingEnums__WEBPACK_IMPORTED_MODULE_11__);
@@ -8501,14 +8519,14 @@ exports.removeElementById = removeElementById;
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./SourceFile */ 64);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 72);
+/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 71);
 /* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
-/* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/helpers/clearObject */ 73);
+/* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/helpers/clearObject */ 72);
 /* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_17__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/helpers/isString */ 35);
+/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/helpers/isString */ 36);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_19__);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 27);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_20__);
@@ -11175,185 +11193,6 @@ function displaySourceFiles(listElement, sourceFiles) {
 
 /***/ }),
 /* 22 */
-/*!******************************!*\
-  !*** ./src/CreateProgram.js ***!
-  \******************************/
-/*! exports provided: Programs, displayCreateProgramContent, getNumAvailableCreateProgram, initCreateProgramButtons */
-/*! exports used: Programs, displayCreateProgramContent, getNumAvailableCreateProgram, initCreateProgramButtons */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Programs; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return displayCreateProgramContent; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return getNumAvailableCreateProgram; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return initCreateProgramButtons; });
-/* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Constants */ 1);
-/* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2__);
-
-
-
-
-// a function that returns a requirement for a program that requires only that
-// the player has at least the given skill level.
-function requireLevel(lvl) {
-    return function() {
-        return _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].hacking_skill >= lvl;
-    }
-}
-
-function Program(name, create) {
-    this.name = name;
-    this.create = create;
-}
-
-Program.prototype.htmlID = function() {
-    const name = this.name.endsWith('.exe') ? this.name.slice(0, -('.exe'.length)) : this.name;
-    return "create-program-"+name;
-}
-
-/* Create programs */
-const Programs = {
-    NukeProgram: new Program("NUKE.exe", {
-        level: 1,
-        tooltip:"This virus is used to gain root access to a machine if enough ports are opened.",
-        req: requireLevel(1),
-        time: _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MillisecondsPerFiveMinutes,
-    }),
-    BruteSSHProgram: new Program("BruteSSH.exe", {
-        level: 50,
-        tooltip:"This program executes a brute force attack that opens SSH ports",
-        req: requireLevel(50),
-        time: _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MillisecondsPerFiveMinutes * 2,
-    }),
-    FTPCrackProgram: new Program("FTPCrack.exe", {
-        level: 100,
-        tooltip:"This program cracks open FTP ports",
-        req: requireLevel(100),
-        time: _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MillisecondsPerHalfHour,
-    }),
-    RelaySMTPProgram: new Program("relaySMTP.exe", {
-        level: 250,
-        tooltip:"This program opens SMTP ports by redirecting data",
-        req: requireLevel(250),
-        time: _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MillisecondsPer2Hours,
-    }),
-    HTTPWormProgram: new Program("HTTPWorm.exe", {
-        level: 500,
-        tooltip:"This virus opens up HTTP ports",
-        req: requireLevel(500),
-        time: _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MillisecondsPer4Hours,
-    }),
-    SQLInjectProgram: new Program("SQLInject.exe", {
-        level: 750,
-        tooltip:"This virus opens SQL ports",
-        req: requireLevel(750),
-        time: _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MillisecondsPer8Hours,
-    }),
-    DeepscanV1: new Program("DeepscanV1.exe", {
-        level: 75,
-        tooltip:"This program allows you to use the scan-analyze command with a depth up to 5",
-        req: requireLevel(75),
-        time: _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MillisecondsPerQuarterHour,
-    }),
-    DeepscanV2: new Program("DeepscanV2.exe", {
-        level: 400,
-        tooltip:"This program allows you to use the scan-analyze command with a depth up to 10",
-        req: requireLevel(400),
-        time: _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MillisecondsPer2Hours,
-    }),
-    ServerProfiler: new Program("ServerProfiler.exe", {
-        level: 75,
-        tooltip:"This program is used to display hacking and Netscript-related information about servers",
-        req: requireLevel(75),
-        time: _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MillisecondsPerHalfHour,
-    }),
-    AutoLink: new Program("AutoLink.exe", {
-        level: 25,
-        tooltip:"This program allows you to directly connect to other servers through the 'scan-analyze' command",
-        req: requireLevel(25),
-        time: _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MillisecondsPerQuarterHour,
-    }),
-    BitFlume: new Program("b1t_flum3.exe", {
-        level: 1,
-        tooltip:"This program creates a portal to the BitNode Nexus (allows you to restart and switch BitNodes)",
-        req: function() {return _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].sourceFiles.length > 0 && _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].hacking_skill >= 1},
-        time: _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MillisecondsPerFiveMinutes / 20,
-    }),
-    // special because you can't create it.
-    Flight: new Program("fl1ght.exe"),
-};
-
-// this has the same key as 'Programs', not program names
-const aLinks = {};
-
-function displayCreateProgramContent() {
-    for(const key in aLinks) {
-        const p = Programs[key]
-        aLinks[key].style.display = "none";
-        if(!_Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].hasProgram(p.name) && p.create.req()){
-            aLinks[key].style.display = "inline-block";
-        }
-    }
-}
-
-//Returns the number of programs that are currently available to be created
-function getNumAvailableCreateProgram() {
-    var count = 0;
-    for(const key in Programs) {
-        if(Programs[key].create === undefined) { // a program we can't create
-            continue
-        }
-        if(_Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].hasProgram(Programs[key].name)) { // can't create it twice
-            continue
-        }
-
-        if(!Programs[key].create.req()) { // if you don't fullfill the creation requirement
-            continue
-        }
-
-        count++;
-    }
-
-    if (_Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].firstProgramAvailable === false && count > 0) {
-        _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].firstProgramAvailable = true;
-        document.getElementById("create-program-tab").style.display = "list-item";
-        document.getElementById("hacking-menu-header").click();
-        document.getElementById("hacking-menu-header").click();
-    }
-    return count;
-}
-
-function initCreateProgramButtons() {
-    var createProgramList = document.getElementById("create-program-list");
-    for(const key in Programs) {
-        if(Programs[key].create === undefined) {
-            continue
-        }
-        const elem = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2__["createElement"])("a", {
-            class: "a-link-button", id: Programs[key].htmlID(), innerText: Programs[key].name,
-            tooltip: Programs[key].create.tooltip,
-        });
-        aLinks[key] = elem;
-        createProgramList.appendChild(elem);
-    }
-
-    for(const key in aLinks) {
-        const p = Programs[key]
-        aLinks[key].addEventListener("click", function() {
-            _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].startCreateProgramWork(p.name, p.create.time, p.create.level);
-            return false;
-        });
-    }
-}
-
-
-
-
-/***/ }),
-/* 23 */
 /*!****************************!*\
   !*** ./src/StockMarket.js ***!
   \****************************/
@@ -11386,9 +11225,9 @@ function initCreateProgramButtons() {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return PositionTypes; });
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Locations */ 4);
+/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Locations */ 5);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NetscriptFunctions */ 40);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NetscriptFunctions */ 41);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./NetscriptWorker */ 24);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Stock__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Stock */ 26);
@@ -11399,8 +11238,8 @@ function initCreateProgramButtons() {
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./ui/navigationTracking */ 13);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ui/numeralFormat */ 5);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 43);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 44);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 15);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 32);
@@ -11411,7 +11250,7 @@ function initCreateProgramButtons() {
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/YesNoBox */ 18);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
 
 
 
@@ -11956,7 +11795,7 @@ function sellShort(stock, shares, workerScript=null) {
 }
 
 function processStockPrices(numCycles=1) {
-    if (isNaN(StockMarket.storedCycles)) { StockMarket.storedCycles = 0; }
+    if (StockMarket.storedCycles == null || isNaN(StockMarket.storedCycles)) { StockMarket.storedCycles = 0; }
     StockMarket.storedCycles += numCycles;
 
     // Stock Prices updated every 6 seconds on average. But if there are stored
@@ -11981,10 +11820,10 @@ function processStockPrices(numCycles=1) {
 
             var chc = 50;
             if (stock.b) {
-                chc = (chc + stock.otlkMag)/100;
+                chc = (chc + stock.otlkMag) / 100;
                 if (isNaN(chc)) {chc = 0.5;}
             } else {
-                chc = (chc - stock.otlkMag)/100;
+                chc = (chc - stock.otlkMag) / 100;
                 if (isNaN(chc)) {chc = 0.5;}
             }
             if (stock.price >= stock.cap) {
@@ -12152,6 +11991,7 @@ function displayStockMarketContent() {
                         "Buy 4S Market Data Access - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(_Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MarketData4SCost, '($0.000a)'),
                         "4S Market Data - Purchased");
     marketDataButton.addEventListener("click", function() {
+        if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.lt(_Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MarketData4SCost)) { return false; }
         _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].has4SData = true;
         _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].loseMoney(_Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MarketData4SCost);
         displayStockMarketContent();
@@ -12191,6 +12031,7 @@ function displayStockMarketContent() {
                         "4S Market Data TIX API - Purchased");
     if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hasTixApiAccess) {
         marketDataTixButton.addEventListener("click", function() {
+            if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.lt(_Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MarketDataTixApi4SCost)) { return false; }
             _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].has4SDataTixApi = true;
             _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].loseMoney(_Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MarketDataTixApi4SCost);
             displayStockMarketContent();
@@ -12302,6 +12143,7 @@ function displayStockMarketContent() {
 
         //Switch to Portfolio Mode Button
         if (modeBtn) {
+            stockMarketPortfolioMode = false;
             modeBtn.innerHTML = "Switch to 'Portfolio' Mode" +
                 "<span class='tooltiptext'>Displays only the stocks for which you have shares or orders</span>";
             modeBtn.addEventListener("click", switchToPortfolioMode);
@@ -12888,6 +12730,185 @@ function updateStockOrderList(stock) {
 
 
 /***/ }),
+/* 23 */
+/*!******************************!*\
+  !*** ./src/CreateProgram.js ***!
+  \******************************/
+/*! exports provided: Programs, displayCreateProgramContent, getNumAvailableCreateProgram, initCreateProgramButtons */
+/*! exports used: Programs, displayCreateProgramContent, getNumAvailableCreateProgram, initCreateProgramButtons */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Programs; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return displayCreateProgramContent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return getNumAvailableCreateProgram; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return initCreateProgramButtons; });
+/* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Constants */ 1);
+/* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ 0);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+
+// a function that returns a requirement for a program that requires only that
+// the player has at least the given skill level.
+function requireLevel(lvl) {
+    return function() {
+        return _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].hacking_skill >= lvl;
+    }
+}
+
+function Program(name, create) {
+    this.name = name;
+    this.create = create;
+}
+
+Program.prototype.htmlID = function() {
+    const name = this.name.endsWith('.exe') ? this.name.slice(0, -('.exe'.length)) : this.name;
+    return "create-program-"+name;
+}
+
+/* Create programs */
+const Programs = {
+    NukeProgram: new Program("NUKE.exe", {
+        level: 1,
+        tooltip:"This virus is used to gain root access to a machine if enough ports are opened.",
+        req: requireLevel(1),
+        time: _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MillisecondsPerFiveMinutes,
+    }),
+    BruteSSHProgram: new Program("BruteSSH.exe", {
+        level: 50,
+        tooltip:"This program executes a brute force attack that opens SSH ports",
+        req: requireLevel(50),
+        time: _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MillisecondsPerFiveMinutes * 2,
+    }),
+    FTPCrackProgram: new Program("FTPCrack.exe", {
+        level: 100,
+        tooltip:"This program cracks open FTP ports",
+        req: requireLevel(100),
+        time: _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MillisecondsPerHalfHour,
+    }),
+    RelaySMTPProgram: new Program("relaySMTP.exe", {
+        level: 250,
+        tooltip:"This program opens SMTP ports by redirecting data",
+        req: requireLevel(250),
+        time: _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MillisecondsPer2Hours,
+    }),
+    HTTPWormProgram: new Program("HTTPWorm.exe", {
+        level: 500,
+        tooltip:"This virus opens up HTTP ports",
+        req: requireLevel(500),
+        time: _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MillisecondsPer4Hours,
+    }),
+    SQLInjectProgram: new Program("SQLInject.exe", {
+        level: 750,
+        tooltip:"This virus opens SQL ports",
+        req: requireLevel(750),
+        time: _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MillisecondsPer8Hours,
+    }),
+    DeepscanV1: new Program("DeepscanV1.exe", {
+        level: 75,
+        tooltip:"This program allows you to use the scan-analyze command with a depth up to 5",
+        req: requireLevel(75),
+        time: _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MillisecondsPerQuarterHour,
+    }),
+    DeepscanV2: new Program("DeepscanV2.exe", {
+        level: 400,
+        tooltip:"This program allows you to use the scan-analyze command with a depth up to 10",
+        req: requireLevel(400),
+        time: _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MillisecondsPer2Hours,
+    }),
+    ServerProfiler: new Program("ServerProfiler.exe", {
+        level: 75,
+        tooltip:"This program is used to display hacking and Netscript-related information about servers",
+        req: requireLevel(75),
+        time: _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MillisecondsPerHalfHour,
+    }),
+    AutoLink: new Program("AutoLink.exe", {
+        level: 25,
+        tooltip:"This program allows you to directly connect to other servers through the 'scan-analyze' command",
+        req: requireLevel(25),
+        time: _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MillisecondsPerQuarterHour,
+    }),
+    BitFlume: new Program("b1t_flum3.exe", {
+        level: 1,
+        tooltip:"This program creates a portal to the BitNode Nexus (allows you to restart and switch BitNodes)",
+        req: function() {return _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].sourceFiles.length > 0 && _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].hacking_skill >= 1},
+        time: _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MillisecondsPerFiveMinutes / 20,
+    }),
+    // special because you can't create it.
+    Flight: new Program("fl1ght.exe"),
+};
+
+// this has the same key as 'Programs', not program names
+const aLinks = {};
+
+function displayCreateProgramContent() {
+    for(const key in aLinks) {
+        const p = Programs[key]
+        aLinks[key].style.display = "none";
+        if(!_Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].hasProgram(p.name) && p.create.req()){
+            aLinks[key].style.display = "inline-block";
+        }
+    }
+}
+
+//Returns the number of programs that are currently available to be created
+function getNumAvailableCreateProgram() {
+    var count = 0;
+    for(const key in Programs) {
+        if(Programs[key].create === undefined) { // a program we can't create
+            continue
+        }
+        if(_Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].hasProgram(Programs[key].name)) { // can't create it twice
+            continue
+        }
+
+        if(!Programs[key].create.req()) { // if you don't fullfill the creation requirement
+            continue
+        }
+
+        count++;
+    }
+
+    if (_Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].firstProgramAvailable === false && count > 0) {
+        _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].firstProgramAvailable = true;
+        document.getElementById("create-program-tab").style.display = "list-item";
+        document.getElementById("hacking-menu-header").click();
+        document.getElementById("hacking-menu-header").click();
+    }
+    return count;
+}
+
+function initCreateProgramButtons() {
+    var createProgramList = document.getElementById("create-program-list");
+    for(const key in Programs) {
+        if(Programs[key].create === undefined) {
+            continue
+        }
+        const elem = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2__["createElement"])("a", {
+            class: "a-link-button", id: Programs[key].htmlID(), innerText: Programs[key].name,
+            tooltip: Programs[key].create.tooltip,
+        });
+        aLinks[key] = elem;
+        createProgramList.appendChild(elem);
+    }
+
+    for(const key in aLinks) {
+        const p = Programs[key]
+        aLinks[key].addEventListener("click", function() {
+            _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].startCreateProgramWork(p.name, p.create.time, p.create.level);
+            return false;
+        });
+    }
+}
+
+
+
+
+/***/ }),
 /* 24 */
 /*!********************************!*\
   !*** ./src/NetscriptWorker.js ***!
@@ -12912,7 +12933,7 @@ function updateStockOrderList(stock) {
 /* harmony import */ var _JSInterpreter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./JSInterpreter */ 117);
 /* harmony import */ var _NetscriptEnvironment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptEnvironment */ 102);
 /* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./NetscriptEvaluator */ 6);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./NetscriptFunctions */ 40);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./NetscriptFunctions */ 41);
 /* harmony import */ var _NetscriptJSEvaluator__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./NetscriptJSEvaluator */ 103);
 /* harmony import */ var _NetscriptPort__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./NetscriptPort */ 66);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Server */ 11);
@@ -12920,14 +12941,14 @@ function updateStockOrderList(stock) {
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var escodegen__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! escodegen */ 97);
 /* harmony import */ var escodegen__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(escodegen__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/acorn */ 44);
+/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/acorn */ 45);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/helpers/compareArrays */ 86);
 /* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 50);
+/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 51);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 77);
+/* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 76);
 /* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_16__);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_17__);
@@ -13575,8 +13596,8 @@ function updateOnlineScriptTimes(numCycles = 1) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 // Constructs all CompanyPosition objects using the metadata in data/companypositions.ts
-const CompanyPositionsMetadata_1 = __webpack_require__(/*! ./data/CompanyPositionsMetadata */ 174);
-const CompanyPosition_1 = __webpack_require__(/*! ./CompanyPosition */ 71);
+const CompanyPositionsMetadata_1 = __webpack_require__(/*! ./data/CompanyPositionsMetadata */ 176);
+const CompanyPosition_1 = __webpack_require__(/*! ./CompanyPosition */ 79);
 exports.CompanyPositions = {};
 function addCompanyPosition(params) {
     if (exports.CompanyPositions[params.name] != null) {
@@ -13650,8 +13671,8 @@ JSONReviver_1.Reviver.constructors.Stock = Stock;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const isString_1 = __webpack_require__(/*! ../helpers/isString */ 35);
-const getElementById_1 = __webpack_require__(/*! ./getElementById */ 48);
+const isString_1 = __webpack_require__(/*! ../helpers/isString */ 36);
+const getElementById_1 = __webpack_require__(/*! ./getElementById */ 50);
 /**
  * Clears out all children from the provided element.
  * If a string is passed in, it will treat it as an ID and search for the element to delete all children from.
@@ -13680,73 +13701,6 @@ exports.removeChildrenFromElement = removeChildrenFromElement;
 
 /***/ }),
 /* 28 */
-/*!*********************************!*\
-  !*** ./src/SpecialServerIps.js ***!
-  \*********************************/
-/*! exports provided: SpecialServerNames, SpecialServerIps, SpecialServerIpsMap, loadSpecialServerIps, prestigeSpecialServerIps, initSpecialServerIps */
-/*! exports used: SpecialServerIps, SpecialServerNames, initSpecialServerIps, loadSpecialServerIps, prestigeSpecialServerIps */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return SpecialServerNames; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SpecialServerIps; });
-/* unused harmony export SpecialServerIpsMap */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return loadSpecialServerIps; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return prestigeSpecialServerIps; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return initSpecialServerIps; });
-/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
-
-
-/* Holds IP of Special Servers */
-let SpecialServerNames = {
-    FulcrumSecretTechnologies:  "Fulcrum Secret Technologies Server",
-    CyberSecServer:             "CyberSec Server",
-    NiteSecServer:              "NiteSec Server",
-    TheBlackHandServer:         "The Black Hand Server",
-    BitRunnersServer:           "BitRunners Server",
-    TheDarkArmyServer:          "The Dark Army Server",
-    DaedalusServer:             "Daedalus Server",
-    WorldDaemon:                "w0r1d_d43m0n",
-}
-function SpecialServerIpsMap() {}
-
-SpecialServerIpsMap.prototype.addIp = function(name, ip) {
-    this[name] = ip;
-}
-
-SpecialServerIpsMap.prototype.toJSON = function() {
-    return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_0__["Generic_toJSON"])("SpecialServerIpsMap", this);
-}
-
-SpecialServerIpsMap.fromJSON = function(value) {
-    return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_0__["Generic_fromJSON"])(SpecialServerIpsMap, value.data);
-}
-
-_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_0__["Reviver"].constructors.SpecialServerIpsMap = SpecialServerIpsMap;
-
-let SpecialServerIps = new SpecialServerIpsMap();
-
-function prestigeSpecialServerIps() {
-    for (var member in SpecialServerIps) {
-        delete SpecialServerIps[member];
-    }
-    SpecialServerIps = null;
-    SpecialServerIps = new SpecialServerIpsMap();
-}
-
-function loadSpecialServerIps(saveString) {
-    SpecialServerIps = JSON.parse(saveString, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_0__["Reviver"]);
-}
-
-function initSpecialServerIps() {
-    SpecialServerIps = new SpecialServerIpsMap();
-}
-
-
-
-
-/***/ }),
-/* 29 */
 /*!***********************!*\
   !*** ./src/Script.js ***!
   \***********************/
@@ -13766,10 +13720,10 @@ function initSpecialServerIps() {
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./engine */ 8);
-/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Fconf */ 42);
+/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Fconf */ 43);
 /* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./InteractiveTutorial */ 33);
 /* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptEvaluator */ 6);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./NetscriptFunctions */ 40);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./NetscriptFunctions */ 41);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./NetscriptWorker */ 24);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Server */ 11);
@@ -13777,13 +13731,13 @@ function initSpecialServerIps() {
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ui/postToTerminal */ 7);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./TextFile */ 57);
+/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./TextFile */ 58);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_TextFile__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/acorn */ 44);
+/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/acorn */ 45);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./ui/navigationTracking */ 13);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./ui/numeralFormat */ 5);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
 /* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/helpers/compareArrays */ 86);
@@ -13792,23 +13746,23 @@ function initSpecialServerIps() {
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__);
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 80);
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 77);
+/* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 76);
 /* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_20__);
-var ace = __webpack_require__(/*! brace */ 240);
-var beautify = __webpack_require__(/*! js-beautify */ 239).js_beautify;
-__webpack_require__(/*! brace/mode/javascript */ 238);
-__webpack_require__(/*! ../netscript */ 175);
-__webpack_require__(/*! brace/theme/chaos */ 237);
-__webpack_require__(/*! brace/theme/chrome */ 236);
-__webpack_require__(/*! brace/theme/monokai */ 235);
-__webpack_require__(/*! brace/theme/solarized_dark */ 234);
-__webpack_require__(/*! brace/theme/solarized_light */ 233);
-__webpack_require__(/*! brace/theme/terminal */ 232);
-__webpack_require__(/*! brace/theme/twilight */ 231);
-__webpack_require__(/*! brace/theme/xcode */ 230);
-__webpack_require__(/*! brace/keybinding/vim */ 229);
-__webpack_require__(/*! brace/keybinding/emacs */ 228);
-__webpack_require__(/*! brace/ext/language_tools */ 227);
+var ace = __webpack_require__(/*! brace */ 242);
+var beautify = __webpack_require__(/*! js-beautify */ 241).js_beautify;
+__webpack_require__(/*! brace/mode/javascript */ 240);
+__webpack_require__(/*! ../netscript */ 177);
+__webpack_require__(/*! brace/theme/chaos */ 239);
+__webpack_require__(/*! brace/theme/chrome */ 238);
+__webpack_require__(/*! brace/theme/monokai */ 237);
+__webpack_require__(/*! brace/theme/solarized_dark */ 236);
+__webpack_require__(/*! brace/theme/solarized_light */ 235);
+__webpack_require__(/*! brace/theme/terminal */ 234);
+__webpack_require__(/*! brace/theme/twilight */ 233);
+__webpack_require__(/*! brace/theme/xcode */ 232);
+__webpack_require__(/*! brace/keybinding/vim */ 231);
+__webpack_require__(/*! brace/keybinding/emacs */ 230);
+__webpack_require__(/*! brace/ext/language_tools */ 229);
 
 // Importing this doesn't work for some reason.
 const walk = __webpack_require__(/*! acorn/dist/walk */ 135);
@@ -14260,7 +14214,7 @@ async function parseOnlyRamCalculate(server, code, workerScript) {
             const nextModule = parseQueue.shift();
 
             let code;
-            if (nextModule.startsWith("https://")) {
+            if (nextModule.startsWith("https://") || nextModule.startsWith("http://")) {
                 try {
                     const module = await eval('import(nextModule)');
                     code = "";
@@ -14892,7 +14846,7 @@ _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__["Reviver"].constructors.AllServ
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 60)))
 
 /***/ }),
-/* 30 */
+/* 29 */
 /*!****************************!*\
   !*** ./src/Bladeburner.js ***!
   \****************************/
@@ -14909,14 +14863,14 @@ _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__["Reviver"].constructors.AllServ
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./engine */ 8);
 /* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Faction */ 12);
-/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Locations */ 4);
+/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Locations */ 5);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./RedPill */ 53);
-/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./ui/numeralFormat */ 5);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 32);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/helpers/createProgressBarText */ 78);
+/* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/helpers/createProgressBarText */ 77);
 /* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 27);
@@ -14924,17 +14878,17 @@ _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__["Reviver"].constructors.AllServ
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
 /* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 59);
 /* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/uiHelpers/appendLineBreaks */ 56);
+/* harmony import */ var _utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/uiHelpers/appendLineBreaks */ 57);
 /* harmony import */ var _utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/helpers/clearObject */ 73);
+/* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/helpers/clearObject */ 72);
 /* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_16__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 37);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 38);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_18__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./ui/navigationTracking */ 13);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 43);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 44);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21__);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 15);
@@ -15019,7 +14973,6 @@ var ContractBaseMoneyGain       = 50e3; //Base Money Gained per contract
 var ActiveActionCssClass        = "bladeburner-active-action";
 
 //Console related stuff
-var consoleHistory = []; //Console command history
 var consoleHistoryIndex = 0;
 var consoleHelpText = {
     helpList:"Use 'help [command]' to get more information about a particular Bladeburner console command.<br><br>" +
@@ -15098,6 +15051,7 @@ $(document).keydown(function(event) {
         //}
 
         if (!(_Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].bladeburner instanceof Bladeburner)) {return;}
+        let consoleHistory = _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].bladeburner.consoleHistory;
 
         //NOTE: Keycodes imported from Terminal.js
         if (event.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_9__["KEY"].ENTER) {
@@ -15657,6 +15611,10 @@ function Bladeburner(params={}) {
     this.automateActionLow = 0;
     this.automateThreshLow = 0; //Stamina Threshold
 
+    //Console command history
+    this.consoleHistory = [];
+    this.consoleLogs = [];
+
     //Initialization
     initBladeburner();
     this.initializeDomElementRefs();
@@ -15806,6 +15764,12 @@ Bladeburner.prototype.process = function() {
             }
             Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_11__["dialogBoxCreate"])(msg);
         }
+        this.resetAction();
+    }
+
+    // If the Player has no Stamina, set action to idle
+    if (this.stamina <= 0) {
+        this.log("Your Bladeburner action was cancelled because your stamina hit 0");
         this.resetAction();
     }
 
@@ -16290,7 +16254,6 @@ Bladeburner.prototype.completeAction = function() {
             _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].gainIntelligenceExp(BaseIntGain);
             _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].gainCharismaExp(charismaExpGain);
             this.changeRank(0.1 * _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__["BitNodeMultipliers"].BladeburnerRank);
-            console.log("DEBUG: Field Analysis effectiveness is " + (eff * this.skillMultipliers.successChanceEstimate));
             this.getCurrentCity().improvePopulationEstimateByPercentage(eff * this.skillMultipliers.successChanceEstimate);
             if (this.logging.general) {
                 this.log("Field analysis completed. Gained 0.1 rank, " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21__["formatNumber"])(hackingExpGain, 1) + " hacking exp, and " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21__["formatNumber"])(charismaExpGain, 1) + " charisma exp");
@@ -16683,8 +16646,15 @@ Bladeburner.prototype.createContent = function() {
 
     document.getElementById("entire-game-container").appendChild(DomElems.bladeburnerDiv);
 
-    this.postToConsole("Bladeburner Console BETA");
-    this.postToConsole("Type 'help' to see console commands");
+    if (this.consoleLogs.length === 0) {
+        this.postToConsole("Bladeburner Console BETA");
+        this.postToConsole("Type 'help' to see console commands");
+    } else {
+        for (let i = 0; i < this.consoleLogs.length; ++i) {
+            this.postToConsole(this.consoleLogs[i], false);
+        }
+    }
+
     DomElems.consoleInput.focus();
 }
 
@@ -17677,12 +17647,22 @@ Bladeburner.prototype.updateSkillsUIElement = function(el, skill) {
 }
 
 //Bladeburner Console Window
-Bladeburner.prototype.postToConsole = function(input) {
+Bladeburner.prototype.postToConsole = function(input, saveToLogs=true) {
+    const MaxConsoleEntries = 100;
+    if (saveToLogs === true) {
+        this.consoleLogs.push(input);
+        if (this.consoleLogs.length > MaxConsoleEntries) {
+            this.consoleLogs.shift();
+        }
+    }
+
     if (input == null || DomElems.consoleDiv == null) {return;}
     $("#bladeubrner-console-input-row").before('<tr><td class="bladeburner-console-line" style="color: var(--my-font-color); white-space:pre-wrap;">' + input + '</td></tr>');
-    if (DomElems.consoleTable.childNodes.length > 200) {
+
+    if (DomElems.consoleTable.childNodes.length > MaxConsoleEntries) {
         DomElems.consoleTable.removeChild(DomElems.consoleTable.firstChild);
     }
+
 	this.updateConsoleScroll();
 }
 
@@ -17698,6 +17678,8 @@ Bladeburner.prototype.clearConsole = function() {
     while (DomElems.consoleTable.childNodes.length > 1) {
         DomElems.consoleTable.removeChild(DomElems.consoleTable.firstChild);
     }
+
+    this.consoleLogs.length = 0;
 }
 
 Bladeburner.prototype.log = function(input) {
@@ -17709,13 +17691,13 @@ Bladeburner.prototype.log = function(input) {
 Bladeburner.prototype.executeConsoleCommands = function(commands) {
     try {
         //Console History
-        if (consoleHistory[consoleHistory.length-1] != commands) {
-            consoleHistory.push(commands);
-            if (consoleHistory.length > 50) {
-                consoleHistory.splice(0, 1);
+        if (this.consoleHistory[this.consoleHistory.length-1] != commands) {
+            this.consoleHistory.push(commands);
+            if (this.consoleHistory.length > 50) {
+                this.consoleHistory.splice(0, 1);
             }
         }
-        consoleHistoryIndex = consoleHistory.length;
+        consoleHistoryIndex = this.consoleHistory.length;
 
         var arrayOfCommands = commands.split(";");
         for (var i = 0; i < arrayOfCommands.length; ++i) {
@@ -18414,7 +18396,7 @@ Bladeburner.prototype.getActionCountRemainingNetscriptFn = function(type, name, 
     switch (actionId.type) {
         case ActionTypes["Contract"]:
         case ActionTypes["Operation"]:
-            return actionObj.count;
+            return Math.floor( actionObj.count );
         case ActionTypes["BlackOp"]:
         case ActionTypes["BlackOperation"]:
             if (this.blackops[name] != null) {
@@ -19106,6 +19088,73 @@ function initBladeburner() {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 60)))
 
 /***/ }),
+/* 30 */
+/*!*********************************!*\
+  !*** ./src/SpecialServerIps.js ***!
+  \*********************************/
+/*! exports provided: SpecialServerNames, SpecialServerIps, SpecialServerIpsMap, loadSpecialServerIps, prestigeSpecialServerIps, initSpecialServerIps */
+/*! exports used: SpecialServerIps, SpecialServerNames, initSpecialServerIps, loadSpecialServerIps, prestigeSpecialServerIps */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return SpecialServerNames; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SpecialServerIps; });
+/* unused harmony export SpecialServerIpsMap */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return loadSpecialServerIps; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return prestigeSpecialServerIps; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return initSpecialServerIps; });
+/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
+
+
+/* Holds IP of Special Servers */
+let SpecialServerNames = {
+    FulcrumSecretTechnologies:  "Fulcrum Secret Technologies Server",
+    CyberSecServer:             "CyberSec Server",
+    NiteSecServer:              "NiteSec Server",
+    TheBlackHandServer:         "The Black Hand Server",
+    BitRunnersServer:           "BitRunners Server",
+    TheDarkArmyServer:          "The Dark Army Server",
+    DaedalusServer:             "Daedalus Server",
+    WorldDaemon:                "w0r1d_d43m0n",
+}
+function SpecialServerIpsMap() {}
+
+SpecialServerIpsMap.prototype.addIp = function(name, ip) {
+    this[name] = ip;
+}
+
+SpecialServerIpsMap.prototype.toJSON = function() {
+    return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_0__["Generic_toJSON"])("SpecialServerIpsMap", this);
+}
+
+SpecialServerIpsMap.fromJSON = function(value) {
+    return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_0__["Generic_fromJSON"])(SpecialServerIpsMap, value.data);
+}
+
+_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_0__["Reviver"].constructors.SpecialServerIpsMap = SpecialServerIpsMap;
+
+let SpecialServerIps = new SpecialServerIpsMap();
+
+function prestigeSpecialServerIps() {
+    for (var member in SpecialServerIps) {
+        delete SpecialServerIps[member];
+    }
+    SpecialServerIps = null;
+    SpecialServerIps = new SpecialServerIpsMap();
+}
+
+function loadSpecialServerIps(saveString) {
+    SpecialServerIps = JSON.parse(saveString, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_0__["Reviver"]);
+}
+
+function initSpecialServerIps() {
+    SpecialServerIps = new SpecialServerIpsMap();
+}
+
+
+
+
+/***/ }),
 /* 31 */,
 /* 32 */
 /*!***********************************!*\
@@ -19173,7 +19222,7 @@ exports.KEY = {
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 37);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 38);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_6__);
@@ -19690,6 +19739,81 @@ function iTutorialSetText(txt) {
 
 /***/ }),
 /* 34 */
+/*!**************************************************!*\
+  !*** ./src/Company/data/CompanyPositionNames.ts ***!
+  \**************************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+// Defs for job titles, stored in arrays and categorized by job "type"
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.SoftwareCompanyPositions = [
+    "Software Engineering Intern",
+    "Junior Software Engineer",
+    "Senior Software Engineer",
+    "Lead Software Developer",
+    "Head of Software",
+    "Head of Engineering",
+    "Vice President of Technology",
+    "Chief Technology Officer"
+];
+exports.ITCompanyPositions = [
+    "IT Intern",
+    "IT Analyst",
+    "IT Manager",
+    "Systems Administrator"
+];
+exports.SecurityEngineerCompanyPositions = [
+    "Security Engineer"
+];
+exports.NetworkEngineerCompanyPositions = [
+    "Network Engineer",
+    "Network Administrator"
+];
+exports.BusinessCompanyPositions = [
+    "Business Intern",
+    "Business Analyst",
+    "Business Manager",
+    "Operations Manager",
+    "Chief Financial Officer",
+    "Chief Executive Officer"
+];
+exports.SecurityCompanyPositions = [
+    "Police Officer",
+    "Police Chief",
+    "Security Guard",
+    "Security Officer",
+    "Security Supervisor",
+    "Head of Security"
+];
+exports.AgentCompanyPositions = [
+    "Field Agent",
+    "Secret Agent",
+    "Special Operative"
+];
+exports.MiscCompanyPositions = [
+    "Waiter",
+    "Employee"
+];
+exports.SoftwareConsultantCompanyPositions = [
+    "Software Consultant",
+    "Senior Software Consultant"
+];
+exports.BusinessConsultantCompanyPositions = [
+    "Business Consultant",
+    "Senior Business Consultant"
+];
+exports.PartTimeCompanyPositions = [
+    "Part-time Waiter",
+    "Part-time Employee"
+];
+
+
+/***/ }),
+/* 35 */
 /*!***********************!*\
   !*** ./src/Crimes.js ***!
   \***********************/
@@ -19983,7 +20107,7 @@ function findCrime(roughName) {
 
 
 /***/ }),
-/* 35 */
+/* 36 */
 /*!***********************************!*\
   !*** ./utils/helpers/isString.ts ***!
   \***********************************/
@@ -20005,7 +20129,7 @@ exports.isString = isString;
 
 
 /***/ }),
-/* 36 */
+/* 37 */
 /*!************************!*\
   !*** ./src/Message.js ***!
   \************************/
@@ -20022,8 +20146,8 @@ exports.isString = isString;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return initMessages; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Message; });
 /* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentations */ 21);
-/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateProgram */ 22);
-/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Missions */ 49);
+/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateProgram */ 23);
+/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Missions */ 52);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./RedPill */ 53);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Server */ 11);
@@ -20225,7 +20349,7 @@ function initMessages()  {
 
 
 /***/ }),
-/* 37 */
+/* 38 */
 /*!****************************************!*\
   !*** ./utils/uiHelpers/createPopup.ts ***!
   \****************************************/
@@ -20237,7 +20361,7 @@ function initMessages()  {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const createElement_1 = __webpack_require__(/*! ./createElement */ 2);
-const getElementById_1 = __webpack_require__(/*! ./getElementById */ 48);
+const getElementById_1 = __webpack_require__(/*! ./getElementById */ 50);
 /**
  * Creates the necessary DOM elements to present an in-game popup to the player.
  * @param id The (hopefully) unique identifier for the popup container.
@@ -20265,7 +20389,39 @@ exports.createPopup = createPopup;
 
 
 /***/ }),
-/* 38 */
+/* 39 */
+/*!******************************!*\
+  !*** ./src/NetscriptGang.js ***!
+  \******************************/
+/*! exports provided: unknownGangApiExceptionMessage, checkGangApiAccess */
+/*! exports used: checkGangApiAccess, unknownGangApiExceptionMessage */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return unknownGangApiExceptionMessage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return checkGangApiAccess; });
+/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Player */ 0);
+/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Gang */ 47);
+/* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NetscriptEvaluator */ 6);
+
+
+
+
+function unknownGangApiExceptionMessage(functionName, err) {
+	return `gang.${functionName}() failed with exception: ` + err;
+}
+
+function checkGangApiAccess(workerScript, functionName) {
+	const accessDenied = `gang.${functionName}() failed because you do not currently have a Gang`;
+	const hasAccess = _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].gang instanceof _Gang__WEBPACK_IMPORTED_MODULE_1__[/* Gang */ "b"];
+	if (!hasAccess) {
+		throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_2__[/* makeRuntimeRejectMsg */ "d"])(workerScript, accessDenied);
+	}
+}
+
+
+/***/ }),
+/* 40 */
 /*!********************************!*\
   !*** ./src/CodingContracts.ts ***!
   \********************************/
@@ -20286,9 +20442,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const JSONReviver_1 = __webpack_require__(/*! ../utils/JSONReviver */ 14);
 const createElement_1 = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
-const createPopup_1 = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 37);
+const createPopup_1 = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 38);
 const removeElementById_1 = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
-const codingcontracttypes_1 = __webpack_require__(/*! ./data/codingcontracttypes */ 180);
+const codingcontracttypes_1 = __webpack_require__(/*! ./data/codingcontracttypes */ 182);
 /* tslint:disable:no-magic-numbers completed-docs max-classes-per-file no-console */
 /* Represents different types of problems that a Coding Contract can have */
 class CodingContractType {
@@ -20439,39 +20595,7 @@ JSONReviver_1.Reviver.constructors.CodingContract = CodingContract;
 
 
 /***/ }),
-/* 39 */
-/*!******************************!*\
-  !*** ./src/NetscriptGang.js ***!
-  \******************************/
-/*! exports provided: unknownGangApiExceptionMessage, checkGangApiAccess */
-/*! exports used: checkGangApiAccess, unknownGangApiExceptionMessage */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return unknownGangApiExceptionMessage; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return checkGangApiAccess; });
-/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Gang */ 52);
-/* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NetscriptEvaluator */ 6);
-
-
-
-
-function unknownGangApiExceptionMessage(functionName, err) {
-	return `gang.${functionName}() failed with exception: ` + err;
-}
-
-function checkGangApiAccess(workerScript, functionName) {
-	const accessDenied = `gang.${functionName}() failed because you do not currently have a Gang`;
-	const hasAccess = _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].gang instanceof _Gang__WEBPACK_IMPORTED_MODULE_1__[/* Gang */ "b"];
-	if (!hasAccess) {
-		throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_2__[/* makeRuntimeRejectMsg */ "d"])(workerScript, accessDenied);
-	}
-}
-
-
-/***/ }),
-/* 40 */
+/* 41 */
 /*!***********************************!*\
   !*** ./src/NetscriptFunctions.js ***!
   \***********************************/
@@ -20493,42 +20617,42 @@ function checkGangApiAccess(workerScript, functionName) {
 /* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Augmentations */ 21);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BitNodeMultipliers */ 10);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _Crimes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Crimes */ 34);
-/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Bladeburner */ 30);
+/* harmony import */ var _Crimes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Crimes */ 35);
+/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Bladeburner */ 29);
 /* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Company/Company */ 69);
 /* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Company_Company__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Company/Companies */ 17);
+/* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Company/Companies */ 18);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Company/CompanyPosition */ 71);
+/* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Company/CompanyPosition */ 79);
 /* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Company/CompanyPositions */ 25);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./CreateProgram */ 22);
-/* harmony import */ var _DarkWeb__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./DarkWeb */ 75);
-/* harmony import */ var _Hacking__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Hacking */ 45);
-/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Gang */ 52);
+/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./CreateProgram */ 23);
+/* harmony import */ var _DarkWeb__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./DarkWeb */ 74);
+/* harmony import */ var _Hacking__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Hacking */ 46);
+/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Gang */ 47);
 /* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Faction */ 12);
 /* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./HacknetNode */ 61);
-/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Locations */ 4);
+/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Locations */ 5);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Message */ 36);
-/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Missions */ 49);
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Message */ 37);
+/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Missions */ 52);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Script */ 29);
+/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Script */ 28);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./Server */ 11);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_22__);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./SpecialServerIps */ 28);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./SpecialServerIps */ 30);
 /* harmony import */ var _Stock__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./Stock */ 26);
 /* harmony import */ var _Stock__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_Stock__WEBPACK_IMPORTED_MODULE_24__);
-/* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./StockMarket */ 23);
+/* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./StockMarket */ 22);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./ui/postToTerminal */ 7);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_26__);
-/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./TextFile */ 57);
+/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./TextFile */ 58);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_TextFile__WEBPACK_IMPORTED_MODULE_27__);
-/* harmony import */ var _NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./NetscriptBladeburner */ 47);
+/* harmony import */ var _NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./NetscriptBladeburner */ 49);
 /* harmony import */ var _NetscriptGang__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./NetscriptGang */ 39);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./NetscriptWorker */ 24);
 /* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./NetscriptEvaluator */ 6);
@@ -20539,14 +20663,14 @@ function checkGangApiAccess(workerScript, functionName) {
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ../utils/helpers/isPowerOfTwo */ 123);
 /* harmony import */ var _utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_36___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_36__);
-/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 50);
+/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 51);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_37___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_37__);
 /* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ../utils/IPAddress */ 55);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_39___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_39__);
-/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ../utils/helpers/isString */ 35);
+/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ../utils/helpers/isString */ 36);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_40___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_40__);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ../utils/YesNoBox */ 18);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
 var sprintf = __webpack_require__(/*! sprintf-js */ 134).sprintf,
     vsprintf = __webpack_require__(/*! sprintf-js */ 134).vsprintf
 
@@ -20636,11 +20760,14 @@ var possibleLogs = {
     getServerGrowth: true,
     getServerNumPortsRequired: true,
     getServerRam: true,
+
     // TIX API
     buyStock: true,
     sellStock: true,
     shortStock: true,
     sellShort: true,
+    purchase4SMarketData: true,
+    purchase4SMarketDataTixApi: true,
 
     // Singularity Functions
     purchaseServer: true,
@@ -21075,8 +21202,30 @@ function NetscriptFunctions(workerScript) {
             }
             return workerScript.disableLogs[fn] ? false : true;
         },
-        getScriptLogs : function() {
+        getScriptLogs : function(fn, ip) {
             if (workerScript.checkingRam) {return 0;}
+
+            if (fn != null && typeof fn === 'string') {
+                // Get Logs of another script
+                if (ip == null) { ip = workerScript.serverIp; }
+                const server = Object(_Server__WEBPACK_IMPORTED_MODULE_21__[/* getServer */ "e"])(ip);
+                if (server == null) {
+                    workerScript.log(`getScriptLogs() failed. Invalid IP or hostname passed in: ${ip}`);
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_31__[/* makeRuntimeRejectMsg */ "d"])(workerScript, `getScriptLogs() failed. Invalid IP or hostname passed in: ${ip}`);
+                }
+
+                let argsForTarget = [];
+                for (let i = 2; i < arguments.length; ++i) {
+                    argsForTarget.push(arguments[i]);
+                }
+                const runningScriptObj = Object(_Script__WEBPACK_IMPORTED_MODULE_20__[/* findRunningScript */ "d"])(fn, argsForTarget, server);
+                if (runningScriptObj == null) {
+                    workerScript.scriptRef.log(`getScriptLogs() failed. No such script ${fn} on ${server.hostname} with args: ${Object(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_37__["arrayToString"])(argsForTarget)}`);
+                    return "";
+                }
+                return runningScriptObj.logs.slice();
+            }
+
             return workerScript.scriptRef.logs.slice();
         },
         nuke : function(ip){
@@ -21330,7 +21479,7 @@ function NetscriptFunctions(workerScript) {
             }
             NetscriptFunctions(workerScript).exit();
         },
-        kill : function(filename,ip) {
+        kill : function(filename, ip) {
             if (workerScript.checkingRam) {
                 return updateStaticRam("kill", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptKillRamCost);
             }
@@ -22226,6 +22375,68 @@ function NetscriptFunctions(workerScript) {
             stock.b ? forecast += stock.otlkMag : forecast -= stock.otlkMag;
             return forecast / 100; //Convert from percentage to decimal
         },
+        purchase4SMarketData : function() {
+            if (workerScript.checkingRam) {
+                return updateStaticRam("purchase4SMarketData", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBuySellStockRamCost);
+            }
+            updateDynamicRam("purchase4SMarketData", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBuySellStockRamCost);
+
+            if (!_Player__WEBPACK_IMPORTED_MODULE_19__[/* Player */ "a"].hasTixApiAccess) {
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_31__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have TIX API Access! Cannot use purchase4SMarketData()");
+            }
+
+            if (_Player__WEBPACK_IMPORTED_MODULE_19__[/* Player */ "a"].has4SData) {
+                if (workerScript.shouldLog("purchase4SMarketData")) {
+                    workerScript.log("Already purchased 4S Market Data");
+                }
+                return true;
+            }
+
+            if (_Player__WEBPACK_IMPORTED_MODULE_19__[/* Player */ "a"].money.lt(_Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].MarketData4SCost)) {
+                if (workerScript.shouldLog("purchase4SMarketData")) {
+                    workerScript.log("Failed to purchase 4S Market Data - Not enough money");
+                }
+                return false;
+            }
+
+            _Player__WEBPACK_IMPORTED_MODULE_19__[/* Player */ "a"].has4SData = true;
+            _Player__WEBPACK_IMPORTED_MODULE_19__[/* Player */ "a"].loseMoney(_Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].MarketData4SCost);
+            if (workerScript.shouldLog("purchase4SMarketData")) {
+                workerScript.log("Purchased 4S Market Data");
+            }
+            return true;
+        },
+        purchase4SMarketDataTixApi : function() {
+            if (workerScript.checkingRam) {
+                return updateStaticRam("purchase4SMarketDataTixApi", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBuySellStockRamCost);
+            }
+            updateDynamicRam("purchase4SMarketDataTixApi", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBuySellStockRamCost);
+
+            if (!_Player__WEBPACK_IMPORTED_MODULE_19__[/* Player */ "a"].hasTixApiAccess) {
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_31__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have TIX API Access! Cannot use purchase4SMarketDataTixApi()");
+            }
+
+            if (_Player__WEBPACK_IMPORTED_MODULE_19__[/* Player */ "a"].has4SDataTixApi) {
+                if (workerScript.shouldLog("purchase4SMarketDataTixApi")) {
+                    workerScript.log("Already purchased 4S Market Data TIX API");
+                }
+                return true;
+            }
+
+            if (_Player__WEBPACK_IMPORTED_MODULE_19__[/* Player */ "a"].money.lt(_Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].MarketDataTixApi4SCost)) {
+                if (workerScript.shouldLog("purchase4SMarketDataTixApi")) {
+                    workerScript.log("Failed to purchase 4S Market Data TIX API - Not enough money");
+                }
+                return false;
+            }
+
+            _Player__WEBPACK_IMPORTED_MODULE_19__[/* Player */ "a"].has4SDataTixApi = true;
+            _Player__WEBPACK_IMPORTED_MODULE_19__[/* Player */ "a"].loseMoney(_Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].MarketDataTixApi4SCost);
+            if (workerScript.shouldLog("purchase4SMarketDataTixApi")) {
+                workerScript.log("Purchased 4S Market Data TIX API");
+            }
+            return true;
+        },
         getPurchasedServerLimit : function() {
             if (workerScript.checkingRam) {
                 return updateStaticRam("getPurchasedServerLimit", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptGetPurchasedServerLimit);
@@ -22253,7 +22464,7 @@ function NetscriptFunctions(workerScript) {
                 cost = getPurchaseServerRamCostGuard(ram);
             } catch (e) {
                 workerScript.scriptRef.log("ERROR: 'getPurchasedServerCost()' " + e.message);
-                return "";
+                return Infinity;
             }
 
             return cost;
@@ -22581,14 +22792,18 @@ function NetscriptFunctions(workerScript) {
             }
             return port;
         },
-        rm : function(fn) {
+        rm : function(fn, ip) {
             if (workerScript.checkingRam) {
                 return updateStaticRam("rm", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptReadWriteRamCost);
             }
             updateDynamicRam("rm", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptReadWriteRamCost);
-            var s = Object(_Server__WEBPACK_IMPORTED_MODULE_21__[/* getServer */ "e"])(workerScript.serverIp);
+
+            if (ip == null || ip === "") {
+                ip = workerScript.serverIp;
+            }
+            var s = Object(_Server__WEBPACK_IMPORTED_MODULE_21__[/* getServer */ "e"])(ip);
             if (s == null) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_31__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Error getting Server for this script in clear(). This is a bug please contact game dev");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_31__[/* makeRuntimeRejectMsg */ "d"])(workerScript, `Invalid server specified for rm(): ${ip}`);
             }
 
             if (fn.includes(".exe")) {
@@ -24312,7 +24527,7 @@ function NetscriptFunctions(workerScript) {
                 _NetscriptGang__WEBPACK_IMPORTED_MODULE_29__[/* checkGangApiAccess */ "a"](workerScript, "purchaseEquipment");
 
                 try {
-                    for (const member in _Player__WEBPACK_IMPORTED_MODULE_19__[/* Player */ "a"].gang.members) {
+                    for (const member of _Player__WEBPACK_IMPORTED_MODULE_19__[/* Player */ "a"].gang.members) {
                         if (member.name === memberName) {
                             const res = member.buyUpgrade(equipName, _Player__WEBPACK_IMPORTED_MODULE_19__[/* Player */ "a"], _Player__WEBPACK_IMPORTED_MODULE_19__[/* Player */ "a"].gang);
                             if (workerScript.shouldLog("purchaseEquipment")) {
@@ -24341,13 +24556,13 @@ function NetscriptFunctions(workerScript) {
                 _NetscriptGang__WEBPACK_IMPORTED_MODULE_29__[/* checkGangApiAccess */ "a"](workerScript, "ascendMember");
 
                 try {
-                    for (const member in _Player__WEBPACK_IMPORTED_MODULE_19__[/* Player */ "a"].gang.members) {
+                    for (const member of _Player__WEBPACK_IMPORTED_MODULE_19__[/* Player */ "a"].gang.members) {
                         if (member.name === name) {
                             return _Player__WEBPACK_IMPORTED_MODULE_19__[/* Player */ "a"].gang.ascendMember(member, workerScript);
                         }
                     }
 
-                    workerScript.log(`Invalid argument passed to gang.ascendMember(). No gang member could be found with name ${memberName}`);
+                    workerScript.log(`Invalid argument passed to gang.ascendMember(). No gang member could be found with name ${name}`);
                     return false;
                 } catch(e) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_31__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_29__[/* unknownGangApiExceptionMessage */ "b"]("ascendMember", e));
@@ -24374,6 +24589,27 @@ function NetscriptFunctions(workerScript) {
                     }
                 } catch(e) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_31__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_29__[/* unknownGangApiExceptionMessage */ "b"]("setTerritoryWarfare", e));
+                }
+            },
+            getChanceToWinClash : function(otherGang) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getChanceToWinClash", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptGangApiBaseRamCost);
+                }
+                updateDynamicRam("getChanceToWinClash", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptGangApiBaseRamCost);
+                _NetscriptGang__WEBPACK_IMPORTED_MODULE_29__[/* checkGangApiAccess */ "a"](workerScript, "getChanceToWinClash");
+
+                try {
+                    if (_Gang__WEBPACK_IMPORTED_MODULE_13__[/* AllGangs */ "a"][otherGang] == null) {
+                        workerScript.log(`Invalid gang specified in gang.getChanceToWinClash() : ${otherGang}`);
+                        return 0;
+                    }
+
+                    const playerPower = _Gang__WEBPACK_IMPORTED_MODULE_13__[/* AllGangs */ "a"][_Player__WEBPACK_IMPORTED_MODULE_19__[/* Player */ "a"].gang.facName].power;
+                    const otherPower = _Gang__WEBPACK_IMPORTED_MODULE_13__[/* AllGangs */ "a"][otherGang].power;
+
+                    return playerPower / (otherPower + playerPower);
+                } catch(e) {
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_31__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_29__[/* unknownGangApiExceptionMessage */ "b"]("getChanceToWinClash", e));
                 }
             },
             getBonusTime : function() {
@@ -25002,7 +25238,7 @@ function NetscriptFunctions(workerScript) {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 60)))
 
 /***/ }),
-/* 41 */
+/* 42 */
 /*!**********************!*\
   !*** ./src/Alias.js ***!
   \**********************/
@@ -25137,7 +25373,7 @@ function substituteAliases(origCommand) {
 
 
 /***/ }),
-/* 42 */
+/* 43 */
 /*!**********************!*\
   !*** ./src/Fconf.js ***!
   \**********************/
@@ -25150,7 +25386,7 @@ function substituteAliases(origCommand) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return createFconf; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return parseFconfSettings; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return loadFconf; });
-/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/acorn */ 44);
+/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/acorn */ 45);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 
@@ -25407,7 +25643,7 @@ function setMainMenuStyle() {
 
 
 /***/ }),
-/* 43 */
+/* 44 */
 /*!*****************************************!*\
   !*** ./utils/helpers/exceptionAlert.js ***!
   \*****************************************/
@@ -25434,7 +25670,7 @@ function exceptionAlert(e) {
 
 
 /***/ }),
-/* 44 */
+/* 45 */
 /*!************************!*\
   !*** ./utils/acorn.js ***!
   \************************/
@@ -29074,7 +29310,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 })));
 
 /***/ }),
-/* 45 */
+/* 46 */
 /*!************************!*\
   !*** ./src/Hacking.js ***!
   \************************/
@@ -29188,7 +29424,1933 @@ function calculateWeakenTime(server, hack, int) {
 
 
 /***/ }),
-/* 46 */
+/* 47 */
+/*!*********************!*\
+  !*** ./src/Gang.js ***!
+  \*********************/
+/*! exports provided: AllGangs, resetGangs, loadAllGangs, Gang */
+/*! exports used: AllGangs, Gang, loadAllGangs, resetGangs */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AllGangs; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return resetGangs; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return loadAllGangs; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Gang; });
+/* harmony import */ var _data_gangmembertasks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./data/gangmembertasks */ 125);
+/* harmony import */ var _data_gangmembertasks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_data_gangmembertasks__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _data_gangmemberupgrades__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data/gangmemberupgrades */ 124);
+/* harmony import */ var _data_gangmemberupgrades__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_data_gangmemberupgrades__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 8);
+/* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Faction */ 12);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
+/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
+/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 32);
+/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 71);
+/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 38);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./ui/navigationTracking */ 13);
+/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 44);
+/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 15);
+/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 27);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 65);
+/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_16__);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
+/*
+Also add police clashes
+balance point to keep them from running out of control
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Constants
+const GangRespectToReputationRatio = 5; // Respect is divided by this to get rep gain
+const MaximumGangMembers = 30;
+const GangRecruitCostMultiplier = 2;
+const CyclesPerTerritoryAndPowerUpdate = 100;
+const AscensionMultiplierRatio = 15 / 100; // Portion of upgrade multiplier that is kept after ascending
+
+// Switch between territory and management screen with 1 and 2
+$(document).keydown(function(event) {
+    if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_11__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_11__["Page"].Gang) && event.altKey) {
+        if (UIElems.gangMemberFilter != null && UIElems.gangMemberFilter === document.activeElement) {return;}
+        if (event.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_7__["KEY"]["1"]) {
+            if(UIElems.gangTerritorySubpage.style.display === "block") {
+                UIElems.managementButton.click();
+            }
+        } else if (event.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_7__["KEY"]["2"]) {
+            if (UIElems.gangManagementSubpage.style.display === "block") {
+                UIElems.territoryButton.click();
+            }
+        }
+    }
+});
+
+//Delete upgrade box when clicking outside
+$(document).mousedown(function(event) {
+    var boxId = "gang-member-upgrade-popup-box";
+    var contentId = "gang-member-upgrade-popup-box-content";
+    if (UIElems.gangMemberUpgradeBoxOpened) {
+        if ( $(event.target).closest("#" + contentId).get(0) == null ) {
+            //Delete the box
+            Object(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_16__["removeElement"])(UIElems.gangMemberUpgradeBox);
+            UIElems.gangMemberUpgradeBox = null;
+            UIElems.gangMemberUpgradeBoxContent = null;
+            UIElems.gangMemberUpgradeBoxOpened = false;
+            UIElems.gangMemberUpgradeBoxElements = null;
+        }
+    }
+});
+
+let GangNames = ["Slum Snakes", "Tetrads", "The Syndicate", "The Dark Army", "Speakers for the Dead",
+             "NiteSec", "The Black Hand"];
+let AllGangs = {
+    "Slum Snakes" : {
+        power: 1,
+        territory: 1/7,
+    },
+    "Tetrads" : {
+        power: 1,
+        territory: 1/7,
+    },
+    "The Syndicate" : {
+        power: 1,
+        territory: 1/7,
+    },
+    "The Dark Army" : {
+        power: 1,
+        territory: 1/7,
+    },
+    "Speakers for the Dead" : {
+        power: 1,
+        territory: 1/7,
+    },
+    "NiteSec" : {
+        power: 1,
+        territory: 1/7,
+    },
+    "The Black Hand" : {
+        power: 1,
+        territory: 1/7,
+    },
+}
+
+function resetGangs() {
+    AllGangs = {
+        "Slum Snakes" : {
+            power: 1,
+            territory: 1/7,
+        },
+        "Tetrads" : {
+            power: 1,
+            territory: 1/7,
+        },
+        "The Syndicate" : {
+            power: 1,
+            territory: 1/7,
+        },
+        "The Dark Army" : {
+            power: 1,
+            territory: 1/7,
+        },
+        "Speakers for the Dead" : {
+            power: 1,
+            territory: 1/7,
+        },
+        "NiteSec" : {
+            power: 1,
+            territory: 1/7,
+        },
+        "The Black Hand" : {
+            power: 1,
+            territory: 1/7,
+        },
+    }
+}
+
+function loadAllGangs(saveString) {
+    AllGangs = JSON.parse(saveString, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_6__["Reviver"]);
+}
+
+/**
+ * @param facName - Name of corresponding faction
+ * @param hacking - Boolean indicating whether or not its a hacking gang
+ */
+function Gang(facName, hacking=false) {
+    this.facName    = facName;
+    this.members    = [];  //Array of GangMembers
+    this.wanted     = 1;
+    this.respect    = 1;
+
+    this.isHackingGang = hacking;
+
+    this.respectGainRate = 0;
+    this.wantedGainRate = 0;
+    this.moneyGainRate = 0;
+
+    // When processing gains, this stores the number of cycles until some
+    // limit is reached, and then calculates and applies the gains only at that limit
+    this.storedCycles   = 0;
+
+    // Separate variable to keep track of cycles for Territry + Power gang, which
+    // happens on a slower "clock" than normal processing
+    this.storedTerritoryAndPowerCycles = 0;
+
+    this.territoryClashChance = 0;
+    this.territoryWarfareEngaged = false;
+
+    this.notifyMemberDeath = true;
+}
+
+Gang.prototype.getPower = function() {
+    return AllGangs[this.facName].power;
+}
+
+Gang.prototype.getTerritory = function() {
+    return AllGangs[this.facName].territory;
+}
+
+Gang.prototype.process = function(numCycles=1, player) {
+    const CyclesPerSecond = 1000 / _engine__WEBPACK_IMPORTED_MODULE_2__["Engine"]._idleSpeed;
+
+    if (isNaN(numCycles)) {
+        console.error(`NaN passed into Gang.process(): ${numCycles}`);
+    }
+    this.storedCycles += numCycles;
+
+    // Only process if there are at least 2 seconds, and at most 5 seconds
+    if (this.storedCycles < 2 * CyclesPerSecond) { return; }
+    const cycles = Math.min(this.storedCycles, 5 * CyclesPerSecond);
+
+    try {
+        this.processGains(cycles, player);
+        this.processExperienceGains(cycles);
+        this.processTerritoryAndPowerGains(cycles);
+        this.storedCycles -= cycles;
+    } catch(e) {
+        Object(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_13__[/* exceptionAlert */ "a"])(`Exception caught when processing Gang: ${e}`);
+    }
+}
+
+Gang.prototype.processGains = function(numCycles=1, player) {
+    //Get gains per cycle
+    var moneyGains = 0, respectGains = 0, wantedLevelGains = 0;
+    for (var i = 0; i < this.members.length; ++i) {
+        respectGains += (this.members[i].calculateRespectGain(this));
+        wantedLevelGains += (this.members[i].calculateWantedLevelGain(this));
+        moneyGains += (this.members[i].calculateMoneyGain(this));
+    }
+    this.respectGainRate = respectGains;
+    this.wantedGainRate = wantedLevelGains;
+    this.moneyGainRate = moneyGains;
+
+    if (typeof respectGains === "number") {
+        const gain = respectGains * numCycles;
+        this.respect += gain;
+        // Faction reputation gains is respect gain divided by some constant
+        const fac = _Faction__WEBPACK_IMPORTED_MODULE_3__[/* Factions */ "b"][this.facName];
+        if (!(fac instanceof _Faction__WEBPACK_IMPORTED_MODULE_3__[/* Faction */ "a"])) {
+            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_5__["dialogBoxCreate"])("ERROR: Could not get Faction associates with your gang. This is a bug, please report to game dev");
+        } else {
+            var favorMult = 1 + (fac.favor / 100);
+            fac.playerReputation += ((player.faction_rep_mult * gain * favorMult) / GangRespectToReputationRatio);
+        }
+
+        // Keep track of respect gained per member
+        for (let i = 0; i < this.members.length; ++i) {
+            this.members[i].recordEarnedRespect(numCycles, this);
+        }
+    } else {
+        console.warn("respectGains calculated to be NaN");
+    }
+    if (typeof wantedLevelGains === "number") {
+        if (this.wanted === 1 && wantedLevelGains < 0) {
+            // At minimum wanted, do nothing
+        } else {
+            const oldWanted = this.wanted;
+            let newWanted = oldWanted + (wantedLevelGains * numCycles);
+
+            // Prevent overflow
+            if (wantedLevelGains <= 0 && newWanted > oldWanted) {
+                newWanted = 1;
+            }
+
+            this.wanted = newWanted;
+            if (this.wanted < 1) {this.wanted = 1;}
+        }
+    } else {
+        console.warn("ERROR: wantedLevelGains is NaN");
+    }
+    if (typeof moneyGains === "number") {
+        player.gainMoney(moneyGains * numCycles);
+    } else {
+        console.warn("ERROR: respectGains is NaN");
+    }
+}
+
+Gang.prototype.processTerritoryAndPowerGains = function(numCycles=1) {
+    this.storedTerritoryAndPowerCycles += numCycles;
+    if (this.storedTerritoryAndPowerCycles < CyclesPerTerritoryAndPowerUpdate) { return; }
+    this.storedTerritoryAndPowerCycles -= CyclesPerTerritoryAndPowerUpdate;
+
+    // Process power first
+    var gangName = this.facName;
+    for (const name in AllGangs) {
+        if (AllGangs.hasOwnProperty(name)) {
+            if (name == gangName) {
+                AllGangs[name].power += this.calculatePower();
+            } else {
+                // All NPC gangs get random power gains
+                const gainRoll = Math.random();
+                if (gainRoll < 0.5) {
+                    // Multiplicative gain (50% chance)
+                    // This is capped per cycle, to prevent it from getting out of control
+                    const multiplicativeGain = AllGangs[name].power * 0.008;
+                    AllGangs[name].power += Math.min(0.9, multiplicativeGain);
+                } else {
+                    // Additive gain (50% chance)
+                    const additiveGain = 0.5 * gainRoll * AllGangs[name].territory;
+                    AllGangs[name].power += (additiveGain);
+                }
+            }
+        }
+    }
+
+    // Determine if territory should be processed
+    if (this.territoryWarfareEngaged) {
+        this.territoryClashChance = 1;
+    } else if (this.territoryClashChance > 0) {
+        // Engagement turned off, but still a positive clash chance. So there's
+        // still a chance of clashing but it slowly goes down over time
+        this.territoryClashChance = Math.max(0, this.territoryClashChance - 0.01);
+    }
+
+    // Then process territory
+    for (var i = 0; i < GangNames.length; ++i) {
+        const others = GangNames.filter((e) => {
+            return e !== i;
+        });
+        const other = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__["getRandomInt"])(0, others.length - 1);
+
+        const thisGang = GangNames[i];
+        const otherGang = others[other];
+
+        // If either of the gangs involved in this clash is the player, determine
+        // whether to skip or process it using the clash chance
+        if (thisGang === gangName || otherGang === gangName) {
+            if (!(Math.random() < this.territoryClashChance)) { continue; }
+        }
+
+        const thisPwr = AllGangs[thisGang].power;
+        const otherPwr = AllGangs[otherGang].power;
+        const thisChance = thisPwr / (thisPwr + otherPwr);
+
+        if (Math.random() < thisChance) {
+            if (AllGangs[otherGang].territory <= 0) {
+                return;
+            }
+            AllGangs[thisGang].territory += 0.0001;
+            AllGangs[otherGang].territory -= 0.0001;
+            if (thisGang === gangName) {
+                this.clash(true); // Player won
+            } else if (otherGang === gangName) {
+                this.clash(false); // Player lost
+            } else {
+                AllGangs[otherGang].power *= (1 / 1.01);
+            }
+        } else {
+            if (AllGangs[thisGang].territory <= 0) {
+                return;
+            }
+            AllGangs[thisGang].territory -= 0.0001;
+            AllGangs[otherGang].territory += 0.0001;
+            if (thisGang === gangName) {
+                this.clash(false); // Player lost
+            } else if (otherGang === gangName) {
+                this.clash(true); // Player won
+            } else {
+                AllGangs[thisGang].power *= (1 / 1.01);
+            }
+        }
+    }
+}
+
+Gang.prototype.canRecruitMember = function() {
+    if (this.members.length >= MaximumGangMembers) { return false; }
+    return (this.respect >= this.getRespectNeededToRecruitMember());
+}
+
+Gang.prototype.getRespectNeededToRecruitMember = function() {
+    // First N gang members are free (can be recruited at 0 respect)
+    const numFreeMembers = 3;
+    if (this.members.length < numFreeMembers) { return 0; }
+
+    const i = this.members.length - (numFreeMembers - 1);
+    return Math.round(0.9 * Math.pow(i, 3) + Math.pow(i, 2));
+}
+
+Gang.prototype.recruitMember = function(name) {
+    name = String(name);
+    if (name === "" || !this.canRecruitMember()) { return false; }
+
+    // Check for already-existing names
+    let sameNames = this.members.filter((m) => {
+        return m.name === name;
+    });
+    if (sameNames.length >= 1) { return false; }
+
+    let member = new GangMember(name);
+    this.members.push(member);
+    if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_11__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_11__["Page"].Gang)) {
+        this.createGangMemberDisplayElement(member);
+        this.updateGangContent();
+    }
+    return true;
+}
+
+// Money and Respect gains multiplied by this number (< 1)
+Gang.prototype.getWantedPenalty = function() {
+    return (this.respect) / (this.respect + this.wanted);
+}
+
+Gang.prototype.processExperienceGains = function(numCycles=1) {
+    for (var i = 0; i < this.members.length; ++i) {
+        this.members[i].gainExperience(numCycles);
+        this.members[i].updateSkillLevels();
+    }
+}
+
+//Calculates power GAIN, which is added onto the Gang's existing power
+Gang.prototype.calculatePower = function() {
+    var memberTotal = 0;
+    for (var i = 0; i < this.members.length; ++i) {
+        if (GangMemberTasks.hasOwnProperty(this.members[i].task) && this.members[i].task == "Territory Warfare") {
+            const gain = this.members[i].calculatePower();
+            memberTotal += gain;
+        }
+    }
+    return (0.015 * this.getTerritory() * memberTotal);
+}
+
+Gang.prototype.clash = function(won=false) {
+    // Determine if a gang member should die
+    let baseDeathChance = 0.01;
+    if (won) { baseDeathChance /= 2; }
+
+    // If the clash was lost, the player loses a small percentage of power
+    if (!won) {
+        AllGangs[this.facName].power *= (1 / 1.008);
+    }
+
+    // Deaths can only occur during X% of clashes
+    if (Math.random() < 0.65) { return; }
+
+    for (let i = this.members.length - 1; i >= 0; --i) {
+        const member = this.members[i];
+
+        // Only members assigned to Territory Warfare can die
+        if (member.task !== "Territory Warfare") { continue; }
+
+        // Chance to die is decreased based on defense
+        const modifiedDeathChance = baseDeathChance / Math.pow(member.def, 0.6);
+        if (Math.random() < modifiedDeathChance) {
+            this.killMember(member);
+        }
+    }
+}
+
+Gang.prototype.killMember = function(memberObj) {
+    const gangName = this.facName;
+
+    // Player loses a percentage of total respect, plus whatever respect that member has earned
+    const totalRespect = this.respect;
+    const lostRespect = (0.05 * totalRespect) + memberObj.earnedRespect;
+    this.respect = Math.max(0, totalRespect - lostRespect);
+
+    for (let i = 0; i < this.members.length; ++i) {
+        if (memberObj.name === this.members[i].name) {
+            this.members.splice(i, 1);
+            break;
+        }
+    }
+
+    // Notify of death
+    if (this.notifyMemberDeath) {
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_5__["dialogBoxCreate"])(`${memberObj.name} was killed in a gang clash! You lost ${lostRespect} respect`);
+    }
+
+    // Update UI
+    if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_11__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_11__["Page"].Gang)) {
+        this.displayGangMemberList();
+    }
+}
+
+Gang.prototype.ascendMember = function(memberObj, workerScript) {
+    try {
+        /**
+         * res is an object with the following format:
+         * {
+         *  respect: Amount of respect to deduct
+         *  hack/str/def/dex/agi/cha: Ascension multipliers gained for each stat
+         * }
+         */
+        const res = memberObj.ascend();
+        this.respect = Math.max(1, this.respect - res.respect);
+        if (workerScript == null) {
+            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_5__["dialogBoxCreate"])([`You ascended ${memberObj.name}!`,
+                             "",
+                             `Your gang lost ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(res.respect, "0.000a")} respect`,
+                             "",
+                             `${memberObj.name} gained the following stat multipliers for ascending:`,
+                             `Hacking: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(res.hack, "0.000%")}`,
+                             `Strength: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(res.str, "0.000%")}`,
+                             `Defense: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(res.def, "0.000%")}`,
+                             `Dexterity: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(res.dex, "0.000%")}`,
+                             `Agility: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(res.agi, "0.000%")}`,
+                             `Charisma: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(res.cha, "0.000%")}`].join("<br>"));
+        } else {
+            workerScript.log(`Ascended Gang member ${memberObj.name}`);
+        }
+        if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_11__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_11__["Page"].Gang)) {
+            this.displayGangMemberList();
+        }
+        return res;
+    } catch(e) {
+        if (workerScript == null) {
+            Object(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_13__[/* exceptionAlert */ "a"])(e);
+        } else {
+            throw e; // Re-throw, will be caught in the Netscript Function
+        }
+    }
+}
+
+// Cost of upgrade gets cheaper as gang increases in respect + power
+Gang.prototype.getDiscount = function() {
+    const power = this.getPower();
+    const respect = this.respect;
+
+    const respectLinearFac = 5e6;
+    const powerLinearFac = 1e6;
+    const discount = Math.pow(respect, 0.01) + respect / respectLinearFac + Math.pow(power, 0.01) + power / powerLinearFac - 1;
+    return Math.max(1, discount);
+}
+
+// Returns only valid tasks for this gang. Excludes 'Unassigned'
+Gang.prototype.getAllTaskNames = function() {
+    let tasks = [];
+    const allTasks = Object.keys(GangMemberTasks);
+    if (this.isHackingGang) {
+        tasks = allTasks.filter((e) => {
+            let task = GangMemberTasks[e];
+            if (task == null) { return false; }
+            if (e === "Unassigned") { return false; }
+            return task.isHacking;
+        });
+    } else {
+        tasks = allTasks.filter((e) => {
+            let task = GangMemberTasks[e];
+            if (task == null) { return false; }
+            if (e === "Unassigned") { return false; }
+            return task.isCombat;
+        });
+    }
+    return tasks;
+}
+
+Gang.prototype.getAllUpgradeNames = function() {
+    return Object.keys(GangMemberUpgrades);
+}
+
+Gang.prototype.getUpgradeCost = function(upgName) {
+    if (GangMemberUpgrades[upgName] == null) { return Infinity; }
+    return GangMemberUpgrades[upgName].getCost(this);
+}
+
+Gang.prototype.toJSON = function() {
+	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_6__["Generic_toJSON"])("Gang", this);
+}
+
+Gang.fromJSON = function(value) {
+	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_6__["Generic_fromJSON"])(Gang, value.data);
+}
+
+_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_6__["Reviver"].constructors.Gang = Gang;
+
+/*** Gang Member object ***/
+function GangMember(name) {
+    this.name   = name;
+    this.task   = "Unassigned"; //GangMemberTask object
+
+    this.earnedRespect = 0;
+
+    this.hack   = 1;
+    this.str    = 1;
+    this.def    = 1;
+    this.dex    = 1;
+    this.agi    = 1;
+    this.cha    = 1;
+
+    this.hack_exp   = 0;
+    this.str_exp    = 0;
+    this.def_exp    = 0;
+    this.dex_exp    = 0;
+    this.agi_exp    = 0;
+    this.cha_exp    = 0;
+
+    this.hack_mult  = 1;
+    this.str_mult   = 1;
+    this.def_mult   = 1;
+    this.dex_mult   = 1;
+    this.agi_mult   = 1;
+    this.cha_mult   = 1;
+
+    this.hack_asc_mult  = 1;
+    this.str_asc_mult   = 1;
+    this.def_asc_mult   = 1;
+    this.dex_asc_mult   = 1;
+    this.agi_asc_mult   = 1;
+    this.cha_asc_mult   = 1;
+
+    this.upgrades = [];         //Names of upgrades
+    this.augmentations = [];    //Names only
+}
+
+//Same formula for Player
+GangMember.prototype.calculateSkill = function(exp, mult=1) {
+    return Math.max(Math.floor(mult * (32 * Math.log(exp + 534.5) - 200)), 1);
+}
+
+GangMember.prototype.updateSkillLevels = function() {
+    this.hack   = this.calculateSkill(this.hack_exp, this.hack_mult * this.hack_asc_mult);
+    this.str    = this.calculateSkill(this.str_exp, this.str_mult * this.str_asc_mult);
+    this.def    = this.calculateSkill(this.def_exp, this.def_mult * this.def_asc_mult);
+    this.dex    = this.calculateSkill(this.dex_exp, this.dex_mult * this.dex_asc_mult);
+    this.agi    = this.calculateSkill(this.agi_exp, this.agi_mult * this.agi_asc_mult);
+    this.cha    = this.calculateSkill(this.cha_exp, this.cha_mult * this.cha_asc_mult);
+}
+
+GangMember.prototype.calculatePower = function() {
+    return (this.hack + this.str + this.def + this.dex + this.agi + this.cha) / 95;
+}
+
+GangMember.prototype.assignToTask = function(taskName) {
+    if (GangMemberTasks.hasOwnProperty(taskName)) {
+        this.task = taskName;
+        return true;
+    } else {
+        this.task = "Unassigned";
+        return false;
+    }
+}
+
+GangMember.prototype.unassignFromTask = function() {
+    this.task = "Unassigned";
+}
+
+GangMember.prototype.getTask = function() {
+    // Backwards compatibility
+    if (this.task instanceof GangMemberTask) {
+        this.task = this.task.name;
+    }
+
+    if (GangMemberTasks.hasOwnProperty(this.task)) {
+        return GangMemberTasks[this.task];
+    }
+    return GangMemberTasks["Unassigned"];
+}
+
+//Gains are per cycle
+GangMember.prototype.calculateRespectGain = function(gang) {
+    const task = this.getTask();
+    if (task == null || !(task instanceof GangMemberTask) || task.baseRespect === 0) {return 0;}
+    var statWeight =    (task.hackWeight/100) * this.hack +
+                        (task.strWeight/100) * this.str +
+                        (task.defWeight/100) * this.def +
+                        (task.dexWeight/100) * this.dex +
+                        (task.agiWeight/100) * this.agi +
+                        (task.chaWeight/100) * this.cha;
+    statWeight -= (4 * task.difficulty);
+    if (statWeight <= 0) { return 0; }
+    const territoryMult = Math.pow(AllGangs[gang.facName].territory * 100, task.territory.respect) / 100;
+    if (isNaN(territoryMult) || territoryMult <= 0) { return 0; }
+    var respectMult = gang.getWantedPenalty();
+    return 11 * task.baseRespect * statWeight * territoryMult * respectMult;
+}
+
+GangMember.prototype.calculateWantedLevelGain = function(gang) {
+    const task = this.getTask();
+    if (task == null || !(task instanceof GangMemberTask) || task.baseWanted === 0) {return 0;}
+    var statWeight =    (task.hackWeight/100) * this.hack +
+                        (task.strWeight/100) * this.str +
+                        (task.defWeight/100) * this.def +
+                        (task.dexWeight/100) * this.dex +
+                        (task.agiWeight/100) * this.agi +
+                        (task.chaWeight/100) * this.cha;
+    statWeight -= (3.5 * task.difficulty);
+    if (statWeight <= 0) { return 0; }
+    const territoryMult = Math.pow(AllGangs[gang.facName].territory * 100, task.territory.wanted) / 100;
+    if (isNaN(territoryMult) || territoryMult <= 0) { return 0; }
+    if (task.baseWanted < 0) {
+        return 0.5 * task.baseWanted * statWeight * territoryMult;
+    } else {
+        return 7 * task.baseWanted / (3 * statWeight * territoryMult);
+    }
+}
+
+GangMember.prototype.calculateMoneyGain = function(gang) {
+    const task = this.getTask();
+    if (task == null || !(task instanceof GangMemberTask) || task.baseMoney === 0) {return 0;}
+    var statWeight =    (task.hackWeight/100) * this.hack +
+                        (task.strWeight/100) * this.str +
+                        (task.defWeight/100) * this.def +
+                        (task.dexWeight/100) * this.dex +
+                        (task.agiWeight/100) * this.agi +
+                        (task.chaWeight/100) * this.cha;
+    statWeight -= (3.2 * task.difficulty);
+    if (statWeight <= 0) { return 0; }
+    const territoryMult = Math.pow(AllGangs[gang.facName].territory * 100, task.territory.money) / 100;
+    if (isNaN(territoryMult) || territoryMult <= 0) { return 0; }
+    var respectMult = gang.getWantedPenalty();
+    return 5 * task.baseMoney * statWeight * territoryMult * respectMult;
+}
+
+GangMember.prototype.gainExperience = function(numCycles=1) {
+    const task = this.getTask();
+    if (task == null || !(task instanceof GangMemberTask) || task === GangMemberTasks["Unassigned"]) {return;}
+    const difficultyMult = Math.pow(task.difficulty, 0.9);
+    const difficultyPerCycles = difficultyMult * numCycles;
+    const weightDivisor = 1500;
+    this.hack_exp   += (task.hackWeight / weightDivisor) * difficultyPerCycles;
+    this.str_exp    += (task.strWeight / weightDivisor) * difficultyPerCycles;
+    this.def_exp    += (task.defWeight / weightDivisor) * difficultyPerCycles;
+    this.dex_exp    += (task.dexWeight / weightDivisor) * difficultyPerCycles;
+    this.agi_exp    += (task.agiWeight / weightDivisor) * difficultyPerCycles;
+    this.cha_exp    += (task.chaWeight / weightDivisor) * difficultyPerCycles;
+}
+
+GangMember.prototype.recordEarnedRespect = function(numCycles=1, gang) {
+    this.earnedRespect += (this.calculateRespectGain(gang) * numCycles);
+}
+
+GangMember.prototype.ascend = function() {
+    const res = this.getAscensionResults();
+    const hackAscMult = res.hack;
+    const strAscMult =  res.str;
+    const defAscMult =  res.def;
+    const dexAscMult =  res.dex;
+    const agiAscMult =  res.agi;
+    const chaAscMult =  res.cha;
+    this.hack_asc_mult += hackAscMult;
+    this.str_asc_mult += strAscMult;
+    this.def_asc_mult += defAscMult;
+    this.dex_asc_mult += dexAscMult;
+    this.agi_asc_mult += agiAscMult;
+    this.cha_asc_mult += chaAscMult;
+
+    // Remove upgrades. Then re-calculate multipliers and stats
+    this.upgrades.length = 0;
+    this.hack_mult = 1;
+    this.str_mult = 1;
+    this.def_mult = 1;
+    this.dex_mult = 1;
+    this.agi_mult = 1;
+    this.cha_mult = 1;
+    for (let i = 0; i < this.augmentations.length; ++i) {
+        let aug = GangMemberUpgrades[this.augmentations[i]];
+        aug.apply(this);
+    }
+
+    // Clear exp and recalculate stats
+    this.hack_exp = 0;
+    this.str_exp = 0;
+    this.def_exp = 0;
+    this.dex_exp = 0;
+    this.agi_exp = 0;
+    this.cha_exp = 0;
+    this.updateSkillLevels();
+
+    const respectToDeduct = this.earnedRespect;
+    this.earnedRespect = 0;
+    return {
+        respect: respectToDeduct,
+        hack: hackAscMult,
+        str: strAscMult,
+        def: defAscMult,
+        dex: dexAscMult,
+        agi: agiAscMult,
+        cha: chaAscMult,
+    };
+}
+
+// Returns the multipliers that would be gained from ascension
+GangMember.prototype.getAscensionResults = function() {
+    // Calculate ascension bonus to stat multipliers.
+    // This is based on the current number of multipliers from Non-Augmentation upgrades
+    // + Ascension Bonus = N% of current bonus from Augmentations
+    let hack = 1;
+    let str = 1;
+    let def = 1;
+    let dex = 1;
+    let agi = 1;
+    let cha = 1;
+    for (let i = 0; i < this.upgrades.length; ++i) {
+        let upg = GangMemberUpgrades[this.upgrades[i]];
+        if (upg.mults.hack != null) { hack *= upg.mults.hack; }
+        if (upg.mults.str != null)  { str *= upg.mults.str; }
+        if (upg.mults.def != null)  { def *= upg.mults.def; }
+        if (upg.mults.dex != null)  { dex *= upg.mults.dex; }
+        if (upg.mults.agi != null)  { agi *= upg.mults.agi; }
+        if (upg.mults.cha != null)  { cha *= upg.mults.cha; }
+    }
+
+    // Subtract 1 because we're only interested in the actual "bonus" part
+    return {
+        hack: (Math.max(0, hack - 1) * AscensionMultiplierRatio),
+        str:  (Math.max(0, str - 1) * AscensionMultiplierRatio),
+        def:  (Math.max(0, def - 1) * AscensionMultiplierRatio),
+        dex:  (Math.max(0, dex - 1) * AscensionMultiplierRatio),
+        agi:  (Math.max(0, agi - 1) * AscensionMultiplierRatio),
+        cha:  (Math.max(0, cha - 1) * AscensionMultiplierRatio),
+    }
+}
+
+GangMember.prototype.buyUpgrade = function(upg, player, gang) {
+    if (typeof upg === 'string') {
+        upg = GangMemberUpgrades[upg];
+    }
+    if (!(upg instanceof GangMemberUpgrade)) {
+        return false;
+    }
+    if (player.money.lt(upg.getCost(gang))) { return false; }
+    player.loseMoney(upg.getCost(gang));
+    if (upg.type === "g") {
+        this.augmentations.push(upg.name);
+    } else {
+        this.upgrades.push(upg.name);
+    }
+    upg.apply(this);
+    if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_11__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_11__["Page"].Gang) && UIElems.gangMemberUpgradeBoxOpened) {
+        var initFilterValue = UIElems.gangMemberUpgradeBoxFilter.value.toString();
+        gang.createGangMemberUpgradeBox(player, initFilterValue);
+    }
+    return true;
+}
+
+GangMember.prototype.toJSON = function() {
+	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_6__["Generic_toJSON"])("GangMember", this);
+}
+
+GangMember.fromJSON = function(value) {
+	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_6__["Generic_fromJSON"])(GangMember, value.data);
+}
+
+_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_6__["Reviver"].constructors.GangMember = GangMember;
+
+//Defines tasks that Gang Members can work on
+function GangMemberTask(name="", desc="", isHacking=false, isCombat=false,
+                        params={baseRespect: 0, baseWanted: 0, baseMoney: 0,
+                                hackWeight: 0, strWeight: 0, defWeight: 0,
+                                dexWeight: 0, agiWeight: 0, chaWeight: 0,
+                                difficulty: 0}) {
+    this.name = name;
+    this.desc = desc;
+
+    // Flags that describe whether this Task is applicable for Hacking/Combat gangs
+    this.isHacking = isHacking;
+    this.isCombat = isCombat;
+
+    // Base gain rates for respect/wanted/money
+    this.baseRespect    = params.baseRespect ? params.baseRespect   : 0;
+    this.baseWanted     = params.baseWanted  ? params.baseWanted    : 0;
+    this.baseMoney      = params.baseMoney   ? params.baseMoney     : 0;
+
+    // Weighting for the effect that each stat has on the tasks effectiveness.
+    // Weights must add up to 100
+    this.hackWeight     = params.hackWeight ? params.hackWeight : 0;
+    this.strWeight      = params.strWeight  ? params.strWeight  : 0;
+    this.defWeight      = params.defWeight  ? params.defWeight  : 0;
+    this.dexWeight      = params.dexWeight  ? params.dexWeight  : 0;
+    this.agiWeight      = params.agiWeight  ? params.agiWeight  : 0;
+    this.chaWeight      = params.chaWeight  ? params.chaWeight  : 0;
+
+    if (Math.round(this.hackWeight + this.strWeight + this.defWeight + this.dexWeight + this.agiWeight + this.chaWeight) != 100) {
+        console.error(`GangMemberTask ${this.name} weights do not add up to 100`);
+    }
+
+    // 1 - 100
+    this.difficulty     = params.difficulty ? params.difficulty : 1;
+
+    // Territory Factors. Exponential factors that dictate how territory affects gains
+    // Formula: Territory Mutiplier = (Territory * 100) ^ factor / 100
+    // So factor should be > 1 if something should scale exponentially with territory
+    // and should be < 1 if it should have diminshing returns
+    this.territory      = params.territory ? params.territory : {money: 1, respect: 1, wanted: 1};
+}
+
+GangMemberTask.prototype.toJSON = function() {
+	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_6__["Generic_toJSON"])("GangMemberTask", this);
+}
+
+GangMemberTask.fromJSON = function(value) {
+	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_6__["Generic_fromJSON"])(GangMemberTask, value.data);
+}
+
+_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_6__["Reviver"].constructors.GangMemberTask = GangMemberTask;
+
+const GangMemberTasks = {};
+
+function addGangMemberTask(name, desc, isHacking, isCombat, params) {
+    GangMemberTasks[name] = new GangMemberTask(name, desc, isHacking, isCombat, params);
+}
+
+_data_gangmembertasks__WEBPACK_IMPORTED_MODULE_0__["gangMemberTasksMetadata"].forEach((e) => {
+    addGangMemberTask(e.name, e.desc, e.isHacking, e.isCombat, e.params);
+});
+
+function GangMemberUpgrade(name="", cost=0, type="w", mults={}) {
+    this.name = name;
+    this.cost = cost;
+    this.type = type; //w = weapon, a = armor, v = vehicle, r = rootkit, g = Aug
+    this.mults = mults;
+
+    this.createDescription();
+}
+
+GangMemberUpgrade.prototype.getCost = function(gang) {
+    const discount = gang.getDiscount();
+    return this.cost / discount;
+}
+
+GangMemberUpgrade.prototype.createDescription = function() {
+    const lines = ["Increases:"];
+    if (this.mults.str != null) {
+        lines.push(`* Strength by ${Math.round((this.mults.str - 1) * 100)}%`);
+    }
+    if (this.mults.def != null) {
+        lines.push(`* Defense by ${Math.round((this.mults.def - 1) * 100)}%`);
+    }
+    if (this.mults.dex != null) {
+        lines.push(`* Dexterity by ${Math.round((this.mults.dex - 1) * 100)}%`);
+    }
+    if (this.mults.agi != null) {
+        lines.push(`* Agility by ${Math.round((this.mults.agi - 1) * 100)}%`);
+    }
+    if (this.mults.cha != null) {
+        lines.push(`* Charisma by ${Math.round((this.mults.cha - 1) * 100)}%`);
+    }
+    if (this.mults.hack != null) {
+        lines.push(`* Hacking by ${Math.round((this.mults.hack - 1) * 100)}%`);
+    }
+    this.desc = lines.join("<br>");
+}
+
+//Passes in a GangMember object
+GangMemberUpgrade.prototype.apply = function(member) {
+    if (this.mults.str != null)     { member.str_mult *= this.mults.str; }
+    if (this.mults.def != null)     { member.def_mult *= this.mults.def; }
+    if (this.mults.dex != null)     { member.dex_mult *= this.mults.dex; }
+    if (this.mults.agi != null)     { member.agi_mult *= this.mults.agi; }
+    if (this.mults.cha != null)     { member.cha_mult *= this.mults.cha; }
+    if (this.mults.hack != null)    { member.hack_mult *= this.mults.hack; }
+    return;
+}
+
+GangMemberUpgrade.prototype.toJSON = function() {
+	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_6__["Generic_toJSON"])("GangMemberUpgrade", this);
+}
+
+GangMemberUpgrade.fromJSON = function(value) {
+	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_6__["Generic_fromJSON"])(GangMemberUpgrade, value.data);
+}
+
+_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_6__["Reviver"].constructors.GangMemberUpgrade = GangMemberUpgrade;
+
+// Initialize Gang Member Upgrades
+const GangMemberUpgrades = {}
+
+function addGangMemberUpgrade(name, cost, type, mults) {
+    GangMemberUpgrades[name] = new GangMemberUpgrade(name, cost, type, mults);
+}
+
+_data_gangmemberupgrades__WEBPACK_IMPORTED_MODULE_1__["gangMemberUpgradesMetadata"].forEach((e) => {
+    addGangMemberUpgrade(e.name, e.cost, e.upgType, e.mults);
+});
+
+// Create a pop-up box that lets player purchase upgrades
+Gang.prototype.createGangMemberUpgradeBox = function(player, initialFilter="") {
+    const boxId = "gang-member-upgrade-popup-box";
+    if (UIElems.gangMemberUpgradeBoxOpened) {
+        //Already opened, refreshing
+        if (UIElems.gangMemberUpgradeBoxElements == null || UIElems.gangMemberUpgradeBox == null || UIElems.gangMemberUpgradeBoxContent == null) {
+            console.error("Refreshing Gang member upgrade box throws error because required elements are null");
+            return;
+        }
+
+        for (var i = 2; i < UIElems.gangMemberUpgradeBoxElements.length; ++i) {
+            Object(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_16__["removeElement"])(UIElems.gangMemberUpgradeBoxElements[i]);
+        }
+        UIElems.gangMemberUpgradeBoxElements = [UIElems.gangMemberUpgradeBoxFilter, UIElems.gangMemberUpgradeBoxDiscount];
+
+        var filter = UIElems.gangMemberUpgradeBoxFilter.value.toString();
+        for (var i = 0; i < this.members.length; ++i) {
+            if (this.members[i].name.indexOf(filter) > -1 || this.members[i].task.indexOf(filter) > -1) {
+                var newPanel = this.members[i].createGangMemberUpgradePanel(this, player);
+                UIElems.gangMemberUpgradeBoxContent.appendChild(newPanel);
+                UIElems.gangMemberUpgradeBoxElements.push(newPanel);
+            }
+        }
+    } else {
+        //New popup
+        UIElems.gangMemberUpgradeBoxFilter = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("input", {
+            type:"text", placeholder:"Filter gang members",
+            value:initialFilter,
+            onkeyup:()=>{
+                var filterValue = UIElems.gangMemberUpgradeBoxFilter.value.toString();
+                this.createGangMemberUpgradeBox(player, filterValue);
+            }
+        });
+
+        UIElems.gangMemberUpgradeBoxDiscount = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {
+            innerText: "Discount: -" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(1 - 1 / this.getDiscount(), "0.00%"),
+            marginLeft: "6px",
+            tooltip: "You get a discount on equipment and upgrades based on your gang's " +
+                     "respect and power. More respect and power leads to more discounts."
+        });
+
+        UIElems.gangMemberUpgradeBoxElements = [UIElems.gangMemberUpgradeBoxFilter, UIElems.gangMemberUpgradeBoxDiscount];
+
+        var filter = UIElems.gangMemberUpgradeBoxFilter.value.toString();
+        for (var i = 0; i < this.members.length; ++i) {
+            if (this.members[i].name.indexOf(filter) > -1 || this.members[i].task.indexOf(filter) > -1) {
+                UIElems.gangMemberUpgradeBoxElements.push(this.members[i].createGangMemberUpgradePanel(this, player));
+            }
+        }
+
+        UIElems.gangMemberUpgradeBox = Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_10__["createPopup"])(boxId, UIElems.gangMemberUpgradeBoxElements);
+        UIElems.gangMemberUpgradeBoxContent = document.getElementById(boxId + "-content");
+        UIElems.gangMemberUpgradeBoxOpened = true;
+    }
+}
+
+//Create upgrade panels for each individual Gang Member
+GangMember.prototype.createGangMemberUpgradePanel = function(gangObj, player) {
+    var container = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {
+        border:"1px solid white",
+    });
+
+    var header = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("h1", {
+        innerText: this.name + " (" + this.task + ")"
+    });
+    container.appendChild(header);
+
+    var text = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("pre", {
+        fontSize:"14px", display: "inline-block", width:"20%",
+        innerText:
+            "Hack: " + this.hack + " (x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(this.hack_mult * this.hack_asc_mult, 2) + ")\n" +
+            "Str:  " + this.str  + " (x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(this.str_mult * this.str_asc_mult, 2) + ")\n" +
+            "Def:  " + this.def  + " (x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(this.def_mult * this.def_asc_mult, 2) + ")\n" +
+            "Dex:  " + this.dex  + " (x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(this.dex_mult * this.dex_asc_mult, 2) + ")\n" +
+            "Agi:  " + this.agi  + " (x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(this.agi_mult * this.agi_asc_mult, 2) + ")\n" +
+            "Cha:  " + this.cha  + " (x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(this.cha_mult * this.cha_asc_mult, 2) + ")\n",
+    });
+
+    //Already purchased upgrades
+    const ownedUpgradesElements = [];
+    function pushOwnedUpgrade(upgName) {
+        const upg = GangMemberUpgrades[upgName];
+        if (upg == null) {
+            console.error(`Could not find GangMemberUpgrade object for name ${upgName}`);
+            return;
+        }
+        ownedUpgradesElements.push(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {
+            class:      "gang-owned-upgrade",
+            innerText:  upgName,
+            tooltip:    upg.desc,
+        }));
+    }
+    for (const upgName of this.upgrades)        { pushOwnedUpgrade(upgName); }
+    for (const upgName of this.augmentations)   { pushOwnedUpgrade(upgName); }
+
+    var ownedUpgrades = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {
+        class:      "gang-owned-upgrades-div",
+        innerText:  "Purchased Upgrades:",
+    });
+    for (const elem of ownedUpgradesElements) { ownedUpgrades.appendChild(elem); }
+    container.appendChild(text);
+    container.appendChild(ownedUpgrades);
+    container.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br", {}));
+
+    //Upgrade buttons. Only show upgrades that can be afforded
+    const weaponUpgrades = [];
+    const armorUpgrades = [];
+    const vehicleUpgrades = [];
+    const rootkitUpgrades = [];
+    const augUpgrades = [];
+
+    for (let upgName in GangMemberUpgrades) {
+        if (GangMemberUpgrades.hasOwnProperty(upgName)) {
+            let upg = GangMemberUpgrades[upgName];
+            if (player.money.lt(upg.getCost(gangObj))) { continue; }
+            if (this.upgrades.includes(upgName) || this.augmentations.includes(upgName)) { continue; }
+            switch (upg.type) {
+                case "w":
+                    weaponUpgrades.push(upg);
+                    break;
+                case "a":
+                    armorUpgrades.push(upg);
+                    break;
+                case "v":
+                    vehicleUpgrades.push(upg);
+                    break;
+                case "r":
+                    rootkitUpgrades.push(upg);
+                    break;
+                case "g":
+                    augUpgrades.push(upg);
+                    break;
+                default:
+                    console.error(`ERROR: Invalid Gang Member Upgrade Type: ${upg.type}`);
+            }
+        }
+    }
+
+    // Create separate columns for each upgrade type
+    const weaponDiv   = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {width: "20%", display: "inline-block"});
+    const armorDiv    = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {width: "20%", display: "inline-block"});
+    const vehicleDiv  = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {width: "20%", display: "inline-block"});
+    const rootkitDiv  = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {width: "20%", display: "inline-block"});
+    const augDiv      = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {width: "20%", display: "inline-block"});
+
+    // Add a title/labe for each column
+    weaponDiv.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("h2", {innerText: "Weapons"}));
+    armorDiv.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("h2", {innerText: "Armor"}));
+    vehicleDiv.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("h2", {innerText: "Vehicles"}));
+    rootkitDiv.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("h2", {innerText: "Rootkits"}));
+    augDiv.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("h2", {innerText: "Augmentations"}));
+
+    // Add buttons to purchase each upgrade
+    const upgrades = [weaponUpgrades, armorUpgrades, vehicleUpgrades, rootkitUpgrades, augUpgrades];
+    const divs = [weaponDiv, armorDiv, vehicleDiv, rootkitDiv, augDiv];
+    for (let i = 0; i < upgrades.length; ++i) {
+        let upgradeArray = upgrades[i];
+        let div = divs[i];
+        for (let j = 0; j < upgradeArray.length; ++j) {
+            let upg = upgradeArray[j];
+            (function (upg, div, memberObj, i, gang) {
+                let createElementParams = {
+                    innerText: upg.name + " - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(upg.getCost(gang), "$0.000a"),
+                    class: "a-link-button", margin:"2px",  padding:"2px", display:"block",
+                    fontSize:"11px",
+                    clickListener:()=>{
+                        memberObj.buyUpgrade(upg, player, gangObj);
+                        return false;
+                    }
+                }
+
+                // For the last two divs, tooltip should be on the left
+                if (i >= 3) {
+                    createElementParams.tooltipleft = upg.desc;
+                } else {
+                    createElementParams.tooltip = upg.desc;
+                }
+                div.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("a", createElementParams));
+            })(upg, div, this, i, gangObj);
+        }
+    }
+
+    container.appendChild(weaponDiv);
+    container.appendChild(armorDiv);
+    container.appendChild(vehicleDiv);
+    container.appendChild(rootkitDiv);
+    container.appendChild(augDiv);
+    return container;
+}
+
+// Gang UI Dom Elements
+const UIElems = {
+    // Main elems
+    gangContentCreated:     false,
+    gangContainer:          null,
+    managementButton:       null,
+    territoryButton:        null,
+
+    // Subpages
+    gangManagementSubpage:  null,
+    gangTerritorySubpage:   null,
+
+    // Gang Management Subpage Elements
+    gangDesc:                   null,
+    gangInfo:                   null,
+    gangRecruitMemberButton:    null,
+    gangRecruitRequirementText: null,
+    gangExpandAllButton:        null,
+    gangCollapseAllButton:      null,
+    gangMemberFilter:           null,
+    gangManageEquipmentButton:  null,
+    gangMemberList:             null,
+    gangMemberPanels:           {},
+
+    // Gang Equipment Upgrade Elements
+    gangMemberUpgradeBoxOpened:     false,
+    gangMemberUpgradeBox:           null,
+    gangMemberUpgradeBoxContent:    null,
+    gangMemberUpgradeBoxFilter:     null,
+    gangMemberUpgradeBoxDiscount:   null,
+    gangMemberUpgradeBoxElements:   null,
+
+    // Gang Territory Elements
+    gangTerritoryDescText: null,
+    gangTerritoryWarfareCheckbox: null,
+    gangTerritoryWarfareCheckboxLabel: null,
+    gangTerritoryWarfareClashChance: null,
+    gangTerritoryDeathNotifyCheckbox: null,
+    gangTerritoryDeathNotifyCheckboxLabel: null,
+    gangTerritoryInfoText: null,
+}
+
+Gang.prototype.displayGangContent = function(player) {
+    if (!UIElems.gangContentCreated || UIElems.gangContainer == null) {
+        UIElems.gangContentCreated = true;
+
+        //Create gang container
+        UIElems.gangContainer = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {
+            id:"gang-container", class:"generic-menupage-container",
+        });
+
+        //Get variables
+        var facName = this.facName,
+            members = this.members,
+            wanted = this.wanted,
+            respect = this.respect;
+
+        //Back button
+        UIElems.gangContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("a", {
+            class:"a-link-button", display:"inline-block", innerText:"Back",
+            clickListener:()=>{
+                _engine__WEBPACK_IMPORTED_MODULE_2__["Engine"].loadFactionContent();
+                Object(_Faction__WEBPACK_IMPORTED_MODULE_3__[/* displayFactionContent */ "c"])(facName);
+                return false;
+            }
+        }));
+
+        //Buttons to switch between panels
+        UIElems.managementButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("a", {
+            id:"gang-management-subpage-button", class:"a-link-button-inactive",
+            display:"inline-block", innerHTML: "Gang Management (Alt+1)",
+            clickListener:()=>{
+                UIElems.gangManagementSubpage.style.display = "block";
+                UIElems.gangTerritorySubpage.style.display = "none";
+                UIElems.managementButton.classList.toggle("a-link-button-inactive");
+                UIElems.managementButton.classList.toggle("a-link-button");
+                UIElems.territoryButton.classList.toggle("a-link-button-inactive");
+                UIElems.territoryButton.classList.toggle("a-link-button");
+                this.updateGangContent();
+                return false;
+            }
+        })
+        UIElems.territoryButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("a", {
+            id:"gang-territory-subpage-button", class:"a-link-button",
+            display:"inline-block", innerHTML:"Gang Territory (Alt+2)",
+            clickListener:() => {
+                UIElems.gangManagementSubpage.style.display = "none";
+                UIElems.gangTerritorySubpage.style.display = "block";
+                UIElems.managementButton.classList.toggle("a-link-button-inactive");
+                UIElems.managementButton.classList.toggle("a-link-button");
+                UIElems.territoryButton.classList.toggle("a-link-button-inactive");
+                UIElems.territoryButton.classList.toggle("a-link-button");
+                this.updateGangContent();
+                return false;
+            }
+        });
+        UIElems.gangContainer.appendChild(UIElems.managementButton);
+        UIElems.gangContainer.appendChild(UIElems.territoryButton);
+
+        //Subpage for managing gang members
+        UIElems.gangManagementSubpage = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {
+            display:"block", id:"gang-management-subpage",
+        });
+
+        var lowerWantedTask = "";
+        if (this.isHackingGang) {
+            lowerWantedTask = "Ethical Hacking";
+        } else {
+            lowerWantedTask = "Vigilante Justice";
+        }
+        UIElems.gangDesc = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {width:"70%",
+            innerHTML:
+            "This page is used to manage your gang members and get an overview of your  " +
+            "gang's stats.<br><br>" +
+            "If a gang member is not earning much money or respect, the task that you " +
+            "have assigned to that member might be too difficult. Consider training that " +
+            "member's stats or choosing an easier task. The tasks closer to the " +
+            "top of the dropdown list are generally easier. Alternatively, the gang member's " +
+            "low production might be due to the fact that your wanted level is too high. " +
+            "Consider assigning a few members to the '" + lowerWantedTask + "' " +
+            "task to lower your wanted level. <br><br>" +
+            "Installing Augmentations does NOT reset your progress with your Gang. " +
+            "Furthermore, after installing Augmentations, you will " +
+            "automatically be a member of whatever Faction you created your gang with.<br><br>" +
+            "You can also manage your gang programmatically through Netscript using the Gang API"
+        });
+        UIElems.gangManagementSubpage.appendChild(UIElems.gangDesc);
+
+        UIElems.gangInfo = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {id:"gang-info", width:"70%"});
+        UIElems.gangManagementSubpage.appendChild(UIElems.gangInfo);
+
+        UIElems.gangRecruitMemberButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("a", {
+            id: "gang-management-recruit-member-btn", class:"a-link-button-inactive",
+            innerHTML:"Recruit Gang Member", display:"inline-block", margin:"10px",
+            clickListener:()=>{
+                const popupId = "recruit-gang-member-popup";
+
+                let yesBtn;
+                const txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {
+                    innerText:"Please enter a name for your new Gang member:",
+                });
+                const br = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br");
+                const nameInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("input", {
+                    onkeyup: (e) => {
+                        if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_7__["KEY"].ENTER) { yesBtn.click(); }
+                    },
+                    placeholder: "Name must be unique",
+                    type: "text",
+                });
+                yesBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("a", {
+                    class: "std-button",
+                    clickListener: () => {
+                        let name = nameInput.value;
+                        if (name === "") {
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_5__["dialogBoxCreate"])("You must enter a name for your Gang member!");
+                            return false;
+                        }
+                        if (!this.canRecruitMember()) {
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_5__["dialogBoxCreate"])("You cannot recruit another Gang member!");
+                            return false;
+                        }
+
+                        // At this point, the only way this can fail is if you already
+                        // have a gang member with the same name
+                        if (!this.recruitMember(name)) {
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_5__["dialogBoxCreate"])("You already have a gang member with this name!");
+                            return false;
+                        }
+
+                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(popupId);
+                        return false;
+                    },
+                    innerText: "Recruit Gang Member",
+                });
+                const noBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("a", {
+                    class: "std-button",
+                    clickListener: () => {
+                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(popupId);
+                        return false;
+                    },
+                    innerText: "Cancel",
+                });
+                Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_10__["createPopup"])(popupId, [txt, br, nameInput, yesBtn, noBtn]);
+            }
+        });
+        UIElems.gangManagementSubpage.appendChild(UIElems.gangRecruitMemberButton);
+
+        // Text for how much reputation is required for recruiting next memberList
+        UIElems.gangRecruitRequirementText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {
+            color:"red",
+            id: "gang-recruit-requirement-text",
+            margin: "10px",
+        });
+        UIElems.gangManagementSubpage.appendChild(UIElems.gangRecruitRequirementText);
+
+        //Gang Member List management buttons (Expand/Collapse All, select a single member)
+        UIElems.gangManagementSubpage.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br", {}));
+        UIElems.gangExpandAllButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("a", {
+            class:"a-link-button", display:"inline-block",
+            innerHTML:"Expand All",
+            clickListener:()=>{
+                var allHeaders = UIElems.gangManagementSubpage.getElementsByClassName("accordion-header");
+                for (var i = 0; i < allHeaders.length; ++i) {
+                    var hdr = allHeaders[i];
+                    if (!hdr.classList.contains("active")) {
+                        hdr.click();
+                    }
+                }
+                return false;
+            }
+        });
+        UIElems.gangCollapseAllButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("a", {
+            class:"a-link-button", display:"inline-block",
+            innerHTML:"Collapse All",
+            clickListener:()=>{
+                var allHeaders = UIElems.gangManagementSubpage.getElementsByClassName("accordion-header");
+                for (var i = 0; i < allHeaders.length; ++i) {
+                    var hdr = allHeaders[i];
+                    if (hdr.classList.contains("active")) {
+                        hdr.click();
+                    }
+                }
+                return false;
+            }
+        });
+        UIElems.gangMemberFilter = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("input", {
+            type:"text", placeholder:"Filter gang members", margin:"5px", padding:"5px",
+            onkeyup:()=>{
+                this.displayGangMemberList();
+            }
+        });
+        UIElems.gangManageEquipmentButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("a", {
+            class:"a-link-button", display:"inline-block",
+            innerHTML:"Manage Equipment",
+            clickListener: () => {
+                this.createGangMemberUpgradeBox(player);
+            }
+        });
+        UIElems.gangManagementSubpage.appendChild(UIElems.gangExpandAllButton);
+        UIElems.gangManagementSubpage.appendChild(UIElems.gangCollapseAllButton);
+        UIElems.gangManagementSubpage.appendChild(UIElems.gangMemberFilter);
+        UIElems.gangManagementSubpage.appendChild(UIElems.gangManageEquipmentButton);
+
+        //Gang Member list
+        UIElems.gangMemberList = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("ul", {id:"gang-member-list"});
+        this.displayGangMemberList();
+        UIElems.gangManagementSubpage.appendChild(UIElems.gangMemberList);
+
+        //Subpage for seeing gang territory information
+        UIElems.gangTerritorySubpage = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {
+            id:"gang-territory-subpage", display:"none"
+        });
+
+        //Info text for territory page
+        UIElems.gangTerritoryDescText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {
+            width:"70%",
+            innerHTML:
+            "This page shows how much territory your Gang controls. This statistic is listed as a percentage, " +
+            "which represents how much of the total territory you control.<br><br>" +
+            "Every ~20 seconds, your gang has a chance to 'clash' with other gangs. Your chance " +
+            "to win a clash depends on your gang's power, which is listed in the display below. " +
+            "Your gang's power slowly accumulates over time. The accumulation rate is determined by the stats " +
+            "of all Gang members you have assigned to the 'Territory Warfare' task. Gang members that are not " +
+            "assigned to this task do not contribute to your gang's power. Your gang also loses a small amount " +
+            "of power whenever you lose a clash<br><br>" +
+            "NOTE: Gang members assigned to 'Territory Warfare' can be killed during clashes. This can happen regardless of whether you win " +
+            "or lose the clash. A gang member being killed results in both respect and power loss for your gang.<br><br>" +
+            "The amount of territory you have affects all aspects of your Gang members' production, including " +
+            "money, respect, and wanted level. It is very beneficial to have high territory control.<br><br>"
+        });
+        UIElems.gangTerritorySubpage.appendChild(UIElems.gangTerritoryDescText);
+
+        // Checkbox for Engaging in Territory Warfare
+        UIElems.gangTerritoryWarfareCheckbox = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("input", {
+            display: "inline-block",
+            id: "gang-management-territory-warfare-checkbox",
+            changeListener: () => {
+                this.territoryWarfareEngaged = UIElems.gangTerritoryWarfareCheckbox.checked;
+            },
+            margin: "2px",
+            type: "checkbox",
+        });
+        UIElems.gangTerritoryWarfareCheckbox.checked = this.territoryWarfareEngaged;
+
+        UIElems.gangTerritoryWarfareCheckboxLabel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("label", {
+            color: "white",
+            display: "inline-block",
+            for: "gang-management-territory-warfare-checkbox",
+            innerText: "Engage in Territory Warfare",
+            tooltip: "Engaging in Territory Warfare sets your clash chance to 100%. " +
+                     "Disengaging will cause your clash chance to gradually decrease until " +
+                     "it reaches 0%",
+        });
+        UIElems.gangTerritorySubpage.appendChild(UIElems.gangTerritoryWarfareCheckbox);
+        UIElems.gangTerritorySubpage.appendChild(UIElems.gangTerritoryWarfareCheckboxLabel);
+
+        // Territory Clash chance
+        UIElems.gangTerritorySubpage.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br"));
+        UIElems.gangTerritoryWarfareClashChance = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {display: "inline-block"});
+        UIElems.gangTerritorySubpage.appendChild(UIElems.gangTerritoryWarfareClashChance);
+
+        UIElems.gangTerritorySubpage.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {
+            class: "help-tip",
+            display: "inline-block",
+            innerText: "?",
+            clickListener: () => {
+                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_5__["dialogBoxCreate"])("This percentage represents the chance you have of 'clashing' with " +
+                                "with another gang. If you do not wish to gain/lose territory, " +
+                                "then keep this percentage at 0% by not engaging in territory " +
+                                "warfare.")
+            },
+        }));
+
+        // Checkbox for whether player wants to be notified of gang member death
+        UIElems.gangTerritoryDeathNotifyCheckbox = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("input", {
+            display: "inline-block",
+            id: "gang-management-notify-member-death-checkbox",
+            changeListener: () => {
+                this.notifyMemberDeath = UIElems.gangTerritoryDeathNotifyCheckbox.checked;
+            },
+            margin: "2px",
+            type: "checkbox",
+        });
+        UIElems.gangTerritoryDeathNotifyCheckbox.checked = this.notifyMemberDeath;
+
+        UIElems.gangTerritoryDeathNotifyCheckboxLabel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("label", {
+            color: "white",
+            display: "inline-block",
+            for: "gang-management-notify-member-death-checkbox",
+            innerText: "Notify about Gang Member Deaths",
+            tooltip: "If this is enabled, then you will receive a pop-up notifying you " +
+                     "whenever one of your Gang Members dies in a territory clash.",
+        });
+        UIElems.gangTerritorySubpage.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br"));
+        UIElems.gangTerritorySubpage.appendChild(UIElems.gangTerritoryDeathNotifyCheckbox);
+        UIElems.gangTerritorySubpage.appendChild(UIElems.gangTerritoryDeathNotifyCheckboxLabel);
+
+        // Territory info (percentages of territory owned for each gang)
+        UIElems.gangTerritorySubpage.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br"));
+        var territoryBorder = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("fieldset", {
+            display:"block",
+            margin: "6px",
+            width:"50%",
+        });
+
+        UIElems.gangTerritoryInfoText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p");
+
+        territoryBorder.appendChild(UIElems.gangTerritoryInfoText);
+        UIElems.gangTerritorySubpage.appendChild(territoryBorder);
+
+        UIElems.gangContainer.appendChild(UIElems.gangTerritorySubpage);
+        UIElems.gangContainer.appendChild(UIElems.gangManagementSubpage);
+        document.getElementById("entire-game-container").appendChild(UIElems.gangContainer);
+    }
+    UIElems.gangContainer.style.display = "block";
+    this.updateGangContent();
+}
+
+Gang.prototype.displayGangMemberList = function() {
+    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15__["removeChildrenFromElement"])(UIElems.gangMemberList);
+    UIElems.gangMemberPanels = {};
+    const members = this.members;
+    const filter = UIElems.gangMemberFilter.value.toString();
+    for (var i = 0; i < members.length; ++i) {
+        if (members[i].name.indexOf(filter) > -1 || members[i].task.indexOf(filter) > -1) {
+            this.createGangMemberDisplayElement(members[i]);
+        }
+    }
+}
+
+Gang.prototype.updateGangContent = function() {
+    if (!UIElems.gangContentCreated) { return; }
+
+    if (UIElems.gangMemberUpgradeBoxOpened) {
+        UIElems.gangMemberUpgradeBoxDiscount.childNodes[0].nodeValue =
+            "Discount: -" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(1 - 1 / this.getDiscount(), "0.00%");
+    }
+
+    if (UIElems.gangTerritorySubpage.style.display === "block") {
+        // Territory Warfare Clash Chance
+        UIElems.gangTerritoryWarfareClashChance.innerText =
+            `Territory Clash Chance: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(this.territoryClashChance, '0.000%')}`;
+
+        // Engaged in Territory Warfare checkbox
+        UIElems.gangTerritoryWarfareCheckbox.checked = this.territoryWarfareEngaged;
+
+        // Update territory information
+        UIElems.gangTerritoryInfoText.innerHTML = "";
+        const playerPower = AllGangs[this.facName].power;
+        for (const gangname in AllGangs) {
+            if (AllGangs.hasOwnProperty(gangname)) {
+                const gangTerritoryInfo = AllGangs[gangname];
+                let territory = gangTerritoryInfo.territory * 100;
+
+                //Fix some rounding issues graphically
+                let displayNumber;
+                if (territory <= 0) {
+                    displayNumber = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(0, 2);
+                } else if (territory >= 100) {
+                    displayNumber = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(100, 2);
+                } else {
+                    displayNumber = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(territory, 2);
+                }
+
+                if (gangname === this.facName) {
+                    let newHTML = `<b><u>${gangname}</u></b><br>Power: ${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(gangTerritoryInfo.power, 6)}<br>`;
+                    newHTML += `Territory: ${displayNumber}%<br><br>`;
+                    UIElems.gangTerritoryInfoText.innerHTML += newHTML;
+                } else {
+                    const clashVictoryChance = playerPower / (gangTerritoryInfo.power + playerPower);
+                    let newHTML = `<u>${gangname}</u><br>Power: ${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(gangTerritoryInfo.power, 6)}<br>`;
+                    newHTML += `Territory: ${displayNumber}%<br>`;
+                    newHTML += `Chance to win clash with this gang: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(clashVictoryChance, "0.000%")}<br><br>`;
+                    UIElems.gangTerritoryInfoText.innerHTML += newHTML;
+                }
+            }
+        }
+    } else {
+        //Update information for overall gang
+        if (UIElems.gangInfo instanceof Element) {
+            var faction = _Faction__WEBPACK_IMPORTED_MODULE_3__[/* Factions */ "b"][this.facName];
+            var rep;
+            if (!(faction instanceof _Faction__WEBPACK_IMPORTED_MODULE_3__[/* Faction */ "a"])) {
+                rep = "ERROR";
+            } else {
+                rep = faction.playerReputation;
+            }
+            Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15__["removeChildrenFromElement"])(UIElems.gangInfo);
+            UIElems.gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {   // Respect
+                display: "inline-block",
+                innerText: "Respect: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(this.respect, 6) +
+                           " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(5*this.respectGainRate, 6) + " / sec)",
+                tooltip: "Represents the amount of respect your gang has from other gangs and criminal " +
+                         "organizations. Your respect affects the amount of money " +
+                         "your gang members will earn, and also determines how much " +
+                         "reputation you are earning with your gang's corresponding Faction."
+            }));
+            UIElems.gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br"));
+
+            UIElems.gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {   // Wanted level
+                display: "inline-block",
+                innerText: "Wanted Level: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(this.wanted, 6) +
+                           " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(5*this.wantedGainRate, 6) + " / sec)",
+                tooltip: "Represents how much the gang is wanted by law enforcement. The higher " +
+                         "your gang's wanted level, the harder it will be for your gang members " +
+                         "to make money and earn respect. Note that the minimum wanted level is 1."
+            }));
+            UIElems.gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br"));
+
+            var wantedPenalty = this.getWantedPenalty();
+            wantedPenalty = (1 - wantedPenalty) * 100;
+            UIElems.gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {   // Wanted Level multiplier
+                display: "inline-block",
+                innerText: `Wanted Level Penalty: -${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(wantedPenalty, 2)}%`,
+                tooltip: "Penalty for respect and money gain rates due to Wanted Level"
+            }));
+            UIElems.gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br"));
+
+            UIElems.gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {   // Money gain rate
+                display: "inline-block",
+                innerText: `Money gain rate: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(5 * this.moneyGainRate, "$0.000a")} / sec`,
+            }));
+            UIElems.gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br"));
+
+            //Fix some rounding issues graphically
+            var territoryMult = AllGangs[this.facName].territory * 100;
+            let displayNumber;
+            if (territoryMult <= 0) {
+                displayNumber = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(0, 2);
+            } else if (territoryMult >= 100) {
+                displayNumber = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(100, 2);
+            } else {
+                displayNumber = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(territoryMult, 2);
+            }
+            UIElems.gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {  // Territory multiplier
+                display: "inline-block",
+                innerText: `Territory: ${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(displayNumber, 3)}%`,
+                tooltip: "The percentage of total territory your Gang controls"
+            }));
+            UIElems.gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br"));
+
+            UIElems.gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {  // Faction reputation
+                display:"inline-block",
+                innerText:"Faction reputation: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(rep, 3)
+            }));
+            UIElems.gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br"));
+
+            const CyclesPerSecond = 1000 / _engine__WEBPACK_IMPORTED_MODULE_2__["Engine"]._idleSpeed;
+            UIElems.gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", { // Stored Cycles
+                innerText: `Bonus time(s): ${this.storedCycles / CyclesPerSecond}`,
+                display: "inline-block",
+                tooltip: "You gain bonus time while offline or when the game is inactive (e.g. when the tab is throttled by the browser). " +
+                         "Bonus time makes the Gang mechanic progress faster, up to 5x the normal speed",
+            }));
+            UIElems.gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br"));
+        } else {
+            console.error("gang-info DOM element DNE");
+        }
+
+        //Toggle the 'Recruit member button' if valid
+        const numMembers = this.members.length;
+        const respectCost = this.getRespectNeededToRecruitMember();
+
+        const btn = UIElems.gangRecruitMemberButton;
+        if (numMembers >= MaximumGangMembers) {
+            btn.className = "a-link-button-inactive";
+            UIElems.gangRecruitRequirementText.style.display = "inline-block";
+            UIElems.gangRecruitRequirementText.innerHTML = "You have reached the maximum amount of gang members";
+        } else if (this.canRecruitMember()) {
+            btn.className = "a-link-button";
+            UIElems.gangRecruitRequirementText.style.display = "none";
+        } else {
+            btn.className = "a-link-button-inactive";
+            UIElems.gangRecruitRequirementText.style.display = "inline-block";
+            UIElems.gangRecruitRequirementText.innerHTML = `${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(respectCost, 2)} respect needed to recruit next member`;
+        }
+
+        //Update information for each gang member
+        for (let i = 0; i < this.members.length; ++i) {
+            this.updateGangMemberDisplayElement(this.members[i]);
+        }
+    }
+}
+
+//Takes in a GangMember object
+Gang.prototype.createGangMemberDisplayElement = function(memberObj) {
+    if (!UIElems.gangContentCreated) { return; }
+    const name = memberObj.name;
+
+    // Clear/Update the UIElems map to keep track of this gang member's panel
+    UIElems.gangMemberPanels[name] = {};
+
+    // Create the accordion
+    var accordion = Object(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_8__["createAccordionElement"])({
+        id: name + "gang-member",
+        hdrText: name,
+    });
+    const li = accordion[0];
+    const hdr = accordion[1];
+    const gangMemberDiv = accordion[2];
+
+    UIElems.gangMemberPanels[name]["panel"] = gangMemberDiv;
+
+    // Gang member content divided into 3 panels:
+    // Panel 1 - Shows member's stats & Ascension stuff
+    const statsDiv = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {
+        class: "gang-member-info-div",
+        id: name + "gang-member-stats",
+        tooltipsmall: [`Hk: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.hack_mult * memberObj.hack_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.hack_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.hack_asc_mult, "0,0.00")} Asc)`,
+                       `St: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.str_mult * memberObj.str_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.str_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.str_asc_mult, "0,0.00")} Asc)`,
+                       `Df: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.def_mult * memberObj.def_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.def_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.def_asc_mult, "0,0.00")} Asc)`,
+                       `Dx: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.dex_mult * memberObj.dex_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.dex_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.dex_asc_mult, "0,0.00")} Asc)`,
+                       `Ag: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.agi_mult * memberObj.agi_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.agi_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.agi_asc_mult, "0,0.00")} Asc)`,
+                       `Ch: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.cha_mult * memberObj.cha_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.cha_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.cha_asc_mult, "0,0.00")} Asc)`].join("<br>"),
+    });
+    UIElems.gangMemberPanels[name]["statsDiv"] = statsDiv;
+    const statsP = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("pre", {
+        display: "inline",
+        id: name + "gang-member-stats-text",
+    });
+    const brElement = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br");
+    const ascendButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("button", {
+        class: "accordion-button",
+        innerText: "Ascend",
+        clickListener: () => {
+            const popupId = `gang-management-ascend-member ${memberObj.name}`;
+            const ascendBenefits = memberObj.getAscensionResults();
+            const txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("pre", {
+               innerText: ["Are you sure you want to ascend this member? (S)he will lose all of",
+                           "his non-Augmentation upgrades and his/her stats will reset back to 1.",
+                           "",
+                           `Furthermore, your gang will lose ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.earnedRespect, "0.000000")} respect`,
+                           "",
+                           "In return, (s)he will gain the following permanent boost to stat multipliers:\n",
+                           `Hacking: +${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(ascendBenefits.hack, "0.00%")}`,
+                           `Strength: +${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(ascendBenefits.str, "0.00%")}`,
+                           `Defense: +${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(ascendBenefits.def, "0.00%")}`,
+                           `Dexterity: +${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(ascendBenefits.dex, "0.00%")}`,
+                           `Agility: +${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(ascendBenefits.agi, "0.00%")}`,
+                           `Charisma: +${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(ascendBenefits.cha, "0.00%")}`].join("\n"),
+            });
+            const confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("button", {
+                class: "std-button",
+                clickListener: () => {
+                    this.ascendMember(memberObj);
+                    this.updateGangMemberDisplayElement(memberObj);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(popupId);
+                    return false;
+                },
+                innerText: "Ascend",
+            });
+            const cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("button", {
+                class: "std-button",
+                clickListener: () => {
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(popupId);
+                    return false;
+                },
+                innerText: "Cancel",
+            });
+            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_10__["createPopup"])(popupId, [txt, confirmBtn, cancelBtn]);
+        }
+    });
+    const ascendHelpTip = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {
+        class: "help-tip",
+        clickListener: () => {
+            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_5__["dialogBoxCreate"])(["Ascending a Gang Member resets the member's progress and stats in exchange",
+                             "for a permanent boost to their stat multipliers.",
+                             "<br><br>The additional stat multiplier that the Gang Member gains upon ascension",
+                             "is based on the amount of multipliers the member has from non-Augmentation Equipment.",
+                             "<br><br>Upon ascension, the member will lose all of its non-Augmentation Equipment and your",
+                             "gang will lose respect equal to the total respect earned by the member."].join(" "));
+        },
+        innerText: "?",
+        marginTop: "5px",
+    });
+
+    statsDiv.appendChild(statsP);
+    statsDiv.appendChild(brElement);
+    statsDiv.appendChild(ascendButton);
+    statsDiv.appendChild(ascendHelpTip);
+
+    // Panel 2 - Task Selection & Info
+    const taskDiv = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {
+        class:"gang-member-info-div",
+        id: name + "gang-member-task",
+    });
+    const taskSelector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("select", {
+        id: name + "gang-member-task-selector",
+    });
+
+    // Get an array of the name of all tasks that are applicable for this Gang
+    let tasks = this.getAllTaskNames();
+    tasks.unshift("---");
+
+    // Create selector for Gang member task
+    for (var i = 0; i < tasks.length; ++i) {
+        var option = document.createElement("option");
+        option.text = tasks[i];
+        taskSelector.add(option);
+    }
+    taskSelector.addEventListener("change", () => {
+        var task = taskSelector.options[taskSelector.selectedIndex].text;
+        memberObj.assignToTask(task);
+        this.setGangMemberTaskDescription(memberObj, task);
+        this.updateGangContent();
+    });
+
+    // Set initial task in selector
+    if (GangMemberTasks.hasOwnProperty(memberObj.task)) {
+        var taskName = memberObj.task;
+        var taskIndex = 0;
+        for (let i = 0; i < tasks.length; ++i) {
+            if (taskName === tasks[i]) {
+                taskIndex = i;
+                break;
+            }
+        }
+        taskSelector.selectedIndex = taskIndex;
+    }
+
+    var gainInfo = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {id:name + "gang-member-gain-info"});
+    taskDiv.appendChild(taskSelector);
+    taskDiv.appendChild(gainInfo);
+
+    //Panel for Description of task
+    var taskDescDiv = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {
+        class:"gang-member-info-div",
+        id: name + "gang-member-task-desc",
+    });
+
+    var taskDescP = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {
+        display:"inline",
+        id: name + "gang-member-task-description",
+    });
+    taskDescDiv.appendChild(taskDescP);
+
+    gangMemberDiv.appendChild(statsDiv);
+    gangMemberDiv.appendChild(taskDiv);
+    gangMemberDiv.appendChild(taskDescDiv);
+
+    UIElems.gangMemberList.appendChild(li);
+    this.setGangMemberTaskDescription(memberObj, taskName); //Initialize description, TODO doesnt work rn
+    this.updateGangMemberDisplayElement(memberObj);
+}
+
+Gang.prototype.updateGangMemberDisplayElement = function(memberObj) {
+    if (!UIElems.gangContentCreated) { return; }
+    var name = memberObj.name;
+
+    // Update stats + exp
+    var stats = document.getElementById(name + "gang-member-stats-text");
+    if (stats) {
+        stats.innerText =
+            [`Hacking: ${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(memberObj.hack, 0)} (${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.hack_exp, '(0.00a)')} exp)`,
+             `Strength: ${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(memberObj.str, 0)} (${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.str_exp, '(0.00a)')} exp)`,
+             `Defense: ${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(memberObj.def, 0)} (${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.def_exp, '(0.00a)')} exp)`,
+             `Dexterity: ${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(memberObj.dex, 0)} (${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.dex_exp, '(0.00a)')} exp)`,
+             `Agility: ${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(memberObj.agi, 0)} (${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.agi_exp, '(0.00a)')} exp)`,
+             `Charisma: ${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(memberObj.cha, 0)} (${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.cha_exp, '(0.00a)')} exp)`].join("\n");
+    }
+
+    // Update tooltip for stat multipliers
+    const panel = UIElems.gangMemberPanels[name];
+    if (panel) {
+        const statsDiv = panel["statsDiv"];
+        if (statsDiv) {
+            statsDiv.firstChild.innerHTML =
+                [`Hk: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.hack_mult * memberObj.hack_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.hack_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.hack_asc_mult, "0,0.00")} Asc)`,
+                `St: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.str_mult * memberObj.str_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.str_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.str_asc_mult, "0,0.00")} Asc)`,
+                `Df: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.def_mult * memberObj.def_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.def_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.def_asc_mult, "0,0.00")} Asc)`,
+                `Dx: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.dex_mult * memberObj.dex_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.dex_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.dex_asc_mult, "0,0.00")} Asc)`,
+                `Ag: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.agi_mult * memberObj.agi_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.agi_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.agi_asc_mult, "0,0.00")} Asc)`,
+                `Ch: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.cha_mult * memberObj.cha_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.cha_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.cha_asc_mult, "0,0.00")} Asc)`].join("<br>");
+        }
+    }
+
+    // Update info about gang member's earnings/gains
+    var gainInfo = document.getElementById(name + "gang-member-gain-info");
+    if (gainInfo) {
+        gainInfo.innerHTML =
+            [`Money: $ ${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(5*memberObj.calculateMoneyGain(this), 2)} / sec`,
+             `Respect: ${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(5*memberObj.calculateRespectGain(this), 6)} / sec`,
+             `Wanted Level: ${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(5*memberObj.calculateWantedLevelGain(this), 6)} / sec`,
+             `Total Respect Earned: ${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(memberObj.earnedRespect, 6)}`].join("<br>");
+    }
+}
+
+Gang.prototype.setGangMemberTaskDescription = function(memberObj, taskName) {
+    const name = memberObj.name;
+    const taskDesc = document.getElementById(name + "gang-member-task-description");
+    if (taskDesc) {
+        var task = GangMemberTasks[taskName];
+        if (task == null) { task = GangMemberTasks["Unassigned"]; }
+        var desc = task.desc;
+        taskDesc.innerHTML = desc;
+    }
+}
+
+Gang.prototype.clearUI = function() {
+    if (UIElems.gangContainer instanceof Element) { Object(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_16__["removeElement"])(UIElems.gangContainer); }
+
+    for (const prop in UIElems) {
+        UIElems[prop] = null;
+    }
+
+    UIElems.gangContentCreated = false;
+    UIElems.gangMemberUpgradeBoxOpened = false;
+    UIElems.gangMemberPanels = {};
+}
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 60)))
+
+/***/ }),
+/* 48 */
 /*!*************************!*\
   !*** ./src/Terminal.js ***!
   \*************************/
@@ -29199,48 +31361,48 @@ function calculateWeakenTime(server, hack, int) {
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return postNetburnerText; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Terminal; });
-/* harmony import */ var _Alias__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Alias */ 41);
-/* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CodingContracts */ 38);
+/* harmony import */ var _Alias__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Alias */ 42);
+/* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CodingContracts */ 40);
 /* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_CodingContracts__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./CreateProgram */ 22);
-/* harmony import */ var _DarkWeb__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./DarkWeb */ 75);
+/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./CreateProgram */ 23);
+/* harmony import */ var _DarkWeb__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./DarkWeb */ 74);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./engine */ 8);
-/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Fconf */ 42);
-/* harmony import */ var _Hacking__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Hacking */ 45);
+/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Fconf */ 43);
+/* harmony import */ var _Hacking__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Hacking */ 46);
 /* harmony import */ var _HelpText__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./HelpText */ 94);
 /* harmony import */ var _HelpText__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_HelpText__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./InteractiveTutorial */ 33);
-/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Literature */ 76);
-/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Message */ 36);
+/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Literature */ 75);
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Message */ 37);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./NetscriptWorker */ 24);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./RedPill */ 53);
-/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Script */ 29);
+/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Script */ 28);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Server */ 11);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./SpecialServerIps */ 28);
-/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./TextFile */ 57);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./SpecialServerIps */ 30);
+/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./TextFile */ 58);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_TextFile__WEBPACK_IMPORTED_MODULE_19__);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_20__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./ui/navigationTracking */ 13);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./ui/numeralFormat */ 5);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 32);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_23__);
 /* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 59);
 /* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_24__);
-/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/helpers/isString */ 35);
+/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/helpers/isString */ 36);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25__);
-/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 50);
+/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 51);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_26__);
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 80);
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_27__);
-/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../utils/LogBox */ 74);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../utils/YesNoBox */ 18);
+/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../utils/LogBox */ 73);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./ui/postToTerminal */ 7);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__);
 /* harmony import */ var autosize__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! autosize */ 138);
@@ -31389,7 +33551,7 @@ let Terminal = {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 60)))
 
 /***/ }),
-/* 47 */
+/* 49 */
 /*!*************************************!*\
   !*** ./src/NetscriptBladeburner.js ***!
   \*************************************/
@@ -31402,7 +33564,7 @@ let Terminal = {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return unknownBladeburnerExceptionMessage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return checkBladeburnerAccess; });
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Bladeburner */ 30);
+/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Bladeburner */ 29);
 /* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NetscriptEvaluator */ 6);
 
 
@@ -31433,7 +33595,7 @@ function checkBladeburnerAccess(workerScript, functionName) {
 
 
 /***/ }),
-/* 48 */
+/* 50 */
 /*!*******************************************!*\
   !*** ./utils/uiHelpers/getElementById.ts ***!
   \*******************************************/
@@ -31461,7 +33623,28 @@ exports.getElementById = getElementById;
 
 
 /***/ }),
-/* 49 */
+/* 51 */
+/*!****************************************!*\
+  !*** ./utils/helpers/arrayToString.ts ***!
+  \****************************************/
+/*! no static exports found */
+/*! exports used: arrayToString */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Returns the input array as a comma separated string.
+ */
+function arrayToString(a) {
+    return `[${a.join(", ")}]`;
+}
+exports.arrayToString = arrayToString;
+
+
+/***/ }),
+/* 52 */
 /*!*************************!*\
   !*** ./src/Missions.js ***!
   \*************************/
@@ -31488,9 +33671,9 @@ exports.getElementById = getElementById;
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 15);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/isString */ 35);
+/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/isString */ 36);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var jsplumb__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! jsplumb */ 241);
+/* harmony import */ var jsplumb__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! jsplumb */ 243);
 /* harmony import */ var jsplumb__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(jsplumb__WEBPACK_IMPORTED_MODULE_10__);
 
 
@@ -33033,2023 +35216,6 @@ HackingMission.prototype.finishMission = function(win) {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 60)))
 
 /***/ }),
-/* 50 */
-/*!****************************************!*\
-  !*** ./utils/helpers/arrayToString.ts ***!
-  \****************************************/
-/*! no static exports found */
-/*! exports used: arrayToString */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * Returns the input array as a comma separated string.
- */
-function arrayToString(a) {
-    return `[${a.join(", ")}]`;
-}
-exports.arrayToString = arrayToString;
-
-
-/***/ }),
-/* 51 */
-/*!**************************************************!*\
-  !*** ./src/Company/data/CompanyPositionNames.ts ***!
-  \**************************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-// Defs for job titles, stored in arrays and categorized by job "type"
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.SoftwareCompanyPositions = [
-    "Software Engineering Intern",
-    "Junior Software Engineer",
-    "Senior Software Engineer",
-    "Lead Software Developer",
-    "Head of Software",
-    "Head of Engineering",
-    "Vice President of Technology",
-    "Chief Technology Officer"
-];
-exports.ITCompanyPositions = [
-    "IT Intern",
-    "IT Analyst",
-    "IT Manager",
-    "Systems Administrator"
-];
-exports.SecurityEngineerCompanyPositions = [
-    "Security Engineer"
-];
-exports.NetworkEngineerCompanyPositions = [
-    "Network Engineer",
-    "Network Administrator"
-];
-exports.BusinessCompanyPositions = [
-    "Business Intern",
-    "Business Analyst",
-    "Business Manager",
-    "Operations Manager",
-    "Chief Financial Officer",
-    "Chief Executive Officer"
-];
-exports.SecurityCompanyPositions = [
-    "Police Officer",
-    "Police Chief",
-    "Security Guard",
-    "Security Officer",
-    "Security Supervisor",
-    "Head of Security"
-];
-exports.AgentCompanyPositions = [
-    "Field Agent",
-    "Secret Agent",
-    "Special Operative"
-];
-exports.MiscCompanyPositions = [
-    "Waiter",
-    "Employee"
-];
-exports.SoftwareConsultantCompanyPositions = [
-    "Software Consultant",
-    "Senior Software Consultant"
-];
-exports.BusinessConsultantCompanyPositions = [
-    "Business Consultant",
-    "Senior Business Consultant"
-];
-exports.PartTimeCompanyPositions = [
-    "Part-time Waiter",
-    "Part-time Employee"
-];
-
-
-/***/ }),
-/* 52 */
-/*!*********************!*\
-  !*** ./src/Gang.js ***!
-  \*********************/
-/*! exports provided: AllGangs, resetGangs, loadAllGangs, Gang */
-/*! exports used: AllGangs, Gang, loadAllGangs, resetGangs */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AllGangs; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return resetGangs; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return loadAllGangs; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Gang; });
-/* harmony import */ var _data_gangmembertasks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./data/gangmembertasks */ 125);
-/* harmony import */ var _data_gangmembertasks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_data_gangmembertasks__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _data_gangmemberupgrades__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data/gangmemberupgrades */ 124);
-/* harmony import */ var _data_gangmemberupgrades__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_data_gangmemberupgrades__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 8);
-/* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Faction */ 12);
-/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ui/numeralFormat */ 5);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
-/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 32);
-/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 72);
-/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 37);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./ui/navigationTracking */ 13);
-/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 43);
-/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 15);
-/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 27);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 65);
-/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/YesNoBox */ 18);
-/*
-Also add police clashes
-balance point to keep them from running out of control
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Constants
-const GangRespectToReputationRatio = 5; // Respect is divided by this to get rep gain
-const MaximumGangMembers = 30;
-const GangRecruitCostMultiplier = 2;
-const CyclesPerTerritoryAndPowerUpdate = 100;
-const AscensionMultiplierRatio = 15 / 100; // Portion of upgrade multiplier that is kept after ascending
-
-// Switch between territory and management screen with 1 and 2
-$(document).keydown(function(event) {
-    if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_11__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_11__["Page"].Gang) && event.altKey) {
-        if (UIElems.gangMemberFilter != null && UIElems.gangMemberFilter === document.activeElement) {return;}
-        if (event.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_7__["KEY"]["1"]) {
-            if(UIElems.gangTerritorySubpage.style.display === "block") {
-                UIElems.managementButton.click();
-            }
-        } else if (event.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_7__["KEY"]["2"]) {
-            if (UIElems.gangManagementSubpage.style.display === "block") {
-                UIElems.territoryButton.click();
-            }
-        }
-    }
-});
-
-//Delete upgrade box when clicking outside
-$(document).mousedown(function(event) {
-    var boxId = "gang-member-upgrade-popup-box";
-    var contentId = "gang-member-upgrade-popup-box-content";
-    if (UIElems.gangMemberUpgradeBoxOpened) {
-        if ( $(event.target).closest("#" + contentId).get(0) == null ) {
-            //Delete the box
-            Object(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_16__["removeElement"])(UIElems.gangMemberUpgradeBox);
-            UIElems.gangMemberUpgradeBox = null;
-            UIElems.gangMemberUpgradeBoxContent = null;
-            UIElems.gangMemberUpgradeBoxOpened = false;
-            UIElems.gangMemberUpgradeBoxElements = null;
-        }
-    }
-});
-
-let GangNames = ["Slum Snakes", "Tetrads", "The Syndicate", "The Dark Army", "Speakers for the Dead",
-             "NiteSec", "The Black Hand"];
-let AllGangs = {
-    "Slum Snakes" : {
-        power: 1,
-        territory: 1/7,
-    },
-    "Tetrads" : {
-        power: 1,
-        territory: 1/7,
-    },
-    "The Syndicate" : {
-        power: 1,
-        territory: 1/7,
-    },
-    "The Dark Army" : {
-        power: 1,
-        territory: 1/7,
-    },
-    "Speakers for the Dead" : {
-        power: 1,
-        territory: 1/7,
-    },
-    "NiteSec" : {
-        power: 1,
-        territory: 1/7,
-    },
-    "The Black Hand" : {
-        power: 1,
-        territory: 1/7,
-    },
-}
-
-function resetGangs() {
-    AllGangs = {
-        "Slum Snakes" : {
-            power: 1,
-            territory: 1/7,
-        },
-        "Tetrads" : {
-            power: 1,
-            territory: 1/7,
-        },
-        "The Syndicate" : {
-            power: 1,
-            territory: 1/7,
-        },
-        "The Dark Army" : {
-            power: 1,
-            territory: 1/7,
-        },
-        "Speakers for the Dead" : {
-            power: 1,
-            territory: 1/7,
-        },
-        "NiteSec" : {
-            power: 1,
-            territory: 1/7,
-        },
-        "The Black Hand" : {
-            power: 1,
-            territory: 1/7,
-        },
-    }
-}
-
-function loadAllGangs(saveString) {
-    AllGangs = JSON.parse(saveString, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_6__["Reviver"]);
-}
-
-/**
- * @param facName - Name of corresponding faction
- * @param hacking - Boolean indicating whether or not its a hacking gang
- */
-function Gang(facName, hacking=false) {
-    this.facName    = facName;
-    this.members    = [];  //Array of GangMembers
-    this.wanted     = 1;
-    this.respect    = 1;
-
-    this.isHackingGang = hacking;
-
-    this.respectGainRate = 0;
-    this.wantedGainRate = 0;
-    this.moneyGainRate = 0;
-
-    // When processing gains, this stores the number of cycles until some
-    // limit is reached, and then calculates and applies the gains only at that limit
-    this.storedCycles   = 0;
-
-    // Separate variable to keep track of cycles for Territry + Power gang, which
-    // happens on a slower "clock" than normal processing
-    this.storedTerritoryAndPowerCycles = 0;
-
-    this.territoryClashChance = 0;
-    this.territoryWarfareEngaged = false;
-
-    this.notifyMemberDeath = true;
-}
-
-Gang.prototype.getPower = function() {
-    return AllGangs[this.facName].power;
-}
-
-Gang.prototype.getTerritory = function() {
-    return AllGangs[this.facName].territory;
-}
-
-Gang.prototype.process = function(numCycles=1, player) {
-    const CyclesPerSecond = 1000 / _engine__WEBPACK_IMPORTED_MODULE_2__["Engine"]._idleSpeed;
-
-    if (isNaN(numCycles)) {
-        console.error(`NaN passed into Gang.process(): ${numCycles}`);
-    }
-    this.storedCycles += numCycles;
-
-    // Only process if there are at least 2 seconds, and at most 5 seconds
-    if (this.storedCycles < 2 * CyclesPerSecond) { return; }
-    const cycles = Math.min(this.storedCycles, 5 * CyclesPerSecond);
-
-    try {
-        this.processGains(cycles, player);
-        this.processExperienceGains(cycles);
-        this.processTerritoryAndPowerGains(cycles);
-        this.storedCycles -= cycles;
-    } catch(e) {
-        Object(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_13__[/* exceptionAlert */ "a"])(`Exception caught when processing Gang: ${e}`);
-    }
-}
-
-Gang.prototype.processGains = function(numCycles=1, player) {
-    //Get gains per cycle
-    var moneyGains = 0, respectGains = 0, wantedLevelGains = 0;
-    for (var i = 0; i < this.members.length; ++i) {
-        respectGains += (this.members[i].calculateRespectGain(this));
-        wantedLevelGains += (this.members[i].calculateWantedLevelGain(this));
-        moneyGains += (this.members[i].calculateMoneyGain(this));
-    }
-    this.respectGainRate = respectGains;
-    this.wantedGainRate = wantedLevelGains;
-    this.moneyGainRate = moneyGains;
-
-    if (typeof respectGains === "number") {
-        const gain = respectGains * numCycles;
-        this.respect += gain;
-        // Faction reputation gains is respect gain divided by some constant
-        const fac = _Faction__WEBPACK_IMPORTED_MODULE_3__[/* Factions */ "b"][this.facName];
-        if (!(fac instanceof _Faction__WEBPACK_IMPORTED_MODULE_3__[/* Faction */ "a"])) {
-            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_5__["dialogBoxCreate"])("ERROR: Could not get Faction associates with your gang. This is a bug, please report to game dev");
-        } else {
-            var favorMult = 1 + (fac.favor / 100);
-            fac.playerReputation += ((player.faction_rep_mult * gain * favorMult) / GangRespectToReputationRatio);
-        }
-
-        // Keep track of respect gained per member
-        for (let i = 0; i < this.members.length; ++i) {
-            this.members[i].recordEarnedRespect(numCycles, this);
-        }
-    } else {
-        console.warn("respectGains calculated to be NaN");
-    }
-    if (typeof wantedLevelGains === "number") {
-        if (this.wanted === 1 && wantedLevelGains < 0) {
-            // At minimum wanted, do nothing
-        } else {
-            const oldWanted = this.wanted;
-            let newWanted = oldWanted + (wantedLevelGains * numCycles);
-
-            // Prevent overflow
-            if (wantedLevelGains <= 0 && newWanted > oldWanted) {
-                newWanted = 1;
-            }
-
-            this.wanted = newWanted;
-            if (this.wanted < 1) {this.wanted = 1;}
-        }
-    } else {
-        console.warn("ERROR: wantedLevelGains is NaN");
-    }
-    if (typeof moneyGains === "number") {
-        player.gainMoney(moneyGains * numCycles);
-    } else {
-        console.warn("ERROR: respectGains is NaN");
-    }
-}
-
-Gang.prototype.processTerritoryAndPowerGains = function(numCycles=1) {
-    this.storedTerritoryAndPowerCycles += numCycles;
-    if (this.storedTerritoryAndPowerCycles < CyclesPerTerritoryAndPowerUpdate) { return; }
-    this.storedTerritoryAndPowerCycles -= CyclesPerTerritoryAndPowerUpdate;
-
-    // Process power first
-    var gangName = this.facName;
-    for (const name in AllGangs) {
-        if (AllGangs.hasOwnProperty(name)) {
-            if (name == gangName) {
-                AllGangs[name].power += this.calculatePower();
-            } else {
-                // All NPC gangs get random power gains
-                const gainRoll = Math.random();
-                if (gainRoll < 0.5) {
-                    // Multiplicative gain (50% chance)
-                    // This is capped per cycle, to prevent it from getting out of control
-                    const multiplicativeGain = AllGangs[name].power * 0.008;
-                    AllGangs[name].power += Math.min(0.9, multiplicativeGain);
-                } else {
-                    // Additive gain (50% chance)
-                    const additiveGain = 0.5 * gainRoll * AllGangs[name].territory;
-                    AllGangs[name].power += (additiveGain);
-                }
-            }
-        }
-    }
-
-    // Determine if territory should be processed
-    if (this.territoryWarfareEngaged) {
-        this.territoryClashChance = 1;
-    } else if (this.territoryClashChance > 0) {
-        // Engagement turned off, but still a positive clash chance. So there's
-        // still a chance of clashing but it slowly goes down over time
-        this.territoryClashChance = Math.max(0, this.territoryClashChance - 0.01);
-    }
-
-    // Then process territory
-    for (var i = 0; i < GangNames.length; ++i) {
-        const others = GangNames.filter((e) => {
-            return e !== i;
-        });
-        const other = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__["getRandomInt"])(0, others.length - 1);
-
-        const thisGang = GangNames[i];
-        const otherGang = others[other];
-
-        // If either of the gangs involved in this clash is the player, determine
-        // whether to skip or process it using the clash chance
-        if (thisGang === gangName || otherGang === gangName) {
-            if (!(Math.random() < this.territoryClashChance)) { continue; }
-        }
-
-        const thisPwr = AllGangs[thisGang].power;
-        const otherPwr = AllGangs[otherGang].power;
-        const thisChance = thisPwr / (thisPwr + otherPwr);
-
-        if (Math.random() < thisChance) {
-            if (AllGangs[otherGang].territory <= 0) {
-                return;
-            }
-            AllGangs[thisGang].territory += 0.0001;
-            AllGangs[otherGang].territory -= 0.0001;
-            if (thisGang === gangName) {
-                this.clash(true); // Player won
-            } else if (otherGang === gangName) {
-                this.clash(false); // Player lost
-            } else {
-                AllGangs[otherGang].power *= (1 / 1.01);
-            }
-        } else {
-            if (AllGangs[thisGang].territory <= 0) {
-                return;
-            }
-            AllGangs[thisGang].territory -= 0.0001;
-            AllGangs[otherGang].territory += 0.0001;
-            if (thisGang === gangName) {
-                this.clash(false); // Player lost
-            } else if (otherGang === gangName) {
-                this.clash(true); // Player won
-            } else {
-                AllGangs[thisGang].power *= (1 / 1.01);
-            }
-        }
-    }
-}
-
-Gang.prototype.canRecruitMember = function() {
-    if (this.members.length >= MaximumGangMembers) { return false; }
-    return (this.respect >= this.getRespectNeededToRecruitMember());
-}
-
-Gang.prototype.getRespectNeededToRecruitMember = function() {
-    // First N gang members are free (can be recruited at 0 respect)
-    const numFreeMembers = 3;
-    if (this.members.length < numFreeMembers) { return 0; }
-
-    const i = this.members.length - (numFreeMembers - 1);
-    return Math.round(0.9 * Math.pow(i, 3) + Math.pow(i, 2));
-}
-
-Gang.prototype.recruitMember = function(name) {
-    name = String(name);
-    if (name === "" || !this.canRecruitMember()) { return false; }
-
-    // Check for already-existing names
-    let sameNames = this.members.filter((m) => {
-        return m.name === name;
-    });
-    if (sameNames.length >= 1) { return false; }
-
-    let member = new GangMember(name);
-    this.members.push(member);
-    if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_11__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_11__["Page"].Gang)) {
-        this.createGangMemberDisplayElement(member);
-        this.updateGangContent();
-    }
-    return true;
-}
-
-// Money and Respect gains multiplied by this number (< 1)
-Gang.prototype.getWantedPenalty = function() {
-    return (this.respect) / (this.respect + this.wanted);
-}
-
-Gang.prototype.processExperienceGains = function(numCycles=1) {
-    for (var i = 0; i < this.members.length; ++i) {
-        this.members[i].gainExperience(numCycles);
-        this.members[i].updateSkillLevels();
-    }
-}
-
-//Calculates power GAIN, which is added onto the Gang's existing power
-Gang.prototype.calculatePower = function() {
-    var memberTotal = 0;
-    for (var i = 0; i < this.members.length; ++i) {
-        if (GangMemberTasks.hasOwnProperty(this.members[i].task) && this.members[i].task == "Territory Warfare") {
-            const gain = this.members[i].calculatePower();
-            memberTotal += gain;
-        }
-    }
-    return (0.015 * this.getTerritory() * memberTotal);
-}
-
-Gang.prototype.clash = function(won=false) {
-    // Determine if a gang member should die
-    let baseDeathChance = 0.01;
-    if (won) { baseDeathChance /= 2; }
-
-    // If the clash was lost, the player loses a small percentage of power
-    if (!won) {
-        AllGangs[this.facName].power *= (1 / 1.008);
-    }
-
-    // Deaths can only occur during X% of clashes
-    if (Math.random() < 0.65) { return; }
-
-    for (let i = this.members.length - 1; i >= 0; --i) {
-        const member = this.members[i];
-
-        // Only members assigned to Territory Warfare can die
-        if (member.task !== "Territory Warfare") { continue; }
-
-        // Chance to die is decreased based on defense
-        const modifiedDeathChance = baseDeathChance / Math.pow(member.def, 0.6);
-        if (Math.random() < modifiedDeathChance) {
-            this.killMember(member);
-        }
-    }
-}
-
-Gang.prototype.killMember = function(memberObj) {
-    const gangName = this.facName;
-
-    // Player loses a percentage of total respect, plus whatever respect that member has earned
-    const totalRespect = this.respect;
-    const lostRespect = (0.05 * totalRespect) + memberObj.earnedRespect;
-    this.respect = Math.max(0, totalRespect - lostRespect);
-
-    for (let i = 0; i < this.members.length; ++i) {
-        if (memberObj.name === this.members[i].name) {
-            this.members.splice(i, 1);
-            break;
-        }
-    }
-
-    // Notify of death
-    if (this.notifyMemberDeath) {
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_5__["dialogBoxCreate"])(`${memberObj.name} was killed in a gang clash! You lost ${lostRespect} respect`);
-    }
-
-    // Update UI
-    if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_11__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_11__["Page"].Gang)) {
-        this.displayGangMemberList();
-    }
-}
-
-Gang.prototype.ascendMember = function(memberObj, workerScript) {
-    try {
-        /**
-         * res is an object with the following format:
-         * {
-         *  respect: Amount of respect to deduct
-         *  hack/str/def/dex/agi/cha: Ascension multipliers gained for each stat
-         * }
-         */
-        const res = memberObj.ascend();
-        this.respect = Math.max(1, this.respect - res.respect);
-        if (workerScript == null) {
-            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_5__["dialogBoxCreate"])([`You ascended ${memberObj.name}!`,
-                             "",
-                             `Your gang lost ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(res.respect, "0.000a")} respect`,
-                             "",
-                             `${memberObj.name} gained the following stat multipliers for ascending:`,
-                             `Hacking: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(res.hack, "0.000%")}`,
-                             `Strength: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(res.str, "0.000%")}`,
-                             `Defense: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(res.def, "0.000%")}`,
-                             `Dexterity: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(res.dex, "0.000%")}`,
-                             `Agility: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(res.agi, "0.000%")}`,
-                             `Charisma: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(res.cha, "0.000%")}`].join("<br>"));
-        } else {
-            workerScript.log(`Ascended Gang member ${memberObj.name}`);
-        }
-        if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_11__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_11__["Page"].Gang)) {
-            this.displayGangMemberList();
-        }
-        return res;
-    } catch(e) {
-        if (workerScript == null) {
-            Object(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_13__[/* exceptionAlert */ "a"])(e);
-        } else {
-            throw e; // Re-throw, will be caught in the Netscript Function
-        }
-    }
-}
-
-// Cost of upgrade gets cheaper as gang increases in respect + power
-Gang.prototype.getDiscount = function() {
-    const power = this.getPower();
-    const respect = this.respect;
-
-    const respectLinearFac = 5e6;
-    const powerLinearFac = 1e6;
-    const discount = Math.pow(respect, 0.01) + respect / respectLinearFac + Math.pow(power, 0.01) + power / powerLinearFac - 1;
-    return Math.max(1, discount);
-}
-
-// Returns only valid tasks for this gang. Excludes 'Unassigned'
-Gang.prototype.getAllTaskNames = function() {
-    let tasks = [];
-    const allTasks = Object.keys(GangMemberTasks);
-    if (this.isHackingGang) {
-        tasks = allTasks.filter((e) => {
-            let task = GangMemberTasks[e];
-            if (task == null) { return false; }
-            if (e === "Unassigned") { return false; }
-            return task.isHacking;
-        });
-    } else {
-        tasks = allTasks.filter((e) => {
-            let task = GangMemberTasks[e];
-            if (task == null) { return false; }
-            if (e === "Unassigned") { return false; }
-            return task.isCombat;
-        });
-    }
-    return tasks;
-}
-
-Gang.prototype.getAllUpgradeNames = function() {
-    return Object.keys(GangMemberUpgrades);
-}
-
-Gang.prototype.getUpgradeCost = function(upgName) {
-    if (GangMemberUpgrades[upgName] == null) { return Infinity; }
-    return GangMemberUpgrades[upgName].getCost(this);
-}
-
-Gang.prototype.toJSON = function() {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_6__["Generic_toJSON"])("Gang", this);
-}
-
-Gang.fromJSON = function(value) {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_6__["Generic_fromJSON"])(Gang, value.data);
-}
-
-_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_6__["Reviver"].constructors.Gang = Gang;
-
-/*** Gang Member object ***/
-function GangMember(name) {
-    this.name   = name;
-    this.task   = "Unassigned"; //GangMemberTask object
-
-    this.earnedRespect = 0;
-
-    this.hack   = 1;
-    this.str    = 1;
-    this.def    = 1;
-    this.dex    = 1;
-    this.agi    = 1;
-    this.cha    = 1;
-
-    this.hack_exp   = 0;
-    this.str_exp    = 0;
-    this.def_exp    = 0;
-    this.dex_exp    = 0;
-    this.agi_exp    = 0;
-    this.cha_exp    = 0;
-
-    this.hack_mult  = 1;
-    this.str_mult   = 1;
-    this.def_mult   = 1;
-    this.dex_mult   = 1;
-    this.agi_mult   = 1;
-    this.cha_mult   = 1;
-
-    this.hack_asc_mult  = 1;
-    this.str_asc_mult   = 1;
-    this.def_asc_mult   = 1;
-    this.dex_asc_mult   = 1;
-    this.agi_asc_mult   = 1;
-    this.cha_asc_mult   = 1;
-
-    this.upgrades = [];         //Names of upgrades
-    this.augmentations = [];    //Names only
-}
-
-//Same formula for Player
-GangMember.prototype.calculateSkill = function(exp, mult=1) {
-    return Math.max(Math.floor(mult * (32 * Math.log(exp + 534.5) - 200)), 1);
-}
-
-GangMember.prototype.updateSkillLevels = function() {
-    this.hack   = this.calculateSkill(this.hack_exp, this.hack_mult * this.hack_asc_mult);
-    this.str    = this.calculateSkill(this.str_exp, this.str_mult * this.str_asc_mult);
-    this.def    = this.calculateSkill(this.def_exp, this.def_mult * this.def_asc_mult);
-    this.dex    = this.calculateSkill(this.dex_exp, this.dex_mult * this.dex_asc_mult);
-    this.agi    = this.calculateSkill(this.agi_exp, this.agi_mult * this.agi_asc_mult);
-    this.cha    = this.calculateSkill(this.cha_exp, this.cha_mult * this.cha_asc_mult);
-}
-
-GangMember.prototype.calculatePower = function() {
-    return (this.hack + this.str + this.def + this.dex + this.agi + this.cha) / 95;
-}
-
-GangMember.prototype.assignToTask = function(taskName) {
-    if (GangMemberTasks.hasOwnProperty(taskName)) {
-        this.task = taskName;
-        return true;
-    } else {
-        this.task = "Unassigned";
-        return false;
-    }
-}
-
-GangMember.prototype.unassignFromTask = function() {
-    this.task = "Unassigned";
-}
-
-GangMember.prototype.getTask = function() {
-    // Backwards compatibility
-    if (this.task instanceof GangMemberTask) {
-        this.task = this.task.name;
-    }
-
-    if (GangMemberTasks.hasOwnProperty(this.task)) {
-        return GangMemberTasks[this.task];
-    }
-    return GangMemberTasks["Unassigned"];
-}
-
-//Gains are per cycle
-GangMember.prototype.calculateRespectGain = function(gang) {
-    const task = this.getTask();
-    if (task == null || !(task instanceof GangMemberTask) || task.baseRespect === 0) {return 0;}
-    var statWeight =    (task.hackWeight/100) * this.hack +
-                        (task.strWeight/100) * this.str +
-                        (task.defWeight/100) * this.def +
-                        (task.dexWeight/100) * this.dex +
-                        (task.agiWeight/100) * this.agi +
-                        (task.chaWeight/100) * this.cha;
-    statWeight -= (4 * task.difficulty);
-    if (statWeight <= 0) { return 0; }
-    const territoryMult = Math.pow(AllGangs[gang.facName].territory * 100, task.territory.respect) / 100;
-    if (isNaN(territoryMult) || territoryMult <= 0) { return 0; }
-    var respectMult = gang.getWantedPenalty();
-    return 11 * task.baseRespect * statWeight * territoryMult * respectMult;
-}
-
-GangMember.prototype.calculateWantedLevelGain = function(gang) {
-    const task = this.getTask();
-    if (task == null || !(task instanceof GangMemberTask) || task.baseWanted === 0) {return 0;}
-    var statWeight =    (task.hackWeight/100) * this.hack +
-                        (task.strWeight/100) * this.str +
-                        (task.defWeight/100) * this.def +
-                        (task.dexWeight/100) * this.dex +
-                        (task.agiWeight/100) * this.agi +
-                        (task.chaWeight/100) * this.cha;
-    statWeight -= (3.5 * task.difficulty);
-    if (statWeight <= 0) { return 0; }
-    const territoryMult = Math.pow(AllGangs[gang.facName].territory * 100, task.territory.wanted) / 100;
-    if (isNaN(territoryMult) || territoryMult <= 0) { return 0; }
-    if (task.baseWanted < 0) {
-        return 0.5 * task.baseWanted * statWeight * territoryMult;
-    } else {
-        return 7 * task.baseWanted / (3 * statWeight * territoryMult);
-    }
-}
-
-GangMember.prototype.calculateMoneyGain = function(gang) {
-    const task = this.getTask();
-    if (task == null || !(task instanceof GangMemberTask) || task.baseMoney === 0) {return 0;}
-    var statWeight =    (task.hackWeight/100) * this.hack +
-                        (task.strWeight/100) * this.str +
-                        (task.defWeight/100) * this.def +
-                        (task.dexWeight/100) * this.dex +
-                        (task.agiWeight/100) * this.agi +
-                        (task.chaWeight/100) * this.cha;
-    statWeight -= (3.2 * task.difficulty);
-    if (statWeight <= 0) { return 0; }
-    const territoryMult = Math.pow(AllGangs[gang.facName].territory * 100, task.territory.money) / 100;
-    if (isNaN(territoryMult) || territoryMult <= 0) { return 0; }
-    var respectMult = gang.getWantedPenalty();
-    return 5 * task.baseMoney * statWeight * territoryMult * respectMult;
-}
-
-GangMember.prototype.gainExperience = function(numCycles=1) {
-    const task = this.getTask();
-    if (task == null || !(task instanceof GangMemberTask) || task === GangMemberTasks["Unassigned"]) {return;}
-    const difficultyMult = Math.pow(task.difficulty, 0.9);
-    const difficultyPerCycles = difficultyMult * numCycles;
-    const weightDivisor = 1500;
-    this.hack_exp   += (task.hackWeight / weightDivisor) * difficultyPerCycles;
-    this.str_exp    += (task.strWeight / weightDivisor) * difficultyPerCycles;
-    this.def_exp    += (task.defWeight / weightDivisor) * difficultyPerCycles;
-    this.dex_exp    += (task.dexWeight / weightDivisor) * difficultyPerCycles;
-    this.agi_exp    += (task.agiWeight / weightDivisor) * difficultyPerCycles;
-    this.cha_exp    += (task.chaWeight / weightDivisor) * difficultyPerCycles;
-}
-
-GangMember.prototype.recordEarnedRespect = function(numCycles=1, gang) {
-    this.earnedRespect += (this.calculateRespectGain(gang) * numCycles);
-}
-
-GangMember.prototype.ascend = function() {
-    const res = this.getAscensionResults();
-    const hackAscMult = res.hack;
-    const strAscMult =  res.str;
-    const defAscMult =  res.def;
-    const dexAscMult =  res.dex;
-    const agiAscMult =  res.agi;
-    const chaAscMult =  res.cha;
-    this.hack_asc_mult += hackAscMult;
-    this.str_asc_mult += strAscMult;
-    this.def_asc_mult += defAscMult;
-    this.dex_asc_mult += dexAscMult;
-    this.agi_asc_mult += agiAscMult;
-    this.cha_asc_mult += chaAscMult;
-
-    // Remove upgrades. Then re-calculate multipliers and stats
-    this.upgrades.length = 0;
-    this.hack_mult = 1;
-    this.str_mult = 1;
-    this.def_mult = 1;
-    this.dex_mult = 1;
-    this.agi_mult = 1;
-    this.cha_mult = 1;
-    for (let i = 0; i < this.augmentations.length; ++i) {
-        let aug = GangMemberUpgrades[this.augmentations[i]];
-        aug.apply(this);
-    }
-
-    // Clear exp and recalculate stats
-    this.hack_exp = 0;
-    this.str_exp = 0;
-    this.def_exp = 0;
-    this.dex_exp = 0;
-    this.agi_exp = 0;
-    this.cha_exp = 0;
-    this.updateSkillLevels();
-
-    const respectToDeduct = this.earnedRespect;
-    this.earnedRespect = 0;
-    return {
-        respect: respectToDeduct,
-        hack: hackAscMult,
-        str: strAscMult,
-        def: defAscMult,
-        dex: dexAscMult,
-        agi: agiAscMult,
-        cha: chaAscMult,
-    };
-}
-
-// Returns the multipliers that would be gained from ascension
-GangMember.prototype.getAscensionResults = function() {
-    // Calculate ascension bonus to stat multipliers.
-    // This is based on the current number of multipliers from Non-Augmentation upgrades
-    // + Ascension Bonus = N% of current bonus from Augmentations
-    let hack = 1;
-    let str = 1;
-    let def = 1;
-    let dex = 1;
-    let agi = 1;
-    let cha = 1;
-    for (let i = 0; i < this.upgrades.length; ++i) {
-        let upg = GangMemberUpgrades[this.upgrades[i]];
-        if (upg.mults.hack != null) { hack *= upg.mults.hack; }
-        if (upg.mults.str != null)  { str *= upg.mults.str; }
-        if (upg.mults.def != null)  { def *= upg.mults.def; }
-        if (upg.mults.dex != null)  { dex *= upg.mults.dex; }
-        if (upg.mults.agi != null)  { agi *= upg.mults.agi; }
-        if (upg.mults.cha != null)  { cha *= upg.mults.cha; }
-    }
-
-    // Subtract 1 because we're only interested in the actual "bonus" part
-    return {
-        hack: (Math.max(0, hack - 1) * AscensionMultiplierRatio),
-        str:  (Math.max(0, str - 1) * AscensionMultiplierRatio),
-        def:  (Math.max(0, def - 1) * AscensionMultiplierRatio),
-        dex:  (Math.max(0, dex - 1) * AscensionMultiplierRatio),
-        agi:  (Math.max(0, agi - 1) * AscensionMultiplierRatio),
-        cha:  (Math.max(0, cha - 1) * AscensionMultiplierRatio),
-    }
-}
-
-GangMember.prototype.buyUpgrade = function(upg, player, gang) {
-    if (typeof upg === 'string') {
-        upg = GangMemberUpgrades[upg];
-    }
-    if (!(upg instanceof GangMemberUpgrade)) {
-        return false;
-    }
-    if (player.money.lt(upg.getCost(gang))) { return false; }
-    player.loseMoney(upg.getCost(gang));
-    if (upg.type === "g") {
-        this.augmentations.push(upg.name);
-    } else {
-        this.upgrades.push(upg.name);
-    }
-    upg.apply(this);
-    if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_11__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_11__["Page"].Gang) && UIElems.gangMemberUpgradeBoxOpened) {
-        var initFilterValue = UIElems.gangMemberUpgradeBoxFilter.value.toString();
-        gang.createGangMemberUpgradeBox(player, initFilterValue);
-    }
-    return true;
-}
-
-GangMember.prototype.toJSON = function() {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_6__["Generic_toJSON"])("GangMember", this);
-}
-
-GangMember.fromJSON = function(value) {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_6__["Generic_fromJSON"])(GangMember, value.data);
-}
-
-_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_6__["Reviver"].constructors.GangMember = GangMember;
-
-//Defines tasks that Gang Members can work on
-function GangMemberTask(name="", desc="", isHacking=false, isCombat=false,
-                        params={baseRespect: 0, baseWanted: 0, baseMoney: 0,
-                                hackWeight: 0, strWeight: 0, defWeight: 0,
-                                dexWeight: 0, agiWeight: 0, chaWeight: 0,
-                                difficulty: 0}) {
-    this.name = name;
-    this.desc = desc;
-
-    // Flags that describe whether this Task is applicable for Hacking/Combat gangs
-    this.isHacking = isHacking;
-    this.isCombat = isCombat;
-
-    // Base gain rates for respect/wanted/money
-    this.baseRespect    = params.baseRespect ? params.baseRespect   : 0;
-    this.baseWanted     = params.baseWanted  ? params.baseWanted    : 0;
-    this.baseMoney      = params.baseMoney   ? params.baseMoney     : 0;
-
-    // Weighting for the effect that each stat has on the tasks effectiveness.
-    // Weights must add up to 100
-    this.hackWeight     = params.hackWeight ? params.hackWeight : 0;
-    this.strWeight      = params.strWeight  ? params.strWeight  : 0;
-    this.defWeight      = params.defWeight  ? params.defWeight  : 0;
-    this.dexWeight      = params.dexWeight  ? params.dexWeight  : 0;
-    this.agiWeight      = params.agiWeight  ? params.agiWeight  : 0;
-    this.chaWeight      = params.chaWeight  ? params.chaWeight  : 0;
-
-    if (Math.round(this.hackWeight + this.strWeight + this.defWeight + this.dexWeight + this.agiWeight + this.chaWeight) != 100) {
-        console.error(`GangMemberTask ${this.name} weights do not add up to 100`);
-    }
-
-    // 1 - 100
-    this.difficulty     = params.difficulty ? params.difficulty : 1;
-
-    // Territory Factors. Exponential factors that dictate how territory affects gains
-    // Formula: Territory Mutiplier = (Territory * 100) ^ factor / 100
-    // So factor should be > 1 if something should scale exponentially with territory
-    // and should be < 1 if it should have diminshing returns
-    this.territory      = params.territory ? params.territory : {money: 1, respect: 1, wanted: 1};
-}
-
-GangMemberTask.prototype.toJSON = function() {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_6__["Generic_toJSON"])("GangMemberTask", this);
-}
-
-GangMemberTask.fromJSON = function(value) {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_6__["Generic_fromJSON"])(GangMemberTask, value.data);
-}
-
-_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_6__["Reviver"].constructors.GangMemberTask = GangMemberTask;
-
-const GangMemberTasks = {};
-
-function addGangMemberTask(name, desc, isHacking, isCombat, params) {
-    GangMemberTasks[name] = new GangMemberTask(name, desc, isHacking, isCombat, params);
-}
-
-_data_gangmembertasks__WEBPACK_IMPORTED_MODULE_0__["gangMemberTasksMetadata"].forEach((e) => {
-    addGangMemberTask(e.name, e.desc, e.isHacking, e.isCombat, e.params);
-});
-
-function GangMemberUpgrade(name="", cost=0, type="w", mults={}) {
-    this.name = name;
-    this.cost = cost;
-    this.type = type; //w = weapon, a = armor, v = vehicle, r = rootkit, g = Aug
-    this.mults = mults;
-
-    this.createDescription();
-}
-
-GangMemberUpgrade.prototype.getCost = function(gang) {
-    const discount = gang.getDiscount();
-    return this.cost / discount;
-}
-
-GangMemberUpgrade.prototype.createDescription = function() {
-    const lines = ["Increases:"];
-    if (this.mults.str != null) {
-        lines.push(`* Strength by ${Math.round((this.mults.str - 1) * 100)}%`);
-    }
-    if (this.mults.def != null) {
-        lines.push(`* Defense by ${Math.round((this.mults.def - 1) * 100)}%`);
-    }
-    if (this.mults.dex != null) {
-        lines.push(`* Dexterity by ${Math.round((this.mults.dex - 1) * 100)}%`);
-    }
-    if (this.mults.agi != null) {
-        lines.push(`* Agility by ${Math.round((this.mults.agi - 1) * 100)}%`);
-    }
-    if (this.mults.cha != null) {
-        lines.push(`* Charisma by ${Math.round((this.mults.cha - 1) * 100)}%`);
-    }
-    if (this.mults.hack != null) {
-        lines.push(`* Hacking by ${Math.round((this.mults.hack - 1) * 100)}%`);
-    }
-    this.desc = lines.join("<br>");
-}
-
-//Passes in a GangMember object
-GangMemberUpgrade.prototype.apply = function(member) {
-    if (this.mults.str != null)     { member.str_mult *= this.mults.str; }
-    if (this.mults.def != null)     { member.def_mult *= this.mults.def; }
-    if (this.mults.dex != null)     { member.dex_mult *= this.mults.dex; }
-    if (this.mults.agi != null)     { member.agi_mult *= this.mults.agi; }
-    if (this.mults.cha != null)     { member.cha_mult *= this.mults.cha; }
-    if (this.mults.hack != null)    { member.hack_mult *= this.mults.hack; }
-    return;
-}
-
-GangMemberUpgrade.prototype.toJSON = function() {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_6__["Generic_toJSON"])("GangMemberUpgrade", this);
-}
-
-GangMemberUpgrade.fromJSON = function(value) {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_6__["Generic_fromJSON"])(GangMemberUpgrade, value.data);
-}
-
-_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_6__["Reviver"].constructors.GangMemberUpgrade = GangMemberUpgrade;
-
-// Initialize Gang Member Upgrades
-const GangMemberUpgrades = {}
-
-function addGangMemberUpgrade(name, cost, type, mults) {
-    GangMemberUpgrades[name] = new GangMemberUpgrade(name, cost, type, mults);
-}
-
-_data_gangmemberupgrades__WEBPACK_IMPORTED_MODULE_1__["gangMemberUpgradesMetadata"].forEach((e) => {
-    addGangMemberUpgrade(e.name, e.cost, e.upgType, e.mults);
-});
-
-// Create a pop-up box that lets player purchase upgrades
-Gang.prototype.createGangMemberUpgradeBox = function(player, initialFilter="") {
-    const boxId = "gang-member-upgrade-popup-box";
-    if (UIElems.gangMemberUpgradeBoxOpened) {
-        //Already opened, refreshing
-        if (UIElems.gangMemberUpgradeBoxElements == null || UIElems.gangMemberUpgradeBox == null || UIElems.gangMemberUpgradeBoxContent == null) {
-            console.error("Refreshing Gang member upgrade box throws error because required elements are null");
-            return;
-        }
-
-        for (var i = 2; i < UIElems.gangMemberUpgradeBoxElements.length; ++i) {
-            Object(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_16__["removeElement"])(UIElems.gangMemberUpgradeBoxElements[i]);
-        }
-        UIElems.gangMemberUpgradeBoxElements = [UIElems.gangMemberUpgradeBoxFilter, UIElems.gangMemberUpgradeBoxDiscount];
-
-        var filter = UIElems.gangMemberUpgradeBoxFilter.value.toString();
-        for (var i = 0; i < this.members.length; ++i) {
-            if (this.members[i].name.indexOf(filter) > -1 || this.members[i].task.indexOf(filter) > -1) {
-                var newPanel = this.members[i].createGangMemberUpgradePanel(this, player);
-                UIElems.gangMemberUpgradeBoxContent.appendChild(newPanel);
-                UIElems.gangMemberUpgradeBoxElements.push(newPanel);
-            }
-        }
-    } else {
-        //New popup
-        UIElems.gangMemberUpgradeBoxFilter = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("input", {
-            type:"text", placeholder:"Filter gang members",
-            value:initialFilter,
-            onkeyup:()=>{
-                var filterValue = UIElems.gangMemberUpgradeBoxFilter.value.toString();
-                this.createGangMemberUpgradeBox(player, filterValue);
-            }
-        });
-
-        UIElems.gangMemberUpgradeBoxDiscount = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {
-            innerText: "Discount: -" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(1 - 1 / this.getDiscount(), "0.00%"),
-            marginLeft: "6px",
-            tooltip: "You get a discount on equipment and upgrades based on your gang's " +
-                     "respect and power. More respect and power leads to more discounts."
-        });
-
-        UIElems.gangMemberUpgradeBoxElements = [UIElems.gangMemberUpgradeBoxFilter, UIElems.gangMemberUpgradeBoxDiscount];
-
-        var filter = UIElems.gangMemberUpgradeBoxFilter.value.toString();
-        for (var i = 0; i < this.members.length; ++i) {
-            if (this.members[i].name.indexOf(filter) > -1 || this.members[i].task.indexOf(filter) > -1) {
-                UIElems.gangMemberUpgradeBoxElements.push(this.members[i].createGangMemberUpgradePanel(this, player));
-            }
-        }
-
-        UIElems.gangMemberUpgradeBox = Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_10__["createPopup"])(boxId, UIElems.gangMemberUpgradeBoxElements);
-        UIElems.gangMemberUpgradeBoxContent = document.getElementById(boxId + "-content");
-        UIElems.gangMemberUpgradeBoxOpened = true;
-    }
-}
-
-//Create upgrade panels for each individual Gang Member
-GangMember.prototype.createGangMemberUpgradePanel = function(gangObj, player) {
-    var container = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {
-        border:"1px solid white",
-    });
-
-    var header = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("h1", {
-        innerText: this.name + " (" + this.task + ")"
-    });
-    container.appendChild(header);
-
-    var text = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("pre", {
-        fontSize:"14px", display: "inline-block", width:"20%",
-        innerText:
-            "Hack: " + this.hack + " (x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(this.hack_mult * this.hack_asc_mult, 2) + ")\n" +
-            "Str:  " + this.str  + " (x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(this.str_mult * this.str_asc_mult, 2) + ")\n" +
-            "Def:  " + this.def  + " (x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(this.def_mult * this.def_asc_mult, 2) + ")\n" +
-            "Dex:  " + this.dex  + " (x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(this.dex_mult * this.dex_asc_mult, 2) + ")\n" +
-            "Agi:  " + this.agi  + " (x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(this.agi_mult * this.agi_asc_mult, 2) + ")\n" +
-            "Cha:  " + this.cha  + " (x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(this.cha_mult * this.cha_asc_mult, 2) + ")\n",
-    });
-
-    //Already purchased upgrades
-    const ownedUpgradesElements = [];
-    function pushOwnedUpgrade(upgName) {
-        const upg = GangMemberUpgrades[upgName];
-        if (upg == null) {
-            console.error(`Could not find GangMemberUpgrade object for name ${upgName}`);
-            return;
-        }
-        ownedUpgradesElements.push(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {
-            class:      "gang-owned-upgrade",
-            innerText:  upgName,
-            tooltip:    upg.desc,
-        }));
-    }
-    for (const upgName of this.upgrades)        { pushOwnedUpgrade(upgName); }
-    for (const upgName of this.augmentations)   { pushOwnedUpgrade(upgName); }
-
-    var ownedUpgrades = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {
-        class:      "gang-owned-upgrades-div",
-        innerText:  "Purchased Upgrades:",
-    });
-    for (const elem of ownedUpgradesElements) { ownedUpgrades.appendChild(elem); }
-    container.appendChild(text);
-    container.appendChild(ownedUpgrades);
-    container.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br", {}));
-
-    //Upgrade buttons. Only show upgrades that can be afforded
-    const weaponUpgrades = [];
-    const armorUpgrades = [];
-    const vehicleUpgrades = [];
-    const rootkitUpgrades = [];
-    const augUpgrades = [];
-
-    for (let upgName in GangMemberUpgrades) {
-        if (GangMemberUpgrades.hasOwnProperty(upgName)) {
-            let upg = GangMemberUpgrades[upgName];
-            if (player.money.lt(upg.getCost(gangObj))) { continue; }
-            if (this.upgrades.includes(upgName) || this.augmentations.includes(upgName)) { continue; }
-            switch (upg.type) {
-                case "w":
-                    weaponUpgrades.push(upg);
-                    break;
-                case "a":
-                    armorUpgrades.push(upg);
-                    break;
-                case "v":
-                    vehicleUpgrades.push(upg);
-                    break;
-                case "r":
-                    rootkitUpgrades.push(upg);
-                    break;
-                case "g":
-                    augUpgrades.push(upg);
-                    break;
-                default:
-                    console.error(`ERROR: Invalid Gang Member Upgrade Type: ${upg.type}`);
-            }
-        }
-    }
-
-    // Create separate columns for each upgrade type
-    const weaponDiv   = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {width: "20%", display: "inline-block"});
-    const armorDiv    = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {width: "20%", display: "inline-block"});
-    const vehicleDiv  = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {width: "20%", display: "inline-block"});
-    const rootkitDiv  = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {width: "20%", display: "inline-block"});
-    const augDiv      = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {width: "20%", display: "inline-block"});
-
-    // Add a title/labe for each column
-    weaponDiv.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("h2", {innerText: "Weapons"}));
-    armorDiv.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("h2", {innerText: "Armor"}));
-    vehicleDiv.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("h2", {innerText: "Vehicles"}));
-    rootkitDiv.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("h2", {innerText: "Rootkits"}));
-    augDiv.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("h2", {innerText: "Augmentations"}));
-
-    // Add buttons to purchase each upgrade
-    const upgrades = [weaponUpgrades, armorUpgrades, vehicleUpgrades, rootkitUpgrades, augUpgrades];
-    const divs = [weaponDiv, armorDiv, vehicleDiv, rootkitDiv, augDiv];
-    for (let i = 0; i < upgrades.length; ++i) {
-        let upgradeArray = upgrades[i];
-        let div = divs[i];
-        for (let j = 0; j < upgradeArray.length; ++j) {
-            let upg = upgradeArray[j];
-            (function (upg, div, memberObj, i, gang) {
-                let createElementParams = {
-                    innerText: upg.name + " - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(upg.getCost(gang), "$0.000a"),
-                    class: "a-link-button", margin:"2px",  padding:"2px", display:"block",
-                    fontSize:"11px",
-                    clickListener:()=>{
-                        memberObj.buyUpgrade(upg, player, gangObj);
-                        return false;
-                    }
-                }
-
-                // For the last two divs, tooltip should be on the left
-                if (i >= 3) {
-                    createElementParams.tooltipleft = upg.desc;
-                } else {
-                    createElementParams.tooltip = upg.desc;
-                }
-                div.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("a", createElementParams));
-            })(upg, div, this, i, gangObj);
-        }
-    }
-
-    container.appendChild(weaponDiv);
-    container.appendChild(armorDiv);
-    container.appendChild(vehicleDiv);
-    container.appendChild(rootkitDiv);
-    container.appendChild(augDiv);
-    return container;
-}
-
-// Gang UI Dom Elements
-const UIElems = {
-    // Main elems
-    gangContentCreated:     false,
-    gangContainer:          null,
-    managementButton:       null,
-    territoryButton:        null,
-
-    // Subpages
-    gangManagementSubpage:  null,
-    gangTerritorySubpage:   null,
-
-    // Gang Management Subpage Elements
-    gangDesc:                   null,
-    gangInfo:                   null,
-    gangRecruitMemberButton:    null,
-    gangRecruitRequirementText: null,
-    gangExpandAllButton:        null,
-    gangCollapseAllButton:      null,
-    gangMemberFilter:           null,
-    gangManageEquipmentButton:  null,
-    gangMemberList:             null,
-    gangMemberPanels:           {},
-
-    // Gang Equipment Upgrade Elements
-    gangMemberUpgradeBoxOpened:     false,
-    gangMemberUpgradeBox:           null,
-    gangMemberUpgradeBoxContent:    null,
-    gangMemberUpgradeBoxFilter:     null,
-    gangMemberUpgradeBoxDiscount:   null,
-    gangMemberUpgradeBoxElements:   null,
-
-    // Gang Territory Elements
-    gangTerritoryDescText: null,
-    gangTerritoryWarfareCheckbox: null,
-    gangTerritoryWarfareCheckboxLabel: null,
-    gangTerritoryWarfareClashChance: null,
-    gangTerritoryDeathNotifyCheckbox: null,
-    gangTerritoryDeathNotifyCheckboxLabel: null,
-    gangTerritoryInfoText: null,
-}
-
-Gang.prototype.displayGangContent = function(player) {
-    if (!UIElems.gangContentCreated || UIElems.gangContainer == null) {
-        UIElems.gangContentCreated = true;
-
-        //Create gang container
-        UIElems.gangContainer = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {
-            id:"gang-container", class:"generic-menupage-container",
-        });
-
-        //Get variables
-        var facName = this.facName,
-            members = this.members,
-            wanted = this.wanted,
-            respect = this.respect;
-
-        //Back button
-        UIElems.gangContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("a", {
-            class:"a-link-button", display:"inline-block", innerText:"Back",
-            clickListener:()=>{
-                _engine__WEBPACK_IMPORTED_MODULE_2__["Engine"].loadFactionContent();
-                Object(_Faction__WEBPACK_IMPORTED_MODULE_3__[/* displayFactionContent */ "c"])(facName);
-                return false;
-            }
-        }));
-
-        //Buttons to switch between panels
-        UIElems.managementButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("a", {
-            id:"gang-management-subpage-button", class:"a-link-button-inactive",
-            display:"inline-block", innerHTML: "Gang Management (Alt+1)",
-            clickListener:()=>{
-                UIElems.gangManagementSubpage.style.display = "block";
-                UIElems.gangTerritorySubpage.style.display = "none";
-                UIElems.managementButton.classList.toggle("a-link-button-inactive");
-                UIElems.managementButton.classList.toggle("a-link-button");
-                UIElems.territoryButton.classList.toggle("a-link-button-inactive");
-                UIElems.territoryButton.classList.toggle("a-link-button");
-                this.updateGangContent();
-                return false;
-            }
-        })
-        UIElems.territoryButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("a", {
-            id:"gang-territory-subpage-button", class:"a-link-button",
-            display:"inline-block", innerHTML:"Gang Territory (Alt+2)",
-            clickListener:() => {
-                UIElems.gangManagementSubpage.style.display = "none";
-                UIElems.gangTerritorySubpage.style.display = "block";
-                UIElems.managementButton.classList.toggle("a-link-button-inactive");
-                UIElems.managementButton.classList.toggle("a-link-button");
-                UIElems.territoryButton.classList.toggle("a-link-button-inactive");
-                UIElems.territoryButton.classList.toggle("a-link-button");
-                this.updateGangContent();
-                return false;
-            }
-        });
-        UIElems.gangContainer.appendChild(UIElems.managementButton);
-        UIElems.gangContainer.appendChild(UIElems.territoryButton);
-
-        //Subpage for managing gang members
-        UIElems.gangManagementSubpage = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {
-            display:"block", id:"gang-management-subpage",
-        });
-
-        var lowerWantedTask = "";
-        if (this.isHackingGang) {
-            lowerWantedTask = "Ethical Hacking";
-        } else {
-            lowerWantedTask = "Vigilante Justice";
-        }
-        UIElems.gangDesc = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {width:"70%",
-            innerHTML:
-            "This page is used to manage your gang members and get an overview of your  " +
-            "gang's stats.<br><br>" +
-            "If a gang member is not earning much money or respect, the task that you " +
-            "have assigned to that member might be too difficult. Consider training that " +
-            "member's stats or choosing an easier task. The tasks closer to the " +
-            "top of the dropdown list are generally easier. Alternatively, the gang member's " +
-            "low production might be due to the fact that your wanted level is too high. " +
-            "Consider assigning a few members to the '" + lowerWantedTask + "' " +
-            "task to lower your wanted level. <br><br>" +
-            "Installing Augmentations does NOT reset your progress with your Gang. " +
-            "Furthermore, after installing Augmentations, you will " +
-            "automatically be a member of whatever Faction you created your gang with.<br><br>" +
-            "You can also manage your gang programmatically through Netscript using the Gang API"
-        });
-        UIElems.gangManagementSubpage.appendChild(UIElems.gangDesc);
-
-        UIElems.gangInfo = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {id:"gang-info", width:"70%"});
-        UIElems.gangManagementSubpage.appendChild(UIElems.gangInfo);
-
-        UIElems.gangRecruitMemberButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("a", {
-            id: "gang-management-recruit-member-btn", class:"a-link-button-inactive",
-            innerHTML:"Recruit Gang Member", display:"inline-block", margin:"10px",
-            clickListener:()=>{
-                const popupId = "recruit-gang-member-popup";
-
-                let yesBtn;
-                const txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {
-                    innerText:"Please enter a name for your new Gang member:",
-                });
-                const br = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br");
-                const nameInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("input", {
-                    onkeyup: (e) => {
-                        if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_7__["KEY"].ENTER) { yesBtn.click(); }
-                    },
-                    placeholder: "Name must be unique",
-                    type: "text",
-                });
-                yesBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("a", {
-                    class: "std-button",
-                    clickListener: () => {
-                        let name = nameInput.value;
-                        if (name === "") {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_5__["dialogBoxCreate"])("You must enter a name for your Gang member!");
-                            return false;
-                        }
-                        if (!this.canRecruitMember()) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_5__["dialogBoxCreate"])("You cannot recruit another Gang member!");
-                            return false;
-                        }
-
-                        // At this point, the only way this can fail is if you already
-                        // have a gang member with the same name
-                        if (!this.recruitMember(name)) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_5__["dialogBoxCreate"])("You already have a gang member with this name!");
-                            return false;
-                        }
-
-                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(popupId);
-                        return false;
-                    },
-                    innerText: "Recruit Gang Member",
-                });
-                const noBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("a", {
-                    class: "std-button",
-                    clickListener: () => {
-                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(popupId);
-                        return false;
-                    },
-                    innerText: "Cancel",
-                });
-                Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_10__["createPopup"])(popupId, [txt, br, nameInput, yesBtn, noBtn]);
-            }
-        });
-        UIElems.gangManagementSubpage.appendChild(UIElems.gangRecruitMemberButton);
-
-        // Text for how much reputation is required for recruiting next memberList
-        UIElems.gangRecruitRequirementText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {
-            color:"red",
-            id: "gang-recruit-requirement-text",
-            margin: "10px",
-        });
-        UIElems.gangManagementSubpage.appendChild(UIElems.gangRecruitRequirementText);
-
-        //Gang Member List management buttons (Expand/Collapse All, select a single member)
-        UIElems.gangManagementSubpage.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br", {}));
-        UIElems.gangExpandAllButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("a", {
-            class:"a-link-button", display:"inline-block",
-            innerHTML:"Expand All",
-            clickListener:()=>{
-                var allHeaders = UIElems.gangManagementSubpage.getElementsByClassName("accordion-header");
-                for (var i = 0; i < allHeaders.length; ++i) {
-                    var hdr = allHeaders[i];
-                    if (!hdr.classList.contains("active")) {
-                        hdr.click();
-                    }
-                }
-                return false;
-            }
-        });
-        UIElems.gangCollapseAllButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("a", {
-            class:"a-link-button", display:"inline-block",
-            innerHTML:"Collapse All",
-            clickListener:()=>{
-                var allHeaders = UIElems.gangManagementSubpage.getElementsByClassName("accordion-header");
-                for (var i = 0; i < allHeaders.length; ++i) {
-                    var hdr = allHeaders[i];
-                    if (hdr.classList.contains("active")) {
-                        hdr.click();
-                    }
-                }
-                return false;
-            }
-        });
-        UIElems.gangMemberFilter = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("input", {
-            type:"text", placeholder:"Filter gang members", margin:"5px", padding:"5px",
-            onkeyup:()=>{
-                this.displayGangMemberList();
-            }
-        });
-        UIElems.gangManageEquipmentButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("a", {
-            class:"a-link-button", display:"inline-block",
-            innerHTML:"Manage Equipment",
-            clickListener: () => {
-                this.createGangMemberUpgradeBox(player);
-            }
-        });
-        UIElems.gangManagementSubpage.appendChild(UIElems.gangExpandAllButton);
-        UIElems.gangManagementSubpage.appendChild(UIElems.gangCollapseAllButton);
-        UIElems.gangManagementSubpage.appendChild(UIElems.gangMemberFilter);
-        UIElems.gangManagementSubpage.appendChild(UIElems.gangManageEquipmentButton);
-
-        //Gang Member list
-        UIElems.gangMemberList = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("ul", {id:"gang-member-list"});
-        this.displayGangMemberList();
-        UIElems.gangManagementSubpage.appendChild(UIElems.gangMemberList);
-
-        //Subpage for seeing gang territory information
-        UIElems.gangTerritorySubpage = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {
-            id:"gang-territory-subpage", display:"none"
-        });
-
-        //Info text for territory page
-        UIElems.gangTerritoryDescText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {
-            width:"70%",
-            innerHTML:
-            "This page shows how much territory your Gang controls. This statistic is listed as a percentage, " +
-            "which represents how much of the total territory you control.<br><br>" +
-            "Every ~20 seconds, your gang has a chance to 'clash' with other gangs. Your chance " +
-            "to win a clash depends on your gang's power, which is listed in the display below. " +
-            "Your gang's power slowly accumulates over time. The accumulation rate is determined by the stats " +
-            "of all Gang members you have assigned to the 'Territory Warfare' task. Gang members that are not " +
-            "assigned to this task do not contribute to your gang's power. Your gang also loses a small amount " +
-            "of power whenever you lose a clash<br><br>" +
-            "NOTE: Gang members assigned to 'Territory Warfare' can be killed during clashes. This can happen regardless of whether you win " +
-            "or lose the clash. A gang member being killed results in both respect and power loss for your gang.<br><br>" +
-            "The amount of territory you have affects all aspects of your Gang members' production, including " +
-            "money, respect, and wanted level. It is very beneficial to have high territory control.<br><br>"
-        });
-        UIElems.gangTerritorySubpage.appendChild(UIElems.gangTerritoryDescText);
-
-        // Checkbox for Engaging in Territory Warfare
-        UIElems.gangTerritoryWarfareCheckbox = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("input", {
-            display: "inline-block",
-            id: "gang-management-territory-warfare-checkbox",
-            changeListener: () => {
-                this.territoryWarfareEngaged = UIElems.gangTerritoryWarfareCheckbox.checked;
-            },
-            margin: "2px",
-            type: "checkbox",
-        });
-        UIElems.gangTerritoryWarfareCheckbox.checked = this.territoryWarfareEngaged;
-
-        UIElems.gangTerritoryWarfareCheckboxLabel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("label", {
-            color: "white",
-            display: "inline-block",
-            for: "gang-management-territory-warfare-checkbox",
-            innerText: "Engage in Territory Warfare",
-            tooltip: "Engaging in Territory Warfare sets your clash chance to 100%. " +
-                     "Disengaging will cause your clash chance to gradually decrease until " +
-                     "it reaches 0%",
-        });
-        UIElems.gangTerritorySubpage.appendChild(UIElems.gangTerritoryWarfareCheckbox);
-        UIElems.gangTerritorySubpage.appendChild(UIElems.gangTerritoryWarfareCheckboxLabel);
-
-        // Territory Clash chance
-        UIElems.gangTerritorySubpage.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br"));
-        UIElems.gangTerritoryWarfareClashChance = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {display: "inline-block"});
-        UIElems.gangTerritorySubpage.appendChild(UIElems.gangTerritoryWarfareClashChance);
-
-        UIElems.gangTerritorySubpage.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {
-            class: "help-tip",
-            display: "inline-block",
-            innerText: "?",
-            clickListener: () => {
-                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_5__["dialogBoxCreate"])("This percentage represents the chance you have of 'clashing' with " +
-                                "with another gang. If you do not wish to gain/lose territory, " +
-                                "then keep this percentage at 0% by not engaging in territory " +
-                                "warfare.")
-            },
-        }));
-
-        // Checkbox for whether player wants to be notified of gang member death
-        UIElems.gangTerritoryDeathNotifyCheckbox = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("input", {
-            display: "inline-block",
-            id: "gang-management-notify-member-death-checkbox",
-            changeListener: () => {
-                this.notifyMemberDeath = UIElems.gangTerritoryDeathNotifyCheckbox.checked;
-            },
-            margin: "2px",
-            type: "checkbox",
-        });
-        UIElems.gangTerritoryDeathNotifyCheckbox.checked = this.notifyMemberDeath;
-
-        UIElems.gangTerritoryDeathNotifyCheckboxLabel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("label", {
-            color: "white",
-            display: "inline-block",
-            for: "gang-management-notify-member-death-checkbox",
-            innerText: "Notify about Gang Member Deaths",
-            tooltip: "If this is enabled, then you will receive a pop-up notifying you " +
-                     "whenever one of your Gang Members dies in a territory clash.",
-        });
-        UIElems.gangTerritorySubpage.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br"));
-        UIElems.gangTerritorySubpage.appendChild(UIElems.gangTerritoryDeathNotifyCheckbox);
-        UIElems.gangTerritorySubpage.appendChild(UIElems.gangTerritoryDeathNotifyCheckboxLabel);
-
-        // Territory info (percentages of territory owned for each gang)
-        UIElems.gangTerritorySubpage.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br"));
-        var territoryBorder = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("fieldset", {
-            display:"block",
-            margin: "6px",
-            width:"50%",
-        });
-
-        UIElems.gangTerritoryInfoText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p");
-
-        territoryBorder.appendChild(UIElems.gangTerritoryInfoText);
-        UIElems.gangTerritorySubpage.appendChild(territoryBorder);
-
-        UIElems.gangContainer.appendChild(UIElems.gangTerritorySubpage);
-        UIElems.gangContainer.appendChild(UIElems.gangManagementSubpage);
-        document.getElementById("entire-game-container").appendChild(UIElems.gangContainer);
-    }
-    UIElems.gangContainer.style.display = "block";
-    this.updateGangContent();
-}
-
-Gang.prototype.displayGangMemberList = function() {
-    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15__["removeChildrenFromElement"])(UIElems.gangMemberList);
-    UIElems.gangMemberPanels = {};
-    const members = this.members;
-    const filter = UIElems.gangMemberFilter.value.toString();
-    for (var i = 0; i < members.length; ++i) {
-        if (members[i].name.indexOf(filter) > -1 || members[i].task.indexOf(filter) > -1) {
-            this.createGangMemberDisplayElement(members[i]);
-        }
-    }
-}
-
-Gang.prototype.updateGangContent = function() {
-    if (!UIElems.gangContentCreated) { return; }
-
-    if (UIElems.gangMemberUpgradeBoxOpened) {
-        UIElems.gangMemberUpgradeBoxDiscount.childNodes[0].nodeValue =
-            "Discount: -" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(1 - 1 / this.getDiscount(), "0.00%");
-    }
-
-    if (UIElems.gangTerritorySubpage.style.display === "block") {
-        // Territory Warfare Clash Chance
-        UIElems.gangTerritoryWarfareClashChance.innerText =
-            `Territory Clash Chance: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(this.territoryClashChance, '0.000%')}`;
-
-        // Engaged in Territory Warfare checkbox
-        UIElems.gangTerritoryWarfareCheckbox.checked = this.territoryWarfareEngaged;
-
-        // Update territory information
-        UIElems.gangTerritoryInfoText.innerHTML = "";
-        for (var gangname in AllGangs) {
-            if (AllGangs.hasOwnProperty(gangname)) {
-                var gangTerritoryInfo = AllGangs[gangname];
-                let territory = gangTerritoryInfo.territory * 100;
-
-                //Fix some rounding issues graphically
-                let displayNumber;
-                if (territory <= 0) {
-                    displayNumber = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(0, 2);
-                } else if (territory >= 100) {
-                    displayNumber = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(100, 2);
-                } else {
-                    displayNumber = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(territory, 2);
-                }
-
-                if (gangname == this.facName) {
-                    UIElems.gangTerritoryInfoText.innerHTML += ("<b>" + gangname + "</b><br>(Power: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(gangTerritoryInfo.power, 6) + "): " +
-                                       displayNumber + "%<br><br>");
-                } else {
-                    UIElems.gangTerritoryInfoText.innerHTML += (gangname + "<br>(Power: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(gangTerritoryInfo.power, 6) + "): " +
-                                       displayNumber + "%<br><br>");
-                }
-            }
-        }
-    } else {
-        //Update information for overall gang
-        if (UIElems.gangInfo instanceof Element) {
-            var faction = _Faction__WEBPACK_IMPORTED_MODULE_3__[/* Factions */ "b"][this.facName];
-            var rep;
-            if (!(faction instanceof _Faction__WEBPACK_IMPORTED_MODULE_3__[/* Faction */ "a"])) {
-                rep = "ERROR";
-            } else {
-                rep = faction.playerReputation;
-            }
-            Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15__["removeChildrenFromElement"])(UIElems.gangInfo);
-            UIElems.gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {   // Respect
-                display: "inline-block",
-                innerText: "Respect: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(this.respect, 6) +
-                           " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(5*this.respectGainRate, 6) + " / sec)",
-                tooltip: "Represents the amount of respect your gang has from other gangs and criminal " +
-                         "organizations. Your respect affects the amount of money " +
-                         "your gang members will earn, and also determines how much " +
-                         "reputation you are earning with your gang's corresponding Faction."
-            }));
-            UIElems.gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br"));
-
-            UIElems.gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {   // Wanted level
-                display: "inline-block",
-                innerText: "Wanted Level: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(this.wanted, 6) +
-                           " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(5*this.wantedGainRate, 6) + " / sec)",
-                tooltip: "Represents how much the gang is wanted by law enforcement. The higher " +
-                         "your gang's wanted level, the harder it will be for your gang members " +
-                         "to make money and earn respect. Note that the minimum wanted level is 1."
-            }));
-            UIElems.gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br"));
-
-            var wantedPenalty = this.getWantedPenalty();
-            wantedPenalty = (1 - wantedPenalty) * 100;
-            UIElems.gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {   // Wanted Level multiplier
-                display: "inline-block",
-                innerText: `Wanted Level Penalty: -${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(wantedPenalty, 2)}%`,
-                tooltip: "Penalty for respect and money gain rates due to Wanted Level"
-            }));
-            UIElems.gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br"));
-
-            UIElems.gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {   // Money gain rate
-                display: "inline-block",
-                innerText: `Money gain rate: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(5 * this.moneyGainRate, "$0.000a")} / sec`,
-            }));
-            UIElems.gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br"));
-
-            //Fix some rounding issues graphically
-            var territoryMult = AllGangs[this.facName].territory * 100;
-            let displayNumber;
-            if (territoryMult <= 0) {
-                displayNumber = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(0, 2);
-            } else if (territoryMult >= 100) {
-                displayNumber = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(100, 2);
-            } else {
-                displayNumber = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(territoryMult, 2);
-            }
-            UIElems.gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {  // Territory multiplier
-                display: "inline-block",
-                innerText: `Territory: ${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(displayNumber, 3)}%`,
-                tooltip: "The percentage of total territory your Gang controls"
-            }));
-            UIElems.gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br"));
-
-            UIElems.gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {  // Faction reputation
-                display:"inline-block",
-                innerText:"Faction reputation: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(rep, 3)
-            }));
-            UIElems.gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br"));
-
-            const CyclesPerSecond = 1000 / _engine__WEBPACK_IMPORTED_MODULE_2__["Engine"]._idleSpeed;
-            UIElems.gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", { // Stored Cycles
-                innerText: `Bonus time(s): ${this.storedCycles / CyclesPerSecond}`,
-                display: "inline-block",
-                tooltip: "You gain bonus time while offline or when the game is inactive (e.g. when the tab is throttled by the browser). " +
-                         "Bonus time makes the Gang mechanic progress faster, up to 5x the normal speed",
-            }));
-            UIElems.gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br"));
-        } else {
-            console.error("gang-info DOM element DNE");
-        }
-
-        //Toggle the 'Recruit member button' if valid
-        const numMembers = this.members.length;
-        const respectCost = this.getRespectNeededToRecruitMember();
-
-        const btn = UIElems.gangRecruitMemberButton;
-        if (numMembers >= MaximumGangMembers) {
-            btn.className = "a-link-button-inactive";
-            UIElems.gangRecruitRequirementText.style.display = "inline-block";
-            UIElems.gangRecruitRequirementText.innerHTML = "You have reached the maximum amount of gang members";
-        } else if (this.canRecruitMember()) {
-            btn.className = "a-link-button";
-            UIElems.gangRecruitRequirementText.style.display = "none";
-        } else {
-            btn.className = "a-link-button-inactive";
-            UIElems.gangRecruitRequirementText.style.display = "inline-block";
-            UIElems.gangRecruitRequirementText.innerHTML = `${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(respectCost, 2)} respect needed to recruit next member`;
-        }
-
-        //Update information for each gang member
-        for (let i = 0; i < this.members.length; ++i) {
-            this.updateGangMemberDisplayElement(this.members[i]);
-        }
-    }
-}
-
-//Takes in a GangMember object
-Gang.prototype.createGangMemberDisplayElement = function(memberObj) {
-    if (!UIElems.gangContentCreated) { return; }
-    const name = memberObj.name;
-
-    // Clear/Update the UIElems map to keep track of this gang member's panel
-    UIElems.gangMemberPanels[name] = {};
-
-    // Create the accordion
-    var accordion = Object(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_8__["createAccordionElement"])({
-        id: name + "gang-member",
-        hdrText: name,
-    });
-    const li = accordion[0];
-    const hdr = accordion[1];
-    const gangMemberDiv = accordion[2];
-
-    UIElems.gangMemberPanels[name]["panel"] = gangMemberDiv;
-
-    // Gang member content divided into 3 panels:
-    // Panel 1 - Shows member's stats & Ascension stuff
-    const statsDiv = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {
-        class: "gang-member-info-div",
-        id: name + "gang-member-stats",
-        tooltipsmall: [`Hk: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.hack_mult * memberObj.hack_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.hack_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.hack_asc_mult, "0,0.00")} Asc)`,
-                       `St: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.str_mult * memberObj.str_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.str_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.str_asc_mult, "0,0.00")} Asc)`,
-                       `Df: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.def_mult * memberObj.def_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.def_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.def_asc_mult, "0,0.00")} Asc)`,
-                       `Dx: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.dex_mult * memberObj.dex_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.dex_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.dex_asc_mult, "0,0.00")} Asc)`,
-                       `Ag: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.agi_mult * memberObj.agi_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.agi_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.agi_asc_mult, "0,0.00")} Asc)`,
-                       `Ch: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.cha_mult * memberObj.cha_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.cha_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.cha_asc_mult, "0,0.00")} Asc)`].join("<br>"),
-    });
-    UIElems.gangMemberPanels[name]["statsDiv"] = statsDiv;
-    const statsP = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("pre", {
-        display: "inline",
-        id: name + "gang-member-stats-text",
-    });
-    const brElement = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br");
-    const ascendButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("button", {
-        class: "accordion-button",
-        innerText: "Ascend",
-        clickListener: () => {
-            const popupId = `gang-management-ascend-member ${memberObj.name}`;
-            const ascendBenefits = memberObj.getAscensionResults();
-            const txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("pre", {
-               innerText: ["Are you sure you want to ascend this member? (S)he will lose all of",
-                           "his non-Augmentation upgrades and his/her stats will reset back to 1.",
-                           "",
-                           `Furthermore, your gang will lose ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.earnedRespect, "0.000000")} respect`,
-                           "",
-                           "In return, (s)he will gain the following permanent boost to stat multipliers:\n",
-                           `Hacking: +${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(ascendBenefits.hack, "0.00%")}`,
-                           `Strength: +${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(ascendBenefits.str, "0.00%")}`,
-                           `Defense: +${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(ascendBenefits.def, "0.00%")}`,
-                           `Dexterity: +${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(ascendBenefits.dex, "0.00%")}`,
-                           `Agility: +${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(ascendBenefits.agi, "0.00%")}`,
-                           `Charisma: +${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(ascendBenefits.cha, "0.00%")}`].join("\n"),
-            });
-            const confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("button", {
-                class: "std-button",
-                clickListener: () => {
-                    this.ascendMember(memberObj);
-                    this.updateGangMemberDisplayElement(memberObj);
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(popupId);
-                    return false;
-                },
-                innerText: "Ascend",
-            });
-            const cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("button", {
-                class: "std-button",
-                clickListener: () => {
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(popupId);
-                    return false;
-                },
-                innerText: "Cancel",
-            });
-            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_10__["createPopup"])(popupId, [txt, confirmBtn, cancelBtn]);
-        }
-    });
-    const ascendHelpTip = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {
-        class: "help-tip",
-        clickListener: () => {
-            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_5__["dialogBoxCreate"])(["Ascending a Gang Member resets the member's progress and stats in exchange",
-                             "for a permanent boost to their stat multipliers.",
-                             "<br><br>The additional stat multiplier that the Gang Member gains upon ascension",
-                             "is based on the amount of multipliers the member has from non-Augmentation Equipment.",
-                             "<br><br>Upon ascension, the member will lose all of its non-Augmentation Equipment and your",
-                             "gang will lose respect equal to the total respect earned by the member."].join(" "));
-        },
-        innerText: "?",
-        marginTop: "5px",
-    });
-
-    statsDiv.appendChild(statsP);
-    statsDiv.appendChild(brElement);
-    statsDiv.appendChild(ascendButton);
-    statsDiv.appendChild(ascendHelpTip);
-
-    // Panel 2 - Task Selection & Info
-    const taskDiv = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {
-        class:"gang-member-info-div",
-        id: name + "gang-member-task",
-    });
-    const taskSelector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("select", {
-        id: name + "gang-member-task-selector",
-    });
-
-    // Get an array of the name of all tasks that are applicable for this Gang
-    let tasks = this.getAllTaskNames();
-    tasks.unshift("---");
-
-    // Create selector for Gang member task
-    for (var i = 0; i < tasks.length; ++i) {
-        var option = document.createElement("option");
-        option.text = tasks[i];
-        taskSelector.add(option);
-    }
-    taskSelector.addEventListener("change", () => {
-        var task = taskSelector.options[taskSelector.selectedIndex].text;
-        memberObj.assignToTask(task);
-        this.setGangMemberTaskDescription(memberObj, task);
-        this.updateGangContent();
-    });
-
-    // Set initial task in selector
-    if (GangMemberTasks.hasOwnProperty(memberObj.task)) {
-        var taskName = memberObj.task;
-        var taskIndex = 0;
-        for (let i = 0; i < tasks.length; ++i) {
-            if (taskName === tasks[i]) {
-                taskIndex = i;
-                break;
-            }
-        }
-        taskSelector.selectedIndex = taskIndex;
-    }
-
-    var gainInfo = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {id:name + "gang-member-gain-info"});
-    taskDiv.appendChild(taskSelector);
-    taskDiv.appendChild(gainInfo);
-
-    //Panel for Description of task
-    var taskDescDiv = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {
-        class:"gang-member-info-div",
-        id: name + "gang-member-task-desc",
-    });
-
-    var taskDescP = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("p", {
-        display:"inline",
-        id: name + "gang-member-task-description",
-    });
-    taskDescDiv.appendChild(taskDescP);
-
-    gangMemberDiv.appendChild(statsDiv);
-    gangMemberDiv.appendChild(taskDiv);
-    gangMemberDiv.appendChild(taskDescDiv);
-
-    UIElems.gangMemberList.appendChild(li);
-    this.setGangMemberTaskDescription(memberObj, taskName); //Initialize description, TODO doesnt work rn
-    this.updateGangMemberDisplayElement(memberObj);
-}
-
-Gang.prototype.updateGangMemberDisplayElement = function(memberObj) {
-    if (!UIElems.gangContentCreated) { return; }
-    var name = memberObj.name;
-
-    // Update stats + exp
-    var stats = document.getElementById(name + "gang-member-stats-text");
-    if (stats) {
-        stats.innerText =
-            [`Hacking: ${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(memberObj.hack, 0)} (${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.hack_exp, '(0.00a)')} exp)`,
-             `Strength: ${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(memberObj.str, 0)} (${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.str_exp, '(0.00a)')} exp)`,
-             `Defense: ${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(memberObj.def, 0)} (${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.def_exp, '(0.00a)')} exp)`,
-             `Dexterity: ${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(memberObj.dex, 0)} (${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.dex_exp, '(0.00a)')} exp)`,
-             `Agility: ${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(memberObj.agi, 0)} (${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.agi_exp, '(0.00a)')} exp)`,
-             `Charisma: ${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(memberObj.cha, 0)} (${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.cha_exp, '(0.00a)')} exp)`].join("\n");
-    }
-
-    // Update tooltip for stat multipliers
-    const panel = UIElems.gangMemberPanels[name];
-    if (panel) {
-        const statsDiv = panel["statsDiv"];
-        if (statsDiv) {
-            statsDiv.firstChild.innerHTML =
-                [`Hk: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.hack_mult * memberObj.hack_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.hack_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.hack_asc_mult, "0,0.00")} Asc)`,
-                `St: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.str_mult * memberObj.str_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.str_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.str_asc_mult, "0,0.00")} Asc)`,
-                `Df: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.def_mult * memberObj.def_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.def_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.def_asc_mult, "0,0.00")} Asc)`,
-                `Dx: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.dex_mult * memberObj.dex_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.dex_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.dex_asc_mult, "0,0.00")} Asc)`,
-                `Ag: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.agi_mult * memberObj.agi_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.agi_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.agi_asc_mult, "0,0.00")} Asc)`,
-                `Ch: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.cha_mult * memberObj.cha_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.cha_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_4__[/* numeralWrapper */ "a"].format(memberObj.cha_asc_mult, "0,0.00")} Asc)`].join("<br>");
-        }
-    }
-
-    // Update info about gang member's earnings/gains
-    var gainInfo = document.getElementById(name + "gang-member-gain-info");
-    if (gainInfo) {
-        gainInfo.innerHTML =
-            [`Money: $ ${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(5*memberObj.calculateMoneyGain(this), 2)} / sec`,
-             `Respect: ${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(5*memberObj.calculateRespectGain(this), 6)} / sec`,
-             `Wanted Level: ${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(5*memberObj.calculateWantedLevelGain(this), 6)} / sec`,
-             `Total Respect Earned: ${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__["formatNumber"])(memberObj.earnedRespect, 6)}`].join("<br>");
-    }
-}
-
-Gang.prototype.setGangMemberTaskDescription = function(memberObj, taskName) {
-    const name = memberObj.name;
-    const taskDesc = document.getElementById(name + "gang-member-task-description");
-    if (taskDesc) {
-        var task = GangMemberTasks[taskName];
-        if (task == null) { task = GangMemberTasks["Unassigned"]; }
-        var desc = task.desc;
-        taskDesc.innerHTML = desc;
-    }
-}
-
-Gang.prototype.clearUI = function() {
-    if (UIElems.gangContainer instanceof Element) { Object(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_16__["removeElement"])(UIElems.gangContainer); }
-
-    for (const prop in UIElems) {
-        UIElems[prop] = null;
-    }
-
-    UIElems.gangContentCreated = false;
-    UIElems.gangMemberUpgradeBoxOpened = false;
-    UIElems.gangMemberPanels = {};
-}
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 60)))
-
-/***/ }),
 /* 53 */
 /*!************************!*\
   !*** ./src/RedPill.js ***!
@@ -35066,13 +35232,13 @@ Gang.prototype.clearUI = function() {
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Prestige */ 82);
 /* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SourceFile */ 64);
-/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Terminal */ 46);
+/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Terminal */ 48);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 27);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/YesNoBox */ 18);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
 
 
 
@@ -35690,7 +35856,7 @@ function initBitNodeMultipliers() {
             _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CorporationValuation     = 0.5;
             break;
         case 6: //Bladeburner
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].HackingLevelMultiplier   = 0.5;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].HackingLevelMultiplier   = 0.4;
             _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerMaxMoney           = 0.5;
             _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerStartingMoney      = 0.5;
             _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerStartingSecurity   = 1.5;
@@ -35707,7 +35873,7 @@ function initBitNodeMultipliers() {
             _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].BladeburnerRank          = 0.6;
             _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].BladeburnerSkillCost     = 2;
             _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].AugmentationMoneyCost    = 3;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].HackingLevelMultiplier   = 0.5;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].HackingLevelMultiplier   = 0.4;
             _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerMaxMoney           = 0.5;
             _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerStartingMoney      = 0.5;
             _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerStartingSecurity   = 1.5;
@@ -35850,167 +36016,6 @@ function ipExists(ip) {
 
 /***/ }),
 /* 56 */
-/*!*********************************************!*\
-  !*** ./utils/uiHelpers/appendLineBreaks.ts ***!
-  \*********************************************/
-/*! no static exports found */
-/*! exports used: appendLineBreaks */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const createElement_1 = __webpack_require__(/*! ./createElement */ 2);
-/**
- * Appends the specified number of breaks (as children) to the specified element
- * @param el The element to add child break elements to.
- * @param n The number of breaks to add.
- */
-function appendLineBreaks(el, n) {
-    for (let i = 0; i < n; ++i) {
-        el.appendChild(createElement_1.createElement("br"));
-    }
-}
-exports.appendLineBreaks = appendLineBreaks;
-
-
-/***/ }),
-/* 57 */
-/*!*************************!*\
-  !*** ./src/TextFile.ts ***!
-  \*************************/
-/*! no static exports found */
-/*! exports used: TextFile, createTextFile, getTextFile */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const DialogBox_1 = __webpack_require__(/*! ../utils/DialogBox */ 9);
-const JSONReviver_1 = __webpack_require__(/*! ../utils/JSONReviver */ 14);
-/**
- * Represents a plain text file that is typically stored on a server.
- */
-class TextFile {
-    /**
-     * Initiatizes a TextFile from a JSON save state.
-     */
-    static fromJSON(value) {
-        return JSONReviver_1.Generic_fromJSON(TextFile, value.data);
-    }
-    constructor(fn = "", txt = "") {
-        this.fn = (fn.endsWith(".txt") ? fn : `${fn}.txt`).replace(/\s+/g, "");
-        this.text = txt;
-    }
-    /**
-     * Concatenates the raw values to the end of current content.
-     */
-    append(txt) {
-        this.text += txt;
-    }
-    /**
-     * Serves the file to the user as a downloadable resource through the browser.
-     */
-    download() {
-        const filename = this.fn;
-        const file = new Blob([this.text], { type: "text/plain" });
-        /* tslint:disable-next-line:strict-boolean-expressions */
-        if (window.navigator.msSaveOrOpenBlob) {
-            // IE10+
-            window.navigator.msSaveOrOpenBlob(file, filename);
-        }
-        else {
-            // Others
-            const a = document.createElement("a");
-            const url = URL.createObjectURL(file);
-            a.href = url;
-            a.download = this.fn;
-            document.body.appendChild(a);
-            a.click();
-            setTimeout(() => {
-                document.body.removeChild(a);
-                window.URL.revokeObjectURL(url);
-            }, 0);
-        }
-    }
-    /**
-     * Retrieve the content of the file.
-     */
-    read() {
-        return this.text;
-    }
-    /**
-     * Shows the content to the user via the game's dialog box.
-     */
-    show() {
-        DialogBox_1.dialogBoxCreate(`${this.fn}<br /><br />${this.text}`, true);
-    }
-    /**
-     * Serialize the current file to a JSON save state.
-     */
-    toJSON() {
-        return JSONReviver_1.Generic_toJSON("TextFile", this);
-    }
-    /**
-     * Replaces the current content with the text provided.
-     */
-    write(txt) {
-        this.text = txt;
-    }
-}
-exports.TextFile = TextFile;
-JSONReviver_1.Reviver.constructors.TextFile = TextFile;
-/**
- * Retrieve the file object for the filename on the specified server.
- * @param fn The file name to look for
- * @param server The server object to look in
- * @returns The file object, or null if it couldn't find it.
- */
-function getTextFile(fn, server) {
-    const filename = !fn.endsWith(".txt") ? `${fn}.txt` : fn;
-    for (const file of server.textFiles) {
-        if (file.fn === filename) {
-            return file;
-        }
-    }
-    return null;
-}
-exports.getTextFile = getTextFile;
-/**
- * Creates a TextFile on the target server.
- * @param fn The file name to create.
- * @param txt The contents of the file.
- * @param server The server that the file should be created on.
- * @returns The instance of the file.
- */
-function createTextFile(fn, txt, server) {
-    if (getTextFile(fn, server) !== null) {
-        // This should probably be a `throw`...
-        /* tslint:disable-next-line:no-console */
-        console.error(`A file named "${fn}" already exists on server ${server.hostname}.`);
-        return undefined;
-    }
-    const file = new TextFile(fn, txt);
-    server.textFiles.push(file);
-    return file;
-}
-exports.createTextFile = createTextFile;
-/* tslint:disable-next-line:no-unused-variable */
-function deleteTextFile(fn, server) {
-    const filename = !fn.endsWith(".txt") ? `${fn}.txt` : fn;
-    /* tslint:disable-next-line:typedef */
-    for (let i = 0; i < server.textFiles.length; ++i) {
-        if (server.textFiles[i].fn === filename) {
-            server.textFiles.splice(i, 1);
-            return true;
-        }
-    }
-    return false;
-}
-
-
-/***/ }),
-/* 58 */
 /*!**********************************!*\
   !*** ./src/CompanyManagement.js ***!
   \**********************************/
@@ -36023,19 +36028,19 @@ function deleteTextFile(fn, server) {
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNodeMultipliers */ 10);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Faction */ 12);
-/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Literature */ 76);
-/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Locations */ 4);
+/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Literature */ 75);
+/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Locations */ 5);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! decimal.js */ 31);
-/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ui/numeralFormat */ 5);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/uiHelpers/clearSelector */ 121);
 /* harmony import */ var _utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 37);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 38);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./ui/navigationTracking */ 13);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_12__);
@@ -36043,13 +36048,13 @@ function deleteTextFile(fn, server) {
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 15);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/helpers/isString */ 35);
+/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/helpers/isString */ 36);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 27);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_16__);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/YesNoBox */ 18);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
 
 
 
@@ -40975,6 +40980,167 @@ _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_9__["Reviver"].constructors.Corporat
 
 
 /***/ }),
+/* 57 */
+/*!*********************************************!*\
+  !*** ./utils/uiHelpers/appendLineBreaks.ts ***!
+  \*********************************************/
+/*! no static exports found */
+/*! exports used: appendLineBreaks */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const createElement_1 = __webpack_require__(/*! ./createElement */ 2);
+/**
+ * Appends the specified number of breaks (as children) to the specified element
+ * @param el The element to add child break elements to.
+ * @param n The number of breaks to add.
+ */
+function appendLineBreaks(el, n) {
+    for (let i = 0; i < n; ++i) {
+        el.appendChild(createElement_1.createElement("br"));
+    }
+}
+exports.appendLineBreaks = appendLineBreaks;
+
+
+/***/ }),
+/* 58 */
+/*!*************************!*\
+  !*** ./src/TextFile.ts ***!
+  \*************************/
+/*! no static exports found */
+/*! exports used: TextFile, createTextFile, getTextFile */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const DialogBox_1 = __webpack_require__(/*! ../utils/DialogBox */ 9);
+const JSONReviver_1 = __webpack_require__(/*! ../utils/JSONReviver */ 14);
+/**
+ * Represents a plain text file that is typically stored on a server.
+ */
+class TextFile {
+    /**
+     * Initiatizes a TextFile from a JSON save state.
+     */
+    static fromJSON(value) {
+        return JSONReviver_1.Generic_fromJSON(TextFile, value.data);
+    }
+    constructor(fn = "", txt = "") {
+        this.fn = (fn.endsWith(".txt") ? fn : `${fn}.txt`).replace(/\s+/g, "");
+        this.text = txt;
+    }
+    /**
+     * Concatenates the raw values to the end of current content.
+     */
+    append(txt) {
+        this.text += txt;
+    }
+    /**
+     * Serves the file to the user as a downloadable resource through the browser.
+     */
+    download() {
+        const filename = this.fn;
+        const file = new Blob([this.text], { type: "text/plain" });
+        /* tslint:disable-next-line:strict-boolean-expressions */
+        if (window.navigator.msSaveOrOpenBlob) {
+            // IE10+
+            window.navigator.msSaveOrOpenBlob(file, filename);
+        }
+        else {
+            // Others
+            const a = document.createElement("a");
+            const url = URL.createObjectURL(file);
+            a.href = url;
+            a.download = this.fn;
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(() => {
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+            }, 0);
+        }
+    }
+    /**
+     * Retrieve the content of the file.
+     */
+    read() {
+        return this.text;
+    }
+    /**
+     * Shows the content to the user via the game's dialog box.
+     */
+    show() {
+        DialogBox_1.dialogBoxCreate(`${this.fn}<br /><br />${this.text}`, true);
+    }
+    /**
+     * Serialize the current file to a JSON save state.
+     */
+    toJSON() {
+        return JSONReviver_1.Generic_toJSON("TextFile", this);
+    }
+    /**
+     * Replaces the current content with the text provided.
+     */
+    write(txt) {
+        this.text = txt;
+    }
+}
+exports.TextFile = TextFile;
+JSONReviver_1.Reviver.constructors.TextFile = TextFile;
+/**
+ * Retrieve the file object for the filename on the specified server.
+ * @param fn The file name to look for
+ * @param server The server object to look in
+ * @returns The file object, or null if it couldn't find it.
+ */
+function getTextFile(fn, server) {
+    const filename = !fn.endsWith(".txt") ? `${fn}.txt` : fn;
+    for (const file of server.textFiles) {
+        if (file.fn === filename) {
+            return file;
+        }
+    }
+    return null;
+}
+exports.getTextFile = getTextFile;
+/**
+ * Creates a TextFile on the target server.
+ * @param fn The file name to create.
+ * @param txt The contents of the file.
+ * @param server The server that the file should be created on.
+ * @returns The instance of the file.
+ */
+function createTextFile(fn, txt, server) {
+    if (getTextFile(fn, server) !== null) {
+        // This should probably be a `throw`...
+        /* tslint:disable-next-line:no-console */
+        console.error(`A file named "${fn}" already exists on server ${server.hostname}.`);
+        return undefined;
+    }
+    const file = new TextFile(fn, txt);
+    server.textFiles.push(file);
+    return file;
+}
+exports.createTextFile = createTextFile;
+/* tslint:disable-next-line:no-unused-variable */
+function deleteTextFile(fn, server) {
+    const filename = !fn.endsWith(".txt") ? `${fn}.txt` : fn;
+    /* tslint:disable-next-line:typedef */
+    for (let i = 0; i < server.textFiles.length; ++i) {
+        if (server.textFiles[i].fn === filename) {
+            server.textFiles.splice(i, 1);
+            return true;
+        }
+    }
+    return false;
+}
+
+
+/***/ }),
 /* 59 */
 /*!************************************!*\
   !*** ./utils/helpers/addOffset.ts ***!
@@ -41049,7 +41215,7 @@ exports.addOffset = addOffset;
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/uiHelpers/getElementById */ 48);
+/* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/uiHelpers/getElementById */ 50);
 /* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_11__);
 
 
@@ -41743,27 +41909,27 @@ function getHacknetNode(name) {
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NetscriptWorker */ 24);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ui/numeralFormat */ 5);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 72);
+/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 71);
 /* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 50);
+/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 51);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/helpers/createProgressBarText */ 78);
+/* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/helpers/createProgressBarText */ 77);
 /* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 43);
-/* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/uiHelpers/getElementById */ 48);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 44);
+/* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/uiHelpers/getElementById */ 50);
 /* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/LogBox */ 74);
+/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/LogBox */ 73);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 27);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13__);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 65);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 77);
+/* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 76);
 /* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./ui/navigationTracking */ 13);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_16__);
@@ -42508,7 +42674,7 @@ var PurchaseAugmentationsOrderSetting;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 14);
-const CompanyPosition_1 = __webpack_require__(/*! ./CompanyPosition */ 71);
+const CompanyPosition_1 = __webpack_require__(/*! ./CompanyPosition */ 79);
 const Constants_1 = __webpack_require__(/*! ../Constants */ 1);
 const DefaultConstructorParams = {
     name: "",
@@ -42605,38 +42771,38 @@ JSONReviver_1.Reviver.constructors.Company = Company;
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return saveObject; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return loadGame; });
-/* harmony import */ var _Alias__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Alias */ 41);
-/* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Company/Companies */ 17);
+/* harmony import */ var _Alias__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Alias */ 42);
+/* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Company/Companies */ 18);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Company/CompanyPosition */ 71);
+/* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Company/CompanyPosition */ 79);
 /* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./engine */ 8);
 /* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Faction */ 12);
-/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Fconf */ 42);
-/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Gang */ 52);
+/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Fconf */ 43);
+/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Gang */ 47);
 /* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./HacknetNode */ 61);
-/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Message */ 36);
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Message */ 37);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Script */ 29);
+/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Script */ 28);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Server */ 11);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./SpecialServerIps */ 28);
-/* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./StockMarket */ 23);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./SpecialServerIps */ 30);
+/* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./StockMarket */ 22);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_GameOptions__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/GameOptions */ 79);
+/* harmony import */ var _utils_GameOptions__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/GameOptions */ 78);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_18__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_20__);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 37);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 38);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_21__);
 /* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./ui/createStatusText */ 93);
 /* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_ui_createStatusText__WEBPACK_IMPORTED_MODULE_22__);
-/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./ui/numeralFormat */ 5);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_24__);
 /* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! decimal.js */ 31);
@@ -42749,6 +42915,31 @@ BitburnerSaveObject.prototype.saveGame = function(db) {
     Object(_ui_createStatusText__WEBPACK_IMPORTED_MODULE_22__["createStatusText"])("Game saved!");
 }
 
+// Makes necessary changes to the loaded/imported data to ensure
+// the game stills works with new versions
+function evaluateVersionCompatibility(ver) {
+    // This version refactored the Company/job-related code
+    if (ver <= "0.41.2") {
+        // Player's company position is now a string
+        if (_Player__WEBPACK_IMPORTED_MODULE_10__[/* Player */ "a"].companyPosition != null && typeof _Player__WEBPACK_IMPORTED_MODULE_10__[/* Player */ "a"].companyPosition !== "string") {
+            console.log("Changed Player.companyPosition value to be compatible with v0.41.2");
+            _Player__WEBPACK_IMPORTED_MODULE_10__[/* Player */ "a"].companyPosition = _Player__WEBPACK_IMPORTED_MODULE_10__[/* Player */ "a"].companyPosition.positionName;
+            if (_Player__WEBPACK_IMPORTED_MODULE_10__[/* Player */ "a"].companyPosition == null) {
+                _Player__WEBPACK_IMPORTED_MODULE_10__[/* Player */ "a"].companyPosition = "";
+            }
+        }
+
+        // The "companyName" property of all Companies is renamed to "name"
+        for (var companyName in _Company_Companies__WEBPACK_IMPORTED_MODULE_1__["Companies"]) {
+            const company = _Company_Companies__WEBPACK_IMPORTED_MODULE_1__["Companies"][companyName];
+            if (company.name == null && company.companyName != null) {
+                console.log("Changed company name property to be compatible with v0.41.2");
+                company.name = company.companyName;
+            }
+        }
+    }
+}
+
 function loadGame(saveString) {
     if (saveString === "" || saveString == null || saveString === undefined) {
         if (!window.localStorage.getItem("bitburnerSave")) {
@@ -42826,23 +43017,8 @@ function loadGame(saveString) {
     if (saveObj.hasOwnProperty("VersionSave")) {
         try {
             var ver = JSON.parse(saveObj.VersionSave, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_19__["Reviver"]);
-            // This version refactored the Company/job-related code
-            if (ver < "0.41.2") {
-                // Player's company position is now a string
-                if (_Player__WEBPACK_IMPORTED_MODULE_10__[/* Player */ "a"].companyPosition !== "" || _Player__WEBPACK_IMPORTED_MODULE_10__[/* Player */ "a"].companyPosition instanceof _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_2__["CompanyPosition"]) {
-                    console.log("Changed Player.companyPosition value to be compatible with v0.41.2");
-                    _Player__WEBPACK_IMPORTED_MODULE_10__[/* Player */ "a"].companyPosition = _Player__WEBPACK_IMPORTED_MODULE_10__[/* Player */ "a"].companyPosition.positionName;
-                }
+            evaluateVersionCompatibility(ver);
 
-                // The "companyName" property of all Companies is renamed to "name"
-                for (var companyName in _Company_Companies__WEBPACK_IMPORTED_MODULE_1__["Companies"]) {
-                    const company = _Company_Companies__WEBPACK_IMPORTED_MODULE_1__["Companies"][companyName];
-                    if (company.name == null && company.companyName != null) {
-                        console.log("Changed company name property to be compatible with v0.41.2");
-                        company.name = company.companyName;
-                    }
-                }
-            }
             if (window.location.href.toLowerCase().includes("bitburner-beta")) {
                 //Beta branch, always show changes
                 createBetaUpdateText();
@@ -42940,23 +43116,7 @@ function loadImportedGame(saveObj, saveString) {
         if (tempSaveObj.hasOwnProperty("VersionSave")) {
             try {
                 var ver = JSON.parse(tempSaveObj.VersionSave, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_19__["Reviver"]);
-                // This version refactored the Company/job-related code
-                if (ver < "0.41.2") {
-                    // Player's company position is now a string
-                    if (_Player__WEBPACK_IMPORTED_MODULE_10__[/* Player */ "a"].companyPosition !== "" || _Player__WEBPACK_IMPORTED_MODULE_10__[/* Player */ "a"].companyPosition instanceof _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_2__["CompanyPosition"]) {
-                        console.log("Changed Player.companyPosition value to be compatible with v0.41.2");
-                        _Player__WEBPACK_IMPORTED_MODULE_10__[/* Player */ "a"].companyPosition = _Player__WEBPACK_IMPORTED_MODULE_10__[/* Player */ "a"].companyPosition.positionName;
-                    }
-
-                    // The "companyName" property of all Companies is renamed to "name"
-                    for (var companyName in _Company_Companies__WEBPACK_IMPORTED_MODULE_1__["Companies"]) {
-                        const company = _Company_Companies__WEBPACK_IMPORTED_MODULE_1__["Companies"][companyName];
-                        if (company.name == null && company.companyName != null) {
-                            console.log("Changed company name property to be compatible with v0.41.2");
-                            company.name = company.companyName;
-                        }
-                    }
-                }
+                evaluateVersionCompatibility(ver);
             } catch(e) {
                 console.error("Parsing Version save failed: " + e);
             }
@@ -43039,23 +43199,8 @@ function loadImportedGame(saveObj, saveString) {
     if (saveObj.hasOwnProperty("VersionSave")) {
         try {
             var ver = JSON.parse(saveObj.VersionSave, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_19__["Reviver"]);
-            // This version refactored the Company/job-related code
-            if (ver < "0.41.2") {
-                // Player's company position is now a string
-                if (_Player__WEBPACK_IMPORTED_MODULE_10__[/* Player */ "a"].companyPosition !== "" || _Player__WEBPACK_IMPORTED_MODULE_10__[/* Player */ "a"].companyPosition instanceof _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_2__["CompanyPosition"]) {
-                    console.log("Changed Player.companyPosition value to be compatible with v0.41.2");
-                    _Player__WEBPACK_IMPORTED_MODULE_10__[/* Player */ "a"].companyPosition = _Player__WEBPACK_IMPORTED_MODULE_10__[/* Player */ "a"].companyPosition.positionName;
-                }
+            evaluateVersionCompatibility(ver);
 
-                // The "companyName" property of all Companies is renamed to "name"
-                for (var companyName in _Company_Companies__WEBPACK_IMPORTED_MODULE_1__["Companies"]) {
-                    const company = _Company_Companies__WEBPACK_IMPORTED_MODULE_1__["Companies"][companyName];
-                    if (company.name == null && company.companyName != null) {
-                        console.log("Changed company name property to be compatible with v0.41.2");
-                        company.name = company.companyName;
-                    }
-                }
-            }
             if (ver != _Constants__WEBPACK_IMPORTED_MODULE_3__["CONSTANTS"].Version) {
                 createNewUpdateText();
             }
@@ -43257,98 +43402,6 @@ function openImportFileHandler(evt) {
 
 /***/ }),
 /* 71 */
-/*!****************************************!*\
-  !*** ./src/Company/CompanyPosition.ts ***!
-  \****************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const Constants_1 = __webpack_require__(/*! ../Constants */ 1);
-const names = __webpack_require__(/*! ./data/CompanyPositionNames */ 51);
-class CompanyPosition {
-    constructor(p) {
-        this.name = p.name;
-        this.nextPosition = p.nextPosition;
-        this.baseSalary = p.baseSalary;
-        this.repMultiplier = p.repMultiplier;
-        this.requiredHacking = (p.reqdHacking != null) ? p.reqdHacking : 0;
-        this.requiredStrength = (p.reqdStrength != null) ? p.reqdStrength : 0;
-        this.requiredDefense = (p.reqdDefense != null) ? p.reqdDefense : 0;
-        this.requiredDexterity = (p.reqdDexterity != null) ? p.reqdDexterity : 0;
-        this.requiredAgility = (p.reqdAgility != null) ? p.reqdAgility : 0;
-        this.requiredCharisma = (p.reqdCharisma != null) ? p.reqdCharisma : 0;
-        this.requiredReputation = (p.reqdReputation != null) ? p.reqdReputation : 0;
-        this.hackingEffectiveness = (p.hackingEffectiveness != null) ? p.hackingEffectiveness : 0;
-        this.strengthEffectiveness = (p.strengthEffectiveness != null) ? p.strengthEffectiveness : 0;
-        this.defenseEffectiveness = (p.defenseEffectiveness != null) ? p.defenseEffectiveness : 0;
-        this.dexterityEffectiveness = (p.dexterityEffectiveness != null) ? p.dexterityEffectiveness : 0;
-        this.agilityEffectiveness = (p.agilityEffectiveness != null) ? p.agilityEffectiveness : 0;
-        this.charismaEffectiveness = (p.charismaEffectiveness != null) ? p.charismaEffectiveness : 0;
-        if (Math.round(this.hackingEffectiveness + this.strengthEffectiveness + this.defenseEffectiveness +
-            this.dexterityEffectiveness + this.agilityEffectiveness + this.charismaEffectiveness) !== 100) {
-            console.error(`CompanyPosition ${this.name} parameters do not sum to 100`);
-        }
-        this.hackingExpGain = (p.hackingExpGain != null) ? p.hackingExpGain : 0;
-        this.strengthExpGain = (p.strengthExpGain != null) ? p.strengthExpGain : 0;
-        this.defenseExpGain = (p.defenseExpGain != null) ? p.defenseExpGain : 0;
-        this.dexterityExpGain = (p.dexterityExpGain != null) ? p.dexterityExpGain : 0;
-        this.agilityExpGain = (p.agilityExpGain != null) ? p.agilityExpGain : 0;
-        this.charismaExpGain = (p.charismaExpGain != null) ? p.charismaExpGain : 0;
-    }
-    calculateJobPerformance(hack, str, def, dex, agi, cha) {
-        const hackRatio = this.hackingEffectiveness * hack / Constants_1.CONSTANTS.MaxSkillLevel;
-        const strRatio = this.strengthEffectiveness * str / Constants_1.CONSTANTS.MaxSkillLevel;
-        const defRatio = this.defenseEffectiveness * def / Constants_1.CONSTANTS.MaxSkillLevel;
-        const dexRatio = this.dexterityEffectiveness * dex / Constants_1.CONSTANTS.MaxSkillLevel;
-        const agiRatio = this.agilityEffectiveness * agi / Constants_1.CONSTANTS.MaxSkillLevel;
-        const chaRatio = this.charismaEffectiveness * cha / Constants_1.CONSTANTS.MaxSkillLevel;
-        let reputationGain = this.repMultiplier * (hackRatio + strRatio + defRatio + dexRatio + agiRatio + chaRatio) / 100;
-        if (isNaN(reputationGain)) {
-            console.error("Company reputation gain calculated to be NaN");
-            reputationGain = 0;
-        }
-        return reputationGain;
-    }
-    isSoftwareJob() {
-        return names.SoftwareCompanyPositions.includes(this.name);
-    }
-    isITJob() {
-        return names.ITCompanyPositions.includes(this.name);
-    }
-    isSecurityEngineerJob() {
-        return names.SecurityEngineerCompanyPositions.includes(this.name);
-    }
-    isNetworkEngineerJob() {
-        return names.NetworkEngineerCompanyPositions.includes(this.name);
-    }
-    isBusinessJob() {
-        return names.BusinessCompanyPositions.includes(this.name);
-    }
-    isSecurityJob() {
-        return names.SecurityCompanyPositions.includes(this.name);
-    }
-    isAgentJob() {
-        return names.AgentCompanyPositions.includes(this.name);
-    }
-    isSoftwareConsultantJob() {
-        return names.SoftwareConsultantCompanyPositions.includes(this.name);
-    }
-    isBusinessConsultantJob() {
-        return names.BusinessConsultantCompanyPositions.includes(this.name);
-    }
-    isPartTimeJob() {
-        return names.PartTimeCompanyPositions.includes(this.name);
-    }
-}
-exports.CompanyPosition = CompanyPosition;
-
-
-/***/ }),
-/* 72 */
 /*!***************************************************!*\
   !*** ./utils/uiHelpers/createAccordionElement.ts ***!
   \***************************************************/
@@ -43393,7 +43446,7 @@ exports.createAccordionElement = createAccordionElement;
 
 
 /***/ }),
-/* 73 */
+/* 72 */
 /*!**************************************!*\
   !*** ./utils/helpers/clearObject.ts ***!
   \**************************************/
@@ -43422,7 +43475,7 @@ exports.clearObject = clearObject;
 
 
 /***/ }),
-/* 74 */
+/* 73 */
 /*!*************************!*\
   !*** ./utils/LogBox.js ***!
   \*************************/
@@ -43438,7 +43491,7 @@ exports.clearObject = clearObject;
 /* harmony import */ var _src_NetscriptWorker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/NetscriptWorker */ 24);
 /* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./uiHelpers/clearEventListeners */ 16);
 /* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _helpers_arrayToString__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers/arrayToString */ 50);
+/* harmony import */ var _helpers_arrayToString__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers/arrayToString */ 51);
 /* harmony import */ var _helpers_arrayToString__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_2__);
 
 
@@ -43512,7 +43565,7 @@ function logBoxUpdateText() {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 60)))
 
 /***/ }),
-/* 75 */
+/* 74 */
 /*!************************!*\
   !*** ./src/DarkWeb.js ***!
   \************************/
@@ -43524,9 +43577,9 @@ function logBoxUpdateText() {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return checkIfConnectedToDarkweb; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return executeDarkwebTerminalCommand; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DarkWebItems; });
-/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateProgram */ 22);
+/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateProgram */ 23);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SpecialServerIps */ 28);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SpecialServerIps */ 30);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ui/postToTerminal */ 7);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/helpers/isValidIPAddress */ 81);
@@ -43652,7 +43705,7 @@ const DarkWebItems = {
 
 
 /***/ }),
-/* 76 */
+/* 75 */
 /*!***************************!*\
   !*** ./src/Literature.js ***!
   \***************************/
@@ -44103,7 +44156,7 @@ function initLiterature() {
 
 
 /***/ }),
-/* 77 */
+/* 76 */
 /*!*************************************!*\
   !*** ./utils/helpers/roundToTwo.ts ***!
   \*************************************/
@@ -44126,7 +44179,7 @@ exports.roundToTwo = roundToTwo;
 
 
 /***/ }),
-/* 78 */
+/* 77 */
 /*!************************************************!*\
   !*** ./utils/helpers/createProgressBarText.ts ***!
   \************************************************/
@@ -44162,7 +44215,7 @@ exports.createProgressBarText = createProgressBarText;
 
 
 /***/ }),
-/* 79 */
+/* 78 */
 /*!******************************!*\
   !*** ./utils/GameOptions.js ***!
   \******************************/
@@ -44220,6 +44273,98 @@ function gameOptionsBoxOpen() {
 
 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 60)))
+
+/***/ }),
+/* 79 */
+/*!****************************************!*\
+  !*** ./src/Company/CompanyPosition.ts ***!
+  \****************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const Constants_1 = __webpack_require__(/*! ../Constants */ 1);
+const names = __webpack_require__(/*! ./data/CompanyPositionNames */ 34);
+class CompanyPosition {
+    constructor(p) {
+        this.name = p.name;
+        this.nextPosition = p.nextPosition;
+        this.baseSalary = p.baseSalary;
+        this.repMultiplier = p.repMultiplier;
+        this.requiredHacking = (p.reqdHacking != null) ? p.reqdHacking : 0;
+        this.requiredStrength = (p.reqdStrength != null) ? p.reqdStrength : 0;
+        this.requiredDefense = (p.reqdDefense != null) ? p.reqdDefense : 0;
+        this.requiredDexterity = (p.reqdDexterity != null) ? p.reqdDexterity : 0;
+        this.requiredAgility = (p.reqdAgility != null) ? p.reqdAgility : 0;
+        this.requiredCharisma = (p.reqdCharisma != null) ? p.reqdCharisma : 0;
+        this.requiredReputation = (p.reqdReputation != null) ? p.reqdReputation : 0;
+        this.hackingEffectiveness = (p.hackingEffectiveness != null) ? p.hackingEffectiveness : 0;
+        this.strengthEffectiveness = (p.strengthEffectiveness != null) ? p.strengthEffectiveness : 0;
+        this.defenseEffectiveness = (p.defenseEffectiveness != null) ? p.defenseEffectiveness : 0;
+        this.dexterityEffectiveness = (p.dexterityEffectiveness != null) ? p.dexterityEffectiveness : 0;
+        this.agilityEffectiveness = (p.agilityEffectiveness != null) ? p.agilityEffectiveness : 0;
+        this.charismaEffectiveness = (p.charismaEffectiveness != null) ? p.charismaEffectiveness : 0;
+        if (Math.round(this.hackingEffectiveness + this.strengthEffectiveness + this.defenseEffectiveness +
+            this.dexterityEffectiveness + this.agilityEffectiveness + this.charismaEffectiveness) !== 100) {
+            console.error(`CompanyPosition ${this.name} parameters do not sum to 100`);
+        }
+        this.hackingExpGain = (p.hackingExpGain != null) ? p.hackingExpGain : 0;
+        this.strengthExpGain = (p.strengthExpGain != null) ? p.strengthExpGain : 0;
+        this.defenseExpGain = (p.defenseExpGain != null) ? p.defenseExpGain : 0;
+        this.dexterityExpGain = (p.dexterityExpGain != null) ? p.dexterityExpGain : 0;
+        this.agilityExpGain = (p.agilityExpGain != null) ? p.agilityExpGain : 0;
+        this.charismaExpGain = (p.charismaExpGain != null) ? p.charismaExpGain : 0;
+    }
+    calculateJobPerformance(hack, str, def, dex, agi, cha) {
+        const hackRatio = this.hackingEffectiveness * hack / Constants_1.CONSTANTS.MaxSkillLevel;
+        const strRatio = this.strengthEffectiveness * str / Constants_1.CONSTANTS.MaxSkillLevel;
+        const defRatio = this.defenseEffectiveness * def / Constants_1.CONSTANTS.MaxSkillLevel;
+        const dexRatio = this.dexterityEffectiveness * dex / Constants_1.CONSTANTS.MaxSkillLevel;
+        const agiRatio = this.agilityEffectiveness * agi / Constants_1.CONSTANTS.MaxSkillLevel;
+        const chaRatio = this.charismaEffectiveness * cha / Constants_1.CONSTANTS.MaxSkillLevel;
+        let reputationGain = this.repMultiplier * (hackRatio + strRatio + defRatio + dexRatio + agiRatio + chaRatio) / 100;
+        if (isNaN(reputationGain)) {
+            console.error("Company reputation gain calculated to be NaN");
+            reputationGain = 0;
+        }
+        return reputationGain;
+    }
+    isSoftwareJob() {
+        return names.SoftwareCompanyPositions.includes(this.name);
+    }
+    isITJob() {
+        return names.ITCompanyPositions.includes(this.name);
+    }
+    isSecurityEngineerJob() {
+        return names.SecurityEngineerCompanyPositions.includes(this.name);
+    }
+    isNetworkEngineerJob() {
+        return names.NetworkEngineerCompanyPositions.includes(this.name);
+    }
+    isBusinessJob() {
+        return names.BusinessCompanyPositions.includes(this.name);
+    }
+    isSecurityJob() {
+        return names.SecurityCompanyPositions.includes(this.name);
+    }
+    isAgentJob() {
+        return names.AgentCompanyPositions.includes(this.name);
+    }
+    isSoftwareConsultantJob() {
+        return names.SoftwareConsultantCompanyPositions.includes(this.name);
+    }
+    isBusinessConsultantJob() {
+        return names.BusinessConsultantCompanyPositions.includes(this.name);
+    }
+    isPartTimeJob() {
+        return names.PartTimeCompanyPositions.includes(this.name);
+    }
+}
+exports.CompanyPosition = CompanyPosition;
+
 
 /***/ }),
 /* 80 */
@@ -44287,33 +44432,33 @@ exports.isValidIPAddress = isValidIPAddress;
 /* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActiveScriptsUI */ 62);
 /* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Augmentations */ 21);
 /* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BitNode */ 54);
-/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Bladeburner */ 30);
+/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Bladeburner */ 29);
 /* harmony import */ var _CinematicText__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./CinematicText */ 91);
-/* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Company/Companies */ 17);
+/* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Company/Companies */ 18);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./CreateProgram */ 22);
+/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./CreateProgram */ 23);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./engine */ 8);
 /* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Faction */ 12);
-/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Gang */ 52);
+/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Gang */ 47);
 /* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Location */ 84);
-/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Message */ 36);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./NetscriptFunctions */ 40);
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Message */ 37);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./NetscriptFunctions */ 41);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./NetscriptWorker */ 24);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./SpecialServerIps */ 28);
-/* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./StockMarket */ 23);
-/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Terminal */ 46);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./SpecialServerIps */ 30);
+/* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./StockMarket */ 22);
+/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Terminal */ 48);
 /* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! decimal.js */ 31);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_21__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 37);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 38);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 43);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/YesNoBox */ 18);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 44);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
 
 
 
@@ -44452,6 +44597,10 @@ function prestigeAugmentation() {
     mainMenu.style.visibility = "visible";
     _Terminal__WEBPACK_IMPORTED_MODULE_18__[/* Terminal */ "a"].resetTerminalInput();
     _engine__WEBPACK_IMPORTED_MODULE_7__["Engine"].loadTerminalContent();
+
+    // Refresh Main Menu (the 'World' menu, specifically)
+    document.getElementById("world-menu-header").click();
+    document.getElementById("world-menu-header").click();
 
     //Red Pill
     if (Object(_Augmentations__WEBPACK_IMPORTED_MODULE_1__[/* augmentationExists */ "f"])(_Augmentations__WEBPACK_IMPORTED_MODULE_1__[/* AugmentationNames */ "b"].TheRedPill) &&
@@ -44624,6 +44773,10 @@ function prestigeSourceFile() {
     _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].corporation = null;
     _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].bladeburner = null;
 
+    // Refresh Main Menu (the 'World' menu, specifically)
+    document.getElementById("world-menu-header").click();
+    document.getElementById("world-menu-header").click();
+
     //Gain int exp
     _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].gainIntelligenceExp(5);
 }
@@ -44645,38 +44798,38 @@ function prestigeSourceFile() {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return displayLocationContent; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return initLocationButtons; });
-/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Bladeburner */ 30);
+/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Bladeburner */ 29);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Company/CompanyPositions */ 25);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Company/Companies */ 17);
+/* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Company/Companies */ 18);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Company/GetJobRequirementText */ 85);
 /* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Company/data/CompanyPositionNames */ 51);
+/* harmony import */ var _Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Company/data/CompanyPositionNames */ 34);
 /* harmony import */ var _Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _CompanyManagement__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./CompanyManagement */ 58);
+/* harmony import */ var _CompanyManagement__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./CompanyManagement */ 56);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _Crimes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Crimes */ 34);
+/* harmony import */ var _Crimes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Crimes */ 35);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./engine */ 8);
 /* harmony import */ var _Infiltration__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Infiltration */ 120);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./NetscriptFunctions */ 40);
-/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Locations */ 4);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./NetscriptFunctions */ 41);
+/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Locations */ 5);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Server */ 11);
 /* harmony import */ var _ServerPurchases__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./ServerPurchases */ 105);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./SpecialServerIps */ 28);
-/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./ui/numeralFormat */ 5);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./SpecialServerIps */ 30);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_19__);
 /* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/IPAddress */ 55);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/YesNoBox */ 18);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
 
 
 
@@ -46629,7 +46782,6 @@ function initLocationButtons() {
                 name:companyName,
             });
             displayLocationContent();
-            document.getElementById("corporation-tab").style.display = "list-item";
             document.getElementById("world-menu-header").click();
             document.getElementById("world-menu-header").click();
             Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("Congratulations! You just started your own corporation. You can visit " +
@@ -46659,7 +46811,6 @@ function initLocationButtons() {
                 _Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].bladeburner = new _Bladeburner__WEBPACK_IMPORTED_MODULE_0__[/* Bladeburner */ "a"]({new:true});
                 Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("You have been accepted into the Bladeburner division!");
                 displayLocationContent();
-                document.getElementById("bladeburner-tab").style.display = "list-item";
                 document.getElementById("world-menu-header").click();
                 document.getElementById("world-menu-header").click();
             } else {
@@ -47035,7 +47186,7 @@ exports.getRandomByte = getRandomByte;
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return generateRandomContract; });
 /* unused harmony export generateContract */
-/* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CodingContracts */ 38);
+/* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CodingContracts */ 40);
 /* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_CodingContracts__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Faction */ 12);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Player */ 0);
@@ -47216,8 +47367,8 @@ function getRandomFilename(server, reward) {
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 43);
-/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/helpers/isString */ 35);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 44);
+/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/helpers/isString */ 36);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_4__);
 
 
@@ -47358,7 +47509,7 @@ exports.getNextCompanyPosition = getNextCompanyPosition;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const getElementById_1 = __webpack_require__(/*! ../../utils/uiHelpers/getElementById */ 48);
+const getElementById_1 = __webpack_require__(/*! ../../utils/uiHelpers/getElementById */ 50);
 const threeSeconds = 3000;
 let x;
 /**
@@ -47636,7 +47787,7 @@ exports.HelpTexts = {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Environment; });
 /* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HacknetNode */ 61);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NetscriptFunctions */ 40);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NetscriptFunctions */ 41);
 /* harmony import */ var _NetscriptPort__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NetscriptPort */ 66);
 
 
@@ -47874,17 +48025,26 @@ function _getScriptUrls(script, scripts, seen) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return closeDevMenu; });
 /* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentations */ 21);
 /* harmony import */ var _CodingContractGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CodingContractGenerator */ 90);
-/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CreateProgram */ 22);
+/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CreateProgram */ 23);
 /* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Faction */ 12);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Server */ 11);
 /* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./RedPill */ 53);
-/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Terminal */ 46);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 43);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./StockMarket */ 22);
+/* harmony import */ var _Stock__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Stock */ 26);
+/* harmony import */ var _Stock__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_Stock__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Terminal */ 48);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 44);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_14__);
+
+
+
+
 
 
 
@@ -47902,18 +48062,18 @@ const devMenuContainerId = "dev-menu-container";
 function createDevMenu() {
     if (false) {}
 
-    const devMenuText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("h1", {
+    const devMenuText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("h1", {
         display: "block",
         innerText: "Development Menu - Only meant to be used for testing/debugging",
     });
 
     // Generic
-    const genericHeader = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("h2", {
+    const genericHeader = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("h2", {
         display: "block",
         innerText: "Generic"
     });
 
-    const addMoney = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("button", {
+    const addMoney = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("button", {
         class: "std-button",
         clickListener: () => {
             _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gainMoney(1e15);
@@ -47922,7 +48082,7 @@ function createDevMenu() {
         innerText: "Add $1000t",
     });
 
-    const addRam = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("button", {
+    const addRam = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("button", {
         class: "std-button",
         clickListener: () => {
             _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].getHomeComputer().maxRam *= 2;
@@ -47931,7 +48091,7 @@ function createDevMenu() {
         innerText: "Double Home Computer RAM",
     });
 
-    const triggerBitflume = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("button", {
+    const triggerBitflume = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("button", {
         class: "std-button",
         clickListener: () => {
             Object(_RedPill__WEBPACK_IMPORTED_MODULE_6__[/* hackWorldDaemon */ "a"])(_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].bitNodeN, true);
@@ -47939,7 +48099,7 @@ function createDevMenu() {
         innerText: "Trigger BitFlume",
     });
 
-    const destroyCurrentBitnode = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("button", {
+    const destroyCurrentBitnode = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("button", {
         class: "std-button",
         clickListener: () => {
             Object(_RedPill__WEBPACK_IMPORTED_MODULE_6__[/* hackWorldDaemon */ "a"])(_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].bitNodeN);
@@ -47949,18 +48109,18 @@ function createDevMenu() {
     });
 
     // Experience / stats
-    const statsHeader = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("h2", {
+    const statsHeader = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("h2", {
         display: "block",
         innerText: "Experience/Stats"
     });
 
-    const statsHackingExpInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("input", {
+    const statsHackingExpInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("input", {
         class: "text-input",
         margin: "5px",
         placeholder: "+/- hacking exp",
         type: "number",
     });
-    const statsHackingExpButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("button", {
+    const statsHackingExpButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("button", {
         class: "std-button",
         clickListener: () => {
             const exp = parseInt(statsHackingExpInput.value);
@@ -47970,13 +48130,13 @@ function createDevMenu() {
         innerText: "Add Hacking Exp",
     });
 
-    const statsStrengthExpInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("input", {
+    const statsStrengthExpInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("input", {
         class: "text-input",
         margin: "5px",
         placeholder: "+/- strength exp",
         type: "number",
     });
-    const statsStrengthExpButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("button", {
+    const statsStrengthExpButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("button", {
         class: "std-button",
         clickListener: () => {
             const exp = parseInt(statsStrengthExpInput.value);
@@ -47986,13 +48146,13 @@ function createDevMenu() {
         innerText: "Add Strength Exp",
     });
 
-    const statsDefenseExpInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("input", {
+    const statsDefenseExpInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("input", {
         class: "text-input",
         margin: "5px",
         placeholder: "+/- defense exp",
         type: "number",
     });
-    const statsDefenseExpButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("button", {
+    const statsDefenseExpButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("button", {
         class: "std-button",
         clickListener: () => {
             const exp = parseInt(statsDefenseExpInput.value);
@@ -48002,13 +48162,13 @@ function createDevMenu() {
         innerText: "Add Defense Exp",
     });
 
-    const statsDexterityExpInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("input", {
+    const statsDexterityExpInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("input", {
         class: "text-input",
         margin: "5px",
         placeholder: "+/- dexterity exp",
         type: "number",
     });
-    const statsDexterityExpButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("button", {
+    const statsDexterityExpButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("button", {
         class: "std-button",
         clickListener: () => {
             const exp = parseInt(statsDexterityExpInput.value);
@@ -48018,13 +48178,13 @@ function createDevMenu() {
         innerText: "Add Dexterity Exp",
     });
 
-    const statsAgilityExpInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("input", {
+    const statsAgilityExpInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("input", {
         class: "text-input",
         margin: "5px",
         placeholder: "+/- agility exp",
         type: "number",
     });
-    const statsAgilityExpButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("button", {
+    const statsAgilityExpButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("button", {
         class: "std-button",
         clickListener: () => {
             const exp = parseInt(statsAgilityExpInput.value);
@@ -48034,13 +48194,13 @@ function createDevMenu() {
         innerText: "Add Agility Exp",
     });
 
-    const statsCharismaExpInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("input", {
+    const statsCharismaExpInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("input", {
         class: "text-input",
         margin: "5px",
         placeholder: "+/- charisma exp",
         type: "number",
     });
-    const statsCharismaExpButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("button", {
+    const statsCharismaExpButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("button", {
         class: "std-button",
         clickListener: () => {
             const exp = parseInt(statsCharismaExpInput.value);
@@ -48050,13 +48210,13 @@ function createDevMenu() {
         innerText: "Add Charisma Exp",
     });
 
-    const statsIntelligenceExpInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("input", {
+    const statsIntelligenceExpInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("input", {
         class: "text-input",
         margin: "5px",
         placeholder: "+/- intelligence exp",
         type: "number",
     });
-    const statsIntelligenceExpButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("button", {
+    const statsIntelligenceExpButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("button", {
         class: "std-button",
         clickListener: () => {
             const exp = parseInt(statsIntelligenceExpInput.value);
@@ -48066,7 +48226,7 @@ function createDevMenu() {
         innerText: "Add Intelligence Exp",
     });
 
-    const statsEnableIntelligenceButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("button", {
+    const statsEnableIntelligenceButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("button", {
         class: "std-button",
         clickListener: () => {
             _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].intelligence = 1;
@@ -48074,7 +48234,7 @@ function createDevMenu() {
         innerText: "Enable Intelligence"
     });
 
-    const statsDisableIntelligenceButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("button", {
+    const statsDisableIntelligenceButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("button", {
         class: "std-button",
         clickListener: () => {
             _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].intelligence = 0;
@@ -48083,9 +48243,9 @@ function createDevMenu() {
     });
 
     // Factions
-    const factionsHeader = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("h2", {innerText: "Factions"});
+    const factionsHeader = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("h2", {innerText: "Factions"});
 
-    const factionsDropdown = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("select", {
+    const factionsDropdown = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("select", {
         class: "dropdown",
         margin: "5px",
     });
@@ -48093,7 +48253,7 @@ function createDevMenu() {
         factionsDropdown.options[factionsDropdown.options.length] = new Option(_Faction__WEBPACK_IMPORTED_MODULE_3__[/* Factions */ "b"][i].name, _Faction__WEBPACK_IMPORTED_MODULE_3__[/* Factions */ "b"][i].name);
     }
 
-    const factionsAddButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("button", {
+    const factionsAddButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("button", {
         class: "std-button",
         clickListener: () => {
             const facName = factionsDropdown.options[factionsDropdown.selectedIndex].value;
@@ -48103,9 +48263,9 @@ function createDevMenu() {
     });
 
     // Augmentations / Source Files
-    const augmentationsHeader = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("h2", {innerText: "Augmentations"});
+    const augmentationsHeader = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("h2", {innerText: "Augmentations"});
 
-    const augmentationsDropdown = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("select", {
+    const augmentationsDropdown = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("select", {
         class: "dropdown",
         margin: "5px",
     });
@@ -48114,7 +48274,7 @@ function createDevMenu() {
         augmentationsDropdown.options[augmentationsDropdown.options.length] = new Option(augName, augName);
     }
 
-    const augmentationsQueueButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("button", {
+    const augmentationsQueueButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("button", {
         class: "std-button",
         clickListener: () => {
             _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].queueAugmentation(augmentationsDropdown.options[augmentationsDropdown.selectedIndex].value);
@@ -48123,9 +48283,9 @@ function createDevMenu() {
     })
 
     // Programs
-    const programsHeader = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("h2", {innerText: "Programs"});
+    const programsHeader = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("h2", {innerText: "Programs"});
 
-    const programsAddDropdown = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("select", {
+    const programsAddDropdown = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("select", {
         class: "dropdown",
         margin: "5px",
     });
@@ -48134,7 +48294,7 @@ function createDevMenu() {
         programsAddDropdown.options[programsAddDropdown.options.length] = new Option(progName, progName);
     }
 
-    const programsAddButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("button", {
+    const programsAddButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("button", {
         class: "std-button",
         clickListener: () => {
             const program = programsAddDropdown.options[programsAddDropdown.selectedIndex].value;
@@ -48146,9 +48306,9 @@ function createDevMenu() {
     })
 
     // Servers
-    const serversHeader = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("h2", {innerText: "Servers"});
+    const serversHeader = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("h2", {innerText: "Servers"});
 
-    const serversOpenAll = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("button", {
+    const serversOpenAll = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("button", {
         class: "std-button",
         clickListener: () => {
             for (const i in _Server__WEBPACK_IMPORTED_MODULE_5__[/* AllServers */ "b"]) {
@@ -48165,7 +48325,7 @@ function createDevMenu() {
         innerText: "Get Admin Rights to all servers",
     });
 
-    const serversMinSecurityAll = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("button", {
+    const serversMinSecurityAll = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("button", {
         class: "std-button",
         clickListener: () => {
             for (const i in _Server__WEBPACK_IMPORTED_MODULE_5__[/* AllServers */ "b"]) {
@@ -48176,7 +48336,7 @@ function createDevMenu() {
         innerText: "Set all servers to min security",
     });
 
-    const serversMaxMoneyAll = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("button", {
+    const serversMaxMoneyAll = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("button", {
         class: "std-button",
         clickListener: () => {
             for (const i in _Server__WEBPACK_IMPORTED_MODULE_5__[/* AllServers */ "b"]) {
@@ -48187,69 +48347,71 @@ function createDevMenu() {
         innerText: "Set all servers to max money",
     });
 
-    const serversConnectToDropdown = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("select", {class: "dropdown"});
+    const serversConnectToDropdown = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("select", {class: "dropdown"});
     for (const i in _Server__WEBPACK_IMPORTED_MODULE_5__[/* AllServers */ "b"]) {
         const hn = _Server__WEBPACK_IMPORTED_MODULE_5__[/* AllServers */ "b"][i].hostname;
         serversConnectToDropdown.options[serversConnectToDropdown.options.length] = new Option(hn, hn);
     }
 
-    const serversConnectToButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("button", {
+    const serversConnectToButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("button", {
         class: "std-button",
         clickListener: () => {
             const host = serversConnectToDropdown.options[serversConnectToDropdown.selectedIndex].value;
-            _Terminal__WEBPACK_IMPORTED_MODULE_7__[/* Terminal */ "a"].connectToServer(host);
+            _Terminal__WEBPACK_IMPORTED_MODULE_9__[/* Terminal */ "a"].connectToServer(host);
         },
         innerText: "Connect to server",
     });
 
     // Bladeburner
-    const bladeburnerHeader = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("h2", {innerText: "Bladeburner"});
+    const bladeburnerHeader = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("h2", {innerText: "Bladeburner"});
 
-    const bladeburnerGainRankInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("input", {
+    const bladeburnerGainRankInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("input", {
         class: "text-input",
+        margin: "5px",
         placeholder: "Rank to gain (or negative to lose rank)",
         type: "number",
     });
 
-    const bladeburnerGainRankButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("button", {
+    const bladeburnerGainRankButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("button", {
         class: "std-button",
         clickListener: () => {
             try {
                 const rank = parseInt(bladeburnerGainRankInput.value);
                 _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].bladeburner.changeRank(rank);
             } catch(e) {
-                Object(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_8__[/* exceptionAlert */ "a"])(`Failed to change Bladeburner Rank in dev menu: ${e}`);
+                Object(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_12__[/* exceptionAlert */ "a"])(`Failed to change Bladeburner Rank in dev menu: ${e}`);
             }
         },
         innerText: "Gain Bladeburner Rank",
     });
 
     // Gang
-    const gangHeader = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("h2", {innerText: "Gang"});
+    const gangHeader = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("h2", {innerText: "Gang"});
 
-    const gangStoredCyclesInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("input", {
+    const gangStoredCyclesInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("input", {
         class: "text-input",
+        margin: "5px",
         placeholder: "# Cycles to add",
         type: "number",
     });
 
-    const gangAddStoredCycles = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("button", {
+    const gangAddStoredCycles = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("button", {
         class: "std-button",
         clickListener: () => {
             try {
                 const cycles = parseInt(gangStoredCyclesInput.value);
                 _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gang.storedCycles += cycles;
             } catch(e) {
-                Object(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_8__[/* exceptionAlert */ "a"])(`Failed to add stored cycles to gang mechanic: ${e}`);
+                Object(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_12__[/* exceptionAlert */ "a"])(`Failed to add stored cycles to gang mechanic: ${e}`);
             }
         },
         innerText: "Add cycles to Gang mechanic",
     });
 
     // Coding Contracts
-    const contractsHeader = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("h2", {innerText: "Coding Contracts"});
+    const contractsHeader = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("h2", {innerText: "Coding Contracts"});
 
-    const generateRandomContractBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("button", {
+    const generateRandomContractBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("button", {
         class: "std-button",
         clickListener: () => {
             Object(_CodingContractGenerator__WEBPACK_IMPORTED_MODULE_1__[/* generateRandomContract */ "a"])();
@@ -48257,8 +48419,75 @@ function createDevMenu() {
         innerText: "Generate Random Contract",
     });
 
+    // Stock Market
+    const stockmarketHeader = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("h2", {innerText: "Stock Market"});
+
+    const stockInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("input", {
+        class: "text-input",
+        display: "block",
+        placeholder: "Stock symbol(s), or 'all'",
+    });
+
+    function processStocks(cb) {
+        const input = stockInput.value.toString().replace(/\s/g, '');
+
+        // Empty input, or "all", will process all stocks
+        if (input === "" || input.toLowerCase() === "all") {
+            for (const name in _StockMarket__WEBPACK_IMPORTED_MODULE_7__[/* StockMarket */ "c"]) {
+                if (_StockMarket__WEBPACK_IMPORTED_MODULE_7__[/* StockMarket */ "c"].hasOwnProperty(name)) {
+                    const stock = _StockMarket__WEBPACK_IMPORTED_MODULE_7__[/* StockMarket */ "c"][name];
+                    if (stock instanceof _Stock__WEBPACK_IMPORTED_MODULE_8__["Stock"]) {
+                        cb(stock);
+                    }
+                }
+            }
+            return;
+        }
+
+        const stockSymbols = input.split(",");
+        for (let i = 0; i < stockSymbols.length; ++i) {
+            const stock = _StockMarket__WEBPACK_IMPORTED_MODULE_7__[/* SymbolToStockMap */ "e"][stockSymbols];
+            if (stock instanceof _Stock__WEBPACK_IMPORTED_MODULE_8__["Stock"]) {
+                cb(stock);
+            }
+        }
+    }
+
+    const stockPriceChangeInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("input", {
+        class: "text-input",
+        margin: "5px",
+        placeholder: "Price to change stock(s) to",
+        type: "number",
+    });
+
+    const stockPriceChangeBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("button", {
+        class: "std-button",
+        clickListener: () => {
+            const price = parseInt(stockPriceChangeInput.value);
+            if (isNaN(price)) { return; }
+
+            processStocks((stock) => {
+                stock.price = price;
+            });
+            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_11__["dialogBoxCreate"])(`Stock Prices changed to ${price}`);
+        },
+        innerText: "Change Stock Price(s)",
+    });
+
+    const stockViewPriceCapBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("button", {
+        class: "std-button",
+        clickListener: () => {
+            let text = "";
+            processStocks((stock) => {
+                text += `${stock.symbol}: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(stock.cap, '$0.000a')}<br>`;
+            });
+            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_11__["dialogBoxCreate"])(text);
+        },
+        innerText: "View Stock Price Caps",
+    });
+
     // Add everything to container, then append to main menu
-    const devMenuContainer = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("div", {
+    const devMenuContainer = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("div", {
         class: "generic-menupage-container",
         id: devMenuContainerId,
     });
@@ -48272,25 +48501,25 @@ function createDevMenu() {
     devMenuContainer.appendChild(statsHeader);
     devMenuContainer.appendChild(statsHackingExpInput);
     devMenuContainer.appendChild(statsHackingExpButton);
-    devMenuContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br"));
+    devMenuContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("br"));
     devMenuContainer.appendChild(statsStrengthExpInput);
     devMenuContainer.appendChild(statsStrengthExpButton);
-    devMenuContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br"));
+    devMenuContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("br"));
     devMenuContainer.appendChild(statsDefenseExpInput);
     devMenuContainer.appendChild(statsDefenseExpButton);
-    devMenuContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br"));
+    devMenuContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("br"));
     devMenuContainer.appendChild(statsDexterityExpInput);
     devMenuContainer.appendChild(statsDexterityExpButton);
-    devMenuContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br"));
+    devMenuContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("br"));
     devMenuContainer.appendChild(statsAgilityExpInput);
     devMenuContainer.appendChild(statsAgilityExpButton);
-    devMenuContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br"));
+    devMenuContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("br"));
     devMenuContainer.appendChild(statsCharismaExpInput);
     devMenuContainer.appendChild(statsCharismaExpButton);
-    devMenuContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br"));
+    devMenuContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("br"));
     devMenuContainer.appendChild(statsIntelligenceExpInput);
     devMenuContainer.appendChild(statsIntelligenceExpButton);
-    devMenuContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br"));
+    devMenuContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("br"));
     devMenuContainer.appendChild(statsEnableIntelligenceButton);
     devMenuContainer.appendChild(statsDisableIntelligenceButton);
     devMenuContainer.appendChild(factionsHeader);
@@ -48311,13 +48540,19 @@ function createDevMenu() {
     devMenuContainer.appendChild(bladeburnerHeader);
     devMenuContainer.appendChild(bladeburnerGainRankInput);
     devMenuContainer.appendChild(bladeburnerGainRankButton);
-    devMenuContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br"));
+    devMenuContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("br"));
     devMenuContainer.appendChild(gangHeader);
     devMenuContainer.appendChild(gangStoredCyclesInput);
     devMenuContainer.appendChild(gangAddStoredCycles);
-    devMenuContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_9__["createElement"])("br"));
+    devMenuContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("br"));
     devMenuContainer.appendChild(contractsHeader);
     devMenuContainer.appendChild(generateRandomContractBtn);
+    devMenuContainer.appendChild(stockmarketHeader);
+    devMenuContainer.appendChild(stockInput);
+    devMenuContainer.appendChild(stockPriceChangeInput);
+    devMenuContainer.appendChild(stockPriceChangeBtn);
+    devMenuContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("br"));
+    devMenuContainer.appendChild(stockViewPriceCapBtn);
 
    const entireGameContainer = document.getElementById("entire-game-container");
    if (entireGameContainer == null) {
@@ -48327,7 +48562,7 @@ function createDevMenu() {
 }
 
 function closeDevMenu() {
-    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_10__["removeElementById"])(devMenuContainerId);
+    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_14__["removeElementById"])(devMenuContainerId);
 }
 
 
@@ -48349,7 +48584,7 @@ function closeDevMenu() {
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Server */ 11);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/IPAddress */ 55);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/YesNoBox */ 18);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
 
 
 
@@ -48607,7 +48842,7 @@ exports.FactionInfos = {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const getElementById_1 = __webpack_require__(/*! ./getElementById */ 48);
+const getElementById_1 = __webpack_require__(/*! ./getElementById */ 50);
 const removeElementById_1 = __webpack_require__(/*! ./removeElementById */ 20);
 /**
  * Routes the player from the Loading screen to the main game content.
@@ -48641,7 +48876,7 @@ exports.removeLoadingScreen = removeLoadingScreen;
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../engine */ 8);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _numeralFormat__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./numeralFormat */ 5);
+/* harmony import */ var _numeralFormat__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./numeralFormat */ 4);
 
 
 
@@ -48764,7 +48999,7 @@ function setSettingsLabels() {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CharacterOverview; });
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ui/numeralFormat */ 5);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 
 
 
@@ -48837,7 +49072,7 @@ CharacterOverview.prototype.update = function() {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Interpreter; });
-/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/acorn */ 44);
+/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/acorn */ 45);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_0__);
 
 /**
@@ -55838,6 +56073,17 @@ exports.gangMemberTasksMetadata = [
 /***/ }),
 /* 160 */,
 /* 161 */
+/*!************************************!*\
+  !*** ./css/characteroverview.scss ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+/* 162 */,
+/* 163 */
 /*!***************************!*\
   !*** ./css/mainmenu.scss ***!
   \***************************/
@@ -55847,8 +56093,8 @@ exports.gangMemberTasksMetadata = [
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 162 */,
-/* 163 */
+/* 164 */,
+/* 165 */
 /*!**************************!*\
   !*** ./css/buttons.scss ***!
   \**************************/
@@ -55858,8 +56104,8 @@ exports.gangMemberTasksMetadata = [
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 164 */,
-/* 165 */
+/* 166 */,
+/* 167 */
 /*!*************************!*\
   !*** ./css/styles.scss ***!
   \*************************/
@@ -55869,15 +56115,15 @@ exports.gangMemberTasksMetadata = [
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 166 */,
-/* 167 */,
 /* 168 */,
 /* 169 */,
 /* 170 */,
 /* 171 */,
 /* 172 */,
 /* 173 */,
-/* 174 */
+/* 174 */,
+/* 175 */,
+/* 176 */
 /*!******************************************************!*\
   !*** ./src/Company/data/CompanyPositionsMetadata.ts ***!
   \******************************************************/
@@ -55888,7 +56134,7 @@ exports.gangMemberTasksMetadata = [
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const posNames = __webpack_require__(/*! ./CompanyPositionNames */ 51);
+const posNames = __webpack_require__(/*! ./CompanyPositionNames */ 34);
 exports.companyPositionMetadata = [
     {
         name: posNames.SoftwareCompanyPositions[0],
@@ -56072,7 +56318,7 @@ exports.companyPositionMetadata = [
         baseSalary: 410,
         charismaEffectiveness: 20,
         charismaExpGain: 0.1,
-        hackingEffectiveness: 0.80,
+        hackingEffectiveness: 80,
         hackingExpGain: 0.5,
         reqdCharisma: 76,
         reqdHacking: 251,
@@ -56306,7 +56552,7 @@ exports.companyPositionMetadata = [
     },
     {
         name: posNames.AgentCompanyPositions[0],
-        nextPosition: posNames.AgentCompanyPositions[0],
+        nextPosition: posNames.AgentCompanyPositions[1],
         baseSalary: 330,
         hackingEffectiveness: 10,
         strengthEffectiveness: 15,
@@ -56330,8 +56576,8 @@ exports.companyPositionMetadata = [
         repMultiplier: 1,
     },
     {
-        name: posNames.AgentCompanyPositions[0],
-        nextPosition: posNames.AgentCompanyPositions[0],
+        name: posNames.AgentCompanyPositions[1],
+        nextPosition: posNames.AgentCompanyPositions[2],
         baseSalary: 990,
         hackingEffectiveness: 15,
         strengthEffectiveness: 15,
@@ -56355,7 +56601,7 @@ exports.companyPositionMetadata = [
         repMultiplier: 1.25,
     },
     {
-        name: posNames.AgentCompanyPositions[0],
+        name: posNames.AgentCompanyPositions[2],
         nextPosition: null,
         baseSalary: 2000,
         hackingEffectiveness: 15,
@@ -56445,7 +56691,7 @@ exports.companyPositionMetadata = [
         repMultiplier: 1,
     },
     {
-        name: posNames.BusinessConsultantCompanyPositions[0],
+        name: posNames.BusinessConsultantCompanyPositions[1],
         nextPosition: null,
         baseSalary: 525,
         hackingEffectiveness: 15,
@@ -56490,7 +56736,7 @@ exports.companyPositionMetadata = [
 
 
 /***/ }),
-/* 175 */
+/* 177 */
 /*!**********************!*\
   !*** ./netscript.js ***!
   \**********************/
@@ -56562,7 +56808,7 @@ let NetscriptFunctions =
     "hack|sleep|grow|weaken|print|tprint|scan|nuke|brutessh|ftpcrack|"         + //Netscript functions
     "clearLog|disableLog|enableLog|isLogEnabled|getScriptLogs|"                +
     "relaysmtp|httpworm|sqlinject|run|exec|spawn|kill|killall|exit|"           +
-    "scp|ls|hasRootAccess|"                                                    +
+    "scp|ls|ps|hasRootAccess|"                                                 +
     "getIp|getHackingMultipliers|getBitNodeMultipliers|getStats|isBusy|"       +
     "getHacknetMultipliers|"                                                   +
     "getHostname|getHackingLevel|getServerMoneyAvailable|getServerMaxMoney|"   +
@@ -56595,6 +56841,7 @@ let NetscriptFunctions =
     "getStockPrice|getStockPosition|getStockSymbols|buyStock|sellStock|"       +
     "shortStock|sellShort|"                                                    +
     "placeOrder|cancelOrder|getStockVolatility|getStockForecast|"              +
+    "purchase4SMarketData|purchase4SMarketDataTixApi|"                         +
 
     // Hacknet Node API
     "hacknet|numNodes|purchaseNode|getPurchaseNodeCost|getNodeStats|"          +
@@ -56606,7 +56853,7 @@ let NetscriptFunctions =
     "getMemberNames|getGangInformation|getMemberInformation|canRecruitMember|" +
     "recruitMember|getTaskNames|setMemberTask|getEquipmentNames|"              +
     "getEquipmentCost|purchaseEquipment|ascendMember|setTerritoryWarfare|"     +
-    "getBonusTime|"                                                            +
+    "getChanceToWinClash|getBonusTime|"                                        +
 
     // Bladeburner API
     "bladeburner|getContractNames|getOperationNames|getBlackOpNames|"          +
@@ -57332,7 +57579,7 @@ oop.inherits(Mode, TextMode);
     };
 
     this.createWorker = function(session) {
-        var worker = new WorkerClient(["ace"], __webpack_require__(/*! brace/worker/javascript */ 176), "JavaScriptWorker");
+        var worker = new WorkerClient(["ace"], __webpack_require__(/*! brace/worker/javascript */ 178), "JavaScriptWorker");
         worker.attachToDocument(session.getDocument());
 
         worker.on("annotate", function(results) {
@@ -57354,11 +57601,11 @@ exports.Mode = Mode;
 
 
 /***/ }),
-/* 176 */,
-/* 177 */,
 /* 178 */,
 /* 179 */,
-/* 180 */
+/* 180 */,
+/* 181 */,
+/* 182 */
 /*!*****************************************!*\
   !*** ./src/data/codingcontracttypes.ts ***!
   \*****************************************/
@@ -57452,7 +57699,7 @@ exports.codingContractTypesMetadata = [
                 "    2 + 2\n",
                 "    2 + 1 + 1\n",
                 "    1 + 1 + 1 + 1\n\n",
-                `How many different ways can ${n} be written as a sum of at least`,
+                `How many different ways can the number ${n} be written as a sum of at least`,
                 "two positive integers?"].join(" ");
         },
         difficulty: 1.5,
@@ -57735,8 +57982,8 @@ exports.codingContractTypesMetadata = [
     },
     {
         desc: (data) => {
-            return ["You are given the following array of stock prices where the i-th element",
-                "represents the stock price on day i:\n\n",
+            return ["You are given the following array of stock prices (which are numbers)",
+                "where the i-th element represents the stock price on day i:\n\n",
                 `${data}\n\n`,
                 "Determine the maximum possible profit you can earn using at most",
                 "one transaction (i.e. you can only buy and sell the stock once). If no profit can be made",
@@ -57767,8 +58014,8 @@ exports.codingContractTypesMetadata = [
     },
     {
         desc: (data) => {
-            return ["You are given the following array of stock prices where the i-th element",
-                "represents the stock price on day i:\n\n",
+            return ["You are given the following array of stock prices (which are numbers)",
+                "where the i-th element represents the stock price on day i:\n\n",
                 `${data}\n\n`,
                 "Determine the maximum possible profit you can earn using as many",
                 "transactions as you'd like. A transaction is defined as buying",
@@ -57799,8 +58046,8 @@ exports.codingContractTypesMetadata = [
     },
     {
         desc: (data) => {
-            return ["You are given the following array of stock prices where the i-th element",
-                "represents the stock price on day i:\n\n",
+            return ["You are given the following array of stock prices (which are numbers)",
+                "where the i-th element represents the stock price on day i:\n\n",
                 `${data}\n\n`,
                 "Determine the maximum possible profit you can earn using at most",
                 "two transactions. A transaction is defined as buying",
@@ -57839,7 +58086,7 @@ exports.codingContractTypesMetadata = [
 
 
 /***/ }),
-/* 181 */
+/* 183 */
 /*!***********************************!*\
   !*** ./utils/SafeObjectAssign.ts ***!
   \***********************************/
@@ -57861,7 +58108,7 @@ exports.SafeObjectAssign = SafeObjectAssign;
 
 
 /***/ }),
-/* 182 */
+/* 184 */
 /*!***********************************************!*\
   !*** ./src/Company/data/CompaniesMetadata.ts ***!
   \***********************************************/
@@ -57872,9 +58119,9 @@ exports.SafeObjectAssign = SafeObjectAssign;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const Locations_1 = __webpack_require__(/*! ../../Locations */ 4);
-const posNames = __webpack_require__(/*! ./CompanyPositionNames */ 51);
-const SafeObjectAssign_1 = __webpack_require__(/*! ../../../utils/SafeObjectAssign */ 181);
+const Locations_1 = __webpack_require__(/*! ../../Locations */ 5);
+const posNames = __webpack_require__(/*! ./CompanyPositionNames */ 34);
+const SafeObjectAssign_1 = __webpack_require__(/*! ../../../utils/SafeObjectAssign */ 183);
 // Create Objects containing Company Positions by category
 // Will help in metadata construction later
 const AllSoftwarePositions = {};
@@ -58254,8 +58501,6 @@ exports.companiesMetadata = [
 
 
 /***/ }),
-/* 183 */,
-/* 184 */,
 /* 185 */,
 /* 186 */,
 /* 187 */,
@@ -58290,7 +58535,9 @@ exports.companiesMetadata = [
 /* 216 */,
 /* 217 */,
 /* 218 */,
-/* 219 */
+/* 219 */,
+/* 220 */,
+/* 221 */
 /*!**********************!*\
   !*** util (ignored) ***!
   \**********************/
@@ -58301,7 +58548,7 @@ exports.companiesMetadata = [
 /* (ignored) */
 
 /***/ }),
-/* 220 */
+/* 222 */
 /*!**********************!*\
   !*** util (ignored) ***!
   \**********************/

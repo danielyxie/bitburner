@@ -5,7 +5,12 @@ import {Factions}               from "./Faction";
 import {Player}                 from "./Player";
 import {AllServers}             from "./Server";
 import {hackWorldDaemon}        from "./RedPill";
+import {StockMarket,
+        SymbolToStockMap}       from "./StockMarket";
+import {Stock}                  from "./Stock";
 import {Terminal}               from "./Terminal";
+import {numeralWrapper}         from "./ui/numeralFormat";
+import {dialogBoxCreate}        from "../utils/DialogBox";
 import {exceptionAlert}         from "../utils/helpers/exceptionAlert";
 import {createElement}          from "../utils/uiHelpers/createElement";
 import {removeElementById}      from "../utils/uiHelpers/removeElementById";
@@ -322,6 +327,7 @@ export function createDevMenu() {
 
     const bladeburnerGainRankInput = createElement("input", {
         class: "text-input",
+        margin: "5px",
         placeholder: "Rank to gain (or negative to lose rank)",
         type: "number",
     });
@@ -344,6 +350,7 @@ export function createDevMenu() {
 
     const gangStoredCyclesInput = createElement("input", {
         class: "text-input",
+        margin: "5px",
         placeholder: "# Cycles to add",
         type: "number",
     });
@@ -370,6 +377,73 @@ export function createDevMenu() {
             generateRandomContract();
         },
         innerText: "Generate Random Contract",
+    });
+
+    // Stock Market
+    const stockmarketHeader = createElement("h2", {innerText: "Stock Market"});
+
+    const stockInput = createElement("input", {
+        class: "text-input",
+        display: "block",
+        placeholder: "Stock symbol(s), or 'all'",
+    });
+
+    function processStocks(cb) {
+        const input = stockInput.value.toString().replace(/\s/g, '');
+
+        // Empty input, or "all", will process all stocks
+        if (input === "" || input.toLowerCase() === "all") {
+            for (const name in StockMarket) {
+                if (StockMarket.hasOwnProperty(name)) {
+                    const stock = StockMarket[name];
+                    if (stock instanceof Stock) {
+                        cb(stock);
+                    }
+                }
+            }
+            return;
+        }
+
+        const stockSymbols = input.split(",");
+        for (let i = 0; i < stockSymbols.length; ++i) {
+            const stock = SymbolToStockMap[stockSymbols];
+            if (stock instanceof Stock) {
+                cb(stock);
+            }
+        }
+    }
+
+    const stockPriceChangeInput = createElement("input", {
+        class: "text-input",
+        margin: "5px",
+        placeholder: "Price to change stock(s) to",
+        type: "number",
+    });
+
+    const stockPriceChangeBtn = createElement("button", {
+        class: "std-button",
+        clickListener: () => {
+            const price = parseInt(stockPriceChangeInput.value);
+            if (isNaN(price)) { return; }
+
+            processStocks((stock) => {
+                stock.price = price;
+            });
+            dialogBoxCreate(`Stock Prices changed to ${price}`);
+        },
+        innerText: "Change Stock Price(s)",
+    });
+
+    const stockViewPriceCapBtn = createElement("button", {
+        class: "std-button",
+        clickListener: () => {
+            let text = "";
+            processStocks((stock) => {
+                text += `${stock.symbol}: ${numeralWrapper.format(stock.cap, '$0.000a')}<br>`;
+            });
+            dialogBoxCreate(text);
+        },
+        innerText: "View Stock Price Caps",
     });
 
     // Add everything to container, then append to main menu
@@ -433,6 +507,12 @@ export function createDevMenu() {
     devMenuContainer.appendChild(createElement("br"));
     devMenuContainer.appendChild(contractsHeader);
     devMenuContainer.appendChild(generateRandomContractBtn);
+    devMenuContainer.appendChild(stockmarketHeader);
+    devMenuContainer.appendChild(stockInput);
+    devMenuContainer.appendChild(stockPriceChangeInput);
+    devMenuContainer.appendChild(stockPriceChangeBtn);
+    devMenuContainer.appendChild(createElement("br"));
+    devMenuContainer.appendChild(stockViewPriceCapBtn);
 
    const entireGameContainer = document.getElementById("entire-game-container");
    if (entireGameContainer == null) {

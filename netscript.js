@@ -62,7 +62,7 @@ let NetscriptFunctions =
     "hack|sleep|grow|weaken|print|tprint|scan|nuke|brutessh|ftpcrack|"         + //Netscript functions
     "clearLog|disableLog|enableLog|isLogEnabled|getScriptLogs|"                +
     "relaysmtp|httpworm|sqlinject|run|exec|spawn|kill|killall|exit|"           +
-    "scp|ls|hasRootAccess|"                                                    +
+    "scp|ls|ps|hasRootAccess|"                                                 +
     "getIp|getHackingMultipliers|getBitNodeMultipliers|getStats|isBusy|"       +
     "getHacknetMultipliers|"                                                   +
     "getHostname|getHackingLevel|getServerMoneyAvailable|getServerMaxMoney|"   +
@@ -95,6 +95,7 @@ let NetscriptFunctions =
     "getStockPrice|getStockPosition|getStockSymbols|buyStock|sellStock|"       +
     "shortStock|sellShort|"                                                    +
     "placeOrder|cancelOrder|getStockVolatility|getStockForecast|"              +
+    "purchase4SMarketData|purchase4SMarketDataTixApi|"                         +
 
     // Hacknet Node API
     "hacknet|numNodes|purchaseNode|getPurchaseNodeCost|getNodeStats|"          +
@@ -106,7 +107,7 @@ let NetscriptFunctions =
     "getMemberNames|getGangInformation|getMemberInformation|canRecruitMember|" +
     "recruitMember|getTaskNames|setMemberTask|getEquipmentNames|"              +
     "getEquipmentCost|purchaseEquipment|ascendMember|setTerritoryWarfare|"     +
-    "getBonusTime|"                                                            +
+    "getChanceToWinClash|getBonusTime|"                                        +
 
     // Bladeburner API
     "bladeburner|getContractNames|getOperationNames|getBlackOpNames|"          +

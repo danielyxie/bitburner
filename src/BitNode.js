@@ -265,7 +265,7 @@ function initBitNodeMultipliers() {
             BitNodeMultipliers.CorporationValuation     = 0.5;
             break;
         case 6: //Bladeburner
-            BitNodeMultipliers.HackingLevelMultiplier   = 0.5;
+            BitNodeMultipliers.HackingLevelMultiplier   = 0.4;
             BitNodeMultipliers.ServerMaxMoney           = 0.5;
             BitNodeMultipliers.ServerStartingMoney      = 0.5;
             BitNodeMultipliers.ServerStartingSecurity   = 1.5;
@@ -282,7 +282,7 @@ function initBitNodeMultipliers() {
             BitNodeMultipliers.BladeburnerRank          = 0.6;
             BitNodeMultipliers.BladeburnerSkillCost     = 2;
             BitNodeMultipliers.AugmentationMoneyCost    = 3;
-            BitNodeMultipliers.HackingLevelMultiplier   = 0.5;
+            BitNodeMultipliers.HackingLevelMultiplier   = 0.4;
             BitNodeMultipliers.ServerMaxMoney           = 0.5;
             BitNodeMultipliers.ServerStartingMoney      = 0.5;
             BitNodeMultipliers.ServerStartingSecurity   = 1.5;

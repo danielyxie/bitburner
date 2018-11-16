@@ -74,7 +74,6 @@ var ContractBaseMoneyGain       = 50e3; //Base Money Gained per contract
 var ActiveActionCssClass        = "bladeburner-active-action";
 
 //Console related stuff
-var consoleHistory = []; //Console command history
 var consoleHistoryIndex = 0;
 var consoleHelpText = {
     helpList:"Use 'help [command]' to get more information about a particular Bladeburner console command.<br><br>" +
@@ -153,6 +152,7 @@ $(document).keydown(function(event) {
         //}
 
         if (!(Player.bladeburner instanceof Bladeburner)) {return;}
+        let consoleHistory = Player.bladeburner.consoleHistory;
 
         //NOTE: Keycodes imported from Terminal.js
         if (event.keyCode === KEY.ENTER) {
@@ -712,6 +712,10 @@ function Bladeburner(params={}) {
     this.automateActionLow = 0;
     this.automateThreshLow = 0; //Stamina Threshold
 
+    //Console command history
+    this.consoleHistory = [];
+    this.consoleLogs = [];
+
     //Initialization
     initBladeburner();
     this.initializeDomElementRefs();
@@ -861,6 +865,12 @@ Bladeburner.prototype.process = function() {
             }
             dialogBoxCreate(msg);
         }
+        this.resetAction();
+    }
+
+    // If the Player has no Stamina, set action to idle
+    if (this.stamina <= 0) {
+        this.log("Your Bladeburner action was cancelled because your stamina hit 0");
         this.resetAction();
     }
 
@@ -1345,7 +1355,6 @@ Bladeburner.prototype.completeAction = function() {
             Player.gainIntelligenceExp(BaseIntGain);
             Player.gainCharismaExp(charismaExpGain);
             this.changeRank(0.1 * BitNodeMultipliers.BladeburnerRank);
-            console.log("DEBUG: Field Analysis effectiveness is " + (eff * this.skillMultipliers.successChanceEstimate));
             this.getCurrentCity().improvePopulationEstimateByPercentage(eff * this.skillMultipliers.successChanceEstimate);
             if (this.logging.general) {
                 this.log("Field analysis completed. Gained 0.1 rank, " + formatNumber(hackingExpGain, 1) + " hacking exp, and " + formatNumber(charismaExpGain, 1) + " charisma exp");
@@ -1738,8 +1747,15 @@ Bladeburner.prototype.createContent = function() {
 
     document.getElementById("entire-game-container").appendChild(DomElems.bladeburnerDiv);
 
-    this.postToConsole("Bladeburner Console BETA");
-    this.postToConsole("Type 'help' to see console commands");
+    if (this.consoleLogs.length === 0) {
+        this.postToConsole("Bladeburner Console BETA");
+        this.postToConsole("Type 'help' to see console commands");
+    } else {
+        for (let i = 0; i < this.consoleLogs.length; ++i) {
+            this.postToConsole(this.consoleLogs[i], false);
+        }
+    }
+
     DomElems.consoleInput.focus();
 }
 
@@ -2732,12 +2748,22 @@ Bladeburner.prototype.updateSkillsUIElement = function(el, skill) {
 }
 
 //Bladeburner Console Window
-Bladeburner.prototype.postToConsole = function(input) {
+Bladeburner.prototype.postToConsole = function(input, saveToLogs=true) {
+    const MaxConsoleEntries = 100;
+    if (saveToLogs === true) {
+        this.consoleLogs.push(input);
+        if (this.consoleLogs.length > MaxConsoleEntries) {
+            this.consoleLogs.shift();
+        }
+    }
+
     if (input == null || DomElems.consoleDiv == null) {return;}
     $("#bladeubrner-console-input-row").before('<tr><td class="bladeburner-console-line" style="color: var(--my-font-color); white-space:pre-wrap;">' + input + '</td></tr>');
-    if (DomElems.consoleTable.childNodes.length > 200) {
+
+    if (DomElems.consoleTable.childNodes.length > MaxConsoleEntries) {
         DomElems.consoleTable.removeChild(DomElems.consoleTable.firstChild);
     }
+
 	this.updateConsoleScroll();
 }
 
@@ -2753,6 +2779,8 @@ Bladeburner.prototype.clearConsole = function() {
     while (DomElems.consoleTable.childNodes.length > 1) {
         DomElems.consoleTable.removeChild(DomElems.consoleTable.firstChild);
     }
+
+    this.consoleLogs.length = 0;
 }
 
 Bladeburner.prototype.log = function(input) {
@@ -2764,13 +2792,13 @@ Bladeburner.prototype.log = function(input) {
 Bladeburner.prototype.executeConsoleCommands = function(commands) {
     try {
         //Console History
-        if (consoleHistory[consoleHistory.length-1] != commands) {
-            consoleHistory.push(commands);
-            if (consoleHistory.length > 50) {
-                consoleHistory.splice(0, 1);
+        if (this.consoleHistory[this.consoleHistory.length-1] != commands) {
+            this.consoleHistory.push(commands);
+            if (this.consoleHistory.length > 50) {
+                this.consoleHistory.splice(0, 1);
             }
         }
-        consoleHistoryIndex = consoleHistory.length;
+        consoleHistoryIndex = this.consoleHistory.length;
 
         var arrayOfCommands = commands.split(";");
         for (var i = 0; i < arrayOfCommands.length; ++i) {
@@ -3469,7 +3497,7 @@ Bladeburner.prototype.getActionCountRemainingNetscriptFn = function(type, name, 
     switch (actionId.type) {
         case ActionTypes["Contract"]:
         case ActionTypes["Operation"]:
-            return actionObj.count;
+            return Math.floor( actionObj.count );
         case ActionTypes["BlackOp"]:
         case ActionTypes["BlackOperation"]:
             if (this.blackops[name] != null) {

@@ -79,6 +79,7 @@ import 'normalize.css';
 import "../css/styles.scss";
 import "../css/buttons.scss";
 import "../css/mainmenu.scss";
+import "../css/characteroverview.scss";
 import "../css/terminal.scss";
 import "../css/menupages.scss";
 import "../css/workinprogress.scss";
@@ -173,6 +174,7 @@ const Engine = {
         worldMainMenuButton:            null,
         travelMainMenuButton:           null,
         jobMainMenuButton:              null,
+        stockmarketMainMenuButton:      null,
         createProgramMainMenuButton:    null,
         factionsMainMenuButton:         null,
         augmentationsMainMenuButton:    null,
@@ -1187,6 +1189,7 @@ const Engine = {
         var city                = document.getElementById("city-tab");
         var travel              = document.getElementById("travel-tab");
         var job                 = document.getElementById("job-tab");
+        var stockmarket         = document.getElementById("stock-market-tab");
         var bladeburner         = document.getElementById("bladeburner-tab");
         var corp                = document.getElementById("corporation-tab");
         var gang                = document.getElementById("gang-tab");
@@ -1243,6 +1246,11 @@ const Engine = {
             //Passive faction rep gain offline
             processPassiveFactionRepGain(numCyclesOffline);
 
+            // Stock Market offline progress
+            if (Player.hasWseAccount) {
+                processStockPrices(numCyclesOffline);
+            }
+
             //Gang progress for BitNode 2
             if (Player.bitNodeN != null && Player.bitNodeN === 2 && Player.inGang()) {
                 Player.gang.process(numCyclesOffline, Player);
@@ -1275,12 +1283,14 @@ const Engine = {
             else {factions.style.display = "none";}
             if (Player.firstAugPurchased) {visibleMenuTabs.push(augmentations);}
             else {augmentations.style.display = "none";}
-            if (Player.firstJobRecvd) {visibleMenuTabs.push(job);}
+            if (Player.companyPosition !== "") {visibleMenuTabs.push(job);}
             else {job.style.display = "none";}
             if (Player.firstTimeTraveled) {visibleMenuTabs.push(travel);}
             else {travel.style.display = "none";}
             if (Player.firstProgramAvailable) {visibleMenuTabs.push(createProgram);}
             else {createProgram.style.display = "none";}
+            if (Player.hasWseAccount) {visibleMenuTabs.push(stockmarket);}
+            else {stockmarket.style.display = "none";}
             if(Player.bladeburner instanceof Bladeburner) {visibleMenuTabs.push(bladeburner);}
             else {bladeburner.style.display = "none";}
             if(Player.corporation instanceof Corporation) {visibleMenuTabs.push(corp);}
@@ -1323,6 +1333,7 @@ const Engine = {
             factions.style.display = "none";
             augmentations.style.display = "none";
             job.style.display = "none";
+            stockmarket.style.display = "none";
             travel.style.display = "none";
             createProgram.style.display = "none";
             bladeburner.style.display = "none";
@@ -1539,28 +1550,38 @@ const Engine = {
         }
 
         worldHdr.onclick = function() {
-            var city            = document.getElementById("city-tab");
-            var cityLink        = document.getElementById("city-menu-link");
-            var travel          = document.getElementById("travel-tab");
-            var travelLink      = document.getElementById("travel-menu-link");
-            var job             = document.getElementById("job-tab");
-            var jobLink         = document.getElementById("job-menu-link");
-            var bladeburner     = document.getElementById("bladeburner-tab");
-            var bladeburnerLink = document.getElementById("bladeburner-menu-link");
-            var corporation            = document.getElementById("corporation-tab");
-            var corporationLink        = document.getElementById("corporation-menu-link");
-            var gang            = document.getElementById("gang-tab");
-            var gangLink        = document.getElementById("gang-menu-link");
+            var city                = document.getElementById("city-tab");
+            var cityLink            = document.getElementById("city-menu-link");
+            var travel              = document.getElementById("travel-tab");
+            var travelLink          = document.getElementById("travel-menu-link");
+            var job                 = document.getElementById("job-tab");
+            var jobLink             = document.getElementById("job-menu-link");
+            var stockmarket         = document.getElementById("stock-market-tab");
+            var stockmarketLink     = document.getElementById("stock-market-menu-link");
+            var bladeburner         = document.getElementById("bladeburner-tab");
+            var bladeburnerLink     = document.getElementById("bladeburner-menu-link");
+            var corporation         = document.getElementById("corporation-tab");
+            var corporationLink     = document.getElementById("corporation-menu-link");
+            var gang                = document.getElementById("gang-tab");
+            var gangLink            = document.getElementById("gang-menu-link");
+
+            // Determine whether certain links should show up
+            job.style.display           = Player.companyPosition !== ""             ? "list-item" : "none";
+            stockmarket.style.display   = Player.hasWseAccount                      ? "list-item" : "none";
+            bladeburner.style.display   = Player.bladeburner instanceof Bladeburner ? "list-item" : "none";
+            corporation.style.display   = Player.corporation instanceof Corporation ? "list-item" : "none";
+            gang.style.display          = Player.inGang()                           ? "list-item" : "none";
+
             this.classList.toggle("opened");
             if (city.style.maxHeight) {
                 Engine.toggleMainMenuHeader(false,
-                    [city, travel, job, bladeburner, corporation, gang],
-                    [cityLink, travelLink, jobLink, bladeburnerLink, corporationLink, gangLink]
+                    [city, travel, job, stockmarket, bladeburner, corporation, gang],
+                    [cityLink, travelLink, jobLink, stockmarketLink, bladeburnerLink, corporationLink, gangLink]
                 );
             } else {
                 Engine.toggleMainMenuHeader(true,
-                    [city, travel, job, bladeburner, corporation, gang],
-                    [cityLink, travelLink, jobLink, bladeburnerLink, corporationLink, gangLink]
+                    [city, travel, job, stockmarket, bladeburner, corporation, gang],
+                    [cityLink, travelLink, jobLink, stockmarketLink, bladeburnerLink, corporationLink, gangLink]
                 );
             }
         }
@@ -1630,6 +1651,12 @@ const Engine = {
         Engine.Clickables.jobMainMenuButton = clearEventListeners("job-menu-link");
         Engine.Clickables.jobMainMenuButton.addEventListener("click", function() {
             Engine.loadJobContent();
+            return false;
+        });
+
+        Engine.Clickables.stockmarketMainMenuButton = clearEventListeners("stock-market-menu-link");
+        Engine.Clickables.stockmarketMainMenuButton.addEventListener("click", function() {
+            Engine.loadStockMarketContent();
             return false;
         });
 

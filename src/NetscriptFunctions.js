@@ -108,11 +108,14 @@ var possibleLogs = {
     getServerGrowth: true,
     getServerNumPortsRequired: true,
     getServerRam: true,
+
     // TIX API
     buyStock: true,
     sellStock: true,
     shortStock: true,
     sellShort: true,
+    purchase4SMarketData: true,
+    purchase4SMarketDataTixApi: true,
 
     // Singularity Functions
     purchaseServer: true,
@@ -547,8 +550,30 @@ function NetscriptFunctions(workerScript) {
             }
             return workerScript.disableLogs[fn] ? false : true;
         },
-        getScriptLogs : function() {
+        getScriptLogs : function(fn, ip) {
             if (workerScript.checkingRam) {return 0;}
+
+            if (fn != null && typeof fn === 'string') {
+                // Get Logs of another script
+                if (ip == null) { ip = workerScript.serverIp; }
+                const server = getServer(ip);
+                if (server == null) {
+                    workerScript.log(`getScriptLogs() failed. Invalid IP or hostname passed in: ${ip}`);
+                    throw makeRuntimeRejectMsg(workerScript, `getScriptLogs() failed. Invalid IP or hostname passed in: ${ip}`);
+                }
+
+                let argsForTarget = [];
+                for (let i = 2; i < arguments.length; ++i) {
+                    argsForTarget.push(arguments[i]);
+                }
+                const runningScriptObj = findRunningScript(fn, argsForTarget, server);
+                if (runningScriptObj == null) {
+                    workerScript.scriptRef.log(`getScriptLogs() failed. No such script ${fn} on ${server.hostname} with args: ${arrayToString(argsForTarget)}`);
+                    return "";
+                }
+                return runningScriptObj.logs.slice();
+            }
+
             return workerScript.scriptRef.logs.slice();
         },
         nuke : function(ip){
@@ -802,7 +827,7 @@ function NetscriptFunctions(workerScript) {
             }
             NetscriptFunctions(workerScript).exit();
         },
-        kill : function(filename,ip) {
+        kill : function(filename, ip) {
             if (workerScript.checkingRam) {
                 return updateStaticRam("kill", CONSTANTS.ScriptKillRamCost);
             }
@@ -1698,6 +1723,68 @@ function NetscriptFunctions(workerScript) {
             stock.b ? forecast += stock.otlkMag : forecast -= stock.otlkMag;
             return forecast / 100; //Convert from percentage to decimal
         },
+        purchase4SMarketData : function() {
+            if (workerScript.checkingRam) {
+                return updateStaticRam("purchase4SMarketData", CONSTANTS.ScriptBuySellStockRamCost);
+            }
+            updateDynamicRam("purchase4SMarketData", CONSTANTS.ScriptBuySellStockRamCost);
+
+            if (!Player.hasTixApiAccess) {
+                throw makeRuntimeRejectMsg(workerScript, "You don't have TIX API Access! Cannot use purchase4SMarketData()");
+            }
+
+            if (Player.has4SData) {
+                if (workerScript.shouldLog("purchase4SMarketData")) {
+                    workerScript.log("Already purchased 4S Market Data");
+                }
+                return true;
+            }
+
+            if (Player.money.lt(CONSTANTS.MarketData4SCost)) {
+                if (workerScript.shouldLog("purchase4SMarketData")) {
+                    workerScript.log("Failed to purchase 4S Market Data - Not enough money");
+                }
+                return false;
+            }
+
+            Player.has4SData = true;
+            Player.loseMoney(CONSTANTS.MarketData4SCost);
+            if (workerScript.shouldLog("purchase4SMarketData")) {
+                workerScript.log("Purchased 4S Market Data");
+            }
+            return true;
+        },
+        purchase4SMarketDataTixApi : function() {
+            if (workerScript.checkingRam) {
+                return updateStaticRam("purchase4SMarketDataTixApi", CONSTANTS.ScriptBuySellStockRamCost);
+            }
+            updateDynamicRam("purchase4SMarketDataTixApi", CONSTANTS.ScriptBuySellStockRamCost);
+
+            if (!Player.hasTixApiAccess) {
+                throw makeRuntimeRejectMsg(workerScript, "You don't have TIX API Access! Cannot use purchase4SMarketDataTixApi()");
+            }
+
+            if (Player.has4SDataTixApi) {
+                if (workerScript.shouldLog("purchase4SMarketDataTixApi")) {
+                    workerScript.log("Already purchased 4S Market Data TIX API");
+                }
+                return true;
+            }
+
+            if (Player.money.lt(CONSTANTS.MarketDataTixApi4SCost)) {
+                if (workerScript.shouldLog("purchase4SMarketDataTixApi")) {
+                    workerScript.log("Failed to purchase 4S Market Data TIX API - Not enough money");
+                }
+                return false;
+            }
+
+            Player.has4SDataTixApi = true;
+            Player.loseMoney(CONSTANTS.MarketDataTixApi4SCost);
+            if (workerScript.shouldLog("purchase4SMarketDataTixApi")) {
+                workerScript.log("Purchased 4S Market Data TIX API");
+            }
+            return true;
+        },
         getPurchasedServerLimit : function() {
             if (workerScript.checkingRam) {
                 return updateStaticRam("getPurchasedServerLimit", CONSTANTS.ScriptGetPurchasedServerLimit);
@@ -1725,7 +1812,7 @@ function NetscriptFunctions(workerScript) {
                 cost = getPurchaseServerRamCostGuard(ram);
             } catch (e) {
                 workerScript.scriptRef.log("ERROR: 'getPurchasedServerCost()' " + e.message);
-                return "";
+                return Infinity;
             }
 
             return cost;
@@ -2053,14 +2140,18 @@ function NetscriptFunctions(workerScript) {
             }
             return port;
         },
-        rm : function(fn) {
+        rm : function(fn, ip) {
             if (workerScript.checkingRam) {
                 return updateStaticRam("rm", CONSTANTS.ScriptReadWriteRamCost);
             }
             updateDynamicRam("rm", CONSTANTS.ScriptReadWriteRamCost);
-            var s = getServer(workerScript.serverIp);
+
+            if (ip == null || ip === "") {
+                ip = workerScript.serverIp;
+            }
+            var s = getServer(ip);
             if (s == null) {
-                throw makeRuntimeRejectMsg(workerScript, "Error getting Server for this script in clear(). This is a bug please contact game dev");
+                throw makeRuntimeRejectMsg(workerScript, `Invalid server specified for rm(): ${ip}`);
             }
 
             if (fn.includes(".exe")) {
@@ -3784,7 +3875,7 @@ function NetscriptFunctions(workerScript) {
                 nsGang.checkGangApiAccess(workerScript, "purchaseEquipment");
 
                 try {
-                    for (const member in Player.gang.members) {
+                    for (const member of Player.gang.members) {
                         if (member.name === memberName) {
                             const res = member.buyUpgrade(equipName, Player, Player.gang);
                             if (workerScript.shouldLog("purchaseEquipment")) {
@@ -3813,13 +3904,13 @@ function NetscriptFunctions(workerScript) {
                 nsGang.checkGangApiAccess(workerScript, "ascendMember");
 
                 try {
-                    for (const member in Player.gang.members) {
+                    for (const member of Player.gang.members) {
                         if (member.name === name) {
                             return Player.gang.ascendMember(member, workerScript);
                         }
                     }
 
-                    workerScript.log(`Invalid argument passed to gang.ascendMember(). No gang member could be found with name ${memberName}`);
+                    workerScript.log(`Invalid argument passed to gang.ascendMember(). No gang member could be found with name ${name}`);
                     return false;
                 } catch(e) {
                     throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("ascendMember", e));
@@ -3846,6 +3937,27 @@ function NetscriptFunctions(workerScript) {
                     }
                 } catch(e) {
                     throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("setTerritoryWarfare", e));
+                }
+            },
+            getChanceToWinClash : function(otherGang) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getChanceToWinClash", CONSTANTS.ScriptGangApiBaseRamCost);
+                }
+                updateDynamicRam("getChanceToWinClash", CONSTANTS.ScriptGangApiBaseRamCost);
+                nsGang.checkGangApiAccess(workerScript, "getChanceToWinClash");
+
+                try {
+                    if (AllGangs[otherGang] == null) {
+                        workerScript.log(`Invalid gang specified in gang.getChanceToWinClash() : ${otherGang}`);
+                        return 0;
+                    }
+
+                    const playerPower = AllGangs[Player.gang.facName].power;
+                    const otherPower = AllGangs[otherGang].power;
+
+                    return playerPower / (otherPower + playerPower);
+                } catch(e) {
+                    throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("getChanceToWinClash", e));
                 }
             },
             getBonusTime : function() {
