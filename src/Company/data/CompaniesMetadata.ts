@@ -1,7 +1,6 @@
 import { IConstructorParams } from "../Company";
 import { Locations } from "../../Locations";
 import * as posNames from "./CompanyPositionNames";
-import { SafeObjectAssign } from "../../../utils/SafeObjectAssign";
 import { IMap } from "../../types";
 
 // Create Objects containing Company Positions by category
@@ -306,7 +305,7 @@ export const companiesMetadata: IConstructorParams[] = [
     {
         name: Locations.VolhavenOmniaCybersystems,
         info: "",
-        companyPositions: SafeObjectAssign(
+        companyPositions: Object.assign({},
             CEOOnly,
             OperationsManagerOnly,
             AllTechnologyPositions,
@@ -319,7 +318,7 @@ export const companiesMetadata: IConstructorParams[] = [
     {
         name: Locations.ChongqingSolarisSpaceSystems,
         info: "",
-        companyPositions: SafeObjectAssign(
+        companyPositions: Object.assign({},
             CEOOnly,
             OperationsManagerOnly,
             AllTechnologyPositions,
@@ -332,7 +331,7 @@ export const companiesMetadata: IConstructorParams[] = [
     {
         name: Locations.Sector12DeltaOne,
         info: "",
-        companyPositions: SafeObjectAssign(
+        companyPositions: Object.assign({},
             CEOOnly,
             OperationsManagerOnly,
             AllTechnologyPositions,
@@ -345,7 +344,7 @@ export const companiesMetadata: IConstructorParams[] = [
     {
         name: Locations.NewTokyoGlobalPharmaceuticals,
         info: "",
-        companyPositions: SafeObjectAssign(
+        companyPositions: Object.assign({},
             AllTechnologyPositions,
             AllBusinessPositions,
             AllSoftwareConsultantPositions,
@@ -358,7 +357,7 @@ export const companiesMetadata: IConstructorParams[] = [
     {
         name: Locations.IshimaNovaMedical,
         info: "",
-        companyPositions: SafeObjectAssign(
+        companyPositions: Object.assign({},
             AllTechnologyPositions,
             AllBusinessPositions,
             AllSoftwareConsultantPositions,
@@ -371,7 +370,7 @@ export const companiesMetadata: IConstructorParams[] = [
     {
         name: Locations.Sector12CIA,
         info: "",
-        companyPositions: SafeObjectAssign(
+        companyPositions: Object.assign({},
             SoftwarePositionsUpToHeadOfEngineering,
             AllNetworkEngineerPositions,
             AllITPositions,
@@ -385,7 +384,7 @@ export const companiesMetadata: IConstructorParams[] = [
     {
         name: Locations.Sector12NSA,
         info: "",
-        companyPositions: SafeObjectAssign(
+        companyPositions: Object.assign({},
             SoftwarePositionsUpToHeadOfEngineering,
             AllNetworkEngineerPositions,
             AllITPositions,
@@ -399,7 +398,7 @@ export const companiesMetadata: IConstructorParams[] = [
     {
         name: Locations.AevumWatchdogSecurity,
         info: "",
-        companyPositions: SafeObjectAssign(
+        companyPositions: Object.assign({},
             SoftwarePositionsUpToHeadOfEngineering,
             AllNetworkEngineerPositions,
             AllITPositions,
@@ -414,7 +413,7 @@ export const companiesMetadata: IConstructorParams[] = [
     {
         name: Locations.VolhavenLexoCorp,
         info: "",
-        companyPositions: SafeObjectAssign(
+        companyPositions: Object.assign({},
             AllTechnologyPositions,
             AllSoftwareConsultantPositions,
             AllBusinessPositions,
@@ -427,7 +426,7 @@ export const companiesMetadata: IConstructorParams[] = [
     {
         name: Locations.AevumRhoConstruction,
         info: "",
-        companyPositions: SafeObjectAssign(
+        companyPositions: Object.assign({},
             SoftwarePositionsUpToLeadDeveloper,
             BusinessPositionsUpToOperationsManager
         ),
@@ -438,7 +437,7 @@ export const companiesMetadata: IConstructorParams[] = [
     {
         name: Locations.Sector12AlphaEnterprises,
         info: "",
-        companyPositions: SafeObjectAssign(
+        companyPositions: Object.assign({},
             SoftwarePositionsUpToLeadDeveloper,
             BusinessPositionsUpToOperationsManager,
             AllSoftwareConsultantPositions
@@ -450,7 +449,7 @@ export const companiesMetadata: IConstructorParams[] = [
     {
         name: Locations.AevumPolice,
         info: "",
-        companyPositions: SafeObjectAssign(
+        companyPositions: Object.assign({},
             AllSecurityPositions,
             SoftwarePositionsUpToLeadDeveloper
         ),
@@ -461,7 +460,7 @@ export const companiesMetadata: IConstructorParams[] = [
     {
         name: Locations.VolhavenSysCoreSecurities,
         info: "",
-        companyPositions: SafeObjectAssign(
+        companyPositions: Object.assign({},
             AllTechnologyPositions
         ),
         expMultiplier: 1.3,
@@ -471,7 +470,7 @@ export const companiesMetadata: IConstructorParams[] = [
     {
         name: Locations.VolhavenCompuTek,
         info: "",
-        companyPositions: SafeObjectAssign(
+        companyPositions: Object.assign({},
             AllTechnologyPositions
         ),
         expMultiplier: 1.2,
@@ -481,7 +480,7 @@ export const companiesMetadata: IConstructorParams[] = [
     {
         name: Locations.AevumNetLinkTechnologies,
         info: "",
-        companyPositions: SafeObjectAssign(
+        companyPositions: Object.assign({},
             AllTechnologyPositions
         ),
         expMultiplier: 1.2,
@@ -491,7 +490,7 @@ export const companiesMetadata: IConstructorParams[] = [
     {
         name: Locations.Sector12CarmichaelSecurity,
         info: "",
-        companyPositions: SafeObjectAssign(
+        companyPositions: Object.assign({},
             AllTechnologyPositions,
             AllAgentPositions,
             AllSecurityPositions
@@ -503,7 +502,7 @@ export const companiesMetadata: IConstructorParams[] = [
     {
         name: Locations.Sector12FoodNStuff,
         info: "",
-        companyPositions: SafeObjectAssign(
+        companyPositions: Object.assign({},
             EmployeeOnly, PartTimeEmployeeOnly
         ),
         expMultiplier: 1,
@@ -513,7 +512,7 @@ export const companiesMetadata: IConstructorParams[] = [
     {
         name: Locations.Sector12JoesGuns,
         info: "",
-        companyPositions: SafeObjectAssign(
+        companyPositions: Object.assign({},
             EmployeeOnly, PartTimeEmployeeOnly
         ),
         expMultiplier: 1,
@@ -523,7 +522,7 @@ export const companiesMetadata: IConstructorParams[] = [
     {
         name: Locations.IshimaOmegaSoftware,
         info: "",
-        companyPositions: SafeObjectAssign(
+        companyPositions: Object.assign({},
             AllSoftwarePositions,
             AllSoftwareConsultantPositions,
             AllITPositions
@@ -535,7 +534,7 @@ export const companiesMetadata: IConstructorParams[] = [
     {
         name: Locations.NewTokyoNoodleBar,
         info: "",
-        companyPositions: SafeObjectAssign(
+        companyPositions: Object.assign({},
             WaiterOnly, PartTimeWaiterOnly
         ),
         expMultiplier: 1,

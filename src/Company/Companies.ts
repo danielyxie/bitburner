@@ -16,9 +16,27 @@ function addCompany(params: IConstructorParams) {
 // Used to initialize new Company objects for the Companies map
 // Called when creating new game or after a prestige/reset
 export function initCompanies() {
+    // Save Old Company data for 'favor'
+    const oldCompanies = Companies;
+
+    // Re-construct all Companies
+    Companies = {};
     companiesMetadata.forEach((e) => {
         addCompany(e);
     });
+
+    // Reset data
+    for (const companyName in Companies) {
+        const company = Companies[companyName];
+        const oldCompany = oldCompanies[companyName];
+        if (!(oldCompany instanceof Company)) {
+            // New game, so no OldCompanies data
+            company.favor = 0;
+        } else {
+            company.favor = oldCompanies[companyName].favor;
+            if (isNaN(company.favor)) { company.favor = 0; }
+        }
+    }
 }
 
 // Used to load Companies map from a save

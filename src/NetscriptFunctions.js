@@ -921,7 +921,7 @@ function NetscriptFunctions(workerScript) {
 
             var destServer, currServ;
 
-            if (arguments.length === 3) {   //scriptname, source, destination
+            if (ip2 != null) { // 3 Argument version: scriptname, source, destination
                 if (scriptname === undefined || ip1 === undefined || ip2 === undefined) {
                     throw makeRuntimeRejectMsg(workerScript, "ERROR: scp() call has incorrect number of arguments. Takes 2 or 3 arguments");
                 }
@@ -934,7 +934,7 @@ function NetscriptFunctions(workerScript) {
                 if (currServ == null) {
                     throw makeRuntimeRejectMsg(workerScript, `ERROR: Invalid hostname/ip passed into scp() command: ${ip1}`);
                 }
-            } else if (arguments.length === 2) {    //scriptname, destination
+            } else if (ip1 != null) { // 2 Argument version: scriptname, destination
                 if (scriptname === undefined || ip1 === undefined) {
                     throw makeRuntimeRejectMsg(workerScript, "ERROR: scp() call has incorrect number of arguments. Takes 2 or 3 arguments");
                 }
@@ -947,6 +947,8 @@ function NetscriptFunctions(workerScript) {
                 if (currServ == null) {
                     throw makeRuntimeRejectMsg(workerScript, "Could not find server ip for this script. This is a bug please contact game developer");
                 }
+            } else {
+                throw makeRuntimeRejectMsg(workerScript, "ERROR: scp() call has incorrect number of arguments. Takes 2 or 3 arguments");
             }
 
             //Scp for lit files

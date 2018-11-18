@@ -235,7 +235,7 @@ function displayLocationContent() {
     //Check if the player is employed at this Location. If he is, display the "Work" button,
     //update the job title, etc.
     if (loc != "" && loc === Player.companyName) {
-        var company = Companies[loc];
+        let company = Companies[loc];
 
         jobTitle.style.display = "block";
         jobReputation.style.display = "inline";
@@ -244,7 +244,7 @@ function displayLocationContent() {
         locationTxtDiv2.style.display = "block";
         locationTxtDiv3.style.display = "block";
         jobTitle.innerHTML = "Job Title: " + Player.companyPosition;
-        var repGain = company.getFavorGain();
+        let repGain = company.getFavorGain();
         if (repGain.length != 2) {repGain = 0;}
         repGain = repGain[0];
         jobReputation.innerHTML = "Company reputation: " + formatNumber(company.playerReputation, 4) +
@@ -258,7 +258,10 @@ function displayLocationContent() {
                                  "favor you gain depends on how much reputation you have with the company</span>";
         work.style.display = "block";
 
-        var currPos = Player.companyPosition;
+        let currPos = CompanyPositions[Player.companyPosition];
+        if (currPos == null) {
+            throw new Error("Player's companyPosition property has an invalid value");
+        }
 
         work.addEventListener("click", function() {
             if (currPos.isPartTimeJob()) {
@@ -1037,13 +1040,13 @@ function displayLocationContent() {
     if (loc == Player.companyName) {
         var currPos = Player.companyPosition;
 
-        if (currPos.name == "Employee") {
+        if (currPos == "Employee") {
             employeeJob.style.display = "none";
-        } else if (currPos.name == "Waiter") {
+        } else if (currPos == "Waiter") {
             waiterJob.style.display = "none";
-        } else if (currPos.name == "Part-time Employee") {
+        } else if (currPos == "Part-time Employee") {
             employeePartTimeJob.style.display = "none";
-        } else if (currPos.name == "Part-time Waiter") {
+        } else if (currPos == "Part-time Waiter") {
             waiterPartTimeJob.style.display = "none";
         }
     }
@@ -2175,8 +2178,8 @@ function setJobRequirementTooltip(loc, entryPosType, btn) {
     var company = Companies[loc];
     if (company == null) {return;}
     var pos = Player.getNextCompanyPosition(company, entryPosType);
-    if (pos == null) {return};
-    if (!company.hasPosition(pos)) {return;}
+    if (pos == null) { return };
+    if (!company.hasPosition(pos)) { return; }
     var reqText = getJobRequirementText(company, pos, true);
     btn.innerHTML += "<span class='tooltiptext'>" + reqText + "</span>";
 }

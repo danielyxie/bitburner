@@ -118,7 +118,7 @@ function evaluateVersionCompatibility(ver) {
         // Player's company position is now a string
         if (Player.companyPosition != null && typeof Player.companyPosition !== "string") {
             console.log("Changed Player.companyPosition value to be compatible with v0.41.2");
-            Player.companyPosition = Player.companyPosition.positionName;
+            Player.companyPosition = Player.companyPosition.data.positionName;
             if (Player.companyPosition == null) {
                 Player.companyPosition = "";
             }
@@ -130,6 +130,16 @@ function evaluateVersionCompatibility(ver) {
             if (company.name == null && company.companyName != null) {
                 console.log("Changed company name property to be compatible with v0.41.2");
                 company.name = company.companyName;
+            }
+
+            if (company.companyPositions instanceof Array) {
+                console.log("Changed company companyPositions property to be compatible with v0.41.2");
+                const pos = {};
+
+                for (let i = 0; i < company.companyPositions.length; ++i) {
+                    pos[company.companyPositions[i]] = true;
+                }
+                company.companyPositions = pos;
             }
         }
     }

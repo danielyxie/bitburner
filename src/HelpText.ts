@@ -10,6 +10,7 @@ export const TerminalHelpText: string =
     "cls                            See 'clear' command <br>" +
     "connect [ip/hostname]          Connects to a remote server<br>" +
     "download [script/text file]    Downloads scripts or text files to your computer<br>" +
+    "expr [math expression]         Evaluate a mathematical expression<br>" +
     "free                           Check the machine's memory (RAM) usage<br>" +
     "hack                           Hack the current machine<br>" +
     "help [command]                 Display this help text, or the help text for a command<br>" +
@@ -96,6 +97,12 @@ export const HelpTexts: IMap<string> = {
                     "Download all scripts and text files: download *<br>" +
                     "Download all scripts: download *.script<br>" +
                     "Download all text files: download *.txt<br>",
+    expr:           "expr [mathematical expression]<br>" +
+                    "Evaluate a  simple mathematical expression. Supports native JavaScript operators:<br>" +
+                    "+, -, /, *, **, %<br>" +
+                    "Example:<br>" +
+                    "expr 25 * 2 ** 10<br>" +
+                    "Note that letters (non-digits) are not allowed and will be removed from the input.",
     free:           "free<br>" +
                     "Display's the memory usage on the current machine. Print the amount of RAM that is available on the current server as well as " +
                     "how much of it is being used.",

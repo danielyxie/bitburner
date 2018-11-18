@@ -339,7 +339,13 @@ const Engine = {
     loadLocationContent: function() {
         Engine.hideAllContent();
         Engine.Display.locationContent.style.display = "block";
-        displayLocationContent();
+        try {
+            displayLocationContent();
+        } catch(e) {
+            exceptionAlert(e);
+            console.error(e);
+        }
+
         routing.navigateTo(Page.Location);
     },
 

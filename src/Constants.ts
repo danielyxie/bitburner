@@ -511,6 +511,9 @@ export let CONSTANTS: IMap<any> = {
      * Gang Changes:
      ** UI now displays your chance to win a clash with other gangs
      ** Added getChanceToWinClash() function to the Gang API
+
+     * Added the terminal command 'expr', which can be used to evaluate simple mathematical expressions
+     * Bug Fix: scp() should no longer throw errors when used with 2-arguments and an array of files
      `
 
 }
