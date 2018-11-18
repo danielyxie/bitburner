@@ -1,6 +1,8 @@
 import {Bladeburner}                            from "./Bladeburner";
-import {CompanyPositions, initCompanies,
-        Companies, getJobRequirementText}       from "./Company";
+import {CompanyPositions}                       from "./Company/CompanyPositions";
+import {Companies}                              from "./Company/Companies";
+import {getJobRequirementText}                  from "./Company/GetJobRequirementText";
+import * as posNames                            from "./Company/data/CompanyPositionNames";
 import {Corporation}                            from "./CompanyManagement";
 import {CONSTANTS}                              from "./Constants";
 import {Crimes}                                 from "./Crimes";
@@ -233,7 +235,7 @@ function displayLocationContent() {
     //Check if the player is employed at this Location. If he is, display the "Work" button,
     //update the job title, etc.
     if (loc != "" && loc === Player.companyName) {
-        var company = Companies[loc];
+        let company = Companies[loc];
 
         jobTitle.style.display = "block";
         jobReputation.style.display = "inline";
@@ -241,8 +243,8 @@ function displayLocationContent() {
         locationTxtDiv1.style.display = "block";
         locationTxtDiv2.style.display = "block";
         locationTxtDiv3.style.display = "block";
-        jobTitle.innerHTML = "Job Title: " + Player.companyPosition.positionName;
-        var repGain = company.getFavorGain();
+        jobTitle.innerHTML = "Job Title: " + Player.companyPosition;
+        let repGain = company.getFavorGain();
         if (repGain.length != 2) {repGain = 0;}
         repGain = repGain[0];
         jobReputation.innerHTML = "Company reputation: " + formatNumber(company.playerReputation, 4) +
@@ -256,7 +258,10 @@ function displayLocationContent() {
                                  "favor you gain depends on how much reputation you have with the company</span>";
         work.style.display = "block";
 
-        var currPos = Player.companyPosition;
+        let currPos = CompanyPositions[Player.companyPosition];
+        if (currPos == null) {
+            throw new Error("Player's companyPosition property has an invalid value");
+        }
 
         work.addEventListener("click", function() {
             if (currPos.isPartTimeJob()) {
@@ -301,19 +306,19 @@ function displayLocationContent() {
     var hospitalTreatmentCost = (Player.max_hp - Player.hp) * CONSTANTS.HospitalCostPerHp;
 
     //Set tooltip for job requirements
-    setJobRequirementTooltip(loc, CompanyPositions.SoftwareIntern, softwareJob);
-    setJobRequirementTooltip(loc, CompanyPositions.SoftwareConsultant, softwareConsultantJob);
-    setJobRequirementTooltip(loc, CompanyPositions.ITIntern, itJob);
-    setJobRequirementTooltip(loc, CompanyPositions.SecurityEngineer, securityEngineerJob);
-    setJobRequirementTooltip(loc, CompanyPositions.NetworkEngineer, networkEngineerJob);
-    setJobRequirementTooltip(loc, CompanyPositions.BusinessIntern, businessJob);
-    setJobRequirementTooltip(loc, CompanyPositions.BusinessConsultant, businessConsultantJob);
-    setJobRequirementTooltip(loc, CompanyPositions.SecurityGuard, securityJob);
-    setJobRequirementTooltip(loc, CompanyPositions.FieldAgent, agentJob);
-    setJobRequirementTooltip(loc, CompanyPositions.Employee, employeeJob);
-    setJobRequirementTooltip(loc, CompanyPositions.PartTimeEmployee, employeePartTimeJob);
-    setJobRequirementTooltip(loc, CompanyPositions.Waiter, waiterJob);
-    setJobRequirementTooltip(loc, CompanyPositions.PartTimeWaiter, waiterPartTimeJob);
+    setJobRequirementTooltip(loc, CompanyPositions[posNames.SoftwareCompanyPositions[0]], softwareJob);
+    setJobRequirementTooltip(loc, CompanyPositions[posNames.SoftwareConsultantCompanyPositions[0]], softwareConsultantJob);
+    setJobRequirementTooltip(loc, CompanyPositions[posNames.ITCompanyPositions[0]], itJob);
+    setJobRequirementTooltip(loc, CompanyPositions[posNames.SecurityEngineerCompanyPositions[0]], securityEngineerJob);
+    setJobRequirementTooltip(loc, CompanyPositions[posNames.NetworkEngineerCompanyPositions[0]], networkEngineerJob);
+    setJobRequirementTooltip(loc, CompanyPositions[posNames.BusinessCompanyPositions[0]], businessJob);
+    setJobRequirementTooltip(loc, CompanyPositions[posNames.BusinessConsultantCompanyPositions[0]], businessConsultantJob);
+    setJobRequirementTooltip(loc, CompanyPositions[posNames.SecurityCompanyPositions[0]], securityJob);
+    setJobRequirementTooltip(loc, CompanyPositions[posNames.AgentCompanyPositions[0]], agentJob);
+    setJobRequirementTooltip(loc, CompanyPositions[posNames.MiscCompanyPositions[1]], employeeJob);
+    setJobRequirementTooltip(loc, CompanyPositions[posNames.PartTimeCompanyPositions[1]], employeePartTimeJob);
+    setJobRequirementTooltip(loc, CompanyPositions[posNames.MiscCompanyPositions[0]], waiterJob);
+    setJobRequirementTooltip(loc, CompanyPositions[posNames.PartTimeCompanyPositions[0]], waiterPartTimeJob);
 
     switch (loc) {
         case Locations.AevumTravelAgency:
@@ -1030,18 +1035,18 @@ function displayLocationContent() {
             console.log("ERROR: INVALID LOCATION");
     }
 
-    //Make the "Apply to be Employee and Waiter" texts disappear if you already hold the job
-    //Includes part-time stuff
+    // Make the "Apply to be Employee and Waiter" texts disappear if you already hold the job
+    // Includes part-time stuff
     if (loc == Player.companyName) {
         var currPos = Player.companyPosition;
 
-        if (currPos.positionName == CompanyPositions.Employee.positionName) {
+        if (currPos == "Employee") {
             employeeJob.style.display = "none";
-        } else if (currPos.positionName == CompanyPositions.Waiter.positionName) {
+        } else if (currPos == "Waiter") {
             waiterJob.style.display = "none";
-        } else if (currPos.positionName == CompanyPositions.PartTimeEmployee.positionName) {
+        } else if (currPos == "Part-time Employee") {
             employeePartTimeJob.style.display = "none";
-        } else if (currPos.positionName == CompanyPositions.PartTimeWaiter.positionName) {
+        } else if (currPos == "Part-time Waiter") {
             waiterPartTimeJob.style.display = "none";
         }
     }
@@ -2173,8 +2178,8 @@ function setJobRequirementTooltip(loc, entryPosType, btn) {
     var company = Companies[loc];
     if (company == null) {return;}
     var pos = Player.getNextCompanyPosition(company, entryPosType);
-    if (pos == null) {return};
-    if (!company.hasPosition(pos)) {return;}
+    if (pos == null) { return };
+    if (!company.hasPosition(pos)) { return; }
     var reqText = getJobRequirementText(company, pos, true);
     btn.innerHTML += "<span class='tooltiptext'>" + reqText + "</span>";
 }

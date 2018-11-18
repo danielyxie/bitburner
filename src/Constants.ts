@@ -1,5 +1,7 @@
-let CONSTANTS = {
-    Version:                "0.41.1",
+import {IMap} from "./types";
+
+export let CONSTANTS: IMap<any> = {
+    Version:                "0.41.2",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -509,8 +511,9 @@ let CONSTANTS = {
      * Gang Changes:
      ** UI now displays your chance to win a clash with other gangs
      ** Added getChanceToWinClash() function to the Gang API
+
+     * Added the terminal command 'expr', which can be used to evaluate simple mathematical expressions
+     * Bug Fix: scp() should no longer throw errors when used with 2-arguments and an array of files
      `
 
 }
-
-export {CONSTANTS};

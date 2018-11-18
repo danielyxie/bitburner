@@ -25,7 +25,8 @@ import {Bladeburner}                                    from "./Bladeburner";
 import {CharacterOverview}                              from "./CharacterOverview";
 import {cinematicTextFlag}                              from "./CinematicText";
 import {generateRandomContract}                         from "./CodingContractGenerator";
-import {CompanyPositions, initCompanies}                from "./Company";
+import {CompanyPositions}                               from "./Company/CompanyPositions";
+import {initCompanies}                                  from "./Company/Companies";
 import {Corporation}                                    from "./CompanyManagement";
 import {CONSTANTS}                                      from "./Constants";
 import {displayCreateProgramContent,
@@ -338,7 +339,13 @@ const Engine = {
     loadLocationContent: function() {
         Engine.hideAllContent();
         Engine.Display.locationContent.style.display = "block";
-        displayLocationContent();
+        try {
+            displayLocationContent();
+        } catch(e) {
+            exceptionAlert(e);
+            console.error(e);
+        }
+
         routing.navigateTo(Page.Location);
     },
 
@@ -539,8 +546,8 @@ const Engine = {
         removeChildrenFromElement(Engine.Display.characterInfo);
 
         var companyPosition = "";
-        if (Player.companyPosition != "") {
-            companyPosition = Player.companyPosition.positionName;
+        if (Player.companyPosition !== "") {
+            companyPosition = Player.companyPosition;
         }
 
         var intText = "";
@@ -1204,7 +1211,6 @@ const Engine = {
             initSourceFiles();
             Engine.setDisplayElements();    //Sets variables for important DOM elements
             Engine.init();                  //Initialize buttons, work, etc.
-            CompanyPositions.init();
             initAugmentations();            //Also calls Player.reapplyAllAugmentations()
             Player.reapplyAllSourceFiles();
             initStockSymbols();
@@ -1312,7 +1318,6 @@ const Engine = {
             initForeignServers();
             initCompanies();
             initFactions();
-            CompanyPositions.init();
             initAugmentations();
             initMessages();
             initStockSymbols();

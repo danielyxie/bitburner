@@ -4,7 +4,7 @@ import {Augmentations, augmentationExists,
 import {initBitNodeMultipliers}                 from "./BitNode";
 import {Bladeburner}                            from "./Bladeburner";
 import {writeCinematicText}                     from "./CinematicText";
-import {Companies, Company, initCompanies}      from "./Company";
+import {Companies, initCompanies}               from "./Company/Companies";
 import {Programs}                               from "./CreateProgram";
 import {Engine}                                 from "./engine";
 import {Factions, Faction, initFactions,
