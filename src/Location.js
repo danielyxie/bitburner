@@ -113,7 +113,7 @@ function displayLocationContent() {
 
     var cityHallCreateCorporation   = document.getElementById("location-cityhall-create-corporation");
 
-    var nsaBladeburner = document.getElementById("location-nsa-bladeburner");
+    var nsaBladeburner = clearEventListeners("location-nsa-bladeburner");
 
     var loc = Player.location;
 

@@ -514,6 +514,10 @@ export let CONSTANTS: IMap<any> = {
 
      * Added the terminal command 'expr', which can be used to evaluate simple mathematical expressions
      * Bug Fix: scp() should no longer throw errors when used with 2-arguments and an array of files
+     * Bug Fix: Coding Contracts no longer give money in BitNode-8
+     * Bug Fix: In Bladeburner, you can no longer start a BlackOp through the Netscript API if it has already been completed
+     * Bug Fix: In Bladeburner, fixed a bug which caused the configured 'automate' actions to occasionally be switched to other actions
+     * Bug Fix: 'Return to World' button at locations no longer accumulates event listeners
      `
 
 }

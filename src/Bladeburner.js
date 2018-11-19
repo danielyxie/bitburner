@@ -918,14 +918,15 @@ Bladeburner.prototype.process = function() {
 
         //Automation
         if (this.automateEnabled) {
+            // Note: Do NOT set this.action = this.automateActionHigh/Low since it creates a reference
             if (this.stamina <= this.automateThreshLow) {
                 if (this.action.name !== this.automateActionLow.name || this.action.type !== this.automateActionLow.type) {
-                    this.action = this.automateActionLow;
+                    this.action = new ActionIdentifier({type: this.automateActionLow.type, name: this.automateActionLow.name});
                     this.startAction(this.action);
                 }
             } else if (this.stamina >= this.automateThreshHigh) {
                 if (this.action.name !== this.automateActionHigh.name || this.action.type !== this.automateActionHigh.type) {
-                    this.action = this.automateActionHigh;
+                    this.action = new ActionIdentifier({type: this.automateActionHigh.type, name: this.automateActionHigh.name});
                     this.startAction(this.action);
                 }
             }
@@ -1119,6 +1120,13 @@ Bladeburner.prototype.startAction = function(actionId) {
         case ActionTypes["BlackOp"]:
         case ActionTypes["BlackOperation"]:
             try {
+                // Safety measure - don't repeat BlackOps that are already done
+                if (this.blackops[actionId.name] != null) {
+                    this.resetAction();
+                    this.log("Error: Tried to start a Black Operation that had already been completed");
+                    break;
+                }
+
                 var action = this.getActionObject(actionId);
                 if (action == null) {
                     throw new Error("Failed to get BlackOperation object for: " + actionId.name);
@@ -2096,6 +2104,8 @@ Bladeburner.prototype.createBlackOpsContent = function() {
         "Black Operations (Black Ops) are special, one-time covert operations. " +
         "Each Black Op must be unlocked successively by completing " +
         "the one before it.<br><br>" +
+        "<b>Your ultimate goal to climb through the ranks of Bladeburners is to complete " +
+        "all of the Black Ops.</b><br><br>" + 
         "Like normal operations, you may use a team for Black Ops. Failing " +
         "a black op will incur heavy HP and rank losses.";
 
@@ -3370,6 +3380,12 @@ Bladeburner.prototype.startActionNetscriptFn = function(type, name, workerScript
         let action = this.getActionObject(actionId);
         if (action.reqdRank > this.rank) {
             workerScript.log(`Failed to start Black Op ${actionId.name} due to insufficient rank`);
+            return false;
+        }
+
+        // Can't start a BlackOp if its already been done
+        if (this.blackops[actionId.name] != null) {
+            workerScript.log(`Failed to start Black Op ${actionId.name} because its already been completed`);
             return false;
         }
 

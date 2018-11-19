@@ -30,6 +30,11 @@ interface IBitNodeMultipliers {
     ClassGymExpGain: number;
 
     /**
+     * Influences the amount of money gained from completing Coding Contracts
+     **/
+    CodingContractMoney: number;
+
+    /**
      * Influences the experience gained for each ability when the player completes working their job.
      */
     CompanyWorkExpGain: number;
@@ -154,6 +159,7 @@ export const BitNodeMultipliers: IBitNodeMultipliers = {
     HacknetNodeMoney:       1,
     ManualHackMoney:        1,
     ScriptHackMoney:        1,
+    CodingContractMoney:    1,
 
     ClassGymExpGain:        1,
     CompanyWorkExpGain:     1,

@@ -1902,7 +1902,6 @@ PlayerObject.prototype.applyForJob = function(entryPosType, sing=false) {
     }
 
     while (true) {
-        console.log("Determining qualification for next Company Position");
         let newPos = Object(_Company_GetNextCompanyPosition__WEBPACK_IMPORTED_MODULE_5__["getNextCompanyPosition"])(pos);
         if (newPos == null) {break;}
 
@@ -2576,7 +2575,7 @@ PlayerObject.prototype.gainCodingContractReward = function(reward, difficulty=1)
             break;
         case _CodingContracts__WEBPACK_IMPORTED_MODULE_2__["CodingContractRewardType"].Money:
         default:
-            var moneyGain = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].CodingContractBaseMoneyGain * difficulty;
+            var moneyGain = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].CodingContractBaseMoneyGain * difficulty * _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__["BitNodeMultipliers"].CodingContractMoney;
             this.gainMoney(moneyGain);
             return `Gained ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__[/* numeralWrapper */ "a"].format(moneyGain, '$0.000a')}`;
             break;
@@ -3103,6 +3102,10 @@ exports.CONSTANTS = {
 
      * Added the terminal command 'expr', which can be used to evaluate simple mathematical expressions
      * Bug Fix: scp() should no longer throw errors when used with 2-arguments and an array of files
+     * Bug Fix: Coding Contracts no longer give money in BitNode-8
+     * Bug Fix: In Bladeburner, you can no longer start a BlackOp through the Netscript API if it has already been completed
+     * Bug Fix: In Bladeburner, fixed a bug which caused the configured 'automate' actions to occasionally be switched to other actions
+     * Bug Fix: 'Return to World' button at locations no longer accumulates event listeners
      `
 };
 
@@ -4595,7 +4598,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 43);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 42);
 /* harmony import */ var _utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/uiHelpers/removeLoadingScreen */ 107);
 /* harmony import */ var _utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
@@ -6630,6 +6633,7 @@ exports.BitNodeMultipliers = {
     HacknetNodeMoney: 1,
     ManualHackMoney: 1,
     ScriptHackMoney: 1,
+    CodingContractMoney: 1,
     ClassGymExpGain: 1,
     CompanyWorkExpGain: 1,
     CrimeExpGain: 1,
@@ -11267,7 +11271,7 @@ function displaySourceFiles(listElement, sourceFiles) {
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./ui/navigationTracking */ 13);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 43);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 42);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 15);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 32);
@@ -14916,7 +14920,7 @@ _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__["Reviver"].constructors.AllServ
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_18__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./ui/navigationTracking */ 13);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 43);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 42);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21__);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 15);
@@ -15845,14 +15849,15 @@ Bladeburner.prototype.process = function() {
 
         //Automation
         if (this.automateEnabled) {
+            // Note: Do NOT set this.action = this.automateActionHigh/Low since it creates a reference
             if (this.stamina <= this.automateThreshLow) {
                 if (this.action.name !== this.automateActionLow.name || this.action.type !== this.automateActionLow.type) {
-                    this.action = this.automateActionLow;
+                    this.action = new ActionIdentifier({type: this.automateActionLow.type, name: this.automateActionLow.name});
                     this.startAction(this.action);
                 }
             } else if (this.stamina >= this.automateThreshHigh) {
                 if (this.action.name !== this.automateActionHigh.name || this.action.type !== this.automateActionHigh.type) {
-                    this.action = this.automateActionHigh;
+                    this.action = new ActionIdentifier({type: this.automateActionHigh.type, name: this.automateActionHigh.name});
                     this.startAction(this.action);
                 }
             }
@@ -16046,6 +16051,13 @@ Bladeburner.prototype.startAction = function(actionId) {
         case ActionTypes["BlackOp"]:
         case ActionTypes["BlackOperation"]:
             try {
+                // Safety measure - don't repeat BlackOps that are already done
+                if (this.blackops[actionId.name] != null) {
+                    this.resetAction();
+                    this.log("Error: Tried to start a Black Operation that had already been completed");
+                    break;
+                }
+
                 var action = this.getActionObject(actionId);
                 if (action == null) {
                     throw new Error("Failed to get BlackOperation object for: " + actionId.name);
@@ -17023,6 +17035,8 @@ Bladeburner.prototype.createBlackOpsContent = function() {
         "Black Operations (Black Ops) are special, one-time covert operations. " +
         "Each Black Op must be unlocked successively by completing " +
         "the one before it.<br><br>" +
+        "<b>Your ultimate goal to climb through the ranks of Bladeburners is to complete " +
+        "all of the Black Ops.</b><br><br>" + 
         "Like normal operations, you may use a team for Black Ops. Failing " +
         "a black op will incur heavy HP and rank losses.";
 
@@ -18297,6 +18311,12 @@ Bladeburner.prototype.startActionNetscriptFn = function(type, name, workerScript
         let action = this.getActionObject(actionId);
         if (action.reqdRank > this.rank) {
             workerScript.log(`Failed to start Black Op ${actionId.name} due to insufficient rank`);
+            return false;
+        }
+
+        // Can't start a BlackOp if its already been done
+        if (this.blackops[actionId.name] != null) {
+            workerScript.log(`Failed to start Black Op ${actionId.name} because its already been completed`);
             return false;
         }
 
@@ -25269,6 +25289,33 @@ function NetscriptFunctions(workerScript) {
 
 /***/ }),
 /* 42 */
+/*!*****************************************!*\
+  !*** ./utils/helpers/exceptionAlert.js ***!
+  \*****************************************/
+/*! exports provided: exceptionAlert */
+/*! exports used: exceptionAlert */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return exceptionAlert; });
+/* harmony import */ var _DialogBox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../DialogBox */ 9);
+
+
+function exceptionAlert(e) {
+    Object(_DialogBox__WEBPACK_IMPORTED_MODULE_0__["dialogBoxCreate"])("Caught an exception: " + e + "<br><br>" +
+                    "Filename: " + (e.fileName || "UNKNOWN FILE NAME") + "<br><br>" +
+                    "Line Number: " + (e.lineNumber || "UNKNOWN LINE NUMBER") + "<br><br>" +
+                    "This is a bug, please report to game developer with this " +
+                    "message as well as details about how to reproduce the bug.<br><br>" +
+                    "If you want to be safe, I suggest refreshing the game WITHOUT saving so that your " +
+                    "safe doesn't get corrupted");
+}
+
+
+
+
+/***/ }),
+/* 43 */
 /*!**********************!*\
   !*** ./src/Alias.js ***!
   \**********************/
@@ -25397,33 +25444,6 @@ function substituteAliases(origCommand) {
         }
     }
     return commandArray.join(" ");
-}
-
-
-
-
-/***/ }),
-/* 43 */
-/*!*****************************************!*\
-  !*** ./utils/helpers/exceptionAlert.js ***!
-  \*****************************************/
-/*! exports provided: exceptionAlert */
-/*! exports used: exceptionAlert */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return exceptionAlert; });
-/* harmony import */ var _DialogBox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../DialogBox */ 9);
-
-
-function exceptionAlert(e) {
-    Object(_DialogBox__WEBPACK_IMPORTED_MODULE_0__["dialogBoxCreate"])("Caught an exception: " + e + "<br><br>" +
-                    "Filename: " + (e.fileName || "UNKNOWN FILE NAME") + "<br><br>" +
-                    "Line Number: " + (e.lineNumber || "UNKNOWN LINE NUMBER") + "<br><br>" +
-                    "This is a bug, please report to game developer with this " +
-                    "message as well as details about how to reproduce the bug.<br><br>" +
-                    "If you want to be safe, I suggest refreshing the game WITHOUT saving so that your " +
-                    "safe doesn't get corrupted");
 }
 
 
@@ -29488,7 +29508,7 @@ function calculateWeakenTime(server, hack, int) {
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 43);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 42);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 15);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 27);
@@ -31391,7 +31411,7 @@ Gang.prototype.clearUI = function() {
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return postNetburnerText; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Terminal; });
-/* harmony import */ var _Alias__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Alias */ 42);
+/* harmony import */ var _Alias__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Alias */ 43);
 /* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CodingContracts */ 40);
 /* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_CodingContracts__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Constants */ 1);
@@ -35943,6 +35963,7 @@ function initBitNodeMultipliers() {
             _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].InfiltrationMoney        = 0;
             _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].RepToDonateToFaction     = 0;
             _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CorporationValuation     = 0;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CodingContractMoney      = 0;
             break;
         case 11: //The Big Crash
             _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerMaxMoney           = 0.1;
@@ -41967,7 +41988,7 @@ function getHacknetNode(name) {
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/helpers/createProgressBarText */ 77);
 /* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 43);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 42);
 /* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/uiHelpers/getElementById */ 50);
 /* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/LogBox */ 73);
@@ -42819,7 +42840,7 @@ JSONReviver_1.Reviver.constructors.Company = Company;
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return saveObject; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return loadGame; });
-/* harmony import */ var _Alias__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Alias */ 42);
+/* harmony import */ var _Alias__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Alias */ 43);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Company/Companies */ 18);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Company/CompanyPosition */ 79);
@@ -44515,7 +44536,7 @@ exports.isValidIPAddress = isValidIPAddress;
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 38);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 43);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 42);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
 
 
@@ -44998,7 +45019,7 @@ function displayLocationContent() {
 
     var cityHallCreateCorporation   = document.getElementById("location-cityhall-create-corporation");
 
-    var nsaBladeburner = document.getElementById("location-nsa-bladeburner");
+    var nsaBladeburner = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_19__["clearEventListeners"])("location-nsa-bladeburner");
 
     var loc = _Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].location;
 
@@ -45121,8 +45142,6 @@ function displayLocationContent() {
     //update the job title, etc.
     if (loc != "" && loc === _Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].companyName) {
         let company = _Company_Companies__WEBPACK_IMPORTED_MODULE_2__["Companies"][loc];
-
-        console.log(company.companyPositions);
 
         jobTitle.style.display = "block";
         jobReputation.style.display = "inline";
@@ -47430,7 +47449,7 @@ function getRandomFilename(server, reward) {
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 43);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 42);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/helpers/isString */ 36);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_4__);
 
@@ -48106,7 +48125,7 @@ function _getScriptUrls(script, scripts, seen) {
 /* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Terminal */ 48);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 43);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 42);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
@@ -48455,6 +48474,26 @@ function createDevMenu() {
         innerText: "Gain Bladeburner Rank",
     });
 
+    const bladeburnerStoredCyclesInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("input", {
+        class: "text-input",
+        margin: "5px",
+        placeholder: "# Cycles to Add",
+        type: "number",
+    });
+
+    const bladeburnerStoredCyclesButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("button", {
+        class: "std-button",
+        clickListener: () => {
+            try {
+                const cycles = parseInt(bladeburnerStoredCyclesInput.value);
+                _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].bladeburner.storedCycles += cycles;
+            } catch(e) {
+                Object(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_12__[/* exceptionAlert */ "a"])(`Failed to add cycles to Bladeburner in dev menu: ${e}`);
+            }
+        },
+        innerText: "Add Cycles to Bladeburner mechanic",
+    });
+
     // Gang
     const gangHeader = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("h2", {innerText: "Gang"});
 
@@ -48610,6 +48649,9 @@ function createDevMenu() {
     devMenuContainer.appendChild(bladeburnerHeader);
     devMenuContainer.appendChild(bladeburnerGainRankInput);
     devMenuContainer.appendChild(bladeburnerGainRankButton);
+    devMenuContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("br"));
+    devMenuContainer.appendChild(bladeburnerStoredCyclesInput);
+    devMenuContainer.appendChild(bladeburnerStoredCyclesButton);
     devMenuContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__["createElement"])("br"));
     devMenuContainer.appendChild(gangHeader);
     devMenuContainer.appendChild(gangStoredCyclesInput);

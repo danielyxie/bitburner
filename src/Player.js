@@ -2371,7 +2371,7 @@ PlayerObject.prototype.gainCodingContractReward = function(reward, difficulty=1)
             break;
         case CodingContractRewardType.Money:
         default:
-            var moneyGain = CONSTANTS.CodingContractBaseMoneyGain * difficulty;
+            var moneyGain = CONSTANTS.CodingContractBaseMoneyGain * difficulty * BitNodeMultipliers.CodingContractMoney;
             this.gainMoney(moneyGain);
             return `Gained ${numeralWrapper.format(moneyGain, '$0.000a')}`;
             break;
