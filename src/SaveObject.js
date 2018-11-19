@@ -127,7 +127,7 @@ function evaluateVersionCompatibility(ver) {
         // The "companyName" property of all Companies is renamed to "name"
         for (var companyName in Companies) {
             const company = Companies[companyName];
-            if (company.name == null && company.companyName != null) {
+            if ((company.name == null || company.name === 0 || company.name === "") && company.companyName != null) {
                 console.log("Changed company name property to be compatible with v0.41.2");
                 company.name = company.companyName;
             }
