@@ -33,7 +33,7 @@ import {Script, findRunningScript, RunningScript,
         isScriptFilename}                           from "./Script";
 import {Server, getServer, AddToAllServers,
         AllServers, processSingleServerGrowth,
-        GetServerByHostname}                        from "./Server";
+        GetServerByHostname, numCycleForGrowth}     from "./Server";
 import {Settings}                                   from "./Settings";
 import {SpecialServerIps}                           from "./SpecialServerIps";
 import {Stock}                                      from "./Stock";
@@ -463,7 +463,21 @@ function NetscriptFunctions(workerScript) {
                 return Promise.resolve(moneyAfter/moneyBefore);
             });
         },
-        weaken : function(ip){
+        growthAnalyze : function(ip, growth) {
+            if (workerScript.checkingRam) {
+                return updateStaticRam("growthAnalyze", CONSTANTS.ScriptGrowthAnalyzeRamCost);
+            }
+            updateDynamicRam("growthAnalyze", CONSTANTS.ScriptGrowthAnalyzeRamCost);
+
+            // Check argument validity
+            const server = safeGetServer(ip, 'growthAnalyze');
+            if (isNaN(growth)) {
+                throw makeRuntimeRejectMsg(workerScript, `Invalid growth argument passed into growthAnalyze: ${growth}. Must be numeric`);
+            }
+
+            return numCycleForGrowth(server, Number(growth));
+        },
+        weaken : function(ip) {
             if (workerScript.checkingRam) {
                 return updateStaticRam("weaken", CONSTANTS.ScriptWeakenRamCost);
             }
@@ -3867,6 +3881,19 @@ function NetscriptFunctions(workerScript) {
                     return Player.gang.getUpgradeCost(equipName);
                 } catch(e) {
                     throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("getEquipmentCost", e));
+                }
+            },
+            getEquipmentType : function(equipName) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getEquipmentType", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                }
+                updateDynamicRam("getEquipmentType", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                nsGang.checkGangApiAccess(workerScript, "getEquipmentType");
+
+                try {
+                    return Player.gang.getUpgradeType(equipName);
+                } catch(e) {
+                    throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("getEquipmentType", e));
                 }
             },
             purchaseEquipment : function(memberName, equipName) {

@@ -385,14 +385,17 @@ function displayFactionContent(factionName) {
         gangDiv.appendChild(gangDivWrapper);
         gangDivWrapper.appendChild(createElement("a", {
             class:"a-link-button", innerText:"Manage Gang",
-            clickListener:()=>{
+            clickListener: () => {
                 if (!Player.inGang()) {
+                    // Determine whether this is a hacking gang
+                    let hacking = false;
+                    if (factionName === "NiteSec" || factionName === "The Black Hand") { hacking = true; }
+
+                    // Configure Yes/No buttons for the pop-up
                     var yesBtn = yesNoBoxGetYesButton(), noBtn = yesNoBoxGetNoButton();
                     yesBtn.innerHTML = "Create Gang";
                     noBtn.innerHTML = "Cancel";
                     yesBtn.addEventListener("click", () => {
-                        var hacking = false;
-                        if (factionName === "NiteSec" || factionName === "The Black Hand") {hacking = true;}
                         Player.startGang(factionName, hacking);
                         document.getElementById("world-menu-header").click();
                         document.getElementById("world-menu-header").click();
@@ -402,10 +405,24 @@ function displayFactionContent(factionName) {
                     noBtn.addEventListener("click", () => {
                         yesNoBoxClose();
                     });
-                    yesNoBoxCreate("Would you like to create a new Gang with " + factionName + "?<br><br>" +
+
+                    // Pop-up text
+                    let gangTypeText = "";
+                    if (hacking) {
+                        gangTypeText = "This is a HACKING gang. Members in this gang will have different tasks than COMBAT gangs. " +
+                                       "Compared to combat gangs, progression with hacking gangs is more straightforward as territory warfare " +
+                                       "is not as important.<br><br>";
+                    } else {
+                        gangTypeText = "This is a COMBAT gang. Members in this gang will have different tasks than HACKING gangs. " +
+                                       "Compared to hacking gangs, progression with combat gangs can be more difficult as territory management " +
+                                       "is more important. However, well-managed combat gangs can progress faster than hacking ones.<br><br>";
+                    }
+                    yesNoBoxCreate(`Would you like to create a new Gang with ${factionName}?<br><br>` +
                                    "Note that this will prevent you from creating a Gang with any other Faction until " +
-                                   "this BitNode is destroyed. There are NO differences between the Factions you can " +
-                                   "create a Gang with and each of these Factions have all Augmentations available");
+                                   "this BitNode is destroyed.<br><br>" +
+                                   gangTypeText +
+                                   "Other than hacking vs combat, there are NO differences between the Factions you can " +
+                                   "create a Gang with, and each of these Factions have all Augmentations available.");
                 } else {
                     Engine.loadGangContent();
                 }

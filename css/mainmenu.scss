@@ -39,6 +39,19 @@
     padding: 16px;
 }
 
+.mainmenu.compact > li a,
+.mainmenu.compact > li button {
+    display: block;
+    color: #e6e6e6;
+    background-color: #555;
+
+    text-decoration: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    padding: 4px;
+}
+
 /* Hovering makes them lighter */
 .mainmenu > li a:hover,
 .mainmenu > li a:hover:not(.active),
@@ -73,7 +86,8 @@
 }
 
 /* Accordion Outline */
-.mainmenu-accordion-header {
+.mainmenu-accordion-header,
+.mainmenu-accordion-header-compact {
     outline: 2px solid #fff !important;
 }
 
@@ -83,7 +97,8 @@
 }
 
 /* Plus and minus signs */
-.mainmenu-accordion-header:after {
+.mainmenu-accordion-header:after,
+.mainmenu-accordion-header-compact:after {
     content: '\02795';
     float: right;
     font-size: $defaultFontSize * 0.8125;
@@ -103,8 +118,9 @@
 }
 
 .mainmenu-accordion-header.opened,
-.mainmenu-accordion-header-classic.opened {
-    background-color: #222;
+.mainmenu-accordion-header-classic.opened,
+.mainmenu-accordion-header-compact.opened {
+    background-color: #222 !important;
 
     &:after {
         content: "\2796";

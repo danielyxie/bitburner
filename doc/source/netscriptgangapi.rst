@@ -187,6 +187,23 @@ getEquipmentCost
     :returns: Cost to purchase the specified Equipment/Augmentation (number). Infinity
              for invalid arguments
 
+getEquipmentType
+----------------
+
+.. js:function:: getEquipmentType(equipName)
+
+    :param string equipName: Name of equipment
+
+    Get the specified equipment type, which can be one of the following:
+
+    * Weapon
+    * Armor
+    * Vehicle
+    * Rootkit
+    * Augmentation
+
+    :returns: A string stating the type of the equipment
+
 purchaseEquipment
 -----------------
 

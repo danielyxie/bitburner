@@ -533,6 +533,27 @@ Gang.prototype.getUpgradeCost = function(upgName) {
     return GangMemberUpgrades[upgName].getCost(this);
 }
 
+// Returns a player-friendly string stating the type of the specified upgrade
+Gang.prototype.getUpgradeType = function(upgName) {
+    const upg = GangMemberUpgrades[upgName];
+    if (upg == null) { return ""; }
+
+    switch (upg.type) {
+        case "w":
+            return "Weapon";
+        case "a":
+            return "Armor";
+        case "v":
+            return "Vehicle";
+        case "r":
+            return "Rootkit";
+        case "g":
+            return "Augmentation";
+        default:
+            return "";
+    }
+}
+
 Gang.prototype.toJSON = function() {
 	return Generic_toJSON("Gang", this);
 }
@@ -1857,6 +1878,25 @@ Gang.prototype.updateGangMemberDisplayElement = function(memberObj) {
              `Respect: ${formatNumber(5*memberObj.calculateRespectGain(this), 6)} / sec`,
              `Wanted Level: ${formatNumber(5*memberObj.calculateWantedLevelGain(this), 6)} / sec`,
              `Total Respect Earned: ${formatNumber(memberObj.earnedRespect, 6)}`].join("<br>");
+    }
+
+    // Update selector to have the correct task
+    const taskSelector = document.getElementById(name + "gang-member-task-selector");
+    if (taskSelector) {
+        let tasks = this.getAllTaskNames();
+        tasks.unshift("---");
+
+        if (GangMemberTasks.hasOwnProperty(memberObj.task)) {
+            const taskName = memberObj.task;
+            let taskIndex = 0;
+            for (let i = 0; i < tasks.length; ++i) {
+                if (taskName === tasks[i]) {
+                    taskIndex = i;
+                    break;
+                }
+            }
+            taskSelector.selectedIndex = taskIndex;
+        }
     }
 }
 

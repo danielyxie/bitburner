@@ -56,6 +56,7 @@ export let CONSTANTS: IMap<any> = {
     ScriptIfRamCost:                0,
     ScriptHackRamCost:              0.1,
     ScriptGrowRamCost:              0.15,
+    ScriptGrowthAnalyzeRamCost:     1,
     ScriptWeakenRamCost:            0.15,
     ScriptScanRamCost:              0.2,
     ScriptPortProgramRamCost:       0.05,
@@ -507,17 +508,23 @@ export let CONSTANTS: IMap<any> = {
      v0.41.2
      * IMPORTANT - Netscript Changes:
      ** rm() now takes an optional parameter that lets you specify on which server to delete the file
+     ** Added growthAnalyze() Netscript function
 
      * Gang Changes:
      ** UI now displays your chance to win a clash with other gangs
      ** Added getChanceToWinClash() function to the Gang API
+     ** Added several new hacking-based equipment and Augmentations
+     ** Rebalanced several equipment/upgrades to give less defense
 
+     * Added new Main Menu configuration in .fconf: "compact"
      * Added the terminal command 'expr', which can be used to evaluate simple mathematical expressions
      * Bug Fix: scp() should no longer throw errors when used with 2-arguments and an array of files
      * Bug Fix: Coding Contracts no longer give money in BitNode-8
      * Bug Fix: In Bladeburner, you can no longer start a BlackOp through the Netscript API if it has already been completed
      * Bug Fix: In Bladeburner, fixed a bug which caused the configured 'automate' actions to occasionally be switched to other actions
      * Bug Fix: 'Return to World' button at locations no longer accumulates event listeners
+     * Bug Fix: Working & taking classes now continuously add/subtract money during the action, instead of doing it only at completion
+     * Bug Fix: Top-right overview panel now displays negative money using '-' instead of '()'
      `
 
 }

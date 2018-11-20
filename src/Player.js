@@ -639,12 +639,13 @@ PlayerObject.prototype.resetWorkStatus = function() {
 }
 
 PlayerObject.prototype.processWorkEarnings = function(numCycles=1) {
-    var hackExpGain = this.workHackExpGainRate * numCycles;
-    var strExpGain = this.workStrExpGainRate * numCycles;
-    var defExpGain = this.workDefExpGainRate * numCycles;
-    var dexExpGain = this.workDexExpGainRate * numCycles;
-    var agiExpGain = this.workAgiExpGainRate * numCycles;
-    var chaExpGain = this.workChaExpGainRate * numCycles;
+    const hackExpGain = this.workHackExpGainRate * numCycles;
+    const strExpGain = this.workStrExpGainRate * numCycles;
+    const defExpGain = this.workDefExpGainRate * numCycles;
+    const dexExpGain = this.workDexExpGainRate * numCycles;
+    const agiExpGain = this.workAgiExpGainRate * numCycles;
+    const chaExpGain = this.workChaExpGainRate * numCycles;
+    const moneyGain = (this.workMoneyGainRate - this.workMoneyLossRate) * numCycles;
 
     this.gainHackingExp(hackExpGain);
     this.gainStrengthExp(strExpGain);
@@ -652,6 +653,7 @@ PlayerObject.prototype.processWorkEarnings = function(numCycles=1) {
     this.gainDexterityExp(dexExpGain);
     this.gainAgilityExp(agiExpGain);
     this.gainCharismaExp(chaExpGain);
+    this.gainMoney(moneyGain);
     this.workHackExpGained  += hackExpGain;
     this.workStrExpGained   += strExpGain;
     this.workDefExpGained   += defExpGain;
@@ -743,8 +745,6 @@ PlayerObject.prototype.finishWork = function(cancelled, sing=false) {
 
     var company = Companies[this.companyName];
     company.playerReputation += (this.workRepGained);
-
-    this.gainMoney(this.workMoneyGained);
 
     this.updateSkillLevels();
 
@@ -861,8 +861,6 @@ PlayerObject.prototype.workPartTime = function(numCycles) {
 PlayerObject.prototype.finishWorkPartTime = function(sing=false) {
     var company = Companies[this.companyName];
     company.playerReputation += (this.workRepGained);
-
-    this.gainMoney(this.workMoneyGained);
 
     this.updateSkillLevels();
 
@@ -1030,8 +1028,6 @@ PlayerObject.prototype.workForFaction = function(numCycles) {
 PlayerObject.prototype.finishFactionWork = function(cancelled, sing=false) {
     var faction = Factions[this.currentWorkFactionName];
     faction.playerReputation += (this.workRepGained);
-
-    this.gainMoney(this.workMoneyGained);
 
     this.updateSkillLevels();
 
@@ -1424,7 +1420,6 @@ PlayerObject.prototype.finishClass = function(sing=false) {
     if (this.workMoneyGained > 0) {
         throw new Error("ERR: Somehow gained money while taking class");
     }
-    this.loseMoney(this.workMoneyGained * -1);
 
     this.updateSkillLevels();
     var txt = "After " + this.className + " for " + convertTimeMsToTimeElapsedString(this.timeWorked) + ", <br>" +

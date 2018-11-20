@@ -23,7 +23,7 @@ var FconfComments = {
     ENABLE_TIMESTAMPS: "Terminal commands and log entries will be timestamped. The timestamp\n" +
                        "will have the format: M/D h:m",
     MAIN_MENU_STYLE: "Customize the main navigation menu on the left-hand side. Current options:\n\n" +
-                     "default, classic",
+                     "default, classic, compact",
     THEME_BACKGROUND_COLOR: "Sets the background color for not only the Terminal, but also for\n" +
                             "most of the game's UI.\n\n" +
                             "The color must be specified as a pound sign (#) followed by a \n" +
@@ -46,7 +46,7 @@ var FconfComments = {
                 "before its effect takes place.",
 }
 
-const MainMenuStyleOptions = ["default", "classic"];
+const MainMenuStyleOptions = ["default", "classic", "compact"];
 
 //Parse Fconf settings from the config text
 //Throws an exception if parsing fails
@@ -231,12 +231,18 @@ function setMainMenuStyle() {
     if (FconfSettings["MAIN_MENU_STYLE"] === "default") {
         removeAllAccordionHeaderClasses();
         mainMenu.classList.remove("classic");
+        mainMenu.classList.remove("compact");
         addClassToAllAccordionHeaders("mainmenu-accordion-header");
-
     } else if (FconfSettings["MAIN_MENU_STYLE"] === "classic") {
         removeAllAccordionHeaderClasses();
+        mainMenu.classList.remove("compact");
         mainMenu.classList.add("classic");
         addClassToAllAccordionHeaders("mainmenu-accordion-header-classic");
+    } else if (FconfSettings["MAIN_MENU_STYLE"] === "compact") {
+        removeAllAccordionHeaderClasses();
+        mainMenu.classList.remove("classic");
+        mainMenu.classList.add("compact");
+        addClassToAllAccordionHeaders("mainmenu-accordion-header-compact");
     } else {
         return;
     }

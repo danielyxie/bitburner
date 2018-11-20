@@ -206,7 +206,7 @@ Server.fromJSON = function(value) {
 
 Reviver.constructors.Server = Server;
 
-function initForeignServers() {
+export function initForeignServers() {
     /* Create a randomized network for all the foreign servers */
     //Groupings for creating a randomized network
     const networkLayers = [];
@@ -287,7 +287,9 @@ function initForeignServers() {
     }
 }
 
-function numCycleForGrowth(server, growth) {
+// Returns the number of cycles needed to grow the specified server by the
+// specified amount. 'growth' parameter is in decimal form, not percentage
+export function numCycleForGrowth(server, growth) {
     let ajdGrowthRate = 1 + (CONSTANTS.ServerBaseGrowthRate - 1) / server.hackDifficulty;
     if(ajdGrowthRate > CONSTANTS.ServerMaxGrowthRate) {
         ajdGrowthRate = CONSTANTS.ServerMaxGrowthRate;
@@ -300,7 +302,7 @@ function numCycleForGrowth(server, growth) {
 }
 
 //Applied server growth for a single server. Returns the percentage growth
-function processSingleServerGrowth(server, numCycles) {
+export function processSingleServerGrowth(server, numCycles) {
     //Server growth processed once every 450 game cycles
     const numServerGrowthCycles = Math.max(Math.floor(numCycles / 450), 0);
 
@@ -334,7 +336,7 @@ function processSingleServerGrowth(server, numCycles) {
     }
 
     // if there was any growth at all, increase security
-    if(oldMoneyAvailable !== server.moneyAvailable) {
+    if (oldMoneyAvailable !== server.moneyAvailable) {
         //Growing increases server security twice as much as hacking
         let usedCycles = numCycleForGrowth(server, server.moneyAvailable / oldMoneyAvailable);
         usedCycles = Math.max(0, usedCycles);
@@ -343,7 +345,7 @@ function processSingleServerGrowth(server, numCycles) {
     return server.moneyAvailable / oldMoneyAvailable;
 }
 
-function prestigeHomeComputer(homeComp) {
+export function prestigeHomeComputer(homeComp) {
     const hasBitflume = homeComp.programs.includes(Programs.BitFlume.name);
 
     homeComp.programs.length = 0; //Remove programs
@@ -366,14 +368,14 @@ function prestigeHomeComputer(homeComp) {
 //List of all servers that exist in the game, indexed by their ip
 let AllServers = {};
 
-function prestigeAllServers() {
+export function prestigeAllServers() {
     for (var member in AllServers) {
         delete AllServers[member];
     }
     AllServers = {};
 }
 
-function loadAllServers(saveString) {
+export function loadAllServers(saveString) {
     AllServers = JSON.parse(saveString, Reviver);
 }
 
@@ -386,7 +388,7 @@ function SizeOfAllServers() {
 }
 
 //Add a server onto the map of all servers in the game
-function AddToAllServers(server) {
+export function AddToAllServers(server) {
     var serverIp = server.ip;
     if (ipExists(serverIp)) {
         console.log("IP of server that's being added: " + serverIp);
@@ -400,7 +402,7 @@ function AddToAllServers(server) {
 
 //Returns server object with corresponding hostname
 //    Relatively slow, would rather not use this a lot
-function GetServerByHostname(hostname) {
+export function GetServerByHostname(hostname) {
     for (var ip in AllServers) {
         if (AllServers.hasOwnProperty(ip)) {
             if (AllServers[ip].hostname == hostname) {
@@ -412,7 +414,7 @@ function GetServerByHostname(hostname) {
 }
 
 //Get server by IP or hostname. Returns null if invalid
-function getServer(s) {
+export function getServer(s) {
     if (!isValidIPAddress(s)) {
         return GetServerByHostname(s);
     }
@@ -459,6 +461,4 @@ Directory.prototype.getPath = function(name) {
     return res.join("");
 }
 
-export {Server, AllServers, getServer, GetServerByHostname, loadAllServers,
-        AddToAllServers, processSingleServerGrowth, initForeignServers,
-        prestigeAllServers, prestigeHomeComputer};
+export {Server, AllServers};
