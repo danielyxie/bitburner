@@ -523,8 +523,9 @@ export let CONSTANTS: IMap<any> = {
      * Bug Fix: In Bladeburner, you can no longer start a BlackOp through the Netscript API if it has already been completed
      * Bug Fix: In Bladeburner, fixed a bug which caused the configured 'automate' actions to occasionally be switched to other actions
      * Bug Fix: 'Return to World' button at locations no longer accumulates event listeners
-     * Bug Fix: Working & taking classes now continuously add/subtract money during the action, instead of doing it only at completion
+     * Bug Fix: Working & taking classes now continuously add/subtract money during the action, instead of doing it at completion
      * Bug Fix: Top-right overview panel now displays negative money using '-' instead of '()'
+     * Bug Fix: Stock Market UI should no longer show 'NaN' profit immediately after buying a stock
      `
 
 }

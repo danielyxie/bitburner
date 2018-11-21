@@ -264,7 +264,7 @@ function displayLocationContent() {
         }
 
         work.addEventListener("click", function() {
-            if (currPos.isPartTimeJob()) {
+            if (currPos.isPartTimeJob() || currPos.isSoftwareConsultantJob() || currPos.isBusinessConsultantJob()) {
                 Player.startWorkPartTime();
             } else {
                 Player.startWork();

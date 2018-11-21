@@ -32,6 +32,8 @@ class NumeralFormatter {
     }
 
     format(n, format) {
+        // numeraljs doesnt properly format numbers that are too big or too small
+        if (Math.abs(n) < 1e-6) { n = 0; }
         return numeral(n).format(format);
     }
 }
