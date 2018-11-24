@@ -1091,6 +1091,24 @@ let Terminal = {
                 }
                 post("Error: " + fn + " does not exist");
                 break;
+            case "expr":
+                if (commandArray.length <= 1) {
+                    post("Incorrect usage of expr command. Usage: expr [math expression]");
+                    return;
+                }
+                const expr = commandArray.slice(1).join("");
+
+                // Sanitize the math expression
+                const sanitizedExpr = expr.replace(/s+/g, '').replace(/[^-()\d/*+.]/g, '');
+                let result;
+                try {
+                    result = eval(sanitizedExpr);
+                } catch(e) {
+                    post(`Could not evaluate expression: ${sanitizedExpr}`);
+                    return;
+                }
+                post(result);
+                break;
 			case "free":
 				Terminal.executeFreeCommand(commandArray);
 				break;

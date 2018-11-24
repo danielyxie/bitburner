@@ -1,7 +1,7 @@
 import {loadAliases, loadGlobalAliases,
         Aliases, GlobalAliases}                 from "./Alias";
-import {loadCompanies, Companies,
-        CompanyPositions}                       from "./Company";
+import {Companies, loadCompanies}               from "./Company/Companies";
+import {CompanyPosition}                        from "./Company/CompanyPosition";
 import {CONSTANTS}                              from "./Constants";
 import {Engine}                                 from "./engine";
 import {loadFactions, Factions,
@@ -110,6 +110,41 @@ BitburnerSaveObject.prototype.saveGame = function(db) {
     createStatusText("Game saved!");
 }
 
+// Makes necessary changes to the loaded/imported data to ensure
+// the game stills works with new versions
+function evaluateVersionCompatibility(ver) {
+    // This version refactored the Company/job-related code
+    if (ver <= "0.41.2") {
+        // Player's company position is now a string
+        if (Player.companyPosition != null && typeof Player.companyPosition !== "string") {
+            console.log("Changed Player.companyPosition value to be compatible with v0.41.2");
+            Player.companyPosition = Player.companyPosition.data.positionName;
+            if (Player.companyPosition == null) {
+                Player.companyPosition = "";
+            }
+        }
+
+        // The "companyName" property of all Companies is renamed to "name"
+        for (var companyName in Companies) {
+            const company = Companies[companyName];
+            if ((company.name == null || company.name === 0 || company.name === "") && company.companyName != null) {
+                console.log("Changed company name property to be compatible with v0.41.2");
+                company.name = company.companyName;
+            }
+
+            if (company.companyPositions instanceof Array) {
+                console.log("Changed company companyPositions property to be compatible with v0.41.2");
+                const pos = {};
+
+                for (let i = 0; i < company.companyPositions.length; ++i) {
+                    pos[company.companyPositions[i]] = true;
+                }
+                company.companyPositions = pos;
+            }
+        }
+    }
+}
+
 function loadGame(saveString) {
     if (saveString === "" || saveString == null || saveString === undefined) {
         if (!window.localStorage.getItem("bitburnerSave")) {
@@ -187,28 +222,8 @@ function loadGame(saveString) {
     if (saveObj.hasOwnProperty("VersionSave")) {
         try {
             var ver = JSON.parse(saveObj.VersionSave, Reviver);
-            if (Player.bitNodeN == null || Player.bitNodeN === 0) {
-                Player.setBitNodeNumber(1);
-            }
-            if (ver.startsWith("0.27.") || ver.startsWith("0.28.")) {
-                console.log("Evaluating changes needed for version compatibility");
-                if (Player.augmentations.length > 0 || Player.queuedAugmentations.length > 0 ||
-                    Player.sourceFiles.length > 0) {
-                    //If you have already purchased an Aug...you are far enough in the game
-                    //that everything should be available
-                    Player.firstFacInvRecvd = true;
-                    Player.firstAugPurchased = true;
-                    Player.firstTimeTraveled = true;
-                    Player.firstProgramAvailable = true;
-                } else  {
-                    if (Player.factions.length > 0 || Player.factionInvitations.length > 0) {
-                        Player.firstFacInvRecvd = true;
-                    }
-                    if (Player.hacking_skill >= 25) {
-                        Player.firstScriptAvailable = true;
-                    }
-                }
-            }
+            evaluateVersionCompatibility(ver);
+
             if (window.location.href.toLowerCase().includes("bitburner-beta")) {
                 //Beta branch, always show changes
                 createBetaUpdateText();
@@ -306,23 +321,11 @@ function loadImportedGame(saveObj, saveString) {
         if (tempSaveObj.hasOwnProperty("VersionSave")) {
             try {
                 var ver = JSON.parse(tempSaveObj.VersionSave, Reviver);
-                if (ver.startsWith("0.27.") || ver.startsWith("0.28.")) {
-                    if (tempPlayer.bitNodeN == null || tempPlayer.bitNodeN == 0) {
-                        tempPlayer.bitNodeN = 1;
-                    }
-                    if (tempPlayer.sourceFiles == null) {
-                        tempPlayer.sourceFiles = [];
-                    }
-                }
-                if (ver != CONSTANTS.Version) {
-                    //createNewUpdateText();
-                }
+                evaluateVersionCompatibility(ver);
             } catch(e) {
-                console.log("Parsing Version save failed: " + e);
-                //createNewUpdateText();
+                console.error("Parsing Version save failed: " + e);
             }
         } else {
-            //createNewUpdateText();
         }
         if (tempPlayer.bitNodeN == 2 && tempPlayer.inGang() && tempSaveObj.hasOwnProperty("AllGangsSave")) {
             try {
@@ -401,29 +404,8 @@ function loadImportedGame(saveObj, saveString) {
     if (saveObj.hasOwnProperty("VersionSave")) {
         try {
             var ver = JSON.parse(saveObj.VersionSave, Reviver);
-            if (Player.bitNodeN == null || Player.bitNodeN == 0) {
-                Player.setBitNodeNumber(1);
+            evaluateVersionCompatibility(ver);
 
-            }
-            if (ver.startsWith("0.27.") || ver.startsWith("0.28.")) {
-                console.log("Evaluating changes needed for version compatibility");
-                if (Player.augmentations.length > 0 || Player.queuedAugmentations.length > 0 ||
-                    Player.sourceFiles.length > 0) {
-                    //If you have already purchased an Aug...you are far enough in the game
-                    //that everything should be available
-                    Player.firstFacInvRecvd = true;
-                    Player.firstAugPurchased = true;
-                    Player.firstTimeTraveled = true;
-                    Player.firstProgramAvailable = true;
-                } else  {
-                    if (Player.factions.length > 0 || Player.factionInvitations.length > 0) {
-                        Player.firstFacInvRecvd = true;
-                    }
-                    if (Player.hacking_skill >= 25) {
-                        Player.firstScriptAvailable = true;
-                    }
-                }
-            }
             if (ver != CONSTANTS.Version) {
                 createNewUpdateText();
             }
@@ -459,7 +441,6 @@ function loadImportedGame(saveObj, saveString) {
     console.log("Importing game");
     Engine.setDisplayElements();    //Sets variables for important DOM elements
     Engine.init();                  //Initialize buttons, work, etc.
-    CompanyPositions.init();
 
     //Calculate the number of cycles have elapsed while offline
     Engine._lastUpdate = new Date().getTime();

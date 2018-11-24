@@ -272,11 +272,11 @@ Gang.prototype.processTerritoryAndPowerGains = function(numCycles=1) {
                 if (gainRoll < 0.5) {
                     // Multiplicative gain (50% chance)
                     // This is capped per cycle, to prevent it from getting out of control
-                    const multiplicativeGain = AllGangs[name].power * 0.008;
-                    AllGangs[name].power += Math.min(0.9, multiplicativeGain);
+                    const multiplicativeGain = AllGangs[name].power * 0.005;
+                    AllGangs[name].power += Math.min(0.85, multiplicativeGain);
                 } else {
                     // Additive gain (50% chance)
-                    const additiveGain = 0.5 * gainRoll * AllGangs[name].territory;
+                    const additiveGain = 0.75 * gainRoll * AllGangs[name].territory;
                     AllGangs[name].power += (additiveGain);
                 }
             }
@@ -533,6 +533,27 @@ Gang.prototype.getUpgradeCost = function(upgName) {
     return GangMemberUpgrades[upgName].getCost(this);
 }
 
+// Returns a player-friendly string stating the type of the specified upgrade
+Gang.prototype.getUpgradeType = function(upgName) {
+    const upg = GangMemberUpgrades[upgName];
+    if (upg == null) { return ""; }
+
+    switch (upg.type) {
+        case "w":
+            return "Weapon";
+        case "a":
+            return "Armor";
+        case "v":
+            return "Vehicle";
+        case "r":
+            return "Rootkit";
+        case "g":
+            return "Augmentation";
+        default:
+            return "";
+    }
+}
+
 Gang.prototype.toJSON = function() {
 	return Generic_toJSON("Gang", this);
 }
@@ -660,7 +681,7 @@ GangMember.prototype.calculateWantedLevelGain = function(gang) {
     if (task.baseWanted < 0) {
         return 0.5 * task.baseWanted * statWeight * territoryMult;
     } else {
-        return 7 * task.baseWanted / (3 * statWeight * territoryMult);
+        return 7 * task.baseWanted / (Math.pow(3 * statWeight * territoryMult, 0.8));
     }
 }
 
@@ -788,6 +809,11 @@ GangMember.prototype.buyUpgrade = function(upg, player, gang) {
     if (!(upg instanceof GangMemberUpgrade)) {
         return false;
     }
+    // Prevent purchasing of already-owned upgrades
+    if (this.augmentations.includes(upg.name) || this.upgrades.includes(upg.name)) {
+        return false;
+    }
+
     if (player.money.lt(upg.getCost(gang))) { return false; }
     player.loseMoney(upg.getCost(gang));
     if (upg.type === "g") {
@@ -1521,9 +1547,10 @@ Gang.prototype.updateGangContent = function() {
 
         // Update territory information
         UIElems.gangTerritoryInfoText.innerHTML = "";
-        for (var gangname in AllGangs) {
+        const playerPower = AllGangs[this.facName].power;
+        for (const gangname in AllGangs) {
             if (AllGangs.hasOwnProperty(gangname)) {
-                var gangTerritoryInfo = AllGangs[gangname];
+                const gangTerritoryInfo = AllGangs[gangname];
                 let territory = gangTerritoryInfo.territory * 100;
 
                 //Fix some rounding issues graphically
@@ -1536,12 +1563,16 @@ Gang.prototype.updateGangContent = function() {
                     displayNumber = formatNumber(territory, 2);
                 }
 
-                if (gangname == this.facName) {
-                    UIElems.gangTerritoryInfoText.innerHTML += ("<b>" + gangname + "</b><br>(Power: " + formatNumber(gangTerritoryInfo.power, 6) + "): " +
-                                       displayNumber + "%<br><br>");
+                if (gangname === this.facName) {
+                    let newHTML = `<b><u>${gangname}</u></b><br>Power: ${formatNumber(gangTerritoryInfo.power, 6)}<br>`;
+                    newHTML += `Territory: ${displayNumber}%<br><br>`;
+                    UIElems.gangTerritoryInfoText.innerHTML += newHTML;
                 } else {
-                    UIElems.gangTerritoryInfoText.innerHTML += (gangname + "<br>(Power: " + formatNumber(gangTerritoryInfo.power, 6) + "): " +
-                                       displayNumber + "%<br><br>");
+                    const clashVictoryChance = playerPower / (gangTerritoryInfo.power + playerPower);
+                    let newHTML = `<u>${gangname}</u><br>Power: ${formatNumber(gangTerritoryInfo.power, 6)}<br>`;
+                    newHTML += `Territory: ${displayNumber}%<br>`;
+                    newHTML += `Chance to win clash with this gang: ${numeralWrapper.format(clashVictoryChance, "0.000%")}<br><br>`;
+                    UIElems.gangTerritoryInfoText.innerHTML += newHTML;
                 }
             }
         }
@@ -1852,6 +1883,25 @@ Gang.prototype.updateGangMemberDisplayElement = function(memberObj) {
              `Respect: ${formatNumber(5*memberObj.calculateRespectGain(this), 6)} / sec`,
              `Wanted Level: ${formatNumber(5*memberObj.calculateWantedLevelGain(this), 6)} / sec`,
              `Total Respect Earned: ${formatNumber(memberObj.earnedRespect, 6)}`].join("<br>");
+    }
+
+    // Update selector to have the correct task
+    const taskSelector = document.getElementById(name + "gang-member-task-selector");
+    if (taskSelector) {
+        let tasks = this.getAllTaskNames();
+        tasks.unshift("---");
+
+        if (GangMemberTasks.hasOwnProperty(memberObj.task)) {
+            const taskName = memberObj.task;
+            let taskIndex = 0;
+            for (let i = 0; i < tasks.length; ++i) {
+                if (taskName === tasks[i]) {
+                    taskIndex = i;
+                    break;
+                }
+            }
+            taskSelector.selectedIndex = taskIndex;
+        }
     }
 }
 

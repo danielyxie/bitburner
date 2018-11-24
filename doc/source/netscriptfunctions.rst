@@ -56,7 +56,7 @@ weaken
 
 .. js:function:: weaken(hostname/ip)
 
-    :param string hostname.ip: IP or hostname of the target server to weaken
+    :param string hostname/ip: IP or hostname of the target server to weaken
     :returns: The amount by which the target server's security level was decreased. This is equivalent to 0.05 multiplied
               by the number of script threads
     :RAM cost: 0.15 GB
@@ -71,6 +71,31 @@ weaken
     Example::
 
         weaken("foodnstuff");
+
+growthAnalyze
+^^^^^^^^^^^^^
+
+.. js:function:: growthAnalyze(hostname/ip, growthAmount)
+
+    :param string hostname/ip: IP or hostname of server to analyze
+    :param number growthAmount: Multiplicative factor by which the server is grown. Decimal form.
+    :returns: The amount of grow() calls needed to grow the specified server by the specified amount
+    :RAM cost: 1 GB
+
+    This function returns the number of "growths" needed in order to increase the amount
+    of money available on the specified server by the specified amount.
+
+    The specified amount is multiplicative and is in decimal form, not percentage.
+
+    For example, if you want to determine how many `grow()` calls you need
+    to double the amount of money on `foodnstuff`, you would use::
+
+        growthAnalyze("foodnstuff", 2);
+
+    If this returns 100, then this means you need to call `grow()` 100 times
+    in order to double the money (or once with 100 threads).
+
+    **Warning**: The value returned by this function isn't necessarily a whole number.
 
 sleep
 ^^^^^
@@ -951,9 +976,10 @@ getPortHandle
 rm
 ^^
 
-.. js:function:: rm(fn)
+.. js:function:: rm(fn[, hostname/ip=current server])
 
     :param string fn: Filename of file to remove. Must include the extension
+    :param string hostname/ip: Hostname or IP Address of the server on which to delete the file. Optional. Defaults to current server
     :returns: True if it successfully deletes the file, and false otherwise
     :RAM cost: 1 GB
 
@@ -1011,7 +1037,7 @@ getScriptRam
 .. js:function:: getScriptRam(scriptname[, hostname/ip])
 
     :param string scriptname: Filename of script. This is case-sensitive.
-    :param string hostname/ip: Hostname or IP of target server the script is located on. This is optional, If it is not specified then the function will se the current server as the target server.
+    :param string hostname/ip: Hostname or IP of target server the script is located on. This is optional, If it is not specified then the function will set the current server as the target server.
     :RAM cost: 0.1 GB
 
     Returns the amount of RAM required to run the specified script on the target server. Returns

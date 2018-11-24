@@ -187,6 +187,23 @@ getEquipmentCost
     :returns: Cost to purchase the specified Equipment/Augmentation (number). Infinity
              for invalid arguments
 
+getEquipmentType
+----------------
+
+.. js:function:: getEquipmentType(equipName)
+
+    :param string equipName: Name of equipment
+
+    Get the specified equipment type, which can be one of the following:
+
+    * Weapon
+    * Armor
+    * Vehicle
+    * Rootkit
+    * Augmentation
+
+    :returns: A string stating the type of the equipment
+
 purchaseEquipment
 -----------------
 
@@ -233,6 +250,17 @@ setTerritoryWarfare
     :param bool engage: Whether or not to engage in territory warfare
 
     Set whether or not the gang should engage in territory warfare
+
+getChanceToWinClash
+-------------------
+
+.. js:function:: getChanceToWinClash(gangName)
+
+    :param string gangName: Target gang
+
+    Returns the chance you have to win a clash with the specified gang. The chance
+    is returned in decimal form, not percentage
+
 
 getBonusTime
 ------------

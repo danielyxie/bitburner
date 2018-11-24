@@ -3,9 +3,12 @@ import {Augmentations, applyAugmentation,
         PlayerOwnedAugmentation}                from "./Augmentations";
 import {BitNodeMultipliers}                     from "./BitNodeMultipliers";
 import {CodingContractRewardType}               from "./CodingContracts";
-import {Company, Companies, getNextCompanyPosition,
-        getJobRequirementText, CompanyPosition,
-        CompanyPositions}                       from "./Company";
+import {Company}                                from "./Company/Company";
+import {Companies}                              from "./Company/Companies";
+import {getNextCompanyPosition}                 from "./Company/GetNextCompanyPosition";
+import {getJobRequirementText}                  from "./Company/GetJobRequirementText";
+import {CompanyPositions}                       from "./Company/CompanyPositions";
+import * as posNames                            from "./Company/data/CompanyPositionNames";
 import {CONSTANTS}                              from "./Constants";
 import {Corporation}                            from "./CompanyManagement";
 import {Programs}                               from "./CreateProgram";
@@ -94,8 +97,8 @@ function PlayerObject() {
 	this.location 		= "";
 
     //Company Information
-    this.companyName = "";      //Name of Company, equivalent to an object from Locations
-    this.companyPosition = "";  //CompanyPosition object
+    this.companyName = "";      // Name of Company. Must match a key value in Companies map
+    this.companyPosition = "";  // Name of Company Position. Must match a key value in CompanyPositions map
 
     //Servers
     this.currentServer          = ""; //IP address of Server currently being accessed through terminal
@@ -636,12 +639,13 @@ PlayerObject.prototype.resetWorkStatus = function() {
 }
 
 PlayerObject.prototype.processWorkEarnings = function(numCycles=1) {
-    var hackExpGain = this.workHackExpGainRate * numCycles;
-    var strExpGain = this.workStrExpGainRate * numCycles;
-    var defExpGain = this.workDefExpGainRate * numCycles;
-    var dexExpGain = this.workDexExpGainRate * numCycles;
-    var agiExpGain = this.workAgiExpGainRate * numCycles;
-    var chaExpGain = this.workChaExpGainRate * numCycles;
+    const hackExpGain = this.workHackExpGainRate * numCycles;
+    const strExpGain = this.workStrExpGainRate * numCycles;
+    const defExpGain = this.workDefExpGainRate * numCycles;
+    const dexExpGain = this.workDexExpGainRate * numCycles;
+    const agiExpGain = this.workAgiExpGainRate * numCycles;
+    const chaExpGain = this.workChaExpGainRate * numCycles;
+    const moneyGain = (this.workMoneyGainRate - this.workMoneyLossRate) * numCycles;
 
     this.gainHackingExp(hackExpGain);
     this.gainStrengthExp(strExpGain);
@@ -649,6 +653,7 @@ PlayerObject.prototype.processWorkEarnings = function(numCycles=1) {
     this.gainDexterityExp(dexExpGain);
     this.gainAgilityExp(agiExpGain);
     this.gainCharismaExp(chaExpGain);
+    this.gainMoney(moneyGain);
     this.workHackExpGained  += hackExpGain;
     this.workStrExpGained   += strExpGain;
     this.workDefExpGained   += defExpGain;
@@ -709,13 +714,13 @@ PlayerObject.prototype.work = function(numCycles) {
 
     var comp = Companies[this.companyName], companyRep = "0";
     if (comp == null || !(comp instanceof Company)) {
-        console.log("ERROR: Could not find Company: " + this.companyName);
+        console.error(`Could not find Company: ${this.companyName}`);
     } else {
         companyRep = comp.playerReputation;
     }
 
     var txt = document.getElementById("work-in-progress-text");
-    txt.innerHTML = "You are currently working as a " + this.companyPosition.positionName +
+    txt.innerHTML = "You are currently working as a " + this.companyPosition +
                     " at " + this.companyName + " (Current Company Reputation: " +
                     numeralWrapper.format(companyRep, '0,0') + ")<br><br>" +
                     "You have been working for " + convertTimeMsToTimeElapsedString(this.timeWorked) + "<br><br>" +
@@ -740,8 +745,6 @@ PlayerObject.prototype.finishWork = function(cancelled, sing=false) {
 
     var company = Companies[this.companyName];
     company.playerReputation += (this.workRepGained);
-
-    this.gainMoney(this.workMoneyGained);
 
     this.updateSkillLevels();
 
@@ -837,7 +840,7 @@ PlayerObject.prototype.workPartTime = function(numCycles) {
     }
 
     var txt = document.getElementById("work-in-progress-text");
-    txt.innerHTML = "You are currently working as a " + this.companyPosition.positionName +
+    txt.innerHTML = "You are currently working as a " + this.companyPosition +
                     " at " + Player.companyName + " (Current Company Reputation: "  +
                     numeralWrapper.format(companyRep, '0,0') + ")<br><br>" +
                     "You have been working for " + convertTimeMsToTimeElapsedString(this.timeWorked) + "<br><br>" +
@@ -858,8 +861,6 @@ PlayerObject.prototype.workPartTime = function(numCycles) {
 PlayerObject.prototype.finishWorkPartTime = function(sing=false) {
     var company = Companies[this.companyName];
     company.playerReputation += (this.workRepGained);
-
-    this.gainMoney(this.workMoneyGained);
 
     this.updateSkillLevels();
 
@@ -1028,8 +1029,6 @@ PlayerObject.prototype.finishFactionWork = function(cancelled, sing=false) {
     var faction = Factions[this.currentWorkFactionName];
     faction.playerReputation += (this.workRepGained);
 
-    this.gainMoney(this.workMoneyGained);
-
     this.updateSkillLevels();
 
     var txt = "You worked for your faction " + faction.name + " for a total of " + convertTimeMsToTimeElapsedString(this.timeWorked) + " <br><br> " +
@@ -1069,70 +1068,126 @@ PlayerObject.prototype.finishFactionWork = function(cancelled, sing=false) {
 
 //Money gained per game cycle
 PlayerObject.prototype.getWorkMoneyGain = function() {
-    var bn11Mult = 1;
-    var company = Companies[this.companyName];
-    if (hasBn11SF) {
-        bn11Mult = 1 + (company.favor / 100);
+    // If player has SF-11, calculate salary multiplier from favor
+    let bn11Mult = 1;
+    const company = Companies[this.companyName];
+    if (hasBn11SF) { bn11Mult = 1 + (company.favor / 100); }
+
+    // Get base salary
+    const companyPosition = CompanyPositions[this.companyPosition];
+    if (companyPosition == null) {
+        console.error(`Could not find CompanyPosition object for ${this.companyPosition}. Work salary will be 0`);
+        return 0;
     }
-    return this.companyPosition.baseSalary * company.salaryMultiplier *
-           this.work_money_mult * BitNodeMultipliers.CompanyWorkMoney * bn11Mult;
+
+    return companyPosition.baseSalary * company.salaryMultiplier * this.work_money_mult * BitNodeMultipliers.CompanyWorkMoney * bn11Mult;
 }
 
 //Hack exp gained per game cycle
 PlayerObject.prototype.getWorkHackExpGain = function() {
-    var company = Companies[this.companyName];
-    return this.companyPosition.hackingExpGain * company.expMultiplier *
-           this.hacking_exp_mult * BitNodeMultipliers.CompanyWorkExpGain;
+    const company = Companies[this.companyName];
+    const companyPosition = CompanyPositions[this.companyPosition];
+    if (company == null || companyPosition == null) {
+        console.error([`Could not find Company object for ${this.companyName}`,
+                       `or CompanyPosition object for ${this.companyPosition}.`,
+                       `Work hack exp gain will be 0`].join(" "));
+        return 0;
+    }
+
+    return companyPosition.hackingExpGain * company.expMultiplier * this.hacking_exp_mult * BitNodeMultipliers.CompanyWorkExpGain;
 }
 
 //Str exp gained per game cycle
 PlayerObject.prototype.getWorkStrExpGain = function() {
-    var company = Companies[this.companyName];
-    return this.companyPosition.strengthExpGain * company.expMultiplier *
-           this.strength_exp_mult * BitNodeMultipliers.CompanyWorkExpGain;
+    const company = Companies[this.companyName];
+    const companyPosition = CompanyPositions[this.companyPosition];
+    if (company == null || companyPosition == null) {
+        console.error([`Could not find Company object for ${this.companyName}`,
+                       `or CompanyPosition object for ${this.companyPosition}.`,
+                       `Work str exp gain will be 0`].join(" "));
+        return 0;
+    }
+
+    return companyPosition.strengthExpGain * company.expMultiplier * this.strength_exp_mult * BitNodeMultipliers.CompanyWorkExpGain;
 }
 
 //Def exp gained per game cycle
 PlayerObject.prototype.getWorkDefExpGain = function() {
-    var company = Companies[this.companyName];
-    return this.companyPosition.defenseExpGain * company.expMultiplier *
-           this.defense_exp_mult * BitNodeMultipliers.CompanyWorkExpGain;
+    const company = Companies[this.companyName];
+    const companyPosition = CompanyPositions[this.companyPosition];
+    if (company == null || companyPosition == null) {
+        console.error([`Could not find Company object for ${this.companyName}`,
+                       `or CompanyPosition object for ${this.companyPosition}.`,
+                       `Work def exp gain will be 0`].join(" "));
+        return 0;
+    }
+
+    return companyPosition.defenseExpGain * company.expMultiplier * this.defense_exp_mult * BitNodeMultipliers.CompanyWorkExpGain;
 }
 
 //Dex exp gained per game cycle
 PlayerObject.prototype.getWorkDexExpGain = function() {
-    var company = Companies[this.companyName];
-    return this.companyPosition.dexterityExpGain * company.expMultiplier *
-           this.dexterity_exp_mult * BitNodeMultipliers.CompanyWorkExpGain;
+    const company = Companies[this.companyName];
+    const companyPosition = CompanyPositions[this.companyPosition];
+    if (company == null || companyPosition == null) {
+        console.error([`Could not find Company object for ${this.companyName}`,
+                       `or CompanyPosition object for ${this.companyPosition}.`,
+                       `Work dex exp gain will be 0`].join(" "));
+        return 0;
+    }
+
+    return companyPosition.dexterityExpGain * company.expMultiplier * this.dexterity_exp_mult * BitNodeMultipliers.CompanyWorkExpGain;
 }
 
 //Agi exp gained per game cycle
 PlayerObject.prototype.getWorkAgiExpGain = function() {
-    var company = Companies[this.companyName];
-    return this.companyPosition.agilityExpGain * company.expMultiplier *
-           this.agility_exp_mult * BitNodeMultipliers.CompanyWorkExpGain;
+    const company = Companies[this.companyName];
+    const companyPosition = CompanyPositions[this.companyPosition];
+    if (company == null || companyPosition == null) {
+        console.error([`Could not find Company object for ${this.companyName}`,
+                       `or CompanyPosition object for ${this.companyPosition}.`,
+                       `Work agi exp gain will be 0`].join(" "));
+        return 0;
+    }
+
+    return companyPosition.agilityExpGain * company.expMultiplier * this.agility_exp_mult * BitNodeMultipliers.CompanyWorkExpGain;
 }
 
 //Charisma exp gained per game cycle
 PlayerObject.prototype.getWorkChaExpGain = function() {
-    var company = Companies[this.companyName];
-    return this.companyPosition.charismaExpGain * company.expMultiplier *
-           this.charisma_exp_mult * BitNodeMultipliers.CompanyWorkExpGain;
+    const company = Companies[this.companyName];
+    const companyPosition = CompanyPositions[this.companyPosition];
+    if (company == null || companyPosition == null) {
+        console.error([`Could not find Company object for ${this.companyName}`,
+                       `or CompanyPosition object for ${this.companyPosition}.`,
+                       `Work cha exp gain will be 0`].join(" "));
+        return 0;
+    }
+
+    return companyPosition.charismaExpGain * company.expMultiplier * this.charisma_exp_mult * BitNodeMultipliers.CompanyWorkExpGain;
 }
 
 //Reputation gained per game cycle
 PlayerObject.prototype.getWorkRepGain = function() {
-    var company = Companies[this.companyName];
-    var jobPerformance = this.companyPosition.calculateJobPerformance(this.hacking_skill, this.strength,
-                                                                      this.defense, this.dexterity,
-                                                                      this.agility, this.charisma);
+    const company = Companies[this.companyName];
+    const companyPosition = CompanyPositions[this.companyPosition];
+    if (company == null || companyPosition == null) {
+        console.error([`Could not find Company object for ${this.companyName}`,
+                       `or CompanyPosition object for ${this.companyPosition}.`,
+                       `Work rep gain will be 0`].join(" "));
+        return 0;
+    }
+
+    var jobPerformance = companyPosition.calculateJobPerformance(this.hacking_skill, this.strength,
+                                                                 this.defense, this.dexterity,
+                                                                 this.agility, this.charisma);
 
     //Intelligence provides a flat bonus to job performance
     jobPerformance += (this.intelligence / CONSTANTS.MaxSkillLevel);
 
     //Update reputation gain rate to account for company favor
     var favorMult = 1 + (company.favor / 100);
-    if (isNaN(favorMult)) {favorMult = 1;}
+    if (isNaN(favorMult)) { favorMult = 1; }
     return jobPerformance * this.company_rep_mult * favorMult;
 }
 
@@ -1365,7 +1420,6 @@ PlayerObject.prototype.finishClass = function(sing=false) {
     if (this.workMoneyGained > 0) {
         throw new Error("ERR: Somehow gained money while taking class");
     }
-    this.loseMoney(this.workMoneyGained * -1);
 
     this.updateSkillLevels();
     var txt = "After " + this.className + " for " + convertTimeMsToTimeElapsedString(this.timeWorked) + ", <br>" +
@@ -1611,20 +1665,25 @@ PlayerObject.prototype.hospitalize = function() {
 //The 'sing' argument designates whether or not this is being called from
 //the applyToCompany() Netscript Singularity function
 PlayerObject.prototype.applyForJob = function(entryPosType, sing=false) {
-    var currCompany = "";
-    if (this.companyName != "") {
+    // Get current company and job
+    let currCompany = null;
+    if (this.companyName !== "") {
         currCompany = Companies[this.companyName];
     }
-    var currPositionName = "";
-    if (this.companyPosition != "") {
-        currPositionName = this.companyPosition.positionName;
-    }
-	var company = Companies[this.location]; //Company being applied to
-    if (sing && !(company instanceof Company)) {
-        return "ERROR: Invalid company name: " + this.location + ". applyToCompany() failed";
+    const currPositionName = this.companyPosition;
+
+    // Get company that's being applied to
+	const company = Companies[this.location]; //Company being applied to
+    if (!(company instanceof Company)) {
+        if (sing) {
+            return "ERROR: Invalid company name: " + this.location + ". applyToCompany() failed";
+        } else {
+            console.error(`Could not find company that matches the location: ${this.location}. Player.applyToCompany() failed`);
+            return;
+        }
     }
 
-    var pos = entryPosType;
+    let pos = entryPosType;
 
     if (!this.isQualified(company, pos)) {
         var reqText = getJobRequirementText(company, pos);
@@ -1634,8 +1693,7 @@ PlayerObject.prototype.applyForJob = function(entryPosType, sing=false) {
     }
 
     while (true) {
-        if (Engine.Debug) {console.log("Determining qualification for next Company Position");}
-        var newPos = getNextCompanyPosition(pos);
+        let newPos = getNextCompanyPosition(pos);
         if (newPos == null) {break;}
 
         //Check if this company has this position
@@ -1651,9 +1709,8 @@ PlayerObject.prototype.applyForJob = function(entryPosType, sing=false) {
     }
 
     //Check if the determined job is the same as the player's current job
-    if (currCompany != "") {
-        if (currCompany.companyName == company.companyName &&
-            pos.positionName == currPositionName) {
+    if (currCompany != null) {
+        if (currCompany.name == company.name && pos.name == currPositionName) {
             var nextPos = getNextCompanyPosition(pos);
             if (nextPos == null) {
                 if (sing) {return false;}
@@ -1672,31 +1729,30 @@ PlayerObject.prototype.applyForJob = function(entryPosType, sing=false) {
 
 
     //Lose reputation from a Company if you are leaving it for another job
-    var leaveCompany = false;
-    var oldCompanyName = "";
-    if (currCompany != "") {
-        if (currCompany.companyName != company.companyName) {
+    let leaveCompany = false;
+    let oldCompanyName = "";
+    if (currCompany != null) {
+        if (currCompany.name != company.name) {
             leaveCompany = true;
-            oldCompanyName = currCompany.companyName;
-            company.playerReputation -= 1000;
-            if (company.playerReputation < 0) {company.playerReputation = 0;}
+            oldCompanyName = currCompany.name;
+            currCompany.playerReputation -= 1000;
+            if (currCompany.playerReputation < 0) { currCompany.playerReputation = 0; }
         }
     }
 
-    this.companyName = company.companyName;
-    this.companyPosition = pos;
+    this.companyName = company.name;
+    this.companyPosition = pos.name;
 
     document.getElementById("world-menu-header").click();
     document.getElementById("world-menu-header").click();
 
     if (leaveCompany) {
-        if (sing) {return true;}
-        dialogBoxCreate("Congratulations! You were offered a new job at " + this.companyName + " as a " +
-                        pos.positionName + "!<br>" +
-                        "You lost 1000 reputation at your old company " + oldCompanyName + " because you left.");
+        if (sing) { return true; }
+        dialogBoxCreate([`Congratulations! You were offered a new job at ${this.companyName} as a ${pos.name}!`,
+                         `You lost 1000 reputation at your old company ${oldCompanyName} because you left.`].join("<br>"));
     } else {
-        if (sing) {return true;}
-        dialogBoxCreate("Congratulations! You were offered a new job at " + this.companyName + " as a " + pos.positionName + "!");
+        if (sing) { return true; }
+        dialogBoxCreate("Congratulations! You were offered a new job at " + this.companyName + " as a " + pos.name + "!");
     }
 
     Engine.loadLocationContent();
@@ -1705,51 +1761,51 @@ PlayerObject.prototype.applyForJob = function(entryPosType, sing=false) {
 //Returns your next position at a company given the field (software, business, etc.)
 PlayerObject.prototype.getNextCompanyPosition = function(company, entryPosType) {
     var currCompany = null;
-    if (this.companyName != "") {
+    if (this.companyName !== "") {
         currCompany = Companies[this.companyName];
     }
 
     //Not employed at this company, so return the entry position
-    if (currCompany == null || (currCompany.companyName != company.companyName)) {
+    if (currCompany == null || (currCompany.name != company.name)) {
         return entryPosType;
     }
 
     //If the entry pos type and the player's current position have the same type,
     //return the player's "nextCompanyPosition". Otherwise return the entryposType
     //Employed at this company, so just return the next position if it exists.
-    if ((this.companyPosition.isSoftwareJob() && entryPosType.isSoftwareJob()) ||
-        (this.companyPosition.isITJob() && entryPosType.isITJob()) ||
-        (this.companyPosition.isBusinessJob() && entryPosType.isBusinessJob()) ||
-        (this.companyPosition.isSecurityEngineerJob() && entryPosType.isSecurityEngineerJob()) ||
-        (this.companyPosition.isNetworkEngineerJob() && entryPosType.isNetworkEngineerJob()) ||
-        (this.companyPosition.isSecurityJob() && entryPosType.isSecurityJob()) ||
-        (this.companyPosition.isAgentJob() && entryPosType.isAgentJob()) ||
-        (this.companyPosition.isSoftwareConsultantJob() && entryPosType.isSoftwareConsultantJob()) ||
-        (this.companyPosition.isBusinessConsultantJob() && entryPosType.isBusinessConsultantJob()) ||
-        (this.companyPosition.isPartTimeJob() && entryPosType.isPartTimeJob())) {
-        return getNextCompanyPosition(this.companyPosition);
+    const currentPosition = CompanyPositions[this.companyPosition];
+    if ((currentPosition.isSoftwareJob() && entryPosType.isSoftwareJob()) ||
+        (currentPosition.isITJob() && entryPosType.isITJob()) ||
+        (currentPosition.isBusinessJob() && entryPosType.isBusinessJob()) ||
+        (currentPosition.isSecurityEngineerJob() && entryPosType.isSecurityEngineerJob()) ||
+        (currentPosition.isNetworkEngineerJob() && entryPosType.isNetworkEngineerJob()) ||
+        (currentPosition.isSecurityJob() && entryPosType.isSecurityJob()) ||
+        (currentPosition.isAgentJob() && entryPosType.isAgentJob()) ||
+        (currentPosition.isSoftwareConsultantJob() && entryPosType.isSoftwareConsultantJob()) ||
+        (currentPosition.isBusinessConsultantJob() && entryPosType.isBusinessConsultantJob()) ||
+        (currentPosition.isPartTimeJob() && entryPosType.isPartTimeJob())) {
+        return getNextCompanyPosition(currentPosition);
     }
-
 
     return entryPosType;
 }
 
 PlayerObject.prototype.applyForSoftwareJob = function(sing=false) {
-    return this.applyForJob(CompanyPositions.SoftwareIntern, sing);
+    return this.applyForJob(CompanyPositions[posNames.SoftwareCompanyPositions[0]], sing);
 }
 
 PlayerObject.prototype.applyForSoftwareConsultantJob = function(sing=false) {
-    return this.applyForJob(CompanyPositions.SoftwareConsultant, sing);
+    return this.applyForJob(CompanyPositions[posNames.SoftwareConsultantCompanyPositions[0]], sing);
 }
 
 PlayerObject.prototype.applyForItJob = function(sing=false) {
-	return this.applyForJob(CompanyPositions.ITIntern, sing);
+	return this.applyForJob(CompanyPositions[posNames.ITCompanyPositions[0]], sing);
 }
 
 PlayerObject.prototype.applyForSecurityEngineerJob = function(sing=false) {
     var company = Companies[this.location]; //Company being applied to
-    if (this.isQualified(company, CompanyPositions.SecurityEngineer)) {
-        return this.applyForJob(CompanyPositions.SecurityEngineer, sing);
+    if (this.isQualified(company, CompanyPositions[posNames.SecurityEngineerCompanyPositions[0]])) {
+        return this.applyForJob(CompanyPositions[posNames.SecurityEngineerCompanyPositions[0]], sing);
     } else {
         if (sing) {return false;}
         dialogBoxCreate("Unforunately, you do not qualify for this position");
@@ -1758,8 +1814,8 @@ PlayerObject.prototype.applyForSecurityEngineerJob = function(sing=false) {
 
 PlayerObject.prototype.applyForNetworkEngineerJob = function(sing=false) {
 	var company = Companies[this.location]; //Company being applied to
-    if (this.isQualified(company, CompanyPositions.NetworkEngineer)) {
-        return this.applyForJob(CompanyPositions.NetworkEngineer, sing);
+    if (this.isQualified(company, CompanyPositions[posNames.NetworkEngineerCompanyPositions[0]])) {
+        return this.applyForJob(CompanyPositions[posNames.NetworkEngineerCompanyPositions[0]], sing);
     } else {
         if (sing) {return false;}
         dialogBoxCreate("Unforunately, you do not qualify for this position");
@@ -1767,22 +1823,23 @@ PlayerObject.prototype.applyForNetworkEngineerJob = function(sing=false) {
 }
 
 PlayerObject.prototype.applyForBusinessJob = function(sing=false) {
-	return this.applyForJob(CompanyPositions.BusinessIntern, sing);
+	return this.applyForJob(CompanyPositions[posNames.BusinessCompanyPositions[0]], sing);
 }
 
 PlayerObject.prototype.applyForBusinessConsultantJob = function(sing=false) {
-    return this.applyForJob(CompanyPositions.BusinessConsultant, sing);
+    return this.applyForJob(CompanyPositions[posNames.BusinessConsultantCompanyPositions[0]], sing);
 }
 
 PlayerObject.prototype.applyForSecurityJob = function(sing=false) {
-    //TODO If case for POlice departments
-	return this.applyForJob(CompanyPositions.SecurityGuard, sing);
+    // TODO Police Jobs
+    // Indexing starts at 2 because 0 is for police officer
+	return this.applyForJob(CompanyPositions[posNames.SecurityCompanyPositions[2]], sing);
 }
 
 PlayerObject.prototype.applyForAgentJob = function(sing=false) {
 	var company = Companies[this.location]; //Company being applied to
-    if (this.isQualified(company, CompanyPositions.FieldAgent)) {
-        return this.applyForJob(CompanyPositions.FieldAgent, sing);
+    if (this.isQualified(company, CompanyPositions[posNames.AgentCompanyPositions[0]])) {
+        return this.applyForJob(CompanyPositions[posNames.AgentCompanyPositions[0]], sing);
     } else {
         if (sing) {return false;}
         dialogBoxCreate("Unforunately, you do not qualify for this position");
@@ -1791,9 +1848,9 @@ PlayerObject.prototype.applyForAgentJob = function(sing=false) {
 
 PlayerObject.prototype.applyForEmployeeJob = function(sing=false) {
 	var company = Companies[this.location]; //Company being applied to
-    if (this.isQualified(company, CompanyPositions.Employee)) {
-        this.companyName = company.companyName;
-        this.companyPosition = CompanyPositions.Employee;
+    if (this.isQualified(company, CompanyPositions[posNames.MiscCompanyPositions[1]])) {
+        this.companyName = company.name;
+        this.companyPosition = posNames.MiscCompanyPositions[1];
         document.getElementById("world-menu-header").click();
         document.getElementById("world-menu-header").click();
         if (sing) {return true;}
@@ -1807,9 +1864,9 @@ PlayerObject.prototype.applyForEmployeeJob = function(sing=false) {
 
 PlayerObject.prototype.applyForPartTimeEmployeeJob = function(sing=false) {
 	var company = Companies[this.location]; //Company being applied to
-    if (this.isQualified(company, CompanyPositions.PartTimeEmployee)) {
-        this.companyName = company.companyName;
-        this.companyPosition = CompanyPositions.PartTimeEmployee;
+    if (this.isQualified(company, CompanyPositions[posNames.PartTimeCompanyPositions[1]])) {
+        this.companyName = company.name;
+        this.companyPosition = posNames.PartTimeCompanyPositions[1];
         document.getElementById("world-menu-header").click();
         document.getElementById("world-menu-header").click();
         if (sing) {return true;}
@@ -1823,9 +1880,9 @@ PlayerObject.prototype.applyForPartTimeEmployeeJob = function(sing=false) {
 
 PlayerObject.prototype.applyForWaiterJob = function(sing=false) {
 	var company = Companies[this.location]; //Company being applied to
-    if (this.isQualified(company, CompanyPositions.Waiter)) {
-        this.companyName = company.companyName;
-        this.companyPosition = CompanyPositions.Waiter;
+    if (this.isQualified(company, CompanyPositions[posNames.MiscCompanyPositions[0]])) {
+        this.companyName = company.name;
+        this.companyPosition = posNames.MiscCompanyPositions[0];
         document.getElementById("world-menu-header").click();
         document.getElementById("world-menu-header").click();
         if (sing) {return true;}
@@ -1839,9 +1896,9 @@ PlayerObject.prototype.applyForWaiterJob = function(sing=false) {
 
 PlayerObject.prototype.applyForPartTimeWaiterJob = function(sing=false) {
 	var company = Companies[this.location]; //Company being applied to
-    if (this.isQualified(company, CompanyPositions.PartTimeWaiter)) {
-        this.companyName = company.companyName;
-        this.companyPosition = CompanyPositions.PartTimeWaiter;
+    if (this.isQualified(company, CompanyPositions[posNames.PartTimeCompanyPositions[0]])) {
+        this.companyName = company.name;
+        this.companyPosition = posNames.PartTimeCompanyPositions[0];
         document.getElementById("world-menu-header").click();
         document.getElementById("world-menu-header").click();
         if (sing) {return true;}
@@ -2156,10 +2213,12 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
 
     //Silhouette
     var silhouetteFac = Factions["Silhouette"];
+    const companyPosition = CompanyPositions[this.companyPosition];
     if (!silhouetteFac.isBanned && !silhouetteFac.isMember && !silhouetteFac.alreadyInvited &&
-        (this.companyPosition.positionName == CompanyPositions.CTO.positionName ||
-         this.companyPosition.positionName == CompanyPositions.CFO.positionName ||
-         this.companyPosition.positionName == CompanyPositions.CEO.positionName) &&
+        companyPosition != null &&
+        (companyPosition.name == "Chief Technology Officer" ||
+         companyPosition.name == "Chief Financial Officer" ||
+         companyPosition.name == "Chief Executive Officer") &&
          this.money.gte(15000000) && this.karma <= -22) {
         invitedFactions.push(silhouetteFac);
     }
@@ -2307,7 +2366,7 @@ PlayerObject.prototype.gainCodingContractReward = function(reward, difficulty=1)
             break;
         case CodingContractRewardType.Money:
         default:
-            var moneyGain = CONSTANTS.CodingContractBaseMoneyGain * difficulty;
+            var moneyGain = CONSTANTS.CodingContractBaseMoneyGain * difficulty * BitNodeMultipliers.CodingContractMoney;
             this.gainMoney(moneyGain);
             return `Gained ${numeralWrapper.format(moneyGain, '$0.000a')}`;
             break;

@@ -403,12 +403,13 @@ function stockMarketCycle() {
 
 //Returns true if successful, false otherwise
 function buyStock(stock, shares) {
-    if (stock == null || shares < 0 || isNaN(shares)) {
+    // Validate arguments
+    shares = Math.round(shares);
+    if (shares == 0 || shares < 0) { return false; }
+    if (stock == null || isNaN(shares)) {
         dialogBoxCreate("Failed to buy stock. This may be a bug, contact developer");
         return false;
     }
-    shares = Math.round(shares);
-    if (shares == 0) {return false;}
 
     var totalPrice = stock.price * shares;
     if (Player.money.lt(totalPrice + CONSTANTS.StockMarketCommission)) {
@@ -420,7 +421,7 @@ function buyStock(stock, shares) {
     var origTotal = stock.playerShares * stock.playerAvgPx;
     Player.loseMoney(totalPrice + CONSTANTS.StockMarketCommission);
     var newTotal = origTotal + totalPrice;
-    stock.playerShares += shares;
+    stock.playerShares = Math.round(stock.playerShares + shares);
     stock.playerAvgPx = newTotal / stock.playerShares;
     updateStockPlayerPosition(stock);
     dialogBoxCreate("Bought " + numeralWrapper.format(shares, '0,0') + " shares of " + stock.symbol + " at " +
@@ -441,7 +442,7 @@ function sellStock(stock, shares) {
     if (shares === 0) {return false;}
     var gains = stock.price * shares - CONSTANTS.StockMarketCommission;
     Player.gainMoney(gains);
-    stock.playerShares -= shares;
+    stock.playerShares = Math.round(stock.playerShares - shares);
     if (stock.playerShares == 0) {
         stock.playerAvgPx = 0;
     }
@@ -455,7 +456,11 @@ function sellStock(stock, shares) {
 //Returns true if successful and false otherwise
 function shortStock(stock, shares, workerScript=null) {
     var tixApi = (workerScript instanceof WorkerScript);
-    if (stock == null || isNaN(shares) || shares < 0) {
+
+    // Validate arguments
+    shares = Math.round(shares);
+    if (shares === 0 || shares < 0) { return false; }
+    if (stock == null || isNaN(shares)) {
         if (tixApi) {
             workerScript.scriptRef.log("ERROR: shortStock() failed because of invalid arguments.");
         } else {
@@ -464,8 +469,6 @@ function shortStock(stock, shares, workerScript=null) {
         }
         return false;
     }
-    shares = Math.round(shares);
-    if (shares === 0) {return false;}
 
     var totalPrice = stock.price * shares;
     if (Player.money.lt(totalPrice + CONSTANTS.StockMarketCommission)) {
@@ -484,7 +487,7 @@ function shortStock(stock, shares, workerScript=null) {
     var origTotal = stock.playerShortShares * stock.playerAvgShortPx;
     Player.loseMoney(totalPrice + CONSTANTS.StockMarketCommission);
     var newTotal = origTotal + totalPrice;
-    stock.playerShortShares += shares;
+    stock.playerShortShares = Math.round(stock.playerShortShares + shares);
     stock.playerAvgShortPx = newTotal / stock.playerShortShares;
     updateStockPlayerPosition(stock);
     if (tixApi) {
@@ -526,7 +529,7 @@ function sellShort(stock, shares, workerScript=null) {
         Player.scriptProdSinceLastAug += profit;
     }
 
-    stock.playerShortShares -= shares;
+    stock.playerShortShares = Math.round(stock.playerShortShares - shares);
     if (stock.playerShortShares === 0) {
         stock.playerAvgShortPx = 0;
     }
@@ -1370,15 +1373,15 @@ function updateStockPlayerPosition(stock) {
     }
 
     //Calculate returns
-    var totalCost = stock.playerShares * stock.playerAvgPx,
-        gains = (stock.price - stock.playerAvgPx) * stock.playerShares,
-        percentageGains = gains / totalCost;
-    if (isNaN(percentageGains)) {percentageGains = 0;}
+    const totalCost = stock.playerShares * stock.playerAvgPx;
+    let gains = (stock.price - stock.playerAvgPx) * stock.playerShares;
+    let percentageGains = gains / totalCost;
+    if (isNaN(percentageGains)) { percentageGains = 0; }
 
-    var shortTotalCost = stock.playerShortShares * stock.playerAvgShortPx,
-        shortGains = (stock.playerAvgShortPx - stock.price) * stock.playerShortShares,
-        shortPercentageGains = shortGains/ shortTotalCost;
-    if (isNaN(shortPercentageGains)) {shortPercentageGains = 0;}
+    const shortTotalCost = stock.playerShortShares * stock.playerAvgShortPx;
+    let shortGains = (stock.playerAvgShortPx - stock.price) * stock.playerShortShares;
+    let shortPercentageGains = shortGains/ shortTotalCost;
+    if (isNaN(shortPercentageGains)) { shortPercentageGains = 0; }
 
     stock.posTxtEl.innerHTML =
         "<h1 class='tooltip stock-market-position-text'>Long Position: " +

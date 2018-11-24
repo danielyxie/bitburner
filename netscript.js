@@ -59,7 +59,8 @@ var TextHighlightRules = acequire("./text_highlight_rules").TextHighlightRules;
 var identifierRe = "[a-zA-Z\\$_\u00a1-\uffff][a-zA-Z\\d\\$_\u00a1-\uffff]*";
 
 let NetscriptFunctions =
-    "hack|sleep|grow|weaken|print|tprint|scan|nuke|brutessh|ftpcrack|"         + //Netscript functions
+    "hack|sleep|grow|weaken|growthAnalyze|print|tprint|scan|nuke|brutessh|"    +
+    "ftpcrack|"                                                                +
     "clearLog|disableLog|enableLog|isLogEnabled|getScriptLogs|"                +
     "relaysmtp|httpworm|sqlinject|run|exec|spawn|kill|killall|exit|"           +
     "scp|ls|ps|hasRootAccess|"                                                 +
@@ -106,8 +107,9 @@ let NetscriptFunctions =
     "gang|"                                                                    +
     "getMemberNames|getGangInformation|getMemberInformation|canRecruitMember|" +
     "recruitMember|getTaskNames|setMemberTask|getEquipmentNames|"              +
-    "getEquipmentCost|purchaseEquipment|ascendMember|setTerritoryWarfare|"     +
-    "getBonusTime|"                                                            +
+    "getEquipmentCost|getEquipmentType|purchaseEquipment|ascendMember|"        +
+    "setTerritoryWarfare|"                                                     +
+    "getChanceToWinClash|getBonusTime|"                                        +
 
     // Bladeburner API
     "bladeburner|getContractNames|getOperationNames|getBlackOpNames|"          +

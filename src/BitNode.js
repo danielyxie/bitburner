@@ -304,6 +304,7 @@ function initBitNodeMultipliers() {
             BitNodeMultipliers.InfiltrationMoney        = 0;
             BitNodeMultipliers.RepToDonateToFaction     = 0;
             BitNodeMultipliers.CorporationValuation     = 0;
+            BitNodeMultipliers.CodingContractMoney      = 0;
             break;
         case 11: //The Big Crash
             BitNodeMultipliers.ServerMaxMoney           = 0.1;

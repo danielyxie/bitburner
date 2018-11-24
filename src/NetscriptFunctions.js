@@ -8,8 +8,10 @@ import {Augmentations, Augmentation,
 import {BitNodeMultipliers}                         from "./BitNodeMultipliers";
 import {determineCrimeSuccess, findCrime}           from "./Crimes";
 import {Bladeburner}                                from "./Bladeburner";
-import {Companies, Company, CompanyPosition,
-        CompanyPositions, companyExists}            from "./Company";
+import {Company}                                    from "./Company/Company";
+import {Companies, companyExists}                   from "./Company/Companies";
+import {CompanyPosition}                            from "./Company/CompanyPosition";
+import {CompanyPositions}                           from "./Company/CompanyPositions";
 import {CONSTANTS}                                  from "./Constants";
 import {Programs}                                   from "./CreateProgram";
 import {DarkWebItems}                               from "./DarkWeb";
@@ -31,7 +33,7 @@ import {Script, findRunningScript, RunningScript,
         isScriptFilename}                           from "./Script";
 import {Server, getServer, AddToAllServers,
         AllServers, processSingleServerGrowth,
-        GetServerByHostname}                        from "./Server";
+        GetServerByHostname, numCycleForGrowth}     from "./Server";
 import {Settings}                                   from "./Settings";
 import {SpecialServerIps}                           from "./SpecialServerIps";
 import {Stock}                                      from "./Stock";
@@ -461,7 +463,21 @@ function NetscriptFunctions(workerScript) {
                 return Promise.resolve(moneyAfter/moneyBefore);
             });
         },
-        weaken : function(ip){
+        growthAnalyze : function(ip, growth) {
+            if (workerScript.checkingRam) {
+                return updateStaticRam("growthAnalyze", CONSTANTS.ScriptGrowthAnalyzeRamCost);
+            }
+            updateDynamicRam("growthAnalyze", CONSTANTS.ScriptGrowthAnalyzeRamCost);
+
+            // Check argument validity
+            const server = safeGetServer(ip, 'growthAnalyze');
+            if (isNaN(growth)) {
+                throw makeRuntimeRejectMsg(workerScript, `Invalid growth argument passed into growthAnalyze: ${growth}. Must be numeric`);
+            }
+
+            return numCycleForGrowth(server, Number(growth));
+        },
+        weaken : function(ip) {
             if (workerScript.checkingRam) {
                 return updateStaticRam("weaken", CONSTANTS.ScriptWeakenRamCost);
             }
@@ -919,7 +935,7 @@ function NetscriptFunctions(workerScript) {
 
             var destServer, currServ;
 
-            if (arguments.length === 3) {   //scriptname, source, destination
+            if (ip2 != null) { // 3 Argument version: scriptname, source, destination
                 if (scriptname === undefined || ip1 === undefined || ip2 === undefined) {
                     throw makeRuntimeRejectMsg(workerScript, "ERROR: scp() call has incorrect number of arguments. Takes 2 or 3 arguments");
                 }
@@ -932,7 +948,7 @@ function NetscriptFunctions(workerScript) {
                 if (currServ == null) {
                     throw makeRuntimeRejectMsg(workerScript, `ERROR: Invalid hostname/ip passed into scp() command: ${ip1}`);
                 }
-            } else if (arguments.length === 2) {    //scriptname, destination
+            } else if (ip1 != null) { // 2 Argument version: scriptname, destination
                 if (scriptname === undefined || ip1 === undefined) {
                     throw makeRuntimeRejectMsg(workerScript, "ERROR: scp() call has incorrect number of arguments. Takes 2 or 3 arguments");
                 }
@@ -945,6 +961,8 @@ function NetscriptFunctions(workerScript) {
                 if (currServ == null) {
                     throw makeRuntimeRejectMsg(workerScript, "Could not find server ip for this script. This is a bug please contact game developer");
                 }
+            } else {
+                throw makeRuntimeRejectMsg(workerScript, "ERROR: scp() call has incorrect number of arguments. Takes 2 or 3 arguments");
             }
 
             //Scp for lit files
@@ -2138,14 +2156,18 @@ function NetscriptFunctions(workerScript) {
             }
             return port;
         },
-        rm : function(fn) {
+        rm : function(fn, ip) {
             if (workerScript.checkingRam) {
                 return updateStaticRam("rm", CONSTANTS.ScriptReadWriteRamCost);
             }
             updateDynamicRam("rm", CONSTANTS.ScriptReadWriteRamCost);
-            var s = getServer(workerScript.serverIp);
+
+            if (ip == null || ip === "") {
+                ip = workerScript.serverIp;
+            }
+            var s = getServer(ip);
             if (s == null) {
-                throw makeRuntimeRejectMsg(workerScript, "Error getting Server for this script in clear(). This is a bug please contact game dev");
+                throw makeRuntimeRejectMsg(workerScript, `Invalid server specified for rm(): ${ip}`);
             }
 
             if (fn.includes(".exe")) {
@@ -2779,8 +2801,8 @@ function NetscriptFunctions(workerScript) {
             }
 
             var companyPositionTitle = "";
-            if (Player.companyPosition instanceof CompanyPosition) {
-                companyPositionTitle = Player.companyPosition.positionName;
+            if (CompanyPositions[Player.companyPosition] instanceof CompanyPosition) {
+                companyPositionTitle = Player.companyPosition;
             }
             return {
                 bitnode:            Player.bitNodeN,
@@ -2921,7 +2943,8 @@ function NetscriptFunctions(workerScript) {
                 return;
             }
 
-            if (Player.companyPosition == "" || !(Player.companyPosition instanceof CompanyPosition)) {
+            const companyPosition = CompanyPositions[Player.companyPosition];
+            if (Player.companyPosition === "" || !(companyPosition instanceof CompanyPosition)) {
                 workerScript.scriptRef.log("ERROR: workForCompany() failed because you do not have a job");
                 return false;
             }
@@ -2933,13 +2956,13 @@ function NetscriptFunctions(workerScript) {
                 }
             }
 
-            if (Player.companyPosition.isPartTimeJob()) {
+            if (companyPosition.isPartTimeJob()) {
                 Player.startWorkPartTime();
             } else {
                 Player.startWork();
             }
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.workForCompany == null) {
-                workerScript.scriptRef.log("Began working at " + Player.companyName + " as a " + Player.companyPosition.positionName);
+                workerScript.log(`Began working at ${Player.companyName} as a ${Player.companyPosition}`);
             }
             return true;
         },
@@ -3015,11 +3038,11 @@ function NetscriptFunctions(workerScript) {
             }
             if (res) {
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.applyToCompany == null) {
-                    workerScript.scriptRef.log("You were offered a new job at " + companyName + " as a " + Player.companyPosition.positionName);
+                    workerScript.log(`You were offered a new job at ${companyName} as a ${Player.companyPosition}`);
                 }
             } else {
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.applyToCompany == null) {
-                    workerScript.scriptRef.log("You failed to get a new job/promotion at " + companyName + " in the " + field + " field.");
+                    workerScript.log(`You failed to get a new job/promotion at ${companyName} in the ${field} field.`);
                 }
             }
             return res;
@@ -3860,6 +3883,19 @@ function NetscriptFunctions(workerScript) {
                     throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("getEquipmentCost", e));
                 }
             },
+            getEquipmentType : function(equipName) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getEquipmentType", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                }
+                updateDynamicRam("getEquipmentType", CONSTANTS.ScriptGangApiBaseRamCost / 2);
+                nsGang.checkGangApiAccess(workerScript, "getEquipmentType");
+
+                try {
+                    return Player.gang.getUpgradeType(equipName);
+                } catch(e) {
+                    throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("getEquipmentType", e));
+                }
+            },
             purchaseEquipment : function(memberName, equipName) {
                 if (workerScript.checkingRam) {
                     return updateStaticRam("purchaseEquipment", CONSTANTS.ScriptGangApiBaseRamCost);
@@ -3930,6 +3966,27 @@ function NetscriptFunctions(workerScript) {
                     }
                 } catch(e) {
                     throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("setTerritoryWarfare", e));
+                }
+            },
+            getChanceToWinClash : function(otherGang) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getChanceToWinClash", CONSTANTS.ScriptGangApiBaseRamCost);
+                }
+                updateDynamicRam("getChanceToWinClash", CONSTANTS.ScriptGangApiBaseRamCost);
+                nsGang.checkGangApiAccess(workerScript, "getChanceToWinClash");
+
+                try {
+                    if (AllGangs[otherGang] == null) {
+                        workerScript.log(`Invalid gang specified in gang.getChanceToWinClash() : ${otherGang}`);
+                        return 0;
+                    }
+
+                    const playerPower = AllGangs[Player.gang.facName].power;
+                    const otherPower = AllGangs[otherGang].power;
+
+                    return playerPower / (otherPower + playerPower);
+                } catch(e) {
+                    throw makeRuntimeRejectMsg(workerScript, nsGang.unknownGangApiExceptionMessage("getChanceToWinClash", e));
                 }
             },
             getBonusTime : function() {
