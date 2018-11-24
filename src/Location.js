@@ -30,7 +30,7 @@ import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
         yesNoTxtInpBoxClose}                    from "../utils/YesNoBox";
 
 function displayLocationContent() {
-    var returnToWorld           = document.getElementById("location-return-to-world-button");
+    var returnToWorld           = clearEventListeners("location-return-to-world-button");
 
     var locationName            = document.getElementById("location-name");
 
