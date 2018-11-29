@@ -1521,6 +1521,7 @@ Industry.prototype.processProduct = function(marketCycles=1, product, corporatio
                 //Backwards compatibility, -1 = 0
                 sellAmt = maxSell;
             }
+            if (sellAmt < 0) { sellAmt = 0; }
             sellAmt = sellAmt * SecsPerMarketCycle * marketCycles;
             sellAmt = Math.min(product.data[city][0], sellAmt); //data[0] is qty
             if (sellAmt && sCost) {
@@ -3096,7 +3097,9 @@ Corporation.prototype.process = function() {
         if (state === "START") {
             this.revenue = new Decimal(0);
             this.expenses = new Decimal(0);
-            this.divisions.forEach((ind)=>{
+            this.divisions.forEach((ind) => {
+                if (ind.lastCycleRevenue === -Infinity || ind.lastCycleRevenue === Infinity) { return; }
+                if (ind.lastCycleExpenses === -Infinity || ind.lastCycleExpenses === Infinity) { return; }
                 this.revenue = this.revenue.plus(ind.lastCycleRevenue);
                 this.expenses = this.expenses.plus(ind.lastCycleExpenses);
             });
