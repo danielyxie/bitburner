@@ -155,7 +155,9 @@ function joinFaction(faction) {
     //Determine what factions you are banned from now that you have joined this faction
     for(const i in factionInfo.enemies) {
         const enemy = factionInfo.enemies[i];
-        Factions[enemy].isBanned = true;
+        if (Factions[enemy] instanceof Faction) {
+            Factions[enemy].isBanned = true;
+        }
     }
 }
 
