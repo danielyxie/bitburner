@@ -58,6 +58,8 @@ defined aliases in the reusable form 'alias NAME=VALUE' on the Terminal.
 
 The :ref:`unalias_terminal_command` Terminal command can be used to remove aliases.
 
+.. _analyze_terminal_command:
+
 analyze
 ^^^^^^^
 
@@ -242,6 +244,8 @@ lscpu
 ^^^^^
 
 Prints the number of CPU cores the current server has.
+
+.. _mem_terminal_command:
 
 mem
 ^^^
