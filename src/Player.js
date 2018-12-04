@@ -589,8 +589,6 @@ PlayerObject.prototype.gainIntelligenceExp = function(exp) {
     }
     if (hasAISF || this.intelligence > 0) {
         this.intelligence_exp += exp;
-    } else {
-        console.log("Not gaining intelligence experience bc it hasn't been unlocked yet");
     }
 }
 

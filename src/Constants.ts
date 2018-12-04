@@ -513,11 +513,15 @@ export let CONSTANTS: IMap<any> = {
      * Gang Changes:
      ** UI now displays your chance to win a clash with other gangs
      ** Added getChanceToWinClash() function to the Gang API
+     ** Added getEquipmentType() function to the Gang API
      ** Added several new hacking-based equipment and Augmentations
      ** Rebalanced several equipment/upgrades to give less defense
+     ** Wanted level gain rate is now be slightly higher for all tasks
+     ** Rebalanced parameters for "hacking" tasks
 
      * Added new Main Menu configuration in .fconf: "compact"
      * Added the terminal command 'expr', which can be used to evaluate simple mathematical expressions
+     * Bug Fix: Can no longer purchase duplicate equipment/Augmentations through gang.purchaseEquipment()
      * Bug Fix: scp() should no longer throw errors when used with 2-arguments and an array of files
      * Bug Fix: Coding Contracts no longer give money in BitNode-8
      * Bug Fix: In Bladeburner, you can no longer start a BlackOp through the Netscript API if it has already been completed

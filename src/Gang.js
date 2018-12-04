@@ -272,11 +272,11 @@ Gang.prototype.processTerritoryAndPowerGains = function(numCycles=1) {
                 if (gainRoll < 0.5) {
                     // Multiplicative gain (50% chance)
                     // This is capped per cycle, to prevent it from getting out of control
-                    const multiplicativeGain = AllGangs[name].power * 0.008;
-                    AllGangs[name].power += Math.min(0.9, multiplicativeGain);
+                    const multiplicativeGain = AllGangs[name].power * 0.005;
+                    AllGangs[name].power += Math.min(0.85, multiplicativeGain);
                 } else {
                     // Additive gain (50% chance)
-                    const additiveGain = 0.5 * gainRoll * AllGangs[name].territory;
+                    const additiveGain = 0.75 * gainRoll * AllGangs[name].territory;
                     AllGangs[name].power += (additiveGain);
                 }
             }
@@ -681,7 +681,7 @@ GangMember.prototype.calculateWantedLevelGain = function(gang) {
     if (task.baseWanted < 0) {
         return 0.5 * task.baseWanted * statWeight * territoryMult;
     } else {
-        return 7 * task.baseWanted / (3 * statWeight * territoryMult);
+        return 7 * task.baseWanted / (Math.pow(3 * statWeight * territoryMult, 0.8));
     }
 }
 
@@ -809,6 +809,11 @@ GangMember.prototype.buyUpgrade = function(upg, player, gang) {
     if (!(upg instanceof GangMemberUpgrade)) {
         return false;
     }
+    // Prevent purchasing of already-owned upgrades
+    if (this.augmentations.includes(upg.name) || this.upgrades.includes(upg.name)) {
+        return false;
+    }
+
     if (player.money.lt(upg.getCost(gang))) { return false; }
     player.loseMoney(upg.getCost(gang));
     if (upg.type === "g") {
