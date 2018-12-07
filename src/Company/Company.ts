@@ -125,7 +125,7 @@ export class Company {
     }
 
     /**
-     * Serialize the current file to a JSON save state.
+     * Serialize the current object to a JSON save state.
      */
     toJSON(): any {
         return Generic_toJSON("Company", this);

@@ -1,19 +1,19 @@
-import {AugmentationNames}      from "./Augmentations";
-import {generateRandomContract} from "./CodingContractGenerator";
-import {Programs}               from "./CreateProgram";
-import {Factions}               from "./Faction";
-import {Player}                 from "./Player";
-import {AllServers}             from "./Server";
-import {hackWorldDaemon}        from "./RedPill";
-import {StockMarket,
-        SymbolToStockMap}       from "./StockMarket";
-import {Stock}                  from "./Stock";
-import {Terminal}               from "./Terminal";
-import {numeralWrapper}         from "./ui/numeralFormat";
-import {dialogBoxCreate}        from "../utils/DialogBox";
-import {exceptionAlert}         from "../utils/helpers/exceptionAlert";
-import {createElement}          from "../utils/uiHelpers/createElement";
-import {removeElementById}      from "../utils/uiHelpers/removeElementById";
+import { AugmentationNames }        from "./Augmentations";
+import { generateRandomContract }   from "./CodingContractGenerator";
+import { Programs }                 from "./CreateProgram";
+import { Factions }                 from "./Faction/Factions";
+import { Player }                   from "./Player";
+import { AllServers }               from "./Server";
+import { hackWorldDaemon }          from "./RedPill";
+import { StockMarket,
+         SymbolToStockMap }         from "./StockMarket";
+import { Stock }                    from "./Stock";
+import { Terminal }                 from "./Terminal";
+import { numeralWrapper }           from "./ui/numeralFormat";
+import { dialogBoxCreate }          from "../utils/DialogBox";
+import { exceptionAlert }           from "../utils/helpers/exceptionAlert";
+import { createElement }            from "../utils/uiHelpers/createElement";
+import { removeElementById }        from "../utils/uiHelpers/removeElementById";
 
 const devMenuContainerId = "dev-menu-container";
 

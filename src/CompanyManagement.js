@@ -1,29 +1,34 @@
-import {BitNodeMultipliers}                             from "./BitNodeMultipliers";
-import {Factions}                                       from "./Faction";
-import {showLiterature}                                 from "./Literature";
-import {Locations}                                      from "./Locations";
-import {Player}                                         from "./Player";
+import { BitNodeMultipliers }                           from "./BitNodeMultipliers";
+import { Factions }                                     from "./Faction/Factions";
+import { showLiterature }                               from "./Literature";
+import { Locations }                                    from "./Locations";
+import { Player }                                       from "./Player";
 
 import Decimal                                          from "decimal.js";
-import {numeralWrapper}                                 from "./ui/numeralFormat";
+import { numeralWrapper }                               from "./ui/numeralFormat";
 
-import {dialogBoxCreate}                                from "../utils/DialogBox";
-import {clearSelector}                                  from "../utils/uiHelpers/clearSelector";
-import {Reviver, Generic_toJSON,
-        Generic_fromJSON}                               from "../utils/JSONReviver";
-import {createElement}                                  from "../utils/uiHelpers/createElement";
-import {createPopup}                                    from "../utils/uiHelpers/createPopup";
-import {Page, routing}                                  from "./ui/navigationTracking";
-import {formatNumber, generateRandomString}             from "../utils/StringHelperFunctions";
-import {getRandomInt}                                   from "../utils/helpers/getRandomInt";
-import {isString}                                       from "../utils/helpers/isString";
-import {removeChildrenFromElement}                      from "../utils/uiHelpers/removeChildrenFromElement";
-import {removeElementById}                              from "../utils/uiHelpers/removeElementById";
-import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
-        yesNoBoxGetYesButton, yesNoBoxGetNoButton,
-        yesNoTxtInpBoxGetYesButton, yesNoTxtInpBoxGetNoButton,
-        yesNoTxtInpBoxGetInput, yesNoBoxClose,
-        yesNoTxtInpBoxClose, yesNoBoxOpen}              from "../utils/YesNoBox";
+import { dialogBoxCreate }                              from "../utils/DialogBox";
+import { clearSelector }                                from "../utils/uiHelpers/clearSelector";
+import { Reviver, Generic_toJSON,
+         Generic_fromJSON }                             from "../utils/JSONReviver";
+import { createElement }                                from "../utils/uiHelpers/createElement";
+import { createPopup }                                  from "../utils/uiHelpers/createPopup";
+import { Page, routing }                                from "./ui/navigationTracking";
+import { formatNumber, generateRandomString }           from "../utils/StringHelperFunctions";
+import { getRandomInt }                                 from "../utils/helpers/getRandomInt";
+import { isString }                                     from "../utils/helpers/isString";
+import { removeChildrenFromElement }                    from "../utils/uiHelpers/removeChildrenFromElement";
+import { removeElementById }                            from "../utils/uiHelpers/removeElementById";
+import { yesNoBoxCreate,
+         yesNoTxtInpBoxCreate,
+         yesNoBoxGetYesButton,
+         yesNoBoxGetNoButton,
+         yesNoTxtInpBoxGetYesButton,
+         yesNoTxtInpBoxGetNoButton,
+         yesNoTxtInpBoxGetInput,
+         yesNoBoxClose,
+         yesNoTxtInpBoxClose,
+         yesNoBoxOpen }                                 from "../utils/YesNoBox";
 
 /* State */
 var companyStates = ["START", "PURCHASE", "PRODUCTION", "SALE", "EXPORT"];

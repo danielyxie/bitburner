@@ -34,9 +34,10 @@ import {displayCreateProgramContent,
         initCreateProgramButtons,
         Programs}                                       from "./CreateProgram";
 import {createDevMenu, closeDevMenu}                    from "./DevMenu";
-import {displayFactionContent, joinFaction,
-        processPassiveFactionRepGain, Factions,
-        inviteToFaction, initFactions}                  from "./Faction";
+import { Factions, initFactions }                       from "./Faction/Factions";
+import { displayFactionContent, joinFaction,
+         processPassiveFactionRepGain,
+         inviteToFaction }                              from "./Faction/FactionHelpers";
 import {FconfSettings}                                  from "./Fconf";
 import {displayLocationContent,
         initLocationButtons}                            from "./Location";

@@ -3,32 +3,39 @@ Also add police clashes
 balance point to keep them from running out of control
 */
 
-import {gangMemberTasksMetadata}                from "./data/gangmembertasks";
-import {gangMemberUpgradesMetadata}             from "./data/gangmemberupgrades";
+import { gangMemberTasksMetadata }              from "./data/gangmembertasks";
+import { gangMemberUpgradesMetadata }           from "./data/gangmemberupgrades";
 
-import {Engine}                                 from "./engine";
-import {Faction, Factions,
-        displayFactionContent}                  from "./Faction";
-import {numeralWrapper}                         from "./ui/numeralFormat";
-import {dialogBoxCreate}                        from "../utils/DialogBox";
-import {Reviver, Generic_toJSON,
-        Generic_fromJSON}                       from "../utils/JSONReviver";
-import {KEY}                                    from "../utils/helpers/keyCodes";
-import {createAccordionElement}                 from "../utils/uiHelpers/createAccordionElement";
-import {createElement}                          from "../utils/uiHelpers/createElement";
-import {createPopup}                            from "../utils/uiHelpers/createPopup";
-import {Page, routing}                          from "./ui/navigationTracking";
-import {formatNumber}                           from "../utils/StringHelperFunctions";
-import {exceptionAlert}                         from "../utils/helpers/exceptionAlert";
-import {getRandomInt}                           from "../utils/helpers/getRandomInt";
-import {removeChildrenFromElement}              from "../utils/uiHelpers/removeChildrenFromElement";
-import {removeElement}                          from "../utils/uiHelpers/removeElement";
-import {removeElementById}                      from "../utils/uiHelpers/removeElementById";
-import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
-        yesNoBoxGetYesButton, yesNoBoxGetNoButton,
-        yesNoTxtInpBoxGetYesButton, yesNoTxtInpBoxGetNoButton,
-        yesNoTxtInpBoxGetInput, yesNoBoxClose,
-        yesNoTxtInpBoxClose, yesNoBoxOpen}      from "../utils/YesNoBox";
+import { Engine }                               from "./engine";
+import { Faction }                              from "./Faction/Faction";
+import { Factions }                             from "./Faction/Factions";
+import { displayFactionContent }                from "./Faction/FactionHelpers";
+import { numeralWrapper }                       from "./ui/numeralFormat";
+import { dialogBoxCreate }                      from "../utils/DialogBox";
+import { Reviver, Generic_toJSON,
+         Generic_fromJSON }                     from "../utils/JSONReviver";
+import { KEY }                                  from "../utils/helpers/keyCodes";
+import { createAccordionElement }               from "../utils/uiHelpers/createAccordionElement";
+import { createElement }                        from "../utils/uiHelpers/createElement";
+import { createPopup }                          from "../utils/uiHelpers/createPopup";
+import { Page,
+         routing }                              from "./ui/navigationTracking";
+import { formatNumber }                         from "../utils/StringHelperFunctions";
+import { exceptionAlert }                       from "../utils/helpers/exceptionAlert";
+import { getRandomInt }                         from "../utils/helpers/getRandomInt";
+import { removeChildrenFromElement }            from "../utils/uiHelpers/removeChildrenFromElement";
+import { removeElement }                        from "../utils/uiHelpers/removeElement";
+import { removeElementById }                    from "../utils/uiHelpers/removeElementById";
+import { yesNoBoxCreate,
+         yesNoTxtInpBoxCreate,
+         yesNoBoxGetYesButton,
+         yesNoBoxGetNoButton,
+         yesNoTxtInpBoxGetYesButton,
+         yesNoTxtInpBoxGetNoButton,
+         yesNoTxtInpBoxGetInput,
+         yesNoBoxClose,
+         yesNoTxtInpBoxClose,
+         yesNoBoxOpen }                         from "../utils/YesNoBox";
 
 // Constants
 const GangRespectToReputationRatio = 5; // Respect is divided by this to get rep gain
