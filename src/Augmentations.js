@@ -1,26 +1,27 @@
-import {BitNodeMultipliers}                from "./BitNodeMultipliers";
-import {CONSTANTS}                         from "./Constants";
-import {Engine}                            from "./engine";
-import {Factions, factionExists}           from "./Faction";
-import {hasBladeburnerSF}                  from "./NetscriptFunctions";
-import {addWorkerScript}                   from "./NetscriptWorker";
-import {Player}                            from "./Player";
-import {prestigeAugmentation}              from "./Prestige";
-import {saveObject}                        from "./SaveObject";
-import {Script, RunningScript}             from "./Script";
-import {Server}                            from "./Server";
-import {OwnedAugmentationsOrderSetting}    from "./SettingEnums";
-import {Settings}                          from "./Settings";
+import { BitNodeMultipliers }               from "./BitNodeMultipliers";
+import { CONSTANTS }                        from "./Constants";
+import { Engine }                           from "./engine";
+import { Factions,
+         factionExists }                    from "./Faction/Factions";
+import { hasBladeburnerSF }                 from "./NetscriptFunctions";
+import { addWorkerScript }                  from "./NetscriptWorker";
+import { Player }                           from "./Player";
+import { prestigeAugmentation }             from "./Prestige";
+import { saveObject }                       from "./SaveObject";
+import { Script , RunningScript}            from "./Script";
+import { Server }                           from "./Server";
+import { OwnedAugmentationsOrderSetting }   from "./SettingEnums";
+import { Settings }                         from "./Settings";
 
-import {SourceFiles}                       from "./SourceFile";
-import {dialogBoxCreate}                   from "../utils/DialogBox";
-import {createAccordionElement}            from "../utils/uiHelpers/createAccordionElement";
-import {Reviver, Generic_toJSON,
-        Generic_fromJSON}                  from "../utils/JSONReviver";
-import {clearObject}                       from "../utils/helpers/clearObject";
-import {createElement}                     from "../utils/uiHelpers/createElement";
-import {isString}                          from "../utils/helpers/isString";
-import {removeChildrenFromElement}         from "../utils/uiHelpers/removeChildrenFromElement";
+import { SourceFiles }                      from "./SourceFile";
+import { dialogBoxCreate }                  from "../utils/DialogBox";
+import { createAccordionElement }           from "../utils/uiHelpers/createAccordionElement";
+import { Reviver, Generic_toJSON,
+         Generic_fromJSON }                 from "../utils/JSONReviver";
+import { clearObject }                      from "../utils/helpers/clearObject";
+import { createElement }                    from "../utils/uiHelpers/createElement";
+import { isString }                         from "../utils/helpers/isString";
+import { removeChildrenFromElement }        from "../utils/uiHelpers/removeChildrenFromElement";
 
 //Augmentations
 function Augmentation(params) {
@@ -1569,13 +1570,13 @@ function initAugmentations() {
     //Do this before adding special Augmentations that become available in later BitNodes
     if (Player.bitNodeN === 2) {
         console.log("Adding all augmentations to crime factions for Bit node 2");
-        Factions["Slum Snakes"].addAllAugmentations();
-        Factions["Tetrads"].addAllAugmentations();
-        Factions["The Syndicate"].addAllAugmentations();
-        Factions["The Dark Army"].addAllAugmentations();
-        Factions["Speakers for the Dead"].addAllAugmentations();
-        Factions["NiteSec"].addAllAugmentations();
-        Factions["The Black Hand"].addAllAugmentations();
+        Factions["Slum Snakes"].addAllAugmentations(Augmentations);
+        Factions["Tetrads"].addAllAugmentations(Augmentations);
+        Factions["The Syndicate"].addAllAugmentations(Augmentations);
+        Factions["The Dark Army"].addAllAugmentations(Augmentations);
+        Factions["Speakers for the Dead"].addAllAugmentations(Augmentations);
+        Factions["NiteSec"].addAllAugmentations(Augmentations);
+        Factions["The Black Hand"].addAllAugmentations(Augmentations);
     }
 
     //Special Bladeburner Augmentations

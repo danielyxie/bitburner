@@ -1,139 +1,26 @@
 import {Augmentations, AugmentationNames,
-        PlayerOwnedAugmentation}                from "./Augmentations";
-import {BitNodeMultipliers}                     from "./BitNodeMultipliers";
-import {CONSTANTS}                              from "./Constants";
-import {Engine}                                 from "./engine";
+        PlayerOwnedAugmentation}                from "../Augmentations";
+import {BitNodeMultipliers}                     from "../BitNodeMultipliers";
+import {CONSTANTS}                              from "../Constants";
+import {Engine}                                 from "../engine";
 import {FactionInfos}                           from "./FactionInfo";
-import {Locations}                              from "./Location";
-import {HackingMission, setInMission}           from "./Missions";
-import {Player}                                 from "./Player";
-import {PurchaseAugmentationsOrderSetting}      from "./SettingEnums";
-import {Settings}                               from "./Settings";
+import {Locations}                              from "../Location";
+import {HackingMission, setInMission}           from "../Missions";
+import {Player}                                 from "../Player";
+import {PurchaseAugmentationsOrderSetting}      from "../SettingEnums";
+import {Settings}                               from "../Settings";
 
-import {Page, routing}                          from "./ui/navigationTracking";
-import {numeralWrapper}                         from "./ui/numeralFormat";
-import {dialogBoxCreate}                        from "../utils/DialogBox";
-import {factionInvitationBoxCreate}             from "../utils/FactionInvitationBox";
-import {removeChildrenFromElement}              from "../utils/uiHelpers/removeChildrenFromElement";
-import {createElement}                          from "../utils/uiHelpers/createElement";
+import {Page, routing}                          from "../ui/navigationTracking";
+import {numeralWrapper}                         from "../ui/numeralFormat";
+import {dialogBoxCreate}                        from "../../utils/DialogBox";
+import {factionInvitationBoxCreate}             from "../../utils/FactionInvitationBox";
+import {removeChildrenFromElement}              from "../../utils/uiHelpers/removeChildrenFromElement";
+import {createElement}                          from "../../utils/uiHelpers/createElement";
 import {Reviver, Generic_toJSON,
-        Generic_fromJSON}                       from "../utils/JSONReviver";
-import {formatNumber}                           from "../utils/StringHelperFunctions";
+        Generic_fromJSON}                       from "../../utils/JSONReviver";
+import {formatNumber}                           from "../../utils/StringHelperFunctions";
 import {yesNoBoxCreate, yesNoBoxGetYesButton,
-        yesNoBoxGetNoButton, yesNoBoxClose}     from "../utils/YesNoBox";
-
-function Faction(name="") {
-    this.name 				= name;
-    this.augmentations 		= [];   //Name of augmentation only
-
-    //Player-related properties for faction
-    this.isMember 			= false; 	//Whether player is member
-    this.isBanned           = false;    //Whether or not player is banned from joining this faction
-    this.playerReputation 	= 0;  		//"Reputation" within faction
-    this.alreadyInvited     = false;
-
-    //Faction favor
-    this.favor              = 0;
-    this.rolloverRep        = 0;
-};
-
-Faction.prototype.getInfo = function() {
-    const info = FactionInfos[this.name];
-    if(info == null) {
-        throw new Error("Missing faction from FactionInfos: " + this.name+" this probably means the faction got corrupted somehow");
-    }
-    return info;
-}
-
-Faction.prototype.gainFavor = function() {
-    if (this.favor == null || this.favor == undefined) {this.favor = 0;}
-    if (this.rolloverRep == null || this.rolloverRep == undefined) {this.rolloverRep = 0;}
-    var res = this.getFavorGain();
-    if (res.length != 2) {
-        console.log("Error: invalid result from getFavorGain() function");
-        return;
-    }
-    this.favor += res[0];
-    this.rolloverRep = res[1];
-}
-
-//Returns an array with [How much favor would be gained, how much rep would be left over]
-Faction.prototype.getFavorGain = function() {
-    if (this.favor == null || this.favor == undefined) {this.favor = 0;}
-    if (this.rolloverRep == null || this.rolloverRep == undefined) {this.rolloverRep = 0;}
-    var favorGain = 0, rep = this.playerReputation + this.rolloverRep;
-    var reqdRep = CONSTANTS.FactionReputationToFavorBase *
-                  Math.pow(CONSTANTS.FactionReputationToFavorMult, this.favor);
-    while(rep > 0) {
-        if (rep >= reqdRep) {
-            ++favorGain;
-            rep -= reqdRep;
-        } else {
-            break;
-        }
-        reqdRep *= CONSTANTS.FactionReputationToFavorMult;
-    }
-    return [favorGain, rep];
-}
-
-//Adds all Augmentations to this faction.
-Faction.prototype.addAllAugmentations = function() {
-    this.augmentations.length = 0;
-    for (var name in Augmentations) {
-        if (Augmentations.hasOwnProperty(name)) {
-            this.augmentations.push(name);
-        }
-    }
-}
-
-Faction.prototype.toJSON = function() {
-	return Generic_toJSON("Faction", this);
-}
-
-Faction.fromJSON = function(value) {
-	return Generic_fromJSON(Faction, value.data);
-}
-
-Reviver.constructors.Faction = Faction;
-
-//Map of factions indexed by faction name
-let Factions = {}
-
-function loadFactions(saveString) {
-    Factions = JSON.parse(saveString, Reviver);
-}
-
-function AddToFactions(faction) {
-	var name = faction.name;
-	Factions[name] = faction;
-}
-
-function factionExists(name) {
-    return Factions.hasOwnProperty(name);
-}
-
-//TODO Augmentation price and rep requirement mult are 1 for everything right now,
-//      This might change in the future for balance
-function initFactions() {
-    for(const name in FactionInfos) {
-        resetFaction(new Faction(name));
-    }
-}
-
-//Resets a faction during (re-)initialization. Saves the favor in the new
-//Faction object and deletes the old Faction Object from "Factions". Then
-//reinserts the new Faction object
-function resetFaction(newFactionObject) {
-    if (!(newFactionObject instanceof Faction)) {
-        throw new Error("Invalid argument 'newFactionObject' passed into resetFaction()");
-    }
-    var factionName = newFactionObject.name;
-    if (factionExists(factionName)) {
-        newFactionObject.favor = Factions[factionName].favor;
-        delete Factions[factionName];
-    }
-    AddToFactions(newFactionObject);
-}
+        yesNoBoxGetNoButton, yesNoBoxClose}     from "../../utils/YesNoBox";
 
 function inviteToFaction(faction) {
     if (Settings.SuppressFactionInvites) {
@@ -783,6 +670,6 @@ function processPassiveFactionRepGain(numCycles) {
 	}
 }
 
-export {getNextNeurofluxLevel, Factions, initFactions, inviteToFaction,
+export {getNextNeurofluxLevel, inviteToFaction,
         joinFaction, displayFactionContent, processPassiveFactionRepGain,
-        loadFactions, Faction, purchaseAugmentation, factionExists};
+        purchaseAugmentation};

@@ -14,8 +14,9 @@ import {Corporation}                            from "./CompanyManagement";
 import {Programs}                               from "./CreateProgram";
 import {determineCrimeSuccess, Crimes}          from "./Crimes";
 import {Engine}                                 from "./engine";
-import {Factions, Faction,
-        displayFactionContent}                  from "./Faction";
+import { Faction }                              from "./Faction/Faction";
+import { Factions }                             from "./Faction/Factions";
+import { displayFactionContent }                from "./Faction/FactionHelpers";
 import {Gang, resetGangs}                       from "./Gang";
 import {Locations}                              from "./Locations";
 import {hasBn11SF, hasWallStreetSF,hasAISF}     from "./NetscriptFunctions";
@@ -41,10 +42,10 @@ function PlayerObject() {
     //Combat stats
     this.hp             = 10;
     this.max_hp         = 10;
-    this.strength       = 1;      //Damage dealt
-    this.defense        = 1;      //Damage received
-    this.dexterity      = 1;      //Accuracy
-    this.agility        = 1;      //Dodge %
+    this.strength       = 1;
+    this.defense        = 1;
+    this.dexterity      = 1;
+    this.agility        = 1;
 
     //Labor stats
     this.charisma       = 1;
@@ -594,7 +595,7 @@ PlayerObject.prototype.gainIntelligenceExp = function(exp) {
 
 //Given a string expression like "str" or "strength", returns the given stat
 PlayerObject.prototype.queryStatFromString = function(str) {
-    var tempStr = str.toLowerCase();
+    const tempStr = str.toLowerCase();
     if (tempStr.includes("hack"))   {return Player.hacking_skill;}
     if (tempStr.includes("str"))    {return Player.strength;}
     if (tempStr.includes("def"))    {return Player.defense;}

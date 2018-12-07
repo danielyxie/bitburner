@@ -1,4 +1,4 @@
-import {joinFaction}                from "../src/Faction";
+import {joinFaction}                from "../src/Faction/FactionHelpers";
 import {Engine}                     from "../src/engine";
 import {Player}                     from "../src/Player";
 import {clearEventListeners}        from "./uiHelpers/clearEventListeners";

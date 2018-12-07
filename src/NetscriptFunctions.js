@@ -22,9 +22,13 @@ import {calculateHackingChance,
         calculateGrowTime,
         calculateWeakenTime}                        from "./Hacking";
 import {AllGangs}                                   from "./Gang";
-import {Factions, Faction, joinFaction,
-        factionExists, purchaseAugmentation}        from "./Faction";
-import {getCostOfNextHacknetNode, purchaseHacknet}  from "./HacknetNode";
+import { Faction }                                  from "./Faction/Faction";
+import { Factions,
+         factionExists }                            from "./Faction/Factions";
+import { joinFaction,
+         purchaseAugmentation }                     from "./Faction/FactionHelpers";
+import { getCostOfNextHacknetNode,
+         purchaseHacknet }                          from "./HacknetNode";
 import {Locations}                                  from "./Locations";
 import {Message, Messages}                          from "./Message";
 import {inMission}                                  from "./Missions";

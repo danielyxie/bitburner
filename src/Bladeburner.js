@@ -1,32 +1,33 @@
-import {Augmentations, AugmentationNames}           from "./Augmentations";
-import {BitNodeMultipliers}                         from "./BitNodeMultipliers";
-import {CONSTANTS}                                  from "./Constants";
-import {Engine}                                     from "./engine";
-import {Faction, Factions, factionExists,
-        joinFaction, displayFactionContent}         from "./Faction";
-import {Locations}                                  from "./Locations";
-import {Player}                                     from "./Player";
-import {hackWorldDaemon, redPillFlag}               from "./RedPill";
-import {numeralWrapper}                             from "./ui/numeralFormat";
-import {KEY}                                        from "../utils/helpers/keyCodes";
+import { Augmentations , AugmentationNames }        from "./Augmentations";
+import { BitNodeMultipliers }                       from "./BitNodeMultipliers";
+import { CONSTANTS }                                from "./Constants";
+import { Engine }                                   from "./engine";
+import { Faction }                                  from "./Faction/Faction";
+import { Factions, factionExists }                  from "./Faction/Factions";
+import { joinFaction, displayFactionContent }       from "./Faction/FactionHelpers";
+import { Locations }                                from "./Locations";
+import { Player }                                   from "./Player";
+import { hackWorldDaemon, redPillFlag }             from "./RedPill";
+import { numeralWrapper }                           from "./ui/numeralFormat";
+import { KEY }                                      from "../utils/helpers/keyCodes";
 
-import {createProgressBarText}                      from "../utils/helpers/createProgressBarText";
-import {dialogBoxCreate}                            from "../utils/DialogBox";
-import {removeChildrenFromElement}                  from "../utils/uiHelpers/removeChildrenFromElement";
-import {Reviver, Generic_toJSON,
-        Generic_fromJSON}                           from "../utils/JSONReviver";
-import {addOffset}                                  from "../utils/helpers/addOffset";
-import {appendLineBreaks}                           from "../utils/uiHelpers/appendLineBreaks";
-import {clearObject}                                from "../utils/helpers/clearObject";
-import {createElement}                              from "../utils/uiHelpers/createElement";
-import {createPopup}                                from "../utils/uiHelpers/createPopup";
-import {Page, routing}                              from "./ui/navigationTracking";
-import {exceptionAlert}                             from "../utils/helpers/exceptionAlert";
-import {formatNumber}                               from "../utils/StringHelperFunctions";
-import {getRandomInt}                               from "../utils/helpers/getRandomInt";
-import {getTimestamp}                               from "../utils/helpers/getTimestamp";
-import {removeElement}                              from "../utils/uiHelpers/removeElement";
-import {removeElementById}                          from "../utils/uiHelpers/removeElementById";
+import { createProgressBarText }                    from "../utils/helpers/createProgressBarText";
+import { dialogBoxCreate }                          from "../utils/DialogBox";
+import { removeChildrenFromElement }                from "../utils/uiHelpers/removeChildrenFromElement";
+import { Reviver, Generic_toJSON,
+         Generic_fromJSON }                         from "../utils/JSONReviver";
+import { addOffset }                                from "../utils/helpers/addOffset";
+import { appendLineBreaks }                         from "../utils/uiHelpers/appendLineBreaks";
+import { clearObject }                              from "../utils/helpers/clearObject";
+import { createElement }                            from "../utils/uiHelpers/createElement";
+import { createPopup }                              from "../utils/uiHelpers/createPopup";
+import { Page, routing }                            from "./ui/navigationTracking";
+import { exceptionAlert }                           from "../utils/helpers/exceptionAlert";
+import { formatNumber }                             from "../utils/StringHelperFunctions";
+import { getRandomInt }                             from "../utils/helpers/getRandomInt";
+import { getTimestamp }                             from "../utils/helpers/getTimestamp";
+import { removeElement }                            from "../utils/uiHelpers/removeElement";
+import { removeElementById }                        from "../utils/uiHelpers/removeElementById";
 
 
 var CityNames = ["Aevum", "Chongqing", "Sector-12", "New Tokyo", "Ishima", "Volhaven"];
@@ -2105,7 +2106,7 @@ Bladeburner.prototype.createBlackOpsContent = function() {
         "Each Black Op must be unlocked successively by completing " +
         "the one before it.<br><br>" +
         "<b>Your ultimate goal to climb through the ranks of Bladeburners is to complete " +
-        "all of the Black Ops.</b><br><br>" + 
+        "all of the Black Ops.</b><br><br>" +
         "Like normal operations, you may use a team for Black Ops. Failing " +
         "a black op will incur heavy HP and rank losses.";
 

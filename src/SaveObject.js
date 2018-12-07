@@ -4,8 +4,9 @@ import {Companies, loadCompanies}               from "./Company/Companies";
 import {CompanyPosition}                        from "./Company/CompanyPosition";
 import {CONSTANTS}                              from "./Constants";
 import {Engine}                                 from "./engine";
-import {loadFactions, Factions,
-        processPassiveFactionRepGain}           from "./Faction";
+import { Factions,
+         loadFactions }                         from "./Faction/Factions";
+import { processPassiveFactionRepGain }         from "./Faction/FactionHelpers";
 import {FconfSettings, loadFconf}               from "./Fconf";
 import {loadAllGangs, AllGangs}                 from "./Gang";
 import {processAllHacknetNodeEarnings}          from "./HacknetNode";

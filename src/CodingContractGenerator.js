@@ -1,12 +1,12 @@
-import {CodingContract,
-        CodingContractRewardType,
-        CodingContractTypes}        from "./CodingContracts";
-import {Factions}                   from "./Faction";
-import {Player}                     from "./Player";
-import {GetServerByHostname,
-        AllServers}                 from "./Server";
+import { CodingContract,
+         CodingContractRewardType,
+         CodingContractTypes }          from "./CodingContracts";
+import { Factions }                     from "./Faction/Factions";
+import { Player }                       from "./Player";
+import { GetServerByHostname,
+         AllServers }                   from "./Server";
 
-import {getRandomInt}               from "../utils/helpers/getRandomInt";
+import { getRandomInt }                 from "../utils/helpers/getRandomInt";
 
 export function generateRandomContract() {
     // First select a random problem type
