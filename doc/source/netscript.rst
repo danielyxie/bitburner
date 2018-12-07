@@ -1,5 +1,7 @@
-Netscript Documentation
-=======================
+.. _netscript:
+
+Netscript
+=========
 Netscript is the programming language used in the world of Bitburner.
 
 When you write scripts in Bitburner, they are written in the Netscript language.
@@ -15,16 +17,16 @@ to reach out to the developer!
    :maxdepth: 5
    :caption: Sections:
 
-    Learn to Program <netscriptlearntoprogram>
-    Netscript 1.0 <netscript1>
-    NetscriptJS (Netscript 2.0) <netscriptjs>
-    Script Arguments <netscriptscriptarguments>
-    Basic Functions <netscriptfunctions>
-    Advanced Functions <netscriptadvancedfunctions>
-    Hacknet Node API <netscripthacknetnodeapi>
-    Trade Information eXchange (TIX) API <netscriptixapi>
-    Singularity Functions <netscriptsingularityfunctions>
-    Bladeburner API <netscriptbladeburnerapi>
-    Gang API <netscriptgangapi>
-    Coding Contract API <netscriptcodingcontractapi>
-    Miscellaneous <netscriptmisc>
+    Learn to Program <netscript/netscriptlearntoprogram>
+    Netscript 1.0 <netscript/netscript1>
+    NetscriptJS (Netscript 2.0) <netscript/netscriptjs>
+    Script Arguments <netscript/netscriptscriptarguments>
+    Basic Functions <netscript/netscriptfunctions>
+    Advanced Functions <netscript/netscriptadvancedfunctions>
+    Hacknet Node API <netscript/netscripthacknetnodeapi>
+    Trade Information eXchange (TIX) API <netscript/netscriptixapi>
+    Singularity Functions <netscript/netscriptsingularityfunctions>
+    Bladeburner API <netscript/netscriptbladeburnerapi>
+    Gang API <netscript/netscriptgangapi>
+    Coding Contract API <netscript/netscriptcodingcontractapi>
+    Miscellaneous <netscript/netscriptmisc>

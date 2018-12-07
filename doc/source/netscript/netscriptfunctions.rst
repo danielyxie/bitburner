@@ -1,3 +1,5 @@
+.. _netscriptfunctions:
+
 Netscript Basic Functions
 =========================
 

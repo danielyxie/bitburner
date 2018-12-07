@@ -20,8 +20,7 @@ secrets that you've been searching for.
    :caption: Contents:
 
     Netscript <netscript>
-    Terminal <terminal>
-    Coding Contracts <codingcontracts>
+    Basic Gameplay <basicgameplay>
     Keyboard Shortcuts <shortcuts>
     Game Frozen or Stuck? <gamefrozen>
     Changelog <changelog>
