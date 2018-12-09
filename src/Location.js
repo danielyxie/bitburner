@@ -3,7 +3,7 @@ import {CompanyPositions}                       from "./Company/CompanyPositions
 import {Companies}                              from "./Company/Companies";
 import {getJobRequirementText}                  from "./Company/GetJobRequirementText";
 import * as posNames                            from "./Company/data/CompanyPositionNames";
-import {Corporation}                            from "./CompanyManagement";
+import { Corporation }                          from "./Corporation/Corporation";
 import {CONSTANTS}                              from "./Constants";
 import {Crimes}                                 from "./Crimes";
 import {Engine}                                 from "./engine";

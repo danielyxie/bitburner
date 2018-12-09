@@ -167,46 +167,47 @@
 /* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentations */ 21);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BitNodeMultipliers */ 10);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CodingContracts */ 40);
+/* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CodingContracts */ 42);
 /* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_CodingContracts__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Company/Company */ 71);
+/* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Company/Company */ 73);
 /* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Company_Company__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Company/Companies */ 18);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _Company_GetNextCompanyPosition__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Company/GetNextCompanyPosition */ 94);
+/* harmony import */ var _Company_GetNextCompanyPosition__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Company/GetNextCompanyPosition */ 98);
 /* harmony import */ var _Company_GetNextCompanyPosition__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Company_GetNextCompanyPosition__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Company/GetJobRequirementText */ 88);
+/* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Company/GetJobRequirementText */ 92);
 /* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Company/CompanyPositions */ 26);
+/* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Company/CompanyPositions */ 27);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Company/data/CompanyPositionNames */ 34);
+/* harmony import */ var _Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Company/data/CompanyPositionNames */ 36);
 /* harmony import */ var _Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _CompanyManagement__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./CompanyManagement */ 58);
+/* harmony import */ var _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Corporation/Corporation */ 60);
 /* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./CreateProgram */ 23);
-/* harmony import */ var _Crimes__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Crimes */ 35);
+/* harmony import */ var _Crimes__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Crimes */ 37);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./engine */ 8);
-/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Faction/Faction */ 54);
+/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Faction/Faction */ 56);
 /* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_Faction_Faction__WEBPACK_IMPORTED_MODULE_14__);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Faction/Factions */ 15);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 44);
-/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Gang */ 48);
+/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 46);
+/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Gang */ 50);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Locations */ 5);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./NetscriptFunctions */ 41);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Server */ 11);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./SpecialServerIps */ 30);
-/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./SourceFile */ 66);
-/* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! decimal.js */ 31);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
+/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./SourceFile */ 69);
+/* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! decimal.js */ 33);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_27__);
-/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../utils/IPAddress */ 57);
+/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../utils/IPAddress */ 59);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_30__);
@@ -930,17 +931,17 @@ PlayerObject.prototype.work = function(numCycles) {
     var txt = document.getElementById("work-in-progress-text");
     txt.innerHTML = "You are currently working as a " + this.companyPosition +
                     " at " + this.companyName + " (Current Company Reputation: " +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(companyRep, '0,0') + ")<br><br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(companyRep, '0,0') + ")<br><br>" +
                     "You have been working for " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_30__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + "<br><br>" +
                     "You have earned: <br><br>" +
-                    "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workMoneyGained, '0,0.00') + " ($" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workMoneyGainRate * CYCLES_PER_SEC, '0,0.00') + " / sec) <br><br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workRepGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workRepGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) reputation for this company <br><br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workHackExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) hacking exp <br><br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workStrExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) strength exp <br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workDefExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) defense exp <br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workDexExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) dexterity exp <br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workAgiExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) agility exp <br><br> " +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workChaExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) charisma exp <br><br>" +
+                    "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workMoneyGained, '0,0.00') + " ($" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workMoneyGainRate * CYCLES_PER_SEC, '0,0.00') + " / sec) <br><br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workRepGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workRepGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) reputation for this company <br><br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workHackExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workHackExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) hacking exp <br><br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workStrExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workStrExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) strength exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workDefExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workDefExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) defense exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workDexExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workDexExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) dexterity exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workAgiExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workAgiExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) agility exp <br><br> " +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workChaExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workChaExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) charisma exp <br><br>" +
                     "You will automatically finish after working for 8 hours. You can cancel earlier if you wish, " +
                     "but you will only gain half of the reputation you've earned so far."
 }
@@ -957,14 +958,14 @@ PlayerObject.prototype.finishWork = function(cancelled, sing=false) {
     this.updateSkillLevels();
 
     var txt = "You earned a total of: <br>" +
-              "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workMoneyGained, '0,0.00') + "<br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workRepGained, '0,0.0000') + " reputation for the company <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hacking exp <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " strength exp <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " defense exp <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dexterity exp <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agility exp <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " charisma exp<br>";
+              "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workMoneyGained, '0,0.00') + "<br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workRepGained, '0,0.0000') + " reputation for the company <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workHackExpGained, '0,0.0000') + " hacking exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workStrExpGained, '0,0.0000') + " strength exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workDefExpGained, '0,0.0000') + " defense exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workDexExpGained, '0,0.0000') + " dexterity exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workAgiExpGained, '0,0.0000') + " agility exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workChaExpGained, '0,0.0000') + " charisma exp<br>";
 
     if (cancelled) {
         txt = "You worked a short shift of " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_30__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + " <br><br> " +
@@ -981,14 +982,14 @@ PlayerObject.prototype.finishWork = function(cancelled, sing=false) {
 
     if (sing) {
         var res =  "You worked a short shift of " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_30__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + " and " +
-               "earned $" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workMoneyGained, '0,0.00') + ", " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workRepGained, '0,0.0000') + " reputation, " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hacking exp, " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " strength exp, " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " defense exp, " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dexterity exp, " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agility exp, and " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " charisma exp.";
+               "earned $" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workMoneyGained, '0,0.00') + ", " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workRepGained, '0,0.0000') + " reputation, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workHackExpGained, '0,0.0000') + " hacking exp, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workStrExpGained, '0,0.0000') + " strength exp, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workDefExpGained, '0,0.0000') + " defense exp, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workDexExpGained, '0,0.0000') + " dexterity exp, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workAgiExpGained, '0,0.0000') + " agility exp, and " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workChaExpGained, '0,0.0000') + " charisma exp.";
         this.resetWorkStatus();
         return res;
     }
@@ -1050,17 +1051,17 @@ PlayerObject.prototype.workPartTime = function(numCycles) {
     var txt = document.getElementById("work-in-progress-text");
     txt.innerHTML = "You are currently working as a " + this.companyPosition +
                     " at " + Player.companyName + " (Current Company Reputation: "  +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(companyRep, '0,0') + ")<br><br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(companyRep, '0,0') + ")<br><br>" +
                     "You have been working for " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_30__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + "<br><br>" +
                     "You have earned: <br><br>" +
-                    "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workMoneyGained, '0,0.00') + " ($" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workMoneyGainRate * CYCLES_PER_SEC, '0,0.00') + " / sec) <br><br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workRepGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workRepGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) reputation for this company <br><br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workHackExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) hacking exp <br><br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workStrExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) strength exp <br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workDefExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) defense exp <br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workDexExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) dexterity exp <br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workAgiExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) agility exp <br><br> " +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workChaExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) charisma exp <br><br>" +
+                    "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workMoneyGained, '0,0.00') + " ($" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workMoneyGainRate * CYCLES_PER_SEC, '0,0.00') + " / sec) <br><br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workRepGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workRepGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) reputation for this company <br><br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workHackExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workHackExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) hacking exp <br><br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workStrExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workStrExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) strength exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workDefExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workDefExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) defense exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workDexExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workDexExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) dexterity exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workAgiExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workAgiExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) agility exp <br><br> " +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workChaExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workChaExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) charisma exp <br><br>" +
                     "You will automatically finish after working for 8 hours. You can cancel earlier if you wish, <br>" +
                     "and there will be no penalty because this is a part-time job.";
 
@@ -1073,14 +1074,14 @@ PlayerObject.prototype.finishWorkPartTime = function(sing=false) {
     this.updateSkillLevels();
 
     var txt = "You earned a total of: <br>" +
-              "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workMoneyGained, '0,0.00') + "<br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workRepGained, '0,0.0000') + " reputation for the company <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hacking exp <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " strength exp <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " defense exp <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dexterity exp <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agility exp <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " charisma exp<br>";
+              "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workMoneyGained, '0,0.00') + "<br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workRepGained, '0,0.0000') + " reputation for the company <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workHackExpGained, '0,0.0000') + " hacking exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workStrExpGained, '0,0.0000') + " strength exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workDefExpGained, '0,0.0000') + " defense exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workDexExpGained, '0,0.0000') + " dexterity exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workAgiExpGained, '0,0.0000') + " agility exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workChaExpGained, '0,0.0000') + " charisma exp<br>";
     txt = "You worked for " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_30__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + "<br><br> " + txt;
     if (!sing) {Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_26__["dialogBoxCreate"])(txt);}
 
@@ -1091,14 +1092,14 @@ PlayerObject.prototype.finishWorkPartTime = function(sing=false) {
     if (sing) {
         var res =  "You worked for " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_30__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + " and " +
                "earned a total of " +
-               "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workMoneyGained, '0,0.00') + ", " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workRepGained, '0,0.0000') + " reputation, " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hacking exp, " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " strength exp, " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " defense exp, " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dexterity exp, " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agility exp, and " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " charisma exp";
+               "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workMoneyGained, '0,0.00') + ", " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workRepGained, '0,0.0000') + " reputation, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workHackExpGained, '0,0.0000') + " hacking exp, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workStrExpGained, '0,0.0000') + " strength exp, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workDefExpGained, '0,0.0000') + " defense exp, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workDexExpGained, '0,0.0000') + " dexterity exp, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workAgiExpGained, '0,0.0000') + " agility exp, and " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workChaExpGained, '0,0.0000') + " charisma exp";
         this.resetWorkStatus();
         return res;
     }
@@ -1217,17 +1218,17 @@ PlayerObject.prototype.workForFaction = function(numCycles) {
 
     var txt = document.getElementById("work-in-progress-text");
     txt.innerHTML = "You are currently " + this.currentWorkFactionDescription + " for your faction " + faction.name +
-                    " (Current Faction Reputation: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(faction.playerReputation, '0,0') + "). <br>" +
+                    " (Current Faction Reputation: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(faction.playerReputation, '0,0') + "). <br>" +
                     "You have been doing this for " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_30__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + "<br><br>" +
                     "You have earned: <br><br>" +
-                    "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workMoneyGained, '0,0.00') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workMoneyGainRate * CYCLES_PER_SEC, '0,0.00') + " / sec) <br><br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workRepGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workRepGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) reputation for this faction <br><br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workHackExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) hacking exp <br><br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workStrExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) strength exp <br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workDefExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) defense exp <br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workDexExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) dexterity exp <br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workAgiExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) agility exp <br><br> " +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workChaExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) charisma exp <br><br>" +
+                    "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workMoneyGained, '0,0.00') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workMoneyGainRate * CYCLES_PER_SEC, '0,0.00') + " / sec) <br><br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workRepGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workRepGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) reputation for this faction <br><br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workHackExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workHackExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) hacking exp <br><br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workStrExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workStrExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) strength exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workDefExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workDefExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) defense exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workDexExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workDexExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) dexterity exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workAgiExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workAgiExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) agility exp <br><br> " +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workChaExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workChaExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) charisma exp <br><br>" +
 
                     "You will automatically finish after working for 20 hours. You can cancel earlier if you wish.<br>" +
                     "There is no penalty for cancelling earlier.";
@@ -1241,14 +1242,14 @@ PlayerObject.prototype.finishFactionWork = function(cancelled, sing=false) {
 
     var txt = "You worked for your faction " + faction.name + " for a total of " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_30__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + " <br><br> " +
               "You earned a total of: <br>" +
-              "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workMoneyGained, '0,0.00') + "<br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workRepGained, '0,0.0000') + " reputation for the faction <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hacking exp <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " strength exp <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " defense exp <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dexterity exp <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agility exp <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " charisma exp<br>";
+              "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workMoneyGained, '0,0.00') + "<br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workRepGained, '0,0.0000') + " reputation for the faction <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workHackExpGained, '0,0.0000') + " hacking exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workStrExpGained, '0,0.0000') + " strength exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workDefExpGained, '0,0.0000') + " defense exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workDexExpGained, '0,0.0000') + " dexterity exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workAgiExpGained, '0,0.0000') + " agility exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workChaExpGained, '0,0.0000') + " charisma exp<br>";
     if (!sing) {Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_26__["dialogBoxCreate"])(txt);}
 
     var mainMenu = document.getElementById("mainmenu-container");
@@ -1261,13 +1262,13 @@ PlayerObject.prototype.finishFactionWork = function(cancelled, sing=false) {
     if (sing) {
         var res="You worked for your faction " + faction.name + " for a total of " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_30__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + ". " +
                "You earned " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workRepGained, '0,0.0000') + " rep, " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hacking exp, " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " str exp, " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " def exp, " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dex exp, " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agi exp, and " +
-               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " cha exp.";
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workRepGained, '0,0.0000') + " rep, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workHackExpGained, '0,0.0000') + " hacking exp, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workStrExpGained, '0,0.0000') + " str exp, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workDefExpGained, '0,0.0000') + " def exp, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workDexExpGained, '0,0.0000') + " dex exp, " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workAgiExpGained, '0,0.0000') + " agi exp, and " +
+               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workChaExpGained, '0,0.0000') + " cha exp.";
         this.resetWorkStatus();
         return res;
     }
@@ -1609,14 +1610,14 @@ PlayerObject.prototype.takeClass = function(numCycles) {
     var txt = document.getElementById("work-in-progress-text");
     txt.innerHTML = "You have been " + className + " for " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_30__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + "<br><br>" +
                     "This has cost you: <br>" +
-                    "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workMoneyGained, '0,0.00') + " ($" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workMoneyLossRate * CYCLES_PER_SEC, '0,0.00') + " / sec) <br><br>" +
+                    "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workMoneyGained, '0,0.00') + " ($" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workMoneyLossRate * CYCLES_PER_SEC, '0,0.00') + " / sec) <br><br>" +
                     "You have gained: <br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workHackExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) hacking exp <br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workStrExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) strength exp <br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workDefExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) defense exp <br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workDexExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) dexterity exp <br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workAgiExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) agility exp <br>" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workChaExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) charisma exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workHackExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workHackExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) hacking exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workStrExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workStrExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) strength exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workDefExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workDefExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) defense exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workDexExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workDexExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) dexterity exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workAgiExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workAgiExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) agility exp <br>" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workChaExpGained, '0,0.0000') + " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workChaExpGainRate * CYCLES_PER_SEC, '0,0.0000') + " / sec) charisma exp <br>" +
                     "You may cancel at any time";
 }
 
@@ -1631,14 +1632,14 @@ PlayerObject.prototype.finishClass = function(sing=false) {
 
     this.updateSkillLevels();
     var txt = "After " + this.className + " for " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_30__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + ", <br>" +
-              "you spent a total of $" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workMoneyGained * -1, '0,0.00') + ". <br><br>" +
+              "you spent a total of $" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workMoneyGained * -1, '0,0.00') + ". <br><br>" +
               "You earned a total of: <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hacking exp <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " strength exp <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " defense exp <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dexterity exp <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agility exp <br>" +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " charisma exp<br>";
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workHackExpGained, '0,0.0000') + " hacking exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workStrExpGained, '0,0.0000') + " strength exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workDefExpGained, '0,0.0000') + " defense exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workDexExpGained, '0,0.0000') + " dexterity exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workAgiExpGained, '0,0.0000') + " agility exp <br>" +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workChaExpGained, '0,0.0000') + " charisma exp<br>";
     if (!sing) {Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_26__["dialogBoxCreate"])(txt);}
 
     var mainMenu = document.getElementById("mainmenu-container");
@@ -1649,14 +1650,14 @@ PlayerObject.prototype.finishClass = function(sing=false) {
     _engine__WEBPACK_IMPORTED_MODULE_13__["Engine"].loadLocationContent();
     if (sing) {
         var res="After " + this.className + " for " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_30__["convertTimeMsToTimeElapsedString"])(this.timeWorked) + ", " +
-              "you spent a total of $" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workMoneyGained * -1, '0,0.00') + ". " +
+              "you spent a total of $" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workMoneyGained * -1, '0,0.00') + ". " +
               "You earned a total of: " +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hacking exp, " +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " strength exp, " +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " defense exp, " +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dexterity exp, " +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agility exp, and " +
-              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " charisma exp";
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workHackExpGained, '0,0.0000') + " hacking exp, " +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workStrExpGained, '0,0.0000') + " strength exp, " +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workDefExpGained, '0,0.0000') + " defense exp, " +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workDexExpGained, '0,0.0000') + " dexterity exp, " +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workAgiExpGained, '0,0.0000') + " agility exp, and " +
+              _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workChaExpGained, '0,0.0000') + " charisma exp";
         this.resetWorkStatus();
         return res;
     }
@@ -1746,24 +1747,24 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
             if (this.committingCrimeThruSingFn) {
                 if(this.singFnCrimeWorkerScript.disableLogs.ALL == null && this.singFnCrimeWorkerScript.disableLogs.commitCrime == null) {
                     this.singFnCrimeWorkerScript.scriptRef.log("Crime successful! Gained " +
-                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workMoneyGained, "$0.000a") + ", " +
-                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hack exp, " +
-                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " str exp, " +
-                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " def exp, " +
-                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dex exp, " +
-                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agi exp, " +
-                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " cha exp.");
+                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workMoneyGained, "$0.000a") + ", " +
+                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workHackExpGained, '0,0.0000') + " hack exp, " +
+                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workStrExpGained, '0,0.0000') + " str exp, " +
+                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workDefExpGained, '0,0.0000') + " def exp, " +
+                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workDexExpGained, '0,0.0000') + " dex exp, " +
+                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workAgiExpGained, '0,0.0000') + " agi exp, " +
+                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workChaExpGained, '0,0.0000') + " cha exp.");
                 }
             } else {
                 Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_26__["dialogBoxCreate"])("Crime successful! <br><br>" +
                                 "You gained:<br>"+
-                                "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workMoneyGained, '0,0.00') + "<br>" +
-                                _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hacking experience <br>" +
-                                _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " strength experience<br>" +
-                                _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " defense experience<br>" +
-                                _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dexterity experience<br>" +
-                                _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agility experience<br>" +
-                                _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " charisma experience");
+                                "$" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workMoneyGained, '0,0.00') + "<br>" +
+                                _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workHackExpGained, '0,0.0000') + " hacking experience <br>" +
+                                _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workStrExpGained, '0,0.0000') + " strength experience<br>" +
+                                _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workDefExpGained, '0,0.0000') + " defense experience<br>" +
+                                _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workDexExpGained, '0,0.0000') + " dexterity experience<br>" +
+                                _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workAgiExpGained, '0,0.0000') + " agility experience<br>" +
+                                _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workChaExpGained, '0,0.0000') + " charisma experience");
             }
 
         } else {
@@ -1777,22 +1778,22 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
             if (this.committingCrimeThruSingFn) {
                 if(this.singFnCrimeWorkerScript.disableLogs.ALL == null && this.singFnCrimeWorkerScript.disableLogs.commitCrime == null) {
                     this.singFnCrimeWorkerScript.scriptRef.log("Crime failed! Gained " +
-                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hack exp, " +
-                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " str exp, " +
-                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " def exp, " +
-                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dex exp, " +
-                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agi exp, " +
-                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " cha exp.");
+                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workHackExpGained, '0,0.0000') + " hack exp, " +
+                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workStrExpGained, '0,0.0000') + " str exp, " +
+                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workDefExpGained, '0,0.0000') + " def exp, " +
+                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workDexExpGained, '0,0.0000') + " dex exp, " +
+                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workAgiExpGained, '0,0.0000') + " agi exp, " +
+                                                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workChaExpGained, '0,0.0000') + " cha exp.");
                 }
             } else {
                 Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_26__["dialogBoxCreate"])("Crime failed! <br><br>" +
                         "You gained:<br>"+
-                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workHackExpGained, '0,0.0000') + " hacking experience <br>" +
-                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workStrExpGained, '0,0.0000') + " strength experience<br>" +
-                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workDefExpGained, '0,0.0000') + " defense experience<br>" +
-                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workDexExpGained, '0,0.0000') + " dexterity experience<br>" +
-                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workAgiExpGained, '0,0.0000') + " agility experience<br>" +
-                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.workChaExpGained, '0,0.0000') + " charisma experience");
+                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workHackExpGained, '0,0.0000') + " hacking experience <br>" +
+                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workStrExpGained, '0,0.0000') + " strength experience<br>" +
+                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workDefExpGained, '0,0.0000') + " defense experience<br>" +
+                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workDexExpGained, '0,0.0000') + " dexterity experience<br>" +
+                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workAgiExpGained, '0,0.0000') + " agility experience<br>" +
+                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.workChaExpGained, '0,0.0000') + " charisma experience");
             }
         }
 
@@ -1860,7 +1861,7 @@ PlayerObject.prototype.hospitalize = function() {
         Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_26__["dialogBoxCreate"])(
             "You were in critical condition! You were taken to the hospital where " +
             "luckily they were able to save your life. You were charged " +
-            _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(this.max_hp * _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].HospitalCostPerHp, '$0.000a')
+            _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(this.max_hp * _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].HospitalCostPerHp, '$0.000a')
         );
     }
 
@@ -2576,7 +2577,7 @@ PlayerObject.prototype.gainCodingContractReward = function(reward, difficulty=1)
         default:
             var moneyGain = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].CodingContractBaseMoneyGain * difficulty * _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__["BitNodeMultipliers"].CodingContractMoney;
             this.gainMoney(moneyGain);
-            return `Gained ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__[/* numeralWrapper */ "a"].format(moneyGain, '$0.000a')}`;
+            return `Gained ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(moneyGain, '$0.000a')}`;
             break;
     }
     /* eslint-enable no-case-declarations */
@@ -2591,7 +2592,7 @@ function loadPlayer(saveString) {
     Player.total_money = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](Player.total_money);
     Player.lifetime_money = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](Player.lifetime_money);
 
-    if (Player.corporation instanceof _CompanyManagement__WEBPACK_IMPORTED_MODULE_10__[/* Corporation */ "a"]) {
+    if (Player.corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_10__[/* Corporation */ "a"]) {
         Player.corporation.funds = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](Player.corporation.funds);
         Player.corporation.revenue = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](Player.corporation.revenue);
         Player.corporation.expenses = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](Player.corporation.expenses);
@@ -3092,31 +3093,11 @@ exports.CONSTANTS = {
         "RAM and CPU Core Upgrades on your home computer<br>" +
         "World Stock Exchange account and TIX API Access<br>",
     LatestUpdate: `
-     v0.41.2
-     * IMPORTANT - Netscript Changes:
-     ** rm() now takes an optional parameter that lets you specify on which server to delete the file
-     ** Added growthAnalyze() Netscript function
-
-     * Gang Changes:
-     ** UI now displays your chance to win a clash with other gangs
-     ** Added getChanceToWinClash() function to the Gang API
-     ** Added getEquipmentType() function to the Gang API
-     ** Added several new hacking-based equipment and Augmentations
-     ** Rebalanced several equipment/upgrades to give less defense
-     ** Wanted level gain rate is now be slightly higher for all tasks
-     ** Rebalanced parameters for "hacking" tasks
-
-     * Added new Main Menu configuration in .fconf: "compact"
-     * Added the terminal command 'expr', which can be used to evaluate simple mathematical expressions
-     * Bug Fix: Can no longer purchase duplicate equipment/Augmentations through gang.purchaseEquipment()
-     * Bug Fix: scp() should no longer throw errors when used with 2-arguments and an array of files
-     * Bug Fix: Coding Contracts no longer give money in BitNode-8
-     * Bug Fix: In Bladeburner, you can no longer start a BlackOp through the Netscript API if it has already been completed
-     * Bug Fix: In Bladeburner, fixed a bug which caused the configured 'automate' actions to occasionally be switched to other actions
-     * Bug Fix: 'Return to World' button at locations no longer accumulates event listeners
-     * Bug Fix: Working & taking classes now continuously add/subtract money during the action, instead of doing it at completion
-     * Bug Fix: Top-right overview panel now displays negative money using '-' instead of '()'
-     * Bug Fix: Stock Market UI should no longer show 'NaN' profit immediately after buying a stock
+     v0.42.0
+     * Corporation Changes:
+     ** Changed initial market prices for many materials
+     ** Changed the way a material's demand, competition, and market price change over time
+     **
      `
 };
 
@@ -3306,7 +3287,7 @@ exports.createElement = createElement;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const isString_1 = __webpack_require__(/*! ./helpers/isString */ 37);
+const isString_1 = __webpack_require__(/*! ./helpers/isString */ 39);
 // Netburner String helper functions
 // Replaces the character at an index with a new character
 function replaceAt(base, index, character) {
@@ -3410,85 +3391,54 @@ exports.generateRandomString = generateRandomString;
 /***/ }),
 /* 4 */
 /*!*********************************!*\
-  !*** ./src/ui/numeralFormat.js ***!
+  !*** ./src/ui/numeralFormat.ts ***!
   \*********************************/
-/*! exports provided: numeralWrapper */
-/*! exports used: numeralWrapper */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return numeralWrapper; });
-/* harmony import */ var numeral__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! numeral */ 70);
-/* harmony import */ var numeral__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(numeral__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var numeral_locales_bg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! numeral/locales/bg */ 258);
-/* harmony import */ var numeral_locales_bg__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_bg__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var numeral_locales_cs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! numeral/locales/cs */ 257);
-/* harmony import */ var numeral_locales_cs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_cs__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var numeral_locales_da_dk__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! numeral/locales/da-dk */ 256);
-/* harmony import */ var numeral_locales_da_dk__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_da_dk__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var numeral_locales_de__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! numeral/locales/de */ 255);
-/* harmony import */ var numeral_locales_de__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_de__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var numeral_locales_en_au__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! numeral/locales/en-au */ 254);
-/* harmony import */ var numeral_locales_en_au__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_en_au__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var numeral_locales_en_gb__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! numeral/locales/en-gb */ 253);
-/* harmony import */ var numeral_locales_en_gb__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_en_gb__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var numeral_locales_es__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! numeral/locales/es */ 252);
-/* harmony import */ var numeral_locales_es__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_es__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var numeral_locales_fr__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! numeral/locales/fr */ 251);
-/* harmony import */ var numeral_locales_fr__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_fr__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var numeral_locales_hu__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! numeral/locales/hu */ 250);
-/* harmony import */ var numeral_locales_hu__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_hu__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var numeral_locales_it__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! numeral/locales/it */ 249);
-/* harmony import */ var numeral_locales_it__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_it__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var numeral_locales_lv__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! numeral/locales/lv */ 248);
-/* harmony import */ var numeral_locales_lv__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_lv__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var numeral_locales_no__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! numeral/locales/no */ 247);
-/* harmony import */ var numeral_locales_no__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_no__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var numeral_locales_pl__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! numeral/locales/pl */ 246);
-/* harmony import */ var numeral_locales_pl__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_pl__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var numeral_locales_ru__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! numeral/locales/ru */ 245);
-/* harmony import */ var numeral_locales_ru__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(numeral_locales_ru__WEBPACK_IMPORTED_MODULE_14__);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+const numeral = __webpack_require__(/*! numeral */ 80);
+__webpack_require__(/*! numeral/locales/bg */ 266);
+__webpack_require__(/*! numeral/locales/cs */ 265);
+__webpack_require__(/*! numeral/locales/da-dk */ 264);
+__webpack_require__(/*! numeral/locales/de */ 263);
+__webpack_require__(/*! numeral/locales/en-au */ 262);
+__webpack_require__(/*! numeral/locales/en-gb */ 261);
+__webpack_require__(/*! numeral/locales/es */ 260);
+__webpack_require__(/*! numeral/locales/fr */ 259);
+__webpack_require__(/*! numeral/locales/hu */ 258);
+__webpack_require__(/*! numeral/locales/it */ 257);
+__webpack_require__(/*! numeral/locales/lv */ 256);
+__webpack_require__(/*! numeral/locales/no */ 255);
+__webpack_require__(/*! numeral/locales/pl */ 254);
+__webpack_require__(/*! numeral/locales/ru */ 253);
 /* eslint-disable class-methods-use-this */
-
 class NumeralFormatter {
     constructor() {
+        // Default Locale
+        this.defaultLocale = "en";
         this.defaultLocale = 'en';
     }
-
     updateLocale(l) {
-        if (numeral__WEBPACK_IMPORTED_MODULE_0___default.a.locale(l) == null) {
+        if (numeral.locale(l) == null) {
             console.warn(`Invalid locale for numeral: ${l}`);
-
-            numeral__WEBPACK_IMPORTED_MODULE_0___default.a.locale(this.defaultLocale);
+            numeral.locale(this.defaultLocale);
             return false;
         }
         return true;
     }
-
     format(n, format) {
         // numeraljs doesnt properly format numbers that are too big or too small
-        if (Math.abs(n) < 1e-6) { n = 0; }
-        return numeral__WEBPACK_IMPORTED_MODULE_0___default()(n).format(format);
+        if (Math.abs(n) < 1e-6) {
+            n = 0;
+        }
+        return numeral(n).format(format);
     }
 }
-
-const numeralWrapper = new NumeralFormatter();
+exports.numeralWrapper = new NumeralFormatter();
 
 
 /***/ }),
@@ -3608,19 +3558,19 @@ exports.Locations = {
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _NetscriptEnvironment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./NetscriptEnvironment */ 105);
+/* harmony import */ var _NetscriptEnvironment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./NetscriptEnvironment */ 110);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptWorker */ 24);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Server */ 11);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Script */ 28);
-/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/acorn */ 46);
+/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Script */ 30);
+/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/acorn */ 48);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 52);
+/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 54);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/helpers/isValidIPAddress */ 84);
+/* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/helpers/isValidIPAddress */ 88);
 /* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/helpers/isString */ 37);
+/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/helpers/isString */ 39);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_11__);
 
 
@@ -3636,7 +3586,7 @@ exports.Locations = {
 
 
 
-var Promise = __webpack_require__(/*! bluebird */ 230);
+var Promise = __webpack_require__(/*! bluebird */ 238);
 
 Promise.config({
     warnings: false,
@@ -4549,7 +4499,7 @@ function isScriptErrorMessage(msg) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const getElementById_1 = __webpack_require__(/*! ../../utils/uiHelpers/getElementById */ 51);
+const getElementById_1 = __webpack_require__(/*! ../../utils/uiHelpers/getElementById */ 53);
 /**
  * Adds some output to the terminal.
  * @param input Text or HTML to output to the terminal
@@ -4602,98 +4552,99 @@ function scrollTerminalToBottom() {
 __webpack_require__.r(__webpack_exports__);
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Engine", function() { return Engine; });
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_GameOptions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/GameOptions */ 80);
+/* harmony import */ var _utils_GameOptions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/GameOptions */ 84);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 14);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 27);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 29);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 42);
-/* harmony import */ var _utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/uiHelpers/removeLoadingScreen */ 109);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 44);
+/* harmony import */ var _utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/uiHelpers/removeLoadingScreen */ 115);
 /* harmony import */ var _utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/LogBox */ 75);
-/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./ActiveScriptsUI */ 64);
+/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/LogBox */ 78);
+/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./ActiveScriptsUI */ 67);
 /* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Augmentations */ 21);
-/* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./BitNode */ 56);
-/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Bladeburner */ 29);
-/* harmony import */ var _CharacterOverview__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./CharacterOverview */ 118);
-/* harmony import */ var _CinematicText__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./CinematicText */ 93);
-/* harmony import */ var _CodingContractGenerator__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./CodingContractGenerator */ 92);
-/* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Company/CompanyPositions */ 26);
+/* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./BitNode */ 58);
+/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Bladeburner */ 31);
+/* harmony import */ var _CharacterOverview__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./CharacterOverview */ 124);
+/* harmony import */ var _CinematicText__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./CinematicText */ 97);
+/* harmony import */ var _CodingContractGenerator__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./CodingContractGenerator */ 96);
+/* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Company/CompanyPositions */ 27);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_18__);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Company/Companies */ 18);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var _CompanyManagement__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./CompanyManagement */ 58);
+/* harmony import */ var _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Corporation/Corporation */ 60);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_21__);
 /* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./CreateProgram */ 23);
-/* harmony import */ var _DevMenu__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./DevMenu */ 107);
+/* harmony import */ var _DevMenu__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./DevMenu */ 112);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./Faction/Factions */ 15);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_24__);
-/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 44);
-/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./Fconf */ 45);
-/* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./Location */ 86);
+/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 46);
+/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./Fconf */ 47);
+/* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./Location */ 90);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./Locations */ 5);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_28__);
-/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./HacknetNode */ 63);
-/* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./InteractiveTutorial */ 33);
-/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./Literature */ 78);
-/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./Message */ 38);
-/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./Missions */ 53);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./NetscriptFunctions */ 41);
+/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./HacknetNode */ 66);
+/* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./InteractiveTutorial */ 35);
+/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./Literature */ 82);
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./Message */ 40);
+/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./Missions */ 55);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./NetscriptWorker */ 24);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./Prestige */ 82);
-/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./RedPill */ 55);
-/* harmony import */ var _SaveObject__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./SaveObject */ 72);
-/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ./Script */ 28);
+/* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./Prestige */ 86);
+/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./RedPill */ 57);
+/* harmony import */ var _SaveObject__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./SaveObject */ 74);
+/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ./Script */ 30);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ./Server */ 11);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ./Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_42___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_42__);
-/* harmony import */ var _ui_setSettingsLabels__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ./ui/setSettingsLabels */ 117);
-/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! ./SourceFile */ 66);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(/*! ./SpecialServerIps */ 30);
+/* harmony import */ var _ui_setSettingsLabels__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ./ui/setSettingsLabels */ 123);
+/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! ./SourceFile */ 69);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
 /* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(/*! ./StockMarket */ 22);
-/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(/*! ./Terminal */ 49);
-/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 32);
+/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(/*! ./Terminal */ 51);
+/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 34);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_48___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_48__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(/*! ./ui/navigationTracking */ 12);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__);
-/* harmony import */ var normalize_css__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(/*! normalize.css */ 193);
+/* harmony import */ var normalize_css__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(/*! normalize.css */ 201);
 /* harmony import */ var normalize_css__WEBPACK_IMPORTED_MODULE_50___default = /*#__PURE__*/__webpack_require__.n(normalize_css__WEBPACK_IMPORTED_MODULE_50__);
-/* harmony import */ var _css_styles_scss__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! ../css/styles.scss */ 169);
+/* harmony import */ var _css_styles_scss__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! ../css/styles.scss */ 175);
 /* harmony import */ var _css_styles_scss__WEBPACK_IMPORTED_MODULE_51___default = /*#__PURE__*/__webpack_require__.n(_css_styles_scss__WEBPACK_IMPORTED_MODULE_51__);
-/* harmony import */ var _css_buttons_scss__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! ../css/buttons.scss */ 167);
+/* harmony import */ var _css_buttons_scss__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! ../css/buttons.scss */ 173);
 /* harmony import */ var _css_buttons_scss__WEBPACK_IMPORTED_MODULE_52___default = /*#__PURE__*/__webpack_require__.n(_css_buttons_scss__WEBPACK_IMPORTED_MODULE_52__);
-/* harmony import */ var _css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(/*! ../css/mainmenu.scss */ 165);
+/* harmony import */ var _css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(/*! ../css/mainmenu.scss */ 171);
 /* harmony import */ var _css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_53___default = /*#__PURE__*/__webpack_require__.n(_css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_53__);
-/* harmony import */ var _css_characteroverview_scss__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(/*! ../css/characteroverview.scss */ 163);
+/* harmony import */ var _css_characteroverview_scss__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(/*! ../css/characteroverview.scss */ 169);
 /* harmony import */ var _css_characteroverview_scss__WEBPACK_IMPORTED_MODULE_54___default = /*#__PURE__*/__webpack_require__.n(_css_characteroverview_scss__WEBPACK_IMPORTED_MODULE_54__);
-/* harmony import */ var _css_terminal_scss__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(/*! ../css/terminal.scss */ 161);
+/* harmony import */ var _css_terminal_scss__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(/*! ../css/terminal.scss */ 167);
 /* harmony import */ var _css_terminal_scss__WEBPACK_IMPORTED_MODULE_55___default = /*#__PURE__*/__webpack_require__.n(_css_terminal_scss__WEBPACK_IMPORTED_MODULE_55__);
-/* harmony import */ var _css_menupages_scss__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(/*! ../css/menupages.scss */ 159);
+/* harmony import */ var _css_menupages_scss__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(/*! ../css/menupages.scss */ 165);
 /* harmony import */ var _css_menupages_scss__WEBPACK_IMPORTED_MODULE_56___default = /*#__PURE__*/__webpack_require__.n(_css_menupages_scss__WEBPACK_IMPORTED_MODULE_56__);
-/* harmony import */ var _css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(/*! ../css/workinprogress.scss */ 157);
+/* harmony import */ var _css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(/*! ../css/workinprogress.scss */ 163);
 /* harmony import */ var _css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_57___default = /*#__PURE__*/__webpack_require__.n(_css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_57__);
-/* harmony import */ var _css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(/*! ../css/popupboxes.scss */ 155);
+/* harmony import */ var _css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(/*! ../css/popupboxes.scss */ 161);
 /* harmony import */ var _css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_58___default = /*#__PURE__*/__webpack_require__.n(_css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_58__);
-/* harmony import */ var _css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(/*! ../css/interactivetutorial.scss */ 153);
+/* harmony import */ var _css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(/*! ../css/interactivetutorial.scss */ 159);
 /* harmony import */ var _css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_59___default = /*#__PURE__*/__webpack_require__.n(_css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_59__);
-/* harmony import */ var _css_loader_scss__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(/*! ../css/loader.scss */ 151);
+/* harmony import */ var _css_loader_scss__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(/*! ../css/loader.scss */ 157);
 /* harmony import */ var _css_loader_scss__WEBPACK_IMPORTED_MODULE_60___default = /*#__PURE__*/__webpack_require__.n(_css_loader_scss__WEBPACK_IMPORTED_MODULE_60__);
-/* harmony import */ var _css_missions_scss__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(/*! ../css/missions.scss */ 149);
+/* harmony import */ var _css_missions_scss__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(/*! ../css/missions.scss */ 155);
 /* harmony import */ var _css_missions_scss__WEBPACK_IMPORTED_MODULE_61___default = /*#__PURE__*/__webpack_require__.n(_css_missions_scss__WEBPACK_IMPORTED_MODULE_61__);
-/* harmony import */ var _css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(/*! ../css/companymanagement.scss */ 147);
+/* harmony import */ var _css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(/*! ../css/companymanagement.scss */ 153);
 /* harmony import */ var _css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_62___default = /*#__PURE__*/__webpack_require__.n(_css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_62__);
-/* harmony import */ var _css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_63__ = __webpack_require__(/*! ../css/bladeburner.scss */ 145);
+/* harmony import */ var _css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_63__ = __webpack_require__(/*! ../css/bladeburner.scss */ 151);
 /* harmony import */ var _css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_63___default = /*#__PURE__*/__webpack_require__.n(_css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_63__);
-/* harmony import */ var _css_gang_scss__WEBPACK_IMPORTED_MODULE_64__ = __webpack_require__(/*! ../css/gang.scss */ 143);
+/* harmony import */ var _css_gang_scss__WEBPACK_IMPORTED_MODULE_64__ = __webpack_require__(/*! ../css/gang.scss */ 149);
 /* harmony import */ var _css_gang_scss__WEBPACK_IMPORTED_MODULE_64___default = /*#__PURE__*/__webpack_require__.n(_css_gang_scss__WEBPACK_IMPORTED_MODULE_64__);
 
 
@@ -5119,7 +5070,7 @@ const Engine = {
     },
 
     loadCorporationContent: function() {
-        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _CompanyManagement__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"]) {
+        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"]) {
             Engine.hideAllContent();
             document.getElementById("character-overview-wrapper").style.visibility = "hidden";
             _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation.createUI();
@@ -5167,7 +5118,7 @@ const Engine = {
         if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].inGang()) {
             _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].gang.clearUI();
         }
-        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _CompanyManagement__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"]) {
+        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"]) {
             _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation.clearUI();
         }
 
@@ -5244,17 +5195,17 @@ const Engine = {
             'Money: $' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].money.toNumber(), 2) + '<br><br><br>' +
             '<b>Stats</b><br><br>' +
             'Hacking Level: ' + (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hacking_skill).toLocaleString() +
-                            ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__[/* numeralWrapper */ "a"].format(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hacking_exp, '(0.000a)') + ' experience)<br>' +
+                            ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hacking_exp, '(0.000a)') + ' experience)<br>' +
             'Strength:      ' + (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].strength).toLocaleString() +
-                       ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__[/* numeralWrapper */ "a"].format(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].strength_exp, '(0.000a)') + ' experience)<br>' +
+                       ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].strength_exp, '(0.000a)') + ' experience)<br>' +
             'Defense:       ' + (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].defense).toLocaleString() +
-                      ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__[/* numeralWrapper */ "a"].format(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].defense_exp, '(0.000a)') + ' experience)<br>' +
+                      ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].defense_exp, '(0.000a)') + ' experience)<br>' +
             'Dexterity:     ' + (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].dexterity).toLocaleString() +
-                       ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__[/* numeralWrapper */ "a"].format(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].dexterity_exp, '(0.000a)') + ' experience)<br>' +
+                       ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].dexterity_exp, '(0.000a)') + ' experience)<br>' +
             'Agility:       ' + (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].agility).toLocaleString() +
-                      ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__[/* numeralWrapper */ "a"].format(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].agility_exp, '(0.000a)') + ' experience)<br>' +
+                      ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].agility_exp, '(0.000a)') + ' experience)<br>' +
             'Charisma:      ' + (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].charisma).toLocaleString() +
-                       ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__[/* numeralWrapper */ "a"].format(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].charisma_exp, '(0.000a)') + ' experience)<br>' +
+                       ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].charisma_exp, '(0.000a)') + ' experience)<br>' +
             intText + '<br><br>' +
             '<b>Multipliers</b><br><br>' +
             'Hacking Chance multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hacking_chance_mult * 100, 2) + '%<br>' +
@@ -5375,7 +5326,7 @@ const Engine = {
         }));
         genericLocationsList.appendChild(li);
 
-        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _CompanyManagement__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"] && document.getElementById("location-corporation-button") == null) {
+        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"] && document.getElementById("location-corporation-button") == null) {
             var li = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("li");
             li.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("a", {
                 innerText:_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation.name, id:"location-corporation-button",
@@ -5585,7 +5536,7 @@ const Engine = {
         }
 
         //Corporation
-        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _CompanyManagement__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"]) {
+        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"]) {
             //Stores cycles in a "buffer". Processed separately using Engine Counters
             //This is to avoid constant DOM redraws when Corporation is catching up
             _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation.storeCycles(numCycles);
@@ -5752,7 +5703,7 @@ const Engine = {
         }
 
         if (Engine.Counters.mechanicProcess <= 0) {
-            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _CompanyManagement__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"]) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"]) {
                 _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation.process();
             }
             if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"]) {
@@ -5974,7 +5925,7 @@ const Engine = {
             else {stockmarket.style.display = "none";}
             if(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"]) {visibleMenuTabs.push(bladeburner);}
             else {bladeburner.style.display = "none";}
-            if(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _CompanyManagement__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"]) {visibleMenuTabs.push(corp);}
+            if(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"]) {visibleMenuTabs.push(corp);}
             else {corp.style.display = "none";}
             if(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].inGang()) {visibleMenuTabs.push(gang);}
             else {gang.style.display = "none";}
@@ -6250,7 +6201,7 @@ const Engine = {
             job.style.display           = _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].companyPosition !== ""             ? "list-item" : "none";
             stockmarket.style.display   = _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hasWseAccount                      ? "list-item" : "none";
             bladeburner.style.display   = _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"] ? "list-item" : "none";
-            corporation.style.display   = _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _CompanyManagement__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"] ? "list-item" : "none";
+            corporation.style.display   = _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"] ? "list-item" : "none";
             gang.style.display          = _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].inGang()                           ? "list-item" : "none";
 
             this.classList.toggle("opened");
@@ -6531,7 +6482,7 @@ window.onload = function() {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 62)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 65)))
 
 /***/ }),
 /* 9 */
@@ -6619,7 +6570,7 @@ function dialogBoxCreate(txt, preformatted=false) {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 62)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 65)))
 
 /***/ }),
 /* 10 */
@@ -6691,23 +6642,23 @@ exports.BitNodeMultipliers = {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return AllServers; });
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNodeMultipliers */ 10);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CodingContracts */ 40);
+/* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CodingContracts */ 42);
 /* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_CodingContracts__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Script */ 28);
+/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Script */ 30);
 /* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./CreateProgram */ 23);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./SpecialServerIps */ 30);
-/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./TextFile */ 60);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
+/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./TextFile */ 63);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_TextFile__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 14);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/IPAddress */ 57);
-/* harmony import */ var _data_servers__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./data/servers */ 124);
+/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/IPAddress */ 59);
+/* harmony import */ var _data_servers__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./data/servers */ 130);
 /* harmony import */ var _data_servers__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_data_servers__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
-/* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/isValidIPAddress */ 84);
+/* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/isValidIPAddress */ 88);
 /* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_12__);
 
 
@@ -7440,8 +7391,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * Initialization and manipulation of the Factions object, which stores data
  * about all Factions in the game
  */
-const Faction_1 = __webpack_require__(/*! ./Faction */ 54);
-const FactionInfo_1 = __webpack_require__(/*! ./FactionInfo */ 104);
+const Faction_1 = __webpack_require__(/*! ./Faction */ 56);
+const FactionInfo_1 = __webpack_require__(/*! ./FactionInfo */ 109);
 const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
 exports.Factions = {};
 function loadFactions(saveString) {
@@ -7492,7 +7443,7 @@ exports.resetFaction = resetFaction;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const getElementById_1 = __webpack_require__(/*! ./getElementById */ 51);
+const getElementById_1 = __webpack_require__(/*! ./getElementById */ 53);
 /**
  * Given an element by its ID, removes all event listeners from that element by cloning and
  * replacing. Then returns the new cloned element.
@@ -7639,8 +7590,8 @@ function yesNoTxtInpBoxCreate(txt) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 // Constructs all CompanyPosition objects using the metadata in data/companypositions.ts
-const CompaniesMetadata_1 = __webpack_require__(/*! ./data/CompaniesMetadata */ 184);
-const Company_1 = __webpack_require__(/*! ./Company */ 71);
+const CompaniesMetadata_1 = __webpack_require__(/*! ./data/CompaniesMetadata */ 192);
+const Company_1 = __webpack_require__(/*! ./Company */ 73);
 const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
 exports.Companies = {};
 function addCompany(params) {
@@ -7700,7 +7651,7 @@ exports.companyExists = companyExists;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const SettingEnums_1 = __webpack_require__(/*! ./SettingEnums */ 69);
+const SettingEnums_1 = __webpack_require__(/*! ./SettingEnums */ 72);
 const defaultSettings = {
     AutosaveInterval: 60,
     CodeInstructionRunTime: 50,
@@ -7755,8 +7706,8 @@ exports.Settings = {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const getElementById_1 = __webpack_require__(/*! ./getElementById */ 51);
-const removeElement_1 = __webpack_require__(/*! ./removeElement */ 67);
+const getElementById_1 = __webpack_require__(/*! ./getElementById */ 53);
+const removeElement_1 = __webpack_require__(/*! ./removeElement */ 70);
 /**
  * Given its id, this function removes an element AND its children
  * @param id The HTML identifier to search for and remove.
@@ -7799,29 +7750,29 @@ exports.removeElementById = removeElementById;
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 8);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Faction/Factions */ 15);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptFunctions */ 41);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./NetscriptWorker */ 24);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Prestige */ 82);
-/* harmony import */ var _SaveObject__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./SaveObject */ 72);
-/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Script */ 28);
+/* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Prestige */ 86);
+/* harmony import */ var _SaveObject__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./SaveObject */ 74);
+/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Script */ 30);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _SettingEnums__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./SettingEnums */ 69);
+/* harmony import */ var _SettingEnums__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./SettingEnums */ 72);
 /* harmony import */ var _SettingEnums__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_SettingEnums__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./SourceFile */ 66);
+/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./SourceFile */ 69);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 73);
+/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 76);
 /* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
-/* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/helpers/clearObject */ 74);
+/* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/helpers/clearObject */ 77);
 /* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_17__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/helpers/isString */ 37);
+/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/helpers/isString */ 39);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 27);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 29);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_20__);
 
 
@@ -10520,10 +10471,10 @@ function displaySourceFiles(listElement, sourceFiles) {
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Locations */ 5);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NetscriptFunctions */ 41);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./NetscriptWorker */ 24);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Stock__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Stock */ 25);
+/* harmony import */ var _Stock__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Stock */ 26);
 /* harmony import */ var _Stock__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Stock__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
@@ -10532,14 +10483,15 @@ function displaySourceFiles(listElement, sourceFiles) {
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./ui/navigationTracking */ 12);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 42);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 44);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 14);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 32);
+/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 34);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_13__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 27);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 29);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_16__);
@@ -10626,7 +10578,7 @@ function cancelOrder(params, workerScript=null) {
         //Order properties are passed in. Need to look for the order
         var stockOrders = StockMarket["Orders"][params.stock.symbol];
         var orderTxt = params.stock.symbol + " - " + params.shares + " @ " +
-                       _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(params.price, '$0.000a');
+                       _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(params.price, '$0.000a');
         for (var i = 0; i < stockOrders.length; ++i) {
             var order = stockOrders[i];
             if (params.shares === order.shares &&
@@ -10955,7 +10907,7 @@ function buyStock(stock, shares) {
     var totalPrice = stock.price * shares;
     if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.lt(totalPrice + _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].StockMarketCommission)) {
         Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_6__["dialogBoxCreate"])("You do not have enough money to purchase this. You need " +
-                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(totalPrice + _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].StockMarketCommission, '($0.000a)') + ".");
+                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(totalPrice + _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].StockMarketCommission, '($0.000a)') + ".");
         return false;
     }
 
@@ -10965,9 +10917,9 @@ function buyStock(stock, shares) {
     stock.playerShares = Math.round(stock.playerShares + shares);
     stock.playerAvgPx = newTotal / stock.playerShares;
     updateStockPlayerPosition(stock);
-    Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_6__["dialogBoxCreate"])("Bought " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(shares, '0,0') + " shares of " + stock.symbol + " at " +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(stock.price, '($0.000a)') + " per share. Paid " +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(_Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].StockMarketCommission, '($0.000a)') + " in commission fees.");
+    Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_6__["dialogBoxCreate"])("Bought " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(shares, '0,0') + " shares of " + stock.symbol + " at " +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(stock.price, '($0.000a)') + " per share. Paid " +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(_Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].StockMarketCommission, '($0.000a)') + " in commission fees.");
     return true;
 }
 
@@ -10988,9 +10940,9 @@ function sellStock(stock, shares) {
         stock.playerAvgPx = 0;
     }
     updateStockPlayerPosition(stock);
-    Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_6__["dialogBoxCreate"])("Sold " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(shares, '0,0') + " shares of " + stock.symbol + " at " +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(stock.price, '($0.000a)') + " per share. After commissions, you gained " +
-                    "a total of " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(gains, '($0.000a)') + ".");
+    Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_6__["dialogBoxCreate"])("Sold " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(shares, '0,0') + " shares of " + stock.symbol + " at " +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(stock.price, '($0.000a)') + " per share. After commissions, you gained " +
+                    "a total of " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(gains, '($0.000a)') + ".");
     return true;
 }
 
@@ -11016,10 +10968,10 @@ function shortStock(stock, shares, workerScript=null) {
         if (tixApi) {
             workerScript.scriptRef.log("ERROR: shortStock() failed because you do not have enough " +
                                        "money to purchase this short position. You need " +
-                                       _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(totalPrice + _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].StockMarketCommission, '($0.000a)') + ".");
+                                       _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(totalPrice + _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].StockMarketCommission, '($0.000a)') + ".");
         } else {
             Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_6__["dialogBoxCreate"])("You do not have enough money to purchase this short position. You need " +
-                            _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(totalPrice + _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].StockMarketCommission, '($0.000a)') + ".");
+                            _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(totalPrice + _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].StockMarketCommission, '($0.000a)') + ".");
         }
 
         return false;
@@ -11033,14 +10985,14 @@ function shortStock(stock, shares, workerScript=null) {
     updateStockPlayerPosition(stock);
     if (tixApi) {
         if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.shortStock == null) {
-            workerScript.scriptRef.log("Bought a short position of " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(shares, '0,0') + " shares of " + stock.symbol + " at " +
-                                       _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(stock.price, '($0.000a)') + " per share. Paid " +
-                                       _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(_Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].StockMarketCommission, '($0.000a)') + " in commission fees.");
+            workerScript.scriptRef.log("Bought a short position of " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(shares, '0,0') + " shares of " + stock.symbol + " at " +
+                                       _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(stock.price, '($0.000a)') + " per share. Paid " +
+                                       _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(_Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].StockMarketCommission, '($0.000a)') + " in commission fees.");
         }
     } else {
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_6__["dialogBoxCreate"])("Bought a short position of " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(shares, '0,0') + " shares of " + stock.symbol + " at " +
-                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(stock.price, '($0.000a)') + " per share. Paid " +
-                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(_Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].StockMarketCommission, '($0.000a)') + " in commission fees.");
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_6__["dialogBoxCreate"])("Bought a short position of " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(shares, '0,0') + " shares of " + stock.symbol + " at " +
+                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(stock.price, '($0.000a)') + " per share. Paid " +
+                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(_Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].StockMarketCommission, '($0.000a)') + " in commission fees.");
     }
     return true;
 }
@@ -11077,14 +11029,14 @@ function sellShort(stock, shares, workerScript=null) {
     updateStockPlayerPosition(stock);
     if (tixApi) {
         if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.sellShort == null) {
-            workerScript.scriptRef.log("Sold your short position of " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(shares, '0,0') + " shares of " + stock.symbol + " at " +
-                                       _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(stock.price, '($0.000a)') + " per share. After commissions, you gained " +
-                                       "a total of " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(origCost + profit, '($0.000a)') + ".");
+            workerScript.scriptRef.log("Sold your short position of " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(shares, '0,0') + " shares of " + stock.symbol + " at " +
+                                       _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(stock.price, '($0.000a)') + " per share. After commissions, you gained " +
+                                       "a total of " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(origCost + profit, '($0.000a)') + ".");
         }
     } else {
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_6__["dialogBoxCreate"])("Sold your short position of " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(shares, '0,0') + " shares of " + stock.symbol + " at " +
-                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(stock.price, '($0.000a)') + " per share. After commissions, you gained " +
-                        "a total of " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(origCost + profit, '($0.000a)') + ".");
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_6__["dialogBoxCreate"])("Sold your short position of " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(shares, '0,0') + " shares of " + stock.symbol + " at " +
+                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(stock.price, '($0.000a)') + " per share. After commissions, you gained " +
+                        "a total of " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(origCost + profit, '($0.000a)') + ".");
     }
 
     return true;
@@ -11258,7 +11210,7 @@ function displayStockMarketContent() {
     //Purchase WSE Account button
     var wseAccountButton = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_7__["clearEventListeners"])("stock-market-buy-account");
     stylePurchaseButton(wseAccountButton, _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].WSEAccountCost, _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hasWseAccount,
-                        "Buy WSE Account - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(_Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].WSEAccountCost, '($0.000a)'),
+                        "Buy WSE Account - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(_Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].WSEAccountCost, '($0.000a)'),
                         "WSE Account - Purchased");
     wseAccountButton.addEventListener("click", function() {
         _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hasWseAccount = true;
@@ -11272,7 +11224,7 @@ function displayStockMarketContent() {
     //Purchase TIX API Access account
     var tixApiAccessButton = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_7__["clearEventListeners"])("stock-market-buy-tix-api");
     stylePurchaseButton(tixApiAccessButton, _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].TIXAPICost, _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hasTixApiAccess,
-                        "Buy Trade Information eXchange (TIX) API Access - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(_Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].TIXAPICost, '($0.000a)'),
+                        "Buy Trade Information eXchange (TIX) API Access - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(_Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].TIXAPICost, '($0.000a)'),
                         "TIX API Access - Purchased");
     tixApiAccessButton.addEventListener("click", function() {
         _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hasTixApiAccess = true;
@@ -11284,7 +11236,7 @@ function displayStockMarketContent() {
     //Purchase Four Sigma Market Data Feed
     var marketDataButton = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_7__["clearEventListeners"])("stock-market-buy-4s-data");
     stylePurchaseButton(marketDataButton, _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MarketData4SCost, _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].has4SData,
-                        "Buy 4S Market Data Access - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(_Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MarketData4SCost, '($0.000a)'),
+                        "Buy 4S Market Data Access - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(_Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MarketData4SCost, '($0.000a)'),
                         "4S Market Data - Purchased");
     marketDataButton.addEventListener("click", function() {
         if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money.lt(_Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MarketData4SCost)) { return false; }
@@ -11323,7 +11275,7 @@ function displayStockMarketContent() {
     //Purchase Four Sigma Market Data TIX API (Requires TIX API Access)
     var marketDataTixButton = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_7__["clearEventListeners"])("stock-market-buy-4s-tix-api");
     stylePurchaseButton(marketDataTixButton, _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MarketDataTixApi4SCost, _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].has4SDataTixApi,
-                        "Buy 4S Market Data TIX API Access - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(_Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MarketDataTixApi4SCost, '($0.000a)'),
+                        "Buy 4S Market Data TIX API Access - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(_Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MarketDataTixApi4SCost, '($0.000a)'),
                         "4S Market Data TIX API - Purchased");
     if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hasTixApiAccess) {
         marketDataTixButton.addEventListener("click", function() {
@@ -11387,7 +11339,7 @@ function displayStockMarketContent() {
         console.log("Creating Stock Market UI");
         commissionText.innerHTML =
             "Commission Fees: Every transaction you make has a " +
-            _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(_Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].StockMarketCommission, '($0.000a)') + " commission fee.<br><br>" +
+            _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(_Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].StockMarketCommission, '($0.000a)') + " commission fee.<br><br>" +
             "WARNING: When you reset after installing Augmentations, the Stock Market is reset. " +
             "This means all your positions are lost, so make sure to sell your stocks before installing " +
             "Augmentations!";
@@ -11585,7 +11537,7 @@ function createStockTicker(stock) {
     var li = document.createElement("li"), hdr = document.createElement("button");
     hdr.classList.add("accordion-header");
     hdr.setAttribute("id", tickerId + "-hdr");
-    hdr.innerHTML = stock.name + "  -  " + stock.symbol + "  -  " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(stock.price, '($0.000a)');
+    hdr.innerHTML = stock.name + "  -  " + stock.symbol + "  -  " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(stock.price, '($0.000a)');
 
     //Div for entire panel
     var stockDiv = document.createElement("div");
@@ -11862,9 +11814,9 @@ function updateStockTicker(stock, increase) {
         }
         return;
     }
-    let hdrText = stock.name + " (" + stock.symbol + ") - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(stock.price, '($0.000a)');
+    let hdrText = stock.name + " (" + stock.symbol + ") - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(stock.price, '($0.000a)');
     if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].has4SData) {
-        hdrText += " - Volatility: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(stock.mv, '0,0.00') + "%" +
+        hdrText += " - Volatility: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(stock.mv, '0,0.00') + "%" +
                    " - Price Forecast: ";
         if (stock.b) {
             hdrText += "+".repeat(Math.floor(stock.otlkMag/10) + 1);
@@ -11928,21 +11880,21 @@ function updateStockPlayerPosition(stock) {
         "<h1 class='tooltip stock-market-position-text'>Long Position: " +
         "<span class='tooltiptext'>Shares in the long position will increase " +
         "in value if the price of the corresponding stock increases</span></h1>" +
-        "<br>Shares: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(stock.playerShares, '0,0') +
-        "<br>Average Price: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(stock.playerAvgPx, '$0.000a') +
-        " (Total Cost: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(totalCost, '$0.000a') + ")" +
-        "<br>Profit: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(gains, '$0.000a') +
-                     " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(percentageGains, '0.00%') + ")<br><br>";
+        "<br>Shares: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(stock.playerShares, '0,0') +
+        "<br>Average Price: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(stock.playerAvgPx, '$0.000a') +
+        " (Total Cost: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(totalCost, '$0.000a') + ")" +
+        "<br>Profit: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(gains, '$0.000a') +
+                     " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(percentageGains, '0.00%') + ")<br><br>";
         if (_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].bitNodeN === 8 || (_NetscriptFunctions__WEBPACK_IMPORTED_MODULE_2__[/* hasWallStreetSF */ "f"] && _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_2__[/* wallStreetSFLvl */ "h"] >= 2)) {
             stock.posTxtEl.innerHTML +=
             "<h1 class='tooltip stock-market-position-text'>Short Position: " +
             "<span class='tooltiptext'>Shares in short position will increase " +
             "in value if the price of the corresponding stock decreases</span></h1>" +
-            "<br>Shares: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(stock.playerShortShares, '0,0') +
-            "<br>Average Price: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(stock.playerAvgShortPx, '$0.000a') +
-            " (Total Cost: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(shortTotalCost, '$0.000a') + ")" +
-            "<br>Profit: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(shortGains, '$0.000a') +
-                         " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(shortPercentageGains, '0.00%') + ")" +
+            "<br>Shares: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(stock.playerShortShares, '0,0') +
+            "<br>Average Price: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(stock.playerAvgShortPx, '$0.000a') +
+            " (Total Cost: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(shortTotalCost, '$0.000a') + ")" +
+            "<br>Profit: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(shortGains, '$0.000a') +
+                         " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(shortPercentageGains, '0.00%') + ")" +
             "<br><br><h1 class='stock-market-position-text'>Orders: </h1>";
         }
 
@@ -12005,7 +11957,7 @@ function updateStockOrderList(stock) {
             var posText = (order.pos === PositionTypes.Long ? "Long Position" : "Short Position");
             li.style.color = "white";
             li.innerText = order.type + " - " + posText + " - " +
-                           order.shares + " @ " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(order.price, '($0.000a)');
+                           order.shares + " @ " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(order.price, '($0.000a)');
 
             var cancelButton = document.createElement("span");
             cancelButton.classList.add("stock-market-order-cancel-btn");
@@ -12222,29 +12174,29 @@ function initCreateProgramButtons() {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return addWorkerScript; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return updateOnlineScriptTimes; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return prestigeWorkerScripts; });
-/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActiveScriptsUI */ 64);
+/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActiveScriptsUI */ 67);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 8);
-/* harmony import */ var _JSInterpreter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./JSInterpreter */ 119);
-/* harmony import */ var _NetscriptEnvironment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptEnvironment */ 105);
+/* harmony import */ var _JSInterpreter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./JSInterpreter */ 125);
+/* harmony import */ var _NetscriptEnvironment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptEnvironment */ 110);
 /* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./NetscriptEvaluator */ 6);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./NetscriptFunctions */ 41);
-/* harmony import */ var _NetscriptJSEvaluator__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./NetscriptJSEvaluator */ 106);
-/* harmony import */ var _NetscriptPort__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./NetscriptPort */ 68);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
+/* harmony import */ var _NetscriptJSEvaluator__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./NetscriptJSEvaluator */ 111);
+/* harmony import */ var _NetscriptPort__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./NetscriptPort */ 71);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Server */ 11);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var escodegen__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! escodegen */ 99);
+/* harmony import */ var escodegen__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! escodegen */ 104);
 /* harmony import */ var escodegen__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(escodegen__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/acorn */ 46);
+/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/acorn */ 48);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/helpers/compareArrays */ 87);
+/* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/helpers/compareArrays */ 91);
 /* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 52);
+/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 54);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 77);
+/* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 81);
 /* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_16__);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_17__);
@@ -12269,7 +12221,7 @@ function initCreateProgramButtons() {
 
 
 
-const walk  = __webpack_require__(/*! acorn/dist/walk */ 136);
+const walk  = __webpack_require__(/*! acorn/dist/walk */ 142);
 
 function WorkerScript(runningScriptObj) {
 	this.name 			= runningScriptObj.filename;
@@ -12881,6 +12833,29 @@ function updateOnlineScriptTimes(numCycles = 1) {
 
 /***/ }),
 /* 25 */
+/*!**********************************************!*\
+  !*** ./src/Corporation/EmployeePositions.ts ***!
+  \**********************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.EmployeePositions = {
+    Operations: "Operations",
+    Engineer: "Engineer",
+    Business: "Business",
+    Management: "Management",
+    RandD: "Research & Development",
+    Training: "Training",
+    Unassigned: "Unassigned",
+};
+
+
+/***/ }),
+/* 26 */
 /*!**********************!*\
   !*** ./src/Stock.ts ***!
   \**********************/
@@ -12929,7 +12904,7 @@ JSONReviver_1.Reviver.constructors.Stock = Stock;
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /*!*****************************************!*\
   !*** ./src/Company/CompanyPositions.ts ***!
   \*****************************************/
@@ -12941,8 +12916,8 @@ JSONReviver_1.Reviver.constructors.Stock = Stock;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 // Constructs all CompanyPosition objects using the metadata in data/companypositions.ts
-const CompanyPositionsMetadata_1 = __webpack_require__(/*! ./data/CompanyPositionsMetadata */ 185);
-const CompanyPosition_1 = __webpack_require__(/*! ./CompanyPosition */ 81);
+const CompanyPositionsMetadata_1 = __webpack_require__(/*! ./data/CompanyPositionsMetadata */ 193);
+const CompanyPosition_1 = __webpack_require__(/*! ./CompanyPosition */ 85);
 exports.CompanyPositions = {};
 function addCompanyPosition(params) {
     if (exports.CompanyPositions[params.name] != null) {
@@ -12956,7 +12931,98 @@ CompanyPositionsMetadata_1.companyPositionMetadata.forEach((e) => {
 
 
 /***/ }),
-/* 27 */
+/* 28 */
+/*!*****************************************!*\
+  !*** ./src/Corporation/IndustryData.ts ***!
+  \*****************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const numeralFormat_1 = __webpack_require__(/*! ../ui/numeralFormat */ 4);
+exports.Industries = {
+    Energy: "Energy",
+    Utilities: "Water Utilities",
+    Agriculture: "Agriculture",
+    Fishing: "Fishing",
+    Mining: "Mining",
+    Food: "Food",
+    Tobacco: "Tobacco",
+    Chemical: "Chemical",
+    Pharmaceutical: "Pharmaceutical",
+    Computer: "Computer Hardware",
+    Robotics: "Robotics",
+    Software: "Software",
+    Healthcare: "Healthcare",
+    RealEstate: "RealEstate",
+};
+exports.IndustryStartingCosts = {
+    Energy: 225e9,
+    Utilities: 150e9,
+    Agriculture: 40e9,
+    Fishing: 80e9,
+    Mining: 300e9,
+    Food: 10e9,
+    Tobacco: 20e9,
+    Chemical: 70e9,
+    Pharmaceutical: 200e9,
+    Computer: 500e9,
+    Robotics: 1e12,
+    Software: 25e9,
+    Healthcare: 750e9,
+    RealEstate: 600e9,
+};
+exports.IndustryDescriptions = {
+    Energy: "Engage in the production and distribution of energy.<br><br>" +
+        "Starting cost: " + numeralFormat_1.numeralWrapper.format(exports.IndustryStartingCosts.Energy, "$0.000a") + "<br>" +
+        "Recommended starting Industry: NO",
+    Utilities: "Distributes water and provides wastewater services.<br><br>" +
+        "Starting cost: " + numeralFormat_1.numeralWrapper.format(exports.IndustryStartingCosts.Utilities, "$0.000a") + "<br>" +
+        "Recommended starting Industry: NO",
+    Agriculture: "Cultive crops and breed livestock to produce food.<br><br>" +
+        "Starting cost: " + numeralFormat_1.numeralWrapper.format(exports.IndustryStartingCosts.Agriculture, "$0.000a") + "<br>" +
+        "Recommended starting Industry: YES",
+    Fishing: "Produce food through the breeding and processing of fish and fish products<br><br>" +
+        "Starting cost: " + numeralFormat_1.numeralWrapper.format(exports.IndustryStartingCosts.Fishing, "$0.000a") + "<br>" +
+        "Recommended starting Industry: NO",
+    Mining: "Extract and process metals from the earth.<br><br>" +
+        "Starting cost: " + numeralFormat_1.numeralWrapper.format(exports.IndustryStartingCosts.Mining, "$0.000a") + "<br>" +
+        "Recommended starting Industry: NO",
+    Food: "Create your own restaurants all around the world.<br><br>" +
+        "Starting cost: " + numeralFormat_1.numeralWrapper.format(exports.IndustryStartingCosts.Food, "$0.000a") + "<br>" +
+        "Recommended starting Industry: YES",
+    Tobacco: "Create and distribute tobacco and tobacco-related products.<br><br>" +
+        "Starting cost: " + numeralFormat_1.numeralWrapper.format(exports.IndustryStartingCosts.Tobacco, "$0.000a") + "<br>" +
+        "Recommended starting Industry: YES",
+    Chemical: "Product industrial chemicals<br><br>" +
+        "Starting cost: " + numeralFormat_1.numeralWrapper.format(exports.IndustryStartingCosts.Chemical, "$0.000a") + "<br>" +
+        "Recommended starting Industry: NO",
+    Pharmaceutical: "Discover, develop, and create new pharmaceutical drugs.<br><br>" +
+        "Starting cost: " + numeralFormat_1.numeralWrapper.format(exports.IndustryStartingCosts.Pharmaceutical, "$0.000a") + "<br>" +
+        "Recommended starting Industry: NO",
+    Computer: "Develop and manufacture new computer hardware and networking infrastructures.<br><br>" +
+        "Starting cost: " + numeralFormat_1.numeralWrapper.format(exports.IndustryStartingCosts.Computer, "$0.000a") + "<br>" +
+        "Recommended starting Industry: NO",
+    Robotics: "Develop and create robots.<br><br>" +
+        "Starting cost: " + numeralFormat_1.numeralWrapper.format(exports.IndustryStartingCosts.Robotics, "$0.000a") + "<br>" +
+        "Recommended starting Industry: NO",
+    Software: "Develop computer software and create AI Cores.<br><br>" +
+        "Starting cost: " + numeralFormat_1.numeralWrapper.format(exports.IndustryStartingCosts.Software, "$0.000a") + "<br>" +
+        "Recommended starting Industry: YES",
+    Healthcare: "Create and manage hospitals.<br><br>" +
+        "Starting cost: " + numeralFormat_1.numeralWrapper.format(exports.IndustryStartingCosts.Healthcare, "$0.000a") + "<br>" +
+        "Recommended starting Industry: NO",
+    RealEstate: "Develop and manage real estate properties.<br><br>" +
+        "Starting cost: " + numeralFormat_1.numeralWrapper.format(exports.IndustryStartingCosts.RealEstate, "$0.000a") + "<br>" +
+        "Recommended starting Industry: NO",
+};
+
+
+/***/ }),
+/* 29 */
 /*!******************************************************!*\
   !*** ./utils/uiHelpers/removeChildrenFromElement.ts ***!
   \******************************************************/
@@ -12967,8 +13033,8 @@ CompanyPositionsMetadata_1.companyPositionMetadata.forEach((e) => {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const isString_1 = __webpack_require__(/*! ../helpers/isString */ 37);
-const getElementById_1 = __webpack_require__(/*! ./getElementById */ 51);
+const isString_1 = __webpack_require__(/*! ../helpers/isString */ 39);
+const getElementById_1 = __webpack_require__(/*! ./getElementById */ 53);
 /**
  * Clears out all children from the provided element.
  * If a string is passed in, it will treat it as an ID and search for the element to delete all children from.
@@ -12996,7 +13062,7 @@ exports.removeChildrenFromElement = removeChildrenFromElement;
 
 
 /***/ }),
-/* 28 */
+/* 30 */
 /*!***********************!*\
   !*** ./src/Script.js ***!
   \***********************/
@@ -13016,10 +13082,10 @@ exports.removeChildrenFromElement = removeChildrenFromElement;
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./engine */ 8);
-/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Fconf */ 45);
-/* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./InteractiveTutorial */ 33);
+/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Fconf */ 47);
+/* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./InteractiveTutorial */ 35);
 /* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptEvaluator */ 6);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./NetscriptFunctions */ 41);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./NetscriptWorker */ 24);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Server */ 11);
@@ -13027,41 +13093,42 @@ exports.removeChildrenFromElement = removeChildrenFromElement;
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ui/postToTerminal */ 7);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./TextFile */ 60);
+/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./TextFile */ 63);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_TextFile__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/acorn */ 46);
+/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/acorn */ 48);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./ui/navigationTracking */ 12);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_13__);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_14__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
-/* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/helpers/compareArrays */ 87);
+/* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/helpers/compareArrays */ 91);
 /* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_17__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 83);
+/* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 87);
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 77);
+/* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 81);
 /* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_20__);
-var ace = __webpack_require__(/*! brace */ 244);
-var beautify = __webpack_require__(/*! js-beautify */ 243).js_beautify;
-__webpack_require__(/*! brace/mode/javascript */ 242);
-__webpack_require__(/*! ../netscript */ 178);
-__webpack_require__(/*! brace/theme/chaos */ 241);
-__webpack_require__(/*! brace/theme/chrome */ 240);
-__webpack_require__(/*! brace/theme/monokai */ 239);
-__webpack_require__(/*! brace/theme/solarized_dark */ 238);
-__webpack_require__(/*! brace/theme/solarized_light */ 237);
-__webpack_require__(/*! brace/theme/terminal */ 236);
-__webpack_require__(/*! brace/theme/twilight */ 235);
-__webpack_require__(/*! brace/theme/xcode */ 234);
-__webpack_require__(/*! brace/keybinding/vim */ 233);
-__webpack_require__(/*! brace/keybinding/emacs */ 232);
-__webpack_require__(/*! brace/ext/language_tools */ 231);
+var ace = __webpack_require__(/*! brace */ 252);
+var beautify = __webpack_require__(/*! js-beautify */ 251).js_beautify;
+__webpack_require__(/*! brace/mode/javascript */ 250);
+__webpack_require__(/*! ../netscript */ 184);
+__webpack_require__(/*! brace/theme/chaos */ 249);
+__webpack_require__(/*! brace/theme/chrome */ 248);
+__webpack_require__(/*! brace/theme/monokai */ 247);
+__webpack_require__(/*! brace/theme/solarized_dark */ 246);
+__webpack_require__(/*! brace/theme/solarized_light */ 245);
+__webpack_require__(/*! brace/theme/terminal */ 244);
+__webpack_require__(/*! brace/theme/twilight */ 243);
+__webpack_require__(/*! brace/theme/xcode */ 242);
+__webpack_require__(/*! brace/keybinding/vim */ 241);
+__webpack_require__(/*! brace/keybinding/emacs */ 240);
+__webpack_require__(/*! brace/ext/language_tools */ 239);
 
 // Importing this doesn't work for some reason.
-const walk = __webpack_require__(/*! acorn/dist/walk */ 136);
+const walk = __webpack_require__(/*! acorn/dist/walk */ 142);
 
 
 
@@ -13295,7 +13362,7 @@ async function updateScriptEditorContent() {
     var codeCopy = code.repeat(1);
     var ramUsage = await calculateRamUsage(codeCopy);
     if (ramUsage !== -1) {
-        scriptEditorRamText.innerText = "RAM: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_14__[/* numeralWrapper */ "a"].format(ramUsage, '0.00') + " GB";
+        scriptEditorRamText.innerText = "RAM: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_14__["numeralWrapper"].format(ramUsage, '0.00') + " GB";
     } else {
         scriptEditorRamText.innerText = "RAM: Syntax Error";
     }
@@ -13943,7 +14010,7 @@ function scriptCalculateOfflineProduction(runningScriptObj) {
             console.log(runningScriptObj.filename + " called grow() on " + serv.hostname + " " + timesGrown + " times while offline");
             runningScriptObj.log("Called grow() on " + serv.hostname + " " + timesGrown + " times while offline");
             var growth = Object(_Server__WEBPACK_IMPORTED_MODULE_8__[/* processSingleServerGrowth */ "k"])(serv, timesGrown * 450);
-            runningScriptObj.log(serv.hostname + " grown by " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_14__[/* numeralWrapper */ "a"].format(growth * 100 - 100, '0.000000%') + " from grow() calls made while offline");
+            runningScriptObj.log(serv.hostname + " grown by " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_14__["numeralWrapper"].format(growth * 100 - 100, '0.000000%') + " from grow() calls made while offline");
         }
     }
 
@@ -14139,10 +14206,10 @@ _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__["Reviver"].constructors.AllServ
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 62)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 65)))
 
 /***/ }),
-/* 29 */
+/* 31 */
 /*!****************************!*\
   !*** ./src/Bladeburner.js ***!
   \****************************/
@@ -14158,44 +14225,45 @@ _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__["Reviver"].constructors.AllServ
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./engine */ 8);
-/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Faction/Faction */ 54);
+/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Faction/Faction */ 56);
 /* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_Faction_Faction__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Faction/Factions */ 15);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 44);
+/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 46);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Locations */ 5);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./RedPill */ 55);
+/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./RedPill */ 57);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
-/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 32);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 34);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/createProgressBarText */ 79);
+/* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/createProgressBarText */ 83);
 /* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 27);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 29);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_14__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
-/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 61);
+/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 64);
 /* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/uiHelpers/appendLineBreaks */ 59);
+/* harmony import */ var _utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/uiHelpers/appendLineBreaks */ 61);
 /* harmony import */ var _utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/helpers/clearObject */ 74);
+/* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/helpers/clearObject */ 77);
 /* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_18__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 39);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 41);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_20__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./ui/navigationTracking */ 12);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 42);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 44);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 14);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__);
-/* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 83);
+/* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 87);
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_25__);
-/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 67);
+/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 70);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_26__);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_27__);
@@ -15411,7 +15479,7 @@ Bladeburner.prototype.completeAction = function() {
                         if (isOperation && this.logging.ops) {
                             this.log(action.name + " successfully completed! Gained " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(gain, 3) + " rank");
                         } else if (!isOperation && this.logging.contracts) {
-                            this.log(action.name + " contract successfully completed! Gained " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(gain, 3) + " rank and " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(moneyGain, "$0.000a"));
+                            this.log(action.name + " contract successfully completed! Gained " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(gain, 3) + " rank and " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(moneyGain, "$0.000a"));
                         }
                     }
                     isOperation ? this.completeOperation(true) : this.completeContract(true);
@@ -16436,10 +16504,10 @@ Bladeburner.prototype.updateOverviewContent = function() {
         "Team Size: "   + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.teamSize, 0)  + "<br>" +
         "Team Members Lost: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.teamLost, 0) + "<br><br>" +
         "Num Times Hospitalized: " + this.numHosp + "<br>" +
-        "Money Lost From Hospitalizations: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(this.moneyLost, "$0.000a") + "<br><br>" +
+        "Money Lost From Hospitalizations: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(this.moneyLost, "$0.000a") + "<br><br>" +
         "Current City: " + this.city + "<br>";
 
-    DomElems.overviewEstPop.childNodes[0].nodeValue = "Est. Synthoid Population: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(this.getCurrentCity().popEst, "0.000a");
+    DomElems.overviewEstPop.childNodes[0].nodeValue = "Est. Synthoid Population: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(this.getCurrentCity().popEst, "0.000a");
     DomElems.overviewEstComms.childNodes[0].nodeValue = "Est. Synthoid Communities: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.getCurrentCity().comms, 0);
     DomElems.overviewChaos.childNodes[0].nodeValue = "City Chaos: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.getCurrentCity().chaos);
     DomElems.overviewSkillPoints.innerText = "Skill Points: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.skillPoints, 0);
@@ -18403,10 +18471,10 @@ function initBladeburner() {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 62)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 65)))
 
 /***/ }),
-/* 30 */
+/* 32 */
 /*!*********************************!*\
   !*** ./src/SpecialServerIps.js ***!
   \*********************************/
@@ -18473,8 +18541,8 @@ function initSpecialServerIps() {
 
 
 /***/ }),
-/* 31 */,
-/* 32 */
+/* 33 */,
+/* 34 */
 /*!***********************************!*\
   !*** ./utils/helpers/keyCodes.ts ***!
   \***********************************/
@@ -18518,7 +18586,7 @@ exports.KEY = {
 
 
 /***/ }),
-/* 33 */
+/* 35 */
 /*!************************************!*\
   !*** ./src/InteractiveTutorial.js ***!
   \************************************/
@@ -18540,7 +18608,7 @@ exports.KEY = {
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 39);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 41);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_6__);
@@ -19056,7 +19124,7 @@ function iTutorialSetText(txt) {
 
 
 /***/ }),
-/* 34 */
+/* 36 */
 /*!**************************************************!*\
   !*** ./src/Company/data/CompanyPositionNames.ts ***!
   \**************************************************/
@@ -19131,7 +19199,7 @@ exports.PartTimeCompanyPositions = [
 
 
 /***/ }),
-/* 35 */
+/* 37 */
 /*!***********************!*\
   !*** ./src/Crimes.js ***!
   \***********************/
@@ -19425,7 +19493,7 @@ function findCrime(roughName) {
 
 
 /***/ }),
-/* 36 */
+/* 38 */
 /*!******************************!*\
   !*** ./src/NetscriptGang.js ***!
   \******************************/
@@ -19437,7 +19505,7 @@ function findCrime(roughName) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return unknownGangApiExceptionMessage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return checkGangApiAccess; });
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Gang */ 48);
+/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Gang */ 50);
 /* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NetscriptEvaluator */ 6);
 
 
@@ -19457,7 +19525,7 @@ function checkGangApiAccess(workerScript, functionName) {
 
 
 /***/ }),
-/* 37 */
+/* 39 */
 /*!***********************************!*\
   !*** ./utils/helpers/isString.ts ***!
   \***********************************/
@@ -19479,7 +19547,7 @@ exports.isString = isString;
 
 
 /***/ }),
-/* 38 */
+/* 40 */
 /*!************************!*\
   !*** ./src/Message.js ***!
   \************************/
@@ -19497,9 +19565,9 @@ exports.isString = isString;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Message; });
 /* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentations */ 21);
 /* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateProgram */ 23);
-/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Missions */ 53);
+/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Missions */ 55);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./RedPill */ 55);
+/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./RedPill */ 57);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Server */ 11);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_6__);
@@ -19699,7 +19767,7 @@ function initMessages()  {
 
 
 /***/ }),
-/* 39 */
+/* 41 */
 /*!****************************************!*\
   !*** ./utils/uiHelpers/createPopup.ts ***!
   \****************************************/
@@ -19711,7 +19779,7 @@ function initMessages()  {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const createElement_1 = __webpack_require__(/*! ./createElement */ 2);
-const getElementById_1 = __webpack_require__(/*! ./getElementById */ 51);
+const getElementById_1 = __webpack_require__(/*! ./getElementById */ 53);
 /**
  * Creates the necessary DOM elements to present an in-game popup to the player.
  * @param id The (hopefully) unique identifier for the popup container.
@@ -19739,7 +19807,7 @@ exports.createPopup = createPopup;
 
 
 /***/ }),
-/* 40 */
+/* 42 */
 /*!********************************!*\
   !*** ./src/CodingContracts.ts ***!
   \********************************/
@@ -19760,9 +19828,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const JSONReviver_1 = __webpack_require__(/*! ../utils/JSONReviver */ 13);
 const createElement_1 = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
-const createPopup_1 = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 39);
+const createPopup_1 = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 41);
 const removeElementById_1 = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
-const codingcontracttypes_1 = __webpack_require__(/*! ./data/codingcontracttypes */ 183);
+const codingcontracttypes_1 = __webpack_require__(/*! ./data/codingcontracttypes */ 189);
 /* tslint:disable:no-magic-numbers completed-docs max-classes-per-file no-console */
 /* Represents different types of problems that a Coding Contract can have */
 class CodingContractType {
@@ -19913,7 +19981,7 @@ JSONReviver_1.Reviver.constructors.CodingContract = CodingContract;
 
 
 /***/ }),
-/* 41 */
+/* 43 */
 /*!***********************************!*\
   !*** ./src/NetscriptFunctions.js ***!
   \***********************************/
@@ -19931,70 +19999,70 @@ JSONReviver_1.Reviver.constructors.CodingContract = CodingContract;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return hasCorporationSF; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return hasAISF; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return hasBladeburnerSF; });
-/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActiveScriptsUI */ 64);
+/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActiveScriptsUI */ 67);
 /* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Augmentations */ 21);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BitNodeMultipliers */ 10);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _Crimes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Crimes */ 35);
-/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Bladeburner */ 29);
-/* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Company/Company */ 71);
+/* harmony import */ var _Crimes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Crimes */ 37);
+/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Bladeburner */ 31);
+/* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Company/Company */ 73);
 /* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Company_Company__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Company/Companies */ 18);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Company/CompanyPosition */ 81);
+/* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Company/CompanyPosition */ 85);
 /* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Company/CompanyPositions */ 26);
+/* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Company/CompanyPositions */ 27);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./CreateProgram */ 23);
-/* harmony import */ var _DarkWeb__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./DarkWeb */ 76);
-/* harmony import */ var _Hacking__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Hacking */ 47);
-/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Gang */ 48);
-/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Faction/Faction */ 54);
+/* harmony import */ var _DarkWeb__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./DarkWeb */ 79);
+/* harmony import */ var _Hacking__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Hacking */ 49);
+/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Gang */ 50);
+/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Faction/Faction */ 56);
 /* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_Faction_Faction__WEBPACK_IMPORTED_MODULE_14__);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Faction/Factions */ 15);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 44);
-/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./HacknetNode */ 63);
+/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 46);
+/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./HacknetNode */ 66);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Locations */ 5);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Message */ 38);
-/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Missions */ 53);
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Message */ 40);
+/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Missions */ 55);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./Script */ 28);
+/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./Script */ 30);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./Server */ 11);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_24__);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./SpecialServerIps */ 30);
-/* harmony import */ var _Stock__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./Stock */ 25);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
+/* harmony import */ var _Stock__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./Stock */ 26);
 /* harmony import */ var _Stock__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_Stock__WEBPACK_IMPORTED_MODULE_26__);
 /* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./StockMarket */ 22);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./ui/postToTerminal */ 7);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_28__);
-/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./TextFile */ 60);
+/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./TextFile */ 63);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_29___default = /*#__PURE__*/__webpack_require__.n(_TextFile__WEBPACK_IMPORTED_MODULE_29__);
-/* harmony import */ var _NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./NetscriptBladeburner */ 50);
-/* harmony import */ var _NetscriptGang__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./NetscriptGang */ 36);
+/* harmony import */ var _NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./NetscriptBladeburner */ 52);
+/* harmony import */ var _NetscriptGang__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./NetscriptGang */ 38);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./NetscriptWorker */ 24);
 /* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./NetscriptEvaluator */ 6);
-/* harmony import */ var _NetscriptPort__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./NetscriptPort */ 68);
-/* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! decimal.js */ 31);
+/* harmony import */ var _NetscriptPort__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./NetscriptPort */ 71);
+/* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! decimal.js */ 33);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./ui/navigationTracking */ 12);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_36___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_36__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ../utils/helpers/isPowerOfTwo */ 120);
+/* harmony import */ var _utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ../utils/helpers/isPowerOfTwo */ 126);
 /* harmony import */ var _utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_38___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_38__);
-/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 52);
+/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 54);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_39___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_39__);
-/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ../utils/IPAddress */ 57);
+/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ../utils/IPAddress */ 59);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_41___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_41__);
-/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ../utils/helpers/isString */ 37);
+/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ../utils/helpers/isString */ 39);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_42___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_42__);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
-var sprintf = __webpack_require__(/*! sprintf-js */ 137).sprintf,
-    vsprintf = __webpack_require__(/*! sprintf-js */ 137).vsprintf
+var sprintf = __webpack_require__(/*! sprintf-js */ 143).sprintf,
+    vsprintf = __webpack_require__(/*! sprintf-js */ 143).vsprintf
 
 
 
@@ -24588,10 +24656,10 @@ function NetscriptFunctions(workerScript) {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 62)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 65)))
 
 /***/ }),
-/* 42 */
+/* 44 */
 /*!*****************************************!*\
   !*** ./utils/helpers/exceptionAlert.js ***!
   \*****************************************/
@@ -24618,7 +24686,7 @@ function exceptionAlert(e) {
 
 
 /***/ }),
-/* 43 */
+/* 45 */
 /*!**********************!*\
   !*** ./src/Alias.js ***!
   \**********************/
@@ -24753,7 +24821,7 @@ function substituteAliases(origCommand) {
 
 
 /***/ }),
-/* 44 */
+/* 46 */
 /*!***************************************!*\
   !*** ./src/Faction/FactionHelpers.js ***!
   \***************************************/
@@ -24774,21 +24842,22 @@ function substituteAliases(origCommand) {
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../engine */ 8);
-/* harmony import */ var _FactionInfo__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./FactionInfo */ 104);
+/* harmony import */ var _FactionInfo__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./FactionInfo */ 109);
 /* harmony import */ var _FactionInfo__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_FactionInfo__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Location */ 86);
-/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../Missions */ 53);
+/* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Location */ 90);
+/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../Missions */ 55);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Player */ 0);
-/* harmony import */ var _SettingEnums__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../SettingEnums */ 69);
+/* harmony import */ var _SettingEnums__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../SettingEnums */ 72);
 /* harmony import */ var _SettingEnums__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_SettingEnums__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../ui/navigationTracking */ 12);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../ui/numeralFormat */ 4);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../utils/DialogBox */ 9);
-/* harmony import */ var _utils_FactionInvitationBox__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../utils/FactionInvitationBox */ 123);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 27);
+/* harmony import */ var _utils_FactionInvitationBox__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../utils/FactionInvitationBox */ 129);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 29);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_14__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_15__);
@@ -25022,7 +25091,7 @@ function displayFactionContent(factionName) {
                 _Player__WEBPACK_IMPORTED_MODULE_7__[/* Player */ "a"].loseMoney(amt);
                 var repGain = amt / _Constants__WEBPACK_IMPORTED_MODULE_2__["CONSTANTS"].DonateMoneyToRepDivisor * _Player__WEBPACK_IMPORTED_MODULE_7__[/* Player */ "a"].faction_rep_mult;
                 faction.playerReputation += repGain;
-                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_12__["dialogBoxCreate"])("You just donated " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__[/* numeralWrapper */ "a"].format(amt, "$0.000a") + " to " +
+                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_12__["dialogBoxCreate"])("You just donated " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(amt, "$0.000a") + " to " +
                                 faction.name + " to gain " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_17__["formatNumber"])(repGain, 3) + " reputation");
                 displayFactionContent(factionName);
             }
@@ -25303,10 +25372,10 @@ function createFactionAugmentationDisplayElements(augmentationsList, augs, facti
                 pElem.innerHTML = "ALREADY OWNED";
             } else if (faction.playerReputation >= req) {
                 aElem.setAttribute("class", "a-link-button");
-                pElem.innerHTML = "UNLOCKED - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__[/* numeralWrapper */ "a"].format(aug.baseCost * factionInfo.augmentationPriceMult, "$0.000a");
+                pElem.innerHTML = "UNLOCKED - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(aug.baseCost * factionInfo.augmentationPriceMult, "$0.000a");
             } else {
                 aElem.setAttribute("class", "a-link-button-inactive");
-                pElem.innerHTML = "LOCKED (Requires " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_17__["formatNumber"])(req, 1) + " faction reputation) - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__[/* numeralWrapper */ "a"].format(aug.baseCost * factionInfo.augmentationPriceMult, "$0.000a");
+                pElem.innerHTML = "LOCKED (Requires " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_17__["formatNumber"])(req, 1) + " faction reputation) - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(aug.baseCost * factionInfo.augmentationPriceMult, "$0.000a");
                 pElem.style.color = "red";
             }
             aDiv.appendChild(aElem);
@@ -25469,7 +25538,7 @@ function processPassiveFactionRepGain(numCycles) {
 
 
 /***/ }),
-/* 45 */
+/* 47 */
 /*!**********************!*\
   !*** ./src/Fconf.js ***!
   \**********************/
@@ -25482,7 +25551,7 @@ function processPassiveFactionRepGain(numCycles) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return createFconf; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return parseFconfSettings; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return loadFconf; });
-/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/acorn */ 46);
+/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/acorn */ 48);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 
@@ -25745,7 +25814,7 @@ function setMainMenuStyle() {
 
 
 /***/ }),
-/* 46 */
+/* 48 */
 /*!************************!*\
   !*** ./utils/acorn.js ***!
   \************************/
@@ -29385,7 +29454,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 })));
 
 /***/ }),
-/* 47 */
+/* 49 */
 /*!************************!*\
   !*** ./src/Hacking.js ***!
   \************************/
@@ -29499,7 +29568,7 @@ function calculateWeakenTime(server, hack, int) {
 
 
 /***/ }),
-/* 48 */
+/* 50 */
 /*!*********************!*\
   !*** ./src/Gang.js ***!
   \*********************/
@@ -29512,37 +29581,38 @@ function calculateWeakenTime(server, hack, int) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return resetGangs; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return loadAllGangs; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Gang; });
-/* harmony import */ var _data_gangmembertasks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./data/gangmembertasks */ 122);
+/* harmony import */ var _data_gangmembertasks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./data/gangmembertasks */ 128);
 /* harmony import */ var _data_gangmembertasks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_data_gangmembertasks__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _data_gangmemberupgrades__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data/gangmemberupgrades */ 121);
+/* harmony import */ var _data_gangmemberupgrades__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data/gangmemberupgrades */ 127);
 /* harmony import */ var _data_gangmemberupgrades__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_data_gangmemberupgrades__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 8);
-/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Faction/Faction */ 54);
+/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Faction/Faction */ 56);
 /* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Faction_Faction__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Faction/Factions */ 15);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 44);
+/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 46);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
-/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 32);
+/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 34);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 73);
+/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 76);
 /* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 39);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 41);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./ui/navigationTracking */ 12);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_13__);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 42);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 44);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 14);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 27);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 29);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 67);
+/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 70);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_18__);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_19__);
@@ -30011,15 +30081,15 @@ Gang.prototype.ascendMember = function(memberObj, workerScript) {
         if (workerScript == null) {
             Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])([`You ascended ${memberObj.name}!`,
                              "",
-                             `Your gang lost ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(res.respect, "0.000a")} respect`,
+                             `Your gang lost ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(res.respect, "0.000a")} respect`,
                              "",
                              `${memberObj.name} gained the following stat multipliers for ascending:`,
-                             `Hacking: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(res.hack, "0.000%")}`,
-                             `Strength: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(res.str, "0.000%")}`,
-                             `Defense: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(res.def, "0.000%")}`,
-                             `Dexterity: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(res.dex, "0.000%")}`,
-                             `Agility: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(res.agi, "0.000%")}`,
-                             `Charisma: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(res.cha, "0.000%")}`].join("<br>"));
+                             `Hacking: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(res.hack, "0.000%")}`,
+                             `Strength: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(res.str, "0.000%")}`,
+                             `Defense: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(res.def, "0.000%")}`,
+                             `Dexterity: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(res.dex, "0.000%")}`,
+                             `Agility: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(res.agi, "0.000%")}`,
+                             `Charisma: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(res.cha, "0.000%")}`].join("<br>"));
         } else {
             workerScript.log(`Ascended Gang member ${memberObj.name}`);
         }
@@ -30549,7 +30619,7 @@ Gang.prototype.createGangMemberUpgradeBox = function(player, initialFilter="") {
         });
 
         UIElems.gangMemberUpgradeBoxDiscount = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_11__["createElement"])("p", {
-            innerText: "Discount: -" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(1 - 1 / this.getDiscount(), "0.00%"),
+            innerText: "Discount: -" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(1 - 1 / this.getDiscount(), "0.00%"),
             marginLeft: "6px",
             tooltip: "You get a discount on equipment and upgrades based on your gang's " +
                      "respect and power. More respect and power leads to more discounts."
@@ -30676,7 +30746,7 @@ GangMember.prototype.createGangMemberUpgradePanel = function(gangObj, player) {
             let upg = upgradeArray[j];
             (function (upg, div, memberObj, i, gang) {
                 let createElementParams = {
-                    innerText: upg.name + " - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(upg.getCost(gang), "$0.000a"),
+                    innerText: upg.name + " - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(upg.getCost(gang), "$0.000a"),
                     class: "a-link-button", margin:"2px",  padding:"2px", display:"block",
                     fontSize:"11px",
                     clickListener:()=>{
@@ -31079,13 +31149,13 @@ Gang.prototype.updateGangContent = function() {
 
     if (UIElems.gangMemberUpgradeBoxOpened) {
         UIElems.gangMemberUpgradeBoxDiscount.childNodes[0].nodeValue =
-            "Discount: -" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(1 - 1 / this.getDiscount(), "0.00%");
+            "Discount: -" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(1 - 1 / this.getDiscount(), "0.00%");
     }
 
     if (UIElems.gangTerritorySubpage.style.display === "block") {
         // Territory Warfare Clash Chance
         UIElems.gangTerritoryWarfareClashChance.innerText =
-            `Territory Clash Chance: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(this.territoryClashChance, '0.000%')}`;
+            `Territory Clash Chance: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(this.territoryClashChance, '0.000%')}`;
 
         // Engaged in Territory Warfare checkbox
         UIElems.gangTerritoryWarfareCheckbox.checked = this.territoryWarfareEngaged;
@@ -31116,7 +31186,7 @@ Gang.prototype.updateGangContent = function() {
                     const clashVictoryChance = playerPower / (gangTerritoryInfo.power + playerPower);
                     let newHTML = `<u>${gangname}</u><br>Power: ${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_14__["formatNumber"])(gangTerritoryInfo.power, 6)}<br>`;
                     newHTML += `Territory: ${displayNumber}%<br>`;
-                    newHTML += `Chance to win clash with this gang: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(clashVictoryChance, "0.000%")}<br><br>`;
+                    newHTML += `Chance to win clash with this gang: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(clashVictoryChance, "0.000%")}<br><br>`;
                     UIElems.gangTerritoryInfoText.innerHTML += newHTML;
                 }
             }
@@ -31164,7 +31234,7 @@ Gang.prototype.updateGangContent = function() {
 
             UIElems.gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_11__["createElement"])("p", {   // Money gain rate
                 display: "inline-block",
-                innerText: `Money gain rate: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(5 * this.moneyGainRate, "$0.000a")} / sec`,
+                innerText: `Money gain rate: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(5 * this.moneyGainRate, "$0.000a")} / sec`,
             }));
             UIElems.gangInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_11__["createElement"])("br"));
 
@@ -31252,12 +31322,12 @@ Gang.prototype.createGangMemberDisplayElement = function(memberObj) {
     const statsDiv = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_11__["createElement"])("div", {
         class: "gang-member-info-div",
         id: name + "gang-member-stats",
-        tooltipsmall: [`Hk: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.hack_mult * memberObj.hack_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.hack_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.hack_asc_mult, "0,0.00")} Asc)`,
-                       `St: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.str_mult * memberObj.str_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.str_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.str_asc_mult, "0,0.00")} Asc)`,
-                       `Df: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.def_mult * memberObj.def_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.def_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.def_asc_mult, "0,0.00")} Asc)`,
-                       `Dx: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.dex_mult * memberObj.dex_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.dex_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.dex_asc_mult, "0,0.00")} Asc)`,
-                       `Ag: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.agi_mult * memberObj.agi_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.agi_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.agi_asc_mult, "0,0.00")} Asc)`,
-                       `Ch: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.cha_mult * memberObj.cha_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.cha_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.cha_asc_mult, "0,0.00")} Asc)`].join("<br>"),
+        tooltipsmall: [`Hk: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.hack_mult * memberObj.hack_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.hack_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.hack_asc_mult, "0,0.00")} Asc)`,
+                       `St: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.str_mult * memberObj.str_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.str_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.str_asc_mult, "0,0.00")} Asc)`,
+                       `Df: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.def_mult * memberObj.def_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.def_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.def_asc_mult, "0,0.00")} Asc)`,
+                       `Dx: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.dex_mult * memberObj.dex_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.dex_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.dex_asc_mult, "0,0.00")} Asc)`,
+                       `Ag: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.agi_mult * memberObj.agi_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.agi_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.agi_asc_mult, "0,0.00")} Asc)`,
+                       `Ch: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.cha_mult * memberObj.cha_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.cha_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.cha_asc_mult, "0,0.00")} Asc)`].join("<br>"),
     });
     UIElems.gangMemberPanels[name]["statsDiv"] = statsDiv;
     const statsP = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_11__["createElement"])("pre", {
@@ -31275,15 +31345,15 @@ Gang.prototype.createGangMemberDisplayElement = function(memberObj) {
                innerText: ["Are you sure you want to ascend this member? (S)he will lose all of",
                            "his non-Augmentation upgrades and his/her stats will reset back to 1.",
                            "",
-                           `Furthermore, your gang will lose ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.earnedRespect, "0.000000")} respect`,
+                           `Furthermore, your gang will lose ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.earnedRespect, "0.000000")} respect`,
                            "",
                            "In return, (s)he will gain the following permanent boost to stat multipliers:\n",
-                           `Hacking: +${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(ascendBenefits.hack, "0.00%")}`,
-                           `Strength: +${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(ascendBenefits.str, "0.00%")}`,
-                           `Defense: +${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(ascendBenefits.def, "0.00%")}`,
-                           `Dexterity: +${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(ascendBenefits.dex, "0.00%")}`,
-                           `Agility: +${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(ascendBenefits.agi, "0.00%")}`,
-                           `Charisma: +${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(ascendBenefits.cha, "0.00%")}`].join("\n"),
+                           `Hacking: +${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(ascendBenefits.hack, "0.00%")}`,
+                           `Strength: +${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(ascendBenefits.str, "0.00%")}`,
+                           `Defense: +${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(ascendBenefits.def, "0.00%")}`,
+                           `Dexterity: +${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(ascendBenefits.dex, "0.00%")}`,
+                           `Agility: +${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(ascendBenefits.agi, "0.00%")}`,
+                           `Charisma: +${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(ascendBenefits.cha, "0.00%")}`].join("\n"),
             });
             const confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_11__["createElement"])("button", {
                 class: "std-button",
@@ -31397,12 +31467,12 @@ Gang.prototype.updateGangMemberDisplayElement = function(memberObj) {
     var stats = document.getElementById(name + "gang-member-stats-text");
     if (stats) {
         stats.innerText =
-            [`Hacking: ${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_14__["formatNumber"])(memberObj.hack, 0)} (${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.hack_exp, '(0.00a)')} exp)`,
-             `Strength: ${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_14__["formatNumber"])(memberObj.str, 0)} (${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.str_exp, '(0.00a)')} exp)`,
-             `Defense: ${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_14__["formatNumber"])(memberObj.def, 0)} (${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.def_exp, '(0.00a)')} exp)`,
-             `Dexterity: ${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_14__["formatNumber"])(memberObj.dex, 0)} (${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.dex_exp, '(0.00a)')} exp)`,
-             `Agility: ${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_14__["formatNumber"])(memberObj.agi, 0)} (${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.agi_exp, '(0.00a)')} exp)`,
-             `Charisma: ${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_14__["formatNumber"])(memberObj.cha, 0)} (${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.cha_exp, '(0.00a)')} exp)`].join("\n");
+            [`Hacking: ${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_14__["formatNumber"])(memberObj.hack, 0)} (${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.hack_exp, '(0.00a)')} exp)`,
+             `Strength: ${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_14__["formatNumber"])(memberObj.str, 0)} (${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.str_exp, '(0.00a)')} exp)`,
+             `Defense: ${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_14__["formatNumber"])(memberObj.def, 0)} (${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.def_exp, '(0.00a)')} exp)`,
+             `Dexterity: ${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_14__["formatNumber"])(memberObj.dex, 0)} (${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.dex_exp, '(0.00a)')} exp)`,
+             `Agility: ${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_14__["formatNumber"])(memberObj.agi, 0)} (${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.agi_exp, '(0.00a)')} exp)`,
+             `Charisma: ${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_14__["formatNumber"])(memberObj.cha, 0)} (${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.cha_exp, '(0.00a)')} exp)`].join("\n");
     }
 
     // Update tooltip for stat multipliers
@@ -31411,12 +31481,12 @@ Gang.prototype.updateGangMemberDisplayElement = function(memberObj) {
         const statsDiv = panel["statsDiv"];
         if (statsDiv) {
             statsDiv.firstChild.innerHTML =
-                [`Hk: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.hack_mult * memberObj.hack_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.hack_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.hack_asc_mult, "0,0.00")} Asc)`,
-                `St: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.str_mult * memberObj.str_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.str_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.str_asc_mult, "0,0.00")} Asc)`,
-                `Df: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.def_mult * memberObj.def_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.def_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.def_asc_mult, "0,0.00")} Asc)`,
-                `Dx: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.dex_mult * memberObj.dex_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.dex_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.dex_asc_mult, "0,0.00")} Asc)`,
-                `Ag: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.agi_mult * memberObj.agi_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.agi_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.agi_asc_mult, "0,0.00")} Asc)`,
-                `Ch: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.cha_mult * memberObj.cha_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.cha_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(memberObj.cha_asc_mult, "0,0.00")} Asc)`].join("<br>");
+                [`Hk: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.hack_mult * memberObj.hack_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.hack_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.hack_asc_mult, "0,0.00")} Asc)`,
+                `St: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.str_mult * memberObj.str_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.str_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.str_asc_mult, "0,0.00")} Asc)`,
+                `Df: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.def_mult * memberObj.def_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.def_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.def_asc_mult, "0,0.00")} Asc)`,
+                `Dx: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.dex_mult * memberObj.dex_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.dex_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.dex_asc_mult, "0,0.00")} Asc)`,
+                `Ag: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.agi_mult * memberObj.agi_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.agi_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.agi_asc_mult, "0,0.00")} Asc)`,
+                `Ch: x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.cha_mult * memberObj.cha_asc_mult, "0,0.00")}(x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.cha_mult, "0,0.00")} Eq, x${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__["numeralWrapper"].format(memberObj.cha_asc_mult, "0,0.00")} Asc)`].join("<br>");
         }
     }
 
@@ -31473,10 +31543,10 @@ Gang.prototype.clearUI = function() {
     UIElems.gangMemberPanels = {};
 }
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 62)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 65)))
 
 /***/ }),
-/* 49 */
+/* 51 */
 /*!*************************!*\
   !*** ./src/Terminal.js ***!
   \*************************/
@@ -31487,55 +31557,56 @@ Gang.prototype.clearUI = function() {
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return postNetburnerText; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Terminal; });
-/* harmony import */ var _Alias__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Alias */ 43);
-/* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CodingContracts */ 40);
+/* harmony import */ var _Alias__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Alias */ 45);
+/* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CodingContracts */ 42);
 /* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_CodingContracts__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./CreateProgram */ 23);
-/* harmony import */ var _DarkWeb__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./DarkWeb */ 76);
+/* harmony import */ var _DarkWeb__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./DarkWeb */ 79);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./engine */ 8);
-/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Fconf */ 45);
-/* harmony import */ var _Hacking__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Hacking */ 47);
-/* harmony import */ var _HelpText__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./HelpText */ 96);
+/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Fconf */ 47);
+/* harmony import */ var _Hacking__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Hacking */ 49);
+/* harmony import */ var _HelpText__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./HelpText */ 100);
 /* harmony import */ var _HelpText__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_HelpText__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./InteractiveTutorial */ 33);
-/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Literature */ 78);
-/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Message */ 38);
+/* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./InteractiveTutorial */ 35);
+/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Literature */ 82);
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Message */ 40);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./NetscriptWorker */ 24);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./RedPill */ 55);
-/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Script */ 28);
+/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./RedPill */ 57);
+/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Script */ 30);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Server */ 11);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./SpecialServerIps */ 30);
-/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./TextFile */ 60);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
+/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./TextFile */ 63);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_TextFile__WEBPACK_IMPORTED_MODULE_19__);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_20__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./ui/navigationTracking */ 12);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_21__);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
-/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 32);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__);
+/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 34);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_23__);
-/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 61);
+/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 64);
 /* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_24__);
-/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/helpers/isString */ 37);
+/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/helpers/isString */ 39);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25__);
-/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 52);
+/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 54);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_26__);
-/* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 83);
+/* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 87);
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_27__);
-/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../utils/LogBox */ 75);
+/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../utils/LogBox */ 78);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./ui/postToTerminal */ 7);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__);
-/* harmony import */ var autosize__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! autosize */ 140);
+/* harmony import */ var autosize__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! autosize */ 146);
 /* harmony import */ var autosize__WEBPACK_IMPORTED_MODULE_31___default = /*#__PURE__*/__webpack_require__.n(autosize__WEBPACK_IMPORTED_MODULE_31__);
-/* harmony import */ var jszip__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! jszip */ 139);
+/* harmony import */ var jszip__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! jszip */ 145);
 /* harmony import */ var jszip__WEBPACK_IMPORTED_MODULE_32___default = /*#__PURE__*/__webpack_require__.n(jszip__WEBPACK_IMPORTED_MODULE_32__);
-/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! file-saver */ 138);
+/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! file-saver */ 144);
 /* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_33___default = /*#__PURE__*/__webpack_require__.n(file_saver__WEBPACK_IMPORTED_MODULE_33__);
 
 
@@ -32229,11 +32300,11 @@ let Terminal = {
 
                 server.fortify(_Constants__WEBPACK_IMPORTED_MODULE_2__["CONSTANTS"].ServerFortifyAmount);
 
-				Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Hack successful! Gained " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(moneyGained, '($0,0.00)') + " and " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(expGainedOnSuccess, '0.0000') + " hacking EXP");
+				Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Hack successful! Gained " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__["numeralWrapper"].format(moneyGained, '($0,0.00)') + " and " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__["numeralWrapper"].format(expGainedOnSuccess, '0.0000') + " hacking EXP");
 			} else {					//Failure
 				//Player only gains 25% exp for failure? TODO Can change this later to balance
                 _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].gainHackingExp(expGainedOnFailure)
-				Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Failed to hack " + server.hostname + ". Gained " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(expGainedOnFailure, '0.0000') + " hacking EXP");
+				Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Failed to hack " + server.hostname + ". Gained " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__["numeralWrapper"].format(expGainedOnFailure, '0.0000') + " hacking EXP");
 			}
 		}
 
@@ -32256,10 +32327,10 @@ let Terminal = {
             else {rootAccess = "NO";}
             Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Root Access: " + rootAccess);
 			Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Required hacking skill: " + currServ.requiredHackingSkill);
-			Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Server security level: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(currServ.hackDifficulty, '0.000a'));
-			Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Chance to hack: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(Object(_Hacking__WEBPACK_IMPORTED_MODULE_7__[/* calculateHackingChance */ "b"])(currServ), '0.00%'));
-			Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Time to hack: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(Object(_Hacking__WEBPACK_IMPORTED_MODULE_7__[/* calculateHackingTime */ "d"])(currServ), '0.000') + " seconds");
-			Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Total money available on server: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(currServ.moneyAvailable, '$0,0.00'));
+			Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Server security level: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__["numeralWrapper"].format(currServ.hackDifficulty, '0.000a'));
+			Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Chance to hack: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__["numeralWrapper"].format(Object(_Hacking__WEBPACK_IMPORTED_MODULE_7__[/* calculateHackingChance */ "b"])(currServ), '0.00%'));
+			Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Time to hack: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__["numeralWrapper"].format(Object(_Hacking__WEBPACK_IMPORTED_MODULE_7__[/* calculateHackingTime */ "d"])(currServ), '0.000') + " seconds");
+			Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Total money available on server: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__["numeralWrapper"].format(currServ.moneyAvailable, '$0,0.00'));
 			Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Required number of open ports for NUKE: " + currServ.numOpenPortsRequired);
 
             if (currServ.sshPortOpen) {
@@ -32743,7 +32814,7 @@ let Terminal = {
                         var scriptBaseRamUsage = currServ.scripts[i].ramUsage;
                         var ramUsage = scriptBaseRamUsage * numThreads;
 
-                        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("This script requires " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(ramUsage, '0.00') + " GB of RAM to run for " + numThreads + " thread(s)");
+                        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("This script requires " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__["numeralWrapper"].format(ramUsage, '0.00') + " GB of RAM to run for " + numThreads + " thread(s)");
                         return;
                     }
                 }
@@ -33106,7 +33177,7 @@ let Terminal = {
 					var spacesThread = Array(numSpacesThread+1).join(" ");
 
 					//Calculate and transform RAM usage
-					ramUsage = _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(script.scriptRef.ramUsage * script.threads, '0.00') + " GB";
+					ramUsage = _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__["numeralWrapper"].format(script.scriptRef.ramUsage * script.threads, '0.00') + " GB";
 
 					var entry = [script.filename, spacesScript, script.threads, spacesThread, ramUsage];
 					Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])(entry.join(""));
@@ -33362,9 +33433,9 @@ let Terminal = {
         if (commandArray.length != 1) {
             Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Incorrect usage of free command. Usage: free"); return;
         }
-        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Total: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(_Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer().maxRam, '0.00') + " GB");
-        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Used: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(_Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer().ramUsed, '0.00') + " GB");
-        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Available: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(_Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer().maxRam - _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer().ramUsed, '0.00') + " GB");
+        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Total: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer().maxRam, '0.00') + " GB");
+        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Used: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer().ramUsed, '0.00') + " GB");
+        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Available: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer().maxRam - _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer().ramUsed, '0.00') + " GB");
     },
 
 	//First called when the "run [program]" command is called. Checks to see if you
@@ -33485,9 +33556,9 @@ let Terminal = {
             Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Server base security level: " + targetServer.baseDifficulty);
             Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Server current security level: " + targetServer.hackDifficulty);
             Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Server growth rate: " + targetServer.serverGrowth);
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Netscript hack() execution time: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(Object(_Hacking__WEBPACK_IMPORTED_MODULE_7__[/* calculateHackingTime */ "d"])(targetServer), '0.0') + "s");
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Netscript grow() execution time: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(Object(_Hacking__WEBPACK_IMPORTED_MODULE_7__[/* calculateGrowTime */ "a"])(targetServer), '0.0') + "s");
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Netscript weaken() execution time: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(Object(_Hacking__WEBPACK_IMPORTED_MODULE_7__[/* calculateWeakenTime */ "f"])(targetServer), '0.0') + "s");
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Netscript hack() execution time: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__["numeralWrapper"].format(Object(_Hacking__WEBPACK_IMPORTED_MODULE_7__[/* calculateHackingTime */ "d"])(targetServer), '0.0') + "s");
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Netscript grow() execution time: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__["numeralWrapper"].format(Object(_Hacking__WEBPACK_IMPORTED_MODULE_7__[/* calculateGrowTime */ "a"])(targetServer), '0.0') + "s");
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Netscript weaken() execution time: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__["numeralWrapper"].format(Object(_Hacking__WEBPACK_IMPORTED_MODULE_7__[/* calculateWeakenTime */ "f"])(targetServer), '0.0') + "s");
         };
         programHandlers[_CreateProgram__WEBPACK_IMPORTED_MODULE_3__[/* Programs */ "a"].AutoLink.name] = () => {
             Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("This executable cannot be run.");
@@ -33513,7 +33584,7 @@ let Terminal = {
             if(!fulfilled) {
                 Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Augmentations: " + _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].augmentations.length + " / 30");
 
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Money: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(_Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].money.toNumber(), '($0.000a)') + " / " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__[/* numeralWrapper */ "a"].format(1e11, '($0.000a)'));
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Money: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].money.toNumber(), '($0.000a)') + " / " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__["numeralWrapper"].format(1e11, '($0.000a)'));
                 Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("One path below must be fulfilled...");
                 Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("----------HACKING PATH----------");
                 Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Hacking skill: " + _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].hacking_skill + " / 2500");
@@ -33692,10 +33763,10 @@ let Terminal = {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 62)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 65)))
 
 /***/ }),
-/* 50 */
+/* 52 */
 /*!*************************************!*\
   !*** ./src/NetscriptBladeburner.js ***!
   \*************************************/
@@ -33708,7 +33779,7 @@ let Terminal = {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return unknownBladeburnerExceptionMessage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return checkBladeburnerAccess; });
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Bladeburner */ 29);
+/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Bladeburner */ 31);
 /* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NetscriptEvaluator */ 6);
 
 
@@ -33739,7 +33810,7 @@ function checkBladeburnerAccess(workerScript, functionName) {
 
 
 /***/ }),
-/* 51 */
+/* 53 */
 /*!*******************************************!*\
   !*** ./utils/uiHelpers/getElementById.ts ***!
   \*******************************************/
@@ -33767,7 +33838,7 @@ exports.getElementById = getElementById;
 
 
 /***/ }),
-/* 52 */
+/* 54 */
 /*!****************************************!*\
   !*** ./utils/helpers/arrayToString.ts ***!
   \****************************************/
@@ -33788,7 +33859,7 @@ exports.arrayToString = arrayToString;
 
 
 /***/ }),
-/* 53 */
+/* 55 */
 /*!*************************!*\
   !*** ./src/Missions.js ***!
   \*************************/
@@ -33804,20 +33875,20 @@ exports.arrayToString = arrayToString;
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./engine */ 8);
-/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 44);
+/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 46);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 61);
+/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 64);
 /* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 14);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/isString */ 37);
+/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/isString */ 39);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var jsplumb__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! jsplumb */ 228);
+/* harmony import */ var jsplumb__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! jsplumb */ 236);
 /* harmony import */ var jsplumb__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(jsplumb__WEBPACK_IMPORTED_MODULE_10__);
 
 
@@ -35357,10 +35428,10 @@ HackingMission.prototype.finishMission = function(win) {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 62)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 65)))
 
 /***/ }),
-/* 54 */
+/* 56 */
 /*!********************************!*\
   !*** ./src/Faction/Faction.ts ***!
   \********************************/
@@ -35372,7 +35443,7 @@ HackingMission.prototype.finishMission = function(win) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const Constants_1 = __webpack_require__(/*! ../Constants */ 1);
-const FactionInfo_1 = __webpack_require__(/*! ./FactionInfo */ 104);
+const FactionInfo_1 = __webpack_require__(/*! ./FactionInfo */ 109);
 const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
 class Faction {
     constructor(name = "") {
@@ -35484,7 +35555,7 @@ JSONReviver_1.Reviver.constructors.Faction = Faction;
 
 
 /***/ }),
-/* 55 */
+/* 57 */
 /*!************************!*\
   !*** ./src/RedPill.js ***!
   \************************/
@@ -35495,16 +35566,16 @@ JSONReviver_1.Reviver.constructors.Faction = Faction;
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return redPillFlag; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return hackWorldDaemon; });
-/* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNode */ 56);
+/* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNode */ 58);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./engine */ 8);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Prestige */ 82);
-/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SourceFile */ 66);
-/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Terminal */ 49);
+/* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Prestige */ 86);
+/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SourceFile */ 69);
+/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Terminal */ 51);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 27);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 29);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
 
@@ -35839,10 +35910,10 @@ function createBitNodeYesNoEventListeners(newBitNode, destroyedBitNode, flume=fa
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 62)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 65)))
 
 /***/ }),
-/* 56 */
+/* 58 */
 /*!************************!*\
   !*** ./src/BitNode.js ***!
   \************************/
@@ -36234,7 +36305,7 @@ function initBitNodeMultipliers() {
 
 
 /***/ }),
-/* 57 */
+/* 59 */
 /*!****************************!*\
   !*** ./utils/IPAddress.js ***!
   \****************************/
@@ -36246,7 +36317,7 @@ function initBitNodeMultipliers() {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return createRandomIp; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return ipExists; });
 /* harmony import */ var _src_Server__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/Server */ 11);
-/* harmony import */ var _helpers_getRandomByte__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers/getRandomByte */ 89);
+/* harmony import */ var _helpers_getRandomByte__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers/getRandomByte */ 93);
 /* harmony import */ var _helpers_getRandomByte__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_helpers_getRandomByte__WEBPACK_IMPORTED_MODULE_1__);
 
 
@@ -36284,47 +36355,74 @@ function ipExists(ip) {
 
 
 /***/ }),
-/* 58 */
-/*!**********************************!*\
-  !*** ./src/CompanyManagement.js ***!
-  \**********************************/
-/*! exports provided: Corporation */
+/* 60 */
+/*!****************************************!*\
+  !*** ./src/Corporation/Corporation.js ***!
+  \****************************************/
+/*! exports provided: TOTALSHARES, CyclesPerMarketCycle, CyclesPerIndustryStateCycle, SecsPerMarketCycle, Cities, WarehouseInitialCost, WarehouseInitialSize, WarehouseUpgradeBaseCost, OfficeInitialCost, OfficeInitialSize, OfficeUpgradeBaseCost, BribeThreshold, BribeToRepRatio, ProductProductionCostRatio, Corporation */
 /*! exports used: Corporation */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* unused harmony export TOTALSHARES */
+/* unused harmony export CyclesPerMarketCycle */
+/* unused harmony export CyclesPerIndustryStateCycle */
+/* unused harmony export SecsPerMarketCycle */
+/* unused harmony export Cities */
+/* unused harmony export WarehouseInitialCost */
+/* unused harmony export WarehouseInitialSize */
+/* unused harmony export WarehouseUpgradeBaseCost */
+/* unused harmony export OfficeInitialCost */
+/* unused harmony export OfficeInitialSize */
+/* unused harmony export OfficeUpgradeBaseCost */
+/* unused harmony export BribeThreshold */
+/* unused harmony export BribeToRepRatio */
+/* unused harmony export ProductProductionCostRatio */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Corporation; });
-/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNodeMultipliers */ 10);
-/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Faction/Factions */ 15);
-/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Literature */ 78);
-/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Locations */ 5);
-/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! decimal.js */ 31);
-/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/uiHelpers/clearSelector */ 127);
-/* harmony import */ var _utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 39);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./ui/navigationTracking */ 12);
+/* harmony import */ var _CorporationState__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CorporationState */ 114);
+/* harmony import */ var _CorporationState__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_CorporationState__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EmployeePositions */ 25);
+/* harmony import */ var _EmployeePositions__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _IndustryData__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./IndustryData */ 28);
+/* harmony import */ var _IndustryData__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_IndustryData__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _Material__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Material */ 62);
+/* harmony import */ var _Material__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Material__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _MaterialSizes__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./MaterialSizes */ 75);
+/* harmony import */ var _MaterialSizes__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_MaterialSizes__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _Product__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Product */ 101);
+/* harmony import */ var _Product__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Product__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../BitNodeMultipliers */ 10);
+/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Faction/Factions */ 15);
+/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Literature */ 82);
+/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../Locations */ 5);
+/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../Player */ 0);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../ui/numeralFormat */ 4);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../ui/navigationTracking */ 12);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 14);
-/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/helpers/isString */ 37);
-/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 27);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../utils/DialogBox */ 9);
+/* harmony import */ var _utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../utils/uiHelpers/clearSelector */ 133);
+/* harmony import */ var _utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../utils/uiHelpers/createElement */ 2);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../utils/uiHelpers/createPopup */ 41);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_17__);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../../utils/StringHelperFunctions */ 3);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__);
+/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../../utils/helpers/getRandomInt */ 14);
+/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__);
+/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../../utils/helpers/isString */ 39);
+/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_20__);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 29);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_21__);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../../utils/uiHelpers/removeElementById */ 20);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../../utils/YesNoBox */ 17);
+/* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! decimal.js */ 33);
 
 
 
@@ -36347,543 +36445,34 @@ function ipExists(ip) {
 
 
 
-/* State */
-var companyStates = ["START", "PURCHASE", "PRODUCTION", "SALE", "EXPORT"];
-function CorporationState() {
-    this.state = 0;
-}
 
-CorporationState.prototype.nextState = function() {
-    if (this.state < 0 || this.state >= companyStates.length) {
-        this.state = 0;
-    }
 
-    ++this.state;
-    if (this.state >= companyStates.length) {
-        this.state = 0;
-    }
-}
 
-CorporationState.prototype.getState = function() {
-    return companyStates[this.state];
-}
 
-CorporationState.prototype.toJSON = function() {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_9__["Generic_toJSON"])("CorporationState", this);
-}
 
-CorporationState.fromJSON = function(value) {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_9__["Generic_fromJSON"])(CorporationState, value.data);
-}
 
-_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_9__["Reviver"].constructors.CorporationState = CorporationState;
+
 
 /* Constants */
-var TOTALSHARES = 1e9; //Total number of shares you have at your company
-var CyclesPerMarketCycle    = 75;
-var CyclesPerIndustryStateCycle = CyclesPerMarketCycle / companyStates.length;
-var SecsPerMarketCycle      = CyclesPerMarketCycle / 5;
-var Cities = ["Aevum", "Chongqing", "Sector-12", "New Tokyo", "Ishima", "Volhaven"];
-var WarehouseInitialCost        = 5e9; //Initial purchase cost of warehouse
-var WarehouseInitialSize        = 100;
-var WarehouseUpgradeBaseCost    = 1e9;
+const TOTALSHARES = 1e9; //Total number of shares you have at your company
+const CyclesPerMarketCycle    = 75;
+const CyclesPerIndustryStateCycle = CyclesPerMarketCycle / _CorporationState__WEBPACK_IMPORTED_MODULE_0__["AllCorporationStates"].length;
+const SecsPerMarketCycle      = CyclesPerMarketCycle / 5;
+const Cities = ["Aevum", "Chongqing", "Sector-12", "New Tokyo", "Ishima", "Volhaven"];
+const WarehouseInitialCost        = 5e9; //Initial purchase cost of warehouse
+const WarehouseInitialSize        = 100;
+const WarehouseUpgradeBaseCost    = 1e9;
 
-var OfficeInitialCost           = 4e9;
-var OfficeInitialSize           = 3;
-var OfficeUpgradeBaseCost       = 1e9;
+const OfficeInitialCost           = 4e9;
+const OfficeInitialSize           = 3;
+const OfficeUpgradeBaseCost       = 1e9;
 
-var BribeThreshold              = 100e12; //Money needed to be able to bribe for faction rep
-var BribeToRepRatio             = 1e9;   //Bribe Value divided by this = rep gain
+const BribeThreshold              = 100e12; //Money needed to be able to bribe for faction rep
+const BribeToRepRatio             = 1e9;   //Bribe Value divided by this = rep gain
 
-var ProductProductionCostRatio  = 5;    //Ratio of material cost of a product to its production cost
-
-function Material(params={}) {
-    this.name = params.name ? params.name : "";
-    this.qty    = 0; //Quantity
-    this.qlt    = 0; //Quality, unbounded
-    this.dmd    = 0; //Demand, 0-100?
-    this.dmdR   = 0; //Range of possible demand
-    this.cmp    = 0; //Competition, 0-100
-    this.cmpR   = 0; //Range of possible competition
-    this.mv     = 0; //Maximum Volatility of stats
-
-    //Markup. Determines how high of a price you can charge on the material
-    //compared to the market price (bCost) based on quality
-    //Quality is divided by this to determine markup limits
-    //e.g if mku is 10 and quality is 100 then you can mark up prices by 100/10 = 10
-    //without consequences
-    this.mku    = 0;
-
-    this.buy = 0; //How much of this material is being bought per second
-    this.sll = 0; //How much of this material is being sold per second
-    this.prd = 0; //How much of this material is being produced per second
-    this.exp = []; //Exports of this material to another warehouse/industry
-    this.totalExp = 0; //Total export amount for last cycle
-    this.imp = 0;
-    this.bCost = 0; //$ Cost/sec to buy material
-    this.sCost = 0; //$ Cost/sec to sell material
-
-    //[Whether production/sale is limited, limit amount]
-    this.prdman = [false, 0]; //Production for this material is manually limited
-    this.sllman = [false, 0]; //Sale of this material is manually limited
-    this.init();
-}
-
-Material.prototype.init = function(mats={}) {
-    switch(this.name) {
-        case "Water":
-            this.dmd = 75; this.dmdR = [65, 85];
-            this.cmp = 50; this.cmpR = [40, 60];
-            this.bCost = 1000; this.mv = 0.2;
-            this.mku = 6;
-            break;
-        case "Energy":
-            this.dmd = 90; this.dmdR = [80, 100];
-            this.cmp = 80; this.cmpR = [65, 95];
-            this.bCost = 1500; this.mv = 0.2;
-            this.mku = 6;
-            break;
-        case "Food":
-            this.dmd = 80; this.dmdR = [70, 90];
-            this.cmp = 60; this.cmpR = [35, 85];
-            this.bCost = 5000; this.mv = 1;
-            this.mku = 3;
-            break;
-        case "Plants":
-            this.dmd = 70; this.dmdR = [20, 90];
-            this.cmp = 50; this.cmpR = [30, 70];
-            this.bCost = 3000; this.mv = 0.6;
-            this.mku = 3.75;
-            break;
-        case "Metal":
-            this.dmd = 80; this.dmdR = [75, 85];
-            this.cmp = 70; this.cmpR = [60, 80];
-            this.bCost = 2650; this.mv = 1;
-            this.mku = 6;
-            break;
-        case "Hardware":
-            this.dmd = 85; this.dmdR = [80, 90];
-            this.cmp = 80; this.cmpR = [65, 95];
-            this.bCost = 4000; this.mv = 0.5; //Less mv bc its processed twice
-            this.mku = 1;
-            break;
-        case "Chemicals":
-            this.dmd = 55; this.dmdR = [40, 70];
-            this.cmp = 60; this.cmpR = [40, 80];
-            this.bCost = 6750; this.mv = 1.2;
-            this.mku = 2;
-            break;
-        case "Real Estate":
-            this.dmd = 50; this.dmdR = [5, 100];
-            this.cmp = 50; this.cmpR = [25, 75];
-            this.bCost = 16e3; this.mv = 1.5; //Less mv bc its processed twice
-            this.mku = 1.5;
-            break;
-        case "Drugs":
-            this.dmd = 60; this.dmdR = [45, 75];
-            this.cmp = 70; this.cmpR = [40, 100];
-            this.bCost = 8e3; this.mv = 1.6;
-            this.mku = 1;
-            break;
-        case "Robots":
-            this.dmd = 90; this.dmdR = [80, 100];
-            this.cmp = 90; this.cmpR = [80, 100];
-            this.bCost = 20e3; this.mv = 0.5; //Less mv bc its processed twice
-            this.mku = 1;
-            break;
-        case "AI Cores":
-            this.dmd = 90; this.dmdR = [80, 100];
-            this.cmp = 90; this.cmpR = [80, 100];
-            this.bCost = 27e3; this.mv = 0.8; //Less mv bc its processed twice
-            this.mku = 0.5;
-            break;
-        case "Scientific Research":
-            break;
-        default:
-            console.log("Invalid material type in init(): " + this.name);
-            break;
-    }
-}
-
-//Process change in demand, competition, and buy cost of this material
-Material.prototype.processMarket = function() {
-    //This 1st random check determines whether competition increases or decreases
-    //More competition = lower market price
-    var v = (Math.random() * this.mv) / 100;
-    var pv = (Math.random() * this.mv) / 300;
-    if (Math.random() < 0.42) {
-        this.cmp *= (1+v);
-        if (this.cmp > this.cmpR[1]) {this.cmp = this.cmpR[1]};
-        this.bCost *= (1-pv);
-    } else {
-        this.cmp *= (1-v);
-        if (this.cmp < this.cmpR[0]) {this.cmp = this.cmpR[0];}
-        this.bCost *= (1+pv);
-    }
-
-    //This 2nd random check determines whether demand increases or decreases
-    //More demand = higher market price
-    v = (Math.random() * this.mv) / 100;
-    pv = (Math.random() * this.mv) / 300;
-    if (Math.random() < 0.45) {
-        this.dmd *= (1+v);
-        if (this.dmd > this.dmdR[1]) {this.dmd = this.dmdR[1];}
-        this.bCost *= (1+pv);
-    } else {
-        this.dmd *= (1-v);
-        if (this.dmd < this.dmdR[0]) {this.dmd = this.dmdR[0];}
-        this.bCost *= (1-pv);
-    }
-}
-
-Material.prototype.toJSON = function() {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_9__["Generic_toJSON"])("Material", this);
-}
-
-Material.fromJSON = function(value) {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_9__["Generic_fromJSON"])(Material, value.data);
-}
-
-_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_9__["Reviver"].constructors.Material = Material;
-
-//Map of material (by name) to their sizes (how much space it takes in warehouse)
-let MaterialSizes = {
-    Water:      0.05,
-    Energy:     0.01,
-    Food:       0.03,
-    Plants:     0.05,
-    Metal:      0.1,
-    Hardware:   0.06,
-    Chemicals:  0.05,
-    Drugs:      0.02,
-    Robots:     0.5,
-    AICores:    0.1,
-    RealEstate: 0,
-}
-
-function Product(params={}) {
-    this.name = params.name         ? params.name           : 0;
-    this.dmd = params.demand        ? params.demand         : 0;
-    this.cmp = params.competition   ? params.competition    : 0;
-    this.mku = params.markup        ? params.markup         : 0;
-    this.pCost = 0; //An estimate of how much money it costs to make this
-    this.sCost = 0; //How much this is selling for
-
-    //Variables for creation of product
-    this.fin = false;       //Finished being created
-    this.prog = 0;          //0-100% created
-    this.createCity = params.createCity ? params.createCity : ""; // City in which the product is being created
-    this.designCost     = params.designCost ? params.designCost : 0;
-    this.advCost        = params.advCost ? params.advCost : 0;
-
-    //Aggregate score for a product's 'rating' based on the other properties below
-    //The weighting of the other properties (performance, durability)
-    //differs between industries
-    this.rat = 0;
-
-    this.qlt = params.quality       ? params.quality        : 0;
-    this.per = params.performance   ? params.performance    : 0;
-    this.dur = params.durability    ? params.durability     : 0;
-    this.rel = params.reliability   ? params.reliability    : 0;
-    this.aes = params.aesthetics    ? params.aesthetics     : 0;
-    this.fea = params.features      ? params.features       : 0;
-
-    //Data refers to the production, sale, and quantity of the products
-    //These values are specific to a city
-    //The data is [qty, prod, sell]
-    this.data = {
-        [_Locations__WEBPACK_IMPORTED_MODULE_3__["Locations"].Aevum]: [0, 0, 0],
-        [_Locations__WEBPACK_IMPORTED_MODULE_3__["Locations"].Chongqing]: [0, 0, 0],
-        [_Locations__WEBPACK_IMPORTED_MODULE_3__["Locations"].Sector12]: [0, 0, 0],
-        [_Locations__WEBPACK_IMPORTED_MODULE_3__["Locations"].NewTokyo]: [0, 0, 0],
-        [_Locations__WEBPACK_IMPORTED_MODULE_3__["Locations"].Ishima]: [0, 0, 0],
-        [_Locations__WEBPACK_IMPORTED_MODULE_3__["Locations"].Volhaven]: [0, 0, 0],
-    }
-
-    //Only applies for location-based products like restaurants/hospitals
-    this.loc = params.loc ? params.loc : 0;
-
-    //How much space it takes in the warehouse. Not applicable for all products
-    this.siz = params.size ? params.size : 0;
-
-    //Material requirements. An object that maps the name of a material to how much it requires
-    //to make 1 unit of the product.
-    this.reqMats = params.req           ? params.req            : {};
-
-    //[Whether production/sale is limited, limit amount]
-    this.prdman = {
-        [_Locations__WEBPACK_IMPORTED_MODULE_3__["Locations"].Aevum]: [false, 0],
-        [_Locations__WEBPACK_IMPORTED_MODULE_3__["Locations"].Chongqing]: [false, 0],
-        [_Locations__WEBPACK_IMPORTED_MODULE_3__["Locations"].Sector12]: [false, 0],
-        [_Locations__WEBPACK_IMPORTED_MODULE_3__["Locations"].NewTokyo]: [false, 0],
-        [_Locations__WEBPACK_IMPORTED_MODULE_3__["Locations"].Ishima]: [false, 0],
-        [_Locations__WEBPACK_IMPORTED_MODULE_3__["Locations"].Volhaven]: [false, 0],
-    }
-
-    this.sllman = {
-        [_Locations__WEBPACK_IMPORTED_MODULE_3__["Locations"].Aevum]: [false, 0],
-        [_Locations__WEBPACK_IMPORTED_MODULE_3__["Locations"].Chongqing]: [false, 0],
-        [_Locations__WEBPACK_IMPORTED_MODULE_3__["Locations"].Sector12]: [false, 0],
-        [_Locations__WEBPACK_IMPORTED_MODULE_3__["Locations"].NewTokyo]: [false, 0],
-        [_Locations__WEBPACK_IMPORTED_MODULE_3__["Locations"].Ishima]: [false, 0],
-        [_Locations__WEBPACK_IMPORTED_MODULE_3__["Locations"].Volhaven]: [false, 0],
-    }
-}
-
-//empWorkMult is a multiplier that increases progress rate based on
-//productivity of employees
-Product.prototype.createProduct = function(marketCycles=1, empWorkMult=1) {
-    if (this.fin) {return;}
-    this.prog += (marketCycles * .01 * empWorkMult);
-}
-
-//'industry' is a reference to the industry that makes the product
-Product.prototype.finishProduct = function(employeeProd, industry) {
-    this.fin = true;
-
-    //Calculate properties
-    var progrMult = this.prog / 100;
-
-    var engrRatio   = employeeProd[EmployeePositions.Engineer] / employeeProd["total"],
-        mgmtRatio   = employeeProd[EmployeePositions.Management] / employeeProd["total"],
-        rndRatio    = employeeProd[EmployeePositions.RandD] / employeeProd["total"],
-        opsRatio    = employeeProd[EmployeePositions.Operations] / employeeProd["total"],
-        busRatio    = employeeProd[EmployeePositions.Business] / employeeProd["total"];
-    var designMult = 1 + (Math.pow(this.designCost, 0.1) / 100);
-    console.log("designMult: " + designMult);
-    var balanceMult = (1.2 * engrRatio) + (0.9 * mgmtRatio) + (1.3 * rndRatio) +
-                      (1.5 * opsRatio) + (busRatio);
-    var sciMult = 1 + (Math.pow(industry.sciResearch.qty, industry.sciFac) / 800);
-    var totalMult = progrMult * balanceMult * designMult * sciMult;
-
-    this.qlt = totalMult * ((0.10 * employeeProd[EmployeePositions.Engineer]) +
-                            (0.05 * employeeProd[EmployeePositions.Management]) +
-                            (0.05 * employeeProd[EmployeePositions.RandD]) +
-                            (0.02 * employeeProd[EmployeePositions.Operations]) +
-                            (0.02 * employeeProd[EmployeePositions.Business]));
-    this.per = totalMult * ((0.15 * employeeProd[EmployeePositions.Engineer]) +
-                            (0.02 * employeeProd[EmployeePositions.Management]) +
-                            (0.02 * employeeProd[EmployeePositions.RandD]) +
-                            (0.02 * employeeProd[EmployeePositions.Operations]) +
-                            (0.02 * employeeProd[EmployeePositions.Business]));
-    this.dur = totalMult * ((0.05 * employeeProd[EmployeePositions.Engineer]) +
-                            (0.02 * employeeProd[EmployeePositions.Management]) +
-                            (0.08 * employeeProd[EmployeePositions.RandD]) +
-                            (0.05 * employeeProd[EmployeePositions.Operations]) +
-                            (0.05 * employeeProd[EmployeePositions.Business]));
-    this.rel = totalMult * ((0.02 * employeeProd[EmployeePositions.Engineer]) +
-                            (0.08 * employeeProd[EmployeePositions.Management]) +
-                            (0.02 * employeeProd[EmployeePositions.RandD]) +
-                            (0.05 * employeeProd[EmployeePositions.Operations]) +
-                            (0.08 * employeeProd[EmployeePositions.Business]));
-    this.aes = totalMult * ((0.00 * employeeProd[EmployeePositions.Engineer]) +
-                            (0.08 * employeeProd[EmployeePositions.Management]) +
-                            (0.05 * employeeProd[EmployeePositions.RandD]) +
-                            (0.02 * employeeProd[EmployeePositions.Operations]) +
-                            (0.10 * employeeProd[EmployeePositions.Business]));
-    this.fea = totalMult * ((0.08 * employeeProd[EmployeePositions.Engineer]) +
-                            (0.05 * employeeProd[EmployeePositions.Management]) +
-                            (0.02 * employeeProd[EmployeePositions.RandD]) +
-                            (0.05 * employeeProd[EmployeePositions.Operations]) +
-                            (0.05 * employeeProd[EmployeePositions.Business]));
-    this.calculateRating(industry);
-    var advMult = 1 + (Math.pow(this.advCost, 0.1) / 100);
-    this.mku = 100 / (advMult * Math.pow((this.qlt + 0.001), 0.65) * (busRatio + mgmtRatio));
-    this.dmd = industry.awareness === 0 ? 20 : Math.min(100, advMult * (100 * (industry.popularity / industry.awareness)));
-    this.cmp = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__["getRandomInt"])(0, 70);
-
-    //Calculate the product's required materials
-    //For now, just set it to be the same as the requirements to make materials
-    for (var matName in industry.reqMats) {
-        if (industry.reqMats.hasOwnProperty(matName)) {
-            this.reqMats[matName] = industry.reqMats[matName];
-        }
-    }
-
-    //Calculate the product's size
-    //For now, just set it to be the same size as the requirements to make materials
-    this.siz = 0;
-    for (var matName in industry.reqMats) {
-        this.siz += MaterialSizes[matName] * industry.reqMats[matName];
-    }
-
-    //Delete unneeded variables
-    delete this.prog;
-    delete this.createCity;
-    delete this.designCost;
-    delete this.advCost;
-}
+const ProductProductionCostRatio  = 5;    //Ratio of material cost of a product to its production cost
 
 
-Product.prototype.calculateRating = function(industry) {
-    var weights = ProductRatingWeights[industry.type];
-    if (weights == null) {
-        console.log("ERROR: Could not find product rating weights for: " + industry);
-        return;
-    }
-    this.rat = 0;
-    this.rat += weights.Quality     ? this.qlt * weights.Quality : 0;
-    this.rat += weights.Performance ? this.per * weights.Performance : 0;
-    this.rat += weights.Durability  ? this.dur * weights.Durability : 0;
-    this.rat += weights.Reliability ? this.rel * weights.Reliability : 0;
-    this.rat += weights.Aesthetics  ? this.aes * weights.Aesthetics : 0;
-    this.rat += weights.Features    ? this.fea * weights.Features : 0;
-}
-
-Product.prototype.toJSON = function() {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_9__["Generic_toJSON"])("Product", this);
-}
-
-Product.fromJSON = function(value) {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_9__["Generic_fromJSON"])(Product, value.data);
-}
-
-_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_9__["Reviver"].constructors.Product = Product;
-
-var Industries = {
-    Energy: "Energy",
-    Utilities: "Water Utilities",
-    Agriculture: "Agriculture",
-    Fishing: "Fishing",
-    Mining: "Mining",
-    Food: "Food",
-    Tobacco: "Tobacco",
-    Chemical: "Chemical",
-    Pharmaceutical: "Pharmaceutical",
-    Computer: "Computer Hardware",
-    Robotics: "Robotics",
-    Software: "Software",
-    Healthcare: "Healthcare",
-    RealEstate: "RealEstate",
-}
-
-var IndustryStartingCosts = {
-    Energy: 225e9,
-    Utilities: 150e9,
-    Agriculture: 40e9,
-    Fishing: 80e9,
-    Mining: 300e9,
-    Food: 10e9,
-    Tobacco: 20e9,
-    Chemical: 70e9,
-    Pharmaceutical: 200e9,
-    Computer: 500e9,
-    Robotics: 1e12,
-    Software: 25e9,
-    Healthcare: 750e9,
-    RealEstate: 600e9,
-}
-
-var IndustryDescriptions = {
-    Energy: "Engage in the production and distribution of energy.<br><br>" +
-            "Starting cost: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(IndustryStartingCosts.Energy, "$0.000a") + "<br>" +
-            "Recommended starting Industry: NO",
-    Utilities: "Distributes water and provides wastewater services.<br><br>" +
-               "Starting cost: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(IndustryStartingCosts.Utilities, "$0.000a") + "<br>" +
-               "Recommended starting Industry: NO",
-    Agriculture: "Cultive crops and breed livestock to produce food.<br><br>" +
-                 "Starting cost: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(IndustryStartingCosts.Agriculture, "$0.000a") + "<br>" +
-                 "Recommended starting Industry: YES",
-    Fishing: "Produce food through the breeding and processing of fish and fish products<br><br>" +
-             "Starting cost: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(IndustryStartingCosts.Fishing, "$0.000a") + "<br>" +
-             "Recommended starting Industry: NO",
-    Mining: "Extract and process metals from the earth.<br><br>" +
-            "Starting cost: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(IndustryStartingCosts.Mining, "$0.000a") + "<br>" +
-            "Recommended starting Industry: NO",
-    Food: "Create your own restaurants all around the world.<br><br>" +
-          "Starting cost: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(IndustryStartingCosts.Food, "$0.000a") + "<br>" +
-          "Recommended starting Industry: YES",
-    Tobacco: "Create and distribute tobacco and tobacco-related products.<br><br>" +
-             "Starting cost: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(IndustryStartingCosts.Tobacco, "$0.000a") + "<br>" +
-             "Recommended starting Industry: YES",
-    Chemical: "Product industrial chemicals<br><br>" +
-              "Starting cost: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(IndustryStartingCosts.Chemical, "$0.000a") + "<br>" +
-              "Recommended starting Industry: NO",
-    Pharmaceutical: "Discover, develop, and create new pharmaceutical drugs.<br><br>" +
-                    "Starting cost: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(IndustryStartingCosts.Pharmaceutical, "$0.000a") + "<br>" +
-                    "Recommended starting Industry: NO",
-    Computer: "Develop and manufacture new computer hardware and networking infrastructures.<br><br>" +
-              "Starting cost: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(IndustryStartingCosts.Computer, "$0.000a") + "<br>" +
-              "Recommended starting Industry: NO",
-    Robotics: "Develop and create robots.<br><br>" +
-              "Starting cost: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(IndustryStartingCosts.Robotics, "$0.000a") + "<br>" +
-              "Recommended starting Industry: NO",
-    Software: "Develop computer software and create AI Cores.<br><br>" +
-              "Starting cost: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(IndustryStartingCosts.Software, "$0.000a") + "<br>" +
-              "Recommended starting Industry: YES",
-    Healthcare: "Create and manage hospitals.<br><br>" +
-                "Starting cost: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(IndustryStartingCosts.Healthcare, "$0.000a") + "<br>" +
-                "Recommended starting Industry: NO",
-    RealEstate: "Develop and manage real estate properties.<br><br>" +
-                "Starting cost: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(IndustryStartingCosts.RealEstate, "$0.000a") + "<br>" +
-                "Recommended starting Industry: NO",
-}
-
-var ProductRatingWeights = {
-    [Industries.Food]: {
-        Quality:        0.7,
-        Durability:     0.1,
-        Aesthetics:     0.2,
-    },
-    [Industries.Tobacco]: {
-        Quality:        0.4,
-        Durability:     0.2,
-        Reliability:    0.2,
-        Aesthetics:     0.2,
-    },
-    [Industries.Pharmaceutical]: {
-        Quality:        0.2,
-        Performance:    0.2,
-        Durability:     0.1,
-        Reliability:    0.3,
-        Features:       0.2,
-    },
-    [Industries.Computer]: {
-        Quality:        0.15,
-        Performance:    0.25,
-        Durability:     0.25,
-        Reliability:    0.2,
-        Aesthetics:     0.05,
-        Features:       0.1,
-    },
-    "Computer" : {  //Repeat
-        Quality:        0.15,
-        Performance:    0.25,
-        Durability:     0.25,
-        Reliability:    0.2,
-        Aesthetics:     0.05,
-        Features:       0.1,
-    },
-    [Industries.Robotics]: {
-        Quality:        0.1,
-        Performance:    0.2,
-        Durability:     0.2,
-        Reliability:    0.2,
-        Aesthetics:     0.1,
-        Features:       0.2,
-    },
-    [Industries.Software]: {
-        Quality:        0.2,
-        Performance:    0.2,
-        Reliability:    0.2,
-        Durability:     0.2,
-        Features:       0.2,
-    },
-    [Industries.Healthcare]: {
-        Quality:        0.4,
-        Performance:    0.1,
-        Durability:     0.1,
-        Reliability:    0.3,
-        Features:       0.1,
-    },
-    [Industries.RealEstate]: {
-        Quality:        0.2,
-        Durability:     0.25,
-        Reliability:    0.1,
-        Aesthetics:     0.35,
-        Features:       0.1,
-    }
-}
 
 //Industry upgrades
 //The structure is:
@@ -36902,33 +36491,33 @@ var IndustryUpgrades = {
 var empManualAssignmentModeActive = false;
 function Industry(params={}) {
     this.offices = { //Maps locations to offices. 0 if no office at that location
-        [_Locations__WEBPACK_IMPORTED_MODULE_3__["Locations"].Aevum]: 0,
-        [_Locations__WEBPACK_IMPORTED_MODULE_3__["Locations"].Chongqing]: 0,
-        [_Locations__WEBPACK_IMPORTED_MODULE_3__["Locations"].Sector12]: new OfficeSpace({
-            loc:_Locations__WEBPACK_IMPORTED_MODULE_3__["Locations"].Sector12,
+        [_Locations__WEBPACK_IMPORTED_MODULE_9__["Locations"].Aevum]: 0,
+        [_Locations__WEBPACK_IMPORTED_MODULE_9__["Locations"].Chongqing]: 0,
+        [_Locations__WEBPACK_IMPORTED_MODULE_9__["Locations"].Sector12]: new OfficeSpace({
+            loc:_Locations__WEBPACK_IMPORTED_MODULE_9__["Locations"].Sector12,
             size:OfficeInitialSize,
         }),
-        [_Locations__WEBPACK_IMPORTED_MODULE_3__["Locations"].NewTokyo]: 0,
-        [_Locations__WEBPACK_IMPORTED_MODULE_3__["Locations"].Ishima]: 0,
-        [_Locations__WEBPACK_IMPORTED_MODULE_3__["Locations"].Volhaven]: 0
+        [_Locations__WEBPACK_IMPORTED_MODULE_9__["Locations"].NewTokyo]: 0,
+        [_Locations__WEBPACK_IMPORTED_MODULE_9__["Locations"].Ishima]: 0,
+        [_Locations__WEBPACK_IMPORTED_MODULE_9__["Locations"].Volhaven]: 0
     };
 
     this.warehouses = { //Maps locations to warehouses. 0 if no warehouse at that location
-        [_Locations__WEBPACK_IMPORTED_MODULE_3__["Locations"].Aevum]: 0,
-        [_Locations__WEBPACK_IMPORTED_MODULE_3__["Locations"].Chonqing]: 0,
-        [_Locations__WEBPACK_IMPORTED_MODULE_3__["Locations"].Sector12]: new Warehouse({
-            loc:_Locations__WEBPACK_IMPORTED_MODULE_3__["Locations"].Sector12,
+        [_Locations__WEBPACK_IMPORTED_MODULE_9__["Locations"].Aevum]: 0,
+        [_Locations__WEBPACK_IMPORTED_MODULE_9__["Locations"].Chonqing]: 0,
+        [_Locations__WEBPACK_IMPORTED_MODULE_9__["Locations"].Sector12]: new Warehouse({
+            loc:_Locations__WEBPACK_IMPORTED_MODULE_9__["Locations"].Sector12,
             size: WarehouseInitialSize,
         }),
-        [_Locations__WEBPACK_IMPORTED_MODULE_3__["Locations"].NewTokyo]: 0,
-        [_Locations__WEBPACK_IMPORTED_MODULE_3__["Locations"].Ishima]: 0,
-        [_Locations__WEBPACK_IMPORTED_MODULE_3__["Locations"].Volhaven]: 0
+        [_Locations__WEBPACK_IMPORTED_MODULE_9__["Locations"].NewTokyo]: 0,
+        [_Locations__WEBPACK_IMPORTED_MODULE_9__["Locations"].Ishima]: 0,
+        [_Locations__WEBPACK_IMPORTED_MODULE_9__["Locations"].Volhaven]: 0
     };
 
     this.name   = params.name ? params.name : 0;
     this.type   = params.type ? params.type : 0;
 
-    this.sciResearch    = new Material({name: "Scientific Research"});
+    this.sciResearch    = new _Material__WEBPACK_IMPORTED_MODULE_3__["Material"]({name: "Scientific Research"});
 
     //A map of the NAME of materials required to create produced materials to
     //how many are needed to produce 1 unit of produced materials
@@ -36959,10 +36548,10 @@ function Industry(params={}) {
     this.prodMult   = 0; //Production multiplier
 
     //Financials
-    this.lastCycleRevenue   = new decimal_js__WEBPACK_IMPORTED_MODULE_5__[/* default */ "a"](0);
-    this.lastCycleExpenses  = new decimal_js__WEBPACK_IMPORTED_MODULE_5__[/* default */ "a"](0);
-    this.thisCycleRevenue   = new decimal_js__WEBPACK_IMPORTED_MODULE_5__[/* default */ "a"](0);
-    this.thisCycleExpenses  = new decimal_js__WEBPACK_IMPORTED_MODULE_5__[/* default */ "a"](0);
+    this.lastCycleRevenue   = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](0);
+    this.lastCycleExpenses  = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](0);
+    this.thisCycleRevenue   = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](0);
+    this.thisCycleExpenses  = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](0);
 
     //Upgrades
     var numUpgrades = Object.keys(IndustryUpgrades).length;
@@ -36976,9 +36565,9 @@ function Industry(params={}) {
 
 Industry.prototype.init = function() {
     //Set the unique properties of an industry (how much its affected by real estate/scientific research, etc.)
-    this.startingCost = IndustryStartingCosts[this.type];
+    this.startingCost = _IndustryData__WEBPACK_IMPORTED_MODULE_2__["IndustryStartingCosts"][this.type];
     switch (this.type) {
-        case Industries.Energy:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Energy:
             this.reFac  = 0.65;
             this.sciFac = 0.7;
             this.robFac = 0.05;
@@ -36990,7 +36579,7 @@ Industry.prototype.init = function() {
             };
             this.prodMats = ["Energy"];
             break;
-        case Industries.Utilities:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Utilities:
         case "Utilities":
             this.reFac  = 0.5;
             this.sciFac = 0.6;
@@ -37003,7 +36592,7 @@ Industry.prototype.init = function() {
             }
             this.prodMats = ["Water"];
             break;
-        case Industries.Agriculture:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Agriculture:
             this.reFac  = 0.75;
             this.sciFac = 0.5;
             this.hwFac  = 0.2;
@@ -37016,7 +36605,7 @@ Industry.prototype.init = function() {
             }
             this.prodMats = ["Plants", "Food"];
             break;
-        case Industries.Fishing:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Fishing:
             this.reFac  = 0.15;
             this.sciFac = 0.35;
             this.hwFac  = 0.35;
@@ -37028,7 +36617,7 @@ Industry.prototype.init = function() {
             }
             this.prodMats = ["Food"];
             break;
-        case Industries.Mining:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Mining:
             this.reFac  = 0.3;
             this.sciFac = 0.26;
             this.hwFac  = 0.4;
@@ -37040,7 +36629,7 @@ Industry.prototype.init = function() {
             }
             this.prodMats = ["Metal"];
             break;
-        case Industries.Food:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Food:
             //reFac is unique for this bc it diminishes greatly per city. Handle this separately in code?
             this.sciFac = 0.12;
             this.hwFac  = 0.15;
@@ -37055,7 +36644,7 @@ Industry.prototype.init = function() {
             }
             this.makesProducts = true;
             break;
-        case Industries.Tobacco:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Tobacco:
             this.reFac  = 0.15;
             this.sciFac = 0.75;
             this.hwFac  = 0.15;
@@ -37068,7 +36657,7 @@ Industry.prototype.init = function() {
             }
             this.makesProducts = true;
             break;
-        case Industries.Chemical:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Chemical:
             this.reFac  = 0.25;
             this.sciFac = 0.75;
             this.hwFac  = 0.2;
@@ -37082,7 +36671,7 @@ Industry.prototype.init = function() {
             }
             this.prodMats = ["Chemicals"];
             break;
-        case Industries.Pharmaceutical:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Pharmaceutical:
             this.reFac  = 0.05;
             this.sciFac = 0.8;
             this.hwFac  = 0.15;
@@ -37097,7 +36686,7 @@ Industry.prototype.init = function() {
             this.prodMats = ["Drugs"];
             this.makesProducts = true;
             break;
-        case Industries.Computer:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Computer:
         case "Computer":
             this.reFac  = 0.2;
             this.sciFac = 0.62;
@@ -37105,13 +36694,13 @@ Industry.prototype.init = function() {
             this.aiFac  = 0.19;
             this.advFac = 0.17;
             this.reqMats = {
-                "Metal":    2.5,
+                "Metal":    2,
                 "Energy":   1,
             }
             this.prodMats = ["Hardware"];
             this.makesProducts = true;
             break;
-        case Industries.Robotics:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Robotics:
             this.reFac  = 0.32;
             this.sciFac = 0.65;
             this.aiFac  = 0.36;
@@ -37124,7 +36713,7 @@ Industry.prototype.init = function() {
             this.prodMats = ["Robots"];
             this.makesProducts = true;
             break;
-        case Industries.Software:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Software:
             this.sciFac = 0.62;
             this.advFac = 0.16;
             this.hwFac  = 0.25;
@@ -37138,7 +36727,7 @@ Industry.prototype.init = function() {
             this.prodMats = ["AICores"];
             this.makesProducts = true;
             break;
-        case Industries.Healthcare:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Healthcare:
             this.reFac  = 0.1;
             this.sciFac = 0.75;
             this.advFac = 0.11;
@@ -37153,17 +36742,17 @@ Industry.prototype.init = function() {
             }
             this.makesProducts = true;
             break;
-        case Industries.RealEstate:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].RealEstate:
             this.robFac = 0.6;
             this.aiFac  = 0.6;
             this.advFac = 0.25;
             this.sciFac = 0.05;
             this.hwFac  = 0.05;
             this.reqMats = {
-                "Metal":    20,
-                "Energy":   10,
-                "Water":    10,
-                "Hardware": 5
+                "Metal":    5,
+                "Energy":   5,
+                "Water":    2,
+                "Hardware": 4
             }
             this.prodMats = ["RealEstate"];
             this.makesProducts = true;
@@ -37177,29 +36766,29 @@ Industry.prototype.init = function() {
 Industry.prototype.getProductDescriptionText = function() {
     if (!this.makesProducts) {return;}
     switch (this.type) {
-        case Industries.Food:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Food:
             return "create and manage restaurants";
             break;
-        case Industries.Tobacco:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Tobacco:
             return "create tobacco and tobacco-related products";
             break;
-        case Industries.Pharmaceutical:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Pharmaceutical:
             return "develop new pharmaceutical drugs";
             break;
-        case Industries.Computer:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Computer:
         case "Computer":
             return "create new computer hardware and networking infrastructures";
             break;
-        case Industries.Robotics:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Robotics:
             return "build specialized robots and robot-related products";
             break;
-        case Industries.Software:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Software:
             return "develop computer software";
             break;
-        case Industries.Healthcare:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Healthcare:
             return "build and manage hospitals";
             break;
-        case Industries.RealEstate:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].RealEstate:
             return "develop and manage real estate properties";
             break;
         default:
@@ -37243,7 +36832,7 @@ Industry.prototype.updateWarehouseSizeUsed = function(warehouse) {
             var prod = this.products[prodName];
             warehouse.sizeUsed += (prod.data[warehouse.loc][0] * prod.siz);
             if (prod.data[warehouse.loc][0] > 0) {
-                warehouse.breakdown += (prodName + ": " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(prod.data[warehouse.loc][0] * prod.siz, 0) + "<br>");
+                warehouse.breakdown += (prodName + ": " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(prod.data[warehouse.loc][0] * prod.siz, 0) + "<br>");
             }
         }
     }
@@ -37259,14 +36848,14 @@ Industry.prototype.process = function(marketCycles=1, state, company) {
             console.log("ERROR: NaN in Corporation's computed revenue/expenses");
             console.log(this.thisCycleRevenue.toString());
             console.log(this.thisCycleExpenses.toString());
-            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("Something went wrong when compting Corporation's revenue/expenses. This is a bug. Please report to game developer");
-            this.thisCycleRevenue = new decimal_js__WEBPACK_IMPORTED_MODULE_5__[/* default */ "a"](0);
-            this.thisCycleExpenses = new decimal_js__WEBPACK_IMPORTED_MODULE_5__[/* default */ "a"](0);
+            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Something went wrong when compting Corporation's revenue/expenses. This is a bug. Please report to game developer");
+            this.thisCycleRevenue = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](0);
+            this.thisCycleExpenses = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](0);
         }
         this.lastCycleRevenue = this.thisCycleRevenue.dividedBy(marketCycles * SecsPerMarketCycle);
         this.lastCycleExpenses = this.thisCycleExpenses.dividedBy(marketCycles * SecsPerMarketCycle);
-        this.thisCycleRevenue = new decimal_js__WEBPACK_IMPORTED_MODULE_5__[/* default */ "a"](0);
-        this.thisCycleExpenses = new decimal_js__WEBPACK_IMPORTED_MODULE_5__[/* default */ "a"](0);
+        this.thisCycleRevenue = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](0);
+        this.thisCycleExpenses = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](0);
 
         //Once you start making revenue, the player should no longer be
         //considered new, and therefore no longer needs the 'tutorial' UI elements
@@ -37349,9 +36938,9 @@ Industry.prototype.processProductMarket = function(marketCycles=1) {
     for (var name in this.products) {
         if (this.products.hasOwnProperty(name)) {
             var product = this.products[name];
-            var change = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__["getRandomInt"])(1, 3) * 0.0004;
-            if (this.type === Industries.Pharmaceutical || this.type === Industries.Software ||
-                this.type === Industries.Robotics) {
+            var change = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(1, 3) * 0.0004;
+            if (this.type === _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Pharmaceutical || this.type === _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Software ||
+                this.type === _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Robotics) {
                 change *= 3;
             }
             change *= marketCycles;
@@ -37411,7 +37000,7 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                     if (matName == "RealEstate") {
                         maxAmt = buyAmt;
                     } else {
-                        maxAmt = Math.floor((warehouse.size - warehouse.sizeUsed) / MaterialSizes[matName]);
+                        maxAmt = Math.floor((warehouse.size - warehouse.sizeUsed) / _MaterialSizes__WEBPACK_IMPORTED_MODULE_4__["MaterialSizes"][matName]);
                     }
                     var buyAmt = Math.min(buyAmt, maxAmt);
                     if (buyAmt > 0) {
@@ -37445,12 +37034,12 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                 //the produced materials will cost
                 var totalMatSize = 0;
                 for (var tmp = 0; tmp < this.prodMats.length; ++tmp) {
-                    totalMatSize += (MaterialSizes[this.prodMats[tmp]]);
+                    totalMatSize += (_MaterialSizes__WEBPACK_IMPORTED_MODULE_4__["MaterialSizes"][this.prodMats[tmp]]);
                 }
                 for (var reqMatName in this.reqMats) {
                     if (this.reqMats.hasOwnProperty(reqMatName)) {
                         var normQty = this.reqMats[reqMatName];
-                        totalMatSize -= (MaterialSizes[reqMatName] * normQty);
+                        totalMatSize -= (_MaterialSizes__WEBPACK_IMPORTED_MODULE_4__["MaterialSizes"][reqMatName] * normQty);
                     }
                 }
                 //If not enough space in warehouse, limit the amount of produced materials
@@ -37489,7 +37078,7 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                     for (var j = 0; j < this.prodMats.length; ++j) {
                         warehouse.materials[this.prodMats[j]].qty += (prod * producableFrac);
                         warehouse.materials[this.prodMats[j]].qlt =
-                            (office.employeeProd[EmployeePositions.Engineer] / 100 +
+                            (office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Engineer] / 100 +
                              Math.pow(this.sciResearch.qty, this.sciFac) +
                              Math.pow(warehouse.materials["AICores"].qty, this.aiFac) / 10e3);
                     }
@@ -37530,7 +37119,7 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                     var mat = warehouse.materials[matName];
 
                     var sCost;
-                    if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_15__["isString"])(mat.sCost)) {
+                    if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_20__["isString"])(mat.sCost)) {
                         sCost = mat.sCost.replace(/MP/g, mat.bCost);
                         sCost = eval(sCost);
                     } else {
@@ -37560,14 +37149,14 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                                   company.getSalesMultiplier() * advertisingFactor;
 
                     var sellAmt;
-                    if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_15__["isString"])(mat.sllman[1])) {
+                    if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_20__["isString"])(mat.sllman[1])) {
                         //Dynamically evaluated
                         var tmp = mat.sllman[1].replace(/MAX/g, maxSell);
                         tmp = tmp.replace(/PROD/g, mat.prd);
                         try {
                             sellAmt = eval(tmp);
                         } catch(e) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("Error evaluating your sell amount for material " + mat.name +
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Error evaluating your sell amount for material " + mat.name +
                                             " in " + this.name + "'s " + city + " office. The sell amount " +
                                             "is being set to zero");
                             sellAmt = 0;
@@ -37610,13 +37199,13 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                             try {
                                 amt = eval(amt);
                             } catch(e) {
-                                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("Calculating export for " + mat.name + " in " +
+                                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Calculating export for " + mat.name + " in " +
                                                 this.name +  "'s " + city + " division failed with " +
                                                 "error: " + e);
                                 continue;
                             }
                             if (isNaN(amt)) {
-                                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("Error calculating export amount for " + mat.name +  " in " +
+                                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Error calculating export amount for " + mat.name +  " in " +
                                                 this.name + "'s " + city + " division.");
                                 continue;
                             }
@@ -37641,7 +37230,7 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                                     if (expWarehouse.sizeUsed >= expWarehouse.size) {
                                         return; //Warehouse at capacity
                                     } else {
-                                        var maxAmt = Math.floor((expWarehouse.size - expWarehouse.sizeUsed) / MaterialSizes[matName]);
+                                        var maxAmt = Math.floor((expWarehouse.size - expWarehouse.sizeUsed) / _MaterialSizes__WEBPACK_IMPORTED_MODULE_4__["MaterialSizes"][matName]);
                                         amt = Math.min(maxAmt, amt);
                                     }
                                     expWarehouse.materials[matName].imp += (amt / (SecsPerMarketCycle * marketCycles));
@@ -37674,7 +37263,7 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
         //Produce Scientific Research based on R&D employees
         //Scientific Research can be produced without a warehouse
         if (office instanceof OfficeSpace) {
-            this.sciResearch.qty += (.005 * Math.pow(office.employeeProd[EmployeePositions.RandD], 0.5)
+            this.sciResearch.qty += (.005 * Math.pow(office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].RandD], 0.5)
                                      * company.getScientificResearchMultiplier());
         }
     }
@@ -37692,15 +37281,15 @@ Industry.prototype.processProducts = function(marketCycles=1, corporation) {
                 var prod = this.products[prodName];
                 if (!prod.fin) {
                     var city = prod.createCity, office = this.offices[city];
-                    var total = office.employeeProd[EmployeePositions.Operations] +
-                                office.employeeProd[EmployeePositions.Engineer] +
-                                office.employeeProd[EmployeePositions.Management], ratio;
+                    var total = office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Operations] +
+                                office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Engineer] +
+                                office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Management], ratio;
                     if (total === 0) {
                         ratio = 0;
                     } else {
-                        ratio = office.employeeProd[EmployeePositions.Engineer] / total +
-                                office.employeeProd[EmployeePositions.Operations] / total +
-                                office.employeeProd[EmployeePositions.Management] / total;
+                        ratio = office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Engineer] / total +
+                                office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Operations] / total +
+                                office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Management] / total;
                     }
                     prod.createProduct(marketCycles, ratio * Math.pow(total, 0.29));
                     if (prod.prog >= 100) {
@@ -37716,7 +37305,7 @@ Industry.prototype.processProducts = function(marketCycles=1, corporation) {
     for (var prodName in this.products) {
         if (this.products.hasOwnProperty(prodName)) {
             var prod = this.products[prodName];
-            if (prod instanceof Product && prod.fin) {
+            if (prod instanceof _Product__WEBPACK_IMPORTED_MODULE_5__["Product"] && prod.fin) {
                 revenue += this.processProduct(marketCycles, prod, corporation);
             }
         }
@@ -37751,7 +37340,7 @@ Industry.prototype.processProduct = function(marketCycles=1, product, corporatio
             for (var reqMatName in product.reqMats) {
                 if (product.reqMats.hasOwnProperty(reqMatName)) {
                     var normQty = product.reqMats[reqMatName];
-                    netStorageSize -= (MaterialSizes[reqMatName] * normQty);
+                    netStorageSize -= (_MaterialSizes__WEBPACK_IMPORTED_MODULE_4__["MaterialSizes"][reqMatName] * normQty);
                 }
             }
 
@@ -37805,7 +37394,7 @@ Industry.prototype.processProduct = function(marketCycles=1, product, corporatio
 
             //Calculate Sale Cost (sCost), which could be dynamically evaluated
             var sCost;
-            if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_15__["isString"])(product.sCost)) {
+            if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_20__["isString"])(product.sCost)) {
                 sCost = product.sCost.replace(/MP/g, product.pCost + product.rat / product.mku);
                 sCost = eval(sCost);
             } else {
@@ -37824,14 +37413,14 @@ Industry.prototype.processProduct = function(marketCycles=1, product, corporatio
             var maxSell = 0.5 * Math.pow(product.rat, 0.65) * marketFactor * corporation.getSalesMultiplier() *
                           Math.pow(markup, 2) * businessFactor * advertisingFactor;
             var sellAmt;
-            if (product.sllman[city][0] && Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_15__["isString"])(product.sllman[city][1])) {
+            if (product.sllman[city][0] && Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_20__["isString"])(product.sllman[city][1])) {
                 //Sell amount is dynamically evaluated
                 var tmp = product.sllman[city][1].replace(/MAX/g, maxSell);
                 tmp = tmp.replace(/PROD/g, product.data[city][1]);
                 try {
                     tmp = eval(tmp);
                 } catch(e) {
-                    Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("Error evaluating your sell price expression for " + product.name +
+                    Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Error evaluating your sell price expression for " + product.name +
                                     " in " + this.name + "'s " + city + " office. Sell price is being set to MAX");
                     tmp = maxSell;
                 }
@@ -37899,7 +37488,7 @@ Industry.prototype.upgrade = function(upgrade, refs) {
             this.awareness += (3 * advMult);
             this.popularity += (1 * advMult);
             this.awareness *= (1.01 * advMult);
-            this.popularity *= ((1 + Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__["getRandomInt"])(1, 3) / 100) * advMult);
+            this.popularity *= ((1 + Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(1, 3) / 100) * advMult);
             break;
         default:
             console.log("ERROR: Un-implemented function index: " + upgN);
@@ -37909,15 +37498,15 @@ Industry.prototype.upgrade = function(upgrade, refs) {
 
 //Returns how much of a material can be produced based of office productivity (employee stats)
 Industry.prototype.getOfficeProductivity = function(office, params) {
-    var total = office.employeeProd[EmployeePositions.Operations] +
-                office.employeeProd[EmployeePositions.Engineer] +
-                office.employeeProd[EmployeePositions.Management], ratio;
+    var total = office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Operations] +
+                office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Engineer] +
+                office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Management], ratio;
     if (total === 0) {
         ratio = 0;
     } else {
-        ratio = (office.employeeProd[EmployeePositions.Operations] / total) *
-                (office.employeeProd[EmployeePositions.Engineer] / total) *
-                (office.employeeProd[EmployeePositions.Management] / total);
+        ratio = (office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Operations] / total) *
+                (office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Engineer] / total) *
+                (office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Management] / total);
         ratio = Math.max(0.01, ratio); //Minimum ratio value if you have employees
     }
     if (params && params.forProduct) {
@@ -37931,9 +37520,9 @@ Industry.prototype.getOfficeProductivity = function(office, params) {
 Industry.prototype.getBusinessFactor = function(office) {
     var ratioMult = 1;
     if (office.employeeProd["total"] > 0) {
-        ratioMult = 1 + (office.employeeProd[EmployeePositions.Business] / office.employeeProd["total"]);
+        ratioMult = 1 + (office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Business] / office.employeeProd["total"]);
     }
-    return ratioMult * Math.pow(1 + office.employeeProd[EmployeePositions.Business], 0.15);
+    return ratioMult * Math.pow(1 + office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Business], 0.15);
 }
 
 //Returns a set of multipliers based on the Industry's awareness, popularity, and advFac. This
@@ -37953,24 +37542,14 @@ Industry.prototype.getMarketFactor = function(mat) {
 }
 
 Industry.prototype.toJSON = function() {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_9__["Generic_toJSON"])("Industry", this);
+	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__["Generic_toJSON"])("Industry", this);
 }
 
 Industry.fromJSON = function(value) {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_9__["Generic_fromJSON"])(Industry, value.data);
+	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__["Generic_fromJSON"])(Industry, value.data);
 }
 
-_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_9__["Reviver"].constructors.Industry = Industry;
-
-var EmployeePositions = {
-    Operations: "Operations",
-    Engineer: "Engineer",
-    Business: "Business",
-    Management: "Management",
-    RandD: "Research & Development",
-    Training:"Training",
-    Unassigned:"Unassigned",
-}
+_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__["Reviver"].constructors.Industry = Industry;
 
 function Employee(params={}) {
     if (!(this instanceof Employee)) {
@@ -37979,21 +37558,21 @@ function Employee(params={}) {
     this.name   = params.name           ? params.name           : "Bobby";
 
     //Morale, happiness, and energy are 0-100
-    this.mor    = params.morale         ? params.morale         : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__["getRandomInt"])(50, 100);
-    this.hap    = params.happiness      ? params.happiness      : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__["getRandomInt"])(50, 100);
-    this.ene    = params.energy         ? params.energy         : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__["getRandomInt"])(50, 100);
+    this.mor    = params.morale         ? params.morale         : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(50, 100);
+    this.hap    = params.happiness      ? params.happiness      : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(50, 100);
+    this.ene    = params.energy         ? params.energy         : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(50, 100);
 
-    this.age    = params.age            ? params.age            : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__["getRandomInt"])(20, 50);
-    this.int    = params.intelligence   ? params.intelligence   : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__["getRandomInt"])(10, 50);
-    this.cha    = params.charisma       ? params.charisma       : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__["getRandomInt"])(10, 50);
-    this.exp    = params.experience     ? params.experience     : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__["getRandomInt"])(10, 50);
-    this.cre    = params.creativity     ? params.creativity     : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__["getRandomInt"])(10, 50);
-    this.eff    = params.efficiency     ? params.efficiency     : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__["getRandomInt"])(10, 50);
-    this.sal    = params.salary         ? params.salary         : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__["getRandomInt"])(0.1, 5);
+    this.age    = params.age            ? params.age            : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(20, 50);
+    this.int    = params.intelligence   ? params.intelligence   : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(10, 50);
+    this.cha    = params.charisma       ? params.charisma       : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(10, 50);
+    this.exp    = params.experience     ? params.experience     : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(10, 50);
+    this.cre    = params.creativity     ? params.creativity     : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(10, 50);
+    this.eff    = params.efficiency     ? params.efficiency     : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(10, 50);
+    this.sal    = params.salary         ? params.salary         : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(0.1, 5);
     this.pro    = 0; //Productivity, This is calculated
 
     this.loc    = params.loc            ? params.loc : "";
-    this.pos    = EmployeePositions.Unassigned;
+    this.pos    = _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Unassigned;
 }
 
 //Returns the amount the employee needs to be paid
@@ -38010,7 +37589,7 @@ Employee.prototype.process = function(marketCycles=1, office) {
 
     //Training
     var trainingEff = gain * Math.random();
-    if (this.pos === EmployeePositions.Training) {
+    if (this.pos === _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Training) {
         //To increase creativity and intelligence special upgrades are needed
         this.cha += trainingEff;
         this.exp += trainingEff;
@@ -38042,27 +37621,27 @@ Employee.prototype.calculateProductivity = function(corporation) {
     switch(this.pos) {
         //Calculate productivity based on position. This is multipled by prodBase
         //to get final value
-        case EmployeePositions.Operations:
+        case _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Operations:
             prodMult = (0.6 * effInt) + (0.1 * effCha) + (this.exp) +
                        (0.5 * effCre) + (effEff);
             break;
-        case EmployeePositions.Engineer:
+        case _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Engineer:
             prodMult = (effInt) + (0.1 * effCha) + (1.5 * this.exp) +
                        (effEff);
             break;
-        case EmployeePositions.Business:
+        case _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Business:
             prodMult = (0.4 * effInt) + (effCha) + (0.5 * this.exp);
             break;
-        case EmployeePositions.Management:
+        case _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Management:
             prodMult = (2 * effCha) + (this.exp) + (0.2 * effCre) +
                        (0.7 * effEff);
             break;
-        case EmployeePositions.RandD:
+        case _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].RandD:
             prodMult = (1.5 * effInt) + (0.8 * this.exp) + (effCre) +
                        (0.5 * effEff);
             break;
-        case EmployeePositions.Unassigned:
-        case EmployeePositions.Training:
+        case _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Unassigned:
+        case _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Training:
             prodMult = 0;
             break;
         default:
@@ -38089,27 +37668,27 @@ Employee.prototype.createUI = function(panel, corporation) {
         effInt = this.int * corporation.getEmployeeIntMultiplier(),
         effEff = this.eff * corporation.getEmployeeEffMultiplier();
     panel.style.color = "white";
-    panel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {
+    panel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
         id:"cmpy-mgmt-employee-" + this.name + "-panel-text",
-        innerHTML:"Morale: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(this.mor, 3) + "<br>" +
-                  "Happiness: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(this.hap, 3) + "<br>" +
-                  "Energy: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(this.ene, 3) + "<br>" +
-                  "Age: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(this.age, 3) + "<br>" +
-                  "Intelligence: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(effInt, 3) + "<br>" +
-                  "Charisma: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(effCha, 3) + "<br>" +
-                  "Experience: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(this.exp, 3) + "<br>" +
-                  "Creativity: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(effCre, 3) + "<br>" +
-                  "Efficiency: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(effEff, 3) + "<br>" +
-                  "Salary: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(this.sal, "$0.000a") + "/ s<br>",
+        innerHTML:"Morale: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(this.mor, 3) + "<br>" +
+                  "Happiness: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(this.hap, 3) + "<br>" +
+                  "Energy: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(this.ene, 3) + "<br>" +
+                  "Age: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(this.age, 3) + "<br>" +
+                  "Intelligence: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(effInt, 3) + "<br>" +
+                  "Charisma: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(effCha, 3) + "<br>" +
+                  "Experience: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(this.exp, 3) + "<br>" +
+                  "Creativity: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(effCre, 3) + "<br>" +
+                  "Efficiency: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(effEff, 3) + "<br>" +
+                  "Salary: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(this.sal, "$0.000a") + "/ s<br>",
     }));
 
     //Selector for employee position
-    var selector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("select", {});
-    for (var key in EmployeePositions) {
-        if (EmployeePositions.hasOwnProperty(key)) {
-            selector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("option", {
-                text: EmployeePositions[key],
-                value: EmployeePositions[key],
+    var selector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("select", {});
+    for (var key in _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"]) {
+        if (_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].hasOwnProperty(key)) {
+            selector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("option", {
+                text: _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"][key],
+                value: _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"][key],
             }));
         }
     }
@@ -38141,27 +37720,27 @@ Employee.prototype.updateUI = function(panel, corporation) {
     if (text == null) {
         return this.createUI(panel);
     }
-    text.innerHTML  = "Morale: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(this.mor, 3) + "<br>" +
-                      "Happiness: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(this.hap, 3) + "<br>" +
-                      "Energy: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(this.ene, 3) + "<br>" +
-                      "Age: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(this.age, 3) + "<br>" +
-                      "Intelligence: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(effInt, 3) + "<br>" +
-                      "Charisma: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(effCha, 3) + "<br>" +
-                      "Experience: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(this.exp, 3) + "<br>" +
-                      "Creativity: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(effCre, 3) + "<br>" +
-                      "Efficiency: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(effEff, 3) + "<br>" +
-                      "Salary: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(this.sal, "$0.000a") + "/ s<br>";
+    text.innerHTML  = "Morale: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(this.mor, 3) + "<br>" +
+                      "Happiness: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(this.hap, 3) + "<br>" +
+                      "Energy: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(this.ene, 3) + "<br>" +
+                      "Age: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(this.age, 3) + "<br>" +
+                      "Intelligence: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(effInt, 3) + "<br>" +
+                      "Charisma: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(effCha, 3) + "<br>" +
+                      "Experience: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(this.exp, 3) + "<br>" +
+                      "Creativity: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(effCre, 3) + "<br>" +
+                      "Efficiency: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(effEff, 3) + "<br>" +
+                      "Salary: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(this.sal, "$0.000a") + "/ s<br>";
 }
 
 Employee.prototype.toJSON = function() {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_9__["Generic_toJSON"])("Employee", this);
+	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__["Generic_toJSON"])("Employee", this);
 }
 
 Employee.fromJSON = function(value) {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_9__["Generic_fromJSON"])(Employee, value.data);
+	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__["Generic_fromJSON"])(Employee, value.data);
 }
 
-_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_9__["Reviver"].constructors.Employee = Employee;
+_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__["Reviver"].constructors.Employee = Employee;
 
 var OfficeSpaceTiers = {
     Basic: "Basic",
@@ -38183,11 +37762,11 @@ function OfficeSpace(params={}) {
 
     this.employees = [];
     this.employeeProd = {
-        [EmployeePositions.Operations]:   0,
-        [EmployeePositions.Engineer]:     0,
-        [EmployeePositions.Business]:     0,
-        [EmployeePositions.Management]:   0,
-        [EmployeePositions.RandD]:        0,
+        [_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Operations]:   0,
+        [_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Engineer]:     0,
+        [_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Business]:     0,
+        [_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Management]:   0,
+        [_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].RandD]:        0,
         total:                            0,
     };
 }
@@ -38238,14 +37817,14 @@ OfficeSpace.prototype.findEmployees = function(parentRefs) {
     if (document.getElementById("cmpy-mgmt-hire-employee-popup") != null) {return;}
 
     //Generate three random employees (meh, decent, amazing)
-    var mult1 = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__["getRandomInt"])(25, 50)/100,
-        mult2 = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__["getRandomInt"])(51, 75)/100,
-        mult3 = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__["getRandomInt"])(76, 100)/100;
-    var int = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__["getRandomInt"])(50, 100),
-        cha = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__["getRandomInt"])(50, 100),
-        exp = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__["getRandomInt"])(50, 100),
-        cre = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__["getRandomInt"])(50, 100),
-        eff = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__["getRandomInt"])(50, 100),
+    var mult1 = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(25, 50)/100,
+        mult2 = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(51, 75)/100,
+        mult3 = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(76, 100)/100;
+    var int = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(50, 100),
+        cha = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(50, 100),
+        exp = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(50, 100),
+        cre = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(50, 100),
+        eff = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(50, 100),
         sal = 2.2 * (int + cha + exp + cre + eff);
 
     var emp1 = new Employee({
@@ -38275,34 +37854,34 @@ OfficeSpace.prototype.findEmployees = function(parentRefs) {
         salary: sal * mult3,
     });
 
-    var text = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("h1", {
+    var text = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("h1", {
         innerHTML: "Select one of the following candidates for hire:",
     });
 
     var createEmpDiv = function(employee, office) {
-        var div = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("div", {
+        var div = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {
             class:"cmpy-mgmt-find-employee-option",
-            innerHTML:  "Intelligence: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(employee.int, 1) + "<br>" +
-                        "Charisma: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(employee.cha, 1) + "<br>" +
-                        "Experience: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(employee.exp, 1) + "<br>" +
-                        "Creativity: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(employee.cre, 1) + "<br>" +
-                        "Efficiency: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(employee.eff, 1) + "<br>" +
-                        "Salary: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(employee.sal, '$0.000a') + " \ s<br>",
+            innerHTML:  "Intelligence: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(employee.int, 1) + "<br>" +
+                        "Charisma: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(employee.cha, 1) + "<br>" +
+                        "Experience: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(employee.exp, 1) + "<br>" +
+                        "Creativity: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(employee.cre, 1) + "<br>" +
+                        "Efficiency: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(employee.eff, 1) + "<br>" +
+                        "Salary: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(employee.sal, '$0.000a') + " \ s<br>",
             clickListener:()=>{
                 office.hireEmployee(employee, parentRefs);
-                Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])("cmpy-mgmt-hire-employee-popup");
+                Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])("cmpy-mgmt-hire-employee-popup");
                 return false;
             }
         });
         return div;
     };
 
-    var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+    var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
         class:"a-link-button",
         innerText:"Cancel",
         float:"right",
         clickListener:()=>{
-            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])("cmpy-mgmt-hire-employee-popup");
+            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])("cmpy-mgmt-hire-employee-popup");
             return false;
         }
     });
@@ -38313,32 +37892,32 @@ OfficeSpace.prototype.findEmployees = function(parentRefs) {
                  createEmpDiv(emp3, this),
                  cancelBtn];
 
-    Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_11__["createPopup"])("cmpy-mgmt-hire-employee-popup", elems);
+    Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_17__["createPopup"])("cmpy-mgmt-hire-employee-popup", elems);
 }
 
 OfficeSpace.prototype.hireEmployee = function(employee, parentRefs) {
     var company = parentRefs.corporation, division = parentRefs.division;
-    var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_18__[/* yesNoTxtInpBoxGetYesButton */ "j"])(),
-        noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_18__[/* yesNoTxtInpBoxGetNoButton */ "i"])();
+    var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_23__[/* yesNoTxtInpBoxGetYesButton */ "j"])(),
+        noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_23__[/* yesNoTxtInpBoxGetNoButton */ "i"])();
     yesBtn.innerHTML = "Hire";
     noBtn.innerHTML = "Cancel";
     yesBtn.addEventListener("click", ()=>{
-        var name = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_18__[/* yesNoTxtInpBoxGetInput */ "h"])();
+        var name = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_23__[/* yesNoTxtInpBoxGetInput */ "h"])();
         for (var i = 0; i < this.employees.length; ++i) {
             if (this.employees[i].name === name) {
-                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("You already have an employee with this nickname! Please give every employee a unique nickname.");
+                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("You already have an employee with this nickname! Please give every employee a unique nickname.");
                 return false;
             }
         }
         employee.name = name;
         this.employees.push(employee);
         company.displayDivisionContent(division, currentCityUi);
-        return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_18__[/* yesNoTxtInpBoxClose */ "f"])();
+        return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_23__[/* yesNoTxtInpBoxClose */ "f"])();
     });
     noBtn.addEventListener("click", ()=>{
-        return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_18__[/* yesNoTxtInpBoxClose */ "f"])();
+        return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_23__[/* yesNoTxtInpBoxClose */ "f"])();
     });
-    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_18__[/* yesNoTxtInpBoxCreate */ "g"])("Give your employee a nickname!");
+    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_23__[/* yesNoTxtInpBoxCreate */ "g"])("Give your employee a nickname!");
 }
 
 OfficeSpace.prototype.hireRandomEmployee = function(parentRefs) {
@@ -38346,12 +37925,12 @@ OfficeSpace.prototype.hireRandomEmployee = function(parentRefs) {
     if (document.getElementById("cmpy-mgmt-hire-employee-popup") != null) {return;}
 
     //Generate three random employees (meh, decent, amazing)
-    var mult = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__["getRandomInt"])(76, 100)/100;
-    var int = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__["getRandomInt"])(50, 100),
-        cha = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__["getRandomInt"])(50, 100),
-        exp = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__["getRandomInt"])(50, 100),
-        cre = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__["getRandomInt"])(50, 100),
-        eff = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_14__["getRandomInt"])(50, 100),
+    var mult = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(76, 100)/100;
+    var int = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(50, 100),
+        cha = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(50, 100),
+        exp = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(50, 100),
+        cre = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(50, 100),
+        eff = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(50, 100),
         sal = 2.2 * (int + cha + exp + cre + eff);
 
     var emp = new Employee({
@@ -38363,7 +37942,7 @@ OfficeSpace.prototype.hireRandomEmployee = function(parentRefs) {
         salary: sal * mult,
     });
 
-    var name = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["generateRandomString"])(7);
+    var name = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["generateRandomString"])(7);
 
     for (var i = 0; i < this.employees.length; ++i) {
         if (this.employees[i].name === name) {
@@ -38378,7 +37957,7 @@ OfficeSpace.prototype.hireRandomEmployee = function(parentRefs) {
 //Finds the first unassigned employee and assigns its to the specified job
 OfficeSpace.prototype.assignEmployeeToJob = function(job) {
     for (var i = 0; i < this.employees.length; ++i) {
-        if (this.employees[i].pos === EmployeePositions.Unassigned) {
+        if (this.employees[i].pos === _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Unassigned) {
             this.employees[i].pos = job;
             return true;
         }
@@ -38390,7 +37969,7 @@ OfficeSpace.prototype.assignEmployeeToJob = function(job) {
 OfficeSpace.prototype.unassignEmployeeFromJob = function(job) {
     for (var i = 0; i < this.employees.length; ++i) {
         if (this.employees[i].pos === job) {
-            this.employees[i].pos = EmployeePositions.Unassigned;
+            this.employees[i].pos = _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Unassigned;
             return true;
         }
     }
@@ -38398,14 +37977,14 @@ OfficeSpace.prototype.unassignEmployeeFromJob = function(job) {
 }
 
 OfficeSpace.prototype.toJSON = function() {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_9__["Generic_toJSON"])("OfficeSpace", this);
+	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__["Generic_toJSON"])("OfficeSpace", this);
 }
 
 OfficeSpace.fromJSON = function(value) {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_9__["Generic_fromJSON"])(OfficeSpace, value.data);
+	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__["Generic_fromJSON"])(OfficeSpace, value.data);
 }
 
-_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_9__["Reviver"].constructors.OfficeSpace = OfficeSpace;
+_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__["Reviver"].constructors.OfficeSpace = OfficeSpace;
 
 function Warehouse(params={}) {
     this.loc    = params.loc        ? params.loc    : "";
@@ -38421,17 +38000,17 @@ function Warehouse(params={}) {
     this.smartSupplyStore = 0;
 
     this.materials = {
-        Water:      new Material({name: "Water"}),
-        Energy:     new Material({name: "Energy"}),
-        Food:       new Material({name: "Food"}),
-        Plants:     new Material({name: "Plants"}),
-        Metal:      new Material({name: "Metal"}),
-        Hardware:   new Material({name: "Hardware"}),
-        Chemicals:  new Material({name: "Chemicals"}),
-        Drugs:      new Material({name: "Drugs"}),
-        Robots:     new Material({name: "Robots"}),
-        AICores:    new Material({name: "AI Cores"}),
-        RealEstate: new Material({name: "Real Estate"})
+        Water:      new _Material__WEBPACK_IMPORTED_MODULE_3__["Material"]({name: "Water"}),
+        Energy:     new _Material__WEBPACK_IMPORTED_MODULE_3__["Material"]({name: "Energy"}),
+        Food:       new _Material__WEBPACK_IMPORTED_MODULE_3__["Material"]({name: "Food"}),
+        Plants:     new _Material__WEBPACK_IMPORTED_MODULE_3__["Material"]({name: "Plants"}),
+        Metal:      new _Material__WEBPACK_IMPORTED_MODULE_3__["Material"]({name: "Metal"}),
+        Hardware:   new _Material__WEBPACK_IMPORTED_MODULE_3__["Material"]({name: "Hardware"}),
+        Chemicals:  new _Material__WEBPACK_IMPORTED_MODULE_3__["Material"]({name: "Chemicals"}),
+        Drugs:      new _Material__WEBPACK_IMPORTED_MODULE_3__["Material"]({name: "Drugs"}),
+        Robots:     new _Material__WEBPACK_IMPORTED_MODULE_3__["Material"]({name: "Robots"}),
+        AICores:    new _Material__WEBPACK_IMPORTED_MODULE_3__["Material"]({name: "AI Cores"}),
+        RealEstate: new _Material__WEBPACK_IMPORTED_MODULE_3__["Material"]({name: "Real Estate"})
     }
 }
 
@@ -38441,10 +38020,10 @@ Warehouse.prototype.updateMaterialSizeUsed = function() {
     for (var matName in this.materials) {
         if (this.materials.hasOwnProperty(matName)) {
             var mat = this.materials[matName];
-            if (MaterialSizes.hasOwnProperty(matName)) {
-                this.sizeUsed += (mat.qty * MaterialSizes[matName]);
+            if (_MaterialSizes__WEBPACK_IMPORTED_MODULE_4__["MaterialSizes"].hasOwnProperty(matName)) {
+                this.sizeUsed += (mat.qty * _MaterialSizes__WEBPACK_IMPORTED_MODULE_4__["MaterialSizes"][matName]);
                 if (mat.qty > 0) {
-                    this.breakdown += (matName + ": " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(mat.qty * MaterialSizes[matName], 0) + "<br>");
+                    this.breakdown += (matName + ": " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(mat.qty * _MaterialSizes__WEBPACK_IMPORTED_MODULE_4__["MaterialSizes"][matName], 0) + "<br>");
                 }
             }
         }
@@ -38469,8 +38048,8 @@ Warehouse.prototype.createUI = function(parentRefs) {
         return;
     }
     var company = parentRefs.company, industry = parentRefs.industry;
-    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_16__["removeChildrenFromElement"])(industryWarehousePanel);
-    industryWarehouseStorageText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {
+    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_21__["removeChildrenFromElement"])(industryWarehousePanel);
+    industryWarehouseStorageText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
         display:"inline-block", class:"tooltip",
         color: this.sizeUsed >= this.size ? "red" : "white",
     });
@@ -38478,8 +38057,8 @@ Warehouse.prototype.createUI = function(parentRefs) {
 
     //Upgrade warehouse size button
     var upgradeCost = WarehouseUpgradeBaseCost * Math.pow(1.07, this.level+1);
-    industryWarehouseUpgradeSizeButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
-        innerText:"Upgrade Warehouse Size - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(upgradeCost, '$0.000a'),
+    industryWarehouseUpgradeSizeButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+        innerText:"Upgrade Warehouse Size - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(upgradeCost, '$0.000a'),
         display:"inline-block",
         class: company.funds.lt(upgradeCost) ? "a-link-button-inactive" : "a-link-button",
         clickListener:()=>{
@@ -38528,23 +38107,23 @@ Warehouse.prototype.createUI = function(parentRefs) {
         reqRatioText += "one of its Products";
     }
 
-    industryWarehousePanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {
+    industryWarehousePanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
         innerHTML:reqText, tooltipleft:reqRatioText
     }));
 
     //Current state
-    industryWarehouseStateText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p");
+    industryWarehouseStateText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p");
     industryWarehousePanel.appendChild(industryWarehouseStateText);
 
     //Smart Supply Enable/Disable
     if (company.unlockUpgrades[1]) {
         if (this.smartSupplyEnabled == null) {this.smartSupplyEnabled = false;}
         var smartSupplyCheckboxId = "cmpy-mgmt-smart-supply-checkbox";
-        industryWarehousePanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("label", {
+        industryWarehousePanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("label", {
             for:smartSupplyCheckboxId, innerText:"Enable Smart Supply",
             color:"white"
         }));
-        industrySmartSupplyCheckbox = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("input", {
+        industrySmartSupplyCheckbox = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("input", {
             type:"checkbox", id:smartSupplyCheckboxId, margin:"3px",
             changeListener:()=>{
                 this.smartSupplyEnabled = industrySmartSupplyCheckbox.checked;
@@ -38555,18 +38134,18 @@ Warehouse.prototype.createUI = function(parentRefs) {
     }
 
     //Materials
-    industryWarehousePanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {
+    industryWarehousePanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
         innerHTML: "<br>Materials:<br>",
     }));
-    industryWarehouseMaterials = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("ul");
+    industryWarehouseMaterials = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("ul");
     industryWarehousePanel.appendChild(industryWarehouseMaterials);
 
     //Products
     if (industry.makesProducts && Object.keys(industry.products).length > 0) {
-        industryWarehousePanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {
+        industryWarehousePanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
             innerHTML: "<br>Products:<br>",
         }));
-        industryWarehouseProducts = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("ul");
+        industryWarehouseProducts = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("ul");
         industryWarehousePanel.appendChild(industryWarehouseProducts);
     }
 
@@ -38582,8 +38161,8 @@ Warehouse.prototype.updateUI = function(parentRefs) {
 
     //Storage text
     var storageText = "Storage: " +
-                      (this.sizedUsed >= this.size ? Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(this.sizeUsed, 3) : Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(this.sizeUsed, 3)) +
-                      "/" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(this.size, 3);
+                      (this.sizedUsed >= this.size ? Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(this.sizeUsed, 3) : Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(this.sizeUsed, 3)) +
+                      "/" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(this.size, 3);
     if (this.breakdown != null && this.breakdown != "") {
         storageText += ("<span class='tooltiptext'>" +
                         this.breakdown + "</span>");
@@ -38623,9 +38202,9 @@ Warehouse.prototype.updateUI = function(parentRefs) {
     industryWarehouseStateText.innerText = stateText;
 
     //Materials
-    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_16__["removeChildrenFromElement"])(industryWarehouseMaterials);
+    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_21__["removeChildrenFromElement"])(industryWarehouseMaterials);
     for (var matName in this.materials) {
-        if (this.materials.hasOwnProperty(matName) && this.materials[matName] instanceof Material) {
+        if (this.materials.hasOwnProperty(matName) && this.materials[matName] instanceof _Material__WEBPACK_IMPORTED_MODULE_3__["Material"]) {
             if (Object.keys(industry.reqMats).includes(matName) || industry.prodMats.includes(matName) ||
                 matName === "Hardware" || matName === "Robots" || matName === "AICores" ||
                 matName === "RealEstate") {
@@ -38635,10 +38214,10 @@ Warehouse.prototype.updateUI = function(parentRefs) {
     }
 
     //Products
-    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_16__["removeChildrenFromElement"])(industryWarehouseProducts);
+    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_21__["removeChildrenFromElement"])(industryWarehouseProducts);
     if (industry.makesProducts && Object.keys(industry.products).length > 0) {
         for (var productName in industry.products) {
-            if (industry.products.hasOwnProperty(productName) && industry.products[productName] instanceof Product) {
+            if (industry.products.hasOwnProperty(productName) && industry.products[productName] instanceof _Product__WEBPACK_IMPORTED_MODULE_5__["Product"]) {
                 industryWarehouseProducts.appendChild(this.createProductUI(industry.products[productName], parentRefs));
             }
         }
@@ -38653,7 +38232,7 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
     var company = parentRefs.company, industry = parentRefs.industry;
     var purchasePopupId = "cmpy-mgmt-material-purchase-popup",
         sellPopupid = "cmpy-mgmt-material-sell-popup";
-    var div = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("div", {
+    var div = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {
         class:"cmpy-mgmt-warehouse-material-div",
     });
 
@@ -38662,30 +38241,30 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
     //If Market Research upgrades are unlocked, add competition and demand info
     var cmpAndDmdText = "";
     if (company.unlockUpgrades[2] === 1) {
-        cmpAndDmdText += "<br>Demand: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(mat.dmd, 3);
+        cmpAndDmdText += "<br>Demand: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(mat.dmd, 3);
     }
     if (company.unlockUpgrades[3] === 1) {
-        cmpAndDmdText += "<br>Competition: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(mat.cmp, 3);
+        cmpAndDmdText += "<br>Competition: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(mat.cmp, 3);
     }
-    var innerTxt = "<p class='tooltip'>" + mat.name + ": " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(mat.qty, 3) +
-                   "(" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(totalGain, 3) +  "/s)" +
-                   "<span class='tooltiptext'>Buy: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(mat.buy, 3) +
-                   "/s<br>Prod: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(mat.prd, 3) + "/s<br>Sell: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(mat.sll, 3) +
-                   "/s<br>Export: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(mat.totalExp, 3) + "/s<br>Import: " +
-                   Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(mat.imp, 3) + "/s" + cmpAndDmdText + "</span></p><br>" +
-                   "<p class='tooltip'>MP: $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(mat.bCost, 2) +
+    var innerTxt = "<p class='tooltip'>" + mat.name + ": " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(mat.qty, 3) +
+                   "(" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(totalGain, 3) +  "/s)" +
+                   "<span class='tooltiptext'>Buy: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(mat.buy, 3) +
+                   "/s<br>Prod: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(mat.prd, 3) + "/s<br>Sell: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(mat.sll, 3) +
+                   "/s<br>Export: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(mat.totalExp, 3) + "/s<br>Import: " +
+                   Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(mat.imp, 3) + "/s" + cmpAndDmdText + "</span></p><br>" +
+                   "<p class='tooltip'>MP: $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(mat.bCost, 2) +
                    "<span class='tooltiptext'>Market Price: The price you would pay if " +
                    "you were to buy this material on the market</span></p><br>" +
-                   "<p class='tooltip'>Quality: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(mat.qlt, 2) +
+                   "<p class='tooltip'>Quality: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(mat.qlt, 2) +
                    "<span class='tooltiptext'>The quality of your material. Higher quality " +
                    "will lead to more sales</span></p>";
 
-    div.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {
+    div.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
         innerHTML: innerTxt,
         id: "cmpy-mgmt-warehouse-" + matName + "-text", display:"inline-block",
     }));
 
-    var buttonPanel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("div", {
+    var buttonPanel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {
         display:"inline-block",
     });
     div.appendChild(buttonPanel);
@@ -38694,82 +38273,82 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
     var tutorial = industry.newInd && Object.keys(industry.reqMats).includes(mat.name) &&
                    mat.buy === 0 && mat.imp === 0;
     var buyButtonParams = {
-        innerText: "Buy (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(mat.buy, 3) + ")", display:"inline-block",
+        innerText: "Buy (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(mat.buy, 3) + ")", display:"inline-block",
         class: tutorial ? "a-link-button flashing-button" : "a-link-button",
         clickListener:()=>{
-            var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {
+            var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
                 innerHTML: "Enter the amount of " + mat.name + " you would like " +
                            "to purchase per second. This material's cost changes constantly"
             });
             var confirmBtn;
-            var input = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("input", {
+            var input = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("input", {
                 type:"number", value:mat.buy ? mat.buy : null, placeholder: "Purchase amount",
                 onkeyup:(e)=>{
                     e.preventDefault();
                     if (e.keyCode === 13) {confirmBtn.click();}
                 }
             });
-            confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+            confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
                 innerText:"Confirm", class:"a-link-button",
                 clickListener:()=>{
                     if (isNaN(input.value)) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("Invalid amount");
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Invalid amount");
                     } else {
                         mat.buy = parseFloat(input.value);
                         if (isNaN(mat.buy)) {mat.buy = 0;}
-                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(purchasePopupId);
+                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(purchasePopupId);
                         this.createUI(parentRefs);
                         return false;
                     }
                 }
             });
-            var clearButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+            var clearButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
                 innerText:"Clear Purchase", class:"a-link-button",
                 clickListener:()=>{
                     mat.buy = 0;
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(purchasePopupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(purchasePopupId);
                     this.createUI(parentRefs);
                     return false;
                 }
             });
-            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
                 innerText:"Cancel", class:"a-link-button",
                 clickListener:()=>{
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(purchasePopupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(purchasePopupId);
                 }
             });
-            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_11__["createPopup"])(purchasePopupId, [txt, input, confirmBtn, clearButton, cancelBtn]);
+            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_17__["createPopup"])(purchasePopupId, [txt, input, confirmBtn, clearButton, cancelBtn]);
             input.focus();
         }
     };
     if (tutorial) {
         buyButtonParams.tooltip = "Purchase your required materials to get production started!";
     }
-    buttonPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", buyButtonParams));
+    buttonPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", buyButtonParams));
 
     //Button to manage exports
     if (company.unlockUpgrades[0] === 1) { //Export unlock upgrade
         function createExportPopup() {
             var popupId = "cmpy-mgmt-export-popup";
-            var exportTxt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {
+            var exportTxt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
                 innerText:"Select the industry and city to export this material to, as well as " +
                           "how much of this material to export per second. You can set the export " +
                           "amount to 'MAX' to export all of the materials in this warehouse."
             });
 
             //Select industry and city to export to
-            var citySelector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("select", {class: "dropdown"});
-            var industrySelector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("select", {
+            var citySelector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("select", {class: "dropdown"});
+            var industrySelector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("select", {
                 class: "dropdown",
                 changeListener:()=>{
                     var industryName = industrySelector.options[industrySelector.selectedIndex].value;
                     for (var foo = 0; foo < company.divisions.length; ++foo) {
                         if (company.divisions[foo].name == industryName) {
-                            Object(_utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_8__["clearSelector"])(citySelector);
+                            Object(_utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_14__["clearSelector"])(citySelector);
                             var selectedIndustry = company.divisions[foo];
                             for (var cityName in company.divisions[foo].warehouses) {
                                 if (company.divisions[foo].warehouses[cityName] instanceof Warehouse) {
-                                    citySelector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("option", {
+                                    citySelector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("option", {
                                         value:cityName, text:cityName,
                                     }));
                                 }
@@ -38781,7 +38360,7 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
             });
 
             for (var i = 0; i < company.divisions.length; ++i) {
-                industrySelector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("option", {
+                industrySelector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("option", {
                     text:company.divisions[i].name, value:company.divisions[i].name,
                 })); //End create element option
             } //End for
@@ -38792,7 +38371,7 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                     for (var cityName in company.divisions[i].warehouses) {
                         if (company.divisions[i].warehouses.hasOwnProperty(cityName) &&
                             company.divisions[i].warehouses[cityName] instanceof Warehouse) {
-                            citySelector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("option", {
+                            citySelector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("option", {
                                 value:cityName, text:cityName,
                             }));
                         }
@@ -38802,12 +38381,12 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
             }
 
             //Select amount to export
-            var exportAmount = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("input", {
+            var exportAmount = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("input", {
                 class: "text-input",
                 placeholder:"Export amount / s"
             });
 
-            var exportBtn  = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+            var exportBtn  = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
                 class:"a-link-button", display:"inline-block", innerText:"Export",
                 clickListener:()=>{
                     var industryName = industrySelector.options[industrySelector.selectedIndex].text,
@@ -38820,81 +38399,81 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                     try {
                         temp = eval(temp);
                     } catch(e) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("Invalid expression entered for export amount: " + e);
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Invalid expression entered for export amount: " + e);
                         return false;
                     }
 
                     if (temp == null || isNaN(temp)) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("Invalid amount entered for export");
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Invalid amount entered for export");
                         return;
                     }
                     var exportObj = {ind:industryName, city:cityName, amt:sanitizedAmt};
                     mat.exp.push(exportObj);
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
                     return false;
                 }
             });
 
-            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
                 class:"a-link-button", display:"inline-block", innerText:"Cancel",
                 clickListener:()=>{
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
                     return false;
                 }
             });
 
-            var currExportsText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {
+            var currExportsText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
                 innerText:"Below is a list of all current exports of this material from this warehouse. " +
                           "Clicking on one of the exports below will REMOVE that export."
             });
             var currExports = [];
             for (var i = 0; i < mat.exp.length; ++i) {
                 (function(i, mat, currExports){
-                currExports.push(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("div", {
+                currExports.push(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {
                     class:"cmpy-mgmt-existing-export",
                     innerHTML: "Industry: " + mat.exp[i].ind + "<br>" +
                                "City: " + mat.exp[i].city + "<br>" +
                                "Amount/s: " + mat.exp[i].amt,
                     clickListener:()=>{
                         mat.exp.splice(i, 1); //Remove export object
-                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(popupId);
+                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
                         createExportPopup();
                     }
                 }));
                 })(i, mat, currExports);
             }
-            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_11__["createPopup"])(popupId, [exportTxt, industrySelector, citySelector, exportAmount,
+            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_17__["createPopup"])(popupId, [exportTxt, industrySelector, citySelector, exportAmount,
                                   exportBtn, cancelBtn, currExportsText].concat(currExports));
         }
-        buttonPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+        buttonPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
             innerText:"Export", display:"inline-block", class:"a-link-button",
             clickListener:()=>{createExportPopup();}
         }));
     }
 
-    buttonPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("br", {})); // Force line break
+    buttonPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("br", {})); // Force line break
 
     //Button to set sell amount
     var innerTextString;
     if (mat.sllman[0]) {
-        innerTextString = (mat.sllman[1] === -1 ? "Sell (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(mat.sll, 3) + "/MAX)" :
-                          "Sell (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(mat.sll, 3) + "/" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(mat.sllman[1], 3) + ")");
+        innerTextString = (mat.sllman[1] === -1 ? "Sell (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(mat.sll, 3) + "/MAX)" :
+                          "Sell (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(mat.sll, 3) + "/" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(mat.sllman[1], 3) + ")");
         if (mat.sCost) {
-            if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_15__["isString"])(mat.sCost)) {
+            if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_20__["isString"])(mat.sCost)) {
                 var sCost = mat.sCost.replace(/MP/g, mat.bCost);
-                innerTextString += " @ $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(eval(sCost), 2);
+                innerTextString += " @ $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(eval(sCost), 2);
             } else {
-                innerTextString += " @ $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(mat.sCost, 2);
+                innerTextString += " @ $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(mat.sCost, 2);
             }
         }
     } else {
         innerTextString = "Sell (0.000/0.000)";
     }
 
-    buttonPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+    buttonPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
         innerText: innerTextString, display:"inline-block", class:"a-link-button",
         clickListener:()=>{
-            var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {
+            var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
                 innerHTML: "Enter the maximum amount of " + mat.name + " you would like " +
                            "to sell per second, as well as the price at which you would " +
                            "like to sell at.<br><br>" +
@@ -38909,9 +38488,9 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                            "changing price that depends on the market price. For example, if you set the sell price " +
                            "to 'MP+10' then it will always be sold at $10 above the market price.",
             });
-            var br = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("br", {});
+            var br = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("br", {});
             var confirmBtn;
-            var inputQty = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("input", {
+            var inputQty = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("input", {
                 type:"text", marginTop:"4px",
                 value: mat.sllman[1] ? mat.sllman[1] : null, placeholder: "Sell amount",
                 onkeyup:(e)=>{
@@ -38919,7 +38498,7 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                     if (e.keyCode === 13) {confirmBtn.click();}
                 }
             });
-            var inputPx = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("input", {
+            var inputPx = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("input", {
                 type:"text", marginTop:"4px",
                 value: mat.sCost ? mat.sCost : null, placeholder: "Sell price",
                 onkeyup:(e)=>{
@@ -38927,7 +38506,7 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                     if (e.keyCode === 13) {confirmBtn.click();}
                 }
             });
-            confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+            confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
                 innerText:"Confirm", class:"a-link-button", margin:"6px",
                 clickListener:()=>{
                     //Parse price
@@ -38937,12 +38516,12 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                     try {
                         temp = eval(temp);
                     } catch(e) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("Invalid value or expression for sell price field: " + e);
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Invalid value or expression for sell price field: " + e);
                         return false;
                     }
 
                     if (temp == null || isNaN(temp)) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("Invalid value or expression for sell price field");
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Invalid value or expression for sell price field");
                         return false;
                     }
 
@@ -38961,19 +38540,19 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                         try {
                             temp = eval(temp);
                         } catch(e) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("Invalid value or expression for sell price field: " + e);
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Invalid value or expression for sell price field: " + e);
                             return false;
                         }
 
                         if (temp == null || isNaN(temp)) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("Invalid value or expression for sell price field");
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Invalid value or expression for sell price field");
                             return false;
                         }
 
                         mat.sllman[0] = true;
                         mat.sllman[1] = qty; //Use sanitized input
                     } else if (isNaN(inputQty.value)) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("Invalid value for sell quantity field! Must be numeric or 'MAX'");
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Invalid value for sell quantity field! Must be numeric or 'MAX'");
                         return false;
                     } else {
                         var qty = parseFloat(inputQty.value);
@@ -38988,17 +38567,17 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                     }
 
                     this.createUI(parentRefs);
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(sellPopupid);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(sellPopupid);
                     return false;
                 }
             });
-            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
                 innerText:"Cancel", class:"a-link-button", margin: "6px",
                 clickListener:()=>{
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(sellPopupid);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(sellPopupid);
                 }
             });
-            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_11__["createPopup"])(sellPopupid, [txt, br, inputQty, inputPx, confirmBtn, cancelBtn]);
+            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_17__["createPopup"])(sellPopupid, [txt, br, inputQty, inputPx, confirmBtn, cancelBtn]);
             inputQty.focus();
         }
     }));
@@ -39009,15 +38588,15 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
 Warehouse.prototype.createProductUI = function(product, parentRefs) {
     var company = parentRefs.company, industry = parentRefs.industry,
         city = currentCityUi;
-    var div = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("div", {
+    var div = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {
         class:"cmpy-mgmt-warehouse-product-div"
     });
 
     //Products being designed TODO
     if (!product.fin) {
-        div.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {
+        div.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
             innerHTML: "Designing " + product.name + "...<br>" +
-                        Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(product.prog, 2) + "% complete",
+                        Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(product.prog, 2) + "% complete",
         }));
         return div;
     }
@@ -39025,53 +38604,53 @@ Warehouse.prototype.createProductUI = function(product, parentRefs) {
     //Completed products
     var cmpAndDmdText = "";
     if (company.unlockUpgrades[2] === 1) {
-        cmpAndDmdText += "<br>Demand: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(product.dmd, 3);
+        cmpAndDmdText += "<br>Demand: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(product.dmd, 3);
     }
     if (company.unlockUpgrades[3] === 1) {
-        cmpAndDmdText += "<br>Competition: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(product.cmp, 3);
+        cmpAndDmdText += "<br>Competition: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(product.cmp, 3);
     }
 
     var totalGain = product.data[city][1] - product.data[city][2]; //Production - sale
-    div.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {
-        innerHTML: "<p class='tooltip'>" + product.name + ": " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(product.data[city][0], 3) + //Quantity
-                   "(" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(totalGain, 3) + "/s)" +
-                   "<span class='tooltiptext'>Prod: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(product.data[city][1], 3) + "/s<br>" +
-                   "Sell: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(product.data[city][2], 3) + "/s</span></p><br>" +
-                   "<p class='tooltip'>Rating: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(product.rat, 3) +
-                   "<span class='tooltiptext'>Quality: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(product.qlt, 3) + "<br>" +
-                   "Performance: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(product.per, 3) + "<br>" +
-                   "Durability: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(product.dur, 3) + "<br>" +
-                   "Reliability: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(product.rel, 3) + "<br>" +
-                   "Aesthetics: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(product.aes, 3) + "<br>" +
-                   "Features: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(product.fea, 3) +
+    div.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
+        innerHTML: "<p class='tooltip'>" + product.name + ": " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(product.data[city][0], 3) + //Quantity
+                   "(" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(totalGain, 3) + "/s)" +
+                   "<span class='tooltiptext'>Prod: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(product.data[city][1], 3) + "/s<br>" +
+                   "Sell: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(product.data[city][2], 3) + "/s</span></p><br>" +
+                   "<p class='tooltip'>Rating: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(product.rat, 3) +
+                   "<span class='tooltiptext'>Quality: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(product.qlt, 3) + "<br>" +
+                   "Performance: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(product.per, 3) + "<br>" +
+                   "Durability: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(product.dur, 3) + "<br>" +
+                   "Reliability: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(product.rel, 3) + "<br>" +
+                   "Aesthetics: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(product.aes, 3) + "<br>" +
+                   "Features: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(product.fea, 3) +
                    cmpAndDmdText + "</span></p><br>" +
-                   "<p class='tooltip'>Est. Production Cost: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(product.pCost / ProductProductionCostRatio, "$0.000a") +
+                   "<p class='tooltip'>Est. Production Cost: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(product.pCost / ProductProductionCostRatio, "$0.000a") +
                    "<span class='tooltiptext'>An estimate of the material cost it takes to create this Product.</span></p><br>" +
-                   "<p class='tooltip'>Est. Market Price: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(product.pCost + product.rat / product.mku, "$0.000a") +
+                   "<p class='tooltip'>Est. Market Price: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(product.pCost + product.rat / product.mku, "$0.000a") +
                    "<span class='tooltiptext'>An estimate of how much consumers are willing to pay for this product. " +
                    "Setting the sale price above this may result in less sales. Setting the sale price below this may result " +
                    "in more sales.</span></p>"
     }));
-    var buttonPanel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("div", {
+    var buttonPanel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {
         display:"inline-block",
     });
     div.appendChild(buttonPanel);
 
     //Sell button
-    var sellInnerTextString = (product.sllman[city][1] === -1 ? "Sell (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(product.data[city][2], 3) + "/MAX)" :
-                              "Sell (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(product.data[city][2], 3) + "/" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(product.sllman[city][1], 3) + ")");
+    var sellInnerTextString = (product.sllman[city][1] === -1 ? "Sell (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(product.data[city][2], 3) + "/MAX)" :
+                              "Sell (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(product.data[city][2], 3) + "/" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(product.sllman[city][1], 3) + ")");
     if (product.sCost) {
-        if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_15__["isString"])(product.sCost)) {
+        if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_20__["isString"])(product.sCost)) {
             sellInnerTextString += (" @ " + product.sCost);
         } else {
-            sellInnerTextString += (" @ " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(product.sCost, "$0.000a"));
+            sellInnerTextString += (" @ " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(product.sCost, "$0.000a"));
         }
     }
-    div.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+    div.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
         innerText:sellInnerTextString, class:"a-link-button", display:"inline-block",margin:"6px",
         clickListener:()=>{
             var popupId = "cmpy-mgmt-sell-product-popup";
-            var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {
+            var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
                 innerHTML:"Enter the maximum amount of " + product.name + " you would like " +
                           "to sell per second, as well as the price at which you would like to " +
                           "sell it at.<br><br>" +
@@ -39089,21 +38668,21 @@ Warehouse.prototype.createProductUI = function(product, parentRefs) {
                           "will always be sold at five times the estimated market price.",
             });
             var confirmBtn;
-            var inputQty = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("input", {
+            var inputQty = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("input", {
                 type:"text", value:product.sllman[city][1] ? product.sllman[city][1] : null, placeholder: "Sell amount",
                 onkeyup:(e)=>{
                     e.preventDefault();
                     if (e.keyCode === 13) {confirmBtn.click();}
                 }
             });
-            var inputPx = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("input", {
+            var inputPx = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("input", {
                 type:"text", value: product.sCost ? product.sCost : null, placeholder: "Sell price",
                 onkeyup:(e)=>{
                     e.preventDefault();
                     if (e.keyCode === 13) {confirmBtn.click();}
                 }
             });
-            confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+            confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
                 class:"a-link-button", innerText:"Confirm",
                 clickListener:()=>{
                     //Parse price
@@ -39116,18 +38695,18 @@ Warehouse.prototype.createProductUI = function(product, parentRefs) {
                         try {
                             temp = eval(temp);
                         } catch(e) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("Invalid value or expression for sell quantity field: " + e);
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Invalid value or expression for sell quantity field: " + e);
                             return false;
                         }
                         if (temp == null || isNaN(temp)) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("Invalid value or expression for sell quantity field.");
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Invalid value or expression for sell quantity field.");
                             return false;
                         }
                         product.sCost = price; //Use sanitized price
                     } else {
                         var cost = parseFloat(inputPx.value);
                         if (isNaN(cost)) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("Invalid value for sell price field");
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Invalid value for sell price field");
                             return false;
                         }
                         product.sCost = cost;
@@ -39143,18 +38722,18 @@ Warehouse.prototype.createProductUI = function(product, parentRefs) {
                         try {
                             temp = eval(temp);
                         } catch(e) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("Invalid value or expression for sell price field: " + e);
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Invalid value or expression for sell price field: " + e);
                             return false;
                         }
 
                         if (temp == null || isNaN(temp)) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("Invalid value or expression for sell price field");
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Invalid value or expression for sell price field");
                             return false;
                         }
                         product.sllman[city][0] = true;
                         product.sllman[city][1] = qty; //Use sanitized input
                     } else if (isNaN(inputQty.value)) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("Invalid value for sell quantity field! Must be numeric");
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Invalid value for sell quantity field! Must be numeric");
                         return false;
                     } else {
                         var qty = parseFloat(inputQty.value);
@@ -39167,55 +38746,55 @@ Warehouse.prototype.createProductUI = function(product, parentRefs) {
                         }
                     }
                     this.createUI(parentRefs);
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
                     return false;
                 }
             });
-            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
                 class:"a-link-button", innerText:"Cancel",
                 clickListener:()=>{
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
                     return false;
                 }
             });
-            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_11__["createPopup"])(popupId, [txt, inputQty, inputPx, confirmBtn, cancelBtn]);
+            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_17__["createPopup"])(popupId, [txt, inputQty, inputPx, confirmBtn, cancelBtn]);
             inputQty.focus();
         }
     }));
-    div.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("br",{})); //force line break
+    div.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("br",{})); //force line break
 
     //Limit production button
     var limitProductionInnerText = "Limit Production";
     if (product.prdman[city][0]) {
-        limitProductionInnerText += " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(product.prdman[city][1], 3) + ")";
+        limitProductionInnerText += " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(product.prdman[city][1], 3) + ")";
     }
-    div.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+    div.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
         class:"a-link-button", innerText:limitProductionInnerText,display:"inline-block",
         clickListener:()=>{
             var popupId = "cmpy-mgmt-limit-product-production-popup";
-            var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {
+            var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
                 innerText:"Enter a limit to the amount of this product you would " +
                           "like to product per second. Leave the box empty to set no limit."
             });
             var confirmBtn;
-            var input = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("input", {
+            var input = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("input", {
                 type:"number", placeholder:"Limit",
                 onkeyup:(e)=>{
                     e.preventDefault();
                     if (e.keyCode === 13) {confirmBtn.click();}
                 }
             });
-            confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+            confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
                 class:"a-link-button", display:"inline-block", innerText:"Limit production", margin:'6px',
                 clickListener:()=>{
                     if (input.value === "") {
                         product.prdman[city][0] = false;
-                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(popupId);
+                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
                         return false;
                     }
                     var qty = parseFloat(input.value);
                     if (isNaN(qty)) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("Invalid value entered");
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Invalid value entered");
                         return false;
                     }
                     if (qty < 0) {
@@ -39224,62 +38803,62 @@ Warehouse.prototype.createProductUI = function(product, parentRefs) {
                         product.prdman[city][0] = true;
                         product.prdman[city][1] = qty;
                     }
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
                     return false;
                 }
             });
-            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
                 class:"a-link-button", display:"inline-block", innerText:"Cancel", margin:"6px",
                 clickListener:()=>{
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
                     return false;
                 }
             });
-            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_11__["createPopup"])(popupId, [txt, input, confirmBtn, cancelBtn]);
+            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_17__["createPopup"])(popupId, [txt, input, confirmBtn, cancelBtn]);
         }
     }));
 
     //Discontinue button
-    div.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+    div.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
         class:'a-link-button', display:"inline-block",innerText:"Discontinue",
         clickListener:()=>{
             var popupId = "cmpy-mgmt-discontinue-product-popup";
-            var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {
+            var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
                 innerText:"Are you sure you want to do this? Discontinuing a product " +
                           "removes it completely and permanently. You will no longer " +
                           "produce this product and all of its existing stock will be " +
                           "removed and left unsold",
             });
-            var confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+            var confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
                 class:"a-link-button",innerText:"Discontinue",
                 clickListener:()=>{
                     industry.discontinueProduct(product, parentRefs);
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
                     return false;
                 }
             });
-            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
                 class:"a-link-button", innerText:"Cancel",
                 clickListener:()=>{
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
                     return false;
                 }
             });
-            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_11__["createPopup"])(popupId, [txt, confirmBtn, cancelBtn]);
+            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_17__["createPopup"])(popupId, [txt, confirmBtn, cancelBtn]);
         }
     }));
     return div;
 }
 
 Warehouse.prototype.toJSON = function() {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_9__["Generic_toJSON"])("Warehouse", this);
+	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__["Generic_toJSON"])("Warehouse", this);
 }
 
 Warehouse.fromJSON = function(value) {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_9__["Generic_fromJSON"])(Warehouse, value.data);
+	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__["Generic_fromJSON"])(Warehouse, value.data);
 }
 
-_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_9__["Reviver"].constructors.Warehouse = Warehouse;
+_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__["Reviver"].constructors.Warehouse = Warehouse;
 
 //Corporation Unlock Upgrades
 //Upgrades for entire corporation, unlocks features, either you have it or you dont
@@ -39381,9 +38960,9 @@ function Corporation(params={}) {
     this.divisions = [];
 
     //Financial stats
-    this.funds      = new decimal_js__WEBPACK_IMPORTED_MODULE_5__[/* default */ "a"](150e9);
-    this.revenue    = new decimal_js__WEBPACK_IMPORTED_MODULE_5__[/* default */ "a"](0);
-    this.expenses   = new decimal_js__WEBPACK_IMPORTED_MODULE_5__[/* default */ "a"](0);
+    this.funds      = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](150e9);
+    this.revenue    = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](0);
+    this.expenses   = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](0);
     this.fundingRound = 0;
     this.public     = false; //Publicly traded
     this.numShares  = TOTALSHARES;
@@ -39398,7 +38977,7 @@ function Corporation(params={}) {
     this.upgrades = Array(numUpgrades).fill(0);
     this.upgradeMultipliers = Array(numUpgrades).fill(1);
 
-    this.state = new CorporationState();
+    this.state = new _CorporationState__WEBPACK_IMPORTED_MODULE_0__["CorporationState"]();
 }
 
 Corporation.prototype.getState = function() {
@@ -39417,8 +38996,8 @@ Corporation.prototype.process = function() {
 
         //At the start of a new cycle, calculate profits from previous cycle
         if (state === "START") {
-            this.revenue = new decimal_js__WEBPACK_IMPORTED_MODULE_5__[/* default */ "a"](0);
-            this.expenses = new decimal_js__WEBPACK_IMPORTED_MODULE_5__[/* default */ "a"](0);
+            this.revenue = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](0);
+            this.expenses = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](0);
             this.divisions.forEach((ind) => {
                 if (ind.lastCycleRevenue === -Infinity || ind.lastCycleRevenue === Infinity) { return; }
                 if (ind.lastCycleExpenses === -Infinity || ind.lastCycleExpenses === Infinity) { return; }
@@ -39428,10 +39007,10 @@ Corporation.prototype.process = function() {
             var profit = this.revenue.minus(this.expenses);
             var cycleProfit = profit.times(marketCycles * SecsPerMarketCycle);
             if (isNaN(this.funds)) {
-                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("There was an error calculating your Corporations funds and they got reset to 0. " +
+                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("There was an error calculating your Corporations funds and they got reset to 0. " +
                                 "This is a bug. Please report to game developer.<br><br>" +
                                 "(Your funds have been set to $150b for the inconvenience)");
-                this.funds = new decimal_js__WEBPACK_IMPORTED_MODULE_5__[/* default */ "a"](150e9);
+                this.funds = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](150e9);
             }
             this.funds = this.funds.plus(cycleProfit);
             this.updateSharePrice();
@@ -39464,7 +39043,7 @@ Corporation.prototype.determineValuation = function() {
         }
         val -= (val % 1e6); //Round down to nearest millionth
     }
-    return val * _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CorporationValuation;
+    return val * _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_6__["BitNodeMultipliers"].CorporationValuation;
 }
 
 Corporation.prototype.getInvestment = function() {
@@ -39487,8 +39066,8 @@ Corporation.prototype.getInvestment = function() {
     }
     var funding = val * percShares * 4,
         investShares = Math.floor(TOTALSHARES * percShares),
-        yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_18__[/* yesNoBoxGetYesButton */ "d"])(),
-        noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_18__[/* yesNoBoxGetNoButton */ "c"])();
+        yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_23__[/* yesNoBoxGetYesButton */ "d"])(),
+        noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_23__[/* yesNoBoxGetNoButton */ "c"])();
     yesBtn.innerHTML = "Accept";
     noBtn.innerHML = "Reject";
     yesBtn.addEventListener("click", ()=>{
@@ -39496,32 +39075,32 @@ Corporation.prototype.getInvestment = function() {
         this.funds = this.funds.plus(funding);
         this.numShares -= investShares;
         this.displayCorporationOverviewContent();
-        return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_18__[/* yesNoBoxClose */ "a"])();
+        return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_23__[/* yesNoBoxClose */ "a"])();
     });
     noBtn.addEventListener("click", ()=>{
-        return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_18__[/* yesNoBoxClose */ "a"])();
+        return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_23__[/* yesNoBoxClose */ "a"])();
     });
-    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_18__[/* yesNoBoxCreate */ "b"])("An investment firm has offered you " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(funding, '$0.000a') +
-                   " in funding in exchange for a " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(percShares*100, "0.000a") +
-                   "% stake in the company (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(investShares, '0.000a') + " shares).<br><br>" +
+    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_23__[/* yesNoBoxCreate */ "b"])("An investment firm has offered you " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(funding, '$0.000a') +
+                   " in funding in exchange for a " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(percShares*100, "0.000a") +
+                   "% stake in the company (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(investShares, '0.000a') + " shares).<br><br>" +
                    "Do you accept or reject this offer?");
 }
 
 Corporation.prototype.goPublic = function() {
     var goPublicPopupId = "cmpy-mgmt-go-public-popup";
     var initialSharePrice = this.determineValuation() / (TOTALSHARES);
-    var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {
+    var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
         innerHTML: "Enter the number of shares you would like to issue " +
                    "for your IPO. These shares will be publicly sold " +
                    "and you will no longer own them. Your Corporation will receive " +
-                   _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(initialSharePrice, '$0.000a') + " per share " +
+                   _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(initialSharePrice, '$0.000a') + " per share " +
                    "(the IPO money will be deposited directly into your Corporation's funds).<br><br>" +
                    "Furthermore, issuing more shares now will help drive up " +
                    "your company's stock price in the future.<br><br>" +
-                   "You have a total of " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(this.numShares, "0.000a") + " of shares that you can issue.",
+                   "You have a total of " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(this.numShares, "0.000a") + " of shares that you can issue.",
     });
     var yesBtn;
-    var input = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("input", {
+    var input = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("input", {
         type:"number",
         placeholder: "Shares to issue",
         onkeyup:(e)=>{
@@ -39529,19 +39108,19 @@ Corporation.prototype.goPublic = function() {
             if (e.keyCode === 13) {yesBtn.click();}
         }
     });
-    var br = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("br", {});
-    yesBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+    var br = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("br", {});
+    yesBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
         class:"a-link-button",
         innerText:"Go Public",
         clickListener:()=>{
             var numShares = Math.round(input.value);
             var initialSharePrice = this.determineValuation() / (TOTALSHARES);
             if (isNaN(numShares)) {
-                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("Invalid value for number of issued shares");
+                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Invalid value for number of issued shares");
                 return false;
             }
             if (numShares > this.numShares) {
-                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("Error: You don't have that many shares to issue!");
+                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Error: You don't have that many shares to issue!");
                 return false;
             }
             this.public = true;
@@ -39550,19 +39129,19 @@ Corporation.prototype.goPublic = function() {
             this.numShares -= numShares;
             this.funds = this.funds.plus(numShares * initialSharePrice);
             this.displayCorporationOverviewContent();
-            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(goPublicPopupId);
+            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(goPublicPopupId);
             return false;
         }
     });
-    var noBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+    var noBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
         class:"a-link-button",
         innerText:"Cancel",
         clickListener:()=>{
-            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(goPublicPopupId);
+            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(goPublicPopupId);
             return false;
         }
     });
-    Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_11__["createPopup"])(goPublicPopupId, [txt, br, input, yesBtn, noBtn]);
+    Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_17__["createPopup"])(goPublicPopupId, [txt, br, input, yesBtn, noBtn]);
 }
 
 Corporation.prototype.updateSharePrice = function() {
@@ -39582,7 +39161,7 @@ Corporation.prototype.unlock = function(upgrade) {
         this.unlockUpgrades.push(0);
     }
     if (this.funds.lt(price)) {
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("You don't have enough funds to unlock this!");
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("You don't have enough funds to unlock this!");
         return;
     }
     this.unlockUpgrades[upgN] = 1;
@@ -39597,7 +39176,7 @@ Corporation.prototype.upgrade = function(upgrade) {
     while (this.upgradeMultipliers.length <= upgN) {this.upgradeMultipliers.push(1);}
     var totalCost = basePrice * Math.pow(priceMult, this.upgrades[upgN]);
     if (this.funds.lt(totalCost)) {
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("You don't have enough funds to purchase this!");
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("You don't have enough funds to purchase this!");
         return;
     }
     ++this.upgrades[upgN];
@@ -39691,19 +39270,19 @@ var companyManagementDiv, companyManagementHeaderTabs, companyManagementPanel,
         industryWarehouseMaterials, industryWarehouseProducts,
     headerTabs, cityTabs;
 Corporation.prototype.createUI = function() {
-    companyManagementDiv = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("div", {
+    companyManagementDiv = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {
         id:"cmpy-mgmt-container",
         position:"fixed",
         class:"generic-menupage-container"
     });
-    companyManagementHeaderTabs = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("div", {id:"cmpy-mgmt-header-tabs"});
+    companyManagementHeaderTabs = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {id:"cmpy-mgmt-header-tabs"});
     companyManagementDiv.appendChild(companyManagementHeaderTabs);
 
     //Create division/industry tabs at the top
     this.updateUIHeaderTabs();
 
     //Create the 'panel' that will have the actual content in the UI
-    companyManagementPanel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("div", {id:"cmpy-mgmt-panel"});
+    companyManagementPanel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {id:"cmpy-mgmt-panel"});
     companyManagementDiv.appendChild(companyManagementPanel);
     document.getElementById("entire-game-container").appendChild(companyManagementDiv);
 
@@ -39712,14 +39291,14 @@ Corporation.prototype.createUI = function() {
 
 Corporation.prototype.updateUIHeaderTabs = function() {
     if (companyManagementHeaderTabs) {
-        Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_16__["removeChildrenFromElement"])(companyManagementHeaderTabs);
+        Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_21__["removeChildrenFromElement"])(companyManagementHeaderTabs);
     } else {
         console.log("ERROR: Header tabs div has not yet been created when Corporation.updateUIHeaderTabs() is called");
         return;
     }
 
     //Corporation overview tabs
-    var cmpyOverviewHdrTab = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("button", {
+    var cmpyOverviewHdrTab = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("button", {
         id:"cmpy-mgmt-company-tab",
         class:"cmpy-mgmt-header-tab",
         innerText:this.name,
@@ -39738,27 +39317,27 @@ Corporation.prototype.updateUIHeaderTabs = function() {
     }
 
     //Create a tab to expand into a new industry
-    companyManagementHeaderTabs.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("button", {
+    companyManagementHeaderTabs.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("button", {
         id:'cmpy-mgmt-expand-industry-tab',
         class:"cmpy-mgmt-header-tab",
         innerText:"Expand into new Industry",
         clickListener: ()=>{
             if (document.getElementById("cmpy-mgmt-expand-industry-popup") != null) {return;}
 
-            var container = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("div", {
+            var container = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {
                 class:"popup-box-container",
                 id:"cmpy-mgmt-expand-industry-popup",
             });
-            var content = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("div", {class:"popup-box-content"});
-            var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {
+            var content = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {class:"popup-box-content"});
+            var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
                 innerHTML: "Create a new division to expand into a new industry:",
             });
-            var selector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("select", {
+            var selector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("select", {
                 class:"dropdown"
             });
-            var industryDescription = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {});
+            var industryDescription = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {});
             var yesBtn;
-            var nameInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("input", {
+            var nameInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("input", {
                 type:"text",
                 id:"cmpy-mgmt-expand-industry-name-input",
                 class: "text-input",
@@ -39770,11 +39349,11 @@ Corporation.prototype.updateUIHeaderTabs = function() {
                     if (e.keyCode === 13) {yesBtn.click();}
                 }
             });
-            var nameLabel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("label", {
+            var nameLabel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("label", {
                 for:"cmpy-mgmt-expand-industry-name-input",
                 innerText:"Division name: "
             });
-            yesBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("span", {
+            yesBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("span", {
                 class:"popup-box-button",
                 innerText:"Create Division",
                 clickListener: ()=>{
@@ -39783,16 +39362,16 @@ Corporation.prototype.updateUIHeaderTabs = function() {
 
                     for (var i = 0; i < this.divisions.length; ++i) {
                         if (this.divisions[i].name === newDivisionName) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("This name is already in use!");
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("This name is already in use!");
                             return false;
                         }
                     }
-                    if (this.funds.lt(IndustryStartingCosts[ind])) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("Not enough money to create a new division in this industry");
+                    if (this.funds.lt(_IndustryData__WEBPACK_IMPORTED_MODULE_2__["IndustryStartingCosts"][ind])) {
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Not enough money to create a new division in this industry");
                     } else if (newDivisionName === "") {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("New division must have a name!");
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("New division must have a name!");
                     } else {
-                        this.funds = this.funds.minus(IndustryStartingCosts[ind]);
+                        this.funds = this.funds.minus(_IndustryData__WEBPACK_IMPORTED_MODULE_2__["IndustryStartingCosts"][ind]);
                         var newInd = new Industry({
                             name:newDivisionName,
                             type:ind,
@@ -39800,17 +39379,17 @@ Corporation.prototype.updateUIHeaderTabs = function() {
                         this.divisions.push(newInd);
                         this.updateUIHeaderTabs();
                         this.selectHeaderTab(headerTabs[headerTabs.length-2]);
-                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])("cmpy-mgmt-expand-industry-popup");
-                        this.displayDivisionContent(newInd, _Locations__WEBPACK_IMPORTED_MODULE_3__["Locations"].Sector12);
+                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])("cmpy-mgmt-expand-industry-popup");
+                        this.displayDivisionContent(newInd, _Locations__WEBPACK_IMPORTED_MODULE_9__["Locations"].Sector12);
                     }
                     return false;
                 }
             });
-            var noBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("span", {
+            var noBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("span", {
                 class:"popup-box-button",
                 innerText:"Cancel",
                 clickListener: function() {
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])("cmpy-mgmt-expand-industry-popup");
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])("cmpy-mgmt-expand-industry-popup");
                     return false;
                 }
             });
@@ -39824,15 +39403,15 @@ Corporation.prototype.updateUIHeaderTabs = function() {
             //Add industry types to selector
             //Have Agriculture be first as recommended option
             if (!ownedIndustries["Agriculture"]) {
-                selector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("option", {
-                    text:Industries["Agriculture"], value:"Agriculture"
+                selector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("option", {
+                    text:_IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"]["Agriculture"], value:"Agriculture"
                 }));
             }
 
-            for (var key in Industries) {
-                if (key !== "Agriculture" && Industries.hasOwnProperty(key) && !ownedIndustries[key]) {
-                    var ind = Industries[key];
-                    selector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("option", {
+            for (var key in _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"]) {
+                if (key !== "Agriculture" && _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].hasOwnProperty(key) && !ownedIndustries[key]) {
+                    var ind = _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"][key];
+                    selector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("option", {
                         text: ind,value:key,
                     }));
                 }
@@ -39840,12 +39419,12 @@ Corporation.prototype.updateUIHeaderTabs = function() {
 
             //Initial Industry Description
             var ind = selector.options[selector.selectedIndex].value;
-            industryDescription.innerHTML = (IndustryDescriptions[ind] + "<br><br>");
+            industryDescription.innerHTML = (_IndustryData__WEBPACK_IMPORTED_MODULE_2__["IndustryDescriptions"][ind] + "<br><br>");
 
             //Change the industry description text based on selected option
             selector.addEventListener("change", function() {
                 var ind = selector.options[selector.selectedIndex].value;
-                industryDescription.innerHTML = IndustryDescriptions[ind] + "<br><br>";
+                industryDescription.innerHTML = _IndustryData__WEBPACK_IMPORTED_MODULE_2__["IndustryDescriptions"][ind] + "<br><br>";
             });
 
             //Add to DOM
@@ -39877,13 +39456,13 @@ Corporation.prototype.selectHeaderTab = function(currentTab) {
 
 Corporation.prototype.createDivisionUIHeaderTab = function(division) {
     var tabId = "cmpy-mgmt-" + division.name + "-tab";
-    var tab = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("button", {
+    var tab = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("button", {
         id:tabId,
         class:"cmpy-mgmt-header-tab",
         innerText:division.name,
         clickListener:()=>{
             this.selectHeaderTab(tab);
-            this.displayDivisionContent(division, _Locations__WEBPACK_IMPORTED_MODULE_3__["Locations"].Sector12);
+            this.displayDivisionContent(division, _Locations__WEBPACK_IMPORTED_MODULE_9__["Locations"].Sector12);
             return false;
         }
     });
@@ -39918,7 +39497,7 @@ Corporation.prototype.updateUIContent = function() {
 
 Corporation.prototype.displayCorporationOverviewContent = function() {
     this.clearUIPanel();
-    companyManagementPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {
+    companyManagementPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
         id:"cmpy-mgmt-overview-text",
     }));
     if (headerTabs && headerTabs.length >= 1) {
@@ -39926,23 +39505,23 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
     }
 
     //Check if player has Corporation Handbook
-    var homeComp = _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].getHomeComputer(), hasHandbook = false,
+    var homeComp = _Player__WEBPACK_IMPORTED_MODULE_10__[/* Player */ "a"].getHomeComputer(), hasHandbook = false,
         handbookFn = "corporation-management-handbook.lit";
     for (var i = 0; i < homeComp.messages.length; ++i) {
-        if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_15__["isString"])(homeComp.messages[i]) && homeComp.messages[i] === handbookFn) {
+        if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_20__["isString"])(homeComp.messages[i]) && homeComp.messages[i] === handbookFn) {
             hasHandbook = true;
             break;
         }
     }
 
-    companyManagementPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+    companyManagementPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
         class:"a-link-button", innerText:"Getting Started Guide", display:"inline-block",
         tooltip:"Get a copy of and read 'The Complete Handbook for Creating a Successful Corporation.' " +
                 "This is a .lit file that guides you through the beginning of setting up a Corporation and " +
                 "provides some tips/pointers for helping you get started with managing it.",
         clickListener:()=>{
             if (!hasHandbook) {homeComp.messages.push(handbookFn);}
-            Object(_Literature__WEBPACK_IMPORTED_MODULE_2__[/* showLiterature */ "b"])(handbookFn);
+            Object(_Literature__WEBPACK_IMPORTED_MODULE_8__[/* showLiterature */ "b"])(handbookFn);
             return false;
         }
     }));
@@ -39950,21 +39529,21 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
     //Investors
     if (this.public) {
         //Sell share buttons
-        var sellShares = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+        var sellShares = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
             class:"a-link-button", innerText:"Sell Shares", display:"inline-block",
             tooltip:"Sell your shares in the company. This is the only way to " +
                     "profit from your business venture.",
             clickListener:()=>{
                 var popupId = "cmpy-mgmt-sell-shares-popup";
                 var currentStockPrice = this.sharePrice;
-                var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {
+                var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
                     innerHTML: "Enter the number of shares you would like to sell. The money from " +
                                "selling your shares will go directly to you (NOT your Corporation). " +
                                "The current price of your " +
-                               "company's stock is " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(currentStockPrice, "$0.000a"),
+                               "company's stock is " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(currentStockPrice, "$0.000a"),
                 });
-                var profitIndicator = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {});
-                var input = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("input", {
+                var profitIndicator = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {});
+                var input = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("input", {
                     type:"number", placeholder:"Shares to sell", margin:"5px",
                     inputListener: ()=> {
                         var numShares = Math.round(input.value);
@@ -39974,18 +39553,18 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                             profitIndicator.innerText = "You don't have this many shares to sell!";
                         } else {
                             profitIndicator.innerText = "Sell " + numShares + " shares for a total of " +
-                                                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(numShares * currentStockPrice, '$0.000a');
+                                                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(numShares * currentStockPrice, '$0.000a');
                         }
                     }
                 });
-                var confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+                var confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
                     class:"a-link-button", innerText:"Sell shares", display:"inline-block",
                     clickListener:()=>{
                         var shares = Math.round(input.value);
                         if (isNaN(shares) || shares <= 0) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("ERROR: Invalid value for number of shares");
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("ERROR: Invalid value for number of shares");
                         } else if (shares > this.numShares) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("ERROR: You don't have this many shares to sell");
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("ERROR: You don't have this many shares to sell");
                         } else {
                             this.numShares -= shares;
                             if (isNaN(this.issuedShares)) {
@@ -39999,40 +39578,40 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                                 }
                             }
                             this.issuedShares += shares;
-                            _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].gainMoney(shares * this.sharePrice);
-                            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(popupId);
+                            _Player__WEBPACK_IMPORTED_MODULE_10__[/* Player */ "a"].gainMoney(shares * this.sharePrice);
+                            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
                             return false;
                         }
 
                     }
                 });
-                var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+                var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
                     class:"a-link-button", innerText:"Cancel", display:"inline-block",
                     clickListener:()=>{
-                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(popupId);
+                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
                         return false;
                     }
                 });
-                Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_11__["createPopup"])(popupId, [txt, profitIndicator, input, confirmBtn, cancelBtn]);
+                Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_17__["createPopup"])(popupId, [txt, profitIndicator, input, confirmBtn, cancelBtn]);
             }
         });
 
         //Buyback shares button
-        var buybackShares = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+        var buybackShares = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
             class:"a-link-button", innerText:"Buyback shares", display:"inline-block",
             tooltip:"Buy back shares you that previously issued or sold at market price.",
             clickListener:()=>{
                 var popupId = "cmpy-mgmt-buyback-shares-popup";
                 var currentStockPrice = this.sharePrice;
-                var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {
+                var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
                     innerHTML: "Enter the number of shares you would like to buy back at market price. To purchase " +
                                "these shares, you must use your own money (NOT your Corporation's funds). " +
                                "The current price of your " +
-                               "company's stock is " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(currentStockPrice, "$0.000a") +
-                               ". Your company currently has " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(this.issuedShares, 3) + " outstanding stock shares",
+                               "company's stock is " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(currentStockPrice, "$0.000a") +
+                               ". Your company currently has " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(this.issuedShares, 3) + " outstanding stock shares",
                 });
-                var costIndicator = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {});
-                var input = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("input", {
+                var costIndicator = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {});
+                var input = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("input", {
                     type:"number", placeholder:"Shares to buyback", margin:"5px",
                     inputListener: ()=> {
                         var numShares = Math.round(input.value);
@@ -40045,22 +39624,22 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                         } else {
                             console.log("here");
                             costIndicator.innerText = "Purchase " + numShares + " shares for a total of " +
-                                                      _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(numShares * currentStockPrice, '$0.000a');
+                                                      _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(numShares * currentStockPrice, '$0.000a');
                         }
                     }
                 });
-                var confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+                var confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
                     class:"a-link-button", innerText:"Buy shares", display:"inline-block",
                     clickListener:()=>{
                         var shares = Math.round(input.value);
                         var tempStockPrice = this.sharePrice;
                         if (isNaN(shares) || shares <= 0) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("ERROR: Invalid value for number of shares");
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("ERROR: Invalid value for number of shares");
                         } else if (shares > this.issuedShares) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("ERROR: There are not this many oustanding shares to buy back");
-                        } else if (shares * tempStockPrice > _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].money) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("ERROR: You do not have enough money to purchase this many shares (you need " +
-                                            _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(shares * tempStockPrice, "$0.000a") + ")");
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("ERROR: There are not this many oustanding shares to buy back");
+                        } else if (shares * tempStockPrice > _Player__WEBPACK_IMPORTED_MODULE_10__[/* Player */ "a"].money) {
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("ERROR: You do not have enough money to purchase this many shares (you need " +
+                                            _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(shares * tempStockPrice, "$0.000a") + ")");
                         } else {
                             this.numShares += shares;
                             if (isNaN(this.issuedShares)) {
@@ -40074,24 +39653,24 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                                 }
                             }
                             this.issuedShares -= shares;
-                            _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].loseMoney(shares * tempStockPrice);
+                            _Player__WEBPACK_IMPORTED_MODULE_10__[/* Player */ "a"].loseMoney(shares * tempStockPrice);
                             //TODO REMOVE from Player money
-                            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(popupId);
+                            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
                         }
                         return false;
 
                     }
                 });
-                var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+                var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
                     class:"a-link-button",
                     innerText:"Cancel",
                     display:"inline-block",
                     clickListener:()=>{
-                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(popupId);
+                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
                         return false;
                     }
                 });
-                Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_11__["createPopup"])(popupId, [txt, costIndicator, input, confirmBtn, cancelBtn]);
+                Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_17__["createPopup"])(popupId, [txt, costIndicator, input, confirmBtn, cancelBtn]);
             }
         });
 
@@ -40100,7 +39679,7 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
 
         //If your Corporation is big enough, buy faction influence through bribes
         var canBribe = this.determineValuation() >= BribeThreshold;
-        var bribeFactions = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+        var bribeFactions = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
             class: canBribe ? "a-link-button" : "a-link-button-inactive",
             innerText:"Bribe Factions", display:"inline-block",
             tooltip:canBribe
@@ -40108,19 +39687,19 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                     : "Your Corporation is not powerful enough to bribe Faction leaders",
             clickListener:()=>{
                 var popupId = "cmpy-mgmt-bribe-factions-popup";
-                var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {
+                var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
                     innerText:"You can use Corporation funds or stock shares to bribe Faction Leaders in exchange for faction reputation"
                 });
-                var factionSelector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("select", {margin:"3px"});
-                for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].factions.length; ++i) {
-                    var facName = _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].factions[i];
-                    factionSelector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("option", {
+                var factionSelector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("select", {margin:"3px"});
+                for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_10__[/* Player */ "a"].factions.length; ++i) {
+                    var facName = _Player__WEBPACK_IMPORTED_MODULE_10__[/* Player */ "a"].factions[i];
+                    factionSelector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("option", {
                         text:facName, value:facName
                     }));
                 }
-                var repGainText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p");
+                var repGainText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p");
                 var stockSharesInput;
-                var moneyInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("input", {
+                var moneyInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("input", {
                     type:"number", placeholder:"Corporation funds", margin:"5px",
                     inputListener:()=>{
                         var money = moneyInput.value == null || moneyInput.value == "" ? 0 : parseFloat(moneyInput.value);
@@ -40136,14 +39715,14 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
 
                             var totalAmount = Number(money) + (stockShares * stockPrice);
                             var repGain = totalAmount / BribeToRepRatio;
-                            repGainText.innerText = "You will gain " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(repGain, 0) +
+                            repGainText.innerText = "You will gain " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(repGain, 0) +
                                                     " reputation with " +
                                                     factionSelector.options[factionSelector.selectedIndex].value +
                                                     " with this bribe";
                         }
                     }
                 });
-                stockSharesInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("input", {
+                stockSharesInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("input", {
                     type:"number", placeholder:"Stock Shares", margin: "5px",
                     inputListener:()=>{
                         var money = moneyInput.value == null || moneyInput.value == "" ? 0 : parseFloat(moneyInput.value);
@@ -40159,58 +39738,58 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                             var totalAmount = money + (stockShares * stockPrice);
                             var repGain = totalAmount / BribeToRepRatio;
                             console.log("repGain: " + repGain);
-                            repGainText.innerText = "You will gain " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(repGain, 0) +
+                            repGainText.innerText = "You will gain " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(repGain, 0) +
                                                     " reputation with " +
                                                     factionSelector.options[factionSelector.selectedIndex].value +
                                                     " with this bribe";
                         }
                     }
                 });
-                var confirmButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+                var confirmButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
                     class:"a-link-button", innerText:"Bribe", display:"inline-block",
                     clickListener:()=>{
                         var money = moneyInput.value == null || moneyInput.value == "" ? 0 : parseFloat(moneyInput.value);
                         var stockPrice = this.sharePrice;
                         var stockShares = stockSharesInput.value == null || stockSharesInput.value == ""? 0 : Math.round(parseFloat(stockSharesInput.value));
-                        var fac = _Faction_Factions__WEBPACK_IMPORTED_MODULE_1__["Factions"][factionSelector.options[factionSelector.selectedIndex].value];
+                        var fac = _Faction_Factions__WEBPACK_IMPORTED_MODULE_7__["Factions"][factionSelector.options[factionSelector.selectedIndex].value];
                         if (fac == null) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("ERROR: You must select a faction to bribe");
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("ERROR: You must select a faction to bribe");
                             return false;
                         }
                         if (isNaN(money) || isNaN(stockShares) || money < 0 || stockShares < 0) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("ERROR: Invalid value(s) entered");
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("ERROR: Invalid value(s) entered");
                         } else if (this.funds.lt(money)) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("ERROR: You do not have this much money to bribe with");
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("ERROR: You do not have this much money to bribe with");
                         } else if (stockShares > this.numShares) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("ERROR: You do not have this many shares to bribe with");
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("ERROR: You do not have this many shares to bribe with");
                         } else {
                             var totalAmount = money + (stockShares * stockPrice);
                             var repGain = totalAmount / BribeToRepRatio;
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("You gained " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(repGain, 0) +
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("You gained " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(repGain, 0) +
                                             " reputation with " + fac.name  + " by bribing them.");
                             fac.playerReputation += repGain;
                             this.funds = this.funds.minus(money);
                             this.numShares -= stockShares;
-                            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(popupId);
+                            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
                             return false;
                         }
                     }
                 });
-                var cancelButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+                var cancelButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
                     class:"a-link-button", innerText:"Cancel", display:"inline-block",
                     clickListener:()=>{
-                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(popupId);
+                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
                         return false;
                     }
                 });
 
-                Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_11__["createPopup"])(popupId, [txt, factionSelector, repGainText,
+                Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_17__["createPopup"])(popupId, [txt, factionSelector, repGainText,
                                       moneyInput, stockSharesInput, confirmButton, cancelButton]);
             }
         });
         companyManagementPanel.appendChild(bribeFactions);
     } else {
-        var findInvestors = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+        var findInvestors = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
             class: this.fundingRound >= 4 ? "a-link-button-inactive" : "a-link-button tooltip",
             innerText: "Find Investors",
             display:"inline-block",
@@ -40219,7 +39798,7 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
             }
         });
         if (this.fundingRound < 4) {
-            var findInvestorsTooltip = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("span", {
+            var findInvestorsTooltip = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("span", {
                 class:"tooltiptext",
                 innerText:"Search for private investors who will give you startup funding in exchange " +
                           "for equity (stock shares) in your company"
@@ -40227,7 +39806,7 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
             findInvestors.appendChild(findInvestorsTooltip);
         }
 
-        var goPublic = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+        var goPublic = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
             class:"a-link-button tooltip",
             innerText:"Go Public",
             display:"inline-block",
@@ -40236,7 +39815,7 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                 return false;
             }
         });
-        var goPublicTooltip = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("span", {
+        var goPublicTooltip = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("span", {
             class:"tooltiptext",
             innerText: "Become a publicly traded and owned entity. Going public involves " +
                        "issuing shares for an IPO. Once you are a public company, " +
@@ -40254,10 +39833,10 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
     //Don't show upgrades if player hasn't opened any divisions
     if (this.divisions.length <= 0) {return; }
     //Corporation Upgrades
-    var upgradeContainer = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("div", {
+    var upgradeContainer = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {
         class:"cmpy-mgmt-upgrade-container",
     });
-    upgradeContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("h1", {
+    upgradeContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("h1", {
         innerText:"Unlocks", margin:"6px", padding:"6px",
     }));
 
@@ -40282,13 +39861,13 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                     return;
                 }
 
-                upgradeContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("div", {
+                upgradeContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {
                     class:"cmpy-mgmt-upgrade-div", width:"45%",
-                    innerHTML:upgrade[2] +  " - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(upgrade[1], "$0.000a"),
+                    innerHTML:upgrade[2] +  " - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(upgrade[1], "$0.000a"),
                     tooltip: upgrade[3],
                     clickListener:()=>{
                         if (corp.funds.lt(upgrade[1])) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("Insufficient funds");
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Insufficient funds");
                         } else {
                             corp.unlock(upgrade);
                             corp.displayCorporationOverviewContent();
@@ -40300,7 +39879,7 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
     }
 
     //Levelable upgrades
-    upgradeContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("h1", {
+    upgradeContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("h1", {
         innerText:"Upgrades", margin:"6px", padding:"6px",
     }));
 
@@ -40314,13 +39893,13 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
 
             var baseCost = upgrade[1], priceMult = upgrade[2];
             var cost = baseCost * Math.pow(priceMult, corp.upgrades[i]);
-            upgradeContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("div", {
+            upgradeContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {
                 class:"cmpy-mgmt-upgrade-div", width:"45%",
-                innerHTML:upgrade[4] + " - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(cost, "$0.000a"),
+                innerHTML:upgrade[4] + " - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(cost, "$0.000a"),
                 tooltip:upgrade[5],
                 clickListener:()=>{
                     if (corp.funds.lt(cost)) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("Insufficient funds");
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Insufficient funds");
                     } else {
                         corp.upgrade(upgrade);
                         corp.displayCorporationOverviewContent();
@@ -40340,19 +39919,19 @@ Corporation.prototype.updateCorporationOverviewContent = function() {
         return;
     }
     var totalFunds = this.funds,
-        totalRevenue = new decimal_js__WEBPACK_IMPORTED_MODULE_5__[/* default */ "a"](0),
-        totalExpenses = new decimal_js__WEBPACK_IMPORTED_MODULE_5__[/* default */ "a"](0);
+        totalRevenue = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](0),
+        totalExpenses = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](0);
 
     var profit = this.revenue.minus(this.expenses).toNumber(),
-        profitStr = profit >= 0 ? _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(profit, "$0.000a") : "-" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(-1 * profit, "$0.000a");
+        profitStr = profit >= 0 ? _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(profit, "$0.000a") : "-" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(-1 * profit, "$0.000a");
 
-    var txt = "Total Funds: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(totalFunds.toNumber(), '$0.000a') + "<br>" +
-              "Total Revenue: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(this.revenue.toNumber(), "$0.000a") + " / s<br>" +
-              "Total Expenses: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(this.expenses.toNumber(), "$0.000a") + "/ s<br>" +
+    var txt = "Total Funds: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(totalFunds.toNumber(), '$0.000a') + "<br>" +
+              "Total Revenue: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(this.revenue.toNumber(), "$0.000a") + " / s<br>" +
+              "Total Expenses: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(this.expenses.toNumber(), "$0.000a") + "/ s<br>" +
               "Total Profits: " + profitStr + " / s<br>" +
               "Publicly Traded: " + (this.public ? "Yes" : "No") + "<br>" +
-              "Owned Stock Shares: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(this.numShares, '0.000a') + "<br>" +
-              "Stock Price: " + (this.public ? "$" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(this.sharePrice, 2) : "N/A") + "<br><br>";
+              "Owned Stock Shares: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(this.numShares, '0.000a') + "<br>" +
+              "Stock Price: " + (this.public ? "$" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(this.sharePrice, 2) : "N/A") + "<br><br>";
 
     var prodMult        = this.getProductionMultiplier(),
         storageMult     = this.getStorageMultiplier(),
@@ -40363,15 +39942,15 @@ Corporation.prototype.updateCorporationOverviewContent = function() {
         empEffMult      = this.getEmployeeEffMultiplier(),
         salesMult       = this.getSalesMultiplier(),
         sciResMult      = this.getScientificResearchMultiplier();
-    if (prodMult > 1)       {txt += "Production Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(prodMult, 3) + "<br>";}
-    if (storageMult > 1)    {txt += "Storage Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(storageMult, 3) + "<br>";}
-    if (advMult > 1)        {txt += "Advertising Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(advMult, 3) + "<br>";}
-    if (empCreMult > 1)     {txt += "Empl. Creativity Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(empCreMult, 3) + "<br>";}
-    if (empChaMult > 1)     {txt += "Empl. Charisma Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(empChaMult, 3) + "<br>";}
-    if (empIntMult > 1)     {txt += "Empl. Intelligence Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(empIntMult, 3) + "<br>";}
-    if (empEffMult > 1)     {txt += "Empl. Efficiency Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(empEffMult, 3) + "<br>";}
-    if (salesMult > 1)      {txt += "Sales Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(salesMult, 3) + "<br>";}
-    if (sciResMult > 1)     {txt += "Scientific Research Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(sciResMult, 3) + "<br>";}
+    if (prodMult > 1)       {txt += "Production Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(prodMult, 3) + "<br>";}
+    if (storageMult > 1)    {txt += "Storage Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(storageMult, 3) + "<br>";}
+    if (advMult > 1)        {txt += "Advertising Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(advMult, 3) + "<br>";}
+    if (empCreMult > 1)     {txt += "Empl. Creativity Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(empCreMult, 3) + "<br>";}
+    if (empChaMult > 1)     {txt += "Empl. Charisma Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(empChaMult, 3) + "<br>";}
+    if (empIntMult > 1)     {txt += "Empl. Intelligence Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(empIntMult, 3) + "<br>";}
+    if (empEffMult > 1)     {txt += "Empl. Efficiency Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(empEffMult, 3) + "<br>";}
+    if (salesMult > 1)      {txt += "Sales Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(salesMult, 3) + "<br>";}
+    if (sciResMult > 1)     {txt += "Scientific Research Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(sciResMult, 3) + "<br>";}
     p.innerHTML = txt;
 }
 
@@ -40391,19 +39970,19 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
     }
 
     //Expand into new City button
-    companyManagementPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("button", {
+    companyManagementPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("button", {
         class:"cmpy-mgmt-city-tab", innerText:"Expand into new City", display:"inline-block",
         clickListener:()=>{
             var popupId = "cmpy-mgmt-expand-city-popup";
-            var text = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {
+            var text = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
                 innerText: "Would you like to expand into a new city by opening an office? " +
-                           "This would cost " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(OfficeInitialCost, '$0.000a'),
+                           "This would cost " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(OfficeInitialCost, '$0.000a'),
             });
-            var citySelector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("select", {class: "dropdown", margin:"5px"});
+            var citySelector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("select", {class: "dropdown", margin:"5px"});
             for (var cityName in division.offices) {
                 if (division.offices.hasOwnProperty(cityName)) {
                     if (!(division.offices[cityName] instanceof OfficeSpace)) {
-                        citySelector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("option", {
+                        citySelector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("option", {
                             text: cityName,
                             value: cityName
                         }));
@@ -40411,37 +39990,37 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                 }
             }
 
-            var confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+            var confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
                 innerText:"Confirm", class:"a-link-button", display:"inline-block", margin:"3px",
                 clickListener:()=>{
                     var city = citySelector.options[citySelector.selectedIndex].value;
                     if (this.funds.lt(OfficeInitialCost)) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("You don't have enough company funds to open a new office!");
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("You don't have enough company funds to open a new office!");
                     } else {
                         this.funds = this.funds.minus(OfficeInitialCost);
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("Opened a new office in " + city + "!");
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Opened a new office in " + city + "!");
                         division.offices[city] = new OfficeSpace({
                             loc:city,
                             size:OfficeInitialSize,
                         });
                         this.displayDivisionContent(division, city);
                     }
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
                     return false;
                 }
             });
-            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
                 innerText:"Cancel", class:"a-link-button", display:"inline-block", margin:"3px",
                 clickListener:()=>{
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
                     return false;
                 }
             })
-            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_11__["createPopup"])(popupId, [text, citySelector, confirmBtn, cancelBtn]);
+            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_17__["createPopup"])(popupId, [text, citySelector, confirmBtn, cancelBtn]);
             return false;
         }
     }));
-    companyManagementPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("br", {})); // Force line break
+    companyManagementPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("br", {})); // Force line break
 
     //Get office object
     var office = division.offices[currentCityUi];
@@ -40451,42 +40030,42 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
     }
 
     //Left and right panels
-    var leftPanel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("div", {class:"cmpy-mgmt-industry-left-panel"});
-    var rightPanel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("div", {class:"cmpy-mgmt-industry-right-panel"});
+    var leftPanel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {class:"cmpy-mgmt-industry-left-panel"});
+    var rightPanel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {class:"cmpy-mgmt-industry-right-panel"});
     companyManagementPanel.appendChild(leftPanel);
     companyManagementPanel.appendChild(rightPanel);
 
     //Different sections (Overview, Employee/Office, and Warehouse)
-    industryOverviewPanel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("div", {
+    industryOverviewPanel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {
         id:"cmpy-mgmt-industry-overview-panel", class:"cmpy-mgmt-industry-overview-panel"
     });
     leftPanel.appendChild(industryOverviewPanel);
 
-    industryEmployeePanel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("div", {
+    industryEmployeePanel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {
         id:"cmpy-mgmt-employee-panel", class:"cmpy-mgmt-employee-panel"
     });
     leftPanel.appendChild(industryEmployeePanel);
 
-    industryWarehousePanel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("div", {
+    industryWarehousePanel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {
         id:"cmpy-mgmt-warehouse-panel", class:"cmpy-mgmt-warehouse-panel"
     });
     rightPanel.appendChild(industryWarehousePanel);
 
     //Industry overview text
-    industryOverviewText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {});
+    industryOverviewText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {});
     industryOverviewPanel.appendChild(industryOverviewText);
-    industryOverviewPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("br", {}));
+    industryOverviewPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("br", {}));
 
     //Industry overview Purchases & Upgrades
     var numUpgrades = Object.keys(IndustryUpgrades).length;
     while (division.upgrades.length < numUpgrades) {division.upgrades.push(0);} //Backwards compatibility
 
-    var industryOverviewUpgrades = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("div", {});
-    industryOverviewUpgrades.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("u", {
+    var industryOverviewUpgrades = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {});
+    industryOverviewUpgrades.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("u", {
         innerText:"Purchases & Upgrades", margin:"2px", padding:"2px",
         fontSize:"14px",
     }));
-    industryOverviewUpgrades.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("br", {}));
+    industryOverviewUpgrades.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("br", {}));
     for (var i = 0; i < numUpgrades; ++i) {
         (function(i, corp, division, office) {
             var upgrade = IndustryUpgrades[i.toString()];
@@ -40504,13 +40083,13 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                     cost = baseCost * Math.pow(priceMult, division.upgrades[i]);
                     break;
             }
-            industryOverviewUpgrades.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("div", {
+            industryOverviewUpgrades.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {
                 class:"cmpy-mgmt-upgrade-div", display:"inline-block",
-                innerHTML:upgrade[4] + ' - ' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(cost, "$0.000a"),
+                innerHTML:upgrade[4] + ' - ' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(cost, "$0.000a"),
                 tooltip:upgrade[5],
                 clickListener:()=>{
                     if (corp.funds.lt(cost)) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("Insufficient funds");
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Insufficient funds");
                     } else {
                         corp.funds = corp.funds.minus(cost);
                         division.upgrade(upgrade, {
@@ -40521,7 +40100,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                     }
                 }
             }));
-            industryOverviewUpgrades.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("br", {}));
+            industryOverviewUpgrades.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("br", {}));
 
         })(i, this, division, office);
     }
@@ -40534,36 +40113,36 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
         //Get the text on the button based on Industry type
         var createProductButtonText, createProductPopupText;
         switch(division.type) {
-            case Industries.Food:
+            case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Food:
                 createProductButtonText = "Build Restaurant";
                 createProductPopupText = "Build and manage a new restaurant!"
                 break;
-            case Industries.Tobacco:
+            case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Tobacco:
                 createProductButtonText = "Create Product";
                 createProductPopupText = "Create a new tobacco product!";
                 break;
-            case Industries.Pharmaceutical:
+            case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Pharmaceutical:
                 createProductButtonText = "Create Drug";
                 createProductPopupText = "Design and develop a new pharmaceutical drug!";
                 break;
-            case Industries.Computer:
+            case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Computer:
             case "Computer":
                 createProductButtonText = "Create Product";
                 createProductPopupText = "Design and manufacture a new computer hardware product!";
                 break;
-            case Industries.Robotics:
+            case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Robotics:
                 createProductButtonText = "Design Robot";
                 createProductPopupText = "Design and create a new robot or robotic system!";
                 break;
-            case Industries.Software:
+            case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Software:
                 createProductButtonText = "Develop Software";
                 createProductPopupText = "Develop a new piece of software!";
                 break;
-            case Industries.Healthcare:
+            case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Healthcare:
                 createProductButtonText = "Build Hospital";
                 createProductPopupText = "Build and manage a new hospital!";
                 break;
-            case Industries.RealEstate:
+            case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].RealEstate:
                 createProductButtonText = "Develop Property";
                 createProductPopupText = "Develop a new piece of real estate property!";
                 break;
@@ -40580,43 +40159,43 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
             "Investing money in marketing the product will help the product's sales.";
 
         //Create the button
-        industryOverviewPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+        industryOverviewPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
             class:"a-link-button", innerText:createProductButtonText, margin:"6px", display:"inline-block",
             clickListener:()=>{
                 var popupId = "cmpy-mgmt-create-product-popup";
-                var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {
+                var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
                     innerHTML:createProductPopupText,
                 });
-                var designCity = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("select", {});
+                var designCity = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("select", {});
                 for (var cityName in division.offices) {
                     if (division.offices[cityName] instanceof OfficeSpace) {
-                        designCity.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("option", {
+                        designCity.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("option", {
                             value:cityName,
                             text:cityName
                         }));
                     }
                 }
                 var foo = "Product Name";
-                if (division.type === Industries.Food) {
+                if (division.type === _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Food) {
                     foo = "Restaurant Name";
-                } else if (division.type === Industries.Healthcare) {
+                } else if (division.type === _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Healthcare) {
                     foo = "Hospital Name";
-                } else if (division.type === Industries.RealEstate) {
+                } else if (division.type === _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].RealEstate) {
                     foo = "Property Name";
                 }
-                var productNameInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("input", {
+                var productNameInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("input", {
                     placeholder:foo,
                 });
-                var lineBreak1 = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("br",{});
-                var designInvestInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("input", {
+                var lineBreak1 = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("br",{});
+                var designInvestInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("input", {
                     type:"number",
                     placeholder:"Design investment"
                 });
-                var marketingInvestInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("input", {
+                var marketingInvestInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("input", {
                     type:"number",
                     placeholder:"Marketing investment"
                 });
-                var confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+                var confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
                     class:"a-link-button",
                     innerText:"Develop Product",
                     clickListener:()=>{
@@ -40625,15 +40204,15 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                         var designInvest = parseFloat(designInvestInput.value),
                             marketingInvest = parseFloat(marketingInvestInput.value);
                         if (productNameInput.value == null || productNameInput.value === "") {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("You must specify a name for your product!");
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("You must specify a name for your product!");
                         } else if (isNaN(designInvest)) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("Invalid value for design investment");
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Invalid value for design investment");
                         } else if (isNaN(marketingInvest))  {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("Invalid value for marketing investment");
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Invalid value for marketing investment");
                         } else if (this.funds.lt(designInvest + marketingInvest)) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("You don't have enough company funds to make this large of an investment");
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("You don't have enough company funds to make this large of an investment");
                         } else {
-                            var product = new Product({
+                            var product = new _Product__WEBPACK_IMPORTED_MODULE_5__["Product"]({
                                 name:productNameInput.value.replace(/[<>]/g, ''), //Sanitize for HTMl elements
                                 createCity:designCity.options[designCity.selectedIndex].value,
                                 designCost: designInvest,
@@ -40641,29 +40220,29 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                             });
                             this.funds = this.funds.minus(designInvest + marketingInvest);
                             division.products[product.name] = product;
-                            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(popupId);
+                            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
                         }
                         //this.updateUIContent();
                         this.displayDivisionContent(division, city);
                         return false;
                     }
                 })
-                var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+                var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
                     class:"a-link-button",
                     innerText:"Cancel",
                     clickListener:()=>{
-                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(popupId);
+                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
                         return false;
                     }
                 })
-                Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_11__["createPopup"])(popupId, [txt, designCity, productNameInput, lineBreak1,
+                Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_17__["createPopup"])(popupId, [txt, designCity, productNameInput, lineBreak1,
                                       designInvestInput, marketingInvestInput, confirmBtn, cancelBtn]);
             }
         }));
     }
 
     //Employee and Office Panel
-    industryEmployeeText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {
+    industryEmployeeText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
         id: "cmpy-mgmt-employee-p",
         display:"block",
         innerHTML:  "<h1>Office Space</h1><br>" +
@@ -40676,7 +40255,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
 
     //Hire Employee button
     if (office.employees.length === 0) {
-        industryEmployeeHireButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+        industryEmployeeHireButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
             class:"a-link-button",display:"inline-block",
             innerText:"Hire Employee", fontSize:"13px",
             tooltip:"You'll need to hire some employees to get your operations started! " +
@@ -40688,7 +40267,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
         });
         //industryEmployeeHireButton.classList.add("flashing-button");
     } else {
-        industryEmployeeHireButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+        industryEmployeeHireButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
             class:"a-link-button",display:"inline-block",
             innerText:"Hire Employee", fontSize:"13px",
             clickListener:()=>{
@@ -40700,7 +40279,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
     industryEmployeePanel.appendChild(industryEmployeeHireButton);
 
     //Autohire Employee button
-    industryEmployeeAutohireButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+    industryEmployeeAutohireButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
         class:"a-link-button", display:"inline-block",
         innerText:"Autohire Employee", fontSize:"13px",
         tooltip:"Automatically hires an employee and gives him/her a random name",
@@ -40712,8 +40291,8 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
     industryEmployeePanel.appendChild(industryEmployeeAutohireButton);
 
     //Upgrade Office Size button
-    industryEmployeePanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("br", {}));
-    industryOfficeUpgradeSizeButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+    industryEmployeePanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("br", {}));
+    industryOfficeUpgradeSizeButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
         class:"a-link-button", innerText:"Upgrade size",
         display:"inline-block", margin:"6px", fontSize:"13px",
         tooltip:"Upgrade the office's size so that it can hold more employees!",
@@ -40746,98 +40325,98 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
 
             var upgradeCostMax = OfficeInitialCost * mult;
 
-            var text = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {
+            var text = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
                 innerText:"Increase the size of your office space to fit additional employees!"
             });
-            var text2 = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {innerText: "Upgrade size: "});
+            var text2 = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {innerText: "Upgrade size: "});
 
-            var confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+            var confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
                 class: this.funds.lt(upgradeCost) ? "a-link-button-inactive" : "a-link-button",
                 display:"inline-block", margin:"4px", innerText:"by 3",
-                tooltip:_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(upgradeCost, "$0.000a"),
+                tooltip:_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(upgradeCost, "$0.000a"),
                 clickListener:()=>{
                     if (this.funds.lt(upgradeCost)) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("You don't have enough company funds to purchase this upgrade!");
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("You don't have enough company funds to purchase this upgrade!");
                     } else {
                         office.size += OfficeInitialSize;
                         this.funds = this.funds.minus(upgradeCost);
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("Office space increased! It can now hold " + office.size + " employees");
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Office space increased! It can now hold " + office.size + " employees");
                         this.updateUIContent();
                     }
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
                     return false;
                 }
             });
-            var confirmBtn15 = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+            var confirmBtn15 = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
                 class: this.funds.lt(upgradeCost15) ? "a-link-button-inactive" : "a-link-button",
                 display:"inline-block", margin:"4px", innerText:"by 15",
-                tooltip:_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(upgradeCost15, "$0.000a"),
+                tooltip:_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(upgradeCost15, "$0.000a"),
                 clickListener:()=>{
                     if (this.funds.lt(upgradeCost15)) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("You don't have enough company funds to purchase this upgrade!");
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("You don't have enough company funds to purchase this upgrade!");
                     } else {
                         office.size += (OfficeInitialSize * 5);
                         this.funds = this.funds.minus(upgradeCost15);
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("Office space increased! It can now hold " + office.size + " employees");
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Office space increased! It can now hold " + office.size + " employees");
                         this.updateUIContent();
                     }
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
                     return false;
                 }
             });
-            var confirmBtnMax = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+            var confirmBtnMax = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
                 class:this.funds.lt(upgradeCostMax) ? "a-link-button-inactive" : "a-link-button",
                 display:"inline-block", margin:"4px", innerText:"by MAX (" + maxNum*OfficeInitialSize + ")",
-                tooltip:_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(upgradeCostMax, "$0.000a"),
+                tooltip:_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(upgradeCostMax, "$0.000a"),
                 clickListener:()=>{
                     if (this.funds.lt(upgradeCostMax)) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("You don't have enough company funds to purchase this upgrade!");
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("You don't have enough company funds to purchase this upgrade!");
                     } else {
                         office.size += (OfficeInitialSize * maxNum);
                         this.funds = this.funds.minus(upgradeCostMax);
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("Office space increased! It can now hold " + office.size + " employees");
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Office space increased! It can now hold " + office.size + " employees");
                         this.updateUIContent();
                     }
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
                     return false;
                 }
             });
-            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
                 class:"a-link-button", innerText:"Cancel", display:"inline-block", margin:"4px",
                 clickListener:()=>{
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
                     return false;
                 }
             })
-            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_11__["createPopup"])(popupId, [text, text2, confirmBtn, confirmBtn15, confirmBtnMax, cancelBtn]);
+            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_17__["createPopup"])(popupId, [text, text2, confirmBtn, confirmBtn15, confirmBtnMax, cancelBtn]);
             return false;
         }
     });
     industryEmployeePanel.appendChild(industryOfficeUpgradeSizeButton);
 
     //Throw Office Party
-    industryEmployeePanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+    industryEmployeePanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
         class:"a-link-button", display:"inline-block", innerText:"Throw Party",
         fontSize:"13px",
         tooltip:"Throw an office party to increase your employee's morale and happiness",
         clickListener:()=>{
             var popupId = "cmpy-mgmt-throw-office-party-popup";
-            var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {
+            var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
                 innerText:"Enter the amount of money you would like to spend PER EMPLOYEE " +
                           "on this office party"
             });
-            var totalCostTxt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {
+            var totalCostTxt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
                 innerText:"Throwing this party will cost a total of $0"
             });
             var confirmBtn;
-            var input = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("input", {
+            var input = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("input", {
                 type:"number", margin:"5px", placeholder:"$ / employee",
                 inputListener:()=>{
                     if (isNaN(input.value) || input.value < 0) {
                         totalCostTxt.innerText = "Invalid value entered!"
                     } else {
                         var totalCost = input.value * office.employees.length;
-                        totalCostTxt.innerText = "Throwing this party will cost a total of " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(totalCost, '$0.000a');
+                        totalCostTxt.innerText = "Throwing this party will cost a total of " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(totalCost, '$0.000a');
                     }
                 },
                 onkeyup:(e)=>{
@@ -40845,49 +40424,49 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                     if (e.keyCode === 13) {confirmBtn.click();}
                 }
             });
-            confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+            confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
                 class:"a-link-button",
                 display:"inline-block",
                 innerText:"Throw Party",
                 clickListener:()=>{
                     if (isNaN(input.value) || input.value < 0) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("Invalid value entered");
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Invalid value entered");
                     } else {
                         var totalCost = input.value * office.employees.length;
                         if (this.funds.lt(totalCost)) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("You don't have enough company funds to throw this party!");
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("You don't have enough company funds to throw this party!");
                         } else {
                             this.funds = this.funds.minus(totalCost);
                             var mult;
                             for (var fooit = 0; fooit < office.employees.length; ++fooit) {
                                 mult = office.employees[fooit].throwParty(input.value);
                             }
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("You threw a party for the office! The morale and happiness " +
-                                            "of each employee increased by " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])((mult-1) * 100, 2) + "%.");
-                            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(popupId);
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("You threw a party for the office! The morale and happiness " +
+                                            "of each employee increased by " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])((mult-1) * 100, 2) + "%.");
+                            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
                         }
                     }
                     return false;
                 }
             });
-            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
                 class:"a-link-button",
                 display:"inline-block",
                 innerText:"Cancel",
                 clickListener:()=>{
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
                     return false;
                 }
             });
-            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_11__["createPopup"])(popupId, [txt, totalCostTxt, input, confirmBtn, cancelBtn]);
+            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_17__["createPopup"])(popupId, [txt, totalCostTxt, input, confirmBtn, cancelBtn]);
         }
     }));
 
-    industryEmployeeManagementUI = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("div", {});
-    industryEmployeeInfo = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {margin:"4px", padding:"4px"});
+    industryEmployeeManagementUI = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {});
+    industryEmployeeInfo = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {margin:"4px", padding:"4px"});
     if (empManualAssignmentModeActive) {
         //Employees manually assigned
-        industryEmployeeManagementUI.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+        industryEmployeeManagementUI.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
             class:"a-link-button", display:"inline-block", margin:"4px",
             innerText:"Switch to Auto Mode",
             tooltip:"Switch to Automatic Assignment Mode, which will automatically  " +
@@ -40898,16 +40477,16 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                 this.displayDivisionContent(division, city);
             }
         }));
-        industryEmployeeManagementUI.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("br", {}));
+        industryEmployeeManagementUI.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("br", {}));
 
-        industryIndividualEmployeeInfo = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("div", {margin:"4px", padding:"4px"});
-        var selector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("select", {
+        industryIndividualEmployeeInfo = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {margin:"4px", padding:"4px"});
+        var selector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("select", {
             color: "white", backgroundColor:"black", margin:"4px", padding:"4px",
             changeListener:()=>{
                 var name = selector.options[selector.selectedIndex].text;
                 for (var i = 0; i < office.employees.length; ++i) {
                     if (office.employees[i].name === name) {
-                        Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_16__["removeChildrenFromElement"])(industryIndividualEmployeeInfo);
+                        Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_21__["removeChildrenFromElement"])(industryIndividualEmployeeInfo);
                         office.employees[i].createUI(industryIndividualEmployeeInfo, this);
                         return;
                     }
@@ -40917,7 +40496,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
         });
 
         for (var i = 0; i < office.employees.length; ++i) {
-            selector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("option", {text:office.employees[i].name}));
+            selector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("option", {text:office.employees[i].name}));
         }
 
         selector.selectedIndex = -1;
@@ -40927,7 +40506,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
         industryEmployeeManagementUI.appendChild(industryIndividualEmployeeInfo);
     } else {
         //Player only manages the number of each occupation, not who gets what job
-        industryEmployeeManagementUI.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+        industryEmployeeManagementUI.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
             class:"a-link-button", display:"inline-block", margin:"4px",
             innerText:"Switch to Manual Mode",
             tooltip:"Switch to Manual Assignment Mode, which allows you to " +
@@ -40937,26 +40516,26 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                 this.displayDivisionContent(division, city);
             }
         }));
-        industryEmployeeManagementUI.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("br", {}));
+        industryEmployeeManagementUI.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("br", {}));
 
         var opCount = 0, engCount = 0, busCount = 0,
             mgmtCount = 0, rndCount = 0, unassignedCount = 0,
             trainingCount = 0;
         for (var i = 0; i < office.employees.length; ++i) {
             switch (office.employees[i].pos) {
-                case EmployeePositions.Operations:
+                case _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Operations:
                     ++opCount; break;
-                case EmployeePositions.Engineer:
+                case _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Engineer:
                     ++engCount; break;
-                case EmployeePositions.Business:
+                case _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Business:
                     ++busCount; break;
-                case EmployeePositions.Management:
+                case _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Management:
                     ++mgmtCount; break;
-                case EmployeePositions.RandD:
+                case _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].RandD:
                     ++rndCount; break;
-                case EmployeePositions.Unassigned:
+                case _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Unassigned:
                     ++unassignedCount; break;
-                case EmployeePositions.Training:
+                case _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Training:
                     ++trainingCount; break;
                 default:
                     console.log("ERROR: Unrecognized employee position: " + office.employees[i].pos);
@@ -40965,19 +40544,19 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
         }
 
         //Unassigned employee count display
-        industryEmployeeManagementUI.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {
+        industryEmployeeManagementUI.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
             display:"inline-block",
             innerText:"Unassigned Employees: " + unassignedCount,
         }));
-        industryEmployeeManagementUI.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("br", {}));
+        industryEmployeeManagementUI.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("br", {}));
 
         //General display of employee information (avg morale, avg energy, etc.)
         industryEmployeeManagementUI.appendChild(industryEmployeeInfo);
-        industryEmployeeManagementUI.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("br", {}));
+        industryEmployeeManagementUI.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("br", {}));
 
-        var positions = [EmployeePositions.Operations, EmployeePositions.Engineer,
-                         EmployeePositions.Business, EmployeePositions.Management,
-                         EmployeePositions.RandD, EmployeePositions.Training];
+        var positions = [_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Operations, _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Engineer,
+                         _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Business, _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Management,
+                         _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].RandD, _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Training];
         var descriptions = ["Manages supply chain operations. Improves production.", //Operations
                             "Develops and maintains products and production systems. Improves production.", //Engineer
                             "Handles sales and finances. Improves sales.", //Business
@@ -40987,12 +40566,12 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
         var counts = [opCount, engCount, busCount, mgmtCount, rndCount, trainingCount];
         for (var i = 0; i < positions.length; ++i) {
             (function(corp, i) {
-                var info = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("h2", {
+                var info = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("h2", {
                     display:"inline-block", width:"40%", fontSize:"15px",
                     innerText: positions[i] + "(" + counts[i] + ")",
                     tooltipleft: descriptions[i]
                 });
-                var plusBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+                var plusBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
                     class: unassignedCount > 0 ? "a-link-button" : "a-link-button-inactive",
                     display:"inline-block", innerText:"+",
                     clickListener:()=>{
@@ -41000,7 +40579,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                         corp.displayDivisionContent(division, city);
                     }
                 });
-                var minusBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+                var minusBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
                     class: counts[i] > 0 ? "a-link-button" : "a-link-button-inactive",
                     display:"inline-block", innerText:"-",
                     clickListener:()=>{
@@ -41008,7 +40587,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                         corp.displayDivisionContent(division, city);
                     }
                 });
-                var newline = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("br", {});
+                var newline = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("br", {});
                 industryEmployeeManagementUI.appendChild(info);
                 industryEmployeeManagementUI.appendChild(plusBtn);
                 industryEmployeeManagementUI.appendChild(minusBtn);
@@ -41023,12 +40602,12 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
     if (warehouse instanceof Warehouse) {
         warehouse.createUI({industry:division, company: this});
     } else {
-        industryWarehousePanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("a", {
+        industryWarehousePanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
             innerText:"Purchase Warehouse ($5b)",
             class: "a-link-button",
             clickListener:()=>{
                 if (this.funds.lt(WarehouseInitialCost)) {
-                    Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("You do not have enough funds to do this!");
+                    Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("You do not have enough funds to do this!");
                 } else {
                     division.warehouses[currentCityUi] = new Warehouse({
                         loc:currentCityUi,
@@ -41052,7 +40631,7 @@ Corporation.prototype.updateDivisionContent = function(division) {
     var vechain = (this.unlockUpgrades[4] === 1);
     //Industry Overview Text
     var profit = division.lastCycleRevenue.minus(division.lastCycleExpenses).toNumber(),
-        profitStr = profit >= 0 ? _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(profit, "$0.000a") : "-" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(-1 * profit, "$0.000a");
+        profitStr = profit >= 0 ? _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(profit, "$0.000a") : "-" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(-1 * profit, "$0.000a");
     var advertisingInfo = "";
     if (vechain) {
         var advertisingFactors = division.getAdvertisingFactors();
@@ -41061,34 +40640,34 @@ Corporation.prototype.updateDivisionContent = function(division) {
         var ratioFac = advertisingFactors[3];
         var totalAdvertisingFac = advertisingFactors[0];
         advertisingInfo =
-            "<p class='tooltip'>Advertising Multiplier: x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(totalAdvertisingFac, 3) +
+            "<p class='tooltip'>Advertising Multiplier: x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(totalAdvertisingFac, 3) +
             "<span class='tooltiptext cmpy-mgmt-advertising-info'>Total multiplier for this industry's sales due to its awareness and popularity<br>" +
-            "Awareness Bonus: x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(Math.pow(awarenessFac, 0.85), 3) + "<br>" +
-            "Popularity Bonus: x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(Math.pow(popularityFac, 0.85), 3) + "<br>" +
-            "Ratio Multiplier: x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(Math.pow(ratioFac, 0.85), 3) + "</span></p><br>"
+            "Awareness Bonus: x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(Math.pow(awarenessFac, 0.85), 3) + "<br>" +
+            "Popularity Bonus: x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(Math.pow(popularityFac, 0.85), 3) + "<br>" +
+            "Ratio Multiplier: x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(Math.pow(ratioFac, 0.85), 3) + "</span></p><br>"
 
     }
 
-    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_16__["removeChildrenFromElement"])(industryOverviewText);
-    industryOverviewText.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {
-        innerHTML:"Industry: " + division.type + " (Corp Funds: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(this.funds.toNumber(), "$0.000a") + ")<br><br>" +
-                  "Awareness: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(division.awareness, 3) + "<br>" +
-                  "Popularity: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(division.popularity, 3) +  "<br>" +
+    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_21__["removeChildrenFromElement"])(industryOverviewText);
+    industryOverviewText.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
+        innerHTML:"Industry: " + division.type + " (Corp Funds: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(this.funds.toNumber(), "$0.000a") + ")<br><br>" +
+                  "Awareness: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(division.awareness, 3) + "<br>" +
+                  "Popularity: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(division.popularity, 3) +  "<br>" +
                   advertisingInfo + "<br>" +
-                  "Revenue: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(division.lastCycleRevenue.toNumber(), "$0.000a") + " / s<br>" +
-                  "Expenses: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__[/* numeralWrapper */ "a"].format(division.lastCycleExpenses.toNumber(), "$0.000a") + " /s<br>" +
+                  "Revenue: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(division.lastCycleRevenue.toNumber(), "$0.000a") + " / s<br>" +
+                  "Expenses: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(division.lastCycleExpenses.toNumber(), "$0.000a") + " /s<br>" +
                   "Profit: " + profitStr + " / s<br><br>"
     }));
-    industryOverviewText.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {
+    industryOverviewText.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
         marginTop:"2px",
-        innerText:"Production Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(division.prodMult, 2),
+        innerText:"Production Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(division.prodMult, 2),
         tooltip:"Production gain from owning production-boosting materials " +
                 "such as hardware, Robots, AI Cores, and Real Estate"
     }));
-    industryOverviewText.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("div", {
+    industryOverviewText.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {
         innerText:"?", class:"help-tip",
         clickListener:()=>{
-            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("Owning Hardware, Robots, AI Cores, and Real Estate " +
+            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Owning Hardware, Robots, AI Cores, and Real Estate " +
                             "can boost your Industry's production. The effect these " +
                             "materials have on your production varies between Industries. " +
                             "For example, Real Estate may be very effective for some Industries, " +
@@ -41100,10 +40679,10 @@ Corporation.prototype.updateDivisionContent = function(division) {
                             "production multiplier of your entire Division.");
         }
     }));
-    industryOverviewText.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("br"));
-    industryOverviewText.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {
+    industryOverviewText.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("br"));
+    industryOverviewText.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
         display:"inline-block",
-        innerText:"Scientific Research: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(division.sciResearch.qty, 3),
+        innerText:"Scientific Research: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(division.sciResearch.qty, 3),
         tooltip:"Scientific Research increases the quality of the materials and " +
                 "products that you produce."
     }));
@@ -41142,27 +40721,27 @@ Corporation.prototype.updateDivisionContent = function(division) {
         avgEnergy = totalEnergy / office.employees.length;
     }
     industryEmployeeInfo.innerHTML =
-        "Avg Employee Morale: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(avgMorale, 3) + "<br>" +
-        "Avg Employee Happiness: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(avgHappiness, 3) + "<br>" +
-        "Avg Employee Energy: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(avgEnergy, 3);
+        "Avg Employee Morale: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(avgMorale, 3) + "<br>" +
+        "Avg Employee Happiness: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(avgHappiness, 3) + "<br>" +
+        "Avg Employee Energy: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(avgEnergy, 3);
     if (vechain) { //VeChain - Statistics
-        industryEmployeeInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("br", {}));
-        industryEmployeeInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {
-            innerText:"Material Production: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(division.getOfficeProductivity(office), 3),
+        industryEmployeeInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("br", {}));
+        industryEmployeeInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
+            innerText:"Material Production: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(division.getOfficeProductivity(office), 3),
             tooltip: "The base amount of material this office can produce. Does not include " +
                      "production multipliers from upgrades and materials. This value is based off " +
                      "the productivity of your Operations, Engineering, and Management employees"
         }));
-        industryEmployeeInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("br", {}));
-        industryEmployeeInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {
-            innerText:"Product Production: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(division.getOfficeProductivity(office, {forProduct:true}), 3),
+        industryEmployeeInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("br", {}));
+        industryEmployeeInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
+            innerText:"Product Production: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(division.getOfficeProductivity(office, {forProduct:true}), 3),
             tooltip: "The base amount of any given Product this office can produce. Does not include " +
                      "production multipliers from upgrades and materials. This value is based off " +
                      "the productivity of your Operations, Engineering, and Management employees"
         }));
-        industryEmployeeInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("br", {}));
-        industryEmployeeInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("p", {
-            innerText: "Business Multiplier: x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_13__["formatNumber"])(division.getBusinessFactor(office), 3),
+        industryEmployeeInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("br", {}));
+        industryEmployeeInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
+            innerText: "Business Multiplier: x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(division.getBusinessFactor(office), 3),
             tooltip: "The effect this office's 'Business' employees has on boosting sales"
         }));
     }
@@ -41175,7 +40754,7 @@ Corporation.prototype.updateDivisionContent = function(division) {
 }
 
 Corporation.prototype.createCityUITab = function(city, division) {
-    var tab = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_10__["createElement"])("button", {
+    var tab = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("button", {
         id:"cmpy-mgmt-city-" + city + "-tab",
         class:"cmpy-mgmt-city-tab",
         innerText:city,
@@ -41201,7 +40780,7 @@ Corporation.prototype.selectCityTab = function(activeTab, city) {
 
 Corporation.prototype.clearUI = function() {
     //Delete everything
-    if (companyManagementDiv != null) {Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_17__["removeElementById"])(companyManagementDiv.id);}
+    if (companyManagementDiv != null) {Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(companyManagementDiv.id);}
 
     //Reset global DOM variables
     companyManagementDiv        = null;
@@ -41240,20 +40819,20 @@ Corporation.prototype.clearUI = function() {
 }
 
 Corporation.prototype.toJSON = function() {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_9__["Generic_toJSON"])("Corporation", this);
+	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__["Generic_toJSON"])("Corporation", this);
 }
 
 Corporation.fromJSON = function(value) {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_9__["Generic_fromJSON"])(Corporation, value.data);
+	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__["Generic_fromJSON"])(Corporation, value.data);
 }
 
-_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_9__["Reviver"].constructors.Corporation = Corporation;
+_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__["Reviver"].constructors.Corporation = Corporation;
 
 
 
 
 /***/ }),
-/* 59 */
+/* 61 */
 /*!*********************************************!*\
   !*** ./utils/uiHelpers/appendLineBreaks.ts ***!
   \*********************************************/
@@ -41279,7 +40858,228 @@ exports.appendLineBreaks = appendLineBreaks;
 
 
 /***/ }),
-/* 60 */
+/* 62 */
+/*!*************************************!*\
+  !*** ./src/Corporation/Material.ts ***!
+  \*************************************/
+/*! no static exports found */
+/*! exports used: Material */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
+class Material {
+    constructor(params = {}) {
+        // Name of material
+        this.name = "";
+        // Amount of material owned
+        this.qty = 0;
+        // Material's "quality". Unbounded
+        this.qlt = 0;
+        // How much demand the Material has in the market, and the range of possible
+        // values for this "demand"
+        this.dmd = 0;
+        this.dmdR = [0, 0];
+        // How much competition there is for this Material in the market, and the range
+        // of possible values for this "competition"
+        this.cmp = 0;
+        this.cmpR = [0, 0];
+        // Maximum volatility of this Materials stats
+        this.mv = 0;
+        // Markup. Determines how high of a price you can charge on the material
+        // compared to the market price without suffering loss in # of sales
+        // Quality is divided by this to determine markup limits
+        // e,g, If mku is 10 and quality is 100 then you can markup prices by 100/10 = 10
+        this.mku = 0;
+        // How much of this material is being bought, sold, imported and produced every second
+        this.buy = 0;
+        this.sll = 0;
+        this.prd = 0;
+        this.imp = 0;
+        // Exports of this material to another warehouse/industry
+        this.exp = [];
+        // Total amount of this material exported in the last cycle
+        this.totalExp = 0;
+        // Cost / sec to buy this material. AKA Market Price
+        this.bCost = 0;
+        // Cost / sec to sell this material
+        this.sCost = 0;
+        // Flags to keep track of whether production and/or sale of this material is limited
+        // [Whether production/sale is limited, limit amount]
+        this.prdman = [false, 0]; // Production
+        this.sllman = [false, 0]; // Sale
+        if (params.name) {
+            this.name = params.name;
+        }
+        this.init();
+    }
+    // Initiatizes a Material object from a JSON save state.
+    static fromJSON(value) {
+        return JSONReviver_1.Generic_fromJSON(Material, value.data);
+    }
+    init() {
+        switch (this.name) {
+            case "Water":
+                this.dmd = 75;
+                this.dmdR = [65, 85];
+                this.cmp = 50;
+                this.cmpR = [40, 60];
+                this.bCost = 1500;
+                this.mv = 0.2;
+                this.mku = 6;
+                break;
+            case "Energy":
+                this.dmd = 90;
+                this.dmdR = [80, 100];
+                this.cmp = 80;
+                this.cmpR = [65, 95];
+                this.bCost = 2000;
+                this.mv = 0.2;
+                this.mku = 6;
+                break;
+            case "Food":
+                this.dmd = 80;
+                this.dmdR = [70, 90];
+                this.cmp = 60;
+                this.cmpR = [35, 85];
+                this.bCost = 5000;
+                this.mv = 1;
+                this.mku = 3;
+                break;
+            case "Plants":
+                this.dmd = 70;
+                this.dmdR = [20, 90];
+                this.cmp = 50;
+                this.cmpR = [30, 70];
+                this.bCost = 3000;
+                this.mv = 0.6;
+                this.mku = 3.75;
+                break;
+            case "Metal":
+                this.dmd = 80;
+                this.dmdR = [75, 85];
+                this.cmp = 70;
+                this.cmpR = [60, 80];
+                this.bCost = 2650;
+                this.mv = 1;
+                this.mku = 6;
+                break;
+            case "Hardware":
+                this.dmd = 85;
+                this.dmdR = [80, 90];
+                this.cmp = 80;
+                this.cmpR = [65, 95];
+                this.bCost = 8e3;
+                this.mv = 0.5; //Less mv bc its processed twice
+                this.mku = 1;
+                break;
+            case "Chemicals":
+                this.dmd = 55;
+                this.dmdR = [40, 70];
+                this.cmp = 60;
+                this.cmpR = [40, 80];
+                this.bCost = 9e3;
+                this.mv = 1.2;
+                this.mku = 2;
+                break;
+            case "Real Estate":
+                this.dmd = 50;
+                this.dmdR = [5, 100];
+                this.cmp = 50;
+                this.cmpR = [25, 75];
+                this.bCost = 80e3;
+                this.mv = 1.5; //Less mv bc its processed twice
+                this.mku = 1.5;
+                break;
+            case "Drugs":
+                this.dmd = 60;
+                this.dmdR = [45, 75];
+                this.cmp = 70;
+                this.cmpR = [40, 100];
+                this.bCost = 40e3;
+                this.mv = 1.6;
+                this.mku = 1;
+                break;
+            case "Robots":
+                this.dmd = 90;
+                this.dmdR = [80, 100];
+                this.cmp = 90;
+                this.cmpR = [80, 100];
+                this.bCost = 75e3;
+                this.mv = 0.5; //Less mv bc its processed twice
+                this.mku = 1;
+                break;
+            case "AI Cores":
+                this.dmd = 90;
+                this.dmdR = [80, 100];
+                this.cmp = 90;
+                this.cmpR = [80, 100];
+                this.bCost = 15e3;
+                this.mv = 0.8; //Less mv bc its processed twice
+                this.mku = 0.5;
+                break;
+            case "Scientific Research":
+                break;
+            default:
+                console.log("Invalid material type in init(): " + this.name);
+                break;
+        }
+    }
+    // Process change in demand, competition, and buy cost of this material
+    processMarket() {
+        // The price will change in accordance with demand and competition.
+        // e.g. If demand goes up, then so does price. If competition goes up, price goes down
+        const priceVolatility = (Math.random() * this.mv) / 300;
+        const priceChange = 1 + priceVolatility;
+        //This 1st random check determines whether competition increases or decreases
+        const compVolatility = (Math.random() * this.mv) / 100;
+        const compChange = 1 + compVolatility;
+        if (Math.random() < 5) {
+            this.cmp *= compChange;
+            if (this.cmp > this.cmpR[1]) {
+                this.cmp = this.cmpR[1];
+            }
+            ;
+            this.bCost *= (1 / priceChange); // Competition increases, so price goes down
+        }
+        else {
+            this.cmp *= (1 / compChange);
+            if (this.cmp < this.cmpR[0]) {
+                this.cmp = this.cmpR[0];
+            }
+            this.bCost *= priceChange; // Competition decreases, so price goes up
+        }
+        // This 2nd random check determines whether demand increases or decreases
+        const dmdVolatility = (Math.random() * this.mv) / 100;
+        const dmdChange = 1 + dmdVolatility;
+        if (Math.random() < 0.5) {
+            this.dmd *= dmdChange;
+            if (this.dmd > this.dmdR[1]) {
+                this.dmd = this.dmdR[1];
+            }
+            this.bCost *= priceChange; // Demand increases, so price goes up
+        }
+        else {
+            this.dmd *= (1 / dmdChange);
+            if (this.dmd < this.dmdR[0]) {
+                this.dmd = this.dmdR[0];
+            }
+            this.bCost *= (1 / priceChange);
+        }
+    }
+    // Serialize the current object to a JSON save state.
+    toJSON() {
+        return JSONReviver_1.Generic_toJSON("Material", this);
+    }
+}
+exports.Material = Material;
+JSONReviver_1.Reviver.constructors.Material = Material;
+
+
+/***/ }),
+/* 63 */
 /*!*************************!*\
   !*** ./src/TextFile.ts ***!
   \*************************/
@@ -41414,7 +41214,7 @@ function deleteTextFile(fn, server) {
 
 
 /***/ }),
-/* 61 */
+/* 64 */
 /*!************************************!*\
   !*** ./utils/helpers/addOffset.ts ***!
   \************************************/
@@ -41450,8 +41250,8 @@ exports.addOffset = addOffset;
 
 
 /***/ }),
-/* 62 */,
-/* 63 */
+/* 65 */,
+/* 66 */
 /*!****************************!*\
   !*** ./src/HacknetNode.js ***!
   \****************************/
@@ -41476,7 +41276,7 @@ exports.addOffset = addOffset;
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 8);
-/* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./InteractiveTutorial */ 33);
+/* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./InteractiveTutorial */ 35);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
@@ -41488,7 +41288,7 @@ exports.addOffset = addOffset;
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/uiHelpers/getElementById */ 51);
+/* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/uiHelpers/getElementById */ 53);
 /* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_11__);
 
 
@@ -42167,7 +41967,7 @@ function getHacknetNode(name) {
 
 
 /***/ }),
-/* 64 */
+/* 67 */
 /*!********************************!*\
   !*** ./src/ActiveScriptsUI.js ***!
   \********************************/
@@ -42183,26 +41983,27 @@ function getHacknetNode(name) {
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Server */ 11);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 73);
+/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 76);
 /* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 52);
+/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 54);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/helpers/createProgressBarText */ 79);
+/* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/helpers/createProgressBarText */ 83);
 /* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 42);
-/* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/uiHelpers/getElementById */ 51);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 44);
+/* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/uiHelpers/getElementById */ 53);
 /* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/LogBox */ 75);
+/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/LogBox */ 78);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 27);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 29);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 67);
+/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 70);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 77);
+/* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 81);
 /* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./ui/navigationTracking */ 12);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_16__);
@@ -42449,9 +42250,9 @@ function updateActiveScriptsItems(maxTasks=150) {
         }
     }
 
-    Object(_utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__["getElementById"])("active-scripts-total-production-active").innerText = _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_3__[/* numeralWrapper */ "a"].format(total, '$0.000a');
-    Object(_utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__["getElementById"])("active-scripts-total-prod-aug-total").innerText = _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_3__[/* numeralWrapper */ "a"].format(_Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].scriptProdSinceLastAug, '$0.000a');
-    Object(_utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__["getElementById"])("active-scripts-total-prod-aug-avg").innerText = _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_3__[/* numeralWrapper */ "a"].format(_Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].scriptProdSinceLastAug / (_Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].playtimeSinceLastAug/1000), '$0.000a');
+    Object(_utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__["getElementById"])("active-scripts-total-production-active").innerText = _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_3__["numeralWrapper"].format(total, '$0.000a');
+    Object(_utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__["getElementById"])("active-scripts-total-prod-aug-total").innerText = _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_3__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].scriptProdSinceLastAug, '$0.000a');
+    Object(_utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__["getElementById"])("active-scripts-total-prod-aug-avg").innerText = _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_3__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].scriptProdSinceLastAug / (_Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].playtimeSinceLastAug/1000), '$0.000a');
     return total;
 }
 
@@ -42532,8 +42333,8 @@ function updateActiveScriptsText(workerscript, item, itemName) {
 
 
 /***/ }),
-/* 65 */,
-/* 66 */
+/* 68 */,
+/* 69 */
 /*!***************************!*\
   !*** ./src/SourceFile.js ***!
   \***************************/
@@ -42547,7 +42348,7 @@ function updateActiveScriptsText(workerscript, item, itemName) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return applySourceFile; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return initSourceFiles; });
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BitNode */ 56);
+/* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BitNode */ 58);
 
 
 
@@ -42800,7 +42601,7 @@ function applySourceFile(srcFile) {
 
 
 /***/ }),
-/* 67 */
+/* 70 */
 /*!******************************************!*\
   !*** ./utils/uiHelpers/removeElement.ts ***!
   \******************************************/
@@ -42837,7 +42638,7 @@ exports.removeElement = removeElement;
 
 
 /***/ }),
-/* 68 */
+/* 71 */
 /*!******************************!*\
   !*** ./src/NetscriptPort.js ***!
   \******************************/
@@ -42903,7 +42704,7 @@ NetscriptPort.prototype.clear = function() {
 
 
 /***/ }),
-/* 69 */
+/* 72 */
 /*!*****************************!*\
   !*** ./src/SettingEnums.ts ***!
   \*****************************/
@@ -42934,8 +42735,7 @@ var PurchaseAugmentationsOrderSetting;
 
 
 /***/ }),
-/* 70 */,
-/* 71 */
+/* 73 */
 /*!********************************!*\
   !*** ./src/Company/Company.ts ***!
   \********************************/
@@ -42947,7 +42747,7 @@ var PurchaseAugmentationsOrderSetting;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
-const CompanyPosition_1 = __webpack_require__(/*! ./CompanyPosition */ 81);
+const CompanyPosition_1 = __webpack_require__(/*! ./CompanyPosition */ 85);
 const Constants_1 = __webpack_require__(/*! ../Constants */ 1);
 const DefaultConstructorParams = {
     name: "",
@@ -43033,7 +42833,7 @@ JSONReviver_1.Reviver.constructors.Company = Company;
 
 
 /***/ }),
-/* 72 */
+/* 74 */
 /*!***************************!*\
   !*** ./src/SaveObject.js ***!
   \***************************/
@@ -43044,43 +42844,44 @@ JSONReviver_1.Reviver.constructors.Company = Company;
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return saveObject; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return loadGame; });
-/* harmony import */ var _Alias__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Alias */ 43);
+/* harmony import */ var _Alias__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Alias */ 45);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Company/Companies */ 18);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Company/CompanyPosition */ 81);
+/* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Company/CompanyPosition */ 85);
 /* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./engine */ 8);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Faction/Factions */ 15);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 44);
-/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Fconf */ 45);
-/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Gang */ 48);
-/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./HacknetNode */ 63);
-/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Message */ 38);
+/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 46);
+/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Fconf */ 47);
+/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Gang */ 50);
+/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./HacknetNode */ 66);
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Message */ 40);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Script */ 28);
+/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Script */ 30);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Server */ 11);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./SpecialServerIps */ 30);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
 /* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./StockMarket */ 22);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_GameOptions__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/GameOptions */ 80);
+/* harmony import */ var _utils_GameOptions__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/GameOptions */ 84);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_19__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 39);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 41);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__);
-/* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./ui/createStatusText */ 95);
+/* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./ui/createStatusText */ 99);
 /* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_ui_createStatusText__WEBPACK_IMPORTED_MODULE_23__);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_24__);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_25__);
-/* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! decimal.js */ 31);
+/* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! decimal.js */ 33);
 
 
 
@@ -43571,8 +43372,8 @@ function loadImportedGame(saveObj, saveString) {
     _Player__WEBPACK_IMPORTED_MODULE_11__[/* Player */ "a"].lastUpdate = _engine__WEBPACK_IMPORTED_MODULE_4__["Engine"]._lastUpdate;
     _engine__WEBPACK_IMPORTED_MODULE_4__["Engine"].start();                 //Run main game loop and Scripts loop
     Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("While you were offline, your scripts generated <span class='money-gold'>$" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_24__[/* numeralWrapper */ "a"].format(offlineProductionFromScripts, '0,0.00') + "</span> and your Hacknet Nodes generated <span class='money-gold'>$" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_24__[/* numeralWrapper */ "a"].format(offlineProductionFromHacknetNodes, '0,0.00') + "</span>");
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_24__["numeralWrapper"].format(offlineProductionFromScripts, '0,0.00') + "</span> and your Hacknet Nodes generated <span class='money-gold'>$" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_24__["numeralWrapper"].format(offlineProductionFromHacknetNodes, '0,0.00') + "</span>");
     return true;
 }
 
@@ -43684,10 +43485,38 @@ function openImportFileHandler(evt) {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 62)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 65)))
 
 /***/ }),
-/* 73 */
+/* 75 */
+/*!******************************************!*\
+  !*** ./src/Corporation/MaterialSizes.ts ***!
+  \******************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+// Map of material (by name) to their sizes (how much space it takes in warehouse)
+exports.MaterialSizes = {
+    Water: 0.05,
+    Energy: 0.01,
+    Food: 0.03,
+    Plants: 0.05,
+    Metal: 0.1,
+    Hardware: 0.06,
+    Chemicals: 0.05,
+    Drugs: 0.02,
+    Robots: 0.5,
+    AICores: 0.1,
+    RealEstate: 0,
+};
+
+
+/***/ }),
+/* 76 */
 /*!***************************************************!*\
   !*** ./utils/uiHelpers/createAccordionElement.ts ***!
   \***************************************************/
@@ -43732,7 +43561,7 @@ exports.createAccordionElement = createAccordionElement;
 
 
 /***/ }),
-/* 74 */
+/* 77 */
 /*!**************************************!*\
   !*** ./utils/helpers/clearObject.ts ***!
   \**************************************/
@@ -43761,7 +43590,7 @@ exports.clearObject = clearObject;
 
 
 /***/ }),
-/* 75 */
+/* 78 */
 /*!*************************!*\
   !*** ./utils/LogBox.js ***!
   \*************************/
@@ -43777,7 +43606,7 @@ exports.clearObject = clearObject;
 /* harmony import */ var _src_NetscriptWorker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/NetscriptWorker */ 24);
 /* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./uiHelpers/clearEventListeners */ 16);
 /* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _helpers_arrayToString__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers/arrayToString */ 52);
+/* harmony import */ var _helpers_arrayToString__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers/arrayToString */ 54);
 /* harmony import */ var _helpers_arrayToString__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_2__);
 
 
@@ -43848,10 +43677,10 @@ function logBoxUpdateText() {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 62)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 65)))
 
 /***/ }),
-/* 76 */
+/* 79 */
 /*!************************!*\
   !*** ./src/DarkWeb.js ***!
   \************************/
@@ -43865,10 +43694,10 @@ function logBoxUpdateText() {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DarkWebItems; });
 /* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateProgram */ 23);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SpecialServerIps */ 30);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ui/postToTerminal */ 7);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/helpers/isValidIPAddress */ 84);
+/* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/helpers/isValidIPAddress */ 88);
 /* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_5__);
@@ -43991,7 +43820,8 @@ const DarkWebItems = {
 
 
 /***/ }),
-/* 77 */
+/* 80 */,
+/* 81 */
 /*!*************************************!*\
   !*** ./utils/helpers/roundToTwo.ts ***!
   \*************************************/
@@ -44014,7 +43844,7 @@ exports.roundToTwo = roundToTwo;
 
 
 /***/ }),
-/* 78 */
+/* 82 */
 /*!***************************!*\
   !*** ./src/Literature.js ***!
   \***************************/
@@ -44465,7 +44295,7 @@ function initLiterature() {
 
 
 /***/ }),
-/* 79 */
+/* 83 */
 /*!************************************************!*\
   !*** ./utils/helpers/createProgressBarText.ts ***!
   \************************************************/
@@ -44501,7 +44331,7 @@ exports.createProgressBarText = createProgressBarText;
 
 
 /***/ }),
-/* 80 */
+/* 84 */
 /*!******************************!*\
   !*** ./utils/GameOptions.js ***!
   \******************************/
@@ -44558,10 +44388,10 @@ function gameOptionsBoxOpen() {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 62)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 65)))
 
 /***/ }),
-/* 81 */
+/* 85 */
 /*!****************************************!*\
   !*** ./src/Company/CompanyPosition.ts ***!
   \****************************************/
@@ -44573,7 +44403,7 @@ function gameOptionsBoxOpen() {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const Constants_1 = __webpack_require__(/*! ../Constants */ 1);
-const names = __webpack_require__(/*! ./data/CompanyPositionNames */ 34);
+const names = __webpack_require__(/*! ./data/CompanyPositionNames */ 36);
 class CompanyPosition {
     constructor(p) {
         this.name = p.name;
@@ -44653,7 +44483,7 @@ exports.CompanyPosition = CompanyPosition;
 
 
 /***/ }),
-/* 82 */
+/* 86 */
 /*!*************************!*\
   !*** ./src/Prestige.js ***!
   \*************************/
@@ -44664,39 +44494,39 @@ exports.CompanyPosition = CompanyPosition;
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return prestigeAugmentation; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return prestigeSourceFile; });
-/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActiveScriptsUI */ 64);
+/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActiveScriptsUI */ 67);
 /* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Augmentations */ 21);
-/* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BitNode */ 56);
-/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Bladeburner */ 29);
-/* harmony import */ var _CinematicText__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./CinematicText */ 93);
+/* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BitNode */ 58);
+/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Bladeburner */ 31);
+/* harmony import */ var _CinematicText__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./CinematicText */ 97);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Company/Companies */ 18);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./CreateProgram */ 23);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./engine */ 8);
-/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Faction/Faction */ 54);
+/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Faction/Faction */ 56);
 /* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_Faction_Faction__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Faction/Factions */ 15);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 44);
-/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Gang */ 48);
-/* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Location */ 86);
-/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Message */ 38);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./NetscriptFunctions */ 41);
+/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 46);
+/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Gang */ 50);
+/* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Location */ 90);
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Message */ 40);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./NetscriptWorker */ 24);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./SpecialServerIps */ 30);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
 /* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./StockMarket */ 22);
-/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Terminal */ 49);
-/* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! decimal.js */ 31);
+/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Terminal */ 51);
+/* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! decimal.js */ 33);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_23__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_24__);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 39);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 41);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_25__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 42);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 44);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
 
 
@@ -45024,10 +44854,10 @@ function prestigeSourceFile() {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 62)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 65)))
 
 /***/ }),
-/* 83 */
+/* 87 */
 /*!***************************************!*\
   !*** ./utils/helpers/getTimestamp.ts ***!
   \***************************************/
@@ -45053,7 +44883,7 @@ exports.getTimestamp = getTimestamp;
 
 
 /***/ }),
-/* 84 */
+/* 88 */
 /*!*******************************************!*\
   !*** ./utils/helpers/isValidIPAddress.ts ***!
   \*******************************************/
@@ -45078,8 +44908,8 @@ exports.isValidIPAddress = isValidIPAddress;
 
 
 /***/ }),
-/* 85 */,
-/* 86 */
+/* 89 */,
+/* 90 */
 /*!*************************!*\
   !*** ./src/Location.js ***!
   \*************************/
@@ -45090,35 +44920,36 @@ exports.isValidIPAddress = isValidIPAddress;
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return displayLocationContent; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return initLocationButtons; });
-/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Bladeburner */ 29);
-/* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Company/CompanyPositions */ 26);
+/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Bladeburner */ 31);
+/* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Company/CompanyPositions */ 27);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Company/Companies */ 18);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Company/GetJobRequirementText */ 88);
+/* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Company/GetJobRequirementText */ 92);
 /* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Company/data/CompanyPositionNames */ 34);
+/* harmony import */ var _Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Company/data/CompanyPositionNames */ 36);
 /* harmony import */ var _Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _CompanyManagement__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./CompanyManagement */ 58);
+/* harmony import */ var _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Corporation/Corporation */ 60);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _Crimes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Crimes */ 35);
+/* harmony import */ var _Crimes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Crimes */ 37);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./engine */ 8);
-/* harmony import */ var _Infiltration__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Infiltration */ 126);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./NetscriptFunctions */ 41);
+/* harmony import */ var _Infiltration__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Infiltration */ 132);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Locations */ 5);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _ServerPurchases__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./ServerPurchases */ 108);
+/* harmony import */ var _ServerPurchases__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./ServerPurchases */ 113);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./SpecialServerIps */ 30);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_17__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/IPAddress */ 57);
+/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/IPAddress */ 59);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21__);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
@@ -45835,7 +45666,7 @@ function displayLocationContent() {
 
         case _Locations__WEBPACK_IMPORTED_MODULE_11__["Locations"].Sector12CityHall:
             cityHallCreateCorporation.style.display = "block";
-            if (_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].corporation instanceof _CompanyManagement__WEBPACK_IMPORTED_MODULE_5__[/* Corporation */ "a"]) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_5__[/* Corporation */ "a"]) {
                 cityHallCreateCorporation.className = "a-link-button-inactive";
             } else {
                 cityHallCreateCorporation.className = "a-link-button";
@@ -46909,7 +46740,7 @@ function initLocationButtons() {
         });
         Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__[/* yesNoBoxCreate */ "b"])("Would you like to purchase additional RAM for your home computer? <br><br>" +
                        "This will upgrade your RAM from " + ram + "GB to " + ram*2 + "GB. <br><br>" +
-                       "This will cost " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_17__[/* numeralWrapper */ "a"].format(cost, '$0.000a'));
+                       "This will cost " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_17__["numeralWrapper"].format(cost, '$0.000a'));
     });
 
     purchaseHomeCores.addEventListener("click", function(e) {
@@ -46946,7 +46777,7 @@ function initLocationButtons() {
         Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__[/* yesNoBoxCreate */ "b"])("Would you like to purchase an additional CPU Core for your home computer? Each CPU Core " +
                        "lets you start with an additional Core Node in Hacking Missions.<br><br>" +
                        "Purchasing an additional core (for a total of " + (_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].getHomeComputer().cpuCores + 1) + ") will " +
-                       "cost " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_17__[/* numeralWrapper */ "a"].format(cost, '$0.000a'));
+                       "cost " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_17__["numeralWrapper"].format(cost, '$0.000a'));
     });
 
     travelToAevum.addEventListener("click", function(e) {
@@ -47073,7 +46904,7 @@ function initLocationButtons() {
                 Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("Invalid company name!");
                 return false;
             }
-            _Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].corporation = new _CompanyManagement__WEBPACK_IMPORTED_MODULE_5__[/* Corporation */ "a"]({
+            _Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].corporation = new _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_5__[/* Corporation */ "a"]({
                 name:companyName,
             });
             displayLocationContent();
@@ -47086,7 +46917,7 @@ function initLocationButtons() {
         noBtn.addEventListener("click", function() {
             return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__[/* yesNoTxtInpBoxClose */ "f"])();
         });
-        if (_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].corporation instanceof _CompanyManagement__WEBPACK_IMPORTED_MODULE_5__[/* Corporation */ "a"]) {
+        if (_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_5__[/* Corporation */ "a"]) {
             return;
         } else {
             Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__[/* yesNoTxtInpBoxCreate */ "g"])("Would you like to start a corporation? This will require $150b " +
@@ -47345,7 +47176,7 @@ function purchaseServerBoxCreate(ram, cost) {
 
 
 /***/ }),
-/* 87 */
+/* 91 */
 /*!****************************************!*\
   !*** ./utils/helpers/compareArrays.ts ***!
   \****************************************/
@@ -47376,7 +47207,7 @@ exports.compareArrays = compareArrays;
 
 
 /***/ }),
-/* 88 */
+/* 92 */
 /*!**********************************************!*\
   !*** ./src/Company/GetJobRequirementText.ts ***!
   \**********************************************/
@@ -47442,7 +47273,7 @@ exports.getJobRequirementText = getJobRequirementText;
 
 
 /***/ }),
-/* 89 */
+/* 93 */
 /*!****************************************!*\
   !*** ./utils/helpers/getRandomByte.ts ***!
   \****************************************/
@@ -47468,9 +47299,9 @@ exports.getRandomByte = getRandomByte;
 
 
 /***/ }),
-/* 90 */,
-/* 91 */,
-/* 92 */
+/* 94 */,
+/* 95 */,
+/* 96 */
 /*!****************************************!*\
   !*** ./src/CodingContractGenerator.js ***!
   \****************************************/
@@ -47481,7 +47312,7 @@ exports.getRandomByte = getRandomByte;
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return generateRandomContract; });
 /* unused harmony export generateContract */
-/* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CodingContracts */ 40);
+/* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CodingContracts */ 42);
 /* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_CodingContracts__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Faction/Factions */ 15);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_1__);
@@ -47647,7 +47478,7 @@ function getRandomFilename(server, reward) {
 
 
 /***/ }),
-/* 93 */
+/* 97 */
 /*!******************************!*\
   !*** ./src/CinematicText.js ***!
   \******************************/
@@ -47659,12 +47490,12 @@ function getRandomFilename(server, reward) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return cinematicTextFlag; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return writeCinematicText; });
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./engine */ 8);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 27);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 29);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 42);
-/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/helpers/isString */ 37);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 44);
+/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/helpers/isString */ 39);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_4__);
 
 
@@ -47768,7 +47599,7 @@ function cinematicTextEnd() {
 
 
 /***/ }),
-/* 94 */
+/* 98 */
 /*!***********************************************!*\
   !*** ./src/Company/GetNextCompanyPosition.ts ***!
   \***********************************************/
@@ -47779,7 +47610,7 @@ function cinematicTextEnd() {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const CompanyPositions_1 = __webpack_require__(/*! ./CompanyPositions */ 26);
+const CompanyPositions_1 = __webpack_require__(/*! ./CompanyPositions */ 27);
 function getNextCompanyPosition(currPos) {
     if (currPos == null) {
         return null;
@@ -47794,7 +47625,7 @@ exports.getNextCompanyPosition = getNextCompanyPosition;
 
 
 /***/ }),
-/* 95 */
+/* 99 */
 /*!************************************!*\
   !*** ./src/ui/createStatusText.ts ***!
   \************************************/
@@ -47805,7 +47636,7 @@ exports.getNextCompanyPosition = getNextCompanyPosition;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const getElementById_1 = __webpack_require__(/*! ../../utils/uiHelpers/getElementById */ 51);
+const getElementById_1 = __webpack_require__(/*! ../../utils/uiHelpers/getElementById */ 53);
 const threeSeconds = 3000;
 let x;
 /**
@@ -47831,7 +47662,7 @@ exports.createStatusText = createStatusText;
 
 
 /***/ }),
-/* 96 */
+/* 100 */
 /*!*************************!*\
   !*** ./src/HelpText.ts ***!
   \*************************/
@@ -48072,14 +47903,221 @@ exports.HelpTexts = {
 
 
 /***/ }),
-/* 97 */,
-/* 98 */,
-/* 99 */,
-/* 100 */,
-/* 101 */,
+/* 101 */
+/*!************************************!*\
+  !*** ./src/Corporation/Product.ts ***!
+  \************************************/
+/*! no static exports found */
+/*! exports used: Product */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const EmployeePositions_1 = __webpack_require__(/*! ./EmployeePositions */ 25);
+const MaterialSizes_1 = __webpack_require__(/*! ./MaterialSizes */ 75);
+const ProductRatingWeights_1 = __webpack_require__(/*! ./ProductRatingWeights */ 191);
+const Cities_1 = __webpack_require__(/*! ../Locations/Cities */ 190);
+const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
+const getRandomInt_1 = __webpack_require__(/*! ../../utils/helpers/getRandomInt */ 14);
+class Product {
+    constructor(params = {}) {
+        // Product name
+        this.name = "";
+        // The demand for this Product in the market. Gradually decreases
+        this.dmd = 0;
+        // How much competition there is in the market for this Product
+        this.cmp = 0;
+        // Markup. Affects how high of a price you can charge for this Product
+        // without suffering a loss in the # of sales
+        this.mku = 0;
+        // Production cost - estimation of how much money it costs to make this Product
+        this.pCost = 0;
+        // Sell cost
+        this.sCost = 0;
+        // Variables for handling the creation process of this Product
+        this.fin = false; // Whether this Product has finished being created
+        this.prog = 0; // Creation progress - A number betwee 0-100 representing percentage
+        this.createCity = ""; // City in which the product is/was being created
+        this.designCost = 0; // How much money was invested into designing this Product
+        this.advCost = 0; // How much money was invested into advertising this Product
+        // Aggregate score for this Product's 'rating'
+        // This is based on the stats/properties below. The weighting of the
+        // stats/properties below differs between different industries
+        this.rat = 0;
+        // Stats/properties of this Product
+        this.qlt = 0;
+        this.per = 0;
+        this.dur = 0;
+        this.rel = 0;
+        this.aes = 0;
+        this.fea = 0;
+        // Data refers to the production, sale, and quantity of the products
+        // These values are specific to a city
+        // For each city, the data is [qty, prod, sell]
+        this.data = {
+            [Cities_1.Cities.Aevum]: [0, 0, 0],
+            [Cities_1.Cities.Chongqing]: [0, 0, 0],
+            [Cities_1.Cities.Sector12]: [0, 0, 0],
+            [Cities_1.Cities.NewTokyo]: [0, 0, 0],
+            [Cities_1.Cities.Ishima]: [0, 0, 0],
+            [Cities_1.Cities.Volhaven]: [0, 0, 0],
+        };
+        // Location of this Product
+        // Only applies for location-based products like restaurants/hospitals
+        this.loc = "";
+        // How much space 1 unit of the Product takes (in the warehouse)
+        // Not applicable for all Products
+        this.siz = 0;
+        // Material requirements. An object that maps the name of a material to how much it requires
+        // to make 1 unit of the product.
+        this.reqMats = {};
+        // Data to keep track of whether production/sale of this Product is
+        // manually limited. These values are specific to a city
+        //  [Whether production/sale is limited, limit amount]
+        this.prdman = {
+            [Cities_1.Cities.Aevum]: [false, 0],
+            [Cities_1.Cities.Chongqing]: [false, 0],
+            [Cities_1.Cities.Sector12]: [false, 0],
+            [Cities_1.Cities.NewTokyo]: [false, 0],
+            [Cities_1.Cities.Ishima]: [false, 0],
+            [Cities_1.Cities.Volhaven]: [false, 0],
+        };
+        this.sllman = {
+            [Cities_1.Cities.Aevum]: [false, 0],
+            [Cities_1.Cities.Chongqing]: [false, 0],
+            [Cities_1.Cities.Sector12]: [false, 0],
+            [Cities_1.Cities.NewTokyo]: [false, 0],
+            [Cities_1.Cities.Ishima]: [false, 0],
+            [Cities_1.Cities.Volhaven]: [false, 0],
+        };
+        this.name = params.name ? params.name : "";
+        this.dmd = params.demand ? params.demand : 0;
+        this.cmp = params.competition ? params.competition : 0;
+        this.mku = params.markup ? params.markup : 0;
+        this.createCity = params.createCity ? params.createCity : "";
+        this.designCost = params.designCost ? params.designCost : 0;
+        this.advCost = params.advCost ? params.advCost : 0;
+        this.qlt = params.quality ? params.quality : 0;
+        this.per = params.performance ? params.performance : 0;
+        this.dur = params.durability ? params.durability : 0;
+        this.rel = params.reliability ? params.reliability : 0;
+        this.aes = params.aesthetics ? params.aesthetics : 0;
+        this.fea = params.features ? params.features : 0;
+        this.loc = params.loc ? params.loc : "";
+        this.siz = params.size ? params.size : 0;
+        this.reqMats = params.req ? params.req : {};
+    }
+    // Initiatizes a Product object from a JSON save state.
+    static fromJSON(value) {
+        return JSONReviver_1.Generic_fromJSON(Product, value.data);
+    }
+    // empWorkMult is a multiplier that increases progress rate based on
+    // productivity of employees
+    createProduct(marketCycles = 1, empWorkMult = 1) {
+        if (this.fin) {
+            return;
+        }
+        this.prog += (marketCycles * .01 * empWorkMult);
+    }
+    // @param industry - Industry object. Reference to industry that makes this Product
+    finishProduct(employeeProd, industry) {
+        this.fin = true;
+        //Calculate properties
+        var progrMult = this.prog / 100;
+        var engrRatio = employeeProd[EmployeePositions_1.EmployeePositions.Engineer] / employeeProd["total"], mgmtRatio = employeeProd[EmployeePositions_1.EmployeePositions.Management] / employeeProd["total"], rndRatio = employeeProd[EmployeePositions_1.EmployeePositions.RandD] / employeeProd["total"], opsRatio = employeeProd[EmployeePositions_1.EmployeePositions.Operations] / employeeProd["total"], busRatio = employeeProd[EmployeePositions_1.EmployeePositions.Business] / employeeProd["total"];
+        var designMult = 1 + (Math.pow(this.designCost, 0.1) / 100);
+        console.log("designMult: " + designMult);
+        var balanceMult = (1.2 * engrRatio) + (0.9 * mgmtRatio) + (1.3 * rndRatio) +
+            (1.5 * opsRatio) + (busRatio);
+        var sciMult = 1 + (Math.pow(industry.sciResearch.qty, industry.sciFac) / 800);
+        var totalMult = progrMult * balanceMult * designMult * sciMult;
+        this.qlt = totalMult * ((0.10 * employeeProd[EmployeePositions_1.EmployeePositions.Engineer]) +
+            (0.05 * employeeProd[EmployeePositions_1.EmployeePositions.Management]) +
+            (0.05 * employeeProd[EmployeePositions_1.EmployeePositions.RandD]) +
+            (0.02 * employeeProd[EmployeePositions_1.EmployeePositions.Operations]) +
+            (0.02 * employeeProd[EmployeePositions_1.EmployeePositions.Business]));
+        this.per = totalMult * ((0.15 * employeeProd[EmployeePositions_1.EmployeePositions.Engineer]) +
+            (0.02 * employeeProd[EmployeePositions_1.EmployeePositions.Management]) +
+            (0.02 * employeeProd[EmployeePositions_1.EmployeePositions.RandD]) +
+            (0.02 * employeeProd[EmployeePositions_1.EmployeePositions.Operations]) +
+            (0.02 * employeeProd[EmployeePositions_1.EmployeePositions.Business]));
+        this.dur = totalMult * ((0.05 * employeeProd[EmployeePositions_1.EmployeePositions.Engineer]) +
+            (0.02 * employeeProd[EmployeePositions_1.EmployeePositions.Management]) +
+            (0.08 * employeeProd[EmployeePositions_1.EmployeePositions.RandD]) +
+            (0.05 * employeeProd[EmployeePositions_1.EmployeePositions.Operations]) +
+            (0.05 * employeeProd[EmployeePositions_1.EmployeePositions.Business]));
+        this.rel = totalMult * ((0.02 * employeeProd[EmployeePositions_1.EmployeePositions.Engineer]) +
+            (0.08 * employeeProd[EmployeePositions_1.EmployeePositions.Management]) +
+            (0.02 * employeeProd[EmployeePositions_1.EmployeePositions.RandD]) +
+            (0.05 * employeeProd[EmployeePositions_1.EmployeePositions.Operations]) +
+            (0.08 * employeeProd[EmployeePositions_1.EmployeePositions.Business]));
+        this.aes = totalMult * ((0.00 * employeeProd[EmployeePositions_1.EmployeePositions.Engineer]) +
+            (0.08 * employeeProd[EmployeePositions_1.EmployeePositions.Management]) +
+            (0.05 * employeeProd[EmployeePositions_1.EmployeePositions.RandD]) +
+            (0.02 * employeeProd[EmployeePositions_1.EmployeePositions.Operations]) +
+            (0.10 * employeeProd[EmployeePositions_1.EmployeePositions.Business]));
+        this.fea = totalMult * ((0.08 * employeeProd[EmployeePositions_1.EmployeePositions.Engineer]) +
+            (0.05 * employeeProd[EmployeePositions_1.EmployeePositions.Management]) +
+            (0.02 * employeeProd[EmployeePositions_1.EmployeePositions.RandD]) +
+            (0.05 * employeeProd[EmployeePositions_1.EmployeePositions.Operations]) +
+            (0.05 * employeeProd[EmployeePositions_1.EmployeePositions.Business]));
+        this.calculateRating(industry);
+        var advMult = 1 + (Math.pow(this.advCost, 0.1) / 100);
+        this.mku = 100 / (advMult * Math.pow((this.qlt + 0.001), 0.65) * (busRatio + mgmtRatio));
+        this.dmd = industry.awareness === 0 ? 20 : Math.min(100, advMult * (100 * (industry.popularity / industry.awareness)));
+        this.cmp = getRandomInt_1.getRandomInt(0, 70);
+        //Calculate the product's required materials
+        //For now, just set it to be the same as the requirements to make materials
+        for (var matName in industry.reqMats) {
+            if (industry.reqMats.hasOwnProperty(matName)) {
+                this.reqMats[matName] = industry.reqMats[matName];
+            }
+        }
+        //Calculate the product's size
+        //For now, just set it to be the same size as the requirements to make materials
+        this.siz = 0;
+        for (var matName in industry.reqMats) {
+            this.siz += MaterialSizes_1.MaterialSizes[matName] * industry.reqMats[matName];
+        }
+        //Delete unneeded variables
+        delete this.prog;
+        delete this.createCity;
+        delete this.designCost;
+        delete this.advCost;
+    }
+    calculateRating(industry) {
+        const weights = ProductRatingWeights_1.ProductRatingWeights[industry.type];
+        if (weights == null) {
+            console.log("ERROR: Could not find product rating weights for: " + industry);
+            return;
+        }
+        this.rat = 0;
+        this.rat += weights.Quality ? this.qlt * weights.Quality : 0;
+        this.rat += weights.Performance ? this.per * weights.Performance : 0;
+        this.rat += weights.Durability ? this.dur * weights.Durability : 0;
+        this.rat += weights.Reliability ? this.rel * weights.Reliability : 0;
+        this.rat += weights.Aesthetics ? this.aes * weights.Aesthetics : 0;
+        this.rat += weights.Features ? this.fea * weights.Features : 0;
+    }
+    // Serialize the current object to a JSON save state.
+    toJSON() {
+        return JSONReviver_1.Generic_toJSON("Product", this);
+    }
+}
+exports.Product = Product;
+JSONReviver_1.Reviver.constructors.Product = Product;
+
+
+/***/ }),
 /* 102 */,
 /* 103 */,
-/* 104 */
+/* 104 */,
+/* 105 */,
+/* 106 */,
+/* 107 */,
+/* 108 */,
+/* 109 */
 /*!************************************!*\
   !*** ./src/Faction/FactionInfo.ts ***!
   \************************************/
@@ -48254,7 +48292,7 @@ exports.FactionInfos = {
 
 
 /***/ }),
-/* 105 */
+/* 110 */
 /*!*************************************!*\
   !*** ./src/NetscriptEnvironment.js ***!
   \*************************************/
@@ -48264,9 +48302,9 @@ exports.FactionInfos = {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Environment; });
-/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HacknetNode */ 63);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NetscriptFunctions */ 41);
-/* harmony import */ var _NetscriptPort__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NetscriptPort */ 68);
+/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HacknetNode */ 66);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
+/* harmony import */ var _NetscriptPort__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NetscriptPort */ 71);
 
 
 
@@ -48366,7 +48404,7 @@ Environment.prototype = {
 
 
 /***/ }),
-/* 106 */
+/* 111 */
 /*!*************************************!*\
   !*** ./src/NetscriptJSEvaluator.js ***!
   \*************************************/
@@ -48490,7 +48528,7 @@ function _getScriptUrls(script, scripts, seen) {
 
 
 /***/ }),
-/* 107 */
+/* 112 */
 /*!************************!*\
   !*** ./src/DevMenu.js ***!
   \************************/
@@ -48502,20 +48540,21 @@ function _getScriptUrls(script, scripts, seen) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return createDevMenu; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return closeDevMenu; });
 /* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentations */ 21);
-/* harmony import */ var _CodingContractGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CodingContractGenerator */ 92);
+/* harmony import */ var _CodingContractGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CodingContractGenerator */ 96);
 /* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CreateProgram */ 23);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Faction/Factions */ 15);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./RedPill */ 55);
+/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./RedPill */ 57);
 /* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./StockMarket */ 22);
-/* harmony import */ var _Stock__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Stock */ 25);
+/* harmony import */ var _Stock__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Stock */ 26);
 /* harmony import */ var _Stock__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_Stock__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Terminal */ 49);
+/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Terminal */ 51);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 42);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 44);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
@@ -48978,7 +49017,7 @@ function createDevMenu() {
         clickListener: () => {
             let text = "";
             processStocks((stock) => {
-                text += `${stock.symbol}: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__[/* numeralWrapper */ "a"].format(stock.cap, '$0.000a')}<br>`;
+                text += `${stock.symbol}: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__["numeralWrapper"].format(stock.cap, '$0.000a')}<br>`;
             });
             Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_11__["dialogBoxCreate"])(text);
         },
@@ -49069,7 +49108,7 @@ function closeDevMenu() {
 
 
 /***/ }),
-/* 108 */
+/* 113 */
 /*!********************************!*\
   !*** ./src/ServerPurchases.js ***!
   \********************************/
@@ -49085,7 +49124,7 @@ function closeDevMenu() {
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Server */ 11);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/IPAddress */ 57);
+/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/IPAddress */ 59);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
 
 
@@ -49159,7 +49198,57 @@ function purchaseRamForHomeComputer(cost) {
 
 
 /***/ }),
-/* 109 */
+/* 114 */
+/*!*********************************************!*\
+  !*** ./src/Corporation/CorporationState.ts ***!
+  \*********************************************/
+/*! no static exports found */
+/*! exports used: AllCorporationStates, CorporationState */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
+// Array of all valid states
+exports.AllCorporationStates = ["START", "PURCHASE", "PRODUCTION", "SALE", "EXPORT"];
+class CorporationState {
+    constructor() {
+        // Number representing what state the Corporation is in. The number
+        // is an index for the array that holds all Corporation States
+        this.state = 0;
+    }
+    // Initiatizes a CorporationState object from a JSON save state.
+    static fromJSON(value) {
+        return JSONReviver_1.Generic_fromJSON(CorporationState, value.data);
+    }
+    // Get the name of the current state
+    // NOTE: This does NOT return the number stored in the 'state' property,
+    // which is just an index for the array of all possible Corporation States.
+    getState() {
+        return exports.AllCorporationStates[this.state];
+    }
+    // Transition to the next state
+    nextState() {
+        if (this.state < 0 || this.state >= exports.AllCorporationStates.length) {
+            this.state = 0;
+        }
+        ++this.state;
+        if (this.state >= exports.AllCorporationStates.length) {
+            this.state = 0;
+        }
+    }
+    // Serialize the current object to a JSON save state.
+    toJSON() {
+        return JSONReviver_1.Generic_toJSON("CorporationState", this);
+    }
+}
+exports.CorporationState = CorporationState;
+JSONReviver_1.Reviver.constructors.CorporationState = CorporationState;
+
+
+/***/ }),
+/* 115 */
 /*!************************************************!*\
   !*** ./utils/uiHelpers/removeLoadingScreen.ts ***!
   \************************************************/
@@ -49170,7 +49259,7 @@ function purchaseRamForHomeComputer(cost) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const getElementById_1 = __webpack_require__(/*! ./getElementById */ 51);
+const getElementById_1 = __webpack_require__(/*! ./getElementById */ 53);
 const removeElementById_1 = __webpack_require__(/*! ./removeElementById */ 20);
 /**
  * Routes the player from the Loading screen to the main game content.
@@ -49184,14 +49273,14 @@ exports.removeLoadingScreen = removeLoadingScreen;
 
 
 /***/ }),
-/* 110 */,
-/* 111 */,
-/* 112 */,
-/* 113 */,
-/* 114 */,
-/* 115 */,
 /* 116 */,
-/* 117 */
+/* 117 */,
+/* 118 */,
+/* 119 */,
+/* 120 */,
+/* 121 */,
+/* 122 */,
+/* 123 */
 /*!*************************************!*\
   !*** ./src/ui/setSettingsLabels.js ***!
   \*************************************/
@@ -49205,6 +49294,7 @@ exports.removeLoadingScreen = removeLoadingScreen;
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _numeralFormat__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./numeralFormat */ 4);
+/* harmony import */ var _numeralFormat__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_numeralFormat__WEBPACK_IMPORTED_MODULE_2__);
 
 
 
@@ -49236,7 +49326,7 @@ function setSettingsLabels() {
     autosaveInterval.innerHTML = _Settings__WEBPACK_IMPORTED_MODULE_1__["Settings"].AutosaveInterval;
     disableHotkeys.checked = _Settings__WEBPACK_IMPORTED_MODULE_1__["Settings"].DisableHotkeys;
     locale.value = _Settings__WEBPACK_IMPORTED_MODULE_1__["Settings"].Locale;
-    _numeralFormat__WEBPACK_IMPORTED_MODULE_2__[/* numeralWrapper */ "a"].updateLocale(_Settings__WEBPACK_IMPORTED_MODULE_1__["Settings"].Locale); //Initialize locale
+    _numeralFormat__WEBPACK_IMPORTED_MODULE_2__["numeralWrapper"].updateLocale(_Settings__WEBPACK_IMPORTED_MODULE_1__["Settings"].Locale); //Initialize locale
 
     //Set handlers for when input changes for sliders
     var nsExecTimeInput = document.getElementById("settingsNSExecTimeRangeVal");
@@ -49300,7 +49390,7 @@ function setSettingsLabels() {
 
     //Locale selector
     locale.onchange = function() {
-        if (!_numeralFormat__WEBPACK_IMPORTED_MODULE_2__[/* numeralWrapper */ "a"].updateLocale(locale.value)) {
+        if (!_numeralFormat__WEBPACK_IMPORTED_MODULE_2__["numeralWrapper"].updateLocale(locale.value)) {
             console.warn(`Invalid locale for numeral: ${locale.value}`);
 
             let defaultValue = 'en';
@@ -49316,7 +49406,7 @@ function setSettingsLabels() {
 
 
 /***/ }),
-/* 118 */
+/* 124 */
 /*!**********************************!*\
   !*** ./src/CharacterOverview.js ***!
   \**********************************/
@@ -49328,6 +49418,7 @@ function setSettingsLabels() {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CharacterOverview; });
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_1__);
 
 
 
@@ -49364,7 +49455,7 @@ CharacterOverview.prototype.update = function() {
 
         let changed = false;
         changed = replaceAndChanged(this.hp, _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hp + " / " + _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].max_hp) || changed;
-        changed = replaceAndChanged(this.money, _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_1__[/* numeralWrapper */ "a"].format(_Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].money.toNumber(), '$0.000a')) || changed;
+        changed = replaceAndChanged(this.money, _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_1__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].money.toNumber(), '$0.000a')) || changed;
         changed = replaceAndChanged(this.hack, (_Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacking_skill).toLocaleString()) || changed;
         changed = replaceAndChanged(this.str, (_Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].strength).toLocaleString()) || changed;
         changed = replaceAndChanged(this.def, (_Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].defense).toLocaleString()) || changed;
@@ -49390,7 +49481,7 @@ CharacterOverview.prototype.update = function() {
 
 
 /***/ }),
-/* 119 */
+/* 125 */
 /*!******************************!*\
   !*** ./src/JSInterpreter.js ***!
   \******************************/
@@ -49400,7 +49491,7 @@ CharacterOverview.prototype.update = function() {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Interpreter; });
-/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/acorn */ 46);
+/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/acorn */ 48);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_0__);
 
 /**
@@ -53193,7 +53284,7 @@ Interpreter.prototype['createPrimitive'] = function(x) {return x;};
 
 
 /***/ }),
-/* 120 */
+/* 126 */
 /*!***************************************!*\
   !*** ./utils/helpers/isPowerOfTwo.ts ***!
   \***************************************/
@@ -53223,7 +53314,7 @@ exports.isPowerOfTwo = isPowerOfTwo;
 
 
 /***/ }),
-/* 121 */
+/* 127 */
 /*!****************************************!*\
   !*** ./src/data/gangmemberupgrades.ts ***!
   \****************************************/
@@ -53435,7 +53526,7 @@ exports.gangMemberUpgradesMetadata = [
 
 
 /***/ }),
-/* 122 */
+/* 128 */
 /*!*************************************!*\
   !*** ./src/data/gangmembertasks.ts ***!
   \*************************************/
@@ -53700,7 +53791,7 @@ exports.gangMemberTasksMetadata = [
 
 
 /***/ }),
-/* 123 */
+/* 129 */
 /*!***************************************!*\
   !*** ./utils/FactionInvitationBox.js ***!
   \***************************************/
@@ -53710,7 +53801,7 @@ exports.gangMemberTasksMetadata = [
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return factionInvitationBoxCreate; });
-/* harmony import */ var _src_Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/Faction/FactionHelpers */ 44);
+/* harmony import */ var _src_Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/Faction/FactionHelpers */ 46);
 /* harmony import */ var _src_engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../src/engine */ 8);
 /* harmony import */ var _src_Player__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../src/Player */ 0);
 /* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./uiHelpers/clearEventListeners */ 16);
@@ -53784,7 +53875,7 @@ function factionInvitationBoxCreate(faction) {
 
 
 /***/ }),
-/* 124 */
+/* 130 */
 /*!*****************************!*\
   !*** ./src/data/servers.ts ***!
   \*****************************/
@@ -55257,7 +55348,7 @@ exports.serverMetadata = [
 
 
 /***/ }),
-/* 125 */
+/* 131 */
 /*!**********************************!*\
   !*** ./utils/InfiltrationBox.js ***!
   \**********************************/
@@ -55271,7 +55362,7 @@ exports.serverMetadata = [
 /* harmony import */ var _src_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_src_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _src_Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../src/Constants */ 1);
 /* harmony import */ var _src_Constants__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_src_Constants__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _src_Faction_Faction__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../src/Faction/Faction */ 54);
+/* harmony import */ var _src_Faction_Faction__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../src/Faction/Faction */ 56);
 /* harmony import */ var _src_Faction_Faction__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_src_Faction_Faction__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _src_Faction_Factions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../src/Faction/Factions */ 15);
 /* harmony import */ var _src_Faction_Factions__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_src_Faction_Factions__WEBPACK_IMPORTED_MODULE_3__);
@@ -55404,7 +55495,7 @@ function infiltrationBoxCreate(inst) {
 
 
 /***/ }),
-/* 126 */
+/* 132 */
 /*!*****************************!*\
   !*** ./src/Infiltration.js ***!
   \*****************************/
@@ -55425,7 +55516,7 @@ function infiltrationBoxCreate(inst) {
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 14);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _utils_InfiltrationBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/InfiltrationBox */ 125);
+/* harmony import */ var _utils_InfiltrationBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/InfiltrationBox */ 131);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_8__);
 
@@ -56273,7 +56364,7 @@ function getInfiltrationEscapeChance(inst) {
 
 
 /***/ }),
-/* 127 */
+/* 133 */
 /*!******************************************!*\
   !*** ./utils/uiHelpers/clearSelector.ts ***!
   \******************************************/
@@ -56297,12 +56388,6 @@ exports.clearSelector = clearSelector;
 
 
 /***/ }),
-/* 128 */,
-/* 129 */,
-/* 130 */,
-/* 131 */,
-/* 132 */,
-/* 133 */,
 /* 134 */,
 /* 135 */,
 /* 136 */,
@@ -56312,7 +56397,13 @@ exports.clearSelector = clearSelector;
 /* 140 */,
 /* 141 */,
 /* 142 */,
-/* 143 */
+/* 143 */,
+/* 144 */,
+/* 145 */,
+/* 146 */,
+/* 147 */,
+/* 148 */,
+/* 149 */
 /*!***********************!*\
   !*** ./css/gang.scss ***!
   \***********************/
@@ -56322,8 +56413,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 144 */,
-/* 145 */
+/* 150 */,
+/* 151 */
 /*!******************************!*\
   !*** ./css/bladeburner.scss ***!
   \******************************/
@@ -56333,8 +56424,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 146 */,
-/* 147 */
+/* 152 */,
+/* 153 */
 /*!************************************!*\
   !*** ./css/companymanagement.scss ***!
   \************************************/
@@ -56344,8 +56435,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 148 */,
-/* 149 */
+/* 154 */,
+/* 155 */
 /*!***************************!*\
   !*** ./css/missions.scss ***!
   \***************************/
@@ -56355,8 +56446,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 150 */,
-/* 151 */
+/* 156 */,
+/* 157 */
 /*!*************************!*\
   !*** ./css/loader.scss ***!
   \*************************/
@@ -56366,8 +56457,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 152 */,
-/* 153 */
+/* 158 */,
+/* 159 */
 /*!**************************************!*\
   !*** ./css/interactivetutorial.scss ***!
   \**************************************/
@@ -56377,8 +56468,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 154 */,
-/* 155 */
+/* 160 */,
+/* 161 */
 /*!*****************************!*\
   !*** ./css/popupboxes.scss ***!
   \*****************************/
@@ -56388,8 +56479,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 156 */,
-/* 157 */
+/* 162 */,
+/* 163 */
 /*!*********************************!*\
   !*** ./css/workinprogress.scss ***!
   \*********************************/
@@ -56399,8 +56490,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 158 */,
-/* 159 */
+/* 164 */,
+/* 165 */
 /*!****************************!*\
   !*** ./css/menupages.scss ***!
   \****************************/
@@ -56410,8 +56501,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 160 */,
-/* 161 */
+/* 166 */,
+/* 167 */
 /*!***************************!*\
   !*** ./css/terminal.scss ***!
   \***************************/
@@ -56421,8 +56512,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 162 */,
-/* 163 */
+/* 168 */,
+/* 169 */
 /*!************************************!*\
   !*** ./css/characteroverview.scss ***!
   \************************************/
@@ -56432,8 +56523,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 164 */,
-/* 165 */
+/* 170 */,
+/* 171 */
 /*!***************************!*\
   !*** ./css/mainmenu.scss ***!
   \***************************/
@@ -56443,8 +56534,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 166 */,
-/* 167 */
+/* 172 */,
+/* 173 */
 /*!**************************!*\
   !*** ./css/buttons.scss ***!
   \**************************/
@@ -56454,8 +56545,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 168 */,
-/* 169 */
+/* 174 */,
+/* 175 */
 /*!*************************!*\
   !*** ./css/styles.scss ***!
   \*************************/
@@ -56465,15 +56556,15 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 170 */,
-/* 171 */,
-/* 172 */,
-/* 173 */,
-/* 174 */,
-/* 175 */,
 /* 176 */,
 /* 177 */,
-/* 178 */
+/* 178 */,
+/* 179 */,
+/* 180 */,
+/* 181 */,
+/* 182 */,
+/* 183 */,
+/* 184 */
 /*!**********************!*\
   !*** ./netscript.js ***!
   \**********************/
@@ -57318,7 +57409,7 @@ oop.inherits(Mode, TextMode);
     };
 
     this.createWorker = function(session) {
-        var worker = new WorkerClient(["ace"], __webpack_require__(/*! brace/worker/javascript */ 179), "JavaScriptWorker");
+        var worker = new WorkerClient(["ace"], __webpack_require__(/*! brace/worker/javascript */ 185), "JavaScriptWorker");
         worker.attachToDocument(session.getDocument());
 
         worker.on("annotate", function(results) {
@@ -57340,11 +57431,11 @@ exports.Mode = Mode;
 
 
 /***/ }),
-/* 179 */,
-/* 180 */,
-/* 181 */,
-/* 182 */,
-/* 183 */
+/* 185 */,
+/* 186 */,
+/* 187 */,
+/* 188 */,
+/* 189 */
 /*!*****************************************!*\
   !*** ./src/data/codingcontracttypes.ts ***!
   \*****************************************/
@@ -57825,7 +57916,113 @@ exports.codingContractTypesMetadata = [
 
 
 /***/ }),
-/* 184 */
+/* 190 */
+/*!*********************************!*\
+  !*** ./src/Locations/Cities.ts ***!
+  \*********************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Display Location Content when visiting somewhere in the World
+ */
+// tslint:disable-next-line:variable-name
+exports.Cities = {
+    Aevum: "Aevum",
+    Chongqing: "Chongqing",
+    Ishima: "Ishima",
+    NewTokyo: "New Tokyo",
+    Sector12: "Sector-12",
+    Volhaven: "Volhaven",
+};
+
+
+/***/ }),
+/* 191 */
+/*!*************************************************!*\
+  !*** ./src/Corporation/ProductRatingWeights.ts ***!
+  \*************************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const IndustryData_1 = __webpack_require__(/*! ./IndustryData */ 28);
+exports.ProductRatingWeights = {
+    [IndustryData_1.Industries.Food]: {
+        Quality: 0.7,
+        Durability: 0.1,
+        Aesthetics: 0.2,
+    },
+    [IndustryData_1.Industries.Tobacco]: {
+        Quality: 0.4,
+        Durability: 0.2,
+        Reliability: 0.2,
+        Aesthetics: 0.2,
+    },
+    [IndustryData_1.Industries.Pharmaceutical]: {
+        Quality: 0.2,
+        Performance: 0.2,
+        Durability: 0.1,
+        Reliability: 0.3,
+        Features: 0.2,
+    },
+    [IndustryData_1.Industries.Computer]: {
+        Quality: 0.15,
+        Performance: 0.25,
+        Durability: 0.25,
+        Reliability: 0.2,
+        Aesthetics: 0.05,
+        Features: 0.1,
+    },
+    "Computer": {
+        Quality: 0.15,
+        Performance: 0.25,
+        Durability: 0.25,
+        Reliability: 0.2,
+        Aesthetics: 0.05,
+        Features: 0.1,
+    },
+    [IndustryData_1.Industries.Robotics]: {
+        Quality: 0.1,
+        Performance: 0.2,
+        Durability: 0.2,
+        Reliability: 0.2,
+        Aesthetics: 0.1,
+        Features: 0.2,
+    },
+    [IndustryData_1.Industries.Software]: {
+        Quality: 0.2,
+        Performance: 0.2,
+        Reliability: 0.2,
+        Durability: 0.2,
+        Features: 0.2,
+    },
+    [IndustryData_1.Industries.Healthcare]: {
+        Quality: 0.4,
+        Performance: 0.1,
+        Durability: 0.1,
+        Reliability: 0.3,
+        Features: 0.1,
+    },
+    [IndustryData_1.Industries.RealEstate]: {
+        Quality: 0.2,
+        Durability: 0.25,
+        Reliability: 0.1,
+        Aesthetics: 0.35,
+        Features: 0.1,
+    }
+};
+
+
+/***/ }),
+/* 192 */
 /*!***********************************************!*\
   !*** ./src/Company/data/CompaniesMetadata.ts ***!
   \***********************************************/
@@ -57837,7 +58034,7 @@ exports.codingContractTypesMetadata = [
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const Locations_1 = __webpack_require__(/*! ../../Locations */ 5);
-const posNames = __webpack_require__(/*! ./CompanyPositionNames */ 34);
+const posNames = __webpack_require__(/*! ./CompanyPositionNames */ 36);
 // Create Objects containing Company Positions by category
 // Will help in metadata construction later
 const AllSoftwarePositions = {};
@@ -58217,7 +58414,7 @@ exports.companiesMetadata = [
 
 
 /***/ }),
-/* 185 */
+/* 193 */
 /*!******************************************************!*\
   !*** ./src/Company/data/CompanyPositionsMetadata.ts ***!
   \******************************************************/
@@ -58228,7 +58425,7 @@ exports.companiesMetadata = [
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const posNames = __webpack_require__(/*! ./CompanyPositionNames */ 34);
+const posNames = __webpack_require__(/*! ./CompanyPositionNames */ 36);
 exports.companyPositionMetadata = [
     {
         name: posNames.SoftwareCompanyPositions[0],
@@ -58830,14 +59027,6 @@ exports.companyPositionMetadata = [
 
 
 /***/ }),
-/* 186 */,
-/* 187 */,
-/* 188 */,
-/* 189 */,
-/* 190 */,
-/* 191 */,
-/* 192 */,
-/* 193 */,
 /* 194 */,
 /* 195 */,
 /* 196 */,
@@ -58866,7 +59055,15 @@ exports.companyPositionMetadata = [
 /* 219 */,
 /* 220 */,
 /* 221 */,
-/* 222 */
+/* 222 */,
+/* 223 */,
+/* 224 */,
+/* 225 */,
+/* 226 */,
+/* 227 */,
+/* 228 */,
+/* 229 */,
+/* 230 */
 /*!**********************!*\
   !*** util (ignored) ***!
   \**********************/
@@ -58877,7 +59074,7 @@ exports.companyPositionMetadata = [
 /* (ignored) */
 
 /***/ }),
-/* 223 */
+/* 231 */
 /*!**********************!*\
   !*** util (ignored) ***!
   \**********************/
