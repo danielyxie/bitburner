@@ -10,7 +10,7 @@ import {getJobRequirementText}                  from "./Company/GetJobRequiremen
 import {CompanyPositions}                       from "./Company/CompanyPositions";
 import * as posNames                            from "./Company/data/CompanyPositionNames";
 import {CONSTANTS}                              from "./Constants";
-import {Corporation}                            from "./CompanyManagement";
+import { Corporation }                          from "./Corporation/Corporation";
 import {Programs}                               from "./CreateProgram";
 import {determineCrimeSuccess, Crimes}          from "./Crimes";
 import {Engine}                                 from "./engine";

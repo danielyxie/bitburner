@@ -6,6 +6,7 @@
     "url": "https://github.com/danielyxie/bitburner/issues"
   },
   "dependencies": {
+    "@types/numeral": "0.0.25",
     "acorn": "^5.0.0",
     "acorn-dynamic-import": "^2.0.0",
     "ajv": "^5.1.5",

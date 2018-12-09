@@ -27,7 +27,7 @@ import {cinematicTextFlag}                              from "./CinematicText";
 import {generateRandomContract}                         from "./CodingContractGenerator";
 import {CompanyPositions}                               from "./Company/CompanyPositions";
 import {initCompanies}                                  from "./Company/Companies";
-import {Corporation}                                    from "./CompanyManagement";
+import { Corporation }                                  from "./Corporation/Corporation";
 import {CONSTANTS}                                      from "./Constants";
 import {displayCreateProgramContent,
         getNumAvailableCreateProgram,

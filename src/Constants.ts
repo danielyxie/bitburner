@@ -505,31 +505,11 @@ export let CONSTANTS: IMap<any> = {
 
     LatestUpdate:
     `
-     v0.41.2
-     * IMPORTANT - Netscript Changes:
-     ** rm() now takes an optional parameter that lets you specify on which server to delete the file
-     ** Added growthAnalyze() Netscript function
-
-     * Gang Changes:
-     ** UI now displays your chance to win a clash with other gangs
-     ** Added getChanceToWinClash() function to the Gang API
-     ** Added getEquipmentType() function to the Gang API
-     ** Added several new hacking-based equipment and Augmentations
-     ** Rebalanced several equipment/upgrades to give less defense
-     ** Wanted level gain rate is now be slightly higher for all tasks
-     ** Rebalanced parameters for "hacking" tasks
-
-     * Added new Main Menu configuration in .fconf: "compact"
-     * Added the terminal command 'expr', which can be used to evaluate simple mathematical expressions
-     * Bug Fix: Can no longer purchase duplicate equipment/Augmentations through gang.purchaseEquipment()
-     * Bug Fix: scp() should no longer throw errors when used with 2-arguments and an array of files
-     * Bug Fix: Coding Contracts no longer give money in BitNode-8
-     * Bug Fix: In Bladeburner, you can no longer start a BlackOp through the Netscript API if it has already been completed
-     * Bug Fix: In Bladeburner, fixed a bug which caused the configured 'automate' actions to occasionally be switched to other actions
-     * Bug Fix: 'Return to World' button at locations no longer accumulates event listeners
-     * Bug Fix: Working & taking classes now continuously add/subtract money during the action, instead of doing it at completion
-     * Bug Fix: Top-right overview panel now displays negative money using '-' instead of '()'
-     * Bug Fix: Stock Market UI should no longer show 'NaN' profit immediately after buying a stock
+     v0.42.0
+     * Corporation Changes:
+     ** Changed initial market prices for many materials
+     ** Changed the way a material's demand, competition, and market price change over time
+     **
      `
 
 }

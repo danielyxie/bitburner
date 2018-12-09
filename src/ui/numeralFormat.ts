@@ -1,4 +1,4 @@
-import numeral from "numeral";
+import * as numeral from 'numeral';
 import 'numeral/locales/bg';
 import 'numeral/locales/cs';
 import 'numeral/locales/da-dk';
@@ -17,11 +17,14 @@ import 'numeral/locales/ru';
 /* eslint-disable class-methods-use-this */
 
 class NumeralFormatter {
+    // Default Locale
+    defaultLocale: string = "en";
+
     constructor() {
         this.defaultLocale = 'en';
     }
 
-    updateLocale(l) {
+    updateLocale(l: string): boolean {
         if (numeral.locale(l) == null) {
             console.warn(`Invalid locale for numeral: ${l}`);
 
@@ -31,7 +34,7 @@ class NumeralFormatter {
         return true;
     }
 
-    format(n, format) {
+    format(n: number, format: string): string {
         // numeraljs doesnt properly format numbers that are too big or too small
         if (Math.abs(n) < 1e-6) { n = 0; }
         return numeral(n).format(format);

@@ -1,24 +1,34 @@
-import { BitNodeMultipliers }                           from "./BitNodeMultipliers";
-import { Factions }                                     from "./Faction/Factions";
-import { showLiterature }                               from "./Literature";
-import { Locations }                                    from "./Locations";
-import { Player }                                       from "./Player";
+import { AllCorporationStates,
+         CorporationState }                             from "./CorporationState";
+import { EmployeePositions }                            from "./EmployeePositions";
+import { Industries,
+         IndustryStartingCosts,
+         IndustryDescriptions }                         from "./IndustryData";
+import { Material }                                     from "./Material";
+import { MaterialSizes }                                from "./MaterialSizes";
+import { Product }                                      from "./Product";
 
-import Decimal                                          from "decimal.js";
-import { numeralWrapper }                               from "./ui/numeralFormat";
+import { BitNodeMultipliers }                           from "../BitNodeMultipliers";
+import { Factions }                                     from "../Faction/Factions";
+import { showLiterature }                               from "../Literature";
+import { Locations }                                    from "../Locations";
+import { Player }                                       from "../Player";
 
-import { dialogBoxCreate }                              from "../utils/DialogBox";
-import { clearSelector }                                from "../utils/uiHelpers/clearSelector";
-import { Reviver, Generic_toJSON,
-         Generic_fromJSON }                             from "../utils/JSONReviver";
-import { createElement }                                from "../utils/uiHelpers/createElement";
-import { createPopup }                                  from "../utils/uiHelpers/createPopup";
-import { Page, routing }                                from "./ui/navigationTracking";
-import { formatNumber, generateRandomString }           from "../utils/StringHelperFunctions";
-import { getRandomInt }                                 from "../utils/helpers/getRandomInt";
-import { isString }                                     from "../utils/helpers/isString";
-import { removeChildrenFromElement }                    from "../utils/uiHelpers/removeChildrenFromElement";
-import { removeElementById }                            from "../utils/uiHelpers/removeElementById";
+import { numeralWrapper }                               from "../ui/numeralFormat";
+import { Page, routing }                                from "../ui/navigationTracking";
+
+import { dialogBoxCreate }                              from "../../utils/DialogBox";
+import { clearSelector }                                from "../../utils/uiHelpers/clearSelector";
+import { Reviver,
+         Generic_toJSON,
+         Generic_fromJSON }                             from "../../utils/JSONReviver";
+import { createElement }                                from "../../utils/uiHelpers/createElement";
+import { createPopup }                                  from "../../utils/uiHelpers/createPopup";
+import { formatNumber, generateRandomString }           from "../../utils/StringHelperFunctions";
+import { getRandomInt }                                 from "../../utils/helpers/getRandomInt";
+import { isString }                                     from "../../utils/helpers/isString";
+import { removeChildrenFromElement }                    from "../../utils/uiHelpers/removeChildrenFromElement";
+import { removeElementById }                            from "../../utils/uiHelpers/removeElementById";
 import { yesNoBoxCreate,
          yesNoTxtInpBoxCreate,
          yesNoBoxGetYesButton,
@@ -28,545 +38,30 @@ import { yesNoBoxCreate,
          yesNoTxtInpBoxGetInput,
          yesNoBoxClose,
          yesNoTxtInpBoxClose,
-         yesNoBoxOpen }                                 from "../utils/YesNoBox";
+         yesNoBoxOpen }                                 from "../../utils/YesNoBox";
 
-/* State */
-var companyStates = ["START", "PURCHASE", "PRODUCTION", "SALE", "EXPORT"];
-function CorporationState() {
-    this.state = 0;
-}
-
-CorporationState.prototype.nextState = function() {
-    if (this.state < 0 || this.state >= companyStates.length) {
-        this.state = 0;
-    }
-
-    ++this.state;
-    if (this.state >= companyStates.length) {
-        this.state = 0;
-    }
-}
-
-CorporationState.prototype.getState = function() {
-    return companyStates[this.state];
-}
-
-CorporationState.prototype.toJSON = function() {
-	return Generic_toJSON("CorporationState", this);
-}
-
-CorporationState.fromJSON = function(value) {
-	return Generic_fromJSON(CorporationState, value.data);
-}
-
-Reviver.constructors.CorporationState = CorporationState;
+import Decimal                                          from "decimal.js";
 
 /* Constants */
-var TOTALSHARES = 1e9; //Total number of shares you have at your company
-var CyclesPerMarketCycle    = 75;
-var CyclesPerIndustryStateCycle = CyclesPerMarketCycle / companyStates.length;
-var SecsPerMarketCycle      = CyclesPerMarketCycle / 5;
-var Cities = ["Aevum", "Chongqing", "Sector-12", "New Tokyo", "Ishima", "Volhaven"];
-var WarehouseInitialCost        = 5e9; //Initial purchase cost of warehouse
-var WarehouseInitialSize        = 100;
-var WarehouseUpgradeBaseCost    = 1e9;
+export const TOTALSHARES = 1e9; //Total number of shares you have at your company
+export const CyclesPerMarketCycle    = 75;
+export const CyclesPerIndustryStateCycle = CyclesPerMarketCycle / AllCorporationStates.length;
+export const SecsPerMarketCycle      = CyclesPerMarketCycle / 5;
+export const Cities = ["Aevum", "Chongqing", "Sector-12", "New Tokyo", "Ishima", "Volhaven"];
+export const WarehouseInitialCost        = 5e9; //Initial purchase cost of warehouse
+export const WarehouseInitialSize        = 100;
+export const WarehouseUpgradeBaseCost    = 1e9;
 
-var OfficeInitialCost           = 4e9;
-var OfficeInitialSize           = 3;
-var OfficeUpgradeBaseCost       = 1e9;
+export const OfficeInitialCost           = 4e9;
+export const OfficeInitialSize           = 3;
+export const OfficeUpgradeBaseCost       = 1e9;
 
-var BribeThreshold              = 100e12; //Money needed to be able to bribe for faction rep
-var BribeToRepRatio             = 1e9;   //Bribe Value divided by this = rep gain
+export const BribeThreshold              = 100e12; //Money needed to be able to bribe for faction rep
+export const BribeToRepRatio             = 1e9;   //Bribe Value divided by this = rep gain
 
-var ProductProductionCostRatio  = 5;    //Ratio of material cost of a product to its production cost
-
-function Material(params={}) {
-    this.name = params.name ? params.name : "";
-    this.qty    = 0; //Quantity
-    this.qlt    = 0; //Quality, unbounded
-    this.dmd    = 0; //Demand, 0-100?
-    this.dmdR   = 0; //Range of possible demand
-    this.cmp    = 0; //Competition, 0-100
-    this.cmpR   = 0; //Range of possible competition
-    this.mv     = 0; //Maximum Volatility of stats
-
-    //Markup. Determines how high of a price you can charge on the material
-    //compared to the market price (bCost) based on quality
-    //Quality is divided by this to determine markup limits
-    //e.g if mku is 10 and quality is 100 then you can mark up prices by 100/10 = 10
-    //without consequences
-    this.mku    = 0;
-
-    this.buy = 0; //How much of this material is being bought per second
-    this.sll = 0; //How much of this material is being sold per second
-    this.prd = 0; //How much of this material is being produced per second
-    this.exp = []; //Exports of this material to another warehouse/industry
-    this.totalExp = 0; //Total export amount for last cycle
-    this.imp = 0;
-    this.bCost = 0; //$ Cost/sec to buy material
-    this.sCost = 0; //$ Cost/sec to sell material
-
-    //[Whether production/sale is limited, limit amount]
-    this.prdman = [false, 0]; //Production for this material is manually limited
-    this.sllman = [false, 0]; //Sale of this material is manually limited
-    this.init();
-}
-
-Material.prototype.init = function(mats={}) {
-    switch(this.name) {
-        case "Water":
-            this.dmd = 75; this.dmdR = [65, 85];
-            this.cmp = 50; this.cmpR = [40, 60];
-            this.bCost = 1000; this.mv = 0.2;
-            this.mku = 6;
-            break;
-        case "Energy":
-            this.dmd = 90; this.dmdR = [80, 100];
-            this.cmp = 80; this.cmpR = [65, 95];
-            this.bCost = 1500; this.mv = 0.2;
-            this.mku = 6;
-            break;
-        case "Food":
-            this.dmd = 80; this.dmdR = [70, 90];
-            this.cmp = 60; this.cmpR = [35, 85];
-            this.bCost = 5000; this.mv = 1;
-            this.mku = 3;
-            break;
-        case "Plants":
-            this.dmd = 70; this.dmdR = [20, 90];
-            this.cmp = 50; this.cmpR = [30, 70];
-            this.bCost = 3000; this.mv = 0.6;
-            this.mku = 3.75;
-            break;
-        case "Metal":
-            this.dmd = 80; this.dmdR = [75, 85];
-            this.cmp = 70; this.cmpR = [60, 80];
-            this.bCost = 2650; this.mv = 1;
-            this.mku = 6;
-            break;
-        case "Hardware":
-            this.dmd = 85; this.dmdR = [80, 90];
-            this.cmp = 80; this.cmpR = [65, 95];
-            this.bCost = 4000; this.mv = 0.5; //Less mv bc its processed twice
-            this.mku = 1;
-            break;
-        case "Chemicals":
-            this.dmd = 55; this.dmdR = [40, 70];
-            this.cmp = 60; this.cmpR = [40, 80];
-            this.bCost = 6750; this.mv = 1.2;
-            this.mku = 2;
-            break;
-        case "Real Estate":
-            this.dmd = 50; this.dmdR = [5, 100];
-            this.cmp = 50; this.cmpR = [25, 75];
-            this.bCost = 16e3; this.mv = 1.5; //Less mv bc its processed twice
-            this.mku = 1.5;
-            break;
-        case "Drugs":
-            this.dmd = 60; this.dmdR = [45, 75];
-            this.cmp = 70; this.cmpR = [40, 100];
-            this.bCost = 8e3; this.mv = 1.6;
-            this.mku = 1;
-            break;
-        case "Robots":
-            this.dmd = 90; this.dmdR = [80, 100];
-            this.cmp = 90; this.cmpR = [80, 100];
-            this.bCost = 20e3; this.mv = 0.5; //Less mv bc its processed twice
-            this.mku = 1;
-            break;
-        case "AI Cores":
-            this.dmd = 90; this.dmdR = [80, 100];
-            this.cmp = 90; this.cmpR = [80, 100];
-            this.bCost = 27e3; this.mv = 0.8; //Less mv bc its processed twice
-            this.mku = 0.5;
-            break;
-        case "Scientific Research":
-            break;
-        default:
-            console.log("Invalid material type in init(): " + this.name);
-            break;
-    }
-}
-
-//Process change in demand, competition, and buy cost of this material
-Material.prototype.processMarket = function() {
-    //This 1st random check determines whether competition increases or decreases
-    //More competition = lower market price
-    var v = (Math.random() * this.mv) / 100;
-    var pv = (Math.random() * this.mv) / 300;
-    if (Math.random() < 0.42) {
-        this.cmp *= (1+v);
-        if (this.cmp > this.cmpR[1]) {this.cmp = this.cmpR[1]};
-        this.bCost *= (1-pv);
-    } else {
-        this.cmp *= (1-v);
-        if (this.cmp < this.cmpR[0]) {this.cmp = this.cmpR[0];}
-        this.bCost *= (1+pv);
-    }
-
-    //This 2nd random check determines whether demand increases or decreases
-    //More demand = higher market price
-    v = (Math.random() * this.mv) / 100;
-    pv = (Math.random() * this.mv) / 300;
-    if (Math.random() < 0.45) {
-        this.dmd *= (1+v);
-        if (this.dmd > this.dmdR[1]) {this.dmd = this.dmdR[1];}
-        this.bCost *= (1+pv);
-    } else {
-        this.dmd *= (1-v);
-        if (this.dmd < this.dmdR[0]) {this.dmd = this.dmdR[0];}
-        this.bCost *= (1-pv);
-    }
-}
-
-Material.prototype.toJSON = function() {
-	return Generic_toJSON("Material", this);
-}
-
-Material.fromJSON = function(value) {
-	return Generic_fromJSON(Material, value.data);
-}
-
-Reviver.constructors.Material = Material;
-
-//Map of material (by name) to their sizes (how much space it takes in warehouse)
-let MaterialSizes = {
-    Water:      0.05,
-    Energy:     0.01,
-    Food:       0.03,
-    Plants:     0.05,
-    Metal:      0.1,
-    Hardware:   0.06,
-    Chemicals:  0.05,
-    Drugs:      0.02,
-    Robots:     0.5,
-    AICores:    0.1,
-    RealEstate: 0,
-}
-
-function Product(params={}) {
-    this.name = params.name         ? params.name           : 0;
-    this.dmd = params.demand        ? params.demand         : 0;
-    this.cmp = params.competition   ? params.competition    : 0;
-    this.mku = params.markup        ? params.markup         : 0;
-    this.pCost = 0; //An estimate of how much money it costs to make this
-    this.sCost = 0; //How much this is selling for
-
-    //Variables for creation of product
-    this.fin = false;       //Finished being created
-    this.prog = 0;          //0-100% created
-    this.createCity = params.createCity ? params.createCity : ""; // City in which the product is being created
-    this.designCost     = params.designCost ? params.designCost : 0;
-    this.advCost        = params.advCost ? params.advCost : 0;
-
-    //Aggregate score for a product's 'rating' based on the other properties below
-    //The weighting of the other properties (performance, durability)
-    //differs between industries
-    this.rat = 0;
-
-    this.qlt = params.quality       ? params.quality        : 0;
-    this.per = params.performance   ? params.performance    : 0;
-    this.dur = params.durability    ? params.durability     : 0;
-    this.rel = params.reliability   ? params.reliability    : 0;
-    this.aes = params.aesthetics    ? params.aesthetics     : 0;
-    this.fea = params.features      ? params.features       : 0;
-
-    //Data refers to the production, sale, and quantity of the products
-    //These values are specific to a city
-    //The data is [qty, prod, sell]
-    this.data = {
-        [Locations.Aevum]: [0, 0, 0],
-        [Locations.Chongqing]: [0, 0, 0],
-        [Locations.Sector12]: [0, 0, 0],
-        [Locations.NewTokyo]: [0, 0, 0],
-        [Locations.Ishima]: [0, 0, 0],
-        [Locations.Volhaven]: [0, 0, 0],
-    }
-
-    //Only applies for location-based products like restaurants/hospitals
-    this.loc = params.loc ? params.loc : 0;
-
-    //How much space it takes in the warehouse. Not applicable for all products
-    this.siz = params.size ? params.size : 0;
-
-    //Material requirements. An object that maps the name of a material to how much it requires
-    //to make 1 unit of the product.
-    this.reqMats = params.req           ? params.req            : {};
-
-    //[Whether production/sale is limited, limit amount]
-    this.prdman = {
-        [Locations.Aevum]: [false, 0],
-        [Locations.Chongqing]: [false, 0],
-        [Locations.Sector12]: [false, 0],
-        [Locations.NewTokyo]: [false, 0],
-        [Locations.Ishima]: [false, 0],
-        [Locations.Volhaven]: [false, 0],
-    }
-
-    this.sllman = {
-        [Locations.Aevum]: [false, 0],
-        [Locations.Chongqing]: [false, 0],
-        [Locations.Sector12]: [false, 0],
-        [Locations.NewTokyo]: [false, 0],
-        [Locations.Ishima]: [false, 0],
-        [Locations.Volhaven]: [false, 0],
-    }
-}
-
-//empWorkMult is a multiplier that increases progress rate based on
-//productivity of employees
-Product.prototype.createProduct = function(marketCycles=1, empWorkMult=1) {
-    if (this.fin) {return;}
-    this.prog += (marketCycles * .01 * empWorkMult);
-}
-
-//'industry' is a reference to the industry that makes the product
-Product.prototype.finishProduct = function(employeeProd, industry) {
-    this.fin = true;
-
-    //Calculate properties
-    var progrMult = this.prog / 100;
-
-    var engrRatio   = employeeProd[EmployeePositions.Engineer] / employeeProd["total"],
-        mgmtRatio   = employeeProd[EmployeePositions.Management] / employeeProd["total"],
-        rndRatio    = employeeProd[EmployeePositions.RandD] / employeeProd["total"],
-        opsRatio    = employeeProd[EmployeePositions.Operations] / employeeProd["total"],
-        busRatio    = employeeProd[EmployeePositions.Business] / employeeProd["total"];
-    var designMult = 1 + (Math.pow(this.designCost, 0.1) / 100);
-    console.log("designMult: " + designMult);
-    var balanceMult = (1.2 * engrRatio) + (0.9 * mgmtRatio) + (1.3 * rndRatio) +
-                      (1.5 * opsRatio) + (busRatio);
-    var sciMult = 1 + (Math.pow(industry.sciResearch.qty, industry.sciFac) / 800);
-    var totalMult = progrMult * balanceMult * designMult * sciMult;
-
-    this.qlt = totalMult * ((0.10 * employeeProd[EmployeePositions.Engineer]) +
-                            (0.05 * employeeProd[EmployeePositions.Management]) +
-                            (0.05 * employeeProd[EmployeePositions.RandD]) +
-                            (0.02 * employeeProd[EmployeePositions.Operations]) +
-                            (0.02 * employeeProd[EmployeePositions.Business]));
-    this.per = totalMult * ((0.15 * employeeProd[EmployeePositions.Engineer]) +
-                            (0.02 * employeeProd[EmployeePositions.Management]) +
-                            (0.02 * employeeProd[EmployeePositions.RandD]) +
-                            (0.02 * employeeProd[EmployeePositions.Operations]) +
-                            (0.02 * employeeProd[EmployeePositions.Business]));
-    this.dur = totalMult * ((0.05 * employeeProd[EmployeePositions.Engineer]) +
-                            (0.02 * employeeProd[EmployeePositions.Management]) +
-                            (0.08 * employeeProd[EmployeePositions.RandD]) +
-                            (0.05 * employeeProd[EmployeePositions.Operations]) +
-                            (0.05 * employeeProd[EmployeePositions.Business]));
-    this.rel = totalMult * ((0.02 * employeeProd[EmployeePositions.Engineer]) +
-                            (0.08 * employeeProd[EmployeePositions.Management]) +
-                            (0.02 * employeeProd[EmployeePositions.RandD]) +
-                            (0.05 * employeeProd[EmployeePositions.Operations]) +
-                            (0.08 * employeeProd[EmployeePositions.Business]));
-    this.aes = totalMult * ((0.00 * employeeProd[EmployeePositions.Engineer]) +
-                            (0.08 * employeeProd[EmployeePositions.Management]) +
-                            (0.05 * employeeProd[EmployeePositions.RandD]) +
-                            (0.02 * employeeProd[EmployeePositions.Operations]) +
-                            (0.10 * employeeProd[EmployeePositions.Business]));
-    this.fea = totalMult * ((0.08 * employeeProd[EmployeePositions.Engineer]) +
-                            (0.05 * employeeProd[EmployeePositions.Management]) +
-                            (0.02 * employeeProd[EmployeePositions.RandD]) +
-                            (0.05 * employeeProd[EmployeePositions.Operations]) +
-                            (0.05 * employeeProd[EmployeePositions.Business]));
-    this.calculateRating(industry);
-    var advMult = 1 + (Math.pow(this.advCost, 0.1) / 100);
-    this.mku = 100 / (advMult * Math.pow((this.qlt + 0.001), 0.65) * (busRatio + mgmtRatio));
-    this.dmd = industry.awareness === 0 ? 20 : Math.min(100, advMult * (100 * (industry.popularity / industry.awareness)));
-    this.cmp = getRandomInt(0, 70);
-
-    //Calculate the product's required materials
-    //For now, just set it to be the same as the requirements to make materials
-    for (var matName in industry.reqMats) {
-        if (industry.reqMats.hasOwnProperty(matName)) {
-            this.reqMats[matName] = industry.reqMats[matName];
-        }
-    }
-
-    //Calculate the product's size
-    //For now, just set it to be the same size as the requirements to make materials
-    this.siz = 0;
-    for (var matName in industry.reqMats) {
-        this.siz += MaterialSizes[matName] * industry.reqMats[matName];
-    }
-
-    //Delete unneeded variables
-    delete this.prog;
-    delete this.createCity;
-    delete this.designCost;
-    delete this.advCost;
-}
+export const ProductProductionCostRatio  = 5;    //Ratio of material cost of a product to its production cost
 
 
-Product.prototype.calculateRating = function(industry) {
-    var weights = ProductRatingWeights[industry.type];
-    if (weights == null) {
-        console.log("ERROR: Could not find product rating weights for: " + industry);
-        return;
-    }
-    this.rat = 0;
-    this.rat += weights.Quality     ? this.qlt * weights.Quality : 0;
-    this.rat += weights.Performance ? this.per * weights.Performance : 0;
-    this.rat += weights.Durability  ? this.dur * weights.Durability : 0;
-    this.rat += weights.Reliability ? this.rel * weights.Reliability : 0;
-    this.rat += weights.Aesthetics  ? this.aes * weights.Aesthetics : 0;
-    this.rat += weights.Features    ? this.fea * weights.Features : 0;
-}
-
-Product.prototype.toJSON = function() {
-	return Generic_toJSON("Product", this);
-}
-
-Product.fromJSON = function(value) {
-	return Generic_fromJSON(Product, value.data);
-}
-
-Reviver.constructors.Product = Product;
-
-var Industries = {
-    Energy: "Energy",
-    Utilities: "Water Utilities",
-    Agriculture: "Agriculture",
-    Fishing: "Fishing",
-    Mining: "Mining",
-    Food: "Food",
-    Tobacco: "Tobacco",
-    Chemical: "Chemical",
-    Pharmaceutical: "Pharmaceutical",
-    Computer: "Computer Hardware",
-    Robotics: "Robotics",
-    Software: "Software",
-    Healthcare: "Healthcare",
-    RealEstate: "RealEstate",
-}
-
-var IndustryStartingCosts = {
-    Energy: 225e9,
-    Utilities: 150e9,
-    Agriculture: 40e9,
-    Fishing: 80e9,
-    Mining: 300e9,
-    Food: 10e9,
-    Tobacco: 20e9,
-    Chemical: 70e9,
-    Pharmaceutical: 200e9,
-    Computer: 500e9,
-    Robotics: 1e12,
-    Software: 25e9,
-    Healthcare: 750e9,
-    RealEstate: 600e9,
-}
-
-var IndustryDescriptions = {
-    Energy: "Engage in the production and distribution of energy.<br><br>" +
-            "Starting cost: " + numeralWrapper.format(IndustryStartingCosts.Energy, "$0.000a") + "<br>" +
-            "Recommended starting Industry: NO",
-    Utilities: "Distributes water and provides wastewater services.<br><br>" +
-               "Starting cost: " + numeralWrapper.format(IndustryStartingCosts.Utilities, "$0.000a") + "<br>" +
-               "Recommended starting Industry: NO",
-    Agriculture: "Cultive crops and breed livestock to produce food.<br><br>" +
-                 "Starting cost: " + numeralWrapper.format(IndustryStartingCosts.Agriculture, "$0.000a") + "<br>" +
-                 "Recommended starting Industry: YES",
-    Fishing: "Produce food through the breeding and processing of fish and fish products<br><br>" +
-             "Starting cost: " + numeralWrapper.format(IndustryStartingCosts.Fishing, "$0.000a") + "<br>" +
-             "Recommended starting Industry: NO",
-    Mining: "Extract and process metals from the earth.<br><br>" +
-            "Starting cost: " + numeralWrapper.format(IndustryStartingCosts.Mining, "$0.000a") + "<br>" +
-            "Recommended starting Industry: NO",
-    Food: "Create your own restaurants all around the world.<br><br>" +
-          "Starting cost: " + numeralWrapper.format(IndustryStartingCosts.Food, "$0.000a") + "<br>" +
-          "Recommended starting Industry: YES",
-    Tobacco: "Create and distribute tobacco and tobacco-related products.<br><br>" +
-             "Starting cost: " + numeralWrapper.format(IndustryStartingCosts.Tobacco, "$0.000a") + "<br>" +
-             "Recommended starting Industry: YES",
-    Chemical: "Product industrial chemicals<br><br>" +
-              "Starting cost: " + numeralWrapper.format(IndustryStartingCosts.Chemical, "$0.000a") + "<br>" +
-              "Recommended starting Industry: NO",
-    Pharmaceutical: "Discover, develop, and create new pharmaceutical drugs.<br><br>" +
-                    "Starting cost: " + numeralWrapper.format(IndustryStartingCosts.Pharmaceutical, "$0.000a") + "<br>" +
-                    "Recommended starting Industry: NO",
-    Computer: "Develop and manufacture new computer hardware and networking infrastructures.<br><br>" +
-              "Starting cost: " + numeralWrapper.format(IndustryStartingCosts.Computer, "$0.000a") + "<br>" +
-              "Recommended starting Industry: NO",
-    Robotics: "Develop and create robots.<br><br>" +
-              "Starting cost: " + numeralWrapper.format(IndustryStartingCosts.Robotics, "$0.000a") + "<br>" +
-              "Recommended starting Industry: NO",
-    Software: "Develop computer software and create AI Cores.<br><br>" +
-              "Starting cost: " + numeralWrapper.format(IndustryStartingCosts.Software, "$0.000a") + "<br>" +
-              "Recommended starting Industry: YES",
-    Healthcare: "Create and manage hospitals.<br><br>" +
-                "Starting cost: " + numeralWrapper.format(IndustryStartingCosts.Healthcare, "$0.000a") + "<br>" +
-                "Recommended starting Industry: NO",
-    RealEstate: "Develop and manage real estate properties.<br><br>" +
-                "Starting cost: " + numeralWrapper.format(IndustryStartingCosts.RealEstate, "$0.000a") + "<br>" +
-                "Recommended starting Industry: NO",
-}
-
-var ProductRatingWeights = {
-    [Industries.Food]: {
-        Quality:        0.7,
-        Durability:     0.1,
-        Aesthetics:     0.2,
-    },
-    [Industries.Tobacco]: {
-        Quality:        0.4,
-        Durability:     0.2,
-        Reliability:    0.2,
-        Aesthetics:     0.2,
-    },
-    [Industries.Pharmaceutical]: {
-        Quality:        0.2,
-        Performance:    0.2,
-        Durability:     0.1,
-        Reliability:    0.3,
-        Features:       0.2,
-    },
-    [Industries.Computer]: {
-        Quality:        0.15,
-        Performance:    0.25,
-        Durability:     0.25,
-        Reliability:    0.2,
-        Aesthetics:     0.05,
-        Features:       0.1,
-    },
-    "Computer" : {  //Repeat
-        Quality:        0.15,
-        Performance:    0.25,
-        Durability:     0.25,
-        Reliability:    0.2,
-        Aesthetics:     0.05,
-        Features:       0.1,
-    },
-    [Industries.Robotics]: {
-        Quality:        0.1,
-        Performance:    0.2,
-        Durability:     0.2,
-        Reliability:    0.2,
-        Aesthetics:     0.1,
-        Features:       0.2,
-    },
-    [Industries.Software]: {
-        Quality:        0.2,
-        Performance:    0.2,
-        Reliability:    0.2,
-        Durability:     0.2,
-        Features:       0.2,
-    },
-    [Industries.Healthcare]: {
-        Quality:        0.4,
-        Performance:    0.1,
-        Durability:     0.1,
-        Reliability:    0.3,
-        Features:       0.1,
-    },
-    [Industries.RealEstate]: {
-        Quality:        0.2,
-        Durability:     0.25,
-        Reliability:    0.1,
-        Aesthetics:     0.35,
-        Features:       0.1,
-    }
-}
 
 //Industry upgrades
 //The structure is:
@@ -788,7 +283,7 @@ Industry.prototype.init = function() {
             this.aiFac  = 0.19;
             this.advFac = 0.17;
             this.reqMats = {
-                "Metal":    2.5,
+                "Metal":    2,
                 "Energy":   1,
             }
             this.prodMats = ["Hardware"];
@@ -843,10 +338,10 @@ Industry.prototype.init = function() {
             this.sciFac = 0.05;
             this.hwFac  = 0.05;
             this.reqMats = {
-                "Metal":    20,
-                "Energy":   10,
-                "Water":    10,
-                "Hardware": 5
+                "Metal":    5,
+                "Energy":   5,
+                "Water":    2,
+                "Hardware": 4
             }
             this.prodMats = ["RealEstate"];
             this.makesProducts = true;
@@ -1644,16 +1139,6 @@ Industry.fromJSON = function(value) {
 }
 
 Reviver.constructors.Industry = Industry;
-
-var EmployeePositions = {
-    Operations: "Operations",
-    Engineer: "Engineer",
-    Business: "Business",
-    Management: "Management",
-    RandD: "Research & Development",
-    Training:"Training",
-    Unassigned:"Unassigned",
-}
 
 function Employee(params={}) {
     if (!(this instanceof Employee)) {
