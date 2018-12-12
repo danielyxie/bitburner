@@ -14,13 +14,9 @@ significantly faster than Netscript 1.0.
 This documentation will not go over any of the additional features of NetscriptJS, since
 there is plenty of documentation on Javascript available on the web.
 
-NetscriptJS in Mozilla Firefox
-------------------------------
-As of the time of writing this, the Mozilla Firefox browser does not support
-dynamic import functionality and therefore cannot run NetscriptJS scripts.
-
-(This may be some option/method for enabling this in Firefox, but I don't know
-what is it)
+Browser compatibility
+---------------------
+As of the time of writing this, Mozilla Firefox and a few other browsers do not support `dynamic import <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import>`_ functionality and therefore cannot run NetscriptJS scripts. These browsers will thus only be capable of using Netscript 1.0.
 
 How to use NetscriptJS
 ----------------------
