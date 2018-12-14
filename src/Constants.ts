@@ -509,7 +509,7 @@ export let CONSTANTS: IMap<any> = {
      * Corporation Changes:
      ** Changed initial market prices for many materials
      ** Changed the way a material's demand, competition, and market price change over time
-     **
+     ** The sale price of materials can no longer be marked-up as high
      `
 
 }
