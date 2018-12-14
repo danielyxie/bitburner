@@ -25,7 +25,7 @@ function initBitNodes() {
                             "Level 3: 28%");
     BitNodes["BitNode2"] = new BitNode(2, "Rise of the Underworld", "From the shadows, they rose",    //Gangs
                             "From the shadows, they rose.<br><br>Organized crime groups quickly filled the void of power " +
-                            "left behind from the collapse of Western government in the 2050's. As society and civlization broke down, " +
+                            "left behind from the collapse of Western government in the 2050s. As society and civlization broke down, " +
                             "people quickly succumbed to the innate human impulse of evil and savagery. The organized crime " +
                             "factions quickly rose to the top of the modern world.<br><br>" +
                             "In this BitNode:<br><br>" +
@@ -41,9 +41,9 @@ function initBitNodes() {
                             "Destroying this BitNode will give you Source-File 2, or if you already have this Source-File it will " +
                             "upgrade its level up to a maximum of 3. This Source-File increases the player's crime success rate, " +
                             "crime money, and charisma multipliers by:<br><br>" +
-                            "Level 1: 20%<br>" +
-                            "Level 2: 30%<br>" +
-                            "Level 3: 35%");
+                            "Level 1: 24%<br>" +
+                            "Level 2: 36%<br>" +
+                            "Level 3: 42%");
     BitNodes["BitNode3"] = new BitNode(3, "Corporatocracy", "The Price of Civilization",
                                           "Our greatest illusion is that a healthy society can revolve around a " +
                                           "single-minded pursuit of wealth.<br><br>" +
