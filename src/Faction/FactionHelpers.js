@@ -1,14 +1,16 @@
-import {Augmentations, AugmentationNames,
-        PlayerOwnedAugmentation}                from "../Augmentations";
-import {BitNodeMultipliers}                     from "../BitNodeMultipliers";
-import {CONSTANTS}                              from "../Constants";
-import {Engine}                                 from "../engine";
-import {FactionInfos}                           from "./FactionInfo";
-import {Locations}                              from "../Location";
-import {HackingMission, setInMission}           from "../Missions";
-import {Player}                                 from "../Player";
-import {PurchaseAugmentationsOrderSetting}      from "../SettingEnums";
-import {Settings}                               from "../Settings";
+import { Augmentations, AugmentationNames,
+         PlayerOwnedAugmentation }              from "../Augmentations";
+import { BitNodeMultipliers }                   from "../BitNodeMultipliers";
+import { CONSTANTS }                            from "../Constants";
+import { Engine }                               from "../engine";
+import { Faction }                              from "./Faction";
+import { Factions }                             from "./Factions";
+import { FactionInfos }                         from "./FactionInfo";
+import { Locations}                             from "../Location";
+import { HackingMission, setInMission }         from "../Missions";
+import { Player }                               from "../Player";
+import { PurchaseAugmentationsOrderSetting }    from "../SettingEnums";
+import { Settings }                             from "../Settings";
 
 import {Page, routing}                          from "../ui/navigationTracking";
 import {numeralWrapper}                         from "../ui/numeralFormat";

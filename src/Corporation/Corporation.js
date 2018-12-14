@@ -716,11 +716,11 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                     }
 
                     //Calculate how much of the material sells (per second)
-                    var markup = 1, markupLimit = mat.qlt / mat.mku;
+                    let markup = 1, markupLimit = mat.qlt / mat.mku;
                     if (sCost > mat.bCost) {
                         //Penalty if difference between sCost and bCost is greater than markup limit
                         if ((sCost - mat.bCost) > markupLimit) {
-                            markup = markupLimit / (sCost - mat.bCost);
+                            markup = Math.pow(markupLimit / (sCost - mat.bCost), 2);
                         }
                     } else if (sCost < mat.bCost) {
                         if (sCost <= 0) {

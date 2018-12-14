@@ -1,7 +1,27 @@
-import { IMap } from "../types";
+import { ResearchTree } from "./ResearchTree";
+import { BaseResearchTree } from "./data/BaseResearchTree";
+
 import { numeralWrapper } from "../ui/numeralFormat";
 
-export const Industries: IMap<string> = {
+interface IIndustryMap<T> {
+    Energy: T;
+    Utilities: T;
+    Agriculture: T;
+    Fishing: T;
+    Mining: T;
+    Food: T;
+    Tobacco: T;
+    Chemical: T;
+    Pharmaceutical: T;
+    Computer: T;
+    Robotics: T;
+    Software: T;
+    Healthcare: T;
+    RealEstate: T;
+}
+
+// Map of official names for each Industry
+export const Industries: IIndustryMap<string> = {
     Energy: "Energy",
     Utilities: "Water Utilities",
     Agriculture: "Agriculture",
@@ -18,7 +38,8 @@ export const Industries: IMap<string> = {
     RealEstate: "RealEstate",
 }
 
-export const IndustryStartingCosts: IMap<number> = {
+// Map of how much money it takes to start each industry
+export const IndustryStartingCosts: IIndustryMap<number> = {
     Energy: 225e9,
     Utilities: 150e9,
     Agriculture: 40e9,
@@ -35,7 +56,8 @@ export const IndustryStartingCosts: IMap<number> = {
     RealEstate: 600e9,
 }
 
-export const IndustryDescriptions: IMap<string> = {
+// Map of description for each industry
+export const IndustryDescriptions: IIndustryMap<string> = {
     Energy: "Engage in the production and distribution of energy.<br><br>" +
             "Starting cost: " + numeralWrapper.format(IndustryStartingCosts.Energy, "$0.000a") + "<br>" +
             "Recommended starting Industry: NO",
@@ -78,4 +100,23 @@ export const IndustryDescriptions: IMap<string> = {
     RealEstate: "Develop and manage real estate properties.<br><br>" +
                 "Starting cost: " + numeralWrapper.format(IndustryStartingCosts.RealEstate, "$0.000a") + "<br>" +
                 "Recommended starting Industry: NO",
+}
+
+// Map of available Research for each Industry. This data is held in a
+// ResearchTree object
+export const IndustryResearchTrees: IIndustryMap<ResearchTree> = {
+    Energy: BaseResearchTree,
+    Utilities: BaseResearchTree,
+    Agriculture: BaseResearchTree,
+    Fishing: BaseResearchTree,
+    Mining: BaseResearchTree,
+    Food: BaseResearchTree,
+    Tobacco: BaseResearchTree,
+    Chemical: BaseResearchTree,
+    Pharmaceutical: BaseResearchTree,
+    Computer: BaseResearchTree,
+    Robotics: BaseResearchTree,
+    Software: BaseResearchTree,
+    Healthcare: BaseResearchTree,
+    RealEstate: BaseResearchTree,
 }
