@@ -173,17 +173,17 @@
 /* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Company_Company__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Company/Companies */ 18);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _Company_GetNextCompanyPosition__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Company/GetNextCompanyPosition */ 98);
+/* harmony import */ var _Company_GetNextCompanyPosition__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Company/GetNextCompanyPosition */ 99);
 /* harmony import */ var _Company_GetNextCompanyPosition__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Company_GetNextCompanyPosition__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Company/GetJobRequirementText */ 92);
 /* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Company/CompanyPositions */ 27);
+/* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Company/CompanyPositions */ 28);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Company/data/CompanyPositionNames */ 36);
 /* harmony import */ var _Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Corporation/Corporation */ 60);
+/* harmony import */ var _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Corporation/Corporation */ 61);
 /* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./CreateProgram */ 23);
 /* harmony import */ var _Crimes__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Crimes */ 37);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./engine */ 8);
@@ -200,14 +200,14 @@
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_21__);
 /* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
-/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./SourceFile */ 69);
+/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./SourceFile */ 70);
 /* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! decimal.js */ 33);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_27__);
-/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../utils/IPAddress */ 59);
+/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../utils/IPAddress */ 60);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_30__);
@@ -3218,6 +3218,9 @@ function setElementStyle(el, params) {
     if (params.position !== undefined) {
         el.style.position = params.position;
     }
+    if (params.overflow !== undefined) {
+        el.style.overflow = params.overflow;
+    }
 }
 function setElementTooltip(el, params) {
     if (params.tooltip !== undefined && params.tooltip !== "") {
@@ -3401,20 +3404,20 @@ exports.generateRandomString = generateRandomString;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const numeral = __webpack_require__(/*! numeral */ 80);
-__webpack_require__(/*! numeral/locales/bg */ 271);
-__webpack_require__(/*! numeral/locales/cs */ 270);
-__webpack_require__(/*! numeral/locales/da-dk */ 269);
-__webpack_require__(/*! numeral/locales/de */ 268);
-__webpack_require__(/*! numeral/locales/en-au */ 267);
-__webpack_require__(/*! numeral/locales/en-gb */ 266);
-__webpack_require__(/*! numeral/locales/es */ 265);
-__webpack_require__(/*! numeral/locales/fr */ 264);
-__webpack_require__(/*! numeral/locales/hu */ 263);
-__webpack_require__(/*! numeral/locales/it */ 262);
-__webpack_require__(/*! numeral/locales/lv */ 261);
-__webpack_require__(/*! numeral/locales/no */ 260);
-__webpack_require__(/*! numeral/locales/pl */ 259);
-__webpack_require__(/*! numeral/locales/ru */ 258);
+__webpack_require__(/*! numeral/locales/bg */ 276);
+__webpack_require__(/*! numeral/locales/cs */ 275);
+__webpack_require__(/*! numeral/locales/da-dk */ 274);
+__webpack_require__(/*! numeral/locales/de */ 273);
+__webpack_require__(/*! numeral/locales/en-au */ 272);
+__webpack_require__(/*! numeral/locales/en-gb */ 271);
+__webpack_require__(/*! numeral/locales/es */ 270);
+__webpack_require__(/*! numeral/locales/fr */ 269);
+__webpack_require__(/*! numeral/locales/hu */ 268);
+__webpack_require__(/*! numeral/locales/it */ 267);
+__webpack_require__(/*! numeral/locales/lv */ 266);
+__webpack_require__(/*! numeral/locales/no */ 265);
+__webpack_require__(/*! numeral/locales/pl */ 264);
+__webpack_require__(/*! numeral/locales/ru */ 263);
 /* eslint-disable class-methods-use-this */
 class NumeralFormatter {
     constructor() {
@@ -3558,7 +3561,7 @@ exports.Locations = {
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _NetscriptEnvironment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./NetscriptEnvironment */ 110);
+/* harmony import */ var _NetscriptEnvironment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./NetscriptEnvironment */ 114);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptWorker */ 24);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Server */ 11);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Settings */ 19);
@@ -3586,7 +3589,7 @@ exports.Locations = {
 
 
 
-var Promise = __webpack_require__(/*! bluebird */ 243);
+var Promise = __webpack_require__(/*! bluebird */ 248);
 
 Promise.config({
     warnings: false,
@@ -4562,29 +4565,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 44);
-/* harmony import */ var _utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/uiHelpers/removeLoadingScreen */ 115);
+/* harmony import */ var _utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/uiHelpers/removeLoadingScreen */ 119);
 /* harmony import */ var _utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/LogBox */ 78);
-/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./ActiveScriptsUI */ 67);
+/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./ActiveScriptsUI */ 68);
 /* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Augmentations */ 21);
-/* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./BitNode */ 58);
+/* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./BitNode */ 59);
 /* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Bladeburner */ 31);
-/* harmony import */ var _CharacterOverview__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./CharacterOverview */ 124);
-/* harmony import */ var _CinematicText__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./CinematicText */ 97);
-/* harmony import */ var _CodingContractGenerator__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./CodingContractGenerator */ 96);
-/* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Company/CompanyPositions */ 27);
+/* harmony import */ var _CharacterOverview__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./CharacterOverview */ 128);
+/* harmony import */ var _CinematicText__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./CinematicText */ 98);
+/* harmony import */ var _CodingContractGenerator__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./CodingContractGenerator */ 97);
+/* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Company/CompanyPositions */ 28);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_18__);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Company/Companies */ 18);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Corporation/Corporation */ 60);
+/* harmony import */ var _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Corporation/Corporation */ 61);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_21__);
 /* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./CreateProgram */ 23);
-/* harmony import */ var _DevMenu__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./DevMenu */ 112);
+/* harmony import */ var _DevMenu__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./DevMenu */ 116);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./Faction/Factions */ 14);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_24__);
 /* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 46);
@@ -4592,23 +4595,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./Location */ 90);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./Locations */ 5);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_28__);
-/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./HacknetNode */ 66);
+/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./HacknetNode */ 67);
 /* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./InteractiveTutorial */ 35);
 /* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./Literature */ 82);
-/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./Message */ 40);
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./Message */ 41);
 /* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./Missions */ 55);
 /* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./NetscriptWorker */ 24);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./Prestige */ 86);
-/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./RedPill */ 57);
+/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./RedPill */ 58);
 /* harmony import */ var _SaveObject__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./SaveObject */ 74);
 /* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ./Script */ 30);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ./Server */ 11);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ./Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_42___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_42__);
-/* harmony import */ var _ui_setSettingsLabels__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ./ui/setSettingsLabels */ 123);
-/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! ./SourceFile */ 69);
+/* harmony import */ var _ui_setSettingsLabels__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ./ui/setSettingsLabels */ 127);
+/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! ./SourceFile */ 70);
 /* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
 /* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(/*! ./StockMarket */ 22);
 /* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(/*! ./Terminal */ 51);
@@ -4616,36 +4619,38 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_48___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_48__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(/*! ./ui/navigationTracking */ 12);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__);
-/* harmony import */ var normalize_css__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(/*! normalize.css */ 206);
+/* harmony import */ var normalize_css__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(/*! normalize.css */ 211);
 /* harmony import */ var normalize_css__WEBPACK_IMPORTED_MODULE_50___default = /*#__PURE__*/__webpack_require__.n(normalize_css__WEBPACK_IMPORTED_MODULE_50__);
-/* harmony import */ var _css_styles_scss__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! ../css/styles.scss */ 175);
+/* harmony import */ var _css_styles_scss__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! ../css/styles.scss */ 181);
 /* harmony import */ var _css_styles_scss__WEBPACK_IMPORTED_MODULE_51___default = /*#__PURE__*/__webpack_require__.n(_css_styles_scss__WEBPACK_IMPORTED_MODULE_51__);
-/* harmony import */ var _css_buttons_scss__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! ../css/buttons.scss */ 173);
+/* harmony import */ var _css_buttons_scss__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! ../css/buttons.scss */ 179);
 /* harmony import */ var _css_buttons_scss__WEBPACK_IMPORTED_MODULE_52___default = /*#__PURE__*/__webpack_require__.n(_css_buttons_scss__WEBPACK_IMPORTED_MODULE_52__);
-/* harmony import */ var _css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(/*! ../css/mainmenu.scss */ 171);
+/* harmony import */ var _css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(/*! ../css/mainmenu.scss */ 177);
 /* harmony import */ var _css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_53___default = /*#__PURE__*/__webpack_require__.n(_css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_53__);
-/* harmony import */ var _css_characteroverview_scss__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(/*! ../css/characteroverview.scss */ 169);
+/* harmony import */ var _css_characteroverview_scss__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(/*! ../css/characteroverview.scss */ 175);
 /* harmony import */ var _css_characteroverview_scss__WEBPACK_IMPORTED_MODULE_54___default = /*#__PURE__*/__webpack_require__.n(_css_characteroverview_scss__WEBPACK_IMPORTED_MODULE_54__);
-/* harmony import */ var _css_terminal_scss__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(/*! ../css/terminal.scss */ 167);
+/* harmony import */ var _css_terminal_scss__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(/*! ../css/terminal.scss */ 173);
 /* harmony import */ var _css_terminal_scss__WEBPACK_IMPORTED_MODULE_55___default = /*#__PURE__*/__webpack_require__.n(_css_terminal_scss__WEBPACK_IMPORTED_MODULE_55__);
-/* harmony import */ var _css_menupages_scss__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(/*! ../css/menupages.scss */ 165);
+/* harmony import */ var _css_menupages_scss__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(/*! ../css/menupages.scss */ 171);
 /* harmony import */ var _css_menupages_scss__WEBPACK_IMPORTED_MODULE_56___default = /*#__PURE__*/__webpack_require__.n(_css_menupages_scss__WEBPACK_IMPORTED_MODULE_56__);
-/* harmony import */ var _css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(/*! ../css/workinprogress.scss */ 163);
+/* harmony import */ var _css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(/*! ../css/workinprogress.scss */ 169);
 /* harmony import */ var _css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_57___default = /*#__PURE__*/__webpack_require__.n(_css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_57__);
-/* harmony import */ var _css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(/*! ../css/popupboxes.scss */ 161);
+/* harmony import */ var _css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(/*! ../css/popupboxes.scss */ 167);
 /* harmony import */ var _css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_58___default = /*#__PURE__*/__webpack_require__.n(_css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_58__);
-/* harmony import */ var _css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(/*! ../css/interactivetutorial.scss */ 159);
+/* harmony import */ var _css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(/*! ../css/interactivetutorial.scss */ 165);
 /* harmony import */ var _css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_59___default = /*#__PURE__*/__webpack_require__.n(_css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_59__);
-/* harmony import */ var _css_loader_scss__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(/*! ../css/loader.scss */ 157);
+/* harmony import */ var _css_loader_scss__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(/*! ../css/loader.scss */ 163);
 /* harmony import */ var _css_loader_scss__WEBPACK_IMPORTED_MODULE_60___default = /*#__PURE__*/__webpack_require__.n(_css_loader_scss__WEBPACK_IMPORTED_MODULE_60__);
-/* harmony import */ var _css_missions_scss__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(/*! ../css/missions.scss */ 155);
+/* harmony import */ var _css_missions_scss__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(/*! ../css/missions.scss */ 161);
 /* harmony import */ var _css_missions_scss__WEBPACK_IMPORTED_MODULE_61___default = /*#__PURE__*/__webpack_require__.n(_css_missions_scss__WEBPACK_IMPORTED_MODULE_61__);
-/* harmony import */ var _css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(/*! ../css/companymanagement.scss */ 153);
+/* harmony import */ var _css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(/*! ../css/companymanagement.scss */ 159);
 /* harmony import */ var _css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_62___default = /*#__PURE__*/__webpack_require__.n(_css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_62__);
-/* harmony import */ var _css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_63__ = __webpack_require__(/*! ../css/bladeburner.scss */ 151);
+/* harmony import */ var _css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_63__ = __webpack_require__(/*! ../css/bladeburner.scss */ 157);
 /* harmony import */ var _css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_63___default = /*#__PURE__*/__webpack_require__.n(_css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_63__);
-/* harmony import */ var _css_gang_scss__WEBPACK_IMPORTED_MODULE_64__ = __webpack_require__(/*! ../css/gang.scss */ 149);
+/* harmony import */ var _css_gang_scss__WEBPACK_IMPORTED_MODULE_64__ = __webpack_require__(/*! ../css/gang.scss */ 155);
 /* harmony import */ var _css_gang_scss__WEBPACK_IMPORTED_MODULE_64___default = /*#__PURE__*/__webpack_require__.n(_css_gang_scss__WEBPACK_IMPORTED_MODULE_64__);
+/* harmony import */ var _css_treant_css__WEBPACK_IMPORTED_MODULE_65__ = __webpack_require__(/*! ../css/treant.css */ 153);
+/* harmony import */ var _css_treant_css__WEBPACK_IMPORTED_MODULE_65___default = /*#__PURE__*/__webpack_require__.n(_css_treant_css__WEBPACK_IMPORTED_MODULE_65__);
 
 
 
@@ -4701,6 +4706,7 @@ __webpack_require__.r(__webpack_exports__);
 
 // These should really be imported with the module that is presenting that UI, but because they very much depend on the
 // cascade order, we'll pull them all in here.
+
 
 
 
@@ -6482,7 +6488,7 @@ window.onload = function() {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 65)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 63)))
 
 /***/ }),
 /* 9 */
@@ -6570,7 +6576,7 @@ function dialogBoxCreate(txt, preformatted=false) {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 65)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 63)))
 
 /***/ }),
 /* 10 */
@@ -6650,12 +6656,12 @@ exports.BitNodeMultipliers = {
 /* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./CreateProgram */ 23);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
-/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./TextFile */ 63);
+/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./TextFile */ 65);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_TextFile__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 15);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/IPAddress */ 59);
-/* harmony import */ var _data_servers__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./data/servers */ 130);
+/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/IPAddress */ 60);
+/* harmony import */ var _data_servers__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./data/servers */ 134);
 /* harmony import */ var _data_servers__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_data_servers__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
 /* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/isValidIPAddress */ 88);
@@ -7367,7 +7373,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * about all Factions in the game
  */
 const Faction_1 = __webpack_require__(/*! ./Faction */ 56);
-const FactionInfo_1 = __webpack_require__(/*! ./FactionInfo */ 109);
+const FactionInfo_1 = __webpack_require__(/*! ./FactionInfo */ 113);
 const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
 exports.Factions = {};
 function loadFactions(saveString) {
@@ -7590,7 +7596,7 @@ function yesNoTxtInpBoxCreate(txt) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 // Constructs all CompanyPosition objects using the metadata in data/companypositions.ts
-const CompaniesMetadata_1 = __webpack_require__(/*! ./data/CompaniesMetadata */ 197);
+const CompaniesMetadata_1 = __webpack_require__(/*! ./data/CompaniesMetadata */ 202);
 const Company_1 = __webpack_require__(/*! ./Company */ 73);
 const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
 exports.Companies = {};
@@ -7707,7 +7713,7 @@ exports.Settings = {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const getElementById_1 = __webpack_require__(/*! ./getElementById */ 53);
-const removeElement_1 = __webpack_require__(/*! ./removeElement */ 70);
+const removeElement_1 = __webpack_require__(/*! ./removeElement */ 64);
 /**
  * Given its id, this function removes an element AND its children
  * @param id The HTML identifier to search for and remove.
@@ -7761,7 +7767,7 @@ exports.removeElementById = removeElementById;
 /* harmony import */ var _SettingEnums__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_SettingEnums__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./SourceFile */ 69);
+/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./SourceFile */ 70);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 76);
 /* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_15__);
@@ -12174,20 +12180,20 @@ function initCreateProgramButtons() {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return addWorkerScript; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return updateOnlineScriptTimes; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return prestigeWorkerScripts; });
-/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActiveScriptsUI */ 67);
+/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActiveScriptsUI */ 68);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 8);
-/* harmony import */ var _JSInterpreter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./JSInterpreter */ 125);
-/* harmony import */ var _NetscriptEnvironment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptEnvironment */ 110);
+/* harmony import */ var _JSInterpreter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./JSInterpreter */ 129);
+/* harmony import */ var _NetscriptEnvironment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptEnvironment */ 114);
 /* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./NetscriptEvaluator */ 6);
 /* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
-/* harmony import */ var _NetscriptJSEvaluator__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./NetscriptJSEvaluator */ 111);
+/* harmony import */ var _NetscriptJSEvaluator__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./NetscriptJSEvaluator */ 115);
 /* harmony import */ var _NetscriptPort__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./NetscriptPort */ 71);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Server */ 11);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var escodegen__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! escodegen */ 104);
+/* harmony import */ var escodegen__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! escodegen */ 108);
 /* harmony import */ var escodegen__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(escodegen__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/acorn */ 48);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_12__);
@@ -12221,7 +12227,7 @@ function initCreateProgramButtons() {
 
 
 
-const walk  = __webpack_require__(/*! acorn/dist/walk */ 142);
+const walk  = __webpack_require__(/*! acorn/dist/walk */ 146);
 
 function WorkerScript(runningScriptObj) {
 	this.name 			= runningScriptObj.filename;
@@ -12906,33 +12912,6 @@ JSONReviver_1.Reviver.constructors.Stock = Stock;
 /***/ }),
 /* 27 */
 /*!*****************************************!*\
-  !*** ./src/Company/CompanyPositions.ts ***!
-  \*****************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-// Constructs all CompanyPosition objects using the metadata in data/companypositions.ts
-const CompanyPositionsMetadata_1 = __webpack_require__(/*! ./data/CompanyPositionsMetadata */ 198);
-const CompanyPosition_1 = __webpack_require__(/*! ./CompanyPosition */ 85);
-exports.CompanyPositions = {};
-function addCompanyPosition(params) {
-    if (exports.CompanyPositions[params.name] != null) {
-        console.warn(`Duplicate Company Position being defined: ${params.name}`);
-    }
-    exports.CompanyPositions[params.name] = new CompanyPosition_1.CompanyPosition(params);
-}
-CompanyPositionsMetadata_1.companyPositionMetadata.forEach((e) => {
-    addCompanyPosition(e);
-});
-
-
-/***/ }),
-/* 28 */
-/*!*****************************************!*\
   !*** ./src/Corporation/IndustryData.ts ***!
   \*****************************************/
 /*! no static exports found */
@@ -12942,7 +12921,7 @@ CompanyPositionsMetadata_1.companyPositionMetadata.forEach((e) => {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const BaseResearchTree_1 = __webpack_require__(/*! ./data/BaseResearchTree */ 196);
+const BaseResearchTree_1 = __webpack_require__(/*! ./data/BaseResearchTree */ 201);
 const numeralFormat_1 = __webpack_require__(/*! ../ui/numeralFormat */ 4);
 // Map of official names for each Industry
 exports.Industries = {
@@ -13026,21 +13005,48 @@ exports.IndustryDescriptions = {
 // Map of available Research for each Industry. This data is held in a
 // ResearchTree object
 exports.IndustryResearchTrees = {
-    Energy: BaseResearchTree_1.BaseResearchTree,
-    Utilities: BaseResearchTree_1.BaseResearchTree,
-    Agriculture: BaseResearchTree_1.BaseResearchTree,
-    Fishing: BaseResearchTree_1.BaseResearchTree,
-    Mining: BaseResearchTree_1.BaseResearchTree,
-    Food: BaseResearchTree_1.BaseResearchTree,
-    Tobacco: BaseResearchTree_1.BaseResearchTree,
-    Chemical: BaseResearchTree_1.BaseResearchTree,
-    Pharmaceutical: BaseResearchTree_1.BaseResearchTree,
-    Computer: BaseResearchTree_1.BaseResearchTree,
-    Robotics: BaseResearchTree_1.BaseResearchTree,
-    Software: BaseResearchTree_1.BaseResearchTree,
-    Healthcare: BaseResearchTree_1.BaseResearchTree,
-    RealEstate: BaseResearchTree_1.BaseResearchTree,
+    Energy: BaseResearchTree_1.getBaseResearchTreeCopy(),
+    Utilities: BaseResearchTree_1.getBaseResearchTreeCopy(),
+    Agriculture: BaseResearchTree_1.getBaseResearchTreeCopy(),
+    Fishing: BaseResearchTree_1.getBaseResearchTreeCopy(),
+    Mining: BaseResearchTree_1.getBaseResearchTreeCopy(),
+    Food: BaseResearchTree_1.getBaseResearchTreeCopy(),
+    Tobacco: BaseResearchTree_1.getBaseResearchTreeCopy(),
+    Chemical: BaseResearchTree_1.getBaseResearchTreeCopy(),
+    Pharmaceutical: BaseResearchTree_1.getBaseResearchTreeCopy(),
+    Computer: BaseResearchTree_1.getBaseResearchTreeCopy(),
+    Robotics: BaseResearchTree_1.getBaseResearchTreeCopy(),
+    Software: BaseResearchTree_1.getBaseResearchTreeCopy(),
+    Healthcare: BaseResearchTree_1.getBaseResearchTreeCopy(),
+    RealEstate: BaseResearchTree_1.getBaseResearchTreeCopy(),
 };
+
+
+/***/ }),
+/* 28 */
+/*!*****************************************!*\
+  !*** ./src/Company/CompanyPositions.ts ***!
+  \*****************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+// Constructs all CompanyPosition objects using the metadata in data/companypositions.ts
+const CompanyPositionsMetadata_1 = __webpack_require__(/*! ./data/CompanyPositionsMetadata */ 203);
+const CompanyPosition_1 = __webpack_require__(/*! ./CompanyPosition */ 85);
+exports.CompanyPositions = {};
+function addCompanyPosition(params) {
+    if (exports.CompanyPositions[params.name] != null) {
+        console.warn(`Duplicate Company Position being defined: ${params.name}`);
+    }
+    exports.CompanyPositions[params.name] = new CompanyPosition_1.CompanyPosition(params);
+}
+CompanyPositionsMetadata_1.companyPositionMetadata.forEach((e) => {
+    addCompanyPosition(e);
+});
 
 
 /***/ }),
@@ -13115,7 +13121,7 @@ exports.removeChildrenFromElement = removeChildrenFromElement;
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ui/postToTerminal */ 7);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./TextFile */ 63);
+/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./TextFile */ 65);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_TextFile__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/acorn */ 48);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_12__);
@@ -13133,24 +13139,24 @@ exports.removeChildrenFromElement = removeChildrenFromElement;
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_19__);
 /* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 81);
 /* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_20__);
-var ace = __webpack_require__(/*! brace */ 257);
-var beautify = __webpack_require__(/*! js-beautify */ 256).js_beautify;
-__webpack_require__(/*! brace/mode/javascript */ 255);
-__webpack_require__(/*! ../netscript */ 184);
-__webpack_require__(/*! brace/theme/chaos */ 254);
-__webpack_require__(/*! brace/theme/chrome */ 253);
-__webpack_require__(/*! brace/theme/monokai */ 252);
-__webpack_require__(/*! brace/theme/solarized_dark */ 251);
-__webpack_require__(/*! brace/theme/solarized_light */ 250);
-__webpack_require__(/*! brace/theme/terminal */ 249);
-__webpack_require__(/*! brace/theme/twilight */ 248);
-__webpack_require__(/*! brace/theme/xcode */ 247);
-__webpack_require__(/*! brace/keybinding/vim */ 246);
-__webpack_require__(/*! brace/keybinding/emacs */ 245);
-__webpack_require__(/*! brace/ext/language_tools */ 244);
+var ace = __webpack_require__(/*! brace */ 262);
+var beautify = __webpack_require__(/*! js-beautify */ 261).js_beautify;
+__webpack_require__(/*! brace/mode/javascript */ 260);
+__webpack_require__(/*! ../netscript */ 190);
+__webpack_require__(/*! brace/theme/chaos */ 259);
+__webpack_require__(/*! brace/theme/chrome */ 258);
+__webpack_require__(/*! brace/theme/monokai */ 257);
+__webpack_require__(/*! brace/theme/solarized_dark */ 256);
+__webpack_require__(/*! brace/theme/solarized_light */ 255);
+__webpack_require__(/*! brace/theme/terminal */ 254);
+__webpack_require__(/*! brace/theme/twilight */ 253);
+__webpack_require__(/*! brace/theme/xcode */ 252);
+__webpack_require__(/*! brace/keybinding/vim */ 251);
+__webpack_require__(/*! brace/keybinding/emacs */ 250);
+__webpack_require__(/*! brace/ext/language_tools */ 249);
 
 // Importing this doesn't work for some reason.
-const walk = __webpack_require__(/*! acorn/dist/walk */ 142);
+const walk = __webpack_require__(/*! acorn/dist/walk */ 146);
 
 
 
@@ -14228,7 +14234,7 @@ _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__["Reviver"].constructors.AllServ
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 65)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 63)))
 
 /***/ }),
 /* 31 */
@@ -14255,7 +14261,7 @@ _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__["Reviver"].constructors.AllServ
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Locations */ 5);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./RedPill */ 57);
+/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./RedPill */ 58);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 34);
@@ -14266,15 +14272,15 @@ _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__["Reviver"].constructors.AllServ
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 29);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_14__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
-/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 64);
+/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 66);
 /* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/uiHelpers/appendLineBreaks */ 61);
+/* harmony import */ var _utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/uiHelpers/appendLineBreaks */ 57);
 /* harmony import */ var _utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_17__);
 /* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/helpers/clearObject */ 77);
 /* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_18__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 41);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 40);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_20__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./ui/navigationTracking */ 12);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_21__);
@@ -14285,7 +14291,7 @@ _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__["Reviver"].constructors.AllServ
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__);
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 87);
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_25__);
-/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 70);
+/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 64);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_26__);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_27__);
@@ -18493,7 +18499,7 @@ function initBladeburner() {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 65)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 63)))
 
 /***/ }),
 /* 32 */
@@ -18630,7 +18636,7 @@ exports.KEY = {
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 41);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 40);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_6__);
@@ -19570,6 +19576,49 @@ exports.isString = isString;
 
 /***/ }),
 /* 40 */
+/*!****************************************!*\
+  !*** ./utils/uiHelpers/createPopup.ts ***!
+  \****************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const createElement_1 = __webpack_require__(/*! ./createElement */ 2);
+const getElementById_1 = __webpack_require__(/*! ./getElementById */ 53);
+/**
+ * Creates the necessary DOM elements to present an in-game popup to the player.
+ * @param id The (hopefully) unique identifier for the popup container.
+ * @param elems The collection of HTML Elements to show within the popup.
+ */
+function createPopup(id, elems, options = {}) {
+    const container = createElement_1.createElement("div", {
+        class: "popup-box-container",
+        display: "flex",
+        id: id,
+    });
+    const content = createElement_1.createElement("div", {
+        class: "popup-box-content",
+        id: `${id}-content`,
+    });
+    for (const elem of elems) {
+        content.appendChild(elem);
+    }
+    // Configurable Options
+    if (options.backgroundColor) {
+        content.style.backgroundColor = options.backgroundColor;
+    }
+    container.appendChild(content);
+    getElementById_1.getElementById("entire-game-container").appendChild(container);
+    return container;
+}
+exports.createPopup = createPopup;
+
+
+/***/ }),
+/* 41 */
 /*!************************!*\
   !*** ./src/Message.js ***!
   \************************/
@@ -19589,7 +19638,7 @@ exports.isString = isString;
 /* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateProgram */ 23);
 /* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Missions */ 55);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./RedPill */ 57);
+/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./RedPill */ 58);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Server */ 11);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_6__);
@@ -19789,46 +19838,6 @@ function initMessages()  {
 
 
 /***/ }),
-/* 41 */
-/*!****************************************!*\
-  !*** ./utils/uiHelpers/createPopup.ts ***!
-  \****************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const createElement_1 = __webpack_require__(/*! ./createElement */ 2);
-const getElementById_1 = __webpack_require__(/*! ./getElementById */ 53);
-/**
- * Creates the necessary DOM elements to present an in-game popup to the player.
- * @param id The (hopefully) unique identifier for the popup container.
- * @param elems The collection of HTML Elements to show within the popup.
- */
-function createPopup(id, elems) {
-    const container = createElement_1.createElement("div", {
-        class: "popup-box-container",
-        display: "flex",
-        id,
-    });
-    const content = createElement_1.createElement("div", {
-        class: "popup-box-content",
-        id: `${id}-content`,
-    });
-    for (const elem of elems) {
-        content.appendChild(elem);
-    }
-    container.appendChild(content);
-    getElementById_1.getElementById("entire-game-container")
-        .appendChild(container);
-    return container;
-}
-exports.createPopup = createPopup;
-
-
-/***/ }),
 /* 42 */
 /*!********************************!*\
   !*** ./src/CodingContracts.ts ***!
@@ -19850,9 +19859,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const JSONReviver_1 = __webpack_require__(/*! ../utils/JSONReviver */ 13);
 const createElement_1 = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
-const createPopup_1 = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 41);
+const createPopup_1 = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 40);
 const removeElementById_1 = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
-const codingcontracttypes_1 = __webpack_require__(/*! ./data/codingcontracttypes */ 189);
+const codingcontracttypes_1 = __webpack_require__(/*! ./data/codingcontracttypes */ 195);
 /* tslint:disable:no-magic-numbers completed-docs max-classes-per-file no-console */
 /* Represents different types of problems that a Coding Contract can have */
 class CodingContractType {
@@ -20021,7 +20030,7 @@ JSONReviver_1.Reviver.constructors.CodingContract = CodingContract;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return hasCorporationSF; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return hasAISF; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return hasBladeburnerSF; });
-/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActiveScriptsUI */ 67);
+/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActiveScriptsUI */ 68);
 /* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Augmentations */ 21);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BitNodeMultipliers */ 10);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_2__);
@@ -20033,7 +20042,7 @@ JSONReviver_1.Reviver.constructors.CodingContract = CodingContract;
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Company/CompanyPosition */ 85);
 /* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Company/CompanyPositions */ 27);
+/* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Company/CompanyPositions */ 28);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_9__);
@@ -20046,10 +20055,10 @@ JSONReviver_1.Reviver.constructors.CodingContract = CodingContract;
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Faction/Factions */ 14);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 46);
-/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./HacknetNode */ 66);
+/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./HacknetNode */ 67);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Locations */ 5);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Message */ 40);
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Message */ 41);
 /* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Missions */ 55);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./Script */ 30);
@@ -20062,7 +20071,7 @@ JSONReviver_1.Reviver.constructors.CodingContract = CodingContract;
 /* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./StockMarket */ 22);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./ui/postToTerminal */ 7);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_28__);
-/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./TextFile */ 63);
+/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./TextFile */ 65);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_29___default = /*#__PURE__*/__webpack_require__.n(_TextFile__WEBPACK_IMPORTED_MODULE_29__);
 /* harmony import */ var _NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./NetscriptBladeburner */ 52);
 /* harmony import */ var _NetscriptGang__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./NetscriptGang */ 38);
@@ -20073,18 +20082,18 @@ JSONReviver_1.Reviver.constructors.CodingContract = CodingContract;
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./ui/navigationTracking */ 12);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_36___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_36__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ../utils/helpers/isPowerOfTwo */ 126);
+/* harmony import */ var _utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ../utils/helpers/isPowerOfTwo */ 130);
 /* harmony import */ var _utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_38___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_38__);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 54);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_39___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_39__);
-/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ../utils/IPAddress */ 59);
+/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ../utils/IPAddress */ 60);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_41___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_41__);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ../utils/helpers/isString */ 39);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_42___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_42__);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
-var sprintf = __webpack_require__(/*! sprintf-js */ 143).sprintf,
-    vsprintf = __webpack_require__(/*! sprintf-js */ 143).vsprintf
+var sprintf = __webpack_require__(/*! sprintf-js */ 147).sprintf,
+    vsprintf = __webpack_require__(/*! sprintf-js */ 147).vsprintf
 
 
 
@@ -24678,7 +24687,7 @@ function NetscriptFunctions(workerScript) {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 65)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 63)))
 
 /***/ }),
 /* 44 */
@@ -24868,7 +24877,7 @@ function substituteAliases(origCommand) {
 /* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_Faction__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _Factions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Factions */ 14);
 /* harmony import */ var _Factions__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Factions__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _FactionInfo__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./FactionInfo */ 109);
+/* harmony import */ var _FactionInfo__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./FactionInfo */ 113);
 /* harmony import */ var _FactionInfo__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_FactionInfo__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Location */ 90);
 /* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Missions */ 55);
@@ -24882,7 +24891,7 @@ function substituteAliases(origCommand) {
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_13__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../utils/DialogBox */ 9);
-/* harmony import */ var _utils_FactionInvitationBox__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../utils/FactionInvitationBox */ 129);
+/* harmony import */ var _utils_FactionInvitationBox__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../utils/FactionInvitationBox */ 133);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 29);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_16__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../utils/uiHelpers/createElement */ 2);
@@ -29609,9 +29618,9 @@ function calculateWeakenTime(server, hack, int) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return resetGangs; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return loadAllGangs; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Gang; });
-/* harmony import */ var _data_gangmembertasks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./data/gangmembertasks */ 128);
+/* harmony import */ var _data_gangmembertasks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./data/gangmembertasks */ 132);
 /* harmony import */ var _data_gangmembertasks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_data_gangmembertasks__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _data_gangmemberupgrades__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data/gangmemberupgrades */ 127);
+/* harmony import */ var _data_gangmemberupgrades__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data/gangmemberupgrades */ 131);
 /* harmony import */ var _data_gangmemberupgrades__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_data_gangmemberupgrades__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 8);
 /* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Faction/Faction */ 56);
@@ -29629,7 +29638,7 @@ function calculateWeakenTime(server, hack, int) {
 /* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 41);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 40);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./ui/navigationTracking */ 12);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_13__);
@@ -29640,7 +29649,7 @@ function calculateWeakenTime(server, hack, int) {
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_16__);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 29);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 70);
+/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 64);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_18__);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_19__);
@@ -31571,7 +31580,7 @@ Gang.prototype.clearUI = function() {
     UIElems.gangMemberPanels = {};
 }
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 65)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 63)))
 
 /***/ }),
 /* 51 */
@@ -31595,20 +31604,20 @@ Gang.prototype.clearUI = function() {
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./engine */ 8);
 /* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Fconf */ 47);
 /* harmony import */ var _Hacking__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Hacking */ 49);
-/* harmony import */ var _HelpText__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./HelpText */ 100);
+/* harmony import */ var _HelpText__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./HelpText */ 101);
 /* harmony import */ var _HelpText__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_HelpText__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./InteractiveTutorial */ 35);
 /* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Literature */ 82);
-/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Message */ 40);
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Message */ 41);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./NetscriptWorker */ 24);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./RedPill */ 57);
+/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./RedPill */ 58);
 /* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Script */ 30);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Server */ 11);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_17__);
 /* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
-/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./TextFile */ 63);
+/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./TextFile */ 65);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_TextFile__WEBPACK_IMPORTED_MODULE_19__);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_20__);
@@ -31618,7 +31627,7 @@ Gang.prototype.clearUI = function() {
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 34);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_23__);
-/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 64);
+/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 66);
 /* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_24__);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/helpers/isString */ 39);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25__);
@@ -31630,11 +31639,11 @@ Gang.prototype.clearUI = function() {
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./ui/postToTerminal */ 7);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__);
-/* harmony import */ var autosize__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! autosize */ 146);
+/* harmony import */ var autosize__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! autosize */ 150);
 /* harmony import */ var autosize__WEBPACK_IMPORTED_MODULE_31___default = /*#__PURE__*/__webpack_require__.n(autosize__WEBPACK_IMPORTED_MODULE_31__);
-/* harmony import */ var jszip__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! jszip */ 145);
+/* harmony import */ var jszip__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! jszip */ 149);
 /* harmony import */ var jszip__WEBPACK_IMPORTED_MODULE_32___default = /*#__PURE__*/__webpack_require__.n(jszip__WEBPACK_IMPORTED_MODULE_32__);
-/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! file-saver */ 144);
+/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! file-saver */ 148);
 /* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_33___default = /*#__PURE__*/__webpack_require__.n(file_saver__WEBPACK_IMPORTED_MODULE_33__);
 
 
@@ -33791,7 +33800,7 @@ let Terminal = {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 65)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 63)))
 
 /***/ }),
 /* 52 */
@@ -33908,7 +33917,7 @@ exports.arrayToString = arrayToString;
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 64);
+/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 66);
 /* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__);
@@ -33916,7 +33925,7 @@ exports.arrayToString = arrayToString;
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/isString */ 39);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var jsplumb__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! jsplumb */ 241);
+/* harmony import */ var jsplumb__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! jsplumb */ 246);
 /* harmony import */ var jsplumb__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(jsplumb__WEBPACK_IMPORTED_MODULE_10__);
 
 
@@ -35456,7 +35465,7 @@ HackingMission.prototype.finishMission = function(win) {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 65)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 63)))
 
 /***/ }),
 /* 56 */
@@ -35471,7 +35480,7 @@ HackingMission.prototype.finishMission = function(win) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const Constants_1 = __webpack_require__(/*! ../Constants */ 1);
-const FactionInfo_1 = __webpack_require__(/*! ./FactionInfo */ 109);
+const FactionInfo_1 = __webpack_require__(/*! ./FactionInfo */ 113);
 const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
 class Faction {
     constructor(name = "") {
@@ -35584,6 +35593,32 @@ JSONReviver_1.Reviver.constructors.Faction = Faction;
 
 /***/ }),
 /* 57 */
+/*!*********************************************!*\
+  !*** ./utils/uiHelpers/appendLineBreaks.ts ***!
+  \*********************************************/
+/*! no static exports found */
+/*! exports used: appendLineBreaks */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const createElement_1 = __webpack_require__(/*! ./createElement */ 2);
+/**
+ * Appends the specified number of breaks (as children) to the specified element
+ * @param el The element to add child break elements to.
+ * @param n The number of breaks to add.
+ */
+function appendLineBreaks(el, n) {
+    for (let i = 0; i < n; ++i) {
+        el.appendChild(createElement_1.createElement("br"));
+    }
+}
+exports.appendLineBreaks = appendLineBreaks;
+
+
+/***/ }),
+/* 58 */
 /*!************************!*\
   !*** ./src/RedPill.js ***!
   \************************/
@@ -35594,11 +35629,11 @@ JSONReviver_1.Reviver.constructors.Faction = Faction;
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return redPillFlag; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return hackWorldDaemon; });
-/* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNode */ 58);
+/* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNode */ 59);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./engine */ 8);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Prestige */ 86);
-/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SourceFile */ 69);
+/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SourceFile */ 70);
 /* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Terminal */ 51);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__);
@@ -35938,10 +35973,10 @@ function createBitNodeYesNoEventListeners(newBitNode, destroyedBitNode, flume=fa
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 65)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 63)))
 
 /***/ }),
-/* 58 */
+/* 59 */
 /*!************************!*\
   !*** ./src/BitNode.js ***!
   \************************/
@@ -35983,7 +36018,7 @@ function initBitNodes() {
                             "Level 3: 28%");
     BitNodes["BitNode2"] = new BitNode(2, "Rise of the Underworld", "From the shadows, they rose",    //Gangs
                             "From the shadows, they rose.<br><br>Organized crime groups quickly filled the void of power " +
-                            "left behind from the collapse of Western government in the 2050's. As society and civlization broke down, " +
+                            "left behind from the collapse of Western government in the 2050s. As society and civlization broke down, " +
                             "people quickly succumbed to the innate human impulse of evil and savagery. The organized crime " +
                             "factions quickly rose to the top of the modern world.<br><br>" +
                             "In this BitNode:<br><br>" +
@@ -35999,9 +36034,9 @@ function initBitNodes() {
                             "Destroying this BitNode will give you Source-File 2, or if you already have this Source-File it will " +
                             "upgrade its level up to a maximum of 3. This Source-File increases the player's crime success rate, " +
                             "crime money, and charisma multipliers by:<br><br>" +
-                            "Level 1: 20%<br>" +
-                            "Level 2: 30%<br>" +
-                            "Level 3: 35%");
+                            "Level 1: 24%<br>" +
+                            "Level 2: 36%<br>" +
+                            "Level 3: 42%");
     BitNodes["BitNode3"] = new BitNode(3, "Corporatocracy", "The Price of Civilization",
                                           "Our greatest illusion is that a healthy society can revolve around a " +
                                           "single-minded pursuit of wealth.<br><br>" +
@@ -36333,7 +36368,7 @@ function initBitNodeMultipliers() {
 
 
 /***/ }),
-/* 59 */
+/* 60 */
 /*!****************************!*\
   !*** ./utils/IPAddress.js ***!
   \****************************/
@@ -36383,7 +36418,7 @@ function ipExists(ip) {
 
 
 /***/ }),
-/* 60 */
+/* 61 */
 /*!****************************************!*\
   !*** ./src/Corporation/Corporation.js ***!
   \****************************************/
@@ -36392,7 +36427,7 @@ function ipExists(ip) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* unused harmony export TOTALSHARES */
+/* WEBPACK VAR INJECTION */(function($) {/* unused harmony export TOTALSHARES */
 /* unused harmony export CyclesPerMarketCycle */
 /* unused harmony export CyclesPerIndustryStateCycle */
 /* unused harmony export SecsPerMarketCycle */
@@ -36407,50 +36442,68 @@ function ipExists(ip) {
 /* unused harmony export BribeToRepRatio */
 /* unused harmony export ProductProductionCostRatio */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Corporation; });
-/* harmony import */ var _CorporationState__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CorporationState */ 114);
+/* harmony import */ var _CorporationState__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CorporationState */ 118);
 /* harmony import */ var _CorporationState__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_CorporationState__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EmployeePositions */ 25);
-/* harmony import */ var _EmployeePositions__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _IndustryData__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./IndustryData */ 28);
-/* harmony import */ var _IndustryData__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_IndustryData__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _Material__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Material */ 62);
-/* harmony import */ var _Material__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Material__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _MaterialSizes__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./MaterialSizes */ 75);
-/* harmony import */ var _MaterialSizes__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_MaterialSizes__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _Product__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Product */ 101);
-/* harmony import */ var _Product__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Product__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../BitNodeMultipliers */ 10);
-/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Faction/Factions */ 14);
-/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Literature */ 82);
-/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../Locations */ 5);
-/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../Player */ 0);
-/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../ui/numeralFormat */ 4);
-/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../ui/navigationTracking */ 12);
-/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../utils/DialogBox */ 9);
-/* harmony import */ var _utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../utils/uiHelpers/clearSelector */ 133);
-/* harmony import */ var _utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../utils/uiHelpers/createElement */ 2);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../utils/uiHelpers/createPopup */ 41);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../../utils/StringHelperFunctions */ 3);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../../utils/helpers/getRandomInt */ 15);
-/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../../utils/helpers/isString */ 39);
-/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_20__);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 29);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../../utils/uiHelpers/removeElementById */ 20);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../../utils/YesNoBox */ 17);
-/* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! decimal.js */ 33);
+/* harmony import */ var _CorporationUnlockUpgrades__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CorporationUnlockUpgrades */ 105);
+/* harmony import */ var _CorporationUnlockUpgrades__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_CorporationUnlockUpgrades__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _CorporationUpgrades__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CorporationUpgrades */ 104);
+/* harmony import */ var _CorporationUpgrades__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_CorporationUpgrades__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./EmployeePositions */ 25);
+/* harmony import */ var _EmployeePositions__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _IndustryData__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./IndustryData */ 27);
+/* harmony import */ var _IndustryData__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_IndustryData__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _IndustryUpgrades__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./IndustryUpgrades */ 103);
+/* harmony import */ var _IndustryUpgrades__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_IndustryUpgrades__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _Material__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Material */ 62);
+/* harmony import */ var _Material__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Material__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _MaterialSizes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./MaterialSizes */ 75);
+/* harmony import */ var _MaterialSizes__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_MaterialSizes__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _Product__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Product */ 102);
+/* harmony import */ var _Product__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_Product__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _ResearchMap__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./ResearchMap */ 96);
+/* harmony import */ var _ResearchMap__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_ResearchMap__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../BitNodeMultipliers */ 10);
+/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../Faction/Factions */ 14);
+/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../Literature */ 82);
+/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../Locations */ 5);
+/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../Player */ 0);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../ui/numeralFormat */ 4);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../ui/navigationTracking */ 12);
+/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_16__);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../utils/DialogBox */ 9);
+/* harmony import */ var _utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../../utils/uiHelpers/clearSelector */ 137);
+/* harmony import */ var _utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_18__);
+/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
+/* harmony import */ var _utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../../utils/uiHelpers/appendLineBreaks */ 57);
+/* harmony import */ var _utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_20__);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../../utils/uiHelpers/createElement */ 2);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../../utils/uiHelpers/createPopup */ 40);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../../utils/StringHelperFunctions */ 3);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__);
+/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../../utils/helpers/getRandomInt */ 15);
+/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__);
+/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../../utils/helpers/isString */ 39);
+/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25__);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 29);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_26__);
+/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../../utils/uiHelpers/removeElement */ 64);
+/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_27__);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../../utils/uiHelpers/removeElementById */ 20);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../../utils/YesNoBox */ 17);
+/* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! decimal.js */ 33);
+
+
+
+
+
+
 
 
 
@@ -36500,52 +36553,50 @@ const BribeToRepRatio             = 1e9;   //Bribe Value divided by this = rep g
 
 const ProductProductionCostRatio  = 5;    //Ratio of material cost of a product to its production cost
 
-
-
-//Industry upgrades
-//The structure is:
-//  [index in array, base price, price mult, benefit mult (if applicable), name, desc]
-var IndustryUpgrades = {
-    "0":    [0, 500e3, 1, 1.05,
-            "Coffee", "Provide your employees with coffee, increasing their energy by 5%."],
-    "1":    [1, 1e9, 1.06, 1.03,
-            "AdVert.Inc", "Hire AdVert.Inc to advertise your company. Each level of " +
-            "this upgrade grants your company a static increase of 3 and 1 to its awareness and " +
-            "popularity, respectively. It will then increase your company's awareness by 1%, and its popularity " +
-            "by a random percentage between 1% and 3%. These effects are increased by other upgrades " +
-            "that increase the power of your advertising."]
-}
+// Delete Research Popup Box when clicking outside of it
+$(document).mousedown(function(event) {
+    const boxId = "corporation-research-popup-box";
+    const contentId = "corporation-research-popup-box-content";
+    if (researchTreeBoxOpened) {
+        if ( $(event.target).closest("#" + contentId).get(0) == null ) {
+            // Delete the box
+            Object(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_27__["removeElement"])(researchTreeBox);
+            researchTreeBox = null;
+            researchTreeBoxOpened = false;
+        }
+    }
+});
 
 var empManualAssignmentModeActive = false;
 function Industry(params={}) {
     this.offices = { //Maps locations to offices. 0 if no office at that location
-        [_Locations__WEBPACK_IMPORTED_MODULE_9__["Locations"].Aevum]: 0,
-        [_Locations__WEBPACK_IMPORTED_MODULE_9__["Locations"].Chongqing]: 0,
-        [_Locations__WEBPACK_IMPORTED_MODULE_9__["Locations"].Sector12]: new OfficeSpace({
-            loc:_Locations__WEBPACK_IMPORTED_MODULE_9__["Locations"].Sector12,
+        [_Locations__WEBPACK_IMPORTED_MODULE_13__["Locations"].Aevum]: 0,
+        [_Locations__WEBPACK_IMPORTED_MODULE_13__["Locations"].Chongqing]: 0,
+        [_Locations__WEBPACK_IMPORTED_MODULE_13__["Locations"].Sector12]: new OfficeSpace({
+            loc:_Locations__WEBPACK_IMPORTED_MODULE_13__["Locations"].Sector12,
             size:OfficeInitialSize,
         }),
-        [_Locations__WEBPACK_IMPORTED_MODULE_9__["Locations"].NewTokyo]: 0,
-        [_Locations__WEBPACK_IMPORTED_MODULE_9__["Locations"].Ishima]: 0,
-        [_Locations__WEBPACK_IMPORTED_MODULE_9__["Locations"].Volhaven]: 0
+        [_Locations__WEBPACK_IMPORTED_MODULE_13__["Locations"].NewTokyo]: 0,
+        [_Locations__WEBPACK_IMPORTED_MODULE_13__["Locations"].Ishima]: 0,
+        [_Locations__WEBPACK_IMPORTED_MODULE_13__["Locations"].Volhaven]: 0
     };
 
     this.warehouses = { //Maps locations to warehouses. 0 if no warehouse at that location
-        [_Locations__WEBPACK_IMPORTED_MODULE_9__["Locations"].Aevum]: 0,
-        [_Locations__WEBPACK_IMPORTED_MODULE_9__["Locations"].Chonqing]: 0,
-        [_Locations__WEBPACK_IMPORTED_MODULE_9__["Locations"].Sector12]: new Warehouse({
-            loc:_Locations__WEBPACK_IMPORTED_MODULE_9__["Locations"].Sector12,
+        [_Locations__WEBPACK_IMPORTED_MODULE_13__["Locations"].Aevum]: 0,
+        [_Locations__WEBPACK_IMPORTED_MODULE_13__["Locations"].Chonqing]: 0,
+        [_Locations__WEBPACK_IMPORTED_MODULE_13__["Locations"].Sector12]: new Warehouse({
+            loc:_Locations__WEBPACK_IMPORTED_MODULE_13__["Locations"].Sector12,
             size: WarehouseInitialSize,
         }),
-        [_Locations__WEBPACK_IMPORTED_MODULE_9__["Locations"].NewTokyo]: 0,
-        [_Locations__WEBPACK_IMPORTED_MODULE_9__["Locations"].Ishima]: 0,
-        [_Locations__WEBPACK_IMPORTED_MODULE_9__["Locations"].Volhaven]: 0
+        [_Locations__WEBPACK_IMPORTED_MODULE_13__["Locations"].NewTokyo]: 0,
+        [_Locations__WEBPACK_IMPORTED_MODULE_13__["Locations"].Ishima]: 0,
+        [_Locations__WEBPACK_IMPORTED_MODULE_13__["Locations"].Volhaven]: 0
     };
 
     this.name   = params.name ? params.name : 0;
     this.type   = params.type ? params.type : 0;
 
-    this.sciResearch    = new _Material__WEBPACK_IMPORTED_MODULE_3__["Material"]({name: "Scientific Research"});
+    this.sciResearch    = new _Material__WEBPACK_IMPORTED_MODULE_6__["Material"]({name: "Scientific Research"});
 
     //A map of the NAME of materials required to create produced materials to
     //how many are needed to produce 1 unit of produced materials
@@ -36576,13 +36627,13 @@ function Industry(params={}) {
     this.prodMult   = 0; //Production multiplier
 
     //Financials
-    this.lastCycleRevenue   = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](0);
-    this.lastCycleExpenses  = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](0);
-    this.thisCycleRevenue   = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](0);
-    this.thisCycleExpenses  = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](0);
+    this.lastCycleRevenue   = new decimal_js__WEBPACK_IMPORTED_MODULE_30__[/* default */ "a"](0);
+    this.lastCycleExpenses  = new decimal_js__WEBPACK_IMPORTED_MODULE_30__[/* default */ "a"](0);
+    this.thisCycleRevenue   = new decimal_js__WEBPACK_IMPORTED_MODULE_30__[/* default */ "a"](0);
+    this.thisCycleExpenses  = new decimal_js__WEBPACK_IMPORTED_MODULE_30__[/* default */ "a"](0);
 
     //Upgrades
-    var numUpgrades = Object.keys(IndustryUpgrades).length;
+    var numUpgrades = Object.keys(_IndustryUpgrades__WEBPACK_IMPORTED_MODULE_5__["IndustryUpgrades"]).length;
     this.upgrades = Array(numUpgrades).fill(0);
 
     this.state = "START";
@@ -36593,9 +36644,9 @@ function Industry(params={}) {
 
 Industry.prototype.init = function() {
     //Set the unique properties of an industry (how much its affected by real estate/scientific research, etc.)
-    this.startingCost = _IndustryData__WEBPACK_IMPORTED_MODULE_2__["IndustryStartingCosts"][this.type];
+    this.startingCost = _IndustryData__WEBPACK_IMPORTED_MODULE_4__["IndustryStartingCosts"][this.type];
     switch (this.type) {
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Energy:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Energy:
             this.reFac  = 0.65;
             this.sciFac = 0.7;
             this.robFac = 0.05;
@@ -36607,7 +36658,7 @@ Industry.prototype.init = function() {
             };
             this.prodMats = ["Energy"];
             break;
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Utilities:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Utilities:
         case "Utilities":
             this.reFac  = 0.5;
             this.sciFac = 0.6;
@@ -36620,7 +36671,7 @@ Industry.prototype.init = function() {
             }
             this.prodMats = ["Water"];
             break;
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Agriculture:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Agriculture:
             this.reFac  = 0.75;
             this.sciFac = 0.5;
             this.hwFac  = 0.2;
@@ -36633,7 +36684,7 @@ Industry.prototype.init = function() {
             }
             this.prodMats = ["Plants", "Food"];
             break;
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Fishing:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Fishing:
             this.reFac  = 0.15;
             this.sciFac = 0.35;
             this.hwFac  = 0.35;
@@ -36645,7 +36696,7 @@ Industry.prototype.init = function() {
             }
             this.prodMats = ["Food"];
             break;
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Mining:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Mining:
             this.reFac  = 0.3;
             this.sciFac = 0.26;
             this.hwFac  = 0.4;
@@ -36657,7 +36708,7 @@ Industry.prototype.init = function() {
             }
             this.prodMats = ["Metal"];
             break;
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Food:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Food:
             //reFac is unique for this bc it diminishes greatly per city. Handle this separately in code?
             this.sciFac = 0.12;
             this.hwFac  = 0.15;
@@ -36672,7 +36723,7 @@ Industry.prototype.init = function() {
             }
             this.makesProducts = true;
             break;
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Tobacco:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Tobacco:
             this.reFac  = 0.15;
             this.sciFac = 0.75;
             this.hwFac  = 0.15;
@@ -36685,7 +36736,7 @@ Industry.prototype.init = function() {
             }
             this.makesProducts = true;
             break;
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Chemical:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Chemical:
             this.reFac  = 0.25;
             this.sciFac = 0.75;
             this.hwFac  = 0.2;
@@ -36699,7 +36750,7 @@ Industry.prototype.init = function() {
             }
             this.prodMats = ["Chemicals"];
             break;
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Pharmaceutical:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Pharmaceutical:
             this.reFac  = 0.05;
             this.sciFac = 0.8;
             this.hwFac  = 0.15;
@@ -36714,7 +36765,7 @@ Industry.prototype.init = function() {
             this.prodMats = ["Drugs"];
             this.makesProducts = true;
             break;
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Computer:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Computer:
         case "Computer":
             this.reFac  = 0.2;
             this.sciFac = 0.62;
@@ -36728,7 +36779,7 @@ Industry.prototype.init = function() {
             this.prodMats = ["Hardware"];
             this.makesProducts = true;
             break;
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Robotics:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Robotics:
             this.reFac  = 0.32;
             this.sciFac = 0.65;
             this.aiFac  = 0.36;
@@ -36741,7 +36792,7 @@ Industry.prototype.init = function() {
             this.prodMats = ["Robots"];
             this.makesProducts = true;
             break;
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Software:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Software:
             this.sciFac = 0.62;
             this.advFac = 0.16;
             this.hwFac  = 0.25;
@@ -36755,7 +36806,7 @@ Industry.prototype.init = function() {
             this.prodMats = ["AICores"];
             this.makesProducts = true;
             break;
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Healthcare:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Healthcare:
             this.reFac  = 0.1;
             this.sciFac = 0.75;
             this.advFac = 0.11;
@@ -36770,7 +36821,7 @@ Industry.prototype.init = function() {
             }
             this.makesProducts = true;
             break;
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].RealEstate:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].RealEstate:
             this.robFac = 0.6;
             this.aiFac  = 0.6;
             this.advFac = 0.25;
@@ -36794,29 +36845,29 @@ Industry.prototype.init = function() {
 Industry.prototype.getProductDescriptionText = function() {
     if (!this.makesProducts) {return;}
     switch (this.type) {
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Food:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Food:
             return "create and manage restaurants";
             break;
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Tobacco:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Tobacco:
             return "create tobacco and tobacco-related products";
             break;
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Pharmaceutical:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Pharmaceutical:
             return "develop new pharmaceutical drugs";
             break;
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Computer:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Computer:
         case "Computer":
             return "create new computer hardware and networking infrastructures";
             break;
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Robotics:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Robotics:
             return "build specialized robots and robot-related products";
             break;
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Software:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Software:
             return "develop computer software";
             break;
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Healthcare:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Healthcare:
             return "build and manage hospitals";
             break;
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].RealEstate:
+        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].RealEstate:
             return "develop and manage real estate properties";
             break;
         default:
@@ -36860,7 +36911,7 @@ Industry.prototype.updateWarehouseSizeUsed = function(warehouse) {
             var prod = this.products[prodName];
             warehouse.sizeUsed += (prod.data[warehouse.loc][0] * prod.siz);
             if (prod.data[warehouse.loc][0] > 0) {
-                warehouse.breakdown += (prodName + ": " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(prod.data[warehouse.loc][0] * prod.siz, 0) + "<br>");
+                warehouse.breakdown += (prodName + ": " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(prod.data[warehouse.loc][0] * prod.siz, 0) + "<br>");
             }
         }
     }
@@ -36876,14 +36927,14 @@ Industry.prototype.process = function(marketCycles=1, state, company) {
             console.log("ERROR: NaN in Corporation's computed revenue/expenses");
             console.log(this.thisCycleRevenue.toString());
             console.log(this.thisCycleExpenses.toString());
-            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Something went wrong when compting Corporation's revenue/expenses. This is a bug. Please report to game developer");
-            this.thisCycleRevenue = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](0);
-            this.thisCycleExpenses = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](0);
+            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Something went wrong when compting Corporation's revenue/expenses. This is a bug. Please report to game developer");
+            this.thisCycleRevenue = new decimal_js__WEBPACK_IMPORTED_MODULE_30__[/* default */ "a"](0);
+            this.thisCycleExpenses = new decimal_js__WEBPACK_IMPORTED_MODULE_30__[/* default */ "a"](0);
         }
         this.lastCycleRevenue = this.thisCycleRevenue.dividedBy(marketCycles * SecsPerMarketCycle);
         this.lastCycleExpenses = this.thisCycleExpenses.dividedBy(marketCycles * SecsPerMarketCycle);
-        this.thisCycleRevenue = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](0);
-        this.thisCycleExpenses = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](0);
+        this.thisCycleRevenue = new decimal_js__WEBPACK_IMPORTED_MODULE_30__[/* default */ "a"](0);
+        this.thisCycleExpenses = new decimal_js__WEBPACK_IMPORTED_MODULE_30__[/* default */ "a"](0);
 
         //Once you start making revenue, the player should no longer be
         //considered new, and therefore no longer needs the 'tutorial' UI elements
@@ -36966,9 +37017,9 @@ Industry.prototype.processProductMarket = function(marketCycles=1) {
     for (var name in this.products) {
         if (this.products.hasOwnProperty(name)) {
             var product = this.products[name];
-            var change = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(1, 3) * 0.0004;
-            if (this.type === _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Pharmaceutical || this.type === _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Software ||
-                this.type === _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Robotics) {
+            var change = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(1, 3) * 0.0004;
+            if (this.type === _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Pharmaceutical || this.type === _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Software ||
+                this.type === _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Robotics) {
                 change *= 3;
             }
             change *= marketCycles;
@@ -37028,7 +37079,7 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                     if (matName == "RealEstate") {
                         maxAmt = buyAmt;
                     } else {
-                        maxAmt = Math.floor((warehouse.size - warehouse.sizeUsed) / _MaterialSizes__WEBPACK_IMPORTED_MODULE_4__["MaterialSizes"][matName]);
+                        maxAmt = Math.floor((warehouse.size - warehouse.sizeUsed) / _MaterialSizes__WEBPACK_IMPORTED_MODULE_7__["MaterialSizes"][matName]);
                     }
                     var buyAmt = Math.min(buyAmt, maxAmt);
                     if (buyAmt > 0) {
@@ -37062,12 +37113,12 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                 //the produced materials will cost
                 var totalMatSize = 0;
                 for (var tmp = 0; tmp < this.prodMats.length; ++tmp) {
-                    totalMatSize += (_MaterialSizes__WEBPACK_IMPORTED_MODULE_4__["MaterialSizes"][this.prodMats[tmp]]);
+                    totalMatSize += (_MaterialSizes__WEBPACK_IMPORTED_MODULE_7__["MaterialSizes"][this.prodMats[tmp]]);
                 }
                 for (var reqMatName in this.reqMats) {
                     if (this.reqMats.hasOwnProperty(reqMatName)) {
                         var normQty = this.reqMats[reqMatName];
-                        totalMatSize -= (_MaterialSizes__WEBPACK_IMPORTED_MODULE_4__["MaterialSizes"][reqMatName] * normQty);
+                        totalMatSize -= (_MaterialSizes__WEBPACK_IMPORTED_MODULE_7__["MaterialSizes"][reqMatName] * normQty);
                     }
                 }
                 //If not enough space in warehouse, limit the amount of produced materials
@@ -37106,7 +37157,7 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                     for (var j = 0; j < this.prodMats.length; ++j) {
                         warehouse.materials[this.prodMats[j]].qty += (prod * producableFrac);
                         warehouse.materials[this.prodMats[j]].qlt =
-                            (office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Engineer] / 100 +
+                            (office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Engineer] / 100 +
                              Math.pow(this.sciResearch.qty, this.sciFac) +
                              Math.pow(warehouse.materials["AICores"].qty, this.aiFac) / 10e3);
                     }
@@ -37147,7 +37198,7 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                     var mat = warehouse.materials[matName];
 
                     var sCost;
-                    if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_20__["isString"])(mat.sCost)) {
+                    if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25__["isString"])(mat.sCost)) {
                         sCost = mat.sCost.replace(/MP/g, mat.bCost);
                         sCost = eval(sCost);
                     } else {
@@ -37177,14 +37228,14 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                                   company.getSalesMultiplier() * advertisingFactor;
 
                     var sellAmt;
-                    if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_20__["isString"])(mat.sllman[1])) {
+                    if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25__["isString"])(mat.sllman[1])) {
                         //Dynamically evaluated
                         var tmp = mat.sllman[1].replace(/MAX/g, maxSell);
                         tmp = tmp.replace(/PROD/g, mat.prd);
                         try {
                             sellAmt = eval(tmp);
                         } catch(e) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Error evaluating your sell amount for material " + mat.name +
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Error evaluating your sell amount for material " + mat.name +
                                             " in " + this.name + "'s " + city + " office. The sell amount " +
                                             "is being set to zero");
                             sellAmt = 0;
@@ -37227,13 +37278,13 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                             try {
                                 amt = eval(amt);
                             } catch(e) {
-                                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Calculating export for " + mat.name + " in " +
+                                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Calculating export for " + mat.name + " in " +
                                                 this.name +  "'s " + city + " division failed with " +
                                                 "error: " + e);
                                 continue;
                             }
                             if (isNaN(amt)) {
-                                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Error calculating export amount for " + mat.name +  " in " +
+                                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Error calculating export amount for " + mat.name +  " in " +
                                                 this.name + "'s " + city + " division.");
                                 continue;
                             }
@@ -37258,7 +37309,7 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                                     if (expWarehouse.sizeUsed >= expWarehouse.size) {
                                         return; //Warehouse at capacity
                                     } else {
-                                        var maxAmt = Math.floor((expWarehouse.size - expWarehouse.sizeUsed) / _MaterialSizes__WEBPACK_IMPORTED_MODULE_4__["MaterialSizes"][matName]);
+                                        var maxAmt = Math.floor((expWarehouse.size - expWarehouse.sizeUsed) / _MaterialSizes__WEBPACK_IMPORTED_MODULE_7__["MaterialSizes"][matName]);
                                         amt = Math.min(maxAmt, amt);
                                     }
                                     expWarehouse.materials[matName].imp += (amt / (SecsPerMarketCycle * marketCycles));
@@ -37291,7 +37342,7 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
         //Produce Scientific Research based on R&D employees
         //Scientific Research can be produced without a warehouse
         if (office instanceof OfficeSpace) {
-            this.sciResearch.qty += (.005 * Math.pow(office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].RandD], 0.5)
+            this.sciResearch.qty += (.005 * Math.pow(office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].RandD], 0.5)
                                      * company.getScientificResearchMultiplier());
         }
     }
@@ -37309,15 +37360,15 @@ Industry.prototype.processProducts = function(marketCycles=1, corporation) {
                 var prod = this.products[prodName];
                 if (!prod.fin) {
                     var city = prod.createCity, office = this.offices[city];
-                    var total = office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Operations] +
-                                office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Engineer] +
-                                office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Management], ratio;
+                    var total = office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Operations] +
+                                office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Engineer] +
+                                office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Management], ratio;
                     if (total === 0) {
                         ratio = 0;
                     } else {
-                        ratio = office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Engineer] / total +
-                                office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Operations] / total +
-                                office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Management] / total;
+                        ratio = office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Engineer] / total +
+                                office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Operations] / total +
+                                office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Management] / total;
                     }
                     prod.createProduct(marketCycles, ratio * Math.pow(total, 0.29));
                     if (prod.prog >= 100) {
@@ -37333,7 +37384,7 @@ Industry.prototype.processProducts = function(marketCycles=1, corporation) {
     for (var prodName in this.products) {
         if (this.products.hasOwnProperty(prodName)) {
             var prod = this.products[prodName];
-            if (prod instanceof _Product__WEBPACK_IMPORTED_MODULE_5__["Product"] && prod.fin) {
+            if (prod instanceof _Product__WEBPACK_IMPORTED_MODULE_8__["Product"] && prod.fin) {
                 revenue += this.processProduct(marketCycles, prod, corporation);
             }
         }
@@ -37368,7 +37419,7 @@ Industry.prototype.processProduct = function(marketCycles=1, product, corporatio
             for (var reqMatName in product.reqMats) {
                 if (product.reqMats.hasOwnProperty(reqMatName)) {
                     var normQty = product.reqMats[reqMatName];
-                    netStorageSize -= (_MaterialSizes__WEBPACK_IMPORTED_MODULE_4__["MaterialSizes"][reqMatName] * normQty);
+                    netStorageSize -= (_MaterialSizes__WEBPACK_IMPORTED_MODULE_7__["MaterialSizes"][reqMatName] * normQty);
                 }
             }
 
@@ -37422,7 +37473,7 @@ Industry.prototype.processProduct = function(marketCycles=1, product, corporatio
 
             //Calculate Sale Cost (sCost), which could be dynamically evaluated
             var sCost;
-            if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_20__["isString"])(product.sCost)) {
+            if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25__["isString"])(product.sCost)) {
                 sCost = product.sCost.replace(/MP/g, product.pCost + product.rat / product.mku);
                 sCost = eval(sCost);
             } else {
@@ -37441,14 +37492,14 @@ Industry.prototype.processProduct = function(marketCycles=1, product, corporatio
             var maxSell = 0.5 * Math.pow(product.rat, 0.65) * marketFactor * corporation.getSalesMultiplier() *
                           Math.pow(markup, 2) * businessFactor * advertisingFactor;
             var sellAmt;
-            if (product.sllman[city][0] && Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_20__["isString"])(product.sllman[city][1])) {
+            if (product.sllman[city][0] && Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25__["isString"])(product.sllman[city][1])) {
                 //Sell amount is dynamically evaluated
                 var tmp = product.sllman[city][1].replace(/MAX/g, maxSell);
                 tmp = tmp.replace(/PROD/g, product.data[city][1]);
                 try {
                     tmp = eval(tmp);
                 } catch(e) {
-                    Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Error evaluating your sell price expression for " + product.name +
+                    Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Error evaluating your sell price expression for " + product.name +
                                     " in " + this.name + "'s " + city + " office. Sell price is being set to MAX");
                     tmp = maxSell;
                 }
@@ -37516,7 +37567,7 @@ Industry.prototype.upgrade = function(upgrade, refs) {
             this.awareness += (3 * advMult);
             this.popularity += (1 * advMult);
             this.awareness *= (1.01 * advMult);
-            this.popularity *= ((1 + Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(1, 3) / 100) * advMult);
+            this.popularity *= ((1 + Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(1, 3) / 100) * advMult);
             break;
         default:
             console.log("ERROR: Un-implemented function index: " + upgN);
@@ -37526,15 +37577,15 @@ Industry.prototype.upgrade = function(upgrade, refs) {
 
 //Returns how much of a material can be produced based of office productivity (employee stats)
 Industry.prototype.getOfficeProductivity = function(office, params) {
-    var total = office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Operations] +
-                office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Engineer] +
-                office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Management], ratio;
+    var total = office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Operations] +
+                office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Engineer] +
+                office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Management], ratio;
     if (total === 0) {
         ratio = 0;
     } else {
-        ratio = (office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Operations] / total) *
-                (office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Engineer] / total) *
-                (office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Management] / total);
+        ratio = (office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Operations] / total) *
+                (office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Engineer] / total) *
+                (office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Management] / total);
         ratio = Math.max(0.01, ratio); //Minimum ratio value if you have employees
     }
     if (params && params.forProduct) {
@@ -37548,9 +37599,9 @@ Industry.prototype.getOfficeProductivity = function(office, params) {
 Industry.prototype.getBusinessFactor = function(office) {
     var ratioMult = 1;
     if (office.employeeProd["total"] > 0) {
-        ratioMult = 1 + (office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Business] / office.employeeProd["total"]);
+        ratioMult = 1 + (office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Business] / office.employeeProd["total"]);
     }
-    return ratioMult * Math.pow(1 + office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Business], 0.15);
+    return ratioMult * Math.pow(1 + office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Business], 0.15);
 }
 
 //Returns a set of multipliers based on the Industry's awareness, popularity, and advFac. This
@@ -37569,15 +37620,82 @@ Industry.prototype.getMarketFactor = function(mat) {
     return mat.dmd * (100 - mat.cmp)/100;
 }
 
+// Create the Research Tree UI for this Industry
+Industry.prototype.createResearchBox = function() {
+    const boxId = "corporation-research-popup-box";
+
+    if (researchTreeBoxOpened) {
+        // It's already opened, so delete it to refresh content
+        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(boxId);
+        researchTreeBox = null;
+    }
+
+    // New popup box
+    const researchTree = _IndustryData__WEBPACK_IMPORTED_MODULE_4__["IndustryResearchTrees"][this.type];
+
+    // Get the tree's markup (i.e. config) for Treant
+    const markup = researchTree.createTreantMarkup();
+    markup.chart.container = "#" + boxId + "-content";
+    markup.chart.nodeAlign = "BOTTOM";
+    markup.chart.rootOrientation = "WEST";
+    markup.chart.siblingSeparation = 40;
+    markup.chart.connectors = {
+        type: "step",
+        style: {
+            "arrow-end": "block-wide-long",
+            "stroke": "white",
+            "stroke-width": 2,
+        },
+    }
+
+    // Create the popup first, so that the tree diagram can be added to it
+    // This is handled by Treant
+    researchTreeBox = Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__["createPopup"])(boxId, [], { backgroundColor: "black" });
+
+    // Construct the tree with Treant
+    const treantTree = new Treant(markup);
+
+    // Add Event Listeners for all Nodes
+    const allResearch = researchTree.getAllNodes();
+    for (let i = 0; i < allResearch.length; ++i) {
+        // Get the Research object
+        const research = _ResearchMap__WEBPACK_IMPORTED_MODULE_9__["ResearchMap"][allResearch[i]];
+
+        // Get the DOM Element to add a click listener to it
+        const sanitizedName = allResearch[i].replace(/\s/g, '');
+        const div = document.getElementById(sanitizedName + "-click-listener");
+        if (div == null) {
+            console.warn(`Could not find Research Tree div for ${sanitizedName}`);
+            continue;
+        }
+
+        div.addEventListener("click", () => {
+            if (this.sciResearch.qty >= research.cost) {
+                this.sciResearch.qty -= research.cost;
+
+                // Get the Node from the Research Tree and set its 'researched' property
+                const node = researchTree.findNode(allResearch[i]);
+                node.researched = true;
+
+                return createResearchBox();
+            } else {
+                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])(`You do not have enough Scientific Research for ${research.name}`);
+            }
+        });
+    }
+
+    researchTreeBoxOpened = true;
+}
+
 Industry.prototype.toJSON = function() {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__["Generic_toJSON"])("Industry", this);
+	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_19__["Generic_toJSON"])("Industry", this);
 }
 
 Industry.fromJSON = function(value) {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__["Generic_fromJSON"])(Industry, value.data);
+	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_19__["Generic_fromJSON"])(Industry, value.data);
 }
 
-_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__["Reviver"].constructors.Industry = Industry;
+_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_19__["Reviver"].constructors.Industry = Industry;
 
 function Employee(params={}) {
     if (!(this instanceof Employee)) {
@@ -37586,21 +37704,21 @@ function Employee(params={}) {
     this.name   = params.name           ? params.name           : "Bobby";
 
     //Morale, happiness, and energy are 0-100
-    this.mor    = params.morale         ? params.morale         : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(50, 100);
-    this.hap    = params.happiness      ? params.happiness      : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(50, 100);
-    this.ene    = params.energy         ? params.energy         : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(50, 100);
+    this.mor    = params.morale         ? params.morale         : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(50, 100);
+    this.hap    = params.happiness      ? params.happiness      : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(50, 100);
+    this.ene    = params.energy         ? params.energy         : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(50, 100);
 
-    this.age    = params.age            ? params.age            : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(20, 50);
-    this.int    = params.intelligence   ? params.intelligence   : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(10, 50);
-    this.cha    = params.charisma       ? params.charisma       : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(10, 50);
-    this.exp    = params.experience     ? params.experience     : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(10, 50);
-    this.cre    = params.creativity     ? params.creativity     : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(10, 50);
-    this.eff    = params.efficiency     ? params.efficiency     : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(10, 50);
-    this.sal    = params.salary         ? params.salary         : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(0.1, 5);
+    this.age    = params.age            ? params.age            : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(20, 50);
+    this.int    = params.intelligence   ? params.intelligence   : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(10, 50);
+    this.cha    = params.charisma       ? params.charisma       : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(10, 50);
+    this.exp    = params.experience     ? params.experience     : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(10, 50);
+    this.cre    = params.creativity     ? params.creativity     : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(10, 50);
+    this.eff    = params.efficiency     ? params.efficiency     : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(10, 50);
+    this.sal    = params.salary         ? params.salary         : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(0.1, 5);
     this.pro    = 0; //Productivity, This is calculated
 
     this.loc    = params.loc            ? params.loc : "";
-    this.pos    = _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Unassigned;
+    this.pos    = _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Unassigned;
 }
 
 //Returns the amount the employee needs to be paid
@@ -37617,7 +37735,7 @@ Employee.prototype.process = function(marketCycles=1, office) {
 
     //Training
     var trainingEff = gain * Math.random();
-    if (this.pos === _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Training) {
+    if (this.pos === _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Training) {
         //To increase creativity and intelligence special upgrades are needed
         this.cha += trainingEff;
         this.exp += trainingEff;
@@ -37649,27 +37767,27 @@ Employee.prototype.calculateProductivity = function(corporation) {
     switch(this.pos) {
         //Calculate productivity based on position. This is multipled by prodBase
         //to get final value
-        case _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Operations:
+        case _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Operations:
             prodMult = (0.6 * effInt) + (0.1 * effCha) + (this.exp) +
                        (0.5 * effCre) + (effEff);
             break;
-        case _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Engineer:
+        case _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Engineer:
             prodMult = (effInt) + (0.1 * effCha) + (1.5 * this.exp) +
                        (effEff);
             break;
-        case _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Business:
+        case _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Business:
             prodMult = (0.4 * effInt) + (effCha) + (0.5 * this.exp);
             break;
-        case _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Management:
+        case _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Management:
             prodMult = (2 * effCha) + (this.exp) + (0.2 * effCre) +
                        (0.7 * effEff);
             break;
-        case _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].RandD:
+        case _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].RandD:
             prodMult = (1.5 * effInt) + (0.8 * this.exp) + (effCre) +
                        (0.5 * effEff);
             break;
-        case _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Unassigned:
-        case _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Training:
+        case _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Unassigned:
+        case _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Training:
             prodMult = 0;
             break;
         default:
@@ -37696,27 +37814,27 @@ Employee.prototype.createUI = function(panel, corporation) {
         effInt = this.int * corporation.getEmployeeIntMultiplier(),
         effEff = this.eff * corporation.getEmployeeEffMultiplier();
     panel.style.color = "white";
-    panel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
+    panel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
         id:"cmpy-mgmt-employee-" + this.name + "-panel-text",
-        innerHTML:"Morale: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(this.mor, 3) + "<br>" +
-                  "Happiness: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(this.hap, 3) + "<br>" +
-                  "Energy: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(this.ene, 3) + "<br>" +
-                  "Age: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(this.age, 3) + "<br>" +
-                  "Intelligence: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(effInt, 3) + "<br>" +
-                  "Charisma: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(effCha, 3) + "<br>" +
-                  "Experience: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(this.exp, 3) + "<br>" +
-                  "Creativity: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(effCre, 3) + "<br>" +
-                  "Efficiency: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(effEff, 3) + "<br>" +
-                  "Salary: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(this.sal, "$0.000a") + "/ s<br>",
+        innerHTML:"Morale: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.mor, 3) + "<br>" +
+                  "Happiness: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.hap, 3) + "<br>" +
+                  "Energy: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.ene, 3) + "<br>" +
+                  "Age: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.age, 3) + "<br>" +
+                  "Intelligence: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(effInt, 3) + "<br>" +
+                  "Charisma: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(effCha, 3) + "<br>" +
+                  "Experience: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.exp, 3) + "<br>" +
+                  "Creativity: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(effCre, 3) + "<br>" +
+                  "Efficiency: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(effEff, 3) + "<br>" +
+                  "Salary: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(this.sal, "$0.000a") + "/ s<br>",
     }));
 
     //Selector for employee position
-    var selector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("select", {});
-    for (var key in _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"]) {
-        if (_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].hasOwnProperty(key)) {
-            selector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("option", {
-                text: _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"][key],
-                value: _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"][key],
+    var selector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("select", {});
+    for (var key in _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"]) {
+        if (_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].hasOwnProperty(key)) {
+            selector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("option", {
+                text: _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"][key],
+                value: _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"][key],
             }));
         }
     }
@@ -37748,27 +37866,27 @@ Employee.prototype.updateUI = function(panel, corporation) {
     if (text == null) {
         return this.createUI(panel);
     }
-    text.innerHTML  = "Morale: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(this.mor, 3) + "<br>" +
-                      "Happiness: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(this.hap, 3) + "<br>" +
-                      "Energy: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(this.ene, 3) + "<br>" +
-                      "Age: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(this.age, 3) + "<br>" +
-                      "Intelligence: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(effInt, 3) + "<br>" +
-                      "Charisma: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(effCha, 3) + "<br>" +
-                      "Experience: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(this.exp, 3) + "<br>" +
-                      "Creativity: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(effCre, 3) + "<br>" +
-                      "Efficiency: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(effEff, 3) + "<br>" +
-                      "Salary: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(this.sal, "$0.000a") + "/ s<br>";
+    text.innerHTML  = "Morale: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.mor, 3) + "<br>" +
+                      "Happiness: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.hap, 3) + "<br>" +
+                      "Energy: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.ene, 3) + "<br>" +
+                      "Age: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.age, 3) + "<br>" +
+                      "Intelligence: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(effInt, 3) + "<br>" +
+                      "Charisma: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(effCha, 3) + "<br>" +
+                      "Experience: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.exp, 3) + "<br>" +
+                      "Creativity: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(effCre, 3) + "<br>" +
+                      "Efficiency: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(effEff, 3) + "<br>" +
+                      "Salary: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(this.sal, "$0.000a") + "/ s<br>";
 }
 
 Employee.prototype.toJSON = function() {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__["Generic_toJSON"])("Employee", this);
+	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_19__["Generic_toJSON"])("Employee", this);
 }
 
 Employee.fromJSON = function(value) {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__["Generic_fromJSON"])(Employee, value.data);
+	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_19__["Generic_fromJSON"])(Employee, value.data);
 }
 
-_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__["Reviver"].constructors.Employee = Employee;
+_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_19__["Reviver"].constructors.Employee = Employee;
 
 var OfficeSpaceTiers = {
     Basic: "Basic",
@@ -37790,11 +37908,11 @@ function OfficeSpace(params={}) {
 
     this.employees = [];
     this.employeeProd = {
-        [_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Operations]:   0,
-        [_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Engineer]:     0,
-        [_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Business]:     0,
-        [_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Management]:   0,
-        [_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].RandD]:        0,
+        [_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Operations]:   0,
+        [_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Engineer]:     0,
+        [_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Business]:     0,
+        [_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Management]:   0,
+        [_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].RandD]:        0,
         total:                            0,
     };
 }
@@ -37845,14 +37963,14 @@ OfficeSpace.prototype.findEmployees = function(parentRefs) {
     if (document.getElementById("cmpy-mgmt-hire-employee-popup") != null) {return;}
 
     //Generate three random employees (meh, decent, amazing)
-    var mult1 = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(25, 50)/100,
-        mult2 = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(51, 75)/100,
-        mult3 = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(76, 100)/100;
-    var int = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(50, 100),
-        cha = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(50, 100),
-        exp = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(50, 100),
-        cre = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(50, 100),
-        eff = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(50, 100),
+    var mult1 = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(25, 50)/100,
+        mult2 = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(51, 75)/100,
+        mult3 = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(76, 100)/100;
+    var int = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(50, 100),
+        cha = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(50, 100),
+        exp = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(50, 100),
+        cre = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(50, 100),
+        eff = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(50, 100),
         sal = 2.2 * (int + cha + exp + cre + eff);
 
     var emp1 = new Employee({
@@ -37882,34 +38000,34 @@ OfficeSpace.prototype.findEmployees = function(parentRefs) {
         salary: sal * mult3,
     });
 
-    var text = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("h1", {
+    var text = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("h1", {
         innerHTML: "Select one of the following candidates for hire:",
     });
 
     var createEmpDiv = function(employee, office) {
-        var div = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {
+        var div = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {
             class:"cmpy-mgmt-find-employee-option",
-            innerHTML:  "Intelligence: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(employee.int, 1) + "<br>" +
-                        "Charisma: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(employee.cha, 1) + "<br>" +
-                        "Experience: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(employee.exp, 1) + "<br>" +
-                        "Creativity: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(employee.cre, 1) + "<br>" +
-                        "Efficiency: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(employee.eff, 1) + "<br>" +
-                        "Salary: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(employee.sal, '$0.000a') + " \ s<br>",
+            innerHTML:  "Intelligence: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(employee.int, 1) + "<br>" +
+                        "Charisma: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(employee.cha, 1) + "<br>" +
+                        "Experience: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(employee.exp, 1) + "<br>" +
+                        "Creativity: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(employee.cre, 1) + "<br>" +
+                        "Efficiency: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(employee.eff, 1) + "<br>" +
+                        "Salary: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(employee.sal, '$0.000a') + " \ s<br>",
             clickListener:()=>{
                 office.hireEmployee(employee, parentRefs);
-                Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])("cmpy-mgmt-hire-employee-popup");
+                Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])("cmpy-mgmt-hire-employee-popup");
                 return false;
             }
         });
         return div;
     };
 
-    var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+    var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
         class:"a-link-button",
         innerText:"Cancel",
         float:"right",
         clickListener:()=>{
-            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])("cmpy-mgmt-hire-employee-popup");
+            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])("cmpy-mgmt-hire-employee-popup");
             return false;
         }
     });
@@ -37920,32 +38038,32 @@ OfficeSpace.prototype.findEmployees = function(parentRefs) {
                  createEmpDiv(emp3, this),
                  cancelBtn];
 
-    Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_17__["createPopup"])("cmpy-mgmt-hire-employee-popup", elems);
+    Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__["createPopup"])("cmpy-mgmt-hire-employee-popup", elems);
 }
 
 OfficeSpace.prototype.hireEmployee = function(employee, parentRefs) {
     var company = parentRefs.corporation, division = parentRefs.division;
-    var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_23__[/* yesNoTxtInpBoxGetYesButton */ "j"])(),
-        noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_23__[/* yesNoTxtInpBoxGetNoButton */ "i"])();
+    var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__[/* yesNoTxtInpBoxGetYesButton */ "j"])(),
+        noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__[/* yesNoTxtInpBoxGetNoButton */ "i"])();
     yesBtn.innerHTML = "Hire";
     noBtn.innerHTML = "Cancel";
     yesBtn.addEventListener("click", ()=>{
-        var name = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_23__[/* yesNoTxtInpBoxGetInput */ "h"])();
+        var name = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__[/* yesNoTxtInpBoxGetInput */ "h"])();
         for (var i = 0; i < this.employees.length; ++i) {
             if (this.employees[i].name === name) {
-                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("You already have an employee with this nickname! Please give every employee a unique nickname.");
+                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("You already have an employee with this nickname! Please give every employee a unique nickname.");
                 return false;
             }
         }
         employee.name = name;
         this.employees.push(employee);
         company.displayDivisionContent(division, currentCityUi);
-        return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_23__[/* yesNoTxtInpBoxClose */ "f"])();
+        return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__[/* yesNoTxtInpBoxClose */ "f"])();
     });
     noBtn.addEventListener("click", ()=>{
-        return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_23__[/* yesNoTxtInpBoxClose */ "f"])();
+        return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__[/* yesNoTxtInpBoxClose */ "f"])();
     });
-    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_23__[/* yesNoTxtInpBoxCreate */ "g"])("Give your employee a nickname!");
+    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__[/* yesNoTxtInpBoxCreate */ "g"])("Give your employee a nickname!");
 }
 
 OfficeSpace.prototype.hireRandomEmployee = function(parentRefs) {
@@ -37953,12 +38071,12 @@ OfficeSpace.prototype.hireRandomEmployee = function(parentRefs) {
     if (document.getElementById("cmpy-mgmt-hire-employee-popup") != null) {return;}
 
     //Generate three random employees (meh, decent, amazing)
-    var mult = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(76, 100)/100;
-    var int = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(50, 100),
-        cha = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(50, 100),
-        exp = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(50, 100),
-        cre = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(50, 100),
-        eff = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_19__["getRandomInt"])(50, 100),
+    var mult = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(76, 100)/100;
+    var int = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(50, 100),
+        cha = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(50, 100),
+        exp = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(50, 100),
+        cre = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(50, 100),
+        eff = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(50, 100),
         sal = 2.2 * (int + cha + exp + cre + eff);
 
     var emp = new Employee({
@@ -37970,7 +38088,7 @@ OfficeSpace.prototype.hireRandomEmployee = function(parentRefs) {
         salary: sal * mult,
     });
 
-    var name = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["generateRandomString"])(7);
+    var name = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["generateRandomString"])(7);
 
     for (var i = 0; i < this.employees.length; ++i) {
         if (this.employees[i].name === name) {
@@ -37985,7 +38103,7 @@ OfficeSpace.prototype.hireRandomEmployee = function(parentRefs) {
 //Finds the first unassigned employee and assigns its to the specified job
 OfficeSpace.prototype.assignEmployeeToJob = function(job) {
     for (var i = 0; i < this.employees.length; ++i) {
-        if (this.employees[i].pos === _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Unassigned) {
+        if (this.employees[i].pos === _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Unassigned) {
             this.employees[i].pos = job;
             return true;
         }
@@ -37997,7 +38115,7 @@ OfficeSpace.prototype.assignEmployeeToJob = function(job) {
 OfficeSpace.prototype.unassignEmployeeFromJob = function(job) {
     for (var i = 0; i < this.employees.length; ++i) {
         if (this.employees[i].pos === job) {
-            this.employees[i].pos = _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Unassigned;
+            this.employees[i].pos = _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Unassigned;
             return true;
         }
     }
@@ -38005,14 +38123,14 @@ OfficeSpace.prototype.unassignEmployeeFromJob = function(job) {
 }
 
 OfficeSpace.prototype.toJSON = function() {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__["Generic_toJSON"])("OfficeSpace", this);
+	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_19__["Generic_toJSON"])("OfficeSpace", this);
 }
 
 OfficeSpace.fromJSON = function(value) {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__["Generic_fromJSON"])(OfficeSpace, value.data);
+	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_19__["Generic_fromJSON"])(OfficeSpace, value.data);
 }
 
-_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__["Reviver"].constructors.OfficeSpace = OfficeSpace;
+_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_19__["Reviver"].constructors.OfficeSpace = OfficeSpace;
 
 function Warehouse(params={}) {
     this.loc    = params.loc        ? params.loc    : "";
@@ -38028,17 +38146,17 @@ function Warehouse(params={}) {
     this.smartSupplyStore = 0;
 
     this.materials = {
-        Water:      new _Material__WEBPACK_IMPORTED_MODULE_3__["Material"]({name: "Water"}),
-        Energy:     new _Material__WEBPACK_IMPORTED_MODULE_3__["Material"]({name: "Energy"}),
-        Food:       new _Material__WEBPACK_IMPORTED_MODULE_3__["Material"]({name: "Food"}),
-        Plants:     new _Material__WEBPACK_IMPORTED_MODULE_3__["Material"]({name: "Plants"}),
-        Metal:      new _Material__WEBPACK_IMPORTED_MODULE_3__["Material"]({name: "Metal"}),
-        Hardware:   new _Material__WEBPACK_IMPORTED_MODULE_3__["Material"]({name: "Hardware"}),
-        Chemicals:  new _Material__WEBPACK_IMPORTED_MODULE_3__["Material"]({name: "Chemicals"}),
-        Drugs:      new _Material__WEBPACK_IMPORTED_MODULE_3__["Material"]({name: "Drugs"}),
-        Robots:     new _Material__WEBPACK_IMPORTED_MODULE_3__["Material"]({name: "Robots"}),
-        AICores:    new _Material__WEBPACK_IMPORTED_MODULE_3__["Material"]({name: "AI Cores"}),
-        RealEstate: new _Material__WEBPACK_IMPORTED_MODULE_3__["Material"]({name: "Real Estate"})
+        Water:      new _Material__WEBPACK_IMPORTED_MODULE_6__["Material"]({name: "Water"}),
+        Energy:     new _Material__WEBPACK_IMPORTED_MODULE_6__["Material"]({name: "Energy"}),
+        Food:       new _Material__WEBPACK_IMPORTED_MODULE_6__["Material"]({name: "Food"}),
+        Plants:     new _Material__WEBPACK_IMPORTED_MODULE_6__["Material"]({name: "Plants"}),
+        Metal:      new _Material__WEBPACK_IMPORTED_MODULE_6__["Material"]({name: "Metal"}),
+        Hardware:   new _Material__WEBPACK_IMPORTED_MODULE_6__["Material"]({name: "Hardware"}),
+        Chemicals:  new _Material__WEBPACK_IMPORTED_MODULE_6__["Material"]({name: "Chemicals"}),
+        Drugs:      new _Material__WEBPACK_IMPORTED_MODULE_6__["Material"]({name: "Drugs"}),
+        Robots:     new _Material__WEBPACK_IMPORTED_MODULE_6__["Material"]({name: "Robots"}),
+        AICores:    new _Material__WEBPACK_IMPORTED_MODULE_6__["Material"]({name: "AI Cores"}),
+        RealEstate: new _Material__WEBPACK_IMPORTED_MODULE_6__["Material"]({name: "Real Estate"})
     }
 }
 
@@ -38048,10 +38166,10 @@ Warehouse.prototype.updateMaterialSizeUsed = function() {
     for (var matName in this.materials) {
         if (this.materials.hasOwnProperty(matName)) {
             var mat = this.materials[matName];
-            if (_MaterialSizes__WEBPACK_IMPORTED_MODULE_4__["MaterialSizes"].hasOwnProperty(matName)) {
-                this.sizeUsed += (mat.qty * _MaterialSizes__WEBPACK_IMPORTED_MODULE_4__["MaterialSizes"][matName]);
+            if (_MaterialSizes__WEBPACK_IMPORTED_MODULE_7__["MaterialSizes"].hasOwnProperty(matName)) {
+                this.sizeUsed += (mat.qty * _MaterialSizes__WEBPACK_IMPORTED_MODULE_7__["MaterialSizes"][matName]);
                 if (mat.qty > 0) {
-                    this.breakdown += (matName + ": " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(mat.qty * _MaterialSizes__WEBPACK_IMPORTED_MODULE_4__["MaterialSizes"][matName], 0) + "<br>");
+                    this.breakdown += (matName + ": " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(mat.qty * _MaterialSizes__WEBPACK_IMPORTED_MODULE_7__["MaterialSizes"][matName], 0) + "<br>");
                 }
             }
         }
@@ -38076,8 +38194,8 @@ Warehouse.prototype.createUI = function(parentRefs) {
         return;
     }
     var company = parentRefs.company, industry = parentRefs.industry;
-    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_21__["removeChildrenFromElement"])(industryWarehousePanel);
-    industryWarehouseStorageText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
+    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_26__["removeChildrenFromElement"])(industryWarehousePanel);
+    industryWarehouseStorageText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
         display:"inline-block", class:"tooltip",
         color: this.sizeUsed >= this.size ? "red" : "white",
     });
@@ -38085,8 +38203,8 @@ Warehouse.prototype.createUI = function(parentRefs) {
 
     //Upgrade warehouse size button
     var upgradeCost = WarehouseUpgradeBaseCost * Math.pow(1.07, this.level+1);
-    industryWarehouseUpgradeSizeButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
-        innerText:"Upgrade Warehouse Size - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(upgradeCost, '$0.000a'),
+    industryWarehouseUpgradeSizeButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
+        innerText:"Upgrade Warehouse Size - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(upgradeCost, '$0.000a'),
         display:"inline-block",
         class: company.funds.lt(upgradeCost) ? "a-link-button-inactive" : "a-link-button",
         clickListener:()=>{
@@ -38135,23 +38253,23 @@ Warehouse.prototype.createUI = function(parentRefs) {
         reqRatioText += "one of its Products";
     }
 
-    industryWarehousePanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
+    industryWarehousePanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
         innerHTML:reqText, tooltipleft:reqRatioText
     }));
 
     //Current state
-    industryWarehouseStateText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p");
+    industryWarehouseStateText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p");
     industryWarehousePanel.appendChild(industryWarehouseStateText);
 
     //Smart Supply Enable/Disable
     if (company.unlockUpgrades[1]) {
         if (this.smartSupplyEnabled == null) {this.smartSupplyEnabled = false;}
         var smartSupplyCheckboxId = "cmpy-mgmt-smart-supply-checkbox";
-        industryWarehousePanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("label", {
+        industryWarehousePanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("label", {
             for:smartSupplyCheckboxId, innerText:"Enable Smart Supply",
             color:"white"
         }));
-        industrySmartSupplyCheckbox = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("input", {
+        industrySmartSupplyCheckbox = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("input", {
             type:"checkbox", id:smartSupplyCheckboxId, margin:"3px",
             changeListener:()=>{
                 this.smartSupplyEnabled = industrySmartSupplyCheckbox.checked;
@@ -38162,18 +38280,18 @@ Warehouse.prototype.createUI = function(parentRefs) {
     }
 
     //Materials
-    industryWarehousePanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
+    industryWarehousePanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
         innerHTML: "<br>Materials:<br>",
     }));
-    industryWarehouseMaterials = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("ul");
+    industryWarehouseMaterials = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("ul");
     industryWarehousePanel.appendChild(industryWarehouseMaterials);
 
     //Products
     if (industry.makesProducts && Object.keys(industry.products).length > 0) {
-        industryWarehousePanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
+        industryWarehousePanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
             innerHTML: "<br>Products:<br>",
         }));
-        industryWarehouseProducts = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("ul");
+        industryWarehouseProducts = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("ul");
         industryWarehousePanel.appendChild(industryWarehouseProducts);
     }
 
@@ -38189,8 +38307,8 @@ Warehouse.prototype.updateUI = function(parentRefs) {
 
     //Storage text
     var storageText = "Storage: " +
-                      (this.sizedUsed >= this.size ? Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(this.sizeUsed, 3) : Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(this.sizeUsed, 3)) +
-                      "/" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(this.size, 3);
+                      (this.sizedUsed >= this.size ? Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.sizeUsed, 3) : Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.sizeUsed, 3)) +
+                      "/" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.size, 3);
     if (this.breakdown != null && this.breakdown != "") {
         storageText += ("<span class='tooltiptext'>" +
                         this.breakdown + "</span>");
@@ -38230,9 +38348,9 @@ Warehouse.prototype.updateUI = function(parentRefs) {
     industryWarehouseStateText.innerText = stateText;
 
     //Materials
-    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_21__["removeChildrenFromElement"])(industryWarehouseMaterials);
+    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_26__["removeChildrenFromElement"])(industryWarehouseMaterials);
     for (var matName in this.materials) {
-        if (this.materials.hasOwnProperty(matName) && this.materials[matName] instanceof _Material__WEBPACK_IMPORTED_MODULE_3__["Material"]) {
+        if (this.materials.hasOwnProperty(matName) && this.materials[matName] instanceof _Material__WEBPACK_IMPORTED_MODULE_6__["Material"]) {
             if (Object.keys(industry.reqMats).includes(matName) || industry.prodMats.includes(matName) ||
                 matName === "Hardware" || matName === "Robots" || matName === "AICores" ||
                 matName === "RealEstate") {
@@ -38242,10 +38360,10 @@ Warehouse.prototype.updateUI = function(parentRefs) {
     }
 
     //Products
-    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_21__["removeChildrenFromElement"])(industryWarehouseProducts);
+    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_26__["removeChildrenFromElement"])(industryWarehouseProducts);
     if (industry.makesProducts && Object.keys(industry.products).length > 0) {
         for (var productName in industry.products) {
-            if (industry.products.hasOwnProperty(productName) && industry.products[productName] instanceof _Product__WEBPACK_IMPORTED_MODULE_5__["Product"]) {
+            if (industry.products.hasOwnProperty(productName) && industry.products[productName] instanceof _Product__WEBPACK_IMPORTED_MODULE_8__["Product"]) {
                 industryWarehouseProducts.appendChild(this.createProductUI(industry.products[productName], parentRefs));
             }
         }
@@ -38260,7 +38378,7 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
     var company = parentRefs.company, industry = parentRefs.industry;
     var purchasePopupId = "cmpy-mgmt-material-purchase-popup",
         sellPopupid = "cmpy-mgmt-material-sell-popup";
-    var div = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {
+    var div = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {
         class:"cmpy-mgmt-warehouse-material-div",
     });
 
@@ -38269,30 +38387,30 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
     //If Market Research upgrades are unlocked, add competition and demand info
     var cmpAndDmdText = "";
     if (company.unlockUpgrades[2] === 1) {
-        cmpAndDmdText += "<br>Demand: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(mat.dmd, 3);
+        cmpAndDmdText += "<br>Demand: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(mat.dmd, 3);
     }
     if (company.unlockUpgrades[3] === 1) {
-        cmpAndDmdText += "<br>Competition: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(mat.cmp, 3);
+        cmpAndDmdText += "<br>Competition: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(mat.cmp, 3);
     }
-    var innerTxt = "<p class='tooltip'>" + mat.name + ": " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(mat.qty, 3) +
-                   "(" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(totalGain, 3) +  "/s)" +
-                   "<span class='tooltiptext'>Buy: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(mat.buy, 3) +
-                   "/s<br>Prod: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(mat.prd, 3) + "/s<br>Sell: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(mat.sll, 3) +
-                   "/s<br>Export: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(mat.totalExp, 3) + "/s<br>Import: " +
-                   Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(mat.imp, 3) + "/s" + cmpAndDmdText + "</span></p><br>" +
-                   "<p class='tooltip'>MP: $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(mat.bCost, 2) +
+    var innerTxt = "<p class='tooltip'>" + mat.name + ": " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(mat.qty, 3) +
+                   "(" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(totalGain, 3) +  "/s)" +
+                   "<span class='tooltiptext'>Buy: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(mat.buy, 3) +
+                   "/s<br>Prod: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(mat.prd, 3) + "/s<br>Sell: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(mat.sll, 3) +
+                   "/s<br>Export: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(mat.totalExp, 3) + "/s<br>Import: " +
+                   Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(mat.imp, 3) + "/s" + cmpAndDmdText + "</span></p><br>" +
+                   "<p class='tooltip'>MP: $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(mat.bCost, 2) +
                    "<span class='tooltiptext'>Market Price: The price you would pay if " +
                    "you were to buy this material on the market</span></p><br>" +
-                   "<p class='tooltip'>Quality: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(mat.qlt, 2) +
+                   "<p class='tooltip'>Quality: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(mat.qlt, 2) +
                    "<span class='tooltiptext'>The quality of your material. Higher quality " +
                    "will lead to more sales</span></p>";
 
-    div.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
+    div.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
         innerHTML: innerTxt,
         id: "cmpy-mgmt-warehouse-" + matName + "-text", display:"inline-block",
     }));
 
-    var buttonPanel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {
+    var buttonPanel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {
         display:"inline-block",
     });
     div.appendChild(buttonPanel);
@@ -38301,82 +38419,82 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
     var tutorial = industry.newInd && Object.keys(industry.reqMats).includes(mat.name) &&
                    mat.buy === 0 && mat.imp === 0;
     var buyButtonParams = {
-        innerText: "Buy (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(mat.buy, 3) + ")", display:"inline-block",
+        innerText: "Buy (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(mat.buy, 3) + ")", display:"inline-block",
         class: tutorial ? "a-link-button flashing-button" : "a-link-button",
         clickListener:()=>{
-            var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
+            var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
                 innerHTML: "Enter the amount of " + mat.name + " you would like " +
                            "to purchase per second. This material's cost changes constantly"
             });
             var confirmBtn;
-            var input = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("input", {
+            var input = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("input", {
                 type:"number", value:mat.buy ? mat.buy : null, placeholder: "Purchase amount",
                 onkeyup:(e)=>{
                     e.preventDefault();
                     if (e.keyCode === 13) {confirmBtn.click();}
                 }
             });
-            confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+            confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
                 innerText:"Confirm", class:"a-link-button",
                 clickListener:()=>{
                     if (isNaN(input.value)) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Invalid amount");
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Invalid amount");
                     } else {
                         mat.buy = parseFloat(input.value);
                         if (isNaN(mat.buy)) {mat.buy = 0;}
-                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(purchasePopupId);
+                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(purchasePopupId);
                         this.createUI(parentRefs);
                         return false;
                     }
                 }
             });
-            var clearButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+            var clearButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
                 innerText:"Clear Purchase", class:"a-link-button",
                 clickListener:()=>{
                     mat.buy = 0;
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(purchasePopupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(purchasePopupId);
                     this.createUI(parentRefs);
                     return false;
                 }
             });
-            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
                 innerText:"Cancel", class:"a-link-button",
                 clickListener:()=>{
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(purchasePopupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(purchasePopupId);
                 }
             });
-            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_17__["createPopup"])(purchasePopupId, [txt, input, confirmBtn, clearButton, cancelBtn]);
+            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__["createPopup"])(purchasePopupId, [txt, input, confirmBtn, clearButton, cancelBtn]);
             input.focus();
         }
     };
     if (tutorial) {
         buyButtonParams.tooltip = "Purchase your required materials to get production started!";
     }
-    buttonPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", buyButtonParams));
+    buttonPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", buyButtonParams));
 
     //Button to manage exports
     if (company.unlockUpgrades[0] === 1) { //Export unlock upgrade
         function createExportPopup() {
             var popupId = "cmpy-mgmt-export-popup";
-            var exportTxt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
+            var exportTxt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
                 innerText:"Select the industry and city to export this material to, as well as " +
                           "how much of this material to export per second. You can set the export " +
                           "amount to 'MAX' to export all of the materials in this warehouse."
             });
 
             //Select industry and city to export to
-            var citySelector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("select", {class: "dropdown"});
-            var industrySelector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("select", {
+            var citySelector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("select", {class: "dropdown"});
+            var industrySelector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("select", {
                 class: "dropdown",
                 changeListener:()=>{
                     var industryName = industrySelector.options[industrySelector.selectedIndex].value;
                     for (var foo = 0; foo < company.divisions.length; ++foo) {
                         if (company.divisions[foo].name == industryName) {
-                            Object(_utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_14__["clearSelector"])(citySelector);
+                            Object(_utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_18__["clearSelector"])(citySelector);
                             var selectedIndustry = company.divisions[foo];
                             for (var cityName in company.divisions[foo].warehouses) {
                                 if (company.divisions[foo].warehouses[cityName] instanceof Warehouse) {
-                                    citySelector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("option", {
+                                    citySelector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("option", {
                                         value:cityName, text:cityName,
                                     }));
                                 }
@@ -38388,7 +38506,7 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
             });
 
             for (var i = 0; i < company.divisions.length; ++i) {
-                industrySelector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("option", {
+                industrySelector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("option", {
                     text:company.divisions[i].name, value:company.divisions[i].name,
                 })); //End create element option
             } //End for
@@ -38399,7 +38517,7 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                     for (var cityName in company.divisions[i].warehouses) {
                         if (company.divisions[i].warehouses.hasOwnProperty(cityName) &&
                             company.divisions[i].warehouses[cityName] instanceof Warehouse) {
-                            citySelector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("option", {
+                            citySelector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("option", {
                                 value:cityName, text:cityName,
                             }));
                         }
@@ -38409,12 +38527,12 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
             }
 
             //Select amount to export
-            var exportAmount = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("input", {
+            var exportAmount = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("input", {
                 class: "text-input",
                 placeholder:"Export amount / s"
             });
 
-            var exportBtn  = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+            var exportBtn  = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
                 class:"a-link-button", display:"inline-block", innerText:"Export",
                 clickListener:()=>{
                     var industryName = industrySelector.options[industrySelector.selectedIndex].text,
@@ -38427,81 +38545,81 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                     try {
                         temp = eval(temp);
                     } catch(e) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Invalid expression entered for export amount: " + e);
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Invalid expression entered for export amount: " + e);
                         return false;
                     }
 
                     if (temp == null || isNaN(temp)) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Invalid amount entered for export");
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Invalid amount entered for export");
                         return;
                     }
                     var exportObj = {ind:industryName, city:cityName, amt:sanitizedAmt};
                     mat.exp.push(exportObj);
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
                     return false;
                 }
             });
 
-            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
                 class:"a-link-button", display:"inline-block", innerText:"Cancel",
                 clickListener:()=>{
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
                     return false;
                 }
             });
 
-            var currExportsText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
+            var currExportsText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
                 innerText:"Below is a list of all current exports of this material from this warehouse. " +
                           "Clicking on one of the exports below will REMOVE that export."
             });
             var currExports = [];
             for (var i = 0; i < mat.exp.length; ++i) {
                 (function(i, mat, currExports){
-                currExports.push(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {
+                currExports.push(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {
                     class:"cmpy-mgmt-existing-export",
                     innerHTML: "Industry: " + mat.exp[i].ind + "<br>" +
                                "City: " + mat.exp[i].city + "<br>" +
                                "Amount/s: " + mat.exp[i].amt,
                     clickListener:()=>{
                         mat.exp.splice(i, 1); //Remove export object
-                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
+                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
                         createExportPopup();
                     }
                 }));
                 })(i, mat, currExports);
             }
-            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_17__["createPopup"])(popupId, [exportTxt, industrySelector, citySelector, exportAmount,
+            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__["createPopup"])(popupId, [exportTxt, industrySelector, citySelector, exportAmount,
                                   exportBtn, cancelBtn, currExportsText].concat(currExports));
         }
-        buttonPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+        buttonPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
             innerText:"Export", display:"inline-block", class:"a-link-button",
             clickListener:()=>{createExportPopup();}
         }));
     }
 
-    buttonPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("br", {})); // Force line break
+    buttonPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("br", {})); // Force line break
 
     //Button to set sell amount
     var innerTextString;
     if (mat.sllman[0]) {
-        innerTextString = (mat.sllman[1] === -1 ? "Sell (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(mat.sll, 3) + "/MAX)" :
-                          "Sell (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(mat.sll, 3) + "/" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(mat.sllman[1], 3) + ")");
+        innerTextString = (mat.sllman[1] === -1 ? "Sell (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(mat.sll, 3) + "/MAX)" :
+                          "Sell (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(mat.sll, 3) + "/" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(mat.sllman[1], 3) + ")");
         if (mat.sCost) {
-            if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_20__["isString"])(mat.sCost)) {
+            if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25__["isString"])(mat.sCost)) {
                 var sCost = mat.sCost.replace(/MP/g, mat.bCost);
-                innerTextString += " @ $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(eval(sCost), 2);
+                innerTextString += " @ $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(eval(sCost), 2);
             } else {
-                innerTextString += " @ $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(mat.sCost, 2);
+                innerTextString += " @ $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(mat.sCost, 2);
             }
         }
     } else {
         innerTextString = "Sell (0.000/0.000)";
     }
 
-    buttonPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+    buttonPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
         innerText: innerTextString, display:"inline-block", class:"a-link-button",
         clickListener:()=>{
-            var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
+            var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
                 innerHTML: "Enter the maximum amount of " + mat.name + " you would like " +
                            "to sell per second, as well as the price at which you would " +
                            "like to sell at.<br><br>" +
@@ -38516,9 +38634,9 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                            "changing price that depends on the market price. For example, if you set the sell price " +
                            "to 'MP+10' then it will always be sold at $10 above the market price.",
             });
-            var br = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("br", {});
+            var br = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("br", {});
             var confirmBtn;
-            var inputQty = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("input", {
+            var inputQty = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("input", {
                 type:"text", marginTop:"4px",
                 value: mat.sllman[1] ? mat.sllman[1] : null, placeholder: "Sell amount",
                 onkeyup:(e)=>{
@@ -38526,7 +38644,7 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                     if (e.keyCode === 13) {confirmBtn.click();}
                 }
             });
-            var inputPx = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("input", {
+            var inputPx = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("input", {
                 type:"text", marginTop:"4px",
                 value: mat.sCost ? mat.sCost : null, placeholder: "Sell price",
                 onkeyup:(e)=>{
@@ -38534,7 +38652,7 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                     if (e.keyCode === 13) {confirmBtn.click();}
                 }
             });
-            confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+            confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
                 innerText:"Confirm", class:"a-link-button", margin:"6px",
                 clickListener:()=>{
                     //Parse price
@@ -38544,12 +38662,12 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                     try {
                         temp = eval(temp);
                     } catch(e) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Invalid value or expression for sell price field: " + e);
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Invalid value or expression for sell price field: " + e);
                         return false;
                     }
 
                     if (temp == null || isNaN(temp)) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Invalid value or expression for sell price field");
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Invalid value or expression for sell price field");
                         return false;
                     }
 
@@ -38568,19 +38686,19 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                         try {
                             temp = eval(temp);
                         } catch(e) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Invalid value or expression for sell price field: " + e);
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Invalid value or expression for sell price field: " + e);
                             return false;
                         }
 
                         if (temp == null || isNaN(temp)) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Invalid value or expression for sell price field");
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Invalid value or expression for sell price field");
                             return false;
                         }
 
                         mat.sllman[0] = true;
                         mat.sllman[1] = qty; //Use sanitized input
                     } else if (isNaN(inputQty.value)) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Invalid value for sell quantity field! Must be numeric or 'MAX'");
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Invalid value for sell quantity field! Must be numeric or 'MAX'");
                         return false;
                     } else {
                         var qty = parseFloat(inputQty.value);
@@ -38595,17 +38713,17 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                     }
 
                     this.createUI(parentRefs);
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(sellPopupid);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(sellPopupid);
                     return false;
                 }
             });
-            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
                 innerText:"Cancel", class:"a-link-button", margin: "6px",
                 clickListener:()=>{
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(sellPopupid);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(sellPopupid);
                 }
             });
-            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_17__["createPopup"])(sellPopupid, [txt, br, inputQty, inputPx, confirmBtn, cancelBtn]);
+            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__["createPopup"])(sellPopupid, [txt, br, inputQty, inputPx, confirmBtn, cancelBtn]);
             inputQty.focus();
         }
     }));
@@ -38616,15 +38734,15 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
 Warehouse.prototype.createProductUI = function(product, parentRefs) {
     var company = parentRefs.company, industry = parentRefs.industry,
         city = currentCityUi;
-    var div = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {
+    var div = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {
         class:"cmpy-mgmt-warehouse-product-div"
     });
 
     //Products being designed TODO
     if (!product.fin) {
-        div.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
+        div.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
             innerHTML: "Designing " + product.name + "...<br>" +
-                        Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(product.prog, 2) + "% complete",
+                        Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(product.prog, 2) + "% complete",
         }));
         return div;
     }
@@ -38632,53 +38750,53 @@ Warehouse.prototype.createProductUI = function(product, parentRefs) {
     //Completed products
     var cmpAndDmdText = "";
     if (company.unlockUpgrades[2] === 1) {
-        cmpAndDmdText += "<br>Demand: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(product.dmd, 3);
+        cmpAndDmdText += "<br>Demand: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(product.dmd, 3);
     }
     if (company.unlockUpgrades[3] === 1) {
-        cmpAndDmdText += "<br>Competition: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(product.cmp, 3);
+        cmpAndDmdText += "<br>Competition: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(product.cmp, 3);
     }
 
     var totalGain = product.data[city][1] - product.data[city][2]; //Production - sale
-    div.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
-        innerHTML: "<p class='tooltip'>" + product.name + ": " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(product.data[city][0], 3) + //Quantity
-                   "(" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(totalGain, 3) + "/s)" +
-                   "<span class='tooltiptext'>Prod: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(product.data[city][1], 3) + "/s<br>" +
-                   "Sell: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(product.data[city][2], 3) + "/s</span></p><br>" +
-                   "<p class='tooltip'>Rating: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(product.rat, 3) +
-                   "<span class='tooltiptext'>Quality: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(product.qlt, 3) + "<br>" +
-                   "Performance: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(product.per, 3) + "<br>" +
-                   "Durability: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(product.dur, 3) + "<br>" +
-                   "Reliability: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(product.rel, 3) + "<br>" +
-                   "Aesthetics: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(product.aes, 3) + "<br>" +
-                   "Features: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(product.fea, 3) +
+    div.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
+        innerHTML: "<p class='tooltip'>" + product.name + ": " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(product.data[city][0], 3) + //Quantity
+                   "(" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(totalGain, 3) + "/s)" +
+                   "<span class='tooltiptext'>Prod: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(product.data[city][1], 3) + "/s<br>" +
+                   "Sell: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(product.data[city][2], 3) + "/s</span></p><br>" +
+                   "<p class='tooltip'>Rating: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(product.rat, 3) +
+                   "<span class='tooltiptext'>Quality: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(product.qlt, 3) + "<br>" +
+                   "Performance: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(product.per, 3) + "<br>" +
+                   "Durability: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(product.dur, 3) + "<br>" +
+                   "Reliability: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(product.rel, 3) + "<br>" +
+                   "Aesthetics: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(product.aes, 3) + "<br>" +
+                   "Features: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(product.fea, 3) +
                    cmpAndDmdText + "</span></p><br>" +
-                   "<p class='tooltip'>Est. Production Cost: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(product.pCost / ProductProductionCostRatio, "$0.000a") +
+                   "<p class='tooltip'>Est. Production Cost: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(product.pCost / ProductProductionCostRatio, "$0.000a") +
                    "<span class='tooltiptext'>An estimate of the material cost it takes to create this Product.</span></p><br>" +
-                   "<p class='tooltip'>Est. Market Price: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(product.pCost + product.rat / product.mku, "$0.000a") +
+                   "<p class='tooltip'>Est. Market Price: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(product.pCost + product.rat / product.mku, "$0.000a") +
                    "<span class='tooltiptext'>An estimate of how much consumers are willing to pay for this product. " +
                    "Setting the sale price above this may result in less sales. Setting the sale price below this may result " +
                    "in more sales.</span></p>"
     }));
-    var buttonPanel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {
+    var buttonPanel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {
         display:"inline-block",
     });
     div.appendChild(buttonPanel);
 
     //Sell button
-    var sellInnerTextString = (product.sllman[city][1] === -1 ? "Sell (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(product.data[city][2], 3) + "/MAX)" :
-                              "Sell (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(product.data[city][2], 3) + "/" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(product.sllman[city][1], 3) + ")");
+    var sellInnerTextString = (product.sllman[city][1] === -1 ? "Sell (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(product.data[city][2], 3) + "/MAX)" :
+                              "Sell (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(product.data[city][2], 3) + "/" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(product.sllman[city][1], 3) + ")");
     if (product.sCost) {
-        if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_20__["isString"])(product.sCost)) {
+        if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25__["isString"])(product.sCost)) {
             sellInnerTextString += (" @ " + product.sCost);
         } else {
-            sellInnerTextString += (" @ " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(product.sCost, "$0.000a"));
+            sellInnerTextString += (" @ " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(product.sCost, "$0.000a"));
         }
     }
-    div.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+    div.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
         innerText:sellInnerTextString, class:"a-link-button", display:"inline-block",margin:"6px",
         clickListener:()=>{
             var popupId = "cmpy-mgmt-sell-product-popup";
-            var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
+            var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
                 innerHTML:"Enter the maximum amount of " + product.name + " you would like " +
                           "to sell per second, as well as the price at which you would like to " +
                           "sell it at.<br><br>" +
@@ -38696,21 +38814,21 @@ Warehouse.prototype.createProductUI = function(product, parentRefs) {
                           "will always be sold at five times the estimated market price.",
             });
             var confirmBtn;
-            var inputQty = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("input", {
+            var inputQty = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("input", {
                 type:"text", value:product.sllman[city][1] ? product.sllman[city][1] : null, placeholder: "Sell amount",
                 onkeyup:(e)=>{
                     e.preventDefault();
                     if (e.keyCode === 13) {confirmBtn.click();}
                 }
             });
-            var inputPx = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("input", {
+            var inputPx = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("input", {
                 type:"text", value: product.sCost ? product.sCost : null, placeholder: "Sell price",
                 onkeyup:(e)=>{
                     e.preventDefault();
                     if (e.keyCode === 13) {confirmBtn.click();}
                 }
             });
-            confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+            confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
                 class:"a-link-button", innerText:"Confirm",
                 clickListener:()=>{
                     //Parse price
@@ -38723,18 +38841,18 @@ Warehouse.prototype.createProductUI = function(product, parentRefs) {
                         try {
                             temp = eval(temp);
                         } catch(e) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Invalid value or expression for sell quantity field: " + e);
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Invalid value or expression for sell quantity field: " + e);
                             return false;
                         }
                         if (temp == null || isNaN(temp)) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Invalid value or expression for sell quantity field.");
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Invalid value or expression for sell quantity field.");
                             return false;
                         }
                         product.sCost = price; //Use sanitized price
                     } else {
                         var cost = parseFloat(inputPx.value);
                         if (isNaN(cost)) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Invalid value for sell price field");
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Invalid value for sell price field");
                             return false;
                         }
                         product.sCost = cost;
@@ -38750,18 +38868,18 @@ Warehouse.prototype.createProductUI = function(product, parentRefs) {
                         try {
                             temp = eval(temp);
                         } catch(e) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Invalid value or expression for sell price field: " + e);
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Invalid value or expression for sell price field: " + e);
                             return false;
                         }
 
                         if (temp == null || isNaN(temp)) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Invalid value or expression for sell price field");
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Invalid value or expression for sell price field");
                             return false;
                         }
                         product.sllman[city][0] = true;
                         product.sllman[city][1] = qty; //Use sanitized input
                     } else if (isNaN(inputQty.value)) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Invalid value for sell quantity field! Must be numeric");
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Invalid value for sell quantity field! Must be numeric");
                         return false;
                     } else {
                         var qty = parseFloat(inputQty.value);
@@ -38774,55 +38892,55 @@ Warehouse.prototype.createProductUI = function(product, parentRefs) {
                         }
                     }
                     this.createUI(parentRefs);
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
                     return false;
                 }
             });
-            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
                 class:"a-link-button", innerText:"Cancel",
                 clickListener:()=>{
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
                     return false;
                 }
             });
-            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_17__["createPopup"])(popupId, [txt, inputQty, inputPx, confirmBtn, cancelBtn]);
+            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__["createPopup"])(popupId, [txt, inputQty, inputPx, confirmBtn, cancelBtn]);
             inputQty.focus();
         }
     }));
-    div.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("br",{})); //force line break
+    div.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("br",{})); //force line break
 
     //Limit production button
     var limitProductionInnerText = "Limit Production";
     if (product.prdman[city][0]) {
-        limitProductionInnerText += " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(product.prdman[city][1], 3) + ")";
+        limitProductionInnerText += " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(product.prdman[city][1], 3) + ")";
     }
-    div.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+    div.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
         class:"a-link-button", innerText:limitProductionInnerText,display:"inline-block",
         clickListener:()=>{
             var popupId = "cmpy-mgmt-limit-product-production-popup";
-            var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
+            var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
                 innerText:"Enter a limit to the amount of this product you would " +
                           "like to product per second. Leave the box empty to set no limit."
             });
             var confirmBtn;
-            var input = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("input", {
+            var input = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("input", {
                 type:"number", placeholder:"Limit",
                 onkeyup:(e)=>{
                     e.preventDefault();
                     if (e.keyCode === 13) {confirmBtn.click();}
                 }
             });
-            confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+            confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
                 class:"a-link-button", display:"inline-block", innerText:"Limit production", margin:'6px',
                 clickListener:()=>{
                     if (input.value === "") {
                         product.prdman[city][0] = false;
-                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
+                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
                         return false;
                     }
                     var qty = parseFloat(input.value);
                     if (isNaN(qty)) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Invalid value entered");
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Invalid value entered");
                         return false;
                     }
                     if (qty < 0) {
@@ -38831,155 +38949,62 @@ Warehouse.prototype.createProductUI = function(product, parentRefs) {
                         product.prdman[city][0] = true;
                         product.prdman[city][1] = qty;
                     }
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
                     return false;
                 }
             });
-            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
                 class:"a-link-button", display:"inline-block", innerText:"Cancel", margin:"6px",
                 clickListener:()=>{
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
                     return false;
                 }
             });
-            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_17__["createPopup"])(popupId, [txt, input, confirmBtn, cancelBtn]);
+            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__["createPopup"])(popupId, [txt, input, confirmBtn, cancelBtn]);
         }
     }));
 
     //Discontinue button
-    div.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+    div.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
         class:'a-link-button', display:"inline-block",innerText:"Discontinue",
         clickListener:()=>{
             var popupId = "cmpy-mgmt-discontinue-product-popup";
-            var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
+            var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
                 innerText:"Are you sure you want to do this? Discontinuing a product " +
                           "removes it completely and permanently. You will no longer " +
                           "produce this product and all of its existing stock will be " +
                           "removed and left unsold",
             });
-            var confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+            var confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
                 class:"a-link-button",innerText:"Discontinue",
                 clickListener:()=>{
                     industry.discontinueProduct(product, parentRefs);
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
                     return false;
                 }
             });
-            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
                 class:"a-link-button", innerText:"Cancel",
                 clickListener:()=>{
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
                     return false;
                 }
             });
-            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_17__["createPopup"])(popupId, [txt, confirmBtn, cancelBtn]);
+            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__["createPopup"])(popupId, [txt, confirmBtn, cancelBtn]);
         }
     }));
     return div;
 }
 
 Warehouse.prototype.toJSON = function() {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__["Generic_toJSON"])("Warehouse", this);
+	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_19__["Generic_toJSON"])("Warehouse", this);
 }
 
 Warehouse.fromJSON = function(value) {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__["Generic_fromJSON"])(Warehouse, value.data);
+	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_19__["Generic_fromJSON"])(Warehouse, value.data);
 }
 
-_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__["Reviver"].constructors.Warehouse = Warehouse;
-
-//Corporation Unlock Upgrades
-//Upgrades for entire corporation, unlocks features, either you have it or you dont
-//The structure is [index in Corporation feature upgrades array, price ]
-var CorporationUnlockUpgrades = {
-    //Lets you export goods
-    "0":  [0, 20e9, "Export",
-                    "Develop infrastructure to export your materials to your other facilities. " +
-                    "This allows you to move materials around between different divisions and cities."],
-
-    //Lets you buy exactly however many required materials you need for production
-    "1":  [1, 50e9, "Smart Supply", "Use advanced AI to anticipate your supply needs. " +
-                     "This allows you to purchase exactly however many materials you need for production."],
-
-    //Displays each material/product's demand
-    "2":  [2, 5e9, "Market Research - Demand",
-                    "Mine and analyze market data to determine the demand of all resources. " +
-                    "The demand attribute, which affects sales, will be displayed for every material and product."],
-
-    //Display's each material/product's competition
-    "3":  [3, 5e9, "Market Data - Competition",
-                    "Mine and analyze market data to determine how much competition there is on the market " +
-                    "for all resources. The competition attribute, which affects sales, will be displayed for " +
-                    "for every material and product."],
-    "4":  [4, 10e9, "VeChain",
-                    "Use AI and blockchain technology to identify where you can improve your supply chain systems. " +
-                    "This upgrade will allow you to view a wide array of useful statistics about your " +
-                    "Corporation."]
-}
-
-//Corporation Upgrades
-//Upgrades for entire corporation, levelable upgrades
-//The structure is [index in Corporation upgrades array, base price, price mult, benefit mult (additive),
-//                  name, desc]
-var CorporationUpgrades = {
-    //Smart factories, increases production
-    "0":    [0, 2e9, 1.07, 0.03,
-            "Smart Factories", "Advanced AI automatically optimizes the operation and productivity " +
-            "of factories. Each level of this upgrade increases your global production by 3% (additive)."],
-
-    //Smart warehouses, increases storage size
-    "1":    [1, 2e9, 1.07, .1,
-             "Smart Storage", "Advanced AI automatically optimizes your warehouse storage methods. " +
-             "Each level of this upgrade increases your global warehouse storage size by 10% (additive)."],
-
-    //Advertise through dreams, passive popularity/ awareness gain
-    "2":    [2, 8e9, 1.09, .001,
-            "DreamSense", "Use DreamSense LCC Technologies to advertise your corporation " +
-            "to consumers through their dreams. Each level of this upgrade provides a passive " +
-            "increase in awareness of all of your companies (divisions) by 0.004 / market cycle," +
-            "and in popularity by 0.001 / market cycle. A market cycle is approximately " +
-            "20 seconds."],
-
-    //Makes advertising more effective
-    "3":    [3, 4e9, 1.12, 0.005,
-            "Wilson Analytics", "Purchase data and analysis from Wilson, a marketing research " +
-            "firm. Each level of this upgrades increases the effectiveness of your " +
-            "advertising by 0.5% (additive)."],
-
-    //Augmentation for employees, increases cre
-    "4":    [4, 1e9, 1.06, 0.1,
-            "Nuoptimal Nootropic Injector Implants", "Purchase the Nuoptimal Nootropic " +
-            "Injector augmentation for your employees. Each level of this upgrade " +
-            "globally increases the creativity of your employees by 10% (additive)."],
-
-    //Augmentation for employees, increases cha
-    "5":    [5, 1e9, 1.06, 0.1,
-            "Speech Processor Implants", "Purchase the Speech Processor augmentation for your employees. " +
-            "Each level of this upgrade globally increases the charisma of your employees by 10% (additive)."],
-
-    //Augmentation for employees, increases int
-    "6":    [6, 1e9, 1.06, 0.1,
-            "Neural Accelerators", "Purchase the Neural Accelerator augmentation for your employees. " +
-            "Each level of this upgrade globally increases the intelligence of your employees " +
-            "by 10% (additive)."],
-
-    //Augmentation for employees, increases eff
-    "7":    [7, 1e9, 1.06, 0.1,
-            "FocusWires", "Purchase the FocusWire augmentation for your employees. Each level " +
-            "of this upgrade globally increases the efficiency of your employees by 10% (additive)."],
-
-    //Improves sales of materials/products
-    "8":    [8, 1e9, 1.08, 0.01,
-            "ABC SalesBots", "Always Be Closing. Purchase these robotic salesmen to increase the amount of " +
-            "materials and products you sell. Each level of this upgrade globally increases your sales " +
-            "by 1% (additive)."],
-
-    //Improves scientific research rate
-    "9":    [9, 5e9, 1.07, 0.05,
-            "Project Insight", "Purchase 'Project Insight', a R&D service provided by the secretive " +
-            "Fulcrum Technologies. Each level of this upgrade globally increases the amount of " +
-            "Scientific Research you produce by 5% (additive)."],
-}
+_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_19__["Reviver"].constructors.Warehouse = Warehouse;
 
 function Corporation(params={}) {
     this.name = params.name ? params.name : "The Corporation";
@@ -38988,9 +39013,9 @@ function Corporation(params={}) {
     this.divisions = [];
 
     //Financial stats
-    this.funds      = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](150e9);
-    this.revenue    = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](0);
-    this.expenses   = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](0);
+    this.funds      = new decimal_js__WEBPACK_IMPORTED_MODULE_30__[/* default */ "a"](150e9);
+    this.revenue    = new decimal_js__WEBPACK_IMPORTED_MODULE_30__[/* default */ "a"](0);
+    this.expenses   = new decimal_js__WEBPACK_IMPORTED_MODULE_30__[/* default */ "a"](0);
     this.fundingRound = 0;
     this.public     = false; //Publicly traded
     this.numShares  = TOTALSHARES;
@@ -38998,8 +39023,8 @@ function Corporation(params={}) {
     this.sharePrice = 0;
     this.storedCycles = 0;
 
-    var numUnlockUpgrades = Object.keys(CorporationUnlockUpgrades).length,
-        numUpgrades = Object.keys(CorporationUpgrades).length;
+    var numUnlockUpgrades = Object.keys(_CorporationUnlockUpgrades__WEBPACK_IMPORTED_MODULE_1__["CorporationUnlockUpgrades"]).length,
+        numUpgrades = Object.keys(_CorporationUpgrades__WEBPACK_IMPORTED_MODULE_2__["CorporationUpgrades"]).length;
 
     this.unlockUpgrades = Array(numUnlockUpgrades).fill(0);
     this.upgrades = Array(numUpgrades).fill(0);
@@ -39024,8 +39049,8 @@ Corporation.prototype.process = function() {
 
         //At the start of a new cycle, calculate profits from previous cycle
         if (state === "START") {
-            this.revenue = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](0);
-            this.expenses = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](0);
+            this.revenue = new decimal_js__WEBPACK_IMPORTED_MODULE_30__[/* default */ "a"](0);
+            this.expenses = new decimal_js__WEBPACK_IMPORTED_MODULE_30__[/* default */ "a"](0);
             this.divisions.forEach((ind) => {
                 if (ind.lastCycleRevenue === -Infinity || ind.lastCycleRevenue === Infinity) { return; }
                 if (ind.lastCycleExpenses === -Infinity || ind.lastCycleExpenses === Infinity) { return; }
@@ -39035,10 +39060,10 @@ Corporation.prototype.process = function() {
             var profit = this.revenue.minus(this.expenses);
             var cycleProfit = profit.times(marketCycles * SecsPerMarketCycle);
             if (isNaN(this.funds)) {
-                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("There was an error calculating your Corporations funds and they got reset to 0. " +
+                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("There was an error calculating your Corporations funds and they got reset to 0. " +
                                 "This is a bug. Please report to game developer.<br><br>" +
                                 "(Your funds have been set to $150b for the inconvenience)");
-                this.funds = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](150e9);
+                this.funds = new decimal_js__WEBPACK_IMPORTED_MODULE_30__[/* default */ "a"](150e9);
             }
             this.funds = this.funds.plus(cycleProfit);
             this.updateSharePrice();
@@ -39051,7 +39076,7 @@ Corporation.prototype.process = function() {
 
         this.state.nextState();
 
-        if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_12__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_12__["Page"].Corporation)) {this.updateUIContent();}
+        if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_16__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_16__["Page"].Corporation)) {this.updateUIContent();}
     }
 }
 
@@ -39071,7 +39096,7 @@ Corporation.prototype.determineValuation = function() {
         }
         val -= (val % 1e6); //Round down to nearest millionth
     }
-    return val * _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_6__["BitNodeMultipliers"].CorporationValuation;
+    return val * _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_10__["BitNodeMultipliers"].CorporationValuation;
 }
 
 Corporation.prototype.getInvestment = function() {
@@ -39094,8 +39119,8 @@ Corporation.prototype.getInvestment = function() {
     }
     var funding = val * percShares * 4,
         investShares = Math.floor(TOTALSHARES * percShares),
-        yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_23__[/* yesNoBoxGetYesButton */ "d"])(),
-        noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_23__[/* yesNoBoxGetNoButton */ "c"])();
+        yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__[/* yesNoBoxGetYesButton */ "d"])(),
+        noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__[/* yesNoBoxGetNoButton */ "c"])();
     yesBtn.innerHTML = "Accept";
     noBtn.innerHML = "Reject";
     yesBtn.addEventListener("click", ()=>{
@@ -39103,32 +39128,32 @@ Corporation.prototype.getInvestment = function() {
         this.funds = this.funds.plus(funding);
         this.numShares -= investShares;
         this.displayCorporationOverviewContent();
-        return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_23__[/* yesNoBoxClose */ "a"])();
+        return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__[/* yesNoBoxClose */ "a"])();
     });
     noBtn.addEventListener("click", ()=>{
-        return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_23__[/* yesNoBoxClose */ "a"])();
+        return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__[/* yesNoBoxClose */ "a"])();
     });
-    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_23__[/* yesNoBoxCreate */ "b"])("An investment firm has offered you " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(funding, '$0.000a') +
-                   " in funding in exchange for a " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(percShares*100, "0.000a") +
-                   "% stake in the company (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(investShares, '0.000a') + " shares).<br><br>" +
+    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__[/* yesNoBoxCreate */ "b"])("An investment firm has offered you " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(funding, '$0.000a') +
+                   " in funding in exchange for a " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(percShares*100, "0.000a") +
+                   "% stake in the company (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(investShares, '0.000a') + " shares).<br><br>" +
                    "Do you accept or reject this offer?");
 }
 
 Corporation.prototype.goPublic = function() {
     var goPublicPopupId = "cmpy-mgmt-go-public-popup";
     var initialSharePrice = this.determineValuation() / (TOTALSHARES);
-    var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
+    var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
         innerHTML: "Enter the number of shares you would like to issue " +
                    "for your IPO. These shares will be publicly sold " +
                    "and you will no longer own them. Your Corporation will receive " +
-                   _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(initialSharePrice, '$0.000a') + " per share " +
+                   _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(initialSharePrice, '$0.000a') + " per share " +
                    "(the IPO money will be deposited directly into your Corporation's funds).<br><br>" +
                    "Furthermore, issuing more shares now will help drive up " +
                    "your company's stock price in the future.<br><br>" +
-                   "You have a total of " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(this.numShares, "0.000a") + " of shares that you can issue.",
+                   "You have a total of " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(this.numShares, "0.000a") + " of shares that you can issue.",
     });
     var yesBtn;
-    var input = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("input", {
+    var input = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("input", {
         type:"number",
         placeholder: "Shares to issue",
         onkeyup:(e)=>{
@@ -39136,19 +39161,19 @@ Corporation.prototype.goPublic = function() {
             if (e.keyCode === 13) {yesBtn.click();}
         }
     });
-    var br = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("br", {});
-    yesBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+    var br = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("br", {});
+    yesBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
         class:"a-link-button",
         innerText:"Go Public",
         clickListener:()=>{
             var numShares = Math.round(input.value);
             var initialSharePrice = this.determineValuation() / (TOTALSHARES);
             if (isNaN(numShares)) {
-                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Invalid value for number of issued shares");
+                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Invalid value for number of issued shares");
                 return false;
             }
             if (numShares > this.numShares) {
-                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Error: You don't have that many shares to issue!");
+                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Error: You don't have that many shares to issue!");
                 return false;
             }
             this.public = true;
@@ -39157,19 +39182,19 @@ Corporation.prototype.goPublic = function() {
             this.numShares -= numShares;
             this.funds = this.funds.plus(numShares * initialSharePrice);
             this.displayCorporationOverviewContent();
-            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(goPublicPopupId);
+            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(goPublicPopupId);
             return false;
         }
     });
-    var noBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+    var noBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
         class:"a-link-button",
         innerText:"Cancel",
         clickListener:()=>{
-            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(goPublicPopupId);
+            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(goPublicPopupId);
             return false;
         }
     });
-    Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_17__["createPopup"])(goPublicPopupId, [txt, br, input, yesBtn, noBtn]);
+    Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__["createPopup"])(goPublicPopupId, [txt, br, input, yesBtn, noBtn]);
 }
 
 Corporation.prototype.updateSharePrice = function() {
@@ -39189,7 +39214,7 @@ Corporation.prototype.unlock = function(upgrade) {
         this.unlockUpgrades.push(0);
     }
     if (this.funds.lt(price)) {
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("You don't have enough funds to unlock this!");
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("You don't have enough funds to unlock this!");
         return;
     }
     this.unlockUpgrades[upgN] = 1;
@@ -39204,7 +39229,7 @@ Corporation.prototype.upgrade = function(upgrade) {
     while (this.upgradeMultipliers.length <= upgN) {this.upgradeMultipliers.push(1);}
     var totalCost = basePrice * Math.pow(priceMult, this.upgrades[upgN]);
     if (this.funds.lt(totalCost)) {
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("You don't have enough funds to purchase this!");
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("You don't have enough funds to purchase this!");
         return;
     }
     ++this.upgrades[upgN];
@@ -39296,21 +39321,27 @@ var companyManagementDiv, companyManagementHeaderTabs, companyManagementPanel,
     industryWarehousePanel, industrySmartSupplyCheckbox, industryWarehouseStorageText,
         industryWarehouseUpgradeSizeButton, industryWarehouseStateText,
         industryWarehouseMaterials, industryWarehouseProducts,
+
+    // Research Tree
+    researchTreeBoxOpened = false,
+    researchTreeBox,
+
+    // Tabs
     headerTabs, cityTabs;
 Corporation.prototype.createUI = function() {
-    companyManagementDiv = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {
+    companyManagementDiv = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {
         id:"cmpy-mgmt-container",
         position:"fixed",
         class:"generic-menupage-container"
     });
-    companyManagementHeaderTabs = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {id:"cmpy-mgmt-header-tabs"});
+    companyManagementHeaderTabs = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {id:"cmpy-mgmt-header-tabs"});
     companyManagementDiv.appendChild(companyManagementHeaderTabs);
 
     //Create division/industry tabs at the top
     this.updateUIHeaderTabs();
 
     //Create the 'panel' that will have the actual content in the UI
-    companyManagementPanel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {id:"cmpy-mgmt-panel"});
+    companyManagementPanel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {id:"cmpy-mgmt-panel"});
     companyManagementDiv.appendChild(companyManagementPanel);
     document.getElementById("entire-game-container").appendChild(companyManagementDiv);
 
@@ -39319,14 +39350,14 @@ Corporation.prototype.createUI = function() {
 
 Corporation.prototype.updateUIHeaderTabs = function() {
     if (companyManagementHeaderTabs) {
-        Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_21__["removeChildrenFromElement"])(companyManagementHeaderTabs);
+        Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_26__["removeChildrenFromElement"])(companyManagementHeaderTabs);
     } else {
         console.log("ERROR: Header tabs div has not yet been created when Corporation.updateUIHeaderTabs() is called");
         return;
     }
 
     //Corporation overview tabs
-    var cmpyOverviewHdrTab = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("button", {
+    var cmpyOverviewHdrTab = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("button", {
         id:"cmpy-mgmt-company-tab",
         class:"cmpy-mgmt-header-tab",
         innerText:this.name,
@@ -39345,27 +39376,27 @@ Corporation.prototype.updateUIHeaderTabs = function() {
     }
 
     //Create a tab to expand into a new industry
-    companyManagementHeaderTabs.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("button", {
+    companyManagementHeaderTabs.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("button", {
         id:'cmpy-mgmt-expand-industry-tab',
         class:"cmpy-mgmt-header-tab",
         innerText:"Expand into new Industry",
         clickListener: ()=>{
             if (document.getElementById("cmpy-mgmt-expand-industry-popup") != null) {return;}
 
-            var container = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {
+            var container = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {
                 class:"popup-box-container",
                 id:"cmpy-mgmt-expand-industry-popup",
             });
-            var content = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {class:"popup-box-content"});
-            var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
+            var content = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {class:"popup-box-content"});
+            var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
                 innerHTML: "Create a new division to expand into a new industry:",
             });
-            var selector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("select", {
+            var selector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("select", {
                 class:"dropdown"
             });
-            var industryDescription = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {});
+            var industryDescription = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {});
             var yesBtn;
-            var nameInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("input", {
+            var nameInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("input", {
                 type:"text",
                 id:"cmpy-mgmt-expand-industry-name-input",
                 class: "text-input",
@@ -39377,11 +39408,11 @@ Corporation.prototype.updateUIHeaderTabs = function() {
                     if (e.keyCode === 13) {yesBtn.click();}
                 }
             });
-            var nameLabel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("label", {
+            var nameLabel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("label", {
                 for:"cmpy-mgmt-expand-industry-name-input",
                 innerText:"Division name: "
             });
-            yesBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("span", {
+            yesBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("span", {
                 class:"popup-box-button",
                 innerText:"Create Division",
                 clickListener: ()=>{
@@ -39390,16 +39421,16 @@ Corporation.prototype.updateUIHeaderTabs = function() {
 
                     for (var i = 0; i < this.divisions.length; ++i) {
                         if (this.divisions[i].name === newDivisionName) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("This name is already in use!");
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("This name is already in use!");
                             return false;
                         }
                     }
-                    if (this.funds.lt(_IndustryData__WEBPACK_IMPORTED_MODULE_2__["IndustryStartingCosts"][ind])) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Not enough money to create a new division in this industry");
+                    if (this.funds.lt(_IndustryData__WEBPACK_IMPORTED_MODULE_4__["IndustryStartingCosts"][ind])) {
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Not enough money to create a new division in this industry");
                     } else if (newDivisionName === "") {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("New division must have a name!");
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("New division must have a name!");
                     } else {
-                        this.funds = this.funds.minus(_IndustryData__WEBPACK_IMPORTED_MODULE_2__["IndustryStartingCosts"][ind]);
+                        this.funds = this.funds.minus(_IndustryData__WEBPACK_IMPORTED_MODULE_4__["IndustryStartingCosts"][ind]);
                         var newInd = new Industry({
                             name:newDivisionName,
                             type:ind,
@@ -39407,17 +39438,17 @@ Corporation.prototype.updateUIHeaderTabs = function() {
                         this.divisions.push(newInd);
                         this.updateUIHeaderTabs();
                         this.selectHeaderTab(headerTabs[headerTabs.length-2]);
-                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])("cmpy-mgmt-expand-industry-popup");
-                        this.displayDivisionContent(newInd, _Locations__WEBPACK_IMPORTED_MODULE_9__["Locations"].Sector12);
+                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])("cmpy-mgmt-expand-industry-popup");
+                        this.displayDivisionContent(newInd, _Locations__WEBPACK_IMPORTED_MODULE_13__["Locations"].Sector12);
                     }
                     return false;
                 }
             });
-            var noBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("span", {
+            var noBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("span", {
                 class:"popup-box-button",
                 innerText:"Cancel",
                 clickListener: function() {
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])("cmpy-mgmt-expand-industry-popup");
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])("cmpy-mgmt-expand-industry-popup");
                     return false;
                 }
             });
@@ -39431,15 +39462,15 @@ Corporation.prototype.updateUIHeaderTabs = function() {
             //Add industry types to selector
             //Have Agriculture be first as recommended option
             if (!ownedIndustries["Agriculture"]) {
-                selector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("option", {
-                    text:_IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"]["Agriculture"], value:"Agriculture"
+                selector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("option", {
+                    text:_IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"]["Agriculture"], value:"Agriculture"
                 }));
             }
 
-            for (var key in _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"]) {
-                if (key !== "Agriculture" && _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].hasOwnProperty(key) && !ownedIndustries[key]) {
-                    var ind = _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"][key];
-                    selector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("option", {
+            for (var key in _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"]) {
+                if (key !== "Agriculture" && _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].hasOwnProperty(key) && !ownedIndustries[key]) {
+                    var ind = _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"][key];
+                    selector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("option", {
                         text: ind,value:key,
                     }));
                 }
@@ -39447,12 +39478,12 @@ Corporation.prototype.updateUIHeaderTabs = function() {
 
             //Initial Industry Description
             var ind = selector.options[selector.selectedIndex].value;
-            industryDescription.innerHTML = (_IndustryData__WEBPACK_IMPORTED_MODULE_2__["IndustryDescriptions"][ind] + "<br><br>");
+            industryDescription.innerHTML = (_IndustryData__WEBPACK_IMPORTED_MODULE_4__["IndustryDescriptions"][ind] + "<br><br>");
 
             //Change the industry description text based on selected option
             selector.addEventListener("change", function() {
                 var ind = selector.options[selector.selectedIndex].value;
-                industryDescription.innerHTML = _IndustryData__WEBPACK_IMPORTED_MODULE_2__["IndustryDescriptions"][ind] + "<br><br>";
+                industryDescription.innerHTML = _IndustryData__WEBPACK_IMPORTED_MODULE_4__["IndustryDescriptions"][ind] + "<br><br>";
             });
 
             //Add to DOM
@@ -39484,13 +39515,13 @@ Corporation.prototype.selectHeaderTab = function(currentTab) {
 
 Corporation.prototype.createDivisionUIHeaderTab = function(division) {
     var tabId = "cmpy-mgmt-" + division.name + "-tab";
-    var tab = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("button", {
+    var tab = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("button", {
         id:tabId,
         class:"cmpy-mgmt-header-tab",
         innerText:division.name,
         clickListener:()=>{
             this.selectHeaderTab(tab);
-            this.displayDivisionContent(division, _Locations__WEBPACK_IMPORTED_MODULE_9__["Locations"].Sector12);
+            this.displayDivisionContent(division, _Locations__WEBPACK_IMPORTED_MODULE_13__["Locations"].Sector12);
             return false;
         }
     });
@@ -39525,7 +39556,7 @@ Corporation.prototype.updateUIContent = function() {
 
 Corporation.prototype.displayCorporationOverviewContent = function() {
     this.clearUIPanel();
-    companyManagementPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
+    companyManagementPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
         id:"cmpy-mgmt-overview-text",
     }));
     if (headerTabs && headerTabs.length >= 1) {
@@ -39533,23 +39564,23 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
     }
 
     //Check if player has Corporation Handbook
-    var homeComp = _Player__WEBPACK_IMPORTED_MODULE_10__[/* Player */ "a"].getHomeComputer(), hasHandbook = false,
+    var homeComp = _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getHomeComputer(), hasHandbook = false,
         handbookFn = "corporation-management-handbook.lit";
     for (var i = 0; i < homeComp.messages.length; ++i) {
-        if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_20__["isString"])(homeComp.messages[i]) && homeComp.messages[i] === handbookFn) {
+        if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25__["isString"])(homeComp.messages[i]) && homeComp.messages[i] === handbookFn) {
             hasHandbook = true;
             break;
         }
     }
 
-    companyManagementPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+    companyManagementPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
         class:"a-link-button", innerText:"Getting Started Guide", display:"inline-block",
         tooltip:"Get a copy of and read 'The Complete Handbook for Creating a Successful Corporation.' " +
                 "This is a .lit file that guides you through the beginning of setting up a Corporation and " +
                 "provides some tips/pointers for helping you get started with managing it.",
         clickListener:()=>{
             if (!hasHandbook) {homeComp.messages.push(handbookFn);}
-            Object(_Literature__WEBPACK_IMPORTED_MODULE_8__[/* showLiterature */ "b"])(handbookFn);
+            Object(_Literature__WEBPACK_IMPORTED_MODULE_12__[/* showLiterature */ "b"])(handbookFn);
             return false;
         }
     }));
@@ -39557,21 +39588,21 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
     //Investors
     if (this.public) {
         //Sell share buttons
-        var sellShares = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+        var sellShares = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
             class:"a-link-button", innerText:"Sell Shares", display:"inline-block",
             tooltip:"Sell your shares in the company. This is the only way to " +
                     "profit from your business venture.",
             clickListener:()=>{
                 var popupId = "cmpy-mgmt-sell-shares-popup";
                 var currentStockPrice = this.sharePrice;
-                var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
+                var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
                     innerHTML: "Enter the number of shares you would like to sell. The money from " +
                                "selling your shares will go directly to you (NOT your Corporation). " +
                                "The current price of your " +
-                               "company's stock is " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(currentStockPrice, "$0.000a"),
+                               "company's stock is " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(currentStockPrice, "$0.000a"),
                 });
-                var profitIndicator = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {});
-                var input = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("input", {
+                var profitIndicator = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {});
+                var input = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("input", {
                     type:"number", placeholder:"Shares to sell", margin:"5px",
                     inputListener: ()=> {
                         var numShares = Math.round(input.value);
@@ -39581,18 +39612,18 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                             profitIndicator.innerText = "You don't have this many shares to sell!";
                         } else {
                             profitIndicator.innerText = "Sell " + numShares + " shares for a total of " +
-                                                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(numShares * currentStockPrice, '$0.000a');
+                                                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(numShares * currentStockPrice, '$0.000a');
                         }
                     }
                 });
-                var confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+                var confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
                     class:"a-link-button", innerText:"Sell shares", display:"inline-block",
                     clickListener:()=>{
                         var shares = Math.round(input.value);
                         if (isNaN(shares) || shares <= 0) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("ERROR: Invalid value for number of shares");
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("ERROR: Invalid value for number of shares");
                         } else if (shares > this.numShares) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("ERROR: You don't have this many shares to sell");
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("ERROR: You don't have this many shares to sell");
                         } else {
                             this.numShares -= shares;
                             if (isNaN(this.issuedShares)) {
@@ -39606,40 +39637,40 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                                 }
                             }
                             this.issuedShares += shares;
-                            _Player__WEBPACK_IMPORTED_MODULE_10__[/* Player */ "a"].gainMoney(shares * this.sharePrice);
-                            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
+                            _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].gainMoney(shares * this.sharePrice);
+                            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
                             return false;
                         }
 
                     }
                 });
-                var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+                var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
                     class:"a-link-button", innerText:"Cancel", display:"inline-block",
                     clickListener:()=>{
-                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
+                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
                         return false;
                     }
                 });
-                Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_17__["createPopup"])(popupId, [txt, profitIndicator, input, confirmBtn, cancelBtn]);
+                Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__["createPopup"])(popupId, [txt, profitIndicator, input, confirmBtn, cancelBtn]);
             }
         });
 
         //Buyback shares button
-        var buybackShares = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+        var buybackShares = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
             class:"a-link-button", innerText:"Buyback shares", display:"inline-block",
             tooltip:"Buy back shares you that previously issued or sold at market price.",
             clickListener:()=>{
                 var popupId = "cmpy-mgmt-buyback-shares-popup";
                 var currentStockPrice = this.sharePrice;
-                var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
+                var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
                     innerHTML: "Enter the number of shares you would like to buy back at market price. To purchase " +
                                "these shares, you must use your own money (NOT your Corporation's funds). " +
                                "The current price of your " +
-                               "company's stock is " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(currentStockPrice, "$0.000a") +
-                               ". Your company currently has " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(this.issuedShares, 3) + " outstanding stock shares",
+                               "company's stock is " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(currentStockPrice, "$0.000a") +
+                               ". Your company currently has " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.issuedShares, 3) + " outstanding stock shares",
                 });
-                var costIndicator = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {});
-                var input = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("input", {
+                var costIndicator = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {});
+                var input = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("input", {
                     type:"number", placeholder:"Shares to buyback", margin:"5px",
                     inputListener: ()=> {
                         var numShares = Math.round(input.value);
@@ -39652,22 +39683,22 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                         } else {
                             console.log("here");
                             costIndicator.innerText = "Purchase " + numShares + " shares for a total of " +
-                                                      _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(numShares * currentStockPrice, '$0.000a');
+                                                      _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(numShares * currentStockPrice, '$0.000a');
                         }
                     }
                 });
-                var confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+                var confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
                     class:"a-link-button", innerText:"Buy shares", display:"inline-block",
                     clickListener:()=>{
                         var shares = Math.round(input.value);
                         var tempStockPrice = this.sharePrice;
                         if (isNaN(shares) || shares <= 0) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("ERROR: Invalid value for number of shares");
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("ERROR: Invalid value for number of shares");
                         } else if (shares > this.issuedShares) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("ERROR: There are not this many oustanding shares to buy back");
-                        } else if (shares * tempStockPrice > _Player__WEBPACK_IMPORTED_MODULE_10__[/* Player */ "a"].money) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("ERROR: You do not have enough money to purchase this many shares (you need " +
-                                            _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(shares * tempStockPrice, "$0.000a") + ")");
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("ERROR: There are not this many oustanding shares to buy back");
+                        } else if (shares * tempStockPrice > _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].money) {
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("ERROR: You do not have enough money to purchase this many shares (you need " +
+                                            _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(shares * tempStockPrice, "$0.000a") + ")");
                         } else {
                             this.numShares += shares;
                             if (isNaN(this.issuedShares)) {
@@ -39681,24 +39712,24 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                                 }
                             }
                             this.issuedShares -= shares;
-                            _Player__WEBPACK_IMPORTED_MODULE_10__[/* Player */ "a"].loseMoney(shares * tempStockPrice);
+                            _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].loseMoney(shares * tempStockPrice);
                             //TODO REMOVE from Player money
-                            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
+                            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
                         }
                         return false;
 
                     }
                 });
-                var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+                var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
                     class:"a-link-button",
                     innerText:"Cancel",
                     display:"inline-block",
                     clickListener:()=>{
-                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
+                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
                         return false;
                     }
                 });
-                Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_17__["createPopup"])(popupId, [txt, costIndicator, input, confirmBtn, cancelBtn]);
+                Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__["createPopup"])(popupId, [txt, costIndicator, input, confirmBtn, cancelBtn]);
             }
         });
 
@@ -39707,7 +39738,7 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
 
         //If your Corporation is big enough, buy faction influence through bribes
         var canBribe = this.determineValuation() >= BribeThreshold;
-        var bribeFactions = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+        var bribeFactions = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
             class: canBribe ? "a-link-button" : "a-link-button-inactive",
             innerText:"Bribe Factions", display:"inline-block",
             tooltip:canBribe
@@ -39715,19 +39746,19 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                     : "Your Corporation is not powerful enough to bribe Faction leaders",
             clickListener:()=>{
                 var popupId = "cmpy-mgmt-bribe-factions-popup";
-                var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
+                var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
                     innerText:"You can use Corporation funds or stock shares to bribe Faction Leaders in exchange for faction reputation"
                 });
-                var factionSelector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("select", {margin:"3px"});
-                for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_10__[/* Player */ "a"].factions.length; ++i) {
-                    var facName = _Player__WEBPACK_IMPORTED_MODULE_10__[/* Player */ "a"].factions[i];
-                    factionSelector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("option", {
+                var factionSelector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("select", {margin:"3px"});
+                for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].factions.length; ++i) {
+                    var facName = _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].factions[i];
+                    factionSelector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("option", {
                         text:facName, value:facName
                     }));
                 }
-                var repGainText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p");
+                var repGainText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p");
                 var stockSharesInput;
-                var moneyInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("input", {
+                var moneyInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("input", {
                     type:"number", placeholder:"Corporation funds", margin:"5px",
                     inputListener:()=>{
                         var money = moneyInput.value == null || moneyInput.value == "" ? 0 : parseFloat(moneyInput.value);
@@ -39743,14 +39774,14 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
 
                             var totalAmount = Number(money) + (stockShares * stockPrice);
                             var repGain = totalAmount / BribeToRepRatio;
-                            repGainText.innerText = "You will gain " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(repGain, 0) +
+                            repGainText.innerText = "You will gain " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(repGain, 0) +
                                                     " reputation with " +
                                                     factionSelector.options[factionSelector.selectedIndex].value +
                                                     " with this bribe";
                         }
                     }
                 });
-                stockSharesInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("input", {
+                stockSharesInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("input", {
                     type:"number", placeholder:"Stock Shares", margin: "5px",
                     inputListener:()=>{
                         var money = moneyInput.value == null || moneyInput.value == "" ? 0 : parseFloat(moneyInput.value);
@@ -39766,58 +39797,58 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                             var totalAmount = money + (stockShares * stockPrice);
                             var repGain = totalAmount / BribeToRepRatio;
                             console.log("repGain: " + repGain);
-                            repGainText.innerText = "You will gain " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(repGain, 0) +
+                            repGainText.innerText = "You will gain " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(repGain, 0) +
                                                     " reputation with " +
                                                     factionSelector.options[factionSelector.selectedIndex].value +
                                                     " with this bribe";
                         }
                     }
                 });
-                var confirmButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+                var confirmButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
                     class:"a-link-button", innerText:"Bribe", display:"inline-block",
                     clickListener:()=>{
                         var money = moneyInput.value == null || moneyInput.value == "" ? 0 : parseFloat(moneyInput.value);
                         var stockPrice = this.sharePrice;
                         var stockShares = stockSharesInput.value == null || stockSharesInput.value == ""? 0 : Math.round(parseFloat(stockSharesInput.value));
-                        var fac = _Faction_Factions__WEBPACK_IMPORTED_MODULE_7__["Factions"][factionSelector.options[factionSelector.selectedIndex].value];
+                        var fac = _Faction_Factions__WEBPACK_IMPORTED_MODULE_11__["Factions"][factionSelector.options[factionSelector.selectedIndex].value];
                         if (fac == null) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("ERROR: You must select a faction to bribe");
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("ERROR: You must select a faction to bribe");
                             return false;
                         }
                         if (isNaN(money) || isNaN(stockShares) || money < 0 || stockShares < 0) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("ERROR: Invalid value(s) entered");
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("ERROR: Invalid value(s) entered");
                         } else if (this.funds.lt(money)) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("ERROR: You do not have this much money to bribe with");
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("ERROR: You do not have this much money to bribe with");
                         } else if (stockShares > this.numShares) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("ERROR: You do not have this many shares to bribe with");
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("ERROR: You do not have this many shares to bribe with");
                         } else {
                             var totalAmount = money + (stockShares * stockPrice);
                             var repGain = totalAmount / BribeToRepRatio;
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("You gained " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(repGain, 0) +
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("You gained " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(repGain, 0) +
                                             " reputation with " + fac.name  + " by bribing them.");
                             fac.playerReputation += repGain;
                             this.funds = this.funds.minus(money);
                             this.numShares -= stockShares;
-                            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
+                            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
                             return false;
                         }
                     }
                 });
-                var cancelButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+                var cancelButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
                     class:"a-link-button", innerText:"Cancel", display:"inline-block",
                     clickListener:()=>{
-                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
+                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
                         return false;
                     }
                 });
 
-                Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_17__["createPopup"])(popupId, [txt, factionSelector, repGainText,
+                Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__["createPopup"])(popupId, [txt, factionSelector, repGainText,
                                       moneyInput, stockSharesInput, confirmButton, cancelButton]);
             }
         });
         companyManagementPanel.appendChild(bribeFactions);
     } else {
-        var findInvestors = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+        var findInvestors = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
             class: this.fundingRound >= 4 ? "a-link-button-inactive" : "a-link-button tooltip",
             innerText: "Find Investors",
             display:"inline-block",
@@ -39826,7 +39857,7 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
             }
         });
         if (this.fundingRound < 4) {
-            var findInvestorsTooltip = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("span", {
+            var findInvestorsTooltip = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("span", {
                 class:"tooltiptext",
                 innerText:"Search for private investors who will give you startup funding in exchange " +
                           "for equity (stock shares) in your company"
@@ -39834,7 +39865,7 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
             findInvestors.appendChild(findInvestorsTooltip);
         }
 
-        var goPublic = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+        var goPublic = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
             class:"a-link-button tooltip",
             innerText:"Go Public",
             display:"inline-block",
@@ -39843,7 +39874,7 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                 return false;
             }
         });
-        var goPublicTooltip = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("span", {
+        var goPublicTooltip = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("span", {
             class:"tooltiptext",
             innerText: "Become a publicly traded and owned entity. Going public involves " +
                        "issuing shares for an IPO. Once you are a public company, " +
@@ -39861,17 +39892,17 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
     //Don't show upgrades if player hasn't opened any divisions
     if (this.divisions.length <= 0) {return; }
     //Corporation Upgrades
-    var upgradeContainer = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {
+    var upgradeContainer = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {
         class:"cmpy-mgmt-upgrade-container",
     });
-    upgradeContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("h1", {
+    upgradeContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("h1", {
         innerText:"Unlocks", margin:"6px", padding:"6px",
     }));
 
     //Unlock upgrades
     var corp = this;
-    var numUnlockUpgrades = Object.keys(CorporationUnlockUpgrades).length,
-        numUpgrades = Object.keys(CorporationUpgrades).length;
+    var numUnlockUpgrades = Object.keys(_CorporationUnlockUpgrades__WEBPACK_IMPORTED_MODULE_1__["CorporationUnlockUpgrades"]).length,
+        numUpgrades = Object.keys(_CorporationUpgrades__WEBPACK_IMPORTED_MODULE_2__["CorporationUpgrades"]).length;
     if (this.unlockUpgrades == null || this.upgrades == null) { //Backwards compatibility
         this.unlockUpgrades = Array(numUnlockUpgrades).fill(0);
         this.upgrades = Array(numUpgrades).fill(0);
@@ -39883,19 +39914,19 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
     for (var i = 0; i < numUnlockUpgrades; ++i) {
         (function(i, corp) {
             if (corp.unlockUpgrades[i] === 0) {
-                var upgrade = CorporationUnlockUpgrades[i.toString()];
+                var upgrade = _CorporationUnlockUpgrades__WEBPACK_IMPORTED_MODULE_1__["CorporationUnlockUpgrades"][i.toString()];
                 if (upgrade == null) {
                     console.log("ERROR: Could not find upgrade index " + i);
                     return;
                 }
 
-                upgradeContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {
+                upgradeContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {
                     class:"cmpy-mgmt-upgrade-div", width:"45%",
-                    innerHTML:upgrade[2] +  " - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(upgrade[1], "$0.000a"),
+                    innerHTML:upgrade[2] +  " - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(upgrade[1], "$0.000a"),
                     tooltip: upgrade[3],
                     clickListener:()=>{
                         if (corp.funds.lt(upgrade[1])) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Insufficient funds");
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Insufficient funds");
                         } else {
                             corp.unlock(upgrade);
                             corp.displayCorporationOverviewContent();
@@ -39907,13 +39938,13 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
     }
 
     //Levelable upgrades
-    upgradeContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("h1", {
+    upgradeContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("h1", {
         innerText:"Upgrades", margin:"6px", padding:"6px",
     }));
 
     for (var i = 0; i < numUpgrades; ++i) {
         (function(i, corp) {
-            var upgrade = CorporationUpgrades[i.toString()];
+            var upgrade = _CorporationUpgrades__WEBPACK_IMPORTED_MODULE_2__["CorporationUpgrades"][i.toString()];
             if (upgrade == null) {
                 console.log("ERROR: Could not find levelable upgrade index " + i);
                 return;
@@ -39921,13 +39952,13 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
 
             var baseCost = upgrade[1], priceMult = upgrade[2];
             var cost = baseCost * Math.pow(priceMult, corp.upgrades[i]);
-            upgradeContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {
+            upgradeContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {
                 class:"cmpy-mgmt-upgrade-div", width:"45%",
-                innerHTML:upgrade[4] + " - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(cost, "$0.000a"),
+                innerHTML:upgrade[4] + " - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(cost, "$0.000a"),
                 tooltip:upgrade[5],
                 clickListener:()=>{
                     if (corp.funds.lt(cost)) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Insufficient funds");
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Insufficient funds");
                     } else {
                         corp.upgrade(upgrade);
                         corp.displayCorporationOverviewContent();
@@ -39947,19 +39978,19 @@ Corporation.prototype.updateCorporationOverviewContent = function() {
         return;
     }
     var totalFunds = this.funds,
-        totalRevenue = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](0),
-        totalExpenses = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](0);
+        totalRevenue = new decimal_js__WEBPACK_IMPORTED_MODULE_30__[/* default */ "a"](0),
+        totalExpenses = new decimal_js__WEBPACK_IMPORTED_MODULE_30__[/* default */ "a"](0);
 
     var profit = this.revenue.minus(this.expenses).toNumber(),
-        profitStr = profit >= 0 ? _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(profit, "$0.000a") : "-" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(-1 * profit, "$0.000a");
+        profitStr = profit >= 0 ? _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(profit, "$0.000a") : "-" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(-1 * profit, "$0.000a");
 
-    var txt = "Total Funds: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(totalFunds.toNumber(), '$0.000a') + "<br>" +
-              "Total Revenue: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(this.revenue.toNumber(), "$0.000a") + " / s<br>" +
-              "Total Expenses: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(this.expenses.toNumber(), "$0.000a") + "/ s<br>" +
+    var txt = "Total Funds: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(totalFunds.toNumber(), '$0.000a') + "<br>" +
+              "Total Revenue: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(this.revenue.toNumber(), "$0.000a") + " / s<br>" +
+              "Total Expenses: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(this.expenses.toNumber(), "$0.000a") + "/ s<br>" +
               "Total Profits: " + profitStr + " / s<br>" +
               "Publicly Traded: " + (this.public ? "Yes" : "No") + "<br>" +
-              "Owned Stock Shares: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(this.numShares, '0.000a') + "<br>" +
-              "Stock Price: " + (this.public ? "$" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(this.sharePrice, 2) : "N/A") + "<br><br>";
+              "Owned Stock Shares: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(this.numShares, '0.000a') + "<br>" +
+              "Stock Price: " + (this.public ? "$" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.sharePrice, 2) : "N/A") + "<br><br>";
 
     var prodMult        = this.getProductionMultiplier(),
         storageMult     = this.getStorageMultiplier(),
@@ -39970,15 +40001,15 @@ Corporation.prototype.updateCorporationOverviewContent = function() {
         empEffMult      = this.getEmployeeEffMultiplier(),
         salesMult       = this.getSalesMultiplier(),
         sciResMult      = this.getScientificResearchMultiplier();
-    if (prodMult > 1)       {txt += "Production Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(prodMult, 3) + "<br>";}
-    if (storageMult > 1)    {txt += "Storage Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(storageMult, 3) + "<br>";}
-    if (advMult > 1)        {txt += "Advertising Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(advMult, 3) + "<br>";}
-    if (empCreMult > 1)     {txt += "Empl. Creativity Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(empCreMult, 3) + "<br>";}
-    if (empChaMult > 1)     {txt += "Empl. Charisma Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(empChaMult, 3) + "<br>";}
-    if (empIntMult > 1)     {txt += "Empl. Intelligence Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(empIntMult, 3) + "<br>";}
-    if (empEffMult > 1)     {txt += "Empl. Efficiency Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(empEffMult, 3) + "<br>";}
-    if (salesMult > 1)      {txt += "Sales Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(salesMult, 3) + "<br>";}
-    if (sciResMult > 1)     {txt += "Scientific Research Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(sciResMult, 3) + "<br>";}
+    if (prodMult > 1)       {txt += "Production Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(prodMult, 3) + "<br>";}
+    if (storageMult > 1)    {txt += "Storage Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(storageMult, 3) + "<br>";}
+    if (advMult > 1)        {txt += "Advertising Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(advMult, 3) + "<br>";}
+    if (empCreMult > 1)     {txt += "Empl. Creativity Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(empCreMult, 3) + "<br>";}
+    if (empChaMult > 1)     {txt += "Empl. Charisma Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(empChaMult, 3) + "<br>";}
+    if (empIntMult > 1)     {txt += "Empl. Intelligence Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(empIntMult, 3) + "<br>";}
+    if (empEffMult > 1)     {txt += "Empl. Efficiency Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(empEffMult, 3) + "<br>";}
+    if (salesMult > 1)      {txt += "Sales Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(salesMult, 3) + "<br>";}
+    if (sciResMult > 1)     {txt += "Scientific Research Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(sciResMult, 3) + "<br>";}
     p.innerHTML = txt;
 }
 
@@ -39998,19 +40029,19 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
     }
 
     //Expand into new City button
-    companyManagementPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("button", {
+    companyManagementPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("button", {
         class:"cmpy-mgmt-city-tab", innerText:"Expand into new City", display:"inline-block",
         clickListener:()=>{
             var popupId = "cmpy-mgmt-expand-city-popup";
-            var text = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
+            var text = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
                 innerText: "Would you like to expand into a new city by opening an office? " +
-                           "This would cost " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(OfficeInitialCost, '$0.000a'),
+                           "This would cost " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(OfficeInitialCost, '$0.000a'),
             });
-            var citySelector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("select", {class: "dropdown", margin:"5px"});
+            var citySelector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("select", {class: "dropdown", margin:"5px"});
             for (var cityName in division.offices) {
                 if (division.offices.hasOwnProperty(cityName)) {
                     if (!(division.offices[cityName] instanceof OfficeSpace)) {
-                        citySelector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("option", {
+                        citySelector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("option", {
                             text: cityName,
                             value: cityName
                         }));
@@ -40018,37 +40049,37 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                 }
             }
 
-            var confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+            var confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
                 innerText:"Confirm", class:"a-link-button", display:"inline-block", margin:"3px",
                 clickListener:()=>{
                     var city = citySelector.options[citySelector.selectedIndex].value;
                     if (this.funds.lt(OfficeInitialCost)) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("You don't have enough company funds to open a new office!");
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("You don't have enough company funds to open a new office!");
                     } else {
                         this.funds = this.funds.minus(OfficeInitialCost);
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Opened a new office in " + city + "!");
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Opened a new office in " + city + "!");
                         division.offices[city] = new OfficeSpace({
                             loc:city,
                             size:OfficeInitialSize,
                         });
                         this.displayDivisionContent(division, city);
                     }
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
                     return false;
                 }
             });
-            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
                 innerText:"Cancel", class:"a-link-button", display:"inline-block", margin:"3px",
                 clickListener:()=>{
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
                     return false;
                 }
             })
-            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_17__["createPopup"])(popupId, [text, citySelector, confirmBtn, cancelBtn]);
+            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__["createPopup"])(popupId, [text, citySelector, confirmBtn, cancelBtn]);
             return false;
         }
     }));
-    companyManagementPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("br", {})); // Force line break
+    companyManagementPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("br", {})); // Force line break
 
     //Get office object
     var office = division.offices[currentCityUi];
@@ -40058,45 +40089,53 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
     }
 
     //Left and right panels
-    var leftPanel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {class:"cmpy-mgmt-industry-left-panel"});
-    var rightPanel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {class:"cmpy-mgmt-industry-right-panel"});
+    var leftPanel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {
+        class: "cmpy-mgmt-industry-left-panel",
+        overflow: "visible",
+        padding: "2px",
+    });
+    var rightPanel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {
+        class: "cmpy-mgmt-industry-right-panel",
+        overflow: "visible",
+        padding: "2px",
+    });
     companyManagementPanel.appendChild(leftPanel);
     companyManagementPanel.appendChild(rightPanel);
 
     //Different sections (Overview, Employee/Office, and Warehouse)
-    industryOverviewPanel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {
+    industryOverviewPanel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {
         id:"cmpy-mgmt-industry-overview-panel", class:"cmpy-mgmt-industry-overview-panel"
     });
     leftPanel.appendChild(industryOverviewPanel);
 
-    industryEmployeePanel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {
+    industryEmployeePanel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {
         id:"cmpy-mgmt-employee-panel", class:"cmpy-mgmt-employee-panel"
     });
     leftPanel.appendChild(industryEmployeePanel);
 
-    industryWarehousePanel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {
+    industryWarehousePanel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {
         id:"cmpy-mgmt-warehouse-panel", class:"cmpy-mgmt-warehouse-panel"
     });
     rightPanel.appendChild(industryWarehousePanel);
 
     //Industry overview text
-    industryOverviewText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {});
+    industryOverviewText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {});
     industryOverviewPanel.appendChild(industryOverviewText);
-    industryOverviewPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("br", {}));
+    industryOverviewPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("br", {}));
 
     //Industry overview Purchases & Upgrades
-    var numUpgrades = Object.keys(IndustryUpgrades).length;
+    var numUpgrades = Object.keys(_IndustryUpgrades__WEBPACK_IMPORTED_MODULE_5__["IndustryUpgrades"]).length;
     while (division.upgrades.length < numUpgrades) {division.upgrades.push(0);} //Backwards compatibility
 
-    var industryOverviewUpgrades = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {});
-    industryOverviewUpgrades.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("u", {
+    var industryOverviewUpgrades = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {});
+    industryOverviewUpgrades.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("u", {
         innerText:"Purchases & Upgrades", margin:"2px", padding:"2px",
         fontSize:"14px",
     }));
-    industryOverviewUpgrades.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("br", {}));
+    industryOverviewUpgrades.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("br", {}));
     for (var i = 0; i < numUpgrades; ++i) {
         (function(i, corp, division, office) {
-            var upgrade = IndustryUpgrades[i.toString()];
+            var upgrade = _IndustryUpgrades__WEBPACK_IMPORTED_MODULE_5__["IndustryUpgrades"][i.toString()];
             if (upgrade == null) {
                 console.log("ERROR: Could not find levelable upgrade index: " + i);
                 return;
@@ -40111,13 +40150,13 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                     cost = baseCost * Math.pow(priceMult, division.upgrades[i]);
                     break;
             }
-            industryOverviewUpgrades.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {
+            industryOverviewUpgrades.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {
                 class:"cmpy-mgmt-upgrade-div", display:"inline-block",
-                innerHTML:upgrade[4] + ' - ' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(cost, "$0.000a"),
+                innerHTML:upgrade[4] + ' - ' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(cost, "$0.000a"),
                 tooltip:upgrade[5],
                 clickListener:()=>{
                     if (corp.funds.lt(cost)) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Insufficient funds");
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Insufficient funds");
                     } else {
                         corp.funds = corp.funds.minus(cost);
                         division.upgrade(upgrade, {
@@ -40128,7 +40167,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                     }
                 }
             }));
-            industryOverviewUpgrades.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("br", {}));
+            industryOverviewUpgrades.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("br", {}));
 
         })(i, this, division, office);
     }
@@ -40141,36 +40180,36 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
         //Get the text on the button based on Industry type
         var createProductButtonText, createProductPopupText;
         switch(division.type) {
-            case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Food:
+            case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Food:
                 createProductButtonText = "Build Restaurant";
                 createProductPopupText = "Build and manage a new restaurant!"
                 break;
-            case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Tobacco:
+            case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Tobacco:
                 createProductButtonText = "Create Product";
                 createProductPopupText = "Create a new tobacco product!";
                 break;
-            case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Pharmaceutical:
+            case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Pharmaceutical:
                 createProductButtonText = "Create Drug";
                 createProductPopupText = "Design and develop a new pharmaceutical drug!";
                 break;
-            case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Computer:
+            case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Computer:
             case "Computer":
                 createProductButtonText = "Create Product";
                 createProductPopupText = "Design and manufacture a new computer hardware product!";
                 break;
-            case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Robotics:
+            case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Robotics:
                 createProductButtonText = "Design Robot";
                 createProductPopupText = "Design and create a new robot or robotic system!";
                 break;
-            case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Software:
+            case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Software:
                 createProductButtonText = "Develop Software";
                 createProductPopupText = "Develop a new piece of software!";
                 break;
-            case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Healthcare:
+            case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Healthcare:
                 createProductButtonText = "Build Hospital";
                 createProductPopupText = "Build and manage a new hospital!";
                 break;
-            case _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].RealEstate:
+            case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].RealEstate:
                 createProductButtonText = "Develop Property";
                 createProductPopupText = "Develop a new piece of real estate property!";
                 break;
@@ -40187,43 +40226,43 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
             "Investing money in marketing the product will help the product's sales.";
 
         //Create the button
-        industryOverviewPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+        industryOverviewPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
             class:"a-link-button", innerText:createProductButtonText, margin:"6px", display:"inline-block",
             clickListener:()=>{
                 var popupId = "cmpy-mgmt-create-product-popup";
-                var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
+                var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
                     innerHTML:createProductPopupText,
                 });
-                var designCity = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("select", {});
+                var designCity = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("select", {});
                 for (var cityName in division.offices) {
                     if (division.offices[cityName] instanceof OfficeSpace) {
-                        designCity.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("option", {
+                        designCity.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("option", {
                             value:cityName,
                             text:cityName
                         }));
                     }
                 }
                 var foo = "Product Name";
-                if (division.type === _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Food) {
+                if (division.type === _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Food) {
                     foo = "Restaurant Name";
-                } else if (division.type === _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].Healthcare) {
+                } else if (division.type === _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Healthcare) {
                     foo = "Hospital Name";
-                } else if (division.type === _IndustryData__WEBPACK_IMPORTED_MODULE_2__["Industries"].RealEstate) {
+                } else if (division.type === _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].RealEstate) {
                     foo = "Property Name";
                 }
-                var productNameInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("input", {
+                var productNameInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("input", {
                     placeholder:foo,
                 });
-                var lineBreak1 = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("br",{});
-                var designInvestInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("input", {
+                var lineBreak1 = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("br",{});
+                var designInvestInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("input", {
                     type:"number",
                     placeholder:"Design investment"
                 });
-                var marketingInvestInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("input", {
+                var marketingInvestInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("input", {
                     type:"number",
                     placeholder:"Marketing investment"
                 });
-                var confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+                var confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
                     class:"a-link-button",
                     innerText:"Develop Product",
                     clickListener:()=>{
@@ -40232,15 +40271,15 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                         var designInvest = parseFloat(designInvestInput.value),
                             marketingInvest = parseFloat(marketingInvestInput.value);
                         if (productNameInput.value == null || productNameInput.value === "") {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("You must specify a name for your product!");
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("You must specify a name for your product!");
                         } else if (isNaN(designInvest)) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Invalid value for design investment");
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Invalid value for design investment");
                         } else if (isNaN(marketingInvest))  {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Invalid value for marketing investment");
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Invalid value for marketing investment");
                         } else if (this.funds.lt(designInvest + marketingInvest)) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("You don't have enough company funds to make this large of an investment");
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("You don't have enough company funds to make this large of an investment");
                         } else {
-                            var product = new _Product__WEBPACK_IMPORTED_MODULE_5__["Product"]({
+                            var product = new _Product__WEBPACK_IMPORTED_MODULE_8__["Product"]({
                                 name:productNameInput.value.replace(/[<>]/g, ''), //Sanitize for HTMl elements
                                 createCity:designCity.options[designCity.selectedIndex].value,
                                 designCost: designInvest,
@@ -40248,29 +40287,29 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                             });
                             this.funds = this.funds.minus(designInvest + marketingInvest);
                             division.products[product.name] = product;
-                            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
+                            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
                         }
                         //this.updateUIContent();
                         this.displayDivisionContent(division, city);
                         return false;
                     }
                 })
-                var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+                var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
                     class:"a-link-button",
                     innerText:"Cancel",
                     clickListener:()=>{
-                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
+                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
                         return false;
                     }
                 })
-                Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_17__["createPopup"])(popupId, [txt, designCity, productNameInput, lineBreak1,
+                Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__["createPopup"])(popupId, [txt, designCity, productNameInput, lineBreak1,
                                       designInvestInput, marketingInvestInput, confirmBtn, cancelBtn]);
             }
         }));
     }
 
     //Employee and Office Panel
-    industryEmployeeText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
+    industryEmployeeText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
         id: "cmpy-mgmt-employee-p",
         display:"block",
         innerHTML:  "<h1>Office Space</h1><br>" +
@@ -40283,7 +40322,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
 
     //Hire Employee button
     if (office.employees.length === 0) {
-        industryEmployeeHireButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+        industryEmployeeHireButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
             class:"a-link-button",display:"inline-block",
             innerText:"Hire Employee", fontSize:"13px",
             tooltip:"You'll need to hire some employees to get your operations started! " +
@@ -40295,7 +40334,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
         });
         //industryEmployeeHireButton.classList.add("flashing-button");
     } else {
-        industryEmployeeHireButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+        industryEmployeeHireButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
             class:"a-link-button",display:"inline-block",
             innerText:"Hire Employee", fontSize:"13px",
             clickListener:()=>{
@@ -40307,7 +40346,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
     industryEmployeePanel.appendChild(industryEmployeeHireButton);
 
     //Autohire Employee button
-    industryEmployeeAutohireButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+    industryEmployeeAutohireButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
         class:"a-link-button", display:"inline-block",
         innerText:"Autohire Employee", fontSize:"13px",
         tooltip:"Automatically hires an employee and gives him/her a random name",
@@ -40319,8 +40358,8 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
     industryEmployeePanel.appendChild(industryEmployeeAutohireButton);
 
     //Upgrade Office Size button
-    industryEmployeePanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("br", {}));
-    industryOfficeUpgradeSizeButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+    industryEmployeePanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("br", {}));
+    industryOfficeUpgradeSizeButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
         class:"a-link-button", innerText:"Upgrade size",
         display:"inline-block", margin:"6px", fontSize:"13px",
         tooltip:"Upgrade the office's size so that it can hold more employees!",
@@ -40353,98 +40392,98 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
 
             var upgradeCostMax = OfficeInitialCost * mult;
 
-            var text = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
+            var text = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
                 innerText:"Increase the size of your office space to fit additional employees!"
             });
-            var text2 = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {innerText: "Upgrade size: "});
+            var text2 = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {innerText: "Upgrade size: "});
 
-            var confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+            var confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
                 class: this.funds.lt(upgradeCost) ? "a-link-button-inactive" : "a-link-button",
                 display:"inline-block", margin:"4px", innerText:"by 3",
-                tooltip:_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(upgradeCost, "$0.000a"),
+                tooltip:_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(upgradeCost, "$0.000a"),
                 clickListener:()=>{
                     if (this.funds.lt(upgradeCost)) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("You don't have enough company funds to purchase this upgrade!");
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("You don't have enough company funds to purchase this upgrade!");
                     } else {
                         office.size += OfficeInitialSize;
                         this.funds = this.funds.minus(upgradeCost);
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Office space increased! It can now hold " + office.size + " employees");
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Office space increased! It can now hold " + office.size + " employees");
                         this.updateUIContent();
                     }
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
                     return false;
                 }
             });
-            var confirmBtn15 = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+            var confirmBtn15 = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
                 class: this.funds.lt(upgradeCost15) ? "a-link-button-inactive" : "a-link-button",
                 display:"inline-block", margin:"4px", innerText:"by 15",
-                tooltip:_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(upgradeCost15, "$0.000a"),
+                tooltip:_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(upgradeCost15, "$0.000a"),
                 clickListener:()=>{
                     if (this.funds.lt(upgradeCost15)) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("You don't have enough company funds to purchase this upgrade!");
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("You don't have enough company funds to purchase this upgrade!");
                     } else {
                         office.size += (OfficeInitialSize * 5);
                         this.funds = this.funds.minus(upgradeCost15);
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Office space increased! It can now hold " + office.size + " employees");
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Office space increased! It can now hold " + office.size + " employees");
                         this.updateUIContent();
                     }
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
                     return false;
                 }
             });
-            var confirmBtnMax = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+            var confirmBtnMax = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
                 class:this.funds.lt(upgradeCostMax) ? "a-link-button-inactive" : "a-link-button",
                 display:"inline-block", margin:"4px", innerText:"by MAX (" + maxNum*OfficeInitialSize + ")",
-                tooltip:_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(upgradeCostMax, "$0.000a"),
+                tooltip:_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(upgradeCostMax, "$0.000a"),
                 clickListener:()=>{
                     if (this.funds.lt(upgradeCostMax)) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("You don't have enough company funds to purchase this upgrade!");
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("You don't have enough company funds to purchase this upgrade!");
                     } else {
                         office.size += (OfficeInitialSize * maxNum);
                         this.funds = this.funds.minus(upgradeCostMax);
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Office space increased! It can now hold " + office.size + " employees");
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Office space increased! It can now hold " + office.size + " employees");
                         this.updateUIContent();
                     }
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
                     return false;
                 }
             });
-            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
                 class:"a-link-button", innerText:"Cancel", display:"inline-block", margin:"4px",
                 clickListener:()=>{
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
                     return false;
                 }
             })
-            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_17__["createPopup"])(popupId, [text, text2, confirmBtn, confirmBtn15, confirmBtnMax, cancelBtn]);
+            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__["createPopup"])(popupId, [text, text2, confirmBtn, confirmBtn15, confirmBtnMax, cancelBtn]);
             return false;
         }
     });
     industryEmployeePanel.appendChild(industryOfficeUpgradeSizeButton);
 
     //Throw Office Party
-    industryEmployeePanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+    industryEmployeePanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
         class:"a-link-button", display:"inline-block", innerText:"Throw Party",
         fontSize:"13px",
         tooltip:"Throw an office party to increase your employee's morale and happiness",
         clickListener:()=>{
             var popupId = "cmpy-mgmt-throw-office-party-popup";
-            var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
+            var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
                 innerText:"Enter the amount of money you would like to spend PER EMPLOYEE " +
                           "on this office party"
             });
-            var totalCostTxt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
+            var totalCostTxt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
                 innerText:"Throwing this party will cost a total of $0"
             });
             var confirmBtn;
-            var input = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("input", {
+            var input = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("input", {
                 type:"number", margin:"5px", placeholder:"$ / employee",
                 inputListener:()=>{
                     if (isNaN(input.value) || input.value < 0) {
                         totalCostTxt.innerText = "Invalid value entered!"
                     } else {
                         var totalCost = input.value * office.employees.length;
-                        totalCostTxt.innerText = "Throwing this party will cost a total of " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(totalCost, '$0.000a');
+                        totalCostTxt.innerText = "Throwing this party will cost a total of " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(totalCost, '$0.000a');
                     }
                 },
                 onkeyup:(e)=>{
@@ -40452,49 +40491,49 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                     if (e.keyCode === 13) {confirmBtn.click();}
                 }
             });
-            confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+            confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
                 class:"a-link-button",
                 display:"inline-block",
                 innerText:"Throw Party",
                 clickListener:()=>{
                     if (isNaN(input.value) || input.value < 0) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Invalid value entered");
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Invalid value entered");
                     } else {
                         var totalCost = input.value * office.employees.length;
                         if (this.funds.lt(totalCost)) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("You don't have enough company funds to throw this party!");
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("You don't have enough company funds to throw this party!");
                         } else {
                             this.funds = this.funds.minus(totalCost);
                             var mult;
                             for (var fooit = 0; fooit < office.employees.length; ++fooit) {
                                 mult = office.employees[fooit].throwParty(input.value);
                             }
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("You threw a party for the office! The morale and happiness " +
-                                            "of each employee increased by " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])((mult-1) * 100, 2) + "%.");
-                            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("You threw a party for the office! The morale and happiness " +
+                                            "of each employee increased by " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])((mult-1) * 100, 2) + "%.");
+                            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
                         }
                     }
                     return false;
                 }
             });
-            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
                 class:"a-link-button",
                 display:"inline-block",
                 innerText:"Cancel",
                 clickListener:()=>{
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
                     return false;
                 }
             });
-            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_17__["createPopup"])(popupId, [txt, totalCostTxt, input, confirmBtn, cancelBtn]);
+            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__["createPopup"])(popupId, [txt, totalCostTxt, input, confirmBtn, cancelBtn]);
         }
     }));
 
-    industryEmployeeManagementUI = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {});
-    industryEmployeeInfo = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {margin:"4px", padding:"4px"});
+    industryEmployeeManagementUI = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {});
+    industryEmployeeInfo = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {margin:"4px", padding:"4px"});
     if (empManualAssignmentModeActive) {
         //Employees manually assigned
-        industryEmployeeManagementUI.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+        industryEmployeeManagementUI.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
             class:"a-link-button", display:"inline-block", margin:"4px",
             innerText:"Switch to Auto Mode",
             tooltip:"Switch to Automatic Assignment Mode, which will automatically  " +
@@ -40505,16 +40544,16 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                 this.displayDivisionContent(division, city);
             }
         }));
-        industryEmployeeManagementUI.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("br", {}));
+        industryEmployeeManagementUI.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("br", {}));
 
-        industryIndividualEmployeeInfo = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {margin:"4px", padding:"4px"});
-        var selector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("select", {
+        industryIndividualEmployeeInfo = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {margin:"4px", padding:"4px"});
+        var selector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("select", {
             color: "white", backgroundColor:"black", margin:"4px", padding:"4px",
             changeListener:()=>{
                 var name = selector.options[selector.selectedIndex].text;
                 for (var i = 0; i < office.employees.length; ++i) {
                     if (office.employees[i].name === name) {
-                        Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_21__["removeChildrenFromElement"])(industryIndividualEmployeeInfo);
+                        Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_26__["removeChildrenFromElement"])(industryIndividualEmployeeInfo);
                         office.employees[i].createUI(industryIndividualEmployeeInfo, this);
                         return;
                     }
@@ -40524,7 +40563,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
         });
 
         for (var i = 0; i < office.employees.length; ++i) {
-            selector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("option", {text:office.employees[i].name}));
+            selector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("option", {text:office.employees[i].name}));
         }
 
         selector.selectedIndex = -1;
@@ -40534,7 +40573,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
         industryEmployeeManagementUI.appendChild(industryIndividualEmployeeInfo);
     } else {
         //Player only manages the number of each occupation, not who gets what job
-        industryEmployeeManagementUI.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+        industryEmployeeManagementUI.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
             class:"a-link-button", display:"inline-block", margin:"4px",
             innerText:"Switch to Manual Mode",
             tooltip:"Switch to Manual Assignment Mode, which allows you to " +
@@ -40544,26 +40583,26 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                 this.displayDivisionContent(division, city);
             }
         }));
-        industryEmployeeManagementUI.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("br", {}));
+        industryEmployeeManagementUI.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("br", {}));
 
         var opCount = 0, engCount = 0, busCount = 0,
             mgmtCount = 0, rndCount = 0, unassignedCount = 0,
             trainingCount = 0;
         for (var i = 0; i < office.employees.length; ++i) {
             switch (office.employees[i].pos) {
-                case _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Operations:
+                case _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Operations:
                     ++opCount; break;
-                case _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Engineer:
+                case _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Engineer:
                     ++engCount; break;
-                case _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Business:
+                case _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Business:
                     ++busCount; break;
-                case _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Management:
+                case _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Management:
                     ++mgmtCount; break;
-                case _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].RandD:
+                case _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].RandD:
                     ++rndCount; break;
-                case _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Unassigned:
+                case _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Unassigned:
                     ++unassignedCount; break;
-                case _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Training:
+                case _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Training:
                     ++trainingCount; break;
                 default:
                     console.log("ERROR: Unrecognized employee position: " + office.employees[i].pos);
@@ -40572,19 +40611,19 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
         }
 
         //Unassigned employee count display
-        industryEmployeeManagementUI.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
+        industryEmployeeManagementUI.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
             display:"inline-block",
             innerText:"Unassigned Employees: " + unassignedCount,
         }));
-        industryEmployeeManagementUI.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("br", {}));
+        industryEmployeeManagementUI.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("br", {}));
 
         //General display of employee information (avg morale, avg energy, etc.)
         industryEmployeeManagementUI.appendChild(industryEmployeeInfo);
-        industryEmployeeManagementUI.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("br", {}));
+        industryEmployeeManagementUI.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("br", {}));
 
-        var positions = [_EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Operations, _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Engineer,
-                         _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Business, _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Management,
-                         _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].RandD, _EmployeePositions__WEBPACK_IMPORTED_MODULE_1__["EmployeePositions"].Training];
+        var positions = [_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Operations, _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Engineer,
+                         _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Business, _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Management,
+                         _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].RandD, _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Training];
         var descriptions = ["Manages supply chain operations. Improves production.", //Operations
                             "Develops and maintains products and production systems. Improves production.", //Engineer
                             "Handles sales and finances. Improves sales.", //Business
@@ -40594,12 +40633,12 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
         var counts = [opCount, engCount, busCount, mgmtCount, rndCount, trainingCount];
         for (var i = 0; i < positions.length; ++i) {
             (function(corp, i) {
-                var info = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("h2", {
+                var info = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("h2", {
                     display:"inline-block", width:"40%", fontSize:"15px",
                     innerText: positions[i] + "(" + counts[i] + ")",
-                    tooltipleft: descriptions[i]
+                    tooltip: descriptions[i]
                 });
-                var plusBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+                var plusBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
                     class: unassignedCount > 0 ? "a-link-button" : "a-link-button-inactive",
                     display:"inline-block", innerText:"+",
                     clickListener:()=>{
@@ -40607,7 +40646,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                         corp.displayDivisionContent(division, city);
                     }
                 });
-                var minusBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+                var minusBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
                     class: counts[i] > 0 ? "a-link-button" : "a-link-button-inactive",
                     display:"inline-block", innerText:"-",
                     clickListener:()=>{
@@ -40615,7 +40654,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                         corp.displayDivisionContent(division, city);
                     }
                 });
-                var newline = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("br", {});
+                var newline = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("br", {});
                 industryEmployeeManagementUI.appendChild(info);
                 industryEmployeeManagementUI.appendChild(plusBtn);
                 industryEmployeeManagementUI.appendChild(minusBtn);
@@ -40630,12 +40669,12 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
     if (warehouse instanceof Warehouse) {
         warehouse.createUI({industry:division, company: this});
     } else {
-        industryWarehousePanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("a", {
+        industryWarehousePanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
             innerText:"Purchase Warehouse ($5b)",
             class: "a-link-button",
             clickListener:()=>{
                 if (this.funds.lt(WarehouseInitialCost)) {
-                    Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("You do not have enough funds to do this!");
+                    Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("You do not have enough funds to do this!");
                 } else {
                     division.warehouses[currentCityUi] = new Warehouse({
                         loc:currentCityUi,
@@ -40659,7 +40698,7 @@ Corporation.prototype.updateDivisionContent = function(division) {
     var vechain = (this.unlockUpgrades[4] === 1);
     //Industry Overview Text
     var profit = division.lastCycleRevenue.minus(division.lastCycleExpenses).toNumber(),
-        profitStr = profit >= 0 ? _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(profit, "$0.000a") : "-" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(-1 * profit, "$0.000a");
+        profitStr = profit >= 0 ? _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(profit, "$0.000a") : "-" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(-1 * profit, "$0.000a");
     var advertisingInfo = "";
     if (vechain) {
         var advertisingFactors = division.getAdvertisingFactors();
@@ -40668,34 +40707,34 @@ Corporation.prototype.updateDivisionContent = function(division) {
         var ratioFac = advertisingFactors[3];
         var totalAdvertisingFac = advertisingFactors[0];
         advertisingInfo =
-            "<p class='tooltip'>Advertising Multiplier: x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(totalAdvertisingFac, 3) +
+            "<p class='tooltip'>Advertising Multiplier: x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(totalAdvertisingFac, 3) +
             "<span class='tooltiptext cmpy-mgmt-advertising-info'>Total multiplier for this industry's sales due to its awareness and popularity<br>" +
-            "Awareness Bonus: x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(Math.pow(awarenessFac, 0.85), 3) + "<br>" +
-            "Popularity Bonus: x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(Math.pow(popularityFac, 0.85), 3) + "<br>" +
-            "Ratio Multiplier: x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(Math.pow(ratioFac, 0.85), 3) + "</span></p><br>"
+            "Awareness Bonus: x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(Math.pow(awarenessFac, 0.85), 3) + "<br>" +
+            "Popularity Bonus: x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(Math.pow(popularityFac, 0.85), 3) + "<br>" +
+            "Ratio Multiplier: x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(Math.pow(ratioFac, 0.85), 3) + "</span></p><br>"
 
     }
 
-    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_21__["removeChildrenFromElement"])(industryOverviewText);
-    industryOverviewText.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
-        innerHTML:"Industry: " + division.type + " (Corp Funds: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(this.funds.toNumber(), "$0.000a") + ")<br><br>" +
-                  "Awareness: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(division.awareness, 3) + "<br>" +
-                  "Popularity: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(division.popularity, 3) +  "<br>" +
+    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_26__["removeChildrenFromElement"])(industryOverviewText);
+    industryOverviewText.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
+        innerHTML:"Industry: " + division.type + " (Corp Funds: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(this.funds.toNumber(), "$0.000a") + ")<br><br>" +
+                  "Awareness: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(division.awareness, 3) + "<br>" +
+                  "Popularity: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(division.popularity, 3) +  "<br>" +
                   advertisingInfo + "<br>" +
-                  "Revenue: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(division.lastCycleRevenue.toNumber(), "$0.000a") + " / s<br>" +
-                  "Expenses: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__["numeralWrapper"].format(division.lastCycleExpenses.toNumber(), "$0.000a") + " /s<br>" +
+                  "Revenue: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(division.lastCycleRevenue.toNumber(), "$0.000a") + " / s<br>" +
+                  "Expenses: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(division.lastCycleExpenses.toNumber(), "$0.000a") + " /s<br>" +
                   "Profit: " + profitStr + " / s<br><br>"
     }));
-    industryOverviewText.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
+    industryOverviewText.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
         marginTop:"2px",
-        innerText:"Production Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(division.prodMult, 2),
+        innerText:"Production Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(division.prodMult, 2),
         tooltip:"Production gain from owning production-boosting materials " +
                 "such as hardware, Robots, AI Cores, and Real Estate"
     }));
-    industryOverviewText.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("div", {
+    industryOverviewText.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {
         innerText:"?", class:"help-tip",
         clickListener:()=>{
-            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("Owning Hardware, Robots, AI Cores, and Real Estate " +
+            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Owning Hardware, Robots, AI Cores, and Real Estate " +
                             "can boost your Industry's production. The effect these " +
                             "materials have on your production varies between Industries. " +
                             "For example, Real Estate may be very effective for some Industries, " +
@@ -40707,12 +40746,19 @@ Corporation.prototype.updateDivisionContent = function(division) {
                             "production multiplier of your entire Division.");
         }
     }));
-    industryOverviewText.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("br"));
-    industryOverviewText.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
+    Object(_utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_20__["appendLineBreaks"])(industryOverviewText, 2);
+    industryOverviewText.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
         display:"inline-block",
-        innerText:"Scientific Research: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(division.sciResearch.qty, 3),
+        innerText:"Scientific Research: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(division.sciResearch.qty, 3),
         tooltip:"Scientific Research increases the quality of the materials and " +
                 "products that you produce."
+    }));
+    industryOverviewText.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {
+        class: "help-tip",
+        innerText: "Research",
+        clickListener: () => {
+            division.createResearchBox();
+        }
     }));
 
     //Office and Employee List
@@ -40749,27 +40795,27 @@ Corporation.prototype.updateDivisionContent = function(division) {
         avgEnergy = totalEnergy / office.employees.length;
     }
     industryEmployeeInfo.innerHTML =
-        "Avg Employee Morale: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(avgMorale, 3) + "<br>" +
-        "Avg Employee Happiness: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(avgHappiness, 3) + "<br>" +
-        "Avg Employee Energy: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(avgEnergy, 3);
+        "Avg Employee Morale: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(avgMorale, 3) + "<br>" +
+        "Avg Employee Happiness: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(avgHappiness, 3) + "<br>" +
+        "Avg Employee Energy: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(avgEnergy, 3);
     if (vechain) { //VeChain - Statistics
-        industryEmployeeInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("br", {}));
-        industryEmployeeInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
-            innerText:"Material Production: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(division.getOfficeProductivity(office), 3),
+        industryEmployeeInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("br", {}));
+        industryEmployeeInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
+            innerText:"Material Production: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(division.getOfficeProductivity(office), 3),
             tooltip: "The base amount of material this office can produce. Does not include " +
                      "production multipliers from upgrades and materials. This value is based off " +
                      "the productivity of your Operations, Engineering, and Management employees"
         }));
-        industryEmployeeInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("br", {}));
-        industryEmployeeInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
-            innerText:"Product Production: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(division.getOfficeProductivity(office, {forProduct:true}), 3),
+        industryEmployeeInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("br", {}));
+        industryEmployeeInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
+            innerText:"Product Production: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(division.getOfficeProductivity(office, {forProduct:true}), 3),
             tooltip: "The base amount of any given Product this office can produce. Does not include " +
                      "production multipliers from upgrades and materials. This value is based off " +
                      "the productivity of your Operations, Engineering, and Management employees"
         }));
-        industryEmployeeInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("br", {}));
-        industryEmployeeInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("p", {
-            innerText: "Business Multiplier: x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_18__["formatNumber"])(division.getBusinessFactor(office), 3),
+        industryEmployeeInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("br", {}));
+        industryEmployeeInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
+            innerText: "Business Multiplier: x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(division.getBusinessFactor(office), 3),
             tooltip: "The effect this office's 'Business' employees has on boosting sales"
         }));
     }
@@ -40782,7 +40828,7 @@ Corporation.prototype.updateDivisionContent = function(division) {
 }
 
 Corporation.prototype.createCityUITab = function(city, division) {
-    var tab = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_16__["createElement"])("button", {
+    var tab = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("button", {
         id:"cmpy-mgmt-city-" + city + "-tab",
         class:"cmpy-mgmt-city-tab",
         innerText:city,
@@ -40808,7 +40854,7 @@ Corporation.prototype.selectCityTab = function(activeTab, city) {
 
 Corporation.prototype.clearUI = function() {
     //Delete everything
-    if (companyManagementDiv != null) {Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_22__["removeElementById"])(companyManagementDiv.id);}
+    if (companyManagementDiv != null) {Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(companyManagementDiv.id);}
 
     //Reset global DOM variables
     companyManagementDiv        = null;
@@ -40839,6 +40885,9 @@ Corporation.prototype.clearUI = function() {
     industryWarehouseMaterials          = null;
     industryWarehouseProducts           = null;
 
+    researchTreeBoxOpened = false;
+    researchTreeBox = null;
+
     companyManagementHeaderTabs = null;
     headerTabs                  = null;
     cityTabs                    = null;
@@ -40847,43 +40896,18 @@ Corporation.prototype.clearUI = function() {
 }
 
 Corporation.prototype.toJSON = function() {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__["Generic_toJSON"])("Corporation", this);
+	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_19__["Generic_toJSON"])("Corporation", this);
 }
 
 Corporation.fromJSON = function(value) {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__["Generic_fromJSON"])(Corporation, value.data);
+	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_19__["Generic_fromJSON"])(Corporation, value.data);
 }
 
-_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__["Reviver"].constructors.Corporation = Corporation;
+_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_19__["Reviver"].constructors.Corporation = Corporation;
 
 
 
-
-/***/ }),
-/* 61 */
-/*!*********************************************!*\
-  !*** ./utils/uiHelpers/appendLineBreaks.ts ***!
-  \*********************************************/
-/*! no static exports found */
-/*! exports used: appendLineBreaks */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const createElement_1 = __webpack_require__(/*! ./createElement */ 2);
-/**
- * Appends the specified number of breaks (as children) to the specified element
- * @param el The element to add child break elements to.
- * @param n The number of breaks to add.
- */
-function appendLineBreaks(el, n) {
-    for (let i = 0; i < n; ++i) {
-        el.appendChild(createElement_1.createElement("br"));
-    }
-}
-exports.appendLineBreaks = appendLineBreaks;
-
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 63)))
 
 /***/ }),
 /* 62 */
@@ -41107,7 +41131,45 @@ JSONReviver_1.Reviver.constructors.Material = Material;
 
 
 /***/ }),
-/* 63 */
+/* 63 */,
+/* 64 */
+/*!******************************************!*\
+  !*** ./utils/uiHelpers/removeElement.ts ***!
+  \******************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * For a given element, this function removes it AND its children
+ * @param elem The element to remove.
+ */
+function removeElement(elem) {
+    if (elem === null) {
+        // tslint:disable-next-line:no-console
+        console.debug("The element passed into 'removeElement' was null.");
+        return;
+    }
+    if (!(elem instanceof Element)) {
+        // tslint:disable-next-line:no-console
+        console.debug("The element passed into 'removeElement' was not an instance of an Element.");
+        return;
+    }
+    while (elem.firstChild !== null) {
+        elem.removeChild(elem.firstChild);
+    }
+    if (elem.parentNode !== null) {
+        elem.parentNode.removeChild(elem);
+    }
+}
+exports.removeElement = removeElement;
+
+
+/***/ }),
+/* 65 */
 /*!*************************!*\
   !*** ./src/TextFile.ts ***!
   \*************************/
@@ -41242,7 +41304,7 @@ function deleteTextFile(fn, server) {
 
 
 /***/ }),
-/* 64 */
+/* 66 */
 /*!************************************!*\
   !*** ./utils/helpers/addOffset.ts ***!
   \************************************/
@@ -41278,8 +41340,7 @@ exports.addOffset = addOffset;
 
 
 /***/ }),
-/* 65 */,
-/* 66 */
+/* 67 */
 /*!****************************!*\
   !*** ./src/HacknetNode.js ***!
   \****************************/
@@ -41995,7 +42056,7 @@ function getHacknetNode(name) {
 
 
 /***/ }),
-/* 67 */
+/* 68 */
 /*!********************************!*\
   !*** ./src/ActiveScriptsUI.js ***!
   \********************************/
@@ -42029,7 +42090,7 @@ function getHacknetNode(name) {
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 29);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 70);
+/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 64);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_14__);
 /* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 81);
 /* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_15__);
@@ -42361,8 +42422,8 @@ function updateActiveScriptsText(workerscript, item, itemName) {
 
 
 /***/ }),
-/* 68 */,
-/* 69 */
+/* 69 */,
+/* 70 */
 /*!***************************!*\
   !*** ./src/SourceFile.js ***!
   \***************************/
@@ -42376,7 +42437,7 @@ function updateActiveScriptsText(workerscript, item, itemName) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return applySourceFile; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return initSourceFiles; });
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BitNode */ 58);
+/* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BitNode */ 59);
 
 
 
@@ -42629,43 +42690,6 @@ function applySourceFile(srcFile) {
 
 
 /***/ }),
-/* 70 */
-/*!******************************************!*\
-  !*** ./utils/uiHelpers/removeElement.ts ***!
-  \******************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * For a given element, this function removes it AND its children
- * @param elem The element to remove.
- */
-function removeElement(elem) {
-    if (elem === null) {
-        // tslint:disable-next-line:no-console
-        console.debug("The element passed into 'removeElement' was null.");
-        return;
-    }
-    if (!(elem instanceof Element)) {
-        // tslint:disable-next-line:no-console
-        console.debug("The element passed into 'removeElement' was not an instance of an Element.");
-        return;
-    }
-    while (elem.firstChild !== null) {
-        elem.removeChild(elem.firstChild);
-    }
-    if (elem.parentNode !== null) {
-        elem.parentNode.removeChild(elem);
-    }
-}
-exports.removeElement = removeElement;
-
-
-/***/ }),
 /* 71 */
 /*!******************************!*\
   !*** ./src/NetscriptPort.js ***!
@@ -42885,8 +42909,8 @@ JSONReviver_1.Reviver.constructors.Company = Company;
 /* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 46);
 /* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Fconf */ 47);
 /* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Gang */ 50);
-/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./HacknetNode */ 66);
-/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Message */ 40);
+/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./HacknetNode */ 67);
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Message */ 41);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Script */ 30);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Server */ 11);
@@ -42901,9 +42925,9 @@ JSONReviver_1.Reviver.constructors.Company = Company;
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 41);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 40);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__);
-/* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./ui/createStatusText */ 99);
+/* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./ui/createStatusText */ 100);
 /* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_ui_createStatusText__WEBPACK_IMPORTED_MODULE_23__);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_24__);
@@ -43513,7 +43537,7 @@ function openImportFileHandler(evt) {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 65)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 63)))
 
 /***/ }),
 /* 75 */
@@ -43705,7 +43729,7 @@ function logBoxUpdateText() {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 65)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 63)))
 
 /***/ }),
 /* 79 */
@@ -44416,7 +44440,7 @@ function gameOptionsBoxOpen() {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 65)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 63)))
 
 /***/ }),
 /* 85 */
@@ -44522,11 +44546,11 @@ exports.CompanyPosition = CompanyPosition;
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return prestigeAugmentation; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return prestigeSourceFile; });
-/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActiveScriptsUI */ 67);
+/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActiveScriptsUI */ 68);
 /* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Augmentations */ 21);
-/* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BitNode */ 58);
+/* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BitNode */ 59);
 /* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Bladeburner */ 31);
-/* harmony import */ var _CinematicText__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./CinematicText */ 97);
+/* harmony import */ var _CinematicText__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./CinematicText */ 98);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Company/Companies */ 18);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./CreateProgram */ 23);
@@ -44538,7 +44562,7 @@ exports.CompanyPosition = CompanyPosition;
 /* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 46);
 /* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Gang */ 50);
 /* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Location */ 90);
-/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Message */ 40);
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Message */ 41);
 /* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./NetscriptWorker */ 24);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Player */ 0);
@@ -44552,7 +44576,7 @@ exports.CompanyPosition = CompanyPosition;
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_23__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_24__);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 41);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 40);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_25__);
 /* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 44);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
@@ -44882,7 +44906,7 @@ function prestigeSourceFile() {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 65)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 63)))
 
 /***/ }),
 /* 87 */
@@ -44949,7 +44973,7 @@ exports.isValidIPAddress = isValidIPAddress;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return displayLocationContent; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return initLocationButtons; });
 /* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Bladeburner */ 31);
-/* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Company/CompanyPositions */ 27);
+/* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Company/CompanyPositions */ 28);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Company/Companies */ 18);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_2__);
@@ -44957,18 +44981,18 @@ exports.isValidIPAddress = isValidIPAddress;
 /* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Company/data/CompanyPositionNames */ 36);
 /* harmony import */ var _Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Corporation/Corporation */ 60);
+/* harmony import */ var _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Corporation/Corporation */ 61);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _Crimes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Crimes */ 37);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./engine */ 8);
-/* harmony import */ var _Infiltration__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Infiltration */ 132);
+/* harmony import */ var _Infiltration__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Infiltration */ 136);
 /* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Locations */ 5);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _ServerPurchases__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./ServerPurchases */ 113);
+/* harmony import */ var _ServerPurchases__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./ServerPurchases */ 117);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
@@ -44977,7 +45001,7 @@ exports.isValidIPAddress = isValidIPAddress;
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/IPAddress */ 59);
+/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/IPAddress */ 60);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21__);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
@@ -47331,6 +47355,34 @@ exports.getRandomByte = getRandomByte;
 /* 95 */,
 /* 96 */
 /*!****************************************!*\
+  !*** ./src/Corporation/ResearchMap.ts ***!
+  \****************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+// The Research Map is an object that holds all Corporation Research objects
+// as values. They are identified by their names
+const Research_1 = __webpack_require__(/*! ./Research */ 200);
+const ResearchMetadata_1 = __webpack_require__(/*! ./data/ResearchMetadata */ 199);
+exports.ResearchMap = {};
+function addResearch(p) {
+    if (exports.ResearchMap[p.name] != null) {
+        console.warn(`Duplicate Research being defined: ${p.name}`);
+    }
+    exports.ResearchMap[p.name] = new Research_1.Research(p);
+}
+for (const metadata of ResearchMetadata_1.researchMetadata) {
+    addResearch(metadata);
+}
+
+
+/***/ }),
+/* 97 */
+/*!****************************************!*\
   !*** ./src/CodingContractGenerator.js ***!
   \****************************************/
 /*! exports provided: generateRandomContract, generateContract */
@@ -47506,7 +47558,7 @@ function getRandomFilename(server, reward) {
 
 
 /***/ }),
-/* 97 */
+/* 98 */
 /*!******************************!*\
   !*** ./src/CinematicText.js ***!
   \******************************/
@@ -47627,7 +47679,7 @@ function cinematicTextEnd() {
 
 
 /***/ }),
-/* 98 */
+/* 99 */
 /*!***********************************************!*\
   !*** ./src/Company/GetNextCompanyPosition.ts ***!
   \***********************************************/
@@ -47638,7 +47690,7 @@ function cinematicTextEnd() {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const CompanyPositions_1 = __webpack_require__(/*! ./CompanyPositions */ 27);
+const CompanyPositions_1 = __webpack_require__(/*! ./CompanyPositions */ 28);
 function getNextCompanyPosition(currPos) {
     if (currPos == null) {
         return null;
@@ -47653,7 +47705,7 @@ exports.getNextCompanyPosition = getNextCompanyPosition;
 
 
 /***/ }),
-/* 99 */
+/* 100 */
 /*!************************************!*\
   !*** ./src/ui/createStatusText.ts ***!
   \************************************/
@@ -47690,7 +47742,7 @@ exports.createStatusText = createStatusText;
 
 
 /***/ }),
-/* 100 */
+/* 101 */
 /*!*************************!*\
   !*** ./src/HelpText.ts ***!
   \*************************/
@@ -47931,7 +47983,7 @@ exports.HelpTexts = {
 
 
 /***/ }),
-/* 101 */
+/* 102 */
 /*!************************************!*\
   !*** ./src/Corporation/Product.ts ***!
   \************************************/
@@ -47944,8 +47996,8 @@ exports.HelpTexts = {
 Object.defineProperty(exports, "__esModule", { value: true });
 const EmployeePositions_1 = __webpack_require__(/*! ./EmployeePositions */ 25);
 const MaterialSizes_1 = __webpack_require__(/*! ./MaterialSizes */ 75);
-const ProductRatingWeights_1 = __webpack_require__(/*! ./ProductRatingWeights */ 191);
-const Cities_1 = __webpack_require__(/*! ../Locations/Cities */ 190);
+const ProductRatingWeights_1 = __webpack_require__(/*! ./ProductRatingWeights */ 197);
+const Cities_1 = __webpack_require__(/*! ../Locations/Cities */ 196);
 const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
 const getRandomInt_1 = __webpack_require__(/*! ../../utils/helpers/getRandomInt */ 15);
 class Product {
@@ -48138,14 +48190,149 @@ JSONReviver_1.Reviver.constructors.Product = Product;
 
 
 /***/ }),
-/* 102 */,
-/* 103 */,
-/* 104 */,
-/* 105 */,
+/* 103 */
+/*!*********************************************!*\
+  !*** ./src/Corporation/IndustryUpgrades.ts ***!
+  \*********************************************/
+/*! no static exports found */
+/*! exports used: IndustryUpgrades */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+// Industry upgrades
+// The data structure is an array with the following format:
+//  [index in array, base price, price mult, benefit mult (if applicable), name, desc]
+exports.IndustryUpgrades = {
+    "0": [0, 500e3, 1, 1.05,
+        "Coffee", "Provide your employees with coffee, increasing their energy by 5%."],
+    "1": [1, 1e9, 1.06, 1.03,
+        "AdVert.Inc", "Hire AdVert.Inc to advertise your company. Each level of " +
+            "this upgrade grants your company a static increase of 3 and 1 to its awareness and " +
+            "popularity, respectively. It will then increase your company's awareness by 1%, and its popularity " +
+            "by a random percentage between 1% and 3%. These effects are increased by other upgrades " +
+            "that increase the power of your advertising."]
+};
+
+
+/***/ }),
+/* 104 */
+/*!************************************************!*\
+  !*** ./src/Corporation/CorporationUpgrades.ts ***!
+  \************************************************/
+/*! no static exports found */
+/*! exports used: CorporationUpgrades */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+// Corporation Upgrades
+// Upgrades for entire corporation, levelable upgrades
+// The data structure is an array with the following format
+//  [index in Corporation upgrades array, base price, price mult, benefit mult (additive), name, desc]
+exports.CorporationUpgrades = {
+    //Smart factories, increases production
+    "0": [0, 2e9, 1.07, 0.03,
+        "Smart Factories", "Advanced AI automatically optimizes the operation and productivity " +
+            "of factories. Each level of this upgrade increases your global production by 3% (additive)."],
+    //Smart warehouses, increases storage size
+    "1": [1, 2e9, 1.07, .1,
+        "Smart Storage", "Advanced AI automatically optimizes your warehouse storage methods. " +
+            "Each level of this upgrade increases your global warehouse storage size by 10% (additive)."],
+    //Advertise through dreams, passive popularity/ awareness gain
+    "2": [2, 8e9, 1.09, .001,
+        "DreamSense", "Use DreamSense LCC Technologies to advertise your corporation " +
+            "to consumers through their dreams. Each level of this upgrade provides a passive " +
+            "increase in awareness of all of your companies (divisions) by 0.004 / market cycle," +
+            "and in popularity by 0.001 / market cycle. A market cycle is approximately " +
+            "20 seconds."],
+    //Makes advertising more effective
+    "3": [3, 4e9, 1.12, 0.005,
+        "Wilson Analytics", "Purchase data and analysis from Wilson, a marketing research " +
+            "firm. Each level of this upgrades increases the effectiveness of your " +
+            "advertising by 0.5% (additive)."],
+    //Augmentation for employees, increases cre
+    "4": [4, 1e9, 1.06, 0.1,
+        "Nuoptimal Nootropic Injector Implants", "Purchase the Nuoptimal Nootropic " +
+            "Injector augmentation for your employees. Each level of this upgrade " +
+            "globally increases the creativity of your employees by 10% (additive)."],
+    //Augmentation for employees, increases cha
+    "5": [5, 1e9, 1.06, 0.1,
+        "Speech Processor Implants", "Purchase the Speech Processor augmentation for your employees. " +
+            "Each level of this upgrade globally increases the charisma of your employees by 10% (additive)."],
+    //Augmentation for employees, increases int
+    "6": [6, 1e9, 1.06, 0.1,
+        "Neural Accelerators", "Purchase the Neural Accelerator augmentation for your employees. " +
+            "Each level of this upgrade globally increases the intelligence of your employees " +
+            "by 10% (additive)."],
+    //Augmentation for employees, increases eff
+    "7": [7, 1e9, 1.06, 0.1,
+        "FocusWires", "Purchase the FocusWire augmentation for your employees. Each level " +
+            "of this upgrade globally increases the efficiency of your employees by 10% (additive)."],
+    //Improves sales of materials/products
+    "8": [8, 1e9, 1.08, 0.01,
+        "ABC SalesBots", "Always Be Closing. Purchase these robotic salesmen to increase the amount of " +
+            "materials and products you sell. Each level of this upgrade globally increases your sales " +
+            "by 1% (additive)."],
+    //Improves scientific research rate
+    "9": [9, 5e9, 1.07, 0.05,
+        "Project Insight", "Purchase 'Project Insight', a R&D service provided by the secretive " +
+            "Fulcrum Technologies. Each level of this upgrade globally increases the amount of " +
+            "Scientific Research you produce by 5% (additive)."],
+};
+
+
+/***/ }),
+/* 105 */
+/*!******************************************************!*\
+  !*** ./src/Corporation/CorporationUnlockUpgrades.ts ***!
+  \******************************************************/
+/*! no static exports found */
+/*! exports used: CorporationUnlockUpgrades */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+// Corporation Unlock Upgrades
+// Upgrades for entire corporation, unlocks features, either you have it or you dont
+// The data structure is an array with the following format:
+//  [index in Corporation feature upgrades array, price, name, description]
+exports.CorporationUnlockUpgrades = {
+    //Lets you export goods
+    "0": [0, 20e9, "Export",
+        "Develop infrastructure to export your materials to your other facilities. " +
+            "This allows you to move materials around between different divisions and cities."],
+    //Lets you buy exactly however many required materials you need for production
+    "1": [1, 50e9, "Smart Supply", "Use advanced AI to anticipate your supply needs. " +
+            "This allows you to purchase exactly however many materials you need for production."],
+    //Displays each material/product's demand
+    "2": [2, 5e9, "Market Research - Demand",
+        "Mine and analyze market data to determine the demand of all resources. " +
+            "The demand attribute, which affects sales, will be displayed for every material and product."],
+    //Display's each material/product's competition
+    "3": [3, 5e9, "Market Data - Competition",
+        "Mine and analyze market data to determine how much competition there is on the market " +
+            "for all resources. The competition attribute, which affects sales, will be displayed for " +
+            "for every material and product."],
+    "4": [4, 10e9, "VeChain",
+        "Use AI and blockchain technology to identify where you can improve your supply chain systems. " +
+            "This upgrade will allow you to view a wide array of useful statistics about your " +
+            "Corporation."]
+};
+
+
+/***/ }),
 /* 106 */,
 /* 107 */,
 /* 108 */,
-/* 109 */
+/* 109 */,
+/* 110 */,
+/* 111 */,
+/* 112 */,
+/* 113 */
 /*!************************************!*\
   !*** ./src/Faction/FactionInfo.ts ***!
   \************************************/
@@ -48320,7 +48507,7 @@ exports.FactionInfos = {
 
 
 /***/ }),
-/* 110 */
+/* 114 */
 /*!*************************************!*\
   !*** ./src/NetscriptEnvironment.js ***!
   \*************************************/
@@ -48330,7 +48517,7 @@ exports.FactionInfos = {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Environment; });
-/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HacknetNode */ 66);
+/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HacknetNode */ 67);
 /* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
 /* harmony import */ var _NetscriptPort__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NetscriptPort */ 71);
 
@@ -48432,7 +48619,7 @@ Environment.prototype = {
 
 
 /***/ }),
-/* 111 */
+/* 115 */
 /*!*************************************!*\
   !*** ./src/NetscriptJSEvaluator.js ***!
   \*************************************/
@@ -48556,7 +48743,7 @@ function _getScriptUrls(script, scripts, seen) {
 
 
 /***/ }),
-/* 112 */
+/* 116 */
 /*!************************!*\
   !*** ./src/DevMenu.js ***!
   \************************/
@@ -48568,13 +48755,13 @@ function _getScriptUrls(script, scripts, seen) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return createDevMenu; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return closeDevMenu; });
 /* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentations */ 21);
-/* harmony import */ var _CodingContractGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CodingContractGenerator */ 96);
+/* harmony import */ var _CodingContractGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CodingContractGenerator */ 97);
 /* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CreateProgram */ 23);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Faction/Factions */ 14);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./RedPill */ 57);
+/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./RedPill */ 58);
 /* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./StockMarket */ 22);
 /* harmony import */ var _Stock__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Stock */ 26);
 /* harmony import */ var _Stock__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_Stock__WEBPACK_IMPORTED_MODULE_8__);
@@ -49136,7 +49323,7 @@ function closeDevMenu() {
 
 
 /***/ }),
-/* 113 */
+/* 117 */
 /*!********************************!*\
   !*** ./src/ServerPurchases.js ***!
   \********************************/
@@ -49152,7 +49339,7 @@ function closeDevMenu() {
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Server */ 11);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/IPAddress */ 59);
+/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/IPAddress */ 60);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
 
 
@@ -49226,7 +49413,7 @@ function purchaseRamForHomeComputer(cost) {
 
 
 /***/ }),
-/* 114 */
+/* 118 */
 /*!*********************************************!*\
   !*** ./src/Corporation/CorporationState.ts ***!
   \*********************************************/
@@ -49276,7 +49463,7 @@ JSONReviver_1.Reviver.constructors.CorporationState = CorporationState;
 
 
 /***/ }),
-/* 115 */
+/* 119 */
 /*!************************************************!*\
   !*** ./utils/uiHelpers/removeLoadingScreen.ts ***!
   \************************************************/
@@ -49301,14 +49488,14 @@ exports.removeLoadingScreen = removeLoadingScreen;
 
 
 /***/ }),
-/* 116 */,
-/* 117 */,
-/* 118 */,
-/* 119 */,
 /* 120 */,
 /* 121 */,
 /* 122 */,
-/* 123 */
+/* 123 */,
+/* 124 */,
+/* 125 */,
+/* 126 */,
+/* 127 */
 /*!*************************************!*\
   !*** ./src/ui/setSettingsLabels.js ***!
   \*************************************/
@@ -49434,7 +49621,7 @@ function setSettingsLabels() {
 
 
 /***/ }),
-/* 124 */
+/* 128 */
 /*!**********************************!*\
   !*** ./src/CharacterOverview.js ***!
   \**********************************/
@@ -49509,7 +49696,7 @@ CharacterOverview.prototype.update = function() {
 
 
 /***/ }),
-/* 125 */
+/* 129 */
 /*!******************************!*\
   !*** ./src/JSInterpreter.js ***!
   \******************************/
@@ -53312,7 +53499,7 @@ Interpreter.prototype['createPrimitive'] = function(x) {return x;};
 
 
 /***/ }),
-/* 126 */
+/* 130 */
 /*!***************************************!*\
   !*** ./utils/helpers/isPowerOfTwo.ts ***!
   \***************************************/
@@ -53342,7 +53529,7 @@ exports.isPowerOfTwo = isPowerOfTwo;
 
 
 /***/ }),
-/* 127 */
+/* 131 */
 /*!****************************************!*\
   !*** ./src/data/gangmemberupgrades.ts ***!
   \****************************************/
@@ -53554,7 +53741,7 @@ exports.gangMemberUpgradesMetadata = [
 
 
 /***/ }),
-/* 128 */
+/* 132 */
 /*!*************************************!*\
   !*** ./src/data/gangmembertasks.ts ***!
   \*************************************/
@@ -53819,7 +54006,7 @@ exports.gangMemberTasksMetadata = [
 
 
 /***/ }),
-/* 129 */
+/* 133 */
 /*!***************************************!*\
   !*** ./utils/FactionInvitationBox.js ***!
   \***************************************/
@@ -53903,7 +54090,7 @@ function factionInvitationBoxCreate(faction) {
 
 
 /***/ }),
-/* 130 */
+/* 134 */
 /*!*****************************!*\
   !*** ./src/data/servers.ts ***!
   \*****************************/
@@ -55376,7 +55563,7 @@ exports.serverMetadata = [
 
 
 /***/ }),
-/* 131 */
+/* 135 */
 /*!**********************************!*\
   !*** ./utils/InfiltrationBox.js ***!
   \**********************************/
@@ -55523,7 +55710,7 @@ function infiltrationBoxCreate(inst) {
 
 
 /***/ }),
-/* 132 */
+/* 136 */
 /*!*****************************!*\
   !*** ./src/Infiltration.js ***!
   \*****************************/
@@ -55544,7 +55731,7 @@ function infiltrationBoxCreate(inst) {
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 15);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _utils_InfiltrationBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/InfiltrationBox */ 131);
+/* harmony import */ var _utils_InfiltrationBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/InfiltrationBox */ 135);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_8__);
 
@@ -56392,7 +56579,7 @@ function getInfiltrationEscapeChance(inst) {
 
 
 /***/ }),
-/* 133 */
+/* 137 */
 /*!******************************************!*\
   !*** ./utils/uiHelpers/clearSelector.ts ***!
   \******************************************/
@@ -56416,10 +56603,6 @@ exports.clearSelector = clearSelector;
 
 
 /***/ }),
-/* 134 */,
-/* 135 */,
-/* 136 */,
-/* 137 */,
 /* 138 */,
 /* 139 */,
 /* 140 */,
@@ -56431,7 +56614,22 @@ exports.clearSelector = clearSelector;
 /* 146 */,
 /* 147 */,
 /* 148 */,
-/* 149 */
+/* 149 */,
+/* 150 */,
+/* 151 */,
+/* 152 */,
+/* 153 */
+/*!************************!*\
+  !*** ./css/treant.css ***!
+  \************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+/* 154 */,
+/* 155 */
 /*!***********************!*\
   !*** ./css/gang.scss ***!
   \***********************/
@@ -56441,8 +56639,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 150 */,
-/* 151 */
+/* 156 */,
+/* 157 */
 /*!******************************!*\
   !*** ./css/bladeburner.scss ***!
   \******************************/
@@ -56452,8 +56650,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 152 */,
-/* 153 */
+/* 158 */,
+/* 159 */
 /*!************************************!*\
   !*** ./css/companymanagement.scss ***!
   \************************************/
@@ -56463,8 +56661,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 154 */,
-/* 155 */
+/* 160 */,
+/* 161 */
 /*!***************************!*\
   !*** ./css/missions.scss ***!
   \***************************/
@@ -56474,8 +56672,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 156 */,
-/* 157 */
+/* 162 */,
+/* 163 */
 /*!*************************!*\
   !*** ./css/loader.scss ***!
   \*************************/
@@ -56485,8 +56683,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 158 */,
-/* 159 */
+/* 164 */,
+/* 165 */
 /*!**************************************!*\
   !*** ./css/interactivetutorial.scss ***!
   \**************************************/
@@ -56496,8 +56694,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 160 */,
-/* 161 */
+/* 166 */,
+/* 167 */
 /*!*****************************!*\
   !*** ./css/popupboxes.scss ***!
   \*****************************/
@@ -56507,8 +56705,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 162 */,
-/* 163 */
+/* 168 */,
+/* 169 */
 /*!*********************************!*\
   !*** ./css/workinprogress.scss ***!
   \*********************************/
@@ -56518,8 +56716,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 164 */,
-/* 165 */
+/* 170 */,
+/* 171 */
 /*!****************************!*\
   !*** ./css/menupages.scss ***!
   \****************************/
@@ -56529,8 +56727,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 166 */,
-/* 167 */
+/* 172 */,
+/* 173 */
 /*!***************************!*\
   !*** ./css/terminal.scss ***!
   \***************************/
@@ -56540,8 +56738,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 168 */,
-/* 169 */
+/* 174 */,
+/* 175 */
 /*!************************************!*\
   !*** ./css/characteroverview.scss ***!
   \************************************/
@@ -56551,8 +56749,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 170 */,
-/* 171 */
+/* 176 */,
+/* 177 */
 /*!***************************!*\
   !*** ./css/mainmenu.scss ***!
   \***************************/
@@ -56562,8 +56760,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 172 */,
-/* 173 */
+/* 178 */,
+/* 179 */
 /*!**************************!*\
   !*** ./css/buttons.scss ***!
   \**************************/
@@ -56573,8 +56771,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 174 */,
-/* 175 */
+/* 180 */,
+/* 181 */
 /*!*************************!*\
   !*** ./css/styles.scss ***!
   \*************************/
@@ -56584,15 +56782,15 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 176 */,
-/* 177 */,
-/* 178 */,
-/* 179 */,
-/* 180 */,
-/* 181 */,
 /* 182 */,
 /* 183 */,
-/* 184 */
+/* 184 */,
+/* 185 */,
+/* 186 */,
+/* 187 */,
+/* 188 */,
+/* 189 */,
+/* 190 */
 /*!**********************!*\
   !*** ./netscript.js ***!
   \**********************/
@@ -57437,7 +57635,7 @@ oop.inherits(Mode, TextMode);
     };
 
     this.createWorker = function(session) {
-        var worker = new WorkerClient(["ace"], __webpack_require__(/*! brace/worker/javascript */ 185), "JavaScriptWorker");
+        var worker = new WorkerClient(["ace"], __webpack_require__(/*! brace/worker/javascript */ 191), "JavaScriptWorker");
         worker.attachToDocument(session.getDocument());
 
         worker.on("annotate", function(results) {
@@ -57459,11 +57657,11 @@ exports.Mode = Mode;
 
 
 /***/ }),
-/* 185 */,
-/* 186 */,
-/* 187 */,
-/* 188 */,
-/* 189 */
+/* 191 */,
+/* 192 */,
+/* 193 */,
+/* 194 */,
+/* 195 */
 /*!*****************************************!*\
   !*** ./src/data/codingcontracttypes.ts ***!
   \*****************************************/
@@ -57944,7 +58142,7 @@ exports.codingContractTypesMetadata = [
 
 
 /***/ }),
-/* 190 */
+/* 196 */
 /*!*********************************!*\
   !*** ./src/Locations/Cities.ts ***!
   \*********************************/
@@ -57970,7 +58168,7 @@ exports.Cities = {
 
 
 /***/ }),
-/* 191 */
+/* 197 */
 /*!*************************************************!*\
   !*** ./src/Corporation/ProductRatingWeights.ts ***!
   \*************************************************/
@@ -57981,7 +58179,7 @@ exports.Cities = {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const IndustryData_1 = __webpack_require__(/*! ./IndustryData */ 28);
+const IndustryData_1 = __webpack_require__(/*! ./IndustryData */ 27);
 exports.ProductRatingWeights = {
     [IndustryData_1.Industries.Food]: {
         Quality: 0.7,
@@ -58050,7 +58248,181 @@ exports.ProductRatingWeights = {
 
 
 /***/ }),
-/* 192 */
+/* 198 */
+/*!*****************************************!*\
+  !*** ./src/Corporation/ResearchTree.ts ***!
+  \*****************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+// Defines a "Research Tree"
+// Each Industry has a unique Research Tree
+// Each Node in the Research Trees only holds the name(s) of Research,
+// not an actual Research object. The name can be used to obtain a reference
+// to the corresponding Research object using the ResearchMap
+Object.defineProperty(exports, "__esModule", { value: true });
+const ResearchMap_1 = __webpack_require__(/*! ./ResearchMap */ 96);
+class Node {
+    constructor(p) {
+        // All child Nodes in the tree
+        // The Research held in this Node is a prerequisite for all Research in
+        // child Nodes
+        this.children = [];
+        // How much Scientific Research is needed for this
+        // Necessary to show it on the UI
+        this.cost = 0;
+        // Whether or not this Research has been unlocked
+        this.researched = false;
+        // Parent node in the tree
+        // The parent node defines the prerequisite Research (there can only be one)
+        // Set as null for no prerequisites
+        this.parent = null;
+        // Name of the Research held in this Node
+        this.text = "";
+        if (ResearchMap_1.ResearchMap[p.text] == null) {
+            throw new Error(`Invalid Research name used when constructing ResearchTree Node: ${p.text}`);
+        }
+        this.text = p.text;
+        this.cost = p.cost;
+        if (p.children && p.children.length > 0) {
+            this.children = p.children;
+        }
+        if (p.parent != null) {
+            this.parent = p.parent;
+        }
+    }
+    addChild(n) {
+        this.children.push(n);
+        n.parent = this;
+    }
+    // Return an object that describes a TreantJS-compatible markup/config for this Node
+    // See: http://fperucic.github.io/treant-js/
+    createTreantMarkup() {
+        const childrenArray = [];
+        for (let i = 0; i < this.children.length; ++i) {
+            childrenArray.push(this.children[i].createTreantMarkup());
+        }
+        // Determine what css class this Node should have in the diagram
+        let htmlClass = "";
+        if (this.researched) {
+            htmlClass = "researched";
+        }
+        else if (this.parent && this.parent.researched === false) {
+            htmlClass = "locked";
+        }
+        else {
+            htmlClass = "unlocked";
+        }
+        const sanitizedName = this.text.replace(/\s/g, '');
+        return {
+            children: childrenArray,
+            HTMLclass: htmlClass,
+            innerHTML: `<div id="${sanitizedName}-click-listener">${this.text}<br>${this.cost} Scientific Research</div>`,
+            text: { name: this.text },
+        };
+    }
+    // Recursive function for finding a Node with the specified text
+    findNode(text) {
+        // Is this the Node?
+        if (this.text === text) {
+            return this;
+        }
+        // Recursively search chilren
+        let res = null;
+        for (let i = 0; i < this.children.length; ++i) {
+            res = this.children[i].findNode(text);
+            if (res != null) {
+                return res;
+            }
+        }
+        return null;
+    }
+    setParent(n) {
+        this.parent = n;
+    }
+}
+exports.Node = Node;
+// A ResearchTree defines all available Research in an Industry
+// The root node in a Research Tree must always be the "Hi-Tech R&D Laboratory"
+class ResearchTree {
+    constructor() {
+        this.root = null;
+    }
+    // Return an object that contains a Tree markup for TreantJS (using the JSON approach)
+    // See: http://fperucic.github.io/treant-js/
+    createTreantMarkup() {
+        if (this.root == null) {
+            return {};
+        }
+        const treeMarkup = this.root.createTreantMarkup();
+        return {
+            chart: {
+                container: "",
+            },
+            nodeStructure: treeMarkup,
+        };
+    }
+    // Gets an array with the 'text' values of ALL Nodes in the Research Tree
+    getAllNodes() {
+        const res = [];
+        const queue = [];
+        if (this.root == null) {
+            return res;
+        }
+        queue.push(this.root);
+        while (queue.length !== 0) {
+            const node = queue.shift();
+            if (node == null) {
+                continue;
+            }
+            res.push(node.text);
+            for (let i = 0; i < node.children.length; ++i) {
+                queue.push(node.children[i]);
+            }
+        }
+        return res;
+    }
+    // Search for a Node with the given name ('text' property on the Node)
+    // Returns 'null' if it cannot be found
+    findNode(name) {
+        if (this.root == null) {
+            return null;
+        }
+        return this.root.findNode(name);
+    }
+    // Marks a Node as researched
+    research(name) {
+        if (this.root == null) {
+            return;
+        }
+        const queue = [];
+        queue.push(this.root);
+        while (queue.length !== 0) {
+            const node = queue.shift();
+            if (node == null) {
+                continue;
+            }
+            if (node.text === name) {
+                node.researched = true;
+            }
+            for (let i = 0; i < node.children.length; ++i) {
+                queue.push(node.children[i]);
+            }
+        }
+    }
+    // Set the tree's Root Node
+    setRoot(root) {
+        this.root = root;
+    }
+}
+exports.ResearchTree = ResearchTree;
+
+
+/***/ }),
+/* 199 */
 /*!**************************************************!*\
   !*** ./src/Corporation/data/ResearchMetadata.ts ***!
   \**************************************************/
@@ -58183,7 +58555,7 @@ exports.researchMetadata = [
 
 
 /***/ }),
-/* 193 */
+/* 200 */
 /*!*************************************!*\
   !*** ./src/Corporation/Research.ts ***!
   \*************************************/
@@ -58248,98 +58620,7 @@ exports.Research = Research;
 
 
 /***/ }),
-/* 194 */
-/*!****************************************!*\
-  !*** ./src/Corporation/ResearchMap.ts ***!
-  \****************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-// The Research Map is an object that holds all Corporation Research objects
-// as values. They are identified by their names
-const Research_1 = __webpack_require__(/*! ./Research */ 193);
-const ResearchMetadata_1 = __webpack_require__(/*! ./data/ResearchMetadata */ 192);
-exports.ResearchMap = {};
-function addResearch(p) {
-    if (exports.ResearchMap[p.name] != null) {
-        console.warn(`Duplicate Research being defined: ${p.name}`);
-    }
-    exports.ResearchMap[p.name] = new Research_1.Research(p);
-}
-for (const metadata of ResearchMetadata_1.researchMetadata) {
-    addResearch(metadata);
-}
-
-
-/***/ }),
-/* 195 */
-/*!*****************************************!*\
-  !*** ./src/Corporation/ResearchTree.ts ***!
-  \*****************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-// Defines a "Research Tree"
-// Each Industry has a unique Research Tree
-// Each Node in the Research Trees only holds the name(s) of Research,
-// not an actual Research object. The name can be used to obtain a reference
-// to the corresponding Research object using the ResearchMap
-Object.defineProperty(exports, "__esModule", { value: true });
-const ResearchMap_1 = __webpack_require__(/*! ./ResearchMap */ 194);
-class Node {
-    constructor(p) {
-        // All child Nodes in the tree
-        // The Research held in this Node is a prerequisite for all Research in
-        // child Nodes
-        this.children = [];
-        // Name of the Research held in this Node
-        this.data = "";
-        // Parent node in the tree
-        // The parent node defines the prerequisite Research (there can only be one)
-        // Set as null for no prerequisites
-        this.parent = null;
-        if (ResearchMap_1.ResearchMap[p.data] == null) {
-            throw new Error(`Invalid Research name used when constructing ResearchTree Node: ${p.data}`);
-        }
-        this.data = p.data;
-        if (p.children && p.children.length > 0) {
-            this.children = p.children;
-        }
-        if (p.parent != null) {
-            this.parent = p.parent;
-        }
-    }
-    addChild(n) {
-        this.children.push(n);
-        n.parent = this;
-    }
-    setParent(n) {
-        this.parent = n;
-    }
-}
-exports.Node = Node;
-// A ResearchTree defines all available Research in an Industry
-// The root node in a Research Tree must always be the "Hi-Tech R&D Laboratory"
-class ResearchTree {
-    constructor() {
-        this.root = null;
-    }
-    setRoot(root) {
-        this.root = root;
-    }
-}
-exports.ResearchTree = ResearchTree;
-
-
-/***/ }),
-/* 196 */
+/* 201 */
 /*!**************************************************!*\
   !*** ./src/Corporation/data/BaseResearchTree.ts ***!
   \**************************************************/
@@ -58350,25 +58631,31 @@ exports.ResearchTree = ResearchTree;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-// Defines the ResearchTree that is common to all Corporation Industries
-// i.e. all Industries have these types of Research available to unlock
-const ResearchTree_1 = __webpack_require__(/*! ../ResearchTree */ 195);
+const ResearchMap_1 = __webpack_require__(/*! ../ResearchMap */ 96);
+const ResearchTree_1 = __webpack_require__(/*! ../ResearchTree */ 198);
 exports.BaseResearchTree = new ResearchTree_1.ResearchTree();
-const rootNode = new ResearchTree_1.Node({ data: "Hi-Tech R&D Laboratory" });
-const autoBrew = new ResearchTree_1.Node({ data: "AutoBrew" });
-const autoParty = new ResearchTree_1.Node({ data: "AutoPartyManager" });
-const autoDrugs = new ResearchTree_1.Node({ data: "Automatic Drug Administration" });
-const cph4 = new ResearchTree_1.Node({ data: "CPH4 Injections" });
-const drones = new ResearchTree_1.Node({ data: "Drones" });
-const dronesAssembly = new ResearchTree_1.Node({ data: "Drones - Assembly" });
-const dronesTransport = new ResearchTree_1.Node({ data: "Drones - Transport" });
-const goJuice = new ResearchTree_1.Node({ data: "Go-Juice" });
-const joywire = new ResearchTree_1.Node({ data: "JoyWire" });
-const marketta1 = new ResearchTree_1.Node({ data: "Market-TA.I" });
-const marketta2 = new ResearchTree_1.Node({ data: "Market-TA.II" });
-const overclock = new ResearchTree_1.Node({ data: "Overclock" });
-const scAssemblers = new ResearchTree_1.Node({ data: "Self-Correcting Assemblers" });
-const stimu = new ResearchTree_1.Node({ data: "Sti.mu" });
+function makeNode(name) {
+    const research = ResearchMap_1.ResearchMap[name];
+    if (research == null) {
+        throw new Error(`Invalid research name: ${name}`);
+    }
+    return new ResearchTree_1.Node({ text: research.name, cost: research.cost });
+}
+const rootNode = makeNode("Hi-Tech R&D Laboratory");
+const autoBrew = makeNode("AutoBrew");
+const autoParty = makeNode("AutoPartyManager");
+const autoDrugs = makeNode("Automatic Drug Administration");
+const cph4 = makeNode("CPH4 Injections");
+const drones = makeNode("Drones");
+const dronesAssembly = makeNode("Drones - Assembly");
+const dronesTransport = makeNode("Drones - Transport");
+const goJuice = makeNode("Go-Juice");
+const joywire = makeNode("JoyWire");
+const marketta1 = makeNode("Market-TA.I");
+const marketta2 = makeNode("Market-TA.II");
+const overclock = makeNode("Overclock");
+const scAssemblers = makeNode("Self-Correcting Assemblers");
+const stimu = makeNode("Sti.mu");
 autoDrugs.addChild(goJuice);
 autoDrugs.addChild(cph4);
 drones.addChild(dronesAssembly);
@@ -58391,7 +58678,7 @@ exports.getBaseResearchTreeCopy = getBaseResearchTreeCopy;
 
 
 /***/ }),
-/* 197 */
+/* 202 */
 /*!***********************************************!*\
   !*** ./src/Company/data/CompaniesMetadata.ts ***!
   \***********************************************/
@@ -58783,7 +59070,7 @@ exports.companiesMetadata = [
 
 
 /***/ }),
-/* 198 */
+/* 203 */
 /*!******************************************************!*\
   !*** ./src/Company/data/CompanyPositionsMetadata.ts ***!
   \******************************************************/
@@ -59396,11 +59683,6 @@ exports.companyPositionMetadata = [
 
 
 /***/ }),
-/* 199 */,
-/* 200 */,
-/* 201 */,
-/* 202 */,
-/* 203 */,
 /* 204 */,
 /* 205 */,
 /* 206 */,
@@ -59432,7 +59714,12 @@ exports.companyPositionMetadata = [
 /* 232 */,
 /* 233 */,
 /* 234 */,
-/* 235 */
+/* 235 */,
+/* 236 */,
+/* 237 */,
+/* 238 */,
+/* 239 */,
+/* 240 */
 /*!**********************!*\
   !*** util (ignored) ***!
   \**********************/
@@ -59443,7 +59730,7 @@ exports.companyPositionMetadata = [
 /* (ignored) */
 
 /***/ }),
-/* 236 */
+/* 241 */
 /*!**********************!*\
   !*** util (ignored) ***!
   \**********************/

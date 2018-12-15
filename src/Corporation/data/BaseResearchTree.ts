@@ -1,25 +1,37 @@
 // Defines the ResearchTree that is common to all Corporation Industries
 // i.e. all Industries have these types of Research available to unlock
+import { Research } from "../Research";
+import { ResearchMap } from "../ResearchMap";
 import { ResearchTree,
          Node } from "../ResearchTree";
 
+
 export const BaseResearchTree: ResearchTree = new ResearchTree();
 
-const rootNode          = new Node({data: "Hi-Tech R&D Laboratory"});
-const autoBrew          = new Node({data: "AutoBrew"});
-const autoParty         = new Node({data: "AutoPartyManager"});
-const autoDrugs         = new Node({data: "Automatic Drug Administration"});
-const cph4              = new Node({data: "CPH4 Injections"});
-const drones            = new Node({data: "Drones"});
-const dronesAssembly    = new Node({data: "Drones - Assembly"});
-const dronesTransport   = new Node({data: "Drones - Transport"});
-const goJuice           = new Node({data: "Go-Juice"});
-const joywire           = new Node({data: "JoyWire"});
-const marketta1         = new Node({data: "Market-TA.I"});
-const marketta2         = new Node({data: "Market-TA.II"});
-const overclock         = new Node({data: "Overclock"});
-const scAssemblers      = new Node({data: "Self-Correcting Assemblers"});
-const stimu             = new Node({data: "Sti.mu"});
+function makeNode(name: string): Node {
+    const research: Research | null = ResearchMap[name];
+    if (research == null) {
+        throw new Error(`Invalid research name: ${name}`);
+    }
+
+    return new Node({ text: research.name, cost: research.cost });
+}
+
+const rootNode: Node        = makeNode("Hi-Tech R&D Laboratory");
+const autoBrew: Node        = makeNode("AutoBrew");
+const autoParty: Node       = makeNode("AutoPartyManager");
+const autoDrugs: Node       = makeNode("Automatic Drug Administration");
+const cph4: Node            = makeNode("CPH4 Injections");
+const drones: Node          = makeNode("Drones");
+const dronesAssembly: Node  = makeNode("Drones - Assembly");
+const dronesTransport: Node = makeNode("Drones - Transport");
+const goJuice: Node         = makeNode("Go-Juice");
+const joywire: Node         = makeNode("JoyWire");
+const marketta1: Node       = makeNode("Market-TA.I");
+const marketta2: Node       = makeNode("Market-TA.II");
+const overclock: Node       = makeNode("Overclock");
+const scAssemblers: Node    = makeNode("Self-Correcting Assemblers");
+const stimu: Node           = makeNode("Sti.mu");
 
 autoDrugs.addChild(goJuice);
 autoDrugs.addChild(cph4);

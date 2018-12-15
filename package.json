@@ -32,7 +32,6 @@
     "numeral": "2.0.6",
     "sprintf-js": "^1.1.1",
     "tapable": "^1.0.0",
-    "treantjs": "^1.0.0",
     "uglifyjs-webpack-plugin": "^1.2.5",
     "uuid": "^3.2.1",
     "w3c-blob": "0.0.1"

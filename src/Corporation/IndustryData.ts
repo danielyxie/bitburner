@@ -1,5 +1,6 @@
 import { ResearchTree } from "./ResearchTree";
-import { BaseResearchTree } from "./data/BaseResearchTree";
+import { BaseResearchTree,
+         getBaseResearchTreeCopy } from "./data/BaseResearchTree";
 
 import { numeralWrapper } from "../ui/numeralFormat";
 
@@ -105,18 +106,18 @@ export const IndustryDescriptions: IIndustryMap<string> = {
 // Map of available Research for each Industry. This data is held in a
 // ResearchTree object
 export const IndustryResearchTrees: IIndustryMap<ResearchTree> = {
-    Energy: BaseResearchTree,
-    Utilities: BaseResearchTree,
-    Agriculture: BaseResearchTree,
-    Fishing: BaseResearchTree,
-    Mining: BaseResearchTree,
-    Food: BaseResearchTree,
-    Tobacco: BaseResearchTree,
-    Chemical: BaseResearchTree,
-    Pharmaceutical: BaseResearchTree,
-    Computer: BaseResearchTree,
-    Robotics: BaseResearchTree,
-    Software: BaseResearchTree,
-    Healthcare: BaseResearchTree,
-    RealEstate: BaseResearchTree,
+    Energy: getBaseResearchTreeCopy(),
+    Utilities: getBaseResearchTreeCopy(),
+    Agriculture: getBaseResearchTreeCopy(),
+    Fishing: getBaseResearchTreeCopy(),
+    Mining: getBaseResearchTreeCopy(),
+    Food: getBaseResearchTreeCopy(),
+    Tobacco: getBaseResearchTreeCopy(),
+    Chemical: getBaseResearchTreeCopy(),
+    Pharmaceutical: getBaseResearchTreeCopy(),
+    Computer: getBaseResearchTreeCopy(),
+    Robotics: getBaseResearchTreeCopy(),
+    Software: getBaseResearchTreeCopy(),
+    Healthcare: getBaseResearchTreeCopy(),
+    RealEstate: getBaseResearchTreeCopy(),
 }

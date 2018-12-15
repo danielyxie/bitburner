@@ -1,12 +1,17 @@
 import { AllCorporationStates,
          CorporationState }                             from "./CorporationState";
+import { CorporationUnlockUpgrades }                    from "./CorporationUnlockUpgrades";
+import { CorporationUpgrades }                          from "./CorporationUpgrades";
 import { EmployeePositions }                            from "./EmployeePositions";
 import { Industries,
          IndustryStartingCosts,
-         IndustryDescriptions }                         from "./IndustryData";
+         IndustryDescriptions,
+         IndustryResearchTrees }                        from "./IndustryData";
+import { IndustryUpgrades }                             from "./IndustryUpgrades";
 import { Material }                                     from "./Material";
 import { MaterialSizes }                                from "./MaterialSizes";
 import { Product }                                      from "./Product";
+import { ResearchMap }                                  from "./ResearchMap";
 
 import { BitNodeMultipliers }                           from "../BitNodeMultipliers";
 import { Factions }                                     from "../Faction/Factions";
@@ -22,12 +27,14 @@ import { clearSelector }                                from "../../utils/uiHelp
 import { Reviver,
          Generic_toJSON,
          Generic_fromJSON }                             from "../../utils/JSONReviver";
+import { appendLineBreaks }                             from "../../utils/uiHelpers/appendLineBreaks";
 import { createElement }                                from "../../utils/uiHelpers/createElement";
 import { createPopup }                                  from "../../utils/uiHelpers/createPopup";
 import { formatNumber, generateRandomString }           from "../../utils/StringHelperFunctions";
 import { getRandomInt }                                 from "../../utils/helpers/getRandomInt";
 import { isString }                                     from "../../utils/helpers/isString";
 import { removeChildrenFromElement }                    from "../../utils/uiHelpers/removeChildrenFromElement";
+import { removeElement }                                from "../../utils/uiHelpers/removeElement";
 import { removeElementById }                            from "../../utils/uiHelpers/removeElementById";
 import { yesNoBoxCreate,
          yesNoTxtInpBoxCreate,
@@ -61,21 +68,19 @@ export const BribeToRepRatio             = 1e9;   //Bribe Value divided by this 
 
 export const ProductProductionCostRatio  = 5;    //Ratio of material cost of a product to its production cost
 
-
-
-//Industry upgrades
-//The structure is:
-//  [index in array, base price, price mult, benefit mult (if applicable), name, desc]
-var IndustryUpgrades = {
-    "0":    [0, 500e3, 1, 1.05,
-            "Coffee", "Provide your employees with coffee, increasing their energy by 5%."],
-    "1":    [1, 1e9, 1.06, 1.03,
-            "AdVert.Inc", "Hire AdVert.Inc to advertise your company. Each level of " +
-            "this upgrade grants your company a static increase of 3 and 1 to its awareness and " +
-            "popularity, respectively. It will then increase your company's awareness by 1%, and its popularity " +
-            "by a random percentage between 1% and 3%. These effects are increased by other upgrades " +
-            "that increase the power of your advertising."]
-}
+// Delete Research Popup Box when clicking outside of it
+$(document).mousedown(function(event) {
+    const boxId = "corporation-research-popup-box";
+    const contentId = "corporation-research-popup-box-content";
+    if (researchTreeBoxOpened) {
+        if ( $(event.target).closest("#" + contentId).get(0) == null ) {
+            // Delete the box
+            removeElement(researchTreeBox);
+            researchTreeBox = null;
+            researchTreeBoxOpened = false;
+        }
+    }
+});
 
 var empManualAssignmentModeActive = false;
 function Industry(params={}) {
@@ -1128,6 +1133,82 @@ Industry.prototype.getAdvertisingFactors = function() {
 //Returns a multiplier based on a materials demand and competition that affects sales
 Industry.prototype.getMarketFactor = function(mat) {
     return mat.dmd * (100 - mat.cmp)/100;
+}
+
+// Returns a boolean indicating whether this Industry has the specified Research
+Industry.prototype.hasResearch = function(name) {
+    const researchTree = IndustryResearchTrees[this.type];
+
+    const node = researchTree.findNode(name);
+    if (node == null) { return false; }
+    return node.researched;
+}
+
+// Create the Research Tree UI for this Industry
+Industry.prototype.createResearchBox = function() {
+    const boxId = "corporation-research-popup-box";
+
+    if (researchTreeBoxOpened) {
+        // It's already opened, so delete it to refresh content
+        removeElementById(boxId);
+        researchTreeBox = null;
+    }
+
+    // New popup box
+    const researchTree = IndustryResearchTrees[this.type];
+
+    // Get the tree's markup (i.e. config) for Treant
+    const markup = researchTree.createTreantMarkup();
+    markup.chart.container = "#" + boxId + "-content";
+    markup.chart.nodeAlign = "BOTTOM";
+    markup.chart.rootOrientation = "WEST";
+    markup.chart.siblingSeparation = 40;
+    markup.chart.connectors = {
+        type: "step",
+        style: {
+            "arrow-end": "block-wide-long",
+            "stroke": "white",
+            "stroke-width": 2,
+        },
+    }
+
+    // Create the popup first, so that the tree diagram can be added to it
+    // This is handled by Treant
+    researchTreeBox = createPopup(boxId, [], { backgroundColor: "black" });
+
+    // Construct the tree with Treant
+    const treantTree = new Treant(markup);
+
+    // Add Event Listeners for all Nodes
+    const allResearch = researchTree.getAllNodes();
+    for (let i = 0; i < allResearch.length; ++i) {
+        // Get the Research object
+        const research = ResearchMap[allResearch[i]];
+
+        // Get the DOM Element to add a click listener to it
+        const sanitizedName = allResearch[i].replace(/\s/g, '');
+        const div = document.getElementById(sanitizedName + "-click-listener");
+        if (div == null) {
+            console.warn(`Could not find Research Tree div for ${sanitizedName}`);
+            continue;
+        }
+
+        div.addEventListener("click", () => {
+            if (this.sciResearch.qty >= research.cost) {
+                this.sciResearch.qty -= research.cost;
+
+                // Get the Node from the Research Tree and set its 'researched' property
+                const node = researchTree.findNode(allResearch[i]);
+                node.researched = true;
+
+                return createResearchBox();
+            } else {
+                dialogBoxCreate(`You do not have enough Scientific Research for ${research.name}`);
+            }
+        });
+    }
+
+    researchTreeBoxOpened = true;
 }
 
 Industry.prototype.toJSON = function() {
@@ -2449,99 +2530,6 @@ Warehouse.fromJSON = function(value) {
 
 Reviver.constructors.Warehouse = Warehouse;
 
-//Corporation Unlock Upgrades
-//Upgrades for entire corporation, unlocks features, either you have it or you dont
-//The structure is [index in Corporation feature upgrades array, price ]
-var CorporationUnlockUpgrades = {
-    //Lets you export goods
-    "0":  [0, 20e9, "Export",
-                    "Develop infrastructure to export your materials to your other facilities. " +
-                    "This allows you to move materials around between different divisions and cities."],
-
-    //Lets you buy exactly however many required materials you need for production
-    "1":  [1, 50e9, "Smart Supply", "Use advanced AI to anticipate your supply needs. " +
-                     "This allows you to purchase exactly however many materials you need for production."],
-
-    //Displays each material/product's demand
-    "2":  [2, 5e9, "Market Research - Demand",
-                    "Mine and analyze market data to determine the demand of all resources. " +
-                    "The demand attribute, which affects sales, will be displayed for every material and product."],
-
-    //Display's each material/product's competition
-    "3":  [3, 5e9, "Market Data - Competition",
-                    "Mine and analyze market data to determine how much competition there is on the market " +
-                    "for all resources. The competition attribute, which affects sales, will be displayed for " +
-                    "for every material and product."],
-    "4":  [4, 10e9, "VeChain",
-                    "Use AI and blockchain technology to identify where you can improve your supply chain systems. " +
-                    "This upgrade will allow you to view a wide array of useful statistics about your " +
-                    "Corporation."]
-}
-
-//Corporation Upgrades
-//Upgrades for entire corporation, levelable upgrades
-//The structure is [index in Corporation upgrades array, base price, price mult, benefit mult (additive),
-//                  name, desc]
-var CorporationUpgrades = {
-    //Smart factories, increases production
-    "0":    [0, 2e9, 1.07, 0.03,
-            "Smart Factories", "Advanced AI automatically optimizes the operation and productivity " +
-            "of factories. Each level of this upgrade increases your global production by 3% (additive)."],
-
-    //Smart warehouses, increases storage size
-    "1":    [1, 2e9, 1.07, .1,
-             "Smart Storage", "Advanced AI automatically optimizes your warehouse storage methods. " +
-             "Each level of this upgrade increases your global warehouse storage size by 10% (additive)."],
-
-    //Advertise through dreams, passive popularity/ awareness gain
-    "2":    [2, 8e9, 1.09, .001,
-            "DreamSense", "Use DreamSense LCC Technologies to advertise your corporation " +
-            "to consumers through their dreams. Each level of this upgrade provides a passive " +
-            "increase in awareness of all of your companies (divisions) by 0.004 / market cycle," +
-            "and in popularity by 0.001 / market cycle. A market cycle is approximately " +
-            "20 seconds."],
-
-    //Makes advertising more effective
-    "3":    [3, 4e9, 1.12, 0.005,
-            "Wilson Analytics", "Purchase data and analysis from Wilson, a marketing research " +
-            "firm. Each level of this upgrades increases the effectiveness of your " +
-            "advertising by 0.5% (additive)."],
-
-    //Augmentation for employees, increases cre
-    "4":    [4, 1e9, 1.06, 0.1,
-            "Nuoptimal Nootropic Injector Implants", "Purchase the Nuoptimal Nootropic " +
-            "Injector augmentation for your employees. Each level of this upgrade " +
-            "globally increases the creativity of your employees by 10% (additive)."],
-
-    //Augmentation for employees, increases cha
-    "5":    [5, 1e9, 1.06, 0.1,
-            "Speech Processor Implants", "Purchase the Speech Processor augmentation for your employees. " +
-            "Each level of this upgrade globally increases the charisma of your employees by 10% (additive)."],
-
-    //Augmentation for employees, increases int
-    "6":    [6, 1e9, 1.06, 0.1,
-            "Neural Accelerators", "Purchase the Neural Accelerator augmentation for your employees. " +
-            "Each level of this upgrade globally increases the intelligence of your employees " +
-            "by 10% (additive)."],
-
-    //Augmentation for employees, increases eff
-    "7":    [7, 1e9, 1.06, 0.1,
-            "FocusWires", "Purchase the FocusWire augmentation for your employees. Each level " +
-            "of this upgrade globally increases the efficiency of your employees by 10% (additive)."],
-
-    //Improves sales of materials/products
-    "8":    [8, 1e9, 1.08, 0.01,
-            "ABC SalesBots", "Always Be Closing. Purchase these robotic salesmen to increase the amount of " +
-            "materials and products you sell. Each level of this upgrade globally increases your sales " +
-            "by 1% (additive)."],
-
-    //Improves scientific research rate
-    "9":    [9, 5e9, 1.07, 0.05,
-            "Project Insight", "Purchase 'Project Insight', a R&D service provided by the secretive " +
-            "Fulcrum Technologies. Each level of this upgrade globally increases the amount of " +
-            "Scientific Research you produce by 5% (additive)."],
-}
-
 function Corporation(params={}) {
     this.name = params.name ? params.name : "The Corporation";
 
@@ -2857,6 +2845,12 @@ var companyManagementDiv, companyManagementHeaderTabs, companyManagementPanel,
     industryWarehousePanel, industrySmartSupplyCheckbox, industryWarehouseStorageText,
         industryWarehouseUpgradeSizeButton, industryWarehouseStateText,
         industryWarehouseMaterials, industryWarehouseProducts,
+
+    // Research Tree
+    researchTreeBoxOpened = false,
+    researchTreeBox,
+
+    // Tabs
     headerTabs, cityTabs;
 Corporation.prototype.createUI = function() {
     companyManagementDiv = createElement("div", {
@@ -3619,8 +3613,16 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
     }
 
     //Left and right panels
-    var leftPanel = createElement("div", {class:"cmpy-mgmt-industry-left-panel"});
-    var rightPanel = createElement("div", {class:"cmpy-mgmt-industry-right-panel"});
+    var leftPanel = createElement("div", {
+        class: "cmpy-mgmt-industry-left-panel",
+        overflow: "visible",
+        padding: "2px",
+    });
+    var rightPanel = createElement("div", {
+        class: "cmpy-mgmt-industry-right-panel",
+        overflow: "visible",
+        padding: "2px",
+    });
     companyManagementPanel.appendChild(leftPanel);
     companyManagementPanel.appendChild(rightPanel);
 
@@ -4158,7 +4160,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                 var info = createElement("h2", {
                     display:"inline-block", width:"40%", fontSize:"15px",
                     innerText: positions[i] + "(" + counts[i] + ")",
-                    tooltipleft: descriptions[i]
+                    tooltip: descriptions[i]
                 });
                 var plusBtn = createElement("a", {
                     class: unassignedCount > 0 ? "a-link-button" : "a-link-button-inactive",
@@ -4268,12 +4270,19 @@ Corporation.prototype.updateDivisionContent = function(division) {
                             "production multiplier of your entire Division.");
         }
     }));
-    industryOverviewText.appendChild(createElement("br"));
+    appendLineBreaks(industryOverviewText, 2);
     industryOverviewText.appendChild(createElement("p", {
         display:"inline-block",
         innerText:"Scientific Research: " + formatNumber(division.sciResearch.qty, 3),
         tooltip:"Scientific Research increases the quality of the materials and " +
                 "products that you produce."
+    }));
+    industryOverviewText.appendChild(createElement("div", {
+        class: "help-tip",
+        innerText: "Research",
+        clickListener: () => {
+            division.createResearchBox();
+        }
     }));
 
     //Office and Employee List
@@ -4399,6 +4408,9 @@ Corporation.prototype.clearUI = function() {
     industryWarehouseStateText          = null;
     industryWarehouseMaterials          = null;
     industryWarehouseProducts           = null;
+
+    researchTreeBoxOpened = false;
+    researchTreeBox = null;
 
     companyManagementHeaderTabs = null;
     headerTabs                  = null;
