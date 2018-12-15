@@ -91,6 +91,7 @@ import "../css/missions.scss";
 import "../css/companymanagement.scss";
 import "../css/bladeburner.scss";
 import "../css/gang.scss";
+import "../css/treant.css";
 
 /* Shortcuts to navigate through the game
  *  Alt-t - Terminal

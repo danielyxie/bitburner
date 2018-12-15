@@ -53,6 +53,7 @@ interface ICreateElementStyleOptions {
     margin?: string;
     marginLeft?: string;
     marginTop?: string;
+    overflow?: string;
     padding?: string;
     position?: string;
     visibility?: string;
@@ -201,6 +202,9 @@ function setElementStyle(el: HTMLElement, params: ICreateElementStyleOptions) {
     }
     if (params.position !== undefined) {
         el.style.position = params.position;
+    }
+    if (params.overflow !== undefined) {
+        el.style.overflow = params.overflow;
     }
 }
 

@@ -1,6 +1,13 @@
 @import "mixins";
 @import "theme";
 
+/**
+ * Styling for Corporations
+ * The names/labels refer to "Company Management", which was the old name
+ * for the mechanic before it got changed to avoid confusion with normal
+ * companies
+ */
+
 #cmpy-mgmt-container p,
 #cmpy-mgmt-container a,
 #cmpy-mgmt-container div {
