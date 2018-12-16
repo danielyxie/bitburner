@@ -3,8 +3,8 @@ export interface IConstructorParams {
     cost: number;
     desc: string;
     advertisingMult?: number;
-    employeeCreMult?: number;
     employeeChaMult?: number;
+    employeeCreMult?: number;
     employeeEffMult?: number;
     employeeIntMult?: number;
     productionMult?: number;
@@ -25,8 +25,8 @@ export class Research {
 
     // All possible generic upgrades for the company, in the form of multipliers
     advertisingMult: number = 1;
-    employeeCreMult: number = 1;
     employeeChaMult: number = 1;
+    employeeCreMult: number = 1;
     employeeEffMult: number = 1;
     employeeIntMult: number = 1;
     productionMult: number = 1;
@@ -39,8 +39,8 @@ export class Research {
         this.cost = p.cost;
         this.desc = p.desc;
         if (p.advertisingMult)    { this.advertisingMult = p.advertisingMult; }
-        if (p.employeeCreMult)    { this.employeeCreMult = p.employeeCreMult; }
         if (p.employeeChaMult)    { this.employeeChaMult = p.employeeChaMult; }
+        if (p.employeeCreMult)    { this.employeeCreMult = p.employeeCreMult; }
         if (p.employeeEffMult)    { this.employeeEffMult = p.employeeEffMult; }
         if (p.employeeIntMult)    { this.employeeIntMult = p.employeeIntMult; }
         if (p.productionMult)     { this.productionMult = p.productionMult; }

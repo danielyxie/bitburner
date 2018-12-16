@@ -615,7 +615,11 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                 var mat = warehouse.materials[this.prodMats[0]];
                 //Calculate the maximum production of this material based
                 //on the office's productivity
-                var maxProd = this.getOfficeProductivity(office) * this.prodMult * company.getProductionMultiplier(), prod;
+                var maxProd = this.getOfficeProductivity(office)
+                            * this.prodMult                     // Multiplier from materials
+                            * company.getProductionMultiplier()
+                            * this.getProductionMultiplier();   // Multiplier from Research
+                let prod;
 
                 if (mat.prdman[0]) {
                     //Production is manually limited
@@ -739,9 +743,13 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                     var businessFactor = this.getBusinessFactor(office);        //Business employee productivity
                     var advertisingFactor = this.getAdvertisingFactors()[0];    //Awareness + popularity
                     var marketFactor = this.getMarketFactor(mat);               //Competition + demand
-                    var maxSell = (mat.qlt + .001) * marketFactor * markup * businessFactor *
-                                  company.getSalesMultiplier() * advertisingFactor;
-
+                    var maxSell = (mat.qlt + .001)
+                                * marketFactor
+                                * markup
+                                * businessFactor
+                                * company.getSalesMultiplier()
+                                * advertisingFactor
+                                * this.getSalesMultiplier();
                     var sellAmt;
                     if (isString(mat.sllman[1])) {
                         //Dynamically evaluated
@@ -857,8 +865,10 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
         //Produce Scientific Research based on R&D employees
         //Scientific Research can be produced without a warehouse
         if (office instanceof OfficeSpace) {
-            this.sciResearch.qty += (.005 * Math.pow(office.employeeProd[EmployeePositions.RandD], 0.5)
-                                     * company.getScientificResearchMultiplier());
+            this.sciResearch.qty += (.005
+                                     * Math.pow(office.employeeProd[EmployeePositions.RandD], 0.5)
+                                     * company.getScientificResearchMultiplier()
+                                     * this.getScientificResearchMultiplier());
         }
     }
     return [revenue, expenses];
@@ -918,8 +928,11 @@ Industry.prototype.processProduct = function(marketCycles=1, product, corporatio
             case "PRODUCTION":
             //Calculate the maximum production of this material based
             //on the office's productivity
-            var maxProd = this.getOfficeProductivity(office, {forProduct:true}) *
-                          corporation.getProductionMultiplier() * this.prodMult, prod;
+            var maxProd = this.getOfficeProductivity(office, {forProduct:true})
+                        * corporation.getProductionMultiplier()
+                        * this.prodMult                     // Multiplier from materials
+                        * this.getProductionMultiplier();   // Multiplier from research
+            let prod;
 
             //Account for whether production is manually limited
             if (product.prdman[city][0]) {
@@ -1004,8 +1017,14 @@ Industry.prototype.processProduct = function(marketCycles=1, product, corporatio
             var businessFactor = this.getBusinessFactor(office);        //Business employee productivity
             var advertisingFactor = this.getAdvertisingFactors()[0];    //Awareness + popularity
             var marketFactor = this.getMarketFactor(product);        //Competition + demand
-            var maxSell = 0.5 * Math.pow(product.rat, 0.65) * marketFactor * corporation.getSalesMultiplier() *
-                          Math.pow(markup, 2) * businessFactor * advertisingFactor;
+            var maxSell = 0.5
+                        * Math.pow(product.rat, 0.65)
+                        * marketFactor
+                        * corporation.getSalesMultiplier()
+                        * Math.pow(markup, 2)
+                        * businessFactor
+                        * advertisingFactor
+                        * this.getSalesMultiplier();
             var sellAmt;
             if (product.sllman[city][0] && isString(product.sllman[city][1])) {
                 //Sell amount is dynamically evaluated
@@ -1073,12 +1092,12 @@ Industry.prototype.upgrade = function(upgrade, refs) {
 
     switch (upgN) {
         case 0: //Coffee, 5% energy per employee
-            for (var i = 0; i < office.employees.length; ++i) {
-                office.employees[i].ene = Math.min(office.employees[i].ene * 1.05, 100);
+            for (let i = 0; i < office.employees.length; ++i) {
+                office.employees[i].ene = Math.min(office.employees[i].ene * 1.05, office.employees[i].maxEne);
             }
             break;
         case 1: //AdVert.Inc,
-            var advMult = corporation.getAdvertisingMultiplier();
+            var advMult = corporation.getAdvertisingMultiplier() * this.getAdvertisingMultiplier();
             this.awareness += (3 * advMult);
             this.popularity += (1 * advMult);
             this.awareness *= (1.01 * advMult);
@@ -1138,10 +1157,44 @@ Industry.prototype.getMarketFactor = function(mat) {
 // Returns a boolean indicating whether this Industry has the specified Research
 Industry.prototype.hasResearch = function(name) {
     const researchTree = IndustryResearchTrees[this.type];
+    return (researchTree.researched[name] != null);
+}
 
-    const node = researchTree.findNode(name);
-    if (node == null) { return false; }
-    return node.researched;
+// Get multipliers from Research
+Industry.prototype.getAdvertisingMultiplier = function() {
+    return IndustryResearchTrees[this.type].getAdvertisingMultiplier();
+}
+
+Industry.prototype.getEmployeeChaMultiplier = function() {
+    return IndustryResearchTrees[this.type].getEmployeeChaMultiplier();
+}
+
+Industry.prototype.getEmployeeCreMultiplier = function() {
+    return IndustryResearchTrees[this.type].getEmployeeCreMultiplier();
+}
+
+Industry.prototype.getEmployeeEffMultiplier = function() {
+    return IndustryResearchTrees[this.type].getEmployeeEffMultiplier();
+}
+
+Industry.prototype.getEmployeeIntMultiplier = function() {
+    return IndustryResearchTrees[this.type].getEmployeeIntMultiplier();
+}
+
+Industry.prototype.getProductionMultiplier = function() {
+    return IndustryResearchTrees[this.type].getProductionMultiplier();
+}
+
+Industry.prototype.getSalesMultiplier = function() {
+    return IndustryResearchTrees[this.type].getSalesMultiplier();
+}
+
+Industry.prototype.getScientificResearchMultiplier = function() {
+    return IndustryResearchTrees[this.type].getScientificResearchMultiplier();
+}
+
+Industry.prototype.getStorageMultiplier = function() {
+    return IndustryResearchTrees[this.type].getStorageMultiplier();
 }
 
 // Create the Research Tree UI for this Industry
@@ -1282,11 +1335,11 @@ Employee.prototype.process = function(marketCycles=1, office) {
     return salary;
 }
 
-Employee.prototype.calculateProductivity = function(corporation) {
-    var effCre = this.cre * corporation.getEmployeeCreMultiplier(),
-        effCha = this.cha * corporation.getEmployeeChaMultiplier(),
-        effInt = this.int * corporation.getEmployeeIntMultiplier(),
-        effEff = this.eff * corporation.getEmployeeEffMultiplier();
+Employee.prototype.calculateProductivity = function(corporation, industry) {
+    var effCre = this.cre * corporation.getEmployeeCreMultiplier() * industry.getEmployeeCreMultiplier(),
+        effCha = this.cha * corporation.getEmployeeChaMultiplier() * industry.getEmployeeChaMultiplier(),
+        effInt = this.int * corporation.getEmployeeIntMultiplier() * industry.getEmployeeIntMultiplier(),
+        effEff = this.eff * corporation.getEmployeeEffMultiplier() * industry.getEmployeeEffMultiplier();
     var prodBase = this.mor * this.hap * this.ene * 1e-6, prodMult;
     switch(this.pos) {
         //Calculate productivity based on position. This is multipled by prodBase
@@ -1332,11 +1385,11 @@ Employee.prototype.throwParty = function(money) {
 }
 
 //'panel' is the DOM element on which to create the UI
-Employee.prototype.createUI = function(panel, corporation) {
-    var effCre = this.cre * corporation.getEmployeeCreMultiplier(),
-        effCha = this.cha * corporation.getEmployeeChaMultiplier(),
-        effInt = this.int * corporation.getEmployeeIntMultiplier(),
-        effEff = this.eff * corporation.getEmployeeEffMultiplier();
+Employee.prototype.createUI = function(panel, corporation, industry) {
+    var effCre = this.cre * corporation.getEmployeeCreMultiplier() * industry.getEmployeeCreMultiplier(),
+        effCha = this.cha * corporation.getEmployeeChaMultiplier() * industry.getEmployeeChaMultiplier(),
+        effInt = this.int * corporation.getEmployeeIntMultiplier() * industry.getEmployeeIntMultiplier(),
+        effEff = this.eff * corporation.getEmployeeEffMultiplier() * industry.getEmployeeEffMultiplier();
     panel.style.color = "white";
     panel.appendChild(createElement("p", {
         id:"cmpy-mgmt-employee-" + this.name + "-panel-text",
@@ -1377,11 +1430,11 @@ Employee.prototype.createUI = function(panel, corporation) {
     panel.appendChild(selector);
 }
 
-Employee.prototype.updateUI = function(panel, corporation) {
-    var effCre = this.cre * corporation.getEmployeeCreMultiplier(),
-        effCha = this.cha * corporation.getEmployeeChaMultiplier(),
-        effInt = this.int * corporation.getEmployeeIntMultiplier(),
-        effEff = this.eff * corporation.getEmployeeEffMultiplier();
+Employee.prototype.updateUI = function(panel, corporation, industry) {
+    var effCre = this.cre * corporation.getEmployeeCreMultiplier() * industry.getEmployeeCreMultiplier(),
+        effCha = this.cha * corporation.getEmployeeChaMultiplier() * industry.getEmployeeChaMultiplier(),
+        effInt = this.int * corporation.getEmployeeIntMultiplier() * industry.getEmployeeIntMultiplier(),
+        effEff = this.eff * corporation.getEmployeeEffMultiplier() * industry.getEmployeeEffMultiplier();
     if (panel == null) {
         console.log("ERROR: Employee.updateUI() called with null panel");
         return;
@@ -1427,8 +1480,16 @@ function OfficeSpace(params={}) {
     this.beau   = params.beauty      ? params.beauty     : 1;
     this.tier   = OfficeSpaceTiers.Basic;
 
-    this.minEne     = 0; //Minimum energy of employees, based on office
-    this.minHap     = 0; //Minimum happiness of employees, based on office.
+    // Min/max energy of employees
+    this.minEne     = 0;
+    this.maxEne     = 100;
+
+    // Min/max Happiness of office
+    this.minHap     = 0;
+    this.maxHap     = 100;
+
+    // Maximum Morale of office
+    this.maxMor     = 100;
 
     this.employees = [];
     this.employeeProd = {
@@ -1443,6 +1504,22 @@ function OfficeSpace(params={}) {
 
 OfficeSpace.prototype.process = function(marketCycles=1, parentRefs) {
     var corporation = parentRefs.corporation, industry = parentRefs.industry;
+
+    // Process Office properties
+    this.maxEne = 100;
+    this.maxHap = 100;
+    this.maxMor = 100;
+    if (industry.hasResearch("Go-Juice")) {
+        this.maxEne += 10;
+    }
+    if (industry.hasResearch("JoyWire")) {
+        this.maxHap += 10;
+    }
+    if (industry.hasResearch("Sti.mu")) {
+        this.maxMor += 10;
+    }
+
+    // Calculate changes in Morale/Happiness/Energy for Employees
     var perfMult=1; //Multiplier for employee morale/happiness/energy based on company performance
     if (industry.funds < 0 && industry.lastCycleRevenue < 0) {
         perfMult = Math.pow(0.99, marketCycles);
@@ -1450,20 +1527,40 @@ OfficeSpace.prototype.process = function(marketCycles=1, parentRefs) {
         perfMult = Math.pow(1.01, marketCycles);
     }
 
+    const hasAutobrew = industry.hasResearch("AutoBrew");
+    const hasAutoparty = industry.hasResearch("AutoPartyManager");
+
     var salaryPaid = 0;
-    for (var i = 0; i < this.employees.length; ++i) {
-        var emp = this.employees[i];
-        emp.mor *= perfMult;
-        emp.hap *= perfMult;
-        emp.ene *= perfMult;
-        var salary = emp.process(marketCycles, this);
+    for (let i = 0; i < this.employees.length; ++i) {
+        const emp = this.employees[i];
+        if (hasAutoparty) {
+            emp.mor = this.maxMor;
+            emp.hap = this.maxHap;
+        } else {
+            emp.mor *= perfMult;
+            emp.hap *= perfMult;
+            emp.mor = Math.min(emp.mor, this.maxMor);
+            emp.hap = Math.min(emp.hap, this.maxHap);
+        }
+
+        if (hasAutobrew) {
+            emp.ene = this.maxEne;
+        } else {
+            emp.ene *= perfMult;
+            emp.ene = Math.min(emp.ene, this.maxEne);
+        }
+
+        const salary = emp.process(marketCycles, this);
         salaryPaid += salary;
     }
-    this.calculateEmployeeProductivity(marketCycles, corporation);
+
+    this.calculateEmployeeProductivity(marketCycles, parentRefs);
     return salaryPaid;
 }
 
-OfficeSpace.prototype.calculateEmployeeProductivity = function(marketCycles=1, corporation) {
+OfficeSpace.prototype.calculateEmployeeProductivity = function(marketCycles=1, parentRefs) {
+    var company = parentRefs.corporation, industry = parentRefs.industry;
+
     //Reset
     for (var name in this.employeeProd) {
         if (this.employeeProd.hasOwnProperty(name)) {
@@ -1474,7 +1571,7 @@ OfficeSpace.prototype.calculateEmployeeProductivity = function(marketCycles=1, c
     var total = 0;
     for (var i = 0; i < this.employees.length; ++i) {
         var employee = this.employees[i];
-        var prod = employee.calculateProductivity(corporation);
+        var prod = employee.calculateProductivity(company, industry);
         this.employeeProd[employee.pos] += prod;
         total += prod;
     }
@@ -1483,7 +1580,7 @@ OfficeSpace.prototype.calculateEmployeeProductivity = function(marketCycles=1, c
 
 //Takes care of UI as well
 OfficeSpace.prototype.findEmployees = function(parentRefs) {
-    var company = parentRefs.corporation, division = parentRefs.division;
+    var company = parentRefs.corporation, division = parentRefs.industry;
     if (document.getElementById("cmpy-mgmt-hire-employee-popup") != null) {return;}
 
     //Generate three random employees (meh, decent, amazing)
@@ -1566,7 +1663,7 @@ OfficeSpace.prototype.findEmployees = function(parentRefs) {
 }
 
 OfficeSpace.prototype.hireEmployee = function(employee, parentRefs) {
-    var company = parentRefs.corporation, division = parentRefs.division;
+    var company = parentRefs.corporation, division = parentRefs.industry;
     var yesBtn = yesNoTxtInpBoxGetYesButton(),
         noBtn = yesNoTxtInpBoxGetNoButton();
     yesBtn.innerHTML = "Hire";
@@ -1591,7 +1688,7 @@ OfficeSpace.prototype.hireEmployee = function(employee, parentRefs) {
 }
 
 OfficeSpace.prototype.hireRandomEmployee = function(parentRefs) {
-    var company = parentRefs.corporation, division = parentRefs.division;
+    var company = parentRefs.corporation, division = parentRefs.industry;
     if (document.getElementById("cmpy-mgmt-hire-employee-popup") != null) {return;}
 
     //Generate three random employees (meh, decent, amazing)
@@ -1703,13 +1800,15 @@ Warehouse.prototype.updateMaterialSizeUsed = function() {
     }
 }
 
-Warehouse.prototype.updateSize = function(corporation) {
+Warehouse.prototype.updateSize = function(corporation, industry) {
     //Backwards compatibility
     if (this.level == null || this.level === 0) {
         this.level = Math.round(this.size / 100);
     }
 
-    this.size = (this.level * 100) * corporation.getStorageMultiplier();
+    this.size = (this.level * 100)
+              * corporation.getStorageMultiplier()
+              * industry.getStorageMultiplier();
 }
 
 Warehouse.prototype.createUI = function(parentRefs) {
@@ -1738,7 +1837,7 @@ Warehouse.prototype.createUI = function(parentRefs) {
             }
 
             ++this.level;
-            this.updateSize(company);
+            this.updateSize(company, industry);
             company.funds = company.funds.minus(upgradeCost);
             this.createUI(parentRefs);
             return;
@@ -2768,7 +2867,7 @@ Corporation.prototype.upgrade = function(upgrade) {
             var industry = this.divisions[i];
             for (var city in industry.warehouses) {
                 if (industry.warehouses.hasOwnProperty(city) && industry.warehouses[city] instanceof Warehouse) {
-                    industry.warehouses[city].updateSize(this);
+                    industry.warehouses[city].updateSize(this, industry);
                 }
             }
         }
@@ -3852,7 +3951,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
             tooltip:"You'll need to hire some employees to get your operations started! " +
                     "It's recommended to have at least one employee in every position",
             clickListener:()=>{
-                office.findEmployees({corporation:this, division:division});
+                office.findEmployees({corporation:this, industry:division});
                 return false;
             }
         });
@@ -3862,7 +3961,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
             class:"a-link-button",display:"inline-block",
             innerText:"Hire Employee", fontSize:"13px",
             clickListener:()=>{
-                office.findEmployees({corporation:this, division:division});
+                office.findEmployees({corporation:this, industry:division});
                 return false;
             }
         });
@@ -3875,7 +3974,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
         innerText:"Autohire Employee", fontSize:"13px",
         tooltip:"Automatically hires an employee and gives him/her a random name",
         clickListener:()=>{
-            office.hireRandomEmployee({corporation:this, division:division});
+            office.hireRandomEmployee({corporation:this, industry:division});
             return false;
         }
     });
@@ -4078,7 +4177,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                 for (var i = 0; i < office.employees.length; ++i) {
                     if (office.employees[i].name === name) {
                         removeChildrenFromElement(industryIndividualEmployeeInfo);
-                        office.employees[i].createUI(industryIndividualEmployeeInfo, this);
+                        office.employees[i].createUI(industryIndividualEmployeeInfo, this, division);
                         return;
                     }
                 }

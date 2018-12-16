@@ -4,6 +4,7 @@
 // not an actual Research object. The name can be used to obtain a reference
 // to the corresponding Research object using the ResearchMap
 
+import { Research } from "./Research";
 import { ResearchMap } from "./ResearchMap";
 
 interface IConstructorParams {
@@ -106,6 +107,10 @@ export class Node {
 // A ResearchTree defines all available Research in an Industry
 // The root node in a Research Tree must always be the "Hi-Tech R&D Laboratory"
 export class ResearchTree {
+    // Object containing names of all acquired Research by name
+    researched: object = {};
+
+    // Root Node
     root: Node | null = null;
 
     constructor() {}
@@ -146,6 +151,81 @@ export class ResearchTree {
         return res;
     }
 
+    // Get total multipliers from this Research Tree
+    getAdvertisingMultiplier(): number {
+        return this.getMultiplierHelper("advertisingMult");
+    }
+
+    getEmployeeChaMultiplier(): number {
+        return this.getMultiplierHelper("employeeChaMult");
+    }
+
+    getEmployeeCreMultiplier(): number {
+        return this.getMultiplierHelper("employeeCreMult");
+    }
+
+    getEmployeeEffMultiplier(): number {
+        return this.getMultiplierHelper("employeeEffMult");
+    }
+
+    getEmployeeIntMultiplier(): number {
+        return this.getMultiplierHelper("employeeIntMult");
+    }
+
+    getProductionMultiplier(): number {
+        return this.getMultiplierHelper("productionMult");
+    }
+
+    getSalesMultiplier(): number {
+        return this.getMultiplierHelper("salesMult");
+    }
+
+    getScientificResearchMultiplier(): number {
+        return this.getMultiplierHelper("sciResearchMult");
+    }
+
+    getStorageMultiplier(): number {
+        return this.getMultiplierHelper("storageMult");
+    }
+
+    // Helper function for all the multiplier getter fns
+    getMultiplierHelper(propName: string): number {
+        let res: number = 1;
+        if (this.root == null) { return res; }
+
+        const queue: Node[] = [];
+        queue.push(this.root);
+        while (queue.length !== 0) {
+            const node: Node | undefined = queue.shift();
+
+            // If the Node has not been researched, there's no need to
+            // process it or its children
+            if (node == null || !node.researched)  { continue; }
+
+            const research: Research | null = ResearchMap[node.text];
+
+            // Safety checks
+            if (research == null) {
+                console.warn(`Invalid Research name in node: ${node.text}`);
+                continue;
+            }
+
+            const mult: any = (<any>research)[propName];
+            if (mult == null) {
+                console.warn(`Invalid propName specified in ResearchTree.getMultiplierHelper: ${propName}`);
+                continue;
+            }
+
+            res *= mult;
+            for (let i = 0; i < node.children.length; ++i) {
+                queue.push(node.children[i]);
+            }
+        }
+
+        return res;
+    }
+
+
     // Search for a Node with the given name ('text' property on the Node)
     // Returns 'null' if it cannot be found
     findNode(name: string): Node | null {
@@ -165,12 +245,16 @@ export class ResearchTree {
 
             if (node.text === name) {
                 node.researched = true;
+                this.researched[name] = true;
+                return;
             }
 
             for (let i = 0; i < node.children.length; ++i) {
                 queue.push(node.children[i]);
             }
         }
+
+        console.warn(`ResearchTree.research() did not find the specified Research node for: ${name}`);
     }
 
     // Set the tree's Root Node
