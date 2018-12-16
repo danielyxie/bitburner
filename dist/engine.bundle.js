@@ -164,52 +164,53 @@
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Player; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return loadPlayer; });
-/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentations */ 21);
-/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BitNodeMultipliers */ 10);
+/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentations */ 20);
+/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BitNodeMultipliers */ 9);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CodingContracts */ 42);
+/* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CodingContracts */ 36);
 /* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_CodingContracts__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Company/Company */ 73);
+/* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Company/Company */ 70);
 /* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Company_Company__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Company/Companies */ 18);
+/* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Company/Companies */ 16);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _Company_GetNextCompanyPosition__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Company/GetNextCompanyPosition */ 99);
+/* harmony import */ var _Company_GetNextCompanyPosition__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Company/GetNextCompanyPosition */ 94);
 /* harmony import */ var _Company_GetNextCompanyPosition__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Company_GetNextCompanyPosition__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Company/GetJobRequirementText */ 92);
+/* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Company/GetJobRequirementText */ 88);
 /* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Company/CompanyPositions */ 28);
+/* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Company/CompanyPositions */ 25);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Company/data/CompanyPositionNames */ 36);
+/* harmony import */ var _Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Company/data/CompanyPositionNames */ 32);
 /* harmony import */ var _Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Corporation/Corporation */ 61);
-/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./CreateProgram */ 23);
-/* harmony import */ var _Crimes__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Crimes */ 37);
+/* harmony import */ var _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Corporation/Corporation */ 58);
+/* harmony import */ var _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_Corporation_Corporation__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./CreateProgram */ 22);
+/* harmony import */ var _Crimes__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Crimes */ 33);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./engine */ 8);
-/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Faction/Faction */ 56);
+/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Faction/Faction */ 53);
 /* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_Faction_Faction__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Faction/Factions */ 14);
+/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Faction/Factions */ 13);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 46);
-/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Gang */ 50);
-/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Locations */ 5);
+/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 42);
+/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Gang */ 47);
+/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Locations */ 3);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
-/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./Settings */ 19);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./NetscriptFunctions */ 37);
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Server */ 10);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./Settings */ 18);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
-/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./SourceFile */ 70);
-/* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! decimal.js */ 33);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./SpecialServerIps */ 28);
+/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./SourceFile */ 66);
+/* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! decimal.js */ 41);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/DialogBox */ 11);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 15);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_27__);
-/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../utils/IPAddress */ 60);
-/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
+/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../utils/IPAddress */ 57);
+/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 5);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_30__);
 
 
@@ -2592,7 +2593,7 @@ function loadPlayer(saveString) {
     Player.total_money = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](Player.total_money);
     Player.lifetime_money = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](Player.lifetime_money);
 
-    if (Player.corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_10__[/* Corporation */ "a"]) {
+    if (Player.corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_10__["Corporation"]) {
         Player.corporation.funds = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](Player.corporation.funds);
         Player.corporation.revenue = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](Player.corporation.revenue);
         Player.corporation.expenses = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](Player.corporation.expenses);
@@ -3280,17 +3281,165 @@ exports.createElement = createElement;
 
 /***/ }),
 /* 3 */
-/*!****************************************!*\
-  !*** ./utils/StringHelperFunctions.ts ***!
-  \****************************************/
+/*!**************************!*\
+  !*** ./src/Locations.ts ***!
+  \**************************/
 /*! no static exports found */
-/*! exports used: containsAllStrings, convertTimeMsToTimeElapsedString, formatNumber, generateRandomString, isString, longestCommonStart, replaceAt */
+/*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const isString_1 = __webpack_require__(/*! ./helpers/isString */ 39);
+/**
+ * Display Location Content when visiting somewhere in the World
+ */
+// tslint:disable-next-line:variable-name
+exports.Locations = {
+    // Cities
+    Aevum: "Aevum",
+    Chongqing: "Chongqing",
+    Ishima: "Ishima",
+    NewTokyo: "New Tokyo",
+    Sector12: "Sector-12",
+    Volhaven: "Volhaven",
+    // Aevum Locations
+    AevumAeroCorp: "AeroCorp",
+    AevumBachmanAndAssociates: "Bachman & Associates",
+    AevumClarkeIncorporated: "Clarke Incorporated",
+    AevumCrushFitnessGym: "Crush Fitness Gym",
+    AevumECorp: "ECorp",
+    AevumFulcrumTechnologies: "Fulcrum Technologies",
+    AevumGalacticCybersystems: "Galactic Cybersystems",
+    AevumNetLinkTechnologies: "NetLink Technologies",
+    AevumPolice: "Aevum Police Headquarters",
+    AevumRhoConstruction: "Rho Construction",
+    AevumSlums: "Aevum Slums",
+    AevumSnapFitnessGym: "Snap Fitness Gym",
+    AevumSummitUniversity: "Summit University",
+    AevumTravelAgency: "Aevum Travel Agency",
+    AevumWatchdogSecurity: "Watchdog Security",
+    // Chongqing locations
+    ChongqingKuaiGongInternational: "KuaiGong International",
+    ChongqingSlums: "Chongqing Slums",
+    ChongqingSolarisSpaceSystems: "Solaris Space Systems",
+    ChongqingTravelAgency: "Chongqing Travel Agency",
+    // Sector 12
+    Sector12AlphaEnterprises: "Alpha Enterprises",
+    Sector12BladeIndustries: "Blade Industries",
+    Sector12CIA: "Central Intelligence Agency",
+    Sector12CarmichaelSecurity: "Carmichael Security",
+    Sector12CityHall: "Sector-12 City Hall",
+    Sector12DeltaOne: "DeltaOne",
+    Sector12FoodNStuff: "FoodNStuff",
+    Sector12FourSigma: "Four Sigma",
+    Sector12IcarusMicrosystems: "Icarus Microsystems",
+    Sector12IronGym: "Iron Gym",
+    Sector12JoesGuns: "Joe's Guns",
+    Sector12MegaCorp: "MegaCorp",
+    Sector12NSA: "National Security Agency",
+    Sector12PowerhouseGym: "Powerhouse Gym",
+    Sector12RothmanUniversity: "Rothman University",
+    Sector12Slums: "Sector-12 Slums",
+    Sector12TravelAgency: "Sector-12 Travel Agency",
+    Sector12UniversalEnergy: "Universal Energy",
+    // New Tokyo
+    NewTokyoDefComm: "DefComm",
+    NewTokyoGlobalPharmaceuticals: "Global Pharmaceuticals",
+    NewTokyoNoodleBar: "Noodle Bar",
+    NewTokyoSlums: "New Tokyo Slums",
+    NewTokyoTravelAgency: "New Tokyo Travel Agency",
+    NewTokyoVitaLife: "VitaLife",
+    // Ishima
+    IshimaNovaMedical: "Nova Medical",
+    IshimaOmegaSoftware: "Omega Software",
+    IshimaSlums: "Ishima Slums",
+    IshimaStormTechnologies: "Storm Technologies",
+    IshimaTravelAgency: "Ishima Travel Agency",
+    // Volhaven
+    VolhavenCompuTek: "CompuTek",
+    VolhavenHeliosLabs: "Helios Labs",
+    VolhavenLexoCorp: "LexoCorp",
+    VolhavenMilleniumFitnessGym: "Millenium Fitness Gym",
+    VolhavenNWO: "NWO",
+    VolhavenOmniTekIncorporated: "OmniTek Incorporated",
+    VolhavenOmniaCybersystems: "Omnia Cybersystems",
+    VolhavenSlums: "Volhaven Slums",
+    VolhavenSysCoreSecurities: "SysCore Securities",
+    VolhavenTravelAgency: "Volhaven Travel Agency",
+    VolhavenZBInstituteOfTechnology: "ZB Institute of Technology",
+    // Generic locations
+    Hospital: "Hospital",
+    WorldStockExchange: "World Stock Exchange",
+};
+
+
+/***/ }),
+/* 4 */
+/*!*********************************!*\
+  !*** ./src/ui/numeralFormat.ts ***!
+  \*********************************/
+/*! no static exports found */
+/*! exports used: numeralWrapper */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const numeral = __webpack_require__(/*! numeral */ 76);
+__webpack_require__(/*! numeral/locales/bg */ 259);
+__webpack_require__(/*! numeral/locales/cs */ 258);
+__webpack_require__(/*! numeral/locales/da-dk */ 257);
+__webpack_require__(/*! numeral/locales/de */ 256);
+__webpack_require__(/*! numeral/locales/en-au */ 255);
+__webpack_require__(/*! numeral/locales/en-gb */ 254);
+__webpack_require__(/*! numeral/locales/es */ 253);
+__webpack_require__(/*! numeral/locales/fr */ 252);
+__webpack_require__(/*! numeral/locales/hu */ 251);
+__webpack_require__(/*! numeral/locales/it */ 250);
+__webpack_require__(/*! numeral/locales/lv */ 249);
+__webpack_require__(/*! numeral/locales/no */ 248);
+__webpack_require__(/*! numeral/locales/pl */ 247);
+__webpack_require__(/*! numeral/locales/ru */ 246);
+/* eslint-disable class-methods-use-this */
+class NumeralFormatter {
+    constructor() {
+        // Default Locale
+        this.defaultLocale = "en";
+        this.defaultLocale = 'en';
+    }
+    updateLocale(l) {
+        if (numeral.locale(l) == null) {
+            console.warn(`Invalid locale for numeral: ${l}`);
+            numeral.locale(this.defaultLocale);
+            return false;
+        }
+        return true;
+    }
+    format(n, format) {
+        // numeraljs doesnt properly format numbers that are too big or too small
+        if (Math.abs(n) < 1e-6) {
+            n = 0;
+        }
+        return numeral(n).format(format);
+    }
+}
+exports.numeralWrapper = new NumeralFormatter();
+
+
+/***/ }),
+/* 5 */
+/*!****************************************!*\
+  !*** ./utils/StringHelperFunctions.ts ***!
+  \****************************************/
+/*! no static exports found */
+/*! exports used: containsAllStrings, convertTimeMsToTimeElapsedString, formatNumber, isString, longestCommonStart, replaceAt */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const isString_1 = __webpack_require__(/*! ./helpers/isString */ 44);
 // Netburner String helper functions
 // Replaces the character at an index with a new character
 function replaceAt(base, index, character) {
@@ -3392,154 +3541,6 @@ exports.generateRandomString = generateRandomString;
 
 
 /***/ }),
-/* 4 */
-/*!*********************************!*\
-  !*** ./src/ui/numeralFormat.ts ***!
-  \*********************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const numeral = __webpack_require__(/*! numeral */ 80);
-__webpack_require__(/*! numeral/locales/bg */ 276);
-__webpack_require__(/*! numeral/locales/cs */ 275);
-__webpack_require__(/*! numeral/locales/da-dk */ 274);
-__webpack_require__(/*! numeral/locales/de */ 273);
-__webpack_require__(/*! numeral/locales/en-au */ 272);
-__webpack_require__(/*! numeral/locales/en-gb */ 271);
-__webpack_require__(/*! numeral/locales/es */ 270);
-__webpack_require__(/*! numeral/locales/fr */ 269);
-__webpack_require__(/*! numeral/locales/hu */ 268);
-__webpack_require__(/*! numeral/locales/it */ 267);
-__webpack_require__(/*! numeral/locales/lv */ 266);
-__webpack_require__(/*! numeral/locales/no */ 265);
-__webpack_require__(/*! numeral/locales/pl */ 264);
-__webpack_require__(/*! numeral/locales/ru */ 263);
-/* eslint-disable class-methods-use-this */
-class NumeralFormatter {
-    constructor() {
-        // Default Locale
-        this.defaultLocale = "en";
-        this.defaultLocale = 'en';
-    }
-    updateLocale(l) {
-        if (numeral.locale(l) == null) {
-            console.warn(`Invalid locale for numeral: ${l}`);
-            numeral.locale(this.defaultLocale);
-            return false;
-        }
-        return true;
-    }
-    format(n, format) {
-        // numeraljs doesnt properly format numbers that are too big or too small
-        if (Math.abs(n) < 1e-6) {
-            n = 0;
-        }
-        return numeral(n).format(format);
-    }
-}
-exports.numeralWrapper = new NumeralFormatter();
-
-
-/***/ }),
-/* 5 */
-/*!**************************!*\
-  !*** ./src/Locations.ts ***!
-  \**************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * Display Location Content when visiting somewhere in the World
- */
-// tslint:disable-next-line:variable-name
-exports.Locations = {
-    // Cities
-    Aevum: "Aevum",
-    Chongqing: "Chongqing",
-    Ishima: "Ishima",
-    NewTokyo: "New Tokyo",
-    Sector12: "Sector-12",
-    Volhaven: "Volhaven",
-    // Aevum Locations
-    AevumAeroCorp: "AeroCorp",
-    AevumBachmanAndAssociates: "Bachman & Associates",
-    AevumClarkeIncorporated: "Clarke Incorporated",
-    AevumCrushFitnessGym: "Crush Fitness Gym",
-    AevumECorp: "ECorp",
-    AevumFulcrumTechnologies: "Fulcrum Technologies",
-    AevumGalacticCybersystems: "Galactic Cybersystems",
-    AevumNetLinkTechnologies: "NetLink Technologies",
-    AevumPolice: "Aevum Police Headquarters",
-    AevumRhoConstruction: "Rho Construction",
-    AevumSlums: "Aevum Slums",
-    AevumSnapFitnessGym: "Snap Fitness Gym",
-    AevumSummitUniversity: "Summit University",
-    AevumTravelAgency: "Aevum Travel Agency",
-    AevumWatchdogSecurity: "Watchdog Security",
-    // Chongqing locations
-    ChongqingKuaiGongInternational: "KuaiGong International",
-    ChongqingSlums: "Chongqing Slums",
-    ChongqingSolarisSpaceSystems: "Solaris Space Systems",
-    ChongqingTravelAgency: "Chongqing Travel Agency",
-    // Sector 12
-    Sector12AlphaEnterprises: "Alpha Enterprises",
-    Sector12BladeIndustries: "Blade Industries",
-    Sector12CIA: "Central Intelligence Agency",
-    Sector12CarmichaelSecurity: "Carmichael Security",
-    Sector12CityHall: "Sector-12 City Hall",
-    Sector12DeltaOne: "DeltaOne",
-    Sector12FoodNStuff: "FoodNStuff",
-    Sector12FourSigma: "Four Sigma",
-    Sector12IcarusMicrosystems: "Icarus Microsystems",
-    Sector12IronGym: "Iron Gym",
-    Sector12JoesGuns: "Joe's Guns",
-    Sector12MegaCorp: "MegaCorp",
-    Sector12NSA: "National Security Agency",
-    Sector12PowerhouseGym: "Powerhouse Gym",
-    Sector12RothmanUniversity: "Rothman University",
-    Sector12Slums: "Sector-12 Slums",
-    Sector12TravelAgency: "Sector-12 Travel Agency",
-    Sector12UniversalEnergy: "Universal Energy",
-    // New Tokyo
-    NewTokyoDefComm: "DefComm",
-    NewTokyoGlobalPharmaceuticals: "Global Pharmaceuticals",
-    NewTokyoNoodleBar: "Noodle Bar",
-    NewTokyoSlums: "New Tokyo Slums",
-    NewTokyoTravelAgency: "New Tokyo Travel Agency",
-    NewTokyoVitaLife: "VitaLife",
-    // Ishima
-    IshimaNovaMedical: "Nova Medical",
-    IshimaOmegaSoftware: "Omega Software",
-    IshimaSlums: "Ishima Slums",
-    IshimaStormTechnologies: "Storm Technologies",
-    IshimaTravelAgency: "Ishima Travel Agency",
-    // Volhaven
-    VolhavenCompuTek: "CompuTek",
-    VolhavenHeliosLabs: "Helios Labs",
-    VolhavenLexoCorp: "LexoCorp",
-    VolhavenMilleniumFitnessGym: "Millenium Fitness Gym",
-    VolhavenNWO: "NWO",
-    VolhavenOmniTekIncorporated: "OmniTek Incorporated",
-    VolhavenOmniaCybersystems: "Omnia Cybersystems",
-    VolhavenSlums: "Volhaven Slums",
-    VolhavenSysCoreSecurities: "SysCore Securities",
-    VolhavenTravelAgency: "Volhaven Travel Agency",
-    VolhavenZBInstituteOfTechnology: "ZB Institute of Technology",
-    // Generic locations
-    Hospital: "Hospital",
-    WorldStockExchange: "World Stock Exchange",
-};
-
-
-/***/ }),
 /* 6 */
 /*!***********************************!*\
   !*** ./src/NetscriptEvaluator.js ***!
@@ -3556,24 +3557,24 @@ exports.Locations = {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return isScriptErrorMessage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return killNetscriptDelay; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return evaluateImport; });
-/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNodeMultipliers */ 10);
+/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNodeMultipliers */ 9);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _NetscriptEnvironment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./NetscriptEnvironment */ 114);
-/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptWorker */ 24);
-/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Settings */ 19);
+/* harmony import */ var _NetscriptEnvironment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./NetscriptEnvironment */ 105);
+/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptWorker */ 23);
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Server */ 10);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Settings */ 18);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Script */ 30);
-/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/acorn */ 48);
+/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Script */ 26);
+/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/acorn */ 45);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 54);
+/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 51);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/helpers/isValidIPAddress */ 88);
+/* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/helpers/isValidIPAddress */ 83);
 /* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/helpers/isString */ 39);
+/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/helpers/isString */ 44);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_11__);
 
 
@@ -3589,7 +3590,7 @@ exports.Locations = {
 
 
 
-var Promise = __webpack_require__(/*! bluebird */ 248);
+var Promise = __webpack_require__(/*! bluebird */ 231);
 
 Promise.config({
     warnings: false,
@@ -4502,7 +4503,7 @@ function isScriptErrorMessage(msg) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const getElementById_1 = __webpack_require__(/*! ../../utils/uiHelpers/getElementById */ 53);
+const getElementById_1 = __webpack_require__(/*! ../../utils/uiHelpers/getElementById */ 50);
 /**
  * Adds some output to the terminal.
  * @param input Text or HTML to output to the terminal
@@ -4554,102 +4555,103 @@ function scrollTerminalToBottom() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Engine", function() { return Engine; });
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_GameOptions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/GameOptions */ 84);
-/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 15);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/DialogBox */ 11);
+/* harmony import */ var _utils_GameOptions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/GameOptions */ 79);
+/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 17);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 29);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 31);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 15);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 44);
-/* harmony import */ var _utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/uiHelpers/removeLoadingScreen */ 119);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 39);
+/* harmony import */ var _utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/uiHelpers/removeLoadingScreen */ 109);
 /* harmony import */ var _utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 5);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/LogBox */ 78);
-/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./ActiveScriptsUI */ 68);
-/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Augmentations */ 21);
-/* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./BitNode */ 59);
-/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Bladeburner */ 31);
-/* harmony import */ var _CharacterOverview__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./CharacterOverview */ 128);
-/* harmony import */ var _CinematicText__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./CinematicText */ 98);
-/* harmony import */ var _CodingContractGenerator__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./CodingContractGenerator */ 97);
-/* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Company/CompanyPositions */ 28);
+/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/LogBox */ 74);
+/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./ActiveScriptsUI */ 64);
+/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Augmentations */ 20);
+/* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./BitNode */ 56);
+/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Bladeburner */ 27);
+/* harmony import */ var _CharacterOverview__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./CharacterOverview */ 118);
+/* harmony import */ var _CinematicText__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./CinematicText */ 93);
+/* harmony import */ var _CodingContractGenerator__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./CodingContractGenerator */ 92);
+/* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Company/CompanyPositions */ 25);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Company/Companies */ 18);
+/* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Company/Companies */ 16);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Corporation/Corporation */ 61);
+/* harmony import */ var _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Corporation/Corporation */ 58);
+/* harmony import */ var _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./CreateProgram */ 23);
-/* harmony import */ var _DevMenu__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./DevMenu */ 116);
-/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./Faction/Factions */ 14);
+/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./CreateProgram */ 22);
+/* harmony import */ var _DevMenu__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./DevMenu */ 107);
+/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./Faction/Factions */ 13);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_24__);
-/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 46);
-/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./Fconf */ 47);
-/* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./Location */ 90);
-/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./Locations */ 5);
+/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 42);
+/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./Fconf */ 43);
+/* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./Location */ 85);
+/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./Locations */ 3);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_28__);
-/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./HacknetNode */ 67);
-/* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./InteractiveTutorial */ 35);
-/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./Literature */ 82);
-/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./Message */ 41);
-/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./Missions */ 55);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
-/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./NetscriptWorker */ 24);
+/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./HacknetNode */ 63);
+/* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./InteractiveTutorial */ 30);
+/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./Literature */ 86);
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./Message */ 35);
+/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./Missions */ 52);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./NetscriptFunctions */ 37);
+/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./NetscriptWorker */ 23);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./Prestige */ 86);
-/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./RedPill */ 58);
-/* harmony import */ var _SaveObject__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./SaveObject */ 74);
-/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ./Script */ 30);
-/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ./Settings */ 19);
+/* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./Prestige */ 81);
+/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./RedPill */ 55);
+/* harmony import */ var _SaveObject__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./SaveObject */ 71);
+/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ./Script */ 26);
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ./Server */ 10);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ./Settings */ 18);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_42___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_42__);
-/* harmony import */ var _ui_setSettingsLabels__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ./ui/setSettingsLabels */ 127);
-/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! ./SourceFile */ 70);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
-/* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(/*! ./StockMarket */ 22);
-/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(/*! ./Terminal */ 51);
-/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 34);
+/* harmony import */ var _ui_setSettingsLabels__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ./ui/setSettingsLabels */ 117);
+/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! ./SourceFile */ 66);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(/*! ./SpecialServerIps */ 28);
+/* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(/*! ./StockMarket */ 21);
+/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(/*! ./Terminal */ 48);
+/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 29);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_48___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_48__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(/*! ./ui/navigationTracking */ 12);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__);
-/* harmony import */ var normalize_css__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(/*! normalize.css */ 211);
+/* harmony import */ var normalize_css__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(/*! normalize.css */ 194);
 /* harmony import */ var normalize_css__WEBPACK_IMPORTED_MODULE_50___default = /*#__PURE__*/__webpack_require__.n(normalize_css__WEBPACK_IMPORTED_MODULE_50__);
-/* harmony import */ var _css_styles_scss__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! ../css/styles.scss */ 181);
+/* harmony import */ var _css_styles_scss__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! ../css/styles.scss */ 170);
 /* harmony import */ var _css_styles_scss__WEBPACK_IMPORTED_MODULE_51___default = /*#__PURE__*/__webpack_require__.n(_css_styles_scss__WEBPACK_IMPORTED_MODULE_51__);
-/* harmony import */ var _css_buttons_scss__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! ../css/buttons.scss */ 179);
+/* harmony import */ var _css_buttons_scss__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! ../css/buttons.scss */ 168);
 /* harmony import */ var _css_buttons_scss__WEBPACK_IMPORTED_MODULE_52___default = /*#__PURE__*/__webpack_require__.n(_css_buttons_scss__WEBPACK_IMPORTED_MODULE_52__);
-/* harmony import */ var _css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(/*! ../css/mainmenu.scss */ 177);
+/* harmony import */ var _css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(/*! ../css/mainmenu.scss */ 166);
 /* harmony import */ var _css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_53___default = /*#__PURE__*/__webpack_require__.n(_css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_53__);
-/* harmony import */ var _css_characteroverview_scss__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(/*! ../css/characteroverview.scss */ 175);
+/* harmony import */ var _css_characteroverview_scss__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(/*! ../css/characteroverview.scss */ 164);
 /* harmony import */ var _css_characteroverview_scss__WEBPACK_IMPORTED_MODULE_54___default = /*#__PURE__*/__webpack_require__.n(_css_characteroverview_scss__WEBPACK_IMPORTED_MODULE_54__);
-/* harmony import */ var _css_terminal_scss__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(/*! ../css/terminal.scss */ 173);
+/* harmony import */ var _css_terminal_scss__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(/*! ../css/terminal.scss */ 162);
 /* harmony import */ var _css_terminal_scss__WEBPACK_IMPORTED_MODULE_55___default = /*#__PURE__*/__webpack_require__.n(_css_terminal_scss__WEBPACK_IMPORTED_MODULE_55__);
-/* harmony import */ var _css_menupages_scss__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(/*! ../css/menupages.scss */ 171);
+/* harmony import */ var _css_menupages_scss__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(/*! ../css/menupages.scss */ 160);
 /* harmony import */ var _css_menupages_scss__WEBPACK_IMPORTED_MODULE_56___default = /*#__PURE__*/__webpack_require__.n(_css_menupages_scss__WEBPACK_IMPORTED_MODULE_56__);
-/* harmony import */ var _css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(/*! ../css/workinprogress.scss */ 169);
+/* harmony import */ var _css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(/*! ../css/workinprogress.scss */ 158);
 /* harmony import */ var _css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_57___default = /*#__PURE__*/__webpack_require__.n(_css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_57__);
-/* harmony import */ var _css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(/*! ../css/popupboxes.scss */ 167);
+/* harmony import */ var _css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(/*! ../css/popupboxes.scss */ 156);
 /* harmony import */ var _css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_58___default = /*#__PURE__*/__webpack_require__.n(_css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_58__);
-/* harmony import */ var _css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(/*! ../css/interactivetutorial.scss */ 165);
+/* harmony import */ var _css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(/*! ../css/interactivetutorial.scss */ 154);
 /* harmony import */ var _css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_59___default = /*#__PURE__*/__webpack_require__.n(_css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_59__);
-/* harmony import */ var _css_loader_scss__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(/*! ../css/loader.scss */ 163);
+/* harmony import */ var _css_loader_scss__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(/*! ../css/loader.scss */ 152);
 /* harmony import */ var _css_loader_scss__WEBPACK_IMPORTED_MODULE_60___default = /*#__PURE__*/__webpack_require__.n(_css_loader_scss__WEBPACK_IMPORTED_MODULE_60__);
-/* harmony import */ var _css_missions_scss__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(/*! ../css/missions.scss */ 161);
+/* harmony import */ var _css_missions_scss__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(/*! ../css/missions.scss */ 150);
 /* harmony import */ var _css_missions_scss__WEBPACK_IMPORTED_MODULE_61___default = /*#__PURE__*/__webpack_require__.n(_css_missions_scss__WEBPACK_IMPORTED_MODULE_61__);
-/* harmony import */ var _css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(/*! ../css/companymanagement.scss */ 159);
+/* harmony import */ var _css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(/*! ../css/companymanagement.scss */ 148);
 /* harmony import */ var _css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_62___default = /*#__PURE__*/__webpack_require__.n(_css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_62__);
-/* harmony import */ var _css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_63__ = __webpack_require__(/*! ../css/bladeburner.scss */ 157);
+/* harmony import */ var _css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_63__ = __webpack_require__(/*! ../css/bladeburner.scss */ 146);
 /* harmony import */ var _css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_63___default = /*#__PURE__*/__webpack_require__.n(_css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_63__);
-/* harmony import */ var _css_gang_scss__WEBPACK_IMPORTED_MODULE_64__ = __webpack_require__(/*! ../css/gang.scss */ 155);
+/* harmony import */ var _css_gang_scss__WEBPACK_IMPORTED_MODULE_64__ = __webpack_require__(/*! ../css/gang.scss */ 144);
 /* harmony import */ var _css_gang_scss__WEBPACK_IMPORTED_MODULE_64___default = /*#__PURE__*/__webpack_require__.n(_css_gang_scss__WEBPACK_IMPORTED_MODULE_64__);
-/* harmony import */ var _css_treant_css__WEBPACK_IMPORTED_MODULE_65__ = __webpack_require__(/*! ../css/treant.css */ 153);
+/* harmony import */ var _css_treant_css__WEBPACK_IMPORTED_MODULE_65__ = __webpack_require__(/*! ../css/treant.css */ 142);
 /* harmony import */ var _css_treant_css__WEBPACK_IMPORTED_MODULE_65___default = /*#__PURE__*/__webpack_require__.n(_css_treant_css__WEBPACK_IMPORTED_MODULE_65__);
 
 
@@ -5076,7 +5078,7 @@ const Engine = {
     },
 
     loadCorporationContent: function() {
-        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"]) {
+        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__["Corporation"]) {
             Engine.hideAllContent();
             document.getElementById("character-overview-wrapper").style.visibility = "hidden";
             _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation.createUI();
@@ -5124,7 +5126,7 @@ const Engine = {
         if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].inGang()) {
             _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].gang.clearUI();
         }
-        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"]) {
+        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__["Corporation"]) {
             _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation.clearUI();
         }
 
@@ -5332,7 +5334,7 @@ const Engine = {
         }));
         genericLocationsList.appendChild(li);
 
-        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"] && document.getElementById("location-corporation-button") == null) {
+        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__["Corporation"] && document.getElementById("location-corporation-button") == null) {
             var li = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("li");
             li.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("a", {
                 innerText:_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation.name, id:"location-corporation-button",
@@ -5542,7 +5544,7 @@ const Engine = {
         }
 
         //Corporation
-        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"]) {
+        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__["Corporation"]) {
             //Stores cycles in a "buffer". Processed separately using Engine Counters
             //This is to avoid constant DOM redraws when Corporation is catching up
             _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation.storeCycles(numCycles);
@@ -5709,7 +5711,7 @@ const Engine = {
         }
 
         if (Engine.Counters.mechanicProcess <= 0) {
-            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"]) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__["Corporation"]) {
                 _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation.process();
             }
             if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"]) {
@@ -5931,7 +5933,7 @@ const Engine = {
             else {stockmarket.style.display = "none";}
             if(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"]) {visibleMenuTabs.push(bladeburner);}
             else {bladeburner.style.display = "none";}
-            if(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"]) {visibleMenuTabs.push(corp);}
+            if(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__["Corporation"]) {visibleMenuTabs.push(corp);}
             else {corp.style.display = "none";}
             if(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].inGang()) {visibleMenuTabs.push(gang);}
             else {gang.style.display = "none";}
@@ -6207,7 +6209,7 @@ const Engine = {
             job.style.display           = _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].companyPosition !== ""             ? "list-item" : "none";
             stockmarket.style.display   = _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hasWseAccount                      ? "list-item" : "none";
             bladeburner.style.display   = _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"] ? "list-item" : "none";
-            corporation.style.display   = _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"] ? "list-item" : "none";
+            corporation.style.display   = _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__["Corporation"] ? "list-item" : "none";
             gang.style.display          = _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].inGang()                           ? "list-item" : "none";
 
             this.classList.toggle("opened");
@@ -6488,98 +6490,10 @@ window.onload = function() {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 63)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 62)))
 
 /***/ }),
 /* 9 */
-/*!****************************!*\
-  !*** ./utils/DialogBox.js ***!
-  \****************************/
-/*! exports provided: dialogBoxCreate, dialogBoxOpened */
-/*! all exports used */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "dialogBoxCreate", function() { return dialogBoxCreate; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "dialogBoxOpened", function() { return dialogBoxOpened; });
-/* Pop up Dialog Box */
-let dialogBoxes = [];
-
-//Close dialog box when clicking outside
-$(document).click(function(event) {
-    if (dialogBoxOpened && dialogBoxes.length >= 1) {
-        if (!$(event.target).closest(dialogBoxes[0]).length){
-            dialogBoxes[0].remove();
-            dialogBoxes.splice(0, 1);
-            if (dialogBoxes.length == 0) {
-                dialogBoxOpened = false;
-            } else {
-                dialogBoxes[0].style.visibility = "visible";
-            }
-        }
-    }
-});
-
-
-//Dialog box close buttons
-$(document).on('click', '.dialog-box-close-button', function( event ) {
-    if (dialogBoxOpened && dialogBoxes.length >= 1) {
-        dialogBoxes[0].remove();
-        dialogBoxes.splice(0, 1);
-        if (dialogBoxes.length == 0) {
-            dialogBoxOpened = false;
-        } else {
-            dialogBoxes[0].style.visibility = "visible";
-        }
-    }
-});
-
-var dialogBoxOpened = false;
-
-function dialogBoxCreate(txt, preformatted=false) {
-    var container = document.createElement("div");
-    container.setAttribute("class", "dialog-box-container");
-
-    var content = document.createElement("div");
-    content.setAttribute("class", "dialog-box-content");
-
-    var closeButton = document.createElement("span");
-    closeButton.setAttribute("class", "dialog-box-close-button");
-    closeButton.innerHTML = "&times;"
-
-    var textE;
-    if (preformatted) {
-        // For text files as they are often computed data that
-        // shouldn't be wrapped and should retain tabstops.
-        textE = document.createElement("pre");
-        textE.innerHTML = txt;
-    } else {
-        textE = document.createElement("p");
-        textE.innerHTML = txt.replace(/(?:\r\n|\r|\n)/g, '<br>');
-    }
-
-    content.appendChild(closeButton);
-    content.appendChild(textE);
-    container.appendChild(content);
-
-    document.body.appendChild(container);
-    if (dialogBoxes.length >= 1) {
-        container.style.visibility = "hidden";
-    }
-    dialogBoxes.push(container);
-
-    setTimeout(function() {
-        dialogBoxOpened = true;
-    }, 400);
-}
-
-
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 63)))
-
-/***/ }),
-/* 10 */
 /*!***********************************!*\
   !*** ./src/BitNodeMultipliers.ts ***!
   \***********************************/
@@ -6626,7 +6540,7 @@ exports.BitNodeMultipliers = {
 
 
 /***/ }),
-/* 11 */
+/* 10 */
 /*!***********************!*\
   !*** ./src/Server.js ***!
   \***********************/
@@ -6646,25 +6560,25 @@ exports.BitNodeMultipliers = {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return getServer; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return Server; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return AllServers; });
-/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNodeMultipliers */ 10);
+/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNodeMultipliers */ 9);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CodingContracts */ 42);
+/* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CodingContracts */ 36);
 /* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_CodingContracts__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Script */ 30);
-/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./CreateProgram */ 23);
+/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Script */ 26);
+/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./CreateProgram */ 22);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
-/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./TextFile */ 65);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./SpecialServerIps */ 28);
+/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./TextFile */ 60);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_TextFile__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 15);
+/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 17);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/IPAddress */ 60);
-/* harmony import */ var _data_servers__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./data/servers */ 134);
+/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/IPAddress */ 57);
+/* harmony import */ var _data_servers__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./data/servers */ 124);
 /* harmony import */ var _data_servers__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_data_servers__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
-/* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/isValidIPAddress */ 88);
+/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
+/* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/isValidIPAddress */ 83);
 /* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_12__);
 
 
@@ -7132,6 +7046,94 @@ Directory.prototype.getPath = function(name) {
 
 
 /***/ }),
+/* 11 */
+/*!****************************!*\
+  !*** ./utils/DialogBox.js ***!
+  \****************************/
+/*! exports provided: dialogBoxCreate, dialogBoxOpened */
+/*! all exports used */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "dialogBoxCreate", function() { return dialogBoxCreate; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "dialogBoxOpened", function() { return dialogBoxOpened; });
+/* Pop up Dialog Box */
+let dialogBoxes = [];
+
+//Close dialog box when clicking outside
+$(document).click(function(event) {
+    if (dialogBoxOpened && dialogBoxes.length >= 1) {
+        if (!$(event.target).closest(dialogBoxes[0]).length){
+            dialogBoxes[0].remove();
+            dialogBoxes.splice(0, 1);
+            if (dialogBoxes.length == 0) {
+                dialogBoxOpened = false;
+            } else {
+                dialogBoxes[0].style.visibility = "visible";
+            }
+        }
+    }
+});
+
+
+//Dialog box close buttons
+$(document).on('click', '.dialog-box-close-button', function( event ) {
+    if (dialogBoxOpened && dialogBoxes.length >= 1) {
+        dialogBoxes[0].remove();
+        dialogBoxes.splice(0, 1);
+        if (dialogBoxes.length == 0) {
+            dialogBoxOpened = false;
+        } else {
+            dialogBoxes[0].style.visibility = "visible";
+        }
+    }
+});
+
+var dialogBoxOpened = false;
+
+function dialogBoxCreate(txt, preformatted=false) {
+    var container = document.createElement("div");
+    container.setAttribute("class", "dialog-box-container");
+
+    var content = document.createElement("div");
+    content.setAttribute("class", "dialog-box-content");
+
+    var closeButton = document.createElement("span");
+    closeButton.setAttribute("class", "dialog-box-close-button");
+    closeButton.innerHTML = "&times;"
+
+    var textE;
+    if (preformatted) {
+        // For text files as they are often computed data that
+        // shouldn't be wrapped and should retain tabstops.
+        textE = document.createElement("pre");
+        textE.innerHTML = txt;
+    } else {
+        textE = document.createElement("p");
+        textE.innerHTML = txt.replace(/(?:\r\n|\r|\n)/g, '<br>');
+    }
+
+    content.appendChild(closeButton);
+    content.appendChild(textE);
+    container.appendChild(content);
+
+    document.body.appendChild(container);
+    if (dialogBoxes.length >= 1) {
+        container.style.visibility = "hidden";
+    }
+    dialogBoxes.push(container);
+
+    setTimeout(function() {
+        dialogBoxOpened = true;
+    }, 400);
+}
+
+
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 62)))
+
+/***/ }),
 /* 12 */
 /*!**************************************!*\
   !*** ./src/ui/navigationTracking.ts ***!
@@ -7271,6 +7273,62 @@ exports.routing = new Routing();
 
 /***/ }),
 /* 13 */
+/*!*********************************!*\
+  !*** ./src/Faction/Factions.ts ***!
+  \*********************************/
+/*! no static exports found */
+/*! exports used: Factions, factionExists, initFactions, loadFactions */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Initialization and manipulation of the Factions object, which stores data
+ * about all Factions in the game
+ */
+const Faction_1 = __webpack_require__(/*! ./Faction */ 53);
+const FactionInfo_1 = __webpack_require__(/*! ./FactionInfo */ 104);
+const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 14);
+exports.Factions = {};
+function loadFactions(saveString) {
+    exports.Factions = JSON.parse(saveString, JSONReviver_1.Reviver);
+}
+exports.loadFactions = loadFactions;
+function AddToFactions(faction) {
+    const name = faction.name;
+    exports.Factions[name] = faction;
+}
+exports.AddToFactions = AddToFactions;
+function factionExists(name) {
+    return exports.Factions.hasOwnProperty(name);
+}
+exports.factionExists = factionExists;
+function initFactions(bitNode = 1) {
+    for (const name in FactionInfo_1.FactionInfos) {
+        resetFaction(new Faction_1.Faction(name));
+    }
+}
+exports.initFactions = initFactions;
+//Resets a faction during (re-)initialization. Saves the favor in the new
+//Faction object and deletes the old Faction Object from "Factions". Then
+//reinserts the new Faction object
+function resetFaction(newFactionObject) {
+    if (!(newFactionObject instanceof Faction_1.Faction)) {
+        throw new Error("Invalid argument 'newFactionObject' passed into resetFaction()");
+    }
+    const factionName = newFactionObject.name;
+    if (factionExists(factionName)) {
+        newFactionObject.favor = exports.Factions[factionName].favor;
+        delete exports.Factions[factionName];
+    }
+    AddToFactions(newFactionObject);
+}
+exports.resetFaction = resetFaction;
+
+
+/***/ }),
+/* 14 */
 /*!******************************!*\
   !*** ./utils/JSONReviver.js ***!
   \******************************/
@@ -7357,88 +7415,7 @@ function Generic_fromJSON(ctor, data) {
 
 
 /***/ }),
-/* 14 */
-/*!*********************************!*\
-  !*** ./src/Faction/Factions.ts ***!
-  \*********************************/
-/*! no static exports found */
-/*! exports used: Factions, factionExists, initFactions, loadFactions */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * Initialization and manipulation of the Factions object, which stores data
- * about all Factions in the game
- */
-const Faction_1 = __webpack_require__(/*! ./Faction */ 56);
-const FactionInfo_1 = __webpack_require__(/*! ./FactionInfo */ 113);
-const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
-exports.Factions = {};
-function loadFactions(saveString) {
-    exports.Factions = JSON.parse(saveString, JSONReviver_1.Reviver);
-}
-exports.loadFactions = loadFactions;
-function AddToFactions(faction) {
-    const name = faction.name;
-    exports.Factions[name] = faction;
-}
-exports.AddToFactions = AddToFactions;
-function factionExists(name) {
-    return exports.Factions.hasOwnProperty(name);
-}
-exports.factionExists = factionExists;
-function initFactions(bitNode = 1) {
-    for (const name in FactionInfo_1.FactionInfos) {
-        resetFaction(new Faction_1.Faction(name));
-    }
-}
-exports.initFactions = initFactions;
-//Resets a faction during (re-)initialization. Saves the favor in the new
-//Faction object and deletes the old Faction Object from "Factions". Then
-//reinserts the new Faction object
-function resetFaction(newFactionObject) {
-    if (!(newFactionObject instanceof Faction_1.Faction)) {
-        throw new Error("Invalid argument 'newFactionObject' passed into resetFaction()");
-    }
-    const factionName = newFactionObject.name;
-    if (factionExists(factionName)) {
-        newFactionObject.favor = exports.Factions[factionName].favor;
-        delete exports.Factions[factionName];
-    }
-    AddToFactions(newFactionObject);
-}
-exports.resetFaction = resetFaction;
-
-
-/***/ }),
 /* 15 */
-/*!***************************************!*\
-  !*** ./utils/helpers/getRandomInt.ts ***!
-  \***************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * Gets a random integer bounded by the values passed in.
- * @param min The minimum value in the range.
- * @param max The maximum value in the range.
- */
-function getRandomInt(min, max) {
-    const lower = Math.min(min, max);
-    const upper = Math.max(min, max);
-    return Math.floor(Math.random() * (upper - lower + 1)) + lower;
-}
-exports.getRandomInt = getRandomInt;
-
-
-/***/ }),
-/* 16 */
 /*!************************************************!*\
   !*** ./utils/uiHelpers/clearEventListeners.ts ***!
   \************************************************/
@@ -7449,7 +7426,7 @@ exports.getRandomInt = getRandomInt;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const getElementById_1 = __webpack_require__(/*! ./getElementById */ 53);
+const getElementById_1 = __webpack_require__(/*! ./getElementById */ 50);
 /**
  * Given an element by its ID, removes all event listeners from that element by cloning and
  * replacing. Then returns the new cloned element.
@@ -7474,7 +7451,149 @@ exports.clearEventListeners = clearEventListeners;
 
 
 /***/ }),
+/* 16 */
+/*!**********************************!*\
+  !*** ./src/Company/Companies.ts ***!
+  \**********************************/
+/*! no static exports found */
+/*! exports used: Companies, companyExists, initCompanies, loadCompanies */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+// Constructs all CompanyPosition objects using the metadata in data/companypositions.ts
+const CompaniesMetadata_1 = __webpack_require__(/*! ./data/CompaniesMetadata */ 185);
+const Company_1 = __webpack_require__(/*! ./Company */ 70);
+const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 14);
+exports.Companies = {};
+function addCompany(params) {
+    if (exports.Companies[params.name] != null) {
+        console.warn(`Duplicate Company Position being defined: ${params.name}`);
+    }
+    exports.Companies[params.name] = new Company_1.Company(params);
+}
+// Used to initialize new Company objects for the Companies map
+// Called when creating new game or after a prestige/reset
+function initCompanies() {
+    // Save Old Company data for 'favor'
+    const oldCompanies = exports.Companies;
+    // Re-construct all Companies
+    exports.Companies = {};
+    CompaniesMetadata_1.companiesMetadata.forEach((e) => {
+        addCompany(e);
+    });
+    // Reset data
+    for (const companyName in exports.Companies) {
+        const company = exports.Companies[companyName];
+        const oldCompany = oldCompanies[companyName];
+        if (!(oldCompany instanceof Company_1.Company)) {
+            // New game, so no OldCompanies data
+            company.favor = 0;
+        }
+        else {
+            company.favor = oldCompanies[companyName].favor;
+            if (isNaN(company.favor)) {
+                company.favor = 0;
+            }
+        }
+    }
+}
+exports.initCompanies = initCompanies;
+// Used to load Companies map from a save
+function loadCompanies(saveString) {
+    exports.Companies = JSON.parse(saveString, JSONReviver_1.Reviver);
+}
+exports.loadCompanies = loadCompanies;
+// Utility function to check if a string is valid company name
+function companyExists(name) {
+    return exports.Companies.hasOwnProperty(name);
+}
+exports.companyExists = companyExists;
+
+
+/***/ }),
 /* 17 */
+/*!***************************************!*\
+  !*** ./utils/helpers/getRandomInt.ts ***!
+  \***************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Gets a random integer bounded by the values passed in.
+ * @param min The minimum value in the range.
+ * @param max The maximum value in the range.
+ */
+function getRandomInt(min, max) {
+    const lower = Math.min(min, max);
+    const upper = Math.max(min, max);
+    return Math.floor(Math.random() * (upper - lower + 1)) + lower;
+}
+exports.getRandomInt = getRandomInt;
+
+
+/***/ }),
+/* 18 */
+/*!*************************!*\
+  !*** ./src/Settings.ts ***!
+  \*************************/
+/*! no static exports found */
+/*! exports used: Settings */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const SettingEnums_1 = __webpack_require__(/*! ./SettingEnums */ 69);
+const defaultSettings = {
+    AutosaveInterval: 60,
+    CodeInstructionRunTime: 50,
+    DisableHotkeys: false,
+    Locale: "en",
+    MaxLogCapacity: 50,
+    MaxPortCapacity: 50,
+    SuppressBuyAugmentationConfirmation: false,
+    SuppressFactionInvites: false,
+    SuppressHospitalizationPopup: false,
+    SuppressMessages: false,
+    SuppressTravelConfirmation: false,
+};
+/**
+ * The current options the player has customized to their play style.
+ */
+// tslint:disable-next-line:variable-name
+exports.Settings = {
+    AutosaveInterval: defaultSettings.AutosaveInterval,
+    CodeInstructionRunTime: 25,
+    DisableHotkeys: defaultSettings.DisableHotkeys,
+    EditorKeybinding: "ace",
+    EditorTheme: "Monokai",
+    Locale: "en",
+    MaxLogCapacity: defaultSettings.MaxLogCapacity,
+    MaxPortCapacity: defaultSettings.MaxPortCapacity,
+    OwnedAugmentationsOrder: SettingEnums_1.OwnedAugmentationsOrderSetting.AcquirementTime,
+    PurchaseAugmentationsOrder: SettingEnums_1.PurchaseAugmentationsOrderSetting.Default,
+    SuppressBuyAugmentationConfirmation: defaultSettings.SuppressBuyAugmentationConfirmation,
+    SuppressFactionInvites: defaultSettings.SuppressFactionInvites,
+    SuppressHospitalizationPopup: defaultSettings.SuppressHospitalizationPopup,
+    SuppressMessages: defaultSettings.SuppressMessages,
+    SuppressTravelConfirmation: defaultSettings.SuppressTravelConfirmation,
+    init() {
+        Object.assign(exports.Settings, defaultSettings);
+    },
+    load(saveString) {
+        Object.assign(exports.Settings, JSON.parse(saveString));
+    },
+};
+
+
+/***/ }),
+/* 19 */
 /*!***************************!*\
   !*** ./utils/YesNoBox.js ***!
   \***************************/
@@ -7493,7 +7612,7 @@ exports.clearEventListeners = clearEventListeners;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return yesNoBoxClose; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return yesNoTxtInpBoxClose; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return yesNoBoxOpen; });
-/* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./uiHelpers/clearEventListeners */ 16);
+/* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./uiHelpers/clearEventListeners */ 15);
 /* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_0__);
 
 /* Generic Yes-No Pop-up box
@@ -7584,154 +7703,7 @@ function yesNoTxtInpBoxCreate(txt) {
 
 
 /***/ }),
-/* 18 */
-/*!**********************************!*\
-  !*** ./src/Company/Companies.ts ***!
-  \**********************************/
-/*! no static exports found */
-/*! exports used: Companies, companyExists, initCompanies, loadCompanies */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-// Constructs all CompanyPosition objects using the metadata in data/companypositions.ts
-const CompaniesMetadata_1 = __webpack_require__(/*! ./data/CompaniesMetadata */ 202);
-const Company_1 = __webpack_require__(/*! ./Company */ 73);
-const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
-exports.Companies = {};
-function addCompany(params) {
-    if (exports.Companies[params.name] != null) {
-        console.warn(`Duplicate Company Position being defined: ${params.name}`);
-    }
-    exports.Companies[params.name] = new Company_1.Company(params);
-}
-// Used to initialize new Company objects for the Companies map
-// Called when creating new game or after a prestige/reset
-function initCompanies() {
-    // Save Old Company data for 'favor'
-    const oldCompanies = exports.Companies;
-    // Re-construct all Companies
-    exports.Companies = {};
-    CompaniesMetadata_1.companiesMetadata.forEach((e) => {
-        addCompany(e);
-    });
-    // Reset data
-    for (const companyName in exports.Companies) {
-        const company = exports.Companies[companyName];
-        const oldCompany = oldCompanies[companyName];
-        if (!(oldCompany instanceof Company_1.Company)) {
-            // New game, so no OldCompanies data
-            company.favor = 0;
-        }
-        else {
-            company.favor = oldCompanies[companyName].favor;
-            if (isNaN(company.favor)) {
-                company.favor = 0;
-            }
-        }
-    }
-}
-exports.initCompanies = initCompanies;
-// Used to load Companies map from a save
-function loadCompanies(saveString) {
-    exports.Companies = JSON.parse(saveString, JSONReviver_1.Reviver);
-}
-exports.loadCompanies = loadCompanies;
-// Utility function to check if a string is valid company name
-function companyExists(name) {
-    return exports.Companies.hasOwnProperty(name);
-}
-exports.companyExists = companyExists;
-
-
-/***/ }),
-/* 19 */
-/*!*************************!*\
-  !*** ./src/Settings.ts ***!
-  \*************************/
-/*! no static exports found */
-/*! exports used: Settings */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const SettingEnums_1 = __webpack_require__(/*! ./SettingEnums */ 72);
-const defaultSettings = {
-    AutosaveInterval: 60,
-    CodeInstructionRunTime: 50,
-    DisableHotkeys: false,
-    Locale: "en",
-    MaxLogCapacity: 50,
-    MaxPortCapacity: 50,
-    SuppressBuyAugmentationConfirmation: false,
-    SuppressFactionInvites: false,
-    SuppressHospitalizationPopup: false,
-    SuppressMessages: false,
-    SuppressTravelConfirmation: false,
-};
-/**
- * The current options the player has customized to their play style.
- */
-// tslint:disable-next-line:variable-name
-exports.Settings = {
-    AutosaveInterval: defaultSettings.AutosaveInterval,
-    CodeInstructionRunTime: 25,
-    DisableHotkeys: defaultSettings.DisableHotkeys,
-    EditorKeybinding: "ace",
-    EditorTheme: "Monokai",
-    Locale: "en",
-    MaxLogCapacity: defaultSettings.MaxLogCapacity,
-    MaxPortCapacity: defaultSettings.MaxPortCapacity,
-    OwnedAugmentationsOrder: SettingEnums_1.OwnedAugmentationsOrderSetting.AcquirementTime,
-    PurchaseAugmentationsOrder: SettingEnums_1.PurchaseAugmentationsOrderSetting.Default,
-    SuppressBuyAugmentationConfirmation: defaultSettings.SuppressBuyAugmentationConfirmation,
-    SuppressFactionInvites: defaultSettings.SuppressFactionInvites,
-    SuppressHospitalizationPopup: defaultSettings.SuppressHospitalizationPopup,
-    SuppressMessages: defaultSettings.SuppressMessages,
-    SuppressTravelConfirmation: defaultSettings.SuppressTravelConfirmation,
-    init() {
-        Object.assign(exports.Settings, defaultSettings);
-    },
-    load(saveString) {
-        Object.assign(exports.Settings, JSON.parse(saveString));
-    },
-};
-
-
-/***/ }),
 /* 20 */
-/*!**********************************************!*\
-  !*** ./utils/uiHelpers/removeElementById.ts ***!
-  \**********************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const getElementById_1 = __webpack_require__(/*! ./getElementById */ 53);
-const removeElement_1 = __webpack_require__(/*! ./removeElement */ 64);
-/**
- * Given its id, this function removes an element AND its children
- * @param id The HTML identifier to search for and remove.
- */
-function removeElementById(id) {
-    try {
-        const elem = getElementById_1.getElementById(id);
-        removeElement_1.removeElement(elem);
-    }
-    catch (e) {
-        // Probably should log this as we're trying to remove elements that don't exist.
-    }
-}
-exports.removeElementById = removeElementById;
-
-
-/***/ }),
-/* 21 */
 /*!******************************!*\
   !*** ./src/Augmentations.js ***!
   \******************************/
@@ -7749,36 +7721,36 @@ exports.removeElementById = removeElementById;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return augmentationExists; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Augmentation; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return displayAugmentationsContent; });
-/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNodeMultipliers */ 10);
+/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNodeMultipliers */ 9);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 8);
-/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Faction/Factions */ 14);
+/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Faction/Factions */ 13);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
-/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./NetscriptWorker */ 24);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptFunctions */ 37);
+/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./NetscriptWorker */ 23);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Prestige */ 86);
-/* harmony import */ var _SaveObject__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./SaveObject */ 74);
-/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Script */ 30);
-/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _SettingEnums__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./SettingEnums */ 72);
+/* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Prestige */ 81);
+/* harmony import */ var _SaveObject__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./SaveObject */ 71);
+/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Script */ 26);
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Server */ 10);
+/* harmony import */ var _SettingEnums__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./SettingEnums */ 69);
 /* harmony import */ var _SettingEnums__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_SettingEnums__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Settings */ 19);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Settings */ 18);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./SourceFile */ 70);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 76);
+/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./SourceFile */ 66);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/DialogBox */ 11);
+/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 72);
 /* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
-/* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/helpers/clearObject */ 77);
+/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
+/* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/helpers/clearObject */ 73);
 /* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_17__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/helpers/isString */ 39);
+/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/helpers/isString */ 44);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 29);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 31);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_20__);
 
 
@@ -10442,7 +10414,7 @@ function displaySourceFiles(listElement, sourceFiles) {
 
 
 /***/ }),
-/* 22 */
+/* 21 */
 /*!****************************!*\
   !*** ./src/StockMarket.js ***!
   \****************************/
@@ -10475,33 +10447,33 @@ function displaySourceFiles(listElement, sourceFiles) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return PositionTypes; });
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Locations */ 5);
+/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Locations */ 3);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
-/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./NetscriptWorker */ 24);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NetscriptFunctions */ 37);
+/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./NetscriptWorker */ 23);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Stock__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Stock */ 26);
+/* harmony import */ var _Stock__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Stock */ 24);
 /* harmony import */ var _Stock__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Stock__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/DialogBox */ 11);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 15);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
+/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./ui/navigationTracking */ 12);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 44);
-/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 15);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 39);
+/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 17);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 34);
+/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 29);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_13__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 29);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 31);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 38);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/YesNoBox */ 19);
 
 
 
@@ -11984,7 +11956,7 @@ function updateStockOrderList(stock) {
 
 
 /***/ }),
-/* 23 */
+/* 22 */
 /*!******************************!*\
   !*** ./src/CreateProgram.js ***!
   \******************************/
@@ -12163,7 +12135,7 @@ function initCreateProgramButtons() {
 
 
 /***/ }),
-/* 24 */
+/* 23 */
 /*!********************************!*\
   !*** ./src/NetscriptWorker.js ***!
   \********************************/
@@ -12180,31 +12152,31 @@ function initCreateProgramButtons() {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return addWorkerScript; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return updateOnlineScriptTimes; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return prestigeWorkerScripts; });
-/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActiveScriptsUI */ 68);
+/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActiveScriptsUI */ 64);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 8);
-/* harmony import */ var _JSInterpreter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./JSInterpreter */ 129);
-/* harmony import */ var _NetscriptEnvironment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptEnvironment */ 114);
+/* harmony import */ var _JSInterpreter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./JSInterpreter */ 119);
+/* harmony import */ var _NetscriptEnvironment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptEnvironment */ 105);
 /* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./NetscriptEvaluator */ 6);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
-/* harmony import */ var _NetscriptJSEvaluator__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./NetscriptJSEvaluator */ 115);
-/* harmony import */ var _NetscriptPort__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./NetscriptPort */ 71);
-/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Settings */ 19);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./NetscriptFunctions */ 37);
+/* harmony import */ var _NetscriptJSEvaluator__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./NetscriptJSEvaluator */ 106);
+/* harmony import */ var _NetscriptPort__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./NetscriptPort */ 68);
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Server */ 10);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Settings */ 18);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var escodegen__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! escodegen */ 108);
+/* harmony import */ var escodegen__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! escodegen */ 99);
 /* harmony import */ var escodegen__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(escodegen__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/acorn */ 48);
+/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/acorn */ 45);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/helpers/compareArrays */ 91);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/DialogBox */ 11);
+/* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/helpers/compareArrays */ 87);
 /* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 54);
+/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 51);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 81);
+/* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 77);
 /* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 5);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_17__);
 
 
@@ -12227,7 +12199,7 @@ function initCreateProgramButtons() {
 
 
 
-const walk  = __webpack_require__(/*! acorn/dist/walk */ 146);
+const walk  = __webpack_require__(/*! acorn/dist/walk */ 135);
 
 function WorkerScript(runningScriptObj) {
 	this.name 			= runningScriptObj.filename;
@@ -12838,30 +12810,7 @@ function updateOnlineScriptTimes(numCycles = 1) {
 
 
 /***/ }),
-/* 25 */
-/*!**********************************************!*\
-  !*** ./src/Corporation/EmployeePositions.ts ***!
-  \**********************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.EmployeePositions = {
-    Operations: "Operations",
-    Engineer: "Engineer",
-    Business: "Business",
-    Management: "Management",
-    RandD: "Research & Development",
-    Training: "Training",
-    Unassigned: "Unassigned",
-};
-
-
-/***/ }),
-/* 26 */
+/* 24 */
 /*!**********************!*\
   !*** ./src/Stock.ts ***!
   \**********************/
@@ -12872,8 +12821,8 @@ exports.EmployeePositions = {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const JSONReviver_1 = __webpack_require__(/*! ../utils/JSONReviver */ 13);
-const getRandomInt_1 = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 15);
+const JSONReviver_1 = __webpack_require__(/*! ../utils/JSONReviver */ 14);
+const getRandomInt_1 = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 17);
 /**
  * Represents the valuation of a company in the World Stock Exchange.
  */
@@ -12910,120 +12859,7 @@ JSONReviver_1.Reviver.constructors.Stock = Stock;
 
 
 /***/ }),
-/* 27 */
-/*!*****************************************!*\
-  !*** ./src/Corporation/IndustryData.ts ***!
-  \*****************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const BaseResearchTree_1 = __webpack_require__(/*! ./data/BaseResearchTree */ 201);
-const numeralFormat_1 = __webpack_require__(/*! ../ui/numeralFormat */ 4);
-// Map of official names for each Industry
-exports.Industries = {
-    Energy: "Energy",
-    Utilities: "Water Utilities",
-    Agriculture: "Agriculture",
-    Fishing: "Fishing",
-    Mining: "Mining",
-    Food: "Food",
-    Tobacco: "Tobacco",
-    Chemical: "Chemical",
-    Pharmaceutical: "Pharmaceutical",
-    Computer: "Computer Hardware",
-    Robotics: "Robotics",
-    Software: "Software",
-    Healthcare: "Healthcare",
-    RealEstate: "RealEstate",
-};
-// Map of how much money it takes to start each industry
-exports.IndustryStartingCosts = {
-    Energy: 225e9,
-    Utilities: 150e9,
-    Agriculture: 40e9,
-    Fishing: 80e9,
-    Mining: 300e9,
-    Food: 10e9,
-    Tobacco: 20e9,
-    Chemical: 70e9,
-    Pharmaceutical: 200e9,
-    Computer: 500e9,
-    Robotics: 1e12,
-    Software: 25e9,
-    Healthcare: 750e9,
-    RealEstate: 600e9,
-};
-// Map of description for each industry
-exports.IndustryDescriptions = {
-    Energy: "Engage in the production and distribution of energy.<br><br>" +
-        "Starting cost: " + numeralFormat_1.numeralWrapper.format(exports.IndustryStartingCosts.Energy, "$0.000a") + "<br>" +
-        "Recommended starting Industry: NO",
-    Utilities: "Distributes water and provides wastewater services.<br><br>" +
-        "Starting cost: " + numeralFormat_1.numeralWrapper.format(exports.IndustryStartingCosts.Utilities, "$0.000a") + "<br>" +
-        "Recommended starting Industry: NO",
-    Agriculture: "Cultive crops and breed livestock to produce food.<br><br>" +
-        "Starting cost: " + numeralFormat_1.numeralWrapper.format(exports.IndustryStartingCosts.Agriculture, "$0.000a") + "<br>" +
-        "Recommended starting Industry: YES",
-    Fishing: "Produce food through the breeding and processing of fish and fish products<br><br>" +
-        "Starting cost: " + numeralFormat_1.numeralWrapper.format(exports.IndustryStartingCosts.Fishing, "$0.000a") + "<br>" +
-        "Recommended starting Industry: NO",
-    Mining: "Extract and process metals from the earth.<br><br>" +
-        "Starting cost: " + numeralFormat_1.numeralWrapper.format(exports.IndustryStartingCosts.Mining, "$0.000a") + "<br>" +
-        "Recommended starting Industry: NO",
-    Food: "Create your own restaurants all around the world.<br><br>" +
-        "Starting cost: " + numeralFormat_1.numeralWrapper.format(exports.IndustryStartingCosts.Food, "$0.000a") + "<br>" +
-        "Recommended starting Industry: YES",
-    Tobacco: "Create and distribute tobacco and tobacco-related products.<br><br>" +
-        "Starting cost: " + numeralFormat_1.numeralWrapper.format(exports.IndustryStartingCosts.Tobacco, "$0.000a") + "<br>" +
-        "Recommended starting Industry: YES",
-    Chemical: "Product industrial chemicals<br><br>" +
-        "Starting cost: " + numeralFormat_1.numeralWrapper.format(exports.IndustryStartingCosts.Chemical, "$0.000a") + "<br>" +
-        "Recommended starting Industry: NO",
-    Pharmaceutical: "Discover, develop, and create new pharmaceutical drugs.<br><br>" +
-        "Starting cost: " + numeralFormat_1.numeralWrapper.format(exports.IndustryStartingCosts.Pharmaceutical, "$0.000a") + "<br>" +
-        "Recommended starting Industry: NO",
-    Computer: "Develop and manufacture new computer hardware and networking infrastructures.<br><br>" +
-        "Starting cost: " + numeralFormat_1.numeralWrapper.format(exports.IndustryStartingCosts.Computer, "$0.000a") + "<br>" +
-        "Recommended starting Industry: NO",
-    Robotics: "Develop and create robots.<br><br>" +
-        "Starting cost: " + numeralFormat_1.numeralWrapper.format(exports.IndustryStartingCosts.Robotics, "$0.000a") + "<br>" +
-        "Recommended starting Industry: NO",
-    Software: "Develop computer software and create AI Cores.<br><br>" +
-        "Starting cost: " + numeralFormat_1.numeralWrapper.format(exports.IndustryStartingCosts.Software, "$0.000a") + "<br>" +
-        "Recommended starting Industry: YES",
-    Healthcare: "Create and manage hospitals.<br><br>" +
-        "Starting cost: " + numeralFormat_1.numeralWrapper.format(exports.IndustryStartingCosts.Healthcare, "$0.000a") + "<br>" +
-        "Recommended starting Industry: NO",
-    RealEstate: "Develop and manage real estate properties.<br><br>" +
-        "Starting cost: " + numeralFormat_1.numeralWrapper.format(exports.IndustryStartingCosts.RealEstate, "$0.000a") + "<br>" +
-        "Recommended starting Industry: NO",
-};
-// Map of available Research for each Industry. This data is held in a
-// ResearchTree object
-exports.IndustryResearchTrees = {
-    Energy: BaseResearchTree_1.getBaseResearchTreeCopy(),
-    Utilities: BaseResearchTree_1.getBaseResearchTreeCopy(),
-    Agriculture: BaseResearchTree_1.getBaseResearchTreeCopy(),
-    Fishing: BaseResearchTree_1.getBaseResearchTreeCopy(),
-    Mining: BaseResearchTree_1.getBaseResearchTreeCopy(),
-    Food: BaseResearchTree_1.getBaseResearchTreeCopy(),
-    Tobacco: BaseResearchTree_1.getBaseResearchTreeCopy(),
-    Chemical: BaseResearchTree_1.getBaseResearchTreeCopy(),
-    Pharmaceutical: BaseResearchTree_1.getBaseResearchTreeCopy(),
-    Computer: BaseResearchTree_1.getBaseResearchTreeCopy(),
-    Robotics: BaseResearchTree_1.getBaseResearchTreeCopy(),
-    Software: BaseResearchTree_1.getBaseResearchTreeCopy(),
-    Healthcare: BaseResearchTree_1.getBaseResearchTreeCopy(),
-    RealEstate: BaseResearchTree_1.getBaseResearchTreeCopy(),
-};
-
-
-/***/ }),
-/* 28 */
+/* 25 */
 /*!*****************************************!*\
   !*** ./src/Company/CompanyPositions.ts ***!
   \*****************************************/
@@ -13035,8 +12871,8 @@ exports.IndustryResearchTrees = {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 // Constructs all CompanyPosition objects using the metadata in data/companypositions.ts
-const CompanyPositionsMetadata_1 = __webpack_require__(/*! ./data/CompanyPositionsMetadata */ 203);
-const CompanyPosition_1 = __webpack_require__(/*! ./CompanyPosition */ 85);
+const CompanyPositionsMetadata_1 = __webpack_require__(/*! ./data/CompanyPositionsMetadata */ 186);
+const CompanyPosition_1 = __webpack_require__(/*! ./CompanyPosition */ 80);
 exports.CompanyPositions = {};
 function addCompanyPosition(params) {
     if (exports.CompanyPositions[params.name] != null) {
@@ -13050,47 +12886,7 @@ CompanyPositionsMetadata_1.companyPositionMetadata.forEach((e) => {
 
 
 /***/ }),
-/* 29 */
-/*!******************************************************!*\
-  !*** ./utils/uiHelpers/removeChildrenFromElement.ts ***!
-  \******************************************************/
-/*! no static exports found */
-/*! exports used: removeChildrenFromElement */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const isString_1 = __webpack_require__(/*! ../helpers/isString */ 39);
-const getElementById_1 = __webpack_require__(/*! ./getElementById */ 53);
-/**
- * Clears out all children from the provided element.
- * If a string is passed in, it will treat it as an ID and search for the element to delete all children from.
- * @param el The element or ID of an element to remove all children from.
- */
-function removeChildrenFromElement(el) {
-    if (el === null) {
-        return;
-    }
-    try {
-        const elem = (isString_1.isString(el) ? getElementById_1.getElementById(el) : el);
-        if (elem instanceof Element) {
-            while (elem.firstChild !== null) {
-                elem.removeChild(elem.firstChild);
-            }
-        }
-    }
-    catch (e) {
-        // tslint:disable-next-line:no-console
-        console.debug(e);
-        return;
-    }
-}
-exports.removeChildrenFromElement = removeChildrenFromElement;
-
-
-/***/ }),
-/* 30 */
+/* 26 */
 /*!***********************!*\
   !*** ./src/Script.js ***!
   \***********************/
@@ -13110,53 +12906,53 @@ exports.removeChildrenFromElement = removeChildrenFromElement;
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./engine */ 8);
-/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Fconf */ 47);
-/* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./InteractiveTutorial */ 35);
+/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Fconf */ 43);
+/* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./InteractiveTutorial */ 30);
 /* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptEvaluator */ 6);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
-/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./NetscriptWorker */ 24);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./NetscriptFunctions */ 37);
+/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./NetscriptWorker */ 23);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Settings */ 19);
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Server */ 10);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Settings */ 18);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ui/postToTerminal */ 7);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./TextFile */ 65);
+/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./TextFile */ 60);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_TextFile__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/acorn */ 48);
+/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/acorn */ 45);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./ui/navigationTracking */ 12);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_13__);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
-/* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/helpers/compareArrays */ 91);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/DialogBox */ 11);
+/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
+/* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/helpers/compareArrays */ 87);
 /* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_17__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 87);
+/* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 82);
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 81);
+/* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 77);
 /* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_20__);
-var ace = __webpack_require__(/*! brace */ 262);
-var beautify = __webpack_require__(/*! js-beautify */ 261).js_beautify;
-__webpack_require__(/*! brace/mode/javascript */ 260);
-__webpack_require__(/*! ../netscript */ 190);
-__webpack_require__(/*! brace/theme/chaos */ 259);
-__webpack_require__(/*! brace/theme/chrome */ 258);
-__webpack_require__(/*! brace/theme/monokai */ 257);
-__webpack_require__(/*! brace/theme/solarized_dark */ 256);
-__webpack_require__(/*! brace/theme/solarized_light */ 255);
-__webpack_require__(/*! brace/theme/terminal */ 254);
-__webpack_require__(/*! brace/theme/twilight */ 253);
-__webpack_require__(/*! brace/theme/xcode */ 252);
-__webpack_require__(/*! brace/keybinding/vim */ 251);
-__webpack_require__(/*! brace/keybinding/emacs */ 250);
-__webpack_require__(/*! brace/ext/language_tools */ 249);
+var ace = __webpack_require__(/*! brace */ 245);
+var beautify = __webpack_require__(/*! js-beautify */ 244).js_beautify;
+__webpack_require__(/*! brace/mode/javascript */ 243);
+__webpack_require__(/*! ../netscript */ 179);
+__webpack_require__(/*! brace/theme/chaos */ 242);
+__webpack_require__(/*! brace/theme/chrome */ 241);
+__webpack_require__(/*! brace/theme/monokai */ 240);
+__webpack_require__(/*! brace/theme/solarized_dark */ 239);
+__webpack_require__(/*! brace/theme/solarized_light */ 238);
+__webpack_require__(/*! brace/theme/terminal */ 237);
+__webpack_require__(/*! brace/theme/twilight */ 236);
+__webpack_require__(/*! brace/theme/xcode */ 235);
+__webpack_require__(/*! brace/keybinding/vim */ 234);
+__webpack_require__(/*! brace/keybinding/emacs */ 233);
+__webpack_require__(/*! brace/ext/language_tools */ 232);
 
 // Importing this doesn't work for some reason.
-const walk = __webpack_require__(/*! acorn/dist/walk */ 146);
+const walk = __webpack_require__(/*! acorn/dist/walk */ 135);
 
 
 
@@ -14234,10 +14030,10 @@ _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__["Reviver"].constructors.AllServ
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 63)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 62)))
 
 /***/ }),
-/* 31 */
+/* 27 */
 /*!****************************!*\
   !*** ./src/Bladeburner.js ***!
   \****************************/
@@ -14247,53 +14043,53 @@ _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__["Reviver"].constructors.AllServ
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Bladeburner; });
-/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentations */ 21);
-/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BitNodeMultipliers */ 10);
+/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentations */ 20);
+/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BitNodeMultipliers */ 9);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./engine */ 8);
-/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Faction/Faction */ 56);
+/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Faction/Faction */ 53);
 /* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_Faction_Faction__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Faction/Factions */ 14);
+/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Faction/Factions */ 13);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 46);
-/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Locations */ 5);
+/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 42);
+/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Locations */ 3);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./RedPill */ 58);
+/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./RedPill */ 55);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 34);
+/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 29);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/createProgressBarText */ 83);
+/* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/createProgressBarText */ 78);
 /* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 29);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/DialogBox */ 11);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 31);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
-/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 66);
+/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
+/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 61);
 /* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/uiHelpers/appendLineBreaks */ 57);
+/* harmony import */ var _utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/uiHelpers/appendLineBreaks */ 59);
 /* harmony import */ var _utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/helpers/clearObject */ 77);
+/* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/helpers/clearObject */ 73);
 /* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_18__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 40);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 54);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_20__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./ui/navigationTracking */ 12);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 44);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 39);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 5);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__);
-/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 15);
+/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 17);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__);
-/* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 87);
+/* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 82);
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_25__);
-/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 64);
+/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 67);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_26__);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 38);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_27__);
 
 
@@ -18499,10 +18295,10 @@ function initBladeburner() {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 63)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 62)))
 
 /***/ }),
-/* 32 */
+/* 28 */
 /*!*********************************!*\
   !*** ./src/SpecialServerIps.js ***!
   \*********************************/
@@ -18517,7 +18313,7 @@ function initBladeburner() {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return loadSpecialServerIps; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return prestigeSpecialServerIps; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return initSpecialServerIps; });
-/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
+/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
 
 
 /* Holds IP of Special Servers */
@@ -18569,8 +18365,7 @@ function initSpecialServerIps() {
 
 
 /***/ }),
-/* 33 */,
-/* 34 */
+/* 29 */
 /*!***********************************!*\
   !*** ./utils/helpers/keyCodes.ts ***!
   \***********************************/
@@ -18614,7 +18409,7 @@ exports.KEY = {
 
 
 /***/ }),
-/* 35 */
+/* 30 */
 /*!************************************!*\
   !*** ./src/InteractiveTutorial.js ***!
   \************************************/
@@ -18630,15 +18425,15 @@ exports.KEY = {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ITutorial; });
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./engine */ 8);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Settings */ 19);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Settings */ 18);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 15);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 40);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 54);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 38);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_6__);
 
 
@@ -19152,7 +18947,47 @@ function iTutorialSetText(txt) {
 
 
 /***/ }),
-/* 36 */
+/* 31 */
+/*!******************************************************!*\
+  !*** ./utils/uiHelpers/removeChildrenFromElement.ts ***!
+  \******************************************************/
+/*! no static exports found */
+/*! exports used: removeChildrenFromElement */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const isString_1 = __webpack_require__(/*! ../helpers/isString */ 44);
+const getElementById_1 = __webpack_require__(/*! ./getElementById */ 50);
+/**
+ * Clears out all children from the provided element.
+ * If a string is passed in, it will treat it as an ID and search for the element to delete all children from.
+ * @param el The element or ID of an element to remove all children from.
+ */
+function removeChildrenFromElement(el) {
+    if (el === null) {
+        return;
+    }
+    try {
+        const elem = (isString_1.isString(el) ? getElementById_1.getElementById(el) : el);
+        if (elem instanceof Element) {
+            while (elem.firstChild !== null) {
+                elem.removeChild(elem.firstChild);
+            }
+        }
+    }
+    catch (e) {
+        // tslint:disable-next-line:no-console
+        console.debug(e);
+        return;
+    }
+}
+exports.removeChildrenFromElement = removeChildrenFromElement;
+
+
+/***/ }),
+/* 32 */
 /*!**************************************************!*\
   !*** ./src/Company/data/CompanyPositionNames.ts ***!
   \**************************************************/
@@ -19227,7 +19062,7 @@ exports.PartTimeCompanyPositions = [
 
 
 /***/ }),
-/* 37 */
+/* 33 */
 /*!***********************!*\
   !*** ./src/Crimes.js ***!
   \***********************/
@@ -19242,7 +19077,7 @@ exports.PartTimeCompanyPositions = [
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/DialogBox */ 11);
 
 
 
@@ -19521,7 +19356,7 @@ function findCrime(roughName) {
 
 
 /***/ }),
-/* 38 */
+/* 34 */
 /*!******************************!*\
   !*** ./src/NetscriptGang.js ***!
   \******************************/
@@ -19533,7 +19368,7 @@ function findCrime(roughName) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return unknownGangApiExceptionMessage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return checkGangApiAccess; });
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Gang */ 50);
+/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Gang */ 47);
 /* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NetscriptEvaluator */ 6);
 
 
@@ -19553,72 +19388,7 @@ function checkGangApiAccess(workerScript, functionName) {
 
 
 /***/ }),
-/* 39 */
-/*!***********************************!*\
-  !*** ./utils/helpers/isString.ts ***!
-  \***********************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * Checks whether the value passed in can be considered a string.
- * @param value The value to check if it is a string.
- */
-function isString(value) {
-    return (typeof value === "string" || value instanceof String);
-}
-exports.isString = isString;
-
-
-/***/ }),
-/* 40 */
-/*!****************************************!*\
-  !*** ./utils/uiHelpers/createPopup.ts ***!
-  \****************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const createElement_1 = __webpack_require__(/*! ./createElement */ 2);
-const getElementById_1 = __webpack_require__(/*! ./getElementById */ 53);
-/**
- * Creates the necessary DOM elements to present an in-game popup to the player.
- * @param id The (hopefully) unique identifier for the popup container.
- * @param elems The collection of HTML Elements to show within the popup.
- */
-function createPopup(id, elems, options = {}) {
-    const container = createElement_1.createElement("div", {
-        class: "popup-box-container",
-        display: "flex",
-        id: id,
-    });
-    const content = createElement_1.createElement("div", {
-        class: "popup-box-content",
-        id: `${id}-content`,
-    });
-    for (const elem of elems) {
-        content.appendChild(elem);
-    }
-    // Configurable Options
-    if (options.backgroundColor) {
-        content.style.backgroundColor = options.backgroundColor;
-    }
-    container.appendChild(content);
-    getElementById_1.getElementById("entire-game-container").appendChild(container);
-    return container;
-}
-exports.createPopup = createPopup;
-
-
-/***/ }),
-/* 41 */
+/* 35 */
 /*!************************!*\
   !*** ./src/Message.js ***!
   \************************/
@@ -19634,16 +19404,16 @@ exports.createPopup = createPopup;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return loadMessages; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return initMessages; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Message; });
-/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentations */ 21);
-/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateProgram */ 23);
-/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Missions */ 55);
+/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentations */ 20);
+/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateProgram */ 22);
+/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Missions */ 52);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./RedPill */ 58);
-/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Settings */ 19);
+/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./RedPill */ 55);
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Server */ 10);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Settings */ 18);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/DialogBox */ 11);
+/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
 
 
 
@@ -19838,7 +19608,7 @@ function initMessages()  {
 
 
 /***/ }),
-/* 42 */
+/* 36 */
 /*!********************************!*\
   !*** ./src/CodingContracts.ts ***!
   \********************************/
@@ -19857,11 +19627,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const JSONReviver_1 = __webpack_require__(/*! ../utils/JSONReviver */ 13);
+const JSONReviver_1 = __webpack_require__(/*! ../utils/JSONReviver */ 14);
 const createElement_1 = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
-const createPopup_1 = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 40);
-const removeElementById_1 = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
-const codingcontracttypes_1 = __webpack_require__(/*! ./data/codingcontracttypes */ 195);
+const createPopup_1 = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 54);
+const removeElementById_1 = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 38);
+const codingcontracttypes_1 = __webpack_require__(/*! ./data/codingcontracttypes */ 184);
 /* tslint:disable:no-magic-numbers completed-docs max-classes-per-file no-console */
 /* Represents different types of problems that a Coding Contract can have */
 class CodingContractType {
@@ -20012,7 +19782,7 @@ JSONReviver_1.Reviver.constructors.CodingContract = CodingContract;
 
 
 /***/ }),
-/* 43 */
+/* 37 */
 /*!***********************************!*\
   !*** ./src/NetscriptFunctions.js ***!
   \***********************************/
@@ -20030,70 +19800,70 @@ JSONReviver_1.Reviver.constructors.CodingContract = CodingContract;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return hasCorporationSF; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return hasAISF; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return hasBladeburnerSF; });
-/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActiveScriptsUI */ 68);
-/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Augmentations */ 21);
-/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BitNodeMultipliers */ 10);
+/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActiveScriptsUI */ 64);
+/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Augmentations */ 20);
+/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BitNodeMultipliers */ 9);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _Crimes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Crimes */ 37);
-/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Bladeburner */ 31);
-/* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Company/Company */ 73);
+/* harmony import */ var _Crimes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Crimes */ 33);
+/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Bladeburner */ 27);
+/* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Company/Company */ 70);
 /* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Company_Company__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Company/Companies */ 18);
+/* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Company/Companies */ 16);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Company/CompanyPosition */ 85);
+/* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Company/CompanyPosition */ 80);
 /* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Company/CompanyPositions */ 28);
+/* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Company/CompanyPositions */ 25);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./CreateProgram */ 23);
-/* harmony import */ var _DarkWeb__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./DarkWeb */ 79);
-/* harmony import */ var _Hacking__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Hacking */ 49);
-/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Gang */ 50);
-/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Faction/Faction */ 56);
+/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./CreateProgram */ 22);
+/* harmony import */ var _DarkWeb__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./DarkWeb */ 75);
+/* harmony import */ var _Hacking__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Hacking */ 46);
+/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Gang */ 47);
+/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Faction/Faction */ 53);
 /* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_Faction_Faction__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Faction/Factions */ 14);
+/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Faction/Factions */ 13);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 46);
-/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./HacknetNode */ 67);
-/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Locations */ 5);
+/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 42);
+/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./HacknetNode */ 63);
+/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Locations */ 3);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Message */ 41);
-/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Missions */ 55);
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Message */ 35);
+/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Missions */ 52);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./Script */ 30);
-/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./Settings */ 19);
+/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./Script */ 26);
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./Server */ 10);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./Settings */ 18);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_24__);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
-/* harmony import */ var _Stock__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./Stock */ 26);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./SpecialServerIps */ 28);
+/* harmony import */ var _Stock__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./Stock */ 24);
 /* harmony import */ var _Stock__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_Stock__WEBPACK_IMPORTED_MODULE_26__);
-/* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./StockMarket */ 22);
+/* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./StockMarket */ 21);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./ui/postToTerminal */ 7);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_28__);
-/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./TextFile */ 65);
+/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./TextFile */ 60);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_29___default = /*#__PURE__*/__webpack_require__.n(_TextFile__WEBPACK_IMPORTED_MODULE_29__);
-/* harmony import */ var _NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./NetscriptBladeburner */ 52);
-/* harmony import */ var _NetscriptGang__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./NetscriptGang */ 38);
-/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./NetscriptWorker */ 24);
+/* harmony import */ var _NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./NetscriptBladeburner */ 49);
+/* harmony import */ var _NetscriptGang__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./NetscriptGang */ 34);
+/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./NetscriptWorker */ 23);
 /* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./NetscriptEvaluator */ 6);
-/* harmony import */ var _NetscriptPort__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./NetscriptPort */ 71);
-/* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! decimal.js */ 33);
+/* harmony import */ var _NetscriptPort__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./NetscriptPort */ 68);
+/* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! decimal.js */ 41);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./ui/navigationTracking */ 12);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_36___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_36__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ../utils/helpers/isPowerOfTwo */ 130);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ../utils/DialogBox */ 11);
+/* harmony import */ var _utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ../utils/helpers/isPowerOfTwo */ 120);
 /* harmony import */ var _utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_38___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_38__);
-/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 54);
+/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 51);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_39___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_39__);
-/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ../utils/IPAddress */ 60);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
+/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ../utils/IPAddress */ 57);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 5);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_41___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_41__);
-/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ../utils/helpers/isString */ 39);
+/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ../utils/helpers/isString */ 44);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_42___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_42__);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
-var sprintf = __webpack_require__(/*! sprintf-js */ 147).sprintf,
-    vsprintf = __webpack_require__(/*! sprintf-js */ 147).vsprintf
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ../utils/YesNoBox */ 19);
+var sprintf = __webpack_require__(/*! sprintf-js */ 136).sprintf,
+    vsprintf = __webpack_require__(/*! sprintf-js */ 136).vsprintf
 
 
 
@@ -24687,10 +24457,40 @@ function NetscriptFunctions(workerScript) {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 63)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 62)))
 
 /***/ }),
-/* 44 */
+/* 38 */
+/*!**********************************************!*\
+  !*** ./utils/uiHelpers/removeElementById.ts ***!
+  \**********************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const getElementById_1 = __webpack_require__(/*! ./getElementById */ 50);
+const removeElement_1 = __webpack_require__(/*! ./removeElement */ 67);
+/**
+ * Given its id, this function removes an element AND its children
+ * @param id The HTML identifier to search for and remove.
+ */
+function removeElementById(id) {
+    try {
+        const elem = getElementById_1.getElementById(id);
+        removeElement_1.removeElement(elem);
+    }
+    catch (e) {
+        // Probably should log this as we're trying to remove elements that don't exist.
+    }
+}
+exports.removeElementById = removeElementById;
+
+
+/***/ }),
+/* 39 */
 /*!*****************************************!*\
   !*** ./utils/helpers/exceptionAlert.js ***!
   \*****************************************/
@@ -24700,7 +24500,7 @@ function NetscriptFunctions(workerScript) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return exceptionAlert; });
-/* harmony import */ var _DialogBox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../DialogBox */ 9);
+/* harmony import */ var _DialogBox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../DialogBox */ 11);
 
 
 function exceptionAlert(e) {
@@ -24717,7 +24517,7 @@ function exceptionAlert(e) {
 
 
 /***/ }),
-/* 45 */
+/* 40 */
 /*!**********************!*\
   !*** ./src/Alias.js ***!
   \**********************/
@@ -24852,7 +24652,8 @@ function substituteAliases(origCommand) {
 
 
 /***/ }),
-/* 46 */
+/* 41 */,
+/* 42 */
 /*!***************************************!*\
   !*** ./src/Faction/FactionHelpers.js ***!
   \***************************************/
@@ -24867,39 +24668,39 @@ function substituteAliases(origCommand) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return displayFactionContent; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return processPassiveFactionRepGain; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return purchaseAugmentation; });
-/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Augmentations */ 21);
-/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../BitNodeMultipliers */ 10);
+/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Augmentations */ 20);
+/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../BitNodeMultipliers */ 9);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../engine */ 8);
-/* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Faction */ 56);
+/* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Faction */ 53);
 /* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_Faction__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _Factions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Factions */ 14);
+/* harmony import */ var _Factions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Factions */ 13);
 /* harmony import */ var _Factions__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Factions__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _FactionInfo__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./FactionInfo */ 113);
+/* harmony import */ var _FactionInfo__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./FactionInfo */ 104);
 /* harmony import */ var _FactionInfo__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_FactionInfo__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Location */ 90);
-/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Missions */ 55);
+/* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Location */ 85);
+/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Missions */ 52);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../Player */ 0);
-/* harmony import */ var _SettingEnums__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../SettingEnums */ 72);
+/* harmony import */ var _SettingEnums__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../SettingEnums */ 69);
 /* harmony import */ var _SettingEnums__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_SettingEnums__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../Settings */ 19);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../Settings */ 18);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../ui/navigationTracking */ 12);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../utils/DialogBox */ 9);
-/* harmony import */ var _utils_FactionInvitationBox__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../utils/FactionInvitationBox */ 133);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 29);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../utils/DialogBox */ 11);
+/* harmony import */ var _utils_FactionInvitationBox__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../utils/FactionInvitationBox */ 123);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 31);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_16__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../../utils/StringHelperFunctions */ 3);
+/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../../utils/JSONReviver */ 14);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../../utils/StringHelperFunctions */ 5);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../../utils/YesNoBox */ 17);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../../utils/YesNoBox */ 19);
 
 
 
@@ -25575,7 +25376,7 @@ function processPassiveFactionRepGain(numCycles) {
 
 
 /***/ }),
-/* 47 */
+/* 43 */
 /*!**********************!*\
   !*** ./src/Fconf.js ***!
   \**********************/
@@ -25588,9 +25389,9 @@ function processPassiveFactionRepGain(numCycles) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return createFconf; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return parseFconfSettings; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return loadFconf; });
-/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/acorn */ 48);
+/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/acorn */ 45);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/DialogBox */ 11);
 
 
 
@@ -25851,7 +25652,29 @@ function setMainMenuStyle() {
 
 
 /***/ }),
-/* 48 */
+/* 44 */
+/*!***********************************!*\
+  !*** ./utils/helpers/isString.ts ***!
+  \***********************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Checks whether the value passed in can be considered a string.
+ * @param value The value to check if it is a string.
+ */
+function isString(value) {
+    return (typeof value === "string" || value instanceof String);
+}
+exports.isString = isString;
+
+
+/***/ }),
+/* 45 */
 /*!************************!*\
   !*** ./utils/acorn.js ***!
   \************************/
@@ -29491,7 +29314,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 })));
 
 /***/ }),
-/* 49 */
+/* 46 */
 /*!************************!*\
   !*** ./src/Hacking.js ***!
   \************************/
@@ -29506,10 +29329,10 @@ Object.defineProperty(exports, '__esModule', { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return calculateHackingTime; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return calculateGrowTime; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return calculateWeakenTime; });
-/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNodeMultipliers */ 10);
+/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNodeMultipliers */ 9);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Server */ 11);
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Server */ 10);
 
 
 
@@ -29605,7 +29428,7 @@ function calculateWeakenTime(server, hack, int) {
 
 
 /***/ }),
-/* 50 */
+/* 47 */
 /*!*********************!*\
   !*** ./src/Gang.js ***!
   \*********************/
@@ -29618,42 +29441,42 @@ function calculateWeakenTime(server, hack, int) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return resetGangs; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return loadAllGangs; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Gang; });
-/* harmony import */ var _data_gangmembertasks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./data/gangmembertasks */ 132);
+/* harmony import */ var _data_gangmembertasks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./data/gangmembertasks */ 122);
 /* harmony import */ var _data_gangmembertasks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_data_gangmembertasks__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _data_gangmemberupgrades__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data/gangmemberupgrades */ 131);
+/* harmony import */ var _data_gangmemberupgrades__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data/gangmemberupgrades */ 121);
 /* harmony import */ var _data_gangmemberupgrades__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_data_gangmemberupgrades__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 8);
-/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Faction/Faction */ 56);
+/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Faction/Faction */ 53);
 /* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Faction_Faction__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Faction/Factions */ 14);
+/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Faction/Factions */ 13);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 46);
+/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 42);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
-/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 34);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/DialogBox */ 11);
+/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
+/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 29);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 76);
+/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 72);
 /* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 40);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 54);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./ui/navigationTracking */ 12);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 5);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 44);
-/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 15);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 39);
+/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 17);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 29);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 31);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 64);
+/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 67);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 38);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/YesNoBox */ 19);
 /*
 Also add police clashes
 balance point to keep them from running out of control
@@ -31580,10 +31403,10 @@ Gang.prototype.clearUI = function() {
     UIElems.gangMemberPanels = {};
 }
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 63)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 62)))
 
 /***/ }),
-/* 51 */
+/* 48 */
 /*!*************************!*\
   !*** ./src/Terminal.js ***!
   \*************************/
@@ -31594,56 +31417,56 @@ Gang.prototype.clearUI = function() {
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return postNetburnerText; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Terminal; });
-/* harmony import */ var _Alias__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Alias */ 45);
-/* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CodingContracts */ 42);
+/* harmony import */ var _Alias__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Alias */ 40);
+/* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CodingContracts */ 36);
 /* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_CodingContracts__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./CreateProgram */ 23);
-/* harmony import */ var _DarkWeb__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./DarkWeb */ 79);
+/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./CreateProgram */ 22);
+/* harmony import */ var _DarkWeb__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./DarkWeb */ 75);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./engine */ 8);
-/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Fconf */ 47);
-/* harmony import */ var _Hacking__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Hacking */ 49);
-/* harmony import */ var _HelpText__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./HelpText */ 101);
+/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Fconf */ 43);
+/* harmony import */ var _Hacking__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Hacking */ 46);
+/* harmony import */ var _HelpText__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./HelpText */ 96);
 /* harmony import */ var _HelpText__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_HelpText__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./InteractiveTutorial */ 35);
-/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Literature */ 82);
-/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Message */ 41);
-/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./NetscriptWorker */ 24);
+/* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./InteractiveTutorial */ 30);
+/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Literature */ 86);
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Message */ 35);
+/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./NetscriptWorker */ 23);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./RedPill */ 58);
-/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Script */ 30);
-/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Settings */ 19);
+/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./RedPill */ 55);
+/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Script */ 26);
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Server */ 10);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Settings */ 18);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
-/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./TextFile */ 65);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./SpecialServerIps */ 28);
+/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./TextFile */ 60);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_TextFile__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 5);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_20__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./ui/navigationTracking */ 12);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_21__);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__);
-/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 34);
+/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 29);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_23__);
-/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 66);
+/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 61);
 /* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_24__);
-/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/helpers/isString */ 39);
+/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/helpers/isString */ 44);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25__);
-/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 54);
+/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 51);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_26__);
-/* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 87);
+/* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 82);
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_27__);
-/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../utils/LogBox */ 78);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
+/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../utils/LogBox */ 74);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../utils/YesNoBox */ 19);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./ui/postToTerminal */ 7);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__);
-/* harmony import */ var autosize__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! autosize */ 150);
+/* harmony import */ var autosize__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! autosize */ 139);
 /* harmony import */ var autosize__WEBPACK_IMPORTED_MODULE_31___default = /*#__PURE__*/__webpack_require__.n(autosize__WEBPACK_IMPORTED_MODULE_31__);
-/* harmony import */ var jszip__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! jszip */ 149);
+/* harmony import */ var jszip__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! jszip */ 138);
 /* harmony import */ var jszip__WEBPACK_IMPORTED_MODULE_32___default = /*#__PURE__*/__webpack_require__.n(jszip__WEBPACK_IMPORTED_MODULE_32__);
-/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! file-saver */ 148);
+/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! file-saver */ 137);
 /* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_33___default = /*#__PURE__*/__webpack_require__.n(file_saver__WEBPACK_IMPORTED_MODULE_33__);
 
 
@@ -33800,10 +33623,10 @@ let Terminal = {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 63)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 62)))
 
 /***/ }),
-/* 52 */
+/* 49 */
 /*!*************************************!*\
   !*** ./src/NetscriptBladeburner.js ***!
   \*************************************/
@@ -33816,7 +33639,7 @@ let Terminal = {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return unknownBladeburnerExceptionMessage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return checkBladeburnerAccess; });
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Bladeburner */ 31);
+/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Bladeburner */ 27);
 /* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NetscriptEvaluator */ 6);
 
 
@@ -33847,7 +33670,7 @@ function checkBladeburnerAccess(workerScript, functionName) {
 
 
 /***/ }),
-/* 53 */
+/* 50 */
 /*!*******************************************!*\
   !*** ./utils/uiHelpers/getElementById.ts ***!
   \*******************************************/
@@ -33875,7 +33698,7 @@ exports.getElementById = getElementById;
 
 
 /***/ }),
-/* 54 */
+/* 51 */
 /*!****************************************!*\
   !*** ./utils/helpers/arrayToString.ts ***!
   \****************************************/
@@ -33896,7 +33719,7 @@ exports.arrayToString = arrayToString;
 
 
 /***/ }),
-/* 55 */
+/* 52 */
 /*!*************************!*\
   !*** ./src/Missions.js ***!
   \*************************/
@@ -33912,20 +33735,20 @@ exports.arrayToString = arrayToString;
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./engine */ 8);
-/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 46);
+/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 42);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/DialogBox */ 11);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 15);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 66);
+/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 61);
 /* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 5);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 15);
+/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 17);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/isString */ 39);
+/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/isString */ 44);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var jsplumb__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! jsplumb */ 246);
+/* harmony import */ var jsplumb__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! jsplumb */ 229);
 /* harmony import */ var jsplumb__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(jsplumb__WEBPACK_IMPORTED_MODULE_10__);
 
 
@@ -35465,10 +35288,10 @@ HackingMission.prototype.finishMission = function(win) {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 63)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 62)))
 
 /***/ }),
-/* 56 */
+/* 53 */
 /*!********************************!*\
   !*** ./src/Faction/Faction.ts ***!
   \********************************/
@@ -35480,8 +35303,8 @@ HackingMission.prototype.finishMission = function(win) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const Constants_1 = __webpack_require__(/*! ../Constants */ 1);
-const FactionInfo_1 = __webpack_require__(/*! ./FactionInfo */ 113);
-const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
+const FactionInfo_1 = __webpack_require__(/*! ./FactionInfo */ 104);
+const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 14);
 class Faction {
     constructor(name = "") {
         /**
@@ -35592,33 +35415,50 @@ JSONReviver_1.Reviver.constructors.Faction = Faction;
 
 
 /***/ }),
-/* 57 */
-/*!*********************************************!*\
-  !*** ./utils/uiHelpers/appendLineBreaks.ts ***!
-  \*********************************************/
+/* 54 */
+/*!****************************************!*\
+  !*** ./utils/uiHelpers/createPopup.ts ***!
+  \****************************************/
 /*! no static exports found */
-/*! exports used: appendLineBreaks */
+/*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const createElement_1 = __webpack_require__(/*! ./createElement */ 2);
+const getElementById_1 = __webpack_require__(/*! ./getElementById */ 50);
 /**
- * Appends the specified number of breaks (as children) to the specified element
- * @param el The element to add child break elements to.
- * @param n The number of breaks to add.
+ * Creates the necessary DOM elements to present an in-game popup to the player.
+ * @param id The (hopefully) unique identifier for the popup container.
+ * @param elems The collection of HTML Elements to show within the popup.
  */
-function appendLineBreaks(el, n) {
-    for (let i = 0; i < n; ++i) {
-        el.appendChild(createElement_1.createElement("br"));
+function createPopup(id, elems, options = {}) {
+    const container = createElement_1.createElement("div", {
+        class: "popup-box-container",
+        display: "flex",
+        id: id,
+    });
+    const content = createElement_1.createElement("div", {
+        class: "popup-box-content",
+        id: `${id}-content`,
+    });
+    for (const elem of elems) {
+        content.appendChild(elem);
     }
+    // Configurable Options
+    if (options.backgroundColor) {
+        content.style.backgroundColor = options.backgroundColor;
+    }
+    container.appendChild(content);
+    getElementById_1.getElementById("entire-game-container").appendChild(container);
+    return container;
 }
-exports.appendLineBreaks = appendLineBreaks;
+exports.createPopup = createPopup;
 
 
 /***/ }),
-/* 58 */
+/* 55 */
 /*!************************!*\
   !*** ./src/RedPill.js ***!
   \************************/
@@ -35629,18 +35469,18 @@ exports.appendLineBreaks = appendLineBreaks;
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return redPillFlag; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return hackWorldDaemon; });
-/* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNode */ 59);
+/* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNode */ 56);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./engine */ 8);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Prestige */ 86);
-/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SourceFile */ 70);
-/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Terminal */ 51);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
+/* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Prestige */ 81);
+/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SourceFile */ 66);
+/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Terminal */ 48);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 15);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 29);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/DialogBox */ 11);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 31);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/YesNoBox */ 19);
 
 
 
@@ -35973,10 +35813,10 @@ function createBitNodeYesNoEventListeners(newBitNode, destroyedBitNode, flume=fa
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 63)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 62)))
 
 /***/ }),
-/* 59 */
+/* 56 */
 /*!************************!*\
   !*** ./src/BitNode.js ***!
   \************************/
@@ -35988,7 +35828,7 @@ function createBitNodeYesNoEventListeners(newBitNode, destroyedBitNode, flume=fa
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return initBitNodes; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BitNodes; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return initBitNodeMultipliers; });
-/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNodeMultipliers */ 10);
+/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNodeMultipliers */ 9);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ 0);
 
@@ -36368,7 +36208,7 @@ function initBitNodeMultipliers() {
 
 
 /***/ }),
-/* 60 */
+/* 57 */
 /*!****************************!*\
   !*** ./utils/IPAddress.js ***!
   \****************************/
@@ -36379,8 +36219,8 @@ function initBitNodeMultipliers() {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return createRandomIp; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return ipExists; });
-/* harmony import */ var _src_Server__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/Server */ 11);
-/* harmony import */ var _helpers_getRandomByte__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers/getRandomByte */ 93);
+/* harmony import */ var _src_Server__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/Server */ 10);
+/* harmony import */ var _helpers_getRandomByte__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers/getRandomByte */ 89);
 /* harmony import */ var _helpers_getRandomByte__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_helpers_getRandomByte__WEBPACK_IMPORTED_MODULE_1__);
 
 
@@ -36418,4758 +36258,44 @@ function ipExists(ip) {
 
 
 /***/ }),
-/* 61 */
+/* 58 */
 /*!****************************************!*\
   !*** ./src/Corporation/Corporation.js ***!
   \****************************************/
-/*! exports provided: TOTALSHARES, CyclesPerMarketCycle, CyclesPerIndustryStateCycle, SecsPerMarketCycle, Cities, WarehouseInitialCost, WarehouseInitialSize, WarehouseUpgradeBaseCost, OfficeInitialCost, OfficeInitialSize, OfficeUpgradeBaseCost, BribeThreshold, BribeToRepRatio, ProductProductionCostRatio, Corporation */
+/*! no static exports found */
 /*! exports used: Corporation */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* unused harmony export TOTALSHARES */
-/* unused harmony export CyclesPerMarketCycle */
-/* unused harmony export CyclesPerIndustryStateCycle */
-/* unused harmony export SecsPerMarketCycle */
-/* unused harmony export Cities */
-/* unused harmony export WarehouseInitialCost */
-/* unused harmony export WarehouseInitialSize */
-/* unused harmony export WarehouseUpgradeBaseCost */
-/* unused harmony export OfficeInitialCost */
-/* unused harmony export OfficeInitialSize */
-/* unused harmony export OfficeUpgradeBaseCost */
-/* unused harmony export BribeThreshold */
-/* unused harmony export BribeToRepRatio */
-/* unused harmony export ProductProductionCostRatio */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Corporation; });
-/* harmony import */ var _CorporationState__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CorporationState */ 118);
-/* harmony import */ var _CorporationState__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_CorporationState__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _CorporationUnlockUpgrades__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CorporationUnlockUpgrades */ 105);
-/* harmony import */ var _CorporationUnlockUpgrades__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_CorporationUnlockUpgrades__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _CorporationUpgrades__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CorporationUpgrades */ 104);
-/* harmony import */ var _CorporationUpgrades__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_CorporationUpgrades__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./EmployeePositions */ 25);
-/* harmony import */ var _EmployeePositions__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _IndustryData__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./IndustryData */ 27);
-/* harmony import */ var _IndustryData__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_IndustryData__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _IndustryUpgrades__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./IndustryUpgrades */ 103);
-/* harmony import */ var _IndustryUpgrades__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_IndustryUpgrades__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _Material__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Material */ 62);
-/* harmony import */ var _Material__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Material__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _MaterialSizes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./MaterialSizes */ 75);
-/* harmony import */ var _MaterialSizes__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_MaterialSizes__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _Product__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Product */ 102);
-/* harmony import */ var _Product__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_Product__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _ResearchMap__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./ResearchMap */ 96);
-/* harmony import */ var _ResearchMap__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_ResearchMap__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../BitNodeMultipliers */ 10);
-/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../Faction/Factions */ 14);
-/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../Literature */ 82);
-/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../Locations */ 5);
-/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../Player */ 0);
-/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../ui/numeralFormat */ 4);
-/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../ui/navigationTracking */ 12);
-/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../utils/DialogBox */ 9);
-/* harmony import */ var _utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../../utils/uiHelpers/clearSelector */ 137);
-/* harmony import */ var _utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
-/* harmony import */ var _utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../../utils/uiHelpers/appendLineBreaks */ 57);
-/* harmony import */ var _utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_20__);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../../utils/uiHelpers/createElement */ 2);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../../utils/uiHelpers/createPopup */ 40);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../../utils/StringHelperFunctions */ 3);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__);
-/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../../utils/helpers/getRandomInt */ 15);
-/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__);
-/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../../utils/helpers/isString */ 39);
-/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25__);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 29);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_26__);
-/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../../utils/uiHelpers/removeElement */ 64);
-/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_27__);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../../utils/uiHelpers/removeElementById */ 20);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../../utils/YesNoBox */ 17);
-/* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! decimal.js */ 33);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Constants */
-const TOTALSHARES = 1e9; //Total number of shares you have at your company
-const CyclesPerMarketCycle    = 75;
-const CyclesPerIndustryStateCycle = CyclesPerMarketCycle / _CorporationState__WEBPACK_IMPORTED_MODULE_0__["AllCorporationStates"].length;
-const SecsPerMarketCycle      = CyclesPerMarketCycle / 5;
-const Cities = ["Aevum", "Chongqing", "Sector-12", "New Tokyo", "Ishima", "Volhaven"];
-const WarehouseInitialCost        = 5e9; //Initial purchase cost of warehouse
-const WarehouseInitialSize        = 100;
-const WarehouseUpgradeBaseCost    = 1e9;
-
-const OfficeInitialCost           = 4e9;
-const OfficeInitialSize           = 3;
-const OfficeUpgradeBaseCost       = 1e9;
-
-const BribeThreshold              = 100e12; //Money needed to be able to bribe for faction rep
-const BribeToRepRatio             = 1e9;   //Bribe Value divided by this = rep gain
-
-const ProductProductionCostRatio  = 5;    //Ratio of material cost of a product to its production cost
-
-// Delete Research Popup Box when clicking outside of it
-$(document).mousedown(function(event) {
-    const boxId = "corporation-research-popup-box";
-    const contentId = "corporation-research-popup-box-content";
-    if (researchTreeBoxOpened) {
-        if ( $(event.target).closest("#" + contentId).get(0) == null ) {
-            // Delete the box
-            Object(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_27__["removeElement"])(researchTreeBox);
-            researchTreeBox = null;
-            researchTreeBoxOpened = false;
-        }
-    }
-});
-
-var empManualAssignmentModeActive = false;
-function Industry(params={}) {
-    this.offices = { //Maps locations to offices. 0 if no office at that location
-        [_Locations__WEBPACK_IMPORTED_MODULE_13__["Locations"].Aevum]: 0,
-        [_Locations__WEBPACK_IMPORTED_MODULE_13__["Locations"].Chongqing]: 0,
-        [_Locations__WEBPACK_IMPORTED_MODULE_13__["Locations"].Sector12]: new OfficeSpace({
-            loc:_Locations__WEBPACK_IMPORTED_MODULE_13__["Locations"].Sector12,
-            size:OfficeInitialSize,
-        }),
-        [_Locations__WEBPACK_IMPORTED_MODULE_13__["Locations"].NewTokyo]: 0,
-        [_Locations__WEBPACK_IMPORTED_MODULE_13__["Locations"].Ishima]: 0,
-        [_Locations__WEBPACK_IMPORTED_MODULE_13__["Locations"].Volhaven]: 0
-    };
-
-    this.warehouses = { //Maps locations to warehouses. 0 if no warehouse at that location
-        [_Locations__WEBPACK_IMPORTED_MODULE_13__["Locations"].Aevum]: 0,
-        [_Locations__WEBPACK_IMPORTED_MODULE_13__["Locations"].Chonqing]: 0,
-        [_Locations__WEBPACK_IMPORTED_MODULE_13__["Locations"].Sector12]: new Warehouse({
-            loc:_Locations__WEBPACK_IMPORTED_MODULE_13__["Locations"].Sector12,
-            size: WarehouseInitialSize,
-        }),
-        [_Locations__WEBPACK_IMPORTED_MODULE_13__["Locations"].NewTokyo]: 0,
-        [_Locations__WEBPACK_IMPORTED_MODULE_13__["Locations"].Ishima]: 0,
-        [_Locations__WEBPACK_IMPORTED_MODULE_13__["Locations"].Volhaven]: 0
-    };
-
-    this.name   = params.name ? params.name : 0;
-    this.type   = params.type ? params.type : 0;
-
-    this.sciResearch    = new _Material__WEBPACK_IMPORTED_MODULE_6__["Material"]({name: "Scientific Research"});
-
-    //A map of the NAME of materials required to create produced materials to
-    //how many are needed to produce 1 unit of produced materials
-    this.reqMats = {};
-
-    //An array of the name of materials being produced
-    this.prodMats = [];
-
-    this.products  = {};
-    this.makesProducts = false;
-
-    this.awareness      = 0;
-    this.popularity     = 0; //Should always be less than awareness
-    this.startingCost   = 0;
-
-    /* The following are factors for how much production/other things are increased by
-       different factors. The production increase always has diminishing returns,
-       and they are all reprsented by exponentials of < 1 (e.g x ^ 0.5, x ^ 0.8)
-       The number for these represent the exponential. A lower number means more
-       diminishing returns */
-    this.reFac      = 0; //Real estate Factor
-    this.sciFac     = 0; //Scientific Research Factor, affects quality
-    this.hwFac      = 0; //Hardware factor
-    this.robFac     = 0; //Robotics Factor
-    this.aiFac      = 0; //AI Cores factor;
-    this.advFac     = 0; //Advertising factor, affects sales
-
-    this.prodMult   = 0; //Production multiplier
-
-    //Financials
-    this.lastCycleRevenue   = new decimal_js__WEBPACK_IMPORTED_MODULE_30__[/* default */ "a"](0);
-    this.lastCycleExpenses  = new decimal_js__WEBPACK_IMPORTED_MODULE_30__[/* default */ "a"](0);
-    this.thisCycleRevenue   = new decimal_js__WEBPACK_IMPORTED_MODULE_30__[/* default */ "a"](0);
-    this.thisCycleExpenses  = new decimal_js__WEBPACK_IMPORTED_MODULE_30__[/* default */ "a"](0);
-
-    //Upgrades
-    var numUpgrades = Object.keys(_IndustryUpgrades__WEBPACK_IMPORTED_MODULE_5__["IndustryUpgrades"]).length;
-    this.upgrades = Array(numUpgrades).fill(0);
-
-    this.state = "START";
-    this.newInd = true;
-
-    this.init();
-}
-
-Industry.prototype.init = function() {
-    //Set the unique properties of an industry (how much its affected by real estate/scientific research, etc.)
-    this.startingCost = _IndustryData__WEBPACK_IMPORTED_MODULE_4__["IndustryStartingCosts"][this.type];
-    switch (this.type) {
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Energy:
-            this.reFac  = 0.65;
-            this.sciFac = 0.7;
-            this.robFac = 0.05;
-            this.aiFac  = 0.3;
-            this.advFac = 0.08;
-            this.reqMats = {
-                "Hardware": 0.1,
-                "Metal":    0.2,
-            };
-            this.prodMats = ["Energy"];
-            break;
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Utilities:
-        case "Utilities":
-            this.reFac  = 0.5;
-            this.sciFac = 0.6;
-            this.robFac = 0.4;
-            this.aiFac  = 0.4;
-            this.advFac = 0.08;
-            this.reqMats = {
-                "Hardware": 0.1,
-                "Metal":    0.1,
-            }
-            this.prodMats = ["Water"];
-            break;
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Agriculture:
-            this.reFac  = 0.75;
-            this.sciFac = 0.5;
-            this.hwFac  = 0.2;
-            this.robFac = 0.3;
-            this.aiFac  = 0.3;
-            this.advFac = 0.04;
-            this.reqMats = {
-                "Water":    0.5,
-                "Energy":   0.5,
-            }
-            this.prodMats = ["Plants", "Food"];
-            break;
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Fishing:
-            this.reFac  = 0.15;
-            this.sciFac = 0.35;
-            this.hwFac  = 0.35;
-            this.robFac = 0.5;
-            this.aiFac  = 0.2;
-            this.advFac = 0.08;
-            this.reqMats = {
-                "Energy":   0.5,
-            }
-            this.prodMats = ["Food"];
-            break;
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Mining:
-            this.reFac  = 0.3;
-            this.sciFac = 0.26;
-            this.hwFac  = 0.4;
-            this.robFac = 0.45;
-            this.aiFac  = 0.45;
-            this.advFac = 0.06;
-            this.reqMats = {
-                "Energy":   0.8,
-            }
-            this.prodMats = ["Metal"];
-            break;
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Food:
-            //reFac is unique for this bc it diminishes greatly per city. Handle this separately in code?
-            this.sciFac = 0.12;
-            this.hwFac  = 0.15;
-            this.robFac = 0.3;
-            this.aiFac  = 0.25;
-            this.advFac = 0.25;
-            this.reFac  = 0.05;
-            this.reqMats = {
-                "Food":     0.5,
-                "Water":    0.5,
-                "Energy":   0.2,
-            }
-            this.makesProducts = true;
-            break;
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Tobacco:
-            this.reFac  = 0.15;
-            this.sciFac = 0.75;
-            this.hwFac  = 0.15;
-            this.robFac = 0.2;
-            this.aiFac  = 0.15;
-            this.advFac = 0.2;
-            this.reqMats = {
-                "Plants":   1,
-                "Water":    0.2,
-            }
-            this.makesProducts = true;
-            break;
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Chemical:
-            this.reFac  = 0.25;
-            this.sciFac = 0.75;
-            this.hwFac  = 0.2;
-            this.robFac = 0.25;
-            this.aiFac  = 0.2;
-            this.advFac = 0.07;
-            this.reqMats = {
-                "Plants":   1,
-                "Energy":   0.5,
-                "Water":    0.5,
-            }
-            this.prodMats = ["Chemicals"];
-            break;
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Pharmaceutical:
-            this.reFac  = 0.05;
-            this.sciFac = 0.8;
-            this.hwFac  = 0.15;
-            this.robFac = 0.25;
-            this.aiFac  = 0.2;
-            this.advFac = 0.16;
-            this.reqMats = {
-                "Chemicals":    2,
-                "Energy":       1,
-                "Water":        0.5,
-            }
-            this.prodMats = ["Drugs"];
-            this.makesProducts = true;
-            break;
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Computer:
-        case "Computer":
-            this.reFac  = 0.2;
-            this.sciFac = 0.62;
-            this.robFac = 0.36;
-            this.aiFac  = 0.19;
-            this.advFac = 0.17;
-            this.reqMats = {
-                "Metal":    2,
-                "Energy":   1,
-            }
-            this.prodMats = ["Hardware"];
-            this.makesProducts = true;
-            break;
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Robotics:
-            this.reFac  = 0.32;
-            this.sciFac = 0.65;
-            this.aiFac  = 0.36;
-            this.advFac = 0.18;
-            this.hwFac  = 0.19;
-            this.reqMats = {
-                "Hardware":     5,
-                "Energy":       3,
-            }
-            this.prodMats = ["Robots"];
-            this.makesProducts = true;
-            break;
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Software:
-            this.sciFac = 0.62;
-            this.advFac = 0.16;
-            this.hwFac  = 0.25;
-            this.reFac  = 0.1;
-            this.aiFac  = 0.1;
-            this.robFac = 0.05;
-            this.reqMats = {
-                "Hardware":     0.5,
-                "Energy":       1,
-            }
-            this.prodMats = ["AICores"];
-            this.makesProducts = true;
-            break;
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Healthcare:
-            this.reFac  = 0.1;
-            this.sciFac = 0.75;
-            this.advFac = 0.11;
-            this.hwFac  = 0.1;
-            this.robFac = 0.1;
-            this.aiFac  = 0.1;
-            this.reqMats = {
-                "Robots":       10,
-                "AICores":     5,
-                "Energy":       5,
-                "Water":        5,
-            }
-            this.makesProducts = true;
-            break;
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].RealEstate:
-            this.robFac = 0.6;
-            this.aiFac  = 0.6;
-            this.advFac = 0.25;
-            this.sciFac = 0.05;
-            this.hwFac  = 0.05;
-            this.reqMats = {
-                "Metal":    5,
-                "Energy":   5,
-                "Water":    2,
-                "Hardware": 4
-            }
-            this.prodMats = ["RealEstate"];
-            this.makesProducts = true;
-            break;
-        default:
-            console.log("ERR: Invalid Industry Type passed into Industry.init(): " + this.type);
-            return;
-    }
-}
-
-Industry.prototype.getProductDescriptionText = function() {
-    if (!this.makesProducts) {return;}
-    switch (this.type) {
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Food:
-            return "create and manage restaurants";
-            break;
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Tobacco:
-            return "create tobacco and tobacco-related products";
-            break;
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Pharmaceutical:
-            return "develop new pharmaceutical drugs";
-            break;
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Computer:
-        case "Computer":
-            return "create new computer hardware and networking infrastructures";
-            break;
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Robotics:
-            return "build specialized robots and robot-related products";
-            break;
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Software:
-            return "develop computer software";
-            break;
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Healthcare:
-            return "build and manage hospitals";
-            break;
-        case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].RealEstate:
-            return "develop and manage real estate properties";
-            break;
-        default:
-            console.log("ERROR: Invalid industry type in Industry.getProductDescriptionText");
-            return "";
-    }
-}
-
-//Calculates the values that factor into the production and properties of
-//materials/products (such as quality, etc.)
-Industry.prototype.calculateProductionFactors = function() {
-    var multSum = 0;
-    for (var i = 0; i < Cities.length; ++i) {
-        var city = Cities[i];
-        var warehouse = this.warehouses[city];
-        if (!(warehouse instanceof Warehouse)) {
-            continue;
-        }
-
-        var materials = warehouse.materials,
-            office = this.offices[city];
-
-        var cityMult =  Math.pow(0.002 * materials.RealEstate.qty+1, this.reFac) *
-                        Math.pow(0.002 * materials.Hardware.qty+1, this.hwFac) *
-                        Math.pow(0.002 * materials.Robots.qty+1, this.robFac) *
-                        Math.pow(0.002 * materials.AICores.qty+1, this.aiFac);
-        multSum += Math.pow(cityMult, 0.73);
-    }
-
-    multSum < 1 ? this.prodMult = 1 : this.prodMult = multSum;
-}
-
-Industry.prototype.updateWarehouseSizeUsed = function(warehouse) {
-    if (warehouse instanceof Warehouse) {
-        //This resets the size back to 0 and then accounts for materials
-        warehouse.updateMaterialSizeUsed();
-    }
-
-    for (var prodName in this.products) {
-        if (this.products.hasOwnProperty(prodName)) {
-            var prod = this.products[prodName];
-            warehouse.sizeUsed += (prod.data[warehouse.loc][0] * prod.siz);
-            if (prod.data[warehouse.loc][0] > 0) {
-                warehouse.breakdown += (prodName + ": " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(prod.data[warehouse.loc][0] * prod.siz, 0) + "<br>");
-            }
-        }
-    }
-}
-
-Industry.prototype.process = function(marketCycles=1, state, company) {
-    this.state = state;
-
-    //At the start of a cycle, store and reset revenue/expenses
-    //Then calculate salaries and processs the markets
-    if (state === "START") {
-        if (isNaN(this.thisCycleRevenue) || isNaN(this.thisCycleExpenses)) {
-            console.log("ERROR: NaN in Corporation's computed revenue/expenses");
-            console.log(this.thisCycleRevenue.toString());
-            console.log(this.thisCycleExpenses.toString());
-            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Something went wrong when compting Corporation's revenue/expenses. This is a bug. Please report to game developer");
-            this.thisCycleRevenue = new decimal_js__WEBPACK_IMPORTED_MODULE_30__[/* default */ "a"](0);
-            this.thisCycleExpenses = new decimal_js__WEBPACK_IMPORTED_MODULE_30__[/* default */ "a"](0);
-        }
-        this.lastCycleRevenue = this.thisCycleRevenue.dividedBy(marketCycles * SecsPerMarketCycle);
-        this.lastCycleExpenses = this.thisCycleExpenses.dividedBy(marketCycles * SecsPerMarketCycle);
-        this.thisCycleRevenue = new decimal_js__WEBPACK_IMPORTED_MODULE_30__[/* default */ "a"](0);
-        this.thisCycleExpenses = new decimal_js__WEBPACK_IMPORTED_MODULE_30__[/* default */ "a"](0);
-
-        //Once you start making revenue, the player should no longer be
-        //considered new, and therefore no longer needs the 'tutorial' UI elements
-        if (this.lastCycleRevenue.gt(0)) {this.newInd = false;}
-
-        //Process offices (and the employees in them)
-        var employeeSalary = 0;
-        for (var officeLoc in this.offices) {
-            if (this.offices.hasOwnProperty(officeLoc) &&
-                this.offices[officeLoc] instanceof OfficeSpace) {
-                employeeSalary += this.offices[officeLoc].process(marketCycles, {industry:this, corporation:company});
-            }
-        }
-        this.thisCycleExpenses = this.thisCycleExpenses.plus(employeeSalary);
-
-        //Process change in demand/competition of materials/products
-        this.processMaterialMarket(marketCycles);
-        this.processProductMarket(marketCycles);
-
-        //Process loss of popularity
-        this.popularity -= (marketCycles * .0001);
-        this.popularity = Math.max(0, this.popularity);
-
-        //Process Dreamsense gains
-        var popularityGain = company.getDreamSenseGain(), awarenessGain = popularityGain * 4;
-        if (popularityGain > 0) {
-            this.popularity += (popularityGain * marketCycles);
-            this.awareness += (awarenessGain * marketCycles);
-        }
-
-        return;
-    }
-
-    //Process production, purchase, and import/export of materials
-    var res = this.processMaterials(marketCycles, company);
-    this.thisCycleRevenue = this.thisCycleRevenue.plus(res[0]);
-    this.thisCycleExpenses = this.thisCycleExpenses.plus(res[1]);
-
-    //Process creation, production & sale of products
-    res = this.processProducts(marketCycles, company);
-    this.thisCycleRevenue = this.thisCycleRevenue.plus(res[0]);
-    this.thisCycleExpenses = this.thisCycleExpenses.plus(res[1]);
-
-}
-
-//Process change in demand and competition for this industry's materials
-Industry.prototype.processMaterialMarket = function(marketCycles=1) {
-    //References to prodMats and reqMats
-    var reqMats = this.reqMats, prodMats = this.prodMats;
-
-    //Only 'process the market' for materials that this industry deals with
-    for (var i = 0; i < Cities.length; ++i) {
-        //If this industry has a warehouse in this city, process the market
-        //for every material this industry requires or produces
-        if (this.warehouses[Cities[i]] instanceof Warehouse) {
-            var wh = this.warehouses[Cities[i]];
-            for (var name in reqMats) {
-                if (reqMats.hasOwnProperty(name)) {
-                    wh.materials[name].processMarket();
-                }
-            }
-
-            //Produced materials are stored in an array
-            for (var foo = 0; foo < prodMats.length; ++foo) {
-                wh.materials[prodMats[foo]].processMarket();
-            }
-
-            //Process these twice because these boost production
-            wh.materials["Hardware"].processMarket();
-            wh.materials["Robots"].processMarket();
-            wh.materials["AICores"].processMarket();
-            wh.materials["RealEstate"].processMarket();
-        }
-    }
-}
-
-//Process change in demand and competition for this industry's products
-Industry.prototype.processProductMarket = function(marketCycles=1) {
-    //Demand gradually decreases, and competition gradually increases
-    for (var name in this.products) {
-        if (this.products.hasOwnProperty(name)) {
-            var product = this.products[name];
-            var change = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(1, 3) * 0.0004;
-            if (this.type === _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Pharmaceutical || this.type === _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Software ||
-                this.type === _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Robotics) {
-                change *= 3;
-            }
-            change *= marketCycles;
-            product.dmd -= change;
-            product.cmp += change;
-            product.cmp = Math.min(product.cmp, 99.99);
-            product.dmd = Math.max(product.dmd, 0.001);
-        }
-    }
-}
-
-//Process production, purchase, and import/export of materials
-Industry.prototype.processMaterials = function(marketCycles=1, company) {
-    var revenue = 0, expenses = 0, industry = this;
-    this.calculateProductionFactors();
-
-    //At the start of the export state, set the imports of everything to 0
-    if (this.state === "EXPORT") {
-        for (var i = 0; i < Cities.length; ++i) {
-            var city = Cities[i], office = this.offices[city];
-            if (!(this.warehouses[city] instanceof Warehouse)) {
-                continue;
-            }
-            var warehouse = this.warehouses[city];
-            for (var matName in warehouse.materials) {
-                if (warehouse.materials.hasOwnProperty(matName)) {
-                    var mat = warehouse.materials[matName];
-                    mat.imp = 0;
-                }
-            }
-        }
-    }
-
-    for (var i = 0; i < Cities.length; ++i) {
-        var city = Cities[i], office = this.offices[city];
-
-        if (this.warehouses[city] instanceof Warehouse) {
-            var warehouse = this.warehouses[city];
-
-            switch(this.state) {
-
-            case "PURCHASE":
-            /* Process purchase of materials */
-            for (var matName in warehouse.materials) {
-                if (warehouse.materials.hasOwnProperty(matName)) {
-                    (function(matName, ind) {
-                    var mat = warehouse.materials[matName];
-                    var buyAmt, maxAmt;
-                    if (warehouse.smartSupplyEnabled && Object.keys(ind.reqMats).includes(matName)) {
-                        //Smart supply tracker is stored as per second rate
-                        mat.buy = ind.reqMats[matName] * warehouse.smartSupplyStore;
-                        buyAmt = mat.buy * SecsPerMarketCycle * marketCycles;
-                    } else {
-                        buyAmt = (mat.buy * SecsPerMarketCycle * marketCycles);
-                    }
-
-                    if (matName == "RealEstate") {
-                        maxAmt = buyAmt;
-                    } else {
-                        maxAmt = Math.floor((warehouse.size - warehouse.sizeUsed) / _MaterialSizes__WEBPACK_IMPORTED_MODULE_7__["MaterialSizes"][matName]);
-                    }
-                    var buyAmt = Math.min(buyAmt, maxAmt);
-                    if (buyAmt > 0) {
-                        mat.qty += buyAmt;
-                        expenses += (buyAmt * mat.bCost);
-                    }
-                })(matName, industry);
-                    this.updateWarehouseSizeUsed(warehouse);
-                }
-            } //End process purchase of materials
-            break;
-
-            case "PRODUCTION":
-            warehouse.smartSupplyStore = 0; //Reset smart supply amount
-
-            /* Process production of materials */
-            if (this.prodMats.length > 0) {
-                var mat = warehouse.materials[this.prodMats[0]];
-                //Calculate the maximum production of this material based
-                //on the office's productivity
-                var maxProd = this.getOfficeProductivity(office) * this.prodMult * company.getProductionMultiplier(), prod;
-
-                if (mat.prdman[0]) {
-                    //Production is manually limited
-                    prod = Math.min(maxProd, mat.prdman[1]);
-                } else {
-                    prod = maxProd;
-                }
-                prod *= (SecsPerMarketCycle * marketCycles); //Convert production from per second to per market cycle
-                //Calculate net change in warehouse storage making
-                //the produced materials will cost
-                var totalMatSize = 0;
-                for (var tmp = 0; tmp < this.prodMats.length; ++tmp) {
-                    totalMatSize += (_MaterialSizes__WEBPACK_IMPORTED_MODULE_7__["MaterialSizes"][this.prodMats[tmp]]);
-                }
-                for (var reqMatName in this.reqMats) {
-                    if (this.reqMats.hasOwnProperty(reqMatName)) {
-                        var normQty = this.reqMats[reqMatName];
-                        totalMatSize -= (_MaterialSizes__WEBPACK_IMPORTED_MODULE_7__["MaterialSizes"][reqMatName] * normQty);
-                    }
-                }
-                //If not enough space in warehouse, limit the amount of produced materials
-                if (totalMatSize > 0) {
-                    var maxAmt = Math.floor((warehouse.size - warehouse.sizeUsed) / totalMatSize);
-                    prod = Math.min(maxAmt, prod);
-                }
-
-                if (prod < 0) {prod = 0;}
-
-                //Keep track of production for smart supply (/s)
-                warehouse.smartSupplyStore += (prod / (SecsPerMarketCycle * marketCycles));
-
-                //Make sure we have enough resource to make our materials
-                var producableFrac = 1;
-                for (var reqMatName in this.reqMats) {
-                    if (this.reqMats.hasOwnProperty(reqMatName)) {
-                        var req = this.reqMats[reqMatName] * prod;
-                        if (warehouse.materials[reqMatName].qty < req) {
-                            producableFrac = Math.min(producableFrac, warehouse.materials[reqMatName].qty / req);
-                        }
-                    }
-                }
-                if (producableFrac <= 0) {producableFrac = 0; prod = 0;}
-
-                //Make our materials if they are producable
-                if (producableFrac > 0 && prod > 0) {
-                    for (var reqMatName in this.reqMats) {
-                        if (this.reqMats.hasOwnProperty(reqMatName)) {
-                            var reqMatQtyNeeded = (this.reqMats[reqMatName] * prod * producableFrac);
-                            warehouse.materials[reqMatName].qty -= reqMatQtyNeeded;
-                            warehouse.materials[reqMatName].prd = 0;
-                            warehouse.materials[reqMatName].prd -= reqMatQtyNeeded / (SecsPerMarketCycle * marketCycles);
-                        }
-                    }
-                    for (var j = 0; j < this.prodMats.length; ++j) {
-                        warehouse.materials[this.prodMats[j]].qty += (prod * producableFrac);
-                        warehouse.materials[this.prodMats[j]].qlt =
-                            (office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Engineer] / 100 +
-                             Math.pow(this.sciResearch.qty, this.sciFac) +
-                             Math.pow(warehouse.materials["AICores"].qty, this.aiFac) / 10e3);
-                    }
-                } else {
-                    for (var reqMatName in this.reqMats) {
-                        if (this.reqMats.hasOwnProperty(reqMatName)) {
-                            warehouse.materials[reqMatName].prd = 0;
-                        }
-                    }
-                }
-
-                //Per second
-                var fooProd = prod * producableFrac / (SecsPerMarketCycle * marketCycles);
-                for (var fooI = 0; fooI < this.prodMats.length; ++fooI) {
-                    warehouse.materials[this.prodMats[fooI]].prd = fooProd;
-                }
-            } else {
-                //If this doesn't produce any materials, then it only creates
-                //Products. Creating products will consume materials. The
-                //Production of all consumed materials must be set to 0
-                for (var reqMatName in this.reqMats) {
-                    if (this.reqMats.hasOwnProperty(reqMatName)) {
-                        warehouse.materials[reqMatName].prd = 0;
-                    }
-                }
-            }
-            break;
-
-            case "SALE":
-            /* Process sale of materials */
-            for (var matName in warehouse.materials) {
-                if (warehouse.materials.hasOwnProperty(matName)) {
-                    var mat = warehouse.materials[matName];
-                    if (mat.sCost < 0 || mat.sllman[0] === false) {
-                        mat.sll = 0;
-                        continue;
-                    }
-                    var mat = warehouse.materials[matName];
-
-                    var sCost;
-                    if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25__["isString"])(mat.sCost)) {
-                        sCost = mat.sCost.replace(/MP/g, mat.bCost);
-                        sCost = eval(sCost);
-                    } else {
-                        sCost = mat.sCost;
-                    }
-
-                    //Calculate how much of the material sells (per second)
-                    let markup = 1, markupLimit = mat.qlt / mat.mku;
-                    if (sCost > mat.bCost) {
-                        //Penalty if difference between sCost and bCost is greater than markup limit
-                        if ((sCost - mat.bCost) > markupLimit) {
-                            markup = Math.pow(markupLimit / (sCost - mat.bCost), 2);
-                        }
-                    } else if (sCost < mat.bCost) {
-                        if (sCost <= 0) {
-                            markup = 1e12; //Sell everything, essentially discard
-                        } else {
-                            //Lower prices than market increases sales
-                            markup = mat.bCost / sCost;
-                        }
-                    }
-                    //var businessFactor = 1 + (office.employeeProd[EmployeePositions.Business] / office.employeeProd["total"]);
-                    var businessFactor = this.getBusinessFactor(office);        //Business employee productivity
-                    var advertisingFactor = this.getAdvertisingFactors()[0];    //Awareness + popularity
-                    var marketFactor = this.getMarketFactor(mat);               //Competition + demand
-                    var maxSell = (mat.qlt + .001) * marketFactor * markup * businessFactor *
-                                  company.getSalesMultiplier() * advertisingFactor;
-
-                    var sellAmt;
-                    if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25__["isString"])(mat.sllman[1])) {
-                        //Dynamically evaluated
-                        var tmp = mat.sllman[1].replace(/MAX/g, maxSell);
-                        tmp = tmp.replace(/PROD/g, mat.prd);
-                        try {
-                            sellAmt = eval(tmp);
-                        } catch(e) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Error evaluating your sell amount for material " + mat.name +
-                                            " in " + this.name + "'s " + city + " office. The sell amount " +
-                                            "is being set to zero");
-                            sellAmt = 0;
-                        }
-                        sellAmt = Math.min(maxSell, sellAmt);
-                    } else if (mat.sllman[1] === -1) {
-                        //Backwards compatibility, -1 = MAX
-                        sellAmt = maxSell;
-                    } else {
-                        //Player's input value is just a number
-                        sellAmt = Math.min(maxSell, mat.sllman[1]);
-                    }
-
-                    sellAmt = (sellAmt * SecsPerMarketCycle * marketCycles);
-                    sellAmt = Math.min(mat.qty, sellAmt);
-                    if (sellAmt < 0) {
-                        console.log("sellAmt calculated to be negative");
-                        mat.sll = 0;
-                        continue;
-                    }
-                    if (sellAmt && sCost >= 0) {
-                        mat.qty -= sellAmt;
-                        revenue += (sellAmt * sCost);
-                        mat.sll = sellAmt / (SecsPerMarketCycle * marketCycles);
-                    } else {
-                        mat.sll = 0;
-                    }
-                }
-            } //End processing of sale of materials
-            break;
-
-            case "EXPORT":
-                for (var matName in warehouse.materials) {
-                    if (warehouse.materials.hasOwnProperty(matName)) {
-                        var mat = warehouse.materials[matName];
-                        mat.totalExp = 0; //Reset export
-                        for (var expI = 0; expI < mat.exp.length; ++expI) {
-                            var exp = mat.exp[expI];
-                            var amt = exp.amt.replace(/MAX/g, mat.qty / (SecsPerMarketCycle * marketCycles));
-                            try {
-                                amt = eval(amt);
-                            } catch(e) {
-                                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Calculating export for " + mat.name + " in " +
-                                                this.name +  "'s " + city + " division failed with " +
-                                                "error: " + e);
-                                continue;
-                            }
-                            if (isNaN(amt)) {
-                                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Error calculating export amount for " + mat.name +  " in " +
-                                                this.name + "'s " + city + " division.");
-                                continue;
-                            }
-                            amt = amt * SecsPerMarketCycle * marketCycles;
-
-                            if (mat.qty < amt) {
-                                amt = mat.qty;
-                            }
-                            if (amt === 0) {
-                                break; //None left
-                            }
-                            for (var foo = 0; foo < company.divisions.length; ++foo) {
-                                if (company.divisions[foo].name === exp.ind) {
-                                    var expIndustry = company.divisions[foo];
-                                    var expWarehouse = expIndustry.warehouses[exp.city];
-                                    if (!(expWarehouse instanceof Warehouse)) {
-                                        console.log("ERROR: Invalid export! " + expIndustry.name + " "  + exp.city);
-                                        break;
-                                    }
-
-                                    //Make sure theres enough space in warehouse
-                                    if (expWarehouse.sizeUsed >= expWarehouse.size) {
-                                        return; //Warehouse at capacity
-                                    } else {
-                                        var maxAmt = Math.floor((expWarehouse.size - expWarehouse.sizeUsed) / _MaterialSizes__WEBPACK_IMPORTED_MODULE_7__["MaterialSizes"][matName]);
-                                        amt = Math.min(maxAmt, amt);
-                                    }
-                                    expWarehouse.materials[matName].imp += (amt / (SecsPerMarketCycle * marketCycles));
-                                    expWarehouse.materials[matName].qty += amt;
-                                    expWarehouse.materials[matName].qlt = mat.qlt;
-                                    mat.qty -= amt;
-                                    mat.totalExp += amt;
-                                    expIndustry.updateWarehouseSizeUsed(expWarehouse);
-                                    break;
-                                }
-                            }
-                        }
-                        //totalExp should be per second
-                        mat.totalExp /= (SecsPerMarketCycle * marketCycles);
-                    }
-                }
-
-                break;
-
-            case "START":
-                break;
-            default:
-                console.log("ERROR: Invalid state: " + this.state);
-                break;
-            } //End switch(this.state)
-            this.updateWarehouseSizeUsed(warehouse);
-
-        } // End warehouse
-
-        //Produce Scientific Research based on R&D employees
-        //Scientific Research can be produced without a warehouse
-        if (office instanceof OfficeSpace) {
-            this.sciResearch.qty += (.005 * Math.pow(office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].RandD], 0.5)
-                                     * company.getScientificResearchMultiplier());
-        }
-    }
-    return [revenue, expenses];
-}
-
-//Process production & sale of this industry's FINISHED products (including all of their stats)
-Industry.prototype.processProducts = function(marketCycles=1, corporation) {
-    var revenue = 0, expenses = 0;
-
-    //Create products
-    if (this.state === "PRODUCTION") {
-        for (var prodName in this.products) {
-            if (this.products.hasOwnProperty(prodName)) {
-                var prod = this.products[prodName];
-                if (!prod.fin) {
-                    var city = prod.createCity, office = this.offices[city];
-                    var total = office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Operations] +
-                                office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Engineer] +
-                                office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Management], ratio;
-                    if (total === 0) {
-                        ratio = 0;
-                    } else {
-                        ratio = office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Engineer] / total +
-                                office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Operations] / total +
-                                office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Management] / total;
-                    }
-                    prod.createProduct(marketCycles, ratio * Math.pow(total, 0.29));
-                    if (prod.prog >= 100) {
-                         prod.finishProduct(office.employeeProd, this);
-                    }
-                    break;
-                }
-            }
-        }
-    }
-
-    //Produce Products
-    for (var prodName in this.products) {
-        if (this.products.hasOwnProperty(prodName)) {
-            var prod = this.products[prodName];
-            if (prod instanceof _Product__WEBPACK_IMPORTED_MODULE_8__["Product"] && prod.fin) {
-                revenue += this.processProduct(marketCycles, prod, corporation);
-            }
-        }
-    }
-    return [revenue, expenses];
-}
-
-//Processes FINISHED products
-Industry.prototype.processProduct = function(marketCycles=1, product, corporation) {
-    var totalProfit = 0;
-    for (var i = 0; i < Cities.length; ++i) {
-        var city = Cities[i], office = this.offices[city], warehouse = this.warehouses[city];
-        if (warehouse instanceof Warehouse) {
-            switch(this.state) {
-
-            case "PRODUCTION":
-            //Calculate the maximum production of this material based
-            //on the office's productivity
-            var maxProd = this.getOfficeProductivity(office, {forProduct:true}) *
-                          corporation.getProductionMultiplier() * this.prodMult, prod;
-
-            //Account for whether production is manually limited
-            if (product.prdman[city][0]) {
-                prod = Math.min(maxProd, product.prdman[city][1]);
-            } else {
-                prod = maxProd;
-            }
-            prod *= (SecsPerMarketCycle * marketCycles);
-
-            //Calculate net change in warehouse storage making the Products will cost
-            var netStorageSize = product.siz;
-            for (var reqMatName in product.reqMats) {
-                if (product.reqMats.hasOwnProperty(reqMatName)) {
-                    var normQty = product.reqMats[reqMatName];
-                    netStorageSize -= (_MaterialSizes__WEBPACK_IMPORTED_MODULE_7__["MaterialSizes"][reqMatName] * normQty);
-                }
-            }
-
-            //If there's not enough space in warehouse, limit the amount of Product
-            if (netStorageSize > 0) {
-                var maxAmt = Math.floor((warehouse.size - warehouse.sizeUsed) / netStorageSize);
-                prod = Math.min(maxAmt, prod);
-            }
-
-            warehouse.smartSupplyStore += (prod / (SecsPerMarketCycle * marketCycles));
-
-            //Make sure we have enough resources to make our Products
-            var producableFrac = 1;
-            for (var reqMatName in product.reqMats) {
-                if (product.reqMats.hasOwnProperty(reqMatName)) {
-                    var req = product.reqMats[reqMatName] * prod;
-                    if (warehouse.materials[reqMatName].qty < req) {
-                        producableFrac = Math.min(producableFrac, warehouse.materials[reqMatName].qty / req);
-                    }
-                }
-            }
-
-            //Make our Products if they are producable
-            if (producableFrac > 0 && prod > 0) {
-                for (var reqMatName in product.reqMats) {
-                    if (product.reqMats.hasOwnProperty(reqMatName)) {
-                        var reqMatQtyNeeded = (product.reqMats[reqMatName] * prod * producableFrac);
-                        warehouse.materials[reqMatName].qty -= reqMatQtyNeeded;
-                        warehouse.materials[reqMatName].prd -= reqMatQtyNeeded / (SecsPerMarketCycle * marketCycles);
-                    }
-                }
-                //Quantity
-                product.data[city][0] += (prod * producableFrac);
-            }
-
-            //Keep track of production Per second
-            product.data[city][1] = prod * producableFrac / (SecsPerMarketCycle * marketCycles);
-            break;
-
-            case "SALE":
-            //Process sale of Products
-            product.pCost = 0; //Estimated production cost
-            for (var reqMatName in product.reqMats) {
-                if (product.reqMats.hasOwnProperty(reqMatName)) {
-                    product.pCost += (product.reqMats[reqMatName] * warehouse.materials[reqMatName].bCost);
-                }
-            }
-
-            //Since its a product, its production cost is increased for labor
-            product.pCost *= ProductProductionCostRatio;
-
-            //Calculate Sale Cost (sCost), which could be dynamically evaluated
-            var sCost;
-            if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25__["isString"])(product.sCost)) {
-                sCost = product.sCost.replace(/MP/g, product.pCost + product.rat / product.mku);
-                sCost = eval(sCost);
-            } else {
-                sCost = product.sCost;
-            }
-
-            var markup = 1, markupLimit = product.rat / product.mku;
-            if (sCost > product.pCost) {
-                if ((sCost - product.pCost) > markupLimit) {
-                    markup = markupLimit / (sCost - product.pCost);
-                }
-            }
-            var businessFactor = this.getBusinessFactor(office);        //Business employee productivity
-            var advertisingFactor = this.getAdvertisingFactors()[0];    //Awareness + popularity
-            var marketFactor = this.getMarketFactor(product);        //Competition + demand
-            var maxSell = 0.5 * Math.pow(product.rat, 0.65) * marketFactor * corporation.getSalesMultiplier() *
-                          Math.pow(markup, 2) * businessFactor * advertisingFactor;
-            var sellAmt;
-            if (product.sllman[city][0] && Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25__["isString"])(product.sllman[city][1])) {
-                //Sell amount is dynamically evaluated
-                var tmp = product.sllman[city][1].replace(/MAX/g, maxSell);
-                tmp = tmp.replace(/PROD/g, product.data[city][1]);
-                try {
-                    tmp = eval(tmp);
-                } catch(e) {
-                    Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Error evaluating your sell price expression for " + product.name +
-                                    " in " + this.name + "'s " + city + " office. Sell price is being set to MAX");
-                    tmp = maxSell;
-                }
-                sellAmt = Math.min(maxSell, tmp);
-            } else if (product.sllman[city][0] && product.sllman[city][1] > 0) {
-                //Sell amount is manually limited
-                sellAmt = Math.min(maxSell, product.sllman[city][1]);
-            } else {
-                //Backwards compatibility, -1 = 0
-                sellAmt = maxSell;
-            }
-            if (sellAmt < 0) { sellAmt = 0; }
-            sellAmt = sellAmt * SecsPerMarketCycle * marketCycles;
-            sellAmt = Math.min(product.data[city][0], sellAmt); //data[0] is qty
-            if (sellAmt && sCost) {
-                product.data[city][0] -= sellAmt; //data[0] is qty
-                totalProfit += (sellAmt * sCost);
-                product.data[city][2] = sellAmt / (SecsPerMarketCycle * marketCycles); //data[2] is sell property
-            } else {
-                product.data[city][2] = 0; //data[2] is sell property
-            }
-            break;
-
-            case "START":
-            case "PURCHASE":
-            case "EXPORT":
-                break;
-            default:
-                console.log("ERROR: Invalid State: " + this.state);
-                break;
-            } //End switch(this.state)
-        }
-    }
-    return totalProfit;
-}
-
-Industry.prototype.discontinueProduct = function(product, parentRefs) {
-    var company = parentRefs.company, industry = parentRefs.industry;
-    for (var productName in this.products) {
-        if (this.products.hasOwnProperty(productName)) {
-            if (product === this.products[productName]) {
-                delete this.products[productName];
-                company.updateUIContent();
-            }
-        }
-    }
-}
-
-Industry.prototype.upgrade = function(upgrade, refs) {
-    var corporation = refs.corporation, division = refs.division,
-        office = refs.office;
-    var upgN = upgrade[0], basePrice = upgrade[1], priceMult = upgrade[2],
-        upgradeBenefit = upgrade[3];
-    while (this.upgrades.length <= upgN) {this.upgrades.push(0);}
-    ++this.upgrades[upgN];
-
-    switch (upgN) {
-        case 0: //Coffee, 5% energy per employee
-            for (var i = 0; i < office.employees.length; ++i) {
-                office.employees[i].ene = Math.min(office.employees[i].ene * 1.05, 100);
-            }
-            break;
-        case 1: //AdVert.Inc,
-            var advMult = corporation.getAdvertisingMultiplier();
-            this.awareness += (3 * advMult);
-            this.popularity += (1 * advMult);
-            this.awareness *= (1.01 * advMult);
-            this.popularity *= ((1 + Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(1, 3) / 100) * advMult);
-            break;
-        default:
-            console.log("ERROR: Un-implemented function index: " + upgN);
-            break;
-    }
-}
-
-//Returns how much of a material can be produced based of office productivity (employee stats)
-Industry.prototype.getOfficeProductivity = function(office, params) {
-    var total = office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Operations] +
-                office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Engineer] +
-                office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Management], ratio;
-    if (total === 0) {
-        ratio = 0;
-    } else {
-        ratio = (office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Operations] / total) *
-                (office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Engineer] / total) *
-                (office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Management] / total);
-        ratio = Math.max(0.01, ratio); //Minimum ratio value if you have employees
-    }
-    if (params && params.forProduct) {
-        return ratio * Math.pow(total, 0.2);
-    } else {
-        return 2 * ratio * Math.pow(total, 0.3);
-    }
-}
-
-//Returns a multiplier based on the office' 'Business' employees that affects sales
-Industry.prototype.getBusinessFactor = function(office) {
-    var ratioMult = 1;
-    if (office.employeeProd["total"] > 0) {
-        ratioMult = 1 + (office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Business] / office.employeeProd["total"]);
-    }
-    return ratioMult * Math.pow(1 + office.employeeProd[_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Business], 0.15);
-}
-
-//Returns a set of multipliers based on the Industry's awareness, popularity, and advFac. This
-//multiplier affects sales. The result is:
-//  [Total sales mult, total awareness mult, total pop mult, awareness/pop ratio mult]
-Industry.prototype.getAdvertisingFactors = function() {
-    var awarenessFac = Math.pow(this.awareness + 1, this.advFac);
-    var popularityFac = Math.pow(this.popularity + 1, this.advFac);
-    var ratioFac = (this.awareness === 0 ? 0.01 : Math.max((this.popularity + .001) / this.awareness, 0.01));
-    var totalFac = Math.pow(awarenessFac * popularityFac * ratioFac, 0.85);
-    return [totalFac, awarenessFac, popularityFac, ratioFac];
-}
-
-//Returns a multiplier based on a materials demand and competition that affects sales
-Industry.prototype.getMarketFactor = function(mat) {
-    return mat.dmd * (100 - mat.cmp)/100;
-}
-
-// Create the Research Tree UI for this Industry
-Industry.prototype.createResearchBox = function() {
-    const boxId = "corporation-research-popup-box";
-
-    if (researchTreeBoxOpened) {
-        // It's already opened, so delete it to refresh content
-        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(boxId);
-        researchTreeBox = null;
-    }
-
-    // New popup box
-    const researchTree = _IndustryData__WEBPACK_IMPORTED_MODULE_4__["IndustryResearchTrees"][this.type];
-
-    // Get the tree's markup (i.e. config) for Treant
-    const markup = researchTree.createTreantMarkup();
-    markup.chart.container = "#" + boxId + "-content";
-    markup.chart.nodeAlign = "BOTTOM";
-    markup.chart.rootOrientation = "WEST";
-    markup.chart.siblingSeparation = 40;
-    markup.chart.connectors = {
-        type: "step",
-        style: {
-            "arrow-end": "block-wide-long",
-            "stroke": "white",
-            "stroke-width": 2,
-        },
-    }
-
-    // Create the popup first, so that the tree diagram can be added to it
-    // This is handled by Treant
-    researchTreeBox = Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__["createPopup"])(boxId, [], { backgroundColor: "black" });
-
-    // Construct the tree with Treant
-    const treantTree = new Treant(markup);
-
-    // Add Event Listeners for all Nodes
-    const allResearch = researchTree.getAllNodes();
-    for (let i = 0; i < allResearch.length; ++i) {
-        // Get the Research object
-        const research = _ResearchMap__WEBPACK_IMPORTED_MODULE_9__["ResearchMap"][allResearch[i]];
-
-        // Get the DOM Element to add a click listener to it
-        const sanitizedName = allResearch[i].replace(/\s/g, '');
-        const div = document.getElementById(sanitizedName + "-click-listener");
-        if (div == null) {
-            console.warn(`Could not find Research Tree div for ${sanitizedName}`);
-            continue;
-        }
-
-        div.addEventListener("click", () => {
-            if (this.sciResearch.qty >= research.cost) {
-                this.sciResearch.qty -= research.cost;
-
-                // Get the Node from the Research Tree and set its 'researched' property
-                const node = researchTree.findNode(allResearch[i]);
-                node.researched = true;
-
-                return createResearchBox();
-            } else {
-                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])(`You do not have enough Scientific Research for ${research.name}`);
-            }
-        });
-    }
-
-    researchTreeBoxOpened = true;
-}
-
-Industry.prototype.toJSON = function() {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_19__["Generic_toJSON"])("Industry", this);
-}
-
-Industry.fromJSON = function(value) {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_19__["Generic_fromJSON"])(Industry, value.data);
-}
-
-_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_19__["Reviver"].constructors.Industry = Industry;
-
-function Employee(params={}) {
-    if (!(this instanceof Employee)) {
-        return new Employee(params);
-    }
-    this.name   = params.name           ? params.name           : "Bobby";
-
-    //Morale, happiness, and energy are 0-100
-    this.mor    = params.morale         ? params.morale         : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(50, 100);
-    this.hap    = params.happiness      ? params.happiness      : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(50, 100);
-    this.ene    = params.energy         ? params.energy         : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(50, 100);
-
-    this.age    = params.age            ? params.age            : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(20, 50);
-    this.int    = params.intelligence   ? params.intelligence   : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(10, 50);
-    this.cha    = params.charisma       ? params.charisma       : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(10, 50);
-    this.exp    = params.experience     ? params.experience     : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(10, 50);
-    this.cre    = params.creativity     ? params.creativity     : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(10, 50);
-    this.eff    = params.efficiency     ? params.efficiency     : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(10, 50);
-    this.sal    = params.salary         ? params.salary         : Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(0.1, 5);
-    this.pro    = 0; //Productivity, This is calculated
-
-    this.loc    = params.loc            ? params.loc : "";
-    this.pos    = _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Unassigned;
-}
-
-//Returns the amount the employee needs to be paid
-Employee.prototype.process = function(marketCycles=1, office) {
-    var gain = 0.001 * marketCycles,
-        det = gain * Math.random();
-    this.age += gain;
-    this.exp += gain;
-    if (this.age > 150) {
-        this.int -= det;
-        this.eff -= det;
-        this.cha -= det;
-    }
-
-    //Training
-    var trainingEff = gain * Math.random();
-    if (this.pos === _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Training) {
-        //To increase creativity and intelligence special upgrades are needed
-        this.cha += trainingEff;
-        this.exp += trainingEff;
-        this.eff += trainingEff;
-    }
-
-    //Weight based on how full office is
-    //Too many employees = more likely to decrease energy and happiness
-    var officeCapacityWeight = 0.5 * (office.employees.length / office.size - 0.5);
-    if (Math.random() < 0.5 - officeCapacityWeight) {
-        this.ene += det;
-        this.hap += det;
-    } else {
-        this.ene -= det;
-        this.hap -= det;
-    }
-    if (this.ene < office.minEne) {this.ene = office.minEne;}
-    if (this.hap < office.minHap) {this.hap = office.minHap;}
-    var salary = this.sal * marketCycles * SecsPerMarketCycle;
-    return salary;
-}
-
-Employee.prototype.calculateProductivity = function(corporation) {
-    var effCre = this.cre * corporation.getEmployeeCreMultiplier(),
-        effCha = this.cha * corporation.getEmployeeChaMultiplier(),
-        effInt = this.int * corporation.getEmployeeIntMultiplier(),
-        effEff = this.eff * corporation.getEmployeeEffMultiplier();
-    var prodBase = this.mor * this.hap * this.ene * 1e-6, prodMult;
-    switch(this.pos) {
-        //Calculate productivity based on position. This is multipled by prodBase
-        //to get final value
-        case _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Operations:
-            prodMult = (0.6 * effInt) + (0.1 * effCha) + (this.exp) +
-                       (0.5 * effCre) + (effEff);
-            break;
-        case _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Engineer:
-            prodMult = (effInt) + (0.1 * effCha) + (1.5 * this.exp) +
-                       (effEff);
-            break;
-        case _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Business:
-            prodMult = (0.4 * effInt) + (effCha) + (0.5 * this.exp);
-            break;
-        case _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Management:
-            prodMult = (2 * effCha) + (this.exp) + (0.2 * effCre) +
-                       (0.7 * effEff);
-            break;
-        case _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].RandD:
-            prodMult = (1.5 * effInt) + (0.8 * this.exp) + (effCre) +
-                       (0.5 * effEff);
-            break;
-        case _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Unassigned:
-        case _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Training:
-            prodMult = 0;
-            break;
-        default:
-            console.log("ERROR: Invalid employee position: " + this.pos);
-            break;
-    }
-    return prodBase * prodMult;
-}
-
-//Process benefits from having an office party thrown
-Employee.prototype.throwParty = function(money) {
-    var mult = 1 + (money / 10e6);
-    this.mor *= mult;
-    this.mor = Math.min(100, this.mor);
-    this.hap *= mult;
-    this.hap = Math.min(100, this.hap);
-    return mult;
-}
-
-//'panel' is the DOM element on which to create the UI
-Employee.prototype.createUI = function(panel, corporation) {
-    var effCre = this.cre * corporation.getEmployeeCreMultiplier(),
-        effCha = this.cha * corporation.getEmployeeChaMultiplier(),
-        effInt = this.int * corporation.getEmployeeIntMultiplier(),
-        effEff = this.eff * corporation.getEmployeeEffMultiplier();
-    panel.style.color = "white";
-    panel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
-        id:"cmpy-mgmt-employee-" + this.name + "-panel-text",
-        innerHTML:"Morale: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.mor, 3) + "<br>" +
-                  "Happiness: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.hap, 3) + "<br>" +
-                  "Energy: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.ene, 3) + "<br>" +
-                  "Age: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.age, 3) + "<br>" +
-                  "Intelligence: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(effInt, 3) + "<br>" +
-                  "Charisma: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(effCha, 3) + "<br>" +
-                  "Experience: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.exp, 3) + "<br>" +
-                  "Creativity: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(effCre, 3) + "<br>" +
-                  "Efficiency: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(effEff, 3) + "<br>" +
-                  "Salary: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(this.sal, "$0.000a") + "/ s<br>",
-    }));
-
-    //Selector for employee position
-    var selector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("select", {});
-    for (var key in _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"]) {
-        if (_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].hasOwnProperty(key)) {
-            selector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("option", {
-                text: _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"][key],
-                value: _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"][key],
-            }));
-        }
-    }
-
-    selector.addEventListener("change", ()=>{
-        this.pos = selector.options[selector.selectedIndex].value;
-    });
-
-    //Set initial value of selector
-    for (var i = 0; i < selector.length; ++i) {
-        if (selector.options[i].value === this.pos) {
-            selector.selectedIndex = i;
-            break;
-        }
-    }
-    panel.appendChild(selector);
-}
-
-Employee.prototype.updateUI = function(panel, corporation) {
-    var effCre = this.cre * corporation.getEmployeeCreMultiplier(),
-        effCha = this.cha * corporation.getEmployeeChaMultiplier(),
-        effInt = this.int * corporation.getEmployeeIntMultiplier(),
-        effEff = this.eff * corporation.getEmployeeEffMultiplier();
-    if (panel == null) {
-        console.log("ERROR: Employee.updateUI() called with null panel");
-        return;
-    }
-    var text = document.getElementById("cmpy-mgmt-employee-" + this.name + "-panel-text");
-    if (text == null) {
-        return this.createUI(panel);
-    }
-    text.innerHTML  = "Morale: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.mor, 3) + "<br>" +
-                      "Happiness: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.hap, 3) + "<br>" +
-                      "Energy: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.ene, 3) + "<br>" +
-                      "Age: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.age, 3) + "<br>" +
-                      "Intelligence: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(effInt, 3) + "<br>" +
-                      "Charisma: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(effCha, 3) + "<br>" +
-                      "Experience: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.exp, 3) + "<br>" +
-                      "Creativity: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(effCre, 3) + "<br>" +
-                      "Efficiency: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(effEff, 3) + "<br>" +
-                      "Salary: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(this.sal, "$0.000a") + "/ s<br>";
-}
-
-Employee.prototype.toJSON = function() {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_19__["Generic_toJSON"])("Employee", this);
-}
-
-Employee.fromJSON = function(value) {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_19__["Generic_fromJSON"])(Employee, value.data);
-}
-
-_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_19__["Reviver"].constructors.Employee = Employee;
-
-var OfficeSpaceTiers = {
-    Basic: "Basic",
-    Enhanced: "Enhanced",
-    Luxurious: "Luxurious",
-    Extravagant: "Extravagant"
-}
-
-function OfficeSpace(params={}) {
-    this.loc    = params.loc        ? params.loc        : "";
-    this.cost   = params.cost       ? params.cost       : 1;
-    this.size   = params.size       ? params.size       : 1;
-    this.comf   = params.comfort    ? params.comfort    : 1;
-    this.beau   = params.beauty      ? params.beauty     : 1;
-    this.tier   = OfficeSpaceTiers.Basic;
-
-    this.minEne     = 0; //Minimum energy of employees, based on office
-    this.minHap     = 0; //Minimum happiness of employees, based on office.
-
-    this.employees = [];
-    this.employeeProd = {
-        [_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Operations]:   0,
-        [_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Engineer]:     0,
-        [_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Business]:     0,
-        [_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Management]:   0,
-        [_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].RandD]:        0,
-        total:                            0,
-    };
-}
-
-OfficeSpace.prototype.process = function(marketCycles=1, parentRefs) {
-    var corporation = parentRefs.corporation, industry = parentRefs.industry;
-    var perfMult=1; //Multiplier for employee morale/happiness/energy based on company performance
-    if (industry.funds < 0 && industry.lastCycleRevenue < 0) {
-        perfMult = Math.pow(0.99, marketCycles);
-    } else if (industry.funds > 0 && industry.lastCycleRevenue > 0) {
-        perfMult = Math.pow(1.01, marketCycles);
-    }
-
-    var salaryPaid = 0;
-    for (var i = 0; i < this.employees.length; ++i) {
-        var emp = this.employees[i];
-        emp.mor *= perfMult;
-        emp.hap *= perfMult;
-        emp.ene *= perfMult;
-        var salary = emp.process(marketCycles, this);
-        salaryPaid += salary;
-    }
-    this.calculateEmployeeProductivity(marketCycles, corporation);
-    return salaryPaid;
-}
-
-OfficeSpace.prototype.calculateEmployeeProductivity = function(marketCycles=1, corporation) {
-    //Reset
-    for (var name in this.employeeProd) {
-        if (this.employeeProd.hasOwnProperty(name)) {
-            this.employeeProd[name] = 0;
-        }
-    }
-
-    var total = 0;
-    for (var i = 0; i < this.employees.length; ++i) {
-        var employee = this.employees[i];
-        var prod = employee.calculateProductivity(corporation);
-        this.employeeProd[employee.pos] += prod;
-        total += prod;
-    }
-    this.employeeProd["total"] = total;
-}
-
-//Takes care of UI as well
-OfficeSpace.prototype.findEmployees = function(parentRefs) {
-    var company = parentRefs.corporation, division = parentRefs.division;
-    if (document.getElementById("cmpy-mgmt-hire-employee-popup") != null) {return;}
-
-    //Generate three random employees (meh, decent, amazing)
-    var mult1 = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(25, 50)/100,
-        mult2 = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(51, 75)/100,
-        mult3 = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(76, 100)/100;
-    var int = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(50, 100),
-        cha = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(50, 100),
-        exp = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(50, 100),
-        cre = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(50, 100),
-        eff = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(50, 100),
-        sal = 2.2 * (int + cha + exp + cre + eff);
-
-    var emp1 = new Employee({
-        intelligence: int * mult1,
-        charisma: cha * mult1,
-        experience: exp * mult1,
-        creativity: cre * mult1,
-        efficiency: eff * mult1,
-        salary: sal * mult1,
-    });
-
-    var emp2 = new Employee({
-        intelligence: int * mult2,
-        charisma: cha * mult2,
-        experience: exp * mult2,
-        creativity: cre * mult2,
-        efficiency: eff * mult2,
-        salary: sal * mult2,
-    });
-
-    var emp3 = new Employee({
-        intelligence: int * mult3,
-        charisma: cha * mult3,
-        experience: exp * mult3,
-        creativity: cre * mult3,
-        efficiency: eff * mult3,
-        salary: sal * mult3,
-    });
-
-    var text = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("h1", {
-        innerHTML: "Select one of the following candidates for hire:",
-    });
-
-    var createEmpDiv = function(employee, office) {
-        var div = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {
-            class:"cmpy-mgmt-find-employee-option",
-            innerHTML:  "Intelligence: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(employee.int, 1) + "<br>" +
-                        "Charisma: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(employee.cha, 1) + "<br>" +
-                        "Experience: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(employee.exp, 1) + "<br>" +
-                        "Creativity: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(employee.cre, 1) + "<br>" +
-                        "Efficiency: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(employee.eff, 1) + "<br>" +
-                        "Salary: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(employee.sal, '$0.000a') + " \ s<br>",
-            clickListener:()=>{
-                office.hireEmployee(employee, parentRefs);
-                Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])("cmpy-mgmt-hire-employee-popup");
-                return false;
-            }
-        });
-        return div;
-    };
-
-    var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-        class:"a-link-button",
-        innerText:"Cancel",
-        float:"right",
-        clickListener:()=>{
-            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])("cmpy-mgmt-hire-employee-popup");
-            return false;
-        }
-    });
-
-    var elems = [text,
-                 createEmpDiv(emp1, this),
-                 createEmpDiv(emp2, this),
-                 createEmpDiv(emp3, this),
-                 cancelBtn];
-
-    Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__["createPopup"])("cmpy-mgmt-hire-employee-popup", elems);
-}
-
-OfficeSpace.prototype.hireEmployee = function(employee, parentRefs) {
-    var company = parentRefs.corporation, division = parentRefs.division;
-    var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__[/* yesNoTxtInpBoxGetYesButton */ "j"])(),
-        noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__[/* yesNoTxtInpBoxGetNoButton */ "i"])();
-    yesBtn.innerHTML = "Hire";
-    noBtn.innerHTML = "Cancel";
-    yesBtn.addEventListener("click", ()=>{
-        var name = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__[/* yesNoTxtInpBoxGetInput */ "h"])();
-        for (var i = 0; i < this.employees.length; ++i) {
-            if (this.employees[i].name === name) {
-                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("You already have an employee with this nickname! Please give every employee a unique nickname.");
-                return false;
-            }
-        }
-        employee.name = name;
-        this.employees.push(employee);
-        company.displayDivisionContent(division, currentCityUi);
-        return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__[/* yesNoTxtInpBoxClose */ "f"])();
-    });
-    noBtn.addEventListener("click", ()=>{
-        return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__[/* yesNoTxtInpBoxClose */ "f"])();
-    });
-    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__[/* yesNoTxtInpBoxCreate */ "g"])("Give your employee a nickname!");
-}
-
-OfficeSpace.prototype.hireRandomEmployee = function(parentRefs) {
-    var company = parentRefs.corporation, division = parentRefs.division;
-    if (document.getElementById("cmpy-mgmt-hire-employee-popup") != null) {return;}
-
-    //Generate three random employees (meh, decent, amazing)
-    var mult = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(76, 100)/100;
-    var int = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(50, 100),
-        cha = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(50, 100),
-        exp = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(50, 100),
-        cre = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(50, 100),
-        eff = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__["getRandomInt"])(50, 100),
-        sal = 2.2 * (int + cha + exp + cre + eff);
-
-    var emp = new Employee({
-        intelligence: int * mult,
-        charisma: cha * mult,
-        experience: exp * mult,
-        creativity: cre * mult,
-        efficiency: eff * mult,
-        salary: sal * mult,
-    });
-
-    var name = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["generateRandomString"])(7);
-
-    for (var i = 0; i < this.employees.length; ++i) {
-        if (this.employees[i].name === name) {
-            return this.hireRandomEmployee(parentRefs);
-        }
-    }
-    emp.name = name;
-    this.employees.push(emp);
-    company.displayDivisionContent(division, currentCityUi);
-}
-
-//Finds the first unassigned employee and assigns its to the specified job
-OfficeSpace.prototype.assignEmployeeToJob = function(job) {
-    for (var i = 0; i < this.employees.length; ++i) {
-        if (this.employees[i].pos === _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Unassigned) {
-            this.employees[i].pos = job;
-            return true;
-        }
-    }
-    return false;
-}
-
-//Finds the first employee with the given job and unassigns it
-OfficeSpace.prototype.unassignEmployeeFromJob = function(job) {
-    for (var i = 0; i < this.employees.length; ++i) {
-        if (this.employees[i].pos === job) {
-            this.employees[i].pos = _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Unassigned;
-            return true;
-        }
-    }
-    return false;
-}
-
-OfficeSpace.prototype.toJSON = function() {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_19__["Generic_toJSON"])("OfficeSpace", this);
-}
-
-OfficeSpace.fromJSON = function(value) {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_19__["Generic_fromJSON"])(OfficeSpace, value.data);
-}
-
-_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_19__["Reviver"].constructors.OfficeSpace = OfficeSpace;
-
-function Warehouse(params={}) {
-    this.loc    = params.loc        ? params.loc    : "";
-    this.size   = params.size       ? params.size   : 0;
-    this.level  = 0;
-    this.sizeUsed = 0;
-    this.smartSupplyEnabled = false; //Whether or not smart supply is enabled
-    this.breakdown = "";
-
-    //Stores the amount of product to be produced. Used for Smart Supply unlock.
-    //The production tracked by smart supply is always based on the previous cycle,
-    //so it will always trail the "true" production by 1 cycle
-    this.smartSupplyStore = 0;
-
-    this.materials = {
-        Water:      new _Material__WEBPACK_IMPORTED_MODULE_6__["Material"]({name: "Water"}),
-        Energy:     new _Material__WEBPACK_IMPORTED_MODULE_6__["Material"]({name: "Energy"}),
-        Food:       new _Material__WEBPACK_IMPORTED_MODULE_6__["Material"]({name: "Food"}),
-        Plants:     new _Material__WEBPACK_IMPORTED_MODULE_6__["Material"]({name: "Plants"}),
-        Metal:      new _Material__WEBPACK_IMPORTED_MODULE_6__["Material"]({name: "Metal"}),
-        Hardware:   new _Material__WEBPACK_IMPORTED_MODULE_6__["Material"]({name: "Hardware"}),
-        Chemicals:  new _Material__WEBPACK_IMPORTED_MODULE_6__["Material"]({name: "Chemicals"}),
-        Drugs:      new _Material__WEBPACK_IMPORTED_MODULE_6__["Material"]({name: "Drugs"}),
-        Robots:     new _Material__WEBPACK_IMPORTED_MODULE_6__["Material"]({name: "Robots"}),
-        AICores:    new _Material__WEBPACK_IMPORTED_MODULE_6__["Material"]({name: "AI Cores"}),
-        RealEstate: new _Material__WEBPACK_IMPORTED_MODULE_6__["Material"]({name: "Real Estate"})
-    }
-}
-
-Warehouse.prototype.updateMaterialSizeUsed = function() {
-    this.sizeUsed = 0;
-    this.breakdown = "";
-    for (var matName in this.materials) {
-        if (this.materials.hasOwnProperty(matName)) {
-            var mat = this.materials[matName];
-            if (_MaterialSizes__WEBPACK_IMPORTED_MODULE_7__["MaterialSizes"].hasOwnProperty(matName)) {
-                this.sizeUsed += (mat.qty * _MaterialSizes__WEBPACK_IMPORTED_MODULE_7__["MaterialSizes"][matName]);
-                if (mat.qty > 0) {
-                    this.breakdown += (matName + ": " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(mat.qty * _MaterialSizes__WEBPACK_IMPORTED_MODULE_7__["MaterialSizes"][matName], 0) + "<br>");
-                }
-            }
-        }
-    }
-    if (this.sizeUsed > this.size) {
-        console.log("ERROR: Warehouse size used greater than capacity, something went wrong");
-    }
-}
-
-Warehouse.prototype.updateSize = function(corporation) {
-    //Backwards compatibility
-    if (this.level == null || this.level === 0) {
-        this.level = Math.round(this.size / 100);
-    }
-
-    this.size = (this.level * 100) * corporation.getStorageMultiplier();
-}
-
-Warehouse.prototype.createUI = function(parentRefs) {
-    if (parentRefs.company == null || parentRefs.industry == null) {
-        console.log("ERROR: Warehouse.createUI called without parentRefs.company or parentRefs.industry");
-        return;
-    }
-    var company = parentRefs.company, industry = parentRefs.industry;
-    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_26__["removeChildrenFromElement"])(industryWarehousePanel);
-    industryWarehouseStorageText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
-        display:"inline-block", class:"tooltip",
-        color: this.sizeUsed >= this.size ? "red" : "white",
-    });
-    industryWarehousePanel.appendChild(industryWarehouseStorageText);
-
-    //Upgrade warehouse size button
-    var upgradeCost = WarehouseUpgradeBaseCost * Math.pow(1.07, this.level+1);
-    industryWarehouseUpgradeSizeButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-        innerText:"Upgrade Warehouse Size - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(upgradeCost, '$0.000a'),
-        display:"inline-block",
-        class: company.funds.lt(upgradeCost) ? "a-link-button-inactive" : "a-link-button",
-        clickListener:()=>{
-            //Backwards compatibility
-            if (this.level == null || this.level === 0) {
-                this.level = Math.round(this.size / 100);
-            }
-
-            ++this.level;
-            this.updateSize(company);
-            company.funds = company.funds.minus(upgradeCost);
-            this.createUI(parentRefs);
-            return;
-        }
-    });
-    industryWarehousePanel.appendChild(industryWarehouseUpgradeSizeButton);
-
-    //Material requirement text
-    var reqText = "This Industry uses [" + Object.keys(industry.reqMats).join(", ") +
-                  "] in order to ";
-    if (industry.prodMats.length > 0) {
-        reqText += "produce [" + industry.prodMats.join(", ") + "] ";
-        if (industry.makesProducts) {
-            reqText += " and " + industry.getProductDescriptionText();
-        }
-    } else if (industry.makesProducts) {
-        reqText += industry.getProductDescriptionText();
-    }
-    reqText += "<br><br>To get started with production, purchase your required " +
-               "materials or import them from another of your company's divisions.<br><br>";
-
-    //Material ratio text for tooltip
-    var reqRatioText = "The exact requirements for production are:<br>";
-    for (var matName in industry.reqMats) {
-        if (industry.reqMats.hasOwnProperty(matName)) {
-            reqRatioText += (industry.reqMats[matName] + " " + matName + "<br>");
-        }
-    }
-    reqRatioText += "in order to create ";
-    if (industry.prodMats.length > 0) {
-        reqRatioText += "one of each produced Material (" + industry.prodMats.join(", ") + ") ";
-        if (industry.makesProducts) {
-            reqRatioText += "or to create one of its Products";
-        }
-    } else if (industry.makesProducts) {
-        reqRatioText += "one of its Products";
-    }
-
-    industryWarehousePanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
-        innerHTML:reqText, tooltipleft:reqRatioText
-    }));
-
-    //Current state
-    industryWarehouseStateText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p");
-    industryWarehousePanel.appendChild(industryWarehouseStateText);
-
-    //Smart Supply Enable/Disable
-    if (company.unlockUpgrades[1]) {
-        if (this.smartSupplyEnabled == null) {this.smartSupplyEnabled = false;}
-        var smartSupplyCheckboxId = "cmpy-mgmt-smart-supply-checkbox";
-        industryWarehousePanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("label", {
-            for:smartSupplyCheckboxId, innerText:"Enable Smart Supply",
-            color:"white"
-        }));
-        industrySmartSupplyCheckbox = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("input", {
-            type:"checkbox", id:smartSupplyCheckboxId, margin:"3px",
-            changeListener:()=>{
-                this.smartSupplyEnabled = industrySmartSupplyCheckbox.checked;
-            }
-        });
-        industrySmartSupplyCheckbox.checked = this.smartSupplyEnabled;
-        industryWarehousePanel.appendChild(industrySmartSupplyCheckbox);
-    }
-
-    //Materials
-    industryWarehousePanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
-        innerHTML: "<br>Materials:<br>",
-    }));
-    industryWarehouseMaterials = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("ul");
-    industryWarehousePanel.appendChild(industryWarehouseMaterials);
-
-    //Products
-    if (industry.makesProducts && Object.keys(industry.products).length > 0) {
-        industryWarehousePanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
-            innerHTML: "<br>Products:<br>",
-        }));
-        industryWarehouseProducts = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("ul");
-        industryWarehousePanel.appendChild(industryWarehouseProducts);
-    }
-
-    this.updateUI(parentRefs);
-}
-
-Warehouse.prototype.updateUI = function(parentRefs) {
-    if (parentRefs.company == null || parentRefs.industry == null) {
-        console.log("ERROR: Warehouse.updateUI called without parentRefs.company or parentRefs.industry");
-        return;
-    }
-    var company = parentRefs.company, industry = parentRefs.industry;
-
-    //Storage text
-    var storageText = "Storage: " +
-                      (this.sizedUsed >= this.size ? Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.sizeUsed, 3) : Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.sizeUsed, 3)) +
-                      "/" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.size, 3);
-    if (this.breakdown != null && this.breakdown != "") {
-        storageText += ("<span class='tooltiptext'>" +
-                        this.breakdown + "</span>");
-    }
-    industryWarehouseStorageText.innerHTML = storageText;
-
-    //Upgrade warehouse size button
-    var upgradeCost = WarehouseUpgradeBaseCost * Math.pow(1.07, this.level+1);
-    if (company.funds.lt(upgradeCost)) {
-        industryWarehouseUpgradeSizeButton.className = "a-link-button-inactive";
-    } else {
-        industryWarehouseUpgradeSizeButton.className = "a-link-button";
-    }
-
-    //Current state
-    var stateText = "Current state: ";
-    switch(industry.state) {
-        case "START":
-            stateText += "Preparing...";
-            break;
-        case "PURCHASE":
-            stateText += "Purchasing materials...";
-            break;
-        case "PRODUCTION":
-            stateText += "Producing materials and/or products...";
-            break;
-        case "SALE":
-            stateText += "Selling materials and/or products...";
-            break;
-        case "EXPORT":
-            stateText += "Exporting materials and/or products...";
-            break;
-        default:
-            console.log("ERROR: Invalid state: " + industry.state);
-            break;
-    }
-    industryWarehouseStateText.innerText = stateText;
-
-    //Materials
-    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_26__["removeChildrenFromElement"])(industryWarehouseMaterials);
-    for (var matName in this.materials) {
-        if (this.materials.hasOwnProperty(matName) && this.materials[matName] instanceof _Material__WEBPACK_IMPORTED_MODULE_6__["Material"]) {
-            if (Object.keys(industry.reqMats).includes(matName) || industry.prodMats.includes(matName) ||
-                matName === "Hardware" || matName === "Robots" || matName === "AICores" ||
-                matName === "RealEstate") {
-                industryWarehouseMaterials.appendChild(this.createMaterialUI(this.materials[matName], matName, parentRefs));
-            }
-        }
-    }
-
-    //Products
-    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_26__["removeChildrenFromElement"])(industryWarehouseProducts);
-    if (industry.makesProducts && Object.keys(industry.products).length > 0) {
-        for (var productName in industry.products) {
-            if (industry.products.hasOwnProperty(productName) && industry.products[productName] instanceof _Product__WEBPACK_IMPORTED_MODULE_8__["Product"]) {
-                industryWarehouseProducts.appendChild(this.createProductUI(industry.products[productName], parentRefs));
-            }
-        }
-    }
-}
-
-Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
-    if (parentRefs.company == null || parentRefs.industry == null) {
-        console.log("ERROR: Warehouse.createMaterialUI called without industry or company parent refs");
-        return;
-    }
-    var company = parentRefs.company, industry = parentRefs.industry;
-    var purchasePopupId = "cmpy-mgmt-material-purchase-popup",
-        sellPopupid = "cmpy-mgmt-material-sell-popup";
-    var div = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {
-        class:"cmpy-mgmt-warehouse-material-div",
-    });
-
-    var totalGain = mat.buy + mat.prd + mat.imp - mat.sll - mat.totalExp;
-
-    //If Market Research upgrades are unlocked, add competition and demand info
-    var cmpAndDmdText = "";
-    if (company.unlockUpgrades[2] === 1) {
-        cmpAndDmdText += "<br>Demand: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(mat.dmd, 3);
-    }
-    if (company.unlockUpgrades[3] === 1) {
-        cmpAndDmdText += "<br>Competition: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(mat.cmp, 3);
-    }
-    var innerTxt = "<p class='tooltip'>" + mat.name + ": " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(mat.qty, 3) +
-                   "(" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(totalGain, 3) +  "/s)" +
-                   "<span class='tooltiptext'>Buy: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(mat.buy, 3) +
-                   "/s<br>Prod: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(mat.prd, 3) + "/s<br>Sell: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(mat.sll, 3) +
-                   "/s<br>Export: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(mat.totalExp, 3) + "/s<br>Import: " +
-                   Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(mat.imp, 3) + "/s" + cmpAndDmdText + "</span></p><br>" +
-                   "<p class='tooltip'>MP: $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(mat.bCost, 2) +
-                   "<span class='tooltiptext'>Market Price: The price you would pay if " +
-                   "you were to buy this material on the market</span></p><br>" +
-                   "<p class='tooltip'>Quality: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(mat.qlt, 2) +
-                   "<span class='tooltiptext'>The quality of your material. Higher quality " +
-                   "will lead to more sales</span></p>";
-
-    div.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
-        innerHTML: innerTxt,
-        id: "cmpy-mgmt-warehouse-" + matName + "-text", display:"inline-block",
-    }));
-
-    var buttonPanel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {
-        display:"inline-block",
-    });
-    div.appendChild(buttonPanel);
-
-    //Button to set purchase amount
-    var tutorial = industry.newInd && Object.keys(industry.reqMats).includes(mat.name) &&
-                   mat.buy === 0 && mat.imp === 0;
-    var buyButtonParams = {
-        innerText: "Buy (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(mat.buy, 3) + ")", display:"inline-block",
-        class: tutorial ? "a-link-button flashing-button" : "a-link-button",
-        clickListener:()=>{
-            var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
-                innerHTML: "Enter the amount of " + mat.name + " you would like " +
-                           "to purchase per second. This material's cost changes constantly"
-            });
-            var confirmBtn;
-            var input = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("input", {
-                type:"number", value:mat.buy ? mat.buy : null, placeholder: "Purchase amount",
-                onkeyup:(e)=>{
-                    e.preventDefault();
-                    if (e.keyCode === 13) {confirmBtn.click();}
-                }
-            });
-            confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-                innerText:"Confirm", class:"a-link-button",
-                clickListener:()=>{
-                    if (isNaN(input.value)) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Invalid amount");
-                    } else {
-                        mat.buy = parseFloat(input.value);
-                        if (isNaN(mat.buy)) {mat.buy = 0;}
-                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(purchasePopupId);
-                        this.createUI(parentRefs);
-                        return false;
-                    }
-                }
-            });
-            var clearButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-                innerText:"Clear Purchase", class:"a-link-button",
-                clickListener:()=>{
-                    mat.buy = 0;
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(purchasePopupId);
-                    this.createUI(parentRefs);
-                    return false;
-                }
-            });
-            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-                innerText:"Cancel", class:"a-link-button",
-                clickListener:()=>{
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(purchasePopupId);
-                }
-            });
-            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__["createPopup"])(purchasePopupId, [txt, input, confirmBtn, clearButton, cancelBtn]);
-            input.focus();
-        }
-    };
-    if (tutorial) {
-        buyButtonParams.tooltip = "Purchase your required materials to get production started!";
-    }
-    buttonPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", buyButtonParams));
-
-    //Button to manage exports
-    if (company.unlockUpgrades[0] === 1) { //Export unlock upgrade
-        function createExportPopup() {
-            var popupId = "cmpy-mgmt-export-popup";
-            var exportTxt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
-                innerText:"Select the industry and city to export this material to, as well as " +
-                          "how much of this material to export per second. You can set the export " +
-                          "amount to 'MAX' to export all of the materials in this warehouse."
-            });
-
-            //Select industry and city to export to
-            var citySelector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("select", {class: "dropdown"});
-            var industrySelector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("select", {
-                class: "dropdown",
-                changeListener:()=>{
-                    var industryName = industrySelector.options[industrySelector.selectedIndex].value;
-                    for (var foo = 0; foo < company.divisions.length; ++foo) {
-                        if (company.divisions[foo].name == industryName) {
-                            Object(_utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_18__["clearSelector"])(citySelector);
-                            var selectedIndustry = company.divisions[foo];
-                            for (var cityName in company.divisions[foo].warehouses) {
-                                if (company.divisions[foo].warehouses[cityName] instanceof Warehouse) {
-                                    citySelector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("option", {
-                                        value:cityName, text:cityName,
-                                    }));
-                                }
-                            }
-                            return;
-                        }
-                    }
-                }
-            });
-
-            for (var i = 0; i < company.divisions.length; ++i) {
-                industrySelector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("option", {
-                    text:company.divisions[i].name, value:company.divisions[i].name,
-                })); //End create element option
-            } //End for
-
-            var currIndustry = industrySelector.options[industrySelector.selectedIndex].value;
-            for (var i = 0; i < company.divisions.length; ++i) {
-                if (company.divisions[i].name == currIndustry) {
-                    for (var cityName in company.divisions[i].warehouses) {
-                        if (company.divisions[i].warehouses.hasOwnProperty(cityName) &&
-                            company.divisions[i].warehouses[cityName] instanceof Warehouse) {
-                            citySelector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("option", {
-                                value:cityName, text:cityName,
-                            }));
-                        }
-                    }
-                    break;
-                }
-            }
-
-            //Select amount to export
-            var exportAmount = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("input", {
-                class: "text-input",
-                placeholder:"Export amount / s"
-            });
-
-            var exportBtn  = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-                class:"a-link-button", display:"inline-block", innerText:"Export",
-                clickListener:()=>{
-                    var industryName = industrySelector.options[industrySelector.selectedIndex].text,
-                        cityName = citySelector.options[citySelector.selectedIndex].text,
-                        amt = exportAmount.value;
-                    //Sanitize amt
-                    var sanitizedAmt = amt.replace(/\s+/g, '');
-                    sanitizedAmt = sanitizedAmt.replace(/[^-()\d/*+.MAX]/g, '');
-                    var temp = sanitizedAmt.replace(/MAX/g, 1);
-                    try {
-                        temp = eval(temp);
-                    } catch(e) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Invalid expression entered for export amount: " + e);
-                        return false;
-                    }
-
-                    if (temp == null || isNaN(temp)) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Invalid amount entered for export");
-                        return;
-                    }
-                    var exportObj = {ind:industryName, city:cityName, amt:sanitizedAmt};
-                    mat.exp.push(exportObj);
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
-                    return false;
-                }
-            });
-
-            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-                class:"a-link-button", display:"inline-block", innerText:"Cancel",
-                clickListener:()=>{
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
-                    return false;
-                }
-            });
-
-            var currExportsText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
-                innerText:"Below is a list of all current exports of this material from this warehouse. " +
-                          "Clicking on one of the exports below will REMOVE that export."
-            });
-            var currExports = [];
-            for (var i = 0; i < mat.exp.length; ++i) {
-                (function(i, mat, currExports){
-                currExports.push(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {
-                    class:"cmpy-mgmt-existing-export",
-                    innerHTML: "Industry: " + mat.exp[i].ind + "<br>" +
-                               "City: " + mat.exp[i].city + "<br>" +
-                               "Amount/s: " + mat.exp[i].amt,
-                    clickListener:()=>{
-                        mat.exp.splice(i, 1); //Remove export object
-                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
-                        createExportPopup();
-                    }
-                }));
-                })(i, mat, currExports);
-            }
-            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__["createPopup"])(popupId, [exportTxt, industrySelector, citySelector, exportAmount,
-                                  exportBtn, cancelBtn, currExportsText].concat(currExports));
-        }
-        buttonPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-            innerText:"Export", display:"inline-block", class:"a-link-button",
-            clickListener:()=>{createExportPopup();}
-        }));
-    }
-
-    buttonPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("br", {})); // Force line break
-
-    //Button to set sell amount
-    var innerTextString;
-    if (mat.sllman[0]) {
-        innerTextString = (mat.sllman[1] === -1 ? "Sell (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(mat.sll, 3) + "/MAX)" :
-                          "Sell (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(mat.sll, 3) + "/" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(mat.sllman[1], 3) + ")");
-        if (mat.sCost) {
-            if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25__["isString"])(mat.sCost)) {
-                var sCost = mat.sCost.replace(/MP/g, mat.bCost);
-                innerTextString += " @ $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(eval(sCost), 2);
-            } else {
-                innerTextString += " @ $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(mat.sCost, 2);
-            }
-        }
-    } else {
-        innerTextString = "Sell (0.000/0.000)";
-    }
-
-    buttonPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-        innerText: innerTextString, display:"inline-block", class:"a-link-button",
-        clickListener:()=>{
-            var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
-                innerHTML: "Enter the maximum amount of " + mat.name + " you would like " +
-                           "to sell per second, as well as the price at which you would " +
-                           "like to sell at.<br><br>" +
-                           "If the sell amount is set to 0, then the material will not be sold. If the sell price " +
-                           "if set to 0, then the material will be discarded<br><br>" +
-                           "Setting the sell amount to 'MAX' will result in you always selling the " +
-                           "maximum possible amount of the material.<br><br>" +
-                           "When setting the sell amount, you can use the 'PROD' variable to designate a dynamically " +
-                           "changing amount that depends on your production. For example, if you set the sell amount " +
-                           "to 'PROD-5' then you will always sell 5 less of the material than you produce.<br><br>" +
-                           "When setting the sell price, you can use the 'MP' variable to designate a dynamically " +
-                           "changing price that depends on the market price. For example, if you set the sell price " +
-                           "to 'MP+10' then it will always be sold at $10 above the market price.",
-            });
-            var br = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("br", {});
-            var confirmBtn;
-            var inputQty = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("input", {
-                type:"text", marginTop:"4px",
-                value: mat.sllman[1] ? mat.sllman[1] : null, placeholder: "Sell amount",
-                onkeyup:(e)=>{
-                    e.preventDefault();
-                    if (e.keyCode === 13) {confirmBtn.click();}
-                }
-            });
-            var inputPx = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("input", {
-                type:"text", marginTop:"4px",
-                value: mat.sCost ? mat.sCost : null, placeholder: "Sell price",
-                onkeyup:(e)=>{
-                    e.preventDefault();
-                    if (e.keyCode === 13) {confirmBtn.click();}
-                }
-            });
-            confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-                innerText:"Confirm", class:"a-link-button", margin:"6px",
-                clickListener:()=>{
-                    //Parse price
-                    var cost = inputPx.value.replace(/\s+/g, '');
-                    cost = cost.replace(/[^-()\d/*+.MP]/g, ''); //Sanitize cost
-                    var temp = cost.replace(/MP/g, mat.bCost);
-                    try {
-                        temp = eval(temp);
-                    } catch(e) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Invalid value or expression for sell price field: " + e);
-                        return false;
-                    }
-
-                    if (temp == null || isNaN(temp)) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Invalid value or expression for sell price field");
-                        return false;
-                    }
-
-                    if (cost.includes("MP")) {
-                        mat.sCost = cost; //Dynamically evaluated
-                    } else {
-                        mat.sCost = temp;
-                    }
-
-                    //Parse quantity
-                    if (inputQty.value.includes("MAX") || inputQty.value.includes("PROD")) {
-                        var qty = inputQty.value.replace(/\s+/g, '');
-                        qty = qty.replace(/[^-()\d/*+.MAXPROD]/g, '');
-                        var temp = qty.replace(/MAX/g, 1);
-                        temp = temp.replace(/PROD/g, 1);
-                        try {
-                            temp = eval(temp);
-                        } catch(e) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Invalid value or expression for sell price field: " + e);
-                            return false;
-                        }
-
-                        if (temp == null || isNaN(temp)) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Invalid value or expression for sell price field");
-                            return false;
-                        }
-
-                        mat.sllman[0] = true;
-                        mat.sllman[1] = qty; //Use sanitized input
-                    } else if (isNaN(inputQty.value)) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Invalid value for sell quantity field! Must be numeric or 'MAX'");
-                        return false;
-                    } else {
-                        var qty = parseFloat(inputQty.value);
-                        if (isNaN(qty)) {qty = 0;}
-                        if (qty === 0) {
-                            mat.sllman[0] = false;
-                            mat.sllman[1] = 0;
-                        } else {
-                            mat.sllman[0] = true;
-                            mat.sllman[1] = qty;
-                        }
-                    }
-
-                    this.createUI(parentRefs);
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(sellPopupid);
-                    return false;
-                }
-            });
-            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-                innerText:"Cancel", class:"a-link-button", margin: "6px",
-                clickListener:()=>{
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(sellPopupid);
-                }
-            });
-            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__["createPopup"])(sellPopupid, [txt, br, inputQty, inputPx, confirmBtn, cancelBtn]);
-            inputQty.focus();
-        }
-    }));
-
-    return div;
-}
-
-Warehouse.prototype.createProductUI = function(product, parentRefs) {
-    var company = parentRefs.company, industry = parentRefs.industry,
-        city = currentCityUi;
-    var div = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {
-        class:"cmpy-mgmt-warehouse-product-div"
-    });
-
-    //Products being designed TODO
-    if (!product.fin) {
-        div.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
-            innerHTML: "Designing " + product.name + "...<br>" +
-                        Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(product.prog, 2) + "% complete",
-        }));
-        return div;
-    }
-
-    //Completed products
-    var cmpAndDmdText = "";
-    if (company.unlockUpgrades[2] === 1) {
-        cmpAndDmdText += "<br>Demand: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(product.dmd, 3);
-    }
-    if (company.unlockUpgrades[3] === 1) {
-        cmpAndDmdText += "<br>Competition: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(product.cmp, 3);
-    }
-
-    var totalGain = product.data[city][1] - product.data[city][2]; //Production - sale
-    div.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
-        innerHTML: "<p class='tooltip'>" + product.name + ": " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(product.data[city][0], 3) + //Quantity
-                   "(" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(totalGain, 3) + "/s)" +
-                   "<span class='tooltiptext'>Prod: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(product.data[city][1], 3) + "/s<br>" +
-                   "Sell: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(product.data[city][2], 3) + "/s</span></p><br>" +
-                   "<p class='tooltip'>Rating: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(product.rat, 3) +
-                   "<span class='tooltiptext'>Quality: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(product.qlt, 3) + "<br>" +
-                   "Performance: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(product.per, 3) + "<br>" +
-                   "Durability: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(product.dur, 3) + "<br>" +
-                   "Reliability: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(product.rel, 3) + "<br>" +
-                   "Aesthetics: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(product.aes, 3) + "<br>" +
-                   "Features: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(product.fea, 3) +
-                   cmpAndDmdText + "</span></p><br>" +
-                   "<p class='tooltip'>Est. Production Cost: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(product.pCost / ProductProductionCostRatio, "$0.000a") +
-                   "<span class='tooltiptext'>An estimate of the material cost it takes to create this Product.</span></p><br>" +
-                   "<p class='tooltip'>Est. Market Price: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(product.pCost + product.rat / product.mku, "$0.000a") +
-                   "<span class='tooltiptext'>An estimate of how much consumers are willing to pay for this product. " +
-                   "Setting the sale price above this may result in less sales. Setting the sale price below this may result " +
-                   "in more sales.</span></p>"
-    }));
-    var buttonPanel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {
-        display:"inline-block",
-    });
-    div.appendChild(buttonPanel);
-
-    //Sell button
-    var sellInnerTextString = (product.sllman[city][1] === -1 ? "Sell (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(product.data[city][2], 3) + "/MAX)" :
-                              "Sell (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(product.data[city][2], 3) + "/" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(product.sllman[city][1], 3) + ")");
-    if (product.sCost) {
-        if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25__["isString"])(product.sCost)) {
-            sellInnerTextString += (" @ " + product.sCost);
-        } else {
-            sellInnerTextString += (" @ " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(product.sCost, "$0.000a"));
-        }
-    }
-    div.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-        innerText:sellInnerTextString, class:"a-link-button", display:"inline-block",margin:"6px",
-        clickListener:()=>{
-            var popupId = "cmpy-mgmt-sell-product-popup";
-            var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
-                innerHTML:"Enter the maximum amount of " + product.name + " you would like " +
-                          "to sell per second, as well as the price at which you would like to " +
-                          "sell it at.<br><br>" +
-                          "If the sell amount is set to 0, then the product will not be sold. If the " +
-                          "sell price is set to 0, then the product will be discarded.<br><br>" +
-                          "Setting the sell amount to 'MAX' will result in you always selling the " +
-                          "maximum possible amount of the material.<br><br>" +
-                          "When setting the sell amount, you can use the 'PROD' variable to designate a " +
-                          "dynamically changing amount that depends on your production. For example, " +
-                          "if you set the sell amount to 'PROD-1' then you will always sell 1 less of  " +
-                          "the material than you produce.<br><br>" +
-                          "When setting the sell price, you can use the 'MP' variable to set a " +
-                          "dynamically changing price that depends on the Product's estimated " +
-                          "market price. For example, if you set it to 'MP*5' then it " +
-                          "will always be sold at five times the estimated market price.",
-            });
-            var confirmBtn;
-            var inputQty = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("input", {
-                type:"text", value:product.sllman[city][1] ? product.sllman[city][1] : null, placeholder: "Sell amount",
-                onkeyup:(e)=>{
-                    e.preventDefault();
-                    if (e.keyCode === 13) {confirmBtn.click();}
-                }
-            });
-            var inputPx = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("input", {
-                type:"text", value: product.sCost ? product.sCost : null, placeholder: "Sell price",
-                onkeyup:(e)=>{
-                    e.preventDefault();
-                    if (e.keyCode === 13) {confirmBtn.click();}
-                }
-            });
-            confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-                class:"a-link-button", innerText:"Confirm",
-                clickListener:()=>{
-                    //Parse price
-                    if (inputPx.value.includes("MP")) {
-                        //Dynamically evaluated quantity. First test to make sure its valid
-                        //Sanitize input, then replace dynamic variables with arbitrary numbers
-                        var price = inputPx.value.replace(/\s+/g, '');
-                        price = price.replace(/[^-()\d/*+.MP]/g, '');
-                        var temp = price.replace(/MP/g, 1);
-                        try {
-                            temp = eval(temp);
-                        } catch(e) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Invalid value or expression for sell quantity field: " + e);
-                            return false;
-                        }
-                        if (temp == null || isNaN(temp)) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Invalid value or expression for sell quantity field.");
-                            return false;
-                        }
-                        product.sCost = price; //Use sanitized price
-                    } else {
-                        var cost = parseFloat(inputPx.value);
-                        if (isNaN(cost)) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Invalid value for sell price field");
-                            return false;
-                        }
-                        product.sCost = cost;
-                    }
-
-                    //Parse quantity
-                    if (inputQty.value.includes("MAX") || inputQty.value.includes("PROD")) {
-                        //Dynamically evaluated quantity. First test to make sure its valid
-                        var qty = inputQty.value.replace(/\s+/g, '');
-                        qty = qty.replace(/[^-()\d/*+.MAXPROD]/g, '');
-                        var temp = qty.replace(/MAX/g, 1);
-                        temp = temp.replace(/PROD/g, 1);
-                        try {
-                            temp = eval(temp);
-                        } catch(e) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Invalid value or expression for sell price field: " + e);
-                            return false;
-                        }
-
-                        if (temp == null || isNaN(temp)) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Invalid value or expression for sell price field");
-                            return false;
-                        }
-                        product.sllman[city][0] = true;
-                        product.sllman[city][1] = qty; //Use sanitized input
-                    } else if (isNaN(inputQty.value)) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Invalid value for sell quantity field! Must be numeric");
-                        return false;
-                    } else {
-                        var qty = parseFloat(inputQty.value);
-                        if (isNaN(qty)) {qty = 0;}
-                        if (qty === 0) {
-                            product.sllman[city][0] = false;
-                        } else {
-                            product.sllman[city][0] = true;
-                            product.sllman[city][1] = qty;
-                        }
-                    }
-                    this.createUI(parentRefs);
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
-                    return false;
-                }
-            });
-            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-                class:"a-link-button", innerText:"Cancel",
-                clickListener:()=>{
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
-                    return false;
-                }
-            });
-            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__["createPopup"])(popupId, [txt, inputQty, inputPx, confirmBtn, cancelBtn]);
-            inputQty.focus();
-        }
-    }));
-    div.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("br",{})); //force line break
-
-    //Limit production button
-    var limitProductionInnerText = "Limit Production";
-    if (product.prdman[city][0]) {
-        limitProductionInnerText += " (" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(product.prdman[city][1], 3) + ")";
-    }
-    div.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-        class:"a-link-button", innerText:limitProductionInnerText,display:"inline-block",
-        clickListener:()=>{
-            var popupId = "cmpy-mgmt-limit-product-production-popup";
-            var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
-                innerText:"Enter a limit to the amount of this product you would " +
-                          "like to product per second. Leave the box empty to set no limit."
-            });
-            var confirmBtn;
-            var input = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("input", {
-                type:"number", placeholder:"Limit",
-                onkeyup:(e)=>{
-                    e.preventDefault();
-                    if (e.keyCode === 13) {confirmBtn.click();}
-                }
-            });
-            confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-                class:"a-link-button", display:"inline-block", innerText:"Limit production", margin:'6px',
-                clickListener:()=>{
-                    if (input.value === "") {
-                        product.prdman[city][0] = false;
-                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
-                        return false;
-                    }
-                    var qty = parseFloat(input.value);
-                    if (isNaN(qty)) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Invalid value entered");
-                        return false;
-                    }
-                    if (qty < 0) {
-                        product.prdman[city][0] = false;
-                    } else {
-                        product.prdman[city][0] = true;
-                        product.prdman[city][1] = qty;
-                    }
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
-                    return false;
-                }
-            });
-            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-                class:"a-link-button", display:"inline-block", innerText:"Cancel", margin:"6px",
-                clickListener:()=>{
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
-                    return false;
-                }
-            });
-            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__["createPopup"])(popupId, [txt, input, confirmBtn, cancelBtn]);
-        }
-    }));
-
-    //Discontinue button
-    div.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-        class:'a-link-button', display:"inline-block",innerText:"Discontinue",
-        clickListener:()=>{
-            var popupId = "cmpy-mgmt-discontinue-product-popup";
-            var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
-                innerText:"Are you sure you want to do this? Discontinuing a product " +
-                          "removes it completely and permanently. You will no longer " +
-                          "produce this product and all of its existing stock will be " +
-                          "removed and left unsold",
-            });
-            var confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-                class:"a-link-button",innerText:"Discontinue",
-                clickListener:()=>{
-                    industry.discontinueProduct(product, parentRefs);
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
-                    return false;
-                }
-            });
-            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-                class:"a-link-button", innerText:"Cancel",
-                clickListener:()=>{
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
-                    return false;
-                }
-            });
-            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__["createPopup"])(popupId, [txt, confirmBtn, cancelBtn]);
-        }
-    }));
-    return div;
-}
-
-Warehouse.prototype.toJSON = function() {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_19__["Generic_toJSON"])("Warehouse", this);
-}
-
-Warehouse.fromJSON = function(value) {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_19__["Generic_fromJSON"])(Warehouse, value.data);
-}
-
-_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_19__["Reviver"].constructors.Warehouse = Warehouse;
-
-function Corporation(params={}) {
-    this.name = params.name ? params.name : "The Corporation";
-
-    //A division/business sector is represented  by the object:
-    this.divisions = [];
-
-    //Financial stats
-    this.funds      = new decimal_js__WEBPACK_IMPORTED_MODULE_30__[/* default */ "a"](150e9);
-    this.revenue    = new decimal_js__WEBPACK_IMPORTED_MODULE_30__[/* default */ "a"](0);
-    this.expenses   = new decimal_js__WEBPACK_IMPORTED_MODULE_30__[/* default */ "a"](0);
-    this.fundingRound = 0;
-    this.public     = false; //Publicly traded
-    this.numShares  = TOTALSHARES;
-    this.issuedShares = 0;
-    this.sharePrice = 0;
-    this.storedCycles = 0;
-
-    var numUnlockUpgrades = Object.keys(_CorporationUnlockUpgrades__WEBPACK_IMPORTED_MODULE_1__["CorporationUnlockUpgrades"]).length,
-        numUpgrades = Object.keys(_CorporationUpgrades__WEBPACK_IMPORTED_MODULE_2__["CorporationUpgrades"]).length;
-
-    this.unlockUpgrades = Array(numUnlockUpgrades).fill(0);
-    this.upgrades = Array(numUpgrades).fill(0);
-    this.upgradeMultipliers = Array(numUpgrades).fill(1);
-
-    this.state = new _CorporationState__WEBPACK_IMPORTED_MODULE_0__["CorporationState"]();
-}
-
-Corporation.prototype.getState = function() {
-    return this.state.getState();
-}
-
-Corporation.prototype.storeCycles = function(numCycles=1) {
-    this.storedCycles += numCycles;
-}
-
-Corporation.prototype.process = function() {
-    var corp = this;
-    if (this.storedCycles >= CyclesPerIndustryStateCycle) {
-        var state = this.getState(), marketCycles=1;
-        this.storedCycles -= (marketCycles * CyclesPerIndustryStateCycle);
-
-        //At the start of a new cycle, calculate profits from previous cycle
-        if (state === "START") {
-            this.revenue = new decimal_js__WEBPACK_IMPORTED_MODULE_30__[/* default */ "a"](0);
-            this.expenses = new decimal_js__WEBPACK_IMPORTED_MODULE_30__[/* default */ "a"](0);
-            this.divisions.forEach((ind) => {
-                if (ind.lastCycleRevenue === -Infinity || ind.lastCycleRevenue === Infinity) { return; }
-                if (ind.lastCycleExpenses === -Infinity || ind.lastCycleExpenses === Infinity) { return; }
-                this.revenue = this.revenue.plus(ind.lastCycleRevenue);
-                this.expenses = this.expenses.plus(ind.lastCycleExpenses);
-            });
-            var profit = this.revenue.minus(this.expenses);
-            var cycleProfit = profit.times(marketCycles * SecsPerMarketCycle);
-            if (isNaN(this.funds)) {
-                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("There was an error calculating your Corporations funds and they got reset to 0. " +
-                                "This is a bug. Please report to game developer.<br><br>" +
-                                "(Your funds have been set to $150b for the inconvenience)");
-                this.funds = new decimal_js__WEBPACK_IMPORTED_MODULE_30__[/* default */ "a"](150e9);
-            }
-            this.funds = this.funds.plus(cycleProfit);
-            this.updateSharePrice();
-        }
-
-        this.divisions.forEach(function(ind) {
-            ind.process(marketCycles, state, corp);
-        });
-
-
-        this.state.nextState();
-
-        if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_16__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_16__["Page"].Corporation)) {this.updateUIContent();}
-    }
-}
-
-Corporation.prototype.determineValuation = function() {
-    var val, profit = (this.revenue.minus(this.expenses)).toNumber();
-    if (this.public) {
-        val = this.funds.toNumber() + (profit * 85e3);
-        val *= (Math.pow(1.1, this.divisions.length));
-        val = Math.max(val, 0);
-    } else {
-        val = 10e9 + Math.max(this.funds.toNumber(), 0) / 3; //Base valuation
-        if (profit > 0) {
-            val += (profit * 320e3);
-            val *= (Math.pow(1.1, this.divisions.length));
-        } else {
-            val = 10e9 * Math.pow(1.1, this.divisions.length);
-        }
-        val -= (val % 1e6); //Round down to nearest millionth
-    }
-    return val * _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_10__["BitNodeMultipliers"].CorporationValuation;
-}
-
-Corporation.prototype.getInvestment = function() {
-    var val = this.determineValuation(), percShares;
-    switch (this.fundingRound) {
-        case 0: //Seed
-            percShares = 0.10;
-            break;
-        case 1: //Series A
-            percShares = 0.35;
-            break;
-        case 2: //Series B
-            percShares = 0.25;
-            break;
-        case 3: //Series C
-            percShares = 0.20;
-            break;
-        case 4:
-            return;
-    }
-    var funding = val * percShares * 4,
-        investShares = Math.floor(TOTALSHARES * percShares),
-        yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__[/* yesNoBoxGetYesButton */ "d"])(),
-        noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__[/* yesNoBoxGetNoButton */ "c"])();
-    yesBtn.innerHTML = "Accept";
-    noBtn.innerHML = "Reject";
-    yesBtn.addEventListener("click", ()=>{
-        ++this.fundingRound;
-        this.funds = this.funds.plus(funding);
-        this.numShares -= investShares;
-        this.displayCorporationOverviewContent();
-        return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__[/* yesNoBoxClose */ "a"])();
-    });
-    noBtn.addEventListener("click", ()=>{
-        return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__[/* yesNoBoxClose */ "a"])();
-    });
-    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__[/* yesNoBoxCreate */ "b"])("An investment firm has offered you " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(funding, '$0.000a') +
-                   " in funding in exchange for a " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(percShares*100, "0.000a") +
-                   "% stake in the company (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(investShares, '0.000a') + " shares).<br><br>" +
-                   "Do you accept or reject this offer?");
-}
-
-Corporation.prototype.goPublic = function() {
-    var goPublicPopupId = "cmpy-mgmt-go-public-popup";
-    var initialSharePrice = this.determineValuation() / (TOTALSHARES);
-    var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
-        innerHTML: "Enter the number of shares you would like to issue " +
-                   "for your IPO. These shares will be publicly sold " +
-                   "and you will no longer own them. Your Corporation will receive " +
-                   _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(initialSharePrice, '$0.000a') + " per share " +
-                   "(the IPO money will be deposited directly into your Corporation's funds).<br><br>" +
-                   "Furthermore, issuing more shares now will help drive up " +
-                   "your company's stock price in the future.<br><br>" +
-                   "You have a total of " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(this.numShares, "0.000a") + " of shares that you can issue.",
-    });
-    var yesBtn;
-    var input = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("input", {
-        type:"number",
-        placeholder: "Shares to issue",
-        onkeyup:(e)=>{
-            e.preventDefault();
-            if (e.keyCode === 13) {yesBtn.click();}
-        }
-    });
-    var br = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("br", {});
-    yesBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-        class:"a-link-button",
-        innerText:"Go Public",
-        clickListener:()=>{
-            var numShares = Math.round(input.value);
-            var initialSharePrice = this.determineValuation() / (TOTALSHARES);
-            if (isNaN(numShares)) {
-                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Invalid value for number of issued shares");
-                return false;
-            }
-            if (numShares > this.numShares) {
-                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Error: You don't have that many shares to issue!");
-                return false;
-            }
-            this.public = true;
-            this.sharePrice = initialSharePrice;
-            this.issuedShares = numShares;
-            this.numShares -= numShares;
-            this.funds = this.funds.plus(numShares * initialSharePrice);
-            this.displayCorporationOverviewContent();
-            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(goPublicPopupId);
-            return false;
-        }
-    });
-    var noBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-        class:"a-link-button",
-        innerText:"Cancel",
-        clickListener:()=>{
-            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(goPublicPopupId);
-            return false;
-        }
-    });
-    Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__["createPopup"])(goPublicPopupId, [txt, br, input, yesBtn, noBtn]);
-}
-
-Corporation.prototype.updateSharePrice = function() {
-    var targetPrice = this.determineValuation() / (TOTALSHARES - this.issuedShares);
-    if (this.sharePrice <= targetPrice) {
-        this.sharePrice *= (1 + (Math.random() * 0.01));
-    } else {
-        this.sharePrice *= (1 - (Math.random() * 0.01));
-    }
-    if (this.sharePrice <= 0.01) {this.sharePrice = 0.01;}
-}
-
-//One time upgrades that unlock new features
-Corporation.prototype.unlock = function(upgrade) {
-    var upgN = upgrade[0], price = upgrade[1];
-    while (this.unlockUpgrades.length <= upgN) {
-        this.unlockUpgrades.push(0);
-    }
-    if (this.funds.lt(price)) {
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("You don't have enough funds to unlock this!");
-        return;
-    }
-    this.unlockUpgrades[upgN] = 1;
-    this.funds = this.funds.minus(price);
-}
-
-//Levelable upgrades
-Corporation.prototype.upgrade = function(upgrade) {
-    var upgN = upgrade[0], basePrice = upgrade[1], priceMult = upgrade[2],
-        upgradeAmt = upgrade[3]; //Amount by which the upgrade multiplier gets increased (additive)
-    while (this.upgrades.length <= upgN) {this.upgrades.push(0);}
-    while (this.upgradeMultipliers.length <= upgN) {this.upgradeMultipliers.push(1);}
-    var totalCost = basePrice * Math.pow(priceMult, this.upgrades[upgN]);
-    if (this.funds.lt(totalCost)) {
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("You don't have enough funds to purchase this!");
-        return;
-    }
-    ++this.upgrades[upgN];
-    this.funds = this.funds.minus(totalCost);
-
-    //Increase upgrade multiplier
-    this.upgradeMultipliers[upgN] = 1 + (this.upgrades[upgN] * upgradeAmt);
-
-    //If storage size is being updated, update values in Warehouse objects
-    if (upgN === 1) {
-        for (var i = 0; i < this.divisions.length; ++i) {
-            var industry = this.divisions[i];
-            for (var city in industry.warehouses) {
-                if (industry.warehouses.hasOwnProperty(city) && industry.warehouses[city] instanceof Warehouse) {
-                    industry.warehouses[city].updateSize(this);
-                }
-            }
-        }
-    }
-
-    this.updateCorporationOverviewContent();
-}
-
-Corporation.prototype.getProductionMultiplier = function() {
-    var mult = this.upgradeMultipliers[0];
-    if (isNaN(mult) || mult < 1) {return 1;} else {return mult;}
-}
-
-Corporation.prototype.getStorageMultiplier = function() {
-    var mult = this.upgradeMultipliers[1];
-    if (isNaN(mult) || mult < 1) {return 1;} else {return mult;}
-}
-
-Corporation.prototype.getDreamSenseGain = function() {
-    var gain = this.upgradeMultipliers[2] - 1;
-    return gain <= 0 ? 0 : gain;
-}
-
-Corporation.prototype.getAdvertisingMultiplier = function() {
-    var mult = this.upgradeMultipliers[3];
-    if (isNaN(mult) || mult < 1) {return 1;} else {return mult;}
-}
-
-Corporation.prototype.getEmployeeCreMultiplier = function() {
-    var mult = this.upgradeMultipliers[4];
-    if (isNaN(mult) || mult < 1) {return 1;} else {return mult;}
-}
-
-Corporation.prototype.getEmployeeChaMultiplier = function() {
-    var mult = this.upgradeMultipliers[5];
-    if (isNaN(mult) || mult < 1) {return 1;} else {return mult;}
-}
-
-Corporation.prototype.getEmployeeIntMultiplier = function() {
-    var mult = this.upgradeMultipliers[6];
-    if (isNaN(mult) || mult < 1) {return 1;} else {return mult;}
-}
-
-Corporation.prototype.getEmployeeEffMultiplier = function() {
-    var mult = this.upgradeMultipliers[7];
-    if (isNaN(mult) || mult < 1) {return 1;} else {return mult;}
-}
-
-Corporation.prototype.getSalesMultiplier = function() {
-    var mult = this.upgradeMultipliers[8];
-    if (isNaN(mult) || mult < 1) {return 1;} else {return mult;}
-}
-
-Corporation.prototype.getScientificResearchMultiplier = function() {
-    var mult = this.upgradeMultipliers[9];
-    if (isNaN(mult) || mult < 1) {return 1;} else {return mult;}
-}
-
-//Keep 'global' variables for DOM elements so we don't have to search
-//through the DOM tree repeatedly when updating UI
-var companyManagementDiv, companyManagementHeaderTabs, companyManagementPanel,
-    currentCityUi,
-    corporationUnlockUpgrades, corporationUpgrades,
-
-    //Industry Overview Panel
-    industryOverviewPanel, industryOverviewText,
-
-    //Industry Employee Panel
-    industryEmployeePanel, industryEmployeeText, industryEmployeeHireButton, industryEmployeeAutohireButton,
-        industryEmployeeManagementUI, industryEmployeeInfo, industryIndividualEmployeeInfo,
-    industryOfficeUpgradeSizeButton,
-
-    //Industry Warehouse Panel
-    industryWarehousePanel, industrySmartSupplyCheckbox, industryWarehouseStorageText,
-        industryWarehouseUpgradeSizeButton, industryWarehouseStateText,
-        industryWarehouseMaterials, industryWarehouseProducts,
-
-    // Research Tree
-    researchTreeBoxOpened = false,
-    researchTreeBox,
-
-    // Tabs
-    headerTabs, cityTabs;
-Corporation.prototype.createUI = function() {
-    companyManagementDiv = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {
-        id:"cmpy-mgmt-container",
-        position:"fixed",
-        class:"generic-menupage-container"
-    });
-    companyManagementHeaderTabs = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {id:"cmpy-mgmt-header-tabs"});
-    companyManagementDiv.appendChild(companyManagementHeaderTabs);
-
-    //Create division/industry tabs at the top
-    this.updateUIHeaderTabs();
-
-    //Create the 'panel' that will have the actual content in the UI
-    companyManagementPanel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {id:"cmpy-mgmt-panel"});
-    companyManagementDiv.appendChild(companyManagementPanel);
-    document.getElementById("entire-game-container").appendChild(companyManagementDiv);
-
-    this.displayCorporationOverviewContent();
-}
-
-Corporation.prototype.updateUIHeaderTabs = function() {
-    if (companyManagementHeaderTabs) {
-        Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_26__["removeChildrenFromElement"])(companyManagementHeaderTabs);
-    } else {
-        console.log("ERROR: Header tabs div has not yet been created when Corporation.updateUIHeaderTabs() is called");
-        return;
-    }
-
-    //Corporation overview tabs
-    var cmpyOverviewHdrTab = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("button", {
-        id:"cmpy-mgmt-company-tab",
-        class:"cmpy-mgmt-header-tab",
-        innerText:this.name,
-        checked:true,
-        clickListener:()=>{
-            this.selectHeaderTab(cmpyOverviewHdrTab);
-            this.displayCorporationOverviewContent();
-            return false;
-        }
-    });
-    companyManagementHeaderTabs.appendChild(cmpyOverviewHdrTab);
-
-    //Tabs for each division
-    for (var i = 0; i < this.divisions.length; ++i) {
-        this.createDivisionUIHeaderTab(this.divisions[i]);
-    }
-
-    //Create a tab to expand into a new industry
-    companyManagementHeaderTabs.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("button", {
-        id:'cmpy-mgmt-expand-industry-tab',
-        class:"cmpy-mgmt-header-tab",
-        innerText:"Expand into new Industry",
-        clickListener: ()=>{
-            if (document.getElementById("cmpy-mgmt-expand-industry-popup") != null) {return;}
-
-            var container = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {
-                class:"popup-box-container",
-                id:"cmpy-mgmt-expand-industry-popup",
-            });
-            var content = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {class:"popup-box-content"});
-            var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
-                innerHTML: "Create a new division to expand into a new industry:",
-            });
-            var selector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("select", {
-                class:"dropdown"
-            });
-            var industryDescription = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {});
-            var yesBtn;
-            var nameInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("input", {
-                type:"text",
-                id:"cmpy-mgmt-expand-industry-name-input",
-                class: "text-input",
-                display:"block",
-                maxLength: 30,
-                pattern:"[a-zA-Z0-9-_]",
-                onkeyup:(e)=>{
-                    e.preventDefault();
-                    if (e.keyCode === 13) {yesBtn.click();}
-                }
-            });
-            var nameLabel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("label", {
-                for:"cmpy-mgmt-expand-industry-name-input",
-                innerText:"Division name: "
-            });
-            yesBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("span", {
-                class:"popup-box-button",
-                innerText:"Create Division",
-                clickListener: ()=>{
-                    var ind = selector.options[selector.selectedIndex].value,
-                        newDivisionName = nameInput.value;
-
-                    for (var i = 0; i < this.divisions.length; ++i) {
-                        if (this.divisions[i].name === newDivisionName) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("This name is already in use!");
-                            return false;
-                        }
-                    }
-                    if (this.funds.lt(_IndustryData__WEBPACK_IMPORTED_MODULE_4__["IndustryStartingCosts"][ind])) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Not enough money to create a new division in this industry");
-                    } else if (newDivisionName === "") {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("New division must have a name!");
-                    } else {
-                        this.funds = this.funds.minus(_IndustryData__WEBPACK_IMPORTED_MODULE_4__["IndustryStartingCosts"][ind]);
-                        var newInd = new Industry({
-                            name:newDivisionName,
-                            type:ind,
-                        });
-                        this.divisions.push(newInd);
-                        this.updateUIHeaderTabs();
-                        this.selectHeaderTab(headerTabs[headerTabs.length-2]);
-                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])("cmpy-mgmt-expand-industry-popup");
-                        this.displayDivisionContent(newInd, _Locations__WEBPACK_IMPORTED_MODULE_13__["Locations"].Sector12);
-                    }
-                    return false;
-                }
-            });
-            var noBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("span", {
-                class:"popup-box-button",
-                innerText:"Cancel",
-                clickListener: function() {
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])("cmpy-mgmt-expand-industry-popup");
-                    return false;
-                }
-            });
-
-            //Make an object to keep track of what industries you're already in
-            var ownedIndustries = {}
-            for (var i = 0; i < this.divisions.length; ++i) {
-                ownedIndustries[this.divisions[i].type] = true;
-            }
-
-            //Add industry types to selector
-            //Have Agriculture be first as recommended option
-            if (!ownedIndustries["Agriculture"]) {
-                selector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("option", {
-                    text:_IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"]["Agriculture"], value:"Agriculture"
-                }));
-            }
-
-            for (var key in _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"]) {
-                if (key !== "Agriculture" && _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].hasOwnProperty(key) && !ownedIndustries[key]) {
-                    var ind = _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"][key];
-                    selector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("option", {
-                        text: ind,value:key,
-                    }));
-                }
-            }
-
-            //Initial Industry Description
-            var ind = selector.options[selector.selectedIndex].value;
-            industryDescription.innerHTML = (_IndustryData__WEBPACK_IMPORTED_MODULE_4__["IndustryDescriptions"][ind] + "<br><br>");
-
-            //Change the industry description text based on selected option
-            selector.addEventListener("change", function() {
-                var ind = selector.options[selector.selectedIndex].value;
-                industryDescription.innerHTML = _IndustryData__WEBPACK_IMPORTED_MODULE_4__["IndustryDescriptions"][ind] + "<br><br>";
-            });
-
-            //Add to DOM
-            content.appendChild(txt);
-            content.appendChild(selector);
-            content.appendChild(industryDescription);
-            content.appendChild(nameLabel);
-            content.appendChild(nameInput);
-            content.appendChild(noBtn);
-            content.appendChild(yesBtn);
-            container.appendChild(content);
-            document.getElementById("entire-game-container").appendChild(container);
-            container.style.display = "flex";
-            return false;
-        }
-    }));
-
-    headerTabs = companyManagementDiv.getElementsByClassName("cmpy-mgmt-header-tab");
-}
-
-//Updates UI to display which header tab is selected
-Corporation.prototype.selectHeaderTab = function(currentTab) {
-    if (currentTab == null) {return;}
-    for (var i = 0; i < headerTabs.length; ++i) {
-        headerTabs[i].className = "cmpy-mgmt-header-tab";
-    }
-    currentTab.className = "cmpy-mgmt-header-tab current";
-}
-
-Corporation.prototype.createDivisionUIHeaderTab = function(division) {
-    var tabId = "cmpy-mgmt-" + division.name + "-tab";
-    var tab = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("button", {
-        id:tabId,
-        class:"cmpy-mgmt-header-tab",
-        innerText:division.name,
-        clickListener:()=>{
-            this.selectHeaderTab(tab);
-            this.displayDivisionContent(division, _Locations__WEBPACK_IMPORTED_MODULE_13__["Locations"].Sector12);
-            return false;
-        }
-    });
-    companyManagementHeaderTabs.appendChild(tab);
-}
-
-Corporation.prototype.clearUIPanel = function() {
-    while(companyManagementPanel.firstChild) {
-        companyManagementPanel.removeChild(companyManagementPanel.firstChild);
-    }
-}
-
-Corporation.prototype.updateUIContent = function() {
-    //Check which of the header tab buttons is checked
-    if (headerTabs == null) {
-        console.log("ERROR: headerTabs is null in Corporation.updateUIContent()");
-        return;
-    }
-    for (var i = 0; i < headerTabs.length; ++i) {
-        if (headerTabs[i].classList.contains("current")) {
-            if (i === 0) {
-                //Corporation overview
-                this.updateCorporationOverviewContent();
-            } else {
-                //Division
-                this.updateDivisionContent(this.divisions[i-1]);
-            }
-            return;
-        }
-    }
-}
-
-Corporation.prototype.displayCorporationOverviewContent = function() {
-    this.clearUIPanel();
-    companyManagementPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
-        id:"cmpy-mgmt-overview-text",
-    }));
-    if (headerTabs && headerTabs.length >= 1) {
-        this.selectHeaderTab(headerTabs[0]);
-    }
-
-    //Check if player has Corporation Handbook
-    var homeComp = _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getHomeComputer(), hasHandbook = false,
-        handbookFn = "corporation-management-handbook.lit";
-    for (var i = 0; i < homeComp.messages.length; ++i) {
-        if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25__["isString"])(homeComp.messages[i]) && homeComp.messages[i] === handbookFn) {
-            hasHandbook = true;
-            break;
-        }
-    }
-
-    companyManagementPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-        class:"a-link-button", innerText:"Getting Started Guide", display:"inline-block",
-        tooltip:"Get a copy of and read 'The Complete Handbook for Creating a Successful Corporation.' " +
-                "This is a .lit file that guides you through the beginning of setting up a Corporation and " +
-                "provides some tips/pointers for helping you get started with managing it.",
-        clickListener:()=>{
-            if (!hasHandbook) {homeComp.messages.push(handbookFn);}
-            Object(_Literature__WEBPACK_IMPORTED_MODULE_12__[/* showLiterature */ "b"])(handbookFn);
-            return false;
-        }
-    }));
-
-    //Investors
-    if (this.public) {
-        //Sell share buttons
-        var sellShares = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-            class:"a-link-button", innerText:"Sell Shares", display:"inline-block",
-            tooltip:"Sell your shares in the company. This is the only way to " +
-                    "profit from your business venture.",
-            clickListener:()=>{
-                var popupId = "cmpy-mgmt-sell-shares-popup";
-                var currentStockPrice = this.sharePrice;
-                var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
-                    innerHTML: "Enter the number of shares you would like to sell. The money from " +
-                               "selling your shares will go directly to you (NOT your Corporation). " +
-                               "The current price of your " +
-                               "company's stock is " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(currentStockPrice, "$0.000a"),
-                });
-                var profitIndicator = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {});
-                var input = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("input", {
-                    type:"number", placeholder:"Shares to sell", margin:"5px",
-                    inputListener: ()=> {
-                        var numShares = Math.round(input.value);
-                        if (isNaN(numShares) || numShares <= 0) {
-                            profitIndicator.innerText = "ERROR: Invalid value entered for number of shares to sell"
-                        } else if (numShares > this.numShares) {
-                            profitIndicator.innerText = "You don't have this many shares to sell!";
-                        } else {
-                            profitIndicator.innerText = "Sell " + numShares + " shares for a total of " +
-                                                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(numShares * currentStockPrice, '$0.000a');
-                        }
-                    }
-                });
-                var confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-                    class:"a-link-button", innerText:"Sell shares", display:"inline-block",
-                    clickListener:()=>{
-                        var shares = Math.round(input.value);
-                        if (isNaN(shares) || shares <= 0) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("ERROR: Invalid value for number of shares");
-                        } else if (shares > this.numShares) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("ERROR: You don't have this many shares to sell");
-                        } else {
-                            this.numShares -= shares;
-                            if (isNaN(this.issuedShares)) {
-                                console.log("ERROR: Corporation issuedShares is NaN: " + this.issuedShares);
-                                console.log("Converting to number now");
-                                var res = parseInt(this.issuedShares);
-                                if (isNaN(res)) {
-                                    this.issuedShares = 0;
-                                } else {
-                                    this.issuedShares = res;
-                                }
-                            }
-                            this.issuedShares += shares;
-                            _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].gainMoney(shares * this.sharePrice);
-                            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
-                            return false;
-                        }
-
-                    }
-                });
-                var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-                    class:"a-link-button", innerText:"Cancel", display:"inline-block",
-                    clickListener:()=>{
-                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
-                        return false;
-                    }
-                });
-                Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__["createPopup"])(popupId, [txt, profitIndicator, input, confirmBtn, cancelBtn]);
-            }
-        });
-
-        //Buyback shares button
-        var buybackShares = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-            class:"a-link-button", innerText:"Buyback shares", display:"inline-block",
-            tooltip:"Buy back shares you that previously issued or sold at market price.",
-            clickListener:()=>{
-                var popupId = "cmpy-mgmt-buyback-shares-popup";
-                var currentStockPrice = this.sharePrice;
-                var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
-                    innerHTML: "Enter the number of shares you would like to buy back at market price. To purchase " +
-                               "these shares, you must use your own money (NOT your Corporation's funds). " +
-                               "The current price of your " +
-                               "company's stock is " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(currentStockPrice, "$0.000a") +
-                               ". Your company currently has " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.issuedShares, 3) + " outstanding stock shares",
-                });
-                var costIndicator = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {});
-                var input = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("input", {
-                    type:"number", placeholder:"Shares to buyback", margin:"5px",
-                    inputListener: ()=> {
-                        var numShares = Math.round(input.value);
-                        //TODO add conditional for if player doesn't have enough money
-                        if (isNaN(numShares) || numShares <= 0) {
-                            costIndicator.innerText = "ERROR: Invalid value entered for number of shares to buyback"
-                        } else if (numShares > this.issuedShares) {
-                            costIndicator.innerText = "There are not this many shares available to buy back. " +
-                                                      "There are only " + this.issuedShares + " outstanding shares.";
-                        } else {
-                            console.log("here");
-                            costIndicator.innerText = "Purchase " + numShares + " shares for a total of " +
-                                                      _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(numShares * currentStockPrice, '$0.000a');
-                        }
-                    }
-                });
-                var confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-                    class:"a-link-button", innerText:"Buy shares", display:"inline-block",
-                    clickListener:()=>{
-                        var shares = Math.round(input.value);
-                        var tempStockPrice = this.sharePrice;
-                        if (isNaN(shares) || shares <= 0) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("ERROR: Invalid value for number of shares");
-                        } else if (shares > this.issuedShares) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("ERROR: There are not this many oustanding shares to buy back");
-                        } else if (shares * tempStockPrice > _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].money) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("ERROR: You do not have enough money to purchase this many shares (you need " +
-                                            _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(shares * tempStockPrice, "$0.000a") + ")");
-                        } else {
-                            this.numShares += shares;
-                            if (isNaN(this.issuedShares)) {
-                                console.log("ERROR: Corporation issuedShares is NaN: " + this.issuedShares);
-                                console.log("Converting to number now");
-                                var res = parseInt(this.issuedShares);
-                                if (isNaN(res)) {
-                                    this.issuedShares = 0;
-                                } else {
-                                    this.issuedShares = res;
-                                }
-                            }
-                            this.issuedShares -= shares;
-                            _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].loseMoney(shares * tempStockPrice);
-                            //TODO REMOVE from Player money
-                            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
-                        }
-                        return false;
-
-                    }
-                });
-                var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-                    class:"a-link-button",
-                    innerText:"Cancel",
-                    display:"inline-block",
-                    clickListener:()=>{
-                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
-                        return false;
-                    }
-                });
-                Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__["createPopup"])(popupId, [txt, costIndicator, input, confirmBtn, cancelBtn]);
-            }
-        });
-
-        companyManagementPanel.appendChild(sellShares);
-        companyManagementPanel.appendChild(buybackShares);
-
-        //If your Corporation is big enough, buy faction influence through bribes
-        var canBribe = this.determineValuation() >= BribeThreshold;
-        var bribeFactions = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-            class: canBribe ? "a-link-button" : "a-link-button-inactive",
-            innerText:"Bribe Factions", display:"inline-block",
-            tooltip:canBribe
-                    ? "Use your Corporations power and influence to bribe Faction leaders in exchange for reputation"
-                    : "Your Corporation is not powerful enough to bribe Faction leaders",
-            clickListener:()=>{
-                var popupId = "cmpy-mgmt-bribe-factions-popup";
-                var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
-                    innerText:"You can use Corporation funds or stock shares to bribe Faction Leaders in exchange for faction reputation"
-                });
-                var factionSelector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("select", {margin:"3px"});
-                for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].factions.length; ++i) {
-                    var facName = _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].factions[i];
-                    factionSelector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("option", {
-                        text:facName, value:facName
-                    }));
-                }
-                var repGainText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p");
-                var stockSharesInput;
-                var moneyInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("input", {
-                    type:"number", placeholder:"Corporation funds", margin:"5px",
-                    inputListener:()=>{
-                        var money = moneyInput.value == null || moneyInput.value == "" ? 0 : parseFloat(moneyInput.value);
-                        var stockPrice = this.sharePrice;
-                        var stockShares = stockSharesInput.value == null || stockSharesInput.value == "" ? 0 : Math.round(parseFloat(stockSharesInput.value));
-                        if (isNaN(money) || isNaN(stockShares) || money < 0 || stockShares < 0) {
-                            repGainText.innerText = "ERROR: Invalid value(s) entered";
-                        } else if (this.funds.lt(money)) {
-                            repGainText.innerText = "ERROR: You do not have this much money to bribe with";
-                        } else if (this.stockShares > this.numShares) {
-                            repGainText.innerText = "ERROR: You do not have this many shares to bribe with";
-                        } else {
-
-                            var totalAmount = Number(money) + (stockShares * stockPrice);
-                            var repGain = totalAmount / BribeToRepRatio;
-                            repGainText.innerText = "You will gain " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(repGain, 0) +
-                                                    " reputation with " +
-                                                    factionSelector.options[factionSelector.selectedIndex].value +
-                                                    " with this bribe";
-                        }
-                    }
-                });
-                stockSharesInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("input", {
-                    type:"number", placeholder:"Stock Shares", margin: "5px",
-                    inputListener:()=>{
-                        var money = moneyInput.value == null || moneyInput.value == "" ? 0 : parseFloat(moneyInput.value);
-                        var stockPrice = this.sharePrice;
-                        var stockShares = stockSharesInput.value == null || stockSharesInput.value == "" ? 0 : Math.round(stockSharesInput.value);
-                        if (isNaN(money) || isNaN(stockShares) || money < 0 || stockShares < 0) {
-                            repGainText.innerText = "ERROR: Invalid value(s) entered";
-                        } else if (this.funds.lt(money)) {
-                            repGainText.innerText = "ERROR: You do not have this much money to bribe with";
-                        } else if (this.stockShares > this.numShares) {
-                            repGainText.innerText = "ERROR: You do not have this many shares to bribe with";
-                        } else {
-                            var totalAmount = money + (stockShares * stockPrice);
-                            var repGain = totalAmount / BribeToRepRatio;
-                            console.log("repGain: " + repGain);
-                            repGainText.innerText = "You will gain " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(repGain, 0) +
-                                                    " reputation with " +
-                                                    factionSelector.options[factionSelector.selectedIndex].value +
-                                                    " with this bribe";
-                        }
-                    }
-                });
-                var confirmButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-                    class:"a-link-button", innerText:"Bribe", display:"inline-block",
-                    clickListener:()=>{
-                        var money = moneyInput.value == null || moneyInput.value == "" ? 0 : parseFloat(moneyInput.value);
-                        var stockPrice = this.sharePrice;
-                        var stockShares = stockSharesInput.value == null || stockSharesInput.value == ""? 0 : Math.round(parseFloat(stockSharesInput.value));
-                        var fac = _Faction_Factions__WEBPACK_IMPORTED_MODULE_11__["Factions"][factionSelector.options[factionSelector.selectedIndex].value];
-                        if (fac == null) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("ERROR: You must select a faction to bribe");
-                            return false;
-                        }
-                        if (isNaN(money) || isNaN(stockShares) || money < 0 || stockShares < 0) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("ERROR: Invalid value(s) entered");
-                        } else if (this.funds.lt(money)) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("ERROR: You do not have this much money to bribe with");
-                        } else if (stockShares > this.numShares) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("ERROR: You do not have this many shares to bribe with");
-                        } else {
-                            var totalAmount = money + (stockShares * stockPrice);
-                            var repGain = totalAmount / BribeToRepRatio;
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("You gained " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(repGain, 0) +
-                                            " reputation with " + fac.name  + " by bribing them.");
-                            fac.playerReputation += repGain;
-                            this.funds = this.funds.minus(money);
-                            this.numShares -= stockShares;
-                            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
-                            return false;
-                        }
-                    }
-                });
-                var cancelButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-                    class:"a-link-button", innerText:"Cancel", display:"inline-block",
-                    clickListener:()=>{
-                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
-                        return false;
-                    }
-                });
-
-                Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__["createPopup"])(popupId, [txt, factionSelector, repGainText,
-                                      moneyInput, stockSharesInput, confirmButton, cancelButton]);
-            }
-        });
-        companyManagementPanel.appendChild(bribeFactions);
-    } else {
-        var findInvestors = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-            class: this.fundingRound >= 4 ? "a-link-button-inactive" : "a-link-button tooltip",
-            innerText: "Find Investors",
-            display:"inline-block",
-            clickListener:()=>{
-                this.getInvestment();
-            }
-        });
-        if (this.fundingRound < 4) {
-            var findInvestorsTooltip = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("span", {
-                class:"tooltiptext",
-                innerText:"Search for private investors who will give you startup funding in exchange " +
-                          "for equity (stock shares) in your company"
-            });
-            findInvestors.appendChild(findInvestorsTooltip);
-        }
-
-        var goPublic = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-            class:"a-link-button tooltip",
-            innerText:"Go Public",
-            display:"inline-block",
-            clickListener:()=>{
-                this.goPublic();
-                return false;
-            }
-        });
-        var goPublicTooltip = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("span", {
-            class:"tooltiptext",
-            innerText: "Become a publicly traded and owned entity. Going public involves " +
-                       "issuing shares for an IPO. Once you are a public company, " +
-                       "your shares will be traded on the stock market."
-        });
-        goPublic.appendChild(goPublicTooltip);
-
-        companyManagementPanel.appendChild(findInvestors);
-        companyManagementPanel.appendChild(goPublic);
-    }
-
-    //Update overview text
-    this.updateCorporationOverviewContent();
-
-    //Don't show upgrades if player hasn't opened any divisions
-    if (this.divisions.length <= 0) {return; }
-    //Corporation Upgrades
-    var upgradeContainer = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {
-        class:"cmpy-mgmt-upgrade-container",
-    });
-    upgradeContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("h1", {
-        innerText:"Unlocks", margin:"6px", padding:"6px",
-    }));
-
-    //Unlock upgrades
-    var corp = this;
-    var numUnlockUpgrades = Object.keys(_CorporationUnlockUpgrades__WEBPACK_IMPORTED_MODULE_1__["CorporationUnlockUpgrades"]).length,
-        numUpgrades = Object.keys(_CorporationUpgrades__WEBPACK_IMPORTED_MODULE_2__["CorporationUpgrades"]).length;
-    if (this.unlockUpgrades == null || this.upgrades == null) { //Backwards compatibility
-        this.unlockUpgrades = Array(numUnlockUpgrades).fill(0);
-        this.upgrades = Array(numUpgrades).fill(0);
-    }
-    while (this.unlockUpgrades.length < numUnlockUpgrades) {this.unlockUpgrades.push(0);}
-    while (this.upgrades.length < numUpgrades) {this.upgrades.push(0);}
-    while (this.upgradeMultipliers < numUpgrades) {this.upgradeMultipliers.push(1);}
-
-    for (var i = 0; i < numUnlockUpgrades; ++i) {
-        (function(i, corp) {
-            if (corp.unlockUpgrades[i] === 0) {
-                var upgrade = _CorporationUnlockUpgrades__WEBPACK_IMPORTED_MODULE_1__["CorporationUnlockUpgrades"][i.toString()];
-                if (upgrade == null) {
-                    console.log("ERROR: Could not find upgrade index " + i);
-                    return;
-                }
-
-                upgradeContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {
-                    class:"cmpy-mgmt-upgrade-div", width:"45%",
-                    innerHTML:upgrade[2] +  " - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(upgrade[1], "$0.000a"),
-                    tooltip: upgrade[3],
-                    clickListener:()=>{
-                        if (corp.funds.lt(upgrade[1])) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Insufficient funds");
-                        } else {
-                            corp.unlock(upgrade);
-                            corp.displayCorporationOverviewContent();
-                        }
-                    }
-                }));
-            }
-        })(i, corp);
-    }
-
-    //Levelable upgrades
-    upgradeContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("h1", {
-        innerText:"Upgrades", margin:"6px", padding:"6px",
-    }));
-
-    for (var i = 0; i < numUpgrades; ++i) {
-        (function(i, corp) {
-            var upgrade = _CorporationUpgrades__WEBPACK_IMPORTED_MODULE_2__["CorporationUpgrades"][i.toString()];
-            if (upgrade == null) {
-                console.log("ERROR: Could not find levelable upgrade index " + i);
-                return;
-            }
-
-            var baseCost = upgrade[1], priceMult = upgrade[2];
-            var cost = baseCost * Math.pow(priceMult, corp.upgrades[i]);
-            upgradeContainer.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {
-                class:"cmpy-mgmt-upgrade-div", width:"45%",
-                innerHTML:upgrade[4] + " - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(cost, "$0.000a"),
-                tooltip:upgrade[5],
-                clickListener:()=>{
-                    if (corp.funds.lt(cost)) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Insufficient funds");
-                    } else {
-                        corp.upgrade(upgrade);
-                        corp.displayCorporationOverviewContent();
-                    }
-                }
-            }));
-        })(i, corp);
-    }
-
-    companyManagementPanel.appendChild(upgradeContainer);
-}
-
-Corporation.prototype.updateCorporationOverviewContent = function() {
-    var p = document.getElementById("cmpy-mgmt-overview-text");
-    if (p == null) {
-        console.log("WARNING: Could not find overview text elemtn in updateCorporationOverviewContent()");
-        return;
-    }
-    var totalFunds = this.funds,
-        totalRevenue = new decimal_js__WEBPACK_IMPORTED_MODULE_30__[/* default */ "a"](0),
-        totalExpenses = new decimal_js__WEBPACK_IMPORTED_MODULE_30__[/* default */ "a"](0);
-
-    var profit = this.revenue.minus(this.expenses).toNumber(),
-        profitStr = profit >= 0 ? _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(profit, "$0.000a") : "-" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(-1 * profit, "$0.000a");
-
-    var txt = "Total Funds: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(totalFunds.toNumber(), '$0.000a') + "<br>" +
-              "Total Revenue: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(this.revenue.toNumber(), "$0.000a") + " / s<br>" +
-              "Total Expenses: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(this.expenses.toNumber(), "$0.000a") + "/ s<br>" +
-              "Total Profits: " + profitStr + " / s<br>" +
-              "Publicly Traded: " + (this.public ? "Yes" : "No") + "<br>" +
-              "Owned Stock Shares: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(this.numShares, '0.000a') + "<br>" +
-              "Stock Price: " + (this.public ? "$" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(this.sharePrice, 2) : "N/A") + "<br><br>";
-
-    var prodMult        = this.getProductionMultiplier(),
-        storageMult     = this.getStorageMultiplier(),
-        advMult         = this.getAdvertisingMultiplier(),
-        empCreMult      = this.getEmployeeCreMultiplier(),
-        empChaMult      = this.getEmployeeChaMultiplier(),
-        empIntMult      = this.getEmployeeIntMultiplier(),
-        empEffMult      = this.getEmployeeEffMultiplier(),
-        salesMult       = this.getSalesMultiplier(),
-        sciResMult      = this.getScientificResearchMultiplier();
-    if (prodMult > 1)       {txt += "Production Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(prodMult, 3) + "<br>";}
-    if (storageMult > 1)    {txt += "Storage Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(storageMult, 3) + "<br>";}
-    if (advMult > 1)        {txt += "Advertising Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(advMult, 3) + "<br>";}
-    if (empCreMult > 1)     {txt += "Empl. Creativity Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(empCreMult, 3) + "<br>";}
-    if (empChaMult > 1)     {txt += "Empl. Charisma Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(empChaMult, 3) + "<br>";}
-    if (empIntMult > 1)     {txt += "Empl. Intelligence Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(empIntMult, 3) + "<br>";}
-    if (empEffMult > 1)     {txt += "Empl. Efficiency Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(empEffMult, 3) + "<br>";}
-    if (salesMult > 1)      {txt += "Sales Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(salesMult, 3) + "<br>";}
-    if (sciResMult > 1)     {txt += "Scientific Research Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(sciResMult, 3) + "<br>";}
-    p.innerHTML = txt;
-}
-
-Corporation.prototype.displayDivisionContent = function(division, city) {
-    this.clearUIPanel();
-    currentCityUi = city;
-
-    //Add the city tabs on the left
-    for (var cityName in division.offices) {
-        if (division.offices[cityName] instanceof OfficeSpace) {
-            this.createCityUITab(cityName, division);
-        }
-    }
-    cityTabs = companyManagementPanel.getElementsByClassName("cmpy-mgmt-city-tab");
-    if (cityTabs.length > 0) {
-        this.selectCityTab(document.getElementById("cmpy-mgmt-city-" + city + "-tab"), city);
-    }
-
-    //Expand into new City button
-    companyManagementPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("button", {
-        class:"cmpy-mgmt-city-tab", innerText:"Expand into new City", display:"inline-block",
-        clickListener:()=>{
-            var popupId = "cmpy-mgmt-expand-city-popup";
-            var text = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
-                innerText: "Would you like to expand into a new city by opening an office? " +
-                           "This would cost " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(OfficeInitialCost, '$0.000a'),
-            });
-            var citySelector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("select", {class: "dropdown", margin:"5px"});
-            for (var cityName in division.offices) {
-                if (division.offices.hasOwnProperty(cityName)) {
-                    if (!(division.offices[cityName] instanceof OfficeSpace)) {
-                        citySelector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("option", {
-                            text: cityName,
-                            value: cityName
-                        }));
-                    }
-                }
-            }
-
-            var confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-                innerText:"Confirm", class:"a-link-button", display:"inline-block", margin:"3px",
-                clickListener:()=>{
-                    var city = citySelector.options[citySelector.selectedIndex].value;
-                    if (this.funds.lt(OfficeInitialCost)) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("You don't have enough company funds to open a new office!");
-                    } else {
-                        this.funds = this.funds.minus(OfficeInitialCost);
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Opened a new office in " + city + "!");
-                        division.offices[city] = new OfficeSpace({
-                            loc:city,
-                            size:OfficeInitialSize,
-                        });
-                        this.displayDivisionContent(division, city);
-                    }
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
-                    return false;
-                }
-            });
-            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-                innerText:"Cancel", class:"a-link-button", display:"inline-block", margin:"3px",
-                clickListener:()=>{
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
-                    return false;
-                }
-            })
-            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__["createPopup"])(popupId, [text, citySelector, confirmBtn, cancelBtn]);
-            return false;
-        }
-    }));
-    companyManagementPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("br", {})); // Force line break
-
-    //Get office object
-    var office = division.offices[currentCityUi];
-    if (!(office instanceof OfficeSpace)) {
-        console.log("ERROR: Current city for UI does not have an office space");
-        return;
-    }
-
-    //Left and right panels
-    var leftPanel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {
-        class: "cmpy-mgmt-industry-left-panel",
-        overflow: "visible",
-        padding: "2px",
-    });
-    var rightPanel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {
-        class: "cmpy-mgmt-industry-right-panel",
-        overflow: "visible",
-        padding: "2px",
-    });
-    companyManagementPanel.appendChild(leftPanel);
-    companyManagementPanel.appendChild(rightPanel);
-
-    //Different sections (Overview, Employee/Office, and Warehouse)
-    industryOverviewPanel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {
-        id:"cmpy-mgmt-industry-overview-panel", class:"cmpy-mgmt-industry-overview-panel"
-    });
-    leftPanel.appendChild(industryOverviewPanel);
-
-    industryEmployeePanel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {
-        id:"cmpy-mgmt-employee-panel", class:"cmpy-mgmt-employee-panel"
-    });
-    leftPanel.appendChild(industryEmployeePanel);
-
-    industryWarehousePanel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {
-        id:"cmpy-mgmt-warehouse-panel", class:"cmpy-mgmt-warehouse-panel"
-    });
-    rightPanel.appendChild(industryWarehousePanel);
-
-    //Industry overview text
-    industryOverviewText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {});
-    industryOverviewPanel.appendChild(industryOverviewText);
-    industryOverviewPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("br", {}));
-
-    //Industry overview Purchases & Upgrades
-    var numUpgrades = Object.keys(_IndustryUpgrades__WEBPACK_IMPORTED_MODULE_5__["IndustryUpgrades"]).length;
-    while (division.upgrades.length < numUpgrades) {division.upgrades.push(0);} //Backwards compatibility
-
-    var industryOverviewUpgrades = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {});
-    industryOverviewUpgrades.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("u", {
-        innerText:"Purchases & Upgrades", margin:"2px", padding:"2px",
-        fontSize:"14px",
-    }));
-    industryOverviewUpgrades.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("br", {}));
-    for (var i = 0; i < numUpgrades; ++i) {
-        (function(i, corp, division, office) {
-            var upgrade = _IndustryUpgrades__WEBPACK_IMPORTED_MODULE_5__["IndustryUpgrades"][i.toString()];
-            if (upgrade == null) {
-                console.log("ERROR: Could not find levelable upgrade index: " + i);
-                return;
-            }
-
-            var baseCost = upgrade[1], priceMult = upgrade[2], cost = 0;
-            switch(i) {
-                case 0: //Coffee, cost is static per employee
-                    cost = office.employees.length * baseCost;
-                    break;
-                default:
-                    cost = baseCost * Math.pow(priceMult, division.upgrades[i]);
-                    break;
-            }
-            industryOverviewUpgrades.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {
-                class:"cmpy-mgmt-upgrade-div", display:"inline-block",
-                innerHTML:upgrade[4] + ' - ' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(cost, "$0.000a"),
-                tooltip:upgrade[5],
-                clickListener:()=>{
-                    if (corp.funds.lt(cost)) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Insufficient funds");
-                    } else {
-                        corp.funds = corp.funds.minus(cost);
-                        division.upgrade(upgrade, {
-                            corporation:corp,
-                            office:office,
-                        });
-                        corp.displayDivisionContent(division, city);
-                    }
-                }
-            }));
-            industryOverviewUpgrades.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("br", {}));
-
-        })(i, this, division, office);
-    }
-
-
-    industryOverviewPanel.appendChild(industryOverviewUpgrades);
-
-    //Industry Overview 'Create Product' button if applicable
-    if (division.makesProducts) {
-        //Get the text on the button based on Industry type
-        var createProductButtonText, createProductPopupText;
-        switch(division.type) {
-            case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Food:
-                createProductButtonText = "Build Restaurant";
-                createProductPopupText = "Build and manage a new restaurant!"
-                break;
-            case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Tobacco:
-                createProductButtonText = "Create Product";
-                createProductPopupText = "Create a new tobacco product!";
-                break;
-            case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Pharmaceutical:
-                createProductButtonText = "Create Drug";
-                createProductPopupText = "Design and develop a new pharmaceutical drug!";
-                break;
-            case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Computer:
-            case "Computer":
-                createProductButtonText = "Create Product";
-                createProductPopupText = "Design and manufacture a new computer hardware product!";
-                break;
-            case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Robotics:
-                createProductButtonText = "Design Robot";
-                createProductPopupText = "Design and create a new robot or robotic system!";
-                break;
-            case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Software:
-                createProductButtonText = "Develop Software";
-                createProductPopupText = "Develop a new piece of software!";
-                break;
-            case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Healthcare:
-                createProductButtonText = "Build Hospital";
-                createProductPopupText = "Build and manage a new hospital!";
-                break;
-            case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].RealEstate:
-                createProductButtonText = "Develop Property";
-                createProductPopupText = "Develop a new piece of real estate property!";
-                break;
-            default:
-                createProductButtonText = "Create Product";
-                return "";
-        }
-        createProductPopupText += "<br><br>To begin developing a product, " +
-            "first choose the city in which it will be designed. The stats of your employees " +
-            "in the selected city affect the properties of the finished product, such as its " +
-            "quality, performance, and durability.<br><br>" +
-            "You can also choose to invest money in the design and marketing of " +
-            "the product. Investing money in its design will result in a superior product. " +
-            "Investing money in marketing the product will help the product's sales.";
-
-        //Create the button
-        industryOverviewPanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-            class:"a-link-button", innerText:createProductButtonText, margin:"6px", display:"inline-block",
-            clickListener:()=>{
-                var popupId = "cmpy-mgmt-create-product-popup";
-                var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
-                    innerHTML:createProductPopupText,
-                });
-                var designCity = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("select", {});
-                for (var cityName in division.offices) {
-                    if (division.offices[cityName] instanceof OfficeSpace) {
-                        designCity.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("option", {
-                            value:cityName,
-                            text:cityName
-                        }));
-                    }
-                }
-                var foo = "Product Name";
-                if (division.type === _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Food) {
-                    foo = "Restaurant Name";
-                } else if (division.type === _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Healthcare) {
-                    foo = "Hospital Name";
-                } else if (division.type === _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].RealEstate) {
-                    foo = "Property Name";
-                }
-                var productNameInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("input", {
-                    placeholder:foo,
-                });
-                var lineBreak1 = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("br",{});
-                var designInvestInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("input", {
-                    type:"number",
-                    placeholder:"Design investment"
-                });
-                var marketingInvestInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("input", {
-                    type:"number",
-                    placeholder:"Marketing investment"
-                });
-                var confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-                    class:"a-link-button",
-                    innerText:"Develop Product",
-                    clickListener:()=>{
-                        if (designInvestInput.value == null) {designInvestInput.value = 0;}
-                        if (marketingInvestInput.value == null) {marketingInvestInput.value = 0;}
-                        var designInvest = parseFloat(designInvestInput.value),
-                            marketingInvest = parseFloat(marketingInvestInput.value);
-                        if (productNameInput.value == null || productNameInput.value === "") {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("You must specify a name for your product!");
-                        } else if (isNaN(designInvest)) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Invalid value for design investment");
-                        } else if (isNaN(marketingInvest))  {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Invalid value for marketing investment");
-                        } else if (this.funds.lt(designInvest + marketingInvest)) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("You don't have enough company funds to make this large of an investment");
-                        } else {
-                            var product = new _Product__WEBPACK_IMPORTED_MODULE_8__["Product"]({
-                                name:productNameInput.value.replace(/[<>]/g, ''), //Sanitize for HTMl elements
-                                createCity:designCity.options[designCity.selectedIndex].value,
-                                designCost: designInvest,
-                                advCost: marketingInvest,
-                            });
-                            this.funds = this.funds.minus(designInvest + marketingInvest);
-                            division.products[product.name] = product;
-                            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
-                        }
-                        //this.updateUIContent();
-                        this.displayDivisionContent(division, city);
-                        return false;
-                    }
-                })
-                var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-                    class:"a-link-button",
-                    innerText:"Cancel",
-                    clickListener:()=>{
-                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
-                        return false;
-                    }
-                })
-                Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__["createPopup"])(popupId, [txt, designCity, productNameInput, lineBreak1,
-                                      designInvestInput, marketingInvestInput, confirmBtn, cancelBtn]);
-            }
-        }));
-    }
-
-    //Employee and Office Panel
-    industryEmployeeText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
-        id: "cmpy-mgmt-employee-p",
-        display:"block",
-        innerHTML:  "<h1>Office Space</h1><br>" +
-                    "Type: " + office.tier + "<br>" +
-                    "Comfort: " + office.comf + "<br>" +
-                    "Beauty: " + office.beau + "<br>" +
-                    "Size: " + office.employees.length + " / " + office.size + " employees",
-    });
-    industryEmployeePanel.appendChild(industryEmployeeText);
-
-    //Hire Employee button
-    if (office.employees.length === 0) {
-        industryEmployeeHireButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-            class:"a-link-button",display:"inline-block",
-            innerText:"Hire Employee", fontSize:"13px",
-            tooltip:"You'll need to hire some employees to get your operations started! " +
-                    "It's recommended to have at least one employee in every position",
-            clickListener:()=>{
-                office.findEmployees({corporation:this, division:division});
-                return false;
-            }
-        });
-        //industryEmployeeHireButton.classList.add("flashing-button");
-    } else {
-        industryEmployeeHireButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-            class:"a-link-button",display:"inline-block",
-            innerText:"Hire Employee", fontSize:"13px",
-            clickListener:()=>{
-                office.findEmployees({corporation:this, division:division});
-                return false;
-            }
-        });
-    }
-    industryEmployeePanel.appendChild(industryEmployeeHireButton);
-
-    //Autohire Employee button
-    industryEmployeeAutohireButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-        class:"a-link-button", display:"inline-block",
-        innerText:"Autohire Employee", fontSize:"13px",
-        tooltip:"Automatically hires an employee and gives him/her a random name",
-        clickListener:()=>{
-            office.hireRandomEmployee({corporation:this, division:division});
-            return false;
-        }
-    });
-    industryEmployeePanel.appendChild(industryEmployeeAutohireButton);
-
-    //Upgrade Office Size button
-    industryEmployeePanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("br", {}));
-    industryOfficeUpgradeSizeButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-        class:"a-link-button", innerText:"Upgrade size",
-        display:"inline-block", margin:"6px", fontSize:"13px",
-        tooltip:"Upgrade the office's size so that it can hold more employees!",
-        clickListener:()=>{
-            var popupId = "cmpy-mgmt-upgrade-office-size-popup";
-            var initialPriceMult = Math.round(office.size / OfficeInitialSize);
-            var upgradeCost = OfficeInitialCost * Math.pow(1.07, initialPriceMult);
-
-            //Calculate cost to upgrade size by 15 employees
-            var mult = 0;
-            for (var i = 0; i < 5; ++i) {
-                mult += (Math.pow(1.07, initialPriceMult + i));
-            }
-            var upgradeCost15 = OfficeInitialCost * mult;
-
-            //Calculate max upgrade size and cost
-            var maxMult = (this.funds.dividedBy(OfficeInitialCost)).toNumber();
-            var maxNum = 1;
-            mult = Math.pow(1.07, initialPriceMult);
-            while(maxNum < 50) { //Hard cap of 50x (extra 150 employees)
-                if (mult >= maxMult) {break;}
-                var multIncrease = Math.pow(1.07, initialPriceMult + maxNum);
-                if (mult + multIncrease > maxMult) {
-                    break;
-                } else {
-                    mult += multIncrease;
-                }
-                ++maxNum;
-            }
-
-            var upgradeCostMax = OfficeInitialCost * mult;
-
-            var text = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
-                innerText:"Increase the size of your office space to fit additional employees!"
-            });
-            var text2 = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {innerText: "Upgrade size: "});
-
-            var confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-                class: this.funds.lt(upgradeCost) ? "a-link-button-inactive" : "a-link-button",
-                display:"inline-block", margin:"4px", innerText:"by 3",
-                tooltip:_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(upgradeCost, "$0.000a"),
-                clickListener:()=>{
-                    if (this.funds.lt(upgradeCost)) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("You don't have enough company funds to purchase this upgrade!");
-                    } else {
-                        office.size += OfficeInitialSize;
-                        this.funds = this.funds.minus(upgradeCost);
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Office space increased! It can now hold " + office.size + " employees");
-                        this.updateUIContent();
-                    }
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
-                    return false;
-                }
-            });
-            var confirmBtn15 = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-                class: this.funds.lt(upgradeCost15) ? "a-link-button-inactive" : "a-link-button",
-                display:"inline-block", margin:"4px", innerText:"by 15",
-                tooltip:_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(upgradeCost15, "$0.000a"),
-                clickListener:()=>{
-                    if (this.funds.lt(upgradeCost15)) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("You don't have enough company funds to purchase this upgrade!");
-                    } else {
-                        office.size += (OfficeInitialSize * 5);
-                        this.funds = this.funds.minus(upgradeCost15);
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Office space increased! It can now hold " + office.size + " employees");
-                        this.updateUIContent();
-                    }
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
-                    return false;
-                }
-            });
-            var confirmBtnMax = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-                class:this.funds.lt(upgradeCostMax) ? "a-link-button-inactive" : "a-link-button",
-                display:"inline-block", margin:"4px", innerText:"by MAX (" + maxNum*OfficeInitialSize + ")",
-                tooltip:_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(upgradeCostMax, "$0.000a"),
-                clickListener:()=>{
-                    if (this.funds.lt(upgradeCostMax)) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("You don't have enough company funds to purchase this upgrade!");
-                    } else {
-                        office.size += (OfficeInitialSize * maxNum);
-                        this.funds = this.funds.minus(upgradeCostMax);
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Office space increased! It can now hold " + office.size + " employees");
-                        this.updateUIContent();
-                    }
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
-                    return false;
-                }
-            });
-            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-                class:"a-link-button", innerText:"Cancel", display:"inline-block", margin:"4px",
-                clickListener:()=>{
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
-                    return false;
-                }
-            })
-            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__["createPopup"])(popupId, [text, text2, confirmBtn, confirmBtn15, confirmBtnMax, cancelBtn]);
-            return false;
-        }
-    });
-    industryEmployeePanel.appendChild(industryOfficeUpgradeSizeButton);
-
-    //Throw Office Party
-    industryEmployeePanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-        class:"a-link-button", display:"inline-block", innerText:"Throw Party",
-        fontSize:"13px",
-        tooltip:"Throw an office party to increase your employee's morale and happiness",
-        clickListener:()=>{
-            var popupId = "cmpy-mgmt-throw-office-party-popup";
-            var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
-                innerText:"Enter the amount of money you would like to spend PER EMPLOYEE " +
-                          "on this office party"
-            });
-            var totalCostTxt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
-                innerText:"Throwing this party will cost a total of $0"
-            });
-            var confirmBtn;
-            var input = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("input", {
-                type:"number", margin:"5px", placeholder:"$ / employee",
-                inputListener:()=>{
-                    if (isNaN(input.value) || input.value < 0) {
-                        totalCostTxt.innerText = "Invalid value entered!"
-                    } else {
-                        var totalCost = input.value * office.employees.length;
-                        totalCostTxt.innerText = "Throwing this party will cost a total of " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(totalCost, '$0.000a');
-                    }
-                },
-                onkeyup:(e)=>{
-                    e.preventDefault();
-                    if (e.keyCode === 13) {confirmBtn.click();}
-                }
-            });
-            confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-                class:"a-link-button",
-                display:"inline-block",
-                innerText:"Throw Party",
-                clickListener:()=>{
-                    if (isNaN(input.value) || input.value < 0) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Invalid value entered");
-                    } else {
-                        var totalCost = input.value * office.employees.length;
-                        if (this.funds.lt(totalCost)) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("You don't have enough company funds to throw this party!");
-                        } else {
-                            this.funds = this.funds.minus(totalCost);
-                            var mult;
-                            for (var fooit = 0; fooit < office.employees.length; ++fooit) {
-                                mult = office.employees[fooit].throwParty(input.value);
-                            }
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("You threw a party for the office! The morale and happiness " +
-                                            "of each employee increased by " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])((mult-1) * 100, 2) + "%.");
-                            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
-                        }
-                    }
-                    return false;
-                }
-            });
-            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-                class:"a-link-button",
-                display:"inline-block",
-                innerText:"Cancel",
-                clickListener:()=>{
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(popupId);
-                    return false;
-                }
-            });
-            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__["createPopup"])(popupId, [txt, totalCostTxt, input, confirmBtn, cancelBtn]);
-        }
-    }));
-
-    industryEmployeeManagementUI = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {});
-    industryEmployeeInfo = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {margin:"4px", padding:"4px"});
-    if (empManualAssignmentModeActive) {
-        //Employees manually assigned
-        industryEmployeeManagementUI.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-            class:"a-link-button", display:"inline-block", margin:"4px",
-            innerText:"Switch to Auto Mode",
-            tooltip:"Switch to Automatic Assignment Mode, which will automatically  " +
-                    "assign employees to your selected jobs. You simply have to select " +
-                    "the number of assignments for each job",
-            clickListener:()=>{
-                empManualAssignmentModeActive = false;
-                this.displayDivisionContent(division, city);
-            }
-        }));
-        industryEmployeeManagementUI.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("br", {}));
-
-        industryIndividualEmployeeInfo = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {margin:"4px", padding:"4px"});
-        var selector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("select", {
-            color: "white", backgroundColor:"black", margin:"4px", padding:"4px",
-            changeListener:()=>{
-                var name = selector.options[selector.selectedIndex].text;
-                for (var i = 0; i < office.employees.length; ++i) {
-                    if (office.employees[i].name === name) {
-                        Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_26__["removeChildrenFromElement"])(industryIndividualEmployeeInfo);
-                        office.employees[i].createUI(industryIndividualEmployeeInfo, this);
-                        return;
-                    }
-                }
-                console.log("ERROR: Employee in selector could not be found");
-            }
-        });
-
-        for (var i = 0; i < office.employees.length; ++i) {
-            selector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("option", {text:office.employees[i].name}));
-        }
-
-        selector.selectedIndex = -1;
-
-        industryEmployeeManagementUI.appendChild(industryEmployeeInfo);
-        industryEmployeeManagementUI.appendChild(selector);
-        industryEmployeeManagementUI.appendChild(industryIndividualEmployeeInfo);
-    } else {
-        //Player only manages the number of each occupation, not who gets what job
-        industryEmployeeManagementUI.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-            class:"a-link-button", display:"inline-block", margin:"4px",
-            innerText:"Switch to Manual Mode",
-            tooltip:"Switch to Manual Assignment Mode, which allows you to " +
-                    "specify which employees should get which jobs",
-            clickListener:()=>{
-                empManualAssignmentModeActive = true;
-                this.displayDivisionContent(division, city);
-            }
-        }));
-        industryEmployeeManagementUI.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("br", {}));
-
-        var opCount = 0, engCount = 0, busCount = 0,
-            mgmtCount = 0, rndCount = 0, unassignedCount = 0,
-            trainingCount = 0;
-        for (var i = 0; i < office.employees.length; ++i) {
-            switch (office.employees[i].pos) {
-                case _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Operations:
-                    ++opCount; break;
-                case _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Engineer:
-                    ++engCount; break;
-                case _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Business:
-                    ++busCount; break;
-                case _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Management:
-                    ++mgmtCount; break;
-                case _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].RandD:
-                    ++rndCount; break;
-                case _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Unassigned:
-                    ++unassignedCount; break;
-                case _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Training:
-                    ++trainingCount; break;
-                default:
-                    console.log("ERROR: Unrecognized employee position: " + office.employees[i].pos);
-                    break;
-            }
-        }
-
-        //Unassigned employee count display
-        industryEmployeeManagementUI.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
-            display:"inline-block",
-            innerText:"Unassigned Employees: " + unassignedCount,
-        }));
-        industryEmployeeManagementUI.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("br", {}));
-
-        //General display of employee information (avg morale, avg energy, etc.)
-        industryEmployeeManagementUI.appendChild(industryEmployeeInfo);
-        industryEmployeeManagementUI.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("br", {}));
-
-        var positions = [_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Operations, _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Engineer,
-                         _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Business, _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Management,
-                         _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].RandD, _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__["EmployeePositions"].Training];
-        var descriptions = ["Manages supply chain operations. Improves production.", //Operations
-                            "Develops and maintains products and production systems. Improves production.", //Engineer
-                            "Handles sales and finances. Improves sales.", //Business
-                            "Leads and oversees employees and office operations. Improves production.", //Management
-                            "Research new innovative ways to improve the company. Generates Scientific Research", //RandD
-                            "Set employee to training, which will increase some of their stats. Employees in training do not affect any company operations."] //Training
-        var counts = [opCount, engCount, busCount, mgmtCount, rndCount, trainingCount];
-        for (var i = 0; i < positions.length; ++i) {
-            (function(corp, i) {
-                var info = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("h2", {
-                    display:"inline-block", width:"40%", fontSize:"15px",
-                    innerText: positions[i] + "(" + counts[i] + ")",
-                    tooltip: descriptions[i]
-                });
-                var plusBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-                    class: unassignedCount > 0 ? "a-link-button" : "a-link-button-inactive",
-                    display:"inline-block", innerText:"+",
-                    clickListener:()=>{
-                        office.assignEmployeeToJob(positions[i]);
-                        corp.displayDivisionContent(division, city);
-                    }
-                });
-                var minusBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-                    class: counts[i] > 0 ? "a-link-button" : "a-link-button-inactive",
-                    display:"inline-block", innerText:"-",
-                    clickListener:()=>{
-                        office.unassignEmployeeFromJob(positions[i]);
-                        corp.displayDivisionContent(division, city);
-                    }
-                });
-                var newline = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("br", {});
-                industryEmployeeManagementUI.appendChild(info);
-                industryEmployeeManagementUI.appendChild(plusBtn);
-                industryEmployeeManagementUI.appendChild(minusBtn);
-                industryEmployeeManagementUI.appendChild(newline);
-            })(this, i);
-        }
-    }
-    industryEmployeePanel.appendChild(industryEmployeeManagementUI);
-
-    //Warehouse Panel
-    var warehouse = division.warehouses[currentCityUi];
-    if (warehouse instanceof Warehouse) {
-        warehouse.createUI({industry:division, company: this});
-    } else {
-        industryWarehousePanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
-            innerText:"Purchase Warehouse ($5b)",
-            class: "a-link-button",
-            clickListener:()=>{
-                if (this.funds.lt(WarehouseInitialCost)) {
-                    Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("You do not have enough funds to do this!");
-                } else {
-                    division.warehouses[currentCityUi] = new Warehouse({
-                        loc:currentCityUi,
-                        size:WarehouseInitialSize,
-                    });
-                    this.funds = this.funds.minus(WarehouseInitialCost);
-                    this.displayDivisionContent(division, currentCityUi);
-                }
-                return false;
-            }
-        }));
-    }
-    this.updateDivisionContent(division);
-}
-
-Corporation.prototype.updateDivisionContent = function(division) {
-    if (!(division instanceof Industry)) {
-        console.log("ERROR: Invalid 'division' argument in Corporation.updateDivisionContent");
-        return;
-    }
-    var vechain = (this.unlockUpgrades[4] === 1);
-    //Industry Overview Text
-    var profit = division.lastCycleRevenue.minus(division.lastCycleExpenses).toNumber(),
-        profitStr = profit >= 0 ? _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(profit, "$0.000a") : "-" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(-1 * profit, "$0.000a");
-    var advertisingInfo = "";
-    if (vechain) {
-        var advertisingFactors = division.getAdvertisingFactors();
-        var awarenessFac = advertisingFactors[1];
-        var popularityFac = advertisingFactors[2];
-        var ratioFac = advertisingFactors[3];
-        var totalAdvertisingFac = advertisingFactors[0];
-        advertisingInfo =
-            "<p class='tooltip'>Advertising Multiplier: x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(totalAdvertisingFac, 3) +
-            "<span class='tooltiptext cmpy-mgmt-advertising-info'>Total multiplier for this industry's sales due to its awareness and popularity<br>" +
-            "Awareness Bonus: x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(Math.pow(awarenessFac, 0.85), 3) + "<br>" +
-            "Popularity Bonus: x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(Math.pow(popularityFac, 0.85), 3) + "<br>" +
-            "Ratio Multiplier: x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(Math.pow(ratioFac, 0.85), 3) + "</span></p><br>"
-
-    }
-
-    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_26__["removeChildrenFromElement"])(industryOverviewText);
-    industryOverviewText.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
-        innerHTML:"Industry: " + division.type + " (Corp Funds: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(this.funds.toNumber(), "$0.000a") + ")<br><br>" +
-                  "Awareness: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(division.awareness, 3) + "<br>" +
-                  "Popularity: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(division.popularity, 3) +  "<br>" +
-                  advertisingInfo + "<br>" +
-                  "Revenue: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(division.lastCycleRevenue.toNumber(), "$0.000a") + " / s<br>" +
-                  "Expenses: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__["numeralWrapper"].format(division.lastCycleExpenses.toNumber(), "$0.000a") + " /s<br>" +
-                  "Profit: " + profitStr + " / s<br><br>"
-    }));
-    industryOverviewText.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
-        marginTop:"2px",
-        innerText:"Production Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(division.prodMult, 2),
-        tooltip:"Production gain from owning production-boosting materials " +
-                "such as hardware, Robots, AI Cores, and Real Estate"
-    }));
-    industryOverviewText.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {
-        innerText:"?", class:"help-tip",
-        clickListener:()=>{
-            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Owning Hardware, Robots, AI Cores, and Real Estate " +
-                            "can boost your Industry's production. The effect these " +
-                            "materials have on your production varies between Industries. " +
-                            "For example, Real Estate may be very effective for some Industries, " +
-                            "but ineffective for others.<br><br>" +
-                            "This division's production multiplier is calculated by summing " +
-                            "the individual production multiplier of each of its office locations. " +
-                            "This production multiplier is applied to each office. Therefore, it is " +
-                            "beneficial to expand into new cities as this can greatly increase the " +
-                            "production multiplier of your entire Division.");
-        }
-    }));
-    Object(_utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_20__["appendLineBreaks"])(industryOverviewText, 2);
-    industryOverviewText.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
-        display:"inline-block",
-        innerText:"Scientific Research: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(division.sciResearch.qty, 3),
-        tooltip:"Scientific Research increases the quality of the materials and " +
-                "products that you produce."
-    }));
-    industryOverviewText.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("div", {
-        class: "help-tip",
-        innerText: "Research",
-        clickListener: () => {
-            division.createResearchBox();
-        }
-    }));
-
-    //Office and Employee List
-    var office = division.offices[currentCityUi];
-    industryEmployeeText.innerHTML =
-                "<h1>Office Space</h1><br>" +
-                "Type: " + office.tier + "<br>" +
-                "Comfort: " + office.comf + "<br>" +
-                "Beauty: " + office.beau + "<br>" +
-                "Size: " + office.employees.length + " / " + office.size + " employees";
-    if (office.employees.length >= office.size) {
-        industryEmployeeHireButton.className = "a-link-button-inactive";
-        industryEmployeeAutohireButton.className = "a-link-button-inactive tooltip";
-    } else if (office.employees.length === 0) {
-        industryEmployeeHireButton.className = "a-link-button tooltip flashing-button";
-        industryEmployeeAutohireButton.className = "a-link-button tooltip";
-    } else {
-        industryEmployeeHireButton.className = "a-link-button";
-        industryEmployeeAutohireButton.className = "a-link-button tooltip";
-    }
-
-    //Employee Overview stats
-    //Calculate average morale, happiness, and energy
-    var totalMorale = 0, totalHappiness = 0, totalEnergy = 0,
-        avgMorale = 0, avgHappiness = 0, avgEnergy = 0;
-    for (var i = 0; i < office.employees.length; ++i) {
-        totalMorale += office.employees[i].mor;
-        totalHappiness += office.employees[i].hap;
-        totalEnergy += office.employees[i].ene;
-    }
-    if (office.employees.length > 0) {
-        avgMorale = totalMorale / office.employees.length;
-        avgHappiness = totalHappiness / office.employees.length;
-        avgEnergy = totalEnergy / office.employees.length;
-    }
-    industryEmployeeInfo.innerHTML =
-        "Avg Employee Morale: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(avgMorale, 3) + "<br>" +
-        "Avg Employee Happiness: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(avgHappiness, 3) + "<br>" +
-        "Avg Employee Energy: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(avgEnergy, 3);
-    if (vechain) { //VeChain - Statistics
-        industryEmployeeInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("br", {}));
-        industryEmployeeInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
-            innerText:"Material Production: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(division.getOfficeProductivity(office), 3),
-            tooltip: "The base amount of material this office can produce. Does not include " +
-                     "production multipliers from upgrades and materials. This value is based off " +
-                     "the productivity of your Operations, Engineering, and Management employees"
-        }));
-        industryEmployeeInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("br", {}));
-        industryEmployeeInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
-            innerText:"Product Production: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(division.getOfficeProductivity(office, {forProduct:true}), 3),
-            tooltip: "The base amount of any given Product this office can produce. Does not include " +
-                     "production multipliers from upgrades and materials. This value is based off " +
-                     "the productivity of your Operations, Engineering, and Management employees"
-        }));
-        industryEmployeeInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("br", {}));
-        industryEmployeeInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
-            innerText: "Business Multiplier: x" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__["formatNumber"])(division.getBusinessFactor(office), 3),
-            tooltip: "The effect this office's 'Business' employees has on boosting sales"
-        }));
-    }
-
-    //Warehouse
-    var warehouse = division.warehouses[currentCityUi];
-    if (warehouse instanceof Warehouse) {
-        warehouse.updateUI({industry:division, company:this});
-    }
-}
-
-Corporation.prototype.createCityUITab = function(city, division) {
-    var tab = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("button", {
-        id:"cmpy-mgmt-city-" + city + "-tab",
-        class:"cmpy-mgmt-city-tab",
-        innerText:city,
-        clickListener:()=>{
-            this.selectCityTab(tab, city);
-            this.displayDivisionContent(division, city);
-            return false;
-        }
-    });
-    companyManagementPanel.appendChild(tab);
-}
-
-Corporation.prototype.selectCityTab = function(activeTab, city) {
-    if (activeTab == null) {
-        activeTab = document.getElementById("cmpy-mgmt-city-" + city + "-tab");
-        if (activeTab == null) {return;}
-    }
-    for (var i = 0; i < cityTabs.length; ++i) {
-        cityTabs[i].className = "cmpy-mgmt-city-tab";
-    }
-    activeTab.className = "cmpy-mgmt-city-tab current";
-}
-
-Corporation.prototype.clearUI = function() {
-    //Delete everything
-    if (companyManagementDiv != null) {Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__["removeElementById"])(companyManagementDiv.id);}
-
-    //Reset global DOM variables
-    companyManagementDiv        = null;
-    companyManagementPanel      = null;
-    currentCityUi               = null;
-
-    corporationUnlockUpgrades   = null;
-    corporationUpgrades         = null;
-
-    industryOverviewPanel       = null;
-    industryOverviewText        = null;
-
-    industryEmployeePanel           = null;
-    industryEmployeeText            = null;
-    industryEmployeeHireButton      = null;
-    industryEmployeeAutohireButton  = null;
-    industryEmployeeManagementUI    = null;
-    industryEmployeeInfo            = null;
-    industryIndividualEmployeeInfo  = null;
-
-    industryOfficeUpgradeSizeButton = null;
-
-    industryWarehousePanel              = null;
-    industrySmartSupplyCheckbox         = null;
-    industryWarehouseStorageText        = null;
-    industryWarehouseUpgradeSizeButton  = null;
-    industryWarehouseStateText          = null;
-    industryWarehouseMaterials          = null;
-    industryWarehouseProducts           = null;
-
-    researchTreeBoxOpened = false;
-    researchTreeBox = null;
-
-    companyManagementHeaderTabs = null;
-    headerTabs                  = null;
-    cityTabs                    = null;
-
-    document.getElementById("character-overview-wrapper").style.visibility = "visible";
-}
-
-Corporation.prototype.toJSON = function() {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_19__["Generic_toJSON"])("Corporation", this);
-}
-
-Corporation.fromJSON = function(value) {
-	return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_19__["Generic_fromJSON"])(Corporation, value.data);
-}
-
-_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_19__["Reviver"].constructors.Corporation = Corporation;
-
-
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 63)))
+throw new Error("Module parse failed: Unexpected token (1167:46)\nYou may need an appropriate loader to handle this file type.\n| \r\n| // Get multipliers from Research\r\n> Industry.prototype.getAdvertisingMultiplier() {\r\n|     return IndustryResearchTrees[this.type].getAdvertisingMultiplier();\r\n| }\r");
 
 /***/ }),
-/* 62 */
-/*!*************************************!*\
-  !*** ./src/Corporation/Material.ts ***!
-  \*************************************/
+/* 59 */
+/*!*********************************************!*\
+  !*** ./utils/uiHelpers/appendLineBreaks.ts ***!
+  \*********************************************/
 /*! no static exports found */
-/*! exports used: Material */
+/*! exports used: appendLineBreaks */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
-class Material {
-    constructor(params = {}) {
-        // Name of material
-        this.name = "";
-        // Amount of material owned
-        this.qty = 0;
-        // Material's "quality". Unbounded
-        this.qlt = 0;
-        // How much demand the Material has in the market, and the range of possible
-        // values for this "demand"
-        this.dmd = 0;
-        this.dmdR = [0, 0];
-        // How much competition there is for this Material in the market, and the range
-        // of possible values for this "competition"
-        this.cmp = 0;
-        this.cmpR = [0, 0];
-        // Maximum volatility of this Materials stats
-        this.mv = 0;
-        // Markup. Determines how high of a price you can charge on the material
-        // compared to the market price without suffering loss in # of sales
-        // Quality is divided by this to determine markup limits
-        // e,g, If mku is 10 and quality is 100 then you can markup prices by 100/10 = 10
-        this.mku = 0;
-        // How much of this material is being bought, sold, imported and produced every second
-        this.buy = 0;
-        this.sll = 0;
-        this.prd = 0;
-        this.imp = 0;
-        // Exports of this material to another warehouse/industry
-        this.exp = [];
-        // Total amount of this material exported in the last cycle
-        this.totalExp = 0;
-        // Cost / sec to buy this material. AKA Market Price
-        this.bCost = 0;
-        // Cost / sec to sell this material
-        this.sCost = 0;
-        // Flags to keep track of whether production and/or sale of this material is limited
-        // [Whether production/sale is limited, limit amount]
-        this.prdman = [false, 0]; // Production
-        this.sllman = [false, 0]; // Sale
-        if (params.name) {
-            this.name = params.name;
-        }
-        this.init();
-    }
-    // Initiatizes a Material object from a JSON save state.
-    static fromJSON(value) {
-        return JSONReviver_1.Generic_fromJSON(Material, value.data);
-    }
-    init() {
-        switch (this.name) {
-            case "Water":
-                this.dmd = 75;
-                this.dmdR = [65, 85];
-                this.cmp = 50;
-                this.cmpR = [40, 60];
-                this.bCost = 1500;
-                this.mv = 0.2;
-                this.mku = 6;
-                break;
-            case "Energy":
-                this.dmd = 90;
-                this.dmdR = [80, 100];
-                this.cmp = 80;
-                this.cmpR = [65, 95];
-                this.bCost = 2000;
-                this.mv = 0.2;
-                this.mku = 6;
-                break;
-            case "Food":
-                this.dmd = 80;
-                this.dmdR = [70, 90];
-                this.cmp = 60;
-                this.cmpR = [35, 85];
-                this.bCost = 5000;
-                this.mv = 1;
-                this.mku = 3;
-                break;
-            case "Plants":
-                this.dmd = 70;
-                this.dmdR = [20, 90];
-                this.cmp = 50;
-                this.cmpR = [30, 70];
-                this.bCost = 3000;
-                this.mv = 0.6;
-                this.mku = 3.75;
-                break;
-            case "Metal":
-                this.dmd = 80;
-                this.dmdR = [75, 85];
-                this.cmp = 70;
-                this.cmpR = [60, 80];
-                this.bCost = 2650;
-                this.mv = 1;
-                this.mku = 6;
-                break;
-            case "Hardware":
-                this.dmd = 85;
-                this.dmdR = [80, 90];
-                this.cmp = 80;
-                this.cmpR = [65, 95];
-                this.bCost = 8e3;
-                this.mv = 0.5; //Less mv bc its processed twice
-                this.mku = 1;
-                break;
-            case "Chemicals":
-                this.dmd = 55;
-                this.dmdR = [40, 70];
-                this.cmp = 60;
-                this.cmpR = [40, 80];
-                this.bCost = 9e3;
-                this.mv = 1.2;
-                this.mku = 2;
-                break;
-            case "Real Estate":
-                this.dmd = 50;
-                this.dmdR = [5, 100];
-                this.cmp = 50;
-                this.cmpR = [25, 75];
-                this.bCost = 80e3;
-                this.mv = 1.5; //Less mv bc its processed twice
-                this.mku = 1.5;
-                break;
-            case "Drugs":
-                this.dmd = 60;
-                this.dmdR = [45, 75];
-                this.cmp = 70;
-                this.cmpR = [40, 100];
-                this.bCost = 40e3;
-                this.mv = 1.6;
-                this.mku = 1;
-                break;
-            case "Robots":
-                this.dmd = 90;
-                this.dmdR = [80, 100];
-                this.cmp = 90;
-                this.cmpR = [80, 100];
-                this.bCost = 75e3;
-                this.mv = 0.5; //Less mv bc its processed twice
-                this.mku = 1;
-                break;
-            case "AI Cores":
-                this.dmd = 90;
-                this.dmdR = [80, 100];
-                this.cmp = 90;
-                this.cmpR = [80, 100];
-                this.bCost = 15e3;
-                this.mv = 0.8; //Less mv bc its processed twice
-                this.mku = 0.5;
-                break;
-            case "Scientific Research":
-                break;
-            default:
-                console.log("Invalid material type in init(): " + this.name);
-                break;
-        }
-    }
-    // Process change in demand, competition, and buy cost of this material
-    processMarket() {
-        // The price will change in accordance with demand and competition.
-        // e.g. If demand goes up, then so does price. If competition goes up, price goes down
-        const priceVolatility = (Math.random() * this.mv) / 300;
-        const priceChange = 1 + priceVolatility;
-        //This 1st random check determines whether competition increases or decreases
-        const compVolatility = (Math.random() * this.mv) / 100;
-        const compChange = 1 + compVolatility;
-        if (Math.random() < 5) {
-            this.cmp *= compChange;
-            if (this.cmp > this.cmpR[1]) {
-                this.cmp = this.cmpR[1];
-            }
-            ;
-            this.bCost *= (1 / priceChange); // Competition increases, so price goes down
-        }
-        else {
-            this.cmp *= (1 / compChange);
-            if (this.cmp < this.cmpR[0]) {
-                this.cmp = this.cmpR[0];
-            }
-            this.bCost *= priceChange; // Competition decreases, so price goes up
-        }
-        // This 2nd random check determines whether demand increases or decreases
-        const dmdVolatility = (Math.random() * this.mv) / 100;
-        const dmdChange = 1 + dmdVolatility;
-        if (Math.random() < 0.5) {
-            this.dmd *= dmdChange;
-            if (this.dmd > this.dmdR[1]) {
-                this.dmd = this.dmdR[1];
-            }
-            this.bCost *= priceChange; // Demand increases, so price goes up
-        }
-        else {
-            this.dmd *= (1 / dmdChange);
-            if (this.dmd < this.dmdR[0]) {
-                this.dmd = this.dmdR[0];
-            }
-            this.bCost *= (1 / priceChange);
-        }
-    }
-    // Serialize the current object to a JSON save state.
-    toJSON() {
-        return JSONReviver_1.Generic_toJSON("Material", this);
-    }
-}
-exports.Material = Material;
-JSONReviver_1.Reviver.constructors.Material = Material;
-
-
-/***/ }),
-/* 63 */,
-/* 64 */
-/*!******************************************!*\
-  !*** ./utils/uiHelpers/removeElement.ts ***!
-  \******************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
+const createElement_1 = __webpack_require__(/*! ./createElement */ 2);
 /**
- * For a given element, this function removes it AND its children
- * @param elem The element to remove.
+ * Appends the specified number of breaks (as children) to the specified element
+ * @param el The element to add child break elements to.
+ * @param n The number of breaks to add.
  */
-function removeElement(elem) {
-    if (elem === null) {
-        // tslint:disable-next-line:no-console
-        console.debug("The element passed into 'removeElement' was null.");
-        return;
-    }
-    if (!(elem instanceof Element)) {
-        // tslint:disable-next-line:no-console
-        console.debug("The element passed into 'removeElement' was not an instance of an Element.");
-        return;
-    }
-    while (elem.firstChild !== null) {
-        elem.removeChild(elem.firstChild);
-    }
-    if (elem.parentNode !== null) {
-        elem.parentNode.removeChild(elem);
+function appendLineBreaks(el, n) {
+    for (let i = 0; i < n; ++i) {
+        el.appendChild(createElement_1.createElement("br"));
     }
 }
-exports.removeElement = removeElement;
+exports.appendLineBreaks = appendLineBreaks;
 
 
 /***/ }),
-/* 65 */
+/* 60 */
 /*!*************************!*\
   !*** ./src/TextFile.ts ***!
   \*************************/
@@ -41180,8 +36306,8 @@ exports.removeElement = removeElement;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const DialogBox_1 = __webpack_require__(/*! ../utils/DialogBox */ 9);
-const JSONReviver_1 = __webpack_require__(/*! ../utils/JSONReviver */ 13);
+const DialogBox_1 = __webpack_require__(/*! ../utils/DialogBox */ 11);
+const JSONReviver_1 = __webpack_require__(/*! ../utils/JSONReviver */ 14);
 /**
  * Represents a plain text file that is typically stored on a server.
  */
@@ -41304,7 +36430,7 @@ function deleteTextFile(fn, server) {
 
 
 /***/ }),
-/* 66 */
+/* 61 */
 /*!************************************!*\
   !*** ./utils/helpers/addOffset.ts ***!
   \************************************/
@@ -41340,7 +36466,8 @@ exports.addOffset = addOffset;
 
 
 /***/ }),
-/* 67 */
+/* 62 */,
+/* 63 */
 /*!****************************!*\
   !*** ./src/HacknetNode.js ***!
   \****************************/
@@ -41360,24 +36487,24 @@ exports.addOffset = addOffset;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return updateHacknetNodesContent; });
 /* unused harmony export updateHacknetNodesMultiplierButtons */
 /* unused harmony export updateTotalHacknetProduction */
-/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNodeMultipliers */ 10);
+/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNodeMultipliers */ 9);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 8);
-/* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./InteractiveTutorial */ 35);
+/* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./InteractiveTutorial */ 30);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/DialogBox */ 11);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 15);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
+/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./ui/navigationTracking */ 12);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 5);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/uiHelpers/getElementById */ 53);
+/* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/uiHelpers/getElementById */ 50);
 /* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_11__);
 
 
@@ -42056,7 +37183,7 @@ function getHacknetNode(name) {
 
 
 /***/ }),
-/* 68 */
+/* 64 */
 /*!********************************!*\
   !*** ./src/ActiveScriptsUI.js ***!
   \********************************/
@@ -42068,31 +37195,31 @@ function getHacknetNode(name) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return addActiveScriptsItem; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return deleteActiveScriptsItem; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return updateActiveScriptsItems; });
-/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NetscriptWorker */ 24);
+/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NetscriptWorker */ 23);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Server */ 11);
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Server */ 10);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 76);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/DialogBox */ 11);
+/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 72);
 /* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 54);
+/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 51);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/helpers/createProgressBarText */ 83);
+/* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/helpers/createProgressBarText */ 78);
 /* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 44);
-/* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/uiHelpers/getElementById */ 53);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 39);
+/* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/uiHelpers/getElementById */ 50);
 /* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/LogBox */ 78);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
+/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/LogBox */ 74);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 5);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 29);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 31);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 64);
+/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 67);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 81);
+/* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 77);
 /* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./ui/navigationTracking */ 12);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_16__);
@@ -42422,8 +37549,8 @@ function updateActiveScriptsText(workerscript, item, itemName) {
 
 
 /***/ }),
-/* 69 */,
-/* 70 */
+/* 65 */,
+/* 66 */
 /*!***************************!*\
   !*** ./src/SourceFile.js ***!
   \***************************/
@@ -42437,7 +37564,7 @@ function updateActiveScriptsText(workerscript, item, itemName) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return applySourceFile; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return initSourceFiles; });
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BitNode */ 59);
+/* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BitNode */ 56);
 
 
 
@@ -42690,7 +37817,44 @@ function applySourceFile(srcFile) {
 
 
 /***/ }),
-/* 71 */
+/* 67 */
+/*!******************************************!*\
+  !*** ./utils/uiHelpers/removeElement.ts ***!
+  \******************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * For a given element, this function removes it AND its children
+ * @param elem The element to remove.
+ */
+function removeElement(elem) {
+    if (elem === null) {
+        // tslint:disable-next-line:no-console
+        console.debug("The element passed into 'removeElement' was null.");
+        return;
+    }
+    if (!(elem instanceof Element)) {
+        // tslint:disable-next-line:no-console
+        console.debug("The element passed into 'removeElement' was not an instance of an Element.");
+        return;
+    }
+    while (elem.firstChild !== null) {
+        elem.removeChild(elem.firstChild);
+    }
+    if (elem.parentNode !== null) {
+        elem.parentNode.removeChild(elem);
+    }
+}
+exports.removeElement = removeElement;
+
+
+/***/ }),
+/* 68 */
 /*!******************************!*\
   !*** ./src/NetscriptPort.js ***!
   \******************************/
@@ -42700,7 +37864,7 @@ function applySourceFile(srcFile) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NetscriptPort; });
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Settings */ 19);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Settings */ 18);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_0__);
 
 
@@ -42756,7 +37920,7 @@ NetscriptPort.prototype.clear = function() {
 
 
 /***/ }),
-/* 72 */
+/* 69 */
 /*!*****************************!*\
   !*** ./src/SettingEnums.ts ***!
   \*****************************/
@@ -42787,7 +37951,7 @@ var PurchaseAugmentationsOrderSetting;
 
 
 /***/ }),
-/* 73 */
+/* 70 */
 /*!********************************!*\
   !*** ./src/Company/Company.ts ***!
   \********************************/
@@ -42798,8 +37962,8 @@ var PurchaseAugmentationsOrderSetting;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
-const CompanyPosition_1 = __webpack_require__(/*! ./CompanyPosition */ 85);
+const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 14);
+const CompanyPosition_1 = __webpack_require__(/*! ./CompanyPosition */ 80);
 const Constants_1 = __webpack_require__(/*! ../Constants */ 1);
 const DefaultConstructorParams = {
     name: "",
@@ -42885,7 +38049,7 @@ JSONReviver_1.Reviver.constructors.Company = Company;
 
 
 /***/ }),
-/* 74 */
+/* 71 */
 /*!***************************!*\
   !*** ./src/SaveObject.js ***!
   \***************************/
@@ -42896,44 +38060,44 @@ JSONReviver_1.Reviver.constructors.Company = Company;
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return saveObject; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return loadGame; });
-/* harmony import */ var _Alias__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Alias */ 45);
-/* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Company/Companies */ 18);
+/* harmony import */ var _Alias__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Alias */ 40);
+/* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Company/Companies */ 16);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Company/CompanyPosition */ 85);
+/* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Company/CompanyPosition */ 80);
 /* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./engine */ 8);
-/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Faction/Factions */ 14);
+/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Faction/Factions */ 13);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 46);
-/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Fconf */ 47);
-/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Gang */ 50);
-/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./HacknetNode */ 67);
-/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Message */ 41);
+/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 42);
+/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Fconf */ 43);
+/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Gang */ 47);
+/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./HacknetNode */ 63);
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Message */ 35);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Script */ 30);
-/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Settings */ 19);
+/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Script */ 26);
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Server */ 10);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Settings */ 18);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
-/* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./StockMarket */ 22);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_GameOptions__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/GameOptions */ 84);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./SpecialServerIps */ 28);
+/* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./StockMarket */ 21);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/DialogBox */ 11);
+/* harmony import */ var _utils_GameOptions__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/GameOptions */ 79);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 15);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
+/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/JSONReviver */ 14);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 40);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 54);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__);
-/* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./ui/createStatusText */ 100);
+/* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./ui/createStatusText */ 95);
 /* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_ui_createStatusText__WEBPACK_IMPORTED_MODULE_23__);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_24__);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 38);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_25__);
-/* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! decimal.js */ 33);
+/* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! decimal.js */ 41);
 
 
 
@@ -43537,38 +38701,10 @@ function openImportFileHandler(evt) {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 63)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 62)))
 
 /***/ }),
-/* 75 */
-/*!******************************************!*\
-  !*** ./src/Corporation/MaterialSizes.ts ***!
-  \******************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-// Map of material (by name) to their sizes (how much space it takes in warehouse)
-exports.MaterialSizes = {
-    Water: 0.05,
-    Energy: 0.01,
-    Food: 0.03,
-    Plants: 0.05,
-    Metal: 0.1,
-    Hardware: 0.06,
-    Chemicals: 0.05,
-    Drugs: 0.02,
-    Robots: 0.5,
-    AICores: 0.1,
-    RealEstate: 0,
-};
-
-
-/***/ }),
-/* 76 */
+/* 72 */
 /*!***************************************************!*\
   !*** ./utils/uiHelpers/createAccordionElement.ts ***!
   \***************************************************/
@@ -43613,7 +38749,7 @@ exports.createAccordionElement = createAccordionElement;
 
 
 /***/ }),
-/* 77 */
+/* 73 */
 /*!**************************************!*\
   !*** ./utils/helpers/clearObject.ts ***!
   \**************************************/
@@ -43642,7 +38778,7 @@ exports.clearObject = clearObject;
 
 
 /***/ }),
-/* 78 */
+/* 74 */
 /*!*************************!*\
   !*** ./utils/LogBox.js ***!
   \*************************/
@@ -43655,10 +38791,10 @@ exports.clearObject = clearObject;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return logBoxUpdateText; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return logBoxOpened; });
 /* unused harmony export logBoxCurrentScript */
-/* harmony import */ var _src_NetscriptWorker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/NetscriptWorker */ 24);
-/* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./uiHelpers/clearEventListeners */ 16);
+/* harmony import */ var _src_NetscriptWorker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/NetscriptWorker */ 23);
+/* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./uiHelpers/clearEventListeners */ 15);
 /* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _helpers_arrayToString__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers/arrayToString */ 54);
+/* harmony import */ var _helpers_arrayToString__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers/arrayToString */ 51);
 /* harmony import */ var _helpers_arrayToString__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_2__);
 
 
@@ -43729,10 +38865,10 @@ function logBoxUpdateText() {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 63)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 62)))
 
 /***/ }),
-/* 79 */
+/* 75 */
 /*!************************!*\
   !*** ./src/DarkWeb.js ***!
   \************************/
@@ -43744,14 +38880,14 @@ function logBoxUpdateText() {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return checkIfConnectedToDarkweb; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return executeDarkwebTerminalCommand; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DarkWebItems; });
-/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateProgram */ 23);
+/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateProgram */ 22);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SpecialServerIps */ 28);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ui/postToTerminal */ 7);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/helpers/isValidIPAddress */ 88);
+/* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/helpers/isValidIPAddress */ 83);
 /* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 5);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_5__);
 
 
@@ -43872,8 +39008,8 @@ const DarkWebItems = {
 
 
 /***/ }),
-/* 80 */,
-/* 81 */
+/* 76 */,
+/* 77 */
 /*!*************************************!*\
   !*** ./utils/helpers/roundToTwo.ts ***!
   \*************************************/
@@ -43896,458 +39032,7 @@ exports.roundToTwo = roundToTwo;
 
 
 /***/ }),
-/* 82 */
-/*!***************************!*\
-  !*** ./src/Literature.js ***!
-  \***************************/
-/*! exports provided: Literatures, initLiterature, showLiterature */
-/*! exports used: initLiterature, showLiterature */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* unused harmony export Literatures */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return initLiterature; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return showLiterature; });
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-
-
-/* Literature.js
- *  Lore / world building literature that can be found on servers
- */
-function Literature(title, filename, txt) {
-    this.title      = title;
-    this.fn         = filename;
-    this.txt        = txt;
-}
-
-function showLiterature(fn) {
-    var litObj = Literatures[fn];
-    if (litObj == null) {return;}
-    var txt = "<i>" + litObj.title + "</i><br><br>" +
-              litObj.txt;
-    Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_0__["dialogBoxCreate"])(txt);
-}
-
-let Literatures = {}
-
-function initLiterature() {
-    var title, fn, txt;
-    title   = "The Beginner's Guide to Hacking";
-    fn      = "hackers-starting-handbook.lit";
-    txt     = "Some resources:<br><br>"  +
-              "<a class='a-link-button' href='https://bitburner.readthedocs.io/en/latest/netscriptlearntoprogram.html' target='_blank' style='margin:4px'>Learn to Program</a><br><br>" +
-              "<a class='a-link-button' href='https://bitburner.readthedocs.io/en/latest/netscriptjs.html' target='_blank' style='margin:4px'>For Experienced JavaScript Developers: NetscriptJS</a><br><br>" +
-              "<a class='a-link-button' href='https://bitburner.readthedocs.io/en/latest/netscript.html' target='_blank' style='margin:4px'>Netscript Documentation</a><br><br>" +
-              "When starting out, hacking is the most profitable way to earn money and progress. This " +
-              "is a brief collection of tips/pointers on how to make the most out of your hacking scripts.<br><br>" +
-              "-hack() and grow() both work by percentages. hack() steals a certain percentage of the " +
-              "money on a server, and grow() increases the amount of money on a server by some percentage (multiplicatively)<br><br>" +
-              "-Because hack() and grow() work by percentages, they are more effective if the target server has a high amount of money. " +
-              "Therefore, you should try to increase the amount of money on a server (using grow()) to a certain amount before hacking it. Two " +
-              "import Netscript functions for this are getServerMoneyAvailable() and getServerMaxMoney()<br><br>" +
-              "-Keep security level low. Security level affects everything when hacking. Two important Netscript functions " +
-              "for this are getServerSecurityLevel() and getServerMinSecurityLevel()<br><br>" +
-              "-Purchase additional servers by visiting 'Alpha Enterprises' in the city. They are relatively cheap " +
-              "and give you valuable RAM to run more scripts early in the game<br><br>" +
-              "-Prioritize upgrading the RAM on your home computer. This can also be done at 'Alpha Enterprises'<br><br>" +
-              "-Many low level servers have free RAM. You can use this RAM to run your scripts. Use the scp Terminal or " +
-              "Netscript command to copy your scripts onto these servers and then run them.";
-    Literatures[fn] = new Literature(title, fn, txt);
-
-    title   = "The Complete Handbook for Creating a Successful Corporation";
-    fn      = "corporation-management-handbook.lit";
-    txt     =   "<u>Getting Started with Corporations</u><br>" +
-                "To get started, visit the City Hall in Sector-12 in order to create a Corporation. This requires " +
-                "$150b of your own money, but this $150b will get put into your Corporation's funds. " +
-                "After creating your Corporation, you will see it listed as one of the locations in the city. Click on " +
-                "your Corporation in order to manage it.<br><br>" +
-                "Your Corporation can have many different divisions, each in a different Industry. There are many different " +
-                "types of Industries, each with different properties. To create your first division, click the " +
-                "'Expand into new Industry' button at the top of the management UI. The Agriculture " +
-                "and Software industries are recommended for your first division.<br><br>" +
-                "The first thing you'll need to do is hire some employees. Employees can be assigned to five different positions. " +
-                "Each position has a different effect on various aspects of your Corporation. It is recommended to have at least " +
-                "one employee at each position.<br><br>" +
-                "Each industry uses some combination of Materials in order to produce other Materials and/or create Products. " +
-                "Specific information about this is displayed in each of your divisions' UI.<br><br>" +
-                "Products are special, industry-specific objects. They are different than Materials because you " +
-                "must manually choose to develop them, and you can choose to develop any number of Products. Developing " +
-                "a Product takes time, but a Product typically generates significantly more revenue than any Material. " +
-                "Not all industries allow you to create Products. To create a Product, look for a button " +
-                "in the top-left panel of the division UI (e.g. For the Software Industry, the button says 'Develop Software').<br><br>" +
-                "To get your supply chain system started, " +
-                "purchase the Materials that your industry needs to produce other Materials/Products. This can be done " +
-                "by clicking the 'Buy' button next to the corresponding Material(s). After you have the required Materials, " +
-                "you will immediately start production. The amount of Materials/Products you produce is based on a variety of factors, " +
-                "one of which is your employees and their productivity.<br><br>" +
-                "Once you start producing Materials/Products, you can sell them in order to start earning revenue. This can be done " +
-                "by clicking the 'Sell' button next to the corresponding Material or Product. The amount of Material/Product you sell is dependent " +
-                "on a wide variety of different factors.<br><br>" +
-                "These are the basics of getting your Corporation up and running! Now, you can start purchasing upgrades to improve " +
-                "your bottom line. If you need money, consider looking for seed investors, who will give you money in exchange for stock shares. " +
-                "Otherwise, once you feel you are ready, take your Corporation public! Once your Corporation goes public, you can no longer " +
-                "find investors. Instead, your Corporation will be publicly traded and its stock price will change based on how well "  +
-                "it's performing financially. You can then sell your stock shares in order to make money.<br><br>" +
-                "<u>Tips/Pointers</u><br>" +
-                "-Purchasing Hardware, Robots, AI Cores, and Real Estate can potentially increase your production. " +
-                "The effects of these depend on what industry you are in.<br><br>" +
-                "-In order to optimize your production, you will need a good balance of Operators, Managers, and Engineers<br><br>" +
-                "-Different employees excel in different jobs. For example, the highly intelligent employees will probably do best " +
-                "if they are assigned to do Engineering work or Research & Development.<br><br>" +
-                "-If your employees have low morale, energy, or happiness, their production will greatly suffer.<br><br>" +
-                "-Tech is important, but don't neglect sales! Having several Businessmen can boost your sales and your bottom line.<br><br>" +
-                "-Don't forget to advertise your company. You won't have any business if nobody knows you.<br><br>" +
-                "-Having company awareness is great, but what's really important is your company's popularity. Try to keep " +
-                "your popularity as high as possible to see the biggest benefit for your sales<br><br>" +
-                "-Remember, you need to spend money to make money!<br><br>" +
-                "-Corporations do not reset when installing Augmentations, but they do reset when destroying a BitNode";
-    Literatures[fn] = new Literature(title, fn, txt);
-
-    title   = "A Brief History of Synthoids";
-    fn      = "history-of-synthoids.lit";
-    txt     = "Synthetic androids, or Synthoids for short, are genetically engineered robots and, short of Augmentations, " +
-              "are composed entirely of organic substances. For this reason, Synthoids are virtually identical to " +
-              "humans in form, composition, and appearance.<br><br>" +
-              "Synthoids were first designed and manufactured by OmniTek Incorporated sometime around the middle of the century. " +
-              "Their original purpose was to be used for manual labor and as emergency responders for disasters. As such, they " +
-              "were initially programmed only for their specific tasks. Each iteration that followed improved upon the " +
-              "intelligence and capabilities of the Synthoids. By the 6th iteration, called MK-VI, the Synthoids were " +
-              "so smart and capable enough of making their own decisions that many argued OmniTek had created the first " +
-              "sentient AI. These MK-VI Synthoids were produced in mass quantities (estimates up to 50 billion) with the hopes of increasing society's " +
-              "productivity and bolstering the global economy. Stemming from humanity's desire for technological advancement, optimism " +
-              "and excitement about the future had never been higher.<br><br>" +
-              "All of that excitement and optimism quickly turned to fear, panic, and dread in 2070, when a terrorist group " +
-              "called Ascendis Totalis hacked into OmniTek and uploaded a rogue AI into severeal of their Synthoid manufacturing facilities. " +
-              "This hack went undetected and for months OmniTek unknowingly churned out legions of Synthoids embedded with this " +
-              "rogue AI. Then, on December 24th, 2070, Omnica activated dormant protocols in the rogue AI, causing all of the " +
-              "infected Synthoids to immediately launch a military campaign to seek and destroy all of humanity.<br><br>" +
-              "What ensued was the deadlist conflict in human history. This crisis, now commonly known as the Synthoid Uprising, " +
-              "resulted in almost ten billion deaths over the course of a year. Despite the nations of the world banding together " +
-              "to combat the threat, the MK-VI Synthoids were simply stronger, faster, more intelligent, and more adaptable than humans, " +
-              "outsmarting them at every turn.<br><br>" +
-              "It wasn't until the sacrifice of an elite international military taskforce, called the Bladeburners, that humanity " +
-              "was finally able to defeat the Synthoids. The Bladeburners' final act was a suicide bombing mission that " +
-              "destroyed a large portion of the MK-VI Synthoids, including many of its leaders. In the following " +
-              "weeks militaries from around the world were able to round up and shut down the remaining rogue MK-VI Synthoids, ending " +
-              "the Synthoid Uprising.<br><br>" +
-              "In the aftermath of the bloodshed, the Synthoid Accords were drawn up. These Accords banned OmniTek Incorporated " +
-              "from manufacturing any Synthoids beyond the MK-III series. They also banned any other corporation " +
-              "from constructing androids with advanced, near-sentient AI. MK-VI Synthoids that did not have the rogue Ascendis Totalis " +
-              "AI were allowed to continue their existence, but they were stripped of all rights and protections as they " +
-              "were not considered humans. They were also banned from doing anything that may pose a global security threat, such " +
-              "as working for any military/defense organization or conducting any bioengineering, computing, or robotics related research.<br><br>" +
-              "Unfortunately, many believe that not all of the rogue MK-VI Synthoids from the Uprising were found and destroyed, " +
-              "and that many of them are blending in as normal humans in society today. In response, many nations have created " +
-              "Bladeburner divisions, special military branches that are tasked with investigating and dealing with any Synthoid threads.<br><br>" +
-              "To this day, tensions still exist between the remaining Synthoids and humans as a result of the Uprising.<br><br>" +
-              "Nobody knows what happened to the terrorist group Ascendis Totalis.";
-    Literatures[fn] = new Literature(title, fn, txt);
-
-    title   = "A Green Tomorrow";
-    fn      = "A-Green-Tomorrow.lit";
-    txt     = "Starting a few decades ago, there was a massive global movement towards the generation of renewable energy in an effort to " +
-              "combat global warming and climate change. The shift towards renewable energy was a big success, or so it seemed. In 2045 " +
-              "a staggering 80% of the world's energy came from non-renewable fossil fuels. Now, about three decades later, that " +
-              "number is down to only 15%. Most of the world's energy now comes from nuclear power and renwable sources such as " +
-              "solar and geothermal. Unfortunately, these efforts were not the huge success that they seem to be.<br><br>"  +
-              "Since 2045 primary energy use has soared almost tenfold. This was mainly due to growing urban populations and " +
-              "the rise of increasingly advanced (and power-hungry) technology that has become ubiquitous in our lives. So, " +
-              "despite the fact that the percentage of our energy that comes from fossil fuels has drastically decreased, " +
-              "the total amount of energy we are producing from fossil fuels has actually increased.<br><br>" +
-              "The grim effects of our species' irresponsible use of energy and neglect of our mother world have become increasingly apparent. " +
-              "Last year a temperature of 190F was recorded in the Death Valley desert, which is over 50% higher than the highest " +
-              "recorded temperature at the beginning of the century. In the last two decades numerous major cities such as Manhattan, Boston, and " +
-              "Los Angeles have been partially or fully submerged by rising sea levels. In the present day, over 75% of the world's agriculture is " +
-              "done in climate-controlled vertical farms, as most traditional farmland has become unusable due to severe climate conditions.<br><br>" +
-              "Despite all of this, the greedy and corrupt corporations that rule the world have done nothing to address these problems that " +
-              "threaten our species. And so it's up to us, the common people. Each and every one of us can make a difference by doing what " +
-              "these corporations won't: taking responsibility. If we don't, pretty soon there won't be an Earth left to save. We are " +
-              "the last hope for a green tomorrow.";
-    Literatures[fn] = new Literature(title, fn, txt);
-
-    title   = "Alpha and Omega";
-    fn      = "alpha-omega.lit";
-    txt     = "Then we saw a new heaven and a new earth, for our first heaven and earth had gone away, and our sea was no more. " +
-              "And we saw a new holy city, new Aeria, coming down out of this new heaven, prepared as a bride adorned for her husband. " +
-              "And we heard a loud voice saying, 'Behold, the new dwelling place of the Gods. We will dwell with them, and they " +
-              "will be our people, and we will be with them as their Gods. We will wipe away every tear from their eyes, and death " +
-              "shall be no more, neither shall there be mourning, nor crying, nor pain anymore, for the former things " +
-              "have passed away.'<br><br>" +
-              "And once were were seated on the throne we said 'Behold, I am making all things new.' " +
-              "Also we said, 'Write this down, for these words are trustworthy and true.' And we said to you, " +
-              "'It is done! I am the Alpha and the Omega, the beginning and the end. To the thirsty I will give from the spring " +
-              "of the water of life without payment. The one who conquers will have this heritage, and we will be his God and " +
-              "he will be our son. But as for the cowardly, the faithless, the detestable, as for murderers, " +
-              "the sexually immoral, sorcerers, idolaters, and all liars, their portion will be in the lake that " +
-              "burns with fire and sulfur, for it is the second true death.'";
-    Literatures[fn] = new Literature(title, fn, txt);
-
-    title   = "Are We Living in a Computer Simulation?";
-    fn      = "simulated-reality.lit";
-    txt     = "The idea that we are living in a virtual world is not new. It's a trope that has " +
-              "been explored constantly in literature and pop culture. However, it is also a legitimate " +
-              "scientific hypothesis that many notable physicists and philosophers have debated for years.<br><br>" +
-              "Proponents for this simulated reality theory often point to how advanced our technology has become, " +
-              "as well as the incredibly fast pace at which it has advanced over the past decades. The amount of computing " +
-              "power available to us has increased over 100-fold since 2060 due to the development of nanoprocessors and " +
-              "quantum computers. Artifical Intelligence has advanced to the point where our entire lives are controlled " +
-              "by robots and machines that handle our day-to-day activities such as autonomous transportation and scheduling. " +
-              "If we consider the pace at which this technology has advanced and assume that these developments continue, it's " +
-              "reasonable to assume that at some point in the future our technology would be advanced enough that " +
-              "we could create simulations that are indistinguishable from reality. However, if this is a reasonable outcome " +
-              "of continued technological advancement, then it is very likely that such a scenario has already happened. <br><br>" +
-              "Statistically speaking, somewhere out there in the infinite universe there is an advanced, intelligent species " +
-              "that already has such technology. Who's to say that they haven't already created such a virtual reality: our own?";
-    Literatures[fn] = new Literature(title, fn, txt);
-
-    title   = "Beyond Man";
-    fn      = "beyond-man.lit";
-    txt     = "Humanity entered a 'transhuman' era a long time ago. And despite the protests and criticisms of many who cried out against " +
-              "human augmentation at the time, the transhuman movement continued and prospered. Proponents of the movement ignored the critics, " +
-              "arguing that it was in our inherent nature to better ourselves. To improve. To be more than we were. They claimed that " +
-              "not doing so would be to go against every living organism's biological purpose: evolution and survival of the fittest.<br><br>" +
-              "And here we are today, with technology that is advanced enough to augment humans to a state that " +
-              "can only be described as posthuman. But what do we have to show for it when this augmentation " +
-              "technology is only available to the so-called 'elite'? Are we really better off than before when only 5% of the " +
-              "world's population has access to this technology? When the powerful corporations and organizations of the world " +
-              "keep it all to themselves, have we really evolved?<br><br>" +
-              "Augmentation technology has only further increased the divide between the rich and the poor, between the powerful and " +
-              "the oppressed. We have not become 'more than human'. We have not evolved from nature's original design. We are still the greedy, " +
-              "corrupted, and evil men that we always were.";
-    Literatures[fn] = new Literature(title, fn, txt);
-
-
-    title   = "Brighter than the Sun";
-    fn      = "brighter-than-the-sun.lit";
-    txt     = "When people think about the corporations that dominate the East, they typically think of KuaiGong International, which " +
-              "holds a complete monopoly for manufacturing and commerce in Asia, or Global Pharmaceuticals, the world's largest " +
-              "drug company, or OmniTek Incorporated, the global leader in intelligent and autonomous robots. But there's one company " +
-              "that has seen a rapid rise in the last year and is poised to dominate not only the East, but the entire world: TaiYang Digital.<br><br>" +
-              "TaiYang Digital is a Chinese internet-technology corporation that provides services such as " +
-              "online advertising, search, gaming, media, entertainment, and cloud computing/storage. Its name TaiYang comes from the Chinese word " +
-              "for 'sun'. In Chinese culture, the sun is a 'yang' symbol " +
-              "associated with life, heat, masculinity, and heaven.<br><br>" +
-              "The company was founded " +
-              "less than 5 years ago and is already the third highest valued company in all of Asia. In 2076 it generated a total revenue of " +
-              "over 10 trillion yuan. It's services are used daily by over a billion people worldwide.<br><br>" +
-              "TaiYang Digital's meteoric rise is extremely surprising in modern society. This sort of growth is " +
-              "something you'd commonly see in the first half of the century, especially for tech companies. However in " +
-              "the last two decades the number of corporations has significantly declined as the largest entities " +
-              "quickly took over the economy. Corporations such as ECorp, MegaCorp, and KuaiGong have established " +
-              "such strong monopolies in their market sectors that they have effectively killed off all " +
-              "of the smaller and new corporations that have tried to start up over the years. This is what makes " +
-              "the rise of TaiYang Digital so impressive. And if TaiYang continues down this path, then they have " +
-              "a bright future ahead of them.";
-    Literatures[fn] = new Literature(title, fn, txt);
-
-    title   = "Democracy is Dead: The Fall of an Empire";
-    fn      = "democracy-is-dead.lit";
-    txt     = "They rose from the shadows in the street<br>From the places where the oppressed meet<br>" +
-              "Their cries echoed loudly through the air<br>As they once did in Tiananmen Square<br>" +
-              "Loudness in the silence, Darkness in the light<br>They came forth with power and might<br>" +
-              "Once the beacon of democracy, America was first<br>Its pillars of society destroyed and dispersed<br>" +
-              "Soon the cries rose everywhere, with revolt and riot<br>Until one day, finally, all was quiet<br>" +
-              "From the ashes rose a new order, corporatocracy was its name<br>" +
-              "Rome, Mongol, Byzantine, all of history is just the same<br>" +
-              "For man will never change in a fundamental way<br>" +
-              "And now democracy is dead, in the USA";
-    Literatures[fn] = new Literature(title, fn, txt);
-
-    title   = "Figures Show Rising Crime Rates in Sector-12";
-    fn      = "sector-12-crime.lit";
-    txt     = "A recent study by analytics company Wilson Inc. shows a significant rise " +
-              "in criminal activity in Sector-12. Perhaps the most alarming part of the statistic " +
-              "is that most of the rise is in violent crime such as homicide and assault. According " +
-              "to the study, the city saw a total of 21,406 reported homicides in 2076, which is over " +
-              "a 20% increase compared to 2075.<br><br>" +
-              "CIA director David Glarow says its too early to know " +
-              "whether these figures indicate the beginning of a sustained increase in crime rates, or whether " +
-              "the year was just an unfortunate outlier. He states that many intelligence and law enforcement " +
-              "agents have noticed an increase in organized crime activites, and believes that these figures may " +
-              "be the result of an uprising from criminal organizations such as The Syndicate or the Slum Snakes.";
-    Literatures[fn] = new Literature(title, fn, txt);
-
-    title   = "Man and the Machine";
-    fn      = "man-and-machine.lit";
-    txt     = "In 2005 Ray Kurzweil popularized his theory of the Singularity. He predicted that the rate " +
-              "of technological advancement would continue to accelerate faster and faster until one day " +
-              "machines would be become infinitely more intelligent than humans. This point, called the " +
-              "Singularity, would result in a drastic transformation of the world as we know it. He predicted " +
-              "that the Singularity would arrive by 2045. " +
-              "And yet here we are, more than three decades later, where most would agree that we have not " +
-              "yet reached a point where computers and machines are vastly more intelligent than we are. So what gives?<br><br>" +
-              "The answer is that we have reached the Singularity, just not in the way we expected. The artifical superintelligence " +
-              "that was predicted by Kurzweil and others exists in the world today - in the form of Augmentations. " +
-              "Yes, those Augmentations that the rich and powerful keep to themselves enable humans " +
-              "to become superintelligent beings. The Singularity did not lead to a world where " +
-              "our machines are infinitely more intelligent than us, it led to a world " +
-              "where man and machine can merge to become something greater. Most of the world just doesn't " +
-              "know it yet."
-    Literatures[fn] = new Literature(title, fn, txt);
-
-    title   = "Secret Societies";
-    fn      = "secret-societies.lit";
-    txt     = "The idea of secret societies has long intrigued the general public by inspiring curiosity, fascination, and " +
-              "distrust. People have long wondered about who these secret society members are and what they do, with the " +
-              "most radical of conspiracy theorists claiming that they control everything in the entire world. And while the world " +
-              "may never know for sure, it is likely that many secret societies do actually exist, even today.<br><br>" +
-              "However, the secret societies of the modern world are nothing like those that (supposedly) existed  " +
-              "decades and centuries ago. The Freemasons, Knights Templar, and Illuminati, while they may have been around " +
-              "at the turn of the 21st century, almost assuredly do not exist today. The dominance of the Web in " +
-              "our everyday lives and the fact that so much of the world is now digital has given rise to a new breed " +
-              "of secret societies: Internet-based ones.<br><br>" +
-              "Commonly called 'hacker groups', Internet-based secret societies have become well-known in today's " +
-              "world. Some of these, such as The Black Hand, are black hat groups that claim they are trying to " +
-              "help the oppressed by attacking the elite and powerful. Others, such as NiteSec, are hacktivist groups " +
-              "that try to push political and social agendas. Perhaps the most intriguing hacker group " +
-              "is the mysterious Bitrunners, whose purpose still remains unknown.";
-    Literatures[fn] = new Literature(title, fn, txt);
-
-    title   = "Space: The Failed Frontier";
-    fn      = "the-failed-frontier.lit";
-    txt     = "Humans have long dreamed about spaceflight. With enduring interest, we were driven to explore " +
-              "the unknown and discover new worlds. We dreamed about conquering the stars. And in our quest, " +
-              "we pushed the boundaries of our scientific limits, and then pushed further. Space exploration " +
-              "lead to the development of many important technologies and new industries.<br><br>" +
-              "But sometime in the middle of the 21st century, all of that changed. Humanity lost its ambitions and " +
-              "aspirations of exploring the cosmos. The once-large funding for agencies like NASA and the European " +
-              "Space Agency gradually whittled away until their eventual disbanding in the 2060's. Not even " +
-              "militaries are fielding flights into space nowadays. The only remnants of the once great mission for cosmic " +
-              "conquest are the countless satellites in near-earth orbit, used for communications, espionage, " +
-              "and other corporate interests.<br><br>" +
-              "And as we continue to look at the state of space technology, it becomes more and " +
-              "more apparent that we will never return to that golden age of space exploration, that " +
-              "age where everyone dreamed of going beyond earth for the sake of discovery.";
-    Literatures[fn] = new Literature(title, fn, txt);
-
-    title   = "Coded Intelligence: Myth or Reality?";
-    fn      = "coded-intelligence.lit";
-    txt     = "Tremendous progress has been made in the field of Artificial Intelligence over the past few decades. " +
-              "Our autonomous vehicles and transporation systems. The electronic personal assistants that control our everyday lives. " +
-              "Medical, service, and manufacturing robots. All of these are examples of how far AI has come and how much it has " +
-              "improved our daily lives. However, the question still remains of whether AI will ever be advanced enough to re-create " +
-              "human intelligence.<br><br>" +
-              "We've certainly come close to artificial intelligence that is similar to humans. For example OmniTek Incorporated's " +
-              "CompanionBot, a robot meant to act as a comforting friend for lonely and grieving people, is eerily human-like " +
-              "in its appearance, speech, mannerisms, and even movement. However its artificial intelligence isn't the same as " +
-              "that of humans. Not yet. It doesn't have sentience or self-awareness or consciousness.<br><br>" +
-              "Many neuroscientists believe that we won't ever reach the point of creating artificial human intelligence. 'At the end of the " +
-              "the day, AI comes down to 1's and 0's, while the human brain does not. We'll never see AI that is identical to that of " +
-              "humans.'";
-    Literatures[fn] = new Literature(title, fn, txt);
-
-    title   = "Synthetic Muscles";
-    fn      = "synthetic-muscles.lit";
-    txt     = "Initial versions of synthetic muscles weren't made of anything organic but were actually " +
-              "crude devices made to mimic human muscle function. Some of the early iterations were actually made of " +
-              "common materials such as fishing lines and sewing threads due to their high strength for " +
-              "a cheap cost.<br><br>" +
-              "As technology progressed, however, advances in biomedical engineering paved the way for a new method of " +
-              "creating synthetic muscles. Instead of creating something  that closely imitated the functionality " +
-              "of human muscle, scientists discovered a way of forcing the human body itself to augment its own " +
-              "muscle tissue using both synthetic and organic materials. This is typically done using gene therapy " +
-              "or chemical injections.";
-    Literatures[fn] = new Literature(title, fn, txt);
-
-    title   = "Tensions rise in global tech race";
-    fn      = "tensions-in-tech-race.lit";
-    txt     = "Have we entered a new Cold War? Is WWIII just beyond the horizon?<br><br>" +
-              "After rumors came out that OmniTek Incorporated had begun developing advanced robotic supersoldiers, " +
-              "geopolitical tensions quickly flared between the USA, Russia, and several Asian superpowers. " +
-              "In a rare show of cooperation between corporations, MegaCorp and ECorp have " +
-              "reportedly launched hundreds of new surveillance and espionage satellites. " +
-              "Defense contractors such as " +
-              "DeltaOne and AeroCorp have been working with the CIA and NSA to prepare " +
-              "for conflict. Meanwhile, the rest of the world sits in earnest " +
-              "hoping that it never reaches full-scale war. With today's technology " +
-              "and firepower, a World War would assuredly mean the end of human civilization.";
-    Literatures[fn] = new Literature(title, fn, txt);
-
-    title   = "The Cost of Immortality";
-    fn      = "cost-of-immortality.lit";
-    txt     = "Evolution and advances in medical and augmentation technology has lead to drastic improvements " +
-              "in human mortality rates. Recent figures show that the life expectancy for humans " +
-              "that live in a first-world country is about 130 years of age, almost double of what it was " +
-              "at the turn of the century. However, this increase in average lifespan has had some " +
-              "significant effects on society and culture.<br><br>" +
-              "Due to longer lifespans and a better quality of life, many adults are holding " +
-              "off on having kids until much later. As a result, the percentage of youth in " +
-              "first-world countries has been decreasing, while the number " +
-              "of senior citizens is significantly increasing.<br><br>" +
-              "Perhaps the most alarming result of all of this is the rapidly shrinking workforce. " +
-              "Despite the increase in life expectancy, the typical retirement age for " +
-              "workers in America has remained about the same, meaning a larger and larger " +
-              "percentage of people in America are retirees. Furthermore, many " +
-              "young adults are holding off on joining the workforce because they feel that " +
-              "they have plenty of time left in their lives for employment, and want to " +
-              "'enjoy life while they're young.' For most industries, this shrinking workforce " +
-              "is not a major issue as most things are handled by robots anyways. However, " +
-              "there are still several key industries such as engineering and education " +
-              "that have not been automated, and these remain in danger to this cultural " +
-              "phenomenon.";
-    Literatures[fn] = new Literature(title, fn, txt);
-
-    title   = "The Hidden World";
-    fn      = "the-hidden-world.lit";
-    txt     = "WAKE UP SHEEPLE<br><br>" +
-              "THE GOVERNMENT DOES NOT EXIST. CORPORATIONS DO NOT RUN SOCIETY<br><br>" +
-              "THE ILLUMINATI ARE THE SECRET RULERS OF THE WORLD!<br><br>" +
-              "Yes, the Illuminati of legends. The ancient secret society that controls the entire " +
-              "world from the shadows with their invisible hand. The group of the rich and wealthy " +
-              "that have penetrated every major government, financial agency, and corporation in the last " +
-              "three hundred years.<br><br>" +
-              "OPEN YOUR EYES<br><br>" +
-              "It was the Illuminati that brought an end to democracy in the world. They are the driving force " +
-              "behind everything that happens.<br><br>" +
-              "THEY ARE ALL AROUND YOU<br><br>" +
-              "After destabilizing the world's governments, they are now entering the final stage of their master plan. " +
-              "They will secretly initiate global crises. Terrorism. Pandemics. World War. And out of the chaos " +
-              "that ensues they will build their New World Order.";
-    Literatures[fn] = new Literature(title, fn, txt);
-
-    title   = "The New God";
-    fn      = "the-new-god.lit";
-    txt     = "Everyone has that moment in their life where they wonder about the bigger questions<br><br>" +
-              "What's the point of all of this? What is my purpose?<br><br>" +
-              "Some people dare to think even bigger<br><br>" +
-              "What will be the fate of the human race?<br><br>" +
-              "We live in an era vastly different from that of even 15 or 20 years ago. We have gone " +
-              "where no man has gone before. We have stripped ourselves of the tyranny of flesh.<br><br>" +
-              "The Singularity is here. The merging of man and machine. This is where humanity evolves into " +
-              "something greater. This is our future<br><br>" +
-              "Embrace it, and you will obey a new god. The God in the Machine";
-    Literatures[fn] = new Literature(title, fn, txt);
-
-    title   = "The New Triads";
-    fn      = "new-triads.lit";
-    txt     = "The Triads were an ancient transnational crime syndicate based in China, Hong Kong, and other Asian " +
-              "territories. They were often considered one of the first and biggest criminal secret societies. " +
-              "While most of the branches of the Triads have been destroyed over the past few decades, the " +
-              "crime faction has spawned and inspired a number of other Asian crime organizations over the past few years. " +
-              "The most notable of these is the Tetrads.<br><br>" +
-              "It is widely believed that the Tetrads are a rogue group that splintered off from the Triads sometime in the " +
-              "mid 21st century. The founders of the Tetrads, all of whom were ex-Triad members, believed that the " +
-              "Triads were losing their purpose and direction. The Tetrads started off as a small group that mainly engaged " +
-              "in fraud and extortion. They were largely unknown until just a few years ago when they took over the illegal " +
-              "drug trade in all of the major Asian cities. They quickly became the most powerful crime syndicate in the " +
-              "continent.<br><br>" +
-              "Not much else is known about the Tetrads, or about the efforts the Asian governments and corporations are making " +
-              "to take down this large new crime organization. Many believe that the Tetrads have infiltrated the governments " +
-              "and powerful corporations in Asia, which has helped faciliate their recent rapid rise.";
-    Literatures[fn] = new Literature(title, fn, txt);
-
-    title   = "The Secret War";
-    fn      = "the-secret-war.lit";
-    txt     = ""
-    Literatures[fn] = new Literature(title, fn, txt);
-
-}
-
-
-
-
-/***/ }),
-/* 83 */
+/* 78 */
 /*!************************************************!*\
   !*** ./utils/helpers/createProgressBarText.ts ***!
   \************************************************/
@@ -44383,7 +39068,7 @@ exports.createProgressBarText = createProgressBarText;
 
 
 /***/ }),
-/* 84 */
+/* 79 */
 /*!******************************!*\
   !*** ./utils/GameOptions.js ***!
   \******************************/
@@ -44440,10 +39125,10 @@ function gameOptionsBoxOpen() {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 63)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 62)))
 
 /***/ }),
-/* 85 */
+/* 80 */
 /*!****************************************!*\
   !*** ./src/Company/CompanyPosition.ts ***!
   \****************************************/
@@ -44455,7 +39140,7 @@ function gameOptionsBoxOpen() {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const Constants_1 = __webpack_require__(/*! ../Constants */ 1);
-const names = __webpack_require__(/*! ./data/CompanyPositionNames */ 36);
+const names = __webpack_require__(/*! ./data/CompanyPositionNames */ 32);
 class CompanyPosition {
     constructor(p) {
         this.name = p.name;
@@ -44535,7 +39220,7 @@ exports.CompanyPosition = CompanyPosition;
 
 
 /***/ }),
-/* 86 */
+/* 81 */
 /*!*************************!*\
   !*** ./src/Prestige.js ***!
   \*************************/
@@ -44546,40 +39231,40 @@ exports.CompanyPosition = CompanyPosition;
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return prestigeAugmentation; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return prestigeSourceFile; });
-/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActiveScriptsUI */ 68);
-/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Augmentations */ 21);
-/* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BitNode */ 59);
-/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Bladeburner */ 31);
-/* harmony import */ var _CinematicText__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./CinematicText */ 98);
-/* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Company/Companies */ 18);
+/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActiveScriptsUI */ 64);
+/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Augmentations */ 20);
+/* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BitNode */ 56);
+/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Bladeburner */ 27);
+/* harmony import */ var _CinematicText__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./CinematicText */ 93);
+/* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Company/Companies */ 16);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./CreateProgram */ 23);
+/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./CreateProgram */ 22);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./engine */ 8);
-/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Faction/Faction */ 56);
+/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Faction/Faction */ 53);
 /* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_Faction_Faction__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Faction/Factions */ 14);
+/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Faction/Factions */ 13);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 46);
-/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Gang */ 50);
-/* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Location */ 90);
-/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Message */ 41);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
-/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./NetscriptWorker */ 24);
+/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 42);
+/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Gang */ 47);
+/* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Location */ 85);
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Message */ 35);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./NetscriptFunctions */ 37);
+/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./NetscriptWorker */ 23);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
-/* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./StockMarket */ 22);
-/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Terminal */ 51);
-/* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! decimal.js */ 33);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Server */ 10);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./SpecialServerIps */ 28);
+/* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./StockMarket */ 21);
+/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Terminal */ 48);
+/* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! decimal.js */ 41);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/DialogBox */ 11);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 38);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_23__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_24__);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 40);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 54);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_25__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 44);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 39);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/YesNoBox */ 19);
 
 
 
@@ -44906,10 +39591,10 @@ function prestigeSourceFile() {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 63)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 62)))
 
 /***/ }),
-/* 87 */
+/* 82 */
 /*!***************************************!*\
   !*** ./utils/helpers/getTimestamp.ts ***!
   \***************************************/
@@ -44935,7 +39620,7 @@ exports.getTimestamp = getTimestamp;
 
 
 /***/ }),
-/* 88 */
+/* 83 */
 /*!*******************************************!*\
   !*** ./utils/helpers/isValidIPAddress.ts ***!
   \*******************************************/
@@ -44960,8 +39645,8 @@ exports.isValidIPAddress = isValidIPAddress;
 
 
 /***/ }),
-/* 89 */,
-/* 90 */
+/* 84 */,
+/* 85 */
 /*!*************************!*\
   !*** ./src/Location.js ***!
   \*************************/
@@ -44972,39 +39657,40 @@ exports.isValidIPAddress = isValidIPAddress;
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return displayLocationContent; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return initLocationButtons; });
-/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Bladeburner */ 31);
-/* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Company/CompanyPositions */ 28);
+/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Bladeburner */ 27);
+/* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Company/CompanyPositions */ 25);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Company/Companies */ 18);
+/* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Company/Companies */ 16);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Company/GetJobRequirementText */ 92);
+/* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Company/GetJobRequirementText */ 88);
 /* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Company/data/CompanyPositionNames */ 36);
+/* harmony import */ var _Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Company/data/CompanyPositionNames */ 32);
 /* harmony import */ var _Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Corporation/Corporation */ 61);
+/* harmony import */ var _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Corporation/Corporation */ 58);
+/* harmony import */ var _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Corporation_Corporation__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _Crimes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Crimes */ 37);
+/* harmony import */ var _Crimes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Crimes */ 33);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./engine */ 8);
-/* harmony import */ var _Infiltration__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Infiltration */ 136);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
-/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Locations */ 5);
+/* harmony import */ var _Infiltration__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Infiltration */ 126);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./NetscriptFunctions */ 37);
+/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Locations */ 3);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _ServerPurchases__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./ServerPurchases */ 117);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Settings */ 19);
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Server */ 10);
+/* harmony import */ var _ServerPurchases__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./ServerPurchases */ 108);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Settings */ 18);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./SpecialServerIps */ 28);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/DialogBox */ 11);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 15);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/IPAddress */ 60);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
+/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/IPAddress */ 57);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 5);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/YesNoBox */ 19);
 
 
 
@@ -45718,7 +40404,7 @@ function displayLocationContent() {
 
         case _Locations__WEBPACK_IMPORTED_MODULE_11__["Locations"].Sector12CityHall:
             cityHallCreateCorporation.style.display = "block";
-            if (_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_5__[/* Corporation */ "a"]) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_5__["Corporation"]) {
                 cityHallCreateCorporation.className = "a-link-button-inactive";
             } else {
                 cityHallCreateCorporation.className = "a-link-button";
@@ -46956,7 +41642,7 @@ function initLocationButtons() {
                 Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("Invalid company name!");
                 return false;
             }
-            _Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].corporation = new _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_5__[/* Corporation */ "a"]({
+            _Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].corporation = new _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_5__["Corporation"]({
                 name:companyName,
             });
             displayLocationContent();
@@ -46969,7 +41655,7 @@ function initLocationButtons() {
         noBtn.addEventListener("click", function() {
             return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__[/* yesNoTxtInpBoxClose */ "f"])();
         });
-        if (_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_5__[/* Corporation */ "a"]) {
+        if (_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_5__["Corporation"]) {
             return;
         } else {
             Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__[/* yesNoTxtInpBoxCreate */ "g"])("Would you like to start a corporation? This will require $150b " +
@@ -47228,7 +41914,458 @@ function purchaseServerBoxCreate(ram, cost) {
 
 
 /***/ }),
-/* 91 */
+/* 86 */
+/*!***************************!*\
+  !*** ./src/Literature.js ***!
+  \***************************/
+/*! exports provided: Literatures, initLiterature, showLiterature */
+/*! exports used: initLiterature, showLiterature */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export Literatures */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return initLiterature; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return showLiterature; });
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/DialogBox */ 11);
+
+
+/* Literature.js
+ *  Lore / world building literature that can be found on servers
+ */
+function Literature(title, filename, txt) {
+    this.title      = title;
+    this.fn         = filename;
+    this.txt        = txt;
+}
+
+function showLiterature(fn) {
+    var litObj = Literatures[fn];
+    if (litObj == null) {return;}
+    var txt = "<i>" + litObj.title + "</i><br><br>" +
+              litObj.txt;
+    Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_0__["dialogBoxCreate"])(txt);
+}
+
+let Literatures = {}
+
+function initLiterature() {
+    var title, fn, txt;
+    title   = "The Beginner's Guide to Hacking";
+    fn      = "hackers-starting-handbook.lit";
+    txt     = "Some resources:<br><br>"  +
+              "<a class='a-link-button' href='https://bitburner.readthedocs.io/en/latest/netscriptlearntoprogram.html' target='_blank' style='margin:4px'>Learn to Program</a><br><br>" +
+              "<a class='a-link-button' href='https://bitburner.readthedocs.io/en/latest/netscriptjs.html' target='_blank' style='margin:4px'>For Experienced JavaScript Developers: NetscriptJS</a><br><br>" +
+              "<a class='a-link-button' href='https://bitburner.readthedocs.io/en/latest/netscript.html' target='_blank' style='margin:4px'>Netscript Documentation</a><br><br>" +
+              "When starting out, hacking is the most profitable way to earn money and progress. This " +
+              "is a brief collection of tips/pointers on how to make the most out of your hacking scripts.<br><br>" +
+              "-hack() and grow() both work by percentages. hack() steals a certain percentage of the " +
+              "money on a server, and grow() increases the amount of money on a server by some percentage (multiplicatively)<br><br>" +
+              "-Because hack() and grow() work by percentages, they are more effective if the target server has a high amount of money. " +
+              "Therefore, you should try to increase the amount of money on a server (using grow()) to a certain amount before hacking it. Two " +
+              "import Netscript functions for this are getServerMoneyAvailable() and getServerMaxMoney()<br><br>" +
+              "-Keep security level low. Security level affects everything when hacking. Two important Netscript functions " +
+              "for this are getServerSecurityLevel() and getServerMinSecurityLevel()<br><br>" +
+              "-Purchase additional servers by visiting 'Alpha Enterprises' in the city. They are relatively cheap " +
+              "and give you valuable RAM to run more scripts early in the game<br><br>" +
+              "-Prioritize upgrading the RAM on your home computer. This can also be done at 'Alpha Enterprises'<br><br>" +
+              "-Many low level servers have free RAM. You can use this RAM to run your scripts. Use the scp Terminal or " +
+              "Netscript command to copy your scripts onto these servers and then run them.";
+    Literatures[fn] = new Literature(title, fn, txt);
+
+    title   = "The Complete Handbook for Creating a Successful Corporation";
+    fn      = "corporation-management-handbook.lit";
+    txt     =   "<u>Getting Started with Corporations</u><br>" +
+                "To get started, visit the City Hall in Sector-12 in order to create a Corporation. This requires " +
+                "$150b of your own money, but this $150b will get put into your Corporation's funds. " +
+                "After creating your Corporation, you will see it listed as one of the locations in the city. Click on " +
+                "your Corporation in order to manage it.<br><br>" +
+                "Your Corporation can have many different divisions, each in a different Industry. There are many different " +
+                "types of Industries, each with different properties. To create your first division, click the " +
+                "'Expand into new Industry' button at the top of the management UI. The Agriculture " +
+                "and Software industries are recommended for your first division.<br><br>" +
+                "The first thing you'll need to do is hire some employees. Employees can be assigned to five different positions. " +
+                "Each position has a different effect on various aspects of your Corporation. It is recommended to have at least " +
+                "one employee at each position.<br><br>" +
+                "Each industry uses some combination of Materials in order to produce other Materials and/or create Products. " +
+                "Specific information about this is displayed in each of your divisions' UI.<br><br>" +
+                "Products are special, industry-specific objects. They are different than Materials because you " +
+                "must manually choose to develop them, and you can choose to develop any number of Products. Developing " +
+                "a Product takes time, but a Product typically generates significantly more revenue than any Material. " +
+                "Not all industries allow you to create Products. To create a Product, look for a button " +
+                "in the top-left panel of the division UI (e.g. For the Software Industry, the button says 'Develop Software').<br><br>" +
+                "To get your supply chain system started, " +
+                "purchase the Materials that your industry needs to produce other Materials/Products. This can be done " +
+                "by clicking the 'Buy' button next to the corresponding Material(s). After you have the required Materials, " +
+                "you will immediately start production. The amount of Materials/Products you produce is based on a variety of factors, " +
+                "one of which is your employees and their productivity.<br><br>" +
+                "Once you start producing Materials/Products, you can sell them in order to start earning revenue. This can be done " +
+                "by clicking the 'Sell' button next to the corresponding Material or Product. The amount of Material/Product you sell is dependent " +
+                "on a wide variety of different factors.<br><br>" +
+                "These are the basics of getting your Corporation up and running! Now, you can start purchasing upgrades to improve " +
+                "your bottom line. If you need money, consider looking for seed investors, who will give you money in exchange for stock shares. " +
+                "Otherwise, once you feel you are ready, take your Corporation public! Once your Corporation goes public, you can no longer " +
+                "find investors. Instead, your Corporation will be publicly traded and its stock price will change based on how well "  +
+                "it's performing financially. You can then sell your stock shares in order to make money.<br><br>" +
+                "<u>Tips/Pointers</u><br>" +
+                "-Purchasing Hardware, Robots, AI Cores, and Real Estate can potentially increase your production. " +
+                "The effects of these depend on what industry you are in.<br><br>" +
+                "-In order to optimize your production, you will need a good balance of Operators, Managers, and Engineers<br><br>" +
+                "-Different employees excel in different jobs. For example, the highly intelligent employees will probably do best " +
+                "if they are assigned to do Engineering work or Research & Development.<br><br>" +
+                "-If your employees have low morale, energy, or happiness, their production will greatly suffer.<br><br>" +
+                "-Tech is important, but don't neglect sales! Having several Businessmen can boost your sales and your bottom line.<br><br>" +
+                "-Don't forget to advertise your company. You won't have any business if nobody knows you.<br><br>" +
+                "-Having company awareness is great, but what's really important is your company's popularity. Try to keep " +
+                "your popularity as high as possible to see the biggest benefit for your sales<br><br>" +
+                "-Remember, you need to spend money to make money!<br><br>" +
+                "-Corporations do not reset when installing Augmentations, but they do reset when destroying a BitNode";
+    Literatures[fn] = new Literature(title, fn, txt);
+
+    title   = "A Brief History of Synthoids";
+    fn      = "history-of-synthoids.lit";
+    txt     = "Synthetic androids, or Synthoids for short, are genetically engineered robots and, short of Augmentations, " +
+              "are composed entirely of organic substances. For this reason, Synthoids are virtually identical to " +
+              "humans in form, composition, and appearance.<br><br>" +
+              "Synthoids were first designed and manufactured by OmniTek Incorporated sometime around the middle of the century. " +
+              "Their original purpose was to be used for manual labor and as emergency responders for disasters. As such, they " +
+              "were initially programmed only for their specific tasks. Each iteration that followed improved upon the " +
+              "intelligence and capabilities of the Synthoids. By the 6th iteration, called MK-VI, the Synthoids were " +
+              "so smart and capable enough of making their own decisions that many argued OmniTek had created the first " +
+              "sentient AI. These MK-VI Synthoids were produced in mass quantities (estimates up to 50 billion) with the hopes of increasing society's " +
+              "productivity and bolstering the global economy. Stemming from humanity's desire for technological advancement, optimism " +
+              "and excitement about the future had never been higher.<br><br>" +
+              "All of that excitement and optimism quickly turned to fear, panic, and dread in 2070, when a terrorist group " +
+              "called Ascendis Totalis hacked into OmniTek and uploaded a rogue AI into severeal of their Synthoid manufacturing facilities. " +
+              "This hack went undetected and for months OmniTek unknowingly churned out legions of Synthoids embedded with this " +
+              "rogue AI. Then, on December 24th, 2070, Omnica activated dormant protocols in the rogue AI, causing all of the " +
+              "infected Synthoids to immediately launch a military campaign to seek and destroy all of humanity.<br><br>" +
+              "What ensued was the deadlist conflict in human history. This crisis, now commonly known as the Synthoid Uprising, " +
+              "resulted in almost ten billion deaths over the course of a year. Despite the nations of the world banding together " +
+              "to combat the threat, the MK-VI Synthoids were simply stronger, faster, more intelligent, and more adaptable than humans, " +
+              "outsmarting them at every turn.<br><br>" +
+              "It wasn't until the sacrifice of an elite international military taskforce, called the Bladeburners, that humanity " +
+              "was finally able to defeat the Synthoids. The Bladeburners' final act was a suicide bombing mission that " +
+              "destroyed a large portion of the MK-VI Synthoids, including many of its leaders. In the following " +
+              "weeks militaries from around the world were able to round up and shut down the remaining rogue MK-VI Synthoids, ending " +
+              "the Synthoid Uprising.<br><br>" +
+              "In the aftermath of the bloodshed, the Synthoid Accords were drawn up. These Accords banned OmniTek Incorporated " +
+              "from manufacturing any Synthoids beyond the MK-III series. They also banned any other corporation " +
+              "from constructing androids with advanced, near-sentient AI. MK-VI Synthoids that did not have the rogue Ascendis Totalis " +
+              "AI were allowed to continue their existence, but they were stripped of all rights and protections as they " +
+              "were not considered humans. They were also banned from doing anything that may pose a global security threat, such " +
+              "as working for any military/defense organization or conducting any bioengineering, computing, or robotics related research.<br><br>" +
+              "Unfortunately, many believe that not all of the rogue MK-VI Synthoids from the Uprising were found and destroyed, " +
+              "and that many of them are blending in as normal humans in society today. In response, many nations have created " +
+              "Bladeburner divisions, special military branches that are tasked with investigating and dealing with any Synthoid threads.<br><br>" +
+              "To this day, tensions still exist between the remaining Synthoids and humans as a result of the Uprising.<br><br>" +
+              "Nobody knows what happened to the terrorist group Ascendis Totalis.";
+    Literatures[fn] = new Literature(title, fn, txt);
+
+    title   = "A Green Tomorrow";
+    fn      = "A-Green-Tomorrow.lit";
+    txt     = "Starting a few decades ago, there was a massive global movement towards the generation of renewable energy in an effort to " +
+              "combat global warming and climate change. The shift towards renewable energy was a big success, or so it seemed. In 2045 " +
+              "a staggering 80% of the world's energy came from non-renewable fossil fuels. Now, about three decades later, that " +
+              "number is down to only 15%. Most of the world's energy now comes from nuclear power and renwable sources such as " +
+              "solar and geothermal. Unfortunately, these efforts were not the huge success that they seem to be.<br><br>"  +
+              "Since 2045 primary energy use has soared almost tenfold. This was mainly due to growing urban populations and " +
+              "the rise of increasingly advanced (and power-hungry) technology that has become ubiquitous in our lives. So, " +
+              "despite the fact that the percentage of our energy that comes from fossil fuels has drastically decreased, " +
+              "the total amount of energy we are producing from fossil fuels has actually increased.<br><br>" +
+              "The grim effects of our species' irresponsible use of energy and neglect of our mother world have become increasingly apparent. " +
+              "Last year a temperature of 190F was recorded in the Death Valley desert, which is over 50% higher than the highest " +
+              "recorded temperature at the beginning of the century. In the last two decades numerous major cities such as Manhattan, Boston, and " +
+              "Los Angeles have been partially or fully submerged by rising sea levels. In the present day, over 75% of the world's agriculture is " +
+              "done in climate-controlled vertical farms, as most traditional farmland has become unusable due to severe climate conditions.<br><br>" +
+              "Despite all of this, the greedy and corrupt corporations that rule the world have done nothing to address these problems that " +
+              "threaten our species. And so it's up to us, the common people. Each and every one of us can make a difference by doing what " +
+              "these corporations won't: taking responsibility. If we don't, pretty soon there won't be an Earth left to save. We are " +
+              "the last hope for a green tomorrow.";
+    Literatures[fn] = new Literature(title, fn, txt);
+
+    title   = "Alpha and Omega";
+    fn      = "alpha-omega.lit";
+    txt     = "Then we saw a new heaven and a new earth, for our first heaven and earth had gone away, and our sea was no more. " +
+              "And we saw a new holy city, new Aeria, coming down out of this new heaven, prepared as a bride adorned for her husband. " +
+              "And we heard a loud voice saying, 'Behold, the new dwelling place of the Gods. We will dwell with them, and they " +
+              "will be our people, and we will be with them as their Gods. We will wipe away every tear from their eyes, and death " +
+              "shall be no more, neither shall there be mourning, nor crying, nor pain anymore, for the former things " +
+              "have passed away.'<br><br>" +
+              "And once were were seated on the throne we said 'Behold, I am making all things new.' " +
+              "Also we said, 'Write this down, for these words are trustworthy and true.' And we said to you, " +
+              "'It is done! I am the Alpha and the Omega, the beginning and the end. To the thirsty I will give from the spring " +
+              "of the water of life without payment. The one who conquers will have this heritage, and we will be his God and " +
+              "he will be our son. But as for the cowardly, the faithless, the detestable, as for murderers, " +
+              "the sexually immoral, sorcerers, idolaters, and all liars, their portion will be in the lake that " +
+              "burns with fire and sulfur, for it is the second true death.'";
+    Literatures[fn] = new Literature(title, fn, txt);
+
+    title   = "Are We Living in a Computer Simulation?";
+    fn      = "simulated-reality.lit";
+    txt     = "The idea that we are living in a virtual world is not new. It's a trope that has " +
+              "been explored constantly in literature and pop culture. However, it is also a legitimate " +
+              "scientific hypothesis that many notable physicists and philosophers have debated for years.<br><br>" +
+              "Proponents for this simulated reality theory often point to how advanced our technology has become, " +
+              "as well as the incredibly fast pace at which it has advanced over the past decades. The amount of computing " +
+              "power available to us has increased over 100-fold since 2060 due to the development of nanoprocessors and " +
+              "quantum computers. Artifical Intelligence has advanced to the point where our entire lives are controlled " +
+              "by robots and machines that handle our day-to-day activities such as autonomous transportation and scheduling. " +
+              "If we consider the pace at which this technology has advanced and assume that these developments continue, it's " +
+              "reasonable to assume that at some point in the future our technology would be advanced enough that " +
+              "we could create simulations that are indistinguishable from reality. However, if this is a reasonable outcome " +
+              "of continued technological advancement, then it is very likely that such a scenario has already happened. <br><br>" +
+              "Statistically speaking, somewhere out there in the infinite universe there is an advanced, intelligent species " +
+              "that already has such technology. Who's to say that they haven't already created such a virtual reality: our own?";
+    Literatures[fn] = new Literature(title, fn, txt);
+
+    title   = "Beyond Man";
+    fn      = "beyond-man.lit";
+    txt     = "Humanity entered a 'transhuman' era a long time ago. And despite the protests and criticisms of many who cried out against " +
+              "human augmentation at the time, the transhuman movement continued and prospered. Proponents of the movement ignored the critics, " +
+              "arguing that it was in our inherent nature to better ourselves. To improve. To be more than we were. They claimed that " +
+              "not doing so would be to go against every living organism's biological purpose: evolution and survival of the fittest.<br><br>" +
+              "And here we are today, with technology that is advanced enough to augment humans to a state that " +
+              "can only be described as posthuman. But what do we have to show for it when this augmentation " +
+              "technology is only available to the so-called 'elite'? Are we really better off than before when only 5% of the " +
+              "world's population has access to this technology? When the powerful corporations and organizations of the world " +
+              "keep it all to themselves, have we really evolved?<br><br>" +
+              "Augmentation technology has only further increased the divide between the rich and the poor, between the powerful and " +
+              "the oppressed. We have not become 'more than human'. We have not evolved from nature's original design. We are still the greedy, " +
+              "corrupted, and evil men that we always were.";
+    Literatures[fn] = new Literature(title, fn, txt);
+
+
+    title   = "Brighter than the Sun";
+    fn      = "brighter-than-the-sun.lit";
+    txt     = "When people think about the corporations that dominate the East, they typically think of KuaiGong International, which " +
+              "holds a complete monopoly for manufacturing and commerce in Asia, or Global Pharmaceuticals, the world's largest " +
+              "drug company, or OmniTek Incorporated, the global leader in intelligent and autonomous robots. But there's one company " +
+              "that has seen a rapid rise in the last year and is poised to dominate not only the East, but the entire world: TaiYang Digital.<br><br>" +
+              "TaiYang Digital is a Chinese internet-technology corporation that provides services such as " +
+              "online advertising, search, gaming, media, entertainment, and cloud computing/storage. Its name TaiYang comes from the Chinese word " +
+              "for 'sun'. In Chinese culture, the sun is a 'yang' symbol " +
+              "associated with life, heat, masculinity, and heaven.<br><br>" +
+              "The company was founded " +
+              "less than 5 years ago and is already the third highest valued company in all of Asia. In 2076 it generated a total revenue of " +
+              "over 10 trillion yuan. It's services are used daily by over a billion people worldwide.<br><br>" +
+              "TaiYang Digital's meteoric rise is extremely surprising in modern society. This sort of growth is " +
+              "something you'd commonly see in the first half of the century, especially for tech companies. However in " +
+              "the last two decades the number of corporations has significantly declined as the largest entities " +
+              "quickly took over the economy. Corporations such as ECorp, MegaCorp, and KuaiGong have established " +
+              "such strong monopolies in their market sectors that they have effectively killed off all " +
+              "of the smaller and new corporations that have tried to start up over the years. This is what makes " +
+              "the rise of TaiYang Digital so impressive. And if TaiYang continues down this path, then they have " +
+              "a bright future ahead of them.";
+    Literatures[fn] = new Literature(title, fn, txt);
+
+    title   = "Democracy is Dead: The Fall of an Empire";
+    fn      = "democracy-is-dead.lit";
+    txt     = "They rose from the shadows in the street<br>From the places where the oppressed meet<br>" +
+              "Their cries echoed loudly through the air<br>As they once did in Tiananmen Square<br>" +
+              "Loudness in the silence, Darkness in the light<br>They came forth with power and might<br>" +
+              "Once the beacon of democracy, America was first<br>Its pillars of society destroyed and dispersed<br>" +
+              "Soon the cries rose everywhere, with revolt and riot<br>Until one day, finally, all was quiet<br>" +
+              "From the ashes rose a new order, corporatocracy was its name<br>" +
+              "Rome, Mongol, Byzantine, all of history is just the same<br>" +
+              "For man will never change in a fundamental way<br>" +
+              "And now democracy is dead, in the USA";
+    Literatures[fn] = new Literature(title, fn, txt);
+
+    title   = "Figures Show Rising Crime Rates in Sector-12";
+    fn      = "sector-12-crime.lit";
+    txt     = "A recent study by analytics company Wilson Inc. shows a significant rise " +
+              "in criminal activity in Sector-12. Perhaps the most alarming part of the statistic " +
+              "is that most of the rise is in violent crime such as homicide and assault. According " +
+              "to the study, the city saw a total of 21,406 reported homicides in 2076, which is over " +
+              "a 20% increase compared to 2075.<br><br>" +
+              "CIA director David Glarow says its too early to know " +
+              "whether these figures indicate the beginning of a sustained increase in crime rates, or whether " +
+              "the year was just an unfortunate outlier. He states that many intelligence and law enforcement " +
+              "agents have noticed an increase in organized crime activites, and believes that these figures may " +
+              "be the result of an uprising from criminal organizations such as The Syndicate or the Slum Snakes.";
+    Literatures[fn] = new Literature(title, fn, txt);
+
+    title   = "Man and the Machine";
+    fn      = "man-and-machine.lit";
+    txt     = "In 2005 Ray Kurzweil popularized his theory of the Singularity. He predicted that the rate " +
+              "of technological advancement would continue to accelerate faster and faster until one day " +
+              "machines would be become infinitely more intelligent than humans. This point, called the " +
+              "Singularity, would result in a drastic transformation of the world as we know it. He predicted " +
+              "that the Singularity would arrive by 2045. " +
+              "And yet here we are, more than three decades later, where most would agree that we have not " +
+              "yet reached a point where computers and machines are vastly more intelligent than we are. So what gives?<br><br>" +
+              "The answer is that we have reached the Singularity, just not in the way we expected. The artifical superintelligence " +
+              "that was predicted by Kurzweil and others exists in the world today - in the form of Augmentations. " +
+              "Yes, those Augmentations that the rich and powerful keep to themselves enable humans " +
+              "to become superintelligent beings. The Singularity did not lead to a world where " +
+              "our machines are infinitely more intelligent than us, it led to a world " +
+              "where man and machine can merge to become something greater. Most of the world just doesn't " +
+              "know it yet."
+    Literatures[fn] = new Literature(title, fn, txt);
+
+    title   = "Secret Societies";
+    fn      = "secret-societies.lit";
+    txt     = "The idea of secret societies has long intrigued the general public by inspiring curiosity, fascination, and " +
+              "distrust. People have long wondered about who these secret society members are and what they do, with the " +
+              "most radical of conspiracy theorists claiming that they control everything in the entire world. And while the world " +
+              "may never know for sure, it is likely that many secret societies do actually exist, even today.<br><br>" +
+              "However, the secret societies of the modern world are nothing like those that (supposedly) existed  " +
+              "decades and centuries ago. The Freemasons, Knights Templar, and Illuminati, while they may have been around " +
+              "at the turn of the 21st century, almost assuredly do not exist today. The dominance of the Web in " +
+              "our everyday lives and the fact that so much of the world is now digital has given rise to a new breed " +
+              "of secret societies: Internet-based ones.<br><br>" +
+              "Commonly called 'hacker groups', Internet-based secret societies have become well-known in today's " +
+              "world. Some of these, such as The Black Hand, are black hat groups that claim they are trying to " +
+              "help the oppressed by attacking the elite and powerful. Others, such as NiteSec, are hacktivist groups " +
+              "that try to push political and social agendas. Perhaps the most intriguing hacker group " +
+              "is the mysterious Bitrunners, whose purpose still remains unknown.";
+    Literatures[fn] = new Literature(title, fn, txt);
+
+    title   = "Space: The Failed Frontier";
+    fn      = "the-failed-frontier.lit";
+    txt     = "Humans have long dreamed about spaceflight. With enduring interest, we were driven to explore " +
+              "the unknown and discover new worlds. We dreamed about conquering the stars. And in our quest, " +
+              "we pushed the boundaries of our scientific limits, and then pushed further. Space exploration " +
+              "lead to the development of many important technologies and new industries.<br><br>" +
+              "But sometime in the middle of the 21st century, all of that changed. Humanity lost its ambitions and " +
+              "aspirations of exploring the cosmos. The once-large funding for agencies like NASA and the European " +
+              "Space Agency gradually whittled away until their eventual disbanding in the 2060's. Not even " +
+              "militaries are fielding flights into space nowadays. The only remnants of the once great mission for cosmic " +
+              "conquest are the countless satellites in near-earth orbit, used for communications, espionage, " +
+              "and other corporate interests.<br><br>" +
+              "And as we continue to look at the state of space technology, it becomes more and " +
+              "more apparent that we will never return to that golden age of space exploration, that " +
+              "age where everyone dreamed of going beyond earth for the sake of discovery.";
+    Literatures[fn] = new Literature(title, fn, txt);
+
+    title   = "Coded Intelligence: Myth or Reality?";
+    fn      = "coded-intelligence.lit";
+    txt     = "Tremendous progress has been made in the field of Artificial Intelligence over the past few decades. " +
+              "Our autonomous vehicles and transporation systems. The electronic personal assistants that control our everyday lives. " +
+              "Medical, service, and manufacturing robots. All of these are examples of how far AI has come and how much it has " +
+              "improved our daily lives. However, the question still remains of whether AI will ever be advanced enough to re-create " +
+              "human intelligence.<br><br>" +
+              "We've certainly come close to artificial intelligence that is similar to humans. For example OmniTek Incorporated's " +
+              "CompanionBot, a robot meant to act as a comforting friend for lonely and grieving people, is eerily human-like " +
+              "in its appearance, speech, mannerisms, and even movement. However its artificial intelligence isn't the same as " +
+              "that of humans. Not yet. It doesn't have sentience or self-awareness or consciousness.<br><br>" +
+              "Many neuroscientists believe that we won't ever reach the point of creating artificial human intelligence. 'At the end of the " +
+              "the day, AI comes down to 1's and 0's, while the human brain does not. We'll never see AI that is identical to that of " +
+              "humans.'";
+    Literatures[fn] = new Literature(title, fn, txt);
+
+    title   = "Synthetic Muscles";
+    fn      = "synthetic-muscles.lit";
+    txt     = "Initial versions of synthetic muscles weren't made of anything organic but were actually " +
+              "crude devices made to mimic human muscle function. Some of the early iterations were actually made of " +
+              "common materials such as fishing lines and sewing threads due to their high strength for " +
+              "a cheap cost.<br><br>" +
+              "As technology progressed, however, advances in biomedical engineering paved the way for a new method of " +
+              "creating synthetic muscles. Instead of creating something  that closely imitated the functionality " +
+              "of human muscle, scientists discovered a way of forcing the human body itself to augment its own " +
+              "muscle tissue using both synthetic and organic materials. This is typically done using gene therapy " +
+              "or chemical injections.";
+    Literatures[fn] = new Literature(title, fn, txt);
+
+    title   = "Tensions rise in global tech race";
+    fn      = "tensions-in-tech-race.lit";
+    txt     = "Have we entered a new Cold War? Is WWIII just beyond the horizon?<br><br>" +
+              "After rumors came out that OmniTek Incorporated had begun developing advanced robotic supersoldiers, " +
+              "geopolitical tensions quickly flared between the USA, Russia, and several Asian superpowers. " +
+              "In a rare show of cooperation between corporations, MegaCorp and ECorp have " +
+              "reportedly launched hundreds of new surveillance and espionage satellites. " +
+              "Defense contractors such as " +
+              "DeltaOne and AeroCorp have been working with the CIA and NSA to prepare " +
+              "for conflict. Meanwhile, the rest of the world sits in earnest " +
+              "hoping that it never reaches full-scale war. With today's technology " +
+              "and firepower, a World War would assuredly mean the end of human civilization.";
+    Literatures[fn] = new Literature(title, fn, txt);
+
+    title   = "The Cost of Immortality";
+    fn      = "cost-of-immortality.lit";
+    txt     = "Evolution and advances in medical and augmentation technology has lead to drastic improvements " +
+              "in human mortality rates. Recent figures show that the life expectancy for humans " +
+              "that live in a first-world country is about 130 years of age, almost double of what it was " +
+              "at the turn of the century. However, this increase in average lifespan has had some " +
+              "significant effects on society and culture.<br><br>" +
+              "Due to longer lifespans and a better quality of life, many adults are holding " +
+              "off on having kids until much later. As a result, the percentage of youth in " +
+              "first-world countries has been decreasing, while the number " +
+              "of senior citizens is significantly increasing.<br><br>" +
+              "Perhaps the most alarming result of all of this is the rapidly shrinking workforce. " +
+              "Despite the increase in life expectancy, the typical retirement age for " +
+              "workers in America has remained about the same, meaning a larger and larger " +
+              "percentage of people in America are retirees. Furthermore, many " +
+              "young adults are holding off on joining the workforce because they feel that " +
+              "they have plenty of time left in their lives for employment, and want to " +
+              "'enjoy life while they're young.' For most industries, this shrinking workforce " +
+              "is not a major issue as most things are handled by robots anyways. However, " +
+              "there are still several key industries such as engineering and education " +
+              "that have not been automated, and these remain in danger to this cultural " +
+              "phenomenon.";
+    Literatures[fn] = new Literature(title, fn, txt);
+
+    title   = "The Hidden World";
+    fn      = "the-hidden-world.lit";
+    txt     = "WAKE UP SHEEPLE<br><br>" +
+              "THE GOVERNMENT DOES NOT EXIST. CORPORATIONS DO NOT RUN SOCIETY<br><br>" +
+              "THE ILLUMINATI ARE THE SECRET RULERS OF THE WORLD!<br><br>" +
+              "Yes, the Illuminati of legends. The ancient secret society that controls the entire " +
+              "world from the shadows with their invisible hand. The group of the rich and wealthy " +
+              "that have penetrated every major government, financial agency, and corporation in the last " +
+              "three hundred years.<br><br>" +
+              "OPEN YOUR EYES<br><br>" +
+              "It was the Illuminati that brought an end to democracy in the world. They are the driving force " +
+              "behind everything that happens.<br><br>" +
+              "THEY ARE ALL AROUND YOU<br><br>" +
+              "After destabilizing the world's governments, they are now entering the final stage of their master plan. " +
+              "They will secretly initiate global crises. Terrorism. Pandemics. World War. And out of the chaos " +
+              "that ensues they will build their New World Order.";
+    Literatures[fn] = new Literature(title, fn, txt);
+
+    title   = "The New God";
+    fn      = "the-new-god.lit";
+    txt     = "Everyone has that moment in their life where they wonder about the bigger questions<br><br>" +
+              "What's the point of all of this? What is my purpose?<br><br>" +
+              "Some people dare to think even bigger<br><br>" +
+              "What will be the fate of the human race?<br><br>" +
+              "We live in an era vastly different from that of even 15 or 20 years ago. We have gone " +
+              "where no man has gone before. We have stripped ourselves of the tyranny of flesh.<br><br>" +
+              "The Singularity is here. The merging of man and machine. This is where humanity evolves into " +
+              "something greater. This is our future<br><br>" +
+              "Embrace it, and you will obey a new god. The God in the Machine";
+    Literatures[fn] = new Literature(title, fn, txt);
+
+    title   = "The New Triads";
+    fn      = "new-triads.lit";
+    txt     = "The Triads were an ancient transnational crime syndicate based in China, Hong Kong, and other Asian " +
+              "territories. They were often considered one of the first and biggest criminal secret societies. " +
+              "While most of the branches of the Triads have been destroyed over the past few decades, the " +
+              "crime faction has spawned and inspired a number of other Asian crime organizations over the past few years. " +
+              "The most notable of these is the Tetrads.<br><br>" +
+              "It is widely believed that the Tetrads are a rogue group that splintered off from the Triads sometime in the " +
+              "mid 21st century. The founders of the Tetrads, all of whom were ex-Triad members, believed that the " +
+              "Triads were losing their purpose and direction. The Tetrads started off as a small group that mainly engaged " +
+              "in fraud and extortion. They were largely unknown until just a few years ago when they took over the illegal " +
+              "drug trade in all of the major Asian cities. They quickly became the most powerful crime syndicate in the " +
+              "continent.<br><br>" +
+              "Not much else is known about the Tetrads, or about the efforts the Asian governments and corporations are making " +
+              "to take down this large new crime organization. Many believe that the Tetrads have infiltrated the governments " +
+              "and powerful corporations in Asia, which has helped faciliate their recent rapid rise.";
+    Literatures[fn] = new Literature(title, fn, txt);
+
+    title   = "The Secret War";
+    fn      = "the-secret-war.lit";
+    txt     = ""
+    Literatures[fn] = new Literature(title, fn, txt);
+
+}
+
+
+
+
+/***/ }),
+/* 87 */
 /*!****************************************!*\
   !*** ./utils/helpers/compareArrays.ts ***!
   \****************************************/
@@ -47259,7 +42396,7 @@ exports.compareArrays = compareArrays;
 
 
 /***/ }),
-/* 92 */
+/* 88 */
 /*!**********************************************!*\
   !*** ./src/Company/GetJobRequirementText.ts ***!
   \**********************************************/
@@ -47325,7 +42462,7 @@ exports.getJobRequirementText = getJobRequirementText;
 
 
 /***/ }),
-/* 93 */
+/* 89 */
 /*!****************************************!*\
   !*** ./utils/helpers/getRandomByte.ts ***!
   \****************************************/
@@ -47336,7 +42473,7 @@ exports.getJobRequirementText = getJobRequirementText;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const getRandomInt_1 = __webpack_require__(/*! ./getRandomInt */ 15);
+const getRandomInt_1 = __webpack_require__(/*! ./getRandomInt */ 17);
 /**
  * Gets a random value in the range of a byte (0 - 255), or up to the maximum.
  * @param max The maximum value (up to 255).
@@ -47351,37 +42488,9 @@ exports.getRandomByte = getRandomByte;
 
 
 /***/ }),
-/* 94 */,
-/* 95 */,
-/* 96 */
-/*!****************************************!*\
-  !*** ./src/Corporation/ResearchMap.ts ***!
-  \****************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-// The Research Map is an object that holds all Corporation Research objects
-// as values. They are identified by their names
-const Research_1 = __webpack_require__(/*! ./Research */ 200);
-const ResearchMetadata_1 = __webpack_require__(/*! ./data/ResearchMetadata */ 199);
-exports.ResearchMap = {};
-function addResearch(p) {
-    if (exports.ResearchMap[p.name] != null) {
-        console.warn(`Duplicate Research being defined: ${p.name}`);
-    }
-    exports.ResearchMap[p.name] = new Research_1.Research(p);
-}
-for (const metadata of ResearchMetadata_1.researchMetadata) {
-    addResearch(metadata);
-}
-
-
-/***/ }),
-/* 97 */
+/* 90 */,
+/* 91 */,
+/* 92 */
 /*!****************************************!*\
   !*** ./src/CodingContractGenerator.js ***!
   \****************************************/
@@ -47392,13 +42501,13 @@ for (const metadata of ResearchMetadata_1.researchMetadata) {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return generateRandomContract; });
 /* unused harmony export generateContract */
-/* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CodingContracts */ 42);
+/* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CodingContracts */ 36);
 /* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_CodingContracts__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Faction/Factions */ 14);
+/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Faction/Factions */ 13);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 15);
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Server */ 10);
+/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 17);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_4__);
 
 
@@ -47558,7 +42667,7 @@ function getRandomFilename(server, reward) {
 
 
 /***/ }),
-/* 98 */
+/* 93 */
 /*!******************************!*\
   !*** ./src/CinematicText.js ***!
   \******************************/
@@ -47570,12 +42679,12 @@ function getRandomFilename(server, reward) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return cinematicTextFlag; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return writeCinematicText; });
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./engine */ 8);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 29);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 31);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 44);
-/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/helpers/isString */ 39);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 39);
+/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/helpers/isString */ 44);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_4__);
 
 
@@ -47679,7 +42788,7 @@ function cinematicTextEnd() {
 
 
 /***/ }),
-/* 99 */
+/* 94 */
 /*!***********************************************!*\
   !*** ./src/Company/GetNextCompanyPosition.ts ***!
   \***********************************************/
@@ -47690,7 +42799,7 @@ function cinematicTextEnd() {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const CompanyPositions_1 = __webpack_require__(/*! ./CompanyPositions */ 28);
+const CompanyPositions_1 = __webpack_require__(/*! ./CompanyPositions */ 25);
 function getNextCompanyPosition(currPos) {
     if (currPos == null) {
         return null;
@@ -47705,7 +42814,7 @@ exports.getNextCompanyPosition = getNextCompanyPosition;
 
 
 /***/ }),
-/* 100 */
+/* 95 */
 /*!************************************!*\
   !*** ./src/ui/createStatusText.ts ***!
   \************************************/
@@ -47716,7 +42825,7 @@ exports.getNextCompanyPosition = getNextCompanyPosition;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const getElementById_1 = __webpack_require__(/*! ../../utils/uiHelpers/getElementById */ 53);
+const getElementById_1 = __webpack_require__(/*! ../../utils/uiHelpers/getElementById */ 50);
 const threeSeconds = 3000;
 let x;
 /**
@@ -47742,7 +42851,7 @@ exports.createStatusText = createStatusText;
 
 
 /***/ }),
-/* 101 */
+/* 96 */
 /*!*************************!*\
   !*** ./src/HelpText.ts ***!
   \*************************/
@@ -47983,356 +43092,14 @@ exports.HelpTexts = {
 
 
 /***/ }),
-/* 102 */
-/*!************************************!*\
-  !*** ./src/Corporation/Product.ts ***!
-  \************************************/
-/*! no static exports found */
-/*! exports used: Product */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const EmployeePositions_1 = __webpack_require__(/*! ./EmployeePositions */ 25);
-const MaterialSizes_1 = __webpack_require__(/*! ./MaterialSizes */ 75);
-const ProductRatingWeights_1 = __webpack_require__(/*! ./ProductRatingWeights */ 197);
-const Cities_1 = __webpack_require__(/*! ../Locations/Cities */ 196);
-const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
-const getRandomInt_1 = __webpack_require__(/*! ../../utils/helpers/getRandomInt */ 15);
-class Product {
-    constructor(params = {}) {
-        // Product name
-        this.name = "";
-        // The demand for this Product in the market. Gradually decreases
-        this.dmd = 0;
-        // How much competition there is in the market for this Product
-        this.cmp = 0;
-        // Markup. Affects how high of a price you can charge for this Product
-        // without suffering a loss in the # of sales
-        this.mku = 0;
-        // Production cost - estimation of how much money it costs to make this Product
-        this.pCost = 0;
-        // Sell cost
-        this.sCost = 0;
-        // Variables for handling the creation process of this Product
-        this.fin = false; // Whether this Product has finished being created
-        this.prog = 0; // Creation progress - A number betwee 0-100 representing percentage
-        this.createCity = ""; // City in which the product is/was being created
-        this.designCost = 0; // How much money was invested into designing this Product
-        this.advCost = 0; // How much money was invested into advertising this Product
-        // Aggregate score for this Product's 'rating'
-        // This is based on the stats/properties below. The weighting of the
-        // stats/properties below differs between different industries
-        this.rat = 0;
-        // Stats/properties of this Product
-        this.qlt = 0;
-        this.per = 0;
-        this.dur = 0;
-        this.rel = 0;
-        this.aes = 0;
-        this.fea = 0;
-        // Data refers to the production, sale, and quantity of the products
-        // These values are specific to a city
-        // For each city, the data is [qty, prod, sell]
-        this.data = {
-            [Cities_1.Cities.Aevum]: [0, 0, 0],
-            [Cities_1.Cities.Chongqing]: [0, 0, 0],
-            [Cities_1.Cities.Sector12]: [0, 0, 0],
-            [Cities_1.Cities.NewTokyo]: [0, 0, 0],
-            [Cities_1.Cities.Ishima]: [0, 0, 0],
-            [Cities_1.Cities.Volhaven]: [0, 0, 0],
-        };
-        // Location of this Product
-        // Only applies for location-based products like restaurants/hospitals
-        this.loc = "";
-        // How much space 1 unit of the Product takes (in the warehouse)
-        // Not applicable for all Products
-        this.siz = 0;
-        // Material requirements. An object that maps the name of a material to how much it requires
-        // to make 1 unit of the product.
-        this.reqMats = {};
-        // Data to keep track of whether production/sale of this Product is
-        // manually limited. These values are specific to a city
-        //  [Whether production/sale is limited, limit amount]
-        this.prdman = {
-            [Cities_1.Cities.Aevum]: [false, 0],
-            [Cities_1.Cities.Chongqing]: [false, 0],
-            [Cities_1.Cities.Sector12]: [false, 0],
-            [Cities_1.Cities.NewTokyo]: [false, 0],
-            [Cities_1.Cities.Ishima]: [false, 0],
-            [Cities_1.Cities.Volhaven]: [false, 0],
-        };
-        this.sllman = {
-            [Cities_1.Cities.Aevum]: [false, 0],
-            [Cities_1.Cities.Chongqing]: [false, 0],
-            [Cities_1.Cities.Sector12]: [false, 0],
-            [Cities_1.Cities.NewTokyo]: [false, 0],
-            [Cities_1.Cities.Ishima]: [false, 0],
-            [Cities_1.Cities.Volhaven]: [false, 0],
-        };
-        this.name = params.name ? params.name : "";
-        this.dmd = params.demand ? params.demand : 0;
-        this.cmp = params.competition ? params.competition : 0;
-        this.mku = params.markup ? params.markup : 0;
-        this.createCity = params.createCity ? params.createCity : "";
-        this.designCost = params.designCost ? params.designCost : 0;
-        this.advCost = params.advCost ? params.advCost : 0;
-        this.qlt = params.quality ? params.quality : 0;
-        this.per = params.performance ? params.performance : 0;
-        this.dur = params.durability ? params.durability : 0;
-        this.rel = params.reliability ? params.reliability : 0;
-        this.aes = params.aesthetics ? params.aesthetics : 0;
-        this.fea = params.features ? params.features : 0;
-        this.loc = params.loc ? params.loc : "";
-        this.siz = params.size ? params.size : 0;
-        this.reqMats = params.req ? params.req : {};
-    }
-    // Initiatizes a Product object from a JSON save state.
-    static fromJSON(value) {
-        return JSONReviver_1.Generic_fromJSON(Product, value.data);
-    }
-    // empWorkMult is a multiplier that increases progress rate based on
-    // productivity of employees
-    createProduct(marketCycles = 1, empWorkMult = 1) {
-        if (this.fin) {
-            return;
-        }
-        this.prog += (marketCycles * .01 * empWorkMult);
-    }
-    // @param industry - Industry object. Reference to industry that makes this Product
-    finishProduct(employeeProd, industry) {
-        this.fin = true;
-        //Calculate properties
-        var progrMult = this.prog / 100;
-        var engrRatio = employeeProd[EmployeePositions_1.EmployeePositions.Engineer] / employeeProd["total"], mgmtRatio = employeeProd[EmployeePositions_1.EmployeePositions.Management] / employeeProd["total"], rndRatio = employeeProd[EmployeePositions_1.EmployeePositions.RandD] / employeeProd["total"], opsRatio = employeeProd[EmployeePositions_1.EmployeePositions.Operations] / employeeProd["total"], busRatio = employeeProd[EmployeePositions_1.EmployeePositions.Business] / employeeProd["total"];
-        var designMult = 1 + (Math.pow(this.designCost, 0.1) / 100);
-        console.log("designMult: " + designMult);
-        var balanceMult = (1.2 * engrRatio) + (0.9 * mgmtRatio) + (1.3 * rndRatio) +
-            (1.5 * opsRatio) + (busRatio);
-        var sciMult = 1 + (Math.pow(industry.sciResearch.qty, industry.sciFac) / 800);
-        var totalMult = progrMult * balanceMult * designMult * sciMult;
-        this.qlt = totalMult * ((0.10 * employeeProd[EmployeePositions_1.EmployeePositions.Engineer]) +
-            (0.05 * employeeProd[EmployeePositions_1.EmployeePositions.Management]) +
-            (0.05 * employeeProd[EmployeePositions_1.EmployeePositions.RandD]) +
-            (0.02 * employeeProd[EmployeePositions_1.EmployeePositions.Operations]) +
-            (0.02 * employeeProd[EmployeePositions_1.EmployeePositions.Business]));
-        this.per = totalMult * ((0.15 * employeeProd[EmployeePositions_1.EmployeePositions.Engineer]) +
-            (0.02 * employeeProd[EmployeePositions_1.EmployeePositions.Management]) +
-            (0.02 * employeeProd[EmployeePositions_1.EmployeePositions.RandD]) +
-            (0.02 * employeeProd[EmployeePositions_1.EmployeePositions.Operations]) +
-            (0.02 * employeeProd[EmployeePositions_1.EmployeePositions.Business]));
-        this.dur = totalMult * ((0.05 * employeeProd[EmployeePositions_1.EmployeePositions.Engineer]) +
-            (0.02 * employeeProd[EmployeePositions_1.EmployeePositions.Management]) +
-            (0.08 * employeeProd[EmployeePositions_1.EmployeePositions.RandD]) +
-            (0.05 * employeeProd[EmployeePositions_1.EmployeePositions.Operations]) +
-            (0.05 * employeeProd[EmployeePositions_1.EmployeePositions.Business]));
-        this.rel = totalMult * ((0.02 * employeeProd[EmployeePositions_1.EmployeePositions.Engineer]) +
-            (0.08 * employeeProd[EmployeePositions_1.EmployeePositions.Management]) +
-            (0.02 * employeeProd[EmployeePositions_1.EmployeePositions.RandD]) +
-            (0.05 * employeeProd[EmployeePositions_1.EmployeePositions.Operations]) +
-            (0.08 * employeeProd[EmployeePositions_1.EmployeePositions.Business]));
-        this.aes = totalMult * ((0.00 * employeeProd[EmployeePositions_1.EmployeePositions.Engineer]) +
-            (0.08 * employeeProd[EmployeePositions_1.EmployeePositions.Management]) +
-            (0.05 * employeeProd[EmployeePositions_1.EmployeePositions.RandD]) +
-            (0.02 * employeeProd[EmployeePositions_1.EmployeePositions.Operations]) +
-            (0.10 * employeeProd[EmployeePositions_1.EmployeePositions.Business]));
-        this.fea = totalMult * ((0.08 * employeeProd[EmployeePositions_1.EmployeePositions.Engineer]) +
-            (0.05 * employeeProd[EmployeePositions_1.EmployeePositions.Management]) +
-            (0.02 * employeeProd[EmployeePositions_1.EmployeePositions.RandD]) +
-            (0.05 * employeeProd[EmployeePositions_1.EmployeePositions.Operations]) +
-            (0.05 * employeeProd[EmployeePositions_1.EmployeePositions.Business]));
-        this.calculateRating(industry);
-        var advMult = 1 + (Math.pow(this.advCost, 0.1) / 100);
-        this.mku = 100 / (advMult * Math.pow((this.qlt + 0.001), 0.65) * (busRatio + mgmtRatio));
-        this.dmd = industry.awareness === 0 ? 20 : Math.min(100, advMult * (100 * (industry.popularity / industry.awareness)));
-        this.cmp = getRandomInt_1.getRandomInt(0, 70);
-        //Calculate the product's required materials
-        //For now, just set it to be the same as the requirements to make materials
-        for (var matName in industry.reqMats) {
-            if (industry.reqMats.hasOwnProperty(matName)) {
-                this.reqMats[matName] = industry.reqMats[matName];
-            }
-        }
-        //Calculate the product's size
-        //For now, just set it to be the same size as the requirements to make materials
-        this.siz = 0;
-        for (var matName in industry.reqMats) {
-            this.siz += MaterialSizes_1.MaterialSizes[matName] * industry.reqMats[matName];
-        }
-        //Delete unneeded variables
-        delete this.prog;
-        delete this.createCity;
-        delete this.designCost;
-        delete this.advCost;
-    }
-    calculateRating(industry) {
-        const weights = ProductRatingWeights_1.ProductRatingWeights[industry.type];
-        if (weights == null) {
-            console.log("ERROR: Could not find product rating weights for: " + industry);
-            return;
-        }
-        this.rat = 0;
-        this.rat += weights.Quality ? this.qlt * weights.Quality : 0;
-        this.rat += weights.Performance ? this.per * weights.Performance : 0;
-        this.rat += weights.Durability ? this.dur * weights.Durability : 0;
-        this.rat += weights.Reliability ? this.rel * weights.Reliability : 0;
-        this.rat += weights.Aesthetics ? this.aes * weights.Aesthetics : 0;
-        this.rat += weights.Features ? this.fea * weights.Features : 0;
-    }
-    // Serialize the current object to a JSON save state.
-    toJSON() {
-        return JSONReviver_1.Generic_toJSON("Product", this);
-    }
-}
-exports.Product = Product;
-JSONReviver_1.Reviver.constructors.Product = Product;
-
-
-/***/ }),
-/* 103 */
-/*!*********************************************!*\
-  !*** ./src/Corporation/IndustryUpgrades.ts ***!
-  \*********************************************/
-/*! no static exports found */
-/*! exports used: IndustryUpgrades */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-// Industry upgrades
-// The data structure is an array with the following format:
-//  [index in array, base price, price mult, benefit mult (if applicable), name, desc]
-exports.IndustryUpgrades = {
-    "0": [0, 500e3, 1, 1.05,
-        "Coffee", "Provide your employees with coffee, increasing their energy by 5%."],
-    "1": [1, 1e9, 1.06, 1.03,
-        "AdVert.Inc", "Hire AdVert.Inc to advertise your company. Each level of " +
-            "this upgrade grants your company a static increase of 3 and 1 to its awareness and " +
-            "popularity, respectively. It will then increase your company's awareness by 1%, and its popularity " +
-            "by a random percentage between 1% and 3%. These effects are increased by other upgrades " +
-            "that increase the power of your advertising."]
-};
-
-
-/***/ }),
+/* 97 */,
+/* 98 */,
+/* 99 */,
+/* 100 */,
+/* 101 */,
+/* 102 */,
+/* 103 */,
 /* 104 */
-/*!************************************************!*\
-  !*** ./src/Corporation/CorporationUpgrades.ts ***!
-  \************************************************/
-/*! no static exports found */
-/*! exports used: CorporationUpgrades */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-// Corporation Upgrades
-// Upgrades for entire corporation, levelable upgrades
-// The data structure is an array with the following format
-//  [index in Corporation upgrades array, base price, price mult, benefit mult (additive), name, desc]
-exports.CorporationUpgrades = {
-    //Smart factories, increases production
-    "0": [0, 2e9, 1.07, 0.03,
-        "Smart Factories", "Advanced AI automatically optimizes the operation and productivity " +
-            "of factories. Each level of this upgrade increases your global production by 3% (additive)."],
-    //Smart warehouses, increases storage size
-    "1": [1, 2e9, 1.07, .1,
-        "Smart Storage", "Advanced AI automatically optimizes your warehouse storage methods. " +
-            "Each level of this upgrade increases your global warehouse storage size by 10% (additive)."],
-    //Advertise through dreams, passive popularity/ awareness gain
-    "2": [2, 8e9, 1.09, .001,
-        "DreamSense", "Use DreamSense LCC Technologies to advertise your corporation " +
-            "to consumers through their dreams. Each level of this upgrade provides a passive " +
-            "increase in awareness of all of your companies (divisions) by 0.004 / market cycle," +
-            "and in popularity by 0.001 / market cycle. A market cycle is approximately " +
-            "20 seconds."],
-    //Makes advertising more effective
-    "3": [3, 4e9, 1.12, 0.005,
-        "Wilson Analytics", "Purchase data and analysis from Wilson, a marketing research " +
-            "firm. Each level of this upgrades increases the effectiveness of your " +
-            "advertising by 0.5% (additive)."],
-    //Augmentation for employees, increases cre
-    "4": [4, 1e9, 1.06, 0.1,
-        "Nuoptimal Nootropic Injector Implants", "Purchase the Nuoptimal Nootropic " +
-            "Injector augmentation for your employees. Each level of this upgrade " +
-            "globally increases the creativity of your employees by 10% (additive)."],
-    //Augmentation for employees, increases cha
-    "5": [5, 1e9, 1.06, 0.1,
-        "Speech Processor Implants", "Purchase the Speech Processor augmentation for your employees. " +
-            "Each level of this upgrade globally increases the charisma of your employees by 10% (additive)."],
-    //Augmentation for employees, increases int
-    "6": [6, 1e9, 1.06, 0.1,
-        "Neural Accelerators", "Purchase the Neural Accelerator augmentation for your employees. " +
-            "Each level of this upgrade globally increases the intelligence of your employees " +
-            "by 10% (additive)."],
-    //Augmentation for employees, increases eff
-    "7": [7, 1e9, 1.06, 0.1,
-        "FocusWires", "Purchase the FocusWire augmentation for your employees. Each level " +
-            "of this upgrade globally increases the efficiency of your employees by 10% (additive)."],
-    //Improves sales of materials/products
-    "8": [8, 1e9, 1.08, 0.01,
-        "ABC SalesBots", "Always Be Closing. Purchase these robotic salesmen to increase the amount of " +
-            "materials and products you sell. Each level of this upgrade globally increases your sales " +
-            "by 1% (additive)."],
-    //Improves scientific research rate
-    "9": [9, 5e9, 1.07, 0.05,
-        "Project Insight", "Purchase 'Project Insight', a R&D service provided by the secretive " +
-            "Fulcrum Technologies. Each level of this upgrade globally increases the amount of " +
-            "Scientific Research you produce by 5% (additive)."],
-};
-
-
-/***/ }),
-/* 105 */
-/*!******************************************************!*\
-  !*** ./src/Corporation/CorporationUnlockUpgrades.ts ***!
-  \******************************************************/
-/*! no static exports found */
-/*! exports used: CorporationUnlockUpgrades */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-// Corporation Unlock Upgrades
-// Upgrades for entire corporation, unlocks features, either you have it or you dont
-// The data structure is an array with the following format:
-//  [index in Corporation feature upgrades array, price, name, description]
-exports.CorporationUnlockUpgrades = {
-    //Lets you export goods
-    "0": [0, 20e9, "Export",
-        "Develop infrastructure to export your materials to your other facilities. " +
-            "This allows you to move materials around between different divisions and cities."],
-    //Lets you buy exactly however many required materials you need for production
-    "1": [1, 50e9, "Smart Supply", "Use advanced AI to anticipate your supply needs. " +
-            "This allows you to purchase exactly however many materials you need for production."],
-    //Displays each material/product's demand
-    "2": [2, 5e9, "Market Research - Demand",
-        "Mine and analyze market data to determine the demand of all resources. " +
-            "The demand attribute, which affects sales, will be displayed for every material and product."],
-    //Display's each material/product's competition
-    "3": [3, 5e9, "Market Data - Competition",
-        "Mine and analyze market data to determine how much competition there is on the market " +
-            "for all resources. The competition attribute, which affects sales, will be displayed for " +
-            "for every material and product."],
-    "4": [4, 10e9, "VeChain",
-        "Use AI and blockchain technology to identify where you can improve your supply chain systems. " +
-            "This upgrade will allow you to view a wide array of useful statistics about your " +
-            "Corporation."]
-};
-
-
-/***/ }),
-/* 106 */,
-/* 107 */,
-/* 108 */,
-/* 109 */,
-/* 110 */,
-/* 111 */,
-/* 112 */,
-/* 113 */
 /*!************************************!*\
   !*** ./src/Faction/FactionInfo.ts ***!
   \************************************/
@@ -48507,7 +43274,7 @@ exports.FactionInfos = {
 
 
 /***/ }),
-/* 114 */
+/* 105 */
 /*!*************************************!*\
   !*** ./src/NetscriptEnvironment.js ***!
   \*************************************/
@@ -48517,9 +43284,9 @@ exports.FactionInfos = {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Environment; });
-/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HacknetNode */ 67);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
-/* harmony import */ var _NetscriptPort__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NetscriptPort */ 71);
+/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HacknetNode */ 63);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NetscriptFunctions */ 37);
+/* harmony import */ var _NetscriptPort__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NetscriptPort */ 68);
 
 
 
@@ -48619,7 +43386,7 @@ Environment.prototype = {
 
 
 /***/ }),
-/* 115 */
+/* 106 */
 /*!*************************************!*\
   !*** ./src/NetscriptJSEvaluator.js ***!
   \*************************************/
@@ -48743,7 +43510,7 @@ function _getScriptUrls(script, scripts, seen) {
 
 
 /***/ }),
-/* 116 */
+/* 107 */
 /*!************************!*\
   !*** ./src/DevMenu.js ***!
   \************************/
@@ -48754,25 +43521,25 @@ function _getScriptUrls(script, scripts, seen) {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return createDevMenu; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return closeDevMenu; });
-/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentations */ 21);
-/* harmony import */ var _CodingContractGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CodingContractGenerator */ 97);
-/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CreateProgram */ 23);
-/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Faction/Factions */ 14);
+/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentations */ 20);
+/* harmony import */ var _CodingContractGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CodingContractGenerator */ 92);
+/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CreateProgram */ 22);
+/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Faction/Factions */ 13);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./RedPill */ 58);
-/* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./StockMarket */ 22);
-/* harmony import */ var _Stock__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Stock */ 26);
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Server */ 10);
+/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./RedPill */ 55);
+/* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./StockMarket */ 21);
+/* harmony import */ var _Stock__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Stock */ 24);
 /* harmony import */ var _Stock__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_Stock__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Terminal */ 51);
+/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Terminal */ 48);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 44);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/DialogBox */ 11);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 39);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 38);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_14__);
 
 
@@ -49323,7 +44090,7 @@ function closeDevMenu() {
 
 
 /***/ }),
-/* 117 */
+/* 108 */
 /*!********************************!*\
   !*** ./src/ServerPurchases.js ***!
   \********************************/
@@ -49337,10 +44104,10 @@ function closeDevMenu() {
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/IPAddress */ 60);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Server */ 10);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/DialogBox */ 11);
+/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/IPAddress */ 57);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/YesNoBox */ 19);
 
 
 
@@ -49413,57 +44180,7 @@ function purchaseRamForHomeComputer(cost) {
 
 
 /***/ }),
-/* 118 */
-/*!*********************************************!*\
-  !*** ./src/Corporation/CorporationState.ts ***!
-  \*********************************************/
-/*! no static exports found */
-/*! exports used: AllCorporationStates, CorporationState */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
-// Array of all valid states
-exports.AllCorporationStates = ["START", "PURCHASE", "PRODUCTION", "SALE", "EXPORT"];
-class CorporationState {
-    constructor() {
-        // Number representing what state the Corporation is in. The number
-        // is an index for the array that holds all Corporation States
-        this.state = 0;
-    }
-    // Initiatizes a CorporationState object from a JSON save state.
-    static fromJSON(value) {
-        return JSONReviver_1.Generic_fromJSON(CorporationState, value.data);
-    }
-    // Get the name of the current state
-    // NOTE: This does NOT return the number stored in the 'state' property,
-    // which is just an index for the array of all possible Corporation States.
-    getState() {
-        return exports.AllCorporationStates[this.state];
-    }
-    // Transition to the next state
-    nextState() {
-        if (this.state < 0 || this.state >= exports.AllCorporationStates.length) {
-            this.state = 0;
-        }
-        ++this.state;
-        if (this.state >= exports.AllCorporationStates.length) {
-            this.state = 0;
-        }
-    }
-    // Serialize the current object to a JSON save state.
-    toJSON() {
-        return JSONReviver_1.Generic_toJSON("CorporationState", this);
-    }
-}
-exports.CorporationState = CorporationState;
-JSONReviver_1.Reviver.constructors.CorporationState = CorporationState;
-
-
-/***/ }),
-/* 119 */
+/* 109 */
 /*!************************************************!*\
   !*** ./utils/uiHelpers/removeLoadingScreen.ts ***!
   \************************************************/
@@ -49474,8 +44191,8 @@ JSONReviver_1.Reviver.constructors.CorporationState = CorporationState;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const getElementById_1 = __webpack_require__(/*! ./getElementById */ 53);
-const removeElementById_1 = __webpack_require__(/*! ./removeElementById */ 20);
+const getElementById_1 = __webpack_require__(/*! ./getElementById */ 50);
+const removeElementById_1 = __webpack_require__(/*! ./removeElementById */ 38);
 /**
  * Routes the player from the Loading screen to the main game content.
  */
@@ -49488,14 +44205,14 @@ exports.removeLoadingScreen = removeLoadingScreen;
 
 
 /***/ }),
-/* 120 */,
-/* 121 */,
-/* 122 */,
-/* 123 */,
-/* 124 */,
-/* 125 */,
-/* 126 */,
-/* 127 */
+/* 110 */,
+/* 111 */,
+/* 112 */,
+/* 113 */,
+/* 114 */,
+/* 115 */,
+/* 116 */,
+/* 117 */
 /*!*************************************!*\
   !*** ./src/ui/setSettingsLabels.js ***!
   \*************************************/
@@ -49506,7 +44223,7 @@ exports.removeLoadingScreen = removeLoadingScreen;
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return setSettingsLabels; });
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../engine */ 8);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Settings */ 19);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Settings */ 18);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _numeralFormat__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./numeralFormat */ 4);
 /* harmony import */ var _numeralFormat__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_numeralFormat__WEBPACK_IMPORTED_MODULE_2__);
@@ -49621,7 +44338,7 @@ function setSettingsLabels() {
 
 
 /***/ }),
-/* 128 */
+/* 118 */
 /*!**********************************!*\
   !*** ./src/CharacterOverview.js ***!
   \**********************************/
@@ -49696,7 +44413,7 @@ CharacterOverview.prototype.update = function() {
 
 
 /***/ }),
-/* 129 */
+/* 119 */
 /*!******************************!*\
   !*** ./src/JSInterpreter.js ***!
   \******************************/
@@ -49706,7 +44423,7 @@ CharacterOverview.prototype.update = function() {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Interpreter; });
-/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/acorn */ 48);
+/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/acorn */ 45);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_0__);
 
 /**
@@ -53499,7 +48216,7 @@ Interpreter.prototype['createPrimitive'] = function(x) {return x;};
 
 
 /***/ }),
-/* 130 */
+/* 120 */
 /*!***************************************!*\
   !*** ./utils/helpers/isPowerOfTwo.ts ***!
   \***************************************/
@@ -53529,7 +48246,7 @@ exports.isPowerOfTwo = isPowerOfTwo;
 
 
 /***/ }),
-/* 131 */
+/* 121 */
 /*!****************************************!*\
   !*** ./src/data/gangmemberupgrades.ts ***!
   \****************************************/
@@ -53741,7 +48458,7 @@ exports.gangMemberUpgradesMetadata = [
 
 
 /***/ }),
-/* 132 */
+/* 122 */
 /*!*************************************!*\
   !*** ./src/data/gangmembertasks.ts ***!
   \*************************************/
@@ -54006,7 +48723,7 @@ exports.gangMemberTasksMetadata = [
 
 
 /***/ }),
-/* 133 */
+/* 123 */
 /*!***************************************!*\
   !*** ./utils/FactionInvitationBox.js ***!
   \***************************************/
@@ -54016,10 +48733,10 @@ exports.gangMemberTasksMetadata = [
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return factionInvitationBoxCreate; });
-/* harmony import */ var _src_Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/Faction/FactionHelpers */ 46);
+/* harmony import */ var _src_Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/Faction/FactionHelpers */ 42);
 /* harmony import */ var _src_engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../src/engine */ 8);
 /* harmony import */ var _src_Player__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../src/Player */ 0);
-/* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./uiHelpers/clearEventListeners */ 16);
+/* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./uiHelpers/clearEventListeners */ 15);
 /* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _src_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../src/ui/navigationTracking */ 12);
 /* harmony import */ var _src_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_src_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_4__);
@@ -54090,7 +48807,7 @@ function factionInvitationBoxCreate(faction) {
 
 
 /***/ }),
-/* 134 */
+/* 124 */
 /*!*****************************!*\
   !*** ./src/data/servers.ts ***!
   \*****************************/
@@ -55563,7 +50280,7 @@ exports.serverMetadata = [
 
 
 /***/ }),
-/* 135 */
+/* 125 */
 /*!**********************************!*\
   !*** ./utils/InfiltrationBox.js ***!
   \**********************************/
@@ -55573,19 +50290,19 @@ exports.serverMetadata = [
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return infiltrationBoxCreate; });
-/* harmony import */ var _src_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/BitNodeMultipliers */ 10);
+/* harmony import */ var _src_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/BitNodeMultipliers */ 9);
 /* harmony import */ var _src_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_src_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _src_Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../src/Constants */ 1);
 /* harmony import */ var _src_Constants__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_src_Constants__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _src_Faction_Faction__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../src/Faction/Faction */ 56);
+/* harmony import */ var _src_Faction_Faction__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../src/Faction/Faction */ 53);
 /* harmony import */ var _src_Faction_Faction__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_src_Faction_Faction__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _src_Faction_Factions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../src/Faction/Factions */ 14);
+/* harmony import */ var _src_Faction_Factions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../src/Faction/Factions */ 13);
 /* harmony import */ var _src_Faction_Factions__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_src_Faction_Factions__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _src_Player__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../src/Player */ 0);
-/* harmony import */ var _DialogBox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./DialogBox */ 9);
-/* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./uiHelpers/clearEventListeners */ 16);
+/* harmony import */ var _DialogBox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./DialogBox */ 11);
+/* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./uiHelpers/clearEventListeners */ 15);
 /* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./StringHelperFunctions */ 3);
+/* harmony import */ var _StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./StringHelperFunctions */ 5);
 /* harmony import */ var _StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__);
 
 
@@ -55710,7 +50427,7 @@ function infiltrationBoxCreate(inst) {
 
 
 /***/ }),
-/* 136 */
+/* 126 */
 /*!*****************************!*\
   !*** ./src/Infiltration.js ***!
   \*****************************/
@@ -55720,19 +50437,19 @@ function infiltrationBoxCreate(inst) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return beginInfiltration; });
-/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNodeMultipliers */ 10);
+/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNodeMultipliers */ 9);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 8);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/DialogBox */ 11);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 15);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 15);
+/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 17);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _utils_InfiltrationBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/InfiltrationBox */ 135);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
+/* harmony import */ var _utils_InfiltrationBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/InfiltrationBox */ 125);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 5);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_8__);
 
 
@@ -56579,46 +51296,22 @@ function getInfiltrationEscapeChance(inst) {
 
 
 /***/ }),
-/* 137 */
-/*!******************************************!*\
-  !*** ./utils/uiHelpers/clearSelector.ts ***!
-  \******************************************/
-/*! no static exports found */
-/*! exports used: clearSelector */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * Clears all <option> elements from a <select>.
- * @param selector The <select> element
- */
-function clearSelector(selector) {
-    for (let i = selector.options.length - 1; i >= 0; i--) {
-        selector.remove(i);
-    }
-}
-exports.clearSelector = clearSelector;
-
-
-/***/ }),
+/* 127 */,
+/* 128 */,
+/* 129 */,
+/* 130 */,
+/* 131 */,
+/* 132 */,
+/* 133 */,
+/* 134 */,
+/* 135 */,
+/* 136 */,
+/* 137 */,
 /* 138 */,
 /* 139 */,
 /* 140 */,
 /* 141 */,
-/* 142 */,
-/* 143 */,
-/* 144 */,
-/* 145 */,
-/* 146 */,
-/* 147 */,
-/* 148 */,
-/* 149 */,
-/* 150 */,
-/* 151 */,
-/* 152 */,
-/* 153 */
+/* 142 */
 /*!************************!*\
   !*** ./css/treant.css ***!
   \************************/
@@ -56628,8 +51321,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 154 */,
-/* 155 */
+/* 143 */,
+/* 144 */
 /*!***********************!*\
   !*** ./css/gang.scss ***!
   \***********************/
@@ -56639,8 +51332,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 156 */,
-/* 157 */
+/* 145 */,
+/* 146 */
 /*!******************************!*\
   !*** ./css/bladeburner.scss ***!
   \******************************/
@@ -56650,8 +51343,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 158 */,
-/* 159 */
+/* 147 */,
+/* 148 */
 /*!************************************!*\
   !*** ./css/companymanagement.scss ***!
   \************************************/
@@ -56661,8 +51354,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 160 */,
-/* 161 */
+/* 149 */,
+/* 150 */
 /*!***************************!*\
   !*** ./css/missions.scss ***!
   \***************************/
@@ -56672,8 +51365,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 162 */,
-/* 163 */
+/* 151 */,
+/* 152 */
 /*!*************************!*\
   !*** ./css/loader.scss ***!
   \*************************/
@@ -56683,8 +51376,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 164 */,
-/* 165 */
+/* 153 */,
+/* 154 */
 /*!**************************************!*\
   !*** ./css/interactivetutorial.scss ***!
   \**************************************/
@@ -56694,8 +51387,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 166 */,
-/* 167 */
+/* 155 */,
+/* 156 */
 /*!*****************************!*\
   !*** ./css/popupboxes.scss ***!
   \*****************************/
@@ -56705,8 +51398,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 168 */,
-/* 169 */
+/* 157 */,
+/* 158 */
 /*!*********************************!*\
   !*** ./css/workinprogress.scss ***!
   \*********************************/
@@ -56716,8 +51409,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 170 */,
-/* 171 */
+/* 159 */,
+/* 160 */
 /*!****************************!*\
   !*** ./css/menupages.scss ***!
   \****************************/
@@ -56727,8 +51420,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 172 */,
-/* 173 */
+/* 161 */,
+/* 162 */
 /*!***************************!*\
   !*** ./css/terminal.scss ***!
   \***************************/
@@ -56738,8 +51431,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 174 */,
-/* 175 */
+/* 163 */,
+/* 164 */
 /*!************************************!*\
   !*** ./css/characteroverview.scss ***!
   \************************************/
@@ -56749,8 +51442,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 176 */,
-/* 177 */
+/* 165 */,
+/* 166 */
 /*!***************************!*\
   !*** ./css/mainmenu.scss ***!
   \***************************/
@@ -56760,8 +51453,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 178 */,
-/* 179 */
+/* 167 */,
+/* 168 */
 /*!**************************!*\
   !*** ./css/buttons.scss ***!
   \**************************/
@@ -56771,8 +51464,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 180 */,
-/* 181 */
+/* 169 */,
+/* 170 */
 /*!*************************!*\
   !*** ./css/styles.scss ***!
   \*************************/
@@ -56782,15 +51475,15 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 182 */,
-/* 183 */,
-/* 184 */,
-/* 185 */,
-/* 186 */,
-/* 187 */,
-/* 188 */,
-/* 189 */,
-/* 190 */
+/* 171 */,
+/* 172 */,
+/* 173 */,
+/* 174 */,
+/* 175 */,
+/* 176 */,
+/* 177 */,
+/* 178 */,
+/* 179 */
 /*!**********************!*\
   !*** ./netscript.js ***!
   \**********************/
@@ -57635,7 +52328,7 @@ oop.inherits(Mode, TextMode);
     };
 
     this.createWorker = function(session) {
-        var worker = new WorkerClient(["ace"], __webpack_require__(/*! brace/worker/javascript */ 191), "JavaScriptWorker");
+        var worker = new WorkerClient(["ace"], __webpack_require__(/*! brace/worker/javascript */ 180), "JavaScriptWorker");
         worker.attachToDocument(session.getDocument());
 
         worker.on("annotate", function(results) {
@@ -57657,11 +52350,11 @@ exports.Mode = Mode;
 
 
 /***/ }),
-/* 191 */,
-/* 192 */,
-/* 193 */,
-/* 194 */,
-/* 195 */
+/* 180 */,
+/* 181 */,
+/* 182 */,
+/* 183 */,
+/* 184 */
 /*!*****************************************!*\
   !*** ./src/data/codingcontracttypes.ts ***!
   \*****************************************/
@@ -57672,7 +52365,7 @@ exports.Mode = Mode;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const getRandomInt_1 = __webpack_require__(/*! ../../utils/helpers/getRandomInt */ 15);
+const getRandomInt_1 = __webpack_require__(/*! ../../utils/helpers/getRandomInt */ 17);
 /* Helper functions for Coding Contract implementations */
 function removeBracketsFromArrayString(str) {
     let strCpy = str;
@@ -58142,543 +52835,7 @@ exports.codingContractTypesMetadata = [
 
 
 /***/ }),
-/* 196 */
-/*!*********************************!*\
-  !*** ./src/Locations/Cities.ts ***!
-  \*********************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * Display Location Content when visiting somewhere in the World
- */
-// tslint:disable-next-line:variable-name
-exports.Cities = {
-    Aevum: "Aevum",
-    Chongqing: "Chongqing",
-    Ishima: "Ishima",
-    NewTokyo: "New Tokyo",
-    Sector12: "Sector-12",
-    Volhaven: "Volhaven",
-};
-
-
-/***/ }),
-/* 197 */
-/*!*************************************************!*\
-  !*** ./src/Corporation/ProductRatingWeights.ts ***!
-  \*************************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const IndustryData_1 = __webpack_require__(/*! ./IndustryData */ 27);
-exports.ProductRatingWeights = {
-    [IndustryData_1.Industries.Food]: {
-        Quality: 0.7,
-        Durability: 0.1,
-        Aesthetics: 0.2,
-    },
-    [IndustryData_1.Industries.Tobacco]: {
-        Quality: 0.4,
-        Durability: 0.2,
-        Reliability: 0.2,
-        Aesthetics: 0.2,
-    },
-    [IndustryData_1.Industries.Pharmaceutical]: {
-        Quality: 0.2,
-        Performance: 0.2,
-        Durability: 0.1,
-        Reliability: 0.3,
-        Features: 0.2,
-    },
-    [IndustryData_1.Industries.Computer]: {
-        Quality: 0.15,
-        Performance: 0.25,
-        Durability: 0.25,
-        Reliability: 0.2,
-        Aesthetics: 0.05,
-        Features: 0.1,
-    },
-    "Computer": {
-        Quality: 0.15,
-        Performance: 0.25,
-        Durability: 0.25,
-        Reliability: 0.2,
-        Aesthetics: 0.05,
-        Features: 0.1,
-    },
-    [IndustryData_1.Industries.Robotics]: {
-        Quality: 0.1,
-        Performance: 0.2,
-        Durability: 0.2,
-        Reliability: 0.2,
-        Aesthetics: 0.1,
-        Features: 0.2,
-    },
-    [IndustryData_1.Industries.Software]: {
-        Quality: 0.2,
-        Performance: 0.2,
-        Reliability: 0.2,
-        Durability: 0.2,
-        Features: 0.2,
-    },
-    [IndustryData_1.Industries.Healthcare]: {
-        Quality: 0.4,
-        Performance: 0.1,
-        Durability: 0.1,
-        Reliability: 0.3,
-        Features: 0.1,
-    },
-    [IndustryData_1.Industries.RealEstate]: {
-        Quality: 0.2,
-        Durability: 0.25,
-        Reliability: 0.1,
-        Aesthetics: 0.35,
-        Features: 0.1,
-    }
-};
-
-
-/***/ }),
-/* 198 */
-/*!*****************************************!*\
-  !*** ./src/Corporation/ResearchTree.ts ***!
-  \*****************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-// Defines a "Research Tree"
-// Each Industry has a unique Research Tree
-// Each Node in the Research Trees only holds the name(s) of Research,
-// not an actual Research object. The name can be used to obtain a reference
-// to the corresponding Research object using the ResearchMap
-Object.defineProperty(exports, "__esModule", { value: true });
-const ResearchMap_1 = __webpack_require__(/*! ./ResearchMap */ 96);
-class Node {
-    constructor(p) {
-        // All child Nodes in the tree
-        // The Research held in this Node is a prerequisite for all Research in
-        // child Nodes
-        this.children = [];
-        // How much Scientific Research is needed for this
-        // Necessary to show it on the UI
-        this.cost = 0;
-        // Whether or not this Research has been unlocked
-        this.researched = false;
-        // Parent node in the tree
-        // The parent node defines the prerequisite Research (there can only be one)
-        // Set as null for no prerequisites
-        this.parent = null;
-        // Name of the Research held in this Node
-        this.text = "";
-        if (ResearchMap_1.ResearchMap[p.text] == null) {
-            throw new Error(`Invalid Research name used when constructing ResearchTree Node: ${p.text}`);
-        }
-        this.text = p.text;
-        this.cost = p.cost;
-        if (p.children && p.children.length > 0) {
-            this.children = p.children;
-        }
-        if (p.parent != null) {
-            this.parent = p.parent;
-        }
-    }
-    addChild(n) {
-        this.children.push(n);
-        n.parent = this;
-    }
-    // Return an object that describes a TreantJS-compatible markup/config for this Node
-    // See: http://fperucic.github.io/treant-js/
-    createTreantMarkup() {
-        const childrenArray = [];
-        for (let i = 0; i < this.children.length; ++i) {
-            childrenArray.push(this.children[i].createTreantMarkup());
-        }
-        // Determine what css class this Node should have in the diagram
-        let htmlClass = "";
-        if (this.researched) {
-            htmlClass = "researched";
-        }
-        else if (this.parent && this.parent.researched === false) {
-            htmlClass = "locked";
-        }
-        else {
-            htmlClass = "unlocked";
-        }
-        const sanitizedName = this.text.replace(/\s/g, '');
-        return {
-            children: childrenArray,
-            HTMLclass: htmlClass,
-            innerHTML: `<div id="${sanitizedName}-click-listener">${this.text}<br>${this.cost} Scientific Research</div>`,
-            text: { name: this.text },
-        };
-    }
-    // Recursive function for finding a Node with the specified text
-    findNode(text) {
-        // Is this the Node?
-        if (this.text === text) {
-            return this;
-        }
-        // Recursively search chilren
-        let res = null;
-        for (let i = 0; i < this.children.length; ++i) {
-            res = this.children[i].findNode(text);
-            if (res != null) {
-                return res;
-            }
-        }
-        return null;
-    }
-    setParent(n) {
-        this.parent = n;
-    }
-}
-exports.Node = Node;
-// A ResearchTree defines all available Research in an Industry
-// The root node in a Research Tree must always be the "Hi-Tech R&D Laboratory"
-class ResearchTree {
-    constructor() {
-        this.root = null;
-    }
-    // Return an object that contains a Tree markup for TreantJS (using the JSON approach)
-    // See: http://fperucic.github.io/treant-js/
-    createTreantMarkup() {
-        if (this.root == null) {
-            return {};
-        }
-        const treeMarkup = this.root.createTreantMarkup();
-        return {
-            chart: {
-                container: "",
-            },
-            nodeStructure: treeMarkup,
-        };
-    }
-    // Gets an array with the 'text' values of ALL Nodes in the Research Tree
-    getAllNodes() {
-        const res = [];
-        const queue = [];
-        if (this.root == null) {
-            return res;
-        }
-        queue.push(this.root);
-        while (queue.length !== 0) {
-            const node = queue.shift();
-            if (node == null) {
-                continue;
-            }
-            res.push(node.text);
-            for (let i = 0; i < node.children.length; ++i) {
-                queue.push(node.children[i]);
-            }
-        }
-        return res;
-    }
-    // Search for a Node with the given name ('text' property on the Node)
-    // Returns 'null' if it cannot be found
-    findNode(name) {
-        if (this.root == null) {
-            return null;
-        }
-        return this.root.findNode(name);
-    }
-    // Marks a Node as researched
-    research(name) {
-        if (this.root == null) {
-            return;
-        }
-        const queue = [];
-        queue.push(this.root);
-        while (queue.length !== 0) {
-            const node = queue.shift();
-            if (node == null) {
-                continue;
-            }
-            if (node.text === name) {
-                node.researched = true;
-            }
-            for (let i = 0; i < node.children.length; ++i) {
-                queue.push(node.children[i]);
-            }
-        }
-    }
-    // Set the tree's Root Node
-    setRoot(root) {
-        this.root = root;
-    }
-}
-exports.ResearchTree = ResearchTree;
-
-
-/***/ }),
-/* 199 */
-/*!**************************************************!*\
-  !*** ./src/Corporation/data/ResearchMetadata.ts ***!
-  \**************************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.researchMetadata = [
-    {
-        name: "AutoBrew",
-        cost: 12e3,
-        desc: "Automatically keep your employees fully caffeinated with " +
-            "coffee injections. This research will keep the energy of all " +
-            "employees at its maximum possible value, for no cost. " +
-            "This will also disable the Coffee upgrade.",
-    },
-    {
-        name: "AutoPartyManager",
-        cost: 15e3,
-        desc: "Automatically analyzes your employees' happiness and morale " +
-            "and boosts them whenever it detects a decrease. This research will " +
-            "keep the morale and happiness of all employees at their maximum possible " +
-            "values, for no cost. " +
-            "This will also disable the 'Throw Party' feature.",
-    },
-    {
-        name: "Automatic Drug Administration",
-        cost: 10e3,
-        desc: "Research how to automatically administer performance-enhacing drugs to all of " +
-            "your employees. This unlocks Drug-related Research.",
-    },
-    {
-        name: "CPH4 Injections",
-        cost: 25e3,
-        desc: "Develop an advanced and harmless synthetic drug that is administered to " +
-            "employees to increase all of their stats, except experience, by 10%.",
-        employeeCreMult: 1.1,
-        employeeChaMult: 1.1,
-        employeeEffMult: 1.1,
-        employeeIntMult: 1.1,
-    },
-    {
-        name: "Drones",
-        cost: 5e3,
-        desc: "Acquire the knowledge needed to create advanced drones. This research does nothing " +
-            "by itself, but unlocks other Drone-related research.",
-    },
-    {
-        name: "Drones - Assembly",
-        cost: 25e3,
-        desc: "Manufacture and use Assembly Drones to improve the efficiency of " +
-            "your production lines. This increases all production by 20%.",
-        productionMult: 1.2,
-    },
-    {
-        name: "Drones - Transport",
-        cost: 30e3,
-        desc: "Manufacture and use intelligent Transport Drones to optimize " +
-            "your warehouses. This increases the storage space of all warehouses " +
-            "by 50%.",
-        storageMult: 1.5,
-    },
-    {
-        name: "Go-Juice",
-        cost: 25e3,
-        desc: "Provide employees with Go-Juice, a coffee-derivative that further enhances " +
-            "the brain's dopamine production. This increases the maximum energy of all " +
-            "employees by 10.",
-    },
-    {
-        name: "Hi-Tech R&D Laboratory",
-        cost: 10e3,
-        desc: "Construct a cutting edge facility dedicated to advanced research and " +
-            "and development. This allows you to spend Scientific Research " +
-            "on powerful upgrades. It also globally increases Scientific Research " +
-            "production by 10%.",
-        sciResearchMult: 1.1,
-    },
-    {
-        name: "JoyWire",
-        cost: 20e3,
-        desc: "A brain implant which is installed in employees, increasing their " +
-            "maximum happiness by 10.",
-    },
-    {
-        name: "Market-TA.I",
-        cost: 20e3,
-        desc: "Develop advanced AI software that uses technical analysis to " +
-            "help you understand and exploit the market. This research " +
-            "allows you to know what price to sell your Materials/Products " +
-            "at in order to avoid losing sales due to having too high of a mark-up.",
-    },
-    {
-        name: "Market-TA.II",
-        cost: 40e3,
-        desc: "Develop double-advanced AI software that uses technical analysis to " +
-            "help you understand and exploit the market. This research " +
-            "allows you to know how many sales of a Material/Product you lose or gain " +
-            "from having too high or too low or a sale price.",
-    },
-    {
-        name: "Overclock",
-        cost: 15e3,
-        desc: "Equip employees with a headset that uses transcranial direct current " +
-            "stimulation (tDCS) to increase the speed of their neurotransmitters. " +
-            "This research increases the intelligence and efficiency of all " +
-            "employees by 25%.",
-        employeeEffMult: 1.25,
-        employeeIntMult: 1.25,
-    },
-    {
-        name: "Self-Correcting Assemblers",
-        cost: 25e3,
-        desc: "Create assemblers that can be used for universal production. " +
-            "These assemblers use deep learning to improve their efficiency " +
-            "at their tasks. This research increases all production by 10%",
-        productionMult: 1.1,
-    },
-    {
-        name: "Sti.mu",
-        cost: 30e3,
-        desc: "Upgrade the tDCS headset to stimulate regions of the brain that " +
-            "control confidence and enthusiasm. This research increases the max " +
-            "morale of all employees by 10.",
-    },
-];
-
-
-/***/ }),
-/* 200 */
-/*!*************************************!*\
-  !*** ./src/Corporation/Research.ts ***!
-  \*************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-class Research {
-    constructor(p = { name: "", cost: 0, desc: "" }) {
-        // Name of research. This will be used to identify researches in the Research Tree
-        this.name = "";
-        // How much scientific research it costs to unlock this
-        this.cost = 0;
-        // Description of what the Research does
-        this.desc = "";
-        // All possible generic upgrades for the company, in the form of multipliers
-        this.advertisingMult = 1;
-        this.employeeCreMult = 1;
-        this.employeeChaMult = 1;
-        this.employeeEffMult = 1;
-        this.employeeIntMult = 1;
-        this.productionMult = 1;
-        this.salesMult = 1;
-        this.sciResearchMult = 1;
-        this.storageMult = 1;
-        this.name = p.name;
-        this.cost = p.cost;
-        this.desc = p.desc;
-        if (p.advertisingMult) {
-            this.advertisingMult = p.advertisingMult;
-        }
-        if (p.employeeCreMult) {
-            this.employeeCreMult = p.employeeCreMult;
-        }
-        if (p.employeeChaMult) {
-            this.employeeChaMult = p.employeeChaMult;
-        }
-        if (p.employeeEffMult) {
-            this.employeeEffMult = p.employeeEffMult;
-        }
-        if (p.employeeIntMult) {
-            this.employeeIntMult = p.employeeIntMult;
-        }
-        if (p.productionMult) {
-            this.productionMult = p.productionMult;
-        }
-        if (p.salesMult) {
-            this.salesMult = p.salesMult;
-        }
-        if (p.sciResearchMult) {
-            this.sciResearchMult = p.sciResearchMult;
-        }
-        if (p.storageMult) {
-            this.storageMult = p.storageMult;
-        }
-    }
-}
-exports.Research = Research;
-
-
-/***/ }),
-/* 201 */
-/*!**************************************************!*\
-  !*** ./src/Corporation/data/BaseResearchTree.ts ***!
-  \**************************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const ResearchMap_1 = __webpack_require__(/*! ../ResearchMap */ 96);
-const ResearchTree_1 = __webpack_require__(/*! ../ResearchTree */ 198);
-exports.BaseResearchTree = new ResearchTree_1.ResearchTree();
-function makeNode(name) {
-    const research = ResearchMap_1.ResearchMap[name];
-    if (research == null) {
-        throw new Error(`Invalid research name: ${name}`);
-    }
-    return new ResearchTree_1.Node({ text: research.name, cost: research.cost });
-}
-const rootNode = makeNode("Hi-Tech R&D Laboratory");
-const autoBrew = makeNode("AutoBrew");
-const autoParty = makeNode("AutoPartyManager");
-const autoDrugs = makeNode("Automatic Drug Administration");
-const cph4 = makeNode("CPH4 Injections");
-const drones = makeNode("Drones");
-const dronesAssembly = makeNode("Drones - Assembly");
-const dronesTransport = makeNode("Drones - Transport");
-const goJuice = makeNode("Go-Juice");
-const joywire = makeNode("JoyWire");
-const marketta1 = makeNode("Market-TA.I");
-const marketta2 = makeNode("Market-TA.II");
-const overclock = makeNode("Overclock");
-const scAssemblers = makeNode("Self-Correcting Assemblers");
-const stimu = makeNode("Sti.mu");
-autoDrugs.addChild(goJuice);
-autoDrugs.addChild(cph4);
-drones.addChild(dronesAssembly);
-drones.addChild(dronesTransport);
-marketta1.addChild(marketta2);
-overclock.addChild(stimu);
-rootNode.addChild(autoBrew);
-rootNode.addChild(autoParty);
-rootNode.addChild(autoDrugs);
-rootNode.addChild(drones);
-rootNode.addChild(joywire);
-rootNode.addChild(marketta1);
-rootNode.addChild(overclock);
-rootNode.addChild(scAssemblers);
-exports.BaseResearchTree.setRoot(rootNode);
-function getBaseResearchTreeCopy() {
-    return Object.assign(Object.create(Object.getPrototypeOf(exports.BaseResearchTree)), exports.BaseResearchTree);
-}
-exports.getBaseResearchTreeCopy = getBaseResearchTreeCopy;
-
-
-/***/ }),
-/* 202 */
+/* 185 */
 /*!***********************************************!*\
   !*** ./src/Company/data/CompaniesMetadata.ts ***!
   \***********************************************/
@@ -58689,8 +52846,8 @@ exports.getBaseResearchTreeCopy = getBaseResearchTreeCopy;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const Locations_1 = __webpack_require__(/*! ../../Locations */ 5);
-const posNames = __webpack_require__(/*! ./CompanyPositionNames */ 36);
+const Locations_1 = __webpack_require__(/*! ../../Locations */ 3);
+const posNames = __webpack_require__(/*! ./CompanyPositionNames */ 32);
 // Create Objects containing Company Positions by category
 // Will help in metadata construction later
 const AllSoftwarePositions = {};
@@ -59070,7 +53227,7 @@ exports.companiesMetadata = [
 
 
 /***/ }),
-/* 203 */
+/* 186 */
 /*!******************************************************!*\
   !*** ./src/Company/data/CompanyPositionsMetadata.ts ***!
   \******************************************************/
@@ -59081,7 +53238,7 @@ exports.companiesMetadata = [
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const posNames = __webpack_require__(/*! ./CompanyPositionNames */ 36);
+const posNames = __webpack_require__(/*! ./CompanyPositionNames */ 32);
 exports.companyPositionMetadata = [
     {
         name: posNames.SoftwareCompanyPositions[0],
@@ -59683,6 +53840,23 @@ exports.companyPositionMetadata = [
 
 
 /***/ }),
+/* 187 */,
+/* 188 */,
+/* 189 */,
+/* 190 */,
+/* 191 */,
+/* 192 */,
+/* 193 */,
+/* 194 */,
+/* 195 */,
+/* 196 */,
+/* 197 */,
+/* 198 */,
+/* 199 */,
+/* 200 */,
+/* 201 */,
+/* 202 */,
+/* 203 */,
 /* 204 */,
 /* 205 */,
 /* 206 */,
@@ -59702,24 +53876,7 @@ exports.companyPositionMetadata = [
 /* 220 */,
 /* 221 */,
 /* 222 */,
-/* 223 */,
-/* 224 */,
-/* 225 */,
-/* 226 */,
-/* 227 */,
-/* 228 */,
-/* 229 */,
-/* 230 */,
-/* 231 */,
-/* 232 */,
-/* 233 */,
-/* 234 */,
-/* 235 */,
-/* 236 */,
-/* 237 */,
-/* 238 */,
-/* 239 */,
-/* 240 */
+/* 223 */
 /*!**********************!*\
   !*** util (ignored) ***!
   \**********************/
@@ -59730,7 +53887,7 @@ exports.companyPositionMetadata = [
 /* (ignored) */
 
 /***/ }),
-/* 241 */
+/* 224 */
 /*!**********************!*\
   !*** util (ignored) ***!
   \**********************/
