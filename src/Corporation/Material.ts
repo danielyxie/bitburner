@@ -14,7 +14,7 @@ export class Material {
 
 
     // Name of material
-    name: string = "";
+    name: string = "InitName";
 
     // Amount of material owned
     qty: number = 0;
@@ -67,6 +67,10 @@ export class Material {
     constructor(params: IConstructorParams = {}) {
         if (params.name) { this.name = params.name; }
         this.init();
+    }
+
+    getMarkupLimit(): number {
+        return this.qlt / this.mku;
     }
 
     init(): void {
@@ -138,9 +142,10 @@ export class Material {
                 this.mku = 0.5;
                 break;
             case "Scientific Research":
+            case "InitName":
                 break;
             default:
-                console.log("Invalid material type in init(): " + this.name);
+                console.error(`Invalid material type in init(): ${this.name}`);
                 break;
         }
     }
@@ -155,7 +160,7 @@ export class Material {
         //This 1st random check determines whether competition increases or decreases
         const compVolatility: number = (Math.random() * this.mv) / 100;
         const compChange: number = 1 + compVolatility;
-        if (Math.random() < 5) {
+        if (Math.random() < 0.5) {
             this.cmp *= compChange;
             if (this.cmp > this.cmpR[1]) {this.cmp = this.cmpR[1]};
             this.bCost *= (1 / priceChange); // Competition increases, so price goes down

@@ -1,4 +1,4 @@
-import { IMap } from "../types";
+import { IMap } from "../../types";
 
 // Corporation Unlock Upgrades
 // Upgrades for entire corporation, unlocks features, either you have it or you dont
@@ -11,7 +11,7 @@ export const CorporationUnlockUpgrades: IMap<any[]> = {
                     "This allows you to move materials around between different divisions and cities."],
 
     //Lets you buy exactly however many required materials you need for production
-    "1":  [1, 50e9, "Smart Supply", "Use advanced AI to anticipate your supply needs. " +
+    "1":  [1, 25e9, "Smart Supply", "Use advanced AI to anticipate your supply needs. " +
                      "This allows you to purchase exactly however many materials you need for production."],
 
     //Displays each material/product's demand

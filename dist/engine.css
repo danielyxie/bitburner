@@ -91,61 +91,6 @@ a:visited {
   border-radius: 0;
   padding: 0; }
 
-/* Tool tips (when hovering over an element */
-.tooltip {
-  display: inline-block;
-  position: relative;
-  /* Positioned to left of element rather than right */ }
-  .tooltip .tooltiptext {
-    visibility: hidden;
-    width: 300px;
-    background-color: var(--my-background-color);
-    border: 2px solid var(--my-highlight-color);
-    color: #fff;
-    text-align: center;
-    padding: 4px;
-    left: 101%;
-    pointer-events: none;
-    position: absolute;
-    z-index: 99; }
-  .tooltip .tooltiptextleft {
-    visibility: hidden;
-    width: 300px;
-    background-color: var(--my-background-color);
-    border: 2px solid var(--my-highlight-color);
-    color: #fff;
-    text-align: center;
-    padding: 4px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-100%, -100%);
-    /* Backwards compatibility */
-    -webkit-transform: translate(-100%, -100%);
-    -moz-transform: translate(-100%, -100%);
-    -o-transform: translate(-100%, -100%);
-    -ms-transform: translate(-100%, -100%);
-    position: absolute;
-    z-index: 99; }
-
-/* Same thing as a normal tooltip except its a bit higher */
-.tooltip .tooltiptexthigh {
-  visibility: hidden;
-  width: 300px;
-  background-color: var(--my-background-color);
-  border: 2px solid var(--my-highlight-color);
-  color: #fff;
-  text-align: center;
-  padding: 4px;
-  left: 101%;
-  bottom: -25%;
-  position: absolute;
-  z-index: 99; }
-
-.tooltip:hover .tooltiptext,
-.tooltip:hover .tooltiptexthigh,
-.tooltip:hover .tooltiptextleft {
-  visibility: visible; }
-
 /* help tip. Question mark that opens popup with info/details */
 .help-tip {
   background-color: black;
@@ -389,6 +334,79 @@ a:visited {
 
 .smallfont {
   font-size: 13px; }
+
+/* COLORS */
+/* Attributes */
+/* Styling for tooltip-style elements */
+/* Tool tips (when hovering over an element */
+.tooltip {
+  display: inline-block;
+  position: relative;
+  /* Positioned to left of element rather than right */
+  /* Tooltip goes below cursor instead of above */ }
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 300px;
+    background-color: var(--my-background-color);
+    border: 2px solid var(--my-highlight-color);
+    color: #fff;
+    text-align: center;
+    padding: 4px;
+    left: 101%;
+    pointer-events: none;
+    position: absolute;
+    z-index: 99; }
+  .tooltip .tooltiptextleft {
+    visibility: hidden;
+    width: 300px;
+    background-color: var(--my-background-color);
+    border: 2px solid var(--my-highlight-color);
+    color: #fff;
+    text-align: center;
+    padding: 4px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-100%, -100%);
+    /* Backwards compatibility */
+    -webkit-transform: translate(-100%, -100%);
+    -moz-transform: translate(-100%, -100%);
+    -o-transform: translate(-100%, -100%);
+    -ms-transform: translate(-100%, -100%);
+    position: absolute;
+    z-index: 99; }
+  .tooltip .tooltiptextlow {
+    visibility: hidden;
+    width: 300px;
+    background-color: var(--my-background-color);
+    border: 2px solid var(--my-highlight-color);
+    color: #fff;
+    text-align: center;
+    padding: 4px;
+    left: 101%;
+    pointer-events: none;
+    position: absolute;
+    z-index: 99;
+    bottom: 25%; }
+
+/* Same thing as a normal tooltip except its a bit higher */
+.tooltip .tooltiptexthigh {
+  visibility: hidden;
+  width: 300px;
+  background-color: var(--my-background-color);
+  border: 2px solid var(--my-highlight-color);
+  color: #fff;
+  text-align: center;
+  padding: 4px;
+  left: 101%;
+  bottom: -25%;
+  position: absolute;
+  z-index: 99; }
+
+.tooltip:hover .tooltiptext,
+.tooltip:hover .tooltiptexthigh,
+.tooltip:hover .tooltiptextleft,
+.tooltip:hover .tooltiptextlow {
+  visibility: visible; }
 
 /* COLORS */
 /* Attributes */

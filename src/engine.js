@@ -78,6 +78,7 @@ import {Page, routing}                                  from "./ui/navigationTra
 // cascade order, we'll pull them all in here.
 import 'normalize.css';
 import "../css/styles.scss";
+import "../css/tooltips.scss";
 import "../css/buttons.scss";
 import "../css/mainmenu.scss";
 import "../css/characteroverview.scss";
@@ -520,6 +521,8 @@ const Engine = {
         document.getElementById("augmentations-menu-link").classList.remove("active");
         document.getElementById("hacknet-nodes-menu-link").classList.remove("active");
         document.getElementById("city-menu-link").classList.remove("active");
+        document.getElementById("travel-menu-link").classList.remove("active");
+        document.getElementById("stock-market-menu-link").classList.remove("active");
         document.getElementById("tutorial-menu-link").classList.remove("active");
         document.getElementById("options-menu-link").classList.remove("active");
         document.getElementById("dev-menu-link").classList.remove("active");
@@ -1259,12 +1262,17 @@ const Engine = {
                 processStockPrices(numCyclesOffline);
             }
 
-            //Gang progress for BitNode 2
+            // Gang progress for BitNode 2
             if (Player.bitNodeN != null && Player.bitNodeN === 2 && Player.inGang()) {
                 Player.gang.process(numCyclesOffline, Player);
             }
 
-            //Bladeburner offline progress
+            // Corporation offline progress
+            if (Player.corporation instanceof Corporation) {
+                Player.corporation.storeCycles(numCyclesOffline);
+            }
+
+            // Bladeburner offline progress
             if (Player.bladeburner instanceof Bladeburner) {
                 Player.bladeburner.storeCycles(numCyclesOffline);
             }
@@ -1653,6 +1661,7 @@ const Engine = {
         Engine.Clickables.travelMainMenuButton = clearEventListeners("travel-menu-link");
         Engine.Clickables.travelMainMenuButton.addEventListener("click", function() {
             Engine.loadTravelContent();
+            Engine.Clickables.travelMainMenuButton.classList.add("active");
             return false;
         });
 
@@ -1665,6 +1674,7 @@ const Engine = {
         Engine.Clickables.stockmarketMainMenuButton = clearEventListeners("stock-market-menu-link");
         Engine.Clickables.stockmarketMainMenuButton.addEventListener("click", function() {
             Engine.loadStockMarketContent();
+            Engine.Clickables.stockmarketMainMenuButton.classList.add("active");
             return false;
         });
 
@@ -1701,6 +1711,7 @@ const Engine = {
         Engine.Clickables.corporationMenuButton = clearEventListeners("corporation-menu-link");
         Engine.Clickables.corporationMenuButton.addEventListener("click", function() {
             Engine.loadCorporationContent();
+            Engine.Clickables.corporationMenuButton.classList.add("active");
             return false;
         });
         Engine.Clickables.gangMenuButton = clearEventListeners("gang-menu-link");

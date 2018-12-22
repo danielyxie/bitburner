@@ -1,4 +1,4 @@
-import { IMap } from "../types";
+import { IMap } from "../../types";
 
 // Corporation Upgrades
 // Upgrades for entire corporation, levelable upgrades

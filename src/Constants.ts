@@ -510,6 +510,15 @@ export let CONSTANTS: IMap<any> = {
      ** Changed initial market prices for many materials
      ** Changed the way a material's demand, competition, and market price change over time
      ** The sale price of materials can no longer be marked-up as high
+     ** Added a Research Tree mechanic. Spend Scientific Research on permanent upgrades for
+        each industry
+     ** You can now redistribute earnings to shareholders (including yourself) as dividends
+     ** Cost of "Smart Supply" upgraded reduced from $50b to $25b
+     ** Now has offline progress, which works similarly to the Gang/Bladeburner mechanics
+     ** Slightly reduced the amount of money offered to you by investment firms
+     ** Employee salaries now slowly increase over time
+
+     * Stock Market, Travel, and Corporation main menu links are now properly styled
      `
 
 }

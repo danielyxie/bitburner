@@ -68,6 +68,7 @@ interface ICreateElementTooltipOptions {
     tooltip?: string;
     tooltipleft?: string;
     tooltipsmall?: string;
+    tooltiplow?: string;
 }
 
 /**
@@ -226,7 +227,13 @@ function setElementTooltip(el: HTMLElement, params: ICreateElementTooltipOptions
         el.appendChild(createElement("span", {
             class: "tooltiptext smallfont",
             innerHTML: params.tooltipsmall,
-        }))
+        }));
+    } else if (params.tooltiplow !== undefined) {
+        el.className += "tooltip";
+        el.appendChild(createElement("span", {
+            class: "tooltiptextlow",
+            innerHTML: params.tooltiplow,
+        }));
     }
 }
 
