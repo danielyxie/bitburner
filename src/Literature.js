@@ -78,6 +78,7 @@ function initLiterature() {
                 "find investors. Instead, your Corporation will be publicly traded and its stock price will change based on how well "  +
                 "it's performing financially. You can then sell your stock shares in order to make money.<br><br>" +
                 "<u>Tips/Pointers</u><br>" +
+                "-The 'Smart Supply' upgrade is extremely useful. Consider purchasing it as soon as possible.<br><br>" + 
                 "-Purchasing Hardware, Robots, AI Cores, and Real Estate can potentially increase your production. " +
                 "The effects of these depend on what industry you are in.<br><br>" +
                 "-In order to optimize your production, you will need a good balance of Operators, Managers, and Engineers<br><br>" +

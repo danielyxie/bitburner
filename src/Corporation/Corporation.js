@@ -1,7 +1,7 @@
 import { AllCorporationStates,
          CorporationState }                             from "./CorporationState";
-import { CorporationUnlockUpgrades }                    from "./CorporationUnlockUpgrades";
-import { CorporationUpgrades }                          from "./CorporationUpgrades";
+import { CorporationUnlockUpgrades }                    from "./data/CorporationUnlockUpgrades";
+import { CorporationUpgrades }                          from "./data/CorporationUpgrades";
 import { EmployeePositions }                            from "./EmployeePositions";
 import { Industries,
          IndustryStartingCosts,
@@ -14,6 +14,7 @@ import { Product }                                      from "./Product";
 import { ResearchMap }                                  from "./ResearchMap";
 
 import { BitNodeMultipliers }                           from "../BitNodeMultipliers";
+import { CONSTANTS }                                    from "../Constants";
 import { Factions }                                     from "../Faction/Factions";
 import { showLiterature }                               from "../Literature";
 import { Locations }                                    from "../Locations";
@@ -50,23 +51,28 @@ import { yesNoBoxCreate,
 import Decimal                                          from "decimal.js";
 
 /* Constants */
-export const TOTALSHARES = 1e9; //Total number of shares you have at your company
-export const CyclesPerMarketCycle    = 75;
-export const CyclesPerIndustryStateCycle = CyclesPerMarketCycle / AllCorporationStates.length;
-export const SecsPerMarketCycle      = CyclesPerMarketCycle / 5;
+export const TOTALSHARES                    = 1e9; //Total number of shares you have at your company
+export const CyclesPerMarketCycle           = 75;
+export const CyclesPerIndustryStateCycle    = CyclesPerMarketCycle / AllCorporationStates.length;
+export const SecsPerMarketCycle             = CyclesPerMarketCycle / 5;
 export const Cities = ["Aevum", "Chongqing", "Sector-12", "New Tokyo", "Ishima", "Volhaven"];
-export const WarehouseInitialCost        = 5e9; //Initial purchase cost of warehouse
-export const WarehouseInitialSize        = 100;
-export const WarehouseUpgradeBaseCost    = 1e9;
+export const WarehouseInitialCost           = 5e9; //Initial purchase cost of warehouse
+export const WarehouseInitialSize           = 100;
+export const WarehouseUpgradeBaseCost       = 1e9;
 
-export const OfficeInitialCost           = 4e9;
-export const OfficeInitialSize           = 3;
-export const OfficeUpgradeBaseCost       = 1e9;
+export const OfficeInitialCost              = 4e9;
+export const OfficeInitialSize              = 3;
+export const OfficeUpgradeBaseCost          = 1e9;
 
-export const BribeThreshold              = 100e12; //Money needed to be able to bribe for faction rep
-export const BribeToRepRatio             = 1e9;   //Bribe Value divided by this = rep gain
+export const BribeThreshold                 = 100e12; //Money needed to be able to bribe for faction rep
+export const BribeToRepRatio                = 1e9;   //Bribe Value divided by this = rep gain
 
-export const ProductProductionCostRatio  = 5;    //Ratio of material cost of a product to its production cost
+export const ProductProductionCostRatio     = 5;    //Ratio of material cost of a product to its production cost
+
+export const DividendMaxPercentage          = 99;
+
+export const CyclesPerEmployeeRaise         = 400;  // All employees get a raise every X market cycles
+export const EmployeeRaiseAmount            = 50;   // Employee salary increases by this (additive)
 
 // Delete Research Popup Box when clicking outside of it
 $(document).mousedown(function(event) {
@@ -725,7 +731,7 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                     }
 
                     //Calculate how much of the material sells (per second)
-                    let markup = 1, markupLimit = mat.qlt / mat.mku;
+                    let markup = 1, markupLimit = mat.getMarkupLimit();
                     if (sCost > mat.bCost) {
                         //Penalty if difference between sCost and bCost is greater than markup limit
                         if ((sCost - mat.bCost) > markupLimit) {
@@ -1093,7 +1099,7 @@ Industry.prototype.upgrade = function(upgrade, refs) {
     switch (upgN) {
         case 0: //Coffee, 5% energy per employee
             for (let i = 0; i < office.employees.length; ++i) {
-                office.employees[i].ene = Math.min(office.employees[i].ene * 1.05, office.employees[i].maxEne);
+                office.employees[i].ene = Math.min(office.employees[i].ene * 1.05, office.maxEne);
             }
             break;
         case 1: //AdVert.Inc,
@@ -1207,8 +1213,11 @@ Industry.prototype.createResearchBox = function() {
         researchTreeBox = null;
     }
 
-    // New popup box
     const researchTree = IndustryResearchTrees[this.type];
+
+    // Create the popup first, so that the tree diagram can be added to it
+    // This is handled by Treant
+    researchTreeBox = createPopup(boxId, [], { backgroundColor: "black" });
 
     // Get the tree's markup (i.e. config) for Treant
     const markup = researchTree.createTreantMarkup();
@@ -1225,10 +1234,6 @@ Industry.prototype.createResearchBox = function() {
         },
     }
 
-    // Create the popup first, so that the tree diagram can be added to it
-    // This is handled by Treant
-    researchTreeBox = createPopup(boxId, [], { backgroundColor: "black" });
-
     // Construct the tree with Treant
     const treantTree = new Treant(markup);
 
@@ -1240,7 +1245,7 @@ Industry.prototype.createResearchBox = function() {
 
         // Get the DOM Element to add a click listener to it
         const sanitizedName = allResearch[i].replace(/\s/g, '');
-        const div = document.getElementById(sanitizedName + "-click-listener");
+        const div = document.getElementById(sanitizedName + "-corp-research-click-listener");
         if (div == null) {
             console.warn(`Could not find Research Tree div for ${sanitizedName}`);
             continue;
@@ -1254,11 +1259,43 @@ Industry.prototype.createResearchBox = function() {
                 const node = researchTree.findNode(allResearch[i]);
                 node.researched = true;
 
-                return createResearchBox();
+                return this.createResearchBox();
             } else {
                 dialogBoxCreate(`You do not have enough Scientific Research for ${research.name}`);
             }
         });
+    }
+
+
+    const boxContent = document.getElementById(`${boxId}-content`);
+    if (boxContent != null) {
+        // Add information about multipliers from research at the bottom of the popup
+        appendLineBreaks(boxContent, 2);
+        boxContent.appendChild(createElement("pre", {
+            display: "block",
+            innerText:  `Multipliers from research:\n` +
+                        ` * Advertising Multiplier: x${researchTree.getAdvertisingMultiplier()}\n` +
+                        ` * Employee Charisma Multiplier: x${researchTree.getEmployeeChaMultiplier()}\n` +
+                        ` * Employee Creativity Multiplier: x${researchTree.getEmployeeCreMultiplier()}\n` +
+                        ` * Employee Efficiency Multiplier: x${researchTree.getEmployeeEffMultiplier()}\n` +
+                        ` * Employee Intelligence Multiplier: x${researchTree.getEmployeeIntMultiplier()}\n` +
+                        ` * Production Multiplier: x${researchTree.getProductionMultiplier()}\n` +
+                        ` * Sales Multiplier: x${researchTree.getSalesMultiplier()}\n` +
+                        ` * Scientific Research Multiplier: x${researchTree.getScientificResearchMultiplier()}\n` +
+                        ` * Storage Multiplier: x${researchTree.getStorageMultiplier()}`,
+        }));
+
+        // Close button
+        boxContent.appendChild(createElement("button", {
+            class: "std-button",
+            clickListener: () => {
+                if (researchTreeBox != null) {
+                    removeElement(researchTreeBox);
+                }
+            },
+            display: "block",
+            innerText: "Close",
+        }));
     }
 
     researchTreeBoxOpened = true;
@@ -1294,6 +1331,8 @@ function Employee(params={}) {
     this.sal    = params.salary         ? params.salary         : getRandomInt(0.1, 5);
     this.pro    = 0; //Productivity, This is calculated
 
+    this.cyclesUntilRaise = CyclesPerEmployeeRaise;
+
     this.loc    = params.loc            ? params.loc : "";
     this.pos    = EmployeePositions.Unassigned;
 }
@@ -1308,6 +1347,13 @@ Employee.prototype.process = function(marketCycles=1, office) {
         this.int -= det;
         this.eff -= det;
         this.cha -= det;
+    }
+
+    // Employee salaries slowly go up over time
+    this.cyclesUntilRaise -= marketCycles;
+    if (this.cyclesUntilRaise <= 0) {
+        this.salary += EmployeeRaiseAmount;
+        this.cyclesUntilRaise += CyclesPerEmployeeRaise;
     }
 
     //Training
@@ -1854,16 +1900,14 @@ Warehouse.prototype.createUI = function(parentRefs) {
             reqText += " and " + industry.getProductDescriptionText();
         }
     } else if (industry.makesProducts) {
-        reqText += industry.getProductDescriptionText();
+        reqText += (industry.getProductDescriptionText() + ".");
     }
-    reqText += "<br><br>To get started with production, purchase your required " +
-               "materials or import them from another of your company's divisions.<br><br>";
 
     //Material ratio text for tooltip
-    var reqRatioText = "The exact requirements for production are:<br>";
+    var reqRatioText = ". The exact requirements for production are:<br>";
     for (var matName in industry.reqMats) {
         if (industry.reqMats.hasOwnProperty(matName)) {
-            reqRatioText += (industry.reqMats[matName] + " " + matName + "<br>");
+            reqRatioText += ([" *", industry.reqMats[matName], matName].join(" ") + "<br>");
         }
     }
     reqRatioText += "in order to create ";
@@ -1876,9 +1920,12 @@ Warehouse.prototype.createUI = function(parentRefs) {
         reqRatioText += "one of its Products";
     }
 
-    industryWarehousePanel.appendChild(createElement("p", {
-        innerHTML:reqText, tooltipleft:reqRatioText
-    }));
+    reqText += reqRatioText;
+
+    reqText += "<br><br>To get started with production, purchase your required " +
+               "materials or import them from another of your company's divisions.<br><br>";
+
+    industryWarehousePanel.appendChild(createElement("p", { innerHTML: reqText }));
 
     //Current state
     industryWarehouseStateText = createElement("p");
@@ -2351,6 +2398,69 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
         }
     }));
 
+    // Button to use Market-TA research, if you have it
+    if (industry.hasResearch("Market-TA.I")) {
+        let marketTaClickListener = () => {
+            const popupId = "cmpy-mgmt-marketta-popup";
+            const markupLimit = mat.getMarkupLimit();
+            const ta1 = createElemenet("p", {
+                innerText: "The maximum sale price you can mark this up to is "  +
+                           numeralWrapper.format(mat.bCost + markupLimit, '$0.000a') +
+                           ". This means that if you set the sale price higher than this, " +
+                           "you will begin to experience a loss in number of sales",
+            });
+
+            if (industry.hasResearch("Market-TA.II")) {
+                let updateTa2Text;
+                const ta2Text = createElement("p");
+                const ta2Input = createElement("input", {
+                    marginTop: "4px",
+                    onkeyup: (e) => {
+                        e.preventDefault();
+                        updateTa2Text();
+                    },
+                    type: "number",
+                    value: mat.sCost,
+                });
+
+                // Function that updates the text in ta2Text element
+                updateTa2Text = () => {
+                    const sCost = parseFloat(ta2Input.value);
+                    let markup = 1;
+                    if (sCost > mat.bCost) {
+                        //Penalty if difference between sCost and bCost is greater than markup limit
+                        if ((sCost - mat.bCost) > markupLimit) {
+                            markup = Math.pow(markupLimit / (sCost - mat.bCost), 2);
+                        }
+                    } else if (sCost < mat.bCost) {
+                        if (sCost <= 0) {
+                            markup = 1e12; //Sell everything, essentially discard
+                        } else {
+                            //Lower prices than market increases sales
+                            markup = mat.bCost / sCost;
+                        }
+                    }
+                    ta2Text.innerText = `If you sell at ${numeralWrapper.format(sCost, "$0.0001")}, ` +
+                                        `then you will sell ${formatNumber(markup, 2)}x as much compared `
+                                        `to if you sold at market price.`;
+                }
+                updateTa2Text();
+                createPopup(popupId, [ta1, ta2Input, ta2Text]);
+            } else {
+                // Market-TA.I only
+                createPopup(popupId, [ta1]);
+            }
+        };
+
+        buttonPanel.appendChild(createElement("a", {
+            class: "a-link-button",
+            clickListener:() => { marketTaClickListener(); },
+            display: "inline-block",
+            innerText: "Market-TA",
+
+        }))
+    }
+
     return div;
 }
 
@@ -2642,6 +2752,8 @@ function Corporation(params={}) {
     this.fundingRound = 0;
     this.public     = false; //Publicly traded
     this.numShares  = TOTALSHARES;
+    this.dividendPercentage = 0;
+    this.dividendTaxPercentage = 50;
     this.issuedShares = 0;
     this.sharePrice = 0;
     this.storedCycles = 0;
@@ -2681,14 +2793,30 @@ Corporation.prototype.process = function() {
                 this.expenses = this.expenses.plus(ind.lastCycleExpenses);
             });
             var profit = this.revenue.minus(this.expenses);
-            var cycleProfit = profit.times(marketCycles * SecsPerMarketCycle);
+            const cycleProfit = profit.times(marketCycles * SecsPerMarketCycle);
             if (isNaN(this.funds)) {
                 dialogBoxCreate("There was an error calculating your Corporations funds and they got reset to 0. " +
                                 "This is a bug. Please report to game developer.<br><br>" +
                                 "(Your funds have been set to $150b for the inconvenience)");
                 this.funds = new Decimal(150e9);
             }
-            this.funds = this.funds.plus(cycleProfit);
+
+            // Process dividends
+            if (this.dividendPercentage > 0 && cycleProfit > 0) {
+                // Validate input again, just to be safe
+                if (isNaN(this.dividendPercentage) || this.dividendPercentage < 0 || this.dividendPercentage > DividendMaxPercentage) {
+                    console.error(`Invalid Corporation dividend percentage: ${this.dividendPercentage}`);
+                } else {
+                    const totalDividends = (this.dividendPercentage / 100) * cycleProfit;
+                    const retainedEarnings = cycleProfit - totalDividends;
+                    const dividendsPerShare = totalDividends / TOTALSHARES;
+                    Player.gainMoney(this.numShares * dividendsPerShare * (this.dividendTaxPercentage / 100));
+                    this.funds = this.funds.plus(retainedEarnings);
+                }
+            } else {
+                this.funds = this.funds.plus(cycleProfit);
+            }
+
             this.updateSharePrice();
         }
 
@@ -2706,13 +2834,18 @@ Corporation.prototype.process = function() {
 Corporation.prototype.determineValuation = function() {
     var val, profit = (this.revenue.minus(this.expenses)).toNumber();
     if (this.public) {
+        // Account for dividends
+        if (this.dividendPercentage > 0) {
+            profit *= ((100 - this.dividendPercentage) / 100);
+        }
+
         val = this.funds.toNumber() + (profit * 85e3);
         val *= (Math.pow(1.1, this.divisions.length));
         val = Math.max(val, 0);
     } else {
         val = 10e9 + Math.max(this.funds.toNumber(), 0) / 3; //Base valuation
         if (profit > 0) {
-            val += (profit * 320e3);
+            val += (profit * 300e3);
             val *= (Math.pow(1.1, this.divisions.length));
         } else {
             val = 10e9 * Math.pow(1.1, this.divisions.length);
@@ -2759,7 +2892,8 @@ Corporation.prototype.getInvestment = function() {
     yesNoBoxCreate("An investment firm has offered you " + numeralWrapper.format(funding, '$0.000a') +
                    " in funding in exchange for a " + numeralWrapper.format(percShares*100, "0.000a") +
                    "% stake in the company (" + numeralWrapper.format(investShares, '0.000a') + " shares).<br><br>" +
-                   "Do you accept or reject this offer?");
+                   "Do you accept or reject this offer?<br><br>" +
+                   "Hint: Investment firms will offer more money if your corporation is turning a profit");
 }
 
 Corporation.prototype.goPublic = function() {
@@ -3213,8 +3347,9 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
         //Sell share buttons
         var sellShares = createElement("a", {
             class:"a-link-button", innerText:"Sell Shares", display:"inline-block",
-            tooltip:"Sell your shares in the company. This is the only way to " +
-                    "profit from your business venture.",
+            tooltip: "Sell your shares in the company. The money earned from selling your " +
+                     "shares goes into your personal account, not the Corporation's. " +
+                     "This is one of the only ways to profit from your business venture.",
             clickListener:()=>{
                 var popupId = "cmpy-mgmt-sell-shares-popup";
                 var currentStockPrice = this.sharePrice;
@@ -3470,6 +3605,68 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
             }
         });
         companyManagementPanel.appendChild(bribeFactions);
+
+        // Set Stock Dividends
+        const issueDividends = createElement("a", {
+            class: "a-link-button",
+            display: "inline-block",
+            innerText: "Issue Dividends",
+            tooltip: "Manage the dividends that are paid out to shareholders (including yourself)",
+            clickListener: () => {
+                const popupId = "cmpy-mgmt-issue-dividends-popup";
+                const descText = "Dividends are a distribution of a portion of the corporation's " +
+                                 "profits to the shareholders. This includes yourself, as well.<br><br>" +
+                                 "In order to issue dividends, simply allocate some percentage " +
+                                 "of your corporation's profits to dividends. This percentage must be an " +
+                                 `integer between 0 and ${DividendMaxPercentage}. (A percentage of 0 means no dividends will be ` +
+                                 "issued<br><br>" +
+                                 "Two important things to note:<br>" +
+                                 " * Issuing dividends will negatively affect your corporation's stock price<br>" +
+                                 " * Dividends are taxed. Taxes start at 50%, but can be decreased<br><br>" +
+                                 "Example: Assume your corporation makes $100m / sec in profit and you allocate " +
+                                 "40% of that towards dividends. That means your corporation will gain $60m / sec " +
+                                 "in funds and the remaining $40m / sec will be paid as dividends. Since your " +
+                                 "corporation starts with 1 billion shares, every shareholder will be paid $0.04 per share " +
+                                 "per second before taxes.";
+                const txt = createElement("p", { innerHTML: descText, });
+
+                const dividendPercentInput = createElement("input", {
+                    margin: "5px",
+                    placeholder: "Dividend %",
+                    type: "number",
+                });
+
+                const allocateBtn = createElement("button", {
+                    class: "std-button",
+                    display: "inline-block",
+                    innerText: "Allocate Dividend Percentage",
+                    clickListener: () => {
+                        const percentage = Math.round(parseInt(dividendPercentInput.value));
+                        if (isNaN(percentage) || percentage < 0 || percentage > DividendMaxPercentage) {
+                            return dialogBoxCreate(`Invalid value. Must be an integer between 0 and ${DividendMaxPercentage}`);
+                        }
+
+                        this.dividendPercentage = percentage;
+
+                        removeElementById(popupId);
+                        return false;
+                    }
+                });
+
+                const cancelBtn = createElement("button", {
+                    class: "std-button",
+                    display: "inline-block",
+                    innerText: "Cancel",
+                    clickListener:  () => {
+                        removeElementById(popupId);
+                        return false;
+                    }
+                })
+
+                createPopup(popupId, [txt, dividendPercentInput, allocateBtn, cancelBtn]);
+            },
+        });
+        companyManagementPanel.appendChild(issueDividends);
     } else {
         var findInvestors = createElement("a", {
             class: this.fundingRound >= 4 ? "a-link-button-inactive" : "a-link-button tooltip",
@@ -3604,16 +3801,38 @@ Corporation.prototype.updateCorporationOverviewContent = function() {
         totalRevenue = new Decimal(0),
         totalExpenses = new Decimal(0);
 
+    // Formatted text for profit
     var profit = this.revenue.minus(this.expenses).toNumber(),
         profitStr = profit >= 0 ? numeralWrapper.format(profit, "$0.000a") : "-" + numeralWrapper.format(-1 * profit, "$0.000a");
+
+    // Formatted text for dividend information, if applicable
+    let dividendStr = "";
+    if (this.dividendPercentage > 0 && profit > 0) {
+        const totalDividends = (this.dividendPercentage / 100) * profit;
+        const retainedEarnings = profit - totalDividends;
+        const dividendsPerShare = totalDividends / TOTALSHARES;
+        const playerEarnings = this.numShares * dividendsPerShare;
+
+        dividendStr = `Retained Profits (after dividends): ${numeralWrapper.format(retainedEarnings, "$0.000a")} / s<br>` +
+                      `Dividends per share: ${numeralWrapper.format(dividendsPerShare, "$0.000a")} / s<br>` +
+                      `Your earnings (Pre-Tax): ${numeralWrapper.format(playerEarnings, "$0.000a")} / s<br>` +
+                      `Your earnings (Post-Tax): ${numeralWrapper.format(playerEarnings * (this.dividendTaxPercentage / 100), "$0.000a")} / s<br>`;
+    }
 
     var txt = "Total Funds: " + numeralWrapper.format(totalFunds.toNumber(), '$0.000a') + "<br>" +
               "Total Revenue: " + numeralWrapper.format(this.revenue.toNumber(), "$0.000a") + " / s<br>" +
               "Total Expenses: " + numeralWrapper.format(this.expenses.toNumber(), "$0.000a") + "/ s<br>" +
               "Total Profits: " + profitStr + " / s<br>" +
+              dividendStr +
               "Publicly Traded: " + (this.public ? "Yes" : "No") + "<br>" +
               "Owned Stock Shares: " + numeralWrapper.format(this.numShares, '0.000a') + "<br>" +
               "Stock Price: " + (this.public ? "$" + formatNumber(this.sharePrice, 2) : "N/A") + "<br><br>";
+
+    const storedTime = this.storedCycles * CONSTANTS.MilliPerCycle / 1000;
+    if (storedTime > 15) {
+        txt += `Bonus Time: ${storedTime} seconds<br><br>`;
+    }
+
 
     var prodMult        = this.getProductionMultiplier(),
         storageMult     = this.getStorageMultiplier(),
@@ -4257,7 +4476,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
         for (var i = 0; i < positions.length; ++i) {
             (function(corp, i) {
                 var info = createElement("h2", {
-                    display:"inline-block", width:"40%", fontSize:"15px",
+                    display:"inline-block", width:"50%", fontSize:"15px",
                     innerText: positions[i] + "(" + counts[i] + ")",
                     tooltip: descriptions[i]
                 });

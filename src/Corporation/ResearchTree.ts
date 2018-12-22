@@ -7,6 +7,8 @@
 import { Research } from "./Research";
 import { ResearchMap } from "./ResearchMap";
 
+import { IMap } from "../types";
+
 interface IConstructorParams {
     children?: Node[];
     cost: number;
@@ -75,11 +77,17 @@ export class Node {
             htmlClass = "unlocked";
         }
 
+        const research: Research | null = ResearchMap[this.text];
         const sanitizedName: string = this.text.replace(/\s/g, '');
         return {
             children: childrenArray,
             HTMLclass: htmlClass,
-            innerHTML: `<div id="${sanitizedName}-click-listener">${this.text}<br>${this.cost} Scientific Research</div>`,
+            innerHTML:  `<div id="${sanitizedName}-corp-research-click-listener" class="tooltip">` +
+                            `${this.text}<br>${this.cost} Scientific Research` +
+                            `<span class="tooltiptext">` +
+                                `${research.desc}` +
+                            `</span>` +
+                        `</div>` ,
             text: { name: this.text },
         }
     }
@@ -108,7 +116,7 @@ export class Node {
 // The root node in a Research Tree must always be the "Hi-Tech R&D Laboratory"
 export class ResearchTree {
     // Object containing names of all acquired Research by name
-    researched: object = {};
+    researched: IMap<boolean> = {};
 
     // Root Node
     root: Node | null = null;
