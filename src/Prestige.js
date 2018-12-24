@@ -36,8 +36,6 @@ import {removeElementById}                      from "../utils/uiHelpers/removeE
 import {createElement}                          from "../utils/uiHelpers/createElement";
 import {createPopup}                            from "../utils/uiHelpers/createPopup";
 import {exceptionAlert}                         from "../utils/helpers/exceptionAlert";
-import {yesNoBoxCreate, yesNoBoxGetYesButton,
-        yesNoBoxGetNoButton, yesNoBoxClose}     from "../utils/YesNoBox";
 
 let BitNode8StartingMoney = 250e6;
 
