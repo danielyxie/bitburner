@@ -3105,6 +3105,10 @@ exports.CONSTANTS = {
      ** Now has offline progress, which works similarly to the Gang/Bladeburner mechanics
      ** Slightly reduced the amount of money offered to you by investment firms
      ** Employee salaries now slowly increase over time
+     ** Slightly reduced the effect "Real Estate" has on the Production Multiplier for the
+        Agriculture industry
+
+     * Stock Market, Travel, and Corporation main menu links are now properly styled
      `
 };
 
@@ -7470,7 +7474,7 @@ exports.getRandomInt = getRandomInt;
   !*** ./utils/uiHelpers/clearEventListeners.ts ***!
   \************************************************/
 /*! no static exports found */
-/*! exports used: clearEventListeners */
+/*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7503,111 +7507,136 @@ exports.clearEventListeners = clearEventListeners;
 /***/ }),
 /* 17 */
 /*!***************************!*\
-  !*** ./utils/YesNoBox.js ***!
+  !*** ./utils/YesNoBox.ts ***!
   \***************************/
-/*! exports provided: yesNoBoxCreate, yesNoTxtInpBoxCreate, yesNoBoxGetYesButton, yesNoBoxGetNoButton, yesNoTxtInpBoxGetYesButton, yesNoTxtInpBoxGetNoButton, yesNoTxtInpBoxGetInput, yesNoBoxClose, yesNoTxtInpBoxClose, yesNoBoxOpen */
+/*! no static exports found */
 /*! exports used: yesNoBoxClose, yesNoBoxCreate, yesNoBoxGetNoButton, yesNoBoxGetYesButton, yesNoBoxOpen, yesNoTxtInpBoxClose, yesNoTxtInpBoxCreate, yesNoTxtInpBoxGetInput, yesNoTxtInpBoxGetNoButton, yesNoTxtInpBoxGetYesButton */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return yesNoBoxCreate; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return yesNoTxtInpBoxCreate; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return yesNoBoxGetYesButton; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return yesNoBoxGetNoButton; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return yesNoTxtInpBoxGetYesButton; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return yesNoTxtInpBoxGetNoButton; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return yesNoTxtInpBoxGetInput; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return yesNoBoxClose; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return yesNoTxtInpBoxClose; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return yesNoBoxOpen; });
-/* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./uiHelpers/clearEventListeners */ 16);
-/* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_0__);
 
-/* Generic Yes-No Pop-up box
- * Can be used to create pop-up boxes that require a yes/no response from player
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Generic Yes-No Pop-up box
+ * Used to create pop-up boxes that require a yes/no response from player
+ *
+ * There are two types of pop ups:
+ *  1. Just a Yes/No response from player
+ *  2. Popup also includes a text input field in addition to the Yes/No response
  */
-var yesNoBoxOpen = false;
+const clearEventListeners_1 = __webpack_require__(/*! ./uiHelpers/clearEventListeners */ 16);
+exports.yesNoBoxOpen = false;
+const yesNoBoxContainer = document.getElementById("yes-no-box-container");
+const yesNoBoxYesButton = document.getElementById("yes-no-box-yes");
+const yesNoBoxNoButton = document.getElementById("yes-no-box-no");
+const yesNoBoxTextElement = document.getElementById("yes-no-box-text");
 function yesNoBoxClose() {
-    var container = document.getElementById("yes-no-box-container");
-    if (container) {
-        container.style.display = "none";
-    } else {
-        console.log("ERROR: Container not found for YesNoBox");
+    if (yesNoBoxContainer) {
+        yesNoBoxContainer.style.display = "none";
     }
-    yesNoBoxOpen = false;
+    else {
+        console.error("Container not found for YesNoBox");
+    }
+    exports.yesNoBoxOpen = false;
+    // Remove hotkey handler
+    document.removeEventListener("keydown", yesNoBoxHotkeyHandler);
     return false; //So that 'return yesNoBoxClose()' is return false in event listeners
 }
-
+exports.yesNoBoxClose = yesNoBoxClose;
+function yesNoBoxHotkeyHandler(e) {
+    if (e.keyCode === 27) {
+        yesNoBoxClose();
+    }
+    else if (e.keyCode === 13) {
+        if (yesNoBoxNoButton) {
+            yesNoBoxNoButton.click();
+        }
+        else {
+            console.error(`Could not find YesNoBox No button DOM element`);
+        }
+    }
+}
+exports.yesNoBoxHotkeyHandler = yesNoBoxHotkeyHandler;
 function yesNoBoxGetYesButton() {
-    return Object(_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_0__["clearEventListeners"])("yes-no-box-yes");
+    return clearEventListeners_1.clearEventListeners("yes-no-box-yes");
 }
-
+exports.yesNoBoxGetYesButton = yesNoBoxGetYesButton;
 function yesNoBoxGetNoButton() {
-    return Object(_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_0__["clearEventListeners"])("yes-no-box-no");
+    return clearEventListeners_1.clearEventListeners("yes-no-box-no");
 }
-
+exports.yesNoBoxGetNoButton = yesNoBoxGetNoButton;
 function yesNoBoxCreate(txt) {
-    if (yesNoBoxOpen) {return false;}   //Already open
-    yesNoBoxOpen = true;
-    var textElement = document.getElementById("yes-no-box-text");
-    if (textElement) {
-        textElement.innerHTML = txt;
+    if (exports.yesNoBoxOpen) {
+        return false;
+    } //Already open
+    exports.yesNoBoxOpen = true;
+    if (yesNoBoxTextElement) {
+        yesNoBoxTextElement.innerHTML = txt;
     }
-
-    var c = document.getElementById("yes-no-box-container");
-    if (c) {
-        c.style.display = "flex";
-    } else {
-        console.log("ERROR: Container not found for YesNoBox");
+    if (yesNoBoxContainer) {
+        yesNoBoxContainer.style.display = "flex";
     }
+    else {
+        console.error("Container not found for YesNoBox");
+    }
+    // Add event listener for Esc and Enter hotkeys
+    document.addEventListener("keydown", yesNoBoxHotkeyHandler);
     return true;
 }
-
-/* Generic Yes-No POp-up Box with Text input */
+exports.yesNoBoxCreate = yesNoBoxCreate;
+/**
+ * Yes-No pop up box with text input field
+ */
+const yesNoTextInputBoxContainer = document.getElementById("yes-no-text-input-box-container");
+const yesNoTextInputBoxYesButton = document.getElementById("yes-no-text-input-box-yes");
+const yesNoTextInputBoxNoButton = document.getElementById("yes-no-text-input-box-no");
+const yesNoTextInputBoxInput = document.getElementById("yes-no-text-input-box-input");
+const yesNoTextInputBoxTextElement = document.getElementById("yes-no-text-input-box-text");
 function yesNoTxtInpBoxClose() {
-    var c = document.getElementById("yes-no-text-input-box-container");
-    if (c) {
-        c.style.display = "none";
-    } else {
-        console.log("ERROR: Container not found for YesNoTextInputBox");
+    if (yesNoTextInputBoxContainer != null) {
+        yesNoTextInputBoxContainer.style.display = "none";
     }
-    yesNoBoxOpen = false;
-    document.getElementById("yes-no-text-input-box-input").value = "";
+    else {
+        console.error("Container not found for YesNoTextInputBox");
+        return false;
+    }
+    exports.yesNoBoxOpen = false;
+    yesNoTextInputBoxInput.value = "";
     return false;
 }
-
+exports.yesNoTxtInpBoxClose = yesNoTxtInpBoxClose;
 function yesNoTxtInpBoxGetYesButton() {
-    return Object(_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_0__["clearEventListeners"])("yes-no-text-input-box-yes");
+    return clearEventListeners_1.clearEventListeners("yes-no-text-input-box-yes");
 }
-
+exports.yesNoTxtInpBoxGetYesButton = yesNoTxtInpBoxGetYesButton;
 function yesNoTxtInpBoxGetNoButton() {
-    return Object(_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_0__["clearEventListeners"])("yes-no-text-input-box-no");
+    return clearEventListeners_1.clearEventListeners("yes-no-text-input-box-no");
 }
-
+exports.yesNoTxtInpBoxGetNoButton = yesNoTxtInpBoxGetNoButton;
 function yesNoTxtInpBoxGetInput() {
-    var val = document.getElementById("yes-no-text-input-box-input").value;
+    if (yesNoTextInputBoxInput == null) {
+        console.error("Could not find YesNoTextInputBox input element");
+        return "";
+    }
+    let val = yesNoTextInputBoxInput.value;
     val = val.replace(/\s+/g, '');
     return val;
 }
-
+exports.yesNoTxtInpBoxGetInput = yesNoTxtInpBoxGetInput;
 function yesNoTxtInpBoxCreate(txt) {
-    yesNoBoxOpen = true;
-    var txtE = document.getElementById("yes-no-text-input-box-text");
-    if (txtE) {
-        txtE.innerHTML = txt;
+    exports.yesNoBoxOpen = true;
+    if (yesNoTextInputBoxTextElement) {
+        yesNoTextInputBoxTextElement.innerHTML = txt;
     }
-
-    var c = document.getElementById("yes-no-text-input-box-container");
-    if (c) {
-        c.style.display = "flex";
-    } else {
-        console.log("ERROR: Container not found for YesNoTextInputBox");
+    if (yesNoTextInputBoxContainer) {
+        yesNoTextInputBoxContainer.style.display = "flex";
     }
-
-    document.getElementById("yes-no-text-input-box-input").focus();
+    else {
+        console.error("Container not found for YesNoTextInputBox");
+    }
+    yesNoTextInputBoxInput.focus();
 }
-
-
+exports.yesNoTxtInpBoxCreate = yesNoTxtInpBoxCreate;
 
 
 /***/ }),
@@ -10529,6 +10558,7 @@ function displaySourceFiles(listElement, sourceFiles) {
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_16__);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__);
 
 
 
@@ -11638,24 +11668,24 @@ function createStockTicker(stock) {
                 break;
             case "Limit Order":
             case "Stop Order":
-                var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__[/* yesNoTxtInpBoxGetYesButton */ "j"])(),
-                    noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__[/* yesNoTxtInpBoxGetNoButton */ "i"])();
+                var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__["yesNoTxtInpBoxGetYesButton"])(),
+                    noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__["yesNoTxtInpBoxGetNoButton"])();
                 yesBtn.innerText = "Place Buy " + ordType;
                 noBtn.innerText = "Cancel Order";
                 yesBtn.addEventListener("click", ()=>{
-                    var price = Number(Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__[/* yesNoTxtInpBoxGetInput */ "h"])()), type;
+                    var price = Number(Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__["yesNoTxtInpBoxGetInput"])()), type;
                     if (ordType === "Limit Order") {
                         type = OrderTypes.LimitBuy;
                     } else {
                         type = OrderTypes.StopBuy;
                     }
                     placeOrder(stock, shares, price, type, pos);
-                    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__[/* yesNoTxtInpBoxClose */ "f"])();
+                    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__["yesNoTxtInpBoxClose"])();
                 });
                 noBtn.addEventListener("click", ()=>{
-                    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__[/* yesNoTxtInpBoxClose */ "f"])();
+                    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__["yesNoTxtInpBoxClose"])();
                 });
-                Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__[/* yesNoTxtInpBoxCreate */ "g"])("Enter the price for your " + ordType);
+                Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__["yesNoTxtInpBoxCreate"])("Enter the price for your " + ordType);
                 break;
             default:
                 console.log("ERROR: Invalid order type");
@@ -11679,24 +11709,24 @@ function createStockTicker(stock) {
                 break;
             case "Limit Order":
             case "Stop Order":
-                var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__[/* yesNoTxtInpBoxGetYesButton */ "j"])(),
-                    noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__[/* yesNoTxtInpBoxGetNoButton */ "i"])();
+                var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__["yesNoTxtInpBoxGetYesButton"])(),
+                    noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__["yesNoTxtInpBoxGetNoButton"])();
                 yesBtn.innerText = "Place Sell " + ordType;
                 noBtn.innerText = "Cancel Order";
                 yesBtn.addEventListener("click", ()=>{
-                    var price = Number(Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__[/* yesNoTxtInpBoxGetInput */ "h"])()), type;
+                    var price = Number(Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__["yesNoTxtInpBoxGetInput"])()), type;
                     if (ordType === "Limit Order") {
                         type = OrderTypes.LimitSell;
                     } else {
                         type = OrderTypes.StopSell;
                     }
-                    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__[/* yesNoTxtInpBoxClose */ "f"])();
+                    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__["yesNoTxtInpBoxClose"])();
                     placeOrder(stock, shares, price, type, pos);
                 });
                 noBtn.addEventListener("click", ()=>{
-                    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__[/* yesNoTxtInpBoxClose */ "f"])();
+                    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__["yesNoTxtInpBoxClose"])();
                 });
-                Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__[/* yesNoTxtInpBoxCreate */ "g"])("Enter the price for your " + ordType);
+                Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__["yesNoTxtInpBoxCreate"])("Enter the price for your " + ordType);
                 break;
             default:
                 console.log("ERROR: Invalid order type");
@@ -11720,12 +11750,12 @@ function createStockTicker(stock) {
                 break;
             case "Limit Order":
             case "Stop Order":
-                var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__[/* yesNoTxtInpBoxGetYesButton */ "j"])(),
-                    noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__[/* yesNoTxtInpBoxGetNoButton */ "i"])();
+                var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__["yesNoTxtInpBoxGetYesButton"])(),
+                    noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__["yesNoTxtInpBoxGetNoButton"])();
                 yesBtn.innerText = "Place Buy " + ordType;
                 noBtn.innerText = "Cancel Order";
                 yesBtn.addEventListener("click", ()=>{
-                    var price = Number(Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__[/* yesNoTxtInpBoxGetInput */ "h"])()), type;
+                    var price = Number(Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__["yesNoTxtInpBoxGetInput"])()), type;
                     if (ordType === "Limit Order") {
                         type = OrderTypes.LimitBuy;
                     } else {
@@ -11733,12 +11763,12 @@ function createStockTicker(stock) {
                     }
                     var shares = Math.floor((money-COMM) / price);
                     placeOrder(stock, shares, price, type, pos);
-                    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__[/* yesNoTxtInpBoxClose */ "f"])();
+                    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__["yesNoTxtInpBoxClose"])();
                 });
                 noBtn.addEventListener("click", ()=>{
-                    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__[/* yesNoTxtInpBoxClose */ "f"])();
+                    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__["yesNoTxtInpBoxClose"])();
                 });
-                Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__[/* yesNoTxtInpBoxCreate */ "g"])("Enter the price for your " + ordType);
+                Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__["yesNoTxtInpBoxCreate"])("Enter the price for your " + ordType);
                 break;
             default:
                 console.log("ERROR: Invalid order type");
@@ -20119,6 +20149,7 @@ JSONReviver_1.Reviver.constructors.CodingContract = CodingContract;
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ../utils/helpers/isString */ 40);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_42___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_42__);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_43___default = /*#__PURE__*/__webpack_require__.n(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_43__);
 var sprintf = __webpack_require__(/*! sprintf-js */ 147).sprintf,
     vsprintf = __webpack_require__(/*! sprintf-js */ 147).vsprintf
 
@@ -22480,24 +22511,24 @@ function NetscriptFunctions(workerScript) {
         },
         prompt : function(txt) {
             if (workerScript.checkingRam) {return 0;}
-            if (_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_43__[/* yesNoBoxOpen */ "e"]) {
+            if (_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_43__["yesNoBoxOpen"]) {
                 workerScript.scriptRef.log("ERROR: confirm() failed because a pop-up dialog box is already open");
                 return false;
             }
             if (!Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_42__["isString"])(txt)) {txt = String(txt);}
-            var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_43__[/* yesNoBoxGetYesButton */ "d"])(), noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_43__[/* yesNoBoxGetNoButton */ "c"])();
+            var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_43__["yesNoBoxGetYesButton"])(), noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_43__["yesNoBoxGetNoButton"])();
             yesBtn.innerHTML = "Yes";
             noBtn.innerHTML = "No";
             return new Promise(function(resolve, reject) {
                 yesBtn.addEventListener("click", ()=>{
-                    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_43__[/* yesNoBoxClose */ "a"])();
+                    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_43__["yesNoBoxClose"])();
                     resolve(true);
                 });
                 noBtn.addEventListener("click", ()=>{
-                    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_43__[/* yesNoBoxClose */ "a"])();
+                    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_43__["yesNoBoxClose"])();
                     resolve(false);
                 });
-                Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_43__[/* yesNoBoxCreate */ "b"])(txt);
+                Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_43__["yesNoBoxCreate"])(txt);
             });
         },
         wget : async function(url, target, ip=workerScript.serverIp) {
@@ -24927,6 +24958,7 @@ function substituteAliases(origCommand) {
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_19__);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../../utils/YesNoBox */ 17);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_20__);
 
 
 
@@ -25209,7 +25241,7 @@ function displayFactionContent(factionName) {
                     if (factionName === "NiteSec" || factionName === "The Black Hand") { hacking = true; }
 
                     // Configure Yes/No buttons for the pop-up
-                    var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_20__[/* yesNoBoxGetYesButton */ "d"])(), noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_20__[/* yesNoBoxGetNoButton */ "c"])();
+                    var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_20__["yesNoBoxGetYesButton"])(), noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_20__["yesNoBoxGetNoButton"])();
                     yesBtn.innerHTML = "Create Gang";
                     noBtn.innerHTML = "Cancel";
                     yesBtn.addEventListener("click", () => {
@@ -25217,10 +25249,10 @@ function displayFactionContent(factionName) {
                         document.getElementById("world-menu-header").click();
                         document.getElementById("world-menu-header").click();
                         _engine__WEBPACK_IMPORTED_MODULE_3__["Engine"].loadGangContent();
-                        Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_20__[/* yesNoBoxClose */ "a"])();
+                        Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_20__["yesNoBoxClose"])();
                     });
                     noBtn.addEventListener("click", () => {
-                        Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_20__[/* yesNoBoxClose */ "a"])();
+                        Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_20__["yesNoBoxClose"])();
                     });
 
                     // Pop-up text
@@ -25234,7 +25266,7 @@ function displayFactionContent(factionName) {
                                        "Compared to hacking gangs, progression with combat gangs can be more difficult as territory management " +
                                        "is more important. However, well-managed combat gangs can progress faster than hacking ones.<br><br>";
                     }
-                    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_20__[/* yesNoBoxCreate */ "b"])(`Would you like to create a new Gang with ${factionName}?<br><br>` +
+                    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_20__["yesNoBoxCreate"])(`Would you like to create a new Gang with ${factionName}?<br><br>` +
                                    "Note that this will prevent you from creating a Gang with any other Faction until " +
                                    "this BitNode is destroyed.<br><br>" +
                                    gangTypeText +
@@ -25453,17 +25485,17 @@ function createFactionAugmentationDisplayElements(augmentationsList, augs, facti
 
 function purchaseAugmentationBoxCreate(aug, fac) {
     const factionInfo = fac.getInfo();
-    var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_20__[/* yesNoBoxGetYesButton */ "d"])(), noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_20__[/* yesNoBoxGetNoButton */ "c"])();
+    var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_20__["yesNoBoxGetYesButton"])(), noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_20__["yesNoBoxGetNoButton"])();
     yesBtn.innerHTML = "Purchase";
     noBtn.innerHTML = "Cancel";
     yesBtn.addEventListener("click", function() {
         purchaseAugmentation(aug, fac);
     });
     noBtn.addEventListener("click", function() {
-        Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_20__[/* yesNoBoxClose */ "a"])();
+        Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_20__["yesNoBoxClose"])();
     });
 
-    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_20__[/* yesNoBoxCreate */ "b"])("<h2>" + aug.name + "</h2><br>" +
+    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_20__["yesNoBoxCreate"])("<h2>" + aug.name + "</h2><br>" +
                    aug.info + "<br><br>" +
                    "<br>Would you like to purchase the " + aug.name + " Augmentation for $" +
                    Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_19__["formatNumber"])(aug.baseCost * factionInfo.augmentationPriceMult, 2)  + "?");
@@ -25563,7 +25595,7 @@ function purchaseAugmentation(aug, fac, sing=false) {
                         "Please report this to the game developer with an explanation of how to " +
                         "reproduce this.");
     }
-    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_20__[/* yesNoBoxClose */ "a"])();
+    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_20__["yesNoBoxClose"])();
 }
 
 function getNextNeurofluxLevel() {
@@ -29681,6 +29713,7 @@ function calculateWeakenTime(server, hack, int) {
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_19__);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_20__);
 /*
 Also add police clashes
 balance point to keep them from running out of control
@@ -31664,6 +31697,7 @@ Gang.prototype.clearUI = function() {
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_27__);
 /* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../utils/LogBox */ 78);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29___default = /*#__PURE__*/__webpack_require__.n(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./ui/postToTerminal */ 7);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__);
 /* harmony import */ var autosize__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! autosize */ 150);
@@ -33664,18 +33698,18 @@ let Terminal = {
             Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("-- Daedalus --");
         };
         programHandlers[_CreateProgram__WEBPACK_IMPORTED_MODULE_3__[/* Programs */ "a"].BitFlume.name] = () => {
-            const yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__[/* yesNoBoxGetYesButton */ "d"])();
-            const noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__[/* yesNoBoxGetNoButton */ "c"])();
+            const yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__["yesNoBoxGetYesButton"])();
+            const noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__["yesNoBoxGetNoButton"])();
             yesBtn.innerHTML = "Travel to BitNode Nexus";
             noBtn.innerHTML = "Cancel";
             yesBtn.addEventListener("click", function() {
                 Object(_RedPill__WEBPACK_IMPORTED_MODULE_14__[/* hackWorldDaemon */ "a"])(_Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].bitNodeN, true);
-                return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__[/* yesNoBoxClose */ "a"])();
+                return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__["yesNoBoxClose"])();
             });
             noBtn.addEventListener("click", function() {
-                return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__[/* yesNoBoxClose */ "a"])();
+                return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__["yesNoBoxClose"])();
             });
-            Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__[/* yesNoBoxCreate */ "b"])("WARNING: USING THIS PROGRAM WILL CAUSE YOU TO LOSE ALL OF YOUR PROGRESS ON THE CURRENT BITNODE.<br><br>" +
+            Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__["yesNoBoxCreate"])("WARNING: USING THIS PROGRAM WILL CAUSE YOU TO LOSE ALL OF YOUR PROGRESS ON THE CURRENT BITNODE.<br><br>" +
                             "Do you want to travel to the BitNode Nexus? This allows you to reset the current BitNode " +
                             "and select a new one.");
         };
@@ -35668,6 +35702,7 @@ exports.appendLineBreaks = appendLineBreaks;
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 29);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__);
 
 
 
@@ -35888,7 +35923,7 @@ function loadBitVerse(destroyedBitNodeNum, flume=false) {
                         console.log("ERROR: Could not find BitNode object for number: " + i);
                         return;
                     }
-                    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__[/* yesNoBoxCreate */ "b"])("BitNode-" + i + ": " + bitNode.name + "<br><br>" + bitNode.info);
+                    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__["yesNoBoxCreate"])("BitNode-" + i + ": " + bitNode.name + "<br><br>" + bitNode.info);
                     createBitNodeYesNoEventListeners(i, destroyedBitNodeNum, flume);
                 });
             } else {
@@ -35961,7 +35996,7 @@ function createBitNode(n) {
 }
 
 function createBitNodeYesNoEventListeners(newBitNode, destroyedBitNode, flume=false) {
-    var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__[/* yesNoBoxGetYesButton */ "d"])();
+    var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__["yesNoBoxGetYesButton"])();
     yesBtn.innerHTML = "Enter BitNode-" + newBitNode;
     yesBtn.addEventListener("click", function() {
         if (!flume) {
@@ -35988,12 +36023,12 @@ function createBitNodeYesNoEventListeners(newBitNode, destroyedBitNode, flume=fa
         _Terminal__WEBPACK_IMPORTED_MODULE_5__[/* Terminal */ "a"].hackFlag = false;
 
         Object(_Prestige__WEBPACK_IMPORTED_MODULE_3__[/* prestigeSourceFile */ "b"])();
-        Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__[/* yesNoBoxClose */ "a"])();
+        Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__["yesNoBoxClose"])();
     });
-    var noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__[/* yesNoBoxGetNoButton */ "c"])();
+    var noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__["yesNoBoxGetNoButton"])();
     noBtn.innerHTML = "Back";
     noBtn.addEventListener("click", function() {
-        Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__[/* yesNoBoxClose */ "a"])();
+        Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__["yesNoBoxClose"])();
     });
 
 }
@@ -36479,6 +36514,7 @@ function initBitNodeMultipliers() {
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../../utils/uiHelpers/removeElementById */ 20);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_29___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_29__);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ../../utils/YesNoBox */ 17);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30__);
 /* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! decimal.js */ 33);
 
 
@@ -36536,7 +36572,7 @@ const BribeToRepRatio                = 1e9;   //Bribe Value divided by this = re
 
 const ProductProductionCostRatio     = 5;    //Ratio of material cost of a product to its production cost
 
-const DividendMaxPercentage          = 99;
+const DividendMaxPercentage          = 50;
 
 const CyclesPerEmployeeRaise         = 400;  // All employees get a raise every X market cycles
 const EmployeeRaiseAmount            = 50;   // Employee salary increases by this (additive)
@@ -36660,7 +36696,7 @@ Industry.prototype.init = function() {
             this.prodMats = ["Water"];
             break;
         case _IndustryData__WEBPACK_IMPORTED_MODULE_4__["Industries"].Agriculture:
-            this.reFac  = 0.75;
+            this.reFac  = 0.72;
             this.sciFac = 0.5;
             this.hwFac  = 0.2;
             this.robFac = 0.3;
@@ -38177,12 +38213,12 @@ OfficeSpace.prototype.findEmployees = function(parentRefs) {
 
 OfficeSpace.prototype.hireEmployee = function(employee, parentRefs) {
     var company = parentRefs.corporation, division = parentRefs.industry;
-    var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30__[/* yesNoTxtInpBoxGetYesButton */ "j"])(),
-        noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30__[/* yesNoTxtInpBoxGetNoButton */ "i"])();
+    var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30__["yesNoTxtInpBoxGetYesButton"])(),
+        noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30__["yesNoTxtInpBoxGetNoButton"])();
     yesBtn.innerHTML = "Hire";
     noBtn.innerHTML = "Cancel";
     yesBtn.addEventListener("click", ()=>{
-        var name = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30__[/* yesNoTxtInpBoxGetInput */ "h"])();
+        var name = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30__["yesNoTxtInpBoxGetInput"])();
         for (var i = 0; i < this.employees.length; ++i) {
             if (this.employees[i].name === name) {
                 Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("You already have an employee with this nickname! Please give every employee a unique nickname.");
@@ -38192,12 +38228,12 @@ OfficeSpace.prototype.hireEmployee = function(employee, parentRefs) {
         employee.name = name;
         this.employees.push(employee);
         company.displayDivisionContent(division, currentCityUi);
-        return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30__[/* yesNoTxtInpBoxClose */ "f"])();
+        return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30__["yesNoTxtInpBoxClose"])();
     });
     noBtn.addEventListener("click", ()=>{
-        return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30__[/* yesNoTxtInpBoxClose */ "f"])();
+        return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30__["yesNoTxtInpBoxClose"])();
     });
-    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30__[/* yesNoTxtInpBoxCreate */ "g"])("Give your employee a nickname!");
+    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30__["yesNoTxtInpBoxCreate"])("Give your employee a nickname!");
 }
 
 OfficeSpace.prototype.hireRandomEmployee = function(parentRefs) {
@@ -39342,8 +39378,8 @@ Corporation.prototype.getInvestment = function() {
     }
     var funding = val * percShares * 4,
         investShares = Math.floor(TOTALSHARES * percShares),
-        yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30__[/* yesNoBoxGetYesButton */ "d"])(),
-        noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30__[/* yesNoBoxGetNoButton */ "c"])();
+        yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30__["yesNoBoxGetYesButton"])(),
+        noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30__["yesNoBoxGetNoButton"])();
     yesBtn.innerHTML = "Accept";
     noBtn.innerHML = "Reject";
     yesBtn.addEventListener("click", ()=>{
@@ -39351,12 +39387,12 @@ Corporation.prototype.getInvestment = function() {
         this.funds = this.funds.plus(funding);
         this.numShares -= investShares;
         this.displayCorporationOverviewContent();
-        return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30__[/* yesNoBoxClose */ "a"])();
+        return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30__["yesNoBoxClose"])();
     });
     noBtn.addEventListener("click", ()=>{
-        return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30__[/* yesNoBoxClose */ "a"])();
+        return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30__["yesNoBoxClose"])();
     });
-    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30__[/* yesNoBoxCreate */ "b"])("An investment firm has offered you " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(funding, '$0.000a') +
+    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30__["yesNoBoxCreate"])("An investment firm has offered you " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(funding, '$0.000a') +
                    " in funding in exchange for a " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(percShares*100, "0.000a") +
                    "% stake in the company (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(investShares, '0.000a') + " shares).<br><br>" +
                    "Do you accept or reject this offer?<br><br>" +
@@ -39433,7 +39469,7 @@ Corporation.prototype.updateSharePrice = function() {
 
 //One time upgrades that unlock new features
 Corporation.prototype.unlock = function(upgrade) {
-    var upgN = upgrade[0], price = upgrade[1];
+    const upgN = upgrade[0], price = upgrade[1];
     while (this.unlockUpgrades.length <= upgN) {
         this.unlockUpgrades.push(0);
     }
@@ -39443,6 +39479,13 @@ Corporation.prototype.unlock = function(upgrade) {
     }
     this.unlockUpgrades[upgN] = 1;
     this.funds = this.funds.minus(price);
+
+    // Apply effects for one-time upgrades
+    if (upgN === 5) {
+        this.dividendTaxPercentage -= 5;
+    } else if (upgN === 6) {
+        this.dividendTaxPercentage -= 10;
+    }
 }
 
 //Levelable upgrades
@@ -40283,6 +40326,7 @@ Corporation.prototype.updateCorporationOverviewContent = function() {
         dividendStr = `Retained Profits (after dividends): ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(retainedEarnings, "$0.000a")} / s<br>` +
                       `Dividends per share: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(dividendsPerShare, "$0.000a")} / s<br>` +
                       `Your earnings (Pre-Tax): ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(playerEarnings, "$0.000a")} / s<br>` +
+                      `Dividend Tax Rate: ${this.dividendTaxPercentage}%<br>` +
                       `Your earnings (Post-Tax): ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(playerEarnings * (this.dividendTaxPercentage / 100), "$0.000a")} / s<br>`;
     }
 
@@ -44944,6 +44988,7 @@ exports.CompanyPosition = CompanyPosition;
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_25__);
 /* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 44);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_27__);
 
 
 
@@ -45369,6 +45414,7 @@ exports.isValidIPAddress = isValidIPAddress;
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21__);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__);
 
 
 
@@ -47145,16 +47191,16 @@ function initLocationButtons() {
         const cost = _Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].getUpgradeHomeRamCost();
         const ram = _Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].getHomeComputer().maxRam;
 
-        var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__[/* yesNoBoxGetYesButton */ "d"])(), noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__[/* yesNoBoxGetNoButton */ "c"])();
+        var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__["yesNoBoxGetYesButton"])(), noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__["yesNoBoxGetNoButton"])();
         yesBtn.innerHTML = "Purchase"; noBtn.innerHTML = "Cancel";
         yesBtn.addEventListener("click", ()=>{
             Object(_ServerPurchases__WEBPACK_IMPORTED_MODULE_14__[/* purchaseRamForHomeComputer */ "a"])(cost);
-            Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__[/* yesNoBoxClose */ "a"])();
+            Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__["yesNoBoxClose"])();
         });
         noBtn.addEventListener("click", ()=>{
-            Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__[/* yesNoBoxClose */ "a"])();
+            Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__["yesNoBoxClose"])();
         });
-        Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__[/* yesNoBoxCreate */ "b"])("Would you like to purchase additional RAM for your home computer? <br><br>" +
+        Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__["yesNoBoxCreate"])("Would you like to purchase additional RAM for your home computer? <br><br>" +
                        "This will upgrade your RAM from " + ram + "GB to " + ram*2 + "GB. <br><br>" +
                        "This will cost " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_17__["numeralWrapper"].format(cost, '$0.000a'));
     });
@@ -47174,7 +47220,7 @@ function initLocationButtons() {
                     20000000000000000,          //6->7 Cores - 20 quadrillion
                     200000000000000000];        //7->8 Cores - 200 quadrillion
         cost = cost[currentCores];
-        var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__[/* yesNoBoxGetYesButton */ "d"])(), noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__[/* yesNoBoxGetNoButton */ "c"])();
+        var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__["yesNoBoxGetYesButton"])(), noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__["yesNoBoxGetNoButton"])();
         yesBtn.innerHTML = "Purchase"; noBtn.innerHTML = "Cancel";
         yesBtn.addEventListener("click", ()=>{
             if (_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].money.lt(cost)) {
@@ -47185,12 +47231,12 @@ function initLocationButtons() {
                 Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("You purchased an additional CPU Core for your home computer! It now has " +
                                 _Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].getHomeComputer().cpuCores +  " cores.");
             }
-            Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__[/* yesNoBoxClose */ "a"])();
+            Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__["yesNoBoxClose"])();
         });
         noBtn.addEventListener("click", ()=>{
-            Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__[/* yesNoBoxClose */ "a"])();
+            Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__["yesNoBoxClose"])();
         });
-        Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__[/* yesNoBoxCreate */ "b"])("Would you like to purchase an additional CPU Core for your home computer? Each CPU Core " +
+        Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__["yesNoBoxCreate"])("Would you like to purchase an additional CPU Core for your home computer? Each CPU Core " +
                        "lets you start with an additional Core Node in Hacking Missions.<br><br>" +
                        "Purchasing an additional core (for a total of " + (_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].getHomeComputer().cpuCores + 1) + ") will " +
                        "cost " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_17__["numeralWrapper"].format(cost, '$0.000a'));
@@ -47305,17 +47351,17 @@ function initLocationButtons() {
     });
 
     cityHallCreateCorporation.addEventListener("click", function() {
-        var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__[/* yesNoTxtInpBoxGetYesButton */ "j"])(),
-            noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__[/* yesNoTxtInpBoxGetNoButton */ "i"])();
+        var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__["yesNoTxtInpBoxGetYesButton"])(),
+            noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__["yesNoTxtInpBoxGetNoButton"])();
         yesBtn.innerText = "Create Corporation";
         noBtn.innerText = "Cancel";
         yesBtn.addEventListener("click", function() {
             if (_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].money.lt(150e9)) {
                 Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("You don't have enough money to create a corporation! You need $150b");
-                return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__[/* yesNoTxtInpBoxClose */ "f"])();
+                return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__["yesNoTxtInpBoxClose"])();
             }
             _Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].loseMoney(150e9);
-            var companyName = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__[/* yesNoTxtInpBoxGetInput */ "h"])();
+            var companyName = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__["yesNoTxtInpBoxGetInput"])();
             if (companyName == null || companyName == "") {
                 Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("Invalid company name!");
                 return false;
@@ -47328,15 +47374,15 @@ function initLocationButtons() {
             document.getElementById("world-menu-header").click();
             Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("Congratulations! You just started your own corporation. You can visit " +
                             "and manage your company in the City");
-            return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__[/* yesNoTxtInpBoxClose */ "f"])();
+            return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__["yesNoTxtInpBoxClose"])();
         });
         noBtn.addEventListener("click", function() {
-            return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__[/* yesNoTxtInpBoxClose */ "f"])();
+            return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__["yesNoTxtInpBoxClose"])();
         });
         if (_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_5__[/* Corporation */ "a"]) {
             return;
         } else {
-            Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__[/* yesNoTxtInpBoxCreate */ "g"])("Would you like to start a corporation? This will require $150b " +
+            Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__["yesNoTxtInpBoxCreate"])("Would you like to start a corporation? This will require $150b " +
                                  "for registration and initial funding.<br><br>If so, please enter " +
                                  "a name for your corporation below:");
         }
@@ -47555,35 +47601,35 @@ function travelBoxCreate(destCityName, cost) {
         travelToCity(destCityName, cost);
         return;
     }
-    var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__[/* yesNoBoxGetYesButton */ "d"])(), noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__[/* yesNoBoxGetNoButton */ "c"])();
+    var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__["yesNoBoxGetYesButton"])(), noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__["yesNoBoxGetNoButton"])();
     yesBtn.innerHTML = "Yes";
     noBtn.innerHTML = "No";
     noBtn.addEventListener("click", () => {
-        Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__[/* yesNoBoxClose */ "a"])();
+        Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__["yesNoBoxClose"])();
         return false;
     });
     yesBtn.addEventListener("click", () => {
-        Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__[/* yesNoBoxClose */ "a"])();
+        Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__["yesNoBoxClose"])();
         travelToCity(destCityName, cost);
         return false;
     });
-    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__[/* yesNoBoxCreate */ "b"])("Would you like to travel to " + destCityName + "? The trip will cost $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21__["formatNumber"])(cost, 2) + ".");
+    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__["yesNoBoxCreate"])("Would you like to travel to " + destCityName + "? The trip will cost $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21__["formatNumber"])(cost, 2) + ".");
 }
 
 function purchaseServerBoxCreate(ram, cost) {
-    var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__[/* yesNoTxtInpBoxGetYesButton */ "j"])();
-    var noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__[/* yesNoTxtInpBoxGetNoButton */ "i"])();
+    var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__["yesNoTxtInpBoxGetYesButton"])();
+    var noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__["yesNoTxtInpBoxGetNoButton"])();
     yesBtn.innerHTML = "Purchase Server";
     noBtn.innerHTML = "Cancel";
     yesBtn.addEventListener("click", function() {
         Object(_ServerPurchases__WEBPACK_IMPORTED_MODULE_14__[/* purchaseServer */ "b"])(ram, cost);
-        Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__[/* yesNoTxtInpBoxClose */ "f"])();
+        Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__["yesNoTxtInpBoxClose"])();
     });
     noBtn.addEventListener("click", function() {
-        Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__[/* yesNoTxtInpBoxClose */ "f"])();
+        Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__["yesNoTxtInpBoxClose"])();
     });
 
-    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__[/* yesNoTxtInpBoxCreate */ "g"])("Would you like to purchase a new server with " + ram +
+    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__["yesNoTxtInpBoxCreate"])("Would you like to purchase a new server with " + ram +
                          "GB of RAM for $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21__["formatNumber"])(cost, 2) + "?<br><br>" +
                          "Please enter the server hostname below:<br>");
 }
@@ -48684,7 +48730,13 @@ exports.CorporationUnlockUpgrades = {
     "4": [4, 10e9, "VeChain",
         "Use AI and blockchain technology to identify where you can improve your supply chain systems. " +
             "This upgrade will allow you to view a wide array of useful statistics about your " +
-            "Corporation."]
+            "Corporation."],
+    "5": [5, 500e9, "Shady Accounting",
+        "Utilize unscrupulous accounting practices and pay off government officials to save money " +
+            "on taxes. This reduces the dividend tax rate by 5%."],
+    "6": [6, 2e12, "Government Partnership",
+        "Help national governments further their agendas in exchange for lowered taxes. " +
+            "This reduces the dividend tax rate by 10%"],
 };
 
 
@@ -49705,6 +49757,7 @@ function closeDevMenu() {
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/IPAddress */ 61);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_5__);
 
 
 
@@ -49732,7 +49785,7 @@ function purchaseServer(ram, cost) {
         return;
     }
 
-    var hostname = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_5__[/* yesNoTxtInpBoxGetInput */ "h"])();
+    var hostname = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_5__["yesNoTxtInpBoxGetInput"])();
     if (hostname == "") {
         Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_3__["dialogBoxCreate"])("You must enter a hostname for your new server!");
         return;

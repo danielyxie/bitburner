@@ -5,7 +5,7 @@ import { getElementById } from "./getElementById";
  * replacing. Then returns the new cloned element.
  * @param elemId The HTML ID to retrieve the element by.
  */
-export function clearEventListeners(elemId: string) {
+export function clearEventListeners(elemId: string): HTMLElement | null {
     try {
         const elem: HTMLElement = getElementById(elemId);
         const newElem: HTMLElement = elem.cloneNode(true) as HTMLElement;

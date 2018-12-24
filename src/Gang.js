@@ -26,16 +26,6 @@ import { getRandomInt }                         from "../utils/helpers/getRandom
 import { removeChildrenFromElement }            from "../utils/uiHelpers/removeChildrenFromElement";
 import { removeElement }                        from "../utils/uiHelpers/removeElement";
 import { removeElementById }                    from "../utils/uiHelpers/removeElementById";
-import { yesNoBoxCreate,
-         yesNoTxtInpBoxCreate,
-         yesNoBoxGetYesButton,
-         yesNoBoxGetNoButton,
-         yesNoTxtInpBoxGetYesButton,
-         yesNoTxtInpBoxGetNoButton,
-         yesNoTxtInpBoxGetInput,
-         yesNoBoxClose,
-         yesNoTxtInpBoxClose,
-         yesNoBoxOpen }                         from "../utils/YesNoBox";
 
 // Constants
 const GangRespectToReputationRatio = 5; // Respect is divided by this to get rep gain

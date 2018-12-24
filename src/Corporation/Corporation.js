@@ -69,7 +69,7 @@ export const BribeToRepRatio                = 1e9;   //Bribe Value divided by th
 
 export const ProductProductionCostRatio     = 5;    //Ratio of material cost of a product to its production cost
 
-export const DividendMaxPercentage          = 99;
+export const DividendMaxPercentage          = 50;
 
 export const CyclesPerEmployeeRaise         = 400;  // All employees get a raise every X market cycles
 export const EmployeeRaiseAmount            = 50;   // Employee salary increases by this (additive)
@@ -193,7 +193,7 @@ Industry.prototype.init = function() {
             this.prodMats = ["Water"];
             break;
         case Industries.Agriculture:
-            this.reFac  = 0.75;
+            this.reFac  = 0.72;
             this.sciFac = 0.5;
             this.hwFac  = 0.2;
             this.robFac = 0.3;
@@ -2966,7 +2966,7 @@ Corporation.prototype.updateSharePrice = function() {
 
 //One time upgrades that unlock new features
 Corporation.prototype.unlock = function(upgrade) {
-    var upgN = upgrade[0], price = upgrade[1];
+    const upgN = upgrade[0], price = upgrade[1];
     while (this.unlockUpgrades.length <= upgN) {
         this.unlockUpgrades.push(0);
     }
@@ -2976,6 +2976,13 @@ Corporation.prototype.unlock = function(upgrade) {
     }
     this.unlockUpgrades[upgN] = 1;
     this.funds = this.funds.minus(price);
+
+    // Apply effects for one-time upgrades
+    if (upgN === 5) {
+        this.dividendTaxPercentage -= 5;
+    } else if (upgN === 6) {
+        this.dividendTaxPercentage -= 10;
+    }
 }
 
 //Levelable upgrades
@@ -3816,6 +3823,7 @@ Corporation.prototype.updateCorporationOverviewContent = function() {
         dividendStr = `Retained Profits (after dividends): ${numeralWrapper.format(retainedEarnings, "$0.000a")} / s<br>` +
                       `Dividends per share: ${numeralWrapper.format(dividendsPerShare, "$0.000a")} / s<br>` +
                       `Your earnings (Pre-Tax): ${numeralWrapper.format(playerEarnings, "$0.000a")} / s<br>` +
+                      `Dividend Tax Rate: ${this.dividendTaxPercentage}%<br>` +
                       `Your earnings (Post-Tax): ${numeralWrapper.format(playerEarnings * (this.dividendTaxPercentage / 100), "$0.000a")} / s<br>`;
     }
 

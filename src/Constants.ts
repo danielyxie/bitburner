@@ -517,6 +517,8 @@ export let CONSTANTS: IMap<any> = {
      ** Now has offline progress, which works similarly to the Gang/Bladeburner mechanics
      ** Slightly reduced the amount of money offered to you by investment firms
      ** Employee salaries now slowly increase over time
+     ** Slightly reduced the effect "Real Estate" has on the Production Multiplier for the
+        Agriculture industry
 
      * Stock Market, Travel, and Corporation main menu links are now properly styled
      `
