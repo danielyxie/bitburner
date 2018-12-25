@@ -169,11 +169,11 @@
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CodingContracts */ 42);
 /* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_CodingContracts__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Company/Company */ 73);
+/* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Company/Company */ 74);
 /* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Company_Company__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Company/Companies */ 18);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _Company_GetNextCompanyPosition__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Company/GetNextCompanyPosition */ 100);
+/* harmony import */ var _Company_GetNextCompanyPosition__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Company/GetNextCompanyPosition */ 101);
 /* harmony import */ var _Company_GetNextCompanyPosition__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Company_GetNextCompanyPosition__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Company/GetJobRequirementText */ 93);
 /* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_6__);
@@ -184,7 +184,8 @@
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Corporation/Corporation */ 60);
-/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./CreateProgram */ 24);
+/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Programs/Programs */ 24);
+/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _Crimes__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Crimes */ 38);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./engine */ 8);
 /* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Faction/Faction */ 56);
@@ -431,7 +432,7 @@ PlayerObject.prototype.init = function() {
     this.currentServer = t_homeComp.ip;
     Object(_Server__WEBPACK_IMPORTED_MODULE_20__[/* AddToAllServers */ "a"])(t_homeComp);
 
-    this.getHomeComputer().programs.push(_CreateProgram__WEBPACK_IMPORTED_MODULE_11__[/* Programs */ "a"].NukeProgram.name);
+    this.getHomeComputer().programs.push(_Programs_Programs__WEBPACK_IMPORTED_MODULE_11__["Programs"].NukeProgram.name);
 }
 
 PlayerObject.prototype.prestigeAugmentation = function() {
@@ -3306,7 +3307,7 @@ exports.createElement = createElement;
   !*** ./utils/StringHelperFunctions.ts ***!
   \****************************************/
 /*! no static exports found */
-/*! exports used: containsAllStrings, convertTimeMsToTimeElapsedString, formatNumber, generateRandomString, isString, longestCommonStart, replaceAt */
+/*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3426,20 +3427,20 @@ exports.generateRandomString = generateRandomString;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const numeral = __webpack_require__(/*! numeral */ 80);
-__webpack_require__(/*! numeral/locales/bg */ 279);
-__webpack_require__(/*! numeral/locales/cs */ 278);
-__webpack_require__(/*! numeral/locales/da-dk */ 277);
-__webpack_require__(/*! numeral/locales/de */ 276);
-__webpack_require__(/*! numeral/locales/en-au */ 275);
-__webpack_require__(/*! numeral/locales/en-gb */ 274);
-__webpack_require__(/*! numeral/locales/es */ 273);
-__webpack_require__(/*! numeral/locales/fr */ 272);
-__webpack_require__(/*! numeral/locales/hu */ 271);
-__webpack_require__(/*! numeral/locales/it */ 270);
-__webpack_require__(/*! numeral/locales/lv */ 269);
-__webpack_require__(/*! numeral/locales/no */ 268);
-__webpack_require__(/*! numeral/locales/pl */ 267);
-__webpack_require__(/*! numeral/locales/ru */ 266);
+__webpack_require__(/*! numeral/locales/bg */ 284);
+__webpack_require__(/*! numeral/locales/cs */ 283);
+__webpack_require__(/*! numeral/locales/da-dk */ 282);
+__webpack_require__(/*! numeral/locales/de */ 281);
+__webpack_require__(/*! numeral/locales/en-au */ 280);
+__webpack_require__(/*! numeral/locales/en-gb */ 279);
+__webpack_require__(/*! numeral/locales/es */ 278);
+__webpack_require__(/*! numeral/locales/fr */ 277);
+__webpack_require__(/*! numeral/locales/hu */ 276);
+__webpack_require__(/*! numeral/locales/it */ 275);
+__webpack_require__(/*! numeral/locales/lv */ 274);
+__webpack_require__(/*! numeral/locales/no */ 273);
+__webpack_require__(/*! numeral/locales/pl */ 272);
+__webpack_require__(/*! numeral/locales/ru */ 271);
 /* eslint-disable class-methods-use-this */
 class NumeralFormatter {
     constructor() {
@@ -3583,7 +3584,7 @@ exports.Locations = {
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _NetscriptEnvironment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./NetscriptEnvironment */ 115);
+/* harmony import */ var _NetscriptEnvironment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./NetscriptEnvironment */ 116);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptWorker */ 25);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Server */ 11);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Settings */ 19);
@@ -3611,7 +3612,7 @@ exports.Locations = {
 
 
 
-var Promise = __webpack_require__(/*! bluebird */ 251);
+var Promise = __webpack_require__(/*! bluebird */ 256);
 
 Promise.config({
     warnings: false,
@@ -4587,20 +4588,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 44);
-/* harmony import */ var _utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/uiHelpers/removeLoadingScreen */ 120);
+/* harmony import */ var _utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/uiHelpers/removeLoadingScreen */ 122);
 /* harmony import */ var _utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/LogBox */ 78);
+/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/LogBox */ 79);
 /* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./ActiveScriptsUI */ 68);
 /* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Augmentations */ 21);
 /* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./BitNode */ 59);
 /* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Bladeburner */ 31);
-/* harmony import */ var _CharacterOverview__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./CharacterOverview */ 129);
-/* harmony import */ var _CinematicText__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./CinematicText */ 99);
-/* harmony import */ var _CodingContractGenerator__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./CodingContractGenerator */ 98);
+/* harmony import */ var _CharacterOverview__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./CharacterOverview */ 131);
+/* harmony import */ var _CinematicText__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./CinematicText */ 100);
+/* harmony import */ var _CodingContractGenerator__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./CodingContractGenerator */ 99);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Company/CompanyPositions */ 28);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_18__);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Company/Companies */ 18);
@@ -4608,73 +4609,78 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Corporation/Corporation */ 60);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./CreateProgram */ 24);
-/* harmony import */ var _DevMenu__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./DevMenu */ 117);
-/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./Faction/Factions */ 14);
-/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_24__);
-/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 46);
-/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./Fconf */ 47);
-/* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./Location */ 91);
-/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./Locations */ 5);
-/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_28__);
-/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./HacknetNode */ 67);
-/* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./InteractiveTutorial */ 34);
-/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./Literature */ 82);
-/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./Message */ 41);
-/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./Missions */ 55);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
-/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./NetscriptWorker */ 25);
-/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./Prestige */ 86);
-/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./RedPill */ 58);
-/* harmony import */ var _SaveObject__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./SaveObject */ 74);
-/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ./Script */ 30);
-/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ./Settings */ 19);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_42___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_42__);
-/* harmony import */ var _ui_setSettingsLabels__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ./ui/setSettingsLabels */ 128);
-/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! ./SourceFile */ 70);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
-/* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(/*! ./StockMarket */ 22);
-/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(/*! ./Terminal */ 51);
-/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 33);
-/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_48___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_48__);
-/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(/*! ./ui/navigationTracking */ 12);
-/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__);
-/* harmony import */ var normalize_css__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(/*! normalize.css */ 214);
-/* harmony import */ var normalize_css__WEBPACK_IMPORTED_MODULE_50___default = /*#__PURE__*/__webpack_require__.n(normalize_css__WEBPACK_IMPORTED_MODULE_50__);
-/* harmony import */ var _css_styles_scss__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! ../css/styles.scss */ 184);
-/* harmony import */ var _css_styles_scss__WEBPACK_IMPORTED_MODULE_51___default = /*#__PURE__*/__webpack_require__.n(_css_styles_scss__WEBPACK_IMPORTED_MODULE_51__);
-/* harmony import */ var _css_tooltips_scss__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! ../css/tooltips.scss */ 182);
-/* harmony import */ var _css_tooltips_scss__WEBPACK_IMPORTED_MODULE_52___default = /*#__PURE__*/__webpack_require__.n(_css_tooltips_scss__WEBPACK_IMPORTED_MODULE_52__);
-/* harmony import */ var _css_buttons_scss__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(/*! ../css/buttons.scss */ 180);
-/* harmony import */ var _css_buttons_scss__WEBPACK_IMPORTED_MODULE_53___default = /*#__PURE__*/__webpack_require__.n(_css_buttons_scss__WEBPACK_IMPORTED_MODULE_53__);
-/* harmony import */ var _css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(/*! ../css/mainmenu.scss */ 178);
-/* harmony import */ var _css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_54___default = /*#__PURE__*/__webpack_require__.n(_css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_54__);
-/* harmony import */ var _css_characteroverview_scss__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(/*! ../css/characteroverview.scss */ 176);
-/* harmony import */ var _css_characteroverview_scss__WEBPACK_IMPORTED_MODULE_55___default = /*#__PURE__*/__webpack_require__.n(_css_characteroverview_scss__WEBPACK_IMPORTED_MODULE_55__);
-/* harmony import */ var _css_terminal_scss__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(/*! ../css/terminal.scss */ 174);
-/* harmony import */ var _css_terminal_scss__WEBPACK_IMPORTED_MODULE_56___default = /*#__PURE__*/__webpack_require__.n(_css_terminal_scss__WEBPACK_IMPORTED_MODULE_56__);
-/* harmony import */ var _css_menupages_scss__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(/*! ../css/menupages.scss */ 172);
-/* harmony import */ var _css_menupages_scss__WEBPACK_IMPORTED_MODULE_57___default = /*#__PURE__*/__webpack_require__.n(_css_menupages_scss__WEBPACK_IMPORTED_MODULE_57__);
-/* harmony import */ var _css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(/*! ../css/workinprogress.scss */ 170);
-/* harmony import */ var _css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_58___default = /*#__PURE__*/__webpack_require__.n(_css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_58__);
-/* harmony import */ var _css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(/*! ../css/popupboxes.scss */ 168);
-/* harmony import */ var _css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_59___default = /*#__PURE__*/__webpack_require__.n(_css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_59__);
-/* harmony import */ var _css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(/*! ../css/interactivetutorial.scss */ 166);
-/* harmony import */ var _css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_60___default = /*#__PURE__*/__webpack_require__.n(_css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_60__);
-/* harmony import */ var _css_loader_scss__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(/*! ../css/loader.scss */ 164);
-/* harmony import */ var _css_loader_scss__WEBPACK_IMPORTED_MODULE_61___default = /*#__PURE__*/__webpack_require__.n(_css_loader_scss__WEBPACK_IMPORTED_MODULE_61__);
-/* harmony import */ var _css_missions_scss__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(/*! ../css/missions.scss */ 162);
-/* harmony import */ var _css_missions_scss__WEBPACK_IMPORTED_MODULE_62___default = /*#__PURE__*/__webpack_require__.n(_css_missions_scss__WEBPACK_IMPORTED_MODULE_62__);
-/* harmony import */ var _css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_63__ = __webpack_require__(/*! ../css/companymanagement.scss */ 160);
-/* harmony import */ var _css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_63___default = /*#__PURE__*/__webpack_require__.n(_css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_63__);
-/* harmony import */ var _css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_64__ = __webpack_require__(/*! ../css/bladeburner.scss */ 158);
-/* harmony import */ var _css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_64___default = /*#__PURE__*/__webpack_require__.n(_css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_64__);
-/* harmony import */ var _css_gang_scss__WEBPACK_IMPORTED_MODULE_65__ = __webpack_require__(/*! ../css/gang.scss */ 156);
-/* harmony import */ var _css_gang_scss__WEBPACK_IMPORTED_MODULE_65___default = /*#__PURE__*/__webpack_require__.n(_css_gang_scss__WEBPACK_IMPORTED_MODULE_65__);
-/* harmony import */ var _css_treant_css__WEBPACK_IMPORTED_MODULE_66__ = __webpack_require__(/*! ../css/treant.css */ 154);
-/* harmony import */ var _css_treant_css__WEBPACK_IMPORTED_MODULE_66___default = /*#__PURE__*/__webpack_require__.n(_css_treant_css__WEBPACK_IMPORTED_MODULE_66__);
+/* harmony import */ var _DevMenu__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./DevMenu */ 118);
+/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./Faction/Factions */ 14);
+/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_23__);
+/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 46);
+/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./Fconf */ 47);
+/* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./Location */ 91);
+/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./Locations */ 5);
+/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_27__);
+/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./HacknetNode */ 67);
+/* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./InteractiveTutorial */ 34);
+/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./Literature */ 82);
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./Message */ 41);
+/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./Missions */ 55);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
+/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./NetscriptWorker */ 25);
+/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./Player */ 0);
+/* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./Prestige */ 86);
+/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./Programs/Programs */ 24);
+/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_37___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_37__);
+/* harmony import */ var _Programs_ProgramHelpers__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./Programs/ProgramHelpers */ 94);
+/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./RedPill */ 58);
+/* harmony import */ var _SaveObject__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ./SaveObject */ 75);
+/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ./Script */ 30);
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ./Server */ 11);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ./Settings */ 19);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_43___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_43__);
+/* harmony import */ var _ui_setSettingsLabels__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! ./ui/setSettingsLabels */ 130);
+/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(/*! ./SourceFile */ 70);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
+/* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(/*! ./StockMarket */ 22);
+/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(/*! ./Terminal */ 51);
+/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 33);
+/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_49___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_49__);
+/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(/*! ./ui/navigationTracking */ 12);
+/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__);
+/* harmony import */ var normalize_css__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! normalize.css */ 219);
+/* harmony import */ var normalize_css__WEBPACK_IMPORTED_MODULE_51___default = /*#__PURE__*/__webpack_require__.n(normalize_css__WEBPACK_IMPORTED_MODULE_51__);
+/* harmony import */ var _css_styles_scss__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! ../css/styles.scss */ 186);
+/* harmony import */ var _css_styles_scss__WEBPACK_IMPORTED_MODULE_52___default = /*#__PURE__*/__webpack_require__.n(_css_styles_scss__WEBPACK_IMPORTED_MODULE_52__);
+/* harmony import */ var _css_tooltips_scss__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(/*! ../css/tooltips.scss */ 184);
+/* harmony import */ var _css_tooltips_scss__WEBPACK_IMPORTED_MODULE_53___default = /*#__PURE__*/__webpack_require__.n(_css_tooltips_scss__WEBPACK_IMPORTED_MODULE_53__);
+/* harmony import */ var _css_buttons_scss__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(/*! ../css/buttons.scss */ 182);
+/* harmony import */ var _css_buttons_scss__WEBPACK_IMPORTED_MODULE_54___default = /*#__PURE__*/__webpack_require__.n(_css_buttons_scss__WEBPACK_IMPORTED_MODULE_54__);
+/* harmony import */ var _css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(/*! ../css/mainmenu.scss */ 180);
+/* harmony import */ var _css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_55___default = /*#__PURE__*/__webpack_require__.n(_css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_55__);
+/* harmony import */ var _css_characteroverview_scss__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(/*! ../css/characteroverview.scss */ 178);
+/* harmony import */ var _css_characteroverview_scss__WEBPACK_IMPORTED_MODULE_56___default = /*#__PURE__*/__webpack_require__.n(_css_characteroverview_scss__WEBPACK_IMPORTED_MODULE_56__);
+/* harmony import */ var _css_terminal_scss__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(/*! ../css/terminal.scss */ 176);
+/* harmony import */ var _css_terminal_scss__WEBPACK_IMPORTED_MODULE_57___default = /*#__PURE__*/__webpack_require__.n(_css_terminal_scss__WEBPACK_IMPORTED_MODULE_57__);
+/* harmony import */ var _css_menupages_scss__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(/*! ../css/menupages.scss */ 174);
+/* harmony import */ var _css_menupages_scss__WEBPACK_IMPORTED_MODULE_58___default = /*#__PURE__*/__webpack_require__.n(_css_menupages_scss__WEBPACK_IMPORTED_MODULE_58__);
+/* harmony import */ var _css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(/*! ../css/workinprogress.scss */ 172);
+/* harmony import */ var _css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_59___default = /*#__PURE__*/__webpack_require__.n(_css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_59__);
+/* harmony import */ var _css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(/*! ../css/popupboxes.scss */ 170);
+/* harmony import */ var _css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_60___default = /*#__PURE__*/__webpack_require__.n(_css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_60__);
+/* harmony import */ var _css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(/*! ../css/interactivetutorial.scss */ 168);
+/* harmony import */ var _css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_61___default = /*#__PURE__*/__webpack_require__.n(_css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_61__);
+/* harmony import */ var _css_loader_scss__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(/*! ../css/loader.scss */ 166);
+/* harmony import */ var _css_loader_scss__WEBPACK_IMPORTED_MODULE_62___default = /*#__PURE__*/__webpack_require__.n(_css_loader_scss__WEBPACK_IMPORTED_MODULE_62__);
+/* harmony import */ var _css_missions_scss__WEBPACK_IMPORTED_MODULE_63__ = __webpack_require__(/*! ../css/missions.scss */ 164);
+/* harmony import */ var _css_missions_scss__WEBPACK_IMPORTED_MODULE_63___default = /*#__PURE__*/__webpack_require__.n(_css_missions_scss__WEBPACK_IMPORTED_MODULE_63__);
+/* harmony import */ var _css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_64__ = __webpack_require__(/*! ../css/companymanagement.scss */ 162);
+/* harmony import */ var _css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_64___default = /*#__PURE__*/__webpack_require__.n(_css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_64__);
+/* harmony import */ var _css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_65__ = __webpack_require__(/*! ../css/bladeburner.scss */ 160);
+/* harmony import */ var _css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_65___default = /*#__PURE__*/__webpack_require__.n(_css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_65__);
+/* harmony import */ var _css_gang_scss__WEBPACK_IMPORTED_MODULE_66__ = __webpack_require__(/*! ../css/gang.scss */ 158);
+/* harmony import */ var _css_gang_scss__WEBPACK_IMPORTED_MODULE_66___default = /*#__PURE__*/__webpack_require__.n(_css_gang_scss__WEBPACK_IMPORTED_MODULE_66__);
+/* harmony import */ var _css_treant_css__WEBPACK_IMPORTED_MODULE_67__ = __webpack_require__(/*! ../css/treant.css */ 156);
+/* harmony import */ var _css_treant_css__WEBPACK_IMPORTED_MODULE_67___default = /*#__PURE__*/__webpack_require__.n(_css_treant_css__WEBPACK_IMPORTED_MODULE_67__);
+
+
+
 
 
 
@@ -4764,52 +4770,52 @@ __webpack_require__.r(__webpack_exports__);
  *  Alt-o - Options
  */
 $(document).keydown(function(e) {
-    if (_Settings__WEBPACK_IMPORTED_MODULE_42__["Settings"].DisableHotkeys === true) {return;}
-    if (!_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].isWorking && !_RedPill__WEBPACK_IMPORTED_MODULE_38__[/* redPillFlag */ "b"] && !_Missions__WEBPACK_IMPORTED_MODULE_33__[/* inMission */ "c"] && !_CinematicText__WEBPACK_IMPORTED_MODULE_16__[/* cinematicTextFlag */ "a"]) {
+    if (_Settings__WEBPACK_IMPORTED_MODULE_43__["Settings"].DisableHotkeys === true) {return;}
+    if (!_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].isWorking && !_RedPill__WEBPACK_IMPORTED_MODULE_39__[/* redPillFlag */ "b"] && !_Missions__WEBPACK_IMPORTED_MODULE_32__[/* inMission */ "c"] && !_CinematicText__WEBPACK_IMPORTED_MODULE_16__[/* cinematicTextFlag */ "a"]) {
         if (e.keyCode == 84 && e.altKey) {
             e.preventDefault();
             Engine.loadTerminalContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_48__["KEY"].C && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_49__["KEY"].C && e.altKey) {
             e.preventDefault();
             Engine.loadCharacterContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_48__["KEY"].E && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_49__["KEY"].E && e.altKey) {
             e.preventDefault();
             Engine.loadScriptEditorContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_48__["KEY"].S && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_49__["KEY"].S && e.altKey) {
             e.preventDefault();
             Engine.loadActiveScriptsContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_48__["KEY"].H && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_49__["KEY"].H && e.altKey) {
             e.preventDefault();
             Engine.loadHacknetNodesContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_48__["KEY"].W && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_49__["KEY"].W && e.altKey) {
             e.preventDefault();
             Engine.loadWorldContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_48__["KEY"].J && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_49__["KEY"].J && e.altKey) {
             e.preventDefault();
             Engine.loadJobContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_48__["KEY"].R && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_49__["KEY"].R && e.altKey) {
             e.preventDefault();
             Engine.loadTravelContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_48__["KEY"].P && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_49__["KEY"].P && e.altKey) {
             e.preventDefault();
             Engine.loadCreateProgramContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_48__["KEY"].F && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_49__["KEY"].F && e.altKey) {
             //Overriden by Fconf
-            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["Page"].Terminal) && _Fconf__WEBPACK_IMPORTED_MODULE_26__[/* FconfSettings */ "a"].ENABLE_BASH_HOTKEYS) {
+            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].Terminal) && _Fconf__WEBPACK_IMPORTED_MODULE_25__[/* FconfSettings */ "a"].ENABLE_BASH_HOTKEYS) {
                 return;
             }
             e.preventDefault();
             Engine.loadFactionsContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_48__["KEY"].A && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_49__["KEY"].A && e.altKey) {
             e.preventDefault();
             Engine.loadAugmentationsContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_48__["KEY"].U && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_49__["KEY"].U && e.altKey) {
             e.preventDefault();
             Engine.loadTutorialContent();
         }
     }
 
-    if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_48__["KEY"].O && e.altKey) {
+    if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_49__["KEY"].O && e.altKey) {
         e.preventDefault();
         Object(_utils_GameOptions__WEBPACK_IMPORTED_MODULE_1__[/* gameOptionsBoxOpen */ "b"])();
     }
@@ -4898,7 +4904,7 @@ const Engine = {
     loadTerminalContent: function() {
         Engine.hideAllContent();
         Engine.Display.terminalContent.style.display = "block";
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["Page"].Terminal);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].Terminal);
         document.getElementById("terminal-menu-link").classList.add("active");
     },
 
@@ -4906,7 +4912,7 @@ const Engine = {
         Engine.hideAllContent();
         Engine.Display.characterContent.style.display = "block";
         Engine.displayCharacterInfo();
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["Page"].CharacterInfo);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].CharacterInfo);
         document.getElementById("stats-menu-link").classList.add("active");
     },
 
@@ -4919,8 +4925,8 @@ const Engine = {
             editor.setValue(code);
         }
         editor.focus();
-        Object(_Script__WEBPACK_IMPORTED_MODULE_40__[/* updateScriptEditorContent */ "h"])();
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["Page"].ScriptEditor);
+        Object(_Script__WEBPACK_IMPORTED_MODULE_41__[/* updateScriptEditorContent */ "h"])();
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].ScriptEditor);
         document.getElementById("create-script-menu-link").classList.add("active");
     },
 
@@ -4928,15 +4934,15 @@ const Engine = {
         Engine.hideAllContent();
         Engine.Display.activeScriptsContent.style.display = "block";
         Object(_ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_11__[/* updateActiveScriptsItems */ "c"])();
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["Page"].ActiveScripts);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].ActiveScripts);
         document.getElementById("active-scripts-menu-link").classList.add("active");
     },
 
     loadHacknetNodesContent: function() {
         Engine.hideAllContent();
         Engine.Display.hacknetNodesContent.style.display = "block";
-        Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_29__[/* displayHacknetNodesContent */ "b"])();
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["Page"].HacknetNodes);
+        Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_28__[/* displayHacknetNodesContent */ "b"])();
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].HacknetNodes);
         document.getElementById("hacknet-nodes-menu-link").classList.add("active");
     },
 
@@ -4944,15 +4950,15 @@ const Engine = {
         Engine.hideAllContent();
         Engine.Display.worldContent.style.display = "block";
         Engine.displayWorldInfo();
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["Page"].World);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].World);
         document.getElementById("city-menu-link").classList.add("active");
     },
 
     loadCreateProgramContent: function() {
         Engine.hideAllContent();
         Engine.Display.createProgramContent.style.display = "block";
-        Object(_CreateProgram__WEBPACK_IMPORTED_MODULE_22__[/* displayCreateProgramContent */ "b"])();
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["Page"].CreateProgram);
+        Object(_Programs_ProgramHelpers__WEBPACK_IMPORTED_MODULE_38__[/* displayCreateProgramContent */ "a"])();
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].CreateProgram);
         document.getElementById("create-program-menu-link").classList.add("active");
     },
 
@@ -4960,21 +4966,21 @@ const Engine = {
         Engine.hideAllContent();
         Engine.Display.factionsContent.style.display = "block";
         Engine.displayFactionsInfo();
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["Page"].Factions);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].Factions);
         document.getElementById("factions-menu-link").classList.add("active");
     },
 
     loadFactionContent: function() {
         Engine.hideAllContent();
         Engine.Display.factionContent.style.display = "block";
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["Page"].Faction);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].Faction);
     },
 
     loadAugmentationsContent: function() {
         Engine.hideAllContent();
         Engine.Display.augmentationsContent.style.display = "block";
         Object(_Augmentations__WEBPACK_IMPORTED_MODULE_12__[/* displayAugmentationsContent */ "g"])();
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["Page"].Augmentations);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].Augmentations);
         document.getElementById("augmentations-menu-link").classList.add("active");
     },
 
@@ -4982,14 +4988,14 @@ const Engine = {
         Engine.hideAllContent();
         Engine.Display.tutorialContent.style.display = "block";
         Engine.displayTutorialContent();
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["Page"].Tutorial);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].Tutorial);
         document.getElementById("tutorial-menu-link").classList.add("active");
     },
 
     loadDevMenuContent: function() {
         Engine.hideAllContent();
-        Object(_DevMenu__WEBPACK_IMPORTED_MODULE_23__[/* createDevMenu */ "b"])();
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["Page"].DevMenu);
+        Object(_DevMenu__WEBPACK_IMPORTED_MODULE_22__[/* createDevMenu */ "b"])();
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].DevMenu);
         document.getElementById("dev-menu-link").classList.add("active");
     },
 
@@ -4997,34 +5003,34 @@ const Engine = {
         Engine.hideAllContent();
         Engine.Display.locationContent.style.display = "block";
         try {
-            Object(_Location__WEBPACK_IMPORTED_MODULE_27__[/* displayLocationContent */ "a"])();
+            Object(_Location__WEBPACK_IMPORTED_MODULE_26__[/* displayLocationContent */ "a"])();
         } catch(e) {
             Object(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_6__[/* exceptionAlert */ "a"])(e);
             console.error(e);
         }
 
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["Page"].Location);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].Location);
     },
 
     loadTravelContent: function() {
-        switch(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].city) {
-            case _Locations__WEBPACK_IMPORTED_MODULE_28__["Locations"].Aevum:
-                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_28__["Locations"].AevumTravelAgency;
+        switch(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].city) {
+            case _Locations__WEBPACK_IMPORTED_MODULE_27__["Locations"].Aevum:
+                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_27__["Locations"].AevumTravelAgency;
                 break;
-            case _Locations__WEBPACK_IMPORTED_MODULE_28__["Locations"].Chongqing:
-                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_28__["Locations"].ChongqingTravelAgency;
+            case _Locations__WEBPACK_IMPORTED_MODULE_27__["Locations"].Chongqing:
+                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_27__["Locations"].ChongqingTravelAgency;
                 break;
-            case _Locations__WEBPACK_IMPORTED_MODULE_28__["Locations"].Sector12:
-                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_28__["Locations"].Sector12TravelAgency;
+            case _Locations__WEBPACK_IMPORTED_MODULE_27__["Locations"].Sector12:
+                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_27__["Locations"].Sector12TravelAgency;
                 break;
-            case _Locations__WEBPACK_IMPORTED_MODULE_28__["Locations"].NewTokyo:
-                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_28__["Locations"].NewTokyoTravelAgency;
+            case _Locations__WEBPACK_IMPORTED_MODULE_27__["Locations"].NewTokyo:
+                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_27__["Locations"].NewTokyoTravelAgency;
                 break;
-            case _Locations__WEBPACK_IMPORTED_MODULE_28__["Locations"].Ishima:
-                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_28__["Locations"].IshimaTravelAgency;
+            case _Locations__WEBPACK_IMPORTED_MODULE_27__["Locations"].Ishima:
+                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_27__["Locations"].IshimaTravelAgency;
                 break;
-            case _Locations__WEBPACK_IMPORTED_MODULE_28__["Locations"].Volhaven:
-                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_28__["Locations"].VolhavenTravelAgency;
+            case _Locations__WEBPACK_IMPORTED_MODULE_27__["Locations"].Volhaven:
+                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_27__["Locations"].VolhavenTravelAgency;
                 break;
             default:
                 Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_0__["dialogBoxCreate"])("ERROR: Invalid city. This is a bug please contact game dev");
@@ -5034,12 +5040,12 @@ const Engine = {
     },
 
     loadJobContent: function() {
-        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].companyName == "") {
+        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].companyName == "") {
             Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_0__["dialogBoxCreate"])("You do not currently have a job! You can visit various companies " +
                             "in the city and try to find a job.");
             return;
         }
-        _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].location = _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].companyName;
+        _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].location = _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].companyName;
         Engine.loadLocationContent();
     },
 
@@ -5049,7 +5055,7 @@ const Engine = {
         //mainMenu.style.visibility = "hidden";
         mainMenu.style.visibility = "hidden";
         Engine.Display.workInProgressContent.style.display = "block";
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["Page"].WorkInProgress);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].WorkInProgress);
     },
 
     loadRedPillContent: function() {
@@ -5057,7 +5063,7 @@ const Engine = {
         var mainMenu = document.getElementById("mainmenu-container");
         mainMenu.style.visibility = "hidden";
         Engine.Display.redPillContent.style.display = "block";
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["Page"].RedPill);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].RedPill);
     },
 
     loadCinematicTextContent: function() {
@@ -5065,30 +5071,30 @@ const Engine = {
         var mainMenu = document.getElementById("mainmenu-container");
         mainMenu.style.visibility = "hidden";
         Engine.Display.cinematicTextContent.style.display = "block";
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["Page"].CinematicText);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].CinematicText);
     },
 
     loadInfiltrationContent: function() {
         Engine.hideAllContent();
         Engine.Display.infiltrationContent.style.display = "block";
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["Page"].Infiltration);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].Infiltration);
     },
 
     loadStockMarketContent: function() {
         Engine.hideAllContent();
         Engine.Display.stockMarketContent.style.display = "block";
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["Page"].StockMarket);
-        Object(_StockMarket__WEBPACK_IMPORTED_MODULE_46__[/* displayStockMarketContent */ "g"])();
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].StockMarket);
+        Object(_StockMarket__WEBPACK_IMPORTED_MODULE_47__[/* displayStockMarketContent */ "g"])();
     },
 
     loadGangContent: function() {
         Engine.hideAllContent();
-        if (document.getElementById("gang-container") || _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].inGang()) {
-            _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].gang.displayGangContent(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"]);
-            _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["Page"].Gang);
+        if (document.getElementById("gang-container") || _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].inGang()) {
+            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].gang.displayGangContent(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"]);
+            _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].Gang);
         } else {
             Engine.loadTerminalContent();
-            _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["Page"].Terminal);
+            _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].Terminal);
         }
     },
 
@@ -5097,24 +5103,24 @@ const Engine = {
         document.getElementById("mainmenu-container").style.visibility = "hidden";
         document.getElementById("character-overview-wrapper").style.visibility = "hidden";
         Engine.Display.missionContent.style.display = "block";
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["Page"].Mission);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].Mission);
     },
 
     loadCorporationContent: function() {
-        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"]) {
+        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"]) {
             Engine.hideAllContent();
             document.getElementById("character-overview-wrapper").style.visibility = "hidden";
-            _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation.createUI();
-            _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["Page"].Corporation);
+            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation.createUI();
+            _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].Corporation);
         }
     },
 
     loadBladeburnerContent: function() {
-        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"]) {
+        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"]) {
             try {
                 Engine.hideAllContent();
-                _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["Page"].Bladeburner);
-                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bladeburner.createContent();
+                _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].Bladeburner);
+                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bladeburner.createContent();
             } catch(e) {
                 Object(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_6__[/* exceptionAlert */ "a"])(e);
             }
@@ -5146,15 +5152,15 @@ const Engine = {
             document.getElementById("gang-container").style.display = "none";
         }
 
-        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].inGang()) {
-            _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].gang.clearUI();
+        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].inGang()) {
+            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].gang.clearUI();
         }
-        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"]) {
-            _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation.clearUI();
+        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"]) {
+            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation.clearUI();
         }
 
-        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"]) {
-            _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bladeburner.clearContent();
+        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"]) {
+            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bladeburner.clearContent();
         }
 
         //Location lists
@@ -5185,7 +5191,7 @@ const Engine = {
         document.getElementById("gang-menu-link").classList.remove("active");
 
         // Close dev menu
-        Object(_DevMenu__WEBPACK_IMPORTED_MODULE_23__[/* closeDevMenu */ "a"])();
+        Object(_DevMenu__WEBPACK_IMPORTED_MODULE_22__[/* closeDevMenu */ "a"])();
     },
 
     displayCharacterOverviewInfo: function() {
@@ -5193,7 +5199,7 @@ const Engine = {
 
         const save = document.getElementById("character-overview-save-button");
         const flashClass = "flashing-button";
-        if(!_Settings__WEBPACK_IMPORTED_MODULE_42__["Settings"].AutosaveInterval) {
+        if(!_Settings__WEBPACK_IMPORTED_MODULE_43__["Settings"].AutosaveInterval) {
             save.classList.add(flashClass);
         } else {
             save.classList.remove(flashClass);
@@ -5205,84 +5211,84 @@ const Engine = {
         Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_3__["removeChildrenFromElement"])(Engine.Display.characterInfo);
 
         var companyPosition = "";
-        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].companyPosition !== "") {
-            companyPosition = _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].companyPosition;
+        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].companyPosition !== "") {
+            companyPosition = _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].companyPosition;
         }
 
         var intText = "";
-        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].intelligence > 0) {
-            intText = 'Intelligence:  ' + (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].intelligence).toLocaleString() + '<br>';
+        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].intelligence > 0) {
+            intText = 'Intelligence:  ' + (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].intelligence).toLocaleString() + '<br>';
         }
 
         let bitNodeTimeText = "";
-        if(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].sourceFiles.length > 0) {
-            bitNodeTimeText = 'Time played since last Bitnode destroyed: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["convertTimeMsToTimeElapsedString"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].playtimeSinceLastBitnode) + '<br>';
+        if(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].sourceFiles.length > 0) {
+            bitNodeTimeText = 'Time played since last Bitnode destroyed: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["convertTimeMsToTimeElapsedString"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastBitnode) + '<br>';
         }
 
         Engine.Display.characterInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("pre", {
             innerHTML:
             '<b>General</b><br><br>' +
-            'Current City: ' + _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].city + '<br><br>' +
-            'Employer: ' + _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].companyName + '<br>' +
+            'Current City: ' + _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].city + '<br><br>' +
+            'Employer: ' + _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].companyName + '<br>' +
             'Job Title: ' + companyPosition + '<br><br>' +
-            'Money: $' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].money.toNumber(), 2) + '<br><br><br>' +
+            'Money: $' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].money.toNumber(), 2) + '<br><br><br>' +
             '<b>Stats</b><br><br>' +
-            'Hacking Level: ' + (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hacking_skill).toLocaleString() +
-                            ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hacking_exp, '(0.000a)') + ' experience)<br>' +
-            'Strength:      ' + (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].strength).toLocaleString() +
-                       ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].strength_exp, '(0.000a)') + ' experience)<br>' +
-            'Defense:       ' + (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].defense).toLocaleString() +
-                      ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].defense_exp, '(0.000a)') + ' experience)<br>' +
-            'Dexterity:     ' + (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].dexterity).toLocaleString() +
-                       ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].dexterity_exp, '(0.000a)') + ' experience)<br>' +
-            'Agility:       ' + (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].agility).toLocaleString() +
-                      ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].agility_exp, '(0.000a)') + ' experience)<br>' +
-            'Charisma:      ' + (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].charisma).toLocaleString() +
-                       ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].charisma_exp, '(0.000a)') + ' experience)<br>' +
+            'Hacking Level: ' + (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacking_skill).toLocaleString() +
+                            ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacking_exp, '(0.000a)') + ' experience)<br>' +
+            'Strength:      ' + (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].strength).toLocaleString() +
+                       ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].strength_exp, '(0.000a)') + ' experience)<br>' +
+            'Defense:       ' + (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].defense).toLocaleString() +
+                      ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].defense_exp, '(0.000a)') + ' experience)<br>' +
+            'Dexterity:     ' + (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].dexterity).toLocaleString() +
+                       ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].dexterity_exp, '(0.000a)') + ' experience)<br>' +
+            'Agility:       ' + (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].agility).toLocaleString() +
+                      ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].agility_exp, '(0.000a)') + ' experience)<br>' +
+            'Charisma:      ' + (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].charisma).toLocaleString() +
+                       ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].charisma_exp, '(0.000a)') + ' experience)<br>' +
             intText + '<br><br>' +
             '<b>Multipliers</b><br><br>' +
-            'Hacking Chance multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hacking_chance_mult * 100, 2) + '%<br>' +
-            'Hacking Speed multiplier:  ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hacking_speed_mult * 100, 2) + '%<br>' +
-            'Hacking Money multiplier:  ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hacking_money_mult * 100, 2) + '%<br>' +
-            'Hacking Growth multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hacking_grow_mult * 100, 2) + '%<br><br>' +
-            'Hacking Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hacking_mult * 100, 2) + '%<br>' +
-            'Hacking Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hacking_exp_mult * 100, 2) + '%<br><br>' +
-            'Strength Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].strength_mult * 100, 2) + '%<br>' +
-            'Strength Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].strength_exp_mult * 100, 2) + '%<br><br>' +
-            'Defense Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].defense_mult * 100, 2) + '%<br>' +
-            'Defense Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].defense_exp_mult * 100, 2) + '%<br><br>' +
-            'Dexterity Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].dexterity_mult * 100, 2) + '%<br>' +
-            'Dexterity Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].dexterity_exp_mult * 100, 2) + '%<br><br>' +
-            'Agility Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].agility_mult * 100, 2) + '%<br>' +
-            'Agility Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].agility_exp_mult * 100, 2) + '%<br><br>' +
-            'Charisma Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].charisma_mult * 100, 2) + '%<br>' +
-            'Charisma Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].charisma_exp_mult * 100, 2) + '%<br><br>' +
-            'Hacknet Node production multiplier:         ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hacknet_node_money_mult * 100, 2) + '%<br>' +
-            'Hacknet Node purchase cost multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hacknet_node_purchase_cost_mult * 100, 2) + '%<br>' +
-            'Hacknet Node RAM upgrade cost multiplier:   ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hacknet_node_ram_cost_mult * 100, 2) + '%<br>' +
-            'Hacknet Node Core purchase cost multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hacknet_node_core_cost_mult * 100, 2) + '%<br>' +
-            'Hacknet Node level upgrade cost multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hacknet_node_level_cost_mult * 100, 2) + '%<br><br>' +
-            'Company reputation gain multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].company_rep_mult * 100, 2) + '%<br>' +
-            'Faction reputation gain multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].faction_rep_mult * 100, 2) + '%<br>' +
-            'Salary multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].work_money_mult * 100, 2) + '%<br>' +
-            'Crime success multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].crime_success_mult * 100, 2) + '%<br>' +
-            'Crime money multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].crime_money_mult * 100, 2) + '%<br><br><br>' +
+            'Hacking Chance multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacking_chance_mult * 100, 2) + '%<br>' +
+            'Hacking Speed multiplier:  ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacking_speed_mult * 100, 2) + '%<br>' +
+            'Hacking Money multiplier:  ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacking_money_mult * 100, 2) + '%<br>' +
+            'Hacking Growth multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacking_grow_mult * 100, 2) + '%<br><br>' +
+            'Hacking Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacking_mult * 100, 2) + '%<br>' +
+            'Hacking Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacking_exp_mult * 100, 2) + '%<br><br>' +
+            'Strength Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].strength_mult * 100, 2) + '%<br>' +
+            'Strength Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].strength_exp_mult * 100, 2) + '%<br><br>' +
+            'Defense Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].defense_mult * 100, 2) + '%<br>' +
+            'Defense Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].defense_exp_mult * 100, 2) + '%<br><br>' +
+            'Dexterity Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].dexterity_mult * 100, 2) + '%<br>' +
+            'Dexterity Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].dexterity_exp_mult * 100, 2) + '%<br><br>' +
+            'Agility Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].agility_mult * 100, 2) + '%<br>' +
+            'Agility Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].agility_exp_mult * 100, 2) + '%<br><br>' +
+            'Charisma Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].charisma_mult * 100, 2) + '%<br>' +
+            'Charisma Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].charisma_exp_mult * 100, 2) + '%<br><br>' +
+            'Hacknet Node production multiplier:         ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacknet_node_money_mult * 100, 2) + '%<br>' +
+            'Hacknet Node purchase cost multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacknet_node_purchase_cost_mult * 100, 2) + '%<br>' +
+            'Hacknet Node RAM upgrade cost multiplier:   ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacknet_node_ram_cost_mult * 100, 2) + '%<br>' +
+            'Hacknet Node Core purchase cost multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacknet_node_core_cost_mult * 100, 2) + '%<br>' +
+            'Hacknet Node level upgrade cost multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacknet_node_level_cost_mult * 100, 2) + '%<br><br>' +
+            'Company reputation gain multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].company_rep_mult * 100, 2) + '%<br>' +
+            'Faction reputation gain multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].faction_rep_mult * 100, 2) + '%<br>' +
+            'Salary multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].work_money_mult * 100, 2) + '%<br>' +
+            'Crime success multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].crime_success_mult * 100, 2) + '%<br>' +
+            'Crime money multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].crime_money_mult * 100, 2) + '%<br><br><br>' +
             '<b>Misc</b><br><br>' +
-            'Servers owned:       ' + _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].purchasedServers.length + '<br>' +
-            'Hacknet Nodes owned: ' + _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hacknetNodes.length + '<br>' +
-            'Augmentations installed: ' + _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].augmentations.length + '<br>' +
-            'Time played since last Augmentation: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["convertTimeMsToTimeElapsedString"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].playtimeSinceLastAug) + '<br>' +
+            'Servers owned:       ' + _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].purchasedServers.length + '<br>' +
+            'Hacknet Nodes owned: ' + _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacknetNodes.length + '<br>' +
+            'Augmentations installed: ' + _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].augmentations.length + '<br>' +
+            'Time played since last Augmentation: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["convertTimeMsToTimeElapsedString"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastAug) + '<br>' +
             bitNodeTimeText +
-            'Time played: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["convertTimeMsToTimeElapsedString"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].totalPlaytime),
+            'Time played: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["convertTimeMsToTimeElapsedString"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].totalPlaytime),
         }));
 
-        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].sourceFiles.length !== 0) {
-            var index = "BitNode" + _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bitNodeN;
+        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].sourceFiles.length !== 0) {
+            var index = "BitNode" + _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bitNodeN;
 
             Engine.Display.characterInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("p", {
                 width:"60%",
                 innerHTML:
-                    "<br>Current BitNode: " + _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bitNodeN + " (" + _BitNode__WEBPACK_IMPORTED_MODULE_13__[/* BitNodes */ "a"][index].name + ")<br><br>",
+                    "<br>Current BitNode: " + _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bitNodeN + " (" + _BitNode__WEBPACK_IMPORTED_MODULE_13__[/* BitNodes */ "a"][index].name + ")<br><br>",
             }));
 
             Engine.Display.characterInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("p", {
@@ -5308,32 +5314,32 @@ const Engine = {
         Engine.ishimaLocationsList.style.display = "none";
         Engine.volhavenLocationsList.style.display = "none";
 
-        document.getElementById("world-city-name").innerHTML = _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].city;
+        document.getElementById("world-city-name").innerHTML = _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].city;
         var cityDesc = document.getElementById("world-city-desc"); //TODO
-        switch(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].city) {
-            case _Locations__WEBPACK_IMPORTED_MODULE_28__["Locations"].Aevum:
+        switch(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].city) {
+            case _Locations__WEBPACK_IMPORTED_MODULE_27__["Locations"].Aevum:
                 Engine.aevumLocationsList.style.display = "inline";
                 break;
-            case _Locations__WEBPACK_IMPORTED_MODULE_28__["Locations"].Chongqing:
+            case _Locations__WEBPACK_IMPORTED_MODULE_27__["Locations"].Chongqing:
                 Engine.chongqingLocationsList.style.display = "inline";
                 break;
-            case _Locations__WEBPACK_IMPORTED_MODULE_28__["Locations"].Sector12:
+            case _Locations__WEBPACK_IMPORTED_MODULE_27__["Locations"].Sector12:
                 Engine.sector12LocationsList.style.display = "inline";
 
                 //City hall only in BitNode-3/with Source-File 3
-                if ((_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bitNodeN === 3 || _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_34__[/* hasCorporationSF */ "e"]) && _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bitNodeN !== 8)  {
+                if ((_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bitNodeN === 3 || _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_33__[/* hasCorporationSF */ "e"]) && _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bitNodeN !== 8)  {
                     document.getElementById("sector12-cityhall-li").style.display = "block";
                 } else {
                     document.getElementById("sector12-cityhall-li").style.display = "none";
                 }
                 break;
-            case _Locations__WEBPACK_IMPORTED_MODULE_28__["Locations"].NewTokyo:
+            case _Locations__WEBPACK_IMPORTED_MODULE_27__["Locations"].NewTokyo:
                 Engine.newTokyoLocationsList.style.display = "inline";
                 break;
-            case _Locations__WEBPACK_IMPORTED_MODULE_28__["Locations"].Ishima:
+            case _Locations__WEBPACK_IMPORTED_MODULE_27__["Locations"].Ishima:
                 Engine.ishimaLocationsList.style.display = "inline";
                 break;
-            case _Locations__WEBPACK_IMPORTED_MODULE_28__["Locations"].Volhaven:
+            case _Locations__WEBPACK_IMPORTED_MODULE_27__["Locations"].Volhaven:
                 Engine.volhavenLocationsList.style.display = "inline";
                 break;
             default:
@@ -5352,17 +5358,17 @@ const Engine = {
         li.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("a", {
             innerText:"World Stock Exchange", class:"a-link-button",
             clickListener:()=>{
-                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_28__["Locations"].WorldStockExchange;
+                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_27__["Locations"].WorldStockExchange;
                 Engine.loadStockMarketContent();
                 return false;
             }
         }));
         genericLocationsList.appendChild(li);
 
-        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"] && document.getElementById("location-corporation-button") == null) {
+        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"] && document.getElementById("location-corporation-button") == null) {
             var li = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("li");
             li.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("a", {
-                innerText:_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation.name, id:"location-corporation-button",
+                innerText:_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation.name, id:"location-corporation-button",
                 class:"a-link-button",
                 clickListener:()=>{
                     Engine.loadCorporationContent();
@@ -5372,7 +5378,7 @@ const Engine = {
             genericLocationsList.appendChild(li);
         }
 
-        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"]) {
+        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"]) {
             var li = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("li");
             li.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("a", {
                 innerText:"Bladeburner Headquarters", class:"a-link-button",
@@ -5399,16 +5405,16 @@ const Engine = {
         Engine.Display.factionsContent.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("br"));
 
         //Add a button for each faction you are a member of
-        for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].factions.length; ++i) {
+        for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].factions.length; ++i) {
             (function () {
-                var factionName = _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].factions[i];
+                var factionName = _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].factions[i];
 
                 factionsList.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("a", {
                     class:"a-link-button", innerText:factionName, padding:"4px", margin:"4px",
                     display:"inline-block",
                     clickListener:()=>{
                         Engine.loadFactionContent();
-                        Object(_Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_25__[/* displayFactionContent */ "a"])(factionName);
+                        Object(_Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_24__[/* displayFactionContent */ "a"])(factionName);
                         return false;
                     }
                 }));
@@ -5431,9 +5437,9 @@ const Engine = {
         var invitationsList = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("ul");
 
         //Add a button to accept for each faction you have invitiations for
-        for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].factionInvitations.length; ++i) {
+        for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].factionInvitations.length; ++i) {
             (function () {
-                var factionName = _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].factionInvitations[i];
+                var factionName = _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].factionInvitations[i];
 
                 var item = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("li", {padding:"6px", margin:"6px"});
                 item.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("p", {
@@ -5443,10 +5449,10 @@ const Engine = {
                     innerText:"Accept Faction Invitation",
                     class:"a-link-button", display:"inline", margin:"4px", padding:"4px",
                     clickListener:()=>{
-                        Object(_Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_25__[/* joinFaction */ "c"])(_Faction_Factions__WEBPACK_IMPORTED_MODULE_24__["Factions"][factionName]);
-                        for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].factionInvitations.length; ++i) {
-                            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].factionInvitations[i] == factionName || _Faction_Factions__WEBPACK_IMPORTED_MODULE_24__["Factions"][_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].factionInvitations[i]].isBanned) {
-                                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].factionInvitations.splice(i, 1);
+                        Object(_Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_24__[/* joinFaction */ "c"])(_Faction_Factions__WEBPACK_IMPORTED_MODULE_23__["Factions"][factionName]);
+                        for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].factionInvitations.length; ++i) {
+                            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].factionInvitations[i] == factionName || _Faction_Factions__WEBPACK_IMPORTED_MODULE_23__["Factions"][_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].factionInvitations[i]].isBanned) {
+                                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].factionInvitations.splice(i, 1);
                                 i--;
                             }
                         }
@@ -5509,7 +5515,7 @@ const Engine = {
         if (diff > 0) {
             //Update the game engine by the calculated number of cycles
             Engine._lastUpdate = _thisUpdate - offset;
-            _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].lastUpdate = _thisUpdate - offset;
+            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].lastUpdate = _thisUpdate - offset;
             Engine.updateGame(diff);
         }
 
@@ -5518,65 +5524,65 @@ const Engine = {
 
     updateGame: function(numCycles = 1) {
         var time = numCycles * Engine._idleSpeed;
-        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].totalPlaytime == null) {_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].totalPlaytime = 0;}
-        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].playtimeSinceLastAug == null) {_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].playtimeSinceLastAug = 0;}
-        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].playtimeSinceLastBitnode == null) {_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].playtimeSinceLastBitnode = 0;}
-        _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].totalPlaytime += time;
-        _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].playtimeSinceLastAug += time;
-        _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].playtimeSinceLastBitnode += time;
+        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].totalPlaytime == null) {_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].totalPlaytime = 0;}
+        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastAug == null) {_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastAug = 0;}
+        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastBitnode == null) {_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastBitnode = 0;}
+        _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].totalPlaytime += time;
+        _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastAug += time;
+        _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastBitnode += time;
 
         //Start Manual hack
-        if (_Terminal__WEBPACK_IMPORTED_MODULE_47__[/* Terminal */ "a"].actionStarted === true) {
-            Engine._totalActionTime = _Terminal__WEBPACK_IMPORTED_MODULE_47__[/* Terminal */ "a"].actionTime;
-            Engine._actionTimeLeft = _Terminal__WEBPACK_IMPORTED_MODULE_47__[/* Terminal */ "a"].actionTime;
+        if (_Terminal__WEBPACK_IMPORTED_MODULE_48__[/* Terminal */ "a"].actionStarted === true) {
+            Engine._totalActionTime = _Terminal__WEBPACK_IMPORTED_MODULE_48__[/* Terminal */ "a"].actionTime;
+            Engine._actionTimeLeft = _Terminal__WEBPACK_IMPORTED_MODULE_48__[/* Terminal */ "a"].actionTime;
             Engine._actionInProgress = true;
             Engine._actionProgressBarCount = 1;
             Engine._actionProgressStr = "[                                                  ]";
             Engine._actionTimeStr = "Time left: ";
-            _Terminal__WEBPACK_IMPORTED_MODULE_47__[/* Terminal */ "a"].actionStarted = false;
+            _Terminal__WEBPACK_IMPORTED_MODULE_48__[/* Terminal */ "a"].actionStarted = false;
         }
 
         //Working
-        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].isWorking) {
-            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeFaction) {
-                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].workForFaction(numCycles);
-            } else if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeCreateProgram) {
-                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].createProgramWork(numCycles);
-            } else if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeStudyClass) {
-                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].takeClass(numCycles);
-            } else if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeCrime) {
-                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].commitCrime(numCycles);
-            } else if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeCompanyPartTime) {
-                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].workPartTime(numCycles);
+        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].isWorking) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeFaction) {
+                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workForFaction(numCycles);
+            } else if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeCreateProgram) {
+                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].createProgramWork(numCycles);
+            } else if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeStudyClass) {
+                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].takeClass(numCycles);
+            } else if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeCrime) {
+                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].commitCrime(numCycles);
+            } else if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeCompanyPartTime) {
+                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workPartTime(numCycles);
             } else {
-                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].work(numCycles);
+                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].work(numCycles);
             }
         }
 
         // Update stock prices
-        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hasWseAccount) {
-            Object(_StockMarket__WEBPACK_IMPORTED_MODULE_46__[/* processStockPrices */ "m"])(numCycles);
+        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hasWseAccount) {
+            Object(_StockMarket__WEBPACK_IMPORTED_MODULE_47__[/* processStockPrices */ "m"])(numCycles);
         }
 
         //Gang, if applicable
-        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bitNodeN == 2 && _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].inGang()) {
-            _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].gang.process(numCycles, _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"]);
+        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bitNodeN == 2 && _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].inGang()) {
+            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].gang.process(numCycles, _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"]);
         }
 
         //Mission
-        if (_Missions__WEBPACK_IMPORTED_MODULE_33__[/* inMission */ "c"] && _Missions__WEBPACK_IMPORTED_MODULE_33__[/* currMission */ "b"]) {
-            _Missions__WEBPACK_IMPORTED_MODULE_33__[/* currMission */ "b"].process(numCycles);
+        if (_Missions__WEBPACK_IMPORTED_MODULE_32__[/* inMission */ "c"] && _Missions__WEBPACK_IMPORTED_MODULE_32__[/* currMission */ "b"]) {
+            _Missions__WEBPACK_IMPORTED_MODULE_32__[/* currMission */ "b"].process(numCycles);
         }
 
         //Corporation
-        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"]) {
+        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"]) {
             //Stores cycles in a "buffer". Processed separately using Engine Counters
             //This is to avoid constant DOM redraws when Corporation is catching up
-            _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation.storeCycles(numCycles);
+            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation.storeCycles(numCycles);
         }
 
-        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"]) {
-            _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bladeburner.storeCycles(numCycles);
+        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"]) {
+            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bladeburner.storeCycles(numCycles);
         }
 
         //Counters
@@ -5589,10 +5595,10 @@ const Engine = {
         }
 
         //Update the running time of all active scripts
-        Object(_NetscriptWorker__WEBPACK_IMPORTED_MODULE_35__[/* updateOnlineScriptTimes */ "g"])(numCycles);
+        Object(_NetscriptWorker__WEBPACK_IMPORTED_MODULE_34__[/* updateOnlineScriptTimes */ "g"])(numCycles);
 
         //Hacknet Nodes
-        Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_29__[/* processAllHacknetNodeEarnings */ "d"])(numCycles);
+        Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_28__[/* processAllHacknetNodeEarnings */ "d"])(numCycles);
     },
 
     //Counters for the main event loop. Represent the number of game cycles are required
@@ -5625,26 +5631,26 @@ const Engine = {
     //is necessary and then resets the counter
     checkCounters: function() {
         if (Engine.Counters.autoSaveCounter <= 0) {
-            _SaveObject__WEBPACK_IMPORTED_MODULE_39__[/* saveObject */ "b"].saveGame(indexedDb);
-            if (_Settings__WEBPACK_IMPORTED_MODULE_42__["Settings"].AutosaveInterval == null) {
-                _Settings__WEBPACK_IMPORTED_MODULE_42__["Settings"].AutosaveInterval = 60;
+            _SaveObject__WEBPACK_IMPORTED_MODULE_40__[/* saveObject */ "b"].saveGame(indexedDb);
+            if (_Settings__WEBPACK_IMPORTED_MODULE_43__["Settings"].AutosaveInterval == null) {
+                _Settings__WEBPACK_IMPORTED_MODULE_43__["Settings"].AutosaveInterval = 60;
             }
-            if (_Settings__WEBPACK_IMPORTED_MODULE_42__["Settings"].AutosaveInterval === 0) {
+            if (_Settings__WEBPACK_IMPORTED_MODULE_43__["Settings"].AutosaveInterval === 0) {
                 Engine.Counters.autoSaveCounter = Infinity;
             } else {
-                Engine.Counters.autoSaveCounter = _Settings__WEBPACK_IMPORTED_MODULE_42__["Settings"].AutosaveInterval * 5;
+                Engine.Counters.autoSaveCounter = _Settings__WEBPACK_IMPORTED_MODULE_43__["Settings"].AutosaveInterval * 5;
             }
         }
 
         if (Engine.Counters.updateSkillLevelsCounter <= 0) {
-            _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].updateSkillLevels();
+            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].updateSkillLevels();
             Engine.Counters.updateSkillLevelsCounter = 10;
         }
 
         if (Engine.Counters.updateActiveScriptsDisplay <= 0) {
             //Always update, but make the interval longer if the page isn't active
             Object(_ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_11__[/* updateActiveScriptsItems */ "c"])();
-            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["Page"].ActiveScripts)) {
+            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].ActiveScripts)) {
                 Engine.Counters.updateActiveScriptsDisplay = 5;
             } else {
                 Engine.Counters.updateActiveScriptsDisplay = 10;
@@ -5653,12 +5659,12 @@ const Engine = {
 
         if (Engine.Counters.updateDisplays <= 0) {
             Engine.displayCharacterOverviewInfo();
-            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["Page"].CharacterInfo)) {
+            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].CharacterInfo)) {
                 Engine.displayCharacterInfo();
-            }  else if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["Page"].HacknetNodes)) {
-                Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_29__[/* updateHacknetNodesContent */ "f"])();
-            } else if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["Page"].CreateProgram)) {
-                Object(_CreateProgram__WEBPACK_IMPORTED_MODULE_22__[/* displayCreateProgramContent */ "b"])();
+            }  else if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].HacknetNodes)) {
+                Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_28__[/* updateHacknetNodesContent */ "f"])();
+            } else if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].CreateProgram)) {
+                Object(_Programs_ProgramHelpers__WEBPACK_IMPORTED_MODULE_38__[/* displayCreateProgramContent */ "a"])();
             }
 
             if (_utils_LogBox__WEBPACK_IMPORTED_MODULE_10__[/* logBoxOpened */ "b"]) {
@@ -5669,23 +5675,23 @@ const Engine = {
         }
 
         if (Engine.Counters.updateDisplaysMed <= 0) {
-            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["Page"].Corporation)) {
-                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation.updateUIContent();
+            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].Corporation)) {
+                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation.updateUIContent();
             }
             Engine.Counters.updateDisplaysMed = 9;
         }
 
         if (Engine.Counters.updateDisplaysLong <= 0) {
-            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["Page"].Gang) && _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].inGang()) {
-                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].gang.updateGangContent();
-            } else if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["Page"].ScriptEditor)) {
-                Object(_Script__WEBPACK_IMPORTED_MODULE_40__[/* updateScriptEditorContent */ "h"])();
+            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].Gang) && _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].inGang()) {
+                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].gang.updateGangContent();
+            } else if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].ScriptEditor)) {
+                Object(_Script__WEBPACK_IMPORTED_MODULE_41__[/* updateScriptEditorContent */ "h"])();
             }
             Engine.Counters.updateDisplaysLong = 15;
         }
 
         if (Engine.Counters.createProgramNotifications <= 0) {
-            var num = Object(_CreateProgram__WEBPACK_IMPORTED_MODULE_22__[/* getNumAvailableCreateProgram */ "c"])();
+            var num = Object(_Programs_ProgramHelpers__WEBPACK_IMPORTED_MODULE_38__[/* getNumAvailableCreateProgram */ "b"])();
             var elem = document.getElementById("create-program-notification");
             if (num > 0) {
                 elem.innerHTML = num;
@@ -5698,29 +5704,29 @@ const Engine = {
         }
 
         if (Engine.Counters.checkFactionInvitations <= 0) {
-            var invitedFactions = _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].checkForFactionInvitations();
+            var invitedFactions = _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].checkForFactionInvitations();
             if (invitedFactions.length > 0) {
-                if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].firstFacInvRecvd === false) {
-                    _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].firstFacInvRecvd = true;
+                if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].firstFacInvRecvd === false) {
+                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].firstFacInvRecvd = true;
                     document.getElementById("factions-tab").style.display = "list-item";
                     document.getElementById("character-menu-header").click();
                     document.getElementById("character-menu-header").click();
                 }
 
                 var randFaction = invitedFactions[Math.floor(Math.random() * invitedFactions.length)];
-                Object(_Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_25__[/* inviteToFaction */ "b"])(randFaction);
+                Object(_Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_24__[/* inviteToFaction */ "b"])(randFaction);
             }
             Engine.Counters.checkFactionInvitations = 100;
         }
 
         if (Engine.Counters.passiveFactionGrowth <= 0) {
             var adjustedCycles = Math.floor((600 - Engine.Counters.passiveFactionGrowth));
-            Object(_Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_25__[/* processPassiveFactionRepGain */ "d"])(adjustedCycles);
+            Object(_Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_24__[/* processPassiveFactionRepGain */ "d"])(adjustedCycles);
             Engine.Counters.passiveFactionGrowth = 600;
         }
 
         if (Engine.Counters.messages <= 0) {
-            Object(_Message__WEBPACK_IMPORTED_MODULE_32__[/* checkForMessagesToSend */ "c"])();
+            Object(_Message__WEBPACK_IMPORTED_MODULE_31__[/* checkForMessagesToSend */ "c"])();
             if (_Augmentations__WEBPACK_IMPORTED_MODULE_12__[/* Augmentations */ "c"][_Augmentations__WEBPACK_IMPORTED_MODULE_12__[/* AugmentationNames */ "b"].TheRedPill].owned) {
                 Engine.Counters.messages = 4500; //15 minutes for Red pill message
             } else {
@@ -5729,19 +5735,19 @@ const Engine = {
         }
 
         if (Engine.Counters.sCr <= 0) {
-            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hasWseAccount) {
-                Object(_StockMarket__WEBPACK_IMPORTED_MODULE_46__[/* stockMarketCycle */ "q"])();
+            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hasWseAccount) {
+                Object(_StockMarket__WEBPACK_IMPORTED_MODULE_47__[/* stockMarketCycle */ "q"])();
             }
             Engine.Counters.sCr = 1500;
         }
 
         if (Engine.Counters.mechanicProcess <= 0) {
-            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"]) {
-                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation.process();
+            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"]) {
+                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation.process();
             }
-            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"]) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"]) {
                 try {
-                    _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bladeburner.process();
+                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bladeburner.process();
                 } catch(e) {
                     Object(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_6__[/* exceptionAlert */ "a"])("Exception caught in Bladeburner.process(): " + e);
                 }
@@ -5790,7 +5796,7 @@ const Engine = {
         //Once percent is 100, the hack is completed
         if (percent >= 100) {
             Engine._actionInProgress = false;
-            _Terminal__WEBPACK_IMPORTED_MODULE_47__[/* Terminal */ "a"].finishAction();
+            _Terminal__WEBPACK_IMPORTED_MODULE_48__[/* Terminal */ "a"].finishAction();
         }
     },
 
@@ -5863,84 +5869,84 @@ const Engine = {
         var dev                 = document.getElementById("dev-tab");
 
         //Load game from save or create new game
-        if (Object(_SaveObject__WEBPACK_IMPORTED_MODULE_39__[/* loadGame */ "a"])(saveString)) {
+        if (Object(_SaveObject__WEBPACK_IMPORTED_MODULE_40__[/* loadGame */ "a"])(saveString)) {
             console.log("Loaded game from save");
             Object(_BitNode__WEBPACK_IMPORTED_MODULE_13__[/* initBitNodes */ "c"])();
             Object(_BitNode__WEBPACK_IMPORTED_MODULE_13__[/* initBitNodeMultipliers */ "b"])();
-            Object(_SourceFile__WEBPACK_IMPORTED_MODULE_44__[/* initSourceFiles */ "d"])();
+            Object(_SourceFile__WEBPACK_IMPORTED_MODULE_45__[/* initSourceFiles */ "d"])();
             Engine.setDisplayElements();    //Sets variables for important DOM elements
             Engine.init();                  //Initialize buttons, work, etc.
             Object(_Augmentations__WEBPACK_IMPORTED_MODULE_12__[/* initAugmentations */ "h"])();            //Also calls Player.reapplyAllAugmentations()
-            _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].reapplyAllSourceFiles();
-            Object(_StockMarket__WEBPACK_IMPORTED_MODULE_46__[/* initStockSymbols */ "i"])();
-            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hasWseAccount) {
-                Object(_StockMarket__WEBPACK_IMPORTED_MODULE_46__[/* initSymbolToStockMap */ "j"])();
+            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].reapplyAllSourceFiles();
+            Object(_StockMarket__WEBPACK_IMPORTED_MODULE_47__[/* initStockSymbols */ "i"])();
+            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hasWseAccount) {
+                Object(_StockMarket__WEBPACK_IMPORTED_MODULE_47__[/* initSymbolToStockMap */ "j"])();
             }
-            Object(_Literature__WEBPACK_IMPORTED_MODULE_31__[/* initLiterature */ "a"])();
-            Object(_NetscriptFunctions__WEBPACK_IMPORTED_MODULE_34__[/* initSingularitySFFlags */ "g"])();
+            Object(_Literature__WEBPACK_IMPORTED_MODULE_30__[/* initLiterature */ "a"])();
+            Object(_NetscriptFunctions__WEBPACK_IMPORTED_MODULE_33__[/* initSingularitySFFlags */ "g"])();
 
-            console.log(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].intelligence_exp);
+            console.log(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].intelligence_exp);
 
             //Calculate the number of cycles have elapsed while offline
             Engine._lastUpdate = new Date().getTime();
-            var lastUpdate = _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].lastUpdate;
+            var lastUpdate = _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].lastUpdate;
             var numCyclesOffline = Math.floor((Engine._lastUpdate - lastUpdate) / Engine._idleSpeed);
 
             /* Process offline progress */
-            var offlineProductionFromScripts = Object(_Script__WEBPACK_IMPORTED_MODULE_40__[/* loadAllRunningScripts */ "f"])();    //This also takes care of offline production for those scripts
-            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].isWorking) {
+            var offlineProductionFromScripts = Object(_Script__WEBPACK_IMPORTED_MODULE_41__[/* loadAllRunningScripts */ "f"])();    //This also takes care of offline production for those scripts
+            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].isWorking) {
                 console.log("work() called in load() for " + numCyclesOffline * Engine._idleSpeed + " milliseconds");
-                if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeFaction) {
-                    _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].workForFaction(numCyclesOffline);
-                } else if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeCreateProgram) {
-                    _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].createProgramWork(numCyclesOffline);
-                } else if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeStudyClass) {
-                    _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].takeClass(numCyclesOffline);
-                } else if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeCrime) {
-                    _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].commitCrime(numCyclesOffline);
-                } else if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeCompanyPartTime) {
-                    _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].workPartTime(numCyclesOffline);
+                if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeFaction) {
+                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workForFaction(numCyclesOffline);
+                } else if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeCreateProgram) {
+                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].createProgramWork(numCyclesOffline);
+                } else if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeStudyClass) {
+                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].takeClass(numCyclesOffline);
+                } else if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeCrime) {
+                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].commitCrime(numCyclesOffline);
+                } else if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeCompanyPartTime) {
+                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workPartTime(numCyclesOffline);
                 } else {
-                    _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].work(numCyclesOffline);
+                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].work(numCyclesOffline);
                 }
             }
 
             //Hacknet Nodes offline progress
-            var offlineProductionFromHacknetNodes = Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_29__[/* processAllHacknetNodeEarnings */ "d"])(numCyclesOffline);
+            var offlineProductionFromHacknetNodes = Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_28__[/* processAllHacknetNodeEarnings */ "d"])(numCyclesOffline);
 
             //Passive faction rep gain offline
-            Object(_Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_25__[/* processPassiveFactionRepGain */ "d"])(numCyclesOffline);
+            Object(_Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_24__[/* processPassiveFactionRepGain */ "d"])(numCyclesOffline);
 
             // Stock Market offline progress
-            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hasWseAccount) {
-                Object(_StockMarket__WEBPACK_IMPORTED_MODULE_46__[/* processStockPrices */ "m"])(numCyclesOffline);
+            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hasWseAccount) {
+                Object(_StockMarket__WEBPACK_IMPORTED_MODULE_47__[/* processStockPrices */ "m"])(numCyclesOffline);
             }
 
             // Gang progress for BitNode 2
-            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bitNodeN != null && _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bitNodeN === 2 && _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].inGang()) {
-                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].gang.process(numCyclesOffline, _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"]);
+            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bitNodeN != null && _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bitNodeN === 2 && _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].inGang()) {
+                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].gang.process(numCyclesOffline, _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"]);
             }
 
             // Corporation offline progress
-            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"]) {
-                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation.storeCycles(numCyclesOffline);
+            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"]) {
+                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation.storeCycles(numCyclesOffline);
             }
 
             // Bladeburner offline progress
-            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"]) {
-                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bladeburner.storeCycles(numCyclesOffline);
+            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"]) {
+                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bladeburner.storeCycles(numCyclesOffline);
             }
 
             //Update total playtime
             var time = numCyclesOffline * Engine._idleSpeed;
-            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].totalPlaytime == null) {_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].totalPlaytime = 0;}
-            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].playtimeSinceLastAug == null) {_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].playtimeSinceLastAug = 0;}
-            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].playtimeSinceLastBitnode == null) {_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].playtimeSinceLastBitnode = 0;}
-            _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].totalPlaytime += time;
-            _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].playtimeSinceLastAug += time;
-            _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].playtimeSinceLastBitnode += time;
+            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].totalPlaytime == null) {_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].totalPlaytime = 0;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastAug == null) {_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastAug = 0;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastBitnode == null) {_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastBitnode = 0;}
+            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].totalPlaytime += time;
+            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastAug += time;
+            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastBitnode += time;
 
-            _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].lastUpdate = Engine._lastUpdate;
+            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].lastUpdate = Engine._lastUpdate;
             Engine.start();                 //Run main game loop and Scripts loop
             Object(_utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_7__["removeLoadingScreen"])();
             Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_0__["dialogBoxCreate"])("While you were offline, your scripts generated <span class='money-gold'>$" +
@@ -5949,23 +5955,23 @@ const Engine = {
             //Close main menu accordions for loaded game
             var visibleMenuTabs = [terminal, createScript, activeScripts, stats,
                                    hacknetnodes, city, tutorial, options, dev];
-            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].firstFacInvRecvd) {visibleMenuTabs.push(factions);}
+            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].firstFacInvRecvd) {visibleMenuTabs.push(factions);}
             else {factions.style.display = "none";}
-            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].firstAugPurchased) {visibleMenuTabs.push(augmentations);}
+            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].firstAugPurchased) {visibleMenuTabs.push(augmentations);}
             else {augmentations.style.display = "none";}
-            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].companyPosition !== "") {visibleMenuTabs.push(job);}
+            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].companyPosition !== "") {visibleMenuTabs.push(job);}
             else {job.style.display = "none";}
-            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].firstTimeTraveled) {visibleMenuTabs.push(travel);}
+            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].firstTimeTraveled) {visibleMenuTabs.push(travel);}
             else {travel.style.display = "none";}
-            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].firstProgramAvailable) {visibleMenuTabs.push(createProgram);}
+            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].firstProgramAvailable) {visibleMenuTabs.push(createProgram);}
             else {createProgram.style.display = "none";}
-            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hasWseAccount) {visibleMenuTabs.push(stockmarket);}
+            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hasWseAccount) {visibleMenuTabs.push(stockmarket);}
             else {stockmarket.style.display = "none";}
-            if(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"]) {visibleMenuTabs.push(bladeburner);}
+            if(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"]) {visibleMenuTabs.push(bladeburner);}
             else {bladeburner.style.display = "none";}
-            if(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"]) {visibleMenuTabs.push(corp);}
+            if(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"]) {visibleMenuTabs.push(corp);}
             else {corp.style.display = "none";}
-            if(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].inGang()) {visibleMenuTabs.push(gang);}
+            if(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].inGang()) {visibleMenuTabs.push(gang);}
             else {gang.style.display = "none";}
 
             Engine.closeMainMenuHeader(visibleMenuTabs);
@@ -5974,19 +5980,19 @@ const Engine = {
             console.log("Initializing new game");
             Object(_BitNode__WEBPACK_IMPORTED_MODULE_13__[/* initBitNodes */ "c"])();
             Object(_BitNode__WEBPACK_IMPORTED_MODULE_13__[/* initBitNodeMultipliers */ "b"])();
-            Object(_SourceFile__WEBPACK_IMPORTED_MODULE_44__[/* initSourceFiles */ "d"])();
-            Object(_SpecialServerIps__WEBPACK_IMPORTED_MODULE_45__[/* initSpecialServerIps */ "c"])();
+            Object(_SourceFile__WEBPACK_IMPORTED_MODULE_45__[/* initSourceFiles */ "d"])();
+            Object(_SpecialServerIps__WEBPACK_IMPORTED_MODULE_46__[/* initSpecialServerIps */ "c"])();
             Engine.setDisplayElements();        //Sets variables for important DOM elements
             Engine.start();                     //Run main game loop and Scripts loop
-            _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].init();
-            Object(_Server__WEBPACK_IMPORTED_MODULE_41__[/* initForeignServers */ "f"])();
+            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].init();
+            Object(_Server__WEBPACK_IMPORTED_MODULE_42__[/* initForeignServers */ "f"])();
             Object(_Company_Companies__WEBPACK_IMPORTED_MODULE_19__["initCompanies"])();
-            Object(_Faction_Factions__WEBPACK_IMPORTED_MODULE_24__["initFactions"])();
+            Object(_Faction_Factions__WEBPACK_IMPORTED_MODULE_23__["initFactions"])();
             Object(_Augmentations__WEBPACK_IMPORTED_MODULE_12__[/* initAugmentations */ "h"])();
-            Object(_Message__WEBPACK_IMPORTED_MODULE_32__[/* initMessages */ "d"])();
-            Object(_StockMarket__WEBPACK_IMPORTED_MODULE_46__[/* initStockSymbols */ "i"])();
-            Object(_Literature__WEBPACK_IMPORTED_MODULE_31__[/* initLiterature */ "a"])();
-            Object(_NetscriptFunctions__WEBPACK_IMPORTED_MODULE_34__[/* initSingularitySFFlags */ "g"])();
+            Object(_Message__WEBPACK_IMPORTED_MODULE_31__[/* initMessages */ "d"])();
+            Object(_StockMarket__WEBPACK_IMPORTED_MODULE_47__[/* initStockSymbols */ "i"])();
+            Object(_Literature__WEBPACK_IMPORTED_MODULE_30__[/* initLiterature */ "a"])();
+            Object(_NetscriptFunctions__WEBPACK_IMPORTED_MODULE_33__[/* initSingularitySFFlags */ "g"])();
 
             //Open main menu accordions for new game
             //Main menu accordions
@@ -6018,19 +6024,19 @@ const Engine = {
             );
 
             //Start interactive tutorial
-            Object(_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_30__[/* iTutorialStart */ "c"])();
+            Object(_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_29__[/* iTutorialStart */ "c"])();
             Object(_utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_7__["removeLoadingScreen"])();
         }
         //Initialize labels on game settings
-        Object(_ui_setSettingsLabels__WEBPACK_IMPORTED_MODULE_43__[/* setSettingsLabels */ "a"])();
-        Object(_Script__WEBPACK_IMPORTED_MODULE_40__[/* scriptEditorInit */ "g"])();
-        _Terminal__WEBPACK_IMPORTED_MODULE_47__[/* Terminal */ "a"].resetTerminalInput();
+        Object(_ui_setSettingsLabels__WEBPACK_IMPORTED_MODULE_44__[/* setSettingsLabels */ "a"])();
+        Object(_Script__WEBPACK_IMPORTED_MODULE_41__[/* scriptEditorInit */ "g"])();
+        _Terminal__WEBPACK_IMPORTED_MODULE_48__[/* Terminal */ "a"].resetTerminalInput();
     },
 
     setDisplayElements: function() {
         //Content elements
         Engine.Display.terminalContent = document.getElementById("terminal-container");
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_49__["Page"].Terminal);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].Terminal);
 
         Engine.Display.characterContent = document.getElementById("character-container");
         Engine.Display.characterContent.style.display = "none";
@@ -6106,7 +6112,7 @@ const Engine = {
         Engine.Display.cinematicTextContent.style.display = "none";
 
 		//Init Location buttons
-		Object(_Location__WEBPACK_IMPORTED_MODULE_27__[/* initLocationButtons */ "b"])();
+		Object(_Location__WEBPACK_IMPORTED_MODULE_26__[/* initLocationButtons */ "b"])();
 
         //Tutorial buttons
         Engine.Clickables.tutorialNetworkingButton = document.getElementById("tutorial-networking-link");
@@ -6159,7 +6165,7 @@ const Engine = {
     init: function() {
         //Import game link
         document.getElementById("import-game-link").onclick = function() {
-            _SaveObject__WEBPACK_IMPORTED_MODULE_39__[/* saveObject */ "b"].importGame();
+            _SaveObject__WEBPACK_IMPORTED_MODULE_40__[/* saveObject */ "b"].importGame();
         };
 
         //Main menu accordions
@@ -6236,11 +6242,11 @@ const Engine = {
             var gangLink            = document.getElementById("gang-menu-link");
 
             // Determine whether certain links should show up
-            job.style.display           = _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].companyPosition !== ""             ? "list-item" : "none";
-            stockmarket.style.display   = _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hasWseAccount                      ? "list-item" : "none";
-            bladeburner.style.display   = _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"] ? "list-item" : "none";
-            corporation.style.display   = _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"] ? "list-item" : "none";
-            gang.style.display          = _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].inGang()                           ? "list-item" : "none";
+            job.style.display           = _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].companyPosition !== ""             ? "list-item" : "none";
+            stockmarket.style.display   = _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hasWseAccount                      ? "list-item" : "none";
+            bladeburner.style.display   = _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"] ? "list-item" : "none";
+            corporation.style.display   = _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"] ? "list-item" : "none";
+            gang.style.display          = _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].inGang()                           ? "list-item" : "none";
 
             this.classList.toggle("opened");
             if (city.style.maxHeight) {
@@ -6389,24 +6395,24 @@ const Engine = {
         //Save, Delete, Import/Export buttons
         Engine.Clickables.saveMainMenuButton = document.getElementById("save-game-link");
         Engine.Clickables.saveMainMenuButton.addEventListener("click", function() {
-            _SaveObject__WEBPACK_IMPORTED_MODULE_39__[/* saveObject */ "b"].saveGame(indexedDb);
+            _SaveObject__WEBPACK_IMPORTED_MODULE_40__[/* saveObject */ "b"].saveGame(indexedDb);
             return false;
         });
 
         Engine.Clickables.deleteMainMenuButton = document.getElementById("delete-game-link");
         Engine.Clickables.deleteMainMenuButton.addEventListener("click", function() {
-            _SaveObject__WEBPACK_IMPORTED_MODULE_39__[/* saveObject */ "b"].deleteGame(indexedDb);
+            _SaveObject__WEBPACK_IMPORTED_MODULE_40__[/* saveObject */ "b"].deleteGame(indexedDb);
             return false;
         });
 
         document.getElementById("export-game-link").addEventListener("click", function() {
-            _SaveObject__WEBPACK_IMPORTED_MODULE_39__[/* saveObject */ "b"].exportGame();
+            _SaveObject__WEBPACK_IMPORTED_MODULE_40__[/* saveObject */ "b"].exportGame();
             return false;
         });
 
         //Character Overview buttons
         document.getElementById("character-overview-save-button").addEventListener("click", function() {
-            _SaveObject__WEBPACK_IMPORTED_MODULE_39__[/* saveObject */ "b"].saveGame(indexedDb);
+            _SaveObject__WEBPACK_IMPORTED_MODULE_40__[/* saveObject */ "b"].saveGame(indexedDb);
             return false;
         });
 
@@ -6416,28 +6422,28 @@ const Engine = {
         });
 
         //Create Program buttons
-        Object(_CreateProgram__WEBPACK_IMPORTED_MODULE_22__[/* initCreateProgramButtons */ "d"])();
+        Object(_Programs_ProgramHelpers__WEBPACK_IMPORTED_MODULE_38__[/* initCreateProgramButtons */ "c"])();
 
         //Message at the top of terminal
-        Object(_Terminal__WEBPACK_IMPORTED_MODULE_47__[/* postNetburnerText */ "b"])();
+        Object(_Terminal__WEBPACK_IMPORTED_MODULE_48__[/* postNetburnerText */ "b"])();
 
         //Player was working cancel button
-        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].isWorking) {
+        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].isWorking) {
             var cancelButton = document.getElementById("work-in-progress-cancel-button");
             cancelButton.addEventListener("click", function() {
-                if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeFaction) {
-                    var fac = _Faction_Factions__WEBPACK_IMPORTED_MODULE_24__["Factions"][_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].currentWorkFactionName];
-                    _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].finishFactionWork(true);
-                } else if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeCreateProgram) {
-                    _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].finishCreateProgramWork(true);
-                } else if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeStudyClass) {
-                    _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].finishClass();
-                } else if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeCrime) {
-                    _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].finishCrime(true);
-                } else if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeCompanyPartTime) {
-                    _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].finishWorkPartTime();
+                if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeFaction) {
+                    var fac = _Faction_Factions__WEBPACK_IMPORTED_MODULE_23__["Factions"][_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].currentWorkFactionName];
+                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].finishFactionWork(true);
+                } else if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeCreateProgram) {
+                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].finishCreateProgramWork(true);
+                } else if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeStudyClass) {
+                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].finishClass();
+                } else if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeCrime) {
+                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].finishCrime(true);
+                } else if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeCompanyPartTime) {
+                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].finishWorkPartTime();
                 } else {
-                    _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].finishWork(true);
+                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].finishWork(true);
                 }
             });
             Engine.loadWorkInProgressContent();
@@ -6458,7 +6464,7 @@ const Engine = {
         //DEBUG Delete active Scripts on home
         document.getElementById("debug-delete-scripts-link").addEventListener("click", function() {
             console.log("Deleting running scripts on home computer");
-            _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].getHomeComputer().runningScripts = [];
+            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].getHomeComputer().runningScripts = [];
             Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_0__["dialogBoxCreate"])("Forcefully deleted all running scripts on home computer. Please save and refresh page");
             Object(_utils_GameOptions__WEBPACK_IMPORTED_MODULE_1__[/* gameOptionsBoxClose */ "a"])();
             return false;
@@ -6467,7 +6473,7 @@ const Engine = {
         //DEBUG Soft Reset
         document.getElementById("debug-soft-reset").addEventListener("click", function() {
             Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_0__["dialogBoxCreate"])("Soft Reset!");
-            Object(_Prestige__WEBPACK_IMPORTED_MODULE_37__[/* prestigeAugmentation */ "a"])();
+            Object(_Prestige__WEBPACK_IMPORTED_MODULE_36__[/* prestigeAugmentation */ "a"])();
             Object(_utils_GameOptions__WEBPACK_IMPORTED_MODULE_1__[/* gameOptionsBoxClose */ "a"])();
             return false;
         });
@@ -6478,7 +6484,7 @@ const Engine = {
         Engine.idleTimer();
 
         //Scripts
-        Object(_NetscriptWorker__WEBPACK_IMPORTED_MODULE_35__[/* runScriptsLoop */ "f"])();
+        Object(_NetscriptWorker__WEBPACK_IMPORTED_MODULE_34__[/* runScriptsLoop */ "f"])();
     }
 };
 
@@ -6688,15 +6694,16 @@ exports.BitNodeMultipliers = {
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Script */ 30);
-/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./CreateProgram */ 24);
-/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Player */ 0);
+/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Player */ 0);
+/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Programs/Programs */ 24);
+/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./TextFile */ 65);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_TextFile__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 15);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/IPAddress */ 62);
-/* harmony import */ var _data_servers__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./data/servers */ 135);
+/* harmony import */ var _data_servers__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./data/servers */ 137);
 /* harmony import */ var _data_servers__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_data_servers__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
 /* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/isValidIPAddress */ 88);
@@ -6983,7 +6990,7 @@ function initForeignServers() {
     };
 
     // Connect the first tier of servers to the player's home computer
-    linkNetworkLayers(networkLayers[0], () => _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].getHomeComputer());
+    linkNetworkLayers(networkLayers[0], () => _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].getHomeComputer());
     for (let i = 1; i < networkLayers.length; i++) {
         linkNetworkLayers(networkLayers[i], () => getRandomArrayItem(networkLayers[i - 1]));
     }
@@ -6999,7 +7006,7 @@ function numCycleForGrowth(server, growth) {
 
     const serverGrowthPercentage = server.serverGrowth / 100;
 
-    const cycles = Math.log(growth)/(Math.log(ajdGrowthRate)*_Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_grow_mult*serverGrowthPercentage);
+    const cycles = Math.log(growth)/(Math.log(ajdGrowthRate)*_Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacking_grow_mult*serverGrowthPercentage);
     return cycles;
 }
 
@@ -7018,7 +7025,7 @@ function processSingleServerGrowth(server, numCycles) {
     const numServerGrowthCyclesAdjusted = numServerGrowthCycles * serverGrowthPercentage * _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerGrowthRate;
 
     //Apply serverGrowth for the calculated number of growth cycles
-    var serverGrowth = Math.pow(adjGrowthRate, numServerGrowthCyclesAdjusted * _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_grow_mult);
+    var serverGrowth = Math.pow(adjGrowthRate, numServerGrowthCyclesAdjusted * _Player__WEBPACK_IMPORTED_MODULE_4__[/* Player */ "a"].hacking_grow_mult);
     if (serverGrowth < 1) {
         console.log("WARN: serverGrowth calculated to be less than 1");
         serverGrowth = 1;
@@ -7048,15 +7055,15 @@ function processSingleServerGrowth(server, numCycles) {
 }
 
 function prestigeHomeComputer(homeComp) {
-    const hasBitflume = homeComp.programs.includes(_CreateProgram__WEBPACK_IMPORTED_MODULE_4__[/* Programs */ "a"].BitFlume.name);
+    const hasBitflume = homeComp.programs.includes(_Programs_Programs__WEBPACK_IMPORTED_MODULE_5__["Programs"].BitFlume.name);
 
     homeComp.programs.length = 0; //Remove programs
     homeComp.runningScripts = [];
     homeComp.serversOnNetwork = [];
     homeComp.isConnectedTo = true;
     homeComp.ramUsed = 0;
-    homeComp.programs.push(_CreateProgram__WEBPACK_IMPORTED_MODULE_4__[/* Programs */ "a"].NukeProgram.name);
-    if (hasBitflume) { homeComp.programs.push(_CreateProgram__WEBPACK_IMPORTED_MODULE_4__[/* Programs */ "a"].BitFlume.name); }
+    homeComp.programs.push(_Programs_Programs__WEBPACK_IMPORTED_MODULE_5__["Programs"].NukeProgram.name);
+    if (hasBitflume) { homeComp.programs.push(_Programs_Programs__WEBPACK_IMPORTED_MODULE_5__["Programs"].BitFlume.name); }
 
     //Update RAM usage on all scripts
     homeComp.scripts.forEach(function(script) {
@@ -7408,7 +7415,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * about all Factions in the game
  */
 const Faction_1 = __webpack_require__(/*! ./Faction */ 56);
-const FactionInfo_1 = __webpack_require__(/*! ./FactionInfo */ 114);
+const FactionInfo_1 = __webpack_require__(/*! ./FactionInfo */ 115);
 const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
 exports.Factions = {};
 function loadFactions(saveString) {
@@ -7675,8 +7682,8 @@ exports.yesNoTxtInpBoxCreate = yesNoTxtInpBoxCreate;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 // Constructs all CompanyPosition objects using the metadata in data/companypositions.ts
-const CompaniesMetadata_1 = __webpack_require__(/*! ./data/CompaniesMetadata */ 205);
-const Company_1 = __webpack_require__(/*! ./Company */ 73);
+const CompaniesMetadata_1 = __webpack_require__(/*! ./data/CompaniesMetadata */ 210);
+const Company_1 = __webpack_require__(/*! ./Company */ 74);
 const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
 exports.Companies = {};
 function addCompany(params) {
@@ -7736,7 +7743,7 @@ exports.companyExists = companyExists;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const SettingEnums_1 = __webpack_require__(/*! ./SettingEnums */ 72);
+const SettingEnums_1 = __webpack_require__(/*! ./SettingEnums */ 73);
 const defaultSettings = {
     AutosaveInterval: 60,
     CodeInstructionRunTime: 50,
@@ -7839,19 +7846,19 @@ exports.removeElementById = removeElementById;
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./NetscriptWorker */ 25);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Prestige */ 86);
-/* harmony import */ var _SaveObject__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./SaveObject */ 74);
+/* harmony import */ var _SaveObject__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./SaveObject */ 75);
 /* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Script */ 30);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _SettingEnums__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./SettingEnums */ 72);
+/* harmony import */ var _SettingEnums__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./SettingEnums */ 73);
 /* harmony import */ var _SettingEnums__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_SettingEnums__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./SourceFile */ 70);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 76);
+/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 77);
 /* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
-/* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/helpers/clearObject */ 77);
+/* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/helpers/clearObject */ 78);
 /* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_17__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__);
@@ -12075,7 +12082,7 @@ function updateStockOrderList(stock) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const BaseResearchTree_1 = __webpack_require__(/*! ./data/BaseResearchTree */ 204);
+const BaseResearchTree_1 = __webpack_require__(/*! ./data/BaseResearchTree */ 209);
 const numeralFormat_1 = __webpack_require__(/*! ../ui/numeralFormat */ 4);
 // Map of official names for each Industry
 exports.Industries = {
@@ -12178,181 +12185,22 @@ exports.IndustryResearchTrees = {
 
 /***/ }),
 /* 24 */
-/*!******************************!*\
-  !*** ./src/CreateProgram.js ***!
-  \******************************/
-/*! exports provided: Programs, displayCreateProgramContent, getNumAvailableCreateProgram, initCreateProgramButtons */
-/*! exports used: Programs, displayCreateProgramContent, getNumAvailableCreateProgram, initCreateProgramButtons */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*!**********************************!*\
+  !*** ./src/Programs/Programs.ts ***!
+  \**********************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Programs; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return displayCreateProgramContent; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return getNumAvailableCreateProgram; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return initCreateProgramButtons; });
-/* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Constants */ 1);
-/* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2__);
 
-
-
-
-// a function that returns a requirement for a program that requires only that
-// the player has at least the given skill level.
-function requireLevel(lvl) {
-    return function() {
-        return _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].hacking_skill >= lvl;
-    }
+Object.defineProperty(exports, "__esModule", { value: true });
+const Program_1 = __webpack_require__(/*! ./Program */ 197);
+const programsMetadata_1 = __webpack_require__(/*! ./data/programsMetadata */ 196);
+exports.Programs = {};
+for (const params of programsMetadata_1.programsMetadata) {
+    exports.Programs[params.key] = new Program_1.Program(params.name, params.create);
 }
-
-function Program(name, create) {
-    this.name = name;
-    this.create = create;
-}
-
-Program.prototype.htmlID = function() {
-    const name = this.name.endsWith('.exe') ? this.name.slice(0, -('.exe'.length)) : this.name;
-    return "create-program-"+name;
-}
-
-/* Create programs */
-const Programs = {
-    NukeProgram: new Program("NUKE.exe", {
-        level: 1,
-        tooltip:"This virus is used to gain root access to a machine if enough ports are opened.",
-        req: requireLevel(1),
-        time: _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MillisecondsPerFiveMinutes,
-    }),
-    BruteSSHProgram: new Program("BruteSSH.exe", {
-        level: 50,
-        tooltip:"This program executes a brute force attack that opens SSH ports",
-        req: requireLevel(50),
-        time: _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MillisecondsPerFiveMinutes * 2,
-    }),
-    FTPCrackProgram: new Program("FTPCrack.exe", {
-        level: 100,
-        tooltip:"This program cracks open FTP ports",
-        req: requireLevel(100),
-        time: _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MillisecondsPerHalfHour,
-    }),
-    RelaySMTPProgram: new Program("relaySMTP.exe", {
-        level: 250,
-        tooltip:"This program opens SMTP ports by redirecting data",
-        req: requireLevel(250),
-        time: _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MillisecondsPer2Hours,
-    }),
-    HTTPWormProgram: new Program("HTTPWorm.exe", {
-        level: 500,
-        tooltip:"This virus opens up HTTP ports",
-        req: requireLevel(500),
-        time: _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MillisecondsPer4Hours,
-    }),
-    SQLInjectProgram: new Program("SQLInject.exe", {
-        level: 750,
-        tooltip:"This virus opens SQL ports",
-        req: requireLevel(750),
-        time: _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MillisecondsPer8Hours,
-    }),
-    DeepscanV1: new Program("DeepscanV1.exe", {
-        level: 75,
-        tooltip:"This program allows you to use the scan-analyze command with a depth up to 5",
-        req: requireLevel(75),
-        time: _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MillisecondsPerQuarterHour,
-    }),
-    DeepscanV2: new Program("DeepscanV2.exe", {
-        level: 400,
-        tooltip:"This program allows you to use the scan-analyze command with a depth up to 10",
-        req: requireLevel(400),
-        time: _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MillisecondsPer2Hours,
-    }),
-    ServerProfiler: new Program("ServerProfiler.exe", {
-        level: 75,
-        tooltip:"This program is used to display hacking and Netscript-related information about servers",
-        req: requireLevel(75),
-        time: _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MillisecondsPerHalfHour,
-    }),
-    AutoLink: new Program("AutoLink.exe", {
-        level: 25,
-        tooltip:"This program allows you to directly connect to other servers through the 'scan-analyze' command",
-        req: requireLevel(25),
-        time: _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MillisecondsPerQuarterHour,
-    }),
-    BitFlume: new Program("b1t_flum3.exe", {
-        level: 1,
-        tooltip:"This program creates a portal to the BitNode Nexus (allows you to restart and switch BitNodes)",
-        req: function() {return _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].sourceFiles.length > 0 && _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].hacking_skill >= 1},
-        time: _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].MillisecondsPerFiveMinutes / 20,
-    }),
-    // special because you can't create it.
-    Flight: new Program("fl1ght.exe"),
-};
-
-// this has the same key as 'Programs', not program names
-const aLinks = {};
-
-function displayCreateProgramContent() {
-    for(const key in aLinks) {
-        const p = Programs[key]
-        aLinks[key].style.display = "none";
-        if(!_Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].hasProgram(p.name) && p.create.req()){
-            aLinks[key].style.display = "inline-block";
-        }
-    }
-}
-
-//Returns the number of programs that are currently available to be created
-function getNumAvailableCreateProgram() {
-    var count = 0;
-    for(const key in Programs) {
-        if(Programs[key].create === undefined) { // a program we can't create
-            continue
-        }
-        if(_Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].hasProgram(Programs[key].name)) { // can't create it twice
-            continue
-        }
-
-        if(!Programs[key].create.req()) { // if you don't fullfill the creation requirement
-            continue
-        }
-
-        count++;
-    }
-
-    if (_Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].firstProgramAvailable === false && count > 0) {
-        _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].firstProgramAvailable = true;
-        document.getElementById("create-program-tab").style.display = "list-item";
-        document.getElementById("hacking-menu-header").click();
-        document.getElementById("hacking-menu-header").click();
-    }
-    return count;
-}
-
-function initCreateProgramButtons() {
-    var createProgramList = document.getElementById("create-program-list");
-    for(const key in Programs) {
-        if(Programs[key].create === undefined) {
-            continue
-        }
-        const elem = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2__["createElement"])("a", {
-            class: "a-link-button", id: Programs[key].htmlID(), innerText: Programs[key].name,
-            tooltip: Programs[key].create.tooltip,
-        });
-        aLinks[key] = elem;
-        createProgramList.appendChild(elem);
-    }
-
-    for(const key in aLinks) {
-        const p = Programs[key]
-        aLinks[key].addEventListener("click", function() {
-            _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].startCreateProgramWork(p.name, p.create.time, p.create.level);
-            return false;
-        });
-    }
-}
-
-
 
 
 /***/ }),
@@ -12377,16 +12225,16 @@ function initCreateProgramButtons() {
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 8);
-/* harmony import */ var _JSInterpreter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./JSInterpreter */ 130);
-/* harmony import */ var _NetscriptEnvironment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptEnvironment */ 115);
+/* harmony import */ var _JSInterpreter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./JSInterpreter */ 132);
+/* harmony import */ var _NetscriptEnvironment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptEnvironment */ 116);
 /* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./NetscriptEvaluator */ 6);
 /* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
-/* harmony import */ var _NetscriptJSEvaluator__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./NetscriptJSEvaluator */ 116);
-/* harmony import */ var _NetscriptPort__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./NetscriptPort */ 71);
+/* harmony import */ var _NetscriptJSEvaluator__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./NetscriptJSEvaluator */ 117);
+/* harmony import */ var _NetscriptPort__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./NetscriptPort */ 72);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Server */ 11);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var escodegen__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! escodegen */ 109);
+/* harmony import */ var escodegen__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! escodegen */ 110);
 /* harmony import */ var escodegen__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(escodegen__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/acorn */ 48);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_12__);
@@ -12420,7 +12268,7 @@ function initCreateProgramButtons() {
 
 
 
-const walk  = __webpack_require__(/*! acorn/dist/walk */ 147);
+const walk  = __webpack_require__(/*! acorn/dist/walk */ 149);
 
 function WorkerScript(runningScriptObj) {
 	this.name 			= runningScriptObj.filename;
@@ -13115,7 +12963,7 @@ JSONReviver_1.Reviver.constructors.Stock = Stock;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 // Constructs all CompanyPosition objects using the metadata in data/companypositions.ts
-const CompanyPositionsMetadata_1 = __webpack_require__(/*! ./data/CompanyPositionsMetadata */ 206);
+const CompanyPositionsMetadata_1 = __webpack_require__(/*! ./data/CompanyPositionsMetadata */ 211);
 const CompanyPosition_1 = __webpack_require__(/*! ./CompanyPosition */ 85);
 exports.CompanyPositions = {};
 function addCompanyPosition(params) {
@@ -13219,24 +13067,24 @@ exports.removeChildrenFromElement = removeChildrenFromElement;
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_19__);
 /* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 81);
 /* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_20__);
-var ace = __webpack_require__(/*! brace */ 265);
-var beautify = __webpack_require__(/*! js-beautify */ 264).js_beautify;
-__webpack_require__(/*! brace/mode/javascript */ 263);
-__webpack_require__(/*! ../netscript */ 193);
-__webpack_require__(/*! brace/theme/chaos */ 262);
-__webpack_require__(/*! brace/theme/chrome */ 261);
-__webpack_require__(/*! brace/theme/monokai */ 260);
-__webpack_require__(/*! brace/theme/solarized_dark */ 259);
-__webpack_require__(/*! brace/theme/solarized_light */ 258);
-__webpack_require__(/*! brace/theme/terminal */ 257);
-__webpack_require__(/*! brace/theme/twilight */ 256);
-__webpack_require__(/*! brace/theme/xcode */ 255);
-__webpack_require__(/*! brace/keybinding/vim */ 254);
-__webpack_require__(/*! brace/keybinding/emacs */ 253);
-__webpack_require__(/*! brace/ext/language_tools */ 252);
+var ace = __webpack_require__(/*! brace */ 270);
+var beautify = __webpack_require__(/*! js-beautify */ 269).js_beautify;
+__webpack_require__(/*! brace/mode/javascript */ 268);
+__webpack_require__(/*! ../netscript */ 198);
+__webpack_require__(/*! brace/theme/chaos */ 267);
+__webpack_require__(/*! brace/theme/chrome */ 266);
+__webpack_require__(/*! brace/theme/monokai */ 265);
+__webpack_require__(/*! brace/theme/solarized_dark */ 264);
+__webpack_require__(/*! brace/theme/solarized_light */ 263);
+__webpack_require__(/*! brace/theme/terminal */ 262);
+__webpack_require__(/*! brace/theme/twilight */ 261);
+__webpack_require__(/*! brace/theme/xcode */ 260);
+__webpack_require__(/*! brace/keybinding/vim */ 259);
+__webpack_require__(/*! brace/keybinding/emacs */ 258);
+__webpack_require__(/*! brace/ext/language_tools */ 257);
 
 // Importing this doesn't work for some reason.
-const walk = __webpack_require__(/*! acorn/dist/walk */ 147);
+const walk = __webpack_require__(/*! acorn/dist/walk */ 149);
 
 
 
@@ -14359,7 +14207,7 @@ _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__["Reviver"].constructors.AllServ
 /* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_16__);
 /* harmony import */ var _utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/uiHelpers/appendLineBreaks */ 57);
 /* harmony import */ var _utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/helpers/clearObject */ 77);
+/* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/helpers/clearObject */ 78);
 /* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_18__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_19__);
@@ -19718,7 +19566,8 @@ exports.isString = isString;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return initMessages; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Message; });
 /* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentations */ 21);
-/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateProgram */ 24);
+/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Programs/Programs */ 24);
+/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Missions */ 55);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./RedPill */ 58);
@@ -19815,7 +19664,7 @@ function checkForMessagesToSend() {
         }
     } else if (jumper0 && !jumper0.recvd && _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].hacking_skill >= 25) {
         sendMessage(jumper0);
-        _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].getHomeComputer().programs.push(_CreateProgram__WEBPACK_IMPORTED_MODULE_1__[/* Programs */ "a"].Flight.name);
+        _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].getHomeComputer().programs.push(_Programs_Programs__WEBPACK_IMPORTED_MODULE_1__["Programs"].Flight.name);
     } else if (jumper1 && !jumper1.recvd && _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].hacking_skill >= 40) {
         sendMessage(jumper1);
     } else if (cybersecTest && !cybersecTest.recvd && _Player__WEBPACK_IMPORTED_MODULE_3__[/* Player */ "a"].hacking_skill >= 50) {
@@ -19944,7 +19793,7 @@ const JSONReviver_1 = __webpack_require__(/*! ../utils/JSONReviver */ 13);
 const createElement_1 = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 const createPopup_1 = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 37);
 const removeElementById_1 = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
-const codingcontracttypes_1 = __webpack_require__(/*! ./data/codingcontracttypes */ 198);
+const codingcontracttypes_1 = __webpack_require__(/*! ./data/codingcontracttypes */ 203);
 /* tslint:disable:no-magic-numbers completed-docs max-classes-per-file no-console */
 /* Represents different types of problems that a Coding Contract can have */
 class CodingContractType {
@@ -20119,7 +19968,7 @@ JSONReviver_1.Reviver.constructors.CodingContract = CodingContract;
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Crimes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Crimes */ 38);
 /* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Bladeburner */ 31);
-/* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Company/Company */ 73);
+/* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Company/Company */ 74);
 /* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Company_Company__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Company/Companies */ 18);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_6__);
@@ -20129,21 +19978,23 @@ JSONReviver_1.Reviver.constructors.CodingContract = CodingContract;
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./CreateProgram */ 24);
-/* harmony import */ var _DarkWeb__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./DarkWeb */ 79);
-/* harmony import */ var _Hacking__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Hacking */ 49);
-/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Gang */ 50);
-/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Faction/Faction */ 56);
-/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_Faction_Faction__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Faction/Factions */ 14);
-/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 46);
-/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./HacknetNode */ 67);
-/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Locations */ 5);
-/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Message */ 41);
-/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Missions */ 55);
-/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./Player */ 0);
+/* harmony import */ var _DarkWeb_DarkWebItems__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./DarkWeb/DarkWebItems */ 71);
+/* harmony import */ var _DarkWeb_DarkWebItems__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_DarkWeb_DarkWebItems__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _Hacking__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Hacking */ 49);
+/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Gang */ 50);
+/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Faction/Faction */ 56);
+/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_Faction_Faction__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Faction/Factions */ 14);
+/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 46);
+/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./HacknetNode */ 67);
+/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Locations */ 5);
+/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_17__);
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Message */ 41);
+/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Missions */ 55);
+/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Player */ 0);
+/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./Programs/Programs */ 24);
+/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_21__);
 /* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./Script */ 30);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./Server */ 11);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./Settings */ 19);
@@ -20160,12 +20011,12 @@ JSONReviver_1.Reviver.constructors.CodingContract = CodingContract;
 /* harmony import */ var _NetscriptGang__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./NetscriptGang */ 39);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./NetscriptWorker */ 25);
 /* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./NetscriptEvaluator */ 6);
-/* harmony import */ var _NetscriptPort__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./NetscriptPort */ 71);
+/* harmony import */ var _NetscriptPort__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./NetscriptPort */ 72);
 /* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! decimal.js */ 35);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./ui/navigationTracking */ 12);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_36___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_36__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ../utils/helpers/isPowerOfTwo */ 131);
+/* harmony import */ var _utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ../utils/helpers/isPowerOfTwo */ 133);
 /* harmony import */ var _utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_38___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_38__);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 54);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_39___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_39__);
@@ -20176,8 +20027,8 @@ JSONReviver_1.Reviver.constructors.CodingContract = CodingContract;
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_42___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_42__);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_43___default = /*#__PURE__*/__webpack_require__.n(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_43__);
-var sprintf = __webpack_require__(/*! sprintf-js */ 148).sprintf,
-    vsprintf = __webpack_require__(/*! sprintf-js */ 148).vsprintf
+var sprintf = __webpack_require__(/*! sprintf-js */ 150).sprintf,
+    vsprintf = __webpack_require__(/*! sprintf-js */ 150).vsprintf
 
 
 
@@ -20309,20 +20160,20 @@ var possibleLogs = {
 
 //Used to check and set flags for every Source File, despite the name of the function
 function initSingularitySFFlags() {
-    for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].sourceFiles.length; ++i) {
-        if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].sourceFiles[i].n === 3) {hasCorporationSF        = true;}
-        if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].sourceFiles[i].n === 4) {
+    for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].sourceFiles.length; ++i) {
+        if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].sourceFiles[i].n === 3) {hasCorporationSF        = true;}
+        if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].sourceFiles[i].n === 4) {
             hasSingularitySF = true;
-            singularitySFLvl = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].sourceFiles[i].lvl;
+            singularitySFLvl = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].sourceFiles[i].lvl;
         }
-        if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].sourceFiles[i].n === 5) {hasAISF                 = true;}
-        if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].sourceFiles[i].n === 6) {hasBladeburnerSF        = true;}
-        if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].sourceFiles[i].n === 7) {hasBladeburner2079SF    = true;}
-        if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].sourceFiles[i].n === 8) {
+        if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].sourceFiles[i].n === 5) {hasAISF                 = true;}
+        if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].sourceFiles[i].n === 6) {hasBladeburnerSF        = true;}
+        if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].sourceFiles[i].n === 7) {hasBladeburner2079SF    = true;}
+        if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].sourceFiles[i].n === 8) {
             hasWallStreetSF = true;
-            wallStreetSFLvl = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].sourceFiles[i].lvl;
+            wallStreetSFLvl = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].sourceFiles[i].lvl;
         }
-        if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].sourceFiles[i].n === 11) {hasBn11SF              = true;}
+        if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].sourceFiles[i].n === 11) {hasBn11SF              = true;}
     }
 }
 
@@ -20376,10 +20227,10 @@ function NetscriptFunctions(workerScript) {
         if (isNaN(i)) {
             throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid index specified for Hacknet Node: " + i);
         }
-        if (i < 0 || i >= _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].hacknetNodes.length) {
+        if (i < 0 || i >= _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].hacknetNodes.length) {
             throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Index specified for Hacknet Node is out-of-bounds: " + i);
         }
-        return _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].hacknetNodes[i];
+        return _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].hacknetNodes[i];
     };
 
     var getCodingContract = function(fn, ip) {
@@ -20408,13 +20259,13 @@ function NetscriptFunctions(workerScript) {
     return {
         hacknet : {
             numNodes : function() {
-                return _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].hacknetNodes.length;
+                return _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].hacknetNodes.length;
             },
             purchaseNode : function() {
-                return Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_17__[/* purchaseHacknet */ "e"])();
+                return Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_16__[/* purchaseHacknet */ "e"])();
             },
             getPurchaseNodeCost : function() {
-                return Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_17__[/* getCostOfNextHacknetNode */ "c"])();
+                return Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_16__[/* getCostOfNextHacknetNode */ "c"])();
             },
             getNodeStats : function(i) {
                 var node = getHacknetNode(i);
@@ -20499,7 +20350,7 @@ function NetscriptFunctions(workerScript) {
             }
 
             //Calculate the hacking time
-            var hackingTime = Object(_Hacking__WEBPACK_IMPORTED_MODULE_12__[/* calculateHackingTime */ "d"])(server); //This is in seconds
+            var hackingTime = Object(_Hacking__WEBPACK_IMPORTED_MODULE_11__[/* calculateHackingTime */ "d"])(server); //This is in seconds
 
             //No root access or skill level too low
             if (server.hasAdminRights == false) {
@@ -20507,7 +20358,7 @@ function NetscriptFunctions(workerScript) {
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot hack this server (" + server.hostname + ") because user does not have root access");
             }
 
-            if (server.requiredHackingSkill > _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].hacking_skill) {
+            if (server.requiredHackingSkill > _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].hacking_skill) {
                 workerScript.scriptRef.log("Cannot hack this server (" + server.hostname + ") because user's hacking skill is not high enough");
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot hack this server (" + server.hostname + ") because user's hacking skill is not high enough");
             }
@@ -20517,12 +20368,12 @@ function NetscriptFunctions(workerScript) {
             }
             return Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* netscriptDelay */ "e"])(hackingTime * 1000, workerScript).then(function() {
                 if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
-                var hackChance = Object(_Hacking__WEBPACK_IMPORTED_MODULE_12__[/* calculateHackingChance */ "b"])(server);
+                var hackChance = Object(_Hacking__WEBPACK_IMPORTED_MODULE_11__[/* calculateHackingChance */ "b"])(server);
                 var rand = Math.random();
-                var expGainedOnSuccess = Object(_Hacking__WEBPACK_IMPORTED_MODULE_12__[/* calculateHackingExpGain */ "c"])(server) * threads;
+                var expGainedOnSuccess = Object(_Hacking__WEBPACK_IMPORTED_MODULE_11__[/* calculateHackingExpGain */ "c"])(server) * threads;
                 var expGainedOnFailure = (expGainedOnSuccess / 4);
                 if (rand < hackChance) { //Success!
-                    const percentHacked = Object(_Hacking__WEBPACK_IMPORTED_MODULE_12__[/* calculatePercentMoneyHacked */ "e"])(server);
+                    const percentHacked = Object(_Hacking__WEBPACK_IMPORTED_MODULE_11__[/* calculatePercentMoneyHacked */ "e"])(server);
                     let maxThreadNeeded = Math.ceil(1/percentHacked*(server.moneyAvailable/server.moneyMax));
                     if (isNaN(maxThreadNeeded)) {
                         //Server has a 'max money' of 0 (probably).
@@ -20541,11 +20392,11 @@ function NetscriptFunctions(workerScript) {
                     server.moneyAvailable -= moneyGained;
                     if (server.moneyAvailable < 0) {server.moneyAvailable = 0;}
 
-                    _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].gainMoney(moneyGained);
+                    _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].gainMoney(moneyGained);
                     workerScript.scriptRef.onlineMoneyMade += moneyGained;
-                    _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].scriptProdSinceLastAug += moneyGained;
+                    _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].scriptProdSinceLastAug += moneyGained;
                     workerScript.scriptRef.recordHack(server.ip, moneyGained, threads);
-                    _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].gainHackingExp(expGainedOnSuccess);
+                    _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].gainHackingExp(expGainedOnSuccess);
                     workerScript.scriptRef.onlineExpGained += expGainedOnSuccess;
                     if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.hack == null) {
                         workerScript.scriptRef.log("Script SUCCESSFULLY hacked " + server.hostname + " for $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_41__["formatNumber"])(moneyGained, 2) + " and " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_41__["formatNumber"])(expGainedOnSuccess, 4) +  " exp (t=" + threads + ")");
@@ -20554,7 +20405,7 @@ function NetscriptFunctions(workerScript) {
                     return Promise.resolve(moneyGained);
                 } else {
                     //Player only gains 25% exp for failure?
-                    _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].gainHackingExp(expGainedOnFailure);
+                    _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].gainHackingExp(expGainedOnFailure);
                     workerScript.scriptRef.onlineExpGained += expGainedOnFailure;
                     if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.hack == null) {
                         workerScript.scriptRef.log("Script FAILED to hack " + server.hostname + ". Gained " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_41__["formatNumber"])(expGainedOnFailure, 4) + " exp (t=" + threads + ")");
@@ -20597,7 +20448,7 @@ function NetscriptFunctions(workerScript) {
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot grow this server (" + server.hostname + ") because user does not have root access");
             }
 
-            var growTime = Object(_Hacking__WEBPACK_IMPORTED_MODULE_12__[/* calculateGrowTime */ "a"])(server);
+            var growTime = Object(_Hacking__WEBPACK_IMPORTED_MODULE_11__[/* calculateGrowTime */ "a"])(server);
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.grow == null) {
                 workerScript.scriptRef.log("Executing grow() on server " + server.hostname + " in " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_41__["formatNumber"])(growTime, 3) + " seconds (t=" + threads + ")");
             }
@@ -20608,7 +20459,7 @@ function NetscriptFunctions(workerScript) {
                 var growthPercentage = Object(_Server__WEBPACK_IMPORTED_MODULE_23__[/* processSingleServerGrowth */ "k"])(server, 450 * threads);
                 const moneyAfter = server.moneyAvailable;
                 workerScript.scriptRef.recordGrow(server.ip, threads);
-                var expGain = Object(_Hacking__WEBPACK_IMPORTED_MODULE_12__[/* calculateHackingExpGain */ "c"])(server) * threads;
+                var expGain = Object(_Hacking__WEBPACK_IMPORTED_MODULE_11__[/* calculateHackingExpGain */ "c"])(server) * threads;
                 if (growthPercentage == 1) {
                     expGain = 0;
                 }
@@ -20618,7 +20469,7 @@ function NetscriptFunctions(workerScript) {
                                                 Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_41__["formatNumber"])(expGain, 4) + " hacking exp (t=" + threads +")");
                 }
                 workerScript.scriptRef.onlineExpGained += expGain;
-                _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].gainHackingExp(expGain);
+                _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].gainHackingExp(expGain);
                 return Promise.resolve(moneyAfter/moneyBefore);
             });
         },
@@ -20658,7 +20509,7 @@ function NetscriptFunctions(workerScript) {
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot weaken this server (" + server.hostname + ") because user does not have root access");
             }
 
-            var weakenTime = Object(_Hacking__WEBPACK_IMPORTED_MODULE_12__[/* calculateWeakenTime */ "f"])(server);
+            var weakenTime = Object(_Hacking__WEBPACK_IMPORTED_MODULE_11__[/* calculateWeakenTime */ "f"])(server);
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.weaken == null) {
                 workerScript.scriptRef.log("Executing weaken() on server " + server.hostname + " in " +
                                            Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_41__["formatNumber"])(weakenTime, 3) + " seconds (t=" + threads + ")");
@@ -20667,13 +20518,13 @@ function NetscriptFunctions(workerScript) {
                 if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
                 server.weaken(_Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ServerWeakenAmount * threads);
                 workerScript.scriptRef.recordWeaken(server.ip, threads);
-                var expGain = Object(_Hacking__WEBPACK_IMPORTED_MODULE_12__[/* calculateHackingExpGain */ "c"])(server) * threads;
+                var expGain = Object(_Hacking__WEBPACK_IMPORTED_MODULE_11__[/* calculateHackingExpGain */ "c"])(server) * threads;
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.weaken == null) {
                     workerScript.scriptRef.log("Server security level on " + server.hostname + " weakened to " + server.hackDifficulty +
                                                ". Gained " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_41__["formatNumber"])(expGain, 4) + " hacking exp (t=" + threads + ")");
                 }
                 workerScript.scriptRef.onlineExpGained += expGain;
-                _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].gainHackingExp(expGain);
+                _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].gainHackingExp(expGain);
                 return Promise.resolve(_Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ServerWeakenAmount * threads);
             });
         },
@@ -20762,7 +20613,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("Cannot call nuke(). Invalid IP or hostname passed in: " + ip);
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot call nuke(). Invalid IP or hostname passed in: " + ip);
             }
-            if (!_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].hasProgram(_CreateProgram__WEBPACK_IMPORTED_MODULE_10__[/* Programs */ "a"].NukeProgram.name)) {
+            if (!_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].hasProgram(_Programs_Programs__WEBPACK_IMPORTED_MODULE_21__["Programs"].NukeProgram.name)) {
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You do not have the NUKE.exe virus!");
             }
             if (server.openPortCount < server.numOpenPortsRequired) {
@@ -20793,7 +20644,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("Cannot call brutessh(). Invalid IP or hostname passed in: " + ip);
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot call brutessh(). Invalid IP or hostname passed in: " + ip);
             }
-            if (!_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].hasProgram(_CreateProgram__WEBPACK_IMPORTED_MODULE_10__[/* Programs */ "a"].BruteSSHProgram.name)) {
+            if (!_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].hasProgram(_Programs_Programs__WEBPACK_IMPORTED_MODULE_21__["Programs"].BruteSSHProgram.name)) {
                 workerScript.scriptRef.log("You do not have the BruteSSH.exe program!");
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You do not have the BruteSSH.exe program!");
             }
@@ -20823,7 +20674,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("Cannot call ftpcrack(). Invalid IP or hostname passed in: " + ip);
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot call ftpcrack(). Invalid IP or hostname passed in: " + ip);
             }
-            if (!_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].hasProgram(_CreateProgram__WEBPACK_IMPORTED_MODULE_10__[/* Programs */ "a"].FTPCrackProgram.name)) {
+            if (!_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].hasProgram(_Programs_Programs__WEBPACK_IMPORTED_MODULE_21__["Programs"].FTPCrackProgram.name)) {
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You do not have the FTPCrack.exe program!");
             }
             if (!server.ftpPortOpen) {
@@ -20852,7 +20703,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("Cannot call relaysmtp(). Invalid IP or hostname passed in: " + ip);
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot call relaysmtp(). Invalid IP or hostname passed in: " + ip);
             }
-            if (!_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].hasProgram(_CreateProgram__WEBPACK_IMPORTED_MODULE_10__[/* Programs */ "a"].RelaySMTPProgram.name)) {
+            if (!_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].hasProgram(_Programs_Programs__WEBPACK_IMPORTED_MODULE_21__["Programs"].RelaySMTPProgram.name)) {
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You do not have the relaySMTP.exe program!");
             }
             if (!server.smtpPortOpen) {
@@ -20881,7 +20732,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("Cannot call httpworm(). Invalid IP or hostname passed in: " + ip);
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot call httpworm(). Invalid IP or hostname passed in: " + ip);
             }
-            if (!_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].hasProgram(_CreateProgram__WEBPACK_IMPORTED_MODULE_10__[/* Programs */ "a"].HTTPWormProgram.name)) {
+            if (!_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].hasProgram(_Programs_Programs__WEBPACK_IMPORTED_MODULE_21__["Programs"].HTTPWormProgram.name)) {
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You do not have the HTTPWorm.exe program!");
             }
             if (!server.httpPortOpen) {
@@ -20910,7 +20761,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("Cannot call sqlinject(). Invalid IP or hostname passed in: " + ip);
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot call sqlinject(). Invalid IP or hostname passed in: " + ip);
             }
-            if (!_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].hasProgram(_CreateProgram__WEBPACK_IMPORTED_MODULE_10__[/* Programs */ "a"].SQLInjectProgram.name)) {
+            if (!_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].hasProgram(_Programs_Programs__WEBPACK_IMPORTED_MODULE_21__["Programs"].SQLInjectProgram.name)) {
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You do not have the SQLInject.exe program!");
             }
             if (!server.sqlPortOpen) {
@@ -21128,7 +20979,7 @@ function NetscriptFunctions(workerScript) {
             if (scriptname.endsWith(".lit")) {
                 var found = false;
                 for (var i = 0; i < currServ.messages.length; ++i) {
-                    if (!(currServ.messages[i] instanceof _Message__WEBPACK_IMPORTED_MODULE_19__[/* Message */ "a"]) && currServ.messages[i] == scriptname) {
+                    if (!(currServ.messages[i] instanceof _Message__WEBPACK_IMPORTED_MODULE_18__[/* Message */ "a"]) && currServ.messages[i] == scriptname) {
                         found = true;
                         break;
                     }
@@ -21270,7 +21121,7 @@ function NetscriptFunctions(workerScript) {
             }
             for (var i = 0; i < server.messages.length; i++) {
                 if (filter) {
-                    if (server.messages[i] instanceof _Message__WEBPACK_IMPORTED_MODULE_19__[/* Message */ "a"]) {
+                    if (server.messages[i] instanceof _Message__WEBPACK_IMPORTED_MODULE_18__[/* Message */ "a"]) {
                         if (server.messages[i].filename.includes(filter)) {
                             allFiles.push(server.messages[i].filename);
                         }
@@ -21278,7 +21129,7 @@ function NetscriptFunctions(workerScript) {
                         allFiles.push(server.messages[i]);
                     }
                 } else {
-                    if (server.messages[i] instanceof _Message__WEBPACK_IMPORTED_MODULE_19__[/* Message */ "a"]) {
+                    if (server.messages[i] instanceof _Message__WEBPACK_IMPORTED_MODULE_18__[/* Message */ "a"]) {
                         allFiles.push(server.messages[i].filename);
                     } else {
                         allFiles.push(server.messages[i]);
@@ -21369,11 +21220,11 @@ function NetscriptFunctions(workerScript) {
                 return updateStaticRam("getHackingLevel", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptGetHackingLevelRamCost);
             }
             updateDynamicRam("getHackingLevel", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptGetHackingLevelRamCost);
-            _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].updateSkillLevels();
+            _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].updateSkillLevels();
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getHackingLevel == null) {
-                workerScript.scriptRef.log("getHackingLevel() returned " + _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].hacking_skill);
+                workerScript.scriptRef.log("getHackingLevel() returned " + _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].hacking_skill);
             }
-            return _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].hacking_skill;
+            return _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].hacking_skill;
         },
         getHackingMultipliers : function() {
             if (workerScript.checkingRam) {
@@ -21381,10 +21232,10 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("getHackingMultipliers", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptGetMultipliersRamCost);
             return {
-                chance: _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].hacking_chance_mult,
-                speed: _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].hacking_speed_mult,
-                money: _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].hacking_money_mult,
-                growth: _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].hacking_grow_mult,
+                chance: _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].hacking_chance_mult,
+                speed: _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].hacking_speed_mult,
+                money: _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].hacking_money_mult,
+                growth: _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].hacking_grow_mult,
             };
         },
         getHacknetMultipliers : function() {
@@ -21393,11 +21244,11 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("getHacknetMultipliers", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptGetMultipliersRamCost);
             return {
-                production: _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].hacknet_node_money_mult,
-                purchaseCost: _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].hacknet_node_purchase_cost_mult,
-                ramCost: _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].hacknet_node_ram_cost_mult,
-                coreCost: _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].hacknet_node_core_cost_mult,
-                levelCost: _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].hacknet_node_level_cost_mult,
+                production: _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].hacknet_node_money_mult,
+                purchaseCost: _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].hacknet_node_purchase_cost_mult,
+                ramCost: _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].hacknet_node_ram_cost_mult,
+                coreCost: _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].hacknet_node_core_cost_mult,
+                levelCost: _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].hacknet_node_level_cost_mult,
             };
         },
         getBitNodeMultipliers: function() {
@@ -21424,9 +21275,9 @@ function NetscriptFunctions(workerScript) {
             if (server.hostname == "home") {
                 //Return player's money
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerMoneyAvailable == null) {
-                    workerScript.scriptRef.log("getServerMoneyAvailable('home') returned player's money: $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_41__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].money.toNumber(), 2));
+                    workerScript.scriptRef.log("getServerMoneyAvailable('home') returned player's money: $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_41__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].money.toNumber(), 2));
                 }
-                return _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].money.toNumber();
+                return _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].money.toNumber();
             }
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerMoneyAvailable == null) {
                 workerScript.scriptRef.log("getServerMoneyAvailable() returned " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_41__["formatNumber"])(server.moneyAvailable, 2) + " for " + server.hostname);
@@ -21584,7 +21435,7 @@ function NetscriptFunctions(workerScript) {
                 }
             }
             for (var i = 0; i < server.messages.length; ++i) {
-                if (!(server.messages[i] instanceof _Message__WEBPACK_IMPORTED_MODULE_19__[/* Message */ "a"]) &&
+                if (!(server.messages[i] instanceof _Message__WEBPACK_IMPORTED_MODULE_18__[/* Message */ "a"]) &&
                     filename.toLowerCase() === server.messages[i]) {
                     return true;
                 }
@@ -21619,7 +21470,7 @@ function NetscriptFunctions(workerScript) {
                 return updateStaticRam("getStockSymbols", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptGetStockRamCost);
             }
             updateDynamicRam("getStockSymbols", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptGetStockRamCost);
-            if (!_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].hasTixApiAccess) {
+            if (!_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].hasTixApiAccess) {
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have TIX API Access! Cannot use getStockSymbols()");
             }
             return Object.values(_StockMarket__WEBPACK_IMPORTED_MODULE_27__[/* StockSymbols */ "d"]);
@@ -21629,7 +21480,7 @@ function NetscriptFunctions(workerScript) {
                 return updateStaticRam("getStockPrice", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptGetStockRamCost);
             }
             updateDynamicRam("getStockPrice", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptGetStockRamCost);
-            if (!_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].hasTixApiAccess) {
+            if (!_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].hasTixApiAccess) {
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have TIX API Access! Cannot use getStockPrice()");
             }
             var stock = _StockMarket__WEBPACK_IMPORTED_MODULE_27__[/* SymbolToStockMap */ "e"][symbol];
@@ -21643,7 +21494,7 @@ function NetscriptFunctions(workerScript) {
                 return updateStaticRam("getStockPosition", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptGetStockRamCost);
             }
             updateDynamicRam("getStockPosition", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptGetStockRamCost);
-            if (!_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].hasTixApiAccess) {
+            if (!_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].hasTixApiAccess) {
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have TIX API Access! Cannot use getStockPosition()");
             }
             var stock = _StockMarket__WEBPACK_IMPORTED_MODULE_27__[/* SymbolToStockMap */ "e"][symbol];
@@ -21657,7 +21508,7 @@ function NetscriptFunctions(workerScript) {
                 return updateStaticRam("buyStock", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBuySellStockRamCost);
             }
             updateDynamicRam("buyStock", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBuySellStockRamCost);
-            if (!_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].hasTixApiAccess) {
+            if (!_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].hasTixApiAccess) {
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have TIX API Access! Cannot use buyStock()");
             }
             var stock = _StockMarket__WEBPACK_IMPORTED_MODULE_27__[/* SymbolToStockMap */ "e"][symbol];
@@ -21672,7 +21523,7 @@ function NetscriptFunctions(workerScript) {
             if (shares === 0) {return 0;}
 
             var totalPrice = stock.price * shares;
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].money.lt(totalPrice + _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].StockMarketCommission)) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].money.lt(totalPrice + _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].StockMarketCommission)) {
                 workerScript.scriptRef.log("Not enough money to purchase " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_41__["formatNumber"])(shares, 0) + " shares of " +
                                            symbol + ". Need $" +
                                            Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_41__["formatNumber"])(totalPrice + _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].StockMarketCommission, 2).toString());
@@ -21680,7 +21531,7 @@ function NetscriptFunctions(workerScript) {
             }
 
             var origTotal = stock.playerShares * stock.playerAvgPx;
-            _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].loseMoney(totalPrice + _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].StockMarketCommission);
+            _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].loseMoney(totalPrice + _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].StockMarketCommission);
             var newTotal = origTotal + totalPrice;
             stock.playerShares += shares;
             stock.playerAvgPx = newTotal / stock.playerShares;
@@ -21698,7 +21549,7 @@ function NetscriptFunctions(workerScript) {
                 return updateStaticRam("sellStock", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBuySellStockRamCost);
             }
             updateDynamicRam("sellStock", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBuySellStockRamCost);
-            if (!_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].hasTixApiAccess) {
+            if (!_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].hasTixApiAccess) {
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have TIX API Access! Cannot use sellStock()");
             }
             var stock = _StockMarket__WEBPACK_IMPORTED_MODULE_27__[/* SymbolToStockMap */ "e"][symbol];
@@ -21713,13 +21564,13 @@ function NetscriptFunctions(workerScript) {
             if (shares > stock.playerShares) {shares = stock.playerShares;}
             if (shares === 0) {return 0;}
             var gains = stock.price * shares - _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].StockMarketCommission;
-            _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].gainMoney(gains);
+            _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].gainMoney(gains);
 
             //Calculate net profit and add to script stats
             var netProfit = ((stock.price - stock.playerAvgPx) * shares) - _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].StockMarketCommission;
             if (isNaN(netProfit)) {netProfit = 0;}
             workerScript.scriptRef.onlineMoneyMade += netProfit;
-            _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].scriptProdSinceLastAug += netProfit;
+            _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].scriptProdSinceLastAug += netProfit;
 
             stock.playerShares -= shares;
             if (stock.playerShares == 0) {
@@ -21740,10 +21591,10 @@ function NetscriptFunctions(workerScript) {
                 return updateStaticRam("shortStock", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBuySellStockRamCost);
             }
             updateDynamicRam("shortStock", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBuySellStockRamCost);
-            if (!_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].hasTixApiAccess) {
+            if (!_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].hasTixApiAccess) {
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have TIX API Access! Cannot use shortStock()");
             }
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN !== 8) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN !== 8) {
                 if (!(hasWallStreetSF && wallStreetSFLvl >= 2)) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Cannot use shortStock(). You must either be in BitNode-8 or you must have Level 2 of Source-File 8");
                 }
@@ -21760,10 +21611,10 @@ function NetscriptFunctions(workerScript) {
                 return updateStaticRam("sellShort", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBuySellStockRamCost);
             }
             updateDynamicRam("sellShort", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBuySellStockRamCost);
-            if (!_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].hasTixApiAccess) {
+            if (!_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].hasTixApiAccess) {
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have TIX API Access! Cannot use sellShort()");
             }
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN !== 8) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN !== 8) {
                 if (!(hasWallStreetSF && wallStreetSFLvl >= 2)) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Cannot use sellShort(). You must either be in BitNode-8 or you must have Level 2 of Source-File 8");
                 }
@@ -21780,10 +21631,10 @@ function NetscriptFunctions(workerScript) {
                 return updateStaticRam("placeOrder", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBuySellStockRamCost);
             }
             updateDynamicRam("placeOrder", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBuySellStockRamCost);
-            if (!_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].hasTixApiAccess) {
+            if (!_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].hasTixApiAccess) {
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have TIX API Access! Cannot use placeOrder()");
             }
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN !== 8) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN !== 8) {
                 if (!(hasWallStreetSF && wallStreetSFLvl >= 3)) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Cannot use placeOrder(). You must either be in BitNode-8 or have Level 3 of Source-File 8");
                 }
@@ -21822,10 +21673,10 @@ function NetscriptFunctions(workerScript) {
                 return updateStaticRam("cancelOrder", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBuySellStockRamCost);
             }
             updateDynamicRam("cancelOrder", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBuySellStockRamCost);
-            if (!_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].hasTixApiAccess) {
+            if (!_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].hasTixApiAccess) {
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have TIX API Access! Cannot use cancelOrder()");
             }
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN !== 8) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN !== 8) {
                 if (!(hasWallStreetSF && wallStreetSFLvl >= 3)) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Cannot use cancelOrder(). You must either be in BitNode-8 or have Level 3 of Source-File 8");
                 }
@@ -21873,7 +21724,7 @@ function NetscriptFunctions(workerScript) {
                 return updateStaticRam("getStockVolatility", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBuySellStockRamCost);
             }
             updateDynamicRam("getStockVolatility", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBuySellStockRamCost);
-            if (!_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].has4SDataTixApi) {
+            if (!_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].has4SDataTixApi) {
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have 4S Market Data TIX API Access! Cannot use getStockVolatility()");
             }
             var stock = _StockMarket__WEBPACK_IMPORTED_MODULE_27__[/* SymbolToStockMap */ "e"][symbol];
@@ -21887,7 +21738,7 @@ function NetscriptFunctions(workerScript) {
                 return updateStaticRam("getStockForecast", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBuySellStockRamCost);
             }
             updateDynamicRam("getStockForecast", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBuySellStockRamCost);
-            if (!_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].has4SDataTixApi) {
+            if (!_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].has4SDataTixApi) {
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have 4S Market Data TIX API Access! Cannot use getStockForecast()");
             }
             var stock = _StockMarket__WEBPACK_IMPORTED_MODULE_27__[/* SymbolToStockMap */ "e"][symbol];
@@ -21904,26 +21755,26 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("purchase4SMarketData", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBuySellStockRamCost);
 
-            if (!_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].hasTixApiAccess) {
+            if (!_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].hasTixApiAccess) {
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have TIX API Access! Cannot use purchase4SMarketData()");
             }
 
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].has4SData) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].has4SData) {
                 if (workerScript.shouldLog("purchase4SMarketData")) {
                     workerScript.log("Already purchased 4S Market Data");
                 }
                 return true;
             }
 
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].money.lt(_Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].MarketData4SCost)) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].money.lt(_Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].MarketData4SCost)) {
                 if (workerScript.shouldLog("purchase4SMarketData")) {
                     workerScript.log("Failed to purchase 4S Market Data - Not enough money");
                 }
                 return false;
             }
 
-            _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].has4SData = true;
-            _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].loseMoney(_Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].MarketData4SCost);
+            _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].has4SData = true;
+            _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].loseMoney(_Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].MarketData4SCost);
             if (workerScript.shouldLog("purchase4SMarketData")) {
                 workerScript.log("Purchased 4S Market Data");
             }
@@ -21935,26 +21786,26 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("purchase4SMarketDataTixApi", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBuySellStockRamCost);
 
-            if (!_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].hasTixApiAccess) {
+            if (!_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].hasTixApiAccess) {
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have TIX API Access! Cannot use purchase4SMarketDataTixApi()");
             }
 
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].has4SDataTixApi) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].has4SDataTixApi) {
                 if (workerScript.shouldLog("purchase4SMarketDataTixApi")) {
                     workerScript.log("Already purchased 4S Market Data TIX API");
                 }
                 return true;
             }
 
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].money.lt(_Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].MarketDataTixApi4SCost)) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].money.lt(_Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].MarketDataTixApi4SCost)) {
                 if (workerScript.shouldLog("purchase4SMarketDataTixApi")) {
                     workerScript.log("Failed to purchase 4S Market Data TIX API - Not enough money");
                 }
                 return false;
             }
 
-            _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].has4SDataTixApi = true;
-            _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].loseMoney(_Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].MarketDataTixApi4SCost);
+            _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].has4SDataTixApi = true;
+            _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].loseMoney(_Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].MarketDataTixApi4SCost);
             if (workerScript.shouldLog("purchase4SMarketDataTixApi")) {
                 workerScript.log("Purchased 4S Market Data TIX API");
             }
@@ -22004,7 +21855,7 @@ function NetscriptFunctions(workerScript) {
                 return "";
             }
 
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].purchasedServers.length >= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].PurchasedServerLimit) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].purchasedServers.length >= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].PurchasedServerLimit) {
                 workerScript.scriptRef.log("ERROR: You have reached the maximum limit of " + _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].PurchasedServerLimit +
                                            " servers. You cannot purchase any more.");
                 return "";
@@ -22018,7 +21869,7 @@ function NetscriptFunctions(workerScript) {
                 return "";
             }
 
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].money.lt(cost)) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].money.lt(cost)) {
                 workerScript.scriptRef.log("ERROR: Not enough money to purchase server. Need $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_41__["formatNumber"])(cost, 2));
                 return "";
             }
@@ -22033,11 +21884,11 @@ function NetscriptFunctions(workerScript) {
             });
             Object(_Server__WEBPACK_IMPORTED_MODULE_23__[/* AddToAllServers */ "a"])(newServ);
 
-            _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].purchasedServers.push(newServ.ip);
-            var homeComputer = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].getHomeComputer();
+            _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].purchasedServers.push(newServ.ip);
+            var homeComputer = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].getHomeComputer();
             homeComputer.serversOnNetwork.push(newServ.ip);
             newServ.serversOnNetwork.push(homeComputer.ip);
-            _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].loseMoney(cost);
+            _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].loseMoney(cost);
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.purchaseServer == null) {
                 workerScript.scriptRef.log("Purchased new server with hostname " + newServ.hostname + " for $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_41__["formatNumber"])(cost, 2));
             }
@@ -22084,10 +21935,10 @@ function NetscriptFunctions(workerScript) {
 
             //Delete from player's purchasedServers array
             var found = false;
-            for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].purchasedServers.length; ++i) {
-                if (ip == _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].purchasedServers[i]) {
+            for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].purchasedServers.length; ++i) {
+                if (ip == _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].purchasedServers[i]) {
                     found = true;
-                    _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].purchasedServers.splice(i, 1);
+                    _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].purchasedServers.splice(i, 1);
                     break;
                 }
             }
@@ -22103,7 +21954,7 @@ function NetscriptFunctions(workerScript) {
 
             //Delete from home computer
             found = false;
-            var homeComputer = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].getHomeComputer();
+            var homeComputer = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].getHomeComputer();
             for (var i = 0; i < homeComputer.serversOnNetwork.length; ++i) {
                 if (ip == homeComputer.serversOnNetwork[i]) {
                     homeComputer.serversOnNetwork.splice(i, 1);
@@ -22124,7 +21975,7 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("getPurchasedServers", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptPurchaseServerRamCost);
             var res = [];
-            _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].purchasedServers.forEach(function(ip) {
+            _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].purchasedServers.forEach(function(ip) {
                 if (hostname) {
                     var server = Object(_Server__WEBPACK_IMPORTED_MODULE_23__[/* getServer */ "e"])(ip);
                     if (server == null) {
@@ -22353,7 +22204,7 @@ function NetscriptFunctions(workerScript) {
             } else if (fn.endsWith(".lit")) {
                 for (var i = 0; i < s.messages.length; ++i) {
                     var f = s.messages[i];
-                    if (!(f instanceof _Message__WEBPACK_IMPORTED_MODULE_19__[/* Message */ "a"]) && Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_42__["isString"])(f) && f === fn) {
+                    if (!(f instanceof _Message__WEBPACK_IMPORTED_MODULE_18__[/* Message */ "a"]) && Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_42__["isString"])(f) && f === fn) {
                         s.messages.splice(i, 1);
                         return true;
                     }
@@ -22442,7 +22293,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("getHackTime() failed. Invalid IP or hostname passed in: " + ip);
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getHackTime() failed. Invalid IP or hostname passed in: " + ip);
             }
-            return Object(_Hacking__WEBPACK_IMPORTED_MODULE_12__[/* calculateHackingTime */ "d"])(server, hack, int); //Returns seconds
+            return Object(_Hacking__WEBPACK_IMPORTED_MODULE_11__[/* calculateHackingTime */ "d"])(server, hack, int); //Returns seconds
         },
         getGrowTime : function(ip, hack, int) {
             if (workerScript.checkingRam) {
@@ -22454,7 +22305,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("getGrowTime() failed. Invalid IP or hostname passed in: " + ip);
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getGrowTime() failed. Invalid IP or hostname passed in: " + ip);
             }
-            return Object(_Hacking__WEBPACK_IMPORTED_MODULE_12__[/* calculateGrowTime */ "a"])(server, hack, int); //Returns seconds
+            return Object(_Hacking__WEBPACK_IMPORTED_MODULE_11__[/* calculateGrowTime */ "a"])(server, hack, int); //Returns seconds
         },
         getWeakenTime : function(ip, hack, int) {
             if (workerScript.checkingRam) {
@@ -22466,7 +22317,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("getWeakenTime() failed. Invalid IP or hostname passed in: " + ip);
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getWeakenTime() failed. Invalid IP or hostname passed in: " + ip);
             }
-            return Object(_Hacking__WEBPACK_IMPORTED_MODULE_12__[/* calculateWeakenTime */ "f"])(server, hack, int); //Returns seconds
+            return Object(_Hacking__WEBPACK_IMPORTED_MODULE_11__[/* calculateWeakenTime */ "f"])(server, hack, int); //Returns seconds
         },
         getScriptIncome : function(scriptname, ip) {
             if (workerScript.checkingRam) {
@@ -22477,7 +22328,7 @@ function NetscriptFunctions(workerScript) {
                 //Get total script income
                 var res = [];
                 res.push(Object(_ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_0__[/* updateActiveScriptsItems */ "c"])());
-                res.push(_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].scriptProdSinceLastAug / (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].playtimeSinceLastAug/1000));
+                res.push(_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].scriptProdSinceLastAug / (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].playtimeSinceLastAug/1000));
                 return res;
             } else {
                 //Get income for a particular script
@@ -22533,7 +22384,7 @@ function NetscriptFunctions(workerScript) {
                 return updateStaticRam("getTimeSinceLastAug", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptGetHackTimeRamCost);
             }
             updateDynamicRam("getTimeSinceLastAug", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptGetHackTimeRamCost);
-            return _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].playtimeSinceLastAug;
+            return _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].playtimeSinceLastAug;
         },
         prompt : function(txt) {
             if (workerScript.checkingRam) {return 0;}
@@ -22599,23 +22450,23 @@ function NetscriptFunctions(workerScript) {
         /* Singularity Functions */
         universityCourse : function(universityName, className) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFn1RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("universityCourse", ramCost);
             }
             updateDynamicRam("universityCourse", ramCost);
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN != 4) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 1)) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run universityCourse(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
                     return false;
                 }
             }
-            if (_Missions__WEBPACK_IMPORTED_MODULE_20__[/* inMission */ "c"]) {
+            if (_Missions__WEBPACK_IMPORTED_MODULE_19__[/* inMission */ "c"]) {
                 workerScript.scriptRef.log("ERROR: universityCourse() failed because you are in the middle of a mission.");
                 return;
             }
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].isWorking) {
-                var txt = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].singularityStopWork();
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].isWorking) {
+                var txt = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].singularityStopWork();
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.universityCourse == null) {
                     workerScript.scriptRef.log(txt);
                 }
@@ -22623,30 +22474,30 @@ function NetscriptFunctions(workerScript) {
 
             var costMult, expMult;
             switch(universityName.toLowerCase()) {
-                case _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].AevumSummitUniversity.toLowerCase():
-                    if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].city != _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].Aevum) {
+                case _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].AevumSummitUniversity.toLowerCase():
+                    if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].city != _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].Aevum) {
                         workerScript.scriptRef.log("ERROR: You cannot study at Summit University because you are not in Aevum. universityCourse() failed");
                         return false;
                     }
-                    _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].AevumSummitUniversity;
+                    _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].AevumSummitUniversity;
                     costMult = 4;
                     expMult = 3;
                     break;
-                case _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].Sector12RothmanUniversity.toLowerCase():
-                    if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].city != _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].Sector12) {
+                case _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].Sector12RothmanUniversity.toLowerCase():
+                    if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].city != _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].Sector12) {
                         workerScript.scriptRef.log("ERROR: You cannot study at Rothman University because you are not in Sector-12. universityCourse() failed");
                         return false;
                     }
-                    _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].Sector12RothmanUniversity;
+                    _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].Sector12RothmanUniversity;
                     costMult = 3;
                     expMult = 2;
                     break;
-                case _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].VolhavenZBInstituteOfTechnology.toLowerCase():
-                    if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].city != _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].Volhaven) {
+                case _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].VolhavenZBInstituteOfTechnology.toLowerCase():
+                    if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].city != _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].Volhaven) {
                         workerScript.scriptRef.log("ERROR: You cannot study at ZB Institute of Technology because you are not in Volhaven. universityCourse() failed");
                         return false;
                     }
-                    _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].VolhavenZBInstituteOfTechnology;
+                    _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].VolhavenZBInstituteOfTechnology;
                     costMult = 5;
                     expMult = 4;
                     break;
@@ -22679,7 +22530,7 @@ function NetscriptFunctions(workerScript) {
                     workerScript.scriptRef.log("Invalid class name: " + className + ". universityCourse() failed");
                     return false;
             }
-            _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].startClass(costMult, expMult, task);
+            _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].startClass(costMult, expMult, task);
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.universityCourse == null) {
                 workerScript.scriptRef.log("Started " + task + " at " + universityName);
             }
@@ -22688,71 +22539,71 @@ function NetscriptFunctions(workerScript) {
 
         gymWorkout : function(gymName, stat) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFn1RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("gymWorkout", ramCost);
             }
             updateDynamicRam("gymWorkout", ramCost);
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN != 4) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 1)) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run gymWorkout(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
                     return false;
                 }
             }
-            if (_Missions__WEBPACK_IMPORTED_MODULE_20__[/* inMission */ "c"]) {
+            if (_Missions__WEBPACK_IMPORTED_MODULE_19__[/* inMission */ "c"]) {
                 workerScript.scriptRef.log("ERROR: gymWorkout() failed because you are in the middle of a mission.");
                 return;
             }
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].isWorking) {
-                var txt = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].singularityStopWork();
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].isWorking) {
+                var txt = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].singularityStopWork();
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.gymWorkout == null) {
                     workerScript.scriptRef.log(txt);
                 }
             }
             var costMult, expMult;
             switch(gymName.toLowerCase()) {
-                case _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].AevumCrushFitnessGym.toLowerCase():
-                    if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].city != _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].Aevum) {
+                case _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].AevumCrushFitnessGym.toLowerCase():
+                    if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].city != _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].Aevum) {
                         workerScript.scriptRef.log("ERROR: You cannot workout at Crush Fitness because you are not in Aevum. gymWorkout() failed");
                         return false;
                     }
-                    _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].AevumCrushFitnessGym;
+                    _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].AevumCrushFitnessGym;
                     costMult = 3;
                     expMult = 2;
                     break;
-                case _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].AevumSnapFitnessGym.toLowerCase():
-                    if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].city != _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].Aevum) {
+                case _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].AevumSnapFitnessGym.toLowerCase():
+                    if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].city != _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].Aevum) {
                         workerScript.scriptRef.log("ERROR: You cannot workout at Snap Fitness because you are not in Aevum. gymWorkout() failed");
                         return false;
                     }
-                    _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].AevumSnapFitnessGym;
+                    _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].AevumSnapFitnessGym;
                     costMult = 10;
                     expMult = 5;
                     break;
-                case _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].Sector12IronGym.toLowerCase():
-                    if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].city != _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].Sector12) {
+                case _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].Sector12IronGym.toLowerCase():
+                    if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].city != _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].Sector12) {
                         workerScript.scriptRef.log("ERROR: You cannot workout at Iron Gym because you are not in Sector-12. gymWorkout() failed");
                         return false;
                     }
-                    _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].Sector12IronGym;
+                    _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].Sector12IronGym;
                     costMult = 1;
                     expMult = 1;
                     break;
-                case _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].Sector12PowerhouseGym.toLowerCase():
-                    if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].city != _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].Sector12) {
+                case _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].Sector12PowerhouseGym.toLowerCase():
+                    if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].city != _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].Sector12) {
                         workerScript.scriptRef.log("ERROR: You cannot workout at Powerhouse Gym because you are not in Sector-12. gymWorkout() failed");
                         return false;
                     }
-                    _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].Sector12PowerhouseGym;
+                    _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].Sector12PowerhouseGym;
                     costMult = 20;
                     expMult = 10;
                     break;
-                case _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].VolhavenMilleniumFitnessGym:
-                    if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].city != _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].Volhaven) {
+                case _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].VolhavenMilleniumFitnessGym:
+                    if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].city != _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].Volhaven) {
                         workerScript.scriptRef.log("ERROR: You cannot workout at Millenium Fitness Gym because you are not in Volhaven. gymWorkout() failed");
                         return false;
                     }
-                    _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].VolhavenMilleniumFitnessGym;
+                    _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].VolhavenMilleniumFitnessGym;
                     costMult = 7;
                     expMult = 4;
                     break;
@@ -22764,19 +22615,19 @@ function NetscriptFunctions(workerScript) {
             switch(stat.toLowerCase()) {
                 case "strength".toLowerCase():
                 case "str".toLowerCase():
-                    _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].startClass(costMult, expMult, _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ClassGymStrength);
+                    _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].startClass(costMult, expMult, _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ClassGymStrength);
                     break;
                 case "defense".toLowerCase():
                 case "def".toLowerCase():
-                    _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].startClass(costMult, expMult, _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ClassGymDefense);
+                    _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].startClass(costMult, expMult, _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ClassGymDefense);
                     break;
                 case "dexterity".toLowerCase():
                 case "dex".toLowerCase():
-                    _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].startClass(costMult, expMult, _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ClassGymDexterity);
+                    _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].startClass(costMult, expMult, _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ClassGymDexterity);
                     break;
                 case "agility".toLowerCase():
                 case "agi".toLowerCase():
-                    _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].startClass(costMult, expMult, _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ClassGymAgility);
+                    _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].startClass(costMult, expMult, _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ClassGymAgility);
                     break;
                 default:
                     workerScript.scriptRef.log("Invalid stat: " + stat + ". gymWorkout() failed");
@@ -22790,12 +22641,12 @@ function NetscriptFunctions(workerScript) {
 
         travelToCity(cityname) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFn1RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("travelToCity", ramCost);
             }
             updateDynamicRam("travelToCity", ramCost);
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN != 4) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 1)) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run travelToCity(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
                     return false;
@@ -22803,18 +22654,18 @@ function NetscriptFunctions(workerScript) {
             }
 
             switch(cityname) {
-                case _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].Aevum:
-                case _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].Chongqing:
-                case _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].Sector12:
-                case _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].NewTokyo:
-                case _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].Ishima:
-                case _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].Volhaven:
-                    if(_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].money.lt(_Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].TravelCost)) {
+                case _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].Aevum:
+                case _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].Chongqing:
+                case _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].Sector12:
+                case _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].NewTokyo:
+                case _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].Ishima:
+                case _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].Volhaven:
+                    if(_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].money.lt(_Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].TravelCost)) {
                         workerScript.scriptRef.log("ERROR: not enough money to travel with travelToCity().");
                         throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: not enough money to travel with travelToCity().");
                     }
-                    _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].loseMoney(_Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].TravelCost);
-                    _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].city = cityname;
+                    _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].loseMoney(_Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].TravelCost);
+                    _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].city = cityname;
                     if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.travelToCity == null) {
                         workerScript.scriptRef.log("Traveled to " + cityname);
                     }
@@ -22827,12 +22678,12 @@ function NetscriptFunctions(workerScript) {
 
         purchaseTor() {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFn1RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("purchaseTor", ramCost);
             }
             updateDynamicRam("purchaseTor", ramCost);
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN != 4) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 1)) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run purchaseTor(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
                     return false;
@@ -22844,11 +22695,11 @@ function NetscriptFunctions(workerScript) {
                 return false;
             }
 
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].money.lt(_Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].TorRouterCost)) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].money.lt(_Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].TorRouterCost)) {
                 workerScript.scriptRef.log("ERROR: You cannot afford to purchase a Tor router. purchaseTor() failed");
                 return false;
             }
-            _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].loseMoney(_Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].TorRouterCost);
+            _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].loseMoney(_Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].TorRouterCost);
 
             var darkweb = new _Server__WEBPACK_IMPORTED_MODULE_23__[/* Server */ "d"]({
                 ip:Object(_utils_IPAddress__WEBPACK_IMPORTED_MODULE_40__[/* createRandomIp */ "a"])(), hostname:"darkweb", organizationName:"",
@@ -22861,9 +22712,9 @@ function NetscriptFunctions(workerScript) {
             purchaseTor.setAttribute("class", "a-link-button-bought");
             purchaseTor.innerHTML = "TOR Router - Purchased";
 
-            _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].getHomeComputer().serversOnNetwork.push(darkweb.ip);
-            darkweb.serversOnNetwork.push(_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].getHomeComputer().ip);
-            _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].gainIntelligenceExp(_Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].IntelligenceSingFnBaseExpGain);
+            _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].getHomeComputer().serversOnNetwork.push(darkweb.ip);
+            darkweb.serversOnNetwork.push(_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].getHomeComputer().ip);
+            _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].gainIntelligenceExp(_Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].IntelligenceSingFnBaseExpGain);
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.purchaseTor == null) {
                 workerScript.scriptRef.log("You have purchased a Tor router!");
             }
@@ -22871,12 +22722,12 @@ function NetscriptFunctions(workerScript) {
         },
         purchaseProgram(programName) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFn1RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("purchaseProgram", ramCost);
             }
             updateDynamicRam("purchaseProgram", ramCost);
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN != 4) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 1)) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run purchaseProgram(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
                     return false;
@@ -22891,8 +22742,8 @@ function NetscriptFunctions(workerScript) {
             programName = programName.toLowerCase();
 
             let item = null;
-            for(const key in _DarkWeb__WEBPACK_IMPORTED_MODULE_11__[/* DarkWebItems */ "a"]) {
-                const i = _DarkWeb__WEBPACK_IMPORTED_MODULE_11__[/* DarkWebItems */ "a"][key];
+            for(const key in _DarkWeb_DarkWebItems__WEBPACK_IMPORTED_MODULE_10__["DarkWebItems"]) {
+                const i = _DarkWeb_DarkWebItems__WEBPACK_IMPORTED_MODULE_10__["DarkWebItems"][key];
                 if(i.program.toLowerCase() == programName) {
                     item = i;
                 }
@@ -22903,19 +22754,19 @@ function NetscriptFunctions(workerScript) {
                 return false;
             }
 
-            if(_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].money.lt(item.price)) {
+            if(_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].money.lt(item.price)) {
                 workerScript.scriptRef.log("Not enough money to purchase " + item.program);
                 return false;
             }
 
 
-            if(_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].hasProgram(item.program)) {
+            if(_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].hasProgram(item.program)) {
                 workerScript.scriptRef.log('You already have the '+item.program+' program');
                 return true;
             }
 
-            _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].loseMoney(item.price);
-            _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].getHomeComputer().programs.push(item.program);
+            _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].loseMoney(item.price);
+            _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].getHomeComputer().programs.push(item.program);
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.purchaseProgram == null) {
                 workerScript.scriptRef.log("You have purchased the "+item.program+" program. The new program can be found on your home computer.");
             }
@@ -22923,12 +22774,12 @@ function NetscriptFunctions(workerScript) {
         },
         getStats : function() {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFn1RamCost / 4;
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getStats", ramCost);
             }
             updateDynamicRam("getStats", ramCost);
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN != 4) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 1)) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getStats(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
                     return {};
@@ -22936,23 +22787,23 @@ function NetscriptFunctions(workerScript) {
             }
 
             return {
-                hacking:        _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].hacking_skill,
-                strength:       _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].strength,
-                defense:        _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].defense,
-                dexterity:      _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].dexterity,
-                agility:        _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].agility,
-                charisma:       _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].charisma,
-                intelligence:   _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].intelligence
+                hacking:        _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].hacking_skill,
+                strength:       _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].strength,
+                defense:        _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].defense,
+                dexterity:      _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].dexterity,
+                agility:        _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].agility,
+                charisma:       _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].charisma,
+                intelligence:   _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].intelligence
             }
         },
         getCharacterInformation : function() {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFn1RamCost / 4;
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getCharacterInformation", ramCost);
             }
             updateDynamicRam("getCharacterInformation", ramCost);
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN != 4) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 1)) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getCharacterInformation(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
                     return {};
@@ -22960,74 +22811,74 @@ function NetscriptFunctions(workerScript) {
             }
 
             var companyPositionTitle = "";
-            if (_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_8__["CompanyPositions"][_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].companyPosition] instanceof _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_7__["CompanyPosition"]) {
-                companyPositionTitle = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].companyPosition;
+            if (_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_8__["CompanyPositions"][_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].companyPosition] instanceof _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_7__["CompanyPosition"]) {
+                companyPositionTitle = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].companyPosition;
             }
             return {
-                bitnode:            _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN,
-                city:               _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].city,
-                company:            _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].companyName,
-                factions:           _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].factions.slice(),
+                bitnode:            _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN,
+                city:               _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].city,
+                company:            _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].companyName,
+                factions:           _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].factions.slice(),
                 jobTitle:           companyPositionTitle,
                 mult: {
-                    agility:        _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].agility_mult,
-                    agilityExp:     _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].agility_exp_mult,
-                    companyRep:     _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].company_rep_mult,
-                    crimeMoney:     _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].crime_money_mult,
-                    crimeSuccess:   _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].crime_success_mult,
-                    defense:        _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].defense_mult,
-                    defenseExp:     _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].defense_exp_mult,
-                    dexterity:      _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].dexterity_mult,
-                    dexterityExp:   _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].dexterity_exp_mult,
-                    factionRep:     _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].faction_rep_mult,
-                    hacking:        _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].hacking_mult,
-                    hackingExp:     _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].hacking_exp_mult,
-                    strength:       _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].strength_mult,
-                    strengthExp:    _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].strength_exp_mult,
-                    workMoney:      _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].work_money_mult,
+                    agility:        _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].agility_mult,
+                    agilityExp:     _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].agility_exp_mult,
+                    companyRep:     _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].company_rep_mult,
+                    crimeMoney:     _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].crime_money_mult,
+                    crimeSuccess:   _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].crime_success_mult,
+                    defense:        _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].defense_mult,
+                    defenseExp:     _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].defense_exp_mult,
+                    dexterity:      _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].dexterity_mult,
+                    dexterityExp:   _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].dexterity_exp_mult,
+                    factionRep:     _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].faction_rep_mult,
+                    hacking:        _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].hacking_mult,
+                    hackingExp:     _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].hacking_exp_mult,
+                    strength:       _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].strength_mult,
+                    strengthExp:    _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].strength_exp_mult,
+                    workMoney:      _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].work_money_mult,
                 },
-                timeWorked:         _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].timeWorked,
+                timeWorked:         _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].timeWorked,
                 tor:                _SpecialServerIps__WEBPACK_IMPORTED_MODULE_25__[/* SpecialServerIps */ "a"].hasOwnProperty("Darkweb Server"),
-                workHackExpGain:    _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].workHackExpGained,
-                workStrExpGain:     _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].workStrExpGained,
-                workDefExpGain:     _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].workDefExpGained,
-                workDexExpGain:     _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].workDexExpGained,
-                workAgiExpGain:     _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].workAgiExpGained,
-                workChaExpGain:     _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].workChaExpGained,
-                workRepGain:        _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].workRepGained,
-                workMoneyGain:      _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].workMoneyGained,
+                workHackExpGain:    _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].workHackExpGained,
+                workStrExpGain:     _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].workStrExpGained,
+                workDefExpGain:     _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].workDefExpGained,
+                workDexExpGain:     _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].workDexExpGained,
+                workAgiExpGain:     _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].workAgiExpGained,
+                workChaExpGain:     _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].workChaExpGained,
+                workRepGain:        _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].workRepGained,
+                workMoneyGain:      _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].workMoneyGained,
             };
         },
         isBusy : function() {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFn1RamCost / 4;
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("isBusy", ramCost);
             }
             updateDynamicRam("isBusy", ramCost);
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN != 4) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 1)) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run isBusy(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
                     return;
                 }
             }
-            return _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].isWorking;
+            return _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].isWorking;
         },
         stopAction : function() {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFn1RamCost / 2;
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("stopAction", ramCost);
             }
             updateDynamicRam("stopAction", ramCost);
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN != 4) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 1)) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run stopAction(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
                     return false;
                 }
             }
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].isWorking) {
-                var txt = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].singularityStopWork();
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].isWorking) {
+                var txt = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].singularityStopWork();
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.stopAction == null) {
                     workerScript.scriptRef.log(txt);
                 }
@@ -23037,31 +22888,31 @@ function NetscriptFunctions(workerScript) {
         },
         upgradeHomeRam : function() {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFn2RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("upgradeHomeRam", ramCost);
             }
             updateDynamicRam("upgradeHomeRam", ramCost);
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN != 4) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 2)) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run upgradeHomeRam(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
                     return false;
                 }
             }
 
-            const cost = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].getUpgradeHomeRamCost();
+            const cost = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].getUpgradeHomeRamCost();
 
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].money.lt(cost)) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].money.lt(cost)) {
                 workerScript.scriptRef.log("ERROR: upgradeHomeRam() failed because you don't have enough money");
                 return false;
             }
 
-            var homeComputer = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].getHomeComputer();
+            var homeComputer = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].getHomeComputer();
             homeComputer.maxRam *= 2;
 
-            _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].loseMoney(cost);
+            _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].loseMoney(cost);
 
-            _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].gainIntelligenceExp(_Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].IntelligenceSingFnBaseExpGain);
+            _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].gainIntelligenceExp(_Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].IntelligenceSingFnBaseExpGain);
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.upgradeHomeRam == null) {
                 workerScript.scriptRef.log("Purchased additional RAM for home computer! It now has " + homeComputer.maxRam + "GB of RAM.");
             }
@@ -23069,70 +22920,70 @@ function NetscriptFunctions(workerScript) {
         },
         getUpgradeHomeRamCost : function() {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFn2RamCost / 2;
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getUpgradeHomeRamCost", ramCost);
             }
             updateDynamicRam("getUpgradeHomeRamCost", ramCost);
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN != 4) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 2)) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getUpgradeHomeRamCost(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
                     return false;
                 }
             }
 
-            return _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].getUpgradeHomeRamCost();
+            return _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].getUpgradeHomeRamCost();
         },
         workForCompany : function() {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFn2RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("workForCompany", ramCost);
             }
             updateDynamicRam("workForCompany", ramCost);
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN != 4) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 2)) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run workForCompany(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
                     return false;
                 }
             }
 
-            if (_Missions__WEBPACK_IMPORTED_MODULE_20__[/* inMission */ "c"]) {
+            if (_Missions__WEBPACK_IMPORTED_MODULE_19__[/* inMission */ "c"]) {
                 workerScript.scriptRef.log("ERROR: workForCompany() failed because you are in the middle of a mission.");
                 return;
             }
 
-            const companyPosition = _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_8__["CompanyPositions"][_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].companyPosition];
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].companyPosition === "" || !(companyPosition instanceof _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_7__["CompanyPosition"])) {
+            const companyPosition = _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_8__["CompanyPositions"][_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].companyPosition];
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].companyPosition === "" || !(companyPosition instanceof _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_7__["CompanyPosition"])) {
                 workerScript.scriptRef.log("ERROR: workForCompany() failed because you do not have a job");
                 return false;
             }
 
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].isWorking) {
-                var txt = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].singularityStopWork();
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].isWorking) {
+                var txt = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].singularityStopWork();
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.workForCompany == null) {
                     workerScript.scriptRef.log(txt);
                 }
             }
 
             if (companyPosition.isPartTimeJob()) {
-                _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].startWorkPartTime();
+                _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].startWorkPartTime();
             } else {
-                _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].startWork();
+                _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].startWork();
             }
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.workForCompany == null) {
-                workerScript.log(`Began working at ${_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].companyName} as a ${_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].companyPosition}`);
+                workerScript.log(`Began working at ${_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].companyName} as a ${_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].companyPosition}`);
             }
             return true;
         },
         applyToCompany : function(companyName, field) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFn2RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("applyToCompany", ramCost);
             }
             updateDynamicRam("applyToCompany", ramCost);
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN != 4) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 2)) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run applyToCompany(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
                     return false;
@@ -23144,47 +22995,47 @@ function NetscriptFunctions(workerScript) {
                 return false;
             }
 
-            _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].location = companyName;
+            _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].location = companyName;
             var res;
             switch (field.toLowerCase()) {
                 case "software":
-                    res = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].applyForSoftwareJob(true);
+                    res = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].applyForSoftwareJob(true);
                     break;
                 case "software consultant":
-                    res = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].applyForSoftwareConsultantJob(true);
+                    res = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].applyForSoftwareConsultantJob(true);
                     break;
                 case "it":
-                    res = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].applyForItJob(true);
+                    res = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].applyForItJob(true);
                     break;
                 case "security engineer":
-                    res = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].applyForSecurityEngineerJob(true);
+                    res = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].applyForSecurityEngineerJob(true);
                     break;
                 case "network engineer":
-                    res = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].applyForNetworkEngineerJob(true);
+                    res = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].applyForNetworkEngineerJob(true);
                     break;
                 case "business":
-                    res = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].applyForBusinessJob(true);
+                    res = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].applyForBusinessJob(true);
                     break;
                 case "business consultant":
-                    res = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].applyForBusinessConsultantJob(true);
+                    res = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].applyForBusinessConsultantJob(true);
                     break;
                 case "security":
-                    res = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].applyForSecurityJob(true);
+                    res = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].applyForSecurityJob(true);
                     break;
                 case "agent":
-                    res = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].applyForAgentJob(true);
+                    res = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].applyForAgentJob(true);
                     break;
                 case "employee":
-                    res = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].applyForEmployeeJob(true);
+                    res = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].applyForEmployeeJob(true);
                     break;
                 case "part-time employee":
-                    res = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].applyForPartTimeEmployeeJob(true);
+                    res = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].applyForPartTimeEmployeeJob(true);
                     break;
                 case "waiter":
-                    res = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].applyForWaiterJob(true);
+                    res = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].applyForWaiterJob(true);
                     break;
                 case "part-time waiter":
-                    res = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].applyForPartTimeWaiterJob(true);
+                    res = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].applyForPartTimeWaiterJob(true);
                     break;
                 default:
                     workerScript.scriptRef.log("ERROR: Invalid job passed into applyToCompany: " + field + ". applyToCompany() failed");
@@ -23197,7 +23048,7 @@ function NetscriptFunctions(workerScript) {
             }
             if (res) {
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.applyToCompany == null) {
-                    workerScript.log(`You were offered a new job at ${companyName} as a ${_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].companyPosition}`);
+                    workerScript.log(`You were offered a new job at ${companyName} as a ${_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].companyPosition}`);
                 }
             } else {
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.applyToCompany == null) {
@@ -23208,12 +23059,12 @@ function NetscriptFunctions(workerScript) {
         },
         getCompanyRep : function(companyName) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFn2RamCost / 2;
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getCompanyRep", ramCost);
             }
             updateDynamicRam("getCompanyRep", ramCost);
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN != 4) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 2)) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getCompanyRep(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
                     return false;
@@ -23229,12 +23080,12 @@ function NetscriptFunctions(workerScript) {
         },
         getCompanyFavor : function(companyName) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFn2RamCost / 4;
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getCompanyFavor", ramCost);
             }
             updateDynamicRam("getCompanyFavor", ramCost);
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN != 4) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 2)) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getCompanyFavor(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
                     return false;
@@ -23250,12 +23101,12 @@ function NetscriptFunctions(workerScript) {
         },
         getCompanyFavorGain : function(companyName) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFn2RamCost / 4;
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getCompanyFavorGain", ramCost);
             }
             updateDynamicRam("getCompanyFavorGain", ramCost);
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN != 4) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 2)) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getCompanyFavorGain(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
                     return -1;
@@ -23271,54 +23122,54 @@ function NetscriptFunctions(workerScript) {
         },
         checkFactionInvitations : function() {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFn2RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("checkFactionInvitations", ramCost);
             }
             updateDynamicRam("checkFactionInvitations", ramCost);
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN != 4) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 2)) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run checkFactionInvitations(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
                     return false;
                 }
             }
             //Make a copy of Player.factionInvitations
-            return _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].factionInvitations.slice();
+            return _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].factionInvitations.slice();
         },
         joinFaction : function(name) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFn2RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("joinFaction", ramCost);
             }
             updateDynamicRam("joinFaction", ramCost);
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN != 4) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 2)) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run joinFaction(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
                     return false;
                 }
             }
 
-            if (!Object(_Faction_Factions__WEBPACK_IMPORTED_MODULE_15__["factionExists"])(name)) {
+            if (!Object(_Faction_Factions__WEBPACK_IMPORTED_MODULE_14__["factionExists"])(name)) {
                 workerScript.scriptRef.log("ERROR: Faction specified in joinFaction() does not exist.");
                 return false;
             }
 
-            if (!_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].factionInvitations.includes(name)) {
+            if (!_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].factionInvitations.includes(name)) {
                 workerScript.scriptRef.log("ERROR: Cannot join " + name + " Faction because you have not been invited. joinFaction() failed");
                 return false;
             }
-            var fac = _Faction_Factions__WEBPACK_IMPORTED_MODULE_15__["Factions"][name];
-            Object(_Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_16__[/* joinFaction */ "c"])(fac);
+            var fac = _Faction_Factions__WEBPACK_IMPORTED_MODULE_14__["Factions"][name];
+            Object(_Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_15__[/* joinFaction */ "c"])(fac);
 
             //Update Faction Invitation list to account for joined + banned factions
-            for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].factionInvitations.length; ++i) {
-                if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].factionInvitations[i] == name || _Faction_Factions__WEBPACK_IMPORTED_MODULE_15__["Factions"][_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].factionInvitations[i]].isBanned) {
-                    _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].factionInvitations.splice(i, 1);
+            for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].factionInvitations.length; ++i) {
+                if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].factionInvitations[i] == name || _Faction_Factions__WEBPACK_IMPORTED_MODULE_14__["Factions"][_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].factionInvitations[i]].isBanned) {
+                    _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].factionInvitations.splice(i, 1);
                     i--;
                 }
             }
-            _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].gainIntelligenceExp(_Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].IntelligenceSingFnBaseExpGain);
+            _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].gainIntelligenceExp(_Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].IntelligenceSingFnBaseExpGain);
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.joinFaction == null) {
                 workerScript.scriptRef.log("Joined the " + name + " faction.");
             }
@@ -23326,12 +23177,12 @@ function NetscriptFunctions(workerScript) {
         },
         workForFaction : function(name, type) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFn2RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("workForFaction", ramCost);
             }
             updateDynamicRam("workForFaction", ramCost);
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN != 4) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 2)) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run workForFaction(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
                     return false;
@@ -23339,34 +23190,34 @@ function NetscriptFunctions(workerScript) {
             }
 
             // if the player is in a gang and the target faction is any of the gang faction, fail
-            if(_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].inGang() && _Gang__WEBPACK_IMPORTED_MODULE_13__[/* AllGangs */ "a"][name] !== undefined) {
+            if(_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].inGang() && _Gang__WEBPACK_IMPORTED_MODULE_12__[/* AllGangs */ "a"][name] !== undefined) {
                 workerScript.scriptRef.log("ERROR: Faction specified in workForFaction() does not offer work at the moment.");
                 return;
             }
 
-            if (_Missions__WEBPACK_IMPORTED_MODULE_20__[/* inMission */ "c"]) {
+            if (_Missions__WEBPACK_IMPORTED_MODULE_19__[/* inMission */ "c"]) {
                 workerScript.scriptRef.log("ERROR: workForFaction() failed because you are in the middle of a mission.");
                 return;
             }
 
-            if (!Object(_Faction_Factions__WEBPACK_IMPORTED_MODULE_15__["factionExists"])(name)) {
+            if (!Object(_Faction_Factions__WEBPACK_IMPORTED_MODULE_14__["factionExists"])(name)) {
                 workerScript.scriptRef.log("ERROR: Faction specified in workForFaction() does not exist.");
                 return false;
             }
 
-            if (!_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].factions.includes(name)) {
+            if (!_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].factions.includes(name)) {
                 workerScript.scriptRef.log("ERROR: workForFaction() failed because you are not a member of " + name);
                 return false;
             }
 
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].isWorking) {
-                var txt = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].singularityStopWork();
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].isWorking) {
+                var txt = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].singularityStopWork();
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.workForFaction == null) {
                     workerScript.scriptRef.log(txt);
                 }
             }
 
-            var fac = _Faction_Factions__WEBPACK_IMPORTED_MODULE_15__["Factions"][name];
+            var fac = _Faction_Factions__WEBPACK_IMPORTED_MODULE_14__["Factions"][name];
             //Arrays listing factions that allow each time of work
             var hackAvailable = ["Illuminati", "Daedalus", "The Covenant", "ECorp", "MegaCorp",
                                  "Bachman & Associates", "Blade Industries", "NWO", "Clarke Incorporated",
@@ -23396,7 +23247,7 @@ function NetscriptFunctions(workerScript) {
                         workerScript.scriptRef.log("ERROR: Cannot carry out hacking contracts for " + fac.name + ". workForFaction() failed");
                         return false;
                     }
-                    _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].startFactionHackWork(fac);
+                    _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].startFactionHackWork(fac);
                     workerScript.scriptRef.log("Started carrying out hacking contracts for " + fac.name);
                     return true;
                 case "field":
@@ -23406,7 +23257,7 @@ function NetscriptFunctions(workerScript) {
                         workerScript.scriptRef.log("ERROR: Cannot carry out field missions for " + fac.name + ". workForFaction() failed");
                         return false;
                     }
-                    _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].startFactionFieldWork(fac);
+                    _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].startFactionFieldWork(fac);
                     workerScript.scriptRef.log("Started carrying out field missions for " + fac.name);
                     return true;
                 case "security":
@@ -23416,7 +23267,7 @@ function NetscriptFunctions(workerScript) {
                         workerScript.scriptRef.log("ERROR: Cannot serve as security detail for " + fac.name + ". workForFaction() failed");
                         return false;
                     }
-                    _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].startFactionSecurityWork(fac);
+                    _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].startFactionSecurityWork(fac);
                     workerScript.scriptRef.log("Started serving as security details for " + fac.name);
                     return true;
                 default:
@@ -23426,82 +23277,82 @@ function NetscriptFunctions(workerScript) {
         },
         getFactionRep : function(name) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFn2RamCost / 4;
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getFactionRep", ramCost);
             }
             updateDynamicRam("getFactionRep", ramCost);
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN != 4) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 2)) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getFactionRep(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
                     return -1;
                 }
             }
 
-            if (!Object(_Faction_Factions__WEBPACK_IMPORTED_MODULE_15__["factionExists"])(name)) {
+            if (!Object(_Faction_Factions__WEBPACK_IMPORTED_MODULE_14__["factionExists"])(name)) {
                 workerScript.scriptRef.log("ERROR: Faction specified in getFactionRep() does not exist.");
                 return -1;
             }
 
-            return _Faction_Factions__WEBPACK_IMPORTED_MODULE_15__["Factions"][name].playerReputation;
+            return _Faction_Factions__WEBPACK_IMPORTED_MODULE_14__["Factions"][name].playerReputation;
         },
         getFactionFavor : function(name) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFn2RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getFactionFavor", ramCost);
             }
             updateDynamicRam("getFactionFavor", ramCost);
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN != 4) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 2)) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getFactionFavor(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
                     return -1;
                 }
             }
 
-            if (!Object(_Faction_Factions__WEBPACK_IMPORTED_MODULE_15__["factionExists"])(name)) {
+            if (!Object(_Faction_Factions__WEBPACK_IMPORTED_MODULE_14__["factionExists"])(name)) {
                 workerScript.scriptRef.log("ERROR: Faction specified in getFactionFavor() does not exist.");
                 return -1;
             }
 
-            return _Faction_Factions__WEBPACK_IMPORTED_MODULE_15__["Factions"][name].favor;
+            return _Faction_Factions__WEBPACK_IMPORTED_MODULE_14__["Factions"][name].favor;
         },
         getFactionFavorGain: function(name) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFn2RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getFactionFavorGain", ramCost);
             }
             updateDynamicRam("getFactionFavorGain", ramCost);
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN != 4) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 2)) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getFactionFavorGain(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
                     return -1;
                 }
             }
 
-            if (!Object(_Faction_Factions__WEBPACK_IMPORTED_MODULE_15__["factionExists"])(name)) {
+            if (!Object(_Faction_Factions__WEBPACK_IMPORTED_MODULE_14__["factionExists"])(name)) {
                 workerScript.scriptRef.log("ERROR: Faction specified in getFactionFavorGain() does not exist.");
                 return -1;
             }
 
-            return _Faction_Factions__WEBPACK_IMPORTED_MODULE_15__["Factions"][name].getFavorGain()[0];
+            return _Faction_Factions__WEBPACK_IMPORTED_MODULE_14__["Factions"][name].getFavorGain()[0];
         },
         donateToFaction : function(name, amt) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFn3RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("donateToFaction", ramCost);
             }
             updateDynamicRam("donateToFaction", ramCost);
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN != 4) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 3)) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run donateToFaction(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
                     return;
                 }
             }
 
-            if (!Object(_Faction_Factions__WEBPACK_IMPORTED_MODULE_15__["factionExists"])(name)) {
+            if (!Object(_Faction_Factions__WEBPACK_IMPORTED_MODULE_14__["factionExists"])(name)) {
                 workerScript.log(`ERROR: Faction specified in donateToFaction() does not exist: ${name}`);
                 return false;
             }
@@ -23509,18 +23360,18 @@ function NetscriptFunctions(workerScript) {
                 workerScript.log(`ERROR: Invalid donation amount specified in donateToFaction(): ${amt}. Must be numeric and positive`);
                 return false;
             }
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].money.lt(amt)) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].money.lt(amt)) {
                 workerScript.log(`ERROR: You do not have enough money to donate $${amt} to ${name}`);
                 return false;
             }
             var repNeededToDonate = Math.round(_Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].BaseFavorToDonate * _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_2__["BitNodeMultipliers"].RepToDonateToFaction);
-            if (_Faction_Factions__WEBPACK_IMPORTED_MODULE_15__["Factions"][name].favor < repNeededToDonate) {
-                workerScript.log(`ERROR: You do not have enough favor to donate to this faction. Have ${_Faction_Factions__WEBPACK_IMPORTED_MODULE_15__["Factions"][name].favor}, need ${repNeededToDonate}`);
+            if (_Faction_Factions__WEBPACK_IMPORTED_MODULE_14__["Factions"][name].favor < repNeededToDonate) {
+                workerScript.log(`ERROR: You do not have enough favor to donate to this faction. Have ${_Faction_Factions__WEBPACK_IMPORTED_MODULE_14__["Factions"][name].favor}, need ${repNeededToDonate}`);
                 return false;
             }
-            var repGain = amt / _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].DonateMoneyToRepDivisor * _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].faction_rep_mult;
-            _Faction_Factions__WEBPACK_IMPORTED_MODULE_15__["Factions"][name].playerReputation += repGain;
-            _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].loseMoney(amt);
+            var repGain = amt / _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].DonateMoneyToRepDivisor * _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].faction_rep_mult;
+            _Faction_Factions__WEBPACK_IMPORTED_MODULE_14__["Factions"][name].playerReputation += repGain;
+            _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].loseMoney(amt);
             if (workerScript.shouldLog("donateToFaction")) {
                 workerScript.log(`$${amt} donated to ${name} for ${repGain} reputation`);
             }
@@ -23528,23 +23379,23 @@ function NetscriptFunctions(workerScript) {
         },
         createProgram : function(name) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFn3RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("createProgram", ramCost);
             }
             updateDynamicRam("createProgram", ramCost);
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN != 4) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 3)) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run createProgram(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
                     return false;
                 }
             }
-            if (_Missions__WEBPACK_IMPORTED_MODULE_20__[/* inMission */ "c"]) {
+            if (_Missions__WEBPACK_IMPORTED_MODULE_19__[/* inMission */ "c"]) {
                 workerScript.scriptRef.log("ERROR: createProgram() failed because you are in the middle of a mission.");
                 return;
             }
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].isWorking) {
-                var txt = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].singularityStopWork();
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].isWorking) {
+                var txt = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].singularityStopWork();
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.createProgram == null) {
                     workerScript.scriptRef.log(txt);
                 }
@@ -23553,9 +23404,9 @@ function NetscriptFunctions(workerScript) {
             name = name.toLowerCase();
 
             let p = null;
-            for (const key in _CreateProgram__WEBPACK_IMPORTED_MODULE_10__[/* Programs */ "a"]) {
-                if(_CreateProgram__WEBPACK_IMPORTED_MODULE_10__[/* Programs */ "a"][key].name.toLowerCase() == name) {
-                    p = _CreateProgram__WEBPACK_IMPORTED_MODULE_10__[/* Programs */ "a"][key];
+            for (const key in _Programs_Programs__WEBPACK_IMPORTED_MODULE_21__["Programs"]) {
+                if(_Programs_Programs__WEBPACK_IMPORTED_MODULE_21__["Programs"][key].name.toLowerCase() == name) {
+                    p = _Programs_Programs__WEBPACK_IMPORTED_MODULE_21__["Programs"][key];
                 }
             }
 
@@ -23564,7 +23415,7 @@ function NetscriptFunctions(workerScript) {
                 return false;
             }
 
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].hasProgram(p.name)) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].hasProgram(p.name)) {
                 workerScript.scriptRef.log('ERROR: createProgram() failed because you already have the ' + p.name + ' program');
                 return false;
             }
@@ -23574,7 +23425,7 @@ function NetscriptFunctions(workerScript) {
                 return false
             }
 
-            _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].startCreateProgramWork(p.name, p.create.time, p.create.level);
+            _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].startCreateProgramWork(p.name, p.create.time, p.create.level);
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.createProgram == null) {
                 workerScript.scriptRef.log("Began creating program: " + name);
             }
@@ -23582,47 +23433,47 @@ function NetscriptFunctions(workerScript) {
         },
         commitCrime : function(crimeRoughName) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFn3RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("commitCrime", ramCost);
             }
             updateDynamicRam("commitCrime", ramCost);
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN != 4) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 3)) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run commitCrime(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
                     return;
                 }
             }
-            if (_Missions__WEBPACK_IMPORTED_MODULE_20__[/* inMission */ "c"]) {
+            if (_Missions__WEBPACK_IMPORTED_MODULE_19__[/* inMission */ "c"]) {
                 workerScript.scriptRef.log("ERROR: commitCrime() failed because you are in the middle of a mission.");
                 return;
             }
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].isWorking) {
-                var txt = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].singularityStopWork();
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].isWorking) {
+                var txt = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].singularityStopWork();
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.commitCrime == null) {
                     workerScript.scriptRef.log(txt);
                 }
             }
 
             //Set Location to slums
-            switch(_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].city) {
-                case _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].Aevum:
-                    _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].AevumSlums;
+            switch(_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].city) {
+                case _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].Aevum:
+                    _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].AevumSlums;
                     break;
-                case _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].Chongqing:
-                    _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].ChongqingSlums;
+                case _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].Chongqing:
+                    _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].ChongqingSlums;
                     break;
-                case _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].Sector12:
-                    _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].Sector12Slums;
+                case _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].Sector12:
+                    _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].Sector12Slums;
                     break;
-                case _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].NewTokyo:
-                    _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].NewTokyoSlums;
+                case _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].NewTokyo:
+                    _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].NewTokyoSlums;
                     break;
-                case _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].Ishima:
-                    _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].IshimaSlums;
+                case _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].Ishima:
+                    _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].IshimaSlums;
                     break;
-                case _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].Volhaven:
-                    _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_18__["Locations"].VolhavenSlums;
+                case _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].Volhaven:
+                    _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].VolhavenSlums;
                     break;
                 default:
                     console.log("Invalid Player.city value");
@@ -23639,12 +23490,12 @@ function NetscriptFunctions(workerScript) {
         },
         getCrimeChance : function(crimeRoughName) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFn3RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getCrimeChance", ramCost);
             }
             updateDynamicRam("getCrimeChance", ramCost);
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN != 4) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 3)) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getCrimeChance(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
                     return;
@@ -23660,67 +23511,67 @@ function NetscriptFunctions(workerScript) {
         },
         getOwnedAugmentations : function(purchased=false) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFn3RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getOwnedAugmentations", ramCost);
             }
             updateDynamicRam("getOwnedAugmentations", ramCost);
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN != 4) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 3)) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getOwnedAugmentations(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
                     return [];
                 }
             }
             var res = [];
-            for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].augmentations.length; ++i) {
-                res.push(_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].augmentations[i].name);
+            for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].augmentations.length; ++i) {
+                res.push(_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].augmentations[i].name);
             }
             if (purchased) {
-                for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].queuedAugmentations.length; ++i) {
-                    res.push(_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].queuedAugmentations[i].name);
+                for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].queuedAugmentations.length; ++i) {
+                    res.push(_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].queuedAugmentations[i].name);
                 }
             }
             return res;
         },
         getOwnedSourceFiles : function() {
             let ramCost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFn3RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getOwnedSourceFiles", ramCost);
             }
             updateDynamicRam("getOwnedSourceFiles", ramCost);
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN != 4) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 3)) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getOwnedSourceFiles(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
                     return [];
                 }
             }
             let res = [];
-            for (let i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].sourceFiles.length; ++i) {
-                res.push({n: _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].sourceFiles[i].n, lvl: _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].sourceFiles[i].lvl});
+            for (let i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].sourceFiles.length; ++i) {
+                res.push({n: _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].sourceFiles[i].n, lvl: _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].sourceFiles[i].lvl});
             }
             return res;
         },
         getAugmentationsFromFaction : function(facname) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFn3RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getAugmentationsFromFaction", ramCost);
             }
             updateDynamicRam("getAugmentationsFromFaction", ramCost);
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN != 4) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 3)) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getAugmentationsFromFaction(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
                     return [];
                 }
             }
 
-            if (!Object(_Faction_Factions__WEBPACK_IMPORTED_MODULE_15__["factionExists"])(facname)) {
+            if (!Object(_Faction_Factions__WEBPACK_IMPORTED_MODULE_14__["factionExists"])(facname)) {
                 workerScript.scriptRef.log("ERROR: getAugmentationsFromFaction() failed. Invalid faction name passed in (this is case-sensitive): " + facname);
                 return [];
             }
 
-            var fac = _Faction_Factions__WEBPACK_IMPORTED_MODULE_15__["Factions"][facname];
+            var fac = _Faction_Factions__WEBPACK_IMPORTED_MODULE_14__["Factions"][facname];
             var res = [];
             for (var i = 0; i < fac.augmentations.length; ++i) {
                 res.push(fac.augmentations[i]);
@@ -23729,12 +23580,12 @@ function NetscriptFunctions(workerScript) {
         },
         getAugmentationCost : function(name) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFn3RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("getAugmentationCost", ramCost);
             }
             updateDynamicRam("getAugmentationCost", ramCost);
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN != 4) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 3)) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getAugmentationCost(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
                     return false;
@@ -23751,20 +23602,20 @@ function NetscriptFunctions(workerScript) {
         },
         purchaseAugmentation : function(faction, name) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFn3RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("purchaseAugmentation", ramCost);
             }
             updateDynamicRam("purchaseAugmentation", ramCost);
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN != 4) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 3)) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run purchaseAugmentation(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
                     return false;
                 }
             }
 
-            var fac = _Faction_Factions__WEBPACK_IMPORTED_MODULE_15__["Factions"][faction];
-            if (fac == null || !(fac instanceof _Faction_Faction__WEBPACK_IMPORTED_MODULE_14__["Faction"])) {
+            var fac = _Faction_Factions__WEBPACK_IMPORTED_MODULE_14__["Factions"][faction];
+            if (fac == null || !(fac instanceof _Faction_Faction__WEBPACK_IMPORTED_MODULE_13__["Faction"])) {
                 workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because of invalid faction name: " + faction);
                 return false;
             }
@@ -23786,14 +23637,14 @@ function NetscriptFunctions(workerScript) {
             }
 
             if (!isNeuroflux) {
-                for (var j = 0; j < _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].queuedAugmentations.length; ++j) {
-                    if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].queuedAugmentations[j].name === aug.name) {
+                for (var j = 0; j < _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].queuedAugmentations.length; ++j) {
+                    if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].queuedAugmentations[j].name === aug.name) {
                         workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because you already have " + name);
                         return false;
                     }
                 }
-                for (var j = 0; j < _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].augmentations.length; ++j) {
-                    if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].augmentations[j].name === aug.name) {
+                for (var j = 0; j < _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].augmentations.length; ++j) {
+                    if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].augmentations[j].name === aug.name) {
                         workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because you already have " + name);
                         return false;
                     }
@@ -23805,10 +23656,10 @@ function NetscriptFunctions(workerScript) {
                 return false;
             }
 
-            var res = Object(_Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_16__[/* purchaseAugmentation */ "e"])(aug, fac, true);
+            var res = Object(_Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_15__[/* purchaseAugmentation */ "e"])(aug, fac, true);
             workerScript.scriptRef.log(res);
             if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_42__["isString"])(res) && res.startsWith("You purchased")) {
-                _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].gainIntelligenceExp(_Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].IntelligenceSingFnBaseExpGain);
+                _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].gainIntelligenceExp(_Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].IntelligenceSingFnBaseExpGain);
                 return true;
             } else {
                 return false;
@@ -23816,23 +23667,23 @@ function NetscriptFunctions(workerScript) {
         },
         installAugmentations : function(cbScript) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFn3RamCost;
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
                 return updateStaticRam("installAugmentations", ramCost);
             }
             updateDynamicRam("installAugmentations", ramCost);
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN != 4) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 3)) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run installAugmentations(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
                     return false;
                 }
             }
 
-            if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].queuedAugmentations.length === 0) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].queuedAugmentations.length === 0) {
                 workerScript.scriptRef.log("ERROR: installAugmentations() failed because you do not have any Augmentations to be installed");
                 return false;
             }
-            _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].gainIntelligenceExp(_Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].IntelligenceSingFnBaseExpGain);
+            _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].gainIntelligenceExp(_Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].IntelligenceSingFnBaseExpGain);
             workerScript.scriptRef.log("Installing Augmentations. This will cause this script to be killed");
             Object(_Augmentations__WEBPACK_IMPORTED_MODULE_1__[/* installAugmentations */ "i"])(cbScript);
             return true;
@@ -23849,7 +23700,7 @@ function NetscriptFunctions(workerScript) {
 
                 try {
                     const names = [];
-                    for (const member of _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].gang.members) {
+                    for (const member of _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].gang.members) {
                         names.push(member.name);
                     }
                     return names;
@@ -23866,17 +23717,17 @@ function NetscriptFunctions(workerScript) {
 
                 try {
                     return {
-                        faction:                    _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].gang.facName,
-                        isHacking:                  _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].gang.isHackingGang,
-                        moneyGainRate:              _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].gang.moneyGainRate,
-                        power:                      _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].gang.getPower(),
-                        respect:                    _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].gang.respect,
-                        respectGainRate:            _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].gang.respectGainRate,
-                        territory:                  _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].gang.getTerritory(),
-                        territoryClashChance:       _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].gang.territoryClashChance,
-                        territoryWarfareEngaged:    _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].gang.territoryWarfareEngaged,
-                        wantedLevel:                _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].gang.wanted,
-                        wantedLevelGainRate:        _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].gang.wantedGainRate,
+                        faction:                    _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].gang.facName,
+                        isHacking:                  _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].gang.isHackingGang,
+                        moneyGainRate:              _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].gang.moneyGainRate,
+                        power:                      _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].gang.getPower(),
+                        respect:                    _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].gang.respect,
+                        respectGainRate:            _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].gang.respectGainRate,
+                        territory:                  _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].gang.getTerritory(),
+                        territoryClashChance:       _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].gang.territoryClashChance,
+                        territoryWarfareEngaged:    _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].gang.territoryWarfareEngaged,
+                        wantedLevel:                _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].gang.wanted,
+                        wantedLevelGainRate:        _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].gang.wantedGainRate,
                     }
                 } catch(e) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_31__[/* unknownGangApiExceptionMessage */ "b"]("getGangInformation", e));
@@ -23890,7 +23741,7 @@ function NetscriptFunctions(workerScript) {
                 _NetscriptGang__WEBPACK_IMPORTED_MODULE_31__[/* checkGangApiAccess */ "a"](workerScript, "getOtherGangInformation");
 
                 try {
-                    return Object.assign(_Gang__WEBPACK_IMPORTED_MODULE_13__[/* AllGangs */ "a"]);
+                    return Object.assign(_Gang__WEBPACK_IMPORTED_MODULE_12__[/* AllGangs */ "a"]);
                 } catch(e) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_31__[/* unknownGangApiExceptionMessage */ "b"]("getOtherGangInformation", e));
                 }
@@ -23903,7 +23754,7 @@ function NetscriptFunctions(workerScript) {
                 _NetscriptGang__WEBPACK_IMPORTED_MODULE_31__[/* checkGangApiAccess */ "a"](workerScript, "getMemberInformation");
 
                 try {
-                    for (const member of _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].gang.members) {
+                    for (const member of _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].gang.members) {
                         if (member.name === name) {
                             return {
                                 agility:                member.agi,
@@ -23945,7 +23796,7 @@ function NetscriptFunctions(workerScript) {
                 _NetscriptGang__WEBPACK_IMPORTED_MODULE_31__[/* checkGangApiAccess */ "a"](workerScript, "canRecruitMember");
 
                 try {
-                    return _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].gang.canRecruitMember();
+                    return _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].gang.canRecruitMember();
                 } catch(e) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_31__[/* unknownGangApiExceptionMessage */ "b"]("canRecruitMember", e));
                 }
@@ -23958,7 +23809,7 @@ function NetscriptFunctions(workerScript) {
                 _NetscriptGang__WEBPACK_IMPORTED_MODULE_31__[/* checkGangApiAccess */ "a"](workerScript, "recruitMember");
 
                 try {
-                    const res = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].gang.recruitMember(name);
+                    const res = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].gang.recruitMember(name);
                     if (workerScript.shouldLog("recruitMember")) {
                         if (res) {
                             workerScript.log(`Successfully recruited Gang Member ${name}`);
@@ -23980,7 +23831,7 @@ function NetscriptFunctions(workerScript) {
                 _NetscriptGang__WEBPACK_IMPORTED_MODULE_31__[/* checkGangApiAccess */ "a"](workerScript, "getTaskNames");
 
                 try {
-                    const tasks = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].gang.getAllTaskNames();
+                    const tasks = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].gang.getAllTaskNames();
                     tasks.unshift("Unassigned");
                     return tasks;
                 } catch(e) {
@@ -23995,7 +23846,7 @@ function NetscriptFunctions(workerScript) {
                 _NetscriptGang__WEBPACK_IMPORTED_MODULE_31__[/* checkGangApiAccess */ "a"](workerScript, "setMemberTask");
 
                 try {
-                    for (const member of _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].gang.members) {
+                    for (const member of _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].gang.members) {
                         if (member.name === memberName) {
                             const res = member.assignToTask(taskName);
                             if (workerScript.shouldLog("setMemberTask")) {
@@ -24024,7 +23875,7 @@ function NetscriptFunctions(workerScript) {
                 _NetscriptGang__WEBPACK_IMPORTED_MODULE_31__[/* checkGangApiAccess */ "a"](workerScript, "getEquipmentNames");
 
                 try {
-                    return _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].gang.getAllUpgradeNames();
+                    return _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].gang.getAllUpgradeNames();
                 } catch(e) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_31__[/* unknownGangApiExceptionMessage */ "b"]("getEquipmentNames", e));
                 }
@@ -24037,7 +23888,7 @@ function NetscriptFunctions(workerScript) {
                 _NetscriptGang__WEBPACK_IMPORTED_MODULE_31__[/* checkGangApiAccess */ "a"](workerScript, "getEquipmentCost");
 
                 try {
-                    return _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].gang.getUpgradeCost(equipName);
+                    return _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].gang.getUpgradeCost(equipName);
                 } catch(e) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_31__[/* unknownGangApiExceptionMessage */ "b"]("getEquipmentCost", e));
                 }
@@ -24050,7 +23901,7 @@ function NetscriptFunctions(workerScript) {
                 _NetscriptGang__WEBPACK_IMPORTED_MODULE_31__[/* checkGangApiAccess */ "a"](workerScript, "getEquipmentType");
 
                 try {
-                    return _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].gang.getUpgradeType(equipName);
+                    return _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].gang.getUpgradeType(equipName);
                 } catch(e) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_31__[/* unknownGangApiExceptionMessage */ "b"]("getEquipmentType", e));
                 }
@@ -24063,9 +23914,9 @@ function NetscriptFunctions(workerScript) {
                 _NetscriptGang__WEBPACK_IMPORTED_MODULE_31__[/* checkGangApiAccess */ "a"](workerScript, "purchaseEquipment");
 
                 try {
-                    for (const member of _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].gang.members) {
+                    for (const member of _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].gang.members) {
                         if (member.name === memberName) {
-                            const res = member.buyUpgrade(equipName, _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"], _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].gang);
+                            const res = member.buyUpgrade(equipName, _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"], _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].gang);
                             if (workerScript.shouldLog("purchaseEquipment")) {
                                 if (res) {
                                     workerScript.log(`Purchased ${equipName} for Gang member ${memberName}`);
@@ -24092,9 +23943,9 @@ function NetscriptFunctions(workerScript) {
                 _NetscriptGang__WEBPACK_IMPORTED_MODULE_31__[/* checkGangApiAccess */ "a"](workerScript, "ascendMember");
 
                 try {
-                    for (const member of _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].gang.members) {
+                    for (const member of _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].gang.members) {
                         if (member.name === name) {
-                            return _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].gang.ascendMember(member, workerScript);
+                            return _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].gang.ascendMember(member, workerScript);
                         }
                     }
 
@@ -24113,12 +23964,12 @@ function NetscriptFunctions(workerScript) {
 
                 try {
                     if (engage) {
-                        _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].gang.territoryWarfareEngaged = true;
+                        _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].gang.territoryWarfareEngaged = true;
                         if (workerScript.shouldLog("setTerritoryWarfare")) {
                             workerScript.log("Engaging in Gang Territory Warfare");
                         }
                     } else {
-                        _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].gang.territoryWarfareEngaged = false;
+                        _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].gang.territoryWarfareEngaged = false;
                         if (workerScript.shouldLog("setTerritoryWarfare")) {
                             workerScript.log("Disengaging in Gang Territory Warfare");
                         }
@@ -24135,13 +23986,13 @@ function NetscriptFunctions(workerScript) {
                 _NetscriptGang__WEBPACK_IMPORTED_MODULE_31__[/* checkGangApiAccess */ "a"](workerScript, "getChanceToWinClash");
 
                 try {
-                    if (_Gang__WEBPACK_IMPORTED_MODULE_13__[/* AllGangs */ "a"][otherGang] == null) {
+                    if (_Gang__WEBPACK_IMPORTED_MODULE_12__[/* AllGangs */ "a"][otherGang] == null) {
                         workerScript.log(`Invalid gang specified in gang.getChanceToWinClash() : ${otherGang}`);
                         return 0;
                     }
 
-                    const playerPower = _Gang__WEBPACK_IMPORTED_MODULE_13__[/* AllGangs */ "a"][_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].gang.facName].power;
-                    const otherPower = _Gang__WEBPACK_IMPORTED_MODULE_13__[/* AllGangs */ "a"][otherGang].power;
+                    const playerPower = _Gang__WEBPACK_IMPORTED_MODULE_12__[/* AllGangs */ "a"][_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].gang.facName].power;
+                    const otherPower = _Gang__WEBPACK_IMPORTED_MODULE_12__[/* AllGangs */ "a"][otherGang].power;
 
                     return playerPower / (otherPower + playerPower);
                 } catch(e) {
@@ -24153,7 +24004,7 @@ function NetscriptFunctions(workerScript) {
                 _NetscriptGang__WEBPACK_IMPORTED_MODULE_31__[/* checkGangApiAccess */ "a"](workerScript, "getBonusTime");
 
                 try {
-                    return Math.round(_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].gang.storedCycles / 5);
+                    return Math.round(_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].gang.storedCycles / 5);
                 } catch(e) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_31__[/* unknownGangApiExceptionMessage */ "b"]("getBonusTime", e));
                 }
@@ -24167,8 +24018,8 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("getContractNames", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost / 10);
                 }
                 updateDynamicRam("getContractNames", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost / 10);
-                if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
-                    return _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner.getContractNamesNetscriptFn();
+                if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
+                    return _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner.getContractNamesNetscriptFn();
                 }
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getContractNames() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
@@ -24178,8 +24029,8 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("getOperationNames", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost / 10);
                 }
                 updateDynamicRam("getOperationNames", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost / 10);
-                if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
-                    return _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner.getOperationNamesNetscriptFn();
+                if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
+                    return _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner.getOperationNamesNetscriptFn();
                 }
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getOperationNames() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
@@ -24189,8 +24040,8 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("getBlackOpNames", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost / 10);
                 }
                 updateDynamicRam("getBlackOpNames", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost / 10);
-                if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
-                    return _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner.getBlackOpNamesNetscriptFn();
+                if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
+                    return _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner.getBlackOpNamesNetscriptFn();
                 }
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getBlackOpNames() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
@@ -24200,8 +24051,8 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("getGeneralActionNames", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost / 10);
                 }
                 updateDynamicRam("getGeneralActionNames", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost / 10);
-                if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
-                    return _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner.getGeneralActionNamesNetscriptFn();
+                if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
+                    return _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner.getGeneralActionNamesNetscriptFn();
                 }
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getGeneralActionNames() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
@@ -24211,8 +24062,8 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("getSkillNames", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost / 10);
                 }
                 updateDynamicRam("getSkillNames", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost / 10);
-                if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
-                    return _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner.getSkillNamesNetscriptFn();
+                if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
+                    return _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner.getSkillNamesNetscriptFn();
                 }
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getSkillNames() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
@@ -24222,9 +24073,9 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("startAction", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
                 }
                 updateDynamicRam("startAction", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
-                if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
+                if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
                     try {
-                        return _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner.startActionNetscriptFn(type, name, workerScript);
+                        return _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner.startActionNetscriptFn(type, name, workerScript);
                     } catch(e) {
                         throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.startAction() failed with exception: " + e);
                     }
@@ -24237,8 +24088,8 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("stopBladeburnerAction", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost / 2);
                 }
                 updateDynamicRam("stopBladeburnerAction", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost / 2);
-                if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
-                    return _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner.resetAction();
+                if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
+                    return _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner.resetAction();
                 }
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "stopBladeburnerAction() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
@@ -24248,8 +24099,8 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("getCurrentAction", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost / 4);
                 }
                 updateDynamicRam("getCurrentAction", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost / 4);
-                if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
-                    return _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner.getTypeAndNameFromActionId(_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner.action);
+                if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
+                    return _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner.getTypeAndNameFromActionId(_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner.action);
                 }
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getCurrentAction() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
@@ -24259,9 +24110,9 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("getActionTime", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
                 }
                 updateDynamicRam("getActionTime", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
-                if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
+                if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
                     try {
-                        return _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner.getActionTimeNetscriptFn(type, name, workerScript);
+                        return _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner.getActionTimeNetscriptFn(type, name, workerScript);
                     } catch(e) {
                         throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.getActionTime() failed with exception: " + e);
                     }
@@ -24274,9 +24125,9 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("getActionEstimatedSuccessChance", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
                 }
                 updateDynamicRam("getActionEstimatedSuccessChance", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
-                if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
+                if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
                     try {
-                        return _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner.getActionEstimatedSuccessChanceNetscriptFn(type, name, workerScript);
+                        return _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner.getActionEstimatedSuccessChanceNetscriptFn(type, name, workerScript);
                     } catch(e) {
                         throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.getActionEstimatedSuccessChance() failed with exception: " + e);
                     }
@@ -24293,12 +24144,12 @@ function NetscriptFunctions(workerScript) {
 
                 try {
                     var errorLogText = Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_30__[/* unknownBladeburnerActionErrorMessage */ "b"])("getActionAutolevel", type, name);
-                    const actionId = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner.getActionIdFromTypeAndName(type, name);
+                    const actionId = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner.getActionIdFromTypeAndName(type, name);
                     if (actionId == null) {
                         workerScript.log(errorLogText);
                         return -1;
                     }
-                    const actionObj = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner.getActionObject(actionId);
+                    const actionObj = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner.getActionObject(actionId);
                     if (actionObj == null) {
                         workerScript.log(errorLogText);
                         return -1;
@@ -24320,9 +24171,9 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("getActionCountRemaining", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
                 }
                 updateDynamicRam("getActionCountRemaining", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
-                if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
+                if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
                     try {
-                        return _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner.getActionCountRemainingNetscriptFn(type, name, workerScript);
+                        return _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner.getActionCountRemainingNetscriptFn(type, name, workerScript);
                     } catch(e) {
                         throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.getActionCountRemaining() failed with exception: " + e);
                     }
@@ -24339,12 +24190,12 @@ function NetscriptFunctions(workerScript) {
 
                 try {
                     var errorLogText = Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_30__[/* unknownBladeburnerActionErrorMessage */ "b"])("getActionMaxLevel", type, name);
-                    const actionId = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner.getActionIdFromTypeAndName(type, name);
+                    const actionId = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner.getActionIdFromTypeAndName(type, name);
                     if (actionId == null) {
                         workerScript.log(errorLogText);
                         return -1;
                     }
-                    const actionObj = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner.getActionObject(actionId);
+                    const actionObj = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner.getActionObject(actionId);
                     if (actionObj == null) {
                         workerScript.log(errorLogText);
                         return -1;
@@ -24363,12 +24214,12 @@ function NetscriptFunctions(workerScript) {
 
                 try {
                     var errorLogText = Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_30__[/* unknownBladeburnerActionErrorMessage */ "b"])("getActionCurrentLevel", type, name);
-                    const actionId = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner.getActionIdFromTypeAndName(type, name);
+                    const actionId = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner.getActionIdFromTypeAndName(type, name);
                     if (actionId == null) {
                         workerScript.log(errorLogText);
                         return -1;
                     }
-                    const actionObj = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner.getActionObject(actionId);
+                    const actionObj = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner.getActionObject(actionId);
                     if (actionObj == null) {
                         workerScript.log(errorLogText);
                         return -1;
@@ -24387,12 +24238,12 @@ function NetscriptFunctions(workerScript) {
 
                 try {
                     var errorLogText = Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_30__[/* unknownBladeburnerActionErrorMessage */ "b"])("getActionAutolevel", type, name);
-                    const actionId = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner.getActionIdFromTypeAndName(type, name);
+                    const actionId = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner.getActionIdFromTypeAndName(type, name);
                     if (actionId == null) {
                         workerScript.log(errorLogText);
                         return false;
                     }
-                    const actionObj = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner.getActionObject(actionId);
+                    const actionObj = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner.getActionObject(actionId);
                     if (actionObj == null) {
                         workerScript.log(errorLogText);
                         return false;
@@ -24411,12 +24262,12 @@ function NetscriptFunctions(workerScript) {
 
                 try {
                     var errorLogText = Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_30__[/* unknownBladeburnerActionErrorMessage */ "b"])("setActionAutolevel", type, name);
-                    const actionId = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner.getActionIdFromTypeAndName(type, name);
+                    const actionId = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner.getActionIdFromTypeAndName(type, name);
                     if (actionId == null) {
                         workerScript.log(errorLogText);
                         return;
                     }
-                    const actionObj = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner.getActionObject(actionId);
+                    const actionObj = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner.getActionObject(actionId);
                     if (actionObj == null) {
                         workerScript.log(errorLogText);
                         return;
@@ -24435,12 +24286,12 @@ function NetscriptFunctions(workerScript) {
 
                 try {
                     var errorLogText = Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_30__[/* unknownBladeburnerActionErrorMessage */ "b"])("setActionLevel", type, name);
-                    const actionId = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner.getActionIdFromTypeAndName(type, name);
+                    const actionId = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner.getActionIdFromTypeAndName(type, name);
                     if (actionId == null) {
                         workerScript.log(errorLogText);
                         return;
                     }
-                    const actionObj = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner.getActionObject(actionId);
+                    const actionObj = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner.getActionObject(actionId);
                     if (actionObj == null) {
                         workerScript.log(errorLogText);
                         return;
@@ -24463,8 +24314,8 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("getRank", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
                 }
                 updateDynamicRam("getRank", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
-                if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
-                    return _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner.rank;
+                if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
+                    return _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner.rank;
                 }
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getRank() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
@@ -24474,8 +24325,8 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("getSkillPoints", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
                 }
                 updateDynamicRam("getSkillPoints", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
-                if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
-                    return _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner.skillPoints;
+                if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
+                    return _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner.skillPoints;
                 }
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getSkillPoints() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
@@ -24485,9 +24336,9 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("getSkillLevel", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
                 }
                 updateDynamicRam("getSkillLevel", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
-                if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
+                if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
                     try {
-                        return _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner.getSkillLevelNetscriptFn(skillName, workerScript);
+                        return _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner.getSkillLevelNetscriptFn(skillName, workerScript);
                     } catch(e) {
                         throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.getSkillLevel() failed with exception: " + e);
                     }
@@ -24500,9 +24351,9 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("getSkillUpgradeCost", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
                 }
                 updateDynamicRam("getSkillUpgradeCost", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
-                if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
+                if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
                     try {
-                        return _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner.getSkillUpgradeCostNetscriptFn(skillName, workerScript);
+                        return _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner.getSkillUpgradeCostNetscriptFn(skillName, workerScript);
                     } catch(e) {
                         throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.getSkillUpgradeCost() failed with exception: " + e);
                     }
@@ -24515,9 +24366,9 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("upgradeSkill", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
                 }
                 updateDynamicRam("upgradeSkill", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
-                if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
+                if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
                     try {
-                        return _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner.upgradeSkillNetscriptFn(skillName, workerScript);
+                        return _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner.upgradeSkillNetscriptFn(skillName, workerScript);
                     } catch(e) {
                         throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.upgradeSkill() failed with exception: " + e);
                     }
@@ -24530,9 +24381,9 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("getTeamSize", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
                 }
                 updateDynamicRam("getTeamSize", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
-                if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
+                if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
                     try {
-                        return _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner.getTeamSizeNetscriptFn(type, name, workerScript);
+                        return _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner.getTeamSizeNetscriptFn(type, name, workerScript);
                     } catch(e) {
                         throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.getTeamSize() failed with exception: " + e);
                     }
@@ -24545,9 +24396,9 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("setTeamSize", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
                 }
                 updateDynamicRam("setTeamSize", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
-                if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
+                if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
                     try {
-                        return _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner.setTeamSizeNetscriptFn(type, name, size, workerScript);
+                        return _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner.setTeamSizeNetscriptFn(type, name, size, workerScript);
                     } catch(e) {
                         throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.setTeamSize() failed with exception: " + e);
                     }
@@ -24560,9 +24411,9 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("getCityEstimatedPopulation", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
                 }
                 updateDynamicRam("getCityEstimatedPopulation", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
-                if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
+                if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
                     try {
-                        return _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner.getCityEstimatedPopulationNetscriptFn(cityName, workerScript);
+                        return _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner.getCityEstimatedPopulationNetscriptFn(cityName, workerScript);
                     } catch(e) {
                         throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.getCityEstimatedPopulation() failed with exception: " + e);
                     }
@@ -24575,9 +24426,9 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("getCityEstimatedCommunities", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
                 }
                 updateDynamicRam("getCityEstimatedCommunities", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
-                if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
+                if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
                     try {
-                        return _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner.getCityEstimatedCommunitiesNetscriptFn(cityName, workerScript);
+                        return _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner.getCityEstimatedCommunitiesNetscriptFn(cityName, workerScript);
                     } catch(e) {
                         throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.getCityEstimatedCommunities() failed with exception: " + e);
                     }
@@ -24590,9 +24441,9 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("getCityChaos", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
                 }
                 updateDynamicRam("getCityChaos", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
-                if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
+                if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
                     try {
-                        return _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner.getCityChaosNetscriptFn(cityName, workerScript);
+                        return _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner.getCityChaosNetscriptFn(cityName, workerScript);
                     } catch(e) {
                         throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.getCityChaos() failed with exception: " + e);
                     }
@@ -24605,9 +24456,9 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("getCity", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
                 }
                 updateDynamicRam("getCity", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
-                if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
+                if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
                     try {
-                        return _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner.city;
+                        return _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner.city;
                     } catch(e) {
                         throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.getCity() failed with exception: " + e);
                     }
@@ -24620,9 +24471,9 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("switchCity", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
                 }
                 updateDynamicRam("switchCity", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
-                if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
+                if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
                     try {
-                        return _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner.switchCityNetscriptFn(cityName, workerScript);
+                        return _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner.switchCityNetscriptFn(cityName, workerScript);
                     } catch(e) {
                         throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.switchCity() failed with exception: " + e);
                     }
@@ -24635,8 +24486,8 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("getStamina", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
                 }
                 updateDynamicRam("getStamina", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
-                if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
-                    return [_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner.stamina, _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner.maxStamina];
+                if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
+                    return [_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner.stamina, _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner.maxStamina];
                 }
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getStamina() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
@@ -24646,8 +24497,8 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("joinBladeburnerFaction", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
                 }
                 updateDynamicRam("joinBladeburnerFaction", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
-                if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
-                    return _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner.joinBladeburnerFactionNetscriptFn(workerScript);
+                if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
+                    return _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner.joinBladeburnerFactionNetscriptFn(workerScript);
                 }
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "joinBladeburnerFaction() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
@@ -24657,12 +24508,12 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("joinBladeburnerDivision", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
                 }
                 updateDynamicRam("joinBladeburnerDivision", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
-                if ((_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
-                    if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"]) {
+                if ((_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
+                    if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"]) {
                         return true; //Already member
-                    } else if (_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].strength >= 100 && _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].defense >= 100 &&
-                               _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].dexterity >= 100 && _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].agility >= 100) {
-                        _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner = new _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"]({new:true});
+                    } else if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].strength >= 100 && _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].defense >= 100 &&
+                               _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].dexterity >= 100 && _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].agility >= 100) {
+                        _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner = new _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"]({new:true});
                         workerScript.log("You have been accepted into the Bladeburner division");
                         return true;
                     } else {
@@ -24675,8 +24526,8 @@ function NetscriptFunctions(workerScript) {
             },
             getBonusTime : function() {
                 if (workerScript.checkingRam) {return 0;}
-                if ((_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
-                    return Math.round(_Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].bladeburner.storedCycles / 5);
+                if ((_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
+                    return Math.round(_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bladeburner.storedCycles / 5);
                 }
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getBonusTime() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
@@ -24696,7 +24547,7 @@ function NetscriptFunctions(workerScript) {
                 answer = String(answer);
                 const serv = safeGetServer(ip, "codingcontract.attempt()");
                 if (contract.isSolution(answer)) {
-                    const reward = _Player__WEBPACK_IMPORTED_MODULE_21__[/* Player */ "a"].gainCodingContractReward(contract.reward, contract.getDifficulty());
+                    const reward = _Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].gainCodingContractReward(contract.reward, contract.getDifficulty());
                     workerScript.log(`Successfully completed Coding Contract ${fn}. Reward: ${reward}`);
                     serv.removeContract(fn);
                     return true;
@@ -24961,12 +24812,12 @@ function substituteAliases(origCommand) {
 /* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_Faction__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _Factions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Factions */ 14);
 /* harmony import */ var _Factions__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Factions__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _FactionInfo__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./FactionInfo */ 114);
+/* harmony import */ var _FactionInfo__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./FactionInfo */ 115);
 /* harmony import */ var _FactionInfo__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_FactionInfo__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Location */ 91);
 /* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Missions */ 55);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../Player */ 0);
-/* harmony import */ var _SettingEnums__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../SettingEnums */ 72);
+/* harmony import */ var _SettingEnums__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../SettingEnums */ 73);
 /* harmony import */ var _SettingEnums__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_SettingEnums__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_11__);
@@ -24975,7 +24826,7 @@ function substituteAliases(origCommand) {
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_13__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../utils/DialogBox */ 9);
-/* harmony import */ var _utils_FactionInvitationBox__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../utils/FactionInvitationBox */ 134);
+/* harmony import */ var _utils_FactionInvitationBox__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../utils/FactionInvitationBox */ 136);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 29);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_16__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../utils/uiHelpers/createElement */ 2);
@@ -29703,9 +29554,9 @@ function calculateWeakenTime(server, hack, int) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return resetGangs; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return loadAllGangs; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Gang; });
-/* harmony import */ var _data_gangmembertasks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./data/gangmembertasks */ 133);
+/* harmony import */ var _data_gangmembertasks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./data/gangmembertasks */ 135);
 /* harmony import */ var _data_gangmembertasks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_data_gangmembertasks__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _data_gangmemberupgrades__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data/gangmemberupgrades */ 132);
+/* harmony import */ var _data_gangmemberupgrades__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data/gangmemberupgrades */ 134);
 /* harmony import */ var _data_gangmemberupgrades__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_data_gangmemberupgrades__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 8);
 /* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Faction/Faction */ 56);
@@ -29719,7 +29570,7 @@ function calculateWeakenTime(server, hack, int) {
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 33);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 76);
+/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 77);
 /* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_11__);
@@ -31682,53 +31533,57 @@ Gang.prototype.clearUI = function() {
 /* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_CodingContracts__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./CreateProgram */ 24);
-/* harmony import */ var _DarkWeb__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./DarkWeb */ 79);
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./engine */ 8);
-/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Fconf */ 47);
-/* harmony import */ var _Hacking__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Hacking */ 49);
-/* harmony import */ var _HelpText__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./HelpText */ 102);
-/* harmony import */ var _HelpText__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_HelpText__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./InteractiveTutorial */ 34);
-/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Literature */ 82);
-/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Message */ 41);
-/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./NetscriptWorker */ 25);
-/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./RedPill */ 58);
-/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Script */ 30);
-/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Settings */ 19);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
-/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./TextFile */ 65);
-/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_TextFile__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_20__);
-/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./ui/navigationTracking */ 12);
-/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
-/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__);
-/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 33);
-/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_23__);
-/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 66);
-/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_24__);
-/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/helpers/isString */ 40);
-/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25__);
-/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 54);
-/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_26__);
-/* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 87);
-/* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_27__);
-/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../utils/LogBox */ 78);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29___default = /*#__PURE__*/__webpack_require__.n(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__);
-/* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./ui/postToTerminal */ 7);
-/* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__);
-/* harmony import */ var autosize__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! autosize */ 151);
-/* harmony import */ var autosize__WEBPACK_IMPORTED_MODULE_31___default = /*#__PURE__*/__webpack_require__.n(autosize__WEBPACK_IMPORTED_MODULE_31__);
-/* harmony import */ var jszip__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! jszip */ 150);
-/* harmony import */ var jszip__WEBPACK_IMPORTED_MODULE_32___default = /*#__PURE__*/__webpack_require__.n(jszip__WEBPACK_IMPORTED_MODULE_32__);
-/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! file-saver */ 149);
-/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_33___default = /*#__PURE__*/__webpack_require__.n(file_saver__WEBPACK_IMPORTED_MODULE_33__);
+/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Programs/Programs */ 24);
+/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _DarkWeb_DarkWeb__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./DarkWeb/DarkWeb */ 119);
+/* harmony import */ var _DarkWeb_DarkWebItems__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./DarkWeb/DarkWebItems */ 71);
+/* harmony import */ var _DarkWeb_DarkWebItems__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_DarkWeb_DarkWebItems__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./engine */ 8);
+/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Fconf */ 47);
+/* harmony import */ var _Hacking__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Hacking */ 49);
+/* harmony import */ var _HelpText__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./HelpText */ 103);
+/* harmony import */ var _HelpText__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_HelpText__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./InteractiveTutorial */ 34);
+/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Literature */ 82);
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Message */ 41);
+/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./NetscriptWorker */ 25);
+/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Player */ 0);
+/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./RedPill */ 58);
+/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Script */ 30);
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Server */ 11);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Settings */ 19);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_18__);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
+/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./TextFile */ 65);
+/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_TextFile__WEBPACK_IMPORTED_MODULE_20__);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21__);
+/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./ui/navigationTracking */ 12);
+/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_22__);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__);
+/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 33);
+/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_24__);
+/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 66);
+/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_25__);
+/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/helpers/isString */ 40);
+/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_26__);
+/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 54);
+/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_27__);
+/* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 87);
+/* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_28__);
+/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../utils/LogBox */ 79);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30__);
+/* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./ui/postToTerminal */ 7);
+/* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31___default = /*#__PURE__*/__webpack_require__.n(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__);
+/* harmony import */ var autosize__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! autosize */ 153);
+/* harmony import */ var autosize__WEBPACK_IMPORTED_MODULE_32___default = /*#__PURE__*/__webpack_require__.n(autosize__WEBPACK_IMPORTED_MODULE_32__);
+/* harmony import */ var jszip__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! jszip */ 152);
+/* harmony import */ var jszip__WEBPACK_IMPORTED_MODULE_33___default = /*#__PURE__*/__webpack_require__.n(jszip__WEBPACK_IMPORTED_MODULE_33__);
+/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! file-saver */ 151);
+/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_34___default = /*#__PURE__*/__webpack_require__.n(file_saver__WEBPACK_IMPORTED_MODULE_34__);
+
 
 
 
@@ -31766,23 +31621,23 @@ Gang.prototype.clearUI = function() {
 
 
 function postNetburnerText() {
-	Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Bitburner v" + _Constants__WEBPACK_IMPORTED_MODULE_2__["CONSTANTS"].Version);
+	Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Bitburner v" + _Constants__WEBPACK_IMPORTED_MODULE_2__["CONSTANTS"].Version);
 }
 
 //Defines key commands in terminal
 $(document).keydown(function(event) {
 	//Terminal
-	if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_21__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_21__["Page"].Terminal)) {
+	if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_22__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_22__["Page"].Terminal)) {
         var terminalInput = document.getElementById("terminal-input-text-box");
         if (terminalInput != null && !event.ctrlKey && !event.shiftKey && !Terminal.contractOpen) {terminalInput.focus();}
 
-		if (event.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_23__["KEY"].ENTER) {
+		if (event.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_24__["KEY"].ENTER) {
             event.preventDefault(); //Prevent newline from being entered in Script Editor
 			var command = terminalInput.value;
-			Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])(
+			Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])(
                 "<span class='prompt'>[" +
-                (_Fconf__WEBPACK_IMPORTED_MODULE_6__[/* FconfSettings */ "a"].ENABLE_TIMESTAMPS ? Object(_utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_27__["getTimestamp"])() + " " : "") +
-                _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer().hostname +
+                (_Fconf__WEBPACK_IMPORTED_MODULE_7__[/* FconfSettings */ "a"].ENABLE_TIMESTAMPS ? Object(_utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_28__["getTimestamp"])() + " " : "") +
+                _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer().hostname +
                 " ~]&gt;</span> " + command
             );
 
@@ -31796,19 +31651,19 @@ $(document).keydown(function(event) {
 			}
 		}
 
-		if (event.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_23__["KEY"].C && event.ctrlKey) {
-            if (_engine__WEBPACK_IMPORTED_MODULE_5__["Engine"]._actionInProgress) {
+		if (event.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_24__["KEY"].C && event.ctrlKey) {
+            if (_engine__WEBPACK_IMPORTED_MODULE_6__["Engine"]._actionInProgress) {
                 //Cancel action
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Cancelling...");
-    			_engine__WEBPACK_IMPORTED_MODULE_5__["Engine"]._actionInProgress = false;
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Cancelling...");
+    			_engine__WEBPACK_IMPORTED_MODULE_6__["Engine"]._actionInProgress = false;
     			Terminal.finishAction(true);
-            } else if (_Fconf__WEBPACK_IMPORTED_MODULE_6__[/* FconfSettings */ "a"].ENABLE_BASH_HOTKEYS) {
+            } else if (_Fconf__WEBPACK_IMPORTED_MODULE_7__[/* FconfSettings */ "a"].ENABLE_BASH_HOTKEYS) {
                 //Dont prevent default so it still copies
                 Terminal.resetTerminalInput();  //Clear Terminal
             }
 		}
 
-        if (event.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_23__["KEY"].L && event.ctrlKey) {
+        if (event.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_24__["KEY"].L && event.ctrlKey) {
             event.preventDefault();
             Terminal.executeCommand("clear"); //Clear screen
         }
@@ -31816,9 +31671,9 @@ $(document).keydown(function(event) {
         //Ctrl p same as up arrow
         //Ctrl n same as down arrow
 
-        if (event.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_23__["KEY"].UPARROW ||
-            (_Fconf__WEBPACK_IMPORTED_MODULE_6__[/* FconfSettings */ "a"].ENABLE_BASH_HOTKEYS && event.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_23__["KEY"].P && event.ctrlKey)) {
-            if (_Fconf__WEBPACK_IMPORTED_MODULE_6__[/* FconfSettings */ "a"].ENABLE_BASH_HOTKEYS) {event.preventDefault();}
+        if (event.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_24__["KEY"].UPARROW ||
+            (_Fconf__WEBPACK_IMPORTED_MODULE_7__[/* FconfSettings */ "a"].ENABLE_BASH_HOTKEYS && event.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_24__["KEY"].P && event.ctrlKey)) {
+            if (_Fconf__WEBPACK_IMPORTED_MODULE_7__[/* FconfSettings */ "a"].ENABLE_BASH_HOTKEYS) {event.preventDefault();}
             //Cycle through past commands
             if (terminalInput == null) {return;}
             var i = Terminal.commandHistoryIndex;
@@ -31837,9 +31692,9 @@ $(document).keydown(function(event) {
             setTimeout(function(){terminalInput.selectionStart = terminalInput.selectionEnd = 10000; }, 0);
         }
 
-        if (event.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_23__["KEY"].DOWNARROW ||
-            (_Fconf__WEBPACK_IMPORTED_MODULE_6__[/* FconfSettings */ "a"].ENABLE_BASH_HOTKEYS && event.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_23__["KEY"].M && event.ctrlKey)) {
-            if (_Fconf__WEBPACK_IMPORTED_MODULE_6__[/* FconfSettings */ "a"].ENABLE_BASH_HOTKEYS) {event.preventDefault();}
+        if (event.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_24__["KEY"].DOWNARROW ||
+            (_Fconf__WEBPACK_IMPORTED_MODULE_7__[/* FconfSettings */ "a"].ENABLE_BASH_HOTKEYS && event.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_24__["KEY"].M && event.ctrlKey)) {
+            if (_Fconf__WEBPACK_IMPORTED_MODULE_7__[/* FconfSettings */ "a"].ENABLE_BASH_HOTKEYS) {event.preventDefault();}
             //Cycle through past commands
             if (terminalInput == null) {return;}
             var i = Terminal.commandHistoryIndex;
@@ -31861,7 +31716,7 @@ $(document).keydown(function(event) {
             }
         }
 
-        if (event.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_23__["KEY"].TAB) {
+        if (event.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_24__["KEY"].TAB) {
             event.preventDefault();
 
             //Autocomplete
@@ -31903,39 +31758,39 @@ $(document).keydown(function(event) {
         }
 
         //Extra Bash Emulation Hotkeys, must be enabled through .fconf
-        if (_Fconf__WEBPACK_IMPORTED_MODULE_6__[/* FconfSettings */ "a"].ENABLE_BASH_HOTKEYS) {
-            if (event.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_23__["KEY"].A && event.ctrlKey) {
+        if (_Fconf__WEBPACK_IMPORTED_MODULE_7__[/* FconfSettings */ "a"].ENABLE_BASH_HOTKEYS) {
+            if (event.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_24__["KEY"].A && event.ctrlKey) {
                 event.preventDefault();
                 Terminal.moveTextCursor("home");
             }
 
-            if (event.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_23__["KEY"].E && event.ctrlKey) {
+            if (event.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_24__["KEY"].E && event.ctrlKey) {
                 event.preventDefault();
                 Terminal.moveTextCursor("end");
             }
 
-            if (event.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_23__["KEY"].B && event.ctrlKey) {
+            if (event.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_24__["KEY"].B && event.ctrlKey) {
                 event.preventDefault();
                 Terminal.moveTextCursor("prevchar");
             }
 
-            if (event.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_23__["KEY"].B && event.altKey) {
+            if (event.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_24__["KEY"].B && event.altKey) {
                 event.preventDefault();
                 Terminal.moveTextCursor("prevword");
             }
 
-            if (event.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_23__["KEY"].F && event.ctrlKey) {
+            if (event.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_24__["KEY"].F && event.ctrlKey) {
                 event.preventDefault();
                 Terminal.moveTextCursor("nextchar");
             }
 
-            if (event.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_23__["KEY"].F && event.altKey) {
+            if (event.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_24__["KEY"].F && event.altKey) {
                 event.preventDefault();
                 Terminal.moveTextCursor("nextword");
             }
 
 
-            if ((event.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_23__["KEY"].H || event.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_23__["KEY"].D) && event.ctrlKey) {
+            if ((event.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_24__["KEY"].H || event.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_24__["KEY"].D) && event.ctrlKey) {
                 Terminal.modifyInput("backspace");
                 event.preventDefault();
             }
@@ -31953,13 +31808,13 @@ $(document).keydown(function(event) {
 //Keep terminal in focus
 let terminalCtrlPressed = false, shiftKeyPressed = false;
 $(document).ready(function() {
-	if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_21__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_21__["Page"].Terminal)) {
+	if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_22__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_22__["Page"].Terminal)) {
 		$('.terminal-input').focus();
 	}
 });
 $(document).keydown(function(e) {
-	if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_21__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_21__["Page"].Terminal)) {
-		if (e.which == _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_23__["KEY"].CTRL) {
+	if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_22__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_22__["Page"].Terminal)) {
+		if (e.which == _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_24__["KEY"].CTRL) {
 			terminalCtrlPressed = true;
 		} else if (e.shiftKey) {
             shiftKeyPressed = true;
@@ -31975,8 +31830,8 @@ $(document).keydown(function(e) {
 	}
 })
 $(document).keyup(function(e) {
-	if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_21__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_21__["Page"].Terminal)) {
-		if (e.which == _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_23__["KEY"].CTRL) {
+	if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_22__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_22__["Page"].Terminal)) {
+		if (e.which == _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_24__["KEY"].CTRL) {
 			terminalCtrlPressed = false;
 		}
         if (e.shiftKey) {
@@ -31994,7 +31849,7 @@ $(document).keyup(function(e) {
 //  index - index of argument that is being "tab completed". By default is 0, the first argument
 function tabCompletion(command, arg, allPossibilities, index=0) {
     if (!(allPossibilities.constructor === Array)) {return;}
-    if (!Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_20__["containsAllStrings"])(allPossibilities)) {return;}
+    if (!Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21__["containsAllStrings"])(allPossibilities)) {return;}
 
     //if (!command.startsWith("./")) {
         //command = command.toLowerCase();
@@ -32040,7 +31895,7 @@ function tabCompletion(command, arg, allPossibilities, index=0) {
 
         document.getElementById("terminal-input-text-box").focus();
     } else {
-        var longestStartSubstr = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_20__["longestCommonStart"])(allPossibilities);
+        var longestStartSubstr = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21__["longestCommonStart"])(allPossibilities);
         //If the longest common starting substring of remaining possibilities is the same
         //as whatevers already in terminal, just list all possible options. Otherwise,
         //change the input in the terminal to the longest common starting substr
@@ -32051,8 +31906,8 @@ function tabCompletion(command, arg, allPossibilities, index=0) {
         }
         if (arg == "") {
             if (longestStartSubstr == command) {
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("> " + command);
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])(allOptionsStr);
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("> " + command);
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])(allOptionsStr);
             } else {
                 document.getElementById("terminal-input-text-box").value = longestStartSubstr;
                 document.getElementById("terminal-input-text-box").focus();
@@ -32060,8 +31915,8 @@ function tabCompletion(command, arg, allPossibilities, index=0) {
         } else {
             if (longestStartSubstr == arg) {
                 //List all possible options
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("> " + command + " " + arg);
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])(allOptionsStr);
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("> " + command + " " + arg);
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])(allOptionsStr);
             } else {
                 document.getElementById("terminal-input-text-box").value = command + " " + longestStartSubstr;
                 document.getElementById("terminal-input-text-box").focus();
@@ -32074,7 +31929,7 @@ function tabCompletion(command, arg, allPossibilities, index=0) {
 function determineAllPossibilitiesForTabCompletion(input, index=0) {
     var allPos = [];
     allPos = allPos.concat(Object.keys(_Alias__WEBPACK_IMPORTED_MODULE_0__[/* GlobalAliases */ "b"]));
-    var currServ = _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer();
+    var currServ = _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer();
     input = input.toLowerCase();
 
     //If the command starts with './' and the index == -1, then the user
@@ -32087,7 +31942,7 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
         }
 
         //Programs are on home computer
-        var homeComputer = _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getHomeComputer();
+        var homeComputer = _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getHomeComputer();
         for(var i = 0; i < homeComputer.programs.length; ++i) {
             allPos.push("./" + homeComputer.programs[i]);
         }
@@ -32104,18 +31959,18 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
 
     if (input.startsWith ("buy ")) {
         let options = [];
-        for(const i in _DarkWeb__WEBPACK_IMPORTED_MODULE_4__[/* DarkWebItems */ "a"]) {
-            const item = _DarkWeb__WEBPACK_IMPORTED_MODULE_4__[/* DarkWebItems */ "a"][i]
+        for(const i in _DarkWeb_DarkWebItems__WEBPACK_IMPORTED_MODULE_5__["DarkWebItems"]) {
+            const item = _DarkWeb_DarkWebItems__WEBPACK_IMPORTED_MODULE_5__["DarkWebItems"][i]
             options.push(item.program);
         }
         return options.concat(Object.keys(_Alias__WEBPACK_IMPORTED_MODULE_0__[/* GlobalAliases */ "b"]));
     }
 
     if (input.startsWith("scp ") && index == 1) {
-        for (var iphostname in _Server__WEBPACK_IMPORTED_MODULE_16__[/* AllServers */ "b"]) {
-            if (_Server__WEBPACK_IMPORTED_MODULE_16__[/* AllServers */ "b"].hasOwnProperty(iphostname)) {
-                allPos.push(_Server__WEBPACK_IMPORTED_MODULE_16__[/* AllServers */ "b"][iphostname].ip);
-                allPos.push(_Server__WEBPACK_IMPORTED_MODULE_16__[/* AllServers */ "b"][iphostname].hostname);
+        for (var iphostname in _Server__WEBPACK_IMPORTED_MODULE_17__[/* AllServers */ "b"]) {
+            if (_Server__WEBPACK_IMPORTED_MODULE_17__[/* AllServers */ "b"].hasOwnProperty(iphostname)) {
+                allPos.push(_Server__WEBPACK_IMPORTED_MODULE_17__[/* AllServers */ "b"][iphostname].ip);
+                allPos.push(_Server__WEBPACK_IMPORTED_MODULE_17__[/* AllServers */ "b"][iphostname].hostname);
             }
         }
     }
@@ -32126,7 +31981,7 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
             allPos.push(currServ.scripts[i].filename);
         }
         for (var i = 0; i < currServ.messages.length; ++i) {
-            if (!(currServ.messages[i] instanceof _Message__WEBPACK_IMPORTED_MODULE_11__[/* Message */ "a"])) {
+            if (!(currServ.messages[i] instanceof _Message__WEBPACK_IMPORTED_MODULE_12__[/* Message */ "a"])) {
                 allPos.push(currServ.messages[i]);
             }
         }
@@ -32138,7 +31993,7 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
     if (input.startsWith("connect ") || input.startsWith("telnet ")) {
         //All network connections
         for (var i = 0; i < currServ.serversOnNetwork.length; ++i) {
-            var serv = _Server__WEBPACK_IMPORTED_MODULE_16__[/* AllServers */ "b"][currServ.serversOnNetwork[i]];
+            var serv = _Server__WEBPACK_IMPORTED_MODULE_17__[/* AllServers */ "b"][currServ.serversOnNetwork[i]];
             if (serv == null) {continue;}
             allPos.push(serv.ip); //IP
             allPos.push(serv.hostname); //Hostname
@@ -32175,7 +32030,7 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
             allPos.push(currServ.programs[i]);
         }
         for (let i = 0; i < currServ.messages.length; ++i) {
-            if (!(currServ.messages[i] instanceof _Message__WEBPACK_IMPORTED_MODULE_11__[/* Message */ "a"]) && Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25__["isString"])(currServ.messages[i]) &&
+            if (!(currServ.messages[i] instanceof _Message__WEBPACK_IMPORTED_MODULE_12__[/* Message */ "a"]) && Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_26__["isString"])(currServ.messages[i]) &&
                   currServ.messages[i].endsWith(".lit")) {
                 allPos.push(currServ.messages[i]);
             }
@@ -32196,7 +32051,7 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
         }
 
         //Programs are on home computer
-        var homeComputer = _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getHomeComputer();
+        var homeComputer = _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getHomeComputer();
         for (let i = 0; i < homeComputer.programs.length; ++i) {
             allPos.push(homeComputer.programs[i]);
         }
@@ -32209,7 +32064,7 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
 
     if (input.startsWith("cat ")) {
         for (var i = 0; i < currServ.messages.length; ++i) {
-            if (currServ.messages[i] instanceof _Message__WEBPACK_IMPORTED_MODULE_11__[/* Message */ "a"]) {
+            if (currServ.messages[i] instanceof _Message__WEBPACK_IMPORTED_MODULE_12__[/* Message */ "a"]) {
                 allPos.push(currServ.messages[i].filename);
             } else {
                 allPos.push(currServ.messages[i]);
@@ -32245,16 +32100,16 @@ let Terminal = {
     contractOpen:       false, //True if a Coding Contract prompt is opened
 
     resetTerminalInput: function() {
-        if (_Fconf__WEBPACK_IMPORTED_MODULE_6__[/* FconfSettings */ "a"].WRAP_INPUT) {
+        if (_Fconf__WEBPACK_IMPORTED_MODULE_7__[/* FconfSettings */ "a"].WRAP_INPUT) {
             document.getElementById("terminal-input-td").innerHTML =
-                "<div id='terminal-input-header' class='prompt'>[" + _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer().hostname + " ~]" + "$ </div>" +
+                "<div id='terminal-input-header' class='prompt'>[" + _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer().hostname + " ~]" + "$ </div>" +
                 '<textarea type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
 
             //Auto re-size the line element as it wraps
-            autosize__WEBPACK_IMPORTED_MODULE_31___default()(document.getElementById("terminal-input-text-box"));
+            autosize__WEBPACK_IMPORTED_MODULE_32___default()(document.getElementById("terminal-input-text-box"));
         } else {
             document.getElementById("terminal-input-td").innerHTML =
-                "<div id='terminal-input-header' class='prompt'>[" + _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer().hostname + " ~]" + "$ </div>" +
+                "<div id='terminal-input-header' class='prompt'>[" + _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer().hostname + " ~]" + "$ </div>" +
                 '<input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
         }
         var hdr = document.getElementById("terminal-input-header");
@@ -32358,22 +32213,22 @@ let Terminal = {
         Terminal.hackFlag = true;
 
         //Hacking through Terminal should be faster than hacking through a script
-        Terminal.actionTime = Object(_Hacking__WEBPACK_IMPORTED_MODULE_7__[/* calculateHackingTime */ "d"])(_Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer()) / 4;
+        Terminal.actionTime = Object(_Hacking__WEBPACK_IMPORTED_MODULE_8__[/* calculateHackingTime */ "d"])(_Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer()) / 4;
         Terminal.startAction();
     },
 
     startAnalyze: function() {
         Terminal.analyzeFlag = true;
         Terminal.actionTime = 1;
-        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Analyzing system...");
+        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Analyzing system...");
         Terminal.startAction();
     },
 
     startAction: function() {
        Terminal.actionStarted = true;
 
-       Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["hackProgressPost"])("Time left:");
-       Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["hackProgressBarPost"])("[");
+       Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["hackProgressPost"])("Time left:");
+       Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["hackProgressBarPost"])("[");
 
        //Disable terminal
        document.getElementById("terminal-input-td").innerHTML = '<input type="text" class="terminal-input"/>';
@@ -32391,41 +32246,41 @@ let Terminal = {
     //Complete the hack/analyze command
 	finishHack: function(cancelled = false) {
 		if (cancelled == false) {
-            var server = _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer();
+            var server = _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer();
 
 			//Calculate whether hack was successful
-			var hackChance = Object(_Hacking__WEBPACK_IMPORTED_MODULE_7__[/* calculateHackingChance */ "b"])(server);
+			var hackChance = Object(_Hacking__WEBPACK_IMPORTED_MODULE_8__[/* calculateHackingChance */ "b"])(server);
 			var rand = Math.random();
 			console.log("Hack success chance: " + hackChance +  ", rand: " + rand);
-			var expGainedOnSuccess = Object(_Hacking__WEBPACK_IMPORTED_MODULE_7__[/* calculateHackingExpGain */ "c"])(server);
+			var expGainedOnSuccess = Object(_Hacking__WEBPACK_IMPORTED_MODULE_8__[/* calculateHackingExpGain */ "c"])(server);
 			var expGainedOnFailure = (expGainedOnSuccess / 4);
 			if (rand < hackChance) {	//Success!
-                if (_SpecialServerIps__WEBPACK_IMPORTED_MODULE_18__[/* SpecialServerIps */ "a"][_SpecialServerIps__WEBPACK_IMPORTED_MODULE_18__[/* SpecialServerNames */ "b"].WorldDaemon] &&
-                    _SpecialServerIps__WEBPACK_IMPORTED_MODULE_18__[/* SpecialServerIps */ "a"][_SpecialServerIps__WEBPACK_IMPORTED_MODULE_18__[/* SpecialServerNames */ "b"].WorldDaemon] == server.ip) {
-                    if (_Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].bitNodeN == null) {
-                        _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].bitNodeN = 1;
+                if (_SpecialServerIps__WEBPACK_IMPORTED_MODULE_19__[/* SpecialServerIps */ "a"][_SpecialServerIps__WEBPACK_IMPORTED_MODULE_19__[/* SpecialServerNames */ "b"].WorldDaemon] &&
+                    _SpecialServerIps__WEBPACK_IMPORTED_MODULE_19__[/* SpecialServerIps */ "a"][_SpecialServerIps__WEBPACK_IMPORTED_MODULE_19__[/* SpecialServerNames */ "b"].WorldDaemon] == server.ip) {
+                    if (_Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].bitNodeN == null) {
+                        _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].bitNodeN = 1;
                     }
-                    Object(_RedPill__WEBPACK_IMPORTED_MODULE_14__[/* hackWorldDaemon */ "a"])(_Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].bitNodeN);
+                    Object(_RedPill__WEBPACK_IMPORTED_MODULE_15__[/* hackWorldDaemon */ "a"])(_Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].bitNodeN);
                     return;
                 }
                 server.manuallyHacked = true;
-				var moneyGained = Object(_Hacking__WEBPACK_IMPORTED_MODULE_7__[/* calculatePercentMoneyHacked */ "e"])(server);
+				var moneyGained = Object(_Hacking__WEBPACK_IMPORTED_MODULE_8__[/* calculatePercentMoneyHacked */ "e"])(server);
 				moneyGained = Math.floor(server.moneyAvailable * moneyGained);
 
 				if (moneyGained <= 0) {moneyGained = 0;} //Safety check
 
 				server.moneyAvailable -= moneyGained;
-				_Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].gainMoney(moneyGained);
-                _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].gainHackingExp(expGainedOnSuccess)
-                _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].gainIntelligenceExp(expGainedOnSuccess / _Constants__WEBPACK_IMPORTED_MODULE_2__["CONSTANTS"].IntelligenceTerminalHackBaseExpGain);
+				_Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].gainMoney(moneyGained);
+                _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].gainHackingExp(expGainedOnSuccess)
+                _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].gainIntelligenceExp(expGainedOnSuccess / _Constants__WEBPACK_IMPORTED_MODULE_2__["CONSTANTS"].IntelligenceTerminalHackBaseExpGain);
 
                 server.fortify(_Constants__WEBPACK_IMPORTED_MODULE_2__["CONSTANTS"].ServerFortifyAmount);
 
-				Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Hack successful! Gained " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__["numeralWrapper"].format(moneyGained, '($0,0.00)') + " and " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__["numeralWrapper"].format(expGainedOnSuccess, '0.0000') + " hacking EXP");
+				Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Hack successful! Gained " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__["numeralWrapper"].format(moneyGained, '($0,0.00)') + " and " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__["numeralWrapper"].format(expGainedOnSuccess, '0.0000') + " hacking EXP");
 			} else {					//Failure
 				//Player only gains 25% exp for failure? TODO Can change this later to balance
-                _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].gainHackingExp(expGainedOnFailure)
-				Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Failed to hack " + server.hostname + ". Gained " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__["numeralWrapper"].format(expGainedOnFailure, '0.0000') + " hacking EXP");
+                _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].gainHackingExp(expGainedOnFailure)
+				Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Failed to hack " + server.hostname + ". Gained " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__["numeralWrapper"].format(expGainedOnFailure, '0.0000') + " hacking EXP");
 			}
 		}
 
@@ -32440,48 +32295,48 @@ let Terminal = {
 
     finishAnalyze: function(cancelled = false) {
 		if (cancelled == false) {
-            let currServ = _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer();
-			Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])(currServ.hostname + ": ");
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Organization name: " + currServ.organizationName);
+            let currServ = _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer();
+			Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])(currServ.hostname + ": ");
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Organization name: " + currServ.organizationName);
             var rootAccess = "";
             if (currServ.hasAdminRights) {rootAccess = "YES";}
             else {rootAccess = "NO";}
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Root Access: " + rootAccess);
-			Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Required hacking skill: " + currServ.requiredHackingSkill);
-			Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Server security level: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__["numeralWrapper"].format(currServ.hackDifficulty, '0.000a'));
-			Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Chance to hack: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__["numeralWrapper"].format(Object(_Hacking__WEBPACK_IMPORTED_MODULE_7__[/* calculateHackingChance */ "b"])(currServ), '0.00%'));
-			Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Time to hack: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__["numeralWrapper"].format(Object(_Hacking__WEBPACK_IMPORTED_MODULE_7__[/* calculateHackingTime */ "d"])(currServ), '0.000') + " seconds");
-			Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Total money available on server: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__["numeralWrapper"].format(currServ.moneyAvailable, '$0,0.00'));
-			Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Required number of open ports for NUKE: " + currServ.numOpenPortsRequired);
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Root Access: " + rootAccess);
+			Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Required hacking skill: " + currServ.requiredHackingSkill);
+			Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Server security level: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__["numeralWrapper"].format(currServ.hackDifficulty, '0.000a'));
+			Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Chance to hack: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__["numeralWrapper"].format(Object(_Hacking__WEBPACK_IMPORTED_MODULE_8__[/* calculateHackingChance */ "b"])(currServ), '0.00%'));
+			Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Time to hack: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__["numeralWrapper"].format(Object(_Hacking__WEBPACK_IMPORTED_MODULE_8__[/* calculateHackingTime */ "d"])(currServ), '0.000') + " seconds");
+			Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Total money available on server: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__["numeralWrapper"].format(currServ.moneyAvailable, '$0,0.00'));
+			Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Required number of open ports for NUKE: " + currServ.numOpenPortsRequired);
 
             if (currServ.sshPortOpen) {
-				Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("SSH port: Open")
+				Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("SSH port: Open")
 			} else {
-				Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("SSH port: Closed")
+				Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("SSH port: Closed")
 			}
 
 			if (currServ.ftpPortOpen) {
-				Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("FTP port: Open")
+				Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("FTP port: Open")
 			} else {
-				Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("FTP port: Closed")
+				Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("FTP port: Closed")
 			}
 
 			if (currServ.smtpPortOpen) {
-				Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("SMTP port: Open")
+				Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("SMTP port: Open")
 			} else {
-				Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("SMTP port: Closed")
+				Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("SMTP port: Closed")
 			}
 
 			if (currServ.httpPortOpen) {
-				Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("HTTP port: Open")
+				Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("HTTP port: Open")
 			} else {
-				Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("HTTP port: Closed")
+				Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("HTTP port: Closed")
 			}
 
 			if (currServ.sqlPortOpen) {
-				Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("SQL port: Open")
+				Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("SQL port: Open")
 			} else {
-				Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("SQL port: Closed")
+				Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("SQL port: Closed")
 			}
 		}
         Terminal.analyzeFlag = false;
@@ -32524,114 +32379,114 @@ let Terminal = {
 		if (commandArray.length == 0) {return;}
 
         /****************** Interactive Tutorial Terminal Commands ******************/
-        if (_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_9__[/* ITutorial */ "a"].isRunning) {
-            var foodnstuffServ = Object(_Server__WEBPACK_IMPORTED_MODULE_16__[/* GetServerByHostname */ "c"])("foodnstuff");
+        if (_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_10__[/* ITutorial */ "a"].isRunning) {
+            var foodnstuffServ = Object(_Server__WEBPACK_IMPORTED_MODULE_17__[/* GetServerByHostname */ "c"])("foodnstuff");
             if (foodnstuffServ == null) {throw new Error("Could not get foodnstuff server"); return;}
 
-            switch(_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_9__[/* ITutorial */ "a"].currStep) {
-            case _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_9__[/* iTutorialSteps */ "d"].TerminalHelp:
+            switch(_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_10__[/* ITutorial */ "a"].currStep) {
+            case _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_10__[/* iTutorialSteps */ "d"].TerminalHelp:
                 if (commandArray[0] == "help") {
-                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])(_HelpText__WEBPACK_IMPORTED_MODULE_8__["TerminalHelpText"]);
-                    Object(_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_9__[/* iTutorialNextStep */ "b"])();
-                } else {Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Bad command. Please follow the tutorial");}
+                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])(_HelpText__WEBPACK_IMPORTED_MODULE_9__["TerminalHelpText"]);
+                    Object(_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_10__[/* iTutorialNextStep */ "b"])();
+                } else {Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Bad command. Please follow the tutorial");}
                 break;
-            case _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_9__[/* iTutorialSteps */ "d"].TerminalLs:
+            case _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_10__[/* iTutorialSteps */ "d"].TerminalLs:
                 if (commandArray[0] == "ls") {
                     Terminal.executeListCommand(commandArray);
-                    Object(_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_9__[/* iTutorialNextStep */ "b"])();
-                } else {Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Bad command. Please follow the tutorial");}
+                    Object(_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_10__[/* iTutorialNextStep */ "b"])();
+                } else {Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Bad command. Please follow the tutorial");}
                 break;
-            case _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_9__[/* iTutorialSteps */ "d"].TerminalScan:
+            case _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_10__[/* iTutorialSteps */ "d"].TerminalScan:
                 if (commandArray[0] == "scan") {
                     Terminal.executeScanCommand(commandArray);
-                    Object(_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_9__[/* iTutorialNextStep */ "b"])();
-                } else {Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Bad command. Please follow the tutorial");}
+                    Object(_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_10__[/* iTutorialNextStep */ "b"])();
+                } else {Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Bad command. Please follow the tutorial");}
                 break;
-            case _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_9__[/* iTutorialSteps */ "d"].TerminalScanAnalyze1:
+            case _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_10__[/* iTutorialSteps */ "d"].TerminalScanAnalyze1:
                 if (commandArray.length == 1 && commandArray[0] == "scan-analyze") {
                     Terminal.executeScanAnalyzeCommand(1);
-                    Object(_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_9__[/* iTutorialNextStep */ "b"])();
-                } else {Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Bad command. Please follow the tutorial");}
+                    Object(_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_10__[/* iTutorialNextStep */ "b"])();
+                } else {Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Bad command. Please follow the tutorial");}
                 break;
-            case _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_9__[/* iTutorialSteps */ "d"].TerminalScanAnalyze2:
+            case _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_10__[/* iTutorialSteps */ "d"].TerminalScanAnalyze2:
                 if (commandArray.length == 2 && commandArray[0] == "scan-analyze" &&
                     commandArray[1] == "2") {
                     Terminal.executeScanAnalyzeCommand(2);
-                    Object(_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_9__[/* iTutorialNextStep */ "b"])();
-                } else {Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Bad command. Please follow the tutorial");}
+                    Object(_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_10__[/* iTutorialNextStep */ "b"])();
+                } else {Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Bad command. Please follow the tutorial");}
                 break;
                 break;
-            case _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_9__[/* iTutorialSteps */ "d"].TerminalConnect:
+            case _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_10__[/* iTutorialSteps */ "d"].TerminalConnect:
                 if (commandArray.length == 2) {
                     if ((commandArray[0] == "connect") &&
                         (commandArray[1] == "foodnstuff" || commandArray[1] == foodnstuffServ.ip)) {
-                        _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer().isConnectedTo = false;
-                        _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].currentServer = foodnstuffServ.ip;
-                        _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer().isConnectedTo = true;
-                        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Connected to foodnstuff");
-                        Object(_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_9__[/* iTutorialNextStep */ "b"])();
-                    } else {Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Wrong command! Try again!"); return;}
-                } else {Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Bad command. Please follow the tutorial");}
+                        _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer().isConnectedTo = false;
+                        _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].currentServer = foodnstuffServ.ip;
+                        _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer().isConnectedTo = true;
+                        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Connected to foodnstuff");
+                        Object(_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_10__[/* iTutorialNextStep */ "b"])();
+                    } else {Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Wrong command! Try again!"); return;}
+                } else {Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Bad command. Please follow the tutorial");}
                 break;
-            case _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_9__[/* iTutorialSteps */ "d"].TerminalAnalyze:
+            case _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_10__[/* iTutorialSteps */ "d"].TerminalAnalyze:
                 if (commandArray[0] == "analyze") {
                     if (commandArray.length != 1) {
-                        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Incorrect usage of analyze command. Usage: analyze"); return;
+                        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Incorrect usage of analyze command. Usage: analyze"); return;
                     }
                     Terminal.startAnalyze();
-                    Object(_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_9__[/* iTutorialNextStep */ "b"])();
+                    Object(_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_10__[/* iTutorialNextStep */ "b"])();
                 } else {
-                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Bad command. Please follow the tutorial");
+                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Bad command. Please follow the tutorial");
                 }
                 break;
-            case _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_9__[/* iTutorialSteps */ "d"].TerminalNuke:
+            case _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_10__[/* iTutorialSteps */ "d"].TerminalNuke:
                 if (commandArray.length == 2 &&
                     commandArray[0] == "run" && commandArray[1] == "NUKE.exe") {
                     foodnstuffServ.hasAdminRights = true;
-                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("NUKE successful! Gained root access to foodnstuff");
-                    Object(_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_9__[/* iTutorialNextStep */ "b"])();
-                } else {Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Bad command. Please follow the tutorial");}
+                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("NUKE successful! Gained root access to foodnstuff");
+                    Object(_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_10__[/* iTutorialNextStep */ "b"])();
+                } else {Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Bad command. Please follow the tutorial");}
                 break;
-            case _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_9__[/* iTutorialSteps */ "d"].TerminalManualHack:
+            case _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_10__[/* iTutorialSteps */ "d"].TerminalManualHack:
                 if (commandArray.length == 1 && commandArray[0] == "hack") {
                     Terminal.startHack();
-                    Object(_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_9__[/* iTutorialNextStep */ "b"])();
-                } else {Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Bad command. Please follow the tutorial");}
+                    Object(_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_10__[/* iTutorialNextStep */ "b"])();
+                } else {Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Bad command. Please follow the tutorial");}
 				break;
-            case _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_9__[/* iTutorialSteps */ "d"].TerminalCreateScript:
+            case _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_10__[/* iTutorialSteps */ "d"].TerminalCreateScript:
                 if (commandArray.length == 2 &&
                     commandArray[0] == "nano" && commandArray[1] == "foodnstuff.script") {
-                    _engine__WEBPACK_IMPORTED_MODULE_5__["Engine"].loadScriptEditorContent("foodnstuff.script", "");
-                    Object(_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_9__[/* iTutorialNextStep */ "b"])();
-                } else {Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Bad command. Please follow the tutorial");}
-            case _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_9__[/* iTutorialSteps */ "d"].TerminalFree:
+                    _engine__WEBPACK_IMPORTED_MODULE_6__["Engine"].loadScriptEditorContent("foodnstuff.script", "");
+                    Object(_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_10__[/* iTutorialNextStep */ "b"])();
+                } else {Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Bad command. Please follow the tutorial");}
+            case _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_10__[/* iTutorialSteps */ "d"].TerminalFree:
                 if (commandArray.length == 1 && commandArray[0] == "free") {
                     Terminal.executeFreeCommand(commandArray);
-                    Object(_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_9__[/* iTutorialNextStep */ "b"])();
+                    Object(_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_10__[/* iTutorialNextStep */ "b"])();
                 }
                 break;
-            case _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_9__[/* iTutorialSteps */ "d"].TerminalRunScript:
+            case _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_10__[/* iTutorialSteps */ "d"].TerminalRunScript:
                 if (commandArray.length == 2 &&
                     commandArray[0] == "run" && commandArray[1] == "foodnstuff.script") {
                     Terminal.runScript("foodnstuff.script");
-                    Object(_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_9__[/* iTutorialNextStep */ "b"])();
-                } else {Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Bad command. Please follow the tutorial");}
+                    Object(_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_10__[/* iTutorialNextStep */ "b"])();
+                } else {Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Bad command. Please follow the tutorial");}
                 break;
-            case _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_9__[/* iTutorialSteps */ "d"].ActiveScriptsToTerminal:
+            case _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_10__[/* iTutorialSteps */ "d"].ActiveScriptsToTerminal:
                 if (commandArray.length == 2 &&
                     commandArray[0] == "tail" && commandArray[1] == "foodnstuff.script") {
                     //Check that the script exists on this machine
-                    var runningScript = Object(_Script__WEBPACK_IMPORTED_MODULE_15__[/* findRunningScript */ "d"])("foodnstuff.script", [], _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer());
+                    var runningScript = Object(_Script__WEBPACK_IMPORTED_MODULE_16__[/* findRunningScript */ "d"])("foodnstuff.script", [], _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer());
                     if (runningScript == null) {
-                        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Error: No such script exists");
+                        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Error: No such script exists");
                         return;
                     }
-                    Object(_utils_LogBox__WEBPACK_IMPORTED_MODULE_28__[/* logBoxCreate */ "a"])(runningScript);
-                    Object(_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_9__[/* iTutorialNextStep */ "b"])();
-                } else {Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Bad command. Please follow the tutorial");}
+                    Object(_utils_LogBox__WEBPACK_IMPORTED_MODULE_29__[/* logBoxCreate */ "a"])(runningScript);
+                    Object(_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_10__[/* iTutorialNextStep */ "b"])();
+                } else {Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Bad command. Please follow the tutorial");}
                 break;
             default:
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Please follow the tutorial, or click 'Exit Tutorial' if you'd like to skip it");
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Please follow the tutorial, or click 'Exit Tutorial' if you'd like to skip it");
                 return;
             }
             return;
@@ -32640,7 +32495,7 @@ let Terminal = {
         /****************** END INTERACTIVE TUTORIAL ******************/
 
         /* Command parser */
-        var s = _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer();
+        var s = _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer();
 		switch (commandArray[0].toLowerCase()) {
             case "alias":
                 if (commandArray.length == 1) {
@@ -32659,35 +32514,35 @@ let Terminal = {
                         }
                     }
                 }
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])('Incorrect usage of alias command. Usage: alias [-g] [aliasname="value"]');
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])('Incorrect usage of alias command. Usage: alias [-g] [aliasname="value"]');
                 break;
 			case "analyze":
 				if (commandArray.length != 1) {
-					Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Incorrect usage of analyze command. Usage: analyze"); return;
+					Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Incorrect usage of analyze command. Usage: analyze"); return;
 				}
                 Terminal.startAnalyze();
 				break;
             case "buy":
-                if (_SpecialServerIps__WEBPACK_IMPORTED_MODULE_18__[/* SpecialServerIps */ "a"].hasOwnProperty("Darkweb Server")) {
-                    Object(_DarkWeb__WEBPACK_IMPORTED_MODULE_4__[/* executeDarkwebTerminalCommand */ "c"])(commandArray);
+                if (_SpecialServerIps__WEBPACK_IMPORTED_MODULE_19__[/* SpecialServerIps */ "a"].hasOwnProperty("Darkweb Server")) {
+                    Object(_DarkWeb_DarkWeb__WEBPACK_IMPORTED_MODULE_4__[/* executeDarkwebTerminalCommand */ "b"])(commandArray);
                 } else {
-                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("You need to be able to connect to the Dark Web to use the buy command. (Maybe there's a TOR router you can buy somewhere)");
+                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("You need to be able to connect to the Dark Web to use the buy command. (Maybe there's a TOR router you can buy somewhere)");
                 }
                 break;
             case "cat":
                 if (commandArray.length != 2) {
-                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Incorrect usage of cat command. Usage: cat [file]"); return;
+                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Incorrect usage of cat command. Usage: cat [file]"); return;
                 }
                 var filename = commandArray[1];
 				if (!filename.endsWith(".msg") && !filename.endsWith(".lit") && !filename.endsWith(".txt")) {
-					Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Error: Only .msg, .txt, and .lit files are viewable with cat (filename must end with .msg, .txt, or .lit)"); return;
+					Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Error: Only .msg, .txt, and .lit files are viewable with cat (filename must end with .msg, .txt, or .lit)"); return;
 				}
                 for (var i = 0; i < s.messages.length; ++i) {
                     if (filename.endsWith(".lit") && s.messages[i] == filename) {
-                        Object(_Literature__WEBPACK_IMPORTED_MODULE_10__[/* showLiterature */ "b"])(s.messages[i]);
+                        Object(_Literature__WEBPACK_IMPORTED_MODULE_11__[/* showLiterature */ "b"])(s.messages[i]);
                         return;
                     } else if (filename.endsWith(".msg") && s.messages[i].filename == filename) {
-                        Object(_Message__WEBPACK_IMPORTED_MODULE_11__[/* showMessage */ "f"])(s.messages[i]);
+                        Object(_Message__WEBPACK_IMPORTED_MODULE_12__[/* showMessage */ "f"])(s.messages[i]);
                         return;
                     }
                 }
@@ -32697,11 +32552,11 @@ let Terminal = {
                         return;
                     }
                 }
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Error: No such file " + filename);
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Error: No such file " + filename);
                 break;
             case "check":
                 if (commandArray.length < 2) {
-                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Incorrect number of arguments. Usage: check [script] [arg1] [arg2]...");
+                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Incorrect number of arguments. Usage: check [script] [arg1] [arg2]...");
                 } else {
                     var results = commandArray[1].split(" ");
                     var scriptName = results[0];
@@ -32711,14 +32566,14 @@ let Terminal = {
                     }
 
                     //Can only tail script files
-                    if (Object(_Script__WEBPACK_IMPORTED_MODULE_15__[/* isScriptFilename */ "e"])(scriptName) == false) {
-                        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Error: tail can only be called on .script files (filename must end with .script)"); return;
+                    if (Object(_Script__WEBPACK_IMPORTED_MODULE_16__[/* isScriptFilename */ "e"])(scriptName) == false) {
+                        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Error: tail can only be called on .script files (filename must end with .script)"); return;
                     }
 
                     //Check that the script exists on this machine
-                    var runningScript = Object(_Script__WEBPACK_IMPORTED_MODULE_15__[/* findRunningScript */ "d"])(scriptName, args, s);
+                    var runningScript = Object(_Script__WEBPACK_IMPORTED_MODULE_16__[/* findRunningScript */ "d"])(scriptName, args, s);
                     if (runningScript == null) {
-                        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Error: No such script exists");
+                        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Error: No such script exists");
                         return;
                     }
                     runningScript.displayLog();
@@ -32727,7 +32582,7 @@ let Terminal = {
 			case "clear":
 			case "cls":
 				if (commandArray.length != 1) {
-					Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Incorrect usage of clear/cls command. Usage: clear/cls"); return;
+					Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Incorrect usage of clear/cls command. Usage: clear/cls"); return;
 				}
 				$("#terminal tr:not(:last)").remove();
 				postNetburnerText();
@@ -32735,30 +32590,30 @@ let Terminal = {
 			case "connect":
 				//Disconnect from current server in terminal and connect to new one
                 if (commandArray.length != 2) {
-                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Incorrect usage of connect command. Usage: connect [ip/hostname]");
+                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Incorrect usage of connect command. Usage: connect [ip/hostname]");
                     return;
                 }
 
                 var ip = commandArray[1];
 
-                for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer().serversOnNetwork.length; i++) {
-                    if (_Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer().getServerOnNetwork(i).ip == ip || _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer().getServerOnNetwork(i).hostname == ip) {
+                for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer().serversOnNetwork.length; i++) {
+                    if (_Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer().getServerOnNetwork(i).ip == ip || _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer().getServerOnNetwork(i).hostname == ip) {
                         Terminal.connectToServer(ip);
                         return;
                     }
                 }
 
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Host not found");
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Host not found");
 				break;
             case "download":
                 if (commandArray.length != 2) {
-                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Incorrect usage of download command. Usage: download [text file]");
+                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Incorrect usage of download command. Usage: download [text file]");
                     return;
                 }
                 var fn = commandArray[1];
                 if (fn === "*" || fn === "*.script" || fn === "*.txt") {
                     //Download all scripts as a zip
-                    var zip = new jszip__WEBPACK_IMPORTED_MODULE_32__();
+                    var zip = new jszip__WEBPACK_IMPORTED_MODULE_33__();
                     if (fn === "*" || fn === "*.script") {
                         for (var i = 0; i < s.scripts.length; ++i) {
                             var file = new Blob([s.scripts[i].code], {type:"text/plain"});
@@ -32783,10 +32638,10 @@ let Terminal = {
                     }
 
                     zip.generateAsync({type:"blob"}).then(function(content) {
-                        file_saver__WEBPACK_IMPORTED_MODULE_33__["saveAs"](content, filename);
+                        file_saver__WEBPACK_IMPORTED_MODULE_34__["saveAs"](content, filename);
                     });
                     return;
-                } else if (Object(_Script__WEBPACK_IMPORTED_MODULE_15__[/* isScriptFilename */ "e"])(fn)) {
+                } else if (Object(_Script__WEBPACK_IMPORTED_MODULE_16__[/* isScriptFilename */ "e"])(fn)) {
                     //Download a single script
                     for (var i = 0; i < s.scripts.length; ++i) {
                         if (s.scripts[i].filename === fn) {
@@ -32795,16 +32650,16 @@ let Terminal = {
                     }
                 } else if (fn.endsWith(".txt")) {
                     //Download a single text file
-                    var txtFile = Object(_TextFile__WEBPACK_IMPORTED_MODULE_19__["getTextFile"])(fn, s);
+                    var txtFile = Object(_TextFile__WEBPACK_IMPORTED_MODULE_20__["getTextFile"])(fn, s);
                     if (txtFile !== null) {
                         return txtFile.download();
                     }
                 }
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Error: " + fn + " does not exist");
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Error: " + fn + " does not exist");
                 break;
             case "expr":
                 if (commandArray.length <= 1) {
-                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Incorrect usage of expr command. Usage: expr [math expression]");
+                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Incorrect usage of expr command. Usage: expr [math expression]");
                     return;
                 }
                 const expr = commandArray.slice(1).join("");
@@ -32815,73 +32670,73 @@ let Terminal = {
                 try {
                     result = eval(sanitizedExpr);
                 } catch(e) {
-                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])(`Could not evaluate expression: ${sanitizedExpr}`);
+                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])(`Could not evaluate expression: ${sanitizedExpr}`);
                     return;
                 }
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])(result);
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])(result);
                 break;
 			case "free":
 				Terminal.executeFreeCommand(commandArray);
 				break;
 			case "hack":
 				if (commandArray.length != 1) {
-					Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Incorrect usage of hack command. Usage: hack"); return;
+					Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Incorrect usage of hack command. Usage: hack"); return;
 				}
 				//Hack the current PC (usually for money)
 				//You can't hack your home pc or servers you purchased
-				if (_Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer().purchasedByPlayer) {
-					Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Cannot hack your own machines! You are currently connected to your home PC or one of your purchased servers");
-				} else if (_Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer().hasAdminRights == false ) {
-					Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("You do not have admin rights for this machine! Cannot hack");
-				} else if (_Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer().requiredHackingSkill > _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].hacking_skill) {
-					Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Your hacking skill is not high enough to attempt hacking this machine. Try analyzing the machine to determine the required hacking skill");
+				if (_Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer().purchasedByPlayer) {
+					Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Cannot hack your own machines! You are currently connected to your home PC or one of your purchased servers");
+				} else if (_Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer().hasAdminRights == false ) {
+					Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("You do not have admin rights for this machine! Cannot hack");
+				} else if (_Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer().requiredHackingSkill > _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].hacking_skill) {
+					Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Your hacking skill is not high enough to attempt hacking this machine. Try analyzing the machine to determine the required hacking skill");
 				} else {
                     Terminal.startHack();
 				}
 				break;
 			case "help":
 				if (commandArray.length != 1 && commandArray.length != 2) {
-					Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Incorrect usage of help command. Usage: help"); return;
+					Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Incorrect usage of help command. Usage: help"); return;
 				}
 				if (commandArray.length == 1) {
-                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])(_HelpText__WEBPACK_IMPORTED_MODULE_8__["TerminalHelpText"]);
+                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])(_HelpText__WEBPACK_IMPORTED_MODULE_9__["TerminalHelpText"]);
                 } else {
                     var cmd = commandArray[1];
-                    var txt = _HelpText__WEBPACK_IMPORTED_MODULE_8__["HelpTexts"][cmd];
+                    var txt = _HelpText__WEBPACK_IMPORTED_MODULE_9__["HelpTexts"][cmd];
                     if (txt == null) {
-                        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Error: No help topics match '" + cmd + "'");
+                        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Error: No help topics match '" + cmd + "'");
                         return;
                     }
-                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])(txt);
+                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])(txt);
                 }
 				break;
 			case "home":
 				if (commandArray.length != 1) {
-                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Incorrect usage of home command. Usage: home"); return;
+                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Incorrect usage of home command. Usage: home"); return;
                 }
-                _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer().isConnectedTo = false;
-                _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].currentServer = _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getHomeComputer().ip;
-                _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer().isConnectedTo = true;
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Connected to home");
+                _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer().isConnectedTo = false;
+                _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].currentServer = _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getHomeComputer().ip;
+                _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer().isConnectedTo = true;
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Connected to home");
                 Terminal.resetTerminalInput();
 				break;
 			case "hostname":
 				if (commandArray.length != 1) {
-					Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Incorrect usage of hostname command. Usage: hostname"); return;
+					Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Incorrect usage of hostname command. Usage: hostname"); return;
 				}
 				//Print the hostname of current system
-				Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])(_Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer().hostname);
+				Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])(_Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer().hostname);
 				break;
 			case "ifconfig":
 				if (commandArray.length != 1) {
-					Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Incorrect usage of ifconfig command. Usage: ifconfig"); return;
+					Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Incorrect usage of ifconfig command. Usage: ifconfig"); return;
 				}
 				//Print the IP address of the current system
-				Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])(_Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer().ip);
+				Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])(_Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer().ip);
 				break;
 			case "kill":
 				if (commandArray.length < 2) {
-					Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Incorrect usage of kill command. Usage: kill [scriptname] [arg1] [arg2]..."); return;
+					Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Incorrect usage of kill command. Usage: kill [scriptname] [arg1] [arg2]..."); return;
 				}
                 var results = commandArray[1].split(" ");
 				var scriptName = results[0];
@@ -32889,90 +32744,90 @@ let Terminal = {
                 for (var i = 1; i < results.length; ++i) {
                     args.push(results[i]);
                 }
-                var runningScript = Object(_Script__WEBPACK_IMPORTED_MODULE_15__[/* findRunningScript */ "d"])(scriptName, args, s);
+                var runningScript = Object(_Script__WEBPACK_IMPORTED_MODULE_16__[/* findRunningScript */ "d"])(scriptName, args, s);
                 if (runningScript == null) {
-                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("No such script is running. Nothing to kill");
+                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("No such script is running. Nothing to kill");
                     return;
                 }
-                Object(_NetscriptWorker__WEBPACK_IMPORTED_MODULE_12__[/* killWorkerScript */ "d"])(runningScript, s.ip);
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Killing " + scriptName + ". May take up to a few minutes for the scripts to die...");
+                Object(_NetscriptWorker__WEBPACK_IMPORTED_MODULE_13__[/* killWorkerScript */ "d"])(runningScript, s.ip);
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Killing " + scriptName + ". May take up to a few minutes for the scripts to die...");
 				break;
             case "killall":
                 for (var i = s.runningScripts.length-1; i >= 0; --i) {
-                    Object(_NetscriptWorker__WEBPACK_IMPORTED_MODULE_12__[/* killWorkerScript */ "d"])(s.runningScripts[i], s.ip);
+                    Object(_NetscriptWorker__WEBPACK_IMPORTED_MODULE_13__[/* killWorkerScript */ "d"])(s.runningScripts[i], s.ip);
                 }
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Killing all running scripts. May take up to a few minutes for the scripts to die...");
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Killing all running scripts. May take up to a few minutes for the scripts to die...");
                 break;
 			case "ls":
                 Terminal.executeListCommand(commandArray);
 				break;
             case "lscpu":
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])(_Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer().cpuCores + " Core(s)");
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])(_Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer().cpuCores + " Core(s)");
                 break;
             case "mem":
                 if (commandArray.length != 2) {
-                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Incorrect usage of mem command. usage: mem [scriptname] [-t] [number threads]"); return;
+                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Incorrect usage of mem command. usage: mem [scriptname] [-t] [number threads]"); return;
                 }
                 var scriptName = commandArray[1];
                 var numThreads = 1;
                 if (scriptName.indexOf(" -t ") != -1) {
                     var results = scriptName.split(" ");
                     if (results.length != 3) {
-                        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Invalid use of run command. Usage: mem [script] [-t] [number threads]");
+                        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Invalid use of run command. Usage: mem [script] [-t] [number threads]");
                         return;
                     }
                     numThreads = Math.round(Number(results[2]));
                     if (isNaN(numThreads) || numThreads < 1) {
-                        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Invalid number of threads specified. Number of threads must be greater than 1");
+                        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Invalid number of threads specified. Number of threads must be greater than 1");
                         return;
                     }
                     scriptName = results[0];
                 }
 
-                var currServ = _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer();
+                var currServ = _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer();
                 for (var i = 0; i < currServ.scripts.length; ++i) {
                     if (scriptName == currServ.scripts[i].filename) {
                         var scriptBaseRamUsage = currServ.scripts[i].ramUsage;
                         var ramUsage = scriptBaseRamUsage * numThreads;
 
-                        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("This script requires " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__["numeralWrapper"].format(ramUsage, '0.00') + " GB of RAM to run for " + numThreads + " thread(s)");
+                        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("This script requires " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__["numeralWrapper"].format(ramUsage, '0.00') + " GB of RAM to run for " + numThreads + " thread(s)");
                         return;
                     }
                 }
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("ERR: No such script exists!");
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("ERR: No such script exists!");
                 break;
 			case "nano":
 				if (commandArray.length != 2) {
-					Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Incorrect usage of nano command. Usage: nano [scriptname]"); return;
+					Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Incorrect usage of nano command. Usage: nano [scriptname]"); return;
 				}
 
 				var filename = commandArray[1];
                 if (filename === ".fconf") {
-                    var text = Object(_Fconf__WEBPACK_IMPORTED_MODULE_6__[/* createFconf */ "b"])();
-                    _engine__WEBPACK_IMPORTED_MODULE_5__["Engine"].loadScriptEditorContent(filename, text);
+                    var text = Object(_Fconf__WEBPACK_IMPORTED_MODULE_7__[/* createFconf */ "b"])();
+                    _engine__WEBPACK_IMPORTED_MODULE_6__["Engine"].loadScriptEditorContent(filename, text);
                     return;
-                } else if (Object(_Script__WEBPACK_IMPORTED_MODULE_15__[/* isScriptFilename */ "e"])(filename)) {
+                } else if (Object(_Script__WEBPACK_IMPORTED_MODULE_16__[/* isScriptFilename */ "e"])(filename)) {
                     for (var i = 0; i < s.scripts.length; i++) {
     					if (filename == s.scripts[i].filename) {
-    						_engine__WEBPACK_IMPORTED_MODULE_5__["Engine"].loadScriptEditorContent(filename, s.scripts[i].code);
+    						_engine__WEBPACK_IMPORTED_MODULE_6__["Engine"].loadScriptEditorContent(filename, s.scripts[i].code);
     						return;
     					}
     				}
                 } else if (filename.endsWith(".txt")) {
                     for (var i = 0; i < s.textFiles.length; ++i) {
                         if (filename === s.textFiles[i].fn) {
-                            _engine__WEBPACK_IMPORTED_MODULE_5__["Engine"].loadScriptEditorContent(filename, s.textFiles[i].text);
+                            _engine__WEBPACK_IMPORTED_MODULE_6__["Engine"].loadScriptEditorContent(filename, s.textFiles[i].text);
                             return;
                         }
                     }
                 } else {
-                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Error: Invalid file. Only scripts (.script, .ns, .js), text files (.txt), or .fconf can be edited with nano"); return;
+                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Error: Invalid file. Only scripts (.script, .ns, .js), text files (.txt), or .fconf can be edited with nano"); return;
                 }
-                _engine__WEBPACK_IMPORTED_MODULE_5__["Engine"].loadScriptEditorContent(filename);
+                _engine__WEBPACK_IMPORTED_MODULE_6__["Engine"].loadScriptEditorContent(filename);
 				break;
 			case "ps":
 				if (commandArray.length != 1) {
-					Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Incorrect usage of ps command. Usage: ps"); return;
+					Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Incorrect usage of ps command. Usage: ps"); return;
 				}
 				for (var i = 0; i < s.runningScripts.length; i++) {
                     var rsObj = s.runningScripts[i];
@@ -32980,12 +32835,12 @@ let Terminal = {
                     for (var j = 0; j < rsObj.args.length; ++j) {
                         res += (" " + rsObj.args[j].toString());
                     }
-					Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])(res);
+					Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])(res);
 				}
 				break;
 			case "rm":
 				if (commandArray.length != 2) {
-                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Incorrect number of arguments. Usage: rm [program/script]"); return;
+                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Incorrect number of arguments. Usage: rm [program/script]"); return;
                 }
 
                 //Check programs
@@ -32998,13 +32853,13 @@ let Terminal = {
                            return;
                         }
                     }
-                } else if (Object(_Script__WEBPACK_IMPORTED_MODULE_15__[/* isScriptFilename */ "e"])(delTarget)) {
+                } else if (Object(_Script__WEBPACK_IMPORTED_MODULE_16__[/* isScriptFilename */ "e"])(delTarget)) {
                     for (var i = 0; i < s.scripts.length; ++i) {
                         if (s.scripts[i].filename == delTarget) {
                             //Check that the script isnt currently running
                             for (var j = 0; j < s.runningScripts.length; ++j) {
                                 if (s.runningScripts[j].filename == delTarget) {
-                                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Cannot delete a script that is currently running!");
+                                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Cannot delete a script that is currently running!");
                                     return;
                                 }
                             }
@@ -33015,7 +32870,7 @@ let Terminal = {
                 } else if (delTarget.endsWith(".lit")) {
                     for (var i = 0; i < s.messages.length; ++i) {
                         var f = s.messages[i];
-                        if (!(f instanceof _Message__WEBPACK_IMPORTED_MODULE_11__[/* Message */ "a"]) && Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_25__["isString"])(f) && f === delTarget) {
+                        if (!(f instanceof _Message__WEBPACK_IMPORTED_MODULE_12__[/* Message */ "a"]) && Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_26__["isString"])(f) && f === delTarget) {
                             s.messages.splice(i, 1);
                             return;
                         }
@@ -33035,18 +32890,18 @@ let Terminal = {
                         }
                     }
                 }
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Error: No such file exists");
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Error: No such file exists");
 				break;
 			case "run":
 				//Run a program or a script
 				if (commandArray.length != 2) {
-					Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Incorrect number of arguments. Usage: run [program/script] [-t] [num threads] [arg1] [arg2]...");
+					Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Incorrect number of arguments. Usage: run [program/script] [-t] [num threads] [arg1] [arg2]...");
 				} else {
 					var executableName = commandArray[1];
 
                     //Secret Music player!
                     if (executableName === "musicplayer") {
-                        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])('<iframe src="https://open.spotify.com/embed/user/danielyxie/playlist/1ORnnL6YNvXOracUaUV2kh" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>', false);
+                        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])('<iframe src="https://open.spotify.com/embed/user/danielyxie/playlist/1ORnnL6YNvXOracUaUV2kh" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>', false);
                         return;
                     }
 
@@ -33080,70 +32935,70 @@ let Terminal = {
                         depth = Number(commandArray[1]);
                     }
                     if (isNaN(depth) || depth < 0) {
-                        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Incorrect usage of scan-analyze command. depth argument must be positive numeric");
+                        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Incorrect usage of scan-analyze command. depth argument must be positive numeric");
                         return;
                     }
-                    if (depth > 3 && !_Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].hasProgram(_CreateProgram__WEBPACK_IMPORTED_MODULE_3__[/* Programs */ "a"].DeepscanV1.name) &&
-                        !_Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].hasProgram(_CreateProgram__WEBPACK_IMPORTED_MODULE_3__[/* Programs */ "a"].DeepscanV2.name)) {
-                        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("You cannot scan-analyze with that high of a depth. Maximum depth is 3");
+                    if (depth > 3 && !_Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].hasProgram(_Programs_Programs__WEBPACK_IMPORTED_MODULE_3__["Programs"].DeepscanV1.name) &&
+                        !_Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].hasProgram(_Programs_Programs__WEBPACK_IMPORTED_MODULE_3__["Programs"].DeepscanV2.name)) {
+                        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("You cannot scan-analyze with that high of a depth. Maximum depth is 3");
                         return;
-                    } else if (depth > 5 && !_Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].hasProgram(_CreateProgram__WEBPACK_IMPORTED_MODULE_3__[/* Programs */ "a"].DeepscanV2.name)) {
-                        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("You cannot scan-analyze with that high of a depth. Maximum depth is 5");
+                    } else if (depth > 5 && !_Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].hasProgram(_Programs_Programs__WEBPACK_IMPORTED_MODULE_3__["Programs"].DeepscanV2.name)) {
+                        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("You cannot scan-analyze with that high of a depth. Maximum depth is 5");
                         return;
                     } else if (depth > 10) {
-                        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("You cannot scan-analyze with that high of a depth. Maximum depth is 10");
+                        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("You cannot scan-analyze with that high of a depth. Maximum depth is 10");
                         return;
                     }
                     Terminal.executeScanAnalyzeCommand(depth, all);
                 } else {
-                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Incorrect usage of scan-analyze command. usage: scan-analyze [depth]");
+                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Incorrect usage of scan-analyze command. usage: scan-analyze [depth]");
                 }
                 break;
             /* eslint-disable no-case-declarations */
 			case "scp":
 				if (commandArray.length != 2) {
-                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Incorrect usage of scp command. Usage: scp [file] [destination hostname/ip]");
+                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Incorrect usage of scp command. Usage: scp [file] [destination hostname/ip]");
                     return;
                 }
                 var args = commandArray[1].split(" ");
                 if (args.length != 2) {
-                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Incorrect usage of scp command. Usage: scp [file] [destination hostname/ip]");
+                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Incorrect usage of scp command. Usage: scp [file] [destination hostname/ip]");
                     return;
                 }
                 var scriptname = args[0];
-                if (!scriptname.endsWith(".lit") && !Object(_Script__WEBPACK_IMPORTED_MODULE_15__[/* isScriptFilename */ "e"])(scriptname) &&
+                if (!scriptname.endsWith(".lit") && !Object(_Script__WEBPACK_IMPORTED_MODULE_16__[/* isScriptFilename */ "e"])(scriptname) &&
                     !scriptname.endsWith(".txt")){
-                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Error: scp only works for .script, .txt, and .lit files");
+                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Error: scp only works for .script, .txt, and .lit files");
                     return;
                 }
-                var destServer = Object(_Server__WEBPACK_IMPORTED_MODULE_16__[/* getServer */ "e"])(args[1]);
+                var destServer = Object(_Server__WEBPACK_IMPORTED_MODULE_17__[/* getServer */ "e"])(args[1]);
                 if (destServer == null) {
-                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Invalid destination. " + args[1] + " not found");
+                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Invalid destination. " + args[1] + " not found");
                     return;
                 }
                 var ip = destServer.ip;
-                var currServ = _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer();
+                var currServ = _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer();
 
                 //Scp for lit files
                 if (scriptname.endsWith(".lit")) {
                     var found = false;
                     for (var i = 0; i < currServ.messages.length; ++i) {
-                        if (!(currServ.messages[i] instanceof _Message__WEBPACK_IMPORTED_MODULE_11__[/* Message */ "a"]) && currServ.messages[i] == scriptname) {
+                        if (!(currServ.messages[i] instanceof _Message__WEBPACK_IMPORTED_MODULE_12__[/* Message */ "a"]) && currServ.messages[i] == scriptname) {
                             found = true;
                             break;
                         }
                     }
 
-                    if (!found) {return Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Error: no such file exists!");}
+                    if (!found) {return Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Error: no such file exists!");}
 
                     for (var i = 0; i < destServer.messages.length; ++i) {
                         if (destServer.messages[i] === scriptname) {
-                            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])(scriptname + " copied over to " + destServer.hostname);
+                            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])(scriptname + " copied over to " + destServer.hostname);
                             return; //Already exists
                         }
                     }
                     destServer.messages.push(scriptname);
-                    return Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])(scriptname + " copied over to " + destServer.hostname);
+                    return Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])(scriptname + " copied over to " + destServer.hostname);
                 }
 
                 //Scp for txt files
@@ -33157,17 +33012,17 @@ let Terminal = {
                         }
                     }
 
-                    if (!found) {return Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Error: no such file exists!");}
+                    if (!found) {return Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Error: no such file exists!");}
 
                     let tRes = destServer.writeToTextFile(txtFile.fn, txtFile.text);
                     if (!tRes.success) {
-                        return Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Error: scp failed");
+                        return Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Error: scp failed");
                     }
                     if (tRes.overwritten) {
-                        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])(`WARNING: ${scriptname} already exists on ${destServer.hostname} and will be overwriten`);
-                        return Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])(`${scriptname} overwritten on ${destServer.hostname}`);
+                        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])(`WARNING: ${scriptname} already exists on ${destServer.hostname} and will be overwriten`);
+                        return Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])(`${scriptname} overwritten on ${destServer.hostname}`);
                     }
-                    return Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])(`${scriptname} copied over to ${destServer.hostname}`);
+                    return Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])(`${scriptname} copied over to ${destServer.hostname}`);
                 }
 
                 //Get the current script
@@ -33179,35 +33034,35 @@ let Terminal = {
                     }
                 }
                 if (sourceScript == null) {
-                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("ERROR: scp() failed. No such script exists");
+                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("ERROR: scp() failed. No such script exists");
                     return;
                 }
 
                 let sRes = destServer.writeToScriptFile(scriptname, sourceScript.code);
                 if (!sRes.success) {
-                    return Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])(`Error: scp failed`);
+                    return Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])(`Error: scp failed`);
                 }
                 if (sRes.overwritten) {
-                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])(`WARNING: ${scriptname} already exists on ${destServer.hostname} and will be overwritten`);
-                    return Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])(`${scriptname} overwritten on ${destServer.hostname}`);
+                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])(`WARNING: ${scriptname} already exists on ${destServer.hostname} and will be overwritten`);
+                    return Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])(`${scriptname} overwritten on ${destServer.hostname}`);
                 }
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])(`${scriptname} copied over to ${destServer.hostname}`);
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])(`${scriptname} copied over to ${destServer.hostname}`);
                 break;
             /* eslint-enable no-case-declarations */
             case "sudov":
                 if (commandArray.length != 1) {
-                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Incorrect number of arguments. Usage: sudov"); return;
+                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Incorrect number of arguments. Usage: sudov"); return;
                 }
 
-                if (_Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer().hasAdminRights) {
-                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("You have ROOT access to this machine");
+                if (_Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer().hasAdminRights) {
+                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("You have ROOT access to this machine");
                 } else {
-                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("You do NOT have root access to this machine");
+                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("You do NOT have root access to this machine");
                 }
                 break;
 			case "tail":
 				if (commandArray.length < 2) {
-                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Incorrect number of arguments. Usage: tail [script] [arg1] [arg2]...");
+                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Incorrect number of arguments. Usage: tail [script] [arg1] [arg2]...");
                 } else {
                     var results = commandArray[1].split(" ");
                     var scriptName = results[0];
@@ -33217,25 +33072,25 @@ let Terminal = {
                     }
 
                     //Can only tail script files
-                    if (Object(_Script__WEBPACK_IMPORTED_MODULE_15__[/* isScriptFilename */ "e"])(scriptName) == false) {
-                        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Error: tail can only be called on .script files (filename must end with .script)"); return;
+                    if (Object(_Script__WEBPACK_IMPORTED_MODULE_16__[/* isScriptFilename */ "e"])(scriptName) == false) {
+                        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Error: tail can only be called on .script files (filename must end with .script)"); return;
                     }
 
                     //Check that the script exists on this machine
-                    var runningScript = Object(_Script__WEBPACK_IMPORTED_MODULE_15__[/* findRunningScript */ "d"])(scriptName, args, s);
+                    var runningScript = Object(_Script__WEBPACK_IMPORTED_MODULE_16__[/* findRunningScript */ "d"])(scriptName, args, s);
                     if (runningScript == null) {
-                        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Error: No such script exists");
+                        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Error: No such script exists");
                         return;
                     }
-                    Object(_utils_LogBox__WEBPACK_IMPORTED_MODULE_28__[/* logBoxCreate */ "a"])(runningScript);
+                    Object(_utils_LogBox__WEBPACK_IMPORTED_MODULE_29__[/* logBoxCreate */ "a"])(runningScript);
                 }
 				break;
             case "theme":
                 //todo support theme saving
                 var args = commandArray[1] ? commandArray[1].split(" ") : [];
                 if (args.length != 1 && args.length != 3) {
-                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Incorrect number of arguments.");
-                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Usage: theme [default|muted|solarized] | #[background color hex] #[text color hex] #[highlight color hex]");
+                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Incorrect number of arguments.");
+                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Usage: theme [default|muted|solarized] | #[background color hex] #[text color hex] #[highlight color hex]");
                 } else if(args.length == 1){
                     var themeName = args[0];
                     if (themeName == "default"){
@@ -33252,12 +33107,12 @@ let Terminal = {
                         document.body.style.setProperty('--my-font-color',"#839496");
                         document.body.style.setProperty('--my-background-color',"#002b36");
                     } else {
-                        return Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Theme not found");
+                        return Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Theme not found");
                     }
-                    _Fconf__WEBPACK_IMPORTED_MODULE_6__[/* FconfSettings */ "a"].THEME_HIGHLIGHT_COLOR = document.body.style.getPropertyValue("--my-highlight-color");
-                    _Fconf__WEBPACK_IMPORTED_MODULE_6__[/* FconfSettings */ "a"].THEME_FONT_COLOR = document.body.style.getPropertyValue("--my-font-color");
-                    _Fconf__WEBPACK_IMPORTED_MODULE_6__[/* FconfSettings */ "a"].THEME_BACKGROUND_COLOR = document.body.style.getPropertyValue("--my-background-color");
-                    _Fconf__WEBPACK_IMPORTED_MODULE_6__[/* FconfSettings */ "a"].THEME_PROMPT_COLOR = document.body.style.getPropertyValue("--my-prompt-color");
+                    _Fconf__WEBPACK_IMPORTED_MODULE_7__[/* FconfSettings */ "a"].THEME_HIGHLIGHT_COLOR = document.body.style.getPropertyValue("--my-highlight-color");
+                    _Fconf__WEBPACK_IMPORTED_MODULE_7__[/* FconfSettings */ "a"].THEME_FONT_COLOR = document.body.style.getPropertyValue("--my-font-color");
+                    _Fconf__WEBPACK_IMPORTED_MODULE_7__[/* FconfSettings */ "a"].THEME_BACKGROUND_COLOR = document.body.style.getPropertyValue("--my-background-color");
+                    _Fconf__WEBPACK_IMPORTED_MODULE_7__[/* FconfSettings */ "a"].THEME_PROMPT_COLOR = document.body.style.getPropertyValue("--my-prompt-color");
                 } else {
                     var inputBackgroundHex = args[0];
                     var inputTextHex = args[1];
@@ -33268,22 +33123,22 @@ let Terminal = {
                         document.body.style.setProperty('--my-highlight-color',inputHighlightHex);
                         document.body.style.setProperty('--my-font-color',inputTextHex);
                         document.body.style.setProperty('--my-background-color',inputBackgroundHex);
-                        _Fconf__WEBPACK_IMPORTED_MODULE_6__[/* FconfSettings */ "a"].THEME_HIGHLIGHT_COLOR = document.body.style.getPropertyValue("--my-highlight-color");
-                        _Fconf__WEBPACK_IMPORTED_MODULE_6__[/* FconfSettings */ "a"].THEME_FONT_COLOR = document.body.style.getPropertyValue("--my-font-color");
-                        _Fconf__WEBPACK_IMPORTED_MODULE_6__[/* FconfSettings */ "a"].THEME_BACKGROUND_COLOR = document.body.style.getPropertyValue("--my-background-color");
+                        _Fconf__WEBPACK_IMPORTED_MODULE_7__[/* FconfSettings */ "a"].THEME_HIGHLIGHT_COLOR = document.body.style.getPropertyValue("--my-highlight-color");
+                        _Fconf__WEBPACK_IMPORTED_MODULE_7__[/* FconfSettings */ "a"].THEME_FONT_COLOR = document.body.style.getPropertyValue("--my-font-color");
+                        _Fconf__WEBPACK_IMPORTED_MODULE_7__[/* FconfSettings */ "a"].THEME_BACKGROUND_COLOR = document.body.style.getPropertyValue("--my-background-color");
                     } else {
-                        return Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Invalid Hex Input for theme");
+                        return Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Invalid Hex Input for theme");
                     }
                 }
                 break;
 			case "top":
 				if(commandArray.length != 1) {
-				  Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Incorrect usage of top command. Usage: top"); return;
+				  Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Incorrect usage of top command. Usage: top"); return;
 				}
 
-				Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Script                          Threads         RAM Usage");
+				Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Script                          Threads         RAM Usage");
 
-				var currRunningScripts = _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer().runningScripts;
+				var currRunningScripts = _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer().runningScripts;
 				//Iterate through scripts on current server
 				for(var i = 0; i < currRunningScripts.length; i++) {
 					var script = currRunningScripts[i];
@@ -33298,86 +33153,86 @@ let Terminal = {
 					var spacesThread = Array(numSpacesThread+1).join(" ");
 
 					//Calculate and transform RAM usage
-					ramUsage = _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__["numeralWrapper"].format(script.scriptRef.ramUsage * script.threads, '0.00') + " GB";
+					ramUsage = _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__["numeralWrapper"].format(script.scriptRef.ramUsage * script.threads, '0.00') + " GB";
 
 					var entry = [script.filename, spacesScript, script.threads, spacesThread, ramUsage];
-					Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])(entry.join(""));
+					Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])(entry.join(""));
 				}
 				break;
             case "unalias":
                 if (commandArray.length != 2) {
-                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])('Incorrect usage of unalias name. Usage: unalias "[alias]"');
+                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])('Incorrect usage of unalias name. Usage: unalias "[alias]"');
                     return;
                 } else if (!(commandArray[1].startsWith('"') && commandArray[1].endsWith('"'))) {
-                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])('Incorrect usage of unalias name. Usage: unalias "[alias]"');
+                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])('Incorrect usage of unalias name. Usage: unalias "[alias]"');
                 } else {
                     var alias = commandArray[1].slice(1, -1);
                     if (Object(_Alias__WEBPACK_IMPORTED_MODULE_0__[/* removeAlias */ "g"])(alias)) {
-                        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Removed alias " + alias);
+                        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Removed alias " + alias);
                     } else {
-                        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("No such alias exists");
+                        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("No such alias exists");
                     }
                 }
                 break;
             /* eslint-disable no-case-declarations */
             case "wget":
                 if (commandArray.length !== 2) {
-                    return Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Incorrect usage of wget command. Usage: wget [url] [target file]");
+                    return Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Incorrect usage of wget command. Usage: wget [url] [target file]");
                 }
                 var args = commandArray[1].split(" ");
                 if (args.length !== 2) {
-                    return Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Incorrect usage of wget command. Usage: wget [url] [target file]");
+                    return Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Incorrect usage of wget command. Usage: wget [url] [target file]");
                 }
 
                 let url = args[0];
                 let target = args[1];
-                if (!Object(_Script__WEBPACK_IMPORTED_MODULE_15__[/* isScriptFilename */ "e"])(target) && !target.endsWith(".txt")) {
-                    return Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])(`wget failed: Invalid target file. Target file must be script or text file`);
+                if (!Object(_Script__WEBPACK_IMPORTED_MODULE_16__[/* isScriptFilename */ "e"])(target) && !target.endsWith(".txt")) {
+                    return Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])(`wget failed: Invalid target file. Target file must be script or text file`);
                 }
                 $.get(url, function(data) {
                     let res;
-                    if (Object(_Script__WEBPACK_IMPORTED_MODULE_15__[/* isScriptFilename */ "e"])(target)) {
+                    if (Object(_Script__WEBPACK_IMPORTED_MODULE_16__[/* isScriptFilename */ "e"])(target)) {
                         res = s.writeToScriptFile(target, data);
                     } else {
                         res = s.writeToTextFile(target, data);
                     }
                     if (!res.success) {
-                        return Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("wget failed");
+                        return Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("wget failed");
                     }
                     if (res.overwritten) {
-                         return Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])(`wget successfully retrieved content and overwrote ${target}`);
+                         return Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])(`wget successfully retrieved content and overwrote ${target}`);
                     }
-                    return Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])(`wget successfully retrieved content to new file ${target}`);
+                    return Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])(`wget successfully retrieved content to new file ${target}`);
                 }, 'text').fail(function(e) {
-                    return Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("wget failed: " + JSON.stringify(e));
+                    return Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("wget failed: " + JSON.stringify(e));
                 })
                 break;
             /* eslint-enable no-case-declarations */
 			default:
-				Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Command not found");
+				Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Command not found");
 		}
 	},
 
     connectToServer: function(ip) {
         console.log("Connect to server called");
-        var serv = Object(_Server__WEBPACK_IMPORTED_MODULE_16__[/* getServer */ "e"])(ip);
+        var serv = Object(_Server__WEBPACK_IMPORTED_MODULE_17__[/* getServer */ "e"])(ip);
         if (serv == null) {
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Invalid server. Connection failed.");
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Invalid server. Connection failed.");
             return;
         }
-        _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer().isConnectedTo = false;
-        _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].currentServer = serv.ip;
-        _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer().isConnectedTo = true;
-        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Connected to " + serv.hostname);
-        if (_Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer().hostname == "darkweb") {
-            Object(_DarkWeb__WEBPACK_IMPORTED_MODULE_4__[/* checkIfConnectedToDarkweb */ "b"])(); //Posts a 'help' message if connecting to dark web
+        _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer().isConnectedTo = false;
+        _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].currentServer = serv.ip;
+        _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer().isConnectedTo = true;
+        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Connected to " + serv.hostname);
+        if (_Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer().hostname == "darkweb") {
+            Object(_DarkWeb_DarkWeb__WEBPACK_IMPORTED_MODULE_4__[/* checkIfConnectedToDarkweb */ "a"])(); //Posts a 'help' message if connecting to dark web
         }
         Terminal.resetTerminalInput();
     },
 
     executeListCommand: function(commandArray) {
         if (commandArray.length != 1 && commandArray.length != 2) {
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Incorrect usage of ls command. Usage: ls [| grep pattern]"); return;
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Incorrect usage of ls command. Usage: ls [| grep pattern]"); return;
         }
 
         //grep
@@ -33389,7 +33244,7 @@ let Terminal = {
                     filter = pattern;
                 }
             } else {
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Incorrect usage of ls command. Usage: ls [| grep pattern]"); return;
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Incorrect usage of ls command. Usage: ls [| grep pattern]"); return;
             }
         }
 
@@ -33397,7 +33252,7 @@ let Terminal = {
         var allFiles = [];
 
         //Get all of the programs and scripts on the machine into one temporary array
-        var s = _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer();
+        var s = _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer();
         for (var i = 0; i < s.programs.length; i++) {
             if (filter) {
                 if (s.programs[i].includes(filter)) {
@@ -33419,7 +33274,7 @@ let Terminal = {
         }
         for (var i = 0; i < s.messages.length; i++) {
             if (filter) {
-                if (s.messages[i] instanceof _Message__WEBPACK_IMPORTED_MODULE_11__[/* Message */ "a"]) {
+                if (s.messages[i] instanceof _Message__WEBPACK_IMPORTED_MODULE_12__[/* Message */ "a"]) {
                     if (s.messages[i].filename.includes(filter)) {
                         allFiles.push(s.messages[i].filename);
                     }
@@ -33427,7 +33282,7 @@ let Terminal = {
                     allFiles.push(s.messages[i]);
                 }
             } else {
-                if (s.messages[i] instanceof _Message__WEBPACK_IMPORTED_MODULE_11__[/* Message */ "a"]) {
+                if (s.messages[i] instanceof _Message__WEBPACK_IMPORTED_MODULE_12__[/* Message */ "a"]) {
                     allFiles.push(s.messages[i].filename);
                 } else {
                     allFiles.push(s.messages[i]);
@@ -33457,19 +33312,19 @@ let Terminal = {
         allFiles.sort();
 
         for (var i = 0; i < allFiles.length; i++) {
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])(allFiles[i]);
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])(allFiles[i]);
         }
     },
 
     executeScanCommand: function(commandArray) {
         if (commandArray.length != 1) {
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Incorrect usage of netstat/scan command. Usage: netstat/scan"); return;
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Incorrect usage of netstat/scan command. Usage: netstat/scan"); return;
         }
         //Displays available network connections using TCP
-        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Hostname             IP                   Root Access");
-        for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer().serversOnNetwork.length; i++) {
+        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Hostname             IP                   Root Access");
+        for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer().serversOnNetwork.length; i++) {
             //Add hostname
-            var entry = _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer().getServerOnNetwork(i);
+            var entry = _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer().getServerOnNetwork(i);
             if (entry == null) {continue;}
             entry = entry.hostname;
 
@@ -33477,33 +33332,33 @@ let Terminal = {
             var numSpaces = 21 - entry.length;
             var spaces = Array(numSpaces+1).join(" ");
             entry += spaces;
-            entry += _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer().getServerOnNetwork(i).ip;
+            entry += _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer().getServerOnNetwork(i).ip;
 
             //Calculate padding and add root access info
             var hasRoot;
-            if (_Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer().getServerOnNetwork(i).hasAdminRights) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer().getServerOnNetwork(i).hasAdminRights) {
                 hasRoot = 'Y';
             } else {
                 hasRoot = 'N';
             }
-            numSpaces = 21 - _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer().getServerOnNetwork(i).ip.length;
+            numSpaces = 21 - _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer().getServerOnNetwork(i).ip.length;
             spaces = Array(numSpaces+1).join(" ");
             entry += spaces;
             entry += hasRoot;
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])(entry);
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])(entry);
         }
     },
 
     executeScanAnalyzeCommand: function(depth=1, all=false) {
         //We'll use the AllServersMap as a visited() array
         //TODO Using array as stack for now, can make more efficient
-        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("~~~~~~~~~~ Beginning scan-analyze ~~~~~~~~~~");
-        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])(" ");
-        var visited = new _Script__WEBPACK_IMPORTED_MODULE_15__[/* AllServersMap */ "a"]();
+        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("~~~~~~~~~~ Beginning scan-analyze ~~~~~~~~~~");
+        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])(" ");
+        var visited = new _Script__WEBPACK_IMPORTED_MODULE_16__[/* AllServersMap */ "a"]();
 
         var stack = [];
         var depthQueue = [0];
-        var currServ = _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer();
+        var currServ = _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer();
         stack.push(currServ);
         while(stack.length != 0) {
             var s = stack.pop();
@@ -33521,20 +33376,20 @@ let Terminal = {
             }
             if (d == 0) {continue;} //Don't print current server
             var titleDashes = Array((d-1) * 4 + 1).join("-");
-            if (_Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].hasProgram(_CreateProgram__WEBPACK_IMPORTED_MODULE_3__[/* Programs */ "a"].AutoLink.name)) {
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("<strong>" +  titleDashes + "> <a class='scan-analyze-link'>"  + s.hostname + "</a></strong>", false);
+            if (_Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].hasProgram(_Programs_Programs__WEBPACK_IMPORTED_MODULE_3__["Programs"].AutoLink.name)) {
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("<strong>" +  titleDashes + "> <a class='scan-analyze-link'>"  + s.hostname + "</a></strong>", false);
             } else {
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("<strong>" + titleDashes + ">" + s.hostname + "</strong>");
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("<strong>" + titleDashes + ">" + s.hostname + "</strong>");
             }
 
             var dashes = titleDashes + "--";
             //var dashes = Array(d * 2 + 1).join("-");
             var c = "NO";
             if (s.hasAdminRights) {c = "YES";}
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])(dashes + "Root Access: " + c + ", Required hacking skill: " + s.requiredHackingSkill);
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])(dashes + "Number of open ports required to NUKE: " + s.numOpenPortsRequired);
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])(dashes + "RAM: " + s.maxRam);
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])(" ");
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])(dashes + "Root Access: " + c + ", Required hacking skill: " + s.requiredHackingSkill);
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])(dashes + "Number of open ports required to NUKE: " + s.numOpenPortsRequired);
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])(dashes + "RAM: " + s.maxRam);
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])(" ");
         }
 
         var links = document.getElementsByClassName("scan-analyze-link");
@@ -33552,11 +33407,11 @@ let Terminal = {
 
     executeFreeCommand: function(commandArray) {
         if (commandArray.length != 1) {
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Incorrect usage of free command. Usage: free"); return;
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Incorrect usage of free command. Usage: free"); return;
         }
-        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Total: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer().maxRam, '0.00') + " GB");
-        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Used: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer().ramUsed, '0.00') + " GB");
-        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Available: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer().maxRam - _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer().ramUsed, '0.00') + " GB");
+        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Total: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer().maxRam, '0.00') + " GB");
+        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Used: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer().ramUsed, '0.00') + " GB");
+        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Available: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer().maxRam - _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer().ramUsed, '0.00') + " GB");
     },
 
 	//First called when the "run [program]" command is called. Checks to see if you
@@ -33571,16 +33426,16 @@ let Terminal = {
         } else {
             name = programName;
         }
-        if (_Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].hasProgram(name)) {
+        if (_Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].hasProgram(name)) {
             Terminal.executeProgram(programName);
             return;
         }
-		Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("ERROR: No such executable on home computer (Only programs that exist on your home computer can be run)");
+		Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("ERROR: No such executable on home computer (Only programs that exist on your home computer can be run)");
 	},
 
 	//Contains the implementations of all possible programs
 	executeProgram: function(programName) {
-        var s = _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer();
+        var s = _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer();
         var splitArgs = programName.split(" ");
         if (splitArgs.length > 1) {
             programName = splitArgs[0];
@@ -33597,149 +33452,149 @@ let Terminal = {
          * @type {Object.<string, ProgramHandler}
          */
         const programHandlers = {};
-        programHandlers[_CreateProgram__WEBPACK_IMPORTED_MODULE_3__[/* Programs */ "a"].NukeProgram.name] = (server) => {
+        programHandlers[_Programs_Programs__WEBPACK_IMPORTED_MODULE_3__["Programs"].NukeProgram.name] = (server) => {
             if (server.hasAdminRights) {
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("You already have root access to this computer. There is no reason to run NUKE.exe");
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("You already have root access to this computer. There is no reason to run NUKE.exe");
                 return;
             }
 
-            if (server.openPortCount >= _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer().numOpenPortsRequired) {
+            if (server.openPortCount >= _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer().numOpenPortsRequired) {
                 server.hasAdminRights = true;
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("NUKE successful! Gained root access to " + _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer().hostname);
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("NUKE successful! Gained root access to " + _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer().hostname);
                 // TODO: Make this take time rather than be instant
                 return;
             }
 
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("NUKE unsuccessful. Not enough ports have been opened");
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("NUKE unsuccessful. Not enough ports have been opened");
         };
-        programHandlers[_CreateProgram__WEBPACK_IMPORTED_MODULE_3__[/* Programs */ "a"].BruteSSHProgram.name] = (server) => {
+        programHandlers[_Programs_Programs__WEBPACK_IMPORTED_MODULE_3__["Programs"].BruteSSHProgram.name] = (server) => {
             if (server.sshPortOpen) {
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("SSH Port (22) is already open!");
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("SSH Port (22) is already open!");
                 return;
             }
 
             server.sshPortOpen = true;
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Opened SSH Port(22)!")
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Opened SSH Port(22)!")
             server.openPortCount++;
         };
-        programHandlers[_CreateProgram__WEBPACK_IMPORTED_MODULE_3__[/* Programs */ "a"].FTPCrackProgram.name] = (server) => {
+        programHandlers[_Programs_Programs__WEBPACK_IMPORTED_MODULE_3__["Programs"].FTPCrackProgram.name] = (server) => {
             if (server.ftpPortOpen) {
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("FTP Port (21) is already open!");
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("FTP Port (21) is already open!");
                 return;
             }
 
             server.ftpPortOpen = true;
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Opened FTP Port (21)!");
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Opened FTP Port (21)!");
             server.openPortCount++;
         };
-        programHandlers[_CreateProgram__WEBPACK_IMPORTED_MODULE_3__[/* Programs */ "a"].RelaySMTPProgram.name] = (server) => {
+        programHandlers[_Programs_Programs__WEBPACK_IMPORTED_MODULE_3__["Programs"].RelaySMTPProgram.name] = (server) => {
             if (server.smtpPortOpen) {
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("SMTP Port (25) is already open!");
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("SMTP Port (25) is already open!");
                 return;
             }
 
             server.smtpPortOpen = true;
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Opened SMTP Port (25)!");
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Opened SMTP Port (25)!");
             server.openPortCount++;
         };
-        programHandlers[_CreateProgram__WEBPACK_IMPORTED_MODULE_3__[/* Programs */ "a"].HTTPWormProgram.name] = (server) => {
+        programHandlers[_Programs_Programs__WEBPACK_IMPORTED_MODULE_3__["Programs"].HTTPWormProgram.name] = (server) => {
             if (server.httpPortOpen) {
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("HTTP Port (80) is already open!");
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("HTTP Port (80) is already open!");
                 return;
             }
 
             server.httpPortOpen = true;
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Opened HTTP Port (80)!");
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Opened HTTP Port (80)!");
             server.openPortCount++;
         };
-        programHandlers[_CreateProgram__WEBPACK_IMPORTED_MODULE_3__[/* Programs */ "a"].SQLInjectProgram.name] = (server) => {
+        programHandlers[_Programs_Programs__WEBPACK_IMPORTED_MODULE_3__["Programs"].SQLInjectProgram.name] = (server) => {
             if (server.sqlPortOpen) {
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("SQL Port (1433) is already open!");
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("SQL Port (1433) is already open!");
                 return;
             }
 
             server.sqlPortOpen = true;
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Opened SQL Port (1433)!");
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Opened SQL Port (1433)!");
             server.openPortCount++;
         };
-        programHandlers[_CreateProgram__WEBPACK_IMPORTED_MODULE_3__[/* Programs */ "a"].ServerProfiler.name] = (server, args) => {
+        programHandlers[_Programs_Programs__WEBPACK_IMPORTED_MODULE_3__["Programs"].ServerProfiler.name] = (server, args) => {
             if (args.length !== 2) {
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Must pass a server hostname or IP as an argument for ServerProfiler.exe");
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Must pass a server hostname or IP as an argument for ServerProfiler.exe");
                 return;
             }
 
-            const targetServer = Object(_Server__WEBPACK_IMPORTED_MODULE_16__[/* getServer */ "e"])(args[1]);
+            const targetServer = Object(_Server__WEBPACK_IMPORTED_MODULE_17__[/* getServer */ "e"])(args[1]);
             if (targetServer == null) {
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Invalid server IP/hostname");
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Invalid server IP/hostname");
                 return;
             }
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])(targetServer.hostname + ":");
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Server base security level: " + targetServer.baseDifficulty);
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Server current security level: " + targetServer.hackDifficulty);
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Server growth rate: " + targetServer.serverGrowth);
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Netscript hack() execution time: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__["numeralWrapper"].format(Object(_Hacking__WEBPACK_IMPORTED_MODULE_7__[/* calculateHackingTime */ "d"])(targetServer), '0.0') + "s");
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Netscript grow() execution time: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__["numeralWrapper"].format(Object(_Hacking__WEBPACK_IMPORTED_MODULE_7__[/* calculateGrowTime */ "a"])(targetServer), '0.0') + "s");
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Netscript weaken() execution time: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__["numeralWrapper"].format(Object(_Hacking__WEBPACK_IMPORTED_MODULE_7__[/* calculateWeakenTime */ "f"])(targetServer), '0.0') + "s");
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])(targetServer.hostname + ":");
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Server base security level: " + targetServer.baseDifficulty);
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Server current security level: " + targetServer.hackDifficulty);
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Server growth rate: " + targetServer.serverGrowth);
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Netscript hack() execution time: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__["numeralWrapper"].format(Object(_Hacking__WEBPACK_IMPORTED_MODULE_8__[/* calculateHackingTime */ "d"])(targetServer), '0.0') + "s");
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Netscript grow() execution time: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__["numeralWrapper"].format(Object(_Hacking__WEBPACK_IMPORTED_MODULE_8__[/* calculateGrowTime */ "a"])(targetServer), '0.0') + "s");
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Netscript weaken() execution time: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__["numeralWrapper"].format(Object(_Hacking__WEBPACK_IMPORTED_MODULE_8__[/* calculateWeakenTime */ "f"])(targetServer), '0.0') + "s");
         };
-        programHandlers[_CreateProgram__WEBPACK_IMPORTED_MODULE_3__[/* Programs */ "a"].AutoLink.name] = () => {
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("This executable cannot be run.");
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("AutoLink.exe lets you automatically connect to other servers when using 'scan-analyze'.");
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("When using scan-analyze, click on a server's hostname to connect to it.");
+        programHandlers[_Programs_Programs__WEBPACK_IMPORTED_MODULE_3__["Programs"].AutoLink.name] = () => {
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("This executable cannot be run.");
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("AutoLink.exe lets you automatically connect to other servers when using 'scan-analyze'.");
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("When using scan-analyze, click on a server's hostname to connect to it.");
         };
-        programHandlers[_CreateProgram__WEBPACK_IMPORTED_MODULE_3__[/* Programs */ "a"].DeepscanV1.name] = () => {
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("This executable cannot be run.");
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("DeepscanV1.exe lets you run 'scan-analyze' with a depth up to 5.");
+        programHandlers[_Programs_Programs__WEBPACK_IMPORTED_MODULE_3__["Programs"].DeepscanV1.name] = () => {
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("This executable cannot be run.");
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("DeepscanV1.exe lets you run 'scan-analyze' with a depth up to 5.");
         };
-        programHandlers[_CreateProgram__WEBPACK_IMPORTED_MODULE_3__[/* Programs */ "a"].DeepscanV2.name] = () => {
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("This executable cannot be run.");
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("DeepscanV2.exe lets you run 'scan-analyze' with a depth up to 10.");
+        programHandlers[_Programs_Programs__WEBPACK_IMPORTED_MODULE_3__["Programs"].DeepscanV2.name] = () => {
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("This executable cannot be run.");
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("DeepscanV2.exe lets you run 'scan-analyze' with a depth up to 10.");
         };
-        programHandlers[_CreateProgram__WEBPACK_IMPORTED_MODULE_3__[/* Programs */ "a"].Flight.name] = () => {
-            const fulfilled = _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].augmentations.length >= 30 &&
-                _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].money.gt(1e11) &&
-                ((_Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].hacking_skill >= 2500)||
-                (_Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].strength >= 1500 &&
-                _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].defense >= 1500 &&
-                _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].dexterity >= 1500 &&
-                _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].agility >= 1500));
+        programHandlers[_Programs_Programs__WEBPACK_IMPORTED_MODULE_3__["Programs"].Flight.name] = () => {
+            const fulfilled = _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].augmentations.length >= 30 &&
+                _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].money.gt(1e11) &&
+                ((_Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].hacking_skill >= 2500)||
+                (_Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].strength >= 1500 &&
+                _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].defense >= 1500 &&
+                _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].dexterity >= 1500 &&
+                _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].agility >= 1500));
             if(!fulfilled) {
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Augmentations: " + _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].augmentations.length + " / 30");
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Augmentations: " + _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].augmentations.length + " / 30");
 
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Money: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].money.toNumber(), '($0.000a)') + " / " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_22__["numeralWrapper"].format(1e11, '($0.000a)'));
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("One path below must be fulfilled...");
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("----------HACKING PATH----------");
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Hacking skill: " + _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].hacking_skill + " / 2500");
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("----------COMBAT PATH----------");
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Strength: " + _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].strength + " / 1500");
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Defense: " + _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].defense + " / 1500");
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Dexterity: " + _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].dexterity + " / 1500");
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Agility: " + _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].agility + " / 1500");
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Money: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].money.toNumber(), '($0.000a)') + " / " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__["numeralWrapper"].format(1e11, '($0.000a)'));
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("One path below must be fulfilled...");
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("----------HACKING PATH----------");
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Hacking skill: " + _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].hacking_skill + " / 2500");
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("----------COMBAT PATH----------");
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Strength: " + _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].strength + " / 1500");
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Defense: " + _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].defense + " / 1500");
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Dexterity: " + _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].dexterity + " / 1500");
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Agility: " + _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].agility + " / 1500");
                 return;
             }
 
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("We will contact you.");
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("-- Daedalus --");
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("We will contact you.");
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("-- Daedalus --");
         };
-        programHandlers[_CreateProgram__WEBPACK_IMPORTED_MODULE_3__[/* Programs */ "a"].BitFlume.name] = () => {
-            const yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__["yesNoBoxGetYesButton"])();
-            const noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__["yesNoBoxGetNoButton"])();
+        programHandlers[_Programs_Programs__WEBPACK_IMPORTED_MODULE_3__["Programs"].BitFlume.name] = () => {
+            const yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30__["yesNoBoxGetYesButton"])();
+            const noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30__["yesNoBoxGetNoButton"])();
             yesBtn.innerHTML = "Travel to BitNode Nexus";
             noBtn.innerHTML = "Cancel";
             yesBtn.addEventListener("click", function() {
                 console.log("yesBtn event listener");
-                Object(_RedPill__WEBPACK_IMPORTED_MODULE_14__[/* hackWorldDaemon */ "a"])(_Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].bitNodeN, true);
-                return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__["yesNoBoxClose"])();
+                Object(_RedPill__WEBPACK_IMPORTED_MODULE_15__[/* hackWorldDaemon */ "a"])(_Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].bitNodeN, true);
+                return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30__["yesNoBoxClose"])();
             });
             noBtn.addEventListener("click", function() {
-                return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__["yesNoBoxClose"])();
+                return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30__["yesNoBoxClose"])();
             });
-            Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_29__["yesNoBoxCreate"])("WARNING: USING THIS PROGRAM WILL CAUSE YOU TO LOSE ALL OF YOUR PROGRESS ON THE CURRENT BITNODE.<br><br>" +
+            Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30__["yesNoBoxCreate"])("WARNING: USING THIS PROGRAM WILL CAUSE YOU TO LOSE ALL OF YOUR PROGRESS ON THE CURRENT BITNODE.<br><br>" +
                             "Do you want to travel to the BitNode Nexus? This allows you to reset the current BitNode " +
                             "and select a new one.");
         };
 
         if (!programHandlers.hasOwnProperty(programName)){
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Invalid executable. Cannot be run");
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Invalid executable. Cannot be run");
             return;
         }
 
@@ -33747,20 +33602,20 @@ let Terminal = {
 	},
 
 	runScript: function(scriptName) {
-		var server = _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer();
+		var server = _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer();
 
         var numThreads = 1;
         var args = [];
         var results = scriptName.split(" ");
         if (results.length <= 0) {
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("This is a bug. Please contact developer");
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("This is a bug. Please contact developer");
         }
         scriptName = results[0];
         if (results.length > 1) {
             if (results.length >= 3 && results[1] == "-t") {
                 numThreads = Math.round(Number(results[2]));
                 if (isNaN(numThreads) || numThreads < 1) {
-                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Invalid number of threads specified. Number of threads must be greater than 0");
+                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Invalid number of threads specified. Number of threads must be greater than 0");
                     return;
                 }
                 for (var i = 3; i < results.length; ++i) {
@@ -33805,8 +33660,8 @@ let Terminal = {
 
 
         //Check if this script is already running
-        if (Object(_Script__WEBPACK_IMPORTED_MODULE_15__[/* findRunningScript */ "d"])(scriptName, args, server) != null) {
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("ERROR: This script is already running. Cannot run multiple instances");
+        if (Object(_Script__WEBPACK_IMPORTED_MODULE_16__[/* findRunningScript */ "d"])(scriptName, args, server) != null) {
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("ERROR: This script is already running. Cannot run multiple instances");
             return;
         }
 
@@ -33819,40 +33674,40 @@ let Terminal = {
 				var ramAvailable = server.maxRam - server.ramUsed;
 
 				if (server.hasAdminRights == false) {
-					Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Need root access to run script");
+					Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Need root access to run script");
 					return;
 				} else if (ramUsage > ramAvailable){
-					Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("This machine does not have enough RAM to run this script with " +
+					Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("This machine does not have enough RAM to run this script with " +
                          numThreads + " threads. Script requires " + ramUsage + "GB of RAM");
 					return;
 				} else {
 					//Able to run script
-					Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Running script with " + numThreads +  " thread(s) and args: " + Object(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_26__["arrayToString"])(args) + ".");
-                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("May take a few seconds to start up the process...");
-                    var runningScriptObj = new _Script__WEBPACK_IMPORTED_MODULE_15__[/* RunningScript */ "b"](script, args);
+					Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Running script with " + numThreads +  " thread(s) and args: " + Object(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_27__["arrayToString"])(args) + ".");
+                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("May take a few seconds to start up the process...");
+                    var runningScriptObj = new _Script__WEBPACK_IMPORTED_MODULE_16__[/* RunningScript */ "b"](script, args);
                     runningScriptObj.threads = numThreads;
 					server.runningScripts.push(runningScriptObj);
 
-					Object(_NetscriptWorker__WEBPACK_IMPORTED_MODULE_12__[/* addWorkerScript */ "c"])(runningScriptObj, server);
+					Object(_NetscriptWorker__WEBPACK_IMPORTED_MODULE_13__[/* addWorkerScript */ "c"])(runningScriptObj, server);
 					return;
 				}
 			}
 		}
 
 
-		Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("ERROR: No such script");
+		Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("ERROR: No such script");
 	},
 
     runContract: async function(contractName) {
         // There's already an opened contract
         if (Terminal.contractOpen) {
-            return Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("ERROR: There's already a Coding Contract in Progress");
+            return Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("ERROR: There's already a Coding Contract in Progress");
         }
 
-        const serv = _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].getCurrentServer();
+        const serv = _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].getCurrentServer();
         const contract = serv.getContract(contractName);
         if (contract == null) {
-            return Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("ERROR: No such contract");
+            return Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("ERROR: No such contract");
         }
 
         Terminal.contractOpen = true;
@@ -33860,22 +33715,22 @@ let Terminal = {
 
         switch (res) {
             case _CodingContracts__WEBPACK_IMPORTED_MODULE_1__["CodingContractResult"].Success:
-                var reward = _Player__WEBPACK_IMPORTED_MODULE_13__[/* Player */ "a"].gainCodingContractReward(contract.reward, contract.getDifficulty());
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])(`Contract SUCCESS - ${reward}`);
+                var reward = _Player__WEBPACK_IMPORTED_MODULE_14__[/* Player */ "a"].gainCodingContractReward(contract.reward, contract.getDifficulty());
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])(`Contract SUCCESS - ${reward}`);
                 serv.removeContract(contract);
                 break;
             case _CodingContracts__WEBPACK_IMPORTED_MODULE_1__["CodingContractResult"].Failure:
                 ++contract.tries;
                 if (contract.tries >= contract.getMaxNumTries()) {
-                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Contract <p style='color:red;display:inline'>FAILED</p> - Contract is now self-destructing");
+                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Contract <p style='color:red;display:inline'>FAILED</p> - Contract is now self-destructing");
                     serv.removeContract(contract);
                 } else {
-                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])(`Contract <p style='color:red;display:inline'>FAILED</p> - ${contract.getMaxNumTries() - contract.tries} tries remaining`);
+                    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])(`Contract <p style='color:red;display:inline'>FAILED</p> - ${contract.getMaxNumTries() - contract.tries} tries remaining`);
                 }
                 break;
             case _CodingContracts__WEBPACK_IMPORTED_MODULE_1__["CodingContractResult"].Cancelled:
             default:
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_30__["post"])("Contract cancelled");
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])("Contract cancelled");
                 break;
         }
         Terminal.contractOpen = false;
@@ -34010,7 +33865,7 @@ exports.arrayToString = arrayToString;
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/isString */ 40);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var jsplumb__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! jsplumb */ 249);
+/* harmony import */ var jsplumb__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! jsplumb */ 254);
 /* harmony import */ var jsplumb__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(jsplumb__WEBPACK_IMPORTED_MODULE_10__);
 
 
@@ -35565,7 +35420,7 @@ HackingMission.prototype.finishMission = function(win) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const Constants_1 = __webpack_require__(/*! ../Constants */ 1);
-const FactionInfo_1 = __webpack_require__(/*! ./FactionInfo */ 114);
+const FactionInfo_1 = __webpack_require__(/*! ./FactionInfo */ 115);
 const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
 class Faction {
     constructor(name = "") {
@@ -36481,25 +36336,25 @@ function initBitNodeMultipliers() {
 /* unused harmony export CyclesPerEmployeeRaise */
 /* unused harmony export EmployeeRaiseAmount */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Corporation; });
-/* harmony import */ var _CorporationState__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CorporationState */ 119);
+/* harmony import */ var _CorporationState__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CorporationState */ 121);
 /* harmony import */ var _CorporationState__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_CorporationState__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _data_CorporationUnlockUpgrades__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data/CorporationUnlockUpgrades */ 106);
+/* harmony import */ var _data_CorporationUnlockUpgrades__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data/CorporationUnlockUpgrades */ 107);
 /* harmony import */ var _data_CorporationUnlockUpgrades__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_data_CorporationUnlockUpgrades__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _data_CorporationUpgrades__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./data/CorporationUpgrades */ 105);
+/* harmony import */ var _data_CorporationUpgrades__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./data/CorporationUpgrades */ 106);
 /* harmony import */ var _data_CorporationUpgrades__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_data_CorporationUpgrades__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./EmployeePositions */ 26);
 /* harmony import */ var _EmployeePositions__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _IndustryData__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./IndustryData */ 23);
 /* harmony import */ var _IndustryData__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_IndustryData__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _IndustryUpgrades__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./IndustryUpgrades */ 104);
+/* harmony import */ var _IndustryUpgrades__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./IndustryUpgrades */ 105);
 /* harmony import */ var _IndustryUpgrades__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_IndustryUpgrades__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _Material__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Material */ 63);
 /* harmony import */ var _Material__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Material__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _MaterialSizes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./MaterialSizes */ 75);
+/* harmony import */ var _MaterialSizes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./MaterialSizes */ 76);
 /* harmony import */ var _MaterialSizes__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_MaterialSizes__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _Product__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Product */ 103);
+/* harmony import */ var _Product__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Product */ 104);
 /* harmony import */ var _Product__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_Product__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _ResearchMap__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./ResearchMap */ 97);
+/* harmony import */ var _ResearchMap__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./ResearchMap */ 98);
 /* harmony import */ var _ResearchMap__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_ResearchMap__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../BitNodeMultipliers */ 10);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_10__);
@@ -36516,7 +36371,7 @@ function initBitNodeMultipliers() {
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../ui/navigationTracking */ 12);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_17__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../../utils/DialogBox */ 9);
-/* harmony import */ var _utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../../utils/uiHelpers/clearSelector */ 138);
+/* harmony import */ var _utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../../utils/uiHelpers/clearSelector */ 140);
 /* harmony import */ var _utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_19__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
 /* harmony import */ var _utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../../utils/uiHelpers/appendLineBreaks */ 57);
@@ -41326,7 +41181,7 @@ exports.removeElement = removeElement;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return createRandomIp; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return ipExists; });
 /* harmony import */ var _src_Server__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/Server */ 11);
-/* harmony import */ var _helpers_getRandomByte__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers/getRandomByte */ 94);
+/* harmony import */ var _helpers_getRandomByte__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers/getRandomByte */ 95);
 /* harmony import */ var _helpers_getRandomByte__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_helpers_getRandomByte__WEBPACK_IMPORTED_MODULE_1__);
 
 
@@ -42495,7 +42350,7 @@ function getHacknetNode(name) {
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 76);
+/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 77);
 /* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 54);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_6__);
@@ -42506,7 +42361,7 @@ function getHacknetNode(name) {
 /* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 44);
 /* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/uiHelpers/getElementById */ 53);
 /* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/LogBox */ 78);
+/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/LogBox */ 79);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 29);
@@ -43112,6 +42967,32 @@ function applySourceFile(srcFile) {
 
 /***/ }),
 /* 71 */
+/*!*************************************!*\
+  !*** ./src/DarkWeb/DarkWebItems.ts ***!
+  \*************************************/
+/*! no static exports found */
+/*! exports used: DarkWebItems */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const DarkWebItem_1 = __webpack_require__(/*! ./DarkWebItem */ 195);
+const Programs_1 = __webpack_require__(/*! ../Programs/Programs */ 24);
+exports.DarkWebItems = {
+    BruteSSHProgram: new DarkWebItem_1.DarkWebItem(Programs_1.Programs.BruteSSHProgram.name, 500000, "Opens up SSH Ports"),
+    FTPCrackProgram: new DarkWebItem_1.DarkWebItem(Programs_1.Programs.FTPCrackProgram.name, 1500000, "Opens up FTP Ports"),
+    RelaySMTPProgram: new DarkWebItem_1.DarkWebItem(Programs_1.Programs.RelaySMTPProgram.name, 5000000, "Opens up SMTP Ports"),
+    HTTPWormProgram: new DarkWebItem_1.DarkWebItem(Programs_1.Programs.HTTPWormProgram.name, 30000000, "Opens up HTTP Ports"),
+    SQLInjectProgram: new DarkWebItem_1.DarkWebItem(Programs_1.Programs.SQLInjectProgram.name, 250000000, "Opens up SQL Ports"),
+    DeepscanV1: new DarkWebItem_1.DarkWebItem(Programs_1.Programs.DeepscanV1.name, 500000, "Enables 'scan-analyze' with a depth up to 5"),
+    DeepscanV2: new DarkWebItem_1.DarkWebItem(Programs_1.Programs.DeepscanV2.name, 25000000, "Enables 'scan-analyze' with a depth up to 10"),
+    AutolinkProgram: new DarkWebItem_1.DarkWebItem(Programs_1.Programs.AutoLink.name, 1000000, "Enables direct connect via 'scan-analyze'"),
+};
+
+
+/***/ }),
+/* 72 */
 /*!******************************!*\
   !*** ./src/NetscriptPort.js ***!
   \******************************/
@@ -43177,7 +43058,7 @@ NetscriptPort.prototype.clear = function() {
 
 
 /***/ }),
-/* 72 */
+/* 73 */
 /*!*****************************!*\
   !*** ./src/SettingEnums.ts ***!
   \*****************************/
@@ -43208,7 +43089,7 @@ var PurchaseAugmentationsOrderSetting;
 
 
 /***/ }),
-/* 73 */
+/* 74 */
 /*!********************************!*\
   !*** ./src/Company/Company.ts ***!
   \********************************/
@@ -43306,7 +43187,7 @@ JSONReviver_1.Reviver.constructors.Company = Company;
 
 
 /***/ }),
-/* 74 */
+/* 75 */
 /*!***************************!*\
   !*** ./src/SaveObject.js ***!
   \***************************/
@@ -43348,7 +43229,7 @@ JSONReviver_1.Reviver.constructors.Company = Company;
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 37);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__);
-/* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./ui/createStatusText */ 101);
+/* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./ui/createStatusText */ 102);
 /* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_ui_createStatusText__WEBPACK_IMPORTED_MODULE_23__);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_24__);
@@ -43961,7 +43842,7 @@ function openImportFileHandler(evt) {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 64)))
 
 /***/ }),
-/* 75 */
+/* 76 */
 /*!******************************************!*\
   !*** ./src/Corporation/MaterialSizes.ts ***!
   \******************************************/
@@ -43989,7 +43870,7 @@ exports.MaterialSizes = {
 
 
 /***/ }),
-/* 76 */
+/* 77 */
 /*!***************************************************!*\
   !*** ./utils/uiHelpers/createAccordionElement.ts ***!
   \***************************************************/
@@ -44034,7 +43915,7 @@ exports.createAccordionElement = createAccordionElement;
 
 
 /***/ }),
-/* 77 */
+/* 78 */
 /*!**************************************!*\
   !*** ./utils/helpers/clearObject.ts ***!
   \**************************************/
@@ -44063,7 +43944,7 @@ exports.clearObject = clearObject;
 
 
 /***/ }),
-/* 78 */
+/* 79 */
 /*!*************************!*\
   !*** ./utils/LogBox.js ***!
   \*************************/
@@ -44151,146 +44032,6 @@ function logBoxUpdateText() {
 
 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 64)))
-
-/***/ }),
-/* 79 */
-/*!************************!*\
-  !*** ./src/DarkWeb.js ***!
-  \************************/
-/*! exports provided: checkIfConnectedToDarkweb, executeDarkwebTerminalCommand, DarkWebItems */
-/*! exports used: DarkWebItems, checkIfConnectedToDarkweb, executeDarkwebTerminalCommand */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return checkIfConnectedToDarkweb; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return executeDarkwebTerminalCommand; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DarkWebItems; });
-/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateProgram */ 24);
-/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
-/* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ui/postToTerminal */ 7);
-/* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/helpers/isValidIPAddress */ 88);
-/* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_5__);
-
-
-
-
-
-
-
-
-
-/* DarkWeb.js */
-//Posts a "help" message if connected to DarkWeb
-function checkIfConnectedToDarkweb() {
-    if (_SpecialServerIps__WEBPACK_IMPORTED_MODULE_2__[/* SpecialServerIps */ "a"].hasOwnProperty("Darkweb Server")) {
-        var darkwebIp =  _SpecialServerIps__WEBPACK_IMPORTED_MODULE_2__[/* SpecialServerIps */ "a"]["Darkweb Server"];
-        if (!Object(_utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_4__["isValidIPAddress"])(darkwebIp)) {return;}
-        if (darkwebIp == _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].getCurrentServer().ip) {
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__["post"])("You are now connected to the dark web. From the dark web you can purchase illegal items. " +
-                 "Use the 'buy -l' command to display a list of all the items you can buy. Use 'buy [item-name] " +
-                 "to purchase an item");
-        }
-    }
-}
-
-//Handler for dark web commands. The terminal's executeCommand() function will pass
-//dark web-specific commands into this. It will pass in the raw split command array
-//rather than the command string
-function executeDarkwebTerminalCommand(commandArray) {
-    if (commandArray.length == 0) {return;}
-    switch (commandArray[0]) {
-        case "buy":
-            if (commandArray.length != 2) {
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__["post"])("Incorrect number of arguments. Usage: ");
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__["post"])("buy -l");
-                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__["post"])("buy [item name]");
-                return;
-            }
-            var arg = commandArray[1];
-            if (arg == "-l") {
-                listAllDarkwebItems();
-            } else {
-                buyDarkwebItem(arg);
-            }
-            break;
-        default:
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__["post"])("Command not found");
-            break;
-    }
-}
-
-function listAllDarkwebItems() {
-    for(const key in DarkWebItems) {
-        const item = DarkWebItems[key];
-        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__["post"])(item.toString());
-    }
-}
-
-function buyDarkwebItem(itemName) {
-    itemName = itemName.toLowerCase();
-
-    // find the program that matches, if any
-    let item = null;
-    for(const key in DarkWebItems) {
-        const i = DarkWebItems[key];
-        if(i.program.toLowerCase() == itemName) {
-            item = i;
-        }
-    }
-
-    // return if invalid
-    if(item === null) {
-        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__["post"])("Unrecognized item: "+itemName);
-        return;
-    }
-
-    // return if the player already has it.
-    if(_Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].hasProgram(item.program)) {
-        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__["post"])('You already have the '+item.program+' program');
-        return;
-    }
-
-    // return if the player doesn't have enough money
-    if(_Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].money.lt(item.price)) {
-        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__["post"])("Not enough money to purchase " + item.program);
-        return;
-    }
-
-    // buy and push
-    _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].loseMoney(item.price);
-    _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].getHomeComputer().programs.push(item.program);
-    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__["post"])('You have purchased the '+item.program+' program. The new program can be found on your home computer.');
-}
-
-function DarkWebItem(program, price, description) {
-    this.program = program;
-    this.price = price;
-    this.description = description;
-}
-
-// formats the item for the terminal (eg. "BruteSSH.exe - $500,000 - Opens up SSH Ports")
-DarkWebItem.prototype.toString = function() {
-    return [this.program, "$"+Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_5__["formatNumber"])(this.price), this.description].join(' - ');
-}
-
-const DarkWebItems = {
-    BruteSSHProgram:  new DarkWebItem(_CreateProgram__WEBPACK_IMPORTED_MODULE_0__[/* Programs */ "a"].BruteSSHProgram.name, 500000, "Opens up SSH Ports"),
-    FTPCrackProgram:  new DarkWebItem(_CreateProgram__WEBPACK_IMPORTED_MODULE_0__[/* Programs */ "a"].FTPCrackProgram.name, 1500000, "Opens up FTP Ports"),
-    RelaySMTPProgram: new DarkWebItem(_CreateProgram__WEBPACK_IMPORTED_MODULE_0__[/* Programs */ "a"].RelaySMTPProgram.name, 5000000, "Opens up SMTP Ports"),
-    HTTPWormProgram:  new DarkWebItem(_CreateProgram__WEBPACK_IMPORTED_MODULE_0__[/* Programs */ "a"].HTTPWormProgram.name, 30000000, "Opens up HTTP Ports"),
-    SQLInjectProgram: new DarkWebItem(_CreateProgram__WEBPACK_IMPORTED_MODULE_0__[/* Programs */ "a"].SQLInjectProgram.name, 250000000, "Opens up SQL Ports"),
-    DeepscanV1:       new DarkWebItem(_CreateProgram__WEBPACK_IMPORTED_MODULE_0__[/* Programs */ "a"].DeepscanV1.name, 500000, "Enables 'scan-analyze' with a depth up to 5"),
-    DeepscanV2:       new DarkWebItem(_CreateProgram__WEBPACK_IMPORTED_MODULE_0__[/* Programs */ "a"].DeepscanV2.name, 25000000, "Enables 'scan-analyze' with a depth up to 10"),
-    AutolinkProgram:  new DarkWebItem(_CreateProgram__WEBPACK_IMPORTED_MODULE_0__[/* Programs */ "a"].AutoLink.name, 1000000, "Enables direct connect via 'scan-analyze'"),
-};
-
-
-
-
 
 /***/ }),
 /* 80 */,
@@ -44972,10 +44713,11 @@ exports.CompanyPosition = CompanyPosition;
 /* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Augmentations */ 21);
 /* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BitNode */ 59);
 /* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Bladeburner */ 31);
-/* harmony import */ var _CinematicText__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./CinematicText */ 99);
+/* harmony import */ var _CinematicText__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./CinematicText */ 100);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Company/Companies */ 18);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./CreateProgram */ 24);
+/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Programs/Programs */ 24);
+/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./engine */ 8);
 /* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Faction/Faction */ 56);
 /* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_Faction_Faction__WEBPACK_IMPORTED_MODULE_8__);
@@ -45054,13 +44796,13 @@ function prestigeAugmentation() {
 
     if (Object(_Augmentations__WEBPACK_IMPORTED_MODULE_1__[/* augmentationExists */ "f"])(_Augmentations__WEBPACK_IMPORTED_MODULE_1__[/* AugmentationNames */ "b"].Neurolink) &&
         _Augmentations__WEBPACK_IMPORTED_MODULE_1__[/* Augmentations */ "c"][_Augmentations__WEBPACK_IMPORTED_MODULE_1__[/* AugmentationNames */ "b"].Neurolink].owned) {
-        homeComp.programs.push(_CreateProgram__WEBPACK_IMPORTED_MODULE_6__[/* Programs */ "a"].FTPCrackProgram.name);
-        homeComp.programs.push(_CreateProgram__WEBPACK_IMPORTED_MODULE_6__[/* Programs */ "a"].RelaySMTPProgram.name);
+        homeComp.programs.push(_Programs_Programs__WEBPACK_IMPORTED_MODULE_6__["Programs"].FTPCrackProgram.name);
+        homeComp.programs.push(_Programs_Programs__WEBPACK_IMPORTED_MODULE_6__["Programs"].RelaySMTPProgram.name);
     }
     if (Object(_Augmentations__WEBPACK_IMPORTED_MODULE_1__[/* augmentationExists */ "f"])(_Augmentations__WEBPACK_IMPORTED_MODULE_1__[/* AugmentationNames */ "b"].CashRoot) &&
         _Augmentations__WEBPACK_IMPORTED_MODULE_1__[/* Augmentations */ "c"][_Augmentations__WEBPACK_IMPORTED_MODULE_1__[/* AugmentationNames */ "b"].CashRoot].owned) {
         _Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].setMoney(new decimal_js__WEBPACK_IMPORTED_MODULE_21__[/* default */ "a"](1000000));
-        homeComp.programs.push(_CreateProgram__WEBPACK_IMPORTED_MODULE_6__[/* Programs */ "a"].BruteSSHProgram.name);
+        homeComp.programs.push(_Programs_Programs__WEBPACK_IMPORTED_MODULE_6__["Programs"].BruteSSHProgram.name);
     }
 
     //Re-create foreign servers
@@ -45459,13 +45201,13 @@ exports.createPopupCloseButton = createPopupCloseButton;
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _Crimes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Crimes */ 38);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./engine */ 8);
-/* harmony import */ var _Infiltration__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Infiltration */ 137);
+/* harmony import */ var _Infiltration__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Infiltration */ 139);
 /* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Locations */ 5);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _ServerPurchases__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./ServerPurchases */ 118);
+/* harmony import */ var _ServerPurchases__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./ServerPurchases */ 120);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
@@ -47801,6 +47543,102 @@ exports.getJobRequirementText = getJobRequirementText;
 /***/ }),
 /* 94 */
 /*!****************************************!*\
+  !*** ./src/Programs/ProgramHelpers.js ***!
+  \****************************************/
+/*! exports provided: displayCreateProgramContent, getNumAvailableCreateProgram, initCreateProgramButtons */
+/*! exports used: displayCreateProgramContent, getNumAvailableCreateProgram, initCreateProgramButtons */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return displayCreateProgramContent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return getNumAvailableCreateProgram; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return initCreateProgramButtons; });
+/* harmony import */ var _Programs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Programs */ 24);
+/* harmony import */ var _Programs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Programs__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Constants */ 1);
+/* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Player */ 0);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utils/uiHelpers/createElement */ 2);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_3__);
+
+
+
+
+
+
+// this has the same key as 'Programs', not program names
+const aLinks = {};
+
+function displayCreateProgramContent() {
+    for(const key in aLinks) {
+        const p = _Programs__WEBPACK_IMPORTED_MODULE_0__["Programs"][key]
+        aLinks[key].style.display = "none";
+        if(!_Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].hasProgram(p.name) && p.create.req(_Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"])){
+            aLinks[key].style.display = "inline-block";
+        }
+    }
+}
+
+//Returns the number of programs that are currently available to be created
+function getNumAvailableCreateProgram() {
+    var count = 0;
+    for (const key in _Programs__WEBPACK_IMPORTED_MODULE_0__["Programs"]) {
+        // Non-creatable program
+        if (_Programs__WEBPACK_IMPORTED_MODULE_0__["Programs"][key].create == null) {
+            continue;
+        }
+
+        // Already has program
+        if (_Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].hasProgram(_Programs__WEBPACK_IMPORTED_MODULE_0__["Programs"][key].name)) {
+            continue;
+        }
+
+        // Does not meet requirements
+        if (!_Programs__WEBPACK_IMPORTED_MODULE_0__["Programs"][key].create.req(_Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"])) {
+            continue;
+        }
+
+        count++;
+    }
+
+    if (_Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].firstProgramAvailable === false && count > 0) {
+        _Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].firstProgramAvailable = true;
+        document.getElementById("create-program-tab").style.display = "list-item";
+        document.getElementById("hacking-menu-header").click();
+        document.getElementById("hacking-menu-header").click();
+    }
+    return count;
+}
+
+function initCreateProgramButtons() {
+    const createProgramList = document.getElementById("create-program-list");
+    for (const key in _Programs__WEBPACK_IMPORTED_MODULE_0__["Programs"]) {
+        if(_Programs__WEBPACK_IMPORTED_MODULE_0__["Programs"][key].create === null) {
+            continue;
+        }
+        const elem = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_3__["createElement"])("a", {
+            class: "a-link-button", id: _Programs__WEBPACK_IMPORTED_MODULE_0__["Programs"][key].htmlID(), innerText: _Programs__WEBPACK_IMPORTED_MODULE_0__["Programs"][key].name,
+            tooltip: _Programs__WEBPACK_IMPORTED_MODULE_0__["Programs"][key].create.tooltip,
+        });
+        aLinks[key] = elem;
+        createProgramList.appendChild(elem);
+    }
+
+    for (const key in aLinks) {
+        const p = _Programs__WEBPACK_IMPORTED_MODULE_0__["Programs"][key]
+        aLinks[key].addEventListener("click", function() {
+            _Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].startCreateProgramWork(p.name, p.create.time, p.create.level);
+            return false;
+        });
+    }
+}
+
+
+
+
+/***/ }),
+/* 95 */
+/*!****************************************!*\
   !*** ./utils/helpers/getRandomByte.ts ***!
   \****************************************/
 /*! no static exports found */
@@ -47825,9 +47663,9 @@ exports.getRandomByte = getRandomByte;
 
 
 /***/ }),
-/* 95 */,
 /* 96 */,
-/* 97 */
+/* 97 */,
+/* 98 */
 /*!****************************************!*\
   !*** ./src/Corporation/ResearchMap.ts ***!
   \****************************************/
@@ -47840,8 +47678,8 @@ exports.getRandomByte = getRandomByte;
 Object.defineProperty(exports, "__esModule", { value: true });
 // The Research Map is an object that holds all Corporation Research objects
 // as values. They are identified by their names
-const Research_1 = __webpack_require__(/*! ./Research */ 203);
-const ResearchMetadata_1 = __webpack_require__(/*! ./data/ResearchMetadata */ 202);
+const Research_1 = __webpack_require__(/*! ./Research */ 208);
+const ResearchMetadata_1 = __webpack_require__(/*! ./data/ResearchMetadata */ 207);
 exports.ResearchMap = {};
 function addResearch(p) {
     if (exports.ResearchMap[p.name] != null) {
@@ -47855,7 +47693,7 @@ for (const metadata of ResearchMetadata_1.researchMetadata) {
 
 
 /***/ }),
-/* 98 */
+/* 99 */
 /*!****************************************!*\
   !*** ./src/CodingContractGenerator.js ***!
   \****************************************/
@@ -48032,7 +47870,7 @@ function getRandomFilename(server, reward) {
 
 
 /***/ }),
-/* 99 */
+/* 100 */
 /*!******************************!*\
   !*** ./src/CinematicText.js ***!
   \******************************/
@@ -48153,7 +47991,7 @@ function cinematicTextEnd() {
 
 
 /***/ }),
-/* 100 */
+/* 101 */
 /*!***********************************************!*\
   !*** ./src/Company/GetNextCompanyPosition.ts ***!
   \***********************************************/
@@ -48179,7 +48017,7 @@ exports.getNextCompanyPosition = getNextCompanyPosition;
 
 
 /***/ }),
-/* 101 */
+/* 102 */
 /*!************************************!*\
   !*** ./src/ui/createStatusText.ts ***!
   \************************************/
@@ -48216,7 +48054,7 @@ exports.createStatusText = createStatusText;
 
 
 /***/ }),
-/* 102 */
+/* 103 */
 /*!*************************!*\
   !*** ./src/HelpText.ts ***!
   \*************************/
@@ -48457,7 +48295,7 @@ exports.HelpTexts = {
 
 
 /***/ }),
-/* 103 */
+/* 104 */
 /*!************************************!*\
   !*** ./src/Corporation/Product.ts ***!
   \************************************/
@@ -48469,9 +48307,9 @@ exports.HelpTexts = {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const EmployeePositions_1 = __webpack_require__(/*! ./EmployeePositions */ 26);
-const MaterialSizes_1 = __webpack_require__(/*! ./MaterialSizes */ 75);
-const ProductRatingWeights_1 = __webpack_require__(/*! ./ProductRatingWeights */ 200);
-const Cities_1 = __webpack_require__(/*! ../Locations/Cities */ 199);
+const MaterialSizes_1 = __webpack_require__(/*! ./MaterialSizes */ 76);
+const ProductRatingWeights_1 = __webpack_require__(/*! ./ProductRatingWeights */ 205);
+const Cities_1 = __webpack_require__(/*! ../Locations/Cities */ 204);
 const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
 const getRandomInt_1 = __webpack_require__(/*! ../../utils/helpers/getRandomInt */ 15);
 class Product {
@@ -48664,7 +48502,7 @@ JSONReviver_1.Reviver.constructors.Product = Product;
 
 
 /***/ }),
-/* 104 */
+/* 105 */
 /*!*********************************************!*\
   !*** ./src/Corporation/IndustryUpgrades.ts ***!
   \*********************************************/
@@ -48691,7 +48529,7 @@ exports.IndustryUpgrades = {
 
 
 /***/ }),
-/* 105 */
+/* 106 */
 /*!*****************************************************!*\
   !*** ./src/Corporation/data/CorporationUpgrades.ts ***!
   \*****************************************************/
@@ -48759,7 +48597,7 @@ exports.CorporationUpgrades = {
 
 
 /***/ }),
-/* 106 */
+/* 107 */
 /*!***********************************************************!*\
   !*** ./src/Corporation/data/CorporationUnlockUpgrades.ts ***!
   \***********************************************************/
@@ -48805,14 +48643,14 @@ exports.CorporationUnlockUpgrades = {
 
 
 /***/ }),
-/* 107 */,
 /* 108 */,
 /* 109 */,
 /* 110 */,
 /* 111 */,
 /* 112 */,
 /* 113 */,
-/* 114 */
+/* 114 */,
+/* 115 */
 /*!************************************!*\
   !*** ./src/Faction/FactionInfo.ts ***!
   \************************************/
@@ -48987,7 +48825,7 @@ exports.FactionInfos = {
 
 
 /***/ }),
-/* 115 */
+/* 116 */
 /*!*************************************!*\
   !*** ./src/NetscriptEnvironment.js ***!
   \*************************************/
@@ -48999,7 +48837,7 @@ exports.FactionInfos = {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Environment; });
 /* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HacknetNode */ 67);
 /* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
-/* harmony import */ var _NetscriptPort__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NetscriptPort */ 71);
+/* harmony import */ var _NetscriptPort__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NetscriptPort */ 72);
 
 
 
@@ -49099,7 +48937,7 @@ Environment.prototype = {
 
 
 /***/ }),
-/* 116 */
+/* 117 */
 /*!*************************************!*\
   !*** ./src/NetscriptJSEvaluator.js ***!
   \*************************************/
@@ -49223,7 +49061,7 @@ function _getScriptUrls(script, scripts, seen) {
 
 
 /***/ }),
-/* 117 */
+/* 118 */
 /*!************************!*\
   !*** ./src/DevMenu.js ***!
   \************************/
@@ -49235,8 +49073,9 @@ function _getScriptUrls(script, scripts, seen) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return createDevMenu; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return closeDevMenu; });
 /* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentations */ 21);
-/* harmony import */ var _CodingContractGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CodingContractGenerator */ 98);
-/* harmony import */ var _CreateProgram__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CreateProgram */ 24);
+/* harmony import */ var _CodingContractGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CodingContractGenerator */ 99);
+/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Programs/Programs */ 24);
+/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Faction/Factions */ 14);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Player */ 0);
@@ -49502,8 +49341,8 @@ function createDevMenu() {
         class: "dropdown",
         margin: "5px",
     });
-    for (const i in _CreateProgram__WEBPACK_IMPORTED_MODULE_2__[/* Programs */ "a"]) {
-        const progName = _CreateProgram__WEBPACK_IMPORTED_MODULE_2__[/* Programs */ "a"][i].name;
+    for (const i in _Programs_Programs__WEBPACK_IMPORTED_MODULE_2__["Programs"]) {
+        const progName = _Programs_Programs__WEBPACK_IMPORTED_MODULE_2__["Programs"][i].name;
         programsAddDropdown.options[programsAddDropdown.options.length] = new Option(progName, progName);
     }
 
@@ -49803,7 +49642,121 @@ function closeDevMenu() {
 
 
 /***/ }),
-/* 118 */
+/* 119 */
+/*!********************************!*\
+  !*** ./src/DarkWeb/DarkWeb.js ***!
+  \********************************/
+/*! exports provided: checkIfConnectedToDarkweb, executeDarkwebTerminalCommand */
+/*! exports used: checkIfConnectedToDarkweb, executeDarkwebTerminalCommand */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return checkIfConnectedToDarkweb; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return executeDarkwebTerminalCommand; });
+/* harmony import */ var _DarkWebItems__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DarkWebItems */ 71);
+/* harmony import */ var _DarkWebItems__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_DarkWebItems__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Player */ 0);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../SpecialServerIps */ 32);
+/* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../ui/postToTerminal */ 7);
+/* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utils/helpers/isValidIPAddress */ 88);
+/* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utils/StringHelperFunctions */ 3);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_5__);
+
+
+
+
+
+
+
+
+
+//Posts a "help" message if connected to DarkWeb
+function checkIfConnectedToDarkweb() {
+    if (_SpecialServerIps__WEBPACK_IMPORTED_MODULE_2__[/* SpecialServerIps */ "a"].hasOwnProperty("Darkweb Server")) {
+        var darkwebIp =  _SpecialServerIps__WEBPACK_IMPORTED_MODULE_2__[/* SpecialServerIps */ "a"]["Darkweb Server"];
+        if (!Object(_utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_4__["isValidIPAddress"])(darkwebIp)) {return;}
+        if (darkwebIp == _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].getCurrentServer().ip) {
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__["post"])("You are now connected to the dark web. From the dark web you can purchase illegal items. " +
+                 "Use the 'buy -l' command to display a list of all the items you can buy. Use 'buy [item-name] " +
+                 "to purchase an item");
+        }
+    }
+}
+
+//Handler for dark web commands. The terminal's executeCommand() function will pass
+//dark web-specific commands into this. It will pass in the raw split command array
+//rather than the command string
+function executeDarkwebTerminalCommand(commandArray) {
+    if (commandArray.length == 0) {return;}
+    switch (commandArray[0]) {
+        case "buy":
+            if (commandArray.length != 2) {
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__["post"])("Incorrect number of arguments. Usage: ");
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__["post"])("buy -l");
+                Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__["post"])("buy [item name]");
+                return;
+            }
+            var arg = commandArray[1];
+            if (arg == "-l") {
+                listAllDarkwebItems();
+            } else {
+                buyDarkwebItem(arg);
+            }
+            break;
+        default:
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__["post"])("Command not found");
+            break;
+    }
+}
+
+function listAllDarkwebItems() {
+    for(const key in _DarkWebItems__WEBPACK_IMPORTED_MODULE_0__["DarkWebItems"]) {
+        const item = _DarkWebItems__WEBPACK_IMPORTED_MODULE_0__["DarkWebItems"][key];
+        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__["post"])(item.toString());
+    }
+}
+
+function buyDarkwebItem(itemName) {
+    itemName = itemName.toLowerCase();
+
+    // find the program that matches, if any
+    let item = null;
+    for(const key in _DarkWebItems__WEBPACK_IMPORTED_MODULE_0__["DarkWebItems"]) {
+        const i = _DarkWebItems__WEBPACK_IMPORTED_MODULE_0__["DarkWebItems"][key];
+        if(i.program.toLowerCase() == itemName) {
+            item = i;
+        }
+    }
+
+    // return if invalid
+    if(item === null) {
+        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__["post"])("Unrecognized item: "+itemName);
+        return;
+    }
+
+    // return if the player already has it.
+    if(_Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].hasProgram(item.program)) {
+        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__["post"])('You already have the '+item.program+' program');
+        return;
+    }
+
+    // return if the player doesn't have enough money
+    if(_Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].money.lt(item.price)) {
+        Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__["post"])("Not enough money to purchase " + item.program);
+        return;
+    }
+
+    // buy and push
+    _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].loseMoney(item.price);
+    _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].getHomeComputer().programs.push(item.program);
+    Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__["post"])('You have purchased the ' + item.program + ' program. The new program can be found on your home computer.');
+}
+
+
+/***/ }),
+/* 120 */
 /*!********************************!*\
   !*** ./src/ServerPurchases.js ***!
   \********************************/
@@ -49894,7 +49847,7 @@ function purchaseRamForHomeComputer(cost) {
 
 
 /***/ }),
-/* 119 */
+/* 121 */
 /*!*********************************************!*\
   !*** ./src/Corporation/CorporationState.ts ***!
   \*********************************************/
@@ -49944,7 +49897,7 @@ JSONReviver_1.Reviver.constructors.CorporationState = CorporationState;
 
 
 /***/ }),
-/* 120 */
+/* 122 */
 /*!************************************************!*\
   !*** ./utils/uiHelpers/removeLoadingScreen.ts ***!
   \************************************************/
@@ -49969,14 +49922,14 @@ exports.removeLoadingScreen = removeLoadingScreen;
 
 
 /***/ }),
-/* 121 */,
-/* 122 */,
 /* 123 */,
 /* 124 */,
 /* 125 */,
 /* 126 */,
 /* 127 */,
-/* 128 */
+/* 128 */,
+/* 129 */,
+/* 130 */
 /*!*************************************!*\
   !*** ./src/ui/setSettingsLabels.js ***!
   \*************************************/
@@ -50102,7 +50055,7 @@ function setSettingsLabels() {
 
 
 /***/ }),
-/* 129 */
+/* 131 */
 /*!**********************************!*\
   !*** ./src/CharacterOverview.js ***!
   \**********************************/
@@ -50177,7 +50130,7 @@ CharacterOverview.prototype.update = function() {
 
 
 /***/ }),
-/* 130 */
+/* 132 */
 /*!******************************!*\
   !*** ./src/JSInterpreter.js ***!
   \******************************/
@@ -53980,7 +53933,7 @@ Interpreter.prototype['createPrimitive'] = function(x) {return x;};
 
 
 /***/ }),
-/* 131 */
+/* 133 */
 /*!***************************************!*\
   !*** ./utils/helpers/isPowerOfTwo.ts ***!
   \***************************************/
@@ -54010,7 +53963,7 @@ exports.isPowerOfTwo = isPowerOfTwo;
 
 
 /***/ }),
-/* 132 */
+/* 134 */
 /*!****************************************!*\
   !*** ./src/data/gangmemberupgrades.ts ***!
   \****************************************/
@@ -54222,7 +54175,7 @@ exports.gangMemberUpgradesMetadata = [
 
 
 /***/ }),
-/* 133 */
+/* 135 */
 /*!*************************************!*\
   !*** ./src/data/gangmembertasks.ts ***!
   \*************************************/
@@ -54487,7 +54440,7 @@ exports.gangMemberTasksMetadata = [
 
 
 /***/ }),
-/* 134 */
+/* 136 */
 /*!***************************************!*\
   !*** ./utils/FactionInvitationBox.js ***!
   \***************************************/
@@ -54571,7 +54524,7 @@ function factionInvitationBoxCreate(faction) {
 
 
 /***/ }),
-/* 135 */
+/* 137 */
 /*!*****************************!*\
   !*** ./src/data/servers.ts ***!
   \*****************************/
@@ -56044,7 +55997,7 @@ exports.serverMetadata = [
 
 
 /***/ }),
-/* 136 */
+/* 138 */
 /*!**********************************!*\
   !*** ./utils/InfiltrationBox.js ***!
   \**********************************/
@@ -56191,7 +56144,7 @@ function infiltrationBoxCreate(inst) {
 
 
 /***/ }),
-/* 137 */
+/* 139 */
 /*!*****************************!*\
   !*** ./src/Infiltration.js ***!
   \*****************************/
@@ -56212,7 +56165,7 @@ function infiltrationBoxCreate(inst) {
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 15);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _utils_InfiltrationBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/InfiltrationBox */ 136);
+/* harmony import */ var _utils_InfiltrationBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/InfiltrationBox */ 138);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_8__);
 
@@ -57060,7 +57013,7 @@ function getInfiltrationEscapeChance(inst) {
 
 
 /***/ }),
-/* 138 */
+/* 140 */
 /*!******************************************!*\
   !*** ./utils/uiHelpers/clearSelector.ts ***!
   \******************************************/
@@ -57084,8 +57037,6 @@ exports.clearSelector = clearSelector;
 
 
 /***/ }),
-/* 139 */,
-/* 140 */,
 /* 141 */,
 /* 142 */,
 /* 143 */,
@@ -57099,7 +57050,9 @@ exports.clearSelector = clearSelector;
 /* 151 */,
 /* 152 */,
 /* 153 */,
-/* 154 */
+/* 154 */,
+/* 155 */,
+/* 156 */
 /*!************************!*\
   !*** ./css/treant.css ***!
   \************************/
@@ -57109,8 +57062,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 155 */,
-/* 156 */
+/* 157 */,
+/* 158 */
 /*!***********************!*\
   !*** ./css/gang.scss ***!
   \***********************/
@@ -57120,8 +57073,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 157 */,
-/* 158 */
+/* 159 */,
+/* 160 */
 /*!******************************!*\
   !*** ./css/bladeburner.scss ***!
   \******************************/
@@ -57131,8 +57084,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 159 */,
-/* 160 */
+/* 161 */,
+/* 162 */
 /*!************************************!*\
   !*** ./css/companymanagement.scss ***!
   \************************************/
@@ -57142,8 +57095,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 161 */,
-/* 162 */
+/* 163 */,
+/* 164 */
 /*!***************************!*\
   !*** ./css/missions.scss ***!
   \***************************/
@@ -57153,8 +57106,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 163 */,
-/* 164 */
+/* 165 */,
+/* 166 */
 /*!*************************!*\
   !*** ./css/loader.scss ***!
   \*************************/
@@ -57164,8 +57117,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 165 */,
-/* 166 */
+/* 167 */,
+/* 168 */
 /*!**************************************!*\
   !*** ./css/interactivetutorial.scss ***!
   \**************************************/
@@ -57175,8 +57128,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 167 */,
-/* 168 */
+/* 169 */,
+/* 170 */
 /*!*****************************!*\
   !*** ./css/popupboxes.scss ***!
   \*****************************/
@@ -57186,8 +57139,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 169 */,
-/* 170 */
+/* 171 */,
+/* 172 */
 /*!*********************************!*\
   !*** ./css/workinprogress.scss ***!
   \*********************************/
@@ -57197,8 +57150,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 171 */,
-/* 172 */
+/* 173 */,
+/* 174 */
 /*!****************************!*\
   !*** ./css/menupages.scss ***!
   \****************************/
@@ -57208,8 +57161,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 173 */,
-/* 174 */
+/* 175 */,
+/* 176 */
 /*!***************************!*\
   !*** ./css/terminal.scss ***!
   \***************************/
@@ -57219,8 +57172,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 175 */,
-/* 176 */
+/* 177 */,
+/* 178 */
 /*!************************************!*\
   !*** ./css/characteroverview.scss ***!
   \************************************/
@@ -57230,8 +57183,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 177 */,
-/* 178 */
+/* 179 */,
+/* 180 */
 /*!***************************!*\
   !*** ./css/mainmenu.scss ***!
   \***************************/
@@ -57241,8 +57194,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 179 */,
-/* 180 */
+/* 181 */,
+/* 182 */
 /*!**************************!*\
   !*** ./css/buttons.scss ***!
   \**************************/
@@ -57252,8 +57205,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 181 */,
-/* 182 */
+/* 183 */,
+/* 184 */
 /*!***************************!*\
   !*** ./css/tooltips.scss ***!
   \***************************/
@@ -57263,8 +57216,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 183 */,
-/* 184 */
+/* 185 */,
+/* 186 */
 /*!*************************!*\
   !*** ./css/styles.scss ***!
   \*************************/
@@ -57274,15 +57227,210 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 185 */,
-/* 186 */,
 /* 187 */,
 /* 188 */,
 /* 189 */,
 /* 190 */,
 /* 191 */,
 /* 192 */,
-/* 193 */
+/* 193 */,
+/* 194 */,
+/* 195 */
+/*!************************************!*\
+  !*** ./src/DarkWeb/DarkWebItem.ts ***!
+  \************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const StringHelperFunctions_1 = __webpack_require__(/*! ../../utils/StringHelperFunctions */ 3);
+class DarkWebItem {
+    constructor(program, price, description) {
+        this.program = program;
+        this.price = price;
+        this.description = description;
+    }
+    // Formats the item to print out to terminal (e.g. BruteSSH.exe -$500,000 - Opens up SSH Ports)
+    toString() {
+        return [this.program, "$" + StringHelperFunctions_1.formatNumber(this.price, 0), this.description].join(' - ');
+    }
+}
+exports.DarkWebItem = DarkWebItem;
+
+
+/***/ }),
+/* 196 */
+/*!***********************************************!*\
+  !*** ./src/Programs/data/programsMetadata.ts ***!
+  \***********************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const Constants_1 = __webpack_require__(/*! ../../Constants */ 1);
+function requireHackingLevel(lvl) {
+    return function (p) {
+        return p.hacking_skill >= lvl;
+    };
+}
+function bitFlumeRequirements() {
+    return function (p) {
+        return p.sourceFiles.length > 0 && p.hacking_skill >= 1;
+    };
+}
+exports.programsMetadata = [
+    {
+        key: "NukeProgram",
+        name: "NUKE.exe",
+        create: {
+            level: 1,
+            tooltip: "This virus is used to gain root access to a machine if enough ports are opened.",
+            req: requireHackingLevel(1),
+            time: Constants_1.CONSTANTS.MillisecondsPerFiveMinutes,
+        },
+    },
+    {
+        key: "BruteSSHProgram",
+        name: "BruteSSH.exe",
+        create: {
+            level: 50,
+            tooltip: "This program executes a brute force attack that opens SSH ports",
+            req: requireHackingLevel(50),
+            time: Constants_1.CONSTANTS.MillisecondsPerFiveMinutes * 2,
+        },
+    },
+    {
+        key: "FTPCrackProgram",
+        name: "FTPCrack.exe",
+        create: {
+            level: 100,
+            tooltip: "This program cracks open FTP ports",
+            req: requireHackingLevel(100),
+            time: Constants_1.CONSTANTS.MillisecondsPerHalfHour,
+        },
+    },
+    {
+        key: "RelaySMTPProgram",
+        name: "relaySMTP.exe",
+        create: {
+            level: 250,
+            tooltip: "This program opens SMTP ports by redirecting data",
+            req: requireHackingLevel(250),
+            time: Constants_1.CONSTANTS.MillisecondsPer2Hours,
+        },
+    },
+    {
+        key: "HTTPWormProgram",
+        name: "HTTPWorm.exe",
+        create: {
+            level: 500,
+            tooltip: "This virus opens up HTTP ports",
+            req: requireHackingLevel(500),
+            time: Constants_1.CONSTANTS.MillisecondsPer4Hours,
+        },
+    },
+    {
+        key: "SQLInjectProgram",
+        name: "SQLInject.exe",
+        create: {
+            level: 750,
+            tooltip: "This virus opens SQL ports",
+            req: requireHackingLevel(750),
+            time: Constants_1.CONSTANTS.MillisecondsPer8Hours,
+        },
+    },
+    {
+        key: "DeepscanV1",
+        name: "DeepscanV1.exe",
+        create: {
+            level: 75,
+            tooltip: "This program allows you to use the scan-analyze command with a depth up to 5",
+            req: requireHackingLevel(75),
+            time: Constants_1.CONSTANTS.MillisecondsPerQuarterHour,
+        },
+    },
+    {
+        key: "DeepscanV2",
+        name: "DeepscanV2.exe",
+        create: {
+            level: 400,
+            tooltip: "This program allows you to use the scan-analyze command with a depth up to 10",
+            req: requireHackingLevel(400),
+            time: Constants_1.CONSTANTS.MillisecondsPer2Hours,
+        },
+    },
+    {
+        key: "ServerProfiler",
+        name: "ServerProfiler.exe",
+        create: {
+            level: 75,
+            tooltip: "This program is used to display hacking and Netscript-related information about servers",
+            req: requireHackingLevel(75),
+            time: Constants_1.CONSTANTS.MillisecondsPerHalfHour,
+        },
+    },
+    {
+        key: "AutoLink",
+        name: "AutoLink.exe",
+        create: {
+            level: 25,
+            tooltip: "This program allows you to directly connect to other servers through the 'scan-analyze' command",
+            req: requireHackingLevel(25),
+            time: Constants_1.CONSTANTS.MillisecondsPerQuarterHour,
+        },
+    },
+    {
+        key: "BitFlume",
+        name: "b1t_flum3.exe",
+        create: {
+            level: 1,
+            tooltip: "This program creates a portal to the BitNode Nexus (allows you to restart and switch BitNodes)",
+            req: bitFlumeRequirements(),
+            time: Constants_1.CONSTANTS.MillisecondsPerFiveMinutes / 20,
+        },
+    },
+    {
+        key: "Flight",
+        name: "fl1ght.exe",
+        create: null,
+    },
+];
+
+
+/***/ }),
+/* 197 */
+/*!*********************************!*\
+  !*** ./src/Programs/Program.ts ***!
+  \*********************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+class Program {
+    constructor(name, create) {
+        this.name = "";
+        this.name = name;
+        this.create = create;
+    }
+    htmlID() {
+        const name = this.name.endsWith('.exe') ? this.name.slice(0, -('.exe'.length)) : this.name;
+        return "create-program-" + name;
+    }
+}
+exports.Program = Program;
+
+
+/***/ }),
+/* 198 */
 /*!**********************!*\
   !*** ./netscript.js ***!
   \**********************/
@@ -58127,7 +58275,7 @@ oop.inherits(Mode, TextMode);
     };
 
     this.createWorker = function(session) {
-        var worker = new WorkerClient(["ace"], __webpack_require__(/*! brace/worker/javascript */ 194), "JavaScriptWorker");
+        var worker = new WorkerClient(["ace"], __webpack_require__(/*! brace/worker/javascript */ 199), "JavaScriptWorker");
         worker.attachToDocument(session.getDocument());
 
         worker.on("annotate", function(results) {
@@ -58149,11 +58297,11 @@ exports.Mode = Mode;
 
 
 /***/ }),
-/* 194 */,
-/* 195 */,
-/* 196 */,
-/* 197 */,
-/* 198 */
+/* 199 */,
+/* 200 */,
+/* 201 */,
+/* 202 */,
+/* 203 */
 /*!*****************************************!*\
   !*** ./src/data/codingcontracttypes.ts ***!
   \*****************************************/
@@ -58634,7 +58782,7 @@ exports.codingContractTypesMetadata = [
 
 
 /***/ }),
-/* 199 */
+/* 204 */
 /*!*********************************!*\
   !*** ./src/Locations/Cities.ts ***!
   \*********************************/
@@ -58660,7 +58808,7 @@ exports.Cities = {
 
 
 /***/ }),
-/* 200 */
+/* 205 */
 /*!*************************************************!*\
   !*** ./src/Corporation/ProductRatingWeights.ts ***!
   \*************************************************/
@@ -58740,7 +58888,7 @@ exports.ProductRatingWeights = {
 
 
 /***/ }),
-/* 201 */
+/* 206 */
 /*!*****************************************!*\
   !*** ./src/Corporation/ResearchTree.ts ***!
   \*****************************************/
@@ -58756,7 +58904,7 @@ exports.ProductRatingWeights = {
 // not an actual Research object. The name can be used to obtain a reference
 // to the corresponding Research object using the ResearchMap
 Object.defineProperty(exports, "__esModule", { value: true });
-const ResearchMap_1 = __webpack_require__(/*! ./ResearchMap */ 97);
+const ResearchMap_1 = __webpack_require__(/*! ./ResearchMap */ 98);
 class Node {
     constructor(p) {
         // All child Nodes in the tree
@@ -58987,7 +59135,7 @@ exports.ResearchTree = ResearchTree;
 
 
 /***/ }),
-/* 202 */
+/* 207 */
 /*!**************************************************!*\
   !*** ./src/Corporation/data/ResearchMetadata.ts ***!
   \**************************************************/
@@ -59120,7 +59268,7 @@ exports.researchMetadata = [
 
 
 /***/ }),
-/* 203 */
+/* 208 */
 /*!*************************************!*\
   !*** ./src/Corporation/Research.ts ***!
   \*************************************/
@@ -59185,7 +59333,7 @@ exports.Research = Research;
 
 
 /***/ }),
-/* 204 */
+/* 209 */
 /*!**************************************************!*\
   !*** ./src/Corporation/data/BaseResearchTree.ts ***!
   \**************************************************/
@@ -59196,8 +59344,8 @@ exports.Research = Research;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const ResearchMap_1 = __webpack_require__(/*! ../ResearchMap */ 97);
-const ResearchTree_1 = __webpack_require__(/*! ../ResearchTree */ 201);
+const ResearchMap_1 = __webpack_require__(/*! ../ResearchMap */ 98);
+const ResearchTree_1 = __webpack_require__(/*! ../ResearchTree */ 206);
 exports.BaseResearchTree = new ResearchTree_1.ResearchTree();
 function makeNode(name) {
     const research = ResearchMap_1.ResearchMap[name];
@@ -59243,7 +59391,7 @@ exports.getBaseResearchTreeCopy = getBaseResearchTreeCopy;
 
 
 /***/ }),
-/* 205 */
+/* 210 */
 /*!***********************************************!*\
   !*** ./src/Company/data/CompaniesMetadata.ts ***!
   \***********************************************/
@@ -59635,7 +59783,7 @@ exports.companiesMetadata = [
 
 
 /***/ }),
-/* 206 */
+/* 211 */
 /*!******************************************************!*\
   !*** ./src/Company/data/CompanyPositionsMetadata.ts ***!
   \******************************************************/
@@ -60248,11 +60396,6 @@ exports.companyPositionMetadata = [
 
 
 /***/ }),
-/* 207 */,
-/* 208 */,
-/* 209 */,
-/* 210 */,
-/* 211 */,
 /* 212 */,
 /* 213 */,
 /* 214 */,
@@ -60284,7 +60427,12 @@ exports.companyPositionMetadata = [
 /* 240 */,
 /* 241 */,
 /* 242 */,
-/* 243 */
+/* 243 */,
+/* 244 */,
+/* 245 */,
+/* 246 */,
+/* 247 */,
+/* 248 */
 /*!**********************!*\
   !*** util (ignored) ***!
   \**********************/
@@ -60295,7 +60443,7 @@ exports.companyPositionMetadata = [
 /* (ignored) */
 
 /***/ }),
-/* 244 */
+/* 249 */
 /*!**********************!*\
   !*** util (ignored) ***!
   \**********************/

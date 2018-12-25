@@ -1,6 +1,6 @@
 import { AugmentationNames }        from "./Augmentations";
 import { generateRandomContract }   from "./CodingContractGenerator";
-import { Programs }                 from "./CreateProgram";
+import { Programs }                 from "./Programs/Programs";
 import { Factions }                 from "./Faction/Factions";
 import { Player }                   from "./Player";
 import { AllServers }               from "./Server";
