@@ -42980,14 +42980,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const DarkWebItem_1 = __webpack_require__(/*! ./DarkWebItem */ 195);
 const Programs_1 = __webpack_require__(/*! ../Programs/Programs */ 24);
 exports.DarkWebItems = {
-    BruteSSHProgram: new DarkWebItem_1.DarkWebItem(Programs_1.Programs.BruteSSHProgram.name, 500000, "Opens up SSH Ports"),
-    FTPCrackProgram: new DarkWebItem_1.DarkWebItem(Programs_1.Programs.FTPCrackProgram.name, 1500000, "Opens up FTP Ports"),
-    RelaySMTPProgram: new DarkWebItem_1.DarkWebItem(Programs_1.Programs.RelaySMTPProgram.name, 5000000, "Opens up SMTP Ports"),
-    HTTPWormProgram: new DarkWebItem_1.DarkWebItem(Programs_1.Programs.HTTPWormProgram.name, 30000000, "Opens up HTTP Ports"),
-    SQLInjectProgram: new DarkWebItem_1.DarkWebItem(Programs_1.Programs.SQLInjectProgram.name, 250000000, "Opens up SQL Ports"),
+    BruteSSHProgram: new DarkWebItem_1.DarkWebItem(Programs_1.Programs.BruteSSHProgram.name, 500e3, "Opens up SSH Ports"),
+    FTPCrackProgram: new DarkWebItem_1.DarkWebItem(Programs_1.Programs.FTPCrackProgram.name, 1500e3, "Opens up FTP Ports"),
+    RelaySMTPProgram: new DarkWebItem_1.DarkWebItem(Programs_1.Programs.RelaySMTPProgram.name, 5e6, "Opens up SMTP Ports"),
+    HTTPWormProgram: new DarkWebItem_1.DarkWebItem(Programs_1.Programs.HTTPWormProgram.name, 30e6, "Opens up HTTP Ports"),
+    SQLInjectProgram: new DarkWebItem_1.DarkWebItem(Programs_1.Programs.SQLInjectProgram.name, 250e6, "Opens up SQL Ports"),
     DeepscanV1: new DarkWebItem_1.DarkWebItem(Programs_1.Programs.DeepscanV1.name, 500000, "Enables 'scan-analyze' with a depth up to 5"),
-    DeepscanV2: new DarkWebItem_1.DarkWebItem(Programs_1.Programs.DeepscanV2.name, 25000000, "Enables 'scan-analyze' with a depth up to 10"),
-    AutolinkProgram: new DarkWebItem_1.DarkWebItem(Programs_1.Programs.AutoLink.name, 1000000, "Enables direct connect via 'scan-analyze'"),
+    DeepscanV2: new DarkWebItem_1.DarkWebItem(Programs_1.Programs.DeepscanV2.name, 25e6, "Enables 'scan-analyze' with a depth up to 10"),
+    AutolinkProgram: new DarkWebItem_1.DarkWebItem(Programs_1.Programs.AutoLink.name, 1e6, "Enables direct connect via 'scan-analyze'"),
+    ServerProfilerProgram: new DarkWebItem_1.DarkWebItem(Programs_1.Programs.ServerProfiler.name, 1e6, "Displays hacking and Netscript-related information about a server"),
 };
 
 

@@ -525,6 +525,7 @@ export let CONSTANTS: IMap<any> = {
        find a pop-up/dialog box that doesnt support this, let me know specifically which one
        ('Enter' for the default option, 'Esc' for cancelling and closing the pop-up box)
      * Added "brace_style = preserve_inline" configuration to Script Editor Beautifier
+     * ServerProfiler.exe can now be purchased from the Dark Web
      `
 
 }
