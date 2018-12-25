@@ -1,16 +1,17 @@
 /* Creates a Close/Cancel button that is used for removing popups */
 
 import { createElement } from "./createElement";
-import { getElementById } from "./getElementById";
 import { removeElement } from "./removeElement";
 
 interface ICreatePopupCloseButtonOptions {
+    class?: string;
+    display?: string;
     innerText?: string;
+    type?: string;
 }
 
 export function createPopupCloseButton(popup: Element | string, options: ICreatePopupCloseButtonOptions) {
     let button: HTMLButtonElement;
-
 
     // TODO event listener works with escape. Add and remove event listener
     // from document
@@ -21,21 +22,25 @@ export function createPopupCloseButton(popup: Element | string, options: ICreate
     }
 
     button = createElement("button", {
-        class: "std-button",
+        class: options.class ? options.class : "popup-box-button",
+        display: options.display ? options.display : "inline-block",
         innerText: options.innerText == null ? "Cancel" : options.innerText,
         clickListener: () => {
             if (popup instanceof Element) {
                 removeElement(popup);
             } else {
                 try {
-                    const popupEl = getElementById(popup);
-                    removeElement(popupEl);
+                    const popupEl = document.getElementById(popup);
+                    if (popupEl instanceof Element) {
+                        removeElement(popupEl);
+                    }
                 } catch(e) {
                     console.error(`createPopupCloseButton() threw: ${e}`);
                 }
             }
 
             document.removeEventListener("keydown", closePopupWithEscFn);
+            return false;
         },
     }) as HTMLButtonElement;
 

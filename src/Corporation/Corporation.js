@@ -31,6 +31,7 @@ import { Reviver,
 import { appendLineBreaks }                             from "../../utils/uiHelpers/appendLineBreaks";
 import { createElement }                                from "../../utils/uiHelpers/createElement";
 import { createPopup }                                  from "../../utils/uiHelpers/createPopup";
+import { createPopupCloseButton }                       from "../../utils/uiHelpers/createPopupCloseButton";
 import { formatNumber, generateRandomString }           from "../../utils/StringHelperFunctions";
 import { getRandomInt }                                 from "../../utils/helpers/getRandomInt";
 import { isString }                                     from "../../utils/helpers/isString";
@@ -1286,13 +1287,8 @@ Industry.prototype.createResearchBox = function() {
         }));
 
         // Close button
-        boxContent.appendChild(createElement("button", {
+        boxContent.appendChild(createPopupCloseButton(researchTreeBox, {
             class: "std-button",
-            clickListener: () => {
-                if (researchTreeBox != null) {
-                    removeElement(researchTreeBox);
-                }
-            },
             display: "block",
             innerText: "Close",
         }));
@@ -2098,14 +2094,17 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
             });
             var confirmBtn;
             var input = createElement("input", {
-                type:"number", value:mat.buy ? mat.buy : null, placeholder: "Purchase amount",
+                margin: "5px",
+                placeholder: "Purchase amount",
+                type: "number",
+                value: mat.buy ? mat.buy : null,
                 onkeyup:(e)=>{
                     e.preventDefault();
                     if (e.keyCode === 13) {confirmBtn.click();}
                 }
             });
-            confirmBtn = createElement("a", {
-                innerText:"Confirm", class:"a-link-button",
+            confirmBtn = createElement("button", {
+                innerText:"Confirm", class:"std-button",
                 clickListener:()=>{
                     if (isNaN(input.value)) {
                         dialogBoxCreate("Invalid amount");
@@ -2118,8 +2117,8 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                     }
                 }
             });
-            var clearButton = createElement("a", {
-                innerText:"Clear Purchase", class:"a-link-button",
+            var clearButton = createElement("button", {
+                innerText:"Clear Purchase", class:"std-button",
                 clickListener:()=>{
                     mat.buy = 0;
                     removeElementById(purchasePopupId);
@@ -2127,12 +2126,11 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                     return false;
                 }
             });
-            var cancelBtn = createElement("a", {
-                innerText:"Cancel", class:"a-link-button",
-                clickListener:()=>{
-                    removeElementById(purchasePopupId);
-                }
+            const cancelBtn = createPopupCloseButton(purchasePopupId, {
+                class: "std-button",
+                innerText: "Cancel",
             });
+
             createPopup(purchasePopupId, [txt, input, confirmBtn, clearButton, cancelBtn]);
             input.focus();
         }
@@ -2307,7 +2305,7 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
             var br = createElement("br", {});
             var confirmBtn;
             var inputQty = createElement("input", {
-                type:"text", marginTop:"4px",
+                type: "text", marginTop: "4px",
                 value: mat.sllman[1] ? mat.sllman[1] : null, placeholder: "Sell amount",
                 onkeyup:(e)=>{
                     e.preventDefault();
@@ -2315,16 +2313,17 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                 }
             });
             var inputPx = createElement("input", {
-                type:"text", marginTop:"4px",
+                type: "text", marginTop: "4px",
                 value: mat.sCost ? mat.sCost : null, placeholder: "Sell price",
-                onkeyup:(e)=>{
+                onkeyup: (e) => {
                     e.preventDefault();
                     if (e.keyCode === 13) {confirmBtn.click();}
                 }
             });
-            confirmBtn = createElement("a", {
-                innerText:"Confirm", class:"a-link-button", margin:"6px",
-                clickListener:()=>{
+            confirmBtn = createElement("button", {
+                class: "std-button",
+                innerText: "Confirm",
+                clickListener: () => {
                     //Parse price
                     var cost = inputPx.value.replace(/\s+/g, '');
                     cost = cost.replace(/[^-()\d/*+.MP]/g, ''); //Sanitize cost
@@ -2387,12 +2386,11 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                     return false;
                 }
             });
-            var cancelBtn = createElement("a", {
-                innerText:"Cancel", class:"a-link-button", margin: "6px",
-                clickListener:()=>{
-                    removeElementById(sellPopupid);
-                }
+            const cancelBtn = createPopupCloseButton(sellPopupid, {
+                class: "std-button",
+                innerText: "Cancel",
             });
+
             createPopup(sellPopupid, [txt, br, inputQty, inputPx, confirmBtn, cancelBtn]);
             inputQty.focus();
         }
@@ -2779,8 +2777,13 @@ Corporation.prototype.storeCycles = function(numCycles=1) {
 Corporation.prototype.process = function() {
     var corp = this;
     if (this.storedCycles >= CyclesPerIndustryStateCycle) {
-        var state = this.getState(), marketCycles=1;
+        const state = this.getState();
+        const marketCycles = 1;
         this.storedCycles -= (marketCycles * CyclesPerIndustryStateCycle);
+
+        this.divisions.forEach(function(ind) {
+            ind.process(marketCycles, state, corp);
+        });
 
         //At the start of a new cycle, calculate profits from previous cycle
         if (state === "START") {
@@ -2819,11 +2822,6 @@ Corporation.prototype.process = function() {
 
             this.updateSharePrice();
         }
-
-        this.divisions.forEach(function(ind) {
-            ind.process(marketCycles, state, corp);
-        });
-
 
         this.state.nextState();
 
@@ -3208,14 +3206,8 @@ Corporation.prototype.updateUIHeaderTabs = function() {
                     return false;
                 }
             });
-            var noBtn = createElement("span", {
-                class:"popup-box-button",
-                innerText:"Cancel",
-                clickListener: function() {
-                    removeElementById("cmpy-mgmt-expand-industry-popup");
-                    return false;
-                }
-            });
+
+            const noBtn = createPopupCloseButton(container, {innerText: "Cancel"});
 
             //Make an object to keep track of what industries you're already in
             var ownedIndustries = {}
@@ -3261,6 +3253,7 @@ Corporation.prototype.updateUIHeaderTabs = function() {
             container.appendChild(content);
             document.getElementById("entire-game-container").appendChild(container);
             container.style.display = "flex";
+            nameInput.focus();
             return false;
         }
     }));
@@ -3804,9 +3797,6 @@ Corporation.prototype.updateCorporationOverviewContent = function() {
         console.log("WARNING: Could not find overview text elemtn in updateCorporationOverviewContent()");
         return;
     }
-    var totalFunds = this.funds,
-        totalRevenue = new Decimal(0),
-        totalExpenses = new Decimal(0);
 
     // Formatted text for profit
     var profit = this.revenue.minus(this.expenses).toNumber(),
@@ -3827,7 +3817,7 @@ Corporation.prototype.updateCorporationOverviewContent = function() {
                       `Your earnings (Post-Tax): ${numeralWrapper.format(playerEarnings * (this.dividendTaxPercentage / 100), "$0.000a")} / s<br>`;
     }
 
-    var txt = "Total Funds: " + numeralWrapper.format(totalFunds.toNumber(), '$0.000a') + "<br>" +
+    var txt = "Total Funds: " + numeralWrapper.format(this.funds.toNumber(), '$0.000a') + "<br>" +
               "Total Revenue: " + numeralWrapper.format(this.revenue.toNumber(), "$0.000a") + " / s<br>" +
               "Total Expenses: " + numeralWrapper.format(this.expenses.toNumber(), "$0.000a") + "/ s<br>" +
               "Total Profits: " + profitStr + " / s<br>" +
@@ -3918,13 +3908,11 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                     return false;
                 }
             });
-            var cancelBtn = createElement("a", {
-                innerText:"Cancel", class:"a-link-button", display:"inline-block", margin:"3px",
-                clickListener:()=>{
-                    removeElementById(popupId);
-                    return false;
-                }
-            })
+            const cancelBtn = createPopupCloseButton(popupId, {
+                class: "std-button",
+                innerText: "Cancel",
+            });
+
             createPopup(popupId, [text, citySelector, confirmBtn, cancelBtn]);
             return false;
         }
