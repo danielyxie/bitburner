@@ -1,12 +1,14 @@
-import {Augmentations, Augmentation,
-        AugmentationNames}                      from "./Augmentations";
-import {Programs}                               from "./CreateProgram";
-import {inMission}                              from "./Missions";
-import {Player}                                 from "./Player";
-import {redPillFlag}                            from "./RedPill";
-import {GetServerByHostname}                    from "./Server";
-import {Settings}                               from "./Settings";
-import {dialogBoxCreate, dialogBoxOpened}       from "../utils/DialogBox";
+import { Augmentations,
+         Augmentation,
+         AugmentationNames }                    from "./Augmentations";
+import { Programs }                             from "./Programs/Programs";
+import { inMission }                            from "./Missions";
+import { Player }                               from "./Player";
+import { redPillFlag }                          from "./RedPill";
+import { GetServerByHostname }                  from "./Server";
+import { Settings }                             from "./Settings";
+import { dialogBoxCreate,
+         dialogBoxOpened}                       from "../utils/DialogBox";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver";
 

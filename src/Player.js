@@ -1,17 +1,18 @@
-import {Augmentations, applyAugmentation,
-        AugmentationNames,
-        PlayerOwnedAugmentation}                from "./Augmentations";
-import {BitNodeMultipliers}                     from "./BitNodeMultipliers";
-import {CodingContractRewardType}               from "./CodingContracts";
-import {Company}                                from "./Company/Company";
-import {Companies}                              from "./Company/Companies";
-import {getNextCompanyPosition}                 from "./Company/GetNextCompanyPosition";
-import {getJobRequirementText}                  from "./Company/GetJobRequirementText";
-import {CompanyPositions}                       from "./Company/CompanyPositions";
+import { Augmentations,
+         applyAugmentation,
+         AugmentationNames,
+         PlayerOwnedAugmentation }              from "./Augmentations";
+import { BitNodeMultipliers }                   from "./BitNodeMultipliers";
+import { CodingContractRewardType }             from "./CodingContracts";
+import { Company }                              from "./Company/Company";
+import { Companies }                            from "./Company/Companies";
+import { getNextCompanyPosition }               from "./Company/GetNextCompanyPosition";
+import { getJobRequirementText }                from "./Company/GetJobRequirementText";
+import { CompanyPositions }                     from "./Company/CompanyPositions";
 import * as posNames                            from "./Company/data/CompanyPositionNames";
 import {CONSTANTS}                              from "./Constants";
 import { Corporation }                          from "./Corporation/Corporation";
-import {Programs}                               from "./CreateProgram";
+import { Programs }                             from "./Programs/Programs";
 import {determineCrimeSuccess, Crimes}          from "./Crimes";
 import {Engine}                                 from "./engine";
 import { Faction }                              from "./Faction/Faction";

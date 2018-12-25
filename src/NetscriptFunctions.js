@@ -13,8 +13,7 @@ import {Companies, companyExists}                   from "./Company/Companies";
 import {CompanyPosition}                            from "./Company/CompanyPosition";
 import {CompanyPositions}                           from "./Company/CompanyPositions";
 import {CONSTANTS}                                  from "./Constants";
-import {Programs}                                   from "./CreateProgram";
-import {DarkWebItems}                               from "./DarkWeb";
+import { DarkWebItems }                             from "./DarkWeb/DarkWebItems";
 import {calculateHackingChance,
         calculateHackingExpGain,
         calculatePercentMoneyHacked,
@@ -33,6 +32,7 @@ import {Locations}                                  from "./Locations";
 import {Message, Messages}                          from "./Message";
 import {inMission}                                  from "./Missions";
 import {Player}                                     from "./Player";
+import { Programs }                                 from "./Programs/Programs";
 import {Script, findRunningScript, RunningScript,
         isScriptFilename}                           from "./Script";
 import {Server, getServer, AddToAllServers,

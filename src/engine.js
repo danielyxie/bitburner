@@ -1,11 +1,12 @@
-import {dialogBoxCreate}                                from "../utils/DialogBox";
-import {gameOptionsBoxOpen, gameOptionsBoxClose}        from "../utils/GameOptions";
+import { dialogBoxCreate}                                from "../utils/DialogBox";
+import { gameOptionsBoxClose,
+         gameOptionsBoxOpen}                            from "../utils/GameOptions";
 import { getRandomInt }                                 from "../utils/helpers/getRandomInt";
-import {removeChildrenFromElement}                      from "../utils/uiHelpers/removeChildrenFromElement";
-import {clearEventListeners}                            from "../utils/uiHelpers/clearEventListeners";
-import {createElement}                                  from "../utils/uiHelpers/createElement";
-import {exceptionAlert}                                 from "../utils/helpers/exceptionAlert";
-import {removeLoadingScreen}                            from "../utils/uiHelpers/removeLoadingScreen";
+import { removeChildrenFromElement }                    from "../utils/uiHelpers/removeChildrenFromElement";
+import { clearEventListeners }                          from "../utils/uiHelpers/clearEventListeners";
+import { createElement }                                from "../utils/uiHelpers/createElement";
+import { exceptionAlert }                               from "../utils/helpers/exceptionAlert";
+import { removeLoadingScreen }                          from "../utils/uiHelpers/removeLoadingScreen";
 
 import {numeralWrapper}                                 from "./ui/numeralFormat";
 
@@ -29,10 +30,8 @@ import {CompanyPositions}                               from "./Company/CompanyP
 import {initCompanies}                                  from "./Company/Companies";
 import { Corporation }                                  from "./Corporation/Corporation";
 import {CONSTANTS}                                      from "./Constants";
-import {displayCreateProgramContent,
-        getNumAvailableCreateProgram,
-        initCreateProgramButtons,
-        Programs}                                       from "./CreateProgram";
+
+
 import {createDevMenu, closeDevMenu}                    from "./DevMenu";
 import { Factions, initFactions }                       from "./Faction/Factions";
 import { displayFactionContent, joinFaction,
@@ -55,6 +54,10 @@ import {updateOnlineScriptTimes,
 import {Player}                                         from "./Player";
 import {prestigeAugmentation,
         prestigeSourceFile}                             from "./Prestige";
+import { Programs }                                     from "./Programs/Programs";
+import { displayCreateProgramContent,
+         getNumAvailableCreateProgram,
+         initCreateProgramButtons }                     from "./Programs/ProgramHelpers";
 import {redPillFlag, hackWorldDaemon}                   from "./RedPill";
 import {saveObject, loadGame}                           from "./SaveObject";
 import {loadAllRunningScripts, scriptEditorInit,

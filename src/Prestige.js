@@ -5,7 +5,7 @@ import {initBitNodeMultipliers}                 from "./BitNode";
 import {Bladeburner}                            from "./Bladeburner";
 import {writeCinematicText}                     from "./CinematicText";
 import {Companies, initCompanies}               from "./Company/Companies";
-import {Programs}                               from "./CreateProgram";
+import { Programs }                             from "./Programs/Programs";
 import {Engine}                                 from "./engine";
 import { Faction }                              from "./Faction/Faction";
 import { Factions,
