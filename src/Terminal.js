@@ -2015,6 +2015,7 @@ let Terminal = {
             yesBtn.innerHTML = "Travel to BitNode Nexus";
             noBtn.innerHTML = "Cancel";
             yesBtn.addEventListener("click", function() {
+                console.log("yesBtn event listener");
                 hackWorldDaemon(Player.bitNodeN, true);
                 return yesNoBoxClose();
             });

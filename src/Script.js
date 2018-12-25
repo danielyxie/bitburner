@@ -272,7 +272,10 @@ $(document).keydown(function(e) {
 function beautifyScript() {
     var editor = ace.edit('javascript-editor');
     var code = editor.getValue();
-    code = beautify(code, { indent_size: 4 })
+    code = beautify(code, {
+        indent_size: 4,
+        brace_style: "preserve-inline",
+    });
     editor.setValue(code);
 }
 

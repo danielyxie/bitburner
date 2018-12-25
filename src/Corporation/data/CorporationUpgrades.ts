@@ -21,7 +21,7 @@ export const CorporationUpgrades: IMap<any[]> = {
             "to consumers through their dreams. Each level of this upgrade provides a passive " +
             "increase in awareness of all of your companies (divisions) by 0.004 / market cycle," +
             "and in popularity by 0.001 / market cycle. A market cycle is approximately " +
-            "20 seconds."],
+            "15 seconds."],
 
     //Makes advertising more effective
     "3":    [3, 4e9, 1.12, 0.005,

@@ -11,9 +11,20 @@ import {clearEventListeners} from "./uiHelpers/clearEventListeners";
 export let yesNoBoxOpen: boolean = false;
 
 const yesNoBoxContainer: HTMLElement | null = document.getElementById("yes-no-box-container");
-const yesNoBoxYesButton: HTMLElement | null = document.getElementById("yes-no-box-yes");
-const yesNoBoxNoButton: HTMLElement | null = document.getElementById("yes-no-box-no");
 const yesNoBoxTextElement: HTMLElement | null = document.getElementById("yes-no-box-text");
+
+export function yesNoBoxHotkeyHandler(e: KeyboardEvent) {
+    if (e.keyCode === 27) {
+        yesNoBoxClose();
+    } else if (e.keyCode === 13) {
+        const yesBtn: HTMLElement | null = document.getElementById("yes-no-box-yes");
+        if (yesBtn) {
+            yesBtn.click();
+        } else {
+            console.error(`Could not find YesNoBox Yes button DOM element`)
+        }
+    }
+}
 
 export function yesNoBoxClose(): boolean {
     if (yesNoBoxContainer) {
@@ -27,18 +38,6 @@ export function yesNoBoxClose(): boolean {
     document.removeEventListener("keydown", yesNoBoxHotkeyHandler);
 
     return false; //So that 'return yesNoBoxClose()' is return false in event listeners
-}
-
-export function yesNoBoxHotkeyHandler(e: KeyboardEvent) {
-    if (e.keyCode === 27) {
-        yesNoBoxClose();
-    } else if (e.keyCode === 13) {
-        if (yesNoBoxNoButton) {
-            yesNoBoxNoButton.click();
-        } else {
-            console.error(`Could not find YesNoBox No button DOM element`)
-        }
-    }
 }
 
 export function yesNoBoxGetYesButton() {
@@ -55,6 +54,8 @@ export function yesNoBoxCreate(txt: string) {
 
     if (yesNoBoxTextElement) {
         yesNoBoxTextElement.innerHTML = txt;
+    } else {
+        console.error(`Text element not found for YesNoBox`);
     }
 
     if (yesNoBoxContainer) {
@@ -73,10 +74,21 @@ export function yesNoBoxCreate(txt: string) {
  * Yes-No pop up box with text input field
  */
 const yesNoTextInputBoxContainer: HTMLElement | null = document.getElementById("yes-no-text-input-box-container");
-const yesNoTextInputBoxYesButton: HTMLElement | null = document.getElementById("yes-no-text-input-box-yes");
-const yesNoTextInputBoxNoButton: HTMLElement | null = document.getElementById("yes-no-text-input-box-no");
 const yesNoTextInputBoxInput: HTMLInputElement | null = document.getElementById("yes-no-text-input-box-input") as HTMLInputElement;
 const yesNoTextInputBoxTextElement: HTMLElement | null = document.getElementById("yes-no-text-input-box-text");
+
+export function yesNoTxtInpBoxHotkeyHandler(e: KeyboardEvent) {
+    if (e.keyCode === 27) {
+        yesNoTxtInpBoxClose();
+    } else if (e.keyCode === 13) {
+        const yesBtn: HTMLElement | null = document.getElementById("yes-no-text-input-box-yes");
+        if (yesBtn) {
+            yesBtn.click();
+        } else {
+            console.error(`Could not find YesNoTxtInputBox Yes button DOM element`)
+        }
+    }
+}
 
 export function yesNoTxtInpBoxClose(): boolean {
     if (yesNoTextInputBoxContainer != null) {
@@ -87,6 +99,10 @@ export function yesNoTxtInpBoxClose(): boolean {
     }
     yesNoBoxOpen = false;
     yesNoTextInputBoxInput!.value = "";
+
+    // Remove hotkey handler
+    document.removeEventListener("keydown", yesNoTxtInpBoxHotkeyHandler);
+
     return false;
 }
 
@@ -120,6 +136,9 @@ export function yesNoTxtInpBoxCreate(txt: string) {
     } else {
         console.error("Container not found for YesNoTextInputBox");
     }
+
+    // Add event listener for Esc and Enter hotkeys
+    document.addEventListener("keydown", yesNoTxtInpBoxHotkeyHandler);
 
     yesNoTextInputBoxInput!.focus();
 }
