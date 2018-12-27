@@ -2,6 +2,8 @@ import {loadAliases, loadGlobalAliases,
         Aliases, GlobalAliases}                 from "./Alias";
 import {Companies, loadCompanies}               from "./Company/Companies";
 import {CompanyPosition}                        from "./Company/CompanyPosition";
+import { IndustryResearchTrees,
+         loadIndustryResearchTrees }            from "./Corporation/IndustryData";
 import {CONSTANTS}                              from "./Constants";
 import {Engine}                                 from "./engine";
 import { Factions,
@@ -36,19 +38,20 @@ import Decimal                                  from "decimal.js";
 let saveObject = new BitburnerSaveObject();
 
 function BitburnerSaveObject() {
-    this.PlayerSave                 = "";
-    this.AllServersSave             = "";
-    this.CompaniesSave              = "";
-    this.FactionsSave               = "";
-    this.SpecialServerIpsSave       = "";
-    this.AliasesSave                = "";
-    this.GlobalAliasesSave          = "";
-    this.MessagesSave               = "";
-    this.StockMarketSave            = "";
-    this.SettingsSave               = "";
-    this.FconfSettingsSave          = "";
-    this.VersionSave                = "";
-    this.AllGangsSave               = "";
+    this.PlayerSave                     = "";
+    this.AllServersSave                 = "";
+    this.CompaniesSave                  = "";
+    this.FactionsSave                   = "";
+    this.SpecialServerIpsSave           = "";
+    this.AliasesSave                    = "";
+    this.GlobalAliasesSave              = "";
+    this.MessagesSave                   = "";
+    this.StockMarketSave                = "";
+    this.SettingsSave                   = "";
+    this.FconfSettingsSave              = "";
+    this.VersionSave                    = "";
+    this.AllGangsSave                   = "";
+    this.CorporationResearchTreesSave   = "";
 }
 
 BitburnerSaveObject.prototype.saveGame = function(db) {
@@ -260,6 +263,7 @@ function loadImportedGame(saveObj, saveString) {
     var tempMessages = null;
     var tempStockMarket = null;
     var tempAllGangs = null;
+    let tempCorporationResearchTrees = null;
 
     //Check to see if the imported save file can be parsed. If any
     //errors are caught it will fail
@@ -332,7 +336,8 @@ function loadImportedGame(saveObj, saveString) {
             try {
                 loadAllGangs(tempSaveObj.AllGangsSave);
             } catch(e) {
-                console.log("ERROR: Failed to parse AllGangsSave: " + e);
+                console.error(`Failed to parse AllGangsSave: {e}`);
+                throw e;
             }
         }
     } catch(e) {
