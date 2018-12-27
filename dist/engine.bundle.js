@@ -3114,6 +3114,7 @@ exports.CONSTANTS = {
        find a pop-up/dialog box that doesnt support this, let me know specifically which one
        ('Enter' for the default option, 'Esc' for cancelling and closing the pop-up box)
      * Added "brace_style = preserve_inline" configuration to Script Editor Beautifier
+     * ServerProfiler.exe can now be purchased from the Dark Web
      `
 };
 
@@ -3594,7 +3595,7 @@ exports.Locations = {
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 54);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/helpers/isValidIPAddress */ 88);
+/* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/helpers/isValidIPAddress */ 89);
 /* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/helpers/isString */ 40);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_11__);
@@ -4625,7 +4626,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./NetscriptWorker */ 25);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./Prestige */ 86);
+/* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./Prestige */ 87);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./Programs/Programs */ 24);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_37___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_37__);
 /* harmony import */ var _Programs_ProgramHelpers__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./Programs/ProgramHelpers */ 94);
@@ -6706,7 +6707,7 @@ exports.BitNodeMultipliers = {
 /* harmony import */ var _data_servers__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./data/servers */ 137);
 /* harmony import */ var _data_servers__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_data_servers__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
-/* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/isValidIPAddress */ 88);
+/* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/isValidIPAddress */ 89);
 /* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_12__);
 
 
@@ -7845,7 +7846,7 @@ exports.removeElementById = removeElementById;
 /* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./NetscriptWorker */ 25);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Prestige */ 86);
+/* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Prestige */ 87);
 /* harmony import */ var _SaveObject__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./SaveObject */ 75);
 /* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Script */ 30);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Server */ 11);
@@ -12084,6 +12085,7 @@ function updateStockOrderList(stock) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const BaseResearchTree_1 = __webpack_require__(/*! ./data/BaseResearchTree */ 209);
 const numeralFormat_1 = __webpack_require__(/*! ../ui/numeralFormat */ 4);
+const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
 // Map of official names for each Industry
 exports.Industries = {
     Energy: "Energy",
@@ -12181,6 +12183,10 @@ exports.IndustryResearchTrees = {
     Healthcare: BaseResearchTree_1.getBaseResearchTreeCopy(),
     RealEstate: BaseResearchTree_1.getBaseResearchTreeCopy(),
 };
+function loadIndustryResearchTrees(saveString) {
+    exports.IndustryResearchTrees = JSON.parse(saveString, JSONReviver_1.Reviver);
+}
+exports.loadIndustryResearchTrees = loadIndustryResearchTrees;
 
 
 /***/ }),
@@ -12964,7 +12970,7 @@ JSONReviver_1.Reviver.constructors.Stock = Stock;
 Object.defineProperty(exports, "__esModule", { value: true });
 // Constructs all CompanyPosition objects using the metadata in data/companypositions.ts
 const CompanyPositionsMetadata_1 = __webpack_require__(/*! ./data/CompanyPositionsMetadata */ 211);
-const CompanyPosition_1 = __webpack_require__(/*! ./CompanyPosition */ 85);
+const CompanyPosition_1 = __webpack_require__(/*! ./CompanyPosition */ 86);
 exports.CompanyPositions = {};
 function addCompanyPosition(params) {
     if (exports.CompanyPositions[params.name] != null) {
@@ -13063,7 +13069,7 @@ exports.removeChildrenFromElement = removeChildrenFromElement;
 /* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_17__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 87);
+/* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 88);
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_19__);
 /* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 81);
 /* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_20__);
@@ -14220,7 +14226,7 @@ _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__["Reviver"].constructors.AllServ
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 15);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__);
-/* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 87);
+/* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 88);
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_25__);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 61);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_26__);
@@ -19972,7 +19978,7 @@ JSONReviver_1.Reviver.constructors.CodingContract = CodingContract;
 /* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Company_Company__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Company/Companies */ 18);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Company/CompanyPosition */ 85);
+/* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Company/CompanyPosition */ 86);
 /* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Company/CompanyPositions */ 28);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_8__);
@@ -31570,7 +31576,7 @@ Gang.prototype.clearUI = function() {
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_26__);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 54);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_27__);
-/* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 87);
+/* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 88);
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_28__);
 /* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../utils/LogBox */ 79);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
@@ -35572,7 +35578,7 @@ exports.appendLineBreaks = appendLineBreaks;
 /* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNode */ 59);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./engine */ 8);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Prestige */ 86);
+/* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Prestige */ 87);
 /* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SourceFile */ 70);
 /* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Terminal */ 51);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
@@ -36380,7 +36386,7 @@ function initBitNodeMultipliers() {
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../../utils/uiHelpers/createPopup */ 37);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23__);
-/* harmony import */ var _utils_uiHelpers_createPopupCloseButton__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../../utils/uiHelpers/createPopupCloseButton */ 89);
+/* harmony import */ var _utils_uiHelpers_createPopupCloseButton__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../../utils/uiHelpers/createPopupCloseButton */ 85);
 /* harmony import */ var _utils_uiHelpers_createPopupCloseButton__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopupCloseButton__WEBPACK_IMPORTED_MODULE_24__);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_25__);
@@ -36503,6 +36509,7 @@ function Industry(params={}) {
     this.type   = params.type ? params.type : 0;
 
     this.sciResearch    = new _Material__WEBPACK_IMPORTED_MODULE_6__["Material"]({name: "Scientific Research"});
+    this.researched = {}; // Object of acquired Research. Keys = research name
 
     //A map of the NAME of materials required to create produced materials to
     //how many are needed to produce 1 unit of produced materials
@@ -37547,44 +37554,65 @@ Industry.prototype.getMarketFactor = function(mat) {
 
 // Returns a boolean indicating whether this Industry has the specified Research
 Industry.prototype.hasResearch = function(name) {
+    return (this.researched[name] === true);
+}
+
+Industry.prototype.updateResearchTree = function() {
     const researchTree = _IndustryData__WEBPACK_IMPORTED_MODULE_4__["IndustryResearchTrees"][this.type];
-    return (researchTree.researched[name] != null);
+
+    // Since ResearchTree data isnt saved, we'll update the Research Tree data
+    // based on the stored 'researched' property in the Industry object
+    if (Object.keys(researchTree.researched).length !== Object.keys(this.researched).length) {
+        console.log("Updating Corporation Research Tree Data");
+        for (let research in this.researched) {
+            researchTree.research(research);
+        }
+    }
 }
 
 // Get multipliers from Research
 Industry.prototype.getAdvertisingMultiplier = function() {
+    this.updateResearchTree();
     return _IndustryData__WEBPACK_IMPORTED_MODULE_4__["IndustryResearchTrees"][this.type].getAdvertisingMultiplier();
 }
 
 Industry.prototype.getEmployeeChaMultiplier = function() {
+    this.updateResearchTree();
     return _IndustryData__WEBPACK_IMPORTED_MODULE_4__["IndustryResearchTrees"][this.type].getEmployeeChaMultiplier();
 }
 
 Industry.prototype.getEmployeeCreMultiplier = function() {
+    this.updateResearchTree();
     return _IndustryData__WEBPACK_IMPORTED_MODULE_4__["IndustryResearchTrees"][this.type].getEmployeeCreMultiplier();
 }
 
 Industry.prototype.getEmployeeEffMultiplier = function() {
+    this.updateResearchTree();
     return _IndustryData__WEBPACK_IMPORTED_MODULE_4__["IndustryResearchTrees"][this.type].getEmployeeEffMultiplier();
 }
 
 Industry.prototype.getEmployeeIntMultiplier = function() {
+    this.updateResearchTree();
     return _IndustryData__WEBPACK_IMPORTED_MODULE_4__["IndustryResearchTrees"][this.type].getEmployeeIntMultiplier();
 }
 
 Industry.prototype.getProductionMultiplier = function() {
+    this.updateResearchTree();
     return _IndustryData__WEBPACK_IMPORTED_MODULE_4__["IndustryResearchTrees"][this.type].getProductionMultiplier();
 }
 
 Industry.prototype.getSalesMultiplier = function() {
+    this.updateResearchTree();
     return _IndustryData__WEBPACK_IMPORTED_MODULE_4__["IndustryResearchTrees"][this.type].getSalesMultiplier();
 }
 
 Industry.prototype.getScientificResearchMultiplier = function() {
+    this.updateResearchTree();
     return _IndustryData__WEBPACK_IMPORTED_MODULE_4__["IndustryResearchTrees"][this.type].getScientificResearchMultiplier();
 }
 
 Industry.prototype.getStorageMultiplier = function() {
+    this.updateResearchTree();
     return _IndustryData__WEBPACK_IMPORTED_MODULE_4__["IndustryResearchTrees"][this.type].getStorageMultiplier();
 }
 
@@ -37598,7 +37626,9 @@ Industry.prototype.createResearchBox = function() {
         researchTreeBox = null;
     }
 
+    this.updateResearchTree();
     const researchTree = _IndustryData__WEBPACK_IMPORTED_MODULE_4__["IndustryResearchTrees"][this.type];
+
 
     // Create the popup first, so that the tree diagram can be added to it
     // This is handled by Treant
@@ -37641,8 +37671,8 @@ Industry.prototype.createResearchBox = function() {
                 this.sciResearch.qty -= research.cost;
 
                 // Get the Node from the Research Tree and set its 'researched' property
-                const node = researchTree.findNode(allResearch[i]);
-                node.researched = true;
+                researchTree.research(allResearch[i]);
+                this.researched[allResearch[i]] = true;
 
                 return this.createResearchBox();
             } else {
@@ -40014,13 +40044,18 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                                  "per second before taxes.";
                 const txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("p", { innerHTML: descText, });
 
+                let allocateBtn;
                 const dividendPercentInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("input", {
                     margin: "5px",
                     placeholder: "Dividend %",
                     type: "number",
+                    onkeyup: (e) => {
+                        e.preventDefault();
+                        if (e.keyCode === 13) {allocateBtn.click();}
+                    }
                 });
 
-                const allocateBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("button", {
+                allocateBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("button", {
                     class: "std-button",
                     display: "inline-block",
                     innerText: "Allocate Dividend Percentage",
@@ -40037,17 +40072,14 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                     }
                 });
 
-                const cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("button", {
+                const cancelBtn = Object(_utils_uiHelpers_createPopupCloseButton__WEBPACK_IMPORTED_MODULE_24__["createPopupCloseButton"])(popupId, {
                     class: "std-button",
                     display: "inline-block",
                     innerText: "Cancel",
-                    clickListener:  () => {
-                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__["removeElementById"])(popupId);
-                        return false;
-                    }
-                })
+                });
 
                 Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23__["createPopup"])(popupId, [txt, dividendPercentInput, allocateBtn, cancelBtn]);
+                dividendPercentInput.focus();
             },
         });
         companyManagementPanel.appendChild(issueDividends);
@@ -40355,7 +40387,10 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
         fontSize:"14px",
     }));
     industryOverviewUpgrades.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("br", {}));
-    for (var i = 0; i < numUpgrades; ++i) {
+    for (let i = 0; i < numUpgrades; ++i) {
+        if (division.hasResearch("AutoBrew") && i == 0) {
+            continue; // AutoBrew disables Coffee upgrades, which is index 0
+        }
         (function(i, corp, division, office) {
             var upgrade = _IndustryUpgrades__WEBPACK_IMPORTED_MODULE_5__["IndustryUpgrades"][i.toString()];
             if (upgrade == null) {
@@ -40684,72 +40719,74 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
     industryEmployeePanel.appendChild(industryOfficeUpgradeSizeButton);
 
     //Throw Office Party
-    industryEmployeePanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("a", {
-        class:"a-link-button", display:"inline-block", innerText:"Throw Party",
-        fontSize:"13px",
-        tooltip:"Throw an office party to increase your employee's morale and happiness",
-        clickListener:()=>{
-            var popupId = "cmpy-mgmt-throw-office-party-popup";
-            var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("p", {
-                innerText:"Enter the amount of money you would like to spend PER EMPLOYEE " +
-                          "on this office party"
-            });
-            var totalCostTxt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("p", {
-                innerText:"Throwing this party will cost a total of $0"
-            });
-            var confirmBtn;
-            var input = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("input", {
-                type:"number", margin:"5px", placeholder:"$ / employee",
-                inputListener:()=>{
-                    if (isNaN(input.value) || input.value < 0) {
-                        totalCostTxt.innerText = "Invalid value entered!"
-                    } else {
-                        var totalCost = input.value * office.employees.length;
-                        totalCostTxt.innerText = "Throwing this party will cost a total of " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(totalCost, '$0.000a');
-                    }
-                },
-                onkeyup:(e)=>{
-                    e.preventDefault();
-                    if (e.keyCode === 13) {confirmBtn.click();}
-                }
-            });
-            confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("a", {
-                class:"a-link-button",
-                display:"inline-block",
-                innerText:"Throw Party",
-                clickListener:()=>{
-                    if (isNaN(input.value) || input.value < 0) {
-                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("Invalid value entered");
-                    } else {
-                        var totalCost = input.value * office.employees.length;
-                        if (this.funds.lt(totalCost)) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("You don't have enough company funds to throw this party!");
+    if (!division.hasResearch("AutoPartyManager")) {
+        industryEmployeePanel.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("a", {
+            class:"a-link-button", display:"inline-block", innerText:"Throw Party",
+            fontSize:"13px",
+            tooltip:"Throw an office party to increase your employee's morale and happiness",
+            clickListener:()=>{
+                var popupId = "cmpy-mgmt-throw-office-party-popup";
+                var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("p", {
+                    innerText:"Enter the amount of money you would like to spend PER EMPLOYEE " +
+                              "on this office party"
+                });
+                var totalCostTxt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("p", {
+                    innerText:"Throwing this party will cost a total of $0"
+                });
+                var confirmBtn;
+                var input = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("input", {
+                    type:"number", margin:"5px", placeholder:"$ / employee",
+                    inputListener:()=>{
+                        if (isNaN(input.value) || input.value < 0) {
+                            totalCostTxt.innerText = "Invalid value entered!"
                         } else {
-                            this.funds = this.funds.minus(totalCost);
-                            var mult;
-                            for (var fooit = 0; fooit < office.employees.length; ++fooit) {
-                                mult = office.employees[fooit].throwParty(input.value);
-                            }
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("You threw a party for the office! The morale and happiness " +
-                                            "of each employee increased by " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_25__["formatNumber"])((mult-1) * 100, 2) + "%.");
-                            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__["removeElementById"])(popupId);
+                            var totalCost = input.value * office.employees.length;
+                            totalCostTxt.innerText = "Throwing this party will cost a total of " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(totalCost, '$0.000a');
                         }
+                    },
+                    onkeyup:(e)=>{
+                        e.preventDefault();
+                        if (e.keyCode === 13) {confirmBtn.click();}
                     }
-                    return false;
-                }
-            });
-            var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("a", {
-                class:"a-link-button",
-                display:"inline-block",
-                innerText:"Cancel",
-                clickListener:()=>{
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__["removeElementById"])(popupId);
-                    return false;
-                }
-            });
-            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23__["createPopup"])(popupId, [txt, totalCostTxt, input, confirmBtn, cancelBtn]);
-        }
-    }));
+                });
+                confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("a", {
+                    class:"a-link-button",
+                    display:"inline-block",
+                    innerText:"Throw Party",
+                    clickListener:()=>{
+                        if (isNaN(input.value) || input.value < 0) {
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("Invalid value entered");
+                        } else {
+                            var totalCost = input.value * office.employees.length;
+                            if (this.funds.lt(totalCost)) {
+                                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("You don't have enough company funds to throw this party!");
+                            } else {
+                                this.funds = this.funds.minus(totalCost);
+                                var mult;
+                                for (var fooit = 0; fooit < office.employees.length; ++fooit) {
+                                    mult = office.employees[fooit].throwParty(input.value);
+                                }
+                                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("You threw a party for the office! The morale and happiness " +
+                                                "of each employee increased by " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_25__["formatNumber"])((mult-1) * 100, 2) + "%.");
+                                Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__["removeElementById"])(popupId);
+                            }
+                        }
+                        return false;
+                    }
+                });
+                var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("a", {
+                    class:"a-link-button",
+                    display:"inline-block",
+                    innerText:"Cancel",
+                    clickListener:()=>{
+                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__["removeElementById"])(popupId);
+                        return false;
+                    }
+                });
+                Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23__["createPopup"])(popupId, [txt, totalCostTxt, input, confirmBtn, cancelBtn]);
+            }
+        }));
+    }
 
     industryEmployeeManagementUI = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("div", {});
     industryEmployeeInfo = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("p", {margin:"4px", padding:"4px"});
@@ -43102,7 +43139,7 @@ var PurchaseAugmentationsOrderSetting;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
-const CompanyPosition_1 = __webpack_require__(/*! ./CompanyPosition */ 85);
+const CompanyPosition_1 = __webpack_require__(/*! ./CompanyPosition */ 86);
 const Constants_1 = __webpack_require__(/*! ../Constants */ 1);
 const DefaultConstructorParams = {
     name: "",
@@ -43202,41 +43239,44 @@ JSONReviver_1.Reviver.constructors.Company = Company;
 /* harmony import */ var _Alias__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Alias */ 45);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Company/Companies */ 18);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Company/CompanyPosition */ 85);
+/* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Company/CompanyPosition */ 86);
 /* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Constants */ 1);
-/* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./engine */ 8);
-/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Faction/Factions */ 14);
-/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 46);
-/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Fconf */ 47);
-/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Gang */ 50);
-/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./HacknetNode */ 67);
-/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Message */ 41);
-/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Script */ 30);
-/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Settings */ 19);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
-/* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./StockMarket */ 22);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_GameOptions__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/GameOptions */ 84);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 37);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__);
-/* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./ui/createStatusText */ 102);
-/* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_ui_createStatusText__WEBPACK_IMPORTED_MODULE_23__);
-/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
-/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_24__);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_25__);
-/* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! decimal.js */ 35);
+/* harmony import */ var _Corporation_IndustryData__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Corporation/IndustryData */ 23);
+/* harmony import */ var _Corporation_IndustryData__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Corporation_IndustryData__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Constants */ 1);
+/* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./engine */ 8);
+/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Faction/Factions */ 14);
+/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 46);
+/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Fconf */ 47);
+/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Gang */ 50);
+/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./HacknetNode */ 67);
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Message */ 41);
+/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Player */ 0);
+/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Script */ 30);
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Server */ 11);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Settings */ 19);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
+/* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./StockMarket */ 22);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
+/* harmony import */ var _utils_GameOptions__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/GameOptions */ 84);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_20__);
+/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 37);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23__);
+/* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./ui/createStatusText */ 102);
+/* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_ui_createStatusText__WEBPACK_IMPORTED_MODULE_24__);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_26__);
+/* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! decimal.js */ 35);
+
 
 
 
@@ -43272,26 +43312,27 @@ JSONReviver_1.Reviver.constructors.Company = Company;
 let saveObject = new BitburnerSaveObject();
 
 function BitburnerSaveObject() {
-    this.PlayerSave                 = "";
-    this.AllServersSave             = "";
-    this.CompaniesSave              = "";
-    this.FactionsSave               = "";
-    this.SpecialServerIpsSave       = "";
-    this.AliasesSave                = "";
-    this.GlobalAliasesSave          = "";
-    this.MessagesSave               = "";
-    this.StockMarketSave            = "";
-    this.SettingsSave               = "";
-    this.FconfSettingsSave          = "";
-    this.VersionSave                = "";
-    this.AllGangsSave               = "";
+    this.PlayerSave                     = "";
+    this.AllServersSave                 = "";
+    this.CompaniesSave                  = "";
+    this.FactionsSave                   = "";
+    this.SpecialServerIpsSave           = "";
+    this.AliasesSave                    = "";
+    this.GlobalAliasesSave              = "";
+    this.MessagesSave                   = "";
+    this.StockMarketSave                = "";
+    this.SettingsSave                   = "";
+    this.FconfSettingsSave              = "";
+    this.VersionSave                    = "";
+    this.AllGangsSave                   = "";
+    this.CorporationResearchTreesSave   = "";
 }
 
 BitburnerSaveObject.prototype.saveGame = function(db) {
-    this.PlayerSave                 = JSON.stringify(_Player__WEBPACK_IMPORTED_MODULE_11__[/* Player */ "a"]);
+    this.PlayerSave                 = JSON.stringify(_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"]);
 
     //Delete all logs from all running scripts
-    var TempAllServers = JSON.parse(JSON.stringify(_Server__WEBPACK_IMPORTED_MODULE_13__[/* AllServers */ "b"]), _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_20__["Reviver"]);
+    var TempAllServers = JSON.parse(JSON.stringify(_Server__WEBPACK_IMPORTED_MODULE_14__[/* AllServers */ "b"]), _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_21__["Reviver"]);
     for (var ip in TempAllServers) {
         var server = TempAllServers[ip];
         if (server == null) {continue;}
@@ -43304,17 +43345,17 @@ BitburnerSaveObject.prototype.saveGame = function(db) {
 
     this.AllServersSave             = JSON.stringify(TempAllServers);
     this.CompaniesSave              = JSON.stringify(_Company_Companies__WEBPACK_IMPORTED_MODULE_1__["Companies"]);
-    this.FactionsSave               = JSON.stringify(_Faction_Factions__WEBPACK_IMPORTED_MODULE_5__["Factions"]);
-    this.SpecialServerIpsSave       = JSON.stringify(_SpecialServerIps__WEBPACK_IMPORTED_MODULE_15__[/* SpecialServerIps */ "a"]);
+    this.FactionsSave               = JSON.stringify(_Faction_Factions__WEBPACK_IMPORTED_MODULE_6__["Factions"]);
+    this.SpecialServerIpsSave       = JSON.stringify(_SpecialServerIps__WEBPACK_IMPORTED_MODULE_16__[/* SpecialServerIps */ "a"]);
     this.AliasesSave                = JSON.stringify(_Alias__WEBPACK_IMPORTED_MODULE_0__[/* Aliases */ "a"]);
     this.GlobalAliasesSave          = JSON.stringify(_Alias__WEBPACK_IMPORTED_MODULE_0__[/* GlobalAliases */ "b"]);
-    this.MessagesSave               = JSON.stringify(_Message__WEBPACK_IMPORTED_MODULE_10__[/* Messages */ "b"]);
-    this.StockMarketSave            = JSON.stringify(_StockMarket__WEBPACK_IMPORTED_MODULE_16__[/* StockMarket */ "c"]);
-    this.SettingsSave               = JSON.stringify(_Settings__WEBPACK_IMPORTED_MODULE_14__["Settings"]);
-    this.FconfSettingsSave          = JSON.stringify(_Fconf__WEBPACK_IMPORTED_MODULE_7__[/* FconfSettings */ "a"]);
-    this.VersionSave                = JSON.stringify(_Constants__WEBPACK_IMPORTED_MODULE_3__["CONSTANTS"].Version);
-    if (_Player__WEBPACK_IMPORTED_MODULE_11__[/* Player */ "a"].bitNodeN == 2 && _Player__WEBPACK_IMPORTED_MODULE_11__[/* Player */ "a"].inGang()) {
-        this.AllGangsSave           = JSON.stringify(_Gang__WEBPACK_IMPORTED_MODULE_8__[/* AllGangs */ "a"]);
+    this.MessagesSave               = JSON.stringify(_Message__WEBPACK_IMPORTED_MODULE_11__[/* Messages */ "b"]);
+    this.StockMarketSave            = JSON.stringify(_StockMarket__WEBPACK_IMPORTED_MODULE_17__[/* StockMarket */ "c"]);
+    this.SettingsSave               = JSON.stringify(_Settings__WEBPACK_IMPORTED_MODULE_15__["Settings"]);
+    this.FconfSettingsSave          = JSON.stringify(_Fconf__WEBPACK_IMPORTED_MODULE_8__[/* FconfSettings */ "a"]);
+    this.VersionSave                = JSON.stringify(_Constants__WEBPACK_IMPORTED_MODULE_4__["CONSTANTS"].Version);
+    if (_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].bitNodeN == 2 && _Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].inGang()) {
+        this.AllGangsSave           = JSON.stringify(_Gang__WEBPACK_IMPORTED_MODULE_9__[/* AllGangs */ "a"]);
     }
     var saveString = btoa(unescape(encodeURIComponent(JSON.stringify(this))));
 
@@ -43335,7 +43376,7 @@ BitburnerSaveObject.prototype.saveGame = function(db) {
         //console.log("Saved game to LocalStorage!");
     } catch(e) {
         if (e.code == 22) {
-            Object(_ui_createStatusText__WEBPACK_IMPORTED_MODULE_23__["createStatusText"])("Save failed for localStorage! Check console(F12)");
+            Object(_ui_createStatusText__WEBPACK_IMPORTED_MODULE_24__["createStatusText"])("Save failed for localStorage! Check console(F12)");
             console.log("Failed to save game to localStorage because the size of the save file " +
                         "is too large. However, the game will still be saved to IndexedDb if your browser " +
                         "supports it. If you would like to save to localStorage as well, then " +
@@ -43344,7 +43385,7 @@ BitburnerSaveObject.prototype.saveGame = function(db) {
         }
     }
 
-    Object(_ui_createStatusText__WEBPACK_IMPORTED_MODULE_23__["createStatusText"])("Game saved!");
+    Object(_ui_createStatusText__WEBPACK_IMPORTED_MODULE_24__["createStatusText"])("Game saved!");
 }
 
 // Makes necessary changes to the loaded/imported data to ensure
@@ -43353,11 +43394,11 @@ function evaluateVersionCompatibility(ver) {
     // This version refactored the Company/job-related code
     if (ver <= "0.41.2") {
         // Player's company position is now a string
-        if (_Player__WEBPACK_IMPORTED_MODULE_11__[/* Player */ "a"].companyPosition != null && typeof _Player__WEBPACK_IMPORTED_MODULE_11__[/* Player */ "a"].companyPosition !== "string") {
+        if (_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].companyPosition != null && typeof _Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].companyPosition !== "string") {
             console.log("Changed Player.companyPosition value to be compatible with v0.41.2");
-            _Player__WEBPACK_IMPORTED_MODULE_11__[/* Player */ "a"].companyPosition = _Player__WEBPACK_IMPORTED_MODULE_11__[/* Player */ "a"].companyPosition.data.positionName;
-            if (_Player__WEBPACK_IMPORTED_MODULE_11__[/* Player */ "a"].companyPosition == null) {
-                _Player__WEBPACK_IMPORTED_MODULE_11__[/* Player */ "a"].companyPosition = "";
+            _Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].companyPosition = _Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].companyPosition.data.positionName;
+            if (_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].companyPosition == null) {
+                _Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].companyPosition = "";
             }
         }
 
@@ -43395,13 +43436,13 @@ function loadGame(saveString) {
         console.log("Loading game from IndexedDB");
     }
 
-    var saveObj = JSON.parse(saveString, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_20__["Reviver"]);
+    var saveObj = JSON.parse(saveString, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_21__["Reviver"]);
 
-    Object(_Player__WEBPACK_IMPORTED_MODULE_11__[/* loadPlayer */ "b"])(saveObj.PlayerSave);
-    Object(_Server__WEBPACK_IMPORTED_MODULE_13__[/* loadAllServers */ "g"])(saveObj.AllServersSave);
+    Object(_Player__WEBPACK_IMPORTED_MODULE_12__[/* loadPlayer */ "b"])(saveObj.PlayerSave);
+    Object(_Server__WEBPACK_IMPORTED_MODULE_14__[/* loadAllServers */ "g"])(saveObj.AllServersSave);
     Object(_Company_Companies__WEBPACK_IMPORTED_MODULE_1__["loadCompanies"])(saveObj.CompaniesSave);
-    Object(_Faction_Factions__WEBPACK_IMPORTED_MODULE_5__["loadFactions"])(saveObj.FactionsSave);
-    Object(_SpecialServerIps__WEBPACK_IMPORTED_MODULE_15__[/* loadSpecialServerIps */ "d"])(saveObj.SpecialServerIpsSave);
+    Object(_Faction_Factions__WEBPACK_IMPORTED_MODULE_6__["loadFactions"])(saveObj.FactionsSave);
+    Object(_SpecialServerIps__WEBPACK_IMPORTED_MODULE_16__[/* loadSpecialServerIps */ "d"])(saveObj.SpecialServerIpsSave);
 
     if (saveObj.hasOwnProperty("AliasesSave")) {
         try {
@@ -43423,48 +43464,48 @@ function loadGame(saveString) {
     }
     if (saveObj.hasOwnProperty("MessagesSave")) {
         try {
-            Object(_Message__WEBPACK_IMPORTED_MODULE_10__[/* loadMessages */ "e"])(saveObj.MessagesSave);
+            Object(_Message__WEBPACK_IMPORTED_MODULE_11__[/* loadMessages */ "e"])(saveObj.MessagesSave);
         } catch(e) {
-            Object(_Message__WEBPACK_IMPORTED_MODULE_10__[/* initMessages */ "d"])();
+            Object(_Message__WEBPACK_IMPORTED_MODULE_11__[/* initMessages */ "d"])();
         }
     } else {
-        Object(_Message__WEBPACK_IMPORTED_MODULE_10__[/* initMessages */ "d"])();
+        Object(_Message__WEBPACK_IMPORTED_MODULE_11__[/* initMessages */ "d"])();
     }
     if (saveObj.hasOwnProperty("StockMarketSave")) {
         try {
-            Object(_StockMarket__WEBPACK_IMPORTED_MODULE_16__[/* loadStockMarket */ "k"])(saveObj.StockMarketSave);
+            Object(_StockMarket__WEBPACK_IMPORTED_MODULE_17__[/* loadStockMarket */ "k"])(saveObj.StockMarketSave);
         } catch(e) {
-            Object(_StockMarket__WEBPACK_IMPORTED_MODULE_16__[/* loadStockMarket */ "k"])("");
+            Object(_StockMarket__WEBPACK_IMPORTED_MODULE_17__[/* loadStockMarket */ "k"])("");
         }
     } else {
-        Object(_StockMarket__WEBPACK_IMPORTED_MODULE_16__[/* loadStockMarket */ "k"])("");
+        Object(_StockMarket__WEBPACK_IMPORTED_MODULE_17__[/* loadStockMarket */ "k"])("");
     }
     if (saveObj.hasOwnProperty("SettingsSave")) {
         try {
-            _Settings__WEBPACK_IMPORTED_MODULE_14__["Settings"].load(saveObj.SettingsSave);
+            _Settings__WEBPACK_IMPORTED_MODULE_15__["Settings"].load(saveObj.SettingsSave);
         } catch(e) {
             console.log("ERROR: Failed to parse Settings. Re-initing default values");
-            _Settings__WEBPACK_IMPORTED_MODULE_14__["Settings"].init();
+            _Settings__WEBPACK_IMPORTED_MODULE_15__["Settings"].init();
         }
     } else {
-        _Settings__WEBPACK_IMPORTED_MODULE_14__["Settings"].init();
+        _Settings__WEBPACK_IMPORTED_MODULE_15__["Settings"].init();
     }
     if (saveObj.hasOwnProperty("FconfSettingsSave")) {
         try {
-            Object(_Fconf__WEBPACK_IMPORTED_MODULE_7__[/* loadFconf */ "c"])(saveObj.FconfSettingsSave);
+            Object(_Fconf__WEBPACK_IMPORTED_MODULE_8__[/* loadFconf */ "c"])(saveObj.FconfSettingsSave);
         } catch(e) {
             console.log("ERROR: Failed to parse .fconf Settings.");
         }
     }
     if (saveObj.hasOwnProperty("VersionSave")) {
         try {
-            var ver = JSON.parse(saveObj.VersionSave, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_20__["Reviver"]);
+            var ver = JSON.parse(saveObj.VersionSave, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_21__["Reviver"]);
             evaluateVersionCompatibility(ver);
 
             if (window.location.href.toLowerCase().includes("bitburner-beta")) {
                 //Beta branch, always show changes
                 createBetaUpdateText();
-            } else if (ver != _Constants__WEBPACK_IMPORTED_MODULE_3__["CONSTANTS"].Version) {
+            } else if (ver != _Constants__WEBPACK_IMPORTED_MODULE_4__["CONSTANTS"].Version) {
                 createNewUpdateText();
             }
         } catch(e) {
@@ -43473,9 +43514,9 @@ function loadGame(saveString) {
     } else {
         createNewUpdateText();
     }
-    if (_Player__WEBPACK_IMPORTED_MODULE_11__[/* Player */ "a"].bitNodeN == 2 && _Player__WEBPACK_IMPORTED_MODULE_11__[/* Player */ "a"].inGang() && saveObj.hasOwnProperty("AllGangsSave")) {
+    if (_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].bitNodeN == 2 && _Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].inGang() && saveObj.hasOwnProperty("AllGangsSave")) {
         try {
-            Object(_Gang__WEBPACK_IMPORTED_MODULE_8__[/* loadAllGangs */ "c"])(saveObj.AllGangsSave);
+            Object(_Gang__WEBPACK_IMPORTED_MODULE_9__[/* loadAllGangs */ "c"])(saveObj.AllGangsSave);
         } catch(e) {
             console.log("ERROR: Failed to parse AllGangsSave: " + e);
         }
@@ -43496,28 +43537,29 @@ function loadImportedGame(saveObj, saveString) {
     var tempMessages = null;
     var tempStockMarket = null;
     var tempAllGangs = null;
+    let tempCorporationResearchTrees = null;
 
     //Check to see if the imported save file can be parsed. If any
     //errors are caught it will fail
     try {
         var decodedSaveString = decodeURIComponent(escape(atob(saveString)));
         tempSaveObj = new BitburnerSaveObject();
-        tempSaveObj = JSON.parse(decodedSaveString, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_20__["Reviver"]);
+        tempSaveObj = JSON.parse(decodedSaveString, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_21__["Reviver"]);
 
-        tempPlayer = JSON.parse(tempSaveObj.PlayerSave, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_20__["Reviver"]);
+        tempPlayer = JSON.parse(tempSaveObj.PlayerSave, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_21__["Reviver"]);
 
         //Parse Decimal.js objects
-        tempPlayer.money = new decimal_js__WEBPACK_IMPORTED_MODULE_26__[/* default */ "a"](tempPlayer.money);
-        tempPlayer.total_money = new decimal_js__WEBPACK_IMPORTED_MODULE_26__[/* default */ "a"](tempPlayer.total_money);
-        tempPlayer.lifetime_money = new decimal_js__WEBPACK_IMPORTED_MODULE_26__[/* default */ "a"](tempPlayer.lifetime_money);
+        tempPlayer.money = new decimal_js__WEBPACK_IMPORTED_MODULE_27__[/* default */ "a"](tempPlayer.money);
+        tempPlayer.total_money = new decimal_js__WEBPACK_IMPORTED_MODULE_27__[/* default */ "a"](tempPlayer.total_money);
+        tempPlayer.lifetime_money = new decimal_js__WEBPACK_IMPORTED_MODULE_27__[/* default */ "a"](tempPlayer.lifetime_money);
 
-        tempAllServers          = JSON.parse(tempSaveObj.AllServersSave, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_20__["Reviver"]);
-        tempCompanies           = JSON.parse(tempSaveObj.CompaniesSave, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_20__["Reviver"]);
-        tempFactions            = JSON.parse(tempSaveObj.FactionsSave, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_20__["Reviver"]);
-        tempSpecialServerIps    = JSON.parse(tempSaveObj.SpecialServerIpsSave, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_20__["Reviver"]);
+        tempAllServers          = JSON.parse(tempSaveObj.AllServersSave, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_21__["Reviver"]);
+        tempCompanies           = JSON.parse(tempSaveObj.CompaniesSave, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_21__["Reviver"]);
+        tempFactions            = JSON.parse(tempSaveObj.FactionsSave, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_21__["Reviver"]);
+        tempSpecialServerIps    = JSON.parse(tempSaveObj.SpecialServerIpsSave, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_21__["Reviver"]);
         if (tempSaveObj.hasOwnProperty("AliasesSave")) {
             try {
-                tempAliases         = JSON.parse(tempSaveObj.AliasesSave, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_20__["Reviver"]);
+                tempAliases         = JSON.parse(tempSaveObj.AliasesSave, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_21__["Reviver"]);
             } catch(e) {
                 console.log("Parsing Aliases save failed: " + e);
                 tempAliases = {};
@@ -43527,7 +43569,7 @@ function loadImportedGame(saveObj, saveString) {
         }
         if (tempSaveObj.hasOwnProperty("GlobalAliases")) {
             try {
-                tempGlobalAliases   = JSON.parse(tempSaveObj.AliasesSave, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_20__["Reviver"]);
+                tempGlobalAliases   = JSON.parse(tempSaveObj.AliasesSave, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_21__["Reviver"]);
             } catch(e) {
                 console.log("Parsing Global Aliases save failed: " + e);
                 tempGlobalAliases = {};
@@ -43537,17 +43579,17 @@ function loadImportedGame(saveObj, saveString) {
         }
         if (tempSaveObj.hasOwnProperty("MessagesSave")) {
             try {
-                tempMessages        = JSON.parse(tempSaveObj.MessagesSave, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_20__["Reviver"]);
+                tempMessages        = JSON.parse(tempSaveObj.MessagesSave, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_21__["Reviver"]);
             } catch(e) {
                 console.log("Parsing Messages save failed: " + e);
-                Object(_Message__WEBPACK_IMPORTED_MODULE_10__[/* initMessages */ "d"])();
+                Object(_Message__WEBPACK_IMPORTED_MODULE_11__[/* initMessages */ "d"])();
             }
         } else {
-            Object(_Message__WEBPACK_IMPORTED_MODULE_10__[/* initMessages */ "d"])();
+            Object(_Message__WEBPACK_IMPORTED_MODULE_11__[/* initMessages */ "d"])();
         }
         if (saveObj.hasOwnProperty("StockMarketSave")) {
             try {
-                tempStockMarket     = JSON.parse(tempSaveObj.StockMarketSave, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_20__["Reviver"]);
+                tempStockMarket     = JSON.parse(tempSaveObj.StockMarketSave, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_21__["Reviver"]);
             } catch(e) {
                 console.log("Parsing StockMarket save failed: " + e);
                 tempStockMarket     = {};
@@ -43557,7 +43599,7 @@ function loadImportedGame(saveObj, saveString) {
         }
         if (tempSaveObj.hasOwnProperty("VersionSave")) {
             try {
-                var ver = JSON.parse(tempSaveObj.VersionSave, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_20__["Reviver"]);
+                var ver = JSON.parse(tempSaveObj.VersionSave, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_21__["Reviver"]);
                 evaluateVersionCompatibility(ver);
             } catch(e) {
                 console.error("Parsing Version save failed: " + e);
@@ -43566,25 +43608,26 @@ function loadImportedGame(saveObj, saveString) {
         }
         if (tempPlayer.bitNodeN == 2 && tempPlayer.inGang() && tempSaveObj.hasOwnProperty("AllGangsSave")) {
             try {
-                Object(_Gang__WEBPACK_IMPORTED_MODULE_8__[/* loadAllGangs */ "c"])(tempSaveObj.AllGangsSave);
+                Object(_Gang__WEBPACK_IMPORTED_MODULE_9__[/* loadAllGangs */ "c"])(tempSaveObj.AllGangsSave);
             } catch(e) {
-                console.log("ERROR: Failed to parse AllGangsSave: " + e);
+                console.error(`Failed to parse AllGangsSave: {e}`);
+                throw e;
             }
         }
     } catch(e) {
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Error importing game: " + e.toString());
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("Error importing game: " + e.toString());
         return false;
     }
 
     //Since the save file is valid, load everything for real
     saveString = decodeURIComponent(escape(atob(saveString)));
-    saveObj = JSON.parse(saveString, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_20__["Reviver"]);
+    saveObj = JSON.parse(saveString, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_21__["Reviver"]);
 
-    Object(_Player__WEBPACK_IMPORTED_MODULE_11__[/* loadPlayer */ "b"])(saveObj.PlayerSave);
-    Object(_Server__WEBPACK_IMPORTED_MODULE_13__[/* loadAllServers */ "g"])(saveObj.AllServersSave);
+    Object(_Player__WEBPACK_IMPORTED_MODULE_12__[/* loadPlayer */ "b"])(saveObj.PlayerSave);
+    Object(_Server__WEBPACK_IMPORTED_MODULE_14__[/* loadAllServers */ "g"])(saveObj.AllServersSave);
     Object(_Company_Companies__WEBPACK_IMPORTED_MODULE_1__["loadCompanies"])(saveObj.CompaniesSave);
-    Object(_Faction_Factions__WEBPACK_IMPORTED_MODULE_5__["loadFactions"])(saveObj.FactionsSave);
-    Object(_SpecialServerIps__WEBPACK_IMPORTED_MODULE_15__[/* loadSpecialServerIps */ "d"])(saveObj.SpecialServerIpsSave);
+    Object(_Faction_Factions__WEBPACK_IMPORTED_MODULE_6__["loadFactions"])(saveObj.FactionsSave);
+    Object(_SpecialServerIps__WEBPACK_IMPORTED_MODULE_16__[/* loadSpecialServerIps */ "d"])(saveObj.SpecialServerIpsSave);
 
     if (saveObj.hasOwnProperty("AliasesSave")) {
         try {
@@ -43606,44 +43649,44 @@ function loadImportedGame(saveObj, saveString) {
     }
     if (saveObj.hasOwnProperty("MessagesSave")) {
         try {
-            Object(_Message__WEBPACK_IMPORTED_MODULE_10__[/* loadMessages */ "e"])(saveObj.MessagesSave);
+            Object(_Message__WEBPACK_IMPORTED_MODULE_11__[/* loadMessages */ "e"])(saveObj.MessagesSave);
         } catch(e) {
-            Object(_Message__WEBPACK_IMPORTED_MODULE_10__[/* initMessages */ "d"])();
+            Object(_Message__WEBPACK_IMPORTED_MODULE_11__[/* initMessages */ "d"])();
         }
     } else {
-        Object(_Message__WEBPACK_IMPORTED_MODULE_10__[/* initMessages */ "d"])();
+        Object(_Message__WEBPACK_IMPORTED_MODULE_11__[/* initMessages */ "d"])();
     }
     if (saveObj.hasOwnProperty("StockMarketSave")) {
         try {
-            Object(_StockMarket__WEBPACK_IMPORTED_MODULE_16__[/* loadStockMarket */ "k"])(saveObj.StockMarketSave);
+            Object(_StockMarket__WEBPACK_IMPORTED_MODULE_17__[/* loadStockMarket */ "k"])(saveObj.StockMarketSave);
         } catch(e) {
-            Object(_StockMarket__WEBPACK_IMPORTED_MODULE_16__[/* loadStockMarket */ "k"])("");
+            Object(_StockMarket__WEBPACK_IMPORTED_MODULE_17__[/* loadStockMarket */ "k"])("");
         }
     } else {
-        Object(_StockMarket__WEBPACK_IMPORTED_MODULE_16__[/* loadStockMarket */ "k"])("");
+        Object(_StockMarket__WEBPACK_IMPORTED_MODULE_17__[/* loadStockMarket */ "k"])("");
     }
     if (saveObj.hasOwnProperty("SettingsSave")) {
         try {
-            _Settings__WEBPACK_IMPORTED_MODULE_14__["Settings"].load(saveObj.SettingsSave);
+            _Settings__WEBPACK_IMPORTED_MODULE_15__["Settings"].load(saveObj.SettingsSave);
         } catch(e) {
-            _Settings__WEBPACK_IMPORTED_MODULE_14__["Settings"].init();
+            _Settings__WEBPACK_IMPORTED_MODULE_15__["Settings"].init();
         }
     } else {
-        _Settings__WEBPACK_IMPORTED_MODULE_14__["Settings"].init();
+        _Settings__WEBPACK_IMPORTED_MODULE_15__["Settings"].init();
     }
     if (saveObj.hasOwnProperty("FconfSettingsSave")) {
         try {
-            Object(_Fconf__WEBPACK_IMPORTED_MODULE_7__[/* loadFconf */ "c"])(saveObj.FconfSettingsSave);
+            Object(_Fconf__WEBPACK_IMPORTED_MODULE_8__[/* loadFconf */ "c"])(saveObj.FconfSettingsSave);
         } catch(e) {
             console.log("ERROR: Failed to load .fconf settings when importing");
         }
     }
     if (saveObj.hasOwnProperty("VersionSave")) {
         try {
-            var ver = JSON.parse(saveObj.VersionSave, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_20__["Reviver"]);
+            var ver = JSON.parse(saveObj.VersionSave, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_21__["Reviver"]);
             evaluateVersionCompatibility(ver);
 
-            if (ver != _Constants__WEBPACK_IMPORTED_MODULE_3__["CONSTANTS"].Version) {
+            if (ver != _Constants__WEBPACK_IMPORTED_MODULE_4__["CONSTANTS"].Version) {
                 createNewUpdateText();
             }
         } catch(e) {
@@ -43652,100 +43695,100 @@ function loadImportedGame(saveObj, saveString) {
     } else {
         createNewUpdateText();
     }
-    if (_Player__WEBPACK_IMPORTED_MODULE_11__[/* Player */ "a"].bitNodeN == 2 && _Player__WEBPACK_IMPORTED_MODULE_11__[/* Player */ "a"].inGang() && saveObj.hasOwnProperty("AllGangsSave")) {
+    if (_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].bitNodeN == 2 && _Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].inGang() && saveObj.hasOwnProperty("AllGangsSave")) {
         try {
-            Object(_Gang__WEBPACK_IMPORTED_MODULE_8__[/* loadAllGangs */ "c"])(saveObj.AllGangsSave);
+            Object(_Gang__WEBPACK_IMPORTED_MODULE_9__[/* loadAllGangs */ "c"])(saveObj.AllGangsSave);
         } catch(e) {
             console.log("ERROR: Failed to parse AllGangsSave: " + e);
         }
     }
 
     var popupId = "import-game-restart-game-notice";
-    var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("p", {
+    var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("p", {
         innerText:"Imported game! You need to SAVE the game and then RELOAD the page " +
                  "to make sure everything runs smoothly"
     });
-    var gotitBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("a", {
+    var gotitBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("a", {
         class:"a-link-button", float:"right", padding:"6px", innerText:"Got it!",
         clickListener:()=>{
-            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_25__["removeElementById"])(popupId);
+            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_26__["removeElementById"])(popupId);
         }
     });
-    Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__["createPopup"])(popupId, [txt, gotitBtn]);
-    Object(_utils_GameOptions__WEBPACK_IMPORTED_MODULE_18__[/* gameOptionsBoxClose */ "a"])();
+    Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23__["createPopup"])(popupId, [txt, gotitBtn]);
+    Object(_utils_GameOptions__WEBPACK_IMPORTED_MODULE_19__[/* gameOptionsBoxClose */ "a"])();
 
     //Re-start game
     console.log("Importing game");
-    _engine__WEBPACK_IMPORTED_MODULE_4__["Engine"].setDisplayElements();    //Sets variables for important DOM elements
-    _engine__WEBPACK_IMPORTED_MODULE_4__["Engine"].init();                  //Initialize buttons, work, etc.
+    _engine__WEBPACK_IMPORTED_MODULE_5__["Engine"].setDisplayElements();    //Sets variables for important DOM elements
+    _engine__WEBPACK_IMPORTED_MODULE_5__["Engine"].init();                  //Initialize buttons, work, etc.
 
     //Calculate the number of cycles have elapsed while offline
-    _engine__WEBPACK_IMPORTED_MODULE_4__["Engine"]._lastUpdate = new Date().getTime();
-    var lastUpdate = _Player__WEBPACK_IMPORTED_MODULE_11__[/* Player */ "a"].lastUpdate;
-    var numCyclesOffline = Math.floor((_engine__WEBPACK_IMPORTED_MODULE_4__["Engine"]._lastUpdate - lastUpdate) / _engine__WEBPACK_IMPORTED_MODULE_4__["Engine"]._idleSpeed);
+    _engine__WEBPACK_IMPORTED_MODULE_5__["Engine"]._lastUpdate = new Date().getTime();
+    var lastUpdate = _Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].lastUpdate;
+    var numCyclesOffline = Math.floor((_engine__WEBPACK_IMPORTED_MODULE_5__["Engine"]._lastUpdate - lastUpdate) / _engine__WEBPACK_IMPORTED_MODULE_5__["Engine"]._idleSpeed);
 
     /* Process offline progress */
-    var offlineProductionFromScripts = Object(_Script__WEBPACK_IMPORTED_MODULE_12__[/* loadAllRunningScripts */ "f"])();    //This also takes care of offline production for those scripts
-    if (_Player__WEBPACK_IMPORTED_MODULE_11__[/* Player */ "a"].isWorking) {
-        console.log("work() called in load() for " + numCyclesOffline * _engine__WEBPACK_IMPORTED_MODULE_4__["Engine"]._idleSpeed + " milliseconds");
-        if (_Player__WEBPACK_IMPORTED_MODULE_11__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_3__["CONSTANTS"].WorkTypeFaction) {
-            _Player__WEBPACK_IMPORTED_MODULE_11__[/* Player */ "a"].workForFaction(numCyclesOffline);
-        } else if (_Player__WEBPACK_IMPORTED_MODULE_11__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_3__["CONSTANTS"].WorkTypeCreateProgram) {
-            _Player__WEBPACK_IMPORTED_MODULE_11__[/* Player */ "a"].createProgramWork(numCyclesOffline);
-        } else if (_Player__WEBPACK_IMPORTED_MODULE_11__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_3__["CONSTANTS"].WorkTypeStudyClass) {
-            _Player__WEBPACK_IMPORTED_MODULE_11__[/* Player */ "a"].takeClass(numCyclesOffline);
-        } else if (_Player__WEBPACK_IMPORTED_MODULE_11__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_3__["CONSTANTS"].WorkTypeCrime) {
-            _Player__WEBPACK_IMPORTED_MODULE_11__[/* Player */ "a"].commitCrime(numCyclesOffline);
-        } else if (_Player__WEBPACK_IMPORTED_MODULE_11__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_3__["CONSTANTS"].WorkTypeCompanyPartTime) {
-            _Player__WEBPACK_IMPORTED_MODULE_11__[/* Player */ "a"].workPartTime(numCyclesOffline);
+    var offlineProductionFromScripts = Object(_Script__WEBPACK_IMPORTED_MODULE_13__[/* loadAllRunningScripts */ "f"])();    //This also takes care of offline production for those scripts
+    if (_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].isWorking) {
+        console.log("work() called in load() for " + numCyclesOffline * _engine__WEBPACK_IMPORTED_MODULE_5__["Engine"]._idleSpeed + " milliseconds");
+        if (_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_4__["CONSTANTS"].WorkTypeFaction) {
+            _Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].workForFaction(numCyclesOffline);
+        } else if (_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_4__["CONSTANTS"].WorkTypeCreateProgram) {
+            _Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].createProgramWork(numCyclesOffline);
+        } else if (_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_4__["CONSTANTS"].WorkTypeStudyClass) {
+            _Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].takeClass(numCyclesOffline);
+        } else if (_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_4__["CONSTANTS"].WorkTypeCrime) {
+            _Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].commitCrime(numCyclesOffline);
+        } else if (_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_4__["CONSTANTS"].WorkTypeCompanyPartTime) {
+            _Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].workPartTime(numCyclesOffline);
         } else {
-            _Player__WEBPACK_IMPORTED_MODULE_11__[/* Player */ "a"].work(numCyclesOffline);
+            _Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].work(numCyclesOffline);
         }
     }
 
     //Hacknet Nodes offline progress
-    var offlineProductionFromHacknetNodes = Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_9__[/* processAllHacknetNodeEarnings */ "d"])(numCyclesOffline);
+    var offlineProductionFromHacknetNodes = Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_10__[/* processAllHacknetNodeEarnings */ "d"])(numCyclesOffline);
 
     //Passive faction rep gain offline
-    Object(_Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_6__[/* processPassiveFactionRepGain */ "d"])(numCyclesOffline);
+    Object(_Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_7__[/* processPassiveFactionRepGain */ "d"])(numCyclesOffline);
 
     //Update total playtime
-    var time = numCyclesOffline * _engine__WEBPACK_IMPORTED_MODULE_4__["Engine"]._idleSpeed;
-    if (_Player__WEBPACK_IMPORTED_MODULE_11__[/* Player */ "a"].totalPlaytime == null) {_Player__WEBPACK_IMPORTED_MODULE_11__[/* Player */ "a"].totalPlaytime = 0;}
-    if (_Player__WEBPACK_IMPORTED_MODULE_11__[/* Player */ "a"].playtimeSinceLastAug == null) {_Player__WEBPACK_IMPORTED_MODULE_11__[/* Player */ "a"].playtimeSinceLastAug = 0;}
-    if (_Player__WEBPACK_IMPORTED_MODULE_11__[/* Player */ "a"].playtimeSinceLastBitnode == null) {_Player__WEBPACK_IMPORTED_MODULE_11__[/* Player */ "a"].playtimeSinceLastBitnode = 0;}
-    _Player__WEBPACK_IMPORTED_MODULE_11__[/* Player */ "a"].totalPlaytime += time;
-    _Player__WEBPACK_IMPORTED_MODULE_11__[/* Player */ "a"].playtimeSinceLastAug += time;
-    _Player__WEBPACK_IMPORTED_MODULE_11__[/* Player */ "a"].playtimeSinceLastBitnode += time;
+    var time = numCyclesOffline * _engine__WEBPACK_IMPORTED_MODULE_5__["Engine"]._idleSpeed;
+    if (_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].totalPlaytime == null) {_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].totalPlaytime = 0;}
+    if (_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].playtimeSinceLastAug == null) {_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].playtimeSinceLastAug = 0;}
+    if (_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].playtimeSinceLastBitnode == null) {_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].playtimeSinceLastBitnode = 0;}
+    _Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].totalPlaytime += time;
+    _Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].playtimeSinceLastAug += time;
+    _Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].playtimeSinceLastBitnode += time;
 
     //Re-apply augmentations
-    _Player__WEBPACK_IMPORTED_MODULE_11__[/* Player */ "a"].reapplyAllAugmentations();
+    _Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].reapplyAllAugmentations();
 
     //Clear terminal
     $("#terminal tr:not(:last)").remove();
 
-    _Player__WEBPACK_IMPORTED_MODULE_11__[/* Player */ "a"].lastUpdate = _engine__WEBPACK_IMPORTED_MODULE_4__["Engine"]._lastUpdate;
-    _engine__WEBPACK_IMPORTED_MODULE_4__["Engine"].start();                 //Run main game loop and Scripts loop
-    Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("While you were offline, your scripts generated <span class='money-gold'>$" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_24__["numeralWrapper"].format(offlineProductionFromScripts, '0,0.00') + "</span> and your Hacknet Nodes generated <span class='money-gold'>$" +
-                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_24__["numeralWrapper"].format(offlineProductionFromHacknetNodes, '0,0.00') + "</span>");
+    _Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].lastUpdate = _engine__WEBPACK_IMPORTED_MODULE_5__["Engine"]._lastUpdate;
+    _engine__WEBPACK_IMPORTED_MODULE_5__["Engine"].start();                 //Run main game loop and Scripts loop
+    Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("While you were offline, your scripts generated <span class='money-gold'>$" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(offlineProductionFromScripts, '0,0.00') + "</span> and your Hacknet Nodes generated <span class='money-gold'>$" +
+                    _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__["numeralWrapper"].format(offlineProductionFromHacknetNodes, '0,0.00') + "</span>");
     return true;
 }
 
 BitburnerSaveObject.prototype.exportGame = function() {
-    this.PlayerSave                 = JSON.stringify(_Player__WEBPACK_IMPORTED_MODULE_11__[/* Player */ "a"]);
-    this.AllServersSave             = JSON.stringify(_Server__WEBPACK_IMPORTED_MODULE_13__[/* AllServers */ "b"]);
+    this.PlayerSave                 = JSON.stringify(_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"]);
+    this.AllServersSave             = JSON.stringify(_Server__WEBPACK_IMPORTED_MODULE_14__[/* AllServers */ "b"]);
     this.CompaniesSave              = JSON.stringify(_Company_Companies__WEBPACK_IMPORTED_MODULE_1__["Companies"]);
-    this.FactionsSave               = JSON.stringify(_Faction_Factions__WEBPACK_IMPORTED_MODULE_5__["Factions"]);
-    this.SpecialServerIpsSave       = JSON.stringify(_SpecialServerIps__WEBPACK_IMPORTED_MODULE_15__[/* SpecialServerIps */ "a"]);
+    this.FactionsSave               = JSON.stringify(_Faction_Factions__WEBPACK_IMPORTED_MODULE_6__["Factions"]);
+    this.SpecialServerIpsSave       = JSON.stringify(_SpecialServerIps__WEBPACK_IMPORTED_MODULE_16__[/* SpecialServerIps */ "a"]);
     this.AliasesSave                = JSON.stringify(_Alias__WEBPACK_IMPORTED_MODULE_0__[/* Aliases */ "a"]);
     this.GlobalAliasesSave          = JSON.stringify(_Alias__WEBPACK_IMPORTED_MODULE_0__[/* GlobalAliases */ "b"]);
-    this.MessagesSave               = JSON.stringify(_Message__WEBPACK_IMPORTED_MODULE_10__[/* Messages */ "b"]);
-    this.StockMarketSave            = JSON.stringify(_StockMarket__WEBPACK_IMPORTED_MODULE_16__[/* StockMarket */ "c"]);
-    this.SettingsSave               = JSON.stringify(_Settings__WEBPACK_IMPORTED_MODULE_14__["Settings"]);
-    this.VersionSave                = JSON.stringify(_Constants__WEBPACK_IMPORTED_MODULE_3__["CONSTANTS"].Version);
-    if (_Player__WEBPACK_IMPORTED_MODULE_11__[/* Player */ "a"].bitNodeN == 2 && _Player__WEBPACK_IMPORTED_MODULE_11__[/* Player */ "a"].inGang()) {
-        this.AllGangsSave           = JSON.stringify(_Gang__WEBPACK_IMPORTED_MODULE_8__[/* AllGangs */ "a"]);
+    this.MessagesSave               = JSON.stringify(_Message__WEBPACK_IMPORTED_MODULE_11__[/* Messages */ "b"]);
+    this.StockMarketSave            = JSON.stringify(_StockMarket__WEBPACK_IMPORTED_MODULE_17__[/* StockMarket */ "c"]);
+    this.SettingsSave               = JSON.stringify(_Settings__WEBPACK_IMPORTED_MODULE_15__["Settings"]);
+    this.VersionSave                = JSON.stringify(_Constants__WEBPACK_IMPORTED_MODULE_4__["CONSTANTS"].Version);
+    if (_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].bitNodeN == 2 && _Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].inGang()) {
+        this.AllGangsSave           = JSON.stringify(_Gang__WEBPACK_IMPORTED_MODULE_9__[/* AllGangs */ "a"]);
     }
 
     var saveString = btoa(unescape(encodeURIComponent(JSON.stringify(this))));
@@ -43769,11 +43812,11 @@ BitburnerSaveObject.prototype.exportGame = function() {
 
 BitburnerSaveObject.prototype.importGame = function() {
     if (window.File && window.FileReader && window.FileList && window.Blob) {
-        var fileSelector = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_19__["clearEventListeners"])("import-game-file-selector");
+        var fileSelector = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_20__["clearEventListeners"])("import-game-file-selector");
         fileSelector.addEventListener("change", openImportFileHandler, false);
         $("#import-game-file-selector").click();
     } else {
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("ERR: Your browser does not support HTML5 File API. Cannot import.");
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("ERR: Your browser does not support HTML5 File API. Cannot import.");
     }
 
 }
@@ -43792,41 +43835,41 @@ BitburnerSaveObject.prototype.deleteGame = function(db) {
     request.onerror = function(e) {
         console.log("Failed to delete save from indexedDb: " + e);
     }
-    Object(_ui_createStatusText__WEBPACK_IMPORTED_MODULE_23__["createStatusText"])("Game deleted!");
+    Object(_ui_createStatusText__WEBPACK_IMPORTED_MODULE_24__["createStatusText"])("Game deleted!");
 }
 
 function createNewUpdateText() {
-    Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("New update!<br>" +
+    Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("New update!<br>" +
                     "Please report any bugs/issues through the github repository " +
                     "or the Bitburner subreddit (reddit.com/r/bitburner).<br><br>" +
-                    _Constants__WEBPACK_IMPORTED_MODULE_3__["CONSTANTS"].LatestUpdate);
+                    _Constants__WEBPACK_IMPORTED_MODULE_4__["CONSTANTS"].LatestUpdate);
 }
 
 function createBetaUpdateText() {
-    Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("You are playing on the beta environment! This branch of the game " +
+    Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("You are playing on the beta environment! This branch of the game " +
                     "features the latest developments in the game. This version may be unstable.<br>" +
                     "Please report any bugs/issues through the github repository (https://github.com/danielyxie/bitburner/issues) " +
                     "or the Bitburner subreddit (reddit.com/r/bitburner).<br><br>" +
-                    _Constants__WEBPACK_IMPORTED_MODULE_3__["CONSTANTS"].LatestUpdate);
+                    _Constants__WEBPACK_IMPORTED_MODULE_4__["CONSTANTS"].LatestUpdate);
 }
 
 
 BitburnerSaveObject.prototype.toJSON = function() {
-    return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_20__["Generic_toJSON"])("BitburnerSaveObject", this);
+    return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_21__["Generic_toJSON"])("BitburnerSaveObject", this);
 }
 
 BitburnerSaveObject.fromJSON = function(value) {
-    return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_20__["Generic_fromJSON"])(BitburnerSaveObject, value.data);
+    return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_21__["Generic_fromJSON"])(BitburnerSaveObject, value.data);
 }
 
-_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_20__["Reviver"].constructors.BitburnerSaveObject = BitburnerSaveObject;
+_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_21__["Reviver"].constructors.BitburnerSaveObject = BitburnerSaveObject;
 
 //Import game
 
 function openImportFileHandler(evt) {
     var file = evt.target.files[0];
     if (!file) {
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__["dialogBoxCreate"])("Invalid file selected");
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("Invalid file selected");
         return;
     }
 
@@ -44608,6 +44651,59 @@ function gameOptionsBoxOpen() {
 
 /***/ }),
 /* 85 */
+/*!***************************************************!*\
+  !*** ./utils/uiHelpers/createPopupCloseButton.ts ***!
+  \***************************************************/
+/*! no static exports found */
+/*! exports used: createPopupCloseButton */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/* Creates a Close/Cancel button that is used for removing popups */
+Object.defineProperty(exports, "__esModule", { value: true });
+const createElement_1 = __webpack_require__(/*! ./createElement */ 2);
+const removeElement_1 = __webpack_require__(/*! ./removeElement */ 61);
+function createPopupCloseButton(popup, options) {
+    let button;
+    // TODO event listener works with escape. Add and remove event listener
+    // from document
+    function closePopupWithEscFn(e) {
+        if (e.keyCode === 27) {
+            button.click();
+        }
+    }
+    button = createElement_1.createElement("button", {
+        class: options.class ? options.class : "popup-box-button",
+        display: options.display ? options.display : "inline-block",
+        innerText: options.innerText == null ? "Cancel" : options.innerText,
+        clickListener: () => {
+            if (popup instanceof Element) {
+                removeElement_1.removeElement(popup);
+            }
+            else {
+                try {
+                    const popupEl = document.getElementById(popup);
+                    if (popupEl instanceof Element) {
+                        removeElement_1.removeElement(popupEl);
+                    }
+                }
+                catch (e) {
+                    console.error(`createPopupCloseButton() threw: ${e}`);
+                }
+            }
+            document.removeEventListener("keydown", closePopupWithEscFn);
+            return false;
+        },
+    });
+    document.addEventListener("keydown", closePopupWithEscFn);
+    return button;
+}
+exports.createPopupCloseButton = createPopupCloseButton;
+
+
+/***/ }),
+/* 86 */
 /*!****************************************!*\
   !*** ./src/Company/CompanyPosition.ts ***!
   \****************************************/
@@ -44699,7 +44795,7 @@ exports.CompanyPosition = CompanyPosition;
 
 
 /***/ }),
-/* 86 */
+/* 87 */
 /*!*************************!*\
   !*** ./src/Prestige.js ***!
   \*************************/
@@ -45072,7 +45168,7 @@ function prestigeSourceFile() {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 64)))
 
 /***/ }),
-/* 87 */
+/* 88 */
 /*!***************************************!*\
   !*** ./utils/helpers/getTimestamp.ts ***!
   \***************************************/
@@ -45098,7 +45194,7 @@ exports.getTimestamp = getTimestamp;
 
 
 /***/ }),
-/* 88 */
+/* 89 */
 /*!*******************************************!*\
   !*** ./utils/helpers/isValidIPAddress.ts ***!
   \*******************************************/
@@ -45120,59 +45216,6 @@ function isValidIPAddress(ipaddress) {
     return ipAddressRegex.test(ipaddress);
 }
 exports.isValidIPAddress = isValidIPAddress;
-
-
-/***/ }),
-/* 89 */
-/*!***************************************************!*\
-  !*** ./utils/uiHelpers/createPopupCloseButton.ts ***!
-  \***************************************************/
-/*! no static exports found */
-/*! exports used: createPopupCloseButton */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-/* Creates a Close/Cancel button that is used for removing popups */
-Object.defineProperty(exports, "__esModule", { value: true });
-const createElement_1 = __webpack_require__(/*! ./createElement */ 2);
-const removeElement_1 = __webpack_require__(/*! ./removeElement */ 61);
-function createPopupCloseButton(popup, options) {
-    let button;
-    // TODO event listener works with escape. Add and remove event listener
-    // from document
-    function closePopupWithEscFn(e) {
-        if (e.keyCode === 27) {
-            button.click();
-        }
-    }
-    button = createElement_1.createElement("button", {
-        class: options.class ? options.class : "popup-box-button",
-        display: options.display ? options.display : "inline-block",
-        innerText: options.innerText == null ? "Cancel" : options.innerText,
-        clickListener: () => {
-            if (popup instanceof Element) {
-                removeElement_1.removeElement(popup);
-            }
-            else {
-                try {
-                    const popupEl = document.getElementById(popup);
-                    if (popupEl instanceof Element) {
-                        removeElement_1.removeElement(popupEl);
-                    }
-                }
-                catch (e) {
-                    console.error(`createPopupCloseButton() threw: ${e}`);
-                }
-            }
-            document.removeEventListener("keydown", closePopupWithEscFn);
-            return false;
-        },
-    });
-    document.addEventListener("keydown", closePopupWithEscFn);
-    return button;
-}
-exports.createPopupCloseButton = createPopupCloseButton;
 
 
 /***/ }),
@@ -49660,7 +49703,7 @@ function closeDevMenu() {
 /* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../SpecialServerIps */ 32);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../ui/postToTerminal */ 7);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utils/helpers/isValidIPAddress */ 88);
+/* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utils/helpers/isValidIPAddress */ 89);
 /* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_5__);
@@ -58899,15 +58942,10 @@ exports.ProductRatingWeights = {
 
 "use strict";
 
-// Defines a "Research Tree"
-// Each Industry has a unique Research Tree
-// Each Node in the Research Trees only holds the name(s) of Research,
-// not an actual Research object. The name can be used to obtain a reference
-// to the corresponding Research object using the ResearchMap
 Object.defineProperty(exports, "__esModule", { value: true });
 const ResearchMap_1 = __webpack_require__(/*! ./ResearchMap */ 98);
 class Node {
-    constructor(p) {
+    constructor(p = { cost: 0, text: "" }) {
         // All child Nodes in the tree
         // The Research held in this Node is a prerequisite for all Research in
         // child Nodes
@@ -59347,7 +59385,6 @@ exports.Research = Research;
 Object.defineProperty(exports, "__esModule", { value: true });
 const ResearchMap_1 = __webpack_require__(/*! ../ResearchMap */ 98);
 const ResearchTree_1 = __webpack_require__(/*! ../ResearchTree */ 206);
-exports.BaseResearchTree = new ResearchTree_1.ResearchTree();
 function makeNode(name) {
     const research = ResearchMap_1.ResearchMap[name];
     if (research == null) {
@@ -59355,38 +59392,39 @@ function makeNode(name) {
     }
     return new ResearchTree_1.Node({ text: research.name, cost: research.cost });
 }
-const rootNode = makeNode("Hi-Tech R&D Laboratory");
-const autoBrew = makeNode("AutoBrew");
-const autoParty = makeNode("AutoPartyManager");
-const autoDrugs = makeNode("Automatic Drug Administration");
-const cph4 = makeNode("CPH4 Injections");
-const drones = makeNode("Drones");
-const dronesAssembly = makeNode("Drones - Assembly");
-const dronesTransport = makeNode("Drones - Transport");
-const goJuice = makeNode("Go-Juice");
-const joywire = makeNode("JoyWire");
-const marketta1 = makeNode("Market-TA.I");
-const marketta2 = makeNode("Market-TA.II");
-const overclock = makeNode("Overclock");
-const scAssemblers = makeNode("Self-Correcting Assemblers");
-const stimu = makeNode("Sti.mu");
-autoDrugs.addChild(goJuice);
-autoDrugs.addChild(cph4);
-drones.addChild(dronesAssembly);
-drones.addChild(dronesTransport);
-marketta1.addChild(marketta2);
-overclock.addChild(stimu);
-rootNode.addChild(autoBrew);
-rootNode.addChild(autoParty);
-rootNode.addChild(autoDrugs);
-rootNode.addChild(drones);
-rootNode.addChild(joywire);
-rootNode.addChild(marketta1);
-rootNode.addChild(overclock);
-rootNode.addChild(scAssemblers);
-exports.BaseResearchTree.setRoot(rootNode);
 function getBaseResearchTreeCopy() {
-    return Object.assign(Object.create(Object.getPrototypeOf(exports.BaseResearchTree)), exports.BaseResearchTree);
+    const baseResearchTree = new ResearchTree_1.ResearchTree();
+    const rootNode = makeNode("Hi-Tech R&D Laboratory");
+    const autoBrew = makeNode("AutoBrew");
+    const autoParty = makeNode("AutoPartyManager");
+    const autoDrugs = makeNode("Automatic Drug Administration");
+    const cph4 = makeNode("CPH4 Injections");
+    const drones = makeNode("Drones");
+    const dronesAssembly = makeNode("Drones - Assembly");
+    const dronesTransport = makeNode("Drones - Transport");
+    const goJuice = makeNode("Go-Juice");
+    const joywire = makeNode("JoyWire");
+    const marketta1 = makeNode("Market-TA.I");
+    const marketta2 = makeNode("Market-TA.II");
+    const overclock = makeNode("Overclock");
+    const scAssemblers = makeNode("Self-Correcting Assemblers");
+    const stimu = makeNode("Sti.mu");
+    autoDrugs.addChild(goJuice);
+    autoDrugs.addChild(cph4);
+    drones.addChild(dronesAssembly);
+    drones.addChild(dronesTransport);
+    marketta1.addChild(marketta2);
+    overclock.addChild(stimu);
+    rootNode.addChild(autoBrew);
+    rootNode.addChild(autoParty);
+    rootNode.addChild(autoDrugs);
+    rootNode.addChild(drones);
+    rootNode.addChild(joywire);
+    rootNode.addChild(marketta1);
+    rootNode.addChild(overclock);
+    rootNode.addChild(scAssemblers);
+    baseResearchTree.setRoot(rootNode);
+    return baseResearchTree;
 }
 exports.getBaseResearchTreeCopy = getBaseResearchTreeCopy;
 

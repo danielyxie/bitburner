@@ -3,7 +3,6 @@
 // Each Node in the Research Trees only holds the name(s) of Research,
 // not an actual Research object. The name can be used to obtain a reference
 // to the corresponding Research object using the ResearchMap
-
 import { Research } from "./Research";
 import { ResearchMap } from "./ResearchMap";
 
@@ -17,6 +16,7 @@ interface IConstructorParams {
 }
 
 export class Node {
+
     // All child Nodes in the tree
     // The Research held in this Node is a prerequisite for all Research in
     // child Nodes
@@ -37,7 +37,7 @@ export class Node {
     // Name of the Research held in this Node
     text: string = "";
 
-    constructor(p: IConstructorParams) {
+    constructor(p: IConstructorParams = {cost: 0, text: ""}) {
         if (ResearchMap[p.text] == null) {
             throw new Error(`Invalid Research name used when constructing ResearchTree Node: ${p.text}`);
         }
@@ -111,6 +111,7 @@ export class Node {
         this.parent =  n;
     }
 }
+
 
 // A ResearchTree defines all available Research in an Industry
 // The root node in a Research Tree must always be the "Hi-Tech R&D Laboratory"

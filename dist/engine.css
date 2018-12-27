@@ -2169,7 +2169,9 @@ button {
   font-size: 12px; }
 
 .Treant > .researched {
-  background-color: #444; }
+  background-color: #666;
+  pointer-events: none;
+  font-size: 16px; }
 
 .Treant > .locked > div {
   color: red;
