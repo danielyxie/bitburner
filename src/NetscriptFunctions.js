@@ -3568,6 +3568,28 @@ function NetscriptFunctions(workerScript) {
             }
             return res;
         },
+        getAugmentationPrereq : function(name) {
+            var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
+            if (Player.bitNodeN !== 4) {ramCost *= CONSTANTS.ScriptSingularityFnRamMult;}
+            if (workerScript.checkingRam) {
+                return updateStaticRam("getAugmentationPrereq", ramCost);
+            }
+            updateDynamicRam("getAugmentationPrereq", ramCost);
+            if (Player.bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 3)) {
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run getAugmentationPrereq(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
+                    return false;
+                }
+            }
+
+            if (!augmentationExists(name)) {
+                workerScript.scriptRef.log("ERROR: getAugmentationPrereq() failed. Invalid Augmentation name passed in (note: this is case-sensitive): " + name);
+                return [-1, -1];
+            }
+
+            var aug = Augmentations[name];
+            return aug.prereqs;
+        },
         getAugmentationCost : function(name) {
             var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
             if (Player.bitNodeN !== 4) {ramCost *= CONSTANTS.ScriptSingularityFnRamMult;}
