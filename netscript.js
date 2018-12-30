@@ -89,7 +89,7 @@ let NetscriptFunctions =
     "donateToFaction|"                                                         +
     "createProgram|commitCrime|getCrimeChance|getOwnedAugmentations|"          +
     "getOwnedSourceFiles|getAugmentationsFromFaction|"                         +
-    "getAugmentationCost|purchaseAugmentation|"                                +
+    "getAugmentationPrereq|getAugmentationCost|purchaseAugmentation|"          +
     "installAugmentations|"                                                    +
 
     // TIX API
