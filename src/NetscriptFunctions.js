@@ -3588,7 +3588,7 @@ function NetscriptFunctions(workerScript) {
 
             if (!augmentationExists(name)) {
                 workerScript.scriptRef.log("ERROR: getAugmentationPrereq() failed. Invalid Augmentation name passed in (note: this is case-sensitive): " + name);
-                return [-1, -1];
+                return [];
             }
 
             var aug = Augmentations[name];
