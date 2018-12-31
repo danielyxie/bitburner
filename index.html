@@ -964,27 +964,30 @@
                 </form>
             </div>
             <div id="game-options-right-panel">
-                <a class="a-link-button" style="display:block;" href="https://bitburner.readthedocs.io/en/latest/changelog.html" target="_blank"> Changelog </a>
-                <a class="a-link-button" style="display:block;" href="https://bitburner.wikia.com" target="_blank">Wiki</a>
-                <a class="a-link-button" style="display:block;" href="https://www.reddit.com/r/bitburner" target="_blank">Subreddit</a>
-                <a id="save-game-link" class="a-link-button" style="display:inline-block;width:46%;"> Save Game </a>
-                <a id="delete-game-link" class="a-link-button" style="display:inline-block;width:46%;"> Delete Game </a>
-                <a id="export-game-link" class="a-link-button" style="display:inline-block;width:46%;"> Export Game </a>
+                <a class="a-link-button" href="https://bitburner.readthedocs.io/en/latest/changelog.html" target="_blank"> Changelog </a>
+                <a class="a-link-button" href="https://bitburner.wikia.com" target="_blank">Wiki</a>
+                <a class="a-link-button" href="https://www.reddit.com/r/bitburner" target="_blank">Subreddit</a>
+                <button id="save-game-link" class="a-link-button"> Save Game </button>
+                <button id="delete-game-link" class="a-link-button"> Delete Game </button>
+                <button id="export-game-link" class="a-link-button"> Export Game </button>
                 <input type="file" id="import-game-file-selector" name="file" />
-                <a id="import-game-link" class="a-link-button" style="display:inline-block;width:46%;"> Import Game </a>
-                <a id="debug-delete-scripts-link" class="a-link-button tooltip" style="display:block;width:46%;">
+                <button id="import-game-link" class="a-link-button"> Import Game </button>
+                <button id="copy-save-to-clipboard-link" class="std-button">
+                    Copy Save data to Clipboard
+                </button>
+                <button id="debug-delete-scripts-link" class="a-link-button tooltip">
                     (DEBUG) Delete Active Scripts
                     <span class="tooltiptextleft">
                         Debug option used to forcefully kill all active running scripts, in case there is a bug or some unexpected issue with the game. After
                         using this, save the game and then reload the page.
                     </span>
-                </a>
-                <a id="debug-soft-reset" class="a-link-button tooltip" style="display:block;width:46%;">
+                </button>
+                <button id="debug-soft-reset" class="a-link-button tooltip">
                     (DEBUG) Soft Reset
                     <span class="tooltiptextleft">
                         Perform a soft reset. Resets everything as if you had just purchased an Augmentation.
                     </span>
-                </a>
+                </button>
             </div>
         </div>
     </div>

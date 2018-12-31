@@ -169,13 +169,13 @@
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CodingContracts */ 42);
 /* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_CodingContracts__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Company/Company */ 74);
+/* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Company/Company */ 75);
 /* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Company_Company__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Company/Companies */ 18);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _Company_GetNextCompanyPosition__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Company/GetNextCompanyPosition */ 101);
+/* harmony import */ var _Company_GetNextCompanyPosition__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Company/GetNextCompanyPosition */ 102);
 /* harmony import */ var _Company_GetNextCompanyPosition__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Company_GetNextCompanyPosition__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Company/GetJobRequirementText */ 93);
+/* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Company/GetJobRequirementText */ 94);
 /* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Company/CompanyPositions */ 28);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__);
@@ -3109,12 +3109,15 @@ exports.CONSTANTS = {
      ** Slightly reduced the effect "Real Estate" has on the Production Multiplier for the
         Agriculture industry
 
+     * Added getOrders() Netscript function to the TIX API
+     *
      * Stock Market, Travel, and Corporation main menu links are now properly styled
      * Many pop-up/dialog boxes now support the 'Enter' and 'Esc' hotkeys. If you
        find a pop-up/dialog box that doesnt support this, let me know specifically which one
        ('Enter' for the default option, 'Esc' for cancelling and closing the pop-up box)
      * Added "brace_style = preserve_inline" configuration to Script Editor Beautifier
      * ServerProfiler.exe can now be purchased from the Dark Web
+     * Added an option to copy save data to clipboard
      `
 };
 
@@ -3427,21 +3430,21 @@ exports.generateRandomString = generateRandomString;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const numeral = __webpack_require__(/*! numeral */ 80);
-__webpack_require__(/*! numeral/locales/bg */ 284);
-__webpack_require__(/*! numeral/locales/cs */ 283);
-__webpack_require__(/*! numeral/locales/da-dk */ 282);
-__webpack_require__(/*! numeral/locales/de */ 281);
-__webpack_require__(/*! numeral/locales/en-au */ 280);
-__webpack_require__(/*! numeral/locales/en-gb */ 279);
-__webpack_require__(/*! numeral/locales/es */ 278);
-__webpack_require__(/*! numeral/locales/fr */ 277);
-__webpack_require__(/*! numeral/locales/hu */ 276);
-__webpack_require__(/*! numeral/locales/it */ 275);
-__webpack_require__(/*! numeral/locales/lv */ 274);
-__webpack_require__(/*! numeral/locales/no */ 273);
-__webpack_require__(/*! numeral/locales/pl */ 272);
-__webpack_require__(/*! numeral/locales/ru */ 271);
+const numeral = __webpack_require__(/*! numeral */ 82);
+__webpack_require__(/*! numeral/locales/bg */ 286);
+__webpack_require__(/*! numeral/locales/cs */ 285);
+__webpack_require__(/*! numeral/locales/da-dk */ 284);
+__webpack_require__(/*! numeral/locales/de */ 283);
+__webpack_require__(/*! numeral/locales/en-au */ 282);
+__webpack_require__(/*! numeral/locales/en-gb */ 281);
+__webpack_require__(/*! numeral/locales/es */ 280);
+__webpack_require__(/*! numeral/locales/fr */ 279);
+__webpack_require__(/*! numeral/locales/hu */ 278);
+__webpack_require__(/*! numeral/locales/it */ 277);
+__webpack_require__(/*! numeral/locales/lv */ 276);
+__webpack_require__(/*! numeral/locales/no */ 275);
+__webpack_require__(/*! numeral/locales/pl */ 274);
+__webpack_require__(/*! numeral/locales/ru */ 273);
 /* eslint-disable class-methods-use-this */
 class NumeralFormatter {
     constructor() {
@@ -3595,7 +3598,7 @@ exports.Locations = {
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 54);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/helpers/isValidIPAddress */ 89);
+/* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/helpers/isValidIPAddress */ 90);
 /* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/helpers/isString */ 40);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_11__);
@@ -3613,7 +3616,7 @@ exports.Locations = {
 
 
 
-var Promise = __webpack_require__(/*! bluebird */ 256);
+var Promise = __webpack_require__(/*! bluebird */ 258);
 
 Promise.config({
     warnings: false,
@@ -4579,7 +4582,7 @@ function scrollTerminalToBottom() {
 __webpack_require__.r(__webpack_exports__);
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Engine", function() { return Engine; });
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_GameOptions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/GameOptions */ 84);
+/* harmony import */ var _utils_GameOptions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/GameOptions */ 86);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 15);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 29);
@@ -4593,92 +4596,97 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/LogBox */ 79);
-/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./ActiveScriptsUI */ 68);
-/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Augmentations */ 21);
-/* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./BitNode */ 59);
-/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Bladeburner */ 31);
-/* harmony import */ var _CharacterOverview__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./CharacterOverview */ 131);
-/* harmony import */ var _CinematicText__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./CinematicText */ 100);
-/* harmony import */ var _CodingContractGenerator__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./CodingContractGenerator */ 99);
-/* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Company/CompanyPositions */ 28);
-/* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Company/Companies */ 18);
-/* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Corporation/Corporation */ 60);
-/* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./Constants */ 1);
-/* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var _DevMenu__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./DevMenu */ 118);
-/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./Faction/Factions */ 14);
-/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_23__);
-/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 46);
-/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./Fconf */ 47);
-/* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./Location */ 91);
-/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./Locations */ 5);
-/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_27__);
-/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./HacknetNode */ 67);
-/* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./InteractiveTutorial */ 34);
-/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./Literature */ 82);
-/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./Message */ 41);
-/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./Missions */ 55);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
-/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./NetscriptWorker */ 25);
-/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./Prestige */ 87);
-/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./Programs/Programs */ 24);
-/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_37___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_37__);
-/* harmony import */ var _Programs_ProgramHelpers__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./Programs/ProgramHelpers */ 94);
-/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./RedPill */ 58);
-/* harmony import */ var _SaveObject__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ./SaveObject */ 75);
-/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ./Script */ 30);
-/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ./Settings */ 19);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_43___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_43__);
-/* harmony import */ var _ui_setSettingsLabels__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! ./ui/setSettingsLabels */ 130);
-/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(/*! ./SourceFile */ 70);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
-/* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(/*! ./StockMarket */ 22);
-/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(/*! ./Terminal */ 51);
-/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 33);
-/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_49___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_49__);
-/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(/*! ./ui/navigationTracking */ 12);
-/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__);
-/* harmony import */ var normalize_css__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! normalize.css */ 219);
-/* harmony import */ var normalize_css__WEBPACK_IMPORTED_MODULE_51___default = /*#__PURE__*/__webpack_require__.n(normalize_css__WEBPACK_IMPORTED_MODULE_51__);
-/* harmony import */ var _css_styles_scss__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! ../css/styles.scss */ 186);
-/* harmony import */ var _css_styles_scss__WEBPACK_IMPORTED_MODULE_52___default = /*#__PURE__*/__webpack_require__.n(_css_styles_scss__WEBPACK_IMPORTED_MODULE_52__);
-/* harmony import */ var _css_tooltips_scss__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(/*! ../css/tooltips.scss */ 184);
-/* harmony import */ var _css_tooltips_scss__WEBPACK_IMPORTED_MODULE_53___default = /*#__PURE__*/__webpack_require__.n(_css_tooltips_scss__WEBPACK_IMPORTED_MODULE_53__);
-/* harmony import */ var _css_buttons_scss__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(/*! ../css/buttons.scss */ 182);
-/* harmony import */ var _css_buttons_scss__WEBPACK_IMPORTED_MODULE_54___default = /*#__PURE__*/__webpack_require__.n(_css_buttons_scss__WEBPACK_IMPORTED_MODULE_54__);
-/* harmony import */ var _css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(/*! ../css/mainmenu.scss */ 180);
-/* harmony import */ var _css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_55___default = /*#__PURE__*/__webpack_require__.n(_css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_55__);
-/* harmony import */ var _css_characteroverview_scss__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(/*! ../css/characteroverview.scss */ 178);
-/* harmony import */ var _css_characteroverview_scss__WEBPACK_IMPORTED_MODULE_56___default = /*#__PURE__*/__webpack_require__.n(_css_characteroverview_scss__WEBPACK_IMPORTED_MODULE_56__);
-/* harmony import */ var _css_terminal_scss__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(/*! ../css/terminal.scss */ 176);
-/* harmony import */ var _css_terminal_scss__WEBPACK_IMPORTED_MODULE_57___default = /*#__PURE__*/__webpack_require__.n(_css_terminal_scss__WEBPACK_IMPORTED_MODULE_57__);
-/* harmony import */ var _css_menupages_scss__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(/*! ../css/menupages.scss */ 174);
-/* harmony import */ var _css_menupages_scss__WEBPACK_IMPORTED_MODULE_58___default = /*#__PURE__*/__webpack_require__.n(_css_menupages_scss__WEBPACK_IMPORTED_MODULE_58__);
-/* harmony import */ var _css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(/*! ../css/workinprogress.scss */ 172);
-/* harmony import */ var _css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_59___default = /*#__PURE__*/__webpack_require__.n(_css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_59__);
-/* harmony import */ var _css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(/*! ../css/popupboxes.scss */ 170);
-/* harmony import */ var _css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_60___default = /*#__PURE__*/__webpack_require__.n(_css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_60__);
-/* harmony import */ var _css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(/*! ../css/interactivetutorial.scss */ 168);
-/* harmony import */ var _css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_61___default = /*#__PURE__*/__webpack_require__.n(_css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_61__);
-/* harmony import */ var _css_loader_scss__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(/*! ../css/loader.scss */ 166);
-/* harmony import */ var _css_loader_scss__WEBPACK_IMPORTED_MODULE_62___default = /*#__PURE__*/__webpack_require__.n(_css_loader_scss__WEBPACK_IMPORTED_MODULE_62__);
-/* harmony import */ var _css_missions_scss__WEBPACK_IMPORTED_MODULE_63__ = __webpack_require__(/*! ../css/missions.scss */ 164);
-/* harmony import */ var _css_missions_scss__WEBPACK_IMPORTED_MODULE_63___default = /*#__PURE__*/__webpack_require__.n(_css_missions_scss__WEBPACK_IMPORTED_MODULE_63__);
-/* harmony import */ var _css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_64__ = __webpack_require__(/*! ../css/companymanagement.scss */ 162);
-/* harmony import */ var _css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_64___default = /*#__PURE__*/__webpack_require__.n(_css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_64__);
-/* harmony import */ var _css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_65__ = __webpack_require__(/*! ../css/bladeburner.scss */ 160);
-/* harmony import */ var _css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_65___default = /*#__PURE__*/__webpack_require__.n(_css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_65__);
-/* harmony import */ var _css_gang_scss__WEBPACK_IMPORTED_MODULE_66__ = __webpack_require__(/*! ../css/gang.scss */ 158);
-/* harmony import */ var _css_gang_scss__WEBPACK_IMPORTED_MODULE_66___default = /*#__PURE__*/__webpack_require__.n(_css_gang_scss__WEBPACK_IMPORTED_MODULE_66__);
-/* harmony import */ var _css_treant_css__WEBPACK_IMPORTED_MODULE_67__ = __webpack_require__(/*! ../css/treant.css */ 156);
-/* harmony import */ var _css_treant_css__WEBPACK_IMPORTED_MODULE_67___default = /*#__PURE__*/__webpack_require__.n(_css_treant_css__WEBPACK_IMPORTED_MODULE_67__);
+/* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./ui/createStatusText */ 77);
+/* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_ui_createStatusText__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/LogBox */ 80);
+/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./ActiveScriptsUI */ 68);
+/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Augmentations */ 21);
+/* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./BitNode */ 59);
+/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Bladeburner */ 31);
+/* harmony import */ var _CharacterOverview__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./CharacterOverview */ 131);
+/* harmony import */ var _CinematicText__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./CinematicText */ 101);
+/* harmony import */ var _CodingContractGenerator__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./CodingContractGenerator */ 100);
+/* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Company/CompanyPositions */ 28);
+/* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_19__);
+/* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Company/Companies */ 18);
+/* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_20__);
+/* harmony import */ var _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./Corporation/Corporation */ 60);
+/* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./Constants */ 1);
+/* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_22__);
+/* harmony import */ var _DevMenu__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./DevMenu */ 118);
+/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./Faction/Factions */ 14);
+/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_24__);
+/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 46);
+/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./Fconf */ 47);
+/* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./Location */ 92);
+/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./Locations */ 5);
+/* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_28__);
+/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./HacknetNode */ 67);
+/* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./InteractiveTutorial */ 34);
+/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./Literature */ 84);
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./Message */ 41);
+/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./Missions */ 55);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
+/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./NetscriptWorker */ 25);
+/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./Player */ 0);
+/* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./Prestige */ 88);
+/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./Programs/Programs */ 24);
+/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_38___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_38__);
+/* harmony import */ var _Programs_ProgramHelpers__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./Programs/ProgramHelpers */ 95);
+/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ./RedPill */ 58);
+/* harmony import */ var _SaveObject__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ./SaveObject */ 74);
+/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ./Script */ 30);
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ./Server */ 11);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! ./Settings */ 19);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_44___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_44__);
+/* harmony import */ var _ui_setSettingsLabels__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(/*! ./ui/setSettingsLabels */ 130);
+/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(/*! ./SourceFile */ 70);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
+/* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(/*! ./StockMarket */ 22);
+/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(/*! ./Terminal */ 51);
+/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 33);
+/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_50___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_50__);
+/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! ./ui/navigationTracking */ 12);
+/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__);
+/* harmony import */ var normalize_css__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! normalize.css */ 221);
+/* harmony import */ var normalize_css__WEBPACK_IMPORTED_MODULE_52___default = /*#__PURE__*/__webpack_require__.n(normalize_css__WEBPACK_IMPORTED_MODULE_52__);
+/* harmony import */ var _css_styles_scss__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(/*! ../css/styles.scss */ 188);
+/* harmony import */ var _css_styles_scss__WEBPACK_IMPORTED_MODULE_53___default = /*#__PURE__*/__webpack_require__.n(_css_styles_scss__WEBPACK_IMPORTED_MODULE_53__);
+/* harmony import */ var _css_tooltips_scss__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(/*! ../css/tooltips.scss */ 186);
+/* harmony import */ var _css_tooltips_scss__WEBPACK_IMPORTED_MODULE_54___default = /*#__PURE__*/__webpack_require__.n(_css_tooltips_scss__WEBPACK_IMPORTED_MODULE_54__);
+/* harmony import */ var _css_buttons_scss__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(/*! ../css/buttons.scss */ 184);
+/* harmony import */ var _css_buttons_scss__WEBPACK_IMPORTED_MODULE_55___default = /*#__PURE__*/__webpack_require__.n(_css_buttons_scss__WEBPACK_IMPORTED_MODULE_55__);
+/* harmony import */ var _css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(/*! ../css/mainmenu.scss */ 182);
+/* harmony import */ var _css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_56___default = /*#__PURE__*/__webpack_require__.n(_css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_56__);
+/* harmony import */ var _css_characteroverview_scss__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(/*! ../css/characteroverview.scss */ 180);
+/* harmony import */ var _css_characteroverview_scss__WEBPACK_IMPORTED_MODULE_57___default = /*#__PURE__*/__webpack_require__.n(_css_characteroverview_scss__WEBPACK_IMPORTED_MODULE_57__);
+/* harmony import */ var _css_terminal_scss__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(/*! ../css/terminal.scss */ 178);
+/* harmony import */ var _css_terminal_scss__WEBPACK_IMPORTED_MODULE_58___default = /*#__PURE__*/__webpack_require__.n(_css_terminal_scss__WEBPACK_IMPORTED_MODULE_58__);
+/* harmony import */ var _css_menupages_scss__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(/*! ../css/menupages.scss */ 176);
+/* harmony import */ var _css_menupages_scss__WEBPACK_IMPORTED_MODULE_59___default = /*#__PURE__*/__webpack_require__.n(_css_menupages_scss__WEBPACK_IMPORTED_MODULE_59__);
+/* harmony import */ var _css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(/*! ../css/workinprogress.scss */ 174);
+/* harmony import */ var _css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_60___default = /*#__PURE__*/__webpack_require__.n(_css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_60__);
+/* harmony import */ var _css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(/*! ../css/popupboxes.scss */ 172);
+/* harmony import */ var _css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_61___default = /*#__PURE__*/__webpack_require__.n(_css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_61__);
+/* harmony import */ var _css_gameoptions_scss__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(/*! ../css/gameoptions.scss */ 170);
+/* harmony import */ var _css_gameoptions_scss__WEBPACK_IMPORTED_MODULE_62___default = /*#__PURE__*/__webpack_require__.n(_css_gameoptions_scss__WEBPACK_IMPORTED_MODULE_62__);
+/* harmony import */ var _css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_63__ = __webpack_require__(/*! ../css/interactivetutorial.scss */ 168);
+/* harmony import */ var _css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_63___default = /*#__PURE__*/__webpack_require__.n(_css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_63__);
+/* harmony import */ var _css_loader_scss__WEBPACK_IMPORTED_MODULE_64__ = __webpack_require__(/*! ../css/loader.scss */ 166);
+/* harmony import */ var _css_loader_scss__WEBPACK_IMPORTED_MODULE_64___default = /*#__PURE__*/__webpack_require__.n(_css_loader_scss__WEBPACK_IMPORTED_MODULE_64__);
+/* harmony import */ var _css_missions_scss__WEBPACK_IMPORTED_MODULE_65__ = __webpack_require__(/*! ../css/missions.scss */ 164);
+/* harmony import */ var _css_missions_scss__WEBPACK_IMPORTED_MODULE_65___default = /*#__PURE__*/__webpack_require__.n(_css_missions_scss__WEBPACK_IMPORTED_MODULE_65__);
+/* harmony import */ var _css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_66__ = __webpack_require__(/*! ../css/companymanagement.scss */ 162);
+/* harmony import */ var _css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_66___default = /*#__PURE__*/__webpack_require__.n(_css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_66__);
+/* harmony import */ var _css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_67__ = __webpack_require__(/*! ../css/bladeburner.scss */ 160);
+/* harmony import */ var _css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_67___default = /*#__PURE__*/__webpack_require__.n(_css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_67__);
+/* harmony import */ var _css_gang_scss__WEBPACK_IMPORTED_MODULE_68__ = __webpack_require__(/*! ../css/gang.scss */ 158);
+/* harmony import */ var _css_gang_scss__WEBPACK_IMPORTED_MODULE_68___default = /*#__PURE__*/__webpack_require__.n(_css_gang_scss__WEBPACK_IMPORTED_MODULE_68__);
+/* harmony import */ var _css_treant_css__WEBPACK_IMPORTED_MODULE_69__ = __webpack_require__(/*! ../css/treant.css */ 156);
+/* harmony import */ var _css_treant_css__WEBPACK_IMPORTED_MODULE_69___default = /*#__PURE__*/__webpack_require__.n(_css_treant_css__WEBPACK_IMPORTED_MODULE_69__);
+
 
 
 
@@ -4755,6 +4763,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
 /* Shortcuts to navigate through the game
  *  Alt-t - Terminal
  *  Alt-c - Character
@@ -4771,52 +4781,52 @@ __webpack_require__.r(__webpack_exports__);
  *  Alt-o - Options
  */
 $(document).keydown(function(e) {
-    if (_Settings__WEBPACK_IMPORTED_MODULE_43__["Settings"].DisableHotkeys === true) {return;}
-    if (!_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].isWorking && !_RedPill__WEBPACK_IMPORTED_MODULE_39__[/* redPillFlag */ "b"] && !_Missions__WEBPACK_IMPORTED_MODULE_32__[/* inMission */ "c"] && !_CinematicText__WEBPACK_IMPORTED_MODULE_16__[/* cinematicTextFlag */ "a"]) {
+    if (_Settings__WEBPACK_IMPORTED_MODULE_44__["Settings"].DisableHotkeys === true) {return;}
+    if (!_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].isWorking && !_RedPill__WEBPACK_IMPORTED_MODULE_40__[/* redPillFlag */ "b"] && !_Missions__WEBPACK_IMPORTED_MODULE_33__[/* inMission */ "c"] && !_CinematicText__WEBPACK_IMPORTED_MODULE_17__[/* cinematicTextFlag */ "a"]) {
         if (e.keyCode == 84 && e.altKey) {
             e.preventDefault();
             Engine.loadTerminalContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_49__["KEY"].C && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_50__["KEY"].C && e.altKey) {
             e.preventDefault();
             Engine.loadCharacterContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_49__["KEY"].E && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_50__["KEY"].E && e.altKey) {
             e.preventDefault();
             Engine.loadScriptEditorContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_49__["KEY"].S && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_50__["KEY"].S && e.altKey) {
             e.preventDefault();
             Engine.loadActiveScriptsContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_49__["KEY"].H && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_50__["KEY"].H && e.altKey) {
             e.preventDefault();
             Engine.loadHacknetNodesContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_49__["KEY"].W && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_50__["KEY"].W && e.altKey) {
             e.preventDefault();
             Engine.loadWorldContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_49__["KEY"].J && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_50__["KEY"].J && e.altKey) {
             e.preventDefault();
             Engine.loadJobContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_49__["KEY"].R && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_50__["KEY"].R && e.altKey) {
             e.preventDefault();
             Engine.loadTravelContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_49__["KEY"].P && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_50__["KEY"].P && e.altKey) {
             e.preventDefault();
             Engine.loadCreateProgramContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_49__["KEY"].F && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_50__["KEY"].F && e.altKey) {
             //Overriden by Fconf
-            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].Terminal) && _Fconf__WEBPACK_IMPORTED_MODULE_25__[/* FconfSettings */ "a"].ENABLE_BASH_HOTKEYS) {
+            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["Page"].Terminal) && _Fconf__WEBPACK_IMPORTED_MODULE_26__[/* FconfSettings */ "a"].ENABLE_BASH_HOTKEYS) {
                 return;
             }
             e.preventDefault();
             Engine.loadFactionsContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_49__["KEY"].A && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_50__["KEY"].A && e.altKey) {
             e.preventDefault();
             Engine.loadAugmentationsContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_49__["KEY"].U && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_50__["KEY"].U && e.altKey) {
             e.preventDefault();
             Engine.loadTutorialContent();
         }
     }
 
-    if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_49__["KEY"].O && e.altKey) {
+    if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_50__["KEY"].O && e.altKey) {
         e.preventDefault();
         Object(_utils_GameOptions__WEBPACK_IMPORTED_MODULE_1__[/* gameOptionsBoxOpen */ "b"])();
     }
@@ -4825,7 +4835,7 @@ $(document).keydown(function(e) {
 const Engine = {
     version: "",
     Debug: true,
-    overview: new _CharacterOverview__WEBPACK_IMPORTED_MODULE_15__[/* CharacterOverview */ "a"](),
+    overview: new _CharacterOverview__WEBPACK_IMPORTED_MODULE_16__[/* CharacterOverview */ "a"](),
 
     //Clickable objects
     Clickables: {
@@ -4905,7 +4915,7 @@ const Engine = {
     loadTerminalContent: function() {
         Engine.hideAllContent();
         Engine.Display.terminalContent.style.display = "block";
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].Terminal);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["Page"].Terminal);
         document.getElementById("terminal-menu-link").classList.add("active");
     },
 
@@ -4913,7 +4923,7 @@ const Engine = {
         Engine.hideAllContent();
         Engine.Display.characterContent.style.display = "block";
         Engine.displayCharacterInfo();
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].CharacterInfo);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["Page"].CharacterInfo);
         document.getElementById("stats-menu-link").classList.add("active");
     },
 
@@ -4926,24 +4936,24 @@ const Engine = {
             editor.setValue(code);
         }
         editor.focus();
-        Object(_Script__WEBPACK_IMPORTED_MODULE_41__[/* updateScriptEditorContent */ "h"])();
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].ScriptEditor);
+        Object(_Script__WEBPACK_IMPORTED_MODULE_42__[/* updateScriptEditorContent */ "h"])();
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["Page"].ScriptEditor);
         document.getElementById("create-script-menu-link").classList.add("active");
     },
 
     loadActiveScriptsContent: function() {
         Engine.hideAllContent();
         Engine.Display.activeScriptsContent.style.display = "block";
-        Object(_ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_11__[/* updateActiveScriptsItems */ "c"])();
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].ActiveScripts);
+        Object(_ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_12__[/* updateActiveScriptsItems */ "c"])();
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["Page"].ActiveScripts);
         document.getElementById("active-scripts-menu-link").classList.add("active");
     },
 
     loadHacknetNodesContent: function() {
         Engine.hideAllContent();
         Engine.Display.hacknetNodesContent.style.display = "block";
-        Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_28__[/* displayHacknetNodesContent */ "b"])();
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].HacknetNodes);
+        Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_29__[/* displayHacknetNodesContent */ "b"])();
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["Page"].HacknetNodes);
         document.getElementById("hacknet-nodes-menu-link").classList.add("active");
     },
 
@@ -4951,15 +4961,15 @@ const Engine = {
         Engine.hideAllContent();
         Engine.Display.worldContent.style.display = "block";
         Engine.displayWorldInfo();
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].World);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["Page"].World);
         document.getElementById("city-menu-link").classList.add("active");
     },
 
     loadCreateProgramContent: function() {
         Engine.hideAllContent();
         Engine.Display.createProgramContent.style.display = "block";
-        Object(_Programs_ProgramHelpers__WEBPACK_IMPORTED_MODULE_38__[/* displayCreateProgramContent */ "a"])();
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].CreateProgram);
+        Object(_Programs_ProgramHelpers__WEBPACK_IMPORTED_MODULE_39__[/* displayCreateProgramContent */ "a"])();
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["Page"].CreateProgram);
         document.getElementById("create-program-menu-link").classList.add("active");
     },
 
@@ -4967,21 +4977,21 @@ const Engine = {
         Engine.hideAllContent();
         Engine.Display.factionsContent.style.display = "block";
         Engine.displayFactionsInfo();
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].Factions);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["Page"].Factions);
         document.getElementById("factions-menu-link").classList.add("active");
     },
 
     loadFactionContent: function() {
         Engine.hideAllContent();
         Engine.Display.factionContent.style.display = "block";
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].Faction);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["Page"].Faction);
     },
 
     loadAugmentationsContent: function() {
         Engine.hideAllContent();
         Engine.Display.augmentationsContent.style.display = "block";
-        Object(_Augmentations__WEBPACK_IMPORTED_MODULE_12__[/* displayAugmentationsContent */ "g"])();
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].Augmentations);
+        Object(_Augmentations__WEBPACK_IMPORTED_MODULE_13__[/* displayAugmentationsContent */ "g"])();
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["Page"].Augmentations);
         document.getElementById("augmentations-menu-link").classList.add("active");
     },
 
@@ -4989,14 +4999,14 @@ const Engine = {
         Engine.hideAllContent();
         Engine.Display.tutorialContent.style.display = "block";
         Engine.displayTutorialContent();
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].Tutorial);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["Page"].Tutorial);
         document.getElementById("tutorial-menu-link").classList.add("active");
     },
 
     loadDevMenuContent: function() {
         Engine.hideAllContent();
-        Object(_DevMenu__WEBPACK_IMPORTED_MODULE_22__[/* createDevMenu */ "b"])();
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].DevMenu);
+        Object(_DevMenu__WEBPACK_IMPORTED_MODULE_23__[/* createDevMenu */ "b"])();
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["Page"].DevMenu);
         document.getElementById("dev-menu-link").classList.add("active");
     },
 
@@ -5004,34 +5014,34 @@ const Engine = {
         Engine.hideAllContent();
         Engine.Display.locationContent.style.display = "block";
         try {
-            Object(_Location__WEBPACK_IMPORTED_MODULE_26__[/* displayLocationContent */ "a"])();
+            Object(_Location__WEBPACK_IMPORTED_MODULE_27__[/* displayLocationContent */ "a"])();
         } catch(e) {
             Object(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_6__[/* exceptionAlert */ "a"])(e);
             console.error(e);
         }
 
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].Location);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["Page"].Location);
     },
 
     loadTravelContent: function() {
-        switch(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].city) {
-            case _Locations__WEBPACK_IMPORTED_MODULE_27__["Locations"].Aevum:
-                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_27__["Locations"].AevumTravelAgency;
+        switch(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].city) {
+            case _Locations__WEBPACK_IMPORTED_MODULE_28__["Locations"].Aevum:
+                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_28__["Locations"].AevumTravelAgency;
                 break;
-            case _Locations__WEBPACK_IMPORTED_MODULE_27__["Locations"].Chongqing:
-                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_27__["Locations"].ChongqingTravelAgency;
+            case _Locations__WEBPACK_IMPORTED_MODULE_28__["Locations"].Chongqing:
+                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_28__["Locations"].ChongqingTravelAgency;
                 break;
-            case _Locations__WEBPACK_IMPORTED_MODULE_27__["Locations"].Sector12:
-                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_27__["Locations"].Sector12TravelAgency;
+            case _Locations__WEBPACK_IMPORTED_MODULE_28__["Locations"].Sector12:
+                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_28__["Locations"].Sector12TravelAgency;
                 break;
-            case _Locations__WEBPACK_IMPORTED_MODULE_27__["Locations"].NewTokyo:
-                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_27__["Locations"].NewTokyoTravelAgency;
+            case _Locations__WEBPACK_IMPORTED_MODULE_28__["Locations"].NewTokyo:
+                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_28__["Locations"].NewTokyoTravelAgency;
                 break;
-            case _Locations__WEBPACK_IMPORTED_MODULE_27__["Locations"].Ishima:
-                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_27__["Locations"].IshimaTravelAgency;
+            case _Locations__WEBPACK_IMPORTED_MODULE_28__["Locations"].Ishima:
+                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_28__["Locations"].IshimaTravelAgency;
                 break;
-            case _Locations__WEBPACK_IMPORTED_MODULE_27__["Locations"].Volhaven:
-                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_27__["Locations"].VolhavenTravelAgency;
+            case _Locations__WEBPACK_IMPORTED_MODULE_28__["Locations"].Volhaven:
+                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_28__["Locations"].VolhavenTravelAgency;
                 break;
             default:
                 Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_0__["dialogBoxCreate"])("ERROR: Invalid city. This is a bug please contact game dev");
@@ -5041,12 +5051,12 @@ const Engine = {
     },
 
     loadJobContent: function() {
-        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].companyName == "") {
+        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].companyName == "") {
             Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_0__["dialogBoxCreate"])("You do not currently have a job! You can visit various companies " +
                             "in the city and try to find a job.");
             return;
         }
-        _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].location = _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].companyName;
+        _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].location = _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].companyName;
         Engine.loadLocationContent();
     },
 
@@ -5056,7 +5066,7 @@ const Engine = {
         //mainMenu.style.visibility = "hidden";
         mainMenu.style.visibility = "hidden";
         Engine.Display.workInProgressContent.style.display = "block";
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].WorkInProgress);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["Page"].WorkInProgress);
     },
 
     loadRedPillContent: function() {
@@ -5064,7 +5074,7 @@ const Engine = {
         var mainMenu = document.getElementById("mainmenu-container");
         mainMenu.style.visibility = "hidden";
         Engine.Display.redPillContent.style.display = "block";
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].RedPill);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["Page"].RedPill);
     },
 
     loadCinematicTextContent: function() {
@@ -5072,30 +5082,30 @@ const Engine = {
         var mainMenu = document.getElementById("mainmenu-container");
         mainMenu.style.visibility = "hidden";
         Engine.Display.cinematicTextContent.style.display = "block";
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].CinematicText);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["Page"].CinematicText);
     },
 
     loadInfiltrationContent: function() {
         Engine.hideAllContent();
         Engine.Display.infiltrationContent.style.display = "block";
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].Infiltration);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["Page"].Infiltration);
     },
 
     loadStockMarketContent: function() {
         Engine.hideAllContent();
         Engine.Display.stockMarketContent.style.display = "block";
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].StockMarket);
-        Object(_StockMarket__WEBPACK_IMPORTED_MODULE_47__[/* displayStockMarketContent */ "g"])();
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["Page"].StockMarket);
+        Object(_StockMarket__WEBPACK_IMPORTED_MODULE_48__[/* displayStockMarketContent */ "g"])();
     },
 
     loadGangContent: function() {
         Engine.hideAllContent();
-        if (document.getElementById("gang-container") || _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].inGang()) {
-            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].gang.displayGangContent(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"]);
-            _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].Gang);
+        if (document.getElementById("gang-container") || _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].inGang()) {
+            _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].gang.displayGangContent(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"]);
+            _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["Page"].Gang);
         } else {
             Engine.loadTerminalContent();
-            _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].Terminal);
+            _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["Page"].Terminal);
         }
     },
 
@@ -5104,24 +5114,24 @@ const Engine = {
         document.getElementById("mainmenu-container").style.visibility = "hidden";
         document.getElementById("character-overview-wrapper").style.visibility = "hidden";
         Engine.Display.missionContent.style.display = "block";
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].Mission);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["Page"].Mission);
     },
 
     loadCorporationContent: function() {
-        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"]) {
+        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_21__[/* Corporation */ "a"]) {
             Engine.hideAllContent();
             document.getElementById("character-overview-wrapper").style.visibility = "hidden";
-            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation.createUI();
-            _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].Corporation);
+            _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation.createUI();
+            _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["Page"].Corporation);
         }
     },
 
     loadBladeburnerContent: function() {
-        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"]) {
+        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_15__[/* Bladeburner */ "a"]) {
             try {
                 Engine.hideAllContent();
-                _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].Bladeburner);
-                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bladeburner.createContent();
+                _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["Page"].Bladeburner);
+                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bladeburner.createContent();
             } catch(e) {
                 Object(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_6__[/* exceptionAlert */ "a"])(e);
             }
@@ -5153,15 +5163,15 @@ const Engine = {
             document.getElementById("gang-container").style.display = "none";
         }
 
-        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].inGang()) {
-            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].gang.clearUI();
+        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].inGang()) {
+            _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].gang.clearUI();
         }
-        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"]) {
-            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation.clearUI();
+        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_21__[/* Corporation */ "a"]) {
+            _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation.clearUI();
         }
 
-        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"]) {
-            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bladeburner.clearContent();
+        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_15__[/* Bladeburner */ "a"]) {
+            _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bladeburner.clearContent();
         }
 
         //Location lists
@@ -5192,7 +5202,7 @@ const Engine = {
         document.getElementById("gang-menu-link").classList.remove("active");
 
         // Close dev menu
-        Object(_DevMenu__WEBPACK_IMPORTED_MODULE_22__[/* closeDevMenu */ "a"])();
+        Object(_DevMenu__WEBPACK_IMPORTED_MODULE_23__[/* closeDevMenu */ "a"])();
     },
 
     displayCharacterOverviewInfo: function() {
@@ -5200,7 +5210,7 @@ const Engine = {
 
         const save = document.getElementById("character-overview-save-button");
         const flashClass = "flashing-button";
-        if(!_Settings__WEBPACK_IMPORTED_MODULE_43__["Settings"].AutosaveInterval) {
+        if(!_Settings__WEBPACK_IMPORTED_MODULE_44__["Settings"].AutosaveInterval) {
             save.classList.add(flashClass);
         } else {
             save.classList.remove(flashClass);
@@ -5212,89 +5222,89 @@ const Engine = {
         Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_3__["removeChildrenFromElement"])(Engine.Display.characterInfo);
 
         var companyPosition = "";
-        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].companyPosition !== "") {
-            companyPosition = _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].companyPosition;
+        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].companyPosition !== "") {
+            companyPosition = _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].companyPosition;
         }
 
         var intText = "";
-        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].intelligence > 0) {
-            intText = 'Intelligence:  ' + (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].intelligence).toLocaleString() + '<br>';
+        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].intelligence > 0) {
+            intText = 'Intelligence:  ' + (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].intelligence).toLocaleString() + '<br>';
         }
 
         let bitNodeTimeText = "";
-        if(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].sourceFiles.length > 0) {
-            bitNodeTimeText = 'Time played since last Bitnode destroyed: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["convertTimeMsToTimeElapsedString"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastBitnode) + '<br>';
+        if(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].sourceFiles.length > 0) {
+            bitNodeTimeText = 'Time played since last Bitnode destroyed: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["convertTimeMsToTimeElapsedString"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].playtimeSinceLastBitnode) + '<br>';
         }
 
         Engine.Display.characterInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("pre", {
             innerHTML:
             '<b>General</b><br><br>' +
-            'Current City: ' + _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].city + '<br><br>' +
-            'Employer: ' + _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].companyName + '<br>' +
+            'Current City: ' + _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].city + '<br><br>' +
+            'Employer: ' + _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].companyName + '<br>' +
             'Job Title: ' + companyPosition + '<br><br>' +
-            'Money: $' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].money.toNumber(), 2) + '<br><br><br>' +
+            'Money: $' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].money.toNumber(), 2) + '<br><br><br>' +
             '<b>Stats</b><br><br>' +
-            'Hacking Level: ' + (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacking_skill).toLocaleString() +
-                            ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacking_exp, '(0.000a)') + ' experience)<br>' +
-            'Strength:      ' + (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].strength).toLocaleString() +
-                       ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].strength_exp, '(0.000a)') + ' experience)<br>' +
-            'Defense:       ' + (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].defense).toLocaleString() +
-                      ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].defense_exp, '(0.000a)') + ' experience)<br>' +
-            'Dexterity:     ' + (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].dexterity).toLocaleString() +
-                       ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].dexterity_exp, '(0.000a)') + ' experience)<br>' +
-            'Agility:       ' + (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].agility).toLocaleString() +
-                      ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].agility_exp, '(0.000a)') + ' experience)<br>' +
-            'Charisma:      ' + (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].charisma).toLocaleString() +
-                       ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].charisma_exp, '(0.000a)') + ' experience)<br>' +
+            'Hacking Level: ' + (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hacking_skill).toLocaleString() +
+                            ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hacking_exp, '(0.000a)') + ' experience)<br>' +
+            'Strength:      ' + (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].strength).toLocaleString() +
+                       ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].strength_exp, '(0.000a)') + ' experience)<br>' +
+            'Defense:       ' + (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].defense).toLocaleString() +
+                      ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].defense_exp, '(0.000a)') + ' experience)<br>' +
+            'Dexterity:     ' + (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].dexterity).toLocaleString() +
+                       ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].dexterity_exp, '(0.000a)') + ' experience)<br>' +
+            'Agility:       ' + (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].agility).toLocaleString() +
+                      ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].agility_exp, '(0.000a)') + ' experience)<br>' +
+            'Charisma:      ' + (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].charisma).toLocaleString() +
+                       ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].charisma_exp, '(0.000a)') + ' experience)<br>' +
             intText + '<br><br>' +
             '<b>Multipliers</b><br><br>' +
-            'Hacking Chance multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacking_chance_mult * 100, 2) + '%<br>' +
-            'Hacking Speed multiplier:  ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacking_speed_mult * 100, 2) + '%<br>' +
-            'Hacking Money multiplier:  ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacking_money_mult * 100, 2) + '%<br>' +
-            'Hacking Growth multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacking_grow_mult * 100, 2) + '%<br><br>' +
-            'Hacking Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacking_mult * 100, 2) + '%<br>' +
-            'Hacking Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacking_exp_mult * 100, 2) + '%<br><br>' +
-            'Strength Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].strength_mult * 100, 2) + '%<br>' +
-            'Strength Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].strength_exp_mult * 100, 2) + '%<br><br>' +
-            'Defense Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].defense_mult * 100, 2) + '%<br>' +
-            'Defense Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].defense_exp_mult * 100, 2) + '%<br><br>' +
-            'Dexterity Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].dexterity_mult * 100, 2) + '%<br>' +
-            'Dexterity Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].dexterity_exp_mult * 100, 2) + '%<br><br>' +
-            'Agility Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].agility_mult * 100, 2) + '%<br>' +
-            'Agility Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].agility_exp_mult * 100, 2) + '%<br><br>' +
-            'Charisma Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].charisma_mult * 100, 2) + '%<br>' +
-            'Charisma Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].charisma_exp_mult * 100, 2) + '%<br><br>' +
-            'Hacknet Node production multiplier:         ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacknet_node_money_mult * 100, 2) + '%<br>' +
-            'Hacknet Node purchase cost multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacknet_node_purchase_cost_mult * 100, 2) + '%<br>' +
-            'Hacknet Node RAM upgrade cost multiplier:   ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacknet_node_ram_cost_mult * 100, 2) + '%<br>' +
-            'Hacknet Node Core purchase cost multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacknet_node_core_cost_mult * 100, 2) + '%<br>' +
-            'Hacknet Node level upgrade cost multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacknet_node_level_cost_mult * 100, 2) + '%<br><br>' +
-            'Company reputation gain multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].company_rep_mult * 100, 2) + '%<br>' +
-            'Faction reputation gain multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].faction_rep_mult * 100, 2) + '%<br>' +
-            'Salary multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].work_money_mult * 100, 2) + '%<br>' +
-            'Crime success multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].crime_success_mult * 100, 2) + '%<br>' +
-            'Crime money multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].crime_money_mult * 100, 2) + '%<br><br><br>' +
+            'Hacking Chance multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hacking_chance_mult * 100, 2) + '%<br>' +
+            'Hacking Speed multiplier:  ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hacking_speed_mult * 100, 2) + '%<br>' +
+            'Hacking Money multiplier:  ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hacking_money_mult * 100, 2) + '%<br>' +
+            'Hacking Growth multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hacking_grow_mult * 100, 2) + '%<br><br>' +
+            'Hacking Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hacking_mult * 100, 2) + '%<br>' +
+            'Hacking Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hacking_exp_mult * 100, 2) + '%<br><br>' +
+            'Strength Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].strength_mult * 100, 2) + '%<br>' +
+            'Strength Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].strength_exp_mult * 100, 2) + '%<br><br>' +
+            'Defense Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].defense_mult * 100, 2) + '%<br>' +
+            'Defense Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].defense_exp_mult * 100, 2) + '%<br><br>' +
+            'Dexterity Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].dexterity_mult * 100, 2) + '%<br>' +
+            'Dexterity Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].dexterity_exp_mult * 100, 2) + '%<br><br>' +
+            'Agility Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].agility_mult * 100, 2) + '%<br>' +
+            'Agility Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].agility_exp_mult * 100, 2) + '%<br><br>' +
+            'Charisma Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].charisma_mult * 100, 2) + '%<br>' +
+            'Charisma Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].charisma_exp_mult * 100, 2) + '%<br><br>' +
+            'Hacknet Node production multiplier:         ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hacknet_node_money_mult * 100, 2) + '%<br>' +
+            'Hacknet Node purchase cost multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hacknet_node_purchase_cost_mult * 100, 2) + '%<br>' +
+            'Hacknet Node RAM upgrade cost multiplier:   ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hacknet_node_ram_cost_mult * 100, 2) + '%<br>' +
+            'Hacknet Node Core purchase cost multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hacknet_node_core_cost_mult * 100, 2) + '%<br>' +
+            'Hacknet Node level upgrade cost multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hacknet_node_level_cost_mult * 100, 2) + '%<br><br>' +
+            'Company reputation gain multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].company_rep_mult * 100, 2) + '%<br>' +
+            'Faction reputation gain multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].faction_rep_mult * 100, 2) + '%<br>' +
+            'Salary multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].work_money_mult * 100, 2) + '%<br>' +
+            'Crime success multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].crime_success_mult * 100, 2) + '%<br>' +
+            'Crime money multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].crime_money_mult * 100, 2) + '%<br><br><br>' +
             '<b>Misc</b><br><br>' +
-            'Servers owned:       ' + _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].purchasedServers.length + '<br>' +
-            'Hacknet Nodes owned: ' + _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hacknetNodes.length + '<br>' +
-            'Augmentations installed: ' + _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].augmentations.length + '<br>' +
-            'Time played since last Augmentation: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["convertTimeMsToTimeElapsedString"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastAug) + '<br>' +
+            'Servers owned:       ' + _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].purchasedServers.length + '<br>' +
+            'Hacknet Nodes owned: ' + _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hacknetNodes.length + '<br>' +
+            'Augmentations installed: ' + _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].augmentations.length + '<br>' +
+            'Time played since last Augmentation: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["convertTimeMsToTimeElapsedString"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].playtimeSinceLastAug) + '<br>' +
             bitNodeTimeText +
-            'Time played: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["convertTimeMsToTimeElapsedString"])(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].totalPlaytime),
+            'Time played: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["convertTimeMsToTimeElapsedString"])(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].totalPlaytime),
         }));
 
-        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].sourceFiles.length !== 0) {
-            var index = "BitNode" + _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bitNodeN;
+        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].sourceFiles.length !== 0) {
+            var index = "BitNode" + _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bitNodeN;
 
             Engine.Display.characterInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("p", {
                 width:"60%",
                 innerHTML:
-                    "<br>Current BitNode: " + _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bitNodeN + " (" + _BitNode__WEBPACK_IMPORTED_MODULE_13__[/* BitNodes */ "a"][index].name + ")<br><br>",
+                    "<br>Current BitNode: " + _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bitNodeN + " (" + _BitNode__WEBPACK_IMPORTED_MODULE_14__[/* BitNodes */ "a"][index].name + ")<br><br>",
             }));
 
             Engine.Display.characterInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("p", {
                 width:"60%", fontSize: "13px", marginLeft:"4%",
-                innerHTML:_BitNode__WEBPACK_IMPORTED_MODULE_13__[/* BitNodes */ "a"][index].info,
+                innerHTML:_BitNode__WEBPACK_IMPORTED_MODULE_14__[/* BitNodes */ "a"][index].info,
             }))
         }
     },
@@ -5315,32 +5325,32 @@ const Engine = {
         Engine.ishimaLocationsList.style.display = "none";
         Engine.volhavenLocationsList.style.display = "none";
 
-        document.getElementById("world-city-name").innerHTML = _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].city;
+        document.getElementById("world-city-name").innerHTML = _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].city;
         var cityDesc = document.getElementById("world-city-desc"); //TODO
-        switch(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].city) {
-            case _Locations__WEBPACK_IMPORTED_MODULE_27__["Locations"].Aevum:
+        switch(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].city) {
+            case _Locations__WEBPACK_IMPORTED_MODULE_28__["Locations"].Aevum:
                 Engine.aevumLocationsList.style.display = "inline";
                 break;
-            case _Locations__WEBPACK_IMPORTED_MODULE_27__["Locations"].Chongqing:
+            case _Locations__WEBPACK_IMPORTED_MODULE_28__["Locations"].Chongqing:
                 Engine.chongqingLocationsList.style.display = "inline";
                 break;
-            case _Locations__WEBPACK_IMPORTED_MODULE_27__["Locations"].Sector12:
+            case _Locations__WEBPACK_IMPORTED_MODULE_28__["Locations"].Sector12:
                 Engine.sector12LocationsList.style.display = "inline";
 
                 //City hall only in BitNode-3/with Source-File 3
-                if ((_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bitNodeN === 3 || _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_33__[/* hasCorporationSF */ "e"]) && _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bitNodeN !== 8)  {
+                if ((_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bitNodeN === 3 || _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_34__[/* hasCorporationSF */ "e"]) && _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bitNodeN !== 8)  {
                     document.getElementById("sector12-cityhall-li").style.display = "block";
                 } else {
                     document.getElementById("sector12-cityhall-li").style.display = "none";
                 }
                 break;
-            case _Locations__WEBPACK_IMPORTED_MODULE_27__["Locations"].NewTokyo:
+            case _Locations__WEBPACK_IMPORTED_MODULE_28__["Locations"].NewTokyo:
                 Engine.newTokyoLocationsList.style.display = "inline";
                 break;
-            case _Locations__WEBPACK_IMPORTED_MODULE_27__["Locations"].Ishima:
+            case _Locations__WEBPACK_IMPORTED_MODULE_28__["Locations"].Ishima:
                 Engine.ishimaLocationsList.style.display = "inline";
                 break;
-            case _Locations__WEBPACK_IMPORTED_MODULE_27__["Locations"].Volhaven:
+            case _Locations__WEBPACK_IMPORTED_MODULE_28__["Locations"].Volhaven:
                 Engine.volhavenLocationsList.style.display = "inline";
                 break;
             default:
@@ -5359,17 +5369,17 @@ const Engine = {
         li.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("a", {
             innerText:"World Stock Exchange", class:"a-link-button",
             clickListener:()=>{
-                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_27__["Locations"].WorldStockExchange;
+                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_28__["Locations"].WorldStockExchange;
                 Engine.loadStockMarketContent();
                 return false;
             }
         }));
         genericLocationsList.appendChild(li);
 
-        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"] && document.getElementById("location-corporation-button") == null) {
+        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_21__[/* Corporation */ "a"] && document.getElementById("location-corporation-button") == null) {
             var li = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("li");
             li.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("a", {
-                innerText:_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation.name, id:"location-corporation-button",
+                innerText:_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation.name, id:"location-corporation-button",
                 class:"a-link-button",
                 clickListener:()=>{
                     Engine.loadCorporationContent();
@@ -5379,7 +5389,7 @@ const Engine = {
             genericLocationsList.appendChild(li);
         }
 
-        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"]) {
+        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_15__[/* Bladeburner */ "a"]) {
             var li = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("li");
             li.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("a", {
                 innerText:"Bladeburner Headquarters", class:"a-link-button",
@@ -5406,16 +5416,16 @@ const Engine = {
         Engine.Display.factionsContent.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("br"));
 
         //Add a button for each faction you are a member of
-        for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].factions.length; ++i) {
+        for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].factions.length; ++i) {
             (function () {
-                var factionName = _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].factions[i];
+                var factionName = _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].factions[i];
 
                 factionsList.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("a", {
                     class:"a-link-button", innerText:factionName, padding:"4px", margin:"4px",
                     display:"inline-block",
                     clickListener:()=>{
                         Engine.loadFactionContent();
-                        Object(_Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_24__[/* displayFactionContent */ "a"])(factionName);
+                        Object(_Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_25__[/* displayFactionContent */ "a"])(factionName);
                         return false;
                     }
                 }));
@@ -5438,9 +5448,9 @@ const Engine = {
         var invitationsList = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("ul");
 
         //Add a button to accept for each faction you have invitiations for
-        for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].factionInvitations.length; ++i) {
+        for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].factionInvitations.length; ++i) {
             (function () {
-                var factionName = _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].factionInvitations[i];
+                var factionName = _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].factionInvitations[i];
 
                 var item = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("li", {padding:"6px", margin:"6px"});
                 item.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("p", {
@@ -5450,10 +5460,10 @@ const Engine = {
                     innerText:"Accept Faction Invitation",
                     class:"a-link-button", display:"inline", margin:"4px", padding:"4px",
                     clickListener:()=>{
-                        Object(_Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_24__[/* joinFaction */ "c"])(_Faction_Factions__WEBPACK_IMPORTED_MODULE_23__["Factions"][factionName]);
-                        for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].factionInvitations.length; ++i) {
-                            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].factionInvitations[i] == factionName || _Faction_Factions__WEBPACK_IMPORTED_MODULE_23__["Factions"][_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].factionInvitations[i]].isBanned) {
-                                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].factionInvitations.splice(i, 1);
+                        Object(_Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_25__[/* joinFaction */ "c"])(_Faction_Factions__WEBPACK_IMPORTED_MODULE_24__["Factions"][factionName]);
+                        for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].factionInvitations.length; ++i) {
+                            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].factionInvitations[i] == factionName || _Faction_Factions__WEBPACK_IMPORTED_MODULE_24__["Factions"][_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].factionInvitations[i]].isBanned) {
+                                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].factionInvitations.splice(i, 1);
                                 i--;
                             }
                         }
@@ -5516,7 +5526,7 @@ const Engine = {
         if (diff > 0) {
             //Update the game engine by the calculated number of cycles
             Engine._lastUpdate = _thisUpdate - offset;
-            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].lastUpdate = _thisUpdate - offset;
+            _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].lastUpdate = _thisUpdate - offset;
             Engine.updateGame(diff);
         }
 
@@ -5525,65 +5535,65 @@ const Engine = {
 
     updateGame: function(numCycles = 1) {
         var time = numCycles * Engine._idleSpeed;
-        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].totalPlaytime == null) {_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].totalPlaytime = 0;}
-        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastAug == null) {_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastAug = 0;}
-        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastBitnode == null) {_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastBitnode = 0;}
-        _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].totalPlaytime += time;
-        _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastAug += time;
-        _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastBitnode += time;
+        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].totalPlaytime == null) {_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].totalPlaytime = 0;}
+        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].playtimeSinceLastAug == null) {_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].playtimeSinceLastAug = 0;}
+        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].playtimeSinceLastBitnode == null) {_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].playtimeSinceLastBitnode = 0;}
+        _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].totalPlaytime += time;
+        _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].playtimeSinceLastAug += time;
+        _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].playtimeSinceLastBitnode += time;
 
         //Start Manual hack
-        if (_Terminal__WEBPACK_IMPORTED_MODULE_48__[/* Terminal */ "a"].actionStarted === true) {
-            Engine._totalActionTime = _Terminal__WEBPACK_IMPORTED_MODULE_48__[/* Terminal */ "a"].actionTime;
-            Engine._actionTimeLeft = _Terminal__WEBPACK_IMPORTED_MODULE_48__[/* Terminal */ "a"].actionTime;
+        if (_Terminal__WEBPACK_IMPORTED_MODULE_49__[/* Terminal */ "a"].actionStarted === true) {
+            Engine._totalActionTime = _Terminal__WEBPACK_IMPORTED_MODULE_49__[/* Terminal */ "a"].actionTime;
+            Engine._actionTimeLeft = _Terminal__WEBPACK_IMPORTED_MODULE_49__[/* Terminal */ "a"].actionTime;
             Engine._actionInProgress = true;
             Engine._actionProgressBarCount = 1;
             Engine._actionProgressStr = "[                                                  ]";
             Engine._actionTimeStr = "Time left: ";
-            _Terminal__WEBPACK_IMPORTED_MODULE_48__[/* Terminal */ "a"].actionStarted = false;
+            _Terminal__WEBPACK_IMPORTED_MODULE_49__[/* Terminal */ "a"].actionStarted = false;
         }
 
         //Working
-        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].isWorking) {
-            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeFaction) {
-                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workForFaction(numCycles);
-            } else if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeCreateProgram) {
-                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].createProgramWork(numCycles);
-            } else if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeStudyClass) {
-                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].takeClass(numCycles);
-            } else if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeCrime) {
-                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].commitCrime(numCycles);
-            } else if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeCompanyPartTime) {
-                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workPartTime(numCycles);
+        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].isWorking) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_22__["CONSTANTS"].WorkTypeFaction) {
+                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].workForFaction(numCycles);
+            } else if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_22__["CONSTANTS"].WorkTypeCreateProgram) {
+                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].createProgramWork(numCycles);
+            } else if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_22__["CONSTANTS"].WorkTypeStudyClass) {
+                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].takeClass(numCycles);
+            } else if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_22__["CONSTANTS"].WorkTypeCrime) {
+                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].commitCrime(numCycles);
+            } else if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_22__["CONSTANTS"].WorkTypeCompanyPartTime) {
+                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].workPartTime(numCycles);
             } else {
-                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].work(numCycles);
+                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].work(numCycles);
             }
         }
 
         // Update stock prices
-        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hasWseAccount) {
-            Object(_StockMarket__WEBPACK_IMPORTED_MODULE_47__[/* processStockPrices */ "m"])(numCycles);
+        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hasWseAccount) {
+            Object(_StockMarket__WEBPACK_IMPORTED_MODULE_48__[/* processStockPrices */ "m"])(numCycles);
         }
 
         //Gang, if applicable
-        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bitNodeN == 2 && _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].inGang()) {
-            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].gang.process(numCycles, _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"]);
+        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bitNodeN == 2 && _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].inGang()) {
+            _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].gang.process(numCycles, _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"]);
         }
 
         //Mission
-        if (_Missions__WEBPACK_IMPORTED_MODULE_32__[/* inMission */ "c"] && _Missions__WEBPACK_IMPORTED_MODULE_32__[/* currMission */ "b"]) {
-            _Missions__WEBPACK_IMPORTED_MODULE_32__[/* currMission */ "b"].process(numCycles);
+        if (_Missions__WEBPACK_IMPORTED_MODULE_33__[/* inMission */ "c"] && _Missions__WEBPACK_IMPORTED_MODULE_33__[/* currMission */ "b"]) {
+            _Missions__WEBPACK_IMPORTED_MODULE_33__[/* currMission */ "b"].process(numCycles);
         }
 
         //Corporation
-        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"]) {
+        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_21__[/* Corporation */ "a"]) {
             //Stores cycles in a "buffer". Processed separately using Engine Counters
             //This is to avoid constant DOM redraws when Corporation is catching up
-            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation.storeCycles(numCycles);
+            _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation.storeCycles(numCycles);
         }
 
-        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"]) {
-            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bladeburner.storeCycles(numCycles);
+        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_15__[/* Bladeburner */ "a"]) {
+            _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bladeburner.storeCycles(numCycles);
         }
 
         //Counters
@@ -5596,10 +5606,10 @@ const Engine = {
         }
 
         //Update the running time of all active scripts
-        Object(_NetscriptWorker__WEBPACK_IMPORTED_MODULE_34__[/* updateOnlineScriptTimes */ "g"])(numCycles);
+        Object(_NetscriptWorker__WEBPACK_IMPORTED_MODULE_35__[/* updateOnlineScriptTimes */ "g"])(numCycles);
 
         //Hacknet Nodes
-        Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_28__[/* processAllHacknetNodeEarnings */ "d"])(numCycles);
+        Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_29__[/* processAllHacknetNodeEarnings */ "d"])(numCycles);
     },
 
     //Counters for the main event loop. Represent the number of game cycles are required
@@ -5632,26 +5642,26 @@ const Engine = {
     //is necessary and then resets the counter
     checkCounters: function() {
         if (Engine.Counters.autoSaveCounter <= 0) {
-            _SaveObject__WEBPACK_IMPORTED_MODULE_40__[/* saveObject */ "b"].saveGame(indexedDb);
-            if (_Settings__WEBPACK_IMPORTED_MODULE_43__["Settings"].AutosaveInterval == null) {
-                _Settings__WEBPACK_IMPORTED_MODULE_43__["Settings"].AutosaveInterval = 60;
+            _SaveObject__WEBPACK_IMPORTED_MODULE_41__[/* saveObject */ "b"].saveGame(indexedDb);
+            if (_Settings__WEBPACK_IMPORTED_MODULE_44__["Settings"].AutosaveInterval == null) {
+                _Settings__WEBPACK_IMPORTED_MODULE_44__["Settings"].AutosaveInterval = 60;
             }
-            if (_Settings__WEBPACK_IMPORTED_MODULE_43__["Settings"].AutosaveInterval === 0) {
+            if (_Settings__WEBPACK_IMPORTED_MODULE_44__["Settings"].AutosaveInterval === 0) {
                 Engine.Counters.autoSaveCounter = Infinity;
             } else {
-                Engine.Counters.autoSaveCounter = _Settings__WEBPACK_IMPORTED_MODULE_43__["Settings"].AutosaveInterval * 5;
+                Engine.Counters.autoSaveCounter = _Settings__WEBPACK_IMPORTED_MODULE_44__["Settings"].AutosaveInterval * 5;
             }
         }
 
         if (Engine.Counters.updateSkillLevelsCounter <= 0) {
-            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].updateSkillLevels();
+            _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].updateSkillLevels();
             Engine.Counters.updateSkillLevelsCounter = 10;
         }
 
         if (Engine.Counters.updateActiveScriptsDisplay <= 0) {
             //Always update, but make the interval longer if the page isn't active
-            Object(_ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_11__[/* updateActiveScriptsItems */ "c"])();
-            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].ActiveScripts)) {
+            Object(_ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_12__[/* updateActiveScriptsItems */ "c"])();
+            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["Page"].ActiveScripts)) {
                 Engine.Counters.updateActiveScriptsDisplay = 5;
             } else {
                 Engine.Counters.updateActiveScriptsDisplay = 10;
@@ -5660,39 +5670,39 @@ const Engine = {
 
         if (Engine.Counters.updateDisplays <= 0) {
             Engine.displayCharacterOverviewInfo();
-            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].CharacterInfo)) {
+            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["Page"].CharacterInfo)) {
                 Engine.displayCharacterInfo();
-            }  else if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].HacknetNodes)) {
-                Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_28__[/* updateHacknetNodesContent */ "f"])();
-            } else if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].CreateProgram)) {
-                Object(_Programs_ProgramHelpers__WEBPACK_IMPORTED_MODULE_38__[/* displayCreateProgramContent */ "a"])();
+            }  else if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["Page"].HacknetNodes)) {
+                Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_29__[/* updateHacknetNodesContent */ "f"])();
+            } else if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["Page"].CreateProgram)) {
+                Object(_Programs_ProgramHelpers__WEBPACK_IMPORTED_MODULE_39__[/* displayCreateProgramContent */ "a"])();
             }
 
-            if (_utils_LogBox__WEBPACK_IMPORTED_MODULE_10__[/* logBoxOpened */ "b"]) {
-                Object(_utils_LogBox__WEBPACK_IMPORTED_MODULE_10__[/* logBoxUpdateText */ "c"])();
+            if (_utils_LogBox__WEBPACK_IMPORTED_MODULE_11__[/* logBoxOpened */ "b"]) {
+                Object(_utils_LogBox__WEBPACK_IMPORTED_MODULE_11__[/* logBoxUpdateText */ "c"])();
             }
 
             Engine.Counters.updateDisplays = 3;
         }
 
         if (Engine.Counters.updateDisplaysMed <= 0) {
-            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].Corporation)) {
-                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation.updateUIContent();
+            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["Page"].Corporation)) {
+                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation.updateUIContent();
             }
             Engine.Counters.updateDisplaysMed = 9;
         }
 
         if (Engine.Counters.updateDisplaysLong <= 0) {
-            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].Gang) && _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].inGang()) {
-                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].gang.updateGangContent();
-            } else if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].ScriptEditor)) {
-                Object(_Script__WEBPACK_IMPORTED_MODULE_41__[/* updateScriptEditorContent */ "h"])();
+            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["Page"].Gang) && _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].inGang()) {
+                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].gang.updateGangContent();
+            } else if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["Page"].ScriptEditor)) {
+                Object(_Script__WEBPACK_IMPORTED_MODULE_42__[/* updateScriptEditorContent */ "h"])();
             }
             Engine.Counters.updateDisplaysLong = 15;
         }
 
         if (Engine.Counters.createProgramNotifications <= 0) {
-            var num = Object(_Programs_ProgramHelpers__WEBPACK_IMPORTED_MODULE_38__[/* getNumAvailableCreateProgram */ "b"])();
+            var num = Object(_Programs_ProgramHelpers__WEBPACK_IMPORTED_MODULE_39__[/* getNumAvailableCreateProgram */ "b"])();
             var elem = document.getElementById("create-program-notification");
             if (num > 0) {
                 elem.innerHTML = num;
@@ -5705,30 +5715,30 @@ const Engine = {
         }
 
         if (Engine.Counters.checkFactionInvitations <= 0) {
-            var invitedFactions = _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].checkForFactionInvitations();
+            var invitedFactions = _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].checkForFactionInvitations();
             if (invitedFactions.length > 0) {
-                if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].firstFacInvRecvd === false) {
-                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].firstFacInvRecvd = true;
+                if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].firstFacInvRecvd === false) {
+                    _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].firstFacInvRecvd = true;
                     document.getElementById("factions-tab").style.display = "list-item";
                     document.getElementById("character-menu-header").click();
                     document.getElementById("character-menu-header").click();
                 }
 
                 var randFaction = invitedFactions[Math.floor(Math.random() * invitedFactions.length)];
-                Object(_Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_24__[/* inviteToFaction */ "b"])(randFaction);
+                Object(_Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_25__[/* inviteToFaction */ "b"])(randFaction);
             }
             Engine.Counters.checkFactionInvitations = 100;
         }
 
         if (Engine.Counters.passiveFactionGrowth <= 0) {
             var adjustedCycles = Math.floor((600 - Engine.Counters.passiveFactionGrowth));
-            Object(_Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_24__[/* processPassiveFactionRepGain */ "d"])(adjustedCycles);
+            Object(_Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_25__[/* processPassiveFactionRepGain */ "d"])(adjustedCycles);
             Engine.Counters.passiveFactionGrowth = 600;
         }
 
         if (Engine.Counters.messages <= 0) {
-            Object(_Message__WEBPACK_IMPORTED_MODULE_31__[/* checkForMessagesToSend */ "c"])();
-            if (_Augmentations__WEBPACK_IMPORTED_MODULE_12__[/* Augmentations */ "c"][_Augmentations__WEBPACK_IMPORTED_MODULE_12__[/* AugmentationNames */ "b"].TheRedPill].owned) {
+            Object(_Message__WEBPACK_IMPORTED_MODULE_32__[/* checkForMessagesToSend */ "c"])();
+            if (_Augmentations__WEBPACK_IMPORTED_MODULE_13__[/* Augmentations */ "c"][_Augmentations__WEBPACK_IMPORTED_MODULE_13__[/* AugmentationNames */ "b"].TheRedPill].owned) {
                 Engine.Counters.messages = 4500; //15 minutes for Red pill message
             } else {
                 Engine.Counters.messages = 150;
@@ -5736,19 +5746,19 @@ const Engine = {
         }
 
         if (Engine.Counters.sCr <= 0) {
-            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hasWseAccount) {
-                Object(_StockMarket__WEBPACK_IMPORTED_MODULE_47__[/* stockMarketCycle */ "q"])();
+            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hasWseAccount) {
+                Object(_StockMarket__WEBPACK_IMPORTED_MODULE_48__[/* stockMarketCycle */ "q"])();
             }
             Engine.Counters.sCr = 1500;
         }
 
         if (Engine.Counters.mechanicProcess <= 0) {
-            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"]) {
-                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation.process();
+            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_21__[/* Corporation */ "a"]) {
+                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation.process();
             }
-            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"]) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_15__[/* Bladeburner */ "a"]) {
                 try {
-                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bladeburner.process();
+                    _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bladeburner.process();
                 } catch(e) {
                     Object(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_6__[/* exceptionAlert */ "a"])("Exception caught in Bladeburner.process(): " + e);
                 }
@@ -5760,7 +5770,7 @@ const Engine = {
         if (Engine.Counters.contractGeneration <= 0) {
             // X% chance of a contract being generated
             if (Math.random() <= 0.25) {
-                Object(_CodingContractGenerator__WEBPACK_IMPORTED_MODULE_17__[/* generateRandomContract */ "a"])();
+                Object(_CodingContractGenerator__WEBPACK_IMPORTED_MODULE_18__[/* generateRandomContract */ "a"])();
             }
             Engine.Counters.contractGeneration = 3000;
         }
@@ -5783,7 +5793,7 @@ const Engine = {
 
         //Update progress bar
         while (Engine._actionProgressBarCount * 2 <= percent) {
-            Engine._actionProgressStr = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["replaceAt"])(Engine._actionProgressStr, Engine._actionProgressBarCount, "|");
+            Engine._actionProgressStr = Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["replaceAt"])(Engine._actionProgressStr, Engine._actionProgressBarCount, "|");
             Engine._actionProgressBarCount += 1;
         }
 
@@ -5797,7 +5807,7 @@ const Engine = {
         //Once percent is 100, the hack is completed
         if (percent >= 100) {
             Engine._actionInProgress = false;
-            _Terminal__WEBPACK_IMPORTED_MODULE_48__[/* Terminal */ "a"].finishAction();
+            _Terminal__WEBPACK_IMPORTED_MODULE_49__[/* Terminal */ "a"].finishAction();
         }
     },
 
@@ -5870,130 +5880,130 @@ const Engine = {
         var dev                 = document.getElementById("dev-tab");
 
         //Load game from save or create new game
-        if (Object(_SaveObject__WEBPACK_IMPORTED_MODULE_40__[/* loadGame */ "a"])(saveString)) {
+        if (Object(_SaveObject__WEBPACK_IMPORTED_MODULE_41__[/* loadGame */ "a"])(saveString)) {
             console.log("Loaded game from save");
-            Object(_BitNode__WEBPACK_IMPORTED_MODULE_13__[/* initBitNodes */ "c"])();
-            Object(_BitNode__WEBPACK_IMPORTED_MODULE_13__[/* initBitNodeMultipliers */ "b"])();
-            Object(_SourceFile__WEBPACK_IMPORTED_MODULE_45__[/* initSourceFiles */ "d"])();
+            Object(_BitNode__WEBPACK_IMPORTED_MODULE_14__[/* initBitNodes */ "c"])();
+            Object(_BitNode__WEBPACK_IMPORTED_MODULE_14__[/* initBitNodeMultipliers */ "b"])();
+            Object(_SourceFile__WEBPACK_IMPORTED_MODULE_46__[/* initSourceFiles */ "d"])();
             Engine.setDisplayElements();    //Sets variables for important DOM elements
             Engine.init();                  //Initialize buttons, work, etc.
-            Object(_Augmentations__WEBPACK_IMPORTED_MODULE_12__[/* initAugmentations */ "h"])();            //Also calls Player.reapplyAllAugmentations()
-            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].reapplyAllSourceFiles();
-            Object(_StockMarket__WEBPACK_IMPORTED_MODULE_47__[/* initStockSymbols */ "i"])();
-            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hasWseAccount) {
-                Object(_StockMarket__WEBPACK_IMPORTED_MODULE_47__[/* initSymbolToStockMap */ "j"])();
+            Object(_Augmentations__WEBPACK_IMPORTED_MODULE_13__[/* initAugmentations */ "h"])();            //Also calls Player.reapplyAllAugmentations()
+            _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].reapplyAllSourceFiles();
+            Object(_StockMarket__WEBPACK_IMPORTED_MODULE_48__[/* initStockSymbols */ "i"])();
+            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hasWseAccount) {
+                Object(_StockMarket__WEBPACK_IMPORTED_MODULE_48__[/* initSymbolToStockMap */ "j"])();
             }
-            Object(_Literature__WEBPACK_IMPORTED_MODULE_30__[/* initLiterature */ "a"])();
-            Object(_NetscriptFunctions__WEBPACK_IMPORTED_MODULE_33__[/* initSingularitySFFlags */ "g"])();
+            Object(_Literature__WEBPACK_IMPORTED_MODULE_31__[/* initLiterature */ "a"])();
+            Object(_NetscriptFunctions__WEBPACK_IMPORTED_MODULE_34__[/* initSingularitySFFlags */ "g"])();
 
-            console.log(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].intelligence_exp);
+            console.log(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].intelligence_exp);
 
             //Calculate the number of cycles have elapsed while offline
             Engine._lastUpdate = new Date().getTime();
-            var lastUpdate = _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].lastUpdate;
+            var lastUpdate = _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].lastUpdate;
             var numCyclesOffline = Math.floor((Engine._lastUpdate - lastUpdate) / Engine._idleSpeed);
 
             /* Process offline progress */
-            var offlineProductionFromScripts = Object(_Script__WEBPACK_IMPORTED_MODULE_41__[/* loadAllRunningScripts */ "f"])();    //This also takes care of offline production for those scripts
-            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].isWorking) {
+            var offlineProductionFromScripts = Object(_Script__WEBPACK_IMPORTED_MODULE_42__[/* loadAllRunningScripts */ "f"])();    //This also takes care of offline production for those scripts
+            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].isWorking) {
                 console.log("work() called in load() for " + numCyclesOffline * Engine._idleSpeed + " milliseconds");
-                if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeFaction) {
-                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workForFaction(numCyclesOffline);
-                } else if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeCreateProgram) {
-                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].createProgramWork(numCyclesOffline);
-                } else if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeStudyClass) {
-                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].takeClass(numCyclesOffline);
-                } else if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeCrime) {
-                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].commitCrime(numCyclesOffline);
-                } else if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeCompanyPartTime) {
-                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workPartTime(numCyclesOffline);
+                if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_22__["CONSTANTS"].WorkTypeFaction) {
+                    _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].workForFaction(numCyclesOffline);
+                } else if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_22__["CONSTANTS"].WorkTypeCreateProgram) {
+                    _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].createProgramWork(numCyclesOffline);
+                } else if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_22__["CONSTANTS"].WorkTypeStudyClass) {
+                    _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].takeClass(numCyclesOffline);
+                } else if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_22__["CONSTANTS"].WorkTypeCrime) {
+                    _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].commitCrime(numCyclesOffline);
+                } else if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_22__["CONSTANTS"].WorkTypeCompanyPartTime) {
+                    _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].workPartTime(numCyclesOffline);
                 } else {
-                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].work(numCyclesOffline);
+                    _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].work(numCyclesOffline);
                 }
             }
 
             //Hacknet Nodes offline progress
-            var offlineProductionFromHacknetNodes = Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_28__[/* processAllHacknetNodeEarnings */ "d"])(numCyclesOffline);
+            var offlineProductionFromHacknetNodes = Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_29__[/* processAllHacknetNodeEarnings */ "d"])(numCyclesOffline);
 
             //Passive faction rep gain offline
-            Object(_Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_24__[/* processPassiveFactionRepGain */ "d"])(numCyclesOffline);
+            Object(_Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_25__[/* processPassiveFactionRepGain */ "d"])(numCyclesOffline);
 
             // Stock Market offline progress
-            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hasWseAccount) {
-                Object(_StockMarket__WEBPACK_IMPORTED_MODULE_47__[/* processStockPrices */ "m"])(numCyclesOffline);
+            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hasWseAccount) {
+                Object(_StockMarket__WEBPACK_IMPORTED_MODULE_48__[/* processStockPrices */ "m"])(numCyclesOffline);
             }
 
             // Gang progress for BitNode 2
-            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bitNodeN != null && _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bitNodeN === 2 && _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].inGang()) {
-                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].gang.process(numCyclesOffline, _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"]);
+            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bitNodeN != null && _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bitNodeN === 2 && _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].inGang()) {
+                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].gang.process(numCyclesOffline, _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"]);
             }
 
             // Corporation offline progress
-            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"]) {
-                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation.storeCycles(numCyclesOffline);
+            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_21__[/* Corporation */ "a"]) {
+                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation.storeCycles(numCyclesOffline);
             }
 
             // Bladeburner offline progress
-            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"]) {
-                _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bladeburner.storeCycles(numCyclesOffline);
+            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_15__[/* Bladeburner */ "a"]) {
+                _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bladeburner.storeCycles(numCyclesOffline);
             }
 
             //Update total playtime
             var time = numCyclesOffline * Engine._idleSpeed;
-            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].totalPlaytime == null) {_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].totalPlaytime = 0;}
-            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastAug == null) {_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastAug = 0;}
-            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastBitnode == null) {_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastBitnode = 0;}
-            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].totalPlaytime += time;
-            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastAug += time;
-            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].playtimeSinceLastBitnode += time;
+            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].totalPlaytime == null) {_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].totalPlaytime = 0;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].playtimeSinceLastAug == null) {_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].playtimeSinceLastAug = 0;}
+            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].playtimeSinceLastBitnode == null) {_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].playtimeSinceLastBitnode = 0;}
+            _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].totalPlaytime += time;
+            _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].playtimeSinceLastAug += time;
+            _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].playtimeSinceLastBitnode += time;
 
-            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].lastUpdate = Engine._lastUpdate;
+            _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].lastUpdate = Engine._lastUpdate;
             Engine.start();                 //Run main game loop and Scripts loop
             Object(_utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_7__["removeLoadingScreen"])();
             Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_0__["dialogBoxCreate"])("While you were offline, your scripts generated <span class='money-gold'>$" +
-                            Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(offlineProductionFromScripts, 2) + "</span> and your Hacknet Nodes generated <span class='money-gold'>$" +
-                            Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_9__["formatNumber"])(offlineProductionFromHacknetNodes, 2) + "</span>");
+                            Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(offlineProductionFromScripts, 2) + "</span> and your Hacknet Nodes generated <span class='money-gold'>$" +
+                            Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__["formatNumber"])(offlineProductionFromHacknetNodes, 2) + "</span>");
             //Close main menu accordions for loaded game
             var visibleMenuTabs = [terminal, createScript, activeScripts, stats,
                                    hacknetnodes, city, tutorial, options, dev];
-            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].firstFacInvRecvd) {visibleMenuTabs.push(factions);}
+            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].firstFacInvRecvd) {visibleMenuTabs.push(factions);}
             else {factions.style.display = "none";}
-            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].firstAugPurchased) {visibleMenuTabs.push(augmentations);}
+            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].firstAugPurchased) {visibleMenuTabs.push(augmentations);}
             else {augmentations.style.display = "none";}
-            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].companyPosition !== "") {visibleMenuTabs.push(job);}
+            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].companyPosition !== "") {visibleMenuTabs.push(job);}
             else {job.style.display = "none";}
-            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].firstTimeTraveled) {visibleMenuTabs.push(travel);}
+            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].firstTimeTraveled) {visibleMenuTabs.push(travel);}
             else {travel.style.display = "none";}
-            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].firstProgramAvailable) {visibleMenuTabs.push(createProgram);}
+            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].firstProgramAvailable) {visibleMenuTabs.push(createProgram);}
             else {createProgram.style.display = "none";}
-            if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hasWseAccount) {visibleMenuTabs.push(stockmarket);}
+            if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hasWseAccount) {visibleMenuTabs.push(stockmarket);}
             else {stockmarket.style.display = "none";}
-            if(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"]) {visibleMenuTabs.push(bladeburner);}
+            if(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_15__[/* Bladeburner */ "a"]) {visibleMenuTabs.push(bladeburner);}
             else {bladeburner.style.display = "none";}
-            if(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"]) {visibleMenuTabs.push(corp);}
+            if(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_21__[/* Corporation */ "a"]) {visibleMenuTabs.push(corp);}
             else {corp.style.display = "none";}
-            if(_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].inGang()) {visibleMenuTabs.push(gang);}
+            if(_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].inGang()) {visibleMenuTabs.push(gang);}
             else {gang.style.display = "none";}
 
             Engine.closeMainMenuHeader(visibleMenuTabs);
         } else {
             //No save found, start new game
             console.log("Initializing new game");
-            Object(_BitNode__WEBPACK_IMPORTED_MODULE_13__[/* initBitNodes */ "c"])();
-            Object(_BitNode__WEBPACK_IMPORTED_MODULE_13__[/* initBitNodeMultipliers */ "b"])();
-            Object(_SourceFile__WEBPACK_IMPORTED_MODULE_45__[/* initSourceFiles */ "d"])();
-            Object(_SpecialServerIps__WEBPACK_IMPORTED_MODULE_46__[/* initSpecialServerIps */ "c"])();
+            Object(_BitNode__WEBPACK_IMPORTED_MODULE_14__[/* initBitNodes */ "c"])();
+            Object(_BitNode__WEBPACK_IMPORTED_MODULE_14__[/* initBitNodeMultipliers */ "b"])();
+            Object(_SourceFile__WEBPACK_IMPORTED_MODULE_46__[/* initSourceFiles */ "d"])();
+            Object(_SpecialServerIps__WEBPACK_IMPORTED_MODULE_47__[/* initSpecialServerIps */ "c"])();
             Engine.setDisplayElements();        //Sets variables for important DOM elements
             Engine.start();                     //Run main game loop and Scripts loop
-            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].init();
-            Object(_Server__WEBPACK_IMPORTED_MODULE_42__[/* initForeignServers */ "f"])();
-            Object(_Company_Companies__WEBPACK_IMPORTED_MODULE_19__["initCompanies"])();
-            Object(_Faction_Factions__WEBPACK_IMPORTED_MODULE_23__["initFactions"])();
-            Object(_Augmentations__WEBPACK_IMPORTED_MODULE_12__[/* initAugmentations */ "h"])();
-            Object(_Message__WEBPACK_IMPORTED_MODULE_31__[/* initMessages */ "d"])();
-            Object(_StockMarket__WEBPACK_IMPORTED_MODULE_47__[/* initStockSymbols */ "i"])();
-            Object(_Literature__WEBPACK_IMPORTED_MODULE_30__[/* initLiterature */ "a"])();
-            Object(_NetscriptFunctions__WEBPACK_IMPORTED_MODULE_33__[/* initSingularitySFFlags */ "g"])();
+            _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].init();
+            Object(_Server__WEBPACK_IMPORTED_MODULE_43__[/* initForeignServers */ "f"])();
+            Object(_Company_Companies__WEBPACK_IMPORTED_MODULE_20__["initCompanies"])();
+            Object(_Faction_Factions__WEBPACK_IMPORTED_MODULE_24__["initFactions"])();
+            Object(_Augmentations__WEBPACK_IMPORTED_MODULE_13__[/* initAugmentations */ "h"])();
+            Object(_Message__WEBPACK_IMPORTED_MODULE_32__[/* initMessages */ "d"])();
+            Object(_StockMarket__WEBPACK_IMPORTED_MODULE_48__[/* initStockSymbols */ "i"])();
+            Object(_Literature__WEBPACK_IMPORTED_MODULE_31__[/* initLiterature */ "a"])();
+            Object(_NetscriptFunctions__WEBPACK_IMPORTED_MODULE_34__[/* initSingularitySFFlags */ "g"])();
 
             //Open main menu accordions for new game
             //Main menu accordions
@@ -6025,19 +6035,19 @@ const Engine = {
             );
 
             //Start interactive tutorial
-            Object(_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_29__[/* iTutorialStart */ "c"])();
+            Object(_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_30__[/* iTutorialStart */ "c"])();
             Object(_utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_7__["removeLoadingScreen"])();
         }
         //Initialize labels on game settings
-        Object(_ui_setSettingsLabels__WEBPACK_IMPORTED_MODULE_44__[/* setSettingsLabels */ "a"])();
-        Object(_Script__WEBPACK_IMPORTED_MODULE_41__[/* scriptEditorInit */ "g"])();
-        _Terminal__WEBPACK_IMPORTED_MODULE_48__[/* Terminal */ "a"].resetTerminalInput();
+        Object(_ui_setSettingsLabels__WEBPACK_IMPORTED_MODULE_45__[/* setSettingsLabels */ "a"])();
+        Object(_Script__WEBPACK_IMPORTED_MODULE_42__[/* scriptEditorInit */ "g"])();
+        _Terminal__WEBPACK_IMPORTED_MODULE_49__[/* Terminal */ "a"].resetTerminalInput();
     },
 
     setDisplayElements: function() {
         //Content elements
         Engine.Display.terminalContent = document.getElementById("terminal-container");
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_50__["Page"].Terminal);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["Page"].Terminal);
 
         Engine.Display.characterContent = document.getElementById("character-container");
         Engine.Display.characterContent.style.display = "none";
@@ -6113,47 +6123,47 @@ const Engine = {
         Engine.Display.cinematicTextContent.style.display = "none";
 
 		//Init Location buttons
-		Object(_Location__WEBPACK_IMPORTED_MODULE_26__[/* initLocationButtons */ "b"])();
+		Object(_Location__WEBPACK_IMPORTED_MODULE_27__[/* initLocationButtons */ "b"])();
 
         //Tutorial buttons
         Engine.Clickables.tutorialNetworkingButton = document.getElementById("tutorial-networking-link");
         Engine.Clickables.tutorialNetworkingButton.addEventListener("click", function() {
-            Engine.displayTutorialPage(_Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].TutorialNetworkingText);
+            Engine.displayTutorialPage(_Constants__WEBPACK_IMPORTED_MODULE_22__["CONSTANTS"].TutorialNetworkingText);
         });
 
         Engine.Clickables.tutorialHackingButton = document.getElementById("tutorial-hacking-link");
         Engine.Clickables.tutorialHackingButton.addEventListener("click", function() {
-            Engine.displayTutorialPage(_Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].TutorialHackingText);
+            Engine.displayTutorialPage(_Constants__WEBPACK_IMPORTED_MODULE_22__["CONSTANTS"].TutorialHackingText);
         });
 
         Engine.Clickables.tutorialScriptsButton = document.getElementById("tutorial-scripts-link");
         Engine.Clickables.tutorialScriptsButton.addEventListener("click", function() {
-            Engine.displayTutorialPage(_Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].TutorialScriptsText);
+            Engine.displayTutorialPage(_Constants__WEBPACK_IMPORTED_MODULE_22__["CONSTANTS"].TutorialScriptsText);
         });
 
         Engine.Clickables.tutorialNetscriptButton = document.getElementById("tutorial-netscript-link");
         Engine.Clickables.tutorialNetscriptButton.addEventListener("click", function() {
-            Engine.displayTutorialPage(_Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].TutorialNetscriptText);
+            Engine.displayTutorialPage(_Constants__WEBPACK_IMPORTED_MODULE_22__["CONSTANTS"].TutorialNetscriptText);
         });
 
         Engine.Clickables.tutorialTravelingButton = document.getElementById("tutorial-traveling-link");
         Engine.Clickables.tutorialTravelingButton.addEventListener("click", function() {
-            Engine.displayTutorialPage(_Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].TutorialTravelingText);
+            Engine.displayTutorialPage(_Constants__WEBPACK_IMPORTED_MODULE_22__["CONSTANTS"].TutorialTravelingText);
         });
 
         Engine.Clickables.tutorialCompaniesButton = document.getElementById("tutorial-jobs-link");
         Engine.Clickables.tutorialCompaniesButton.addEventListener("click", function() {
-            Engine.displayTutorialPage(_Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].TutorialCompaniesText);
+            Engine.displayTutorialPage(_Constants__WEBPACK_IMPORTED_MODULE_22__["CONSTANTS"].TutorialCompaniesText);
         });
 
         Engine.Clickables.tutorialFactionsButton = document.getElementById("tutorial-factions-link");
         Engine.Clickables.tutorialFactionsButton.addEventListener("click", function() {
-            Engine.displayTutorialPage(_Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].TutorialFactionsText);
+            Engine.displayTutorialPage(_Constants__WEBPACK_IMPORTED_MODULE_22__["CONSTANTS"].TutorialFactionsText);
         });
 
         Engine.Clickables.tutorialAugmentationsButton = document.getElementById("tutorial-augmentations-link");
         Engine.Clickables.tutorialAugmentationsButton.addEventListener("click", function() {
-            Engine.displayTutorialPage(_Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].TutorialAugmentationsText);
+            Engine.displayTutorialPage(_Constants__WEBPACK_IMPORTED_MODULE_22__["CONSTANTS"].TutorialAugmentationsText);
         });
 
         Engine.Clickables.tutorialBackButton = document.getElementById("tutorial-back-button");
@@ -6166,7 +6176,7 @@ const Engine = {
     init: function() {
         //Import game link
         document.getElementById("import-game-link").onclick = function() {
-            _SaveObject__WEBPACK_IMPORTED_MODULE_40__[/* saveObject */ "b"].importGame();
+            _SaveObject__WEBPACK_IMPORTED_MODULE_41__[/* saveObject */ "b"].importGame();
         };
 
         //Main menu accordions
@@ -6243,11 +6253,11 @@ const Engine = {
             var gangLink            = document.getElementById("gang-menu-link");
 
             // Determine whether certain links should show up
-            job.style.display           = _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].companyPosition !== ""             ? "list-item" : "none";
-            stockmarket.style.display   = _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].hasWseAccount                      ? "list-item" : "none";
-            bladeburner.style.display   = _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_14__[/* Bladeburner */ "a"] ? "list-item" : "none";
-            corporation.style.display   = _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_20__[/* Corporation */ "a"] ? "list-item" : "none";
-            gang.style.display          = _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].inGang()                           ? "list-item" : "none";
+            job.style.display           = _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].companyPosition !== ""             ? "list-item" : "none";
+            stockmarket.style.display   = _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].hasWseAccount                      ? "list-item" : "none";
+            bladeburner.style.display   = _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_15__[/* Bladeburner */ "a"] ? "list-item" : "none";
+            corporation.style.display   = _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_21__[/* Corporation */ "a"] ? "list-item" : "none";
+            gang.style.display          = _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].inGang()                           ? "list-item" : "none";
 
             this.classList.toggle("opened");
             if (city.style.maxHeight) {
@@ -6396,24 +6406,24 @@ const Engine = {
         //Save, Delete, Import/Export buttons
         Engine.Clickables.saveMainMenuButton = document.getElementById("save-game-link");
         Engine.Clickables.saveMainMenuButton.addEventListener("click", function() {
-            _SaveObject__WEBPACK_IMPORTED_MODULE_40__[/* saveObject */ "b"].saveGame(indexedDb);
+            _SaveObject__WEBPACK_IMPORTED_MODULE_41__[/* saveObject */ "b"].saveGame(indexedDb);
             return false;
         });
 
         Engine.Clickables.deleteMainMenuButton = document.getElementById("delete-game-link");
         Engine.Clickables.deleteMainMenuButton.addEventListener("click", function() {
-            _SaveObject__WEBPACK_IMPORTED_MODULE_40__[/* saveObject */ "b"].deleteGame(indexedDb);
+            _SaveObject__WEBPACK_IMPORTED_MODULE_41__[/* saveObject */ "b"].deleteGame(indexedDb);
             return false;
         });
 
         document.getElementById("export-game-link").addEventListener("click", function() {
-            _SaveObject__WEBPACK_IMPORTED_MODULE_40__[/* saveObject */ "b"].exportGame();
+            _SaveObject__WEBPACK_IMPORTED_MODULE_41__[/* saveObject */ "b"].exportGame();
             return false;
         });
 
         //Character Overview buttons
         document.getElementById("character-overview-save-button").addEventListener("click", function() {
-            _SaveObject__WEBPACK_IMPORTED_MODULE_40__[/* saveObject */ "b"].saveGame(indexedDb);
+            _SaveObject__WEBPACK_IMPORTED_MODULE_41__[/* saveObject */ "b"].saveGame(indexedDb);
             return false;
         });
 
@@ -6423,28 +6433,28 @@ const Engine = {
         });
 
         //Create Program buttons
-        Object(_Programs_ProgramHelpers__WEBPACK_IMPORTED_MODULE_38__[/* initCreateProgramButtons */ "c"])();
+        Object(_Programs_ProgramHelpers__WEBPACK_IMPORTED_MODULE_39__[/* initCreateProgramButtons */ "c"])();
 
         //Message at the top of terminal
-        Object(_Terminal__WEBPACK_IMPORTED_MODULE_48__[/* postNetburnerText */ "b"])();
+        Object(_Terminal__WEBPACK_IMPORTED_MODULE_49__[/* postNetburnerText */ "b"])();
 
         //Player was working cancel button
-        if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].isWorking) {
+        if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].isWorking) {
             var cancelButton = document.getElementById("work-in-progress-cancel-button");
             cancelButton.addEventListener("click", function() {
-                if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeFaction) {
-                    var fac = _Faction_Factions__WEBPACK_IMPORTED_MODULE_23__["Factions"][_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].currentWorkFactionName];
-                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].finishFactionWork(true);
-                } else if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeCreateProgram) {
-                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].finishCreateProgramWork(true);
-                } else if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeStudyClass) {
-                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].finishClass();
-                } else if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeCrime) {
-                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].finishCrime(true);
-                } else if (_Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_21__["CONSTANTS"].WorkTypeCompanyPartTime) {
-                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].finishWorkPartTime();
+                if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_22__["CONSTANTS"].WorkTypeFaction) {
+                    var fac = _Faction_Factions__WEBPACK_IMPORTED_MODULE_24__["Factions"][_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].currentWorkFactionName];
+                    _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].finishFactionWork(true);
+                } else if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_22__["CONSTANTS"].WorkTypeCreateProgram) {
+                    _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].finishCreateProgramWork(true);
+                } else if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_22__["CONSTANTS"].WorkTypeStudyClass) {
+                    _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].finishClass();
+                } else if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_22__["CONSTANTS"].WorkTypeCrime) {
+                    _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].finishCrime(true);
+                } else if (_Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].workType == _Constants__WEBPACK_IMPORTED_MODULE_22__["CONSTANTS"].WorkTypeCompanyPartTime) {
+                    _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].finishWorkPartTime();
                 } else {
-                    _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].finishWork(true);
+                    _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].finishWork(true);
                 }
             });
             Engine.loadWorkInProgressContent();
@@ -6462,10 +6472,47 @@ const Engine = {
         document.getElementById("city-menu-link").removeAttribute("class");
         document.getElementById("tutorial-menu-link").removeAttribute("class");
 
+        // Copy Save Data to Clipboard
+        document.getElementById("copy-save-to-clipboard-link").addEventListener("click", function() {
+            const saveString = _SaveObject__WEBPACK_IMPORTED_MODULE_41__[/* saveObject */ "b"].getSaveString();
+            if (!navigator.clipboard) {
+                // Async Clipboard API not supported, so we'll use this using the
+                // textarea and document.execCommand('copy') trick
+                const textArea = document.createElement("textarea");
+                textArea.value = saveString;
+                textArea.setAttribute("readonly", '');
+                textArea.style.position = 'absolute';
+                textArea.left = '-9999px';
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    const successful = document.execCommand("copy");
+                    if (successful) {
+                        Object(_ui_createStatusText__WEBPACK_IMPORTED_MODULE_9__["createStatusText"])("Copied save to clipboard");
+                    } else {
+                        Object(_ui_createStatusText__WEBPACK_IMPORTED_MODULE_9__["createStatusText"])("Failed to copy save");
+                    }
+                } catch(e) {
+                    console.error("Unable to copy save data to clipboard using document.execCommand('copy')");
+                    Object(_ui_createStatusText__WEBPACK_IMPORTED_MODULE_9__["createStatusText"])("Failed to copy save");
+                }
+                document.body.removeChild(textArea);
+            } else {
+                // Use the Async Clipboard API
+                navigator.clipboard.writeText(saveString).then(function() {
+                    Object(_ui_createStatusText__WEBPACK_IMPORTED_MODULE_9__["createStatusText"])("Copied save to clipboard");
+                }, function(e) {
+                    console.error("Unable to copy save data to clipboard using Async API");
+                    Object(_ui_createStatusText__WEBPACK_IMPORTED_MODULE_9__["createStatusText"])("Failed to copy save");
+                })
+            }
+        });
+
         //DEBUG Delete active Scripts on home
         document.getElementById("debug-delete-scripts-link").addEventListener("click", function() {
             console.log("Deleting running scripts on home computer");
-            _Player__WEBPACK_IMPORTED_MODULE_35__[/* Player */ "a"].getHomeComputer().runningScripts = [];
+            _Player__WEBPACK_IMPORTED_MODULE_36__[/* Player */ "a"].getHomeComputer().runningScripts = [];
             Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_0__["dialogBoxCreate"])("Forcefully deleted all running scripts on home computer. Please save and refresh page");
             Object(_utils_GameOptions__WEBPACK_IMPORTED_MODULE_1__[/* gameOptionsBoxClose */ "a"])();
             return false;
@@ -6474,7 +6521,7 @@ const Engine = {
         //DEBUG Soft Reset
         document.getElementById("debug-soft-reset").addEventListener("click", function() {
             Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_0__["dialogBoxCreate"])("Soft Reset!");
-            Object(_Prestige__WEBPACK_IMPORTED_MODULE_36__[/* prestigeAugmentation */ "a"])();
+            Object(_Prestige__WEBPACK_IMPORTED_MODULE_37__[/* prestigeAugmentation */ "a"])();
             Object(_utils_GameOptions__WEBPACK_IMPORTED_MODULE_1__[/* gameOptionsBoxClose */ "a"])();
             return false;
         });
@@ -6485,7 +6532,7 @@ const Engine = {
         Engine.idleTimer();
 
         //Scripts
-        Object(_NetscriptWorker__WEBPACK_IMPORTED_MODULE_34__[/* runScriptsLoop */ "f"])();
+        Object(_NetscriptWorker__WEBPACK_IMPORTED_MODULE_35__[/* runScriptsLoop */ "f"])();
     }
 };
 
@@ -6707,7 +6754,7 @@ exports.BitNodeMultipliers = {
 /* harmony import */ var _data_servers__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./data/servers */ 137);
 /* harmony import */ var _data_servers__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_data_servers__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
-/* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/isValidIPAddress */ 89);
+/* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/isValidIPAddress */ 90);
 /* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_12__);
 
 
@@ -7683,8 +7730,8 @@ exports.yesNoTxtInpBoxCreate = yesNoTxtInpBoxCreate;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 // Constructs all CompanyPosition objects using the metadata in data/companypositions.ts
-const CompaniesMetadata_1 = __webpack_require__(/*! ./data/CompaniesMetadata */ 210);
-const Company_1 = __webpack_require__(/*! ./Company */ 74);
+const CompaniesMetadata_1 = __webpack_require__(/*! ./data/CompaniesMetadata */ 212);
+const Company_1 = __webpack_require__(/*! ./Company */ 75);
 const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
 exports.Companies = {};
 function addCompany(params) {
@@ -7846,8 +7893,8 @@ exports.removeElementById = removeElementById;
 /* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./NetscriptWorker */ 25);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Prestige */ 87);
-/* harmony import */ var _SaveObject__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./SaveObject */ 75);
+/* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Prestige */ 88);
+/* harmony import */ var _SaveObject__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./SaveObject */ 74);
 /* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Script */ 30);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Server */ 11);
 /* harmony import */ var _SettingEnums__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./SettingEnums */ 73);
@@ -7856,10 +7903,10 @@ exports.removeElementById = removeElementById;
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./SourceFile */ 70);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 77);
+/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 78);
 /* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
-/* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/helpers/clearObject */ 78);
+/* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/helpers/clearObject */ 79);
 /* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_17__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__);
@@ -12083,7 +12130,7 @@ function updateStockOrderList(stock) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const BaseResearchTree_1 = __webpack_require__(/*! ./data/BaseResearchTree */ 209);
+const BaseResearchTree_1 = __webpack_require__(/*! ./data/BaseResearchTree */ 211);
 const numeralFormat_1 = __webpack_require__(/*! ../ui/numeralFormat */ 4);
 const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
 // Map of official names for each Industry
@@ -12201,8 +12248,8 @@ exports.loadIndustryResearchTrees = loadIndustryResearchTrees;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const Program_1 = __webpack_require__(/*! ./Program */ 197);
-const programsMetadata_1 = __webpack_require__(/*! ./data/programsMetadata */ 196);
+const Program_1 = __webpack_require__(/*! ./Program */ 199);
+const programsMetadata_1 = __webpack_require__(/*! ./data/programsMetadata */ 198);
 exports.Programs = {};
 for (const params of programsMetadata_1.programsMetadata) {
     exports.Programs[params.key] = new Program_1.Program(params.name, params.create);
@@ -12245,11 +12292,11 @@ for (const params of programsMetadata_1.programsMetadata) {
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/acorn */ 48);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/helpers/compareArrays */ 92);
+/* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/helpers/compareArrays */ 93);
 /* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_14__);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 54);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 81);
+/* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 83);
 /* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_16__);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_17__);
@@ -12969,8 +13016,8 @@ JSONReviver_1.Reviver.constructors.Stock = Stock;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 // Constructs all CompanyPosition objects using the metadata in data/companypositions.ts
-const CompanyPositionsMetadata_1 = __webpack_require__(/*! ./data/CompanyPositionsMetadata */ 211);
-const CompanyPosition_1 = __webpack_require__(/*! ./CompanyPosition */ 86);
+const CompanyPositionsMetadata_1 = __webpack_require__(/*! ./data/CompanyPositionsMetadata */ 213);
+const CompanyPosition_1 = __webpack_require__(/*! ./CompanyPosition */ 87);
 exports.CompanyPositions = {};
 function addCompanyPosition(params) {
     if (exports.CompanyPositions[params.name] != null) {
@@ -13065,29 +13112,29 @@ exports.removeChildrenFromElement = removeChildrenFromElement;
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_14__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
-/* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/helpers/compareArrays */ 92);
+/* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/helpers/compareArrays */ 93);
 /* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_17__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 88);
+/* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 89);
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 81);
+/* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 83);
 /* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_20__);
-var ace = __webpack_require__(/*! brace */ 270);
-var beautify = __webpack_require__(/*! js-beautify */ 269).js_beautify;
-__webpack_require__(/*! brace/mode/javascript */ 268);
-__webpack_require__(/*! ../netscript */ 198);
-__webpack_require__(/*! brace/theme/chaos */ 267);
-__webpack_require__(/*! brace/theme/chrome */ 266);
-__webpack_require__(/*! brace/theme/monokai */ 265);
-__webpack_require__(/*! brace/theme/solarized_dark */ 264);
-__webpack_require__(/*! brace/theme/solarized_light */ 263);
-__webpack_require__(/*! brace/theme/terminal */ 262);
-__webpack_require__(/*! brace/theme/twilight */ 261);
-__webpack_require__(/*! brace/theme/xcode */ 260);
-__webpack_require__(/*! brace/keybinding/vim */ 259);
-__webpack_require__(/*! brace/keybinding/emacs */ 258);
-__webpack_require__(/*! brace/ext/language_tools */ 257);
+var ace = __webpack_require__(/*! brace */ 272);
+var beautify = __webpack_require__(/*! js-beautify */ 271).js_beautify;
+__webpack_require__(/*! brace/mode/javascript */ 270);
+__webpack_require__(/*! ../netscript */ 200);
+__webpack_require__(/*! brace/theme/chaos */ 269);
+__webpack_require__(/*! brace/theme/chrome */ 268);
+__webpack_require__(/*! brace/theme/monokai */ 267);
+__webpack_require__(/*! brace/theme/solarized_dark */ 266);
+__webpack_require__(/*! brace/theme/solarized_light */ 265);
+__webpack_require__(/*! brace/theme/terminal */ 264);
+__webpack_require__(/*! brace/theme/twilight */ 263);
+__webpack_require__(/*! brace/theme/xcode */ 262);
+__webpack_require__(/*! brace/keybinding/vim */ 261);
+__webpack_require__(/*! brace/keybinding/emacs */ 260);
+__webpack_require__(/*! brace/ext/language_tools */ 259);
 
 // Importing this doesn't work for some reason.
 const walk = __webpack_require__(/*! acorn/dist/walk */ 149);
@@ -14203,7 +14250,7 @@ _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__["Reviver"].constructors.AllServ
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 33);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/createProgressBarText */ 83);
+/* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/createProgressBarText */ 85);
 /* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 29);
@@ -14213,7 +14260,7 @@ _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__["Reviver"].constructors.AllServ
 /* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_16__);
 /* harmony import */ var _utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/uiHelpers/appendLineBreaks */ 57);
 /* harmony import */ var _utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/helpers/clearObject */ 78);
+/* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/helpers/clearObject */ 79);
 /* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_18__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_19__);
@@ -14226,7 +14273,7 @@ _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__["Reviver"].constructors.AllServ
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_23__);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 15);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_24__);
-/* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 88);
+/* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 89);
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_25__);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 61);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_26__);
@@ -19799,7 +19846,7 @@ const JSONReviver_1 = __webpack_require__(/*! ../utils/JSONReviver */ 13);
 const createElement_1 = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 const createPopup_1 = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 37);
 const removeElementById_1 = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
-const codingcontracttypes_1 = __webpack_require__(/*! ./data/codingcontracttypes */ 203);
+const codingcontracttypes_1 = __webpack_require__(/*! ./data/codingcontracttypes */ 205);
 /* tslint:disable:no-magic-numbers completed-docs max-classes-per-file no-console */
 /* Represents different types of problems that a Coding Contract can have */
 class CodingContractType {
@@ -19974,11 +20021,11 @@ JSONReviver_1.Reviver.constructors.CodingContract = CodingContract;
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Crimes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Crimes */ 38);
 /* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Bladeburner */ 31);
-/* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Company/Company */ 74);
+/* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Company/Company */ 75);
 /* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Company_Company__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Company/Companies */ 18);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Company/CompanyPosition */ 86);
+/* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Company/CompanyPosition */ 87);
 /* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Company/CompanyPositions */ 28);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_8__);
@@ -21724,6 +21771,40 @@ function NetscriptFunctions(workerScript) {
                 pos: orderPos
             };
             return Object(_StockMarket__WEBPACK_IMPORTED_MODULE_27__[/* cancelOrder */ "f"])(params, workerScript);
+        },
+        getOrders : function() {
+            if (workerScript.checkingRam) {
+                return updateStaticRam("getOrders", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBuySellStockRamCost);
+            }
+            updateDynamicRam("getOrders", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBuySellStockRamCost);
+            if (!_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].hasTixApiAccess) {
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have TIX API Access! Cannot use getOrders()");
+            }
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN !== 8) {
+                if (!(hasWallStreetSF && wallStreetSFLvl >= 3)) {
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Cannot use getOrders(). You must either be in BitNode-8 or have Level 3 of Source-File 8");
+                }
+            }
+
+            const orders = {};
+
+            const stockMarketOrders = _StockMarket__WEBPACK_IMPORTED_MODULE_27__[/* StockMarket */ "c"]["Orders"];
+            for (let symbol in stockMarketOrders) {
+                const orderBook = stockMarketOrders[symbol];
+                if (orderBook.constructor === Array && orderBook.length > 0) {
+                    orders[symbol] = [];
+                    for (let i = 0; i < orderBook.length; ++i) {
+                        orders[symbol].push({
+                            shares: orderBook[i].shares,
+                            price: orderBook[i].price,
+                            type: orderBook[i].type,
+                            position: orderBook[i].pos,
+                        });
+                    }
+                }
+            }
+
+            return orders;
         },
         getStockVolatility : function(symbol) {
             if (workerScript.checkingRam) {
@@ -24820,7 +24901,7 @@ function substituteAliases(origCommand) {
 /* harmony import */ var _Factions__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Factions__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _FactionInfo__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./FactionInfo */ 115);
 /* harmony import */ var _FactionInfo__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_FactionInfo__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Location */ 91);
+/* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Location */ 92);
 /* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Missions */ 55);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../Player */ 0);
 /* harmony import */ var _SettingEnums__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../SettingEnums */ 73);
@@ -29576,7 +29657,7 @@ function calculateWeakenTime(server, hack, int) {
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 33);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 77);
+/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 78);
 /* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_11__);
@@ -31550,7 +31631,7 @@ Gang.prototype.clearUI = function() {
 /* harmony import */ var _HelpText__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./HelpText */ 103);
 /* harmony import */ var _HelpText__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_HelpText__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./InteractiveTutorial */ 34);
-/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Literature */ 82);
+/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Literature */ 84);
 /* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Message */ 41);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./NetscriptWorker */ 25);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Player */ 0);
@@ -31576,9 +31657,9 @@ Gang.prototype.clearUI = function() {
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_26__);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 54);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_27__);
-/* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 88);
+/* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 89);
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_28__);
-/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../utils/LogBox */ 79);
+/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../utils/LogBox */ 80);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30__);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./ui/postToTerminal */ 7);
@@ -33871,7 +33952,7 @@ exports.arrayToString = arrayToString;
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/isString */ 40);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var jsplumb__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! jsplumb */ 254);
+/* harmony import */ var jsplumb__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! jsplumb */ 256);
 /* harmony import */ var jsplumb__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(jsplumb__WEBPACK_IMPORTED_MODULE_10__);
 
 
@@ -35578,7 +35659,7 @@ exports.appendLineBreaks = appendLineBreaks;
 /* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNode */ 59);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./engine */ 8);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Prestige */ 87);
+/* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Prestige */ 88);
 /* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SourceFile */ 70);
 /* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Terminal */ 51);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
@@ -36360,7 +36441,7 @@ function initBitNodeMultipliers() {
 /* harmony import */ var _MaterialSizes__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_MaterialSizes__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _Product__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Product */ 104);
 /* harmony import */ var _Product__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_Product__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _ResearchMap__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./ResearchMap */ 98);
+/* harmony import */ var _ResearchMap__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./ResearchMap */ 99);
 /* harmony import */ var _ResearchMap__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_ResearchMap__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../BitNodeMultipliers */ 10);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_10__);
@@ -36368,7 +36449,7 @@ function initBitNodeMultipliers() {
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../Faction/Factions */ 14);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../Literature */ 82);
+/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../Literature */ 84);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../Locations */ 5);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_14__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../Player */ 0);
@@ -36386,7 +36467,7 @@ function initBitNodeMultipliers() {
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../../utils/uiHelpers/createPopup */ 37);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23__);
-/* harmony import */ var _utils_uiHelpers_createPopupCloseButton__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../../utils/uiHelpers/createPopupCloseButton */ 85);
+/* harmony import */ var _utils_uiHelpers_createPopupCloseButton__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../../utils/uiHelpers/createPopupCloseButton */ 81);
 /* harmony import */ var _utils_uiHelpers_createPopupCloseButton__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopupCloseButton__WEBPACK_IMPORTED_MODULE_24__);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_25__);
@@ -38815,11 +38896,16 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
         let marketTaClickListener = () => {
             const popupId = "cmpy-mgmt-marketta-popup";
             const markupLimit = mat.getMarkupLimit();
-            const ta1 = createElemenet("p", {
-                innerText: "The maximum sale price you can mark this up to is "  +
+            const ta1 = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("p", {
+                innerHTML: "<u><strong>Market-TA.I</strong></u><br>" +
+                           "The maximum sale price you can mark this up to is "  +
                            _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(mat.bCost + markupLimit, '$0.000a') +
                            ". This means that if you set the sale price higher than this, " +
                            "you will begin to experience a loss in number of sales",
+            });
+            const closeBtn = Object(_utils_uiHelpers_createPopupCloseButton__WEBPACK_IMPORTED_MODULE_24__["createPopupCloseButton"])(popupId, {
+                class: "std-button",
+                display: "block",
             });
 
             if (industry.hasResearch("Market-TA.II")) {
@@ -38832,11 +38918,11 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                         updateTa2Text();
                     },
                     type: "number",
-                    value: mat.sCost,
+                    value: mat.bCost,
                 });
 
                 // Function that updates the text in ta2Text element
-                updateTa2Text = () => {
+                updateTa2Text = function() {
                     const sCost = parseFloat(ta2Input.value);
                     let markup = 1;
                     if (sCost > mat.bCost) {
@@ -38852,15 +38938,16 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                             markup = mat.bCost / sCost;
                         }
                     }
-                    ta2Text.innerText = `If you sell at ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(sCost, "$0.0001")}, ` +
-                                        `then you will sell ${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_25__["formatNumber"])(markup, 2)}x as much compared `
+                    ta2Text.innerHTML = `<br><u><strong>Market-TA.II</strong></u><br>` +
+                                        `If you sell at ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(sCost, "$0.0001")}, ` +
+                                        `then you will sell ${Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_25__["formatNumber"])(markup, 5)}x as much compared ` +
                                         `to if you sold at market price.`;
                 }
                 updateTa2Text();
-                Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23__["createPopup"])(popupId, [ta1, ta2Input, ta2Text]);
+                Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23__["createPopup"])(popupId, [ta1, ta2Text, ta2Input, closeBtn]);
             } else {
                 // Market-TA.I only
-                Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23__["createPopup"])(popupId, [ta1]);
+                Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23__["createPopup"])(popupId, [ta1, closeBtn]);
             }
         };
 
@@ -41218,7 +41305,7 @@ exports.removeElement = removeElement;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return createRandomIp; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return ipExists; });
 /* harmony import */ var _src_Server__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/Server */ 11);
-/* harmony import */ var _helpers_getRandomByte__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers/getRandomByte */ 95);
+/* harmony import */ var _helpers_getRandomByte__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers/getRandomByte */ 96);
 /* harmony import */ var _helpers_getRandomByte__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_helpers_getRandomByte__WEBPACK_IMPORTED_MODULE_1__);
 
 
@@ -42387,25 +42474,25 @@ function getHacknetNode(name) {
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 77);
+/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 78);
 /* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 54);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/helpers/createProgressBarText */ 83);
+/* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/helpers/createProgressBarText */ 85);
 /* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 44);
 /* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/uiHelpers/getElementById */ 53);
 /* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/LogBox */ 79);
+/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/LogBox */ 80);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 29);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13__);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 61);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 81);
+/* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 83);
 /* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./ui/navigationTracking */ 12);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_16__);
@@ -43014,7 +43101,7 @@ function applySourceFile(srcFile) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const DarkWebItem_1 = __webpack_require__(/*! ./DarkWebItem */ 195);
+const DarkWebItem_1 = __webpack_require__(/*! ./DarkWebItem */ 197);
 const Programs_1 = __webpack_require__(/*! ../Programs/Programs */ 24);
 exports.DarkWebItems = {
     BruteSSHProgram: new DarkWebItem_1.DarkWebItem(Programs_1.Programs.BruteSSHProgram.name, 500e3, "Opens up SSH Ports"),
@@ -43128,104 +43215,6 @@ var PurchaseAugmentationsOrderSetting;
 
 /***/ }),
 /* 74 */
-/*!********************************!*\
-  !*** ./src/Company/Company.ts ***!
-  \********************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
-const CompanyPosition_1 = __webpack_require__(/*! ./CompanyPosition */ 86);
-const Constants_1 = __webpack_require__(/*! ../Constants */ 1);
-const DefaultConstructorParams = {
-    name: "",
-    info: "",
-    companyPositions: {},
-    expMultiplier: 1,
-    salaryMultiplier: 1,
-    jobStatReqOffset: 0,
-};
-class Company {
-    /**
-     * Initiatizes a Company from a JSON save state.
-     */
-    static fromJSON(value) {
-        return JSONReviver_1.Generic_fromJSON(Company, value.data);
-    }
-    constructor(p = DefaultConstructorParams) {
-        this.name = p.name;
-        this.info = p.info;
-        this.companyPositions = p.companyPositions;
-        this.expMultiplier = p.expMultiplier;
-        this.salaryMultiplier = p.salaryMultiplier;
-        this.jobStatReqOffset = p.jobStatReqOffset;
-        this.isPlayerEmployed = false;
-        this.playerReputation = 1;
-        this.favor = 0;
-        this.rolloverRep = 0;
-    }
-    hasPosition(pos) {
-        if (pos instanceof CompanyPosition_1.CompanyPosition) {
-            return (this.companyPositions[pos.name] != null);
-        }
-        else {
-            return (this.companyPositions[pos] != null);
-        }
-    }
-    gainFavor() {
-        if (this.favor == null) {
-            this.favor = 0;
-        }
-        if (this.rolloverRep == null) {
-            this.rolloverRep = 0;
-        }
-        var res = this.getFavorGain();
-        if (res.length != 2) {
-            console.error("Invalid result from getFavorGain() function");
-            return;
-        }
-        this.favor += res[0];
-        this.rolloverRep = res[1];
-    }
-    getFavorGain() {
-        if (this.favor == null) {
-            this.favor = 0;
-        }
-        if (this.rolloverRep == null) {
-            this.rolloverRep = 0;
-        }
-        let favorGain = 0, rep = this.playerReputation + this.rolloverRep;
-        let reqdRep = Constants_1.CONSTANTS.CompanyReputationToFavorBase *
-            Math.pow(Constants_1.CONSTANTS.CompanyReputationToFavorMult, this.favor);
-        while (rep > 0) {
-            if (rep >= reqdRep) {
-                ++favorGain;
-                rep -= reqdRep;
-            }
-            else {
-                break;
-            }
-            reqdRep *= Constants_1.CONSTANTS.FactionReputationToFavorMult;
-        }
-        return [favorGain, rep];
-    }
-    /**
-     * Serialize the current object to a JSON save state.
-     */
-    toJSON() {
-        return JSONReviver_1.Generic_toJSON("Company", this);
-    }
-}
-exports.Company = Company;
-JSONReviver_1.Reviver.constructors.Company = Company;
-
-
-/***/ }),
-/* 75 */
 /*!***************************!*\
   !*** ./src/SaveObject.js ***!
   \***************************/
@@ -43239,7 +43228,7 @@ JSONReviver_1.Reviver.constructors.Company = Company;
 /* harmony import */ var _Alias__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Alias */ 45);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Company/Companies */ 18);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Company/CompanyPosition */ 86);
+/* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Company/CompanyPosition */ 87);
 /* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Corporation_IndustryData__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Corporation/IndustryData */ 23);
 /* harmony import */ var _Corporation_IndustryData__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Corporation_IndustryData__WEBPACK_IMPORTED_MODULE_3__);
@@ -43261,7 +43250,7 @@ JSONReviver_1.Reviver.constructors.Company = Company;
 /* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
 /* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./StockMarket */ 22);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_GameOptions__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/GameOptions */ 84);
+/* harmony import */ var _utils_GameOptions__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/GameOptions */ 86);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_20__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
@@ -43269,7 +43258,7 @@ JSONReviver_1.Reviver.constructors.Company = Company;
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 37);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23__);
-/* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./ui/createStatusText */ 102);
+/* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./ui/createStatusText */ 77);
 /* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_ui_createStatusText__WEBPACK_IMPORTED_MODULE_24__);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__);
@@ -43328,7 +43317,7 @@ function BitburnerSaveObject() {
     this.CorporationResearchTreesSave   = "";
 }
 
-BitburnerSaveObject.prototype.saveGame = function(db) {
+BitburnerSaveObject.prototype.getSaveString = function() {
     this.PlayerSave                 = JSON.stringify(_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"]);
 
     //Delete all logs from all running scripts
@@ -43358,6 +43347,12 @@ BitburnerSaveObject.prototype.saveGame = function(db) {
         this.AllGangsSave           = JSON.stringify(_Gang__WEBPACK_IMPORTED_MODULE_9__[/* AllGangs */ "a"]);
     }
     var saveString = btoa(unescape(encodeURIComponent(JSON.stringify(this))));
+
+    return saveString;
+}
+
+BitburnerSaveObject.prototype.saveGame = function(db) {
+    var saveString = this.getSaveString();
 
     //We'll save to both localstorage and indexedDb
     var objectStore = db.transaction(["savestring"], "readwrite").objectStore("savestring");
@@ -43886,6 +43881,104 @@ function openImportFileHandler(evt) {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 64)))
 
 /***/ }),
+/* 75 */
+/*!********************************!*\
+  !*** ./src/Company/Company.ts ***!
+  \********************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
+const CompanyPosition_1 = __webpack_require__(/*! ./CompanyPosition */ 87);
+const Constants_1 = __webpack_require__(/*! ../Constants */ 1);
+const DefaultConstructorParams = {
+    name: "",
+    info: "",
+    companyPositions: {},
+    expMultiplier: 1,
+    salaryMultiplier: 1,
+    jobStatReqOffset: 0,
+};
+class Company {
+    /**
+     * Initiatizes a Company from a JSON save state.
+     */
+    static fromJSON(value) {
+        return JSONReviver_1.Generic_fromJSON(Company, value.data);
+    }
+    constructor(p = DefaultConstructorParams) {
+        this.name = p.name;
+        this.info = p.info;
+        this.companyPositions = p.companyPositions;
+        this.expMultiplier = p.expMultiplier;
+        this.salaryMultiplier = p.salaryMultiplier;
+        this.jobStatReqOffset = p.jobStatReqOffset;
+        this.isPlayerEmployed = false;
+        this.playerReputation = 1;
+        this.favor = 0;
+        this.rolloverRep = 0;
+    }
+    hasPosition(pos) {
+        if (pos instanceof CompanyPosition_1.CompanyPosition) {
+            return (this.companyPositions[pos.name] != null);
+        }
+        else {
+            return (this.companyPositions[pos] != null);
+        }
+    }
+    gainFavor() {
+        if (this.favor == null) {
+            this.favor = 0;
+        }
+        if (this.rolloverRep == null) {
+            this.rolloverRep = 0;
+        }
+        var res = this.getFavorGain();
+        if (res.length != 2) {
+            console.error("Invalid result from getFavorGain() function");
+            return;
+        }
+        this.favor += res[0];
+        this.rolloverRep = res[1];
+    }
+    getFavorGain() {
+        if (this.favor == null) {
+            this.favor = 0;
+        }
+        if (this.rolloverRep == null) {
+            this.rolloverRep = 0;
+        }
+        let favorGain = 0, rep = this.playerReputation + this.rolloverRep;
+        let reqdRep = Constants_1.CONSTANTS.CompanyReputationToFavorBase *
+            Math.pow(Constants_1.CONSTANTS.CompanyReputationToFavorMult, this.favor);
+        while (rep > 0) {
+            if (rep >= reqdRep) {
+                ++favorGain;
+                rep -= reqdRep;
+            }
+            else {
+                break;
+            }
+            reqdRep *= Constants_1.CONSTANTS.FactionReputationToFavorMult;
+        }
+        return [favorGain, rep];
+    }
+    /**
+     * Serialize the current object to a JSON save state.
+     */
+    toJSON() {
+        return JSONReviver_1.Generic_toJSON("Company", this);
+    }
+}
+exports.Company = Company;
+JSONReviver_1.Reviver.constructors.Company = Company;
+
+
+/***/ }),
 /* 76 */
 /*!******************************************!*\
   !*** ./src/Corporation/MaterialSizes.ts ***!
@@ -43915,6 +44008,43 @@ exports.MaterialSizes = {
 
 /***/ }),
 /* 77 */
+/*!************************************!*\
+  !*** ./src/ui/createStatusText.ts ***!
+  \************************************/
+/*! no static exports found */
+/*! exports used: createStatusText */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const getElementById_1 = __webpack_require__(/*! ../../utils/uiHelpers/getElementById */ 53);
+const threeSeconds = 3000;
+let x;
+/**
+ * Displays a status message to the player for approximately 3 seconds.
+ * @param text The status text to display
+ */
+function createStatusText(text) {
+    if (x !== undefined) {
+        clearTimeout(x);
+        // Likely not needed due to clearTimeout, but just in case...
+        x = undefined;
+    }
+    const statusElement = getElementById_1.getElementById("status-text");
+    statusElement.classList.add("status-text");
+    statusElement.innerText = text;
+    const handler = () => {
+        statusElement.classList.remove("status-text");
+        statusElement.innerText = "";
+    };
+    x = setTimeout(handler, threeSeconds);
+}
+exports.createStatusText = createStatusText;
+
+
+/***/ }),
+/* 78 */
 /*!***************************************************!*\
   !*** ./utils/uiHelpers/createAccordionElement.ts ***!
   \***************************************************/
@@ -43959,7 +44089,7 @@ exports.createAccordionElement = createAccordionElement;
 
 
 /***/ }),
-/* 78 */
+/* 79 */
 /*!**************************************!*\
   !*** ./utils/helpers/clearObject.ts ***!
   \**************************************/
@@ -43988,7 +44118,7 @@ exports.clearObject = clearObject;
 
 
 /***/ }),
-/* 79 */
+/* 80 */
 /*!*************************!*\
   !*** ./utils/LogBox.js ***!
   \*************************/
@@ -44078,8 +44208,61 @@ function logBoxUpdateText() {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 64)))
 
 /***/ }),
-/* 80 */,
 /* 81 */
+/*!***************************************************!*\
+  !*** ./utils/uiHelpers/createPopupCloseButton.ts ***!
+  \***************************************************/
+/*! no static exports found */
+/*! exports used: createPopupCloseButton */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/* Creates a Close/Cancel button that is used for removing popups */
+Object.defineProperty(exports, "__esModule", { value: true });
+const createElement_1 = __webpack_require__(/*! ./createElement */ 2);
+const removeElement_1 = __webpack_require__(/*! ./removeElement */ 61);
+function createPopupCloseButton(popup, options) {
+    let button;
+    // TODO event listener works with escape. Add and remove event listener
+    // from document
+    function closePopupWithEscFn(e) {
+        if (e.keyCode === 27) {
+            button.click();
+        }
+    }
+    button = createElement_1.createElement("button", {
+        class: options.class ? options.class : "popup-box-button",
+        display: options.display ? options.display : "inline-block",
+        innerText: options.innerText == null ? "Cancel" : options.innerText,
+        clickListener: () => {
+            if (popup instanceof Element) {
+                removeElement_1.removeElement(popup);
+            }
+            else {
+                try {
+                    const popupEl = document.getElementById(popup);
+                    if (popupEl instanceof Element) {
+                        removeElement_1.removeElement(popupEl);
+                    }
+                }
+                catch (e) {
+                    console.error(`createPopupCloseButton() threw: ${e}`);
+                }
+            }
+            document.removeEventListener("keydown", closePopupWithEscFn);
+            return false;
+        },
+    });
+    document.addEventListener("keydown", closePopupWithEscFn);
+    return button;
+}
+exports.createPopupCloseButton = createPopupCloseButton;
+
+
+/***/ }),
+/* 82 */,
+/* 83 */
 /*!*************************************!*\
   !*** ./utils/helpers/roundToTwo.ts ***!
   \*************************************/
@@ -44102,7 +44285,7 @@ exports.roundToTwo = roundToTwo;
 
 
 /***/ }),
-/* 82 */
+/* 84 */
 /*!***************************!*\
   !*** ./src/Literature.js ***!
   \***************************/
@@ -44554,7 +44737,7 @@ function initLiterature() {
 
 
 /***/ }),
-/* 83 */
+/* 85 */
 /*!************************************************!*\
   !*** ./utils/helpers/createProgressBarText.ts ***!
   \************************************************/
@@ -44590,7 +44773,7 @@ exports.createProgressBarText = createProgressBarText;
 
 
 /***/ }),
-/* 84 */
+/* 86 */
 /*!******************************!*\
   !*** ./utils/GameOptions.js ***!
   \******************************/
@@ -44650,60 +44833,7 @@ function gameOptionsBoxOpen() {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 64)))
 
 /***/ }),
-/* 85 */
-/*!***************************************************!*\
-  !*** ./utils/uiHelpers/createPopupCloseButton.ts ***!
-  \***************************************************/
-/*! no static exports found */
-/*! exports used: createPopupCloseButton */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-/* Creates a Close/Cancel button that is used for removing popups */
-Object.defineProperty(exports, "__esModule", { value: true });
-const createElement_1 = __webpack_require__(/*! ./createElement */ 2);
-const removeElement_1 = __webpack_require__(/*! ./removeElement */ 61);
-function createPopupCloseButton(popup, options) {
-    let button;
-    // TODO event listener works with escape. Add and remove event listener
-    // from document
-    function closePopupWithEscFn(e) {
-        if (e.keyCode === 27) {
-            button.click();
-        }
-    }
-    button = createElement_1.createElement("button", {
-        class: options.class ? options.class : "popup-box-button",
-        display: options.display ? options.display : "inline-block",
-        innerText: options.innerText == null ? "Cancel" : options.innerText,
-        clickListener: () => {
-            if (popup instanceof Element) {
-                removeElement_1.removeElement(popup);
-            }
-            else {
-                try {
-                    const popupEl = document.getElementById(popup);
-                    if (popupEl instanceof Element) {
-                        removeElement_1.removeElement(popupEl);
-                    }
-                }
-                catch (e) {
-                    console.error(`createPopupCloseButton() threw: ${e}`);
-                }
-            }
-            document.removeEventListener("keydown", closePopupWithEscFn);
-            return false;
-        },
-    });
-    document.addEventListener("keydown", closePopupWithEscFn);
-    return button;
-}
-exports.createPopupCloseButton = createPopupCloseButton;
-
-
-/***/ }),
-/* 86 */
+/* 87 */
 /*!****************************************!*\
   !*** ./src/Company/CompanyPosition.ts ***!
   \****************************************/
@@ -44795,7 +44925,7 @@ exports.CompanyPosition = CompanyPosition;
 
 
 /***/ }),
-/* 87 */
+/* 88 */
 /*!*************************!*\
   !*** ./src/Prestige.js ***!
   \*************************/
@@ -44810,7 +44940,7 @@ exports.CompanyPosition = CompanyPosition;
 /* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Augmentations */ 21);
 /* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BitNode */ 59);
 /* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Bladeburner */ 31);
-/* harmony import */ var _CinematicText__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./CinematicText */ 100);
+/* harmony import */ var _CinematicText__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./CinematicText */ 101);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Company/Companies */ 18);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Programs/Programs */ 24);
@@ -44822,7 +44952,7 @@ exports.CompanyPosition = CompanyPosition;
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 46);
 /* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Gang */ 50);
-/* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Location */ 91);
+/* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Location */ 92);
 /* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Message */ 41);
 /* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./NetscriptWorker */ 25);
@@ -45168,7 +45298,7 @@ function prestigeSourceFile() {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 64)))
 
 /***/ }),
-/* 88 */
+/* 89 */
 /*!***************************************!*\
   !*** ./utils/helpers/getTimestamp.ts ***!
   \***************************************/
@@ -45194,7 +45324,7 @@ exports.getTimestamp = getTimestamp;
 
 
 /***/ }),
-/* 89 */
+/* 90 */
 /*!*******************************************!*\
   !*** ./utils/helpers/isValidIPAddress.ts ***!
   \*******************************************/
@@ -45219,8 +45349,8 @@ exports.isValidIPAddress = isValidIPAddress;
 
 
 /***/ }),
-/* 90 */,
-/* 91 */
+/* 91 */,
+/* 92 */
 /*!*************************!*\
   !*** ./src/Location.js ***!
   \*************************/
@@ -45236,7 +45366,7 @@ exports.isValidIPAddress = isValidIPAddress;
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Company/Companies */ 18);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Company/GetJobRequirementText */ 93);
+/* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Company/GetJobRequirementText */ 94);
 /* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Company/data/CompanyPositionNames */ 36);
 /* harmony import */ var _Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_4__);
@@ -47488,7 +47618,7 @@ function purchaseServerBoxCreate(ram, cost) {
 
 
 /***/ }),
-/* 92 */
+/* 93 */
 /*!****************************************!*\
   !*** ./utils/helpers/compareArrays.ts ***!
   \****************************************/
@@ -47519,7 +47649,7 @@ exports.compareArrays = compareArrays;
 
 
 /***/ }),
-/* 93 */
+/* 94 */
 /*!**********************************************!*\
   !*** ./src/Company/GetJobRequirementText.ts ***!
   \**********************************************/
@@ -47585,7 +47715,7 @@ exports.getJobRequirementText = getJobRequirementText;
 
 
 /***/ }),
-/* 94 */
+/* 95 */
 /*!****************************************!*\
   !*** ./src/Programs/ProgramHelpers.js ***!
   \****************************************/
@@ -47681,7 +47811,7 @@ function initCreateProgramButtons() {
 
 
 /***/ }),
-/* 95 */
+/* 96 */
 /*!****************************************!*\
   !*** ./utils/helpers/getRandomByte.ts ***!
   \****************************************/
@@ -47707,9 +47837,9 @@ exports.getRandomByte = getRandomByte;
 
 
 /***/ }),
-/* 96 */,
 /* 97 */,
-/* 98 */
+/* 98 */,
+/* 99 */
 /*!****************************************!*\
   !*** ./src/Corporation/ResearchMap.ts ***!
   \****************************************/
@@ -47722,8 +47852,8 @@ exports.getRandomByte = getRandomByte;
 Object.defineProperty(exports, "__esModule", { value: true });
 // The Research Map is an object that holds all Corporation Research objects
 // as values. They are identified by their names
-const Research_1 = __webpack_require__(/*! ./Research */ 208);
-const ResearchMetadata_1 = __webpack_require__(/*! ./data/ResearchMetadata */ 207);
+const Research_1 = __webpack_require__(/*! ./Research */ 210);
+const ResearchMetadata_1 = __webpack_require__(/*! ./data/ResearchMetadata */ 209);
 exports.ResearchMap = {};
 function addResearch(p) {
     if (exports.ResearchMap[p.name] != null) {
@@ -47737,7 +47867,7 @@ for (const metadata of ResearchMetadata_1.researchMetadata) {
 
 
 /***/ }),
-/* 99 */
+/* 100 */
 /*!****************************************!*\
   !*** ./src/CodingContractGenerator.js ***!
   \****************************************/
@@ -47914,7 +48044,7 @@ function getRandomFilename(server, reward) {
 
 
 /***/ }),
-/* 100 */
+/* 101 */
 /*!******************************!*\
   !*** ./src/CinematicText.js ***!
   \******************************/
@@ -48035,7 +48165,7 @@ function cinematicTextEnd() {
 
 
 /***/ }),
-/* 101 */
+/* 102 */
 /*!***********************************************!*\
   !*** ./src/Company/GetNextCompanyPosition.ts ***!
   \***********************************************/
@@ -48058,43 +48188,6 @@ function getNextCompanyPosition(currPos) {
     return CompanyPositions_1.CompanyPositions[nextPosName];
 }
 exports.getNextCompanyPosition = getNextCompanyPosition;
-
-
-/***/ }),
-/* 102 */
-/*!************************************!*\
-  !*** ./src/ui/createStatusText.ts ***!
-  \************************************/
-/*! no static exports found */
-/*! exports used: createStatusText */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const getElementById_1 = __webpack_require__(/*! ../../utils/uiHelpers/getElementById */ 53);
-const threeSeconds = 3000;
-let x;
-/**
- * Displays a status message to the player for approximately 3 seconds.
- * @param text The status text to display
- */
-function createStatusText(text) {
-    if (x !== undefined) {
-        clearTimeout(x);
-        // Likely not needed due to clearTimeout, but just in case...
-        x = undefined;
-    }
-    const statusElement = getElementById_1.getElementById("status-text");
-    statusElement.classList.add("status-text");
-    statusElement.innerText = text;
-    const handler = () => {
-        statusElement.classList.remove("status-text");
-        statusElement.innerText = "";
-    };
-    x = setTimeout(handler, threeSeconds);
-}
-exports.createStatusText = createStatusText;
 
 
 /***/ }),
@@ -48352,8 +48445,8 @@ exports.HelpTexts = {
 Object.defineProperty(exports, "__esModule", { value: true });
 const EmployeePositions_1 = __webpack_require__(/*! ./EmployeePositions */ 26);
 const MaterialSizes_1 = __webpack_require__(/*! ./MaterialSizes */ 76);
-const ProductRatingWeights_1 = __webpack_require__(/*! ./ProductRatingWeights */ 205);
-const Cities_1 = __webpack_require__(/*! ../Locations/Cities */ 204);
+const ProductRatingWeights_1 = __webpack_require__(/*! ./ProductRatingWeights */ 207);
+const Cities_1 = __webpack_require__(/*! ../Locations/Cities */ 206);
 const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
 const getRandomInt_1 = __webpack_require__(/*! ../../utils/helpers/getRandomInt */ 15);
 class Product {
@@ -49117,7 +49210,7 @@ function _getScriptUrls(script, scripts, seen) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return createDevMenu; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return closeDevMenu; });
 /* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentations */ 21);
-/* harmony import */ var _CodingContractGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CodingContractGenerator */ 99);
+/* harmony import */ var _CodingContractGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CodingContractGenerator */ 100);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Programs/Programs */ 24);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Faction/Factions */ 14);
@@ -49703,7 +49796,7 @@ function closeDevMenu() {
 /* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../SpecialServerIps */ 32);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../ui/postToTerminal */ 7);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utils/helpers/isValidIPAddress */ 89);
+/* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utils/helpers/isValidIPAddress */ 90);
 /* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_5__);
@@ -57174,6 +57267,17 @@ exports.clearSelector = clearSelector;
 /***/ }),
 /* 169 */,
 /* 170 */
+/*!******************************!*\
+  !*** ./css/gameoptions.scss ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+/* 171 */,
+/* 172 */
 /*!*****************************!*\
   !*** ./css/popupboxes.scss ***!
   \*****************************/
@@ -57183,8 +57287,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 171 */,
-/* 172 */
+/* 173 */,
+/* 174 */
 /*!*********************************!*\
   !*** ./css/workinprogress.scss ***!
   \*********************************/
@@ -57194,8 +57298,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 173 */,
-/* 174 */
+/* 175 */,
+/* 176 */
 /*!****************************!*\
   !*** ./css/menupages.scss ***!
   \****************************/
@@ -57205,8 +57309,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 175 */,
-/* 176 */
+/* 177 */,
+/* 178 */
 /*!***************************!*\
   !*** ./css/terminal.scss ***!
   \***************************/
@@ -57216,8 +57320,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 177 */,
-/* 178 */
+/* 179 */,
+/* 180 */
 /*!************************************!*\
   !*** ./css/characteroverview.scss ***!
   \************************************/
@@ -57227,8 +57331,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 179 */,
-/* 180 */
+/* 181 */,
+/* 182 */
 /*!***************************!*\
   !*** ./css/mainmenu.scss ***!
   \***************************/
@@ -57238,8 +57342,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 181 */,
-/* 182 */
+/* 183 */,
+/* 184 */
 /*!**************************!*\
   !*** ./css/buttons.scss ***!
   \**************************/
@@ -57249,8 +57353,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 183 */,
-/* 184 */
+/* 185 */,
+/* 186 */
 /*!***************************!*\
   !*** ./css/tooltips.scss ***!
   \***************************/
@@ -57260,8 +57364,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 185 */,
-/* 186 */
+/* 187 */,
+/* 188 */
 /*!*************************!*\
   !*** ./css/styles.scss ***!
   \*************************/
@@ -57271,15 +57375,15 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 187 */,
-/* 188 */,
 /* 189 */,
 /* 190 */,
 /* 191 */,
 /* 192 */,
 /* 193 */,
 /* 194 */,
-/* 195 */
+/* 195 */,
+/* 196 */,
+/* 197 */
 /*!************************************!*\
   !*** ./src/DarkWeb/DarkWebItem.ts ***!
   \************************************/
@@ -57306,7 +57410,7 @@ exports.DarkWebItem = DarkWebItem;
 
 
 /***/ }),
-/* 196 */
+/* 198 */
 /*!***********************************************!*\
   !*** ./src/Programs/data/programsMetadata.ts ***!
   \***********************************************/
@@ -57448,7 +57552,7 @@ exports.programsMetadata = [
 
 
 /***/ }),
-/* 197 */
+/* 199 */
 /*!*********************************!*\
   !*** ./src/Programs/Program.ts ***!
   \*********************************/
@@ -57474,7 +57578,7 @@ exports.Program = Program;
 
 
 /***/ }),
-/* 198 */
+/* 200 */
 /*!**********************!*\
   !*** ./netscript.js ***!
   \**********************/
@@ -57579,7 +57683,7 @@ let NetscriptFunctions =
     // TIX API
     "getStockPrice|getStockPosition|getStockSymbols|buyStock|sellStock|"       +
     "shortStock|sellShort|"                                                    +
-    "placeOrder|cancelOrder|getStockVolatility|getStockForecast|"              +
+    "placeOrder|cancelOrder|getOrders|getStockVolatility|getStockForecast|"    +
     "purchase4SMarketData|purchase4SMarketDataTixApi|"                         +
 
     // Hacknet Node API
@@ -58319,7 +58423,7 @@ oop.inherits(Mode, TextMode);
     };
 
     this.createWorker = function(session) {
-        var worker = new WorkerClient(["ace"], __webpack_require__(/*! brace/worker/javascript */ 199), "JavaScriptWorker");
+        var worker = new WorkerClient(["ace"], __webpack_require__(/*! brace/worker/javascript */ 201), "JavaScriptWorker");
         worker.attachToDocument(session.getDocument());
 
         worker.on("annotate", function(results) {
@@ -58341,11 +58445,11 @@ exports.Mode = Mode;
 
 
 /***/ }),
-/* 199 */,
-/* 200 */,
 /* 201 */,
 /* 202 */,
-/* 203 */
+/* 203 */,
+/* 204 */,
+/* 205 */
 /*!*****************************************!*\
   !*** ./src/data/codingcontracttypes.ts ***!
   \*****************************************/
@@ -58826,7 +58930,7 @@ exports.codingContractTypesMetadata = [
 
 
 /***/ }),
-/* 204 */
+/* 206 */
 /*!*********************************!*\
   !*** ./src/Locations/Cities.ts ***!
   \*********************************/
@@ -58852,7 +58956,7 @@ exports.Cities = {
 
 
 /***/ }),
-/* 205 */
+/* 207 */
 /*!*************************************************!*\
   !*** ./src/Corporation/ProductRatingWeights.ts ***!
   \*************************************************/
@@ -58932,7 +59036,7 @@ exports.ProductRatingWeights = {
 
 
 /***/ }),
-/* 206 */
+/* 208 */
 /*!*****************************************!*\
   !*** ./src/Corporation/ResearchTree.ts ***!
   \*****************************************/
@@ -58943,7 +59047,7 @@ exports.ProductRatingWeights = {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const ResearchMap_1 = __webpack_require__(/*! ./ResearchMap */ 98);
+const ResearchMap_1 = __webpack_require__(/*! ./ResearchMap */ 99);
 class Node {
     constructor(p = { cost: 0, text: "" }) {
         // All child Nodes in the tree
@@ -59174,7 +59278,7 @@ exports.ResearchTree = ResearchTree;
 
 
 /***/ }),
-/* 207 */
+/* 209 */
 /*!**************************************************!*\
   !*** ./src/Corporation/data/ResearchMetadata.ts ***!
   \**************************************************/
@@ -59307,7 +59411,7 @@ exports.researchMetadata = [
 
 
 /***/ }),
-/* 208 */
+/* 210 */
 /*!*************************************!*\
   !*** ./src/Corporation/Research.ts ***!
   \*************************************/
@@ -59372,7 +59476,7 @@ exports.Research = Research;
 
 
 /***/ }),
-/* 209 */
+/* 211 */
 /*!**************************************************!*\
   !*** ./src/Corporation/data/BaseResearchTree.ts ***!
   \**************************************************/
@@ -59383,8 +59487,8 @@ exports.Research = Research;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const ResearchMap_1 = __webpack_require__(/*! ../ResearchMap */ 98);
-const ResearchTree_1 = __webpack_require__(/*! ../ResearchTree */ 206);
+const ResearchMap_1 = __webpack_require__(/*! ../ResearchMap */ 99);
+const ResearchTree_1 = __webpack_require__(/*! ../ResearchTree */ 208);
 function makeNode(name) {
     const research = ResearchMap_1.ResearchMap[name];
     if (research == null) {
@@ -59430,7 +59534,7 @@ exports.getBaseResearchTreeCopy = getBaseResearchTreeCopy;
 
 
 /***/ }),
-/* 210 */
+/* 212 */
 /*!***********************************************!*\
   !*** ./src/Company/data/CompaniesMetadata.ts ***!
   \***********************************************/
@@ -59822,7 +59926,7 @@ exports.companiesMetadata = [
 
 
 /***/ }),
-/* 211 */
+/* 213 */
 /*!******************************************************!*\
   !*** ./src/Company/data/CompanyPositionsMetadata.ts ***!
   \******************************************************/
@@ -60435,8 +60539,6 @@ exports.companyPositionMetadata = [
 
 
 /***/ }),
-/* 212 */,
-/* 213 */,
 /* 214 */,
 /* 215 */,
 /* 216 */,
@@ -60471,7 +60573,9 @@ exports.companyPositionMetadata = [
 /* 245 */,
 /* 246 */,
 /* 247 */,
-/* 248 */
+/* 248 */,
+/* 249 */,
+/* 250 */
 /*!**********************!*\
   !*** util (ignored) ***!
   \**********************/
@@ -60482,7 +60586,7 @@ exports.companyPositionMetadata = [
 /* (ignored) */
 
 /***/ }),
-/* 249 */
+/* 251 */
 /*!**********************!*\
   !*** util (ignored) ***!
   \**********************/
