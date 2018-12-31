@@ -54,7 +54,7 @@ function BitburnerSaveObject() {
     this.CorporationResearchTreesSave   = "";
 }
 
-BitburnerSaveObject.prototype.saveGame = function(db) {
+BitburnerSaveObject.prototype.getSaveString = function() {
     this.PlayerSave                 = JSON.stringify(Player);
 
     //Delete all logs from all running scripts
@@ -84,6 +84,12 @@ BitburnerSaveObject.prototype.saveGame = function(db) {
         this.AllGangsSave           = JSON.stringify(AllGangs);
     }
     var saveString = btoa(unescape(encodeURIComponent(JSON.stringify(this))));
+
+    return saveString;
+}
+
+BitburnerSaveObject.prototype.saveGame = function(db) {
+    var saveString = this.getSaveString();
 
     //We'll save to both localstorage and indexedDb
     var objectStore = db.transaction(["savestring"], "readwrite").objectStore("savestring");

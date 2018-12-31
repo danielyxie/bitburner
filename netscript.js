@@ -95,7 +95,7 @@ let NetscriptFunctions =
     // TIX API
     "getStockPrice|getStockPosition|getStockSymbols|buyStock|sellStock|"       +
     "shortStock|sellShort|"                                                    +
-    "placeOrder|cancelOrder|getStockVolatility|getStockForecast|"              +
+    "placeOrder|cancelOrder|getOrders|getStockVolatility|getStockForecast|"    +
     "purchase4SMarketData|purchase4SMarketDataTixApi|"                         +
 
     // Hacknet Node API

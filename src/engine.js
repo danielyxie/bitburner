@@ -9,6 +9,7 @@ import { exceptionAlert }                               from "../utils/helpers/e
 import { removeLoadingScreen }                          from "../utils/uiHelpers/removeLoadingScreen";
 
 import {numeralWrapper}                                 from "./ui/numeralFormat";
+import { createStatusText }                             from "./ui/createStatusText";
 
 import {formatNumber,
         convertTimeMsToTimeElapsedString,
@@ -89,6 +90,7 @@ import "../css/terminal.scss";
 import "../css/menupages.scss";
 import "../css/workinprogress.scss";
 import "../css/popupboxes.scss";
+import "../css/gameoptions.scss";
 import "../css/interactivetutorial.scss";
 import "../css/loader.scss";
 import "../css/missions.scss";
@@ -96,6 +98,7 @@ import "../css/companymanagement.scss";
 import "../css/bladeburner.scss";
 import "../css/gang.scss";
 import "../css/treant.css";
+
 
 /* Shortcuts to navigate through the game
  *  Alt-t - Terminal
@@ -1803,6 +1806,43 @@ const Engine = {
         document.getElementById("hacknet-nodes-menu-link").removeAttribute("class");
         document.getElementById("city-menu-link").removeAttribute("class");
         document.getElementById("tutorial-menu-link").removeAttribute("class");
+
+        // Copy Save Data to Clipboard
+        document.getElementById("copy-save-to-clipboard-link").addEventListener("click", function() {
+            const saveString = saveObject.getSaveString();
+            if (!navigator.clipboard) {
+                // Async Clipboard API not supported, so we'll use this using the
+                // textarea and document.execCommand('copy') trick
+                const textArea = document.createElement("textarea");
+                textArea.value = saveString;
+                textArea.setAttribute("readonly", '');
+                textArea.style.position = 'absolute';
+                textArea.left = '-9999px';
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    const successful = document.execCommand("copy");
+                    if (successful) {
+                        createStatusText("Copied save to clipboard");
+                    } else {
+                        createStatusText("Failed to copy save");
+                    }
+                } catch(e) {
+                    console.error("Unable to copy save data to clipboard using document.execCommand('copy')");
+                    createStatusText("Failed to copy save");
+                }
+                document.body.removeChild(textArea);
+            } else {
+                // Use the Async Clipboard API
+                navigator.clipboard.writeText(saveString).then(function() {
+                    createStatusText("Copied save to clipboard");
+                }, function(e) {
+                    console.error("Unable to copy save data to clipboard using Async API");
+                    createStatusText("Failed to copy save");
+                })
+            }
+        });
 
         //DEBUG Delete active Scripts on home
         document.getElementById("debug-delete-scripts-link").addEventListener("click", function() {

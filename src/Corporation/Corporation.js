@@ -2425,11 +2425,16 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
         let marketTaClickListener = () => {
             const popupId = "cmpy-mgmt-marketta-popup";
             const markupLimit = mat.getMarkupLimit();
-            const ta1 = createElemenet("p", {
-                innerText: "The maximum sale price you can mark this up to is "  +
+            const ta1 = createElement("p", {
+                innerHTML: "<u><strong>Market-TA.I</strong></u><br>" +
+                           "The maximum sale price you can mark this up to is "  +
                            numeralWrapper.format(mat.bCost + markupLimit, '$0.000a') +
                            ". This means that if you set the sale price higher than this, " +
                            "you will begin to experience a loss in number of sales",
+            });
+            const closeBtn = createPopupCloseButton(popupId, {
+                class: "std-button",
+                display: "block",
             });
 
             if (industry.hasResearch("Market-TA.II")) {
@@ -2442,11 +2447,11 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                         updateTa2Text();
                     },
                     type: "number",
-                    value: mat.sCost,
+                    value: mat.bCost,
                 });
 
                 // Function that updates the text in ta2Text element
-                updateTa2Text = () => {
+                updateTa2Text = function() {
                     const sCost = parseFloat(ta2Input.value);
                     let markup = 1;
                     if (sCost > mat.bCost) {
@@ -2462,15 +2467,16 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                             markup = mat.bCost / sCost;
                         }
                     }
-                    ta2Text.innerText = `If you sell at ${numeralWrapper.format(sCost, "$0.0001")}, ` +
-                                        `then you will sell ${formatNumber(markup, 2)}x as much compared `
+                    ta2Text.innerHTML = `<br><u><strong>Market-TA.II</strong></u><br>` +
+                                        `If you sell at ${numeralWrapper.format(sCost, "$0.0001")}, ` +
+                                        `then you will sell ${formatNumber(markup, 5)}x as much compared ` +
                                         `to if you sold at market price.`;
                 }
                 updateTa2Text();
-                createPopup(popupId, [ta1, ta2Input, ta2Text]);
+                createPopup(popupId, [ta1, ta2Text, ta2Input, closeBtn]);
             } else {
                 // Market-TA.I only
-                createPopup(popupId, [ta1]);
+                createPopup(popupId, [ta1, closeBtn]);
             }
         };
 
