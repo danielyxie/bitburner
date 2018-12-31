@@ -510,22 +510,18 @@ export let CONSTANTS: IMap<any> = {
      ** Changed initial market prices for many materials
      ** Changed the way a material's demand, competition, and market price change over time
      ** The sale price of materials can no longer be marked-up as high
-     ** Added a Research Tree mechanic. Spend Scientific Research on permanent upgrades for
-        each industry
+     ** Added a Research Tree mechanic. Spend Scientific Research on permanent upgrades for each industry
      ** You can now redistribute earnings to shareholders (including yourself) as dividends
      ** Cost of "Smart Supply" upgraded reduced from $50b to $25b
      ** Now has offline progress, which works similarly to the Gang/Bladeburner mechanics
      ** Slightly reduced the amount of money offered to you by investment firms
      ** Employee salaries now slowly increase over time
-     ** Slightly reduced the effect "Real Estate" has on the Production Multiplier for the
-        Agriculture industry
+     ** Slightly reduced the effect "Real Estate" has on the Production Multiplier for the Agriculture industry
 
      * Added getOrders() Netscript function to the TIX API
      *
      * Stock Market, Travel, and Corporation main menu links are now properly styled
-     * Many pop-up/dialog boxes now support the 'Enter' and 'Esc' hotkeys. If you
-       find a pop-up/dialog box that doesnt support this, let me know specifically which one
-       ('Enter' for the default option, 'Esc' for cancelling and closing the pop-up box)
+     * Many pop-up/dialog boxes now support the 'Enter' and 'Esc' hotkeys. If you find a pop-up/dialog box that doesnt support this, let me know specifically which one ('Enter' for the default option, 'Esc' for cancelling and closing the pop-up box)
      * Added "brace_style = preserve_inline" configuration to Script Editor Beautifier
      * ServerProfiler.exe can now be purchased from the Dark Web
      * Added an option to copy save data to clipboard
