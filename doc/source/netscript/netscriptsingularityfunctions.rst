@@ -557,7 +557,7 @@ getAugmentationsFromFaction
     Returns an array containing the names (as strings) of all Augmentations that are available from the specified faction.
 
 getAugmentationPrereq
--------------------
+---------------------
 
 .. js:function:: getAugmentationPrereq(augName)
 

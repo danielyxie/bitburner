@@ -519,7 +519,7 @@ export let CONSTANTS: IMap<any> = {
      ** Slightly reduced the effect "Real Estate" has on the Production Multiplier for the Agriculture industry
 
      * Added getOrders() Netscript function to the TIX API
-     *
+     * Added getAugmentationPrereq() Singularity function (by havocmayhem)
      * Stock Market, Travel, and Corporation main menu links are now properly styled
      * Many pop-up/dialog boxes now support the 'Enter' and 'Esc' hotkeys. If you find a pop-up/dialog box that doesnt support this, let me know specifically which one ('Enter' for the default option, 'Esc' for cancelling and closing the pop-up box)
      * Added "brace_style = preserve_inline" configuration to Script Editor Beautifier
