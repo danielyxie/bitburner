@@ -3626,7 +3626,7 @@ function NetscriptFunctions(workerScript) {
             }
 
             var aug = Augmentations[name];
-            return aug.prereqs;
+            return aug.prereqs.slice();
         },
         getAugmentationCost : function(name) {
             var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
