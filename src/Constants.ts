@@ -55,6 +55,7 @@ export let CONSTANTS: IMap<any> = {
     ScriptForRamCost:               0,
     ScriptIfRamCost:                0,
     ScriptHackRamCost:              0.1,
+    ScriptHackAnalyzeRamCost:       1,
     ScriptGrowRamCost:              0.15,
     ScriptGrowthAnalyzeRamCost:     1,
     ScriptWeakenRamCost:            0.15,
@@ -520,11 +521,16 @@ export let CONSTANTS: IMap<any> = {
 
      * Added getOrders() Netscript function to the TIX API
      * Added getAugmentationPrereq() Singularity function (by havocmayhem)
+     * Added hackAnalyzePercent() and hackAnalyzeThreads() Netscript functions
      * Stock Market, Travel, and Corporation main menu links are now properly styled
      * Many pop-up/dialog boxes now support the 'Enter' and 'Esc' hotkeys. If you find a pop-up/dialog box that doesnt support this, let me know specifically which one ('Enter' for the default option, 'Esc' for cancelling and closing the pop-up box)
      * Added "brace_style = preserve_inline" configuration to Script Editor Beautifier
      * ServerProfiler.exe can now be purchased from the Dark Web
      * Added an option to copy save data to clipboard
+     * Added total multiplier information on the "Augmentations" page
+     * Bug Fix: gymWorkout() Singularity function should now work properly with Millenium Fitness Gym
+     * Began migrating gameplay information to the ReadTheDocs documentation
+     *
      `
 
 }

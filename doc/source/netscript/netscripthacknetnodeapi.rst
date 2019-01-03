@@ -31,6 +31,12 @@ purchase will have the name "hacknet-node-0" and is referenced using index 0.
 The fifth Hacknet Node you purchase will have the name "hacknet-node-4" and is
 referenced using index 4.
 
+RAM Cost
+--------
+Accessing the `hacknet` namespace incurs a one time cost of 4 GB of RAM.
+In other words, using multiple Hacknet Node API functions in a script will not cost
+more than 4 GB of RAM. 
+
 numNodes
 --------
 .. js:function:: numNodes()
@@ -150,7 +156,7 @@ getCoreUpgradeCost
     Returns the cost of upgrading the number of cores of the specified Hacknet Node by *n*.
 
     If an invalid value for *n* is provided, then this function returns 0. If the
-    specified Hacknet Node is already at the max number of cores, then Infinity is returned. 
+    specified Hacknet Node is already at the max number of cores, then Infinity is returned.
 
 Utilities
 ---------

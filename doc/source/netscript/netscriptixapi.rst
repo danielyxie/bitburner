@@ -15,6 +15,8 @@ getStockSymbols
 
 .. js:function:: getStockSymbols()
 
+    :RAM cost: 2 GB
+
     Returns an array of the symbols of the tradable stocks
 
 getStockPrice
@@ -23,6 +25,7 @@ getStockPrice
 .. js:function:: getStockPrice(sym)
 
     :param string sym: Stock symbol
+    :RAM cost: 2 GB
 
     Returns the price of a stock, given its symbol (NOT the company name). The symbol is a sequence
     of two to four capital letters.
@@ -37,6 +40,7 @@ getStockPosition
 .. js:function:: getStockPosition(sym)
 
     :param string sym: Stock symbol
+    :RAM cost: 2 GB
 
     Returns an array of four elements that represents the player's position in a stock.
 
@@ -65,6 +69,7 @@ buyStock
 
     :param string sym: Symbol of stock to purchase
     :param number shares: Number of shares to purchased. Must be positive. Will be rounded to nearest integer
+    :RAM cost: 2.5 GB
 
     Attempts to purchase shares of a stock using a `Market Order <http://bitburner.wikia.com/wiki/Stock_Market#Order_Types>`_.
 
@@ -81,6 +86,7 @@ sellStock
 
     :param string sym: Symbol of stock to sell
     :param number shares: Number of shares to sell. Must be positive. Will be rounded to nearest integer
+    :RAM cost: 2.5 GB
 
     Attempts to sell shares of a stock using a `Market Order <http://bitburner.wikia.com/wiki/Stock_Market#Order_Types>`_.
 
@@ -101,6 +107,7 @@ shortStock
 
     :param string sym: Symbol of stock to short
     :param number shares: Number of shares to short. Must be positive. Will be rounded to nearest integer
+    :RAM cost: 2.5 GB
 
     Attempts to purchase a `short <http://bitburner.wikia.com/wiki/Stock_Market#Positions:_Long_vs_Short>`_ position of a stock
     using a `Market Order <http://bitburner.wikia.com/wiki/Stock_Market#Order_Types>`_.
@@ -119,6 +126,7 @@ sellShort
 
     :param string sym: Symbol of stock to sell
     :param number shares: Number of shares to sell. Must be positive. Will be rounded to nearest integer
+    :RAM cost: 2.5 GB
 
     Attempts to sell a `short <http://bitburner.wikia.com/wiki/Stock_Market#Positions:_Long_vs_Short>`_ position of a stock
     using a `Market Order <http://bitburner.wikia.com/wiki/Stock_Market#Order_Types>`_.
@@ -149,6 +157,7 @@ placeOrder
     :param string pos:
         Specifies whether the order is a "Long" or "Short" position. The Values "L" or "S" can also be used. This is
         NOT case-sensitive.
+    :RAM cost: 2.5 GB
 
     Places an order on the stock market. This function only works for `Limit and Stop Orders <http://bitburner.wikia.com/wiki/Stock_Market#Order_Types>`_.
 
@@ -175,10 +184,80 @@ cancelOrder
     :param string pos:
         Specifies whether the order is a "Long" or "Short" position. The Values "L" or "S" can also be used. This is
         NOT case-sensitive.
+    :RAM cost: 2.5 GB
 
     Cancels an oustanding Limit or Stop order on the stock market.
 
     The ability to use limit and stop orders is **not** immediately available to the player and must be unlocked later on in the game.
+
+getOrders
+---------
+
+.. js:function:: getOrders()
+
+    :RAM cost: 2.5 GB
+
+    Returns your order book for the stock market. This is an object containing information
+    for all the Limit and Stop Orders you have in the stock market.
+
+    The object has the following structure::
+
+        {
+            StockSymbol1: [ // Array of orders for this stock
+                {
+                    shares: Order quantity
+                    price: Order price
+                    type: Order type
+                    position: Either "L" or "S" for Long or Short position
+                },
+                {
+                    ...
+                },
+                ...
+            ],
+            StockSymbol2: [ // Array of orders for this stock
+                ...
+            ],
+            ...
+        }
+
+    The "Order type" property can have one of the following four values:
+
+        * "Limit Buy Order"
+        * "Limit Sell Order"
+        * "Stop Buy Order"
+        * "Stop Sell Order"
+
+    **Note that the order book will only contain information for stocks that you actually
+    have orders in**. For example, if you do not have orders in Nova Medical (NVMD), then the returned
+    object will not have a "NVMD" property.
+
+    Example::
+
+        {
+            ECP: [
+                {
+                    shares: 5,
+                    price: 100,000
+                    type: "Stop Buy Order",
+                    position: "S",
+                },
+                {
+                    shares: 25,
+                    price: 125,000
+                    type: "Limit Sell Order",
+                    position: "L",
+                },
+            ],
+            SYSC: [
+                {
+                    shares: 100,
+                    price: 10,000
+                    type: "Limit Buy Order",
+                    position: "L",
+                },
+            ],
+        }
 
 getStockVolatility
 ------------------
@@ -186,6 +265,7 @@ getStockVolatility
 .. js:function:: getStockVolatility(sym)
 
     :param string sym: Symbol of stock
+    :RAM cost: 2.5 GB
 
     Returns the volatility of the specified stock.
 
@@ -203,6 +283,7 @@ getStockForecast
 .. js:function:: getStockForecast(sym)
 
     :param string sym: Symbol of stock
+    :RAM cost: 2.5 GB
 
     Returns the probability that the specified stock's price will increase
     (as opposed to decrease) during the next tick.
@@ -220,6 +301,8 @@ purchase4SMarketData
 
 .. js:function:: purchase4SMarketData()
 
+    :RAM cost: 2.5 GB
+
     Purchase 4S Market Data Access.
 
     Returns true if you successfully purchased it or if you already have access.
@@ -229,6 +312,8 @@ purchase4SMarketDataTixApi
 --------------------------
 
 .. js:function:: purchase4SMarketDataTixApi()
+
+    :RAM cost: 2.5 GB
 
     Purchase 4S Market Data TIX API Access.
 

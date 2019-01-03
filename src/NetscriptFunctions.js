@@ -408,6 +408,46 @@ function NetscriptFunctions(workerScript) {
                 }
             });
         },
+        hackAnalyzeThreads : function(ip, hackAmount) {
+            if (workerScript.checkingRam) {
+                return updateStaticRam("hackAnalyzeThreads", CONSTANTS.ScriptHackAnalyzeRamCost);
+            }
+            updateDynamicRam("hackAnalyzeThreads", CONSTANTS.ScriptHackAnalyzeRamCost);
+
+            // Check argument validity
+            const server = safeGetServer(ip, 'hackAnalyzeThreads');
+            if (isNaN(hackAmount)) {
+                throw makeRuntimeRejectMsg(workerScript, `Invalid growth argument passed into growthAnalyze: ${hackAmount}. Must be numeric`);
+            }
+
+            if (hackAmount < 0 || hackAmount > server.moneyAvailable) {
+                return -1;
+            }
+
+            const percentHacked = calculatePercentMoneyHacked(server);
+
+            return hackAmount / Math.floor(server.moneyAvailable * percentHacked);
+        },
+        hackAnalyzePercent : function(ip) {
+            if (workerScript.checkingRam) {
+                return updateStaticRam("hackAnalyzePercent", CONSTANTS.ScriptHackAnalyzeRamCost);
+            }
+            updateDynamicRam("hackAnalyzePercent", CONSTANTS.ScriptHackAnalyzeRamCost);
+
+            const server = safeGetServer(ip, 'hackAnalyzePercent');
+
+            return calculatePercentMoneyHacked(server) * 100;
+        },
+        hackChance : function(ip) {
+            if (workerScript.checkingRam) {
+                return updateStaticRam("hackChance", CONSTANTS.ScriptHackAnalyzeRamCost);
+            }
+            updateDynamicRam("hackChance", CONSTANTS.ScriptHackAnalyzeRamCost);
+
+            const server = safeGetServer(ip, 'hackChance');
+
+            return calculateHackingChance(server);
+        },
         sleep : function(time){
             if (workerScript.checkingRam) {return 0;}
             if (time === undefined) {
@@ -2626,7 +2666,7 @@ function NetscriptFunctions(workerScript) {
                     costMult = 20;
                     expMult = 10;
                     break;
-                case Locations.VolhavenMilleniumFitnessGym:
+                case Locations.VolhavenMilleniumFitnessGym.toLowerCase():
                     if (Player.city != Locations.Volhaven) {
                         workerScript.scriptRef.log("ERROR: You cannot workout at Millenium Fitness Gym because you are not in Volhaven. gymWorkout() failed");
                         return false;

@@ -1265,6 +1265,11 @@ Industry.prototype.createResearchBox = function() {
     // Add Event Listeners for all Nodes
     const allResearch = researchTree.getAllNodes();
     for (let i = 0; i < allResearch.length; ++i) {
+        // If this is already Researched, skip it
+        if (this.researched[allResearch[i]] === true) {
+            continue;
+        }
+
         // Get the Research object
         const research = ResearchMap[allResearch[i]];
 
@@ -3842,11 +3847,12 @@ Corporation.prototype.updateCorporationOverviewContent = function() {
         const dividendsPerShare = totalDividends / TOTALSHARES;
         const playerEarnings = this.numShares * dividendsPerShare;
 
-        dividendStr = `Retained Profits (after dividends): ${numeralWrapper.format(retainedEarnings, "$0.000a")} / s<br>` +
+        dividendStr = `Dividend Percentage: ${numeralWrapper.format(this.dividendPercentage / 100, "0%")}<br>` +
+                      `Retained Profits (after dividends): ${numeralWrapper.format(retainedEarnings, "$0.000a")} / s<br>` +
                       `Dividends per share: ${numeralWrapper.format(dividendsPerShare, "$0.000a")} / s<br>` +
-                      `Your earnings (Pre-Tax): ${numeralWrapper.format(playerEarnings, "$0.000a")} / s<br>` +
+                      `Your earnings as a shareholder (Pre-Tax): ${numeralWrapper.format(playerEarnings, "$0.000a")} / s<br>` +
                       `Dividend Tax Rate: ${this.dividendTaxPercentage}%<br>` +
-                      `Your earnings (Post-Tax): ${numeralWrapper.format(playerEarnings * (this.dividendTaxPercentage / 100), "$0.000a")} / s<br>`;
+                      `Your earnings as a shareholder (Post-Tax): ${numeralWrapper.format(playerEarnings * (this.dividendTaxPercentage / 100), "$0.000a")} / s<br>`;
     }
 
     var txt = "Total Funds: " + numeralWrapper.format(this.funds.toNumber(), '$0.000a') + "<br>" +
@@ -4186,9 +4192,6 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
         id: "cmpy-mgmt-employee-p",
         display:"block",
         innerHTML:  "<h1>Office Space</h1><br>" +
-                    "Type: " + office.tier + "<br>" +
-                    "Comfort: " + office.comf + "<br>" +
-                    "Beauty: " + office.beau + "<br>" +
                     "Size: " + office.employees.length + " / " + office.size + " employees",
     });
     industryEmployeePanel.appendChild(industryEmployeeText);
@@ -4640,9 +4643,6 @@ Corporation.prototype.updateDivisionContent = function(division) {
     var office = division.offices[currentCityUi];
     industryEmployeeText.innerHTML =
                 "<h1>Office Space</h1><br>" +
-                "Type: " + office.tier + "<br>" +
-                "Comfort: " + office.comf + "<br>" +
-                "Beauty: " + office.beau + "<br>" +
                 "Size: " + office.employees.length + " / " + office.size + " employees";
     if (office.employees.length >= office.size) {
         industryEmployeeHireButton.className = "a-link-button-inactive";
@@ -4657,12 +4657,13 @@ Corporation.prototype.updateDivisionContent = function(division) {
 
     //Employee Overview stats
     //Calculate average morale, happiness, and energy
-    var totalMorale = 0, totalHappiness = 0, totalEnergy = 0,
+    var totalMorale = 0, totalHappiness = 0, totalEnergy = 0, totalSalary = 0,
         avgMorale = 0, avgHappiness = 0, avgEnergy = 0;
-    for (var i = 0; i < office.employees.length; ++i) {
+    for (let i = 0; i < office.employees.length; ++i) {
         totalMorale += office.employees[i].mor;
         totalHappiness += office.employees[i].hap;
         totalEnergy += office.employees[i].ene;
+        totalSalary += office.employees[i].sal;
     }
     if (office.employees.length > 0) {
         avgMorale = totalMorale / office.employees.length;
@@ -4672,7 +4673,8 @@ Corporation.prototype.updateDivisionContent = function(division) {
     industryEmployeeInfo.innerHTML =
         "Avg Employee Morale: " + formatNumber(avgMorale, 3) + "<br>" +
         "Avg Employee Happiness: " + formatNumber(avgHappiness, 3) + "<br>" +
-        "Avg Employee Energy: " + formatNumber(avgEnergy, 3);
+        "Avg Employee Energy: " + formatNumber(avgEnergy, 3) + "<br>" +
+        "Total Employee Salary: " + numeralWrapper.format(totalSalary, "$0.000a");
     if (vechain) { //VeChain - Statistics
         industryEmployeeInfo.appendChild(createElement("br", {}));
         industryEmployeeInfo.appendChild(createElement("p", {
