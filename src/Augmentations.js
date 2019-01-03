@@ -1,6 +1,5 @@
 import { BitNodeMultipliers }               from "./BitNodeMultipliers";
 import { CONSTANTS }                        from "./Constants";
-import { Engine }                           from "./engine";
 import { Factions,
          factionExists }                    from "./Faction/Factions";
 import { hasBladeburnerSF }                 from "./NetscriptFunctions";
@@ -18,6 +17,7 @@ import { dialogBoxCreate }                  from "../utils/DialogBox";
 import { createAccordionElement }           from "../utils/uiHelpers/createAccordionElement";
 import { Reviver, Generic_toJSON,
          Generic_fromJSON }                 from "../utils/JSONReviver";
+import { formatNumber }                     from "../utils/StringHelperFunctions";
 import { clearObject }                      from "../utils/helpers/clearObject";
 import { createElement }                    from "../utils/uiHelpers/createElement";
 import { isString }                         from "../utils/helpers/isString";
@@ -2475,9 +2475,9 @@ function giveAllAugmentations() {
     Player.reapplyAllAugmentations();
 }
 
-function displayAugmentationsContent() {
-    removeChildrenFromElement(Engine.Display.augmentationsContent);
-    Engine.Display.augmentationsContent.appendChild(createElement("h1", {
+function displayAugmentationsContent(contentEl) {
+    removeChildrenFromElement(contentEl);
+    contentEl.appendChild(createElement("h1", {
         innerText:"Purchased Augmentations",
     }));
 
@@ -2487,7 +2487,7 @@ function displayAugmentationsContent() {
         bladeburnerText = "Bladeburner Progress\n\n";
     }
 
-    Engine.Display.augmentationsContent.appendChild(createElement("pre", {
+    contentEl.appendChild(createElement("pre", {
         width:"70%", whiteSpace:"pre-wrap", display:"block",
         innerText:"Below is a list of all Augmentations you have purchased but not yet installed. Click the button below to install them.\n" +
                   "WARNING: Installing your Augmentations resets most of your progress, including:\n\n" +
@@ -2505,7 +2505,7 @@ function displayAugmentationsContent() {
     }));
 
     //Install Augmentations button
-    Engine.Display.augmentationsContent.appendChild(createElement("a", {
+    contentEl.appendChild(createElement("a", {
         class:"a-link-button", innerText:"Install Augmentations",
         tooltip:"'I never asked for this'",
         clickListener:()=>{
@@ -2515,7 +2515,7 @@ function displayAugmentationsContent() {
     }));
 
     //Backup button
-    Engine.Display.augmentationsContent.appendChild(createElement("a", {
+    contentEl.appendChild(createElement("a", {
         class:"a-link-button flashing-button", innerText:"Backup Save (Export)",
         tooltip:"It's always a good idea to backup/export your save!",
         clickListener:()=>{
@@ -2539,13 +2539,13 @@ function displayAugmentationsContent() {
         var accordion = createAccordionElement({hdrText:displayName, panelText:aug.info});
         queuedAugmentationsList.appendChild(accordion[0]);
     }
-    Engine.Display.augmentationsContent.appendChild(queuedAugmentationsList);
+    contentEl.appendChild(queuedAugmentationsList);
 
     //Installed augmentations list
-    Engine.Display.augmentationsContent.appendChild(createElement("h1", {
+    contentEl.appendChild(createElement("h1", {
         innerText:"Installed Augmentations", marginTop:"8px",
     }));
-    Engine.Display.augmentationsContent.appendChild(createElement("p", {
+    contentEl.appendChild(createElement("p", {
         width:"70%", whiteSpace:"pre-wrap",
         innerText:"List of all Augmentations (including Source Files) that have been " +
                   "installed. You have gained the effects of these Augmentations."
@@ -2554,7 +2554,7 @@ function displayAugmentationsContent() {
     var augmentationsList = createElement("ul", {class:"augmentations-list"});
 
     //Expand/Collapse All buttons
-    Engine.Display.augmentationsContent.appendChild(createElement("a", {
+    contentEl.appendChild(createElement("a", {
         class:"a-link-button", fontSize:"14px", innerText:"Expand All", display:"inline-block",
         clickListener:()=>{
             var allHeaders = augmentationsList.getElementsByClassName("accordion-header");
@@ -2563,7 +2563,7 @@ function displayAugmentationsContent() {
             }
         }
     }));
-    Engine.Display.augmentationsContent.appendChild(createElement("a", {
+    contentEl.appendChild(createElement("a", {
         class:"a-link-button", fontSize:"14px", innerText:"Collapse All", display:"inline-block",
         clickListener:()=>{
             var allHeaders = augmentationsList.getElementsByClassName("accordion-header");
@@ -2595,7 +2595,7 @@ function displayAugmentationsContent() {
             Settings.OwnedAugmentationsOrder = OwnedAugmentationsOrderSetting.Alphabetically;
         }
     });
-    Engine.Display.augmentationsContent.appendChild(sortInOrderButton);
+    contentEl.appendChild(sortInOrderButton);
 
     const sortByAcquirementTimeButton = createElement("a", {
         class:"a-link-button", fontSize:"14px", innerText:"Sort by Acquirement Time",
@@ -2608,15 +2608,47 @@ function displayAugmentationsContent() {
             Settings.OwnedAugmentationsOrder = OwnedAugmentationsOrderSetting.AcquirementTime;
         }
     });
-    Engine.Display.augmentationsContent.appendChild(sortByAcquirementTimeButton);
+    contentEl.appendChild(sortByAcquirementTimeButton);
 
-    //Source Files - Temporary...Will probably put in a separate pane Later
     if (Settings.OwnedAugmentationsOrder === OwnedAugmentationsOrderSetting.Alphabetically) {
         sortInOrderButton.click();
     } else {
         sortByAcquirementTimeButton.click();
     }
-    Engine.Display.augmentationsContent.appendChild(augmentationsList);
+    contentEl.appendChild(augmentationsList);
+
+    // Display multiplier information at the bottom
+    contentEl.appendChild(createElement("p", {
+        display: "block",
+        innerHTML:
+            `<br><br><strong><u>Total Multipliers:</u></strong><br>` + 
+            'Hacking Chance multiplier: ' + formatNumber(Player.hacking_chance_mult * 100, 2) + '%<br>' +
+            'Hacking Speed multiplier:  ' + formatNumber(Player.hacking_speed_mult * 100, 2) + '%<br>' +
+            'Hacking Money multiplier:  ' + formatNumber(Player.hacking_money_mult * 100, 2) + '%<br>' +
+            'Hacking Growth multiplier: ' + formatNumber(Player.hacking_grow_mult * 100, 2) + '%<br><br>' +
+            'Hacking Level multiplier:      ' + formatNumber(Player.hacking_mult * 100, 2) + '%<br>' +
+            'Hacking Experience multiplier: ' + formatNumber(Player.hacking_exp_mult * 100, 2) + '%<br><br>' +
+            'Strength Level multiplier:      ' + formatNumber(Player.strength_mult * 100, 2) + '%<br>' +
+            'Strength Experience multiplier: ' + formatNumber(Player.strength_exp_mult * 100, 2) + '%<br><br>' +
+            'Defense Level multiplier:      ' + formatNumber(Player.defense_mult * 100, 2) + '%<br>' +
+            'Defense Experience multiplier: ' + formatNumber(Player.defense_exp_mult * 100, 2) + '%<br><br>' +
+            'Dexterity Level multiplier:      ' + formatNumber(Player.dexterity_mult * 100, 2) + '%<br>' +
+            'Dexterity Experience multiplier: ' + formatNumber(Player.dexterity_exp_mult * 100, 2) + '%<br><br>' +
+            'Agility Level multiplier:      ' + formatNumber(Player.agility_mult * 100, 2) + '%<br>' +
+            'Agility Experience multiplier: ' + formatNumber(Player.agility_exp_mult * 100, 2) + '%<br><br>' +
+            'Charisma Level multiplier:      ' + formatNumber(Player.charisma_mult * 100, 2) + '%<br>' +
+            'Charisma Experience multiplier: ' + formatNumber(Player.charisma_exp_mult * 100, 2) + '%<br><br>' +
+            'Hacknet Node production multiplier:         ' + formatNumber(Player.hacknet_node_money_mult * 100, 2) + '%<br>' +
+            'Hacknet Node purchase cost multiplier:      ' + formatNumber(Player.hacknet_node_purchase_cost_mult * 100, 2) + '%<br>' +
+            'Hacknet Node RAM upgrade cost multiplier:   ' + formatNumber(Player.hacknet_node_ram_cost_mult * 100, 2) + '%<br>' +
+            'Hacknet Node Core purchase cost multiplier: ' + formatNumber(Player.hacknet_node_core_cost_mult * 100, 2) + '%<br>' +
+            'Hacknet Node level upgrade cost multiplier: ' + formatNumber(Player.hacknet_node_level_cost_mult * 100, 2) + '%<br><br>' +
+            'Company reputation gain multiplier: ' + formatNumber(Player.company_rep_mult * 100, 2) + '%<br>' +
+            'Faction reputation gain multiplier: ' + formatNumber(Player.faction_rep_mult * 100, 2) + '%<br>' +
+            'Salary multiplier: ' + formatNumber(Player.work_money_mult * 100, 2) + '%<br>' +
+            'Crime success multiplier: ' + formatNumber(Player.crime_success_mult * 100, 2) + '%<br>' +
+            'Crime money multiplier: ' + formatNumber(Player.crime_money_mult * 100, 2) + '%<br><br><br>',
+    }))
 }
 
 //Creates the accordion elements to display Augmentations

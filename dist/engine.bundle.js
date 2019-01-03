@@ -147,7 +147,7 @@
 /******/
 /******/
 /******/ 	// add entry module to deferred list
-/******/ 	deferredModules.push([8,0]);
+/******/ 	deferredModules.push([9,0]);
 /******/ 	// run deferred modules when ready
 /******/ 	return checkDeferredModules();
 /******/ })
@@ -164,7 +164,7 @@
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Player; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return loadPlayer; });
-/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentations */ 21);
+/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentations */ 20);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BitNodeMultipliers */ 10);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CodingContracts */ 42);
@@ -187,7 +187,7 @@
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Programs/Programs */ 24);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _Crimes__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Crimes */ 38);
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./engine */ 8);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./engine */ 9);
 /* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Faction/Faction */ 56);
 /* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_Faction_Faction__WEBPACK_IMPORTED_MODULE_14__);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Faction/Factions */ 14);
@@ -205,7 +205,7 @@
 /* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! decimal.js */ 35);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_27__);
 /* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../utils/IPAddress */ 62);
@@ -2678,6 +2678,7 @@ exports.CONSTANTS = {
     ScriptForRamCost: 0,
     ScriptIfRamCost: 0,
     ScriptHackRamCost: 0.1,
+    ScriptHackAnalyzeRamCost: 1,
     ScriptGrowRamCost: 0.15,
     ScriptGrowthAnalyzeRamCost: 1,
     ScriptWeakenRamCost: 0.15,
@@ -3099,25 +3100,26 @@ exports.CONSTANTS = {
      ** Changed initial market prices for many materials
      ** Changed the way a material's demand, competition, and market price change over time
      ** The sale price of materials can no longer be marked-up as high
-     ** Added a Research Tree mechanic. Spend Scientific Research on permanent upgrades for
-        each industry
+     ** Added a Research Tree mechanic. Spend Scientific Research on permanent upgrades for each industry
      ** You can now redistribute earnings to shareholders (including yourself) as dividends
      ** Cost of "Smart Supply" upgraded reduced from $50b to $25b
      ** Now has offline progress, which works similarly to the Gang/Bladeburner mechanics
      ** Slightly reduced the amount of money offered to you by investment firms
      ** Employee salaries now slowly increase over time
-     ** Slightly reduced the effect "Real Estate" has on the Production Multiplier for the
-        Agriculture industry
+     ** Slightly reduced the effect "Real Estate" has on the Production Multiplier for the Agriculture industry
 
      * Added getOrders() Netscript function to the TIX API
-     *
+     * Added getAugmentationPrereq() Singularity function (by havocmayhem)
+     * Added hackAnalyzePercent() and hackAnalyzeThreads() Netscript functions
      * Stock Market, Travel, and Corporation main menu links are now properly styled
-     * Many pop-up/dialog boxes now support the 'Enter' and 'Esc' hotkeys. If you
-       find a pop-up/dialog box that doesnt support this, let me know specifically which one
-       ('Enter' for the default option, 'Esc' for cancelling and closing the pop-up box)
+     * Many pop-up/dialog boxes now support the 'Enter' and 'Esc' hotkeys. If you find a pop-up/dialog box that doesnt support this, let me know specifically which one ('Enter' for the default option, 'Esc' for cancelling and closing the pop-up box)
      * Added "brace_style = preserve_inline" configuration to Script Editor Beautifier
      * ServerProfiler.exe can now be purchased from the Dark Web
      * Added an option to copy save data to clipboard
+     * Added total multiplier information on the "Augmentations" page
+     * Bug Fix: gymWorkout() Singularity function should now work properly with Millenium Fitness Gym
+     * Began migrating gameplay information to the ReadTheDocs documentation
+     *
      `
 };
 
@@ -3594,7 +3596,7 @@ exports.Locations = {
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Script */ 30);
-/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/acorn */ 48);
+/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/acorn */ 49);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 54);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_9__);
@@ -4571,6 +4573,94 @@ function scrollTerminalToBottom() {
 
 /***/ }),
 /* 8 */
+/*!****************************!*\
+  !*** ./utils/DialogBox.js ***!
+  \****************************/
+/*! exports provided: dialogBoxCreate, dialogBoxOpened */
+/*! all exports used */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "dialogBoxCreate", function() { return dialogBoxCreate; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "dialogBoxOpened", function() { return dialogBoxOpened; });
+/* Pop up Dialog Box */
+let dialogBoxes = [];
+
+//Close dialog box when clicking outside
+$(document).click(function(event) {
+    if (dialogBoxOpened && dialogBoxes.length >= 1) {
+        if (!$(event.target).closest(dialogBoxes[0]).length){
+            dialogBoxes[0].remove();
+            dialogBoxes.splice(0, 1);
+            if (dialogBoxes.length == 0) {
+                dialogBoxOpened = false;
+            } else {
+                dialogBoxes[0].style.visibility = "visible";
+            }
+        }
+    }
+});
+
+
+//Dialog box close buttons
+$(document).on('click', '.dialog-box-close-button', function( event ) {
+    if (dialogBoxOpened && dialogBoxes.length >= 1) {
+        dialogBoxes[0].remove();
+        dialogBoxes.splice(0, 1);
+        if (dialogBoxes.length == 0) {
+            dialogBoxOpened = false;
+        } else {
+            dialogBoxes[0].style.visibility = "visible";
+        }
+    }
+});
+
+var dialogBoxOpened = false;
+
+function dialogBoxCreate(txt, preformatted=false) {
+    var container = document.createElement("div");
+    container.setAttribute("class", "dialog-box-container");
+
+    var content = document.createElement("div");
+    content.setAttribute("class", "dialog-box-content");
+
+    var closeButton = document.createElement("span");
+    closeButton.setAttribute("class", "dialog-box-close-button");
+    closeButton.innerHTML = "&times;"
+
+    var textE;
+    if (preformatted) {
+        // For text files as they are often computed data that
+        // shouldn't be wrapped and should retain tabstops.
+        textE = document.createElement("pre");
+        textE.innerHTML = txt;
+    } else {
+        textE = document.createElement("p");
+        textE.innerHTML = txt.replace(/(?:\r\n|\r|\n)/g, '<br>');
+    }
+
+    content.appendChild(closeButton);
+    content.appendChild(textE);
+    container.appendChild(content);
+
+    document.body.appendChild(container);
+    if (dialogBoxes.length >= 1) {
+        container.style.visibility = "hidden";
+    }
+    dialogBoxes.push(container);
+
+    setTimeout(function() {
+        dialogBoxOpened = true;
+    }, 400);
+}
+
+
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 64)))
+
+/***/ }),
+/* 9 */
 /*!***********************!*\
   !*** ./src/engine.js ***!
   \***********************/
@@ -4581,7 +4671,7 @@ function scrollTerminalToBottom() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Engine", function() { return Engine; });
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
 /* harmony import */ var _utils_GameOptions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/GameOptions */ 86);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 15);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_2__);
@@ -4602,7 +4692,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/LogBox */ 80);
 /* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./ActiveScriptsUI */ 68);
-/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Augmentations */ 21);
+/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Augmentations */ 20);
 /* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./BitNode */ 59);
 /* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Bladeburner */ 31);
 /* harmony import */ var _CharacterOverview__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./CharacterOverview */ 131);
@@ -4990,7 +5080,7 @@ const Engine = {
     loadAugmentationsContent: function() {
         Engine.hideAllContent();
         Engine.Display.augmentationsContent.style.display = "block";
-        Object(_Augmentations__WEBPACK_IMPORTED_MODULE_13__[/* displayAugmentationsContent */ "g"])();
+        Object(_Augmentations__WEBPACK_IMPORTED_MODULE_13__[/* displayAugmentationsContent */ "g"])(Engine.Display.augmentationsContent);
         _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__["Page"].Augmentations);
         document.getElementById("augmentations-menu-link").classList.add("active");
     },
@@ -6580,94 +6670,6 @@ window.onload = function() {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 64)))
 
 /***/ }),
-/* 9 */
-/*!****************************!*\
-  !*** ./utils/DialogBox.js ***!
-  \****************************/
-/*! exports provided: dialogBoxCreate, dialogBoxOpened */
-/*! all exports used */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "dialogBoxCreate", function() { return dialogBoxCreate; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "dialogBoxOpened", function() { return dialogBoxOpened; });
-/* Pop up Dialog Box */
-let dialogBoxes = [];
-
-//Close dialog box when clicking outside
-$(document).click(function(event) {
-    if (dialogBoxOpened && dialogBoxes.length >= 1) {
-        if (!$(event.target).closest(dialogBoxes[0]).length){
-            dialogBoxes[0].remove();
-            dialogBoxes.splice(0, 1);
-            if (dialogBoxes.length == 0) {
-                dialogBoxOpened = false;
-            } else {
-                dialogBoxes[0].style.visibility = "visible";
-            }
-        }
-    }
-});
-
-
-//Dialog box close buttons
-$(document).on('click', '.dialog-box-close-button', function( event ) {
-    if (dialogBoxOpened && dialogBoxes.length >= 1) {
-        dialogBoxes[0].remove();
-        dialogBoxes.splice(0, 1);
-        if (dialogBoxes.length == 0) {
-            dialogBoxOpened = false;
-        } else {
-            dialogBoxes[0].style.visibility = "visible";
-        }
-    }
-});
-
-var dialogBoxOpened = false;
-
-function dialogBoxCreate(txt, preformatted=false) {
-    var container = document.createElement("div");
-    container.setAttribute("class", "dialog-box-container");
-
-    var content = document.createElement("div");
-    content.setAttribute("class", "dialog-box-content");
-
-    var closeButton = document.createElement("span");
-    closeButton.setAttribute("class", "dialog-box-close-button");
-    closeButton.innerHTML = "&times;"
-
-    var textE;
-    if (preformatted) {
-        // For text files as they are often computed data that
-        // shouldn't be wrapped and should retain tabstops.
-        textE = document.createElement("pre");
-        textE.innerHTML = txt;
-    } else {
-        textE = document.createElement("p");
-        textE.innerHTML = txt.replace(/(?:\r\n|\r|\n)/g, '<br>');
-    }
-
-    content.appendChild(closeButton);
-    content.appendChild(textE);
-    container.appendChild(content);
-
-    document.body.appendChild(container);
-    if (dialogBoxes.length >= 1) {
-        container.style.visibility = "hidden";
-    }
-    dialogBoxes.push(container);
-
-    setTimeout(function() {
-        dialogBoxOpened = true;
-    }, 400);
-}
-
-
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 64)))
-
-/***/ }),
 /* 10 */
 /*!***********************************!*\
   !*** ./src/BitNodeMultipliers.ts ***!
@@ -7836,36 +7838,6 @@ exports.Settings = {
 
 /***/ }),
 /* 20 */
-/*!**********************************************!*\
-  !*** ./utils/uiHelpers/removeElementById.ts ***!
-  \**********************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const getElementById_1 = __webpack_require__(/*! ./getElementById */ 53);
-const removeElement_1 = __webpack_require__(/*! ./removeElement */ 61);
-/**
- * Given its id, this function removes an element AND its children
- * @param id The HTML identifier to search for and remove.
- */
-function removeElementById(id) {
-    try {
-        const elem = getElementById_1.getElementById(id);
-        removeElement_1.removeElement(elem);
-    }
-    catch (e) {
-        // Probably should log this as we're trying to remove elements that don't exist.
-    }
-}
-exports.removeElementById = removeElementById;
-
-
-/***/ }),
-/* 21 */
 /*!******************************!*\
   !*** ./src/Augmentations.js ***!
   \******************************/
@@ -7887,25 +7859,26 @@ exports.removeElementById = removeElementById;
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 8);
-/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Faction/Factions */ 14);
-/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
-/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./NetscriptWorker */ 25);
-/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Prestige */ 88);
-/* harmony import */ var _SaveObject__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./SaveObject */ 74);
-/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Script */ 30);
-/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _SettingEnums__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./SettingEnums */ 73);
-/* harmony import */ var _SettingEnums__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_SettingEnums__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Settings */ 19);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./SourceFile */ 70);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 78);
-/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
+/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Faction/Factions */ 14);
+/* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
+/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptWorker */ 25);
+/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Player */ 0);
+/* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Prestige */ 88);
+/* harmony import */ var _SaveObject__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./SaveObject */ 74);
+/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Script */ 30);
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Server */ 11);
+/* harmony import */ var _SettingEnums__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./SettingEnums */ 73);
+/* harmony import */ var _SettingEnums__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_SettingEnums__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Settings */ 19);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./SourceFile */ 70);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
+/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 78);
+/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_16__);
 /* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/helpers/clearObject */ 79);
 /* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_17__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
@@ -7940,7 +7913,7 @@ exports.removeElementById = removeElementById;
 //Augmentations
 function Augmentation(params) {
     if (params.name == null || params.info == null || params.moneyCost == null || params.repCost == null) {
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_14__["dialogBoxCreate"])("ERROR Creating Augmentations. This is a bug please contact game dev");
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("ERROR Creating Augmentations. This is a bug please contact game dev");
         return;
     }
     this.name = params.name;
@@ -7960,7 +7933,7 @@ function Augmentation(params) {
 //Takes in an array of faction names and adds this augmentation to all of those factions
 Augmentation.prototype.addToFactions = function(factionList) {
     for (var i = 0; i < factionList.length; ++i) {
-        var faction = _Faction_Factions__WEBPACK_IMPORTED_MODULE_3__["Factions"][factionList[i]];
+        var faction = _Faction_Factions__WEBPACK_IMPORTED_MODULE_2__["Factions"][factionList[i]];
         if (faction == null) {
             throw new Error("In Augmentation.addToFactions(), could not find faction with this name:" + factionList[i]);
             continue;
@@ -7970,9 +7943,9 @@ Augmentation.prototype.addToFactions = function(factionList) {
 }
 
 Augmentation.prototype.addToAllFactions = function() {
-    for (var fac in _Faction_Factions__WEBPACK_IMPORTED_MODULE_3__["Factions"]) {
-        if (_Faction_Factions__WEBPACK_IMPORTED_MODULE_3__["Factions"].hasOwnProperty(fac)) {
-            var facObj = _Faction_Factions__WEBPACK_IMPORTED_MODULE_3__["Factions"][fac];
+    for (var fac in _Faction_Factions__WEBPACK_IMPORTED_MODULE_2__["Factions"]) {
+        if (_Faction_Factions__WEBPACK_IMPORTED_MODULE_2__["Factions"].hasOwnProperty(fac)) {
+            var facObj = _Faction_Factions__WEBPACK_IMPORTED_MODULE_2__["Factions"][fac];
             if (facObj == null) {
                 console.log("ERROR: Invalid faction object");
                 continue;
@@ -7983,14 +7956,14 @@ Augmentation.prototype.addToAllFactions = function() {
 }
 
 Augmentation.prototype.toJSON = function() {
-    return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__["Generic_toJSON"])("Augmentation", this);
+    return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__["Generic_toJSON"])("Augmentation", this);
 }
 
 Augmentation.fromJSON = function(value) {
-    return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__["Generic_fromJSON"])(Augmentation, value.data);
+    return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__["Generic_fromJSON"])(Augmentation, value.data);
 }
 
-_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__["Reviver"].constructors.Augmentation = Augmentation;
+_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__["Reviver"].constructors.Augmentation = Augmentation;
 
 let Augmentations = {}
 
@@ -8113,9 +8086,9 @@ let AugmentationNames = {
 }
 
 function initAugmentations() {
-    for (var name in _Faction_Factions__WEBPACK_IMPORTED_MODULE_3__["Factions"]) {
-        if (_Faction_Factions__WEBPACK_IMPORTED_MODULE_3__["Factions"].hasOwnProperty(name)) {
-            _Faction_Factions__WEBPACK_IMPORTED_MODULE_3__["Factions"][name].augmentations = [];
+    for (var name in _Faction_Factions__WEBPACK_IMPORTED_MODULE_2__["Factions"]) {
+        if (_Faction_Factions__WEBPACK_IMPORTED_MODULE_2__["Factions"].hasOwnProperty(name)) {
+            _Faction_Factions__WEBPACK_IMPORTED_MODULE_2__["Factions"][name].augmentations = [];
         }
     }
 
@@ -8949,9 +8922,9 @@ function initAugmentations() {
 
     // Set the Augmentation's level to the currently-installed level
     let currLevel = 0;
-    for (let i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].augmentations.length; ++i) {
-        if (_Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].augmentations[i].name === AugmentationNames.NeuroFluxGovernor) {
-            currLevel = _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].augmentations[i].level;
+    for (let i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].augmentations.length; ++i) {
+        if (_Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].augmentations[i].name === AugmentationNames.NeuroFluxGovernor) {
+            currLevel = _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].augmentations[i].level;
         }
     }
     NeuroFluxGovernor.level = currLevel;
@@ -8959,8 +8932,8 @@ function initAugmentations() {
     // To set the price/rep req of the NeuroFlux, we have to take into account NeuroFlux
     // levels that are purchased but not yet installed
     let nextLevel = currLevel;
-    for (let i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].queuedAugmentations.length; ++i) {
-        if (_Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].queuedAugmentations[i].name === AugmentationNames.NeuroFluxGovernor) {
+    for (let i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].queuedAugmentations.length; ++i) {
+        if (_Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].queuedAugmentations[i].name === AugmentationNames.NeuroFluxGovernor) {
             ++nextLevel;
         }
     }
@@ -9482,20 +9455,20 @@ function initAugmentations() {
 
     //For BitNode-2, add all Augmentations to crime/evil factions.
     //Do this before adding special Augmentations that become available in later BitNodes
-    if (_Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].bitNodeN === 2) {
+    if (_Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].bitNodeN === 2) {
         console.log("Adding all augmentations to crime factions for Bit node 2");
-        _Faction_Factions__WEBPACK_IMPORTED_MODULE_3__["Factions"]["Slum Snakes"].addAllAugmentations(Augmentations);
-        _Faction_Factions__WEBPACK_IMPORTED_MODULE_3__["Factions"]["Tetrads"].addAllAugmentations(Augmentations);
-        _Faction_Factions__WEBPACK_IMPORTED_MODULE_3__["Factions"]["The Syndicate"].addAllAugmentations(Augmentations);
-        _Faction_Factions__WEBPACK_IMPORTED_MODULE_3__["Factions"]["The Dark Army"].addAllAugmentations(Augmentations);
-        _Faction_Factions__WEBPACK_IMPORTED_MODULE_3__["Factions"]["Speakers for the Dead"].addAllAugmentations(Augmentations);
-        _Faction_Factions__WEBPACK_IMPORTED_MODULE_3__["Factions"]["NiteSec"].addAllAugmentations(Augmentations);
-        _Faction_Factions__WEBPACK_IMPORTED_MODULE_3__["Factions"]["The Black Hand"].addAllAugmentations(Augmentations);
+        _Faction_Factions__WEBPACK_IMPORTED_MODULE_2__["Factions"]["Slum Snakes"].addAllAugmentations(Augmentations);
+        _Faction_Factions__WEBPACK_IMPORTED_MODULE_2__["Factions"]["Tetrads"].addAllAugmentations(Augmentations);
+        _Faction_Factions__WEBPACK_IMPORTED_MODULE_2__["Factions"]["The Syndicate"].addAllAugmentations(Augmentations);
+        _Faction_Factions__WEBPACK_IMPORTED_MODULE_2__["Factions"]["The Dark Army"].addAllAugmentations(Augmentations);
+        _Faction_Factions__WEBPACK_IMPORTED_MODULE_2__["Factions"]["Speakers for the Dead"].addAllAugmentations(Augmentations);
+        _Faction_Factions__WEBPACK_IMPORTED_MODULE_2__["Factions"]["NiteSec"].addAllAugmentations(Augmentations);
+        _Faction_Factions__WEBPACK_IMPORTED_MODULE_2__["Factions"]["The Black Hand"].addAllAugmentations(Augmentations);
     }
 
     //Special Bladeburner Augmentations
     var BladeburnersFactionName = "Bladeburners";
-    if (Object(_Faction_Factions__WEBPACK_IMPORTED_MODULE_3__["factionExists"])(BladeburnersFactionName)) {
+    if (Object(_Faction_Factions__WEBPACK_IMPORTED_MODULE_2__["factionExists"])(BladeburnersFactionName)) {
         var EsperEyewear = new Augmentation({
             name:AugmentationNames.EsperEyewear, repCost:500, moneyCost:33e6,
             info:"Ballistic-grade protective and retractable eyewear that was designed specially " +
@@ -9727,14 +9700,14 @@ function initAugmentations() {
     }
 
     //Update costs based on how many have been purchased
-    var mult = Math.pow(_Constants__WEBPACK_IMPORTED_MODULE_1__["CONSTANTS"].MultipleAugMultiplier, _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].queuedAugmentations.length);
+    var mult = Math.pow(_Constants__WEBPACK_IMPORTED_MODULE_1__["CONSTANTS"].MultipleAugMultiplier, _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].queuedAugmentations.length);
     for (var name in Augmentations) {
         if (Augmentations.hasOwnProperty(name)) {
             Augmentations[name].baseCost *= mult;
         }
     }
 
-    _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].reapplyAllAugmentations();
+    _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].reapplyAllAugmentations();
 }
 
 //Resets an Augmentation during (re-initizliation)
@@ -9754,557 +9727,557 @@ function applyAugmentation(aug, reapply=false) {
     switch(aug.name) {
         //Combat stat augmentations
         case AugmentationNames.Targeting1:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].dexterity_mult *= 1.10;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].dexterity_mult *= 1.10;
             break;
         case AugmentationNames.Targeting2:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].dexterity_mult *= 1.20;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].dexterity_mult *= 1.20;
             break;
         case AugmentationNames.Targeting3:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].dexterity_mult *= 1.30;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].dexterity_mult *= 1.30;
             break;
         case AugmentationNames.SyntheticHeart:         //High level
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].agility_mult *= 1.5;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].strength_mult *= 1.5;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].agility_mult *= 1.5;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].strength_mult *= 1.5;
             break;
         case AugmentationNames.SynfibrilMuscle:        //Medium-high level
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].strength_mult    *= 1.3;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].defense_mult     *= 1.3;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].strength_mult    *= 1.3;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].defense_mult     *= 1.3;
             break;
         case AugmentationNames.CombatRib1:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].strength_mult    *= 1.1;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].defense_mult     *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].strength_mult    *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].defense_mult     *= 1.1;
             break;
         case AugmentationNames.CombatRib2:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].strength_mult    *= 1.14;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].defense_mult     *= 1.14;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].strength_mult    *= 1.14;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].defense_mult     *= 1.14;
             break;
         case AugmentationNames.CombatRib3:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].strength_mult    *= 1.18;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].defense_mult     *= 1.18;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].strength_mult    *= 1.18;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].defense_mult     *= 1.18;
             break;
         case AugmentationNames.NanofiberWeave:         //Med level
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].strength_mult    *= 1.2;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].defense_mult     *= 1.2;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].strength_mult    *= 1.2;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].defense_mult     *= 1.2;
             break;
         case AugmentationNames.SubdermalArmor:         //High level
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].defense_mult     *= 2.2;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].defense_mult     *= 2.2;
             break;
         case AugmentationNames.WiredReflexes:          //Low level
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].agility_mult     *= 1.05;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].dexterity_mult   *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].agility_mult     *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].dexterity_mult   *= 1.05;
             break;
         case AugmentationNames.GrapheneBoneLacings:   //High level
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].strength_mult    *= 1.7;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].defense_mult     *= 1.7;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].strength_mult    *= 1.7;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].defense_mult     *= 1.7;
             break;
         case AugmentationNames.BionicSpine:            //Med level
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].strength_mult    *= 1.15;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].defense_mult     *= 1.15;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].agility_mult     *= 1.15;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].dexterity_mult   *= 1.15;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].strength_mult    *= 1.15;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].defense_mult     *= 1.15;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].agility_mult     *= 1.15;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].dexterity_mult   *= 1.15;
             break;
         case AugmentationNames.GrapheneBionicSpine:   //High level
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].strength_mult    *= 1.6;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].defense_mult     *= 1.6;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].agility_mult     *= 1.6;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].dexterity_mult   *= 1.6;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].strength_mult    *= 1.6;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].defense_mult     *= 1.6;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].agility_mult     *= 1.6;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].dexterity_mult   *= 1.6;
             break;
         case AugmentationNames.BionicLegs:             //Med level
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].agility_mult     *= 1.6;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].agility_mult     *= 1.6;
             break;
         case AugmentationNames.GrapheneBionicLegs:    //High level
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].agility_mult     *= 2.5;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].agility_mult     *= 2.5;
             break;
 
         //Labor stats augmentations
         case AugmentationNames.EnhancedSocialInteractionImplant: //Med-high level
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].charisma_mult        *= 1.6;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].charisma_exp_mult    *= 1.6;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].charisma_mult        *= 1.6;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].charisma_exp_mult    *= 1.6;
             break;
         case AugmentationNames.TITN41Injection:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].charisma_mult        *= 1.15;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].charisma_exp_mult    *= 1.15;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].charisma_mult        *= 1.15;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].charisma_exp_mult    *= 1.15;
             break;
         case AugmentationNames.SpeechProcessor:    //Med level
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].charisma_mult    *= 1.2;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].charisma_mult    *= 1.2;
             break;
 
         //Hacking augmentations
         case AugmentationNames.BitWire:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_mult   *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_mult   *= 1.05;
             break;
         case AugmentationNames.ArtificialBioNeuralNetwork:   //Med level
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_speed_mult *= 1.03;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_money_mult *= 1.15;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_mult       *= 1.12;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_speed_mult *= 1.03;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_money_mult *= 1.15;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_mult       *= 1.12;
             break;
         case AugmentationNames.ArtificialSynapticPotentiation:    //Med level
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_speed_mult   *= 1.02;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_chance_mult  *= 1.05;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_exp_mult     *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_speed_mult   *= 1.02;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_chance_mult  *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_exp_mult     *= 1.05;
             break;
         case AugmentationNames.EnhancedMyelinSheathing:       //Med level
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_speed_mult *= 1.03;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_exp_mult   *= 1.1;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_mult       *= 1.08;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_speed_mult *= 1.03;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_exp_mult   *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_mult       *= 1.08;
             break;
         case AugmentationNames.SynapticEnhancement:    //Low Level
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_speed_mult *= 1.03;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_speed_mult *= 1.03;
             break;
         case AugmentationNames.NeuralRetentionEnhancement:    //Med level
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_exp_mult   *= 1.25;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_exp_mult   *= 1.25;
             break;
         case AugmentationNames.DataJack:                        //Med low level
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_money_mult *= 1.25;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_money_mult *= 1.25;
             break;
         case AugmentationNames.ENM:       //Medium level
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_mult           *= 1.08;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_mult           *= 1.08;
             break;
         case AugmentationNames.ENMCore:      //Medium level
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_speed_mult     *= 1.03;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_money_mult     *= 1.1;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_chance_mult    *= 1.03;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_exp_mult       *= 1.07;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_mult           *= 1.07;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_speed_mult     *= 1.03;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_money_mult     *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_chance_mult    *= 1.03;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_exp_mult       *= 1.07;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_mult           *= 1.07;
             break;
         case AugmentationNames.ENMCoreV2:   //Medium high level
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_speed_mult     *= 1.05;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_money_mult     *= 1.3;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_chance_mult    *= 1.05;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_exp_mult       *= 1.15;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_mult           *= 1.08;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_speed_mult     *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_money_mult     *= 1.3;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_chance_mult    *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_exp_mult       *= 1.15;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_mult           *= 1.08;
             break;
         case AugmentationNames.ENMCoreV3:   //High level
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_speed_mult     *= 1.05;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_money_mult     *= 1.4;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_chance_mult    *= 1.1;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_exp_mult       *= 1.25;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_mult           *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_speed_mult     *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_money_mult     *= 1.4;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_chance_mult    *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_exp_mult       *= 1.25;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_mult           *= 1.1;
             break;
         case AugmentationNames.ENMAnalyzeEngine:    //High level
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_speed_mult     *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_speed_mult     *= 1.1;
             break;
         case AugmentationNames.ENMDMA:  //High level
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_money_mult     *= 1.4;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_chance_mult    *= 1.2;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_money_mult     *= 1.4;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_chance_mult    *= 1.2;
             break;
         case AugmentationNames.Neuralstimulator:    //Medium Level
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_speed_mult     *= 1.02;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_chance_mult    *= 1.1;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_exp_mult       *= 1.12;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_speed_mult     *= 1.02;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_chance_mult    *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_exp_mult       *= 1.12;
             break;
         case AugmentationNames.NeuralAccelerator:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_mult         *= 1.1;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_exp_mult     *= 1.15;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_money_mult   *= 1.2;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_mult         *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_exp_mult     *= 1.15;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_money_mult   *= 1.2;
             break;
         case AugmentationNames.CranialSignalProcessorsG1:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_speed_mult   *= 1.01;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_mult         *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_speed_mult   *= 1.01;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_mult         *= 1.05;
             break;
         case AugmentationNames.CranialSignalProcessorsG2:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_speed_mult   *= 1.02;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_chance_mult  *= 1.05;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_mult         *= 1.07;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_speed_mult   *= 1.02;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_chance_mult  *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_mult         *= 1.07;
             break;
         case AugmentationNames.CranialSignalProcessorsG3:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_speed_mult   *= 1.02;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_money_mult   *= 1.15;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_mult         *= 1.09;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_speed_mult   *= 1.02;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_money_mult   *= 1.15;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_mult         *= 1.09;
             break;
         case AugmentationNames.CranialSignalProcessorsG4:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_speed_mult   *= 1.02;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_money_mult   *= 1.2;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_grow_mult    *= 1.25;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_speed_mult   *= 1.02;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_money_mult   *= 1.2;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_grow_mult    *= 1.25;
             break;
         case AugmentationNames.CranialSignalProcessorsG5:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_mult         *= 1.3;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_money_mult   *= 1.25;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_grow_mult    *= 1.75;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_mult         *= 1.3;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_money_mult   *= 1.25;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_grow_mult    *= 1.75;
             break;
         case AugmentationNames.NeuronalDensification:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_mult         *= 1.15;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_exp_mult     *= 1.1;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_speed_mult   *= 1.03;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_mult         *= 1.15;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_exp_mult     *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_speed_mult   *= 1.03;
             break;
 
         //Work augmentations
         case AugmentationNames.NuoptimalInjectorImplant:    //Low medium level
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].company_rep_mult   *= 1.2;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].company_rep_mult   *= 1.2;
             break;
         case AugmentationNames.SpeechEnhancement:  //Low level
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].company_rep_mult   *= 1.1;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].charisma_mult      *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].company_rep_mult   *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].charisma_mult      *= 1.1;
             break;
         case AugmentationNames.FocusWire:   //Med level
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_exp_mult     *= 1.05;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].strength_exp_mult    *= 1.05;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].defense_exp_mult     *= 1.05;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].dexterity_exp_mult   *= 1.05;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].agility_exp_mult     *= 1.05;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].charisma_exp_mult    *= 1.05;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].company_rep_mult     *= 1.1;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].work_money_mult      *= 1.2;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_exp_mult     *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].strength_exp_mult    *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].defense_exp_mult     *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].dexterity_exp_mult   *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].agility_exp_mult     *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].charisma_exp_mult    *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].company_rep_mult     *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].work_money_mult      *= 1.2;
             break;
         case AugmentationNames.PCDNI:  //Med level
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].company_rep_mult   *= 1.3;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_mult       *= 1.08;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].company_rep_mult   *= 1.3;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_mult       *= 1.08;
             break;
         case AugmentationNames.PCDNIOptimizer:   //High level
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].company_rep_mult   *= 1.75;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_mult       *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].company_rep_mult   *= 1.75;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_mult       *= 1.1;
             break;
         case AugmentationNames.PCDNINeuralNetwork:        //High level
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].company_rep_mult   *= 2;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_mult       *= 1.1;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_speed_mult *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].company_rep_mult   *= 2;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_mult       *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_speed_mult *= 1.05;
             break;
         case AugmentationNames.ADRPheromone1:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].company_rep_mult     *= 1.1;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].faction_rep_mult     *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].company_rep_mult     *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].faction_rep_mult     *= 1.1;
             break;
         case AugmentationNames.ADRPheromone2:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].company_rep_mult     *= 1.2;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].faction_rep_mult     *= 1.2;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].company_rep_mult     *= 1.2;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].faction_rep_mult     *= 1.2;
             break;
 
         //Hacknet Node Augmentations
         case AugmentationNames.HacknetNodeCPUUpload:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacknet_node_money_mult            *= 1.15;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacknet_node_purchase_cost_mult    *= 0.85;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacknet_node_money_mult            *= 1.15;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacknet_node_purchase_cost_mult    *= 0.85;
             break;
         case AugmentationNames.HacknetNodeCacheUpload:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacknet_node_money_mult            *= 1.10;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacknet_node_level_cost_mult       *= 0.85;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacknet_node_money_mult            *= 1.10;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacknet_node_level_cost_mult       *= 0.85;
             break;
         case AugmentationNames.HacknetNodeNICUpload:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacknet_node_money_mult            *= 1.1;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacknet_node_purchase_cost_mult    *= 0.9;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacknet_node_money_mult            *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacknet_node_purchase_cost_mult    *= 0.9;
             break;
         case AugmentationNames.HacknetNodeKernelDNI:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacknet_node_money_mult            *= 1.25;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacknet_node_money_mult            *= 1.25;
             break;
         case AugmentationNames.HacknetNodeCoreDNI:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacknet_node_money_mult            *= 1.45;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacknet_node_money_mult            *= 1.45;
             break;
 
         //Misc augmentations
         case AugmentationNames.NeuroFluxGovernor:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_chance_mult *= 1.01;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_speed_mult  *= 1.01;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_money_mult  *= 1.01;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_grow_mult   *= 1.01;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_mult        *= 1.01;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_chance_mult *= 1.01;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_speed_mult  *= 1.01;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_money_mult  *= 1.01;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_grow_mult   *= 1.01;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_mult        *= 1.01;
 
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].strength_mult       *= 1.01;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].defense_mult        *= 1.01;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].dexterity_mult      *= 1.01;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].agility_mult        *= 1.01;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].charisma_mult       *= 1.01;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].strength_mult       *= 1.01;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].defense_mult        *= 1.01;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].dexterity_mult      *= 1.01;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].agility_mult        *= 1.01;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].charisma_mult       *= 1.01;
 
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_exp_mult    *= 1.01;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].strength_exp_mult   *= 1.01;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].defense_exp_mult    *= 1.01;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].dexterity_exp_mult  *= 1.01;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].agility_exp_mult    *= 1.01;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].charisma_exp_mult   *= 1.01;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_exp_mult    *= 1.01;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].strength_exp_mult   *= 1.01;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].defense_exp_mult    *= 1.01;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].dexterity_exp_mult  *= 1.01;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].agility_exp_mult    *= 1.01;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].charisma_exp_mult   *= 1.01;
 
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].company_rep_mult    *= 1.01;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].faction_rep_mult    *= 1.01;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].company_rep_mult    *= 1.01;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].faction_rep_mult    *= 1.01;
 
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].crime_money_mult    *= 1.01;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].crime_success_mult  *= 1.01;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].crime_money_mult    *= 1.01;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].crime_success_mult  *= 1.01;
 
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacknet_node_money_mult            *= 1.01;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacknet_node_purchase_cost_mult    *= 0.99;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacknet_node_ram_cost_mult         *= 0.99;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacknet_node_core_cost_mult        *= 0.99;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacknet_node_level_cost_mult       *= 0.99;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacknet_node_money_mult            *= 1.01;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacknet_node_purchase_cost_mult    *= 0.99;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacknet_node_ram_cost_mult         *= 0.99;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacknet_node_core_cost_mult        *= 0.99;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacknet_node_level_cost_mult       *= 0.99;
 
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].work_money_mult    *= 1.01;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].work_money_mult    *= 1.01;
 
             if (!reapply) {
                 Augmentations[aug.name].level = aug.level;
-                for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].augmentations.length; ++i) {
-                    if (_Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].augmentations[i].name == AugmentationNames.NeuroFluxGovernor) {
-                        _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].augmentations[i].level = aug.level;
+                for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].augmentations.length; ++i) {
+                    if (_Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].augmentations[i].name == AugmentationNames.NeuroFluxGovernor) {
+                        _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].augmentations[i].level = aug.level;
                         break;
                     }
                 }
             }
             break;
         case AugmentationNames.Neurotrainer1:      //Low Level
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_exp_mult   *= 1.1;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].strength_exp_mult  *= 1.1;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].defense_exp_mult   *= 1.1;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].dexterity_exp_mult *= 1.1;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].agility_exp_mult   *= 1.1;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].charisma_exp_mult  *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_exp_mult   *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].strength_exp_mult  *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].defense_exp_mult   *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].dexterity_exp_mult *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].agility_exp_mult   *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].charisma_exp_mult  *= 1.1;
             break;
         case AugmentationNames.Neurotrainer2:     //Medium level
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_exp_mult   *= 1.15;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].strength_exp_mult  *= 1.15;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].defense_exp_mult   *= 1.15;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].dexterity_exp_mult *= 1.15;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].agility_exp_mult   *= 1.15;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].charisma_exp_mult  *= 1.15;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_exp_mult   *= 1.15;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].strength_exp_mult  *= 1.15;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].defense_exp_mult   *= 1.15;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].dexterity_exp_mult *= 1.15;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].agility_exp_mult   *= 1.15;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].charisma_exp_mult  *= 1.15;
             break;
         case AugmentationNames.Neurotrainer3:    //High Level
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_exp_mult   *= 1.2;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].strength_exp_mult  *= 1.2;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].defense_exp_mult   *= 1.2;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].dexterity_exp_mult *= 1.2;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].agility_exp_mult   *= 1.2;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].charisma_exp_mult  *= 1.2;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_exp_mult   *= 1.2;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].strength_exp_mult  *= 1.2;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].defense_exp_mult   *= 1.2;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].dexterity_exp_mult *= 1.2;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].agility_exp_mult   *= 1.2;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].charisma_exp_mult  *= 1.2;
             break;
         case AugmentationNames.Hypersight:  //Medium high level
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].dexterity_mult     *= 1.4;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_speed_mult *= 1.03;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_money_mult *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].dexterity_mult     *= 1.4;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_speed_mult *= 1.03;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_money_mult *= 1.1;
             break;
         case AugmentationNames.LuminCloaking1:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].agility_mult       *= 1.05;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].crime_money_mult   *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].agility_mult       *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].crime_money_mult   *= 1.1;
             break;
         case AugmentationNames.LuminCloaking2:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].agility_mult       *= 1.1;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].defense_mult       *= 1.1;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].crime_money_mult   *= 1.25;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].agility_mult       *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].defense_mult       *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].crime_money_mult   *= 1.25;
             break;
         case AugmentationNames.HemoRecirculator:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].strength_mult      *= 1.08;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].defense_mult       *= 1.08;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].agility_mult       *= 1.08;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].dexterity_mult     *= 1.08;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].strength_mult      *= 1.08;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].defense_mult       *= 1.08;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].agility_mult       *= 1.08;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].dexterity_mult     *= 1.08;
             break;
         case AugmentationNames.SmartSonar:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].dexterity_mult     *= 1.1;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].dexterity_exp_mult *= 1.15;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].crime_money_mult   *= 1.25;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].dexterity_mult     *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].dexterity_exp_mult *= 1.15;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].crime_money_mult   *= 1.25;
             break;
         case AugmentationNames.PowerRecirculator:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_mult         *= 1.05;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].strength_mult        *= 1.05;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].defense_mult         *= 1.05;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].dexterity_mult       *= 1.05;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].agility_mult         *= 1.05;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].charisma_mult        *= 1.05;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_exp_mult     *= 1.1;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].strength_exp_mult    *= 1.1;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].defense_exp_mult     *= 1.1;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].dexterity_exp_mult   *= 1.1;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].agility_exp_mult     *= 1.1;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].charisma_exp_mult    *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_mult         *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].strength_mult        *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].defense_mult         *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].dexterity_mult       *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].agility_mult         *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].charisma_mult        *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_exp_mult     *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].strength_exp_mult    *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].defense_exp_mult     *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].dexterity_exp_mult   *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].agility_exp_mult     *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].charisma_exp_mult    *= 1.1;
             break;
         //Unique augmentations (for factions)
         case AugmentationNames.QLink:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_speed_mult   *= 1.1;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_chance_mult  *= 1.3;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_money_mult   *= 2;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_speed_mult   *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_chance_mult  *= 1.3;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_money_mult   *= 2;
             break;
         case AugmentationNames.TheRedPill:
             break;
         case AugmentationNames.SPTN97:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].strength_mult        *= 1.75;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].defense_mult         *= 1.75;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].dexterity_mult       *= 1.75;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].agility_mult         *= 1.75;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_mult         *= 1.15;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].strength_mult        *= 1.75;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].defense_mult         *= 1.75;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].dexterity_mult       *= 1.75;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].agility_mult         *= 1.75;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_mult         *= 1.15;
             break;
         case AugmentationNames.HiveMind:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_grow_mult    *= 3;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_grow_mult    *= 3;
             break;
         case AugmentationNames.CordiARCReactor:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].strength_mult        *= 1.35;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].defense_mult         *= 1.35;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].dexterity_mult       *= 1.35;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].agility_mult         *= 1.35;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].strength_exp_mult    *= 1.35;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].defense_exp_mult     *= 1.35;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].dexterity_exp_mult   *= 1.35;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].agility_exp_mult     *= 1.35;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].strength_mult        *= 1.35;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].defense_mult         *= 1.35;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].dexterity_mult       *= 1.35;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].agility_mult         *= 1.35;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].strength_exp_mult    *= 1.35;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].defense_exp_mult     *= 1.35;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].dexterity_exp_mult   *= 1.35;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].agility_exp_mult     *= 1.35;
             break;
         case AugmentationNames.SmartJaw:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].charisma_mult        *= 1.5;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].charisma_exp_mult    *= 1.5;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].company_rep_mult     *= 1.25;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].faction_rep_mult     *= 1.25;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].charisma_mult        *= 1.5;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].charisma_exp_mult    *= 1.5;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].company_rep_mult     *= 1.25;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].faction_rep_mult     *= 1.25;
             break;
         case AugmentationNames.Neotra:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].strength_mult        *= 1.55;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].defense_mult         *= 1.55;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].strength_mult        *= 1.55;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].defense_mult         *= 1.55;
             break;
         case AugmentationNames.Xanipher:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_mult         *= 1.2;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].strength_mult        *= 1.2;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].defense_mult         *= 1.2;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].dexterity_mult       *= 1.2;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].agility_mult         *= 1.2;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].charisma_mult        *= 1.2;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_exp_mult     *= 1.15;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].strength_exp_mult    *= 1.15;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].defense_exp_mult     *= 1.15;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].dexterity_exp_mult   *= 1.15;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].agility_exp_mult     *= 1.15;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].charisma_exp_mult    *= 1.15;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_mult         *= 1.2;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].strength_mult        *= 1.2;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].defense_mult         *= 1.2;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].dexterity_mult       *= 1.2;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].agility_mult         *= 1.2;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].charisma_mult        *= 1.2;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_exp_mult     *= 1.15;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].strength_exp_mult    *= 1.15;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].defense_exp_mult     *= 1.15;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].dexterity_exp_mult   *= 1.15;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].agility_exp_mult     *= 1.15;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].charisma_exp_mult    *= 1.15;
             break;
         case AugmentationNames.nextSENS:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_mult         *= 1.2;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].strength_mult        *= 1.2;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].defense_mult         *= 1.2;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].dexterity_mult       *= 1.2;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].agility_mult         *= 1.2;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].charisma_mult        *= 1.2;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_mult         *= 1.2;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].strength_mult        *= 1.2;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].defense_mult         *= 1.2;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].dexterity_mult       *= 1.2;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].agility_mult         *= 1.2;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].charisma_mult        *= 1.2;
             break;
         case AugmentationNames.OmniTekInfoLoad:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_mult         *= 1.2;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_exp_mult     *= 1.25;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_mult         *= 1.2;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_exp_mult     *= 1.25;
             break;
         case AugmentationNames.PhotosyntheticCells:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].strength_mult        *= 1.4;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].defense_mult         *= 1.4;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].agility_mult         *= 1.4;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].strength_mult        *= 1.4;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].defense_mult         *= 1.4;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].agility_mult         *= 1.4;
             break;
         case AugmentationNames.Neurolink:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_mult         *= 1.15;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_exp_mult     *= 1.2;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_chance_mult  *= 1.1;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_speed_mult   *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_mult         *= 1.15;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_exp_mult     *= 1.2;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_chance_mult  *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_speed_mult   *= 1.05;
             break;
         case AugmentationNames.TheBlackHand:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].strength_mult        *= 1.15;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].dexterity_mult       *= 1.15;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_mult         *= 1.1;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_speed_mult   *= 1.02;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_money_mult   *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].strength_mult        *= 1.15;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].dexterity_mult       *= 1.15;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_mult         *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_speed_mult   *= 1.02;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_money_mult   *= 1.1;
             break;
         case AugmentationNames.CRTX42AA:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_mult         *= 1.08;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_exp_mult     *= 1.15;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_mult         *= 1.08;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_exp_mult     *= 1.15;
             break;
         case AugmentationNames.Neuregen:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].hacking_exp_mult     *= 1.4;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_exp_mult     *= 1.4;
             break;
         case AugmentationNames.CashRoot:
             break;
         case AugmentationNames.NutriGen:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].strength_exp_mult    *= 1.2;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].defense_exp_mult     *= 1.2;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].dexterity_exp_mult   *= 1.2;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].agility_exp_mult     *= 1.2;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].strength_exp_mult    *= 1.2;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].defense_exp_mult     *= 1.2;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].dexterity_exp_mult   *= 1.2;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].agility_exp_mult     *= 1.2;
             break;
         case AugmentationNames.INFRARet:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].crime_success_mult   *= 1.25;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].crime_money_mult     *= 1.1;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].dexterity_mult       *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].crime_success_mult   *= 1.25;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].crime_money_mult     *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].dexterity_mult       *= 1.1;
             break;
         case AugmentationNames.DermaForce:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].defense_mult         *= 1.4;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].defense_mult         *= 1.4;
             break;
         case AugmentationNames.GrapheneBrachiBlades:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].strength_mult        *= 1.4;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].defense_mult         *= 1.4;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].crime_success_mult   *= 1.1;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].crime_money_mult     *= 1.3;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].strength_mult        *= 1.4;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].defense_mult         *= 1.4;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].crime_success_mult   *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].crime_money_mult     *= 1.3;
             break;
         case AugmentationNames.GrapheneBionicArms:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].strength_mult        *= 1.85;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].dexterity_mult       *= 1.85;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].strength_mult        *= 1.85;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].dexterity_mult       *= 1.85;
             break;
         case AugmentationNames.BrachiBlades:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].strength_mult        *= 1.15;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].defense_mult         *= 1.15;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].crime_success_mult   *= 1.1;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].crime_money_mult     *= 1.15;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].strength_mult        *= 1.15;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].defense_mult         *= 1.15;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].crime_success_mult   *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].crime_money_mult     *= 1.15;
             break;
         case AugmentationNames.BionicArms:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].strength_mult        *= 1.3;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].dexterity_mult       *= 1.3;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].strength_mult        *= 1.3;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].dexterity_mult       *= 1.3;
             break;
         case AugmentationNames.SNA:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].work_money_mult      *= 1.1;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].company_rep_mult     *= 1.15;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].faction_rep_mult     *= 1.15;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].work_money_mult      *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].company_rep_mult     *= 1.15;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].faction_rep_mult     *= 1.15;
             break;
 
         //Bladeburner augmentations
         case AugmentationNames.EsperEyewear:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].bladeburner_success_chance_mult  *= 1.03;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].dexterity_mult                   *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].bladeburner_success_chance_mult  *= 1.03;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].dexterity_mult                   *= 1.05;
             break;
         case AugmentationNames.EMS4Recombination:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].bladeburner_success_chance_mult  *= 1.03;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].bladeburner_analysis_mult        *= 1.05;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].bladeburner_stamina_gain_mult    *= 1.02;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].bladeburner_success_chance_mult  *= 1.03;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].bladeburner_analysis_mult        *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].bladeburner_stamina_gain_mult    *= 1.02;
             break;
         case AugmentationNames.OrionShoulder:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].defense_mult                     *= 1.05;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].strength_mult                    *= 1.05;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].dexterity_mult                   *= 1.05;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].bladeburner_success_chance_mult  *= 1.04;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].defense_mult                     *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].strength_mult                    *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].dexterity_mult                   *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].bladeburner_success_chance_mult  *= 1.04;
             break;
         case AugmentationNames.HyperionV1:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].bladeburner_success_chance_mult  *= 1.06;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].bladeburner_success_chance_mult  *= 1.06;
             break;
         case AugmentationNames.HyperionV2:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].bladeburner_success_chance_mult  *= 1.08;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].bladeburner_success_chance_mult  *= 1.08;
             break;
         case AugmentationNames.GolemSerum:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].strength_mult                    *= 1.07;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].defense_mult                     *= 1.07;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].dexterity_mult                   *= 1.07;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].agility_mult                     *= 1.07;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].bladeburner_stamina_gain_mult    *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].strength_mult                    *= 1.07;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].defense_mult                     *= 1.07;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].dexterity_mult                   *= 1.07;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].agility_mult                     *= 1.07;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].bladeburner_stamina_gain_mult    *= 1.05;
             break;
         case AugmentationNames.VangelisVirus:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].dexterity_exp_mult               *= 1.1;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].bladeburner_analysis_mult        *= 1.1;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].bladeburner_success_chance_mult  *= 1.04;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].dexterity_exp_mult               *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].bladeburner_analysis_mult        *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].bladeburner_success_chance_mult  *= 1.04;
             break;
         case AugmentationNames.VangelisVirus3:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].defense_exp_mult                 *= 1.1;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].dexterity_exp_mult               *= 1.1;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].bladeburner_analysis_mult        *= 1.15;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].bladeburner_success_chance_mult  *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].defense_exp_mult                 *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].dexterity_exp_mult               *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].bladeburner_analysis_mult        *= 1.15;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].bladeburner_success_chance_mult  *= 1.05;
             break;
         case AugmentationNames.INTERLINKED:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].strength_exp_mult                *= 1.05;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].defense_exp_mult                 *= 1.05;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].dexterity_exp_mult               *= 1.05;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].agility_exp_mult                 *= 1.05;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].bladeburner_max_stamina_mult     *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].strength_exp_mult                *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].defense_exp_mult                 *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].dexterity_exp_mult               *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].agility_exp_mult                 *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].bladeburner_max_stamina_mult     *= 1.1;
             break;
         case AugmentationNames.BladeRunner:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].agility_mult                     *= 1.05;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].bladeburner_max_stamina_mult     *= 1.05;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].bladeburner_stamina_gain_mult    *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].agility_mult                     *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].bladeburner_max_stamina_mult     *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].bladeburner_stamina_gain_mult    *= 1.05;
             break;
         case AugmentationNames.BladeArmor:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].strength_mult                    *= 1.04;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].defense_mult                     *= 1.04;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].dexterity_mult                   *= 1.04;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].agility_mult                     *= 1.04;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].bladeburner_stamina_gain_mult    *= 1.02;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].bladeburner_success_chance_mult  *= 1.03;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].strength_mult                    *= 1.04;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].defense_mult                     *= 1.04;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].dexterity_mult                   *= 1.04;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].agility_mult                     *= 1.04;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].bladeburner_stamina_gain_mult    *= 1.02;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].bladeburner_success_chance_mult  *= 1.03;
             break;
         case AugmentationNames.BladeArmorPowerCells:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].bladeburner_success_chance_mult  *= 1.05;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].bladeburner_stamina_gain_mult    *= 1.02;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].bladeburner_max_stamina_mult     *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].bladeburner_success_chance_mult  *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].bladeburner_stamina_gain_mult    *= 1.02;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].bladeburner_max_stamina_mult     *= 1.05;
             break;
         case AugmentationNames.BladeArmorEnergyShielding:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].defense_mult                     *= 1.05;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].bladeburner_success_chance_mult  *= 1.06;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].defense_mult                     *= 1.05;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].bladeburner_success_chance_mult  *= 1.06;
             break;
         case AugmentationNames.BladeArmorUnibeam:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].bladeburner_success_chance_mult  *= 1.08;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].bladeburner_success_chance_mult  *= 1.08;
             break;
         case AugmentationNames.BladeArmorOmnibeam:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].bladeburner_success_chance_mult  *= 1.1;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].bladeburner_success_chance_mult  *= 1.1;
             break;
         case AugmentationNames.BladeArmorIPU:
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].bladeburner_analysis_mult        *= 1.15;
-            _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].bladeburner_success_chance_mult  *= 1.02;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].bladeburner_analysis_mult        *= 1.15;
+            _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].bladeburner_success_chance_mult  *= 1.02;
             break;
         case AugmentationNames.BladesSimulacrum: //No multiplier effect
             break;
@@ -10314,8 +10287,8 @@ function applyAugmentation(aug, reapply=false) {
     }
 
     if (aug.name === AugmentationNames.NeuroFluxGovernor) {
-        for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].augmentations.length; ++i) {
-            if (_Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].augmentations[i].name == AugmentationNames.NeuroFluxGovernor) {
+        for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].augmentations.length; ++i) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].augmentations[i].name == AugmentationNames.NeuroFluxGovernor) {
                 //Already have this aug, just upgrade the level
                 return;
             }
@@ -10324,7 +10297,7 @@ function applyAugmentation(aug, reapply=false) {
 
     if (!reapply) {
         var ownedAug = new PlayerOwnedAugmentation(aug.name);
-        _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].augmentations.push(ownedAug);
+        _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].augmentations.push(ownedAug);
     }
 }
 
@@ -10334,29 +10307,29 @@ function PlayerOwnedAugmentation(name) {
 }
 
 function installAugmentations(cbScript=null) {
-    if (_Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].queuedAugmentations.length == 0) {
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_14__["dialogBoxCreate"])("You have not purchased any Augmentations to install!");
+    if (_Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].queuedAugmentations.length == 0) {
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("You have not purchased any Augmentations to install!");
         return false;
     }
     var augmentationList = "";
-    for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].queuedAugmentations.length; ++i) {
-        var aug = Augmentations[_Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].queuedAugmentations[i].name];
+    for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].queuedAugmentations.length; ++i) {
+        var aug = Augmentations[_Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].queuedAugmentations[i].name];
         if (aug == null) {
             console.log("ERROR. Invalid augmentation");
             continue;
         }
-        applyAugmentation(_Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].queuedAugmentations[i]);
+        applyAugmentation(_Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].queuedAugmentations[i]);
         augmentationList += (aug.name + "<br>");
     }
-    _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].queuedAugmentations = [];
-    Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_14__["dialogBoxCreate"])("You slowly drift to sleep as scientists put you under in order " +
+    _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].queuedAugmentations = [];
+    Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__["dialogBoxCreate"])("You slowly drift to sleep as scientists put you under in order " +
                     "to install the following Augmentations:<br>" + augmentationList +
                     "<br>You wake up in your home...you feel different...");
-    Object(_Prestige__WEBPACK_IMPORTED_MODULE_7__[/* prestigeAugmentation */ "a"])();
+    Object(_Prestige__WEBPACK_IMPORTED_MODULE_6__[/* prestigeAugmentation */ "a"])();
 
     //Run a script after prestiging
     if (cbScript && Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_19__["isString"])(cbScript)) {
-        var home = _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].getHomeComputer();
+        var home = _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].getHomeComputer();
         for (var i = 0; i < home.scripts.length; ++i) {
             if (home.scripts[i].filename === cbScript) {
                 var script = home.scripts[i];
@@ -10365,10 +10338,10 @@ function installAugmentations(cbScript=null) {
                 if (ramUsage > ramAvailable) {
                     return; //Not enough RAM
                 }
-                var runningScriptObj = new _Script__WEBPACK_IMPORTED_MODULE_9__[/* RunningScript */ "b"](script, []); //No args
+                var runningScriptObj = new _Script__WEBPACK_IMPORTED_MODULE_8__[/* RunningScript */ "b"](script, []); //No args
                 runningScriptObj.threads = 1; //Only 1 thread
                 home.runningScripts.push(runningScriptObj);
-                Object(_NetscriptWorker__WEBPACK_IMPORTED_MODULE_5__[/* addWorkerScript */ "c"])(runningScriptObj, home);
+                Object(_NetscriptWorker__WEBPACK_IMPORTED_MODULE_4__[/* addWorkerScript */ "c"])(runningScriptObj, home);
             }
         }
     }
@@ -10384,24 +10357,24 @@ function giveAllAugmentations() {
         var aug = Augmentations[name];
         if (aug == null) {continue;}
         var ownedAug = new PlayerOwnedAugmentation(name);
-        _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].augmentations.push(ownedAug);
+        _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].augmentations.push(ownedAug);
     }
-    _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].reapplyAllAugmentations();
+    _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].reapplyAllAugmentations();
 }
 
-function displayAugmentationsContent() {
-    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_20__["removeChildrenFromElement"])(_engine__WEBPACK_IMPORTED_MODULE_2__["Engine"].Display.augmentationsContent);
-    _engine__WEBPACK_IMPORTED_MODULE_2__["Engine"].Display.augmentationsContent.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__["createElement"])("h1", {
+function displayAugmentationsContent(contentEl) {
+    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_20__["removeChildrenFromElement"])(contentEl);
+    contentEl.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__["createElement"])("h1", {
         innerText:"Purchased Augmentations",
     }));
 
     //Bladeburner text, once mechanic is unlocked
     var bladeburnerText = "\n";
-    if (_Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].bitNodeN === 6 || _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_4__[/* hasBladeburnerSF */ "c"]) {
+    if (_Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].bitNodeN === 6 || _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_3__[/* hasBladeburnerSF */ "c"]) {
         bladeburnerText = "Bladeburner Progress\n\n";
     }
 
-    _engine__WEBPACK_IMPORTED_MODULE_2__["Engine"].Display.augmentationsContent.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__["createElement"])("pre", {
+    contentEl.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__["createElement"])("pre", {
         width:"70%", whiteSpace:"pre-wrap", display:"block",
         innerText:"Below is a list of all Augmentations you have purchased but not yet installed. Click the button below to install them.\n" +
                   "WARNING: Installing your Augmentations resets most of your progress, including:\n\n" +
@@ -10419,7 +10392,7 @@ function displayAugmentationsContent() {
     }));
 
     //Install Augmentations button
-    _engine__WEBPACK_IMPORTED_MODULE_2__["Engine"].Display.augmentationsContent.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__["createElement"])("a", {
+    contentEl.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__["createElement"])("a", {
         class:"a-link-button", innerText:"Install Augmentations",
         tooltip:"'I never asked for this'",
         clickListener:()=>{
@@ -10429,11 +10402,11 @@ function displayAugmentationsContent() {
     }));
 
     //Backup button
-    _engine__WEBPACK_IMPORTED_MODULE_2__["Engine"].Display.augmentationsContent.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__["createElement"])("a", {
+    contentEl.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__["createElement"])("a", {
         class:"a-link-button flashing-button", innerText:"Backup Save (Export)",
         tooltip:"It's always a good idea to backup/export your save!",
         clickListener:()=>{
-            _SaveObject__WEBPACK_IMPORTED_MODULE_8__[/* saveObject */ "b"].exportGame();
+            _SaveObject__WEBPACK_IMPORTED_MODULE_7__[/* saveObject */ "b"].exportGame();
             return false;
         }
     }));
@@ -10441,25 +10414,25 @@ function displayAugmentationsContent() {
     //Purchased/queued augmentations list
     var queuedAugmentationsList = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__["createElement"])("ul", {class:"augmentations-list"});
 
-    for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].queuedAugmentations.length; ++i) {
-        var augName = _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].queuedAugmentations[i].name;
+    for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].queuedAugmentations.length; ++i) {
+        var augName = _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].queuedAugmentations[i].name;
         var aug = Augmentations[augName];
 
         var displayName = augName;
         if (augName === AugmentationNames.NeuroFluxGovernor) {
-            displayName += " - Level " + (_Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].queuedAugmentations[i].level);
+            displayName += " - Level " + (_Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].queuedAugmentations[i].level);
         }
 
-        var accordion = Object(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_15__["createAccordionElement"])({hdrText:displayName, panelText:aug.info});
+        var accordion = Object(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_14__["createAccordionElement"])({hdrText:displayName, panelText:aug.info});
         queuedAugmentationsList.appendChild(accordion[0]);
     }
-    _engine__WEBPACK_IMPORTED_MODULE_2__["Engine"].Display.augmentationsContent.appendChild(queuedAugmentationsList);
+    contentEl.appendChild(queuedAugmentationsList);
 
     //Installed augmentations list
-    _engine__WEBPACK_IMPORTED_MODULE_2__["Engine"].Display.augmentationsContent.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__["createElement"])("h1", {
+    contentEl.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__["createElement"])("h1", {
         innerText:"Installed Augmentations", marginTop:"8px",
     }));
-    _engine__WEBPACK_IMPORTED_MODULE_2__["Engine"].Display.augmentationsContent.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__["createElement"])("p", {
+    contentEl.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__["createElement"])("p", {
         width:"70%", whiteSpace:"pre-wrap",
         innerText:"List of all Augmentations (including Source Files) that have been " +
                   "installed. You have gained the effects of these Augmentations."
@@ -10468,7 +10441,7 @@ function displayAugmentationsContent() {
     var augmentationsList = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__["createElement"])("ul", {class:"augmentations-list"});
 
     //Expand/Collapse All buttons
-    _engine__WEBPACK_IMPORTED_MODULE_2__["Engine"].Display.augmentationsContent.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__["createElement"])("a", {
+    contentEl.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__["createElement"])("a", {
         class:"a-link-button", fontSize:"14px", innerText:"Expand All", display:"inline-block",
         clickListener:()=>{
             var allHeaders = augmentationsList.getElementsByClassName("accordion-header");
@@ -10477,7 +10450,7 @@ function displayAugmentationsContent() {
             }
         }
     }));
-    _engine__WEBPACK_IMPORTED_MODULE_2__["Engine"].Display.augmentationsContent.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__["createElement"])("a", {
+    contentEl.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__["createElement"])("a", {
         class:"a-link-button", fontSize:"14px", innerText:"Collapse All", display:"inline-block",
         clickListener:()=>{
             var allHeaders = augmentationsList.getElementsByClassName("accordion-header");
@@ -10495,8 +10468,8 @@ function displayAugmentationsContent() {
             Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_20__["removeChildrenFromElement"])(augmentationsList);
 
             //Create a copy of Player's Source Files and augs array and sort them
-            var sourceFiles = _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].sourceFiles.slice();
-            var augs = _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].augmentations.slice();
+            var sourceFiles = _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].sourceFiles.slice();
+            var augs = _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].augmentations.slice();
             sourceFiles.sort((sf1, sf2)=>{
                 return sf1.n - sf2.n;
             });
@@ -10506,31 +10479,63 @@ function displayAugmentationsContent() {
             displaySourceFiles(augmentationsList, sourceFiles);
             displayAugmentations(augmentationsList, augs);
 
-            _Settings__WEBPACK_IMPORTED_MODULE_12__["Settings"].OwnedAugmentationsOrder = _SettingEnums__WEBPACK_IMPORTED_MODULE_11__["OwnedAugmentationsOrderSetting"].Alphabetically;
+            _Settings__WEBPACK_IMPORTED_MODULE_11__["Settings"].OwnedAugmentationsOrder = _SettingEnums__WEBPACK_IMPORTED_MODULE_10__["OwnedAugmentationsOrderSetting"].Alphabetically;
         }
     });
-    _engine__WEBPACK_IMPORTED_MODULE_2__["Engine"].Display.augmentationsContent.appendChild(sortInOrderButton);
+    contentEl.appendChild(sortInOrderButton);
 
     const sortByAcquirementTimeButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__["createElement"])("a", {
         class:"a-link-button", fontSize:"14px", innerText:"Sort by Acquirement Time",
         tooltip:"Sorts the Augmentations and Source Files based on when you acquired them (same as default)",
         clickListener:()=>{
             Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_20__["removeChildrenFromElement"])(augmentationsList);
-            displaySourceFiles(augmentationsList, _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].sourceFiles);
-            displayAugmentations(augmentationsList, _Player__WEBPACK_IMPORTED_MODULE_6__[/* Player */ "a"].augmentations);
+            displaySourceFiles(augmentationsList, _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].sourceFiles);
+            displayAugmentations(augmentationsList, _Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].augmentations);
 
-            _Settings__WEBPACK_IMPORTED_MODULE_12__["Settings"].OwnedAugmentationsOrder = _SettingEnums__WEBPACK_IMPORTED_MODULE_11__["OwnedAugmentationsOrderSetting"].AcquirementTime;
+            _Settings__WEBPACK_IMPORTED_MODULE_11__["Settings"].OwnedAugmentationsOrder = _SettingEnums__WEBPACK_IMPORTED_MODULE_10__["OwnedAugmentationsOrderSetting"].AcquirementTime;
         }
     });
-    _engine__WEBPACK_IMPORTED_MODULE_2__["Engine"].Display.augmentationsContent.appendChild(sortByAcquirementTimeButton);
+    contentEl.appendChild(sortByAcquirementTimeButton);
 
-    //Source Files - Temporary...Will probably put in a separate pane Later
-    if (_Settings__WEBPACK_IMPORTED_MODULE_12__["Settings"].OwnedAugmentationsOrder === _SettingEnums__WEBPACK_IMPORTED_MODULE_11__["OwnedAugmentationsOrderSetting"].Alphabetically) {
+    if (_Settings__WEBPACK_IMPORTED_MODULE_11__["Settings"].OwnedAugmentationsOrder === _SettingEnums__WEBPACK_IMPORTED_MODULE_10__["OwnedAugmentationsOrderSetting"].Alphabetically) {
         sortInOrderButton.click();
     } else {
         sortByAcquirementTimeButton.click();
     }
-    _engine__WEBPACK_IMPORTED_MODULE_2__["Engine"].Display.augmentationsContent.appendChild(augmentationsList);
+    contentEl.appendChild(augmentationsList);
+
+    // Display multiplier information at the bottom
+    contentEl.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__["createElement"])("p", {
+        display: "block",
+        innerHTML:
+            `<br><br><strong><u>Total Multipliers:</u></strong><br>` + 
+            'Hacking Chance multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_16__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_chance_mult * 100, 2) + '%<br>' +
+            'Hacking Speed multiplier:  ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_16__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_speed_mult * 100, 2) + '%<br>' +
+            'Hacking Money multiplier:  ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_16__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_money_mult * 100, 2) + '%<br>' +
+            'Hacking Growth multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_16__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_grow_mult * 100, 2) + '%<br><br>' +
+            'Hacking Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_16__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_mult * 100, 2) + '%<br>' +
+            'Hacking Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_16__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacking_exp_mult * 100, 2) + '%<br><br>' +
+            'Strength Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_16__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].strength_mult * 100, 2) + '%<br>' +
+            'Strength Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_16__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].strength_exp_mult * 100, 2) + '%<br><br>' +
+            'Defense Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_16__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].defense_mult * 100, 2) + '%<br>' +
+            'Defense Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_16__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].defense_exp_mult * 100, 2) + '%<br><br>' +
+            'Dexterity Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_16__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].dexterity_mult * 100, 2) + '%<br>' +
+            'Dexterity Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_16__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].dexterity_exp_mult * 100, 2) + '%<br><br>' +
+            'Agility Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_16__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].agility_mult * 100, 2) + '%<br>' +
+            'Agility Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_16__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].agility_exp_mult * 100, 2) + '%<br><br>' +
+            'Charisma Level multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_16__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].charisma_mult * 100, 2) + '%<br>' +
+            'Charisma Experience multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_16__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].charisma_exp_mult * 100, 2) + '%<br><br>' +
+            'Hacknet Node production multiplier:         ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_16__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacknet_node_money_mult * 100, 2) + '%<br>' +
+            'Hacknet Node purchase cost multiplier:      ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_16__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacknet_node_purchase_cost_mult * 100, 2) + '%<br>' +
+            'Hacknet Node RAM upgrade cost multiplier:   ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_16__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacknet_node_ram_cost_mult * 100, 2) + '%<br>' +
+            'Hacknet Node Core purchase cost multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_16__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacknet_node_core_cost_mult * 100, 2) + '%<br>' +
+            'Hacknet Node level upgrade cost multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_16__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].hacknet_node_level_cost_mult * 100, 2) + '%<br><br>' +
+            'Company reputation gain multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_16__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].company_rep_mult * 100, 2) + '%<br>' +
+            'Faction reputation gain multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_16__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].faction_rep_mult * 100, 2) + '%<br>' +
+            'Salary multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_16__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].work_money_mult * 100, 2) + '%<br>' +
+            'Crime success multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_16__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].crime_success_mult * 100, 2) + '%<br>' +
+            'Crime money multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_16__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].crime_money_mult * 100, 2) + '%<br><br><br>',
+    }))
 }
 
 //Creates the accordion elements to display Augmentations
@@ -10545,7 +10550,7 @@ function displayAugmentations(listElement, augs) {
         if (augName === AugmentationNames.NeuroFluxGovernor) {
             displayName += " - Level " + (augs[i].level);
         }
-        var accordion = Object(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_15__["createAccordionElement"])({hdrText:displayName, panelText:aug.info});
+        var accordion = Object(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_14__["createAccordionElement"])({hdrText:displayName, panelText:aug.info});
         listElement.appendChild(accordion[0]);
     }
 }
@@ -10556,13 +10561,13 @@ function displayAugmentations(listElement, augs) {
 function displaySourceFiles(listElement, sourceFiles) {
     for (var i = 0; i < sourceFiles.length; ++i) {
         var srcFileKey = "SourceFile" + sourceFiles[i].n;
-        var sourceFileObject = _SourceFile__WEBPACK_IMPORTED_MODULE_13__[/* SourceFiles */ "b"][srcFileKey];
+        var sourceFileObject = _SourceFile__WEBPACK_IMPORTED_MODULE_12__[/* SourceFiles */ "b"][srcFileKey];
         if (sourceFileObject == null) {
             console.log("ERROR: Invalid source file number: " + sourceFiles[i].n);
             continue;
         }
         const maxLevel = sourceFiles[i].n == 12 ? "∞" : "3";
-        var accordion = Object(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_15__["createAccordionElement"])({
+        var accordion = Object(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_14__["createAccordionElement"])({
             hdrText:sourceFileObject.name + "<br>" + "Level " + (sourceFiles[i].lvl) + " / "+maxLevel,
             panelText:sourceFileObject.info
         });
@@ -10573,6 +10578,36 @@ function displaySourceFiles(listElement, sourceFiles) {
 
 
 
+
+
+/***/ }),
+/* 21 */
+/*!**********************************************!*\
+  !*** ./utils/uiHelpers/removeElementById.ts ***!
+  \**********************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const getElementById_1 = __webpack_require__(/*! ./getElementById */ 53);
+const removeElement_1 = __webpack_require__(/*! ./removeElement */ 61);
+/**
+ * Given its id, this function removes an element AND its children
+ * @param id The HTML identifier to search for and remove.
+ */
+function removeElementById(id) {
+    try {
+        const elem = getElementById_1.getElementById(id);
+        removeElement_1.removeElement(elem);
+    }
+    catch (e) {
+        // Probably should log this as we're trying to remove elements that don't exist.
+    }
+}
+exports.removeElementById = removeElementById;
 
 
 /***/ }),
@@ -10616,7 +10651,7 @@ function displaySourceFiles(listElement, sourceFiles) {
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Stock__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Stock */ 27);
 /* harmony import */ var _Stock__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Stock__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
@@ -10633,7 +10668,7 @@ function displaySourceFiles(listElement, sourceFiles) {
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_14__);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 29);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 21);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_16__);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__);
@@ -12277,7 +12312,7 @@ for (const params of programsMetadata_1.programsMetadata) {
 /* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActiveScriptsUI */ 68);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 8);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 9);
 /* harmony import */ var _JSInterpreter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./JSInterpreter */ 132);
 /* harmony import */ var _NetscriptEnvironment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptEnvironment */ 116);
 /* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./NetscriptEvaluator */ 6);
@@ -12289,9 +12324,9 @@ for (const params of programsMetadata_1.programsMetadata) {
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var escodegen__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! escodegen */ 110);
 /* harmony import */ var escodegen__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(escodegen__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/acorn */ 48);
+/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/acorn */ 49);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
 /* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/helpers/compareArrays */ 93);
 /* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_14__);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 54);
@@ -13090,7 +13125,7 @@ exports.removeChildrenFromElement = removeChildrenFromElement;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return isScriptFilename; });
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./engine */ 8);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./engine */ 9);
 /* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Fconf */ 47);
 /* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./InteractiveTutorial */ 34);
 /* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptEvaluator */ 6);
@@ -13104,13 +13139,13 @@ exports.removeChildrenFromElement = removeChildrenFromElement;
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./TextFile */ 65);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_TextFile__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/acorn */ 48);
+/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/acorn */ 49);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./ui/navigationTracking */ 12);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_13__);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
 /* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/helpers/compareArrays */ 93);
 /* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_17__);
@@ -14231,12 +14266,12 @@ _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__["Reviver"].constructors.AllServ
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Bladeburner; });
-/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentations */ 21);
+/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentations */ 20);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BitNodeMultipliers */ 10);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./engine */ 8);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./engine */ 9);
 /* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Faction/Faction */ 56);
 /* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_Faction_Faction__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Faction/Factions */ 14);
@@ -14252,7 +14287,7 @@ _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__["Reviver"].constructors.AllServ
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/createProgressBarText */ 85);
 /* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 29);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_14__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
@@ -14277,7 +14312,7 @@ _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__["Reviver"].constructors.AllServ
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_25__);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 61);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_26__);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 21);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_27__);
 
 
@@ -18611,7 +18646,7 @@ exports.KEY = {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return iTutorialStart; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return iTutorialNextStep; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ITutorial; });
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./engine */ 8);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./engine */ 9);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_2__);
@@ -18621,7 +18656,7 @@ exports.KEY = {
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 37);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 21);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_6__);
 
 
@@ -19269,7 +19304,7 @@ exports.createPopup = createPopup;
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
 
 
 
@@ -19618,7 +19653,7 @@ exports.isString = isString;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return loadMessages; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return initMessages; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Message; });
-/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentations */ 21);
+/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentations */ 20);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Programs/Programs */ 24);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Missions */ 55);
@@ -19627,7 +19662,7 @@ exports.isString = isString;
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Server */ 11);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
 
 
@@ -19845,7 +19880,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const JSONReviver_1 = __webpack_require__(/*! ../utils/JSONReviver */ 13);
 const createElement_1 = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 const createPopup_1 = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 37);
-const removeElementById_1 = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
+const removeElementById_1 = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 21);
 const codingcontracttypes_1 = __webpack_require__(/*! ./data/codingcontracttypes */ 205);
 /* tslint:disable:no-magic-numbers completed-docs max-classes-per-file no-console */
 /* Represents different types of problems that a Coding Contract can have */
@@ -20016,7 +20051,7 @@ JSONReviver_1.Reviver.constructors.CodingContract = CodingContract;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return hasAISF; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return hasBladeburnerSF; });
 /* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActiveScriptsUI */ 68);
-/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Augmentations */ 21);
+/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Augmentations */ 20);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BitNodeMultipliers */ 10);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Crimes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Crimes */ 38);
@@ -20033,7 +20068,7 @@ JSONReviver_1.Reviver.constructors.CodingContract = CodingContract;
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _DarkWeb_DarkWebItems__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./DarkWeb/DarkWebItems */ 71);
 /* harmony import */ var _DarkWeb_DarkWebItems__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_DarkWeb_DarkWebItems__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _Hacking__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Hacking */ 49);
+/* harmony import */ var _Hacking__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Hacking */ 48);
 /* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Gang */ 50);
 /* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Faction/Faction */ 56);
 /* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_Faction_Faction__WEBPACK_IMPORTED_MODULE_13__);
@@ -20068,7 +20103,7 @@ JSONReviver_1.Reviver.constructors.CodingContract = CodingContract;
 /* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! decimal.js */ 35);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./ui/navigationTracking */ 12);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_36___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_36__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
 /* harmony import */ var _utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ../utils/helpers/isPowerOfTwo */ 133);
 /* harmony import */ var _utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_38___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_38__);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 54);
@@ -20466,6 +20501,46 @@ function NetscriptFunctions(workerScript) {
                     return Promise.resolve(0);
                 }
             });
+        },
+        hackAnalyzeThreads : function(ip, hackAmount) {
+            if (workerScript.checkingRam) {
+                return updateStaticRam("hackAnalyzeThreads", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptHackAnalyzeRamCost);
+            }
+            updateDynamicRam("hackAnalyzeThreads", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptHackAnalyzeRamCost);
+
+            // Check argument validity
+            const server = safeGetServer(ip, 'hackAnalyzeThreads');
+            if (isNaN(hackAmount)) {
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, `Invalid growth argument passed into growthAnalyze: ${hackAmount}. Must be numeric`);
+            }
+
+            if (hackAmount < 0 || hackAmount > server.moneyAvailable) {
+                return -1;
+            }
+
+            const percentHacked = Object(_Hacking__WEBPACK_IMPORTED_MODULE_11__[/* calculatePercentMoneyHacked */ "e"])(server);
+
+            return hackAmount / Math.floor(server.moneyAvailable * percentHacked);
+        },
+        hackAnalyzePercent : function(ip) {
+            if (workerScript.checkingRam) {
+                return updateStaticRam("hackAnalyzePercent", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptHackAnalyzeRamCost);
+            }
+            updateDynamicRam("hackAnalyzePercent", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptHackAnalyzeRamCost);
+
+            const server = safeGetServer(ip, 'hackAnalyzePercent');
+
+            return Object(_Hacking__WEBPACK_IMPORTED_MODULE_11__[/* calculatePercentMoneyHacked */ "e"])(server) * 100;
+        },
+        hackChance : function(ip) {
+            if (workerScript.checkingRam) {
+                return updateStaticRam("hackChance", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptHackAnalyzeRamCost);
+            }
+            updateDynamicRam("hackChance", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptHackAnalyzeRamCost);
+
+            const server = safeGetServer(ip, 'hackChance');
+
+            return Object(_Hacking__WEBPACK_IMPORTED_MODULE_11__[/* calculateHackingChance */ "b"])(server);
         },
         sleep : function(time){
             if (workerScript.checkingRam) {return 0;}
@@ -22685,7 +22760,7 @@ function NetscriptFunctions(workerScript) {
                     costMult = 20;
                     expMult = 10;
                     break;
-                case _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].VolhavenMilleniumFitnessGym:
+                case _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].VolhavenMilleniumFitnessGym.toLowerCase():
                     if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].city != _Locations__WEBPACK_IMPORTED_MODULE_17__["Locations"].Volhaven) {
                         workerScript.scriptRef.log("ERROR: You cannot workout at Millenium Fitness Gym because you are not in Volhaven. gymWorkout() failed");
                         return false;
@@ -23664,6 +23739,28 @@ function NetscriptFunctions(workerScript) {
                 res.push(fac.augmentations[i]);
             }
             return res;
+        },
+        getAugmentationPrereq : function(name) {
+            var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFn3RamCost;
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN !== 4) {ramCost *= _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFnRamMult;}
+            if (workerScript.checkingRam) {
+                return updateStaticRam("getAugmentationPrereq", ramCost);
+            }
+            updateDynamicRam("getAugmentationPrereq", ramCost);
+            if (_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 3)) {
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getAugmentationPrereq(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
+                    return false;
+                }
+            }
+
+            if (!Object(_Augmentations__WEBPACK_IMPORTED_MODULE_1__[/* augmentationExists */ "f"])(name)) {
+                workerScript.scriptRef.log("ERROR: getAugmentationPrereq() failed. Invalid Augmentation name passed in (note: this is case-sensitive): " + name);
+                return [];
+            }
+
+            var aug = _Augmentations__WEBPACK_IMPORTED_MODULE_1__[/* Augmentations */ "c"][name];
+            return aug.prereqs.slice();
         },
         getAugmentationCost : function(name) {
             var ramCost = _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptSingularityFn3RamCost;
@@ -24722,7 +24819,7 @@ function NetscriptFunctions(workerScript) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return exceptionAlert; });
-/* harmony import */ var _DialogBox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../DialogBox */ 9);
+/* harmony import */ var _DialogBox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../DialogBox */ 8);
 
 
 function exceptionAlert(e) {
@@ -24889,12 +24986,12 @@ function substituteAliases(origCommand) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return displayFactionContent; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return processPassiveFactionRepGain; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return purchaseAugmentation; });
-/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Augmentations */ 21);
+/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Augmentations */ 20);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../BitNodeMultipliers */ 10);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../engine */ 8);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../engine */ 9);
 /* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Faction */ 56);
 /* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_Faction__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _Factions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Factions */ 14);
@@ -24912,7 +25009,7 @@ function substituteAliases(origCommand) {
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../utils/DialogBox */ 9);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../utils/DialogBox */ 8);
 /* harmony import */ var _utils_FactionInvitationBox__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../utils/FactionInvitationBox */ 136);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 29);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_16__);
@@ -25611,9 +25708,9 @@ function processPassiveFactionRepGain(numCycles) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return createFconf; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return parseFconfSettings; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return loadFconf; });
-/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/acorn */ 48);
+/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/acorn */ 49);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
 
 
 
@@ -25875,6 +25972,120 @@ function setMainMenuStyle() {
 
 /***/ }),
 /* 48 */
+/*!************************!*\
+  !*** ./src/Hacking.js ***!
+  \************************/
+/*! exports provided: calculateHackingChance, calculateHackingExpGain, calculatePercentMoneyHacked, calculateHackingTime, calculateGrowTime, calculateWeakenTime */
+/*! exports used: calculateGrowTime, calculateHackingChance, calculateHackingExpGain, calculateHackingTime, calculatePercentMoneyHacked, calculateWeakenTime */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return calculateHackingChance; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return calculateHackingExpGain; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return calculatePercentMoneyHacked; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return calculateHackingTime; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return calculateGrowTime; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return calculateWeakenTime; });
+/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNodeMultipliers */ 10);
+/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ 0);
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Server */ 11);
+
+
+
+
+/**
+ * Returns the chance the player has to successfully hack a server
+ */
+function calculateHackingChance(server) {
+    const hackFactor = 1.75;
+    const intFactor = 0.2;
+    const difficultyMult = (100 - server.hackDifficulty) / 100;
+    const skillMult = (hackFactor * _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].hacking_skill) + (intFactor * _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].intelligence);
+    const skillChance = (skillMult - server.requiredHackingSkill) / skillMult;
+    const chance = skillChance * difficultyMult * _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].hacking_chance_mult;
+    if (chance > 1) { return 1; }
+    if (chance < 0) { return 0; }
+
+    return chance;
+}
+
+/**
+ * Returns the amount of hacking experience the player will gain upon
+ * successfully hacking a server
+ */
+function calculateHackingExpGain(server) {
+    const baseExpGain = 3;
+    const diffFactor = 0.3;
+    if (server.baseDifficulty == null) {
+        server.baseDifficulty = server.hackDifficulty;
+    }
+    var expGain = baseExpGain;
+    expGain += (server.baseDifficulty * _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].hacking_exp_mult * diffFactor);
+
+    return expGain * _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].HackExpGain;
+}
+
+/**
+ * Returns the percentage of money that will be stolen from a server if
+ * it is successfully hacked (returns the decimal form, not the actual percent value)
+ */
+function calculatePercentMoneyHacked(server) {
+    // Adjust if needed for balancing. This is the divisor for the final calculation
+    const balanceFactor = 240;
+
+    const difficultyMult = (100 - server.hackDifficulty) / 100;
+    const skillMult = (_Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].hacking_skill - (server.requiredHackingSkill - 1)) / _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].hacking_skill;
+    const percentMoneyHacked = difficultyMult * skillMult * _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].hacking_money_mult / balanceFactor;
+    if (percentMoneyHacked < 0) { return 0; }
+    if (percentMoneyHacked > 1) { return 1; }
+
+    return percentMoneyHacked * _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ScriptHackMoney;
+}
+
+/**
+ * Returns time it takes to complete a hack on a server, in seconds
+ */
+function calculateHackingTime(server, hack, int) {
+    const difficultyMult = server.requiredHackingSkill * server.hackDifficulty;
+
+    const baseDiff      = 500;
+    const baseSkill     = 50;
+    const diffFactor    = 2.5;
+    const intFactor     = 0.1;
+    if (hack == null) {hack = _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].hacking_skill;}
+    if (int == null) {int = _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].intelligence;}
+    var skillFactor = (diffFactor * difficultyMult + baseDiff);
+    // tslint:disable-next-line
+    skillFactor /= (hack + baseSkill + (intFactor * int));
+
+    const hackTimeMultiplier = 5;
+    const hackingTime = hackTimeMultiplier * skillFactor / _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].hacking_speed_mult;
+
+    return hackingTime;
+}
+
+/**
+ * Returns time it takes to complete a grow operation on a server, in seconds
+ */
+function calculateGrowTime(server, hack, int) {
+    const growTimeMultiplier = 3.2; // Relative to hacking time. 16/5 = 3.2
+
+    return growTimeMultiplier * calculateHackingTime(server, hack, int);
+}
+
+/**
+ * Returns time it takes to complete a weaken operation on a server, in seconds
+ */
+function calculateWeakenTime(server, hack, int) {
+    const weakenTimeMultiplier = 4; // Relative to hacking time
+
+    return weakenTimeMultiplier * calculateHackingTime(server, hack, int);
+}
+
+
+/***/ }),
+/* 49 */
 /*!************************!*\
   !*** ./utils/acorn.js ***!
   \************************/
@@ -29514,120 +29725,6 @@ Object.defineProperty(exports, '__esModule', { value: true });
 })));
 
 /***/ }),
-/* 49 */
-/*!************************!*\
-  !*** ./src/Hacking.js ***!
-  \************************/
-/*! exports provided: calculateHackingChance, calculateHackingExpGain, calculatePercentMoneyHacked, calculateHackingTime, calculateGrowTime, calculateWeakenTime */
-/*! exports used: calculateGrowTime, calculateHackingChance, calculateHackingExpGain, calculateHackingTime, calculatePercentMoneyHacked, calculateWeakenTime */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return calculateHackingChance; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return calculateHackingExpGain; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return calculatePercentMoneyHacked; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return calculateHackingTime; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return calculateGrowTime; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return calculateWeakenTime; });
-/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNodeMultipliers */ 10);
-/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Server */ 11);
-
-
-
-
-/**
- * Returns the chance the player has to successfully hack a server
- */
-function calculateHackingChance(server) {
-    const hackFactor = 1.75;
-    const intFactor = 0.2;
-    const difficultyMult = (100 - server.hackDifficulty) / 100;
-    const skillMult = (hackFactor * _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].hacking_skill) + (intFactor * _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].intelligence);
-    const skillChance = (skillMult - server.requiredHackingSkill) / skillMult;
-    const chance = skillChance * difficultyMult * _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].hacking_chance_mult;
-    if (chance > 1) { return 1; }
-    if (chance < 0) { return 0; }
-
-    return chance;
-}
-
-/**
- * Returns the amount of hacking experience the player will gain upon
- * successfully hacking a server
- */
-function calculateHackingExpGain(server) {
-    const baseExpGain = 3;
-    const diffFactor = 0.3;
-    if (server.baseDifficulty == null) {
-        server.baseDifficulty = server.hackDifficulty;
-    }
-    var expGain = baseExpGain;
-    expGain += (server.baseDifficulty * _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].hacking_exp_mult * diffFactor);
-
-    return expGain * _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].HackExpGain;
-}
-
-/**
- * Returns the percentage of money that will be stolen from a server if
- * it is successfully hacked (returns the decimal form, not the actual percent value)
- */
-function calculatePercentMoneyHacked(server) {
-    // Adjust if needed for balancing. This is the divisor for the final calculation
-    const balanceFactor = 240;
-
-    const difficultyMult = (100 - server.hackDifficulty) / 100;
-    const skillMult = (_Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].hacking_skill - (server.requiredHackingSkill - 1)) / _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].hacking_skill;
-    const percentMoneyHacked = difficultyMult * skillMult * _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].hacking_money_mult / balanceFactor;
-    if (percentMoneyHacked < 0) { return 0; }
-    if (percentMoneyHacked > 1) { return 1; }
-
-    return percentMoneyHacked * _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ScriptHackMoney;
-}
-
-/**
- * Returns time it takes to complete a hack on a server, in seconds
- */
-function calculateHackingTime(server, hack, int) {
-    const difficultyMult = server.requiredHackingSkill * server.hackDifficulty;
-
-    const baseDiff      = 500;
-    const baseSkill     = 50;
-    const diffFactor    = 2.5;
-    const intFactor     = 0.1;
-    if (hack == null) {hack = _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].hacking_skill;}
-    if (int == null) {int = _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].intelligence;}
-    var skillFactor = (diffFactor * difficultyMult + baseDiff);
-    // tslint:disable-next-line
-    skillFactor /= (hack + baseSkill + (intFactor * int));
-
-    const hackTimeMultiplier = 5;
-    const hackingTime = hackTimeMultiplier * skillFactor / _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].hacking_speed_mult;
-
-    return hackingTime;
-}
-
-/**
- * Returns time it takes to complete a grow operation on a server, in seconds
- */
-function calculateGrowTime(server, hack, int) {
-    const growTimeMultiplier = 3.2; // Relative to hacking time. 16/5 = 3.2
-
-    return growTimeMultiplier * calculateHackingTime(server, hack, int);
-}
-
-/**
- * Returns time it takes to complete a weaken operation on a server, in seconds
- */
-function calculateWeakenTime(server, hack, int) {
-    const weakenTimeMultiplier = 4; // Relative to hacking time
-
-    return weakenTimeMultiplier * calculateHackingTime(server, hack, int);
-}
-
-
-/***/ }),
 /* 50 */
 /*!*********************!*\
   !*** ./src/Gang.js ***!
@@ -29645,7 +29742,7 @@ function calculateWeakenTime(server, hack, int) {
 /* harmony import */ var _data_gangmembertasks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_data_gangmembertasks__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _data_gangmemberupgrades__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data/gangmemberupgrades */ 134);
 /* harmony import */ var _data_gangmemberupgrades__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_data_gangmemberupgrades__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 8);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 9);
 /* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Faction/Faction */ 56);
 /* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Faction_Faction__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Faction/Factions */ 14);
@@ -29653,7 +29750,7 @@ function calculateWeakenTime(server, hack, int) {
 /* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 46);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 33);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_9__);
@@ -29674,7 +29771,7 @@ function calculateWeakenTime(server, hack, int) {
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_17__);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 61);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 21);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_19__);
 /*
 Also add police clashes
@@ -31625,9 +31722,9 @@ Gang.prototype.clearUI = function() {
 /* harmony import */ var _DarkWeb_DarkWeb__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./DarkWeb/DarkWeb */ 119);
 /* harmony import */ var _DarkWeb_DarkWebItems__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./DarkWeb/DarkWebItems */ 71);
 /* harmony import */ var _DarkWeb_DarkWebItems__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_DarkWeb_DarkWebItems__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./engine */ 8);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./engine */ 9);
 /* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Fconf */ 47);
-/* harmony import */ var _Hacking__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Hacking */ 49);
+/* harmony import */ var _Hacking__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Hacking */ 48);
 /* harmony import */ var _HelpText__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./HelpText */ 103);
 /* harmony import */ var _HelpText__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_HelpText__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./InteractiveTutorial */ 34);
@@ -33938,10 +34035,10 @@ exports.arrayToString = arrayToString;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return currMission; });
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./engine */ 8);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./engine */ 9);
 /* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 46);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 66);
@@ -35657,14 +35754,14 @@ exports.appendLineBreaks = appendLineBreaks;
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return redPillFlag; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return hackWorldDaemon; });
 /* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNode */ 59);
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./engine */ 8);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./engine */ 9);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Prestige */ 88);
 /* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SourceFile */ 70);
 /* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Terminal */ 51);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 29);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
@@ -36457,7 +36554,7 @@ function initBitNodeMultipliers() {
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../ui/navigationTracking */ 12);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../../utils/DialogBox */ 9);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../../utils/DialogBox */ 8);
 /* harmony import */ var _utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../../utils/uiHelpers/clearSelector */ 140);
 /* harmony import */ var _utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_19__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
@@ -36479,7 +36576,7 @@ function initBitNodeMultipliers() {
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_28__);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../../utils/uiHelpers/removeElement */ 61);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_29___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_29__);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ../../utils/uiHelpers/removeElementById */ 20);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ../../utils/uiHelpers/removeElementById */ 21);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ../../utils/YesNoBox */ 17);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_31___default = /*#__PURE__*/__webpack_require__.n(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_31__);
@@ -37736,6 +37833,11 @@ Industry.prototype.createResearchBox = function() {
     // Add Event Listeners for all Nodes
     const allResearch = researchTree.getAllNodes();
     for (let i = 0; i < allResearch.length; ++i) {
+        // If this is already Researched, skip it
+        if (this.researched[allResearch[i]] === true) {
+            continue;
+        }
+
         // Get the Research object
         const research = _ResearchMap__WEBPACK_IMPORTED_MODULE_9__["ResearchMap"][allResearch[i]];
 
@@ -40313,11 +40415,12 @@ Corporation.prototype.updateCorporationOverviewContent = function() {
         const dividendsPerShare = totalDividends / TOTALSHARES;
         const playerEarnings = this.numShares * dividendsPerShare;
 
-        dividendStr = `Retained Profits (after dividends): ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(retainedEarnings, "$0.000a")} / s<br>` +
+        dividendStr = `Dividend Percentage: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(this.dividendPercentage / 100, "0%")}<br>` +
+                      `Retained Profits (after dividends): ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(retainedEarnings, "$0.000a")} / s<br>` +
                       `Dividends per share: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(dividendsPerShare, "$0.000a")} / s<br>` +
-                      `Your earnings (Pre-Tax): ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(playerEarnings, "$0.000a")} / s<br>` +
+                      `Your earnings as a shareholder (Pre-Tax): ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(playerEarnings, "$0.000a")} / s<br>` +
                       `Dividend Tax Rate: ${this.dividendTaxPercentage}%<br>` +
-                      `Your earnings (Post-Tax): ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(playerEarnings * (this.dividendTaxPercentage / 100), "$0.000a")} / s<br>`;
+                      `Your earnings as a shareholder (Post-Tax): ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(playerEarnings * (this.dividendTaxPercentage / 100), "$0.000a")} / s<br>`;
     }
 
     var txt = "Total Funds: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(this.funds.toNumber(), '$0.000a') + "<br>" +
@@ -40657,9 +40760,6 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
         id: "cmpy-mgmt-employee-p",
         display:"block",
         innerHTML:  "<h1>Office Space</h1><br>" +
-                    "Type: " + office.tier + "<br>" +
-                    "Comfort: " + office.comf + "<br>" +
-                    "Beauty: " + office.beau + "<br>" +
                     "Size: " + office.employees.length + " / " + office.size + " employees",
     });
     industryEmployeePanel.appendChild(industryEmployeeText);
@@ -41111,9 +41211,6 @@ Corporation.prototype.updateDivisionContent = function(division) {
     var office = division.offices[currentCityUi];
     industryEmployeeText.innerHTML =
                 "<h1>Office Space</h1><br>" +
-                "Type: " + office.tier + "<br>" +
-                "Comfort: " + office.comf + "<br>" +
-                "Beauty: " + office.beau + "<br>" +
                 "Size: " + office.employees.length + " / " + office.size + " employees";
     if (office.employees.length >= office.size) {
         industryEmployeeHireButton.className = "a-link-button-inactive";
@@ -41128,12 +41225,13 @@ Corporation.prototype.updateDivisionContent = function(division) {
 
     //Employee Overview stats
     //Calculate average morale, happiness, and energy
-    var totalMorale = 0, totalHappiness = 0, totalEnergy = 0,
+    var totalMorale = 0, totalHappiness = 0, totalEnergy = 0, totalSalary = 0,
         avgMorale = 0, avgHappiness = 0, avgEnergy = 0;
-    for (var i = 0; i < office.employees.length; ++i) {
+    for (let i = 0; i < office.employees.length; ++i) {
         totalMorale += office.employees[i].mor;
         totalHappiness += office.employees[i].hap;
         totalEnergy += office.employees[i].ene;
+        totalSalary += office.employees[i].sal;
     }
     if (office.employees.length > 0) {
         avgMorale = totalMorale / office.employees.length;
@@ -41143,7 +41241,8 @@ Corporation.prototype.updateDivisionContent = function(division) {
     industryEmployeeInfo.innerHTML =
         "Avg Employee Morale: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_25__["formatNumber"])(avgMorale, 3) + "<br>" +
         "Avg Employee Happiness: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_25__["formatNumber"])(avgHappiness, 3) + "<br>" +
-        "Avg Employee Energy: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_25__["formatNumber"])(avgEnergy, 3);
+        "Avg Employee Energy: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_25__["formatNumber"])(avgEnergy, 3) + "<br>" +
+        "Total Employee Salary: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(totalSalary, "$0.000a");
     if (vechain) { //VeChain - Statistics
         industryEmployeeInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("br", {}));
         industryEmployeeInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("p", {
@@ -41580,7 +41679,7 @@ JSONReviver_1.Reviver.constructors.Material = Material;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const DialogBox_1 = __webpack_require__(/*! ../utils/DialogBox */ 9);
+const DialogBox_1 = __webpack_require__(/*! ../utils/DialogBox */ 8);
 const JSONReviver_1 = __webpack_require__(/*! ../utils/JSONReviver */ 13);
 /**
  * Represents a plain text file that is typically stored on a server.
@@ -41764,10 +41863,10 @@ exports.addOffset = addOffset;
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 8);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 9);
 /* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./InteractiveTutorial */ 34);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
@@ -42473,7 +42572,7 @@ function getHacknetNode(name) {
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Server */ 11);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
 /* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 78);
 /* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 54);
@@ -43234,7 +43333,7 @@ var PurchaseAugmentationsOrderSetting;
 /* harmony import */ var _Corporation_IndustryData__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Corporation_IndustryData__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./engine */ 8);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./engine */ 9);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Faction/Factions */ 14);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 46);
@@ -43249,7 +43348,7 @@ var PurchaseAugmentationsOrderSetting;
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
 /* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./StockMarket */ 22);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
 /* harmony import */ var _utils_GameOptions__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/GameOptions */ 86);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_20__);
@@ -43262,7 +43361,7 @@ var PurchaseAugmentationsOrderSetting;
 /* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_ui_createStatusText__WEBPACK_IMPORTED_MODULE_24__);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 21);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_26__);
 /* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! decimal.js */ 35);
 
@@ -44297,7 +44396,7 @@ exports.roundToTwo = roundToTwo;
 /* unused harmony export Literatures */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return initLiterature; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return showLiterature; });
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
 
 
 /* Literature.js
@@ -44937,7 +45036,7 @@ exports.CompanyPosition = CompanyPosition;
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return prestigeAugmentation; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return prestigeSourceFile; });
 /* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActiveScriptsUI */ 68);
-/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Augmentations */ 21);
+/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Augmentations */ 20);
 /* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BitNode */ 59);
 /* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Bladeburner */ 31);
 /* harmony import */ var _CinematicText__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./CinematicText */ 101);
@@ -44945,7 +45044,7 @@ exports.CompanyPosition = CompanyPosition;
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Programs/Programs */ 24);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./engine */ 8);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./engine */ 9);
 /* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Faction/Faction */ 56);
 /* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_Faction_Faction__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Faction/Factions */ 14);
@@ -44962,8 +45061,8 @@ exports.CompanyPosition = CompanyPosition;
 /* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./StockMarket */ 22);
 /* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Terminal */ 51);
 /* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! decimal.js */ 35);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 21);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_23__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_24__);
@@ -45374,7 +45473,7 @@ exports.isValidIPAddress = isValidIPAddress;
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _Crimes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Crimes */ 38);
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./engine */ 8);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./engine */ 9);
 /* harmony import */ var _Infiltration__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Infiltration */ 139);
 /* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Locations */ 5);
@@ -45387,7 +45486,7 @@ exports.isValidIPAddress = isValidIPAddress;
 /* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_19__);
 /* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/IPAddress */ 62);
@@ -48055,7 +48154,7 @@ function getRandomFilename(server, reward) {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return cinematicTextFlag; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return writeCinematicText; });
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./engine */ 8);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./engine */ 9);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 29);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
@@ -49209,7 +49308,7 @@ function _getScriptUrls(script, scripts, seen) {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return createDevMenu; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return closeDevMenu; });
-/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentations */ 21);
+/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentations */ 20);
 /* harmony import */ var _CodingContractGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CodingContractGenerator */ 100);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Programs/Programs */ 24);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_2__);
@@ -49224,11 +49323,11 @@ function _getScriptUrls(script, scripts, seen) {
 /* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Terminal */ 51);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
 /* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 44);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 21);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_14__);
 
 
@@ -49908,7 +50007,7 @@ function buyDarkwebItem(itemName) {
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
 /* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/IPAddress */ 62);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_5__);
@@ -50046,7 +50145,7 @@ JSONReviver_1.Reviver.constructors.CorporationState = CorporationState;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const getElementById_1 = __webpack_require__(/*! ./getElementById */ 53);
-const removeElementById_1 = __webpack_require__(/*! ./removeElementById */ 20);
+const removeElementById_1 = __webpack_require__(/*! ./removeElementById */ 21);
 /**
  * Routes the player from the Loading screen to the main game content.
  */
@@ -50076,7 +50175,7 @@ exports.removeLoadingScreen = removeLoadingScreen;
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return setSettingsLabels; });
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../engine */ 8);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../engine */ 9);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Settings */ 19);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _numeralFormat__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./numeralFormat */ 4);
@@ -50277,7 +50376,7 @@ CharacterOverview.prototype.update = function() {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Interpreter; });
-/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/acorn */ 48);
+/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/acorn */ 49);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_0__);
 
 /**
@@ -54588,7 +54687,7 @@ exports.gangMemberTasksMetadata = [
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return factionInvitationBoxCreate; });
 /* harmony import */ var _src_Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/Faction/FactionHelpers */ 46);
-/* harmony import */ var _src_engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../src/engine */ 8);
+/* harmony import */ var _src_engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../src/engine */ 9);
 /* harmony import */ var _src_Player__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../src/Player */ 0);
 /* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./uiHelpers/clearEventListeners */ 16);
 /* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__);
@@ -56153,7 +56252,7 @@ exports.serverMetadata = [
 /* harmony import */ var _src_Faction_Factions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../src/Faction/Factions */ 14);
 /* harmony import */ var _src_Faction_Factions__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_src_Faction_Factions__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _src_Player__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../src/Player */ 0);
-/* harmony import */ var _DialogBox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./DialogBox */ 9);
+/* harmony import */ var _DialogBox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./DialogBox */ 8);
 /* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./uiHelpers/clearEventListeners */ 16);
 /* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./StringHelperFunctions */ 3);
@@ -56295,9 +56394,9 @@ function infiltrationBoxCreate(inst) {
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 8);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 9);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 15);
@@ -57647,7 +57746,8 @@ var TextHighlightRules = acequire("./text_highlight_rules").TextHighlightRules;
 var identifierRe = "[a-zA-Z\\$_\u00a1-\uffff][a-zA-Z\\d\\$_\u00a1-\uffff]*";
 
 let NetscriptFunctions =
-    "hack|sleep|grow|weaken|growthAnalyze|print|tprint|scan|nuke|brutessh|"    +
+    "hack|hackAnalyzeThreads|hackAnalyzePercent|hackChance|"                   +
+    "sleep|grow|weaken|growthAnalyze|print|tprint|scan|nuke|brutessh|"         +
     "ftpcrack|"                                                                +
     "clearLog|disableLog|enableLog|isLogEnabled|getScriptLogs|"                +
     "relaysmtp|httpworm|sqlinject|run|exec|spawn|kill|killall|exit|"           +
@@ -57677,7 +57777,7 @@ let NetscriptFunctions =
     "donateToFaction|"                                                         +
     "createProgram|commitCrime|getCrimeChance|getOwnedAugmentations|"          +
     "getOwnedSourceFiles|getAugmentationsFromFaction|"                         +
-    "getAugmentationCost|purchaseAugmentation|"                                +
+    "getAugmentationPrereq|getAugmentationCost|purchaseAugmentation|"          +
     "installAugmentations|"                                                    +
 
     // TIX API

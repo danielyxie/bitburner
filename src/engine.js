@@ -325,7 +325,7 @@ const Engine = {
     loadAugmentationsContent: function() {
         Engine.hideAllContent();
         Engine.Display.augmentationsContent.style.display = "block";
-        displayAugmentationsContent();
+        displayAugmentationsContent(Engine.Display.augmentationsContent);
         routing.navigateTo(Page.Augmentations);
         document.getElementById("augmentations-menu-link").classList.add("active");
     },

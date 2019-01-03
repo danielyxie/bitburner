@@ -151,6 +151,22 @@ Terminal commands::
     $ download *.script
     $ download *.txt
 
+expr
+^^^^
+
+    $ expr [math expression]
+
+Evaluate a mathematical expression. The expression is evaluated in JavaScript,
+and therefore all JavaScript operators should be supported.
+
+Examples::
+
+    $ expr 5.6 * 10 - 123
+    $ expr 3 ** 3
+
+
+Evalutes a
+
 free
 ^^^^
 

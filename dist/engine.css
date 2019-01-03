@@ -2019,6 +2019,9 @@ button {
 .cmpy-mgmt-advertising-info {
   font-size: 12px; }
 
+#corporation-research-popup-box-content {
+  overflow-x: visible !important; }
+
 /* COLORS */
 /* Attributes */
 #bladeburner-container a,
@@ -2185,7 +2188,6 @@ button {
 
 .Treant > .researched {
   background-color: #666;
-  pointer-events: none;
   font-size: 16px; }
 
 .Treant > .locked > div {
