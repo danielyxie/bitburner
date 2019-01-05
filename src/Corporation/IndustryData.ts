@@ -123,6 +123,19 @@ export let IndustryResearchTrees: IIndustryMap<ResearchTree> = {
     RealEstate: getBaseResearchTreeCopy(),
 }
 
-export function loadIndustryResearchTrees(saveString: string): void {
-    IndustryResearchTrees = JSON.parse(saveString, Reviver);
+export function resetIndustryResearchTrees() {
+    IndustryResearchTrees.Energy         = getBaseResearchTreeCopy();
+    IndustryResearchTrees.Utilities      = getBaseResearchTreeCopy();
+    IndustryResearchTrees.Agriculture    = getBaseResearchTreeCopy();
+    IndustryResearchTrees.Fishing        = getBaseResearchTreeCopy();
+    IndustryResearchTrees.Mining         = getBaseResearchTreeCopy();
+    IndustryResearchTrees.Food           = getBaseResearchTreeCopy();
+    IndustryResearchTrees.Tobacco        = getBaseResearchTreeCopy();
+    IndustryResearchTrees.Chemical       = getBaseResearchTreeCopy();
+    IndustryResearchTrees.Pharmaceutical = getBaseResearchTreeCopy();
+    IndustryResearchTrees.Computer       = getBaseResearchTreeCopy();
+    IndustryResearchTrees.Robotics       = getBaseResearchTreeCopy();
+    IndustryResearchTrees.Software       = getBaseResearchTreeCopy();
+    IndustryResearchTrees.Healthcare     = getBaseResearchTreeCopy();
+    IndustryResearchTrees.RealEstate     = getBaseResearchTreeCopy();
 }

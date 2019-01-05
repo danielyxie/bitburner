@@ -5,6 +5,7 @@ import {initBitNodeMultipliers}                 from "./BitNode";
 import {Bladeburner}                            from "./Bladeburner";
 import {writeCinematicText}                     from "./CinematicText";
 import {Companies, initCompanies}               from "./Company/Companies";
+import { resetIndustryResearchTrees }           from "./Corporation/IndustryData";
 import { Programs }                             from "./Programs/Programs";
 import {Engine}                                 from "./engine";
 import { Faction }                              from "./Faction/Faction";
@@ -320,8 +321,9 @@ function prestigeSourceFile() {
 
     if (Player.inGang()) { Player.gang.clearUI(); }
     Player.gang = null;
-    Player.corporation = null;
+    Player.corporation = null; resetIndustryResearchTrees();
     Player.bladeburner = null;
+
 
     // Refresh Main Menu (the 'World' menu, specifically)
     document.getElementById("world-menu-header").click();
