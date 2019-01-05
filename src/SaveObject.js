@@ -2,8 +2,6 @@ import {loadAliases, loadGlobalAliases,
         Aliases, GlobalAliases}                 from "./Alias";
 import {Companies, loadCompanies}               from "./Company/Companies";
 import {CompanyPosition}                        from "./Company/CompanyPosition";
-import { IndustryResearchTrees,
-         loadIndustryResearchTrees }            from "./Corporation/IndustryData";
 import {CONSTANTS}                              from "./Constants";
 import {Engine}                                 from "./engine";
 import { Factions,
