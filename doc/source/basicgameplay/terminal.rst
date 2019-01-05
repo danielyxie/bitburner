@@ -5,8 +5,8 @@ Terminal
 The Terminal is a console emulator program that lets you interface with all of the
 Servers in the game. The Terminal can be accessed by clicking the 'Terminal' tab
 on the navigation menu on the left-hand side of the game (you may need to expand
-the 'Hacking' header in order to see the 'Terminal' tab). Alternatively, the keyboard
-shortcut Alt + t can be used to open the Terminal.
+the 'Hacking' header in order to see the 'Terminal' tab). Alternatively, the :ref:`keyboard
+shortcut <shortcuts>` Alt + t can be used to open the Terminal.
 
 Configuration
 -------------

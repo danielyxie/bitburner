@@ -31,7 +31,7 @@ the hostname "nova-med".
 Hostnames and IP addresses are unique. This means that if one
 server has the IP address "1.1.1.1" and the hostname
 "some-server", then no other server in the game can have that
- IP address or that hostname.
+IP address or that hostname.
 
 There are many :ref:`Netscript Functions <netscriptfunctions>`
 and :ref:`terminal` commands in the game
@@ -49,7 +49,7 @@ certain locations in the World.
 
 2. The home computer persists through Augmentation Installations. This means
 that you will not lose any RAM upgrades or Scripts on your
-home computer when you install Augmentations (you will
+home computer when you install :ref:`gameplay_augmentations` (you will
 however, lose programs and messages on your home computer).
 
 The player can also purchase additional servers. This can be

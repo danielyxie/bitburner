@@ -19,6 +19,7 @@ Affects:
 * Success rate of Hacking option during Infiltration
 * Time it takes to create a program
 * Faction reputation gain when carrying out Hacking Contracts or Field Work
+* Company reputation gain for certain jobs
 
 Gain experience by:
 
@@ -27,7 +28,7 @@ Gain experience by:
 * Committing certain crimes
 * Infiltration
 * Carrying out Hacking Contracts or doing Field work for Factions
-* Working software/IT-related jobs at a company
+* Working certain jobs at a company
 * Studying at a university
 
 Strength
@@ -47,6 +48,7 @@ Gain experience by:
 * Infiltration
 * Working out at a gym
 * Doing Security/Field Work for a faction
+* Working certain jobs at a company
 
 Defense
 ^^^^^^^
@@ -67,6 +69,7 @@ Gain experience by:
 * Infiltration
 * Working out at a gym
 * Doing Security/Field Work for a faction
+* Working certain jobs at a company
 
 Dexterity
 ^^^^^^^^^
@@ -85,6 +88,7 @@ Gain experience by:
 * Infiltration
 * Working out at a gym
 * Doing Security/Field Work for a faction
+* Working certain jobs at a company
 
 Agility
 ^^^^^^^
@@ -103,6 +107,7 @@ Gain experience by:
 * Infiltration
 * Working out at a gym
 * Doing Security/Field Work for a faction
+* Working certain jobs at a company
 
 Charisma
 ^^^^^^^^

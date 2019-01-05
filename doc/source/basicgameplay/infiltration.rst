@@ -15,15 +15,15 @@ visit a company through the 'World' menu. There will be an option that
 says 'Infiltrate Company'.
 
 When infiltrating a company, you must progress through clearance levels in
- the facility. Every clearance level has some form of security that
- you must get past. There are several forms of security, ranging from
- high-tech security systems to armed guards. For each form of security,
- there are a variety of options that you can choose to try and bypass
- the security. Examples include hacking the security, engaging in combat,
- assassination, or sneaking past the security. The chance to succeed for
- each option is determined in part by your stats. So, for example,
- trying to hack the security system relies on your hacking skill,
- whereas trying to sneak past the security relies on your agility level.
+the facility. Every clearance level has some form of security that
+you must get past. There are several forms of security, ranging from
+high-tech security systems to armed guards. For each form of security,
+there are a variety of options that you can choose to try and bypass
+the security. Examples include hacking the security, engaging in combat,
+assassination, or sneaking past the security. The chance to succeed for
+each option is determined in part by your stats. So, for example,
+trying to hack the security system relies on your hacking skill,
+whereas trying to sneak past the security relies on your agility level.
 
 The facility has a 'security level' that affects your chance of success
 when trying to get past a clearance level. Every time you advance to the

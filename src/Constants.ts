@@ -518,6 +518,7 @@ export let CONSTANTS: IMap<any> = {
      ** Slightly reduced the amount of money offered to you by investment firms
      ** Employee salaries now slowly increase over time
      ** Slightly reduced the effect "Real Estate" has on the Production Multiplier for the Agriculture industry
+     ** Changed the way your Corporation's value is calculated (this is what determines stock price)
 
      * Added getOrders() Netscript function to the TIX API
      * Added getAugmentationPrereq() Singularity function (by havocmayhem)

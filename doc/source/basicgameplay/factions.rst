@@ -40,7 +40,7 @@ List of Factions and their Requirements
 |                     | Tian Di Hui    | * $1m                                   |                               |
 |                     |                | * Hacking Level 50                      |                               |
 |                     |                | * Be in Chongqing, New Tokyo, or Ishima |                               |
-+---------------------+----------------+-----------------------------------------+-------------------------------+
++                     +----------------+-----------------------------------------+-------------------------------+
 |                     | Netburners     | * Hacking Level 80                      |                               |
 |                     |                | * Total Hacknet Levels of 100           |                               |
 |                     |                | * Total Hacknet RAM of 8                |                               |
