@@ -2938,8 +2938,6 @@ Corporation.prototype.goPublic = function() {
                    "and you will no longer own them. Your Corporation will receive " +
                    numeralWrapper.format(initialSharePrice, '$0.000a') + " per share " +
                    "(the IPO money will be deposited directly into your Corporation's funds).<br><br>" +
-                   "Furthermore, issuing more shares now will help drive up " +
-                   "your company's stock price in the future.<br><br>" +
                    "You have a total of " + numeralWrapper.format(this.numShares, "0.000a") + " of shares that you can issue.",
     });
     var yesBtn;
@@ -2988,7 +2986,7 @@ Corporation.prototype.goPublic = function() {
 }
 
 Corporation.prototype.updateSharePrice = function() {
-    var targetPrice = this.determineValuation() / (TOTALSHARES - this.issuedShares);
+    var targetPrice = this.determineValuation() / (1.5 * TOTALSHARES - this.numShares);
     if (this.sharePrice <= targetPrice) {
         this.sharePrice *= (1 + (Math.random() * 0.01));
     } else {

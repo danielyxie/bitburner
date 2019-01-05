@@ -78,7 +78,7 @@ Server Security
 Each server has a security level, typically between 1 and 100.
 A higher number means the server has stronger security. It is
 possible for a server to have a security of level 100 or higher, in
-which case hacking a server will become impossible (0% chance for
+which case hacking that server will become impossible (0% chance for
 hack to succeed).
 
 As mentioned above, a server's security level is an important factor

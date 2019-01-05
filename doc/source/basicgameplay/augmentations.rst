@@ -11,7 +11,7 @@ user's physical and mental faculties.
 Augmentations provide persistent upgrades in the form of multipliers.
 These multipliers apply to a wide variety of things such as stats,
 experience gain, and hacking, just to name a few. Your multipliers
-can be viewed in the 'Character' page (keyboard shortcut Alt + c)
+can be viewed in the 'Character' page (:ref:`keyboard shortcut <shortcuts>` Alt + c)
 
 How to acquire Augmentations
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^

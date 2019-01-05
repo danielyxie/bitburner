@@ -75,7 +75,7 @@ weaken
         weaken("foodnstuff");
 
 hackAnalyzeThreads
-^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^
 
 .. js:function:: hackAnalyzeThreads(hostname/ip, hackAmount)
 
@@ -118,7 +118,7 @@ hackAnalyzePercent
 
     This means that if hack the `foodnstuff` server, then you will steal 1% of its
     total money. If you `hack()` using N threads, then you will steal N% of its total
-    money. 
+    money.
 
 hackChance
 ^^^^^^^^^^
