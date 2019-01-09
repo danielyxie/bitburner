@@ -88,6 +88,7 @@ import "../css/mainmenu.scss";
 import "../css/characteroverview.scss";
 import "../css/terminal.scss";
 import "../css/menupages.scss";
+import "../css/stockmarket.scss";
 import "../css/workinprogress.scss";
 import "../css/popupboxes.scss";
 import "../css/gameoptions.scss";

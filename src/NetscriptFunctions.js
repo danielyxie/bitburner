@@ -1537,6 +1537,22 @@ function NetscriptFunctions(workerScript) {
             }
             return [stock.playerShares, stock.playerAvgPx, stock.playerShortShares, stock.playerAvgShortPx];
         },
+        getStockMaxShares : function(symbol) {
+            if (workerScript.checkingRam) {
+                return updateStaticRam("getStockMaxShares", CONSTANTS.ScriptGetStockRamCost);
+            }
+            updateDynamicRam("getStockMaxShares", CONSTANTS.ScriptGetStockRamCost);
+
+            if (!Player.hasTixApiAccess) {
+                throw makeRuntimeRejectMsg(workerScript, "You don't have TIX API Access! Cannot use getStockMaxShares()");
+            }
+            const stock = SymbolToStockMap[symbol];
+            if (stock == null) {
+                throw makeRuntimeRejectMsg(workerScript, "Invalid stock symbol passed into getStockMaxShares()");
+            }
+
+            return stock.maxShares;
+        },
         buyStock : function(symbol, shares) {
             if (workerScript.checkingRam) {
                 return updateStaticRam("buyStock", CONSTANTS.ScriptBuySellStockRamCost);

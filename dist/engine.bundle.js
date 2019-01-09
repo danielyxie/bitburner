@@ -3442,20 +3442,20 @@ exports.generateRandomString = generateRandomString;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const numeral = __webpack_require__(/*! numeral */ 82);
-__webpack_require__(/*! numeral/locales/bg */ 286);
-__webpack_require__(/*! numeral/locales/cs */ 285);
-__webpack_require__(/*! numeral/locales/da-dk */ 284);
-__webpack_require__(/*! numeral/locales/de */ 283);
-__webpack_require__(/*! numeral/locales/en-au */ 282);
-__webpack_require__(/*! numeral/locales/en-gb */ 281);
-__webpack_require__(/*! numeral/locales/es */ 280);
-__webpack_require__(/*! numeral/locales/fr */ 279);
-__webpack_require__(/*! numeral/locales/hu */ 278);
-__webpack_require__(/*! numeral/locales/it */ 277);
-__webpack_require__(/*! numeral/locales/lv */ 276);
-__webpack_require__(/*! numeral/locales/no */ 275);
-__webpack_require__(/*! numeral/locales/pl */ 274);
-__webpack_require__(/*! numeral/locales/ru */ 273);
+__webpack_require__(/*! numeral/locales/bg */ 288);
+__webpack_require__(/*! numeral/locales/cs */ 287);
+__webpack_require__(/*! numeral/locales/da-dk */ 286);
+__webpack_require__(/*! numeral/locales/de */ 285);
+__webpack_require__(/*! numeral/locales/en-au */ 284);
+__webpack_require__(/*! numeral/locales/en-gb */ 283);
+__webpack_require__(/*! numeral/locales/es */ 282);
+__webpack_require__(/*! numeral/locales/fr */ 281);
+__webpack_require__(/*! numeral/locales/hu */ 280);
+__webpack_require__(/*! numeral/locales/it */ 279);
+__webpack_require__(/*! numeral/locales/lv */ 278);
+__webpack_require__(/*! numeral/locales/no */ 277);
+__webpack_require__(/*! numeral/locales/pl */ 276);
+__webpack_require__(/*! numeral/locales/ru */ 275);
 /* eslint-disable class-methods-use-this */
 class NumeralFormatter {
     constructor() {
@@ -3480,6 +3480,9 @@ class NumeralFormatter {
     }
     formatMoney(n) {
         return this.format(n, "$0.000a");
+    }
+    formatBigNumber(n) {
+        return this.format(n, "0.000a");
     }
 }
 exports.numeralWrapper = new NumeralFormatter();
@@ -3630,7 +3633,7 @@ exports.Locations = {
 
 
 
-var Promise = __webpack_require__(/*! bluebird */ 258);
+var Promise = __webpack_require__(/*! bluebird */ 260);
 
 Promise.config({
     warnings: false,
@@ -4752,42 +4755,44 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_50___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_50__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! ./ui/navigationTracking */ 12);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__);
-/* harmony import */ var normalize_css__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! normalize.css */ 221);
+/* harmony import */ var normalize_css__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! normalize.css */ 223);
 /* harmony import */ var normalize_css__WEBPACK_IMPORTED_MODULE_52___default = /*#__PURE__*/__webpack_require__.n(normalize_css__WEBPACK_IMPORTED_MODULE_52__);
-/* harmony import */ var _css_styles_scss__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(/*! ../css/styles.scss */ 188);
+/* harmony import */ var _css_styles_scss__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(/*! ../css/styles.scss */ 190);
 /* harmony import */ var _css_styles_scss__WEBPACK_IMPORTED_MODULE_53___default = /*#__PURE__*/__webpack_require__.n(_css_styles_scss__WEBPACK_IMPORTED_MODULE_53__);
-/* harmony import */ var _css_tooltips_scss__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(/*! ../css/tooltips.scss */ 186);
+/* harmony import */ var _css_tooltips_scss__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(/*! ../css/tooltips.scss */ 188);
 /* harmony import */ var _css_tooltips_scss__WEBPACK_IMPORTED_MODULE_54___default = /*#__PURE__*/__webpack_require__.n(_css_tooltips_scss__WEBPACK_IMPORTED_MODULE_54__);
-/* harmony import */ var _css_buttons_scss__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(/*! ../css/buttons.scss */ 184);
+/* harmony import */ var _css_buttons_scss__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(/*! ../css/buttons.scss */ 186);
 /* harmony import */ var _css_buttons_scss__WEBPACK_IMPORTED_MODULE_55___default = /*#__PURE__*/__webpack_require__.n(_css_buttons_scss__WEBPACK_IMPORTED_MODULE_55__);
-/* harmony import */ var _css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(/*! ../css/mainmenu.scss */ 182);
+/* harmony import */ var _css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(/*! ../css/mainmenu.scss */ 184);
 /* harmony import */ var _css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_56___default = /*#__PURE__*/__webpack_require__.n(_css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_56__);
-/* harmony import */ var _css_characteroverview_scss__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(/*! ../css/characteroverview.scss */ 180);
+/* harmony import */ var _css_characteroverview_scss__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(/*! ../css/characteroverview.scss */ 182);
 /* harmony import */ var _css_characteroverview_scss__WEBPACK_IMPORTED_MODULE_57___default = /*#__PURE__*/__webpack_require__.n(_css_characteroverview_scss__WEBPACK_IMPORTED_MODULE_57__);
-/* harmony import */ var _css_terminal_scss__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(/*! ../css/terminal.scss */ 178);
+/* harmony import */ var _css_terminal_scss__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(/*! ../css/terminal.scss */ 180);
 /* harmony import */ var _css_terminal_scss__WEBPACK_IMPORTED_MODULE_58___default = /*#__PURE__*/__webpack_require__.n(_css_terminal_scss__WEBPACK_IMPORTED_MODULE_58__);
-/* harmony import */ var _css_menupages_scss__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(/*! ../css/menupages.scss */ 176);
+/* harmony import */ var _css_menupages_scss__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(/*! ../css/menupages.scss */ 178);
 /* harmony import */ var _css_menupages_scss__WEBPACK_IMPORTED_MODULE_59___default = /*#__PURE__*/__webpack_require__.n(_css_menupages_scss__WEBPACK_IMPORTED_MODULE_59__);
-/* harmony import */ var _css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(/*! ../css/workinprogress.scss */ 174);
-/* harmony import */ var _css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_60___default = /*#__PURE__*/__webpack_require__.n(_css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_60__);
-/* harmony import */ var _css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(/*! ../css/popupboxes.scss */ 172);
-/* harmony import */ var _css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_61___default = /*#__PURE__*/__webpack_require__.n(_css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_61__);
-/* harmony import */ var _css_gameoptions_scss__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(/*! ../css/gameoptions.scss */ 170);
-/* harmony import */ var _css_gameoptions_scss__WEBPACK_IMPORTED_MODULE_62___default = /*#__PURE__*/__webpack_require__.n(_css_gameoptions_scss__WEBPACK_IMPORTED_MODULE_62__);
-/* harmony import */ var _css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_63__ = __webpack_require__(/*! ../css/interactivetutorial.scss */ 168);
-/* harmony import */ var _css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_63___default = /*#__PURE__*/__webpack_require__.n(_css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_63__);
-/* harmony import */ var _css_loader_scss__WEBPACK_IMPORTED_MODULE_64__ = __webpack_require__(/*! ../css/loader.scss */ 166);
-/* harmony import */ var _css_loader_scss__WEBPACK_IMPORTED_MODULE_64___default = /*#__PURE__*/__webpack_require__.n(_css_loader_scss__WEBPACK_IMPORTED_MODULE_64__);
-/* harmony import */ var _css_missions_scss__WEBPACK_IMPORTED_MODULE_65__ = __webpack_require__(/*! ../css/missions.scss */ 164);
-/* harmony import */ var _css_missions_scss__WEBPACK_IMPORTED_MODULE_65___default = /*#__PURE__*/__webpack_require__.n(_css_missions_scss__WEBPACK_IMPORTED_MODULE_65__);
-/* harmony import */ var _css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_66__ = __webpack_require__(/*! ../css/companymanagement.scss */ 162);
-/* harmony import */ var _css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_66___default = /*#__PURE__*/__webpack_require__.n(_css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_66__);
-/* harmony import */ var _css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_67__ = __webpack_require__(/*! ../css/bladeburner.scss */ 160);
-/* harmony import */ var _css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_67___default = /*#__PURE__*/__webpack_require__.n(_css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_67__);
-/* harmony import */ var _css_gang_scss__WEBPACK_IMPORTED_MODULE_68__ = __webpack_require__(/*! ../css/gang.scss */ 158);
-/* harmony import */ var _css_gang_scss__WEBPACK_IMPORTED_MODULE_68___default = /*#__PURE__*/__webpack_require__.n(_css_gang_scss__WEBPACK_IMPORTED_MODULE_68__);
-/* harmony import */ var _css_treant_css__WEBPACK_IMPORTED_MODULE_69__ = __webpack_require__(/*! ../css/treant.css */ 156);
-/* harmony import */ var _css_treant_css__WEBPACK_IMPORTED_MODULE_69___default = /*#__PURE__*/__webpack_require__.n(_css_treant_css__WEBPACK_IMPORTED_MODULE_69__);
+/* harmony import */ var _css_stockmarket_scss__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(/*! ../css/stockmarket.scss */ 176);
+/* harmony import */ var _css_stockmarket_scss__WEBPACK_IMPORTED_MODULE_60___default = /*#__PURE__*/__webpack_require__.n(_css_stockmarket_scss__WEBPACK_IMPORTED_MODULE_60__);
+/* harmony import */ var _css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(/*! ../css/workinprogress.scss */ 174);
+/* harmony import */ var _css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_61___default = /*#__PURE__*/__webpack_require__.n(_css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_61__);
+/* harmony import */ var _css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(/*! ../css/popupboxes.scss */ 172);
+/* harmony import */ var _css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_62___default = /*#__PURE__*/__webpack_require__.n(_css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_62__);
+/* harmony import */ var _css_gameoptions_scss__WEBPACK_IMPORTED_MODULE_63__ = __webpack_require__(/*! ../css/gameoptions.scss */ 170);
+/* harmony import */ var _css_gameoptions_scss__WEBPACK_IMPORTED_MODULE_63___default = /*#__PURE__*/__webpack_require__.n(_css_gameoptions_scss__WEBPACK_IMPORTED_MODULE_63__);
+/* harmony import */ var _css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_64__ = __webpack_require__(/*! ../css/interactivetutorial.scss */ 168);
+/* harmony import */ var _css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_64___default = /*#__PURE__*/__webpack_require__.n(_css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_64__);
+/* harmony import */ var _css_loader_scss__WEBPACK_IMPORTED_MODULE_65__ = __webpack_require__(/*! ../css/loader.scss */ 166);
+/* harmony import */ var _css_loader_scss__WEBPACK_IMPORTED_MODULE_65___default = /*#__PURE__*/__webpack_require__.n(_css_loader_scss__WEBPACK_IMPORTED_MODULE_65__);
+/* harmony import */ var _css_missions_scss__WEBPACK_IMPORTED_MODULE_66__ = __webpack_require__(/*! ../css/missions.scss */ 164);
+/* harmony import */ var _css_missions_scss__WEBPACK_IMPORTED_MODULE_66___default = /*#__PURE__*/__webpack_require__.n(_css_missions_scss__WEBPACK_IMPORTED_MODULE_66__);
+/* harmony import */ var _css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_67__ = __webpack_require__(/*! ../css/companymanagement.scss */ 162);
+/* harmony import */ var _css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_67___default = /*#__PURE__*/__webpack_require__.n(_css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_67__);
+/* harmony import */ var _css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_68__ = __webpack_require__(/*! ../css/bladeburner.scss */ 160);
+/* harmony import */ var _css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_68___default = /*#__PURE__*/__webpack_require__.n(_css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_68__);
+/* harmony import */ var _css_gang_scss__WEBPACK_IMPORTED_MODULE_69__ = __webpack_require__(/*! ../css/gang.scss */ 158);
+/* harmony import */ var _css_gang_scss__WEBPACK_IMPORTED_MODULE_69___default = /*#__PURE__*/__webpack_require__.n(_css_gang_scss__WEBPACK_IMPORTED_MODULE_69__);
+/* harmony import */ var _css_treant_css__WEBPACK_IMPORTED_MODULE_70__ = __webpack_require__(/*! ../css/treant.css */ 156);
+/* harmony import */ var _css_treant_css__WEBPACK_IMPORTED_MODULE_70___default = /*#__PURE__*/__webpack_require__.n(_css_treant_css__WEBPACK_IMPORTED_MODULE_70__);
 
 
 
@@ -4847,6 +4852,7 @@ __webpack_require__.r(__webpack_exports__);
 
 // These should really be imported with the module that is presenting that UI, but because they very much depend on the
 // cascade order, we'll pull them all in here.
+
 
 
 
@@ -7590,7 +7596,7 @@ exports.clearEventListeners = clearEventListeners;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 // Constructs all CompanyPosition objects using the metadata in data/companypositions.ts
-const CompaniesMetadata_1 = __webpack_require__(/*! ./data/CompaniesMetadata */ 212);
+const CompaniesMetadata_1 = __webpack_require__(/*! ./data/CompaniesMetadata */ 214);
 const Company_1 = __webpack_require__(/*! ./Company */ 76);
 const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
 exports.Companies = {};
@@ -10911,135 +10917,135 @@ function initStockMarket() {
     const randInt = _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_12__["getRandomInt"];
 
     var ecorp = _Locations__WEBPACK_IMPORTED_MODULE_2__["Locations"].AevumECorp;
-    var ecorpStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](ecorp, StockSymbols[ecorp], randInt(40, 50) / 100, true, 19, randInt(17e3, 28e3), 5e12);
+    var ecorpStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](ecorp, StockSymbols[ecorp], randInt(40, 50) / 100, true, 19, randInt(17e3, 28e3), 3e12);
     StockMarket[ecorp] = ecorpStk;
 
     var megacorp = _Locations__WEBPACK_IMPORTED_MODULE_2__["Locations"].Sector12MegaCorp;
-    var megacorpStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](megacorp, StockSymbols[megacorp], randInt(40,50)/100, true, 19, randInt(24e3, 34e3), 5e12);
+    var megacorpStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](megacorp, StockSymbols[megacorp], randInt(40,50)/100, true, 19, randInt(24e3, 34e3), 3e12);
     StockMarket[megacorp] = megacorpStk;
 
     var blade = _Locations__WEBPACK_IMPORTED_MODULE_2__["Locations"].Sector12BladeIndustries;
-    var bladeStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](blade, StockSymbols[blade], randInt(70, 80)/100, true, 13, randInt(12e3, 25e3), 3e12);
+    var bladeStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](blade, StockSymbols[blade], randInt(70, 80)/100, true, 13, randInt(12e3, 25e3), 1.9e12);
     StockMarket[blade] = bladeStk;
 
     var clarke = _Locations__WEBPACK_IMPORTED_MODULE_2__["Locations"].AevumClarkeIncorporated;
-    var clarkeStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](clarke, StockSymbols[clarke], randInt(65, 75)/100, true, 12, randInt(10e3, 25e3), 3e12);
+    var clarkeStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](clarke, StockSymbols[clarke], randInt(65, 75)/100, true, 12, randInt(10e3, 25e3), 1.8e12);
     StockMarket[clarke] = clarkeStk;
 
     var omnitek = _Locations__WEBPACK_IMPORTED_MODULE_2__["Locations"].VolhavenOmniTekIncorporated;
-    var omnitekStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](omnitek, StockSymbols[omnitek], randInt(60, 70)/100, true, 12, randInt(32e3, 43e3), 3.5e12);
+    var omnitekStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](omnitek, StockSymbols[omnitek], randInt(60, 70)/100, true, 12, randInt(32e3, 43e3), 2.1e12);
     StockMarket[omnitek] = omnitekStk;
 
     var foursigma = _Locations__WEBPACK_IMPORTED_MODULE_2__["Locations"].Sector12FourSigma;
-    var foursigmaStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](foursigma, StockSymbols[foursigma], randInt(100, 110)/100, true, 17, randInt(50e3, 80e3), 4e12);
+    var foursigmaStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](foursigma, StockSymbols[foursigma], randInt(100, 110)/100, true, 17, randInt(50e3, 80e3), 2.4e12);
     StockMarket[foursigma] = foursigmaStk;
 
     var kuaigong = _Locations__WEBPACK_IMPORTED_MODULE_2__["Locations"].ChongqingKuaiGongInternational;
-    var kuaigongStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](kuaigong, StockSymbols[kuaigong], randInt(75, 85)/100, true, 10, randInt(16e3, 28e3), 4e12);
+    var kuaigongStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](kuaigong, StockSymbols[kuaigong], randInt(75, 85)/100, true, 10, randInt(16e3, 28e3), 2.3e12);
     StockMarket[kuaigong] = kuaigongStk;
 
     var fulcrum = _Locations__WEBPACK_IMPORTED_MODULE_2__["Locations"].AevumFulcrumTechnologies;
-    var fulcrumStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](fulcrum, StockSymbols[fulcrum], randInt(120, 130)/100, true, 16, randInt(29e3, 36e3), 4e12);
+    var fulcrumStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](fulcrum, StockSymbols[fulcrum], randInt(120, 130)/100, true, 16, randInt(29e3, 36e3), 2.4e12);
     StockMarket[fulcrum] = fulcrumStk;
 
     var storm = _Locations__WEBPACK_IMPORTED_MODULE_2__["Locations"].IshimaStormTechnologies;
-    var stormStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](storm, StockSymbols[storm], randInt(80, 90)/100, true, 7, randInt(20e3, 25e3), 2e12);
+    var stormStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](storm, StockSymbols[storm], randInt(80, 90)/100, true, 7, randInt(20e3, 25e3), 1.2e12);
     StockMarket[storm] = stormStk;
 
     var defcomm = _Locations__WEBPACK_IMPORTED_MODULE_2__["Locations"].NewTokyoDefComm;
-    var defcommStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](defcomm, StockSymbols[defcomm], randInt(60, 70)/100, true, 10, randInt(6e3, 19e3), 1.5e12);
+    var defcommStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](defcomm, StockSymbols[defcomm], randInt(60, 70)/100, true, 10, randInt(6e3, 19e3), 900e9);
     StockMarket[defcomm] = defcommStk;
 
     var helios = _Locations__WEBPACK_IMPORTED_MODULE_2__["Locations"].VolhavenHeliosLabs;
-    var heliosStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](helios, StockSymbols[helios], randInt(55, 65)/100, true, 9, randInt(10e3, 18e3), 1.3e12);
+    var heliosStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](helios, StockSymbols[helios], randInt(55, 65)/100, true, 9, randInt(10e3, 18e3), 825e9);
     StockMarket[helios] = heliosStk;
 
     var vitalife = _Locations__WEBPACK_IMPORTED_MODULE_2__["Locations"].NewTokyoVitaLife;
-    var vitalifeStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](vitalife, StockSymbols[vitalife], randInt(70, 80)/100, true, 7, randInt(8e3, 14e3), 1.7e12);
+    var vitalifeStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](vitalife, StockSymbols[vitalife], randInt(70, 80)/100, true, 7, randInt(8e3, 14e3), 1e12);
     StockMarket[vitalife] = vitalifeStk;
 
     var icarus = _Locations__WEBPACK_IMPORTED_MODULE_2__["Locations"].Sector12IcarusMicrosystems;
-    var icarusStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](icarus, StockSymbols[icarus], randInt(60, 70)/100, true, 7.5, randInt(12e3, 24e3), 1.4e12);
+    var icarusStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](icarus, StockSymbols[icarus], randInt(60, 70)/100, true, 7.5, randInt(12e3, 24e3), 800e12);
     StockMarket[icarus] = icarusStk;
 
     var universalenergy = _Locations__WEBPACK_IMPORTED_MODULE_2__["Locations"].Sector12UniversalEnergy;
-    var universalenergyStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](universalenergy, StockSymbols[universalenergy], randInt(50, 60)/100, true, 10, randInt(16e3, 29e3), 1.6e12);
+    var universalenergyStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](universalenergy, StockSymbols[universalenergy], randInt(50, 60)/100, true, 10, randInt(16e3, 29e3), 900e9);
     StockMarket[universalenergy] = universalenergyStk;
 
     var aerocorp = _Locations__WEBPACK_IMPORTED_MODULE_2__["Locations"].AevumAeroCorp;
-    var aerocorpStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](aerocorp, StockSymbols[aerocorp], randInt(55, 65)/100, true, 6, randInt(8e3, 17e3), 1e12);
+    var aerocorpStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](aerocorp, StockSymbols[aerocorp], randInt(55, 65)/100, true, 6, randInt(8e3, 17e3), 640e9);
     StockMarket[aerocorp] = aerocorpStk;
 
     var omnia = _Locations__WEBPACK_IMPORTED_MODULE_2__["Locations"].VolhavenOmniaCybersystems;
-    var omniaStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](omnia, StockSymbols[omnia], randInt(65, 75)/100, true, 4.5, randInt(6e3, 15e3), 1e12);
+    var omniaStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](omnia, StockSymbols[omnia], randInt(65, 75)/100, true, 4.5, randInt(6e3, 15e3), 600e9);
     StockMarket[omnia] = omniaStk;
 
     var solaris = _Locations__WEBPACK_IMPORTED_MODULE_2__["Locations"].ChongqingSolarisSpaceSystems;
-    var solarisStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](solaris, StockSymbols[solaris], randInt(70, 80)/100, true, 8.5, randInt(14e3, 28e3), 1.2e12);
+    var solarisStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](solaris, StockSymbols[solaris], randInt(70, 80)/100, true, 8.5, randInt(14e3, 28e3), 705e9);
     StockMarket[solaris] = solarisStk;
 
     var globalpharm = _Locations__WEBPACK_IMPORTED_MODULE_2__["Locations"].NewTokyoGlobalPharmaceuticals;
-    var globalpharmStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](globalpharm, StockSymbols[globalpharm], randInt(55, 65)/100, true, 10.5, randInt(12e3, 30e3), 1.1e12);
+    var globalpharmStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](globalpharm, StockSymbols[globalpharm], randInt(55, 65)/100, true, 10.5, randInt(12e3, 30e3), 695e9);
     StockMarket[globalpharm] = globalpharmStk;
 
     var nova = _Locations__WEBPACK_IMPORTED_MODULE_2__["Locations"].IshimaNovaMedical;
-    var novaStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](nova, StockSymbols[nova], randInt(70, 80)/100, true, 5, randInt(15e3, 27e3), 1e12);
+    var novaStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](nova, StockSymbols[nova], randInt(70, 80)/100, true, 5, randInt(15e3, 27e3), 600e9);
     StockMarket[nova] = novaStk;
 
     var watchdog = _Locations__WEBPACK_IMPORTED_MODULE_2__["Locations"].AevumWatchdogSecurity;
-    var watchdogStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](watchdog, StockSymbols[watchdog], randInt(240, 260)/100, true, 1.5, randInt(4e3, 8.5e3), 750e9);
+    var watchdogStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](watchdog, StockSymbols[watchdog], randInt(240, 260)/100, true, 1.5, randInt(4e3, 8.5e3), 450e9);
     StockMarket[watchdog] = watchdogStk;
 
     var lexocorp = _Locations__WEBPACK_IMPORTED_MODULE_2__["Locations"].VolhavenLexoCorp;
-    var lexocorpStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](lexocorp, StockSymbols[lexocorp], randInt(115, 135)/100, true, 6, randInt(4.5e3, 8e3), 500e9);
+    var lexocorpStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](lexocorp, StockSymbols[lexocorp], randInt(115, 135)/100, true, 6, randInt(4.5e3, 8e3), 300e9);
     StockMarket[lexocorp] = lexocorpStk;
 
     var rho = _Locations__WEBPACK_IMPORTED_MODULE_2__["Locations"].AevumRhoConstruction;
-    var rhoStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](rho, StockSymbols[rho], randInt(50, 70)/100, true, 1, randInt(2e3, 7e3), 300e9);
+    var rhoStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](rho, StockSymbols[rho], randInt(50, 70)/100, true, 1, randInt(2e3, 7e3), 180e9);
     StockMarket[rho] = rhoStk;
 
     var alpha = _Locations__WEBPACK_IMPORTED_MODULE_2__["Locations"].Sector12AlphaEnterprises;
-    var alphaStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](alpha, StockSymbols[alpha], randInt(175, 205)/100, true, 10, randInt(4e3, 8.5e3), 400e9);
+    var alphaStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](alpha, StockSymbols[alpha], randInt(175, 205)/100, true, 10, randInt(4e3, 8.5e3), 240e9);
     StockMarket[alpha] = alphaStk;
 
     var syscore = _Locations__WEBPACK_IMPORTED_MODULE_2__["Locations"].VolhavenSysCoreSecurities;
-    var syscoreStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](syscore, StockSymbols[syscore], randInt(150, 170)/100, true, 3, randInt(3e3, 8e3), 350e9);
+    var syscoreStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](syscore, StockSymbols[syscore], randInt(150, 170)/100, true, 3, randInt(3e3, 8e3), 200e9);
     StockMarket[syscore] = syscoreStk;
 
     var computek = _Locations__WEBPACK_IMPORTED_MODULE_2__["Locations"].VolhavenCompuTek;
-    var computekStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](computek, StockSymbols[computek], randInt(80, 100)/100, true, 4, randInt(1e3, 6e3), 350e9);
+    var computekStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](computek, StockSymbols[computek], randInt(80, 100)/100, true, 4, randInt(1e3, 6e3), 185e9);
     StockMarket[computek] = computekStk;
 
     var netlink = _Locations__WEBPACK_IMPORTED_MODULE_2__["Locations"].AevumNetLinkTechnologies;
-    var netlinkStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](netlink, StockSymbols[netlink], randInt(400, 430)/100, true, 1, randInt(1e3, 5e3), 100e9);
+    var netlinkStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](netlink, StockSymbols[netlink], randInt(400, 430)/100, true, 1, randInt(1e3, 5e3), 58e9);
     StockMarket[netlink] = netlinkStk;
 
     var omega = _Locations__WEBPACK_IMPORTED_MODULE_2__["Locations"].IshimaOmegaSoftware;
-    var omegaStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](omega, StockSymbols[omega], randInt(90, 110)/100, true, 0.5, randInt(1e3, 8e3), 100e9);
+    var omegaStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](omega, StockSymbols[omega], randInt(90, 110)/100, true, 0.5, randInt(1e3, 8e3), 60e9);
     StockMarket[omega] = omegaStk;
 
     var fns = _Locations__WEBPACK_IMPORTED_MODULE_2__["Locations"].Sector12FoodNStuff;
-    var fnsStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](fns, StockSymbols[fns], randInt(70, 80)/100, false, 1, randInt(500, 4.5e3), 75e9);
+    var fnsStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](fns, StockSymbols[fns], randInt(70, 80)/100, false, 1, randInt(500, 4.5e3), 45e9);
     StockMarket[fns] = fnsStk;
 
     var sigmacosm = "Sigma Cosmetics";
-    var sigmacosmStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](sigmacosm, StockSymbols[sigmacosm], randInt(260, 300)/100, true, 0, randInt(1.5e3, 3.5e3), 50e9);
+    var sigmacosmStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](sigmacosm, StockSymbols[sigmacosm], randInt(260, 300)/100, true, 0, randInt(1.5e3, 3.5e3), 30e9);
     StockMarket[sigmacosm] = sigmacosmStk;
 
     var joesguns = "Joes Guns";
-    var joesgunsStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](joesguns, StockSymbols[joesguns], randInt(360, 400)/100, true, 1, randInt(250, 1.5e3), 70e9);
+    var joesgunsStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](joesguns, StockSymbols[joesguns], randInt(360, 400)/100, true, 1, randInt(250, 1.5e3), 42e9);
     StockMarket[joesguns] = joesgunsStk;
 
     var catalyst = "Catalyst Ventures";
-    var catalystStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](catalyst, StockSymbols[catalyst], randInt(120, 175)/100, true, 13.5, randInt(250, 1.5e3), 200e9);
+    var catalystStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](catalyst, StockSymbols[catalyst], randInt(120, 175)/100, true, 13.5, randInt(250, 1.5e3), 120e9);
     StockMarket[catalyst] = catalystStk;
 
     var microdyne = "Microdyne Technologies";
-    var microdyneStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](microdyne, StockSymbols[microdyne], randInt(70, 80)/100, true, 8, randInt(15e3, 30e3), 600e9);
+    var microdyneStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](microdyne, StockSymbols[microdyne], randInt(70, 80)/100, true, 8, randInt(15e3, 30e3), 360e9);
     StockMarket[microdyne] = microdyneStk;
 
     var titanlabs = "Titan Laboratories";
-    var titanlabsStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](titanlabs, StockSymbols[titanlabs], randInt(50, 70)/100, true, 11, randInt(12e3, 24e3), 700e9);
+    var titanlabsStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](titanlabs, StockSymbols[titanlabs], randInt(50, 70)/100, true, 11, randInt(12e3, 24e3), 420e9);
     StockMarket[titanlabs] = titanlabsStk;
 
     var orders = {};
@@ -11105,7 +11111,7 @@ function buyStock(stock, shares) {
     // Would this purchase exceed the maximum number of shares?
     if (shares + stock.playerShares + stock.playerShortShares > stock.maxShares) {
         Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_8__["dialogBoxCreate"])(`You cannot purchase this many shares. ${stock.symbol} has a maximum of ` +
-                        `${stock.maxShares} shares.`);
+                        `${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_7__["numeralWrapper"].formatBigNumber(stock.maxShares)} shares.`);
         return false;
     }
 
@@ -11895,6 +11901,7 @@ function createStockTicker(stock) {
         switch (ordType) {
             case "Market Order":
                 var shares = Math.floor((money - COMM) / stock.price);
+                shares = Math.min(shares, Math.round(stock.maxShares - stock.playerShares - stock.playerShortShares));
                 pos === PositionTypes.Long ? buyStock(stock, shares) : shortStock(stock, shares, null);
                 break;
             case "Limit Order":
@@ -11911,6 +11918,7 @@ function createStockTicker(stock) {
                         type = OrderTypes.StopBuy;
                     }
                     var shares = Math.floor((money-COMM) / price);
+                    shares = Math.min(shares, Math.round(stock.maxShares - stock.playerShares - stock.playerShortShares));
                     placeOrder(stock, shares, price, type, pos);
                     Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__["yesNoTxtInpBoxClose"])();
                 });
@@ -12089,25 +12097,26 @@ function updateStockPlayerPosition(stock) {
     if (isNaN(shortPercentageGains)) { shortPercentageGains = 0; }
 
     stock.posTxtEl.innerHTML =
-        "<h1 class='tooltip stock-market-position-text'>Long Position: " +
+        `Max Shares: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_7__["numeralWrapper"].format(stock.maxShares, "0.000a")}<br>` +
+        "<h3 class='tooltip stock-market-position-text'>Long Position: " +
         "<span class='tooltiptext'>Shares in the long position will increase " +
-        "in value if the price of the corresponding stock increases</span></h1>" +
+        "in value if the price of the corresponding stock increases</span></h3>" +
         "<br>Shares: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_7__["numeralWrapper"].format(stock.playerShares, '0,0') +
         "<br>Average Price: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_7__["numeralWrapper"].format(stock.playerAvgPx, '$0.000a') +
         " (Total Cost: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_7__["numeralWrapper"].format(totalCost, '$0.000a') + ")" +
         "<br>Profit: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_7__["numeralWrapper"].format(gains, '$0.000a') +
-                     " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_7__["numeralWrapper"].format(percentageGains, '0.00%') + ")<br><br>";
+                     " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_7__["numeralWrapper"].format(percentageGains, '0.00%') + ")<br>";
         if (_Player__WEBPACK_IMPORTED_MODULE_5__[/* Player */ "a"].bitNodeN === 8 || (_NetscriptFunctions__WEBPACK_IMPORTED_MODULE_3__[/* hasWallStreetSF */ "f"] && _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_3__[/* wallStreetSFLvl */ "h"] >= 2)) {
             stock.posTxtEl.innerHTML +=
-            "<h1 class='tooltip stock-market-position-text'>Short Position: " +
+            "<br><h3 class='tooltip stock-market-position-text'>Short Position: " +
             "<span class='tooltiptext'>Shares in short position will increase " +
-            "in value if the price of the corresponding stock decreases</span></h1>" +
-            "<br>Shares: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_7__["numeralWrapper"].format(stock.playerShortShares, '0,0') + `(Max: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_7__["numeralWrapper"].format(stock.maxShares, "0.000a")})`
+            "in value if the price of the corresponding stock decreases</span></h3>" +
+            "<br>Shares: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_7__["numeralWrapper"].format(stock.playerShortShares, '0,0') +
             "<br>Average Price: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_7__["numeralWrapper"].formatMoney(stock.playerAvgShortPx) +
             " (Total Cost: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_7__["numeralWrapper"].formatMoney(shortTotalCost) + ")" +
             "<br>Profit: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_7__["numeralWrapper"].formatMoney(shortGains) +
                          " (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_7__["numeralWrapper"].format(shortPercentageGains, '0.00%') + ")" +
-            "<br><br><h1 class='stock-market-position-text'>Orders: </h1>";
+            "<br><br><h3 class='stock-market-position-text'>Orders:</h3>";
         }
 
 }
@@ -12201,7 +12210,7 @@ function updateStockOrderList(stock) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const BaseResearchTree_1 = __webpack_require__(/*! ./data/BaseResearchTree */ 211);
+const BaseResearchTree_1 = __webpack_require__(/*! ./data/BaseResearchTree */ 213);
 const numeralFormat_1 = __webpack_require__(/*! ../ui/numeralFormat */ 4);
 // Map of official names for each Industry
 exports.Industries = {
@@ -12331,8 +12340,8 @@ exports.resetIndustryResearchTrees = resetIndustryResearchTrees;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const Program_1 = __webpack_require__(/*! ./Program */ 199);
-const programsMetadata_1 = __webpack_require__(/*! ./data/programsMetadata */ 198);
+const Program_1 = __webpack_require__(/*! ./Program */ 201);
+const programsMetadata_1 = __webpack_require__(/*! ./data/programsMetadata */ 200);
 exports.Programs = {};
 for (const params of programsMetadata_1.programsMetadata) {
     exports.Programs[params.key] = new Program_1.Program(params.name, params.create);
@@ -13146,7 +13155,7 @@ JSONReviver_1.Reviver.constructors.Stock = Stock;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 // Constructs all CompanyPosition objects using the metadata in data/companypositions.ts
-const CompanyPositionsMetadata_1 = __webpack_require__(/*! ./data/CompanyPositionsMetadata */ 213);
+const CompanyPositionsMetadata_1 = __webpack_require__(/*! ./data/CompanyPositionsMetadata */ 215);
 const CompanyPosition_1 = __webpack_require__(/*! ./CompanyPosition */ 87);
 exports.CompanyPositions = {};
 function addCompanyPosition(params) {
@@ -13250,21 +13259,21 @@ exports.removeChildrenFromElement = removeChildrenFromElement;
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_19__);
 /* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 83);
 /* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_20__);
-var ace = __webpack_require__(/*! brace */ 272);
-var beautify = __webpack_require__(/*! js-beautify */ 271).js_beautify;
-__webpack_require__(/*! brace/mode/javascript */ 270);
-__webpack_require__(/*! ../netscript */ 200);
-__webpack_require__(/*! brace/theme/chaos */ 269);
-__webpack_require__(/*! brace/theme/chrome */ 268);
-__webpack_require__(/*! brace/theme/monokai */ 267);
-__webpack_require__(/*! brace/theme/solarized_dark */ 266);
-__webpack_require__(/*! brace/theme/solarized_light */ 265);
-__webpack_require__(/*! brace/theme/terminal */ 264);
-__webpack_require__(/*! brace/theme/twilight */ 263);
-__webpack_require__(/*! brace/theme/xcode */ 262);
-__webpack_require__(/*! brace/keybinding/vim */ 261);
-__webpack_require__(/*! brace/keybinding/emacs */ 260);
-__webpack_require__(/*! brace/ext/language_tools */ 259);
+var ace = __webpack_require__(/*! brace */ 274);
+var beautify = __webpack_require__(/*! js-beautify */ 273).js_beautify;
+__webpack_require__(/*! brace/mode/javascript */ 272);
+__webpack_require__(/*! ../netscript */ 202);
+__webpack_require__(/*! brace/theme/chaos */ 271);
+__webpack_require__(/*! brace/theme/chrome */ 270);
+__webpack_require__(/*! brace/theme/monokai */ 269);
+__webpack_require__(/*! brace/theme/solarized_dark */ 268);
+__webpack_require__(/*! brace/theme/solarized_light */ 267);
+__webpack_require__(/*! brace/theme/terminal */ 266);
+__webpack_require__(/*! brace/theme/twilight */ 265);
+__webpack_require__(/*! brace/theme/xcode */ 264);
+__webpack_require__(/*! brace/keybinding/vim */ 263);
+__webpack_require__(/*! brace/keybinding/emacs */ 262);
+__webpack_require__(/*! brace/ext/language_tools */ 261);
 
 // Importing this doesn't work for some reason.
 const walk = __webpack_require__(/*! acorn/dist/walk */ 149);
@@ -19932,7 +19941,7 @@ const JSONReviver_1 = __webpack_require__(/*! ../utils/JSONReviver */ 13);
 const createElement_1 = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 const createPopup_1 = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 36);
 const removeElementById_1 = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
-const codingcontracttypes_1 = __webpack_require__(/*! ./data/codingcontracttypes */ 205);
+const codingcontracttypes_1 = __webpack_require__(/*! ./data/codingcontracttypes */ 207);
 /* tslint:disable:no-magic-numbers completed-docs max-classes-per-file no-console */
 /* Represents different types of problems that a Coding Contract can have */
 class CodingContractType {
@@ -34134,7 +34143,7 @@ exports.arrayToString = arrayToString;
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/isString */ 40);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var jsplumb__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! jsplumb */ 256);
+/* harmony import */ var jsplumb__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! jsplumb */ 258);
 /* harmony import */ var jsplumb__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(jsplumb__WEBPACK_IMPORTED_MODULE_10__);
 
 
@@ -43559,7 +43568,7 @@ function applySourceFile(srcFile) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const DarkWebItem_1 = __webpack_require__(/*! ./DarkWebItem */ 197);
+const DarkWebItem_1 = __webpack_require__(/*! ./DarkWebItem */ 199);
 const Programs_1 = __webpack_require__(/*! ../Programs/Programs */ 24);
 exports.DarkWebItems = {
     BruteSSHProgram: new DarkWebItem_1.DarkWebItem(Programs_1.Programs.BruteSSHProgram.name, 500e3, "Opens up SSH Ports"),
@@ -48364,8 +48373,8 @@ exports.getRandomByte = getRandomByte;
 Object.defineProperty(exports, "__esModule", { value: true });
 // The Research Map is an object that holds all Corporation Research objects
 // as values. They are identified by their names
-const Research_1 = __webpack_require__(/*! ./Research */ 210);
-const ResearchMetadata_1 = __webpack_require__(/*! ./data/ResearchMetadata */ 209);
+const Research_1 = __webpack_require__(/*! ./Research */ 212);
+const ResearchMetadata_1 = __webpack_require__(/*! ./data/ResearchMetadata */ 211);
 exports.ResearchMap = {};
 function addResearch(p) {
     if (exports.ResearchMap[p.name] != null) {
@@ -48957,8 +48966,8 @@ exports.HelpTexts = {
 Object.defineProperty(exports, "__esModule", { value: true });
 const EmployeePositions_1 = __webpack_require__(/*! ./EmployeePositions */ 27);
 const MaterialSizes_1 = __webpack_require__(/*! ./MaterialSizes */ 77);
-const ProductRatingWeights_1 = __webpack_require__(/*! ./ProductRatingWeights */ 207);
-const Cities_1 = __webpack_require__(/*! ../Locations/Cities */ 206);
+const ProductRatingWeights_1 = __webpack_require__(/*! ./ProductRatingWeights */ 209);
+const Cities_1 = __webpack_require__(/*! ../Locations/Cities */ 208);
 const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
 const getRandomInt_1 = __webpack_require__(/*! ../../utils/helpers/getRandomInt */ 15);
 class Product {
@@ -57812,6 +57821,17 @@ exports.clearSelector = clearSelector;
 /***/ }),
 /* 175 */,
 /* 176 */
+/*!******************************!*\
+  !*** ./css/stockmarket.scss ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+/* 177 */,
+/* 178 */
 /*!****************************!*\
   !*** ./css/menupages.scss ***!
   \****************************/
@@ -57821,8 +57841,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 177 */,
-/* 178 */
+/* 179 */,
+/* 180 */
 /*!***************************!*\
   !*** ./css/terminal.scss ***!
   \***************************/
@@ -57832,8 +57852,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 179 */,
-/* 180 */
+/* 181 */,
+/* 182 */
 /*!************************************!*\
   !*** ./css/characteroverview.scss ***!
   \************************************/
@@ -57843,8 +57863,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 181 */,
-/* 182 */
+/* 183 */,
+/* 184 */
 /*!***************************!*\
   !*** ./css/mainmenu.scss ***!
   \***************************/
@@ -57854,8 +57874,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 183 */,
-/* 184 */
+/* 185 */,
+/* 186 */
 /*!**************************!*\
   !*** ./css/buttons.scss ***!
   \**************************/
@@ -57865,8 +57885,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 185 */,
-/* 186 */
+/* 187 */,
+/* 188 */
 /*!***************************!*\
   !*** ./css/tooltips.scss ***!
   \***************************/
@@ -57876,8 +57896,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 187 */,
-/* 188 */
+/* 189 */,
+/* 190 */
 /*!*************************!*\
   !*** ./css/styles.scss ***!
   \*************************/
@@ -57887,15 +57907,15 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 189 */,
-/* 190 */,
 /* 191 */,
 /* 192 */,
 /* 193 */,
 /* 194 */,
 /* 195 */,
 /* 196 */,
-/* 197 */
+/* 197 */,
+/* 198 */,
+/* 199 */
 /*!************************************!*\
   !*** ./src/DarkWeb/DarkWebItem.ts ***!
   \************************************/
@@ -57922,7 +57942,7 @@ exports.DarkWebItem = DarkWebItem;
 
 
 /***/ }),
-/* 198 */
+/* 200 */
 /*!***********************************************!*\
   !*** ./src/Programs/data/programsMetadata.ts ***!
   \***********************************************/
@@ -58064,7 +58084,7 @@ exports.programsMetadata = [
 
 
 /***/ }),
-/* 199 */
+/* 201 */
 /*!*********************************!*\
   !*** ./src/Programs/Program.ts ***!
   \*********************************/
@@ -58090,7 +58110,7 @@ exports.Program = Program;
 
 
 /***/ }),
-/* 200 */
+/* 202 */
 /*!**********************!*\
   !*** ./netscript.js ***!
   \**********************/
@@ -58936,7 +58956,7 @@ oop.inherits(Mode, TextMode);
     };
 
     this.createWorker = function(session) {
-        var worker = new WorkerClient(["ace"], __webpack_require__(/*! brace/worker/javascript */ 201), "JavaScriptWorker");
+        var worker = new WorkerClient(["ace"], __webpack_require__(/*! brace/worker/javascript */ 203), "JavaScriptWorker");
         worker.attachToDocument(session.getDocument());
 
         worker.on("annotate", function(results) {
@@ -58958,11 +58978,11 @@ exports.Mode = Mode;
 
 
 /***/ }),
-/* 201 */,
-/* 202 */,
 /* 203 */,
 /* 204 */,
-/* 205 */
+/* 205 */,
+/* 206 */,
+/* 207 */
 /*!*****************************************!*\
   !*** ./src/data/codingcontracttypes.ts ***!
   \*****************************************/
@@ -59443,7 +59463,7 @@ exports.codingContractTypesMetadata = [
 
 
 /***/ }),
-/* 206 */
+/* 208 */
 /*!*********************************!*\
   !*** ./src/Locations/Cities.ts ***!
   \*********************************/
@@ -59469,7 +59489,7 @@ exports.Cities = {
 
 
 /***/ }),
-/* 207 */
+/* 209 */
 /*!*************************************************!*\
   !*** ./src/Corporation/ProductRatingWeights.ts ***!
   \*************************************************/
@@ -59549,7 +59569,7 @@ exports.ProductRatingWeights = {
 
 
 /***/ }),
-/* 208 */
+/* 210 */
 /*!*****************************************!*\
   !*** ./src/Corporation/ResearchTree.ts ***!
   \*****************************************/
@@ -59791,7 +59811,7 @@ exports.ResearchTree = ResearchTree;
 
 
 /***/ }),
-/* 209 */
+/* 211 */
 /*!**************************************************!*\
   !*** ./src/Corporation/data/ResearchMetadata.ts ***!
   \**************************************************/
@@ -59924,7 +59944,7 @@ exports.researchMetadata = [
 
 
 /***/ }),
-/* 210 */
+/* 212 */
 /*!*************************************!*\
   !*** ./src/Corporation/Research.ts ***!
   \*************************************/
@@ -59989,7 +60009,7 @@ exports.Research = Research;
 
 
 /***/ }),
-/* 211 */
+/* 213 */
 /*!**************************************************!*\
   !*** ./src/Corporation/data/BaseResearchTree.ts ***!
   \**************************************************/
@@ -60001,7 +60021,7 @@ exports.Research = Research;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const ResearchMap_1 = __webpack_require__(/*! ../ResearchMap */ 99);
-const ResearchTree_1 = __webpack_require__(/*! ../ResearchTree */ 208);
+const ResearchTree_1 = __webpack_require__(/*! ../ResearchTree */ 210);
 function makeNode(name) {
     const research = ResearchMap_1.ResearchMap[name];
     if (research == null) {
@@ -60047,7 +60067,7 @@ exports.getBaseResearchTreeCopy = getBaseResearchTreeCopy;
 
 
 /***/ }),
-/* 212 */
+/* 214 */
 /*!***********************************************!*\
   !*** ./src/Company/data/CompaniesMetadata.ts ***!
   \***********************************************/
@@ -60439,7 +60459,7 @@ exports.companiesMetadata = [
 
 
 /***/ }),
-/* 213 */
+/* 215 */
 /*!******************************************************!*\
   !*** ./src/Company/data/CompanyPositionsMetadata.ts ***!
   \******************************************************/
@@ -61052,8 +61072,6 @@ exports.companyPositionMetadata = [
 
 
 /***/ }),
-/* 214 */,
-/* 215 */,
 /* 216 */,
 /* 217 */,
 /* 218 */,
@@ -61088,7 +61106,9 @@ exports.companyPositionMetadata = [
 /* 247 */,
 /* 248 */,
 /* 249 */,
-/* 250 */
+/* 250 */,
+/* 251 */,
+/* 252 */
 /*!**********************!*\
   !*** util (ignored) ***!
   \**********************/
@@ -61099,7 +61119,7 @@ exports.companyPositionMetadata = [
 /* (ignored) */
 
 /***/ }),
-/* 251 */
+/* 253 */
 /*!**********************!*\
   !*** util (ignored) ***!
   \**********************/

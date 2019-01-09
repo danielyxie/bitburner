@@ -43,6 +43,10 @@ class NumeralFormatter {
     formatMoney(n: number): string {
         return this.format(n, "$0.000a");
     }
+
+    formatBigNumber(n: number): string {
+        return this.format(n, "0.000a");
+    }
 }
 
 export const numeralWrapper = new NumeralFormatter();

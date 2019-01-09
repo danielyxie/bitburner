@@ -3,7 +3,8 @@ Netscript Trade Information eXchange (TIX) API
 
 The Trade Information eXchange (TIX) is the communications protocol supported by the World Stock Exchange (WSE).
 The WSE provides an API that allows you to automatically communicate with the
-`Stock Market <http://bitburner.wikia.com/wiki/Stock_Market>`_. This API lets you write code using Netscript
+:ref:`Stock Market <gameplay_stock_market>`.
+This API lets you write code using Netscript
 to build automated trading systems and create your own algorithmic trading strategies. Access to this
 TIX API can be purchased by visiting the World Stock Exchange in-game.
 
@@ -61,6 +62,19 @@ getStockPosition
         avgPx       = pos[1];
         sharesShort = pos[2];
         avgPxShort  = pos[3];
+
+getStockMaxShares
+-----------------
+
+
+.. js:function:: getStockMaxShares(sym)
+
+    :param string sym: Stock symbol
+    :RAM cost: 2 GB
+
+    Returns the maximum number of shares that the stock has. This is the maximum
+    amount of the stock that can be purchased in both the Long and Short
+    positions combined
 
 buyStock
 --------
