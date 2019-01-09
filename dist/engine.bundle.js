@@ -2634,7 +2634,7 @@ let Player = new PlayerObject();
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CONSTANTS = {
-    Version: "0.41.2",
+    Version: "0.42.0",
     //Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
     //the player will have this level assuming no multipliers. Multipliers can cause skills to go above this.
@@ -3128,7 +3128,6 @@ exports.CONSTANTS = {
      * Added total multiplier information on the "Augmentations" page
      * Bug Fix: gymWorkout() Singularity function should now work properly with Millenium Fitness Gym
      * Began migrating gameplay information to the ReadTheDocs documentation
-     *
      `
 };
 
@@ -21691,6 +21690,22 @@ function NetscriptFunctions(workerScript) {
             }
             return [stock.playerShares, stock.playerAvgPx, stock.playerShortShares, stock.playerAvgShortPx];
         },
+        getStockMaxShares : function(symbol) {
+            if (workerScript.checkingRam) {
+                return updateStaticRam("getStockMaxShares", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptGetStockRamCost);
+            }
+            updateDynamicRam("getStockMaxShares", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptGetStockRamCost);
+
+            if (!_Player__WEBPACK_IMPORTED_MODULE_20__[/* Player */ "a"].hasTixApiAccess) {
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have TIX API Access! Cannot use getStockMaxShares()");
+            }
+            const stock = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_27__[/* SymbolToStockMap */ "e"][symbol];
+            if (stock == null) {
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid stock symbol passed into getStockMaxShares()");
+            }
+
+            return stock.maxShares;
+        },
         buyStock : function(symbol, shares) {
             if (workerScript.checkingRam) {
                 return updateStaticRam("buyStock", _Constants__WEBPACK_IMPORTED_MODULE_9__["CONSTANTS"].ScriptBuySellStockRamCost);
@@ -38758,7 +38773,7 @@ Corporation.prototype.process = function() {
                     const totalDividends = (this.dividendPercentage / 100) * cycleProfit;
                     const retainedEarnings = cycleProfit - totalDividends;
                     const dividendsPerShare = totalDividends / this.totalShares;
-                    _Player__WEBPACK_IMPORTED_MODULE_15__[/* Player */ "a"].gainMoney(this.numShares * dividendsPerShare * (this.dividendTaxPercentage / 100));
+                    _Player__WEBPACK_IMPORTED_MODULE_15__[/* Player */ "a"].gainMoney(this.numShares * dividendsPerShare * (1 - (this.dividendTaxPercentage / 100)));
                     this.funds = this.funds.plus(retainedEarnings);
                 }
             } else {
@@ -39993,7 +40008,7 @@ Corporation.prototype.updateCorporationOverviewContent = function() {
                       `Dividends per share: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(dividendsPerShare, "$0.000a")} / s<br>` +
                       `Your earnings as a shareholder (Pre-Tax): ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(playerEarnings, "$0.000a")} / s<br>` +
                       `Dividend Tax Rate: ${this.dividendTaxPercentage}%<br>` +
-                      `Your earnings as a shareholder (Post-Tax): ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(playerEarnings * (this.dividendTaxPercentage / 100), "$0.000a")} / s<br><br>`;
+                      `Your earnings as a shareholder (Post-Tax): ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(playerEarnings * (1 - (this.dividendTaxPercentage / 100)), "$0.000a")} / s<br><br>`;
     }
 
     var txt = "Total Funds: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(this.funds.toNumber(), '$0.000a') + "<br>" +
