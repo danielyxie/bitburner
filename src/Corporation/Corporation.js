@@ -2868,7 +2868,7 @@ Corporation.prototype.process = function() {
                     const totalDividends = (this.dividendPercentage / 100) * cycleProfit;
                     const retainedEarnings = cycleProfit - totalDividends;
                     const dividendsPerShare = totalDividends / this.totalShares;
-                    Player.gainMoney(this.numShares * dividendsPerShare * (this.dividendTaxPercentage / 100));
+                    Player.gainMoney(this.numShares * dividendsPerShare * (1 - (this.dividendTaxPercentage / 100)));
                     this.funds = this.funds.plus(retainedEarnings);
                 }
             } else {
@@ -4103,7 +4103,7 @@ Corporation.prototype.updateCorporationOverviewContent = function() {
                       `Dividends per share: ${numeralWrapper.format(dividendsPerShare, "$0.000a")} / s<br>` +
                       `Your earnings as a shareholder (Pre-Tax): ${numeralWrapper.format(playerEarnings, "$0.000a")} / s<br>` +
                       `Dividend Tax Rate: ${this.dividendTaxPercentage}%<br>` +
-                      `Your earnings as a shareholder (Post-Tax): ${numeralWrapper.format(playerEarnings * (this.dividendTaxPercentage / 100), "$0.000a")} / s<br><br>`;
+                      `Your earnings as a shareholder (Post-Tax): ${numeralWrapper.format(playerEarnings * (1 - (this.dividendTaxPercentage / 100)), "$0.000a")} / s<br><br>`;
     }
 
     var txt = "Total Funds: " + numeralWrapper.format(this.funds.toNumber(), '$0.000a') + "<br>" +
