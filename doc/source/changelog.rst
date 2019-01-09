@@ -3,6 +3,43 @@
 Changelog
 =========
 
+v0.42.0 - 1/8/2019
+------------------
+v0.42.0
+* Corporation Changes:
+    * Corporation can now be self-funded with $150b or using seed money in exchange for 500m newly-issued shares
+    * In BitNode-3, you no longer start with $150b
+    * Changed initial market prices for many materials
+    * Changed the way a material's demand, competition, and market price change over time
+    * The sale price of materials can no longer be marked-up as high
+    * Added a Research Tree mechanic. Spend Scientific Research on permanent upgrades for each industry
+    * You can now redistribute earnings to shareholders (including yourself) as dividends
+    * Cost of "Smart Supply" upgraded reduced from $50b to $25b
+    * Now has offline progress, which works similarly to the Gang/Bladeburner mechanics
+    * Slightly reduced the amount of money offered to you by investment firms
+    * Employee salaries now slowly increase over time
+    * Slightly reduced the effect "Real Estate" has on the Production Multiplier for the Agriculture industry
+    * Changed the way your Corporation's value is calculated (this is what determines stock price)
+    * After taking your corporation public, it is now possible to issue new shares to raise capital
+    * Issuing new shares can only be done once every 12 hours
+    * Buying back shares must now be done at a premium
+    * Selling shares can now only be done once per hour
+    * Selling large amounts of shares now immediately impacts stock price (during the transaction)
+    * Reduced the initial cost of the DreamSense upgrade from $8b to $4b, but increased its price multiplier
+    * Reduced the price multiplier for ABC SalesBots upgrade
+
+* Added getOrders() Netscript function to the TIX API
+* Added getAugmentationPrereq() Singularity function (by havocmayhem)
+* Added hackAnalyzePercent() and hackAnalyzeThreads() Netscript functions
+* Stock Market, Travel, and Corporation main menu links are now properly styled
+* Many pop-up/dialog boxes now support the 'Enter' and 'Esc' hotkeys. If you find a pop-up/dialog box that doesnt support this, let me know specifically which one ('Enter' for the default option, 'Esc' for cancelling and closing the pop-up box)
+* Added "brace_style = preserve_inline" configuration to Script Editor Beautifier
+* ServerProfiler.exe can now be purchased from the Dark Web
+* Added an option to copy save data to clipboard
+* Added total multiplier information on the "Augmentations" page
+* Bug Fix: gymWorkout() Singularity function should now work properly with Millenium Fitness Gym
+* Began migrating gameplay information to the ReadTheDocs documentation
+
 v0.41.2 - 11/23/2018
 --------------------
 * IMPORTANT - Netscript Changes:
