@@ -29,6 +29,12 @@ import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
         yesNoTxtInpBoxGetInput, yesNoBoxClose,
         yesNoTxtInpBoxClose}                    from "../utils/YesNoBox";
 
+import { createElement }                        from "../utils/uiHelpers/createElement";
+import { createPopup }                          from "../utils/uiHelpers/createPopup";
+import { createPopupCloseButton }               from "../utils/uiHelpers/createPopupCloseButton";
+import { removeElementById }                    from "../utils/uiHelpers/removeElementById";
+
+
 function displayLocationContent() {
     var returnToWorld           = clearEventListeners("location-return-to-world-button");
 
@@ -1939,40 +1945,80 @@ function initLocationButtons() {
     });
 
     cityHallCreateCorporation.addEventListener("click", function() {
-        var yesBtn = yesNoTxtInpBoxGetYesButton(),
-            noBtn = yesNoTxtInpBoxGetNoButton();
-        yesBtn.innerText = "Create Corporation";
-        noBtn.innerText = "Cancel";
-        yesBtn.addEventListener("click", function() {
-            if (Player.money.lt(150e9)) {
-                dialogBoxCreate("You don't have enough money to create a corporation! You need $150b");
-                return yesNoTxtInpBoxClose();
-            }
-            Player.loseMoney(150e9);
-            var companyName = yesNoTxtInpBoxGetInput();
-            if (companyName == null || companyName == "") {
-                dialogBoxCreate("Invalid company name!");
+        const popupId = "create-corporation-popup";
+        const txt = createElement("p", {
+            innerHTML: "Would you like to start a corporation? This will require $150b for registration " +
+                       "and initial funding. This $150b can either be self-funded, or you can obtain " +
+                       "the seed money from the government in exchange for 500 million shares<br><br>" +
+                       "If you would like to start one, please enter a name for your corporation below:",
+        });
+
+        const nameInput = createElement("input", {
+            placeholder: "Corporation Name",
+        });
+
+        const selfFundedButton = createElement("button", {
+            class: "popup-box-button",
+            innerText: "Self-Fund",
+            clickListener: () => {
+                if (Player.money.lt(150e9)) {
+                    dialogBoxCreate("You don't have enough money to create a corporation! You need $150b");
+                    return false;
+                }
+                Player.loseMoney(150e9);
+
+                const companyName = nameInput.value;
+                if (companyName == null || companyName == "") {
+                    dialogBoxCreate("Invalid company name!");
+                    return false;
+                }
+
+                Player.corporation = new Corporation({
+                    name: companyName,
+                });
+
+                displayLocationContent();
+                document.getElementById("world-menu-header").click();
+                document.getElementById("world-menu-header").click();
+                dialogBoxCreate("Congratulations! You just self-funded your own corporation. You can visit " +
+                                "and manage your company in the City");
+                removeElementById(popupId);
                 return false;
             }
-            Player.corporation = new Corporation({
-                name:companyName,
-            });
-            displayLocationContent();
-            document.getElementById("world-menu-header").click();
-            document.getElementById("world-menu-header").click();
-            dialogBoxCreate("Congratulations! You just started your own corporation. You can visit " +
-                            "and manage your company in the City");
-            return yesNoTxtInpBoxClose();
         });
-        noBtn.addEventListener("click", function() {
-            return yesNoTxtInpBoxClose();
-        });
+
+        const seedMoneyButton = createElement("button", {
+            class: "popup-box-button",
+            innerText: "Use Seed Money",
+            clickListener: () => {
+                const companyName = nameInput.value;
+                if (companyName == null || companyName == "") {
+                    dialogBoxCreate("Invalid company name!");
+                    return false;
+                }
+
+                Player.corporation = new Corporation({
+                    name: companyName,
+                });
+                Player.corporation.totalShares += 500e6;
+
+                displayLocationContent();
+                document.getElementById("world-menu-header").click();
+                document.getElementById("world-menu-header").click();
+                dialogBoxCreate("Congratulations! You just started your own corporation with government seed money. " +
+                                "You can visit and manage your company in the City");
+                removeElementById(popupId);
+                return false;
+            }
+        })
+
+        const cancelBtn = createPopupCloseButton(popupId, { class: "popup-box-button" });
+
         if (Player.corporation instanceof Corporation) {
             return;
         } else {
-            yesNoTxtInpBoxCreate("Would you like to start a corporation? This will require $150b " +
-                                 "for registration and initial funding.<br><br>If so, please enter " +
-                                 "a name for your corporation below:");
+            createPopup(popupId, [txt, nameInput, cancelBtn, selfFundedButton, seedMoneyButton]);
+            nameInput.focus();
         }
     });
 

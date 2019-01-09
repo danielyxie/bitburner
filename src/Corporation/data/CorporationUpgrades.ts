@@ -16,7 +16,7 @@ export const CorporationUpgrades: IMap<any[]> = {
              "Each level of this upgrade increases your global warehouse storage size by 10% (additive)."],
 
     //Advertise through dreams, passive popularity/ awareness gain
-    "2":    [2, 8e9, 1.09, .001,
+    "2":    [2, 4e9, 1.1, .001,
             "DreamSense", "Use DreamSense LCC Technologies to advertise your corporation " +
             "to consumers through their dreams. Each level of this upgrade provides a passive " +
             "increase in awareness of all of your companies (divisions) by 0.004 / market cycle," +
@@ -52,7 +52,7 @@ export const CorporationUpgrades: IMap<any[]> = {
             "of this upgrade globally increases the efficiency of your employees by 10% (additive)."],
 
     //Improves sales of materials/products
-    "8":    [8, 1e9, 1.08, 0.01,
+    "8":    [8, 1e9, 1.07, 0.01,
             "ABC SalesBots", "Always Be Closing. Purchase these robotic salesmen to increase the amount of " +
             "materials and products you sell. Each level of this upgrade globally increases your sales " +
             "by 1% (additive)."],

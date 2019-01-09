@@ -164,31 +164,31 @@
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Player; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return loadPlayer; });
-/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentations */ 20);
+/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentations */ 21);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BitNodeMultipliers */ 10);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CodingContracts */ 42);
 /* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_CodingContracts__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Company/Company */ 75);
+/* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Company/Company */ 76);
 /* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Company_Company__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Company/Companies */ 18);
+/* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Company/Companies */ 17);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _Company_GetNextCompanyPosition__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Company/GetNextCompanyPosition */ 102);
 /* harmony import */ var _Company_GetNextCompanyPosition__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Company_GetNextCompanyPosition__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Company/GetJobRequirementText */ 94);
 /* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Company/CompanyPositions */ 28);
+/* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Company/CompanyPositions */ 29);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Company/data/CompanyPositionNames */ 36);
+/* harmony import */ var _Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Company/data/CompanyPositionNames */ 37);
 /* harmony import */ var _Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Corporation/Corporation */ 60);
+/* harmony import */ var _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Corporation/Corporation */ 58);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Programs/Programs */ 24);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _Crimes__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Crimes */ 38);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./engine */ 9);
-/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Faction/Faction */ 56);
+/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Faction/Faction */ 57);
 /* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_Faction_Faction__WEBPACK_IMPORTED_MODULE_14__);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Faction/Factions */ 14);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_15__);
@@ -198,9 +198,9 @@
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_18__);
 /* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./Settings */ 19);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./Settings */ 18);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./SpecialServerIps */ 33);
 /* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./SourceFile */ 70);
 /* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! decimal.js */ 35);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
@@ -599,7 +599,6 @@ PlayerObject.prototype.prestigeSourceFile = function() {
     this.has4SDataTixApi = false;
 
     //BitNode 3: Corporatocracy
-    if (this.bitNodeN === 3) {this.money = new decimal_js__WEBPACK_IMPORTED_MODULE_24__[/* default */ "a"](150e9);}
     this.corporation = 0;
 
     this.playtimeSinceLastAug = 0;
@@ -3097,6 +3096,8 @@ exports.CONSTANTS = {
     LatestUpdate: `
      v0.42.0
      * Corporation Changes:
+     ** Corporation can now be self-funded with $150b or using seed money in exchange for 500m newly-issued shares
+     ** In BitNode-3, you no longer start with $150b
      ** Changed initial market prices for many materials
      ** Changed the way a material's demand, competition, and market price change over time
      ** The sale price of materials can no longer be marked-up as high
@@ -3108,6 +3109,13 @@ exports.CONSTANTS = {
      ** Employee salaries now slowly increase over time
      ** Slightly reduced the effect "Real Estate" has on the Production Multiplier for the Agriculture industry
      ** Changed the way your Corporation's value is calculated (this is what determines stock price)
+     ** After taking your corporation public, it is now possible to issue new shares to raise capital
+     ** Issuing new shares can only be done once every 12 hours
+     ** Buying back shares must now be done at a premium
+     ** Selling shares can now only be done once per hour
+     ** Selling large amounts of shares now immediately impacts stock price (during the transaction)
+     ** Reduced the initial cost of the DreamSense upgrade from $8b to $4b, but increased its price multiplier
+     ** Reduced the price multiplier for ABC SalesBots upgrade
 
      * Added getOrders() Netscript function to the TIX API
      * Added getAugmentationPrereq() Singularity function (by havocmayhem)
@@ -3470,6 +3478,9 @@ class NumeralFormatter {
         }
         return numeral(n).format(format);
     }
+    formatMoney(n) {
+        return this.format(n, "$0.000a");
+    }
 }
 exports.numeralWrapper = new NumeralFormatter();
 
@@ -3592,14 +3603,14 @@ exports.Locations = {
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _NetscriptEnvironment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./NetscriptEnvironment */ 116);
-/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptWorker */ 25);
+/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptWorker */ 26);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Settings */ 19);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Settings */ 18);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Script */ 30);
+/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Script */ 31);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/acorn */ 49);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 54);
+/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 55);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/helpers/isValidIPAddress */ 90);
 /* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_10__);
@@ -4532,7 +4543,7 @@ function isScriptErrorMessage(msg) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const getElementById_1 = __webpack_require__(/*! ../../utils/uiHelpers/getElementById */ 53);
+const getElementById_1 = __webpack_require__(/*! ../../utils/uiHelpers/getElementById */ 54);
 /**
  * Adds some output to the terminal.
  * @param input Text or HTML to output to the terminal
@@ -4676,7 +4687,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_GameOptions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/GameOptions */ 86);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 15);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 29);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 30);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_4__);
@@ -4687,23 +4698,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./ui/createStatusText */ 77);
+/* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./ui/createStatusText */ 78);
 /* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_ui_createStatusText__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/LogBox */ 80);
+/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/LogBox */ 81);
 /* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./ActiveScriptsUI */ 68);
-/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Augmentations */ 20);
-/* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./BitNode */ 59);
-/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Bladeburner */ 31);
+/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Augmentations */ 21);
+/* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./BitNode */ 60);
+/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Bladeburner */ 32);
 /* harmony import */ var _CharacterOverview__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./CharacterOverview */ 131);
 /* harmony import */ var _CinematicText__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./CinematicText */ 101);
 /* harmony import */ var _CodingContractGenerator__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./CodingContractGenerator */ 100);
-/* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Company/CompanyPositions */ 28);
+/* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Company/CompanyPositions */ 29);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Company/Companies */ 18);
+/* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Company/Companies */ 17);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_20__);
-/* harmony import */ var _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./Corporation/Corporation */ 60);
+/* harmony import */ var _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./Corporation/Corporation */ 58);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_22__);
 /* harmony import */ var _DevMenu__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./DevMenu */ 118);
@@ -4718,26 +4729,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./InteractiveTutorial */ 34);
 /* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./Literature */ 84);
 /* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./Message */ 41);
-/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./Missions */ 55);
+/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./Missions */ 56);
 /* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
-/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./NetscriptWorker */ 25);
+/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./NetscriptWorker */ 26);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./Prestige */ 88);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./Programs/Programs */ 24);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_38___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_38__);
 /* harmony import */ var _Programs_ProgramHelpers__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./Programs/ProgramHelpers */ 95);
-/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ./RedPill */ 58);
+/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ./RedPill */ 59);
 /* harmony import */ var _SaveObject__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ./SaveObject */ 74);
-/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ./Script */ 30);
+/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ./Script */ 31);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! ./Settings */ 19);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! ./Settings */ 18);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_44___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_44__);
 /* harmony import */ var _ui_setSettingsLabels__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(/*! ./ui/setSettingsLabels */ 130);
 /* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(/*! ./SourceFile */ 70);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(/*! ./SpecialServerIps */ 33);
 /* harmony import */ var _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(/*! ./StockMarket/StockMarket */ 22);
 /* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(/*! ./Terminal */ 51);
-/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 33);
+/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 25);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_50___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_50__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! ./ui/navigationTracking */ 12);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_51__);
@@ -6744,11 +6755,11 @@ exports.BitNodeMultipliers = {
 /* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_CodingContracts__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Script */ 30);
+/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Script */ 31);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Programs/Programs */ 24);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./SpecialServerIps */ 33);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./TextFile */ 65);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_TextFile__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 15);
@@ -7465,7 +7476,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * Initialization and manipulation of the Factions object, which stores data
  * about all Factions in the game
  */
-const Faction_1 = __webpack_require__(/*! ./Faction */ 56);
+const Faction_1 = __webpack_require__(/*! ./Faction */ 57);
 const FactionInfo_1 = __webpack_require__(/*! ./FactionInfo */ 115);
 const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
 exports.Factions = {};
@@ -7542,7 +7553,7 @@ exports.getRandomInt = getRandomInt;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const getElementById_1 = __webpack_require__(/*! ./getElementById */ 53);
+const getElementById_1 = __webpack_require__(/*! ./getElementById */ 54);
 /**
  * Given an element by its ID, removes all event listeners from that element by cloning and
  * replacing. Then returns the new cloned element.
@@ -7568,6 +7579,123 @@ exports.clearEventListeners = clearEventListeners;
 
 /***/ }),
 /* 17 */
+/*!**********************************!*\
+  !*** ./src/Company/Companies.ts ***!
+  \**********************************/
+/*! no static exports found */
+/*! exports used: Companies, companyExists, initCompanies, loadCompanies */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+// Constructs all CompanyPosition objects using the metadata in data/companypositions.ts
+const CompaniesMetadata_1 = __webpack_require__(/*! ./data/CompaniesMetadata */ 212);
+const Company_1 = __webpack_require__(/*! ./Company */ 76);
+const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
+exports.Companies = {};
+function addCompany(params) {
+    if (exports.Companies[params.name] != null) {
+        console.warn(`Duplicate Company Position being defined: ${params.name}`);
+    }
+    exports.Companies[params.name] = new Company_1.Company(params);
+}
+// Used to initialize new Company objects for the Companies map
+// Called when creating new game or after a prestige/reset
+function initCompanies() {
+    // Save Old Company data for 'favor'
+    const oldCompanies = exports.Companies;
+    // Re-construct all Companies
+    exports.Companies = {};
+    CompaniesMetadata_1.companiesMetadata.forEach((e) => {
+        addCompany(e);
+    });
+    // Reset data
+    for (const companyName in exports.Companies) {
+        const company = exports.Companies[companyName];
+        const oldCompany = oldCompanies[companyName];
+        if (!(oldCompany instanceof Company_1.Company)) {
+            // New game, so no OldCompanies data
+            company.favor = 0;
+        }
+        else {
+            company.favor = oldCompanies[companyName].favor;
+            if (isNaN(company.favor)) {
+                company.favor = 0;
+            }
+        }
+    }
+}
+exports.initCompanies = initCompanies;
+// Used to load Companies map from a save
+function loadCompanies(saveString) {
+    exports.Companies = JSON.parse(saveString, JSONReviver_1.Reviver);
+}
+exports.loadCompanies = loadCompanies;
+// Utility function to check if a string is valid company name
+function companyExists(name) {
+    return exports.Companies.hasOwnProperty(name);
+}
+exports.companyExists = companyExists;
+
+
+/***/ }),
+/* 18 */
+/*!*************************!*\
+  !*** ./src/Settings.ts ***!
+  \*************************/
+/*! no static exports found */
+/*! exports used: Settings */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const SettingEnums_1 = __webpack_require__(/*! ./SettingEnums */ 73);
+const defaultSettings = {
+    AutosaveInterval: 60,
+    CodeInstructionRunTime: 50,
+    DisableHotkeys: false,
+    Locale: "en",
+    MaxLogCapacity: 50,
+    MaxPortCapacity: 50,
+    SuppressBuyAugmentationConfirmation: false,
+    SuppressFactionInvites: false,
+    SuppressHospitalizationPopup: false,
+    SuppressMessages: false,
+    SuppressTravelConfirmation: false,
+};
+/**
+ * The current options the player has customized to their play style.
+ */
+// tslint:disable-next-line:variable-name
+exports.Settings = {
+    AutosaveInterval: defaultSettings.AutosaveInterval,
+    CodeInstructionRunTime: 25,
+    DisableHotkeys: defaultSettings.DisableHotkeys,
+    EditorKeybinding: "ace",
+    EditorTheme: "Monokai",
+    Locale: "en",
+    MaxLogCapacity: defaultSettings.MaxLogCapacity,
+    MaxPortCapacity: defaultSettings.MaxPortCapacity,
+    OwnedAugmentationsOrder: SettingEnums_1.OwnedAugmentationsOrderSetting.AcquirementTime,
+    PurchaseAugmentationsOrder: SettingEnums_1.PurchaseAugmentationsOrderSetting.Default,
+    SuppressBuyAugmentationConfirmation: defaultSettings.SuppressBuyAugmentationConfirmation,
+    SuppressFactionInvites: defaultSettings.SuppressFactionInvites,
+    SuppressHospitalizationPopup: defaultSettings.SuppressHospitalizationPopup,
+    SuppressMessages: defaultSettings.SuppressMessages,
+    SuppressTravelConfirmation: defaultSettings.SuppressTravelConfirmation,
+    init() {
+        Object.assign(exports.Settings, defaultSettings);
+    },
+    load(saveString) {
+        Object.assign(exports.Settings, JSON.parse(saveString));
+    },
+};
+
+
+/***/ }),
+/* 19 */
 /*!***************************!*\
   !*** ./utils/YesNoBox.ts ***!
   \***************************/
@@ -7721,124 +7849,37 @@ exports.yesNoTxtInpBoxCreate = yesNoTxtInpBoxCreate;
 
 
 /***/ }),
-/* 18 */
-/*!**********************************!*\
-  !*** ./src/Company/Companies.ts ***!
-  \**********************************/
-/*! no static exports found */
-/*! exports used: Companies, companyExists, initCompanies, loadCompanies */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-// Constructs all CompanyPosition objects using the metadata in data/companypositions.ts
-const CompaniesMetadata_1 = __webpack_require__(/*! ./data/CompaniesMetadata */ 212);
-const Company_1 = __webpack_require__(/*! ./Company */ 75);
-const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
-exports.Companies = {};
-function addCompany(params) {
-    if (exports.Companies[params.name] != null) {
-        console.warn(`Duplicate Company Position being defined: ${params.name}`);
-    }
-    exports.Companies[params.name] = new Company_1.Company(params);
-}
-// Used to initialize new Company objects for the Companies map
-// Called when creating new game or after a prestige/reset
-function initCompanies() {
-    // Save Old Company data for 'favor'
-    const oldCompanies = exports.Companies;
-    // Re-construct all Companies
-    exports.Companies = {};
-    CompaniesMetadata_1.companiesMetadata.forEach((e) => {
-        addCompany(e);
-    });
-    // Reset data
-    for (const companyName in exports.Companies) {
-        const company = exports.Companies[companyName];
-        const oldCompany = oldCompanies[companyName];
-        if (!(oldCompany instanceof Company_1.Company)) {
-            // New game, so no OldCompanies data
-            company.favor = 0;
-        }
-        else {
-            company.favor = oldCompanies[companyName].favor;
-            if (isNaN(company.favor)) {
-                company.favor = 0;
-            }
-        }
-    }
-}
-exports.initCompanies = initCompanies;
-// Used to load Companies map from a save
-function loadCompanies(saveString) {
-    exports.Companies = JSON.parse(saveString, JSONReviver_1.Reviver);
-}
-exports.loadCompanies = loadCompanies;
-// Utility function to check if a string is valid company name
-function companyExists(name) {
-    return exports.Companies.hasOwnProperty(name);
-}
-exports.companyExists = companyExists;
-
-
-/***/ }),
-/* 19 */
-/*!*************************!*\
-  !*** ./src/Settings.ts ***!
-  \*************************/
-/*! no static exports found */
-/*! exports used: Settings */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const SettingEnums_1 = __webpack_require__(/*! ./SettingEnums */ 73);
-const defaultSettings = {
-    AutosaveInterval: 60,
-    CodeInstructionRunTime: 50,
-    DisableHotkeys: false,
-    Locale: "en",
-    MaxLogCapacity: 50,
-    MaxPortCapacity: 50,
-    SuppressBuyAugmentationConfirmation: false,
-    SuppressFactionInvites: false,
-    SuppressHospitalizationPopup: false,
-    SuppressMessages: false,
-    SuppressTravelConfirmation: false,
-};
-/**
- * The current options the player has customized to their play style.
- */
-// tslint:disable-next-line:variable-name
-exports.Settings = {
-    AutosaveInterval: defaultSettings.AutosaveInterval,
-    CodeInstructionRunTime: 25,
-    DisableHotkeys: defaultSettings.DisableHotkeys,
-    EditorKeybinding: "ace",
-    EditorTheme: "Monokai",
-    Locale: "en",
-    MaxLogCapacity: defaultSettings.MaxLogCapacity,
-    MaxPortCapacity: defaultSettings.MaxPortCapacity,
-    OwnedAugmentationsOrder: SettingEnums_1.OwnedAugmentationsOrderSetting.AcquirementTime,
-    PurchaseAugmentationsOrder: SettingEnums_1.PurchaseAugmentationsOrderSetting.Default,
-    SuppressBuyAugmentationConfirmation: defaultSettings.SuppressBuyAugmentationConfirmation,
-    SuppressFactionInvites: defaultSettings.SuppressFactionInvites,
-    SuppressHospitalizationPopup: defaultSettings.SuppressHospitalizationPopup,
-    SuppressMessages: defaultSettings.SuppressMessages,
-    SuppressTravelConfirmation: defaultSettings.SuppressTravelConfirmation,
-    init() {
-        Object.assign(exports.Settings, defaultSettings);
-    },
-    load(saveString) {
-        Object.assign(exports.Settings, JSON.parse(saveString));
-    },
-};
-
-
-/***/ }),
 /* 20 */
+/*!**********************************************!*\
+  !*** ./utils/uiHelpers/removeElementById.ts ***!
+  \**********************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const getElementById_1 = __webpack_require__(/*! ./getElementById */ 54);
+const removeElement_1 = __webpack_require__(/*! ./removeElement */ 61);
+/**
+ * Given its id, this function removes an element AND its children
+ * @param id The HTML identifier to search for and remove.
+ */
+function removeElementById(id) {
+    try {
+        const elem = getElementById_1.getElementById(id);
+        removeElement_1.removeElement(elem);
+    }
+    catch (e) {
+        // Probably should log this as we're trying to remove elements that don't exist.
+    }
+}
+exports.removeElementById = removeElementById;
+
+
+/***/ }),
+/* 21 */
 /*!******************************!*\
   !*** ./src/Augmentations.js ***!
   \******************************/
@@ -7863,30 +7904,30 @@ exports.Settings = {
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Faction/Factions */ 14);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
-/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptWorker */ 25);
+/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptWorker */ 26);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Prestige */ 88);
 /* harmony import */ var _SaveObject__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./SaveObject */ 74);
-/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Script */ 30);
+/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Script */ 31);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Server */ 11);
 /* harmony import */ var _SettingEnums__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./SettingEnums */ 73);
 /* harmony import */ var _SettingEnums__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_SettingEnums__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Settings */ 19);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Settings */ 18);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./SourceFile */ 70);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
-/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 78);
+/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 79);
 /* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_14__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/helpers/clearObject */ 79);
+/* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/helpers/clearObject */ 80);
 /* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_17__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/helpers/isString */ 40);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 29);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 30);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_20__);
 
 
@@ -10582,36 +10623,6 @@ function displaySourceFiles(listElement, sourceFiles) {
 
 
 /***/ }),
-/* 21 */
-/*!**********************************************!*\
-  !*** ./utils/uiHelpers/removeElementById.ts ***!
-  \**********************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const getElementById_1 = __webpack_require__(/*! ./getElementById */ 53);
-const removeElement_1 = __webpack_require__(/*! ./removeElement */ 61);
-/**
- * Given its id, this function removes an element AND its children
- * @param id The HTML identifier to search for and remove.
- */
-function removeElementById(id) {
-    try {
-        const elem = getElementById_1.getElementById(id);
-        removeElement_1.removeElement(elem);
-    }
-    catch (e) {
-        // Probably should log this as we're trying to remove elements that don't exist.
-    }
-}
-exports.removeElementById = removeElementById;
-
-
-/***/ }),
 /* 22 */
 /*!****************************************!*\
   !*** ./src/StockMarket/StockMarket.js ***!
@@ -10643,14 +10654,14 @@ exports.removeElementById = removeElementById;
 /* unused harmony export Order */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return OrderTypes; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return PositionTypes; });
-/* harmony import */ var _Stock__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Stock */ 27);
+/* harmony import */ var _Stock__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Stock */ 28);
 /* harmony import */ var _Stock__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Stock__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Locations */ 5);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../NetscriptFunctions */ 43);
-/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../NetscriptWorker */ 25);
+/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../NetscriptWorker */ 26);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Player */ 0);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! .././ui/navigationTracking */ 12);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_6__);
@@ -10663,15 +10674,15 @@ exports.removeElementById = removeElementById;
 /* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../utils/helpers/exceptionAlert */ 44);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../utils/helpers/getRandomInt */ 15);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../utils/helpers/keyCodes */ 33);
+/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../utils/helpers/keyCodes */ 25);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_13__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 29);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 30);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../utils/uiHelpers/removeElementById */ 21);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../utils/uiHelpers/removeElementById */ 20);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../utils/YesNoBox */ 17);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../utils/YesNoBox */ 19);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_17__);
 
 
@@ -12330,6 +12341,50 @@ for (const params of programsMetadata_1.programsMetadata) {
 
 /***/ }),
 /* 25 */
+/*!***********************************!*\
+  !*** ./utils/helpers/keyCodes.ts ***!
+  \***********************************/
+/*! no static exports found */
+/*! exports used: KEY */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Keyboard key codes
+ */
+exports.KEY = {
+    A: 65,
+    B: 66,
+    C: 67,
+    CTRL: 17,
+    D: 68,
+    DOWNARROW: 40,
+    E: 69,
+    ENTER: 13,
+    F: 70,
+    H: 72,
+    J: 74,
+    K: 75,
+    L: 76,
+    M: 77,
+    N: 78,
+    O: 79,
+    P: 80,
+    R: 82,
+    S: 83,
+    TAB: 9,
+    U: 85,
+    UPARROW: 38,
+    W: 87,
+    "1": 49,
+    "2": 50,
+};
+
+
+/***/ }),
+/* 26 */
 /*!********************************!*\
   !*** ./src/NetscriptWorker.js ***!
   \********************************/
@@ -12357,7 +12412,7 @@ for (const params of programsMetadata_1.programsMetadata) {
 /* harmony import */ var _NetscriptJSEvaluator__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./NetscriptJSEvaluator */ 117);
 /* harmony import */ var _NetscriptPort__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./NetscriptPort */ 72);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Settings */ 19);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Settings */ 18);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var escodegen__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! escodegen */ 110);
 /* harmony import */ var escodegen__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(escodegen__WEBPACK_IMPORTED_MODULE_11__);
@@ -12366,7 +12421,7 @@ for (const params of programsMetadata_1.programsMetadata) {
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
 /* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/helpers/compareArrays */ 93);
 /* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 54);
+/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 55);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 83);
 /* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_16__);
@@ -13004,7 +13059,7 @@ function updateOnlineScriptTimes(numCycles = 1) {
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /*!**********************************************!*\
   !*** ./src/Corporation/EmployeePositions.ts ***!
   \**********************************************/
@@ -13027,7 +13082,7 @@ exports.EmployeePositions = {
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /*!**********************************!*\
   !*** ./src/StockMarket/Stock.ts ***!
   \**********************************/
@@ -13079,7 +13134,7 @@ JSONReviver_1.Reviver.constructors.Stock = Stock;
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /*!*****************************************!*\
   !*** ./src/Company/CompanyPositions.ts ***!
   \*****************************************/
@@ -13106,7 +13161,7 @@ CompanyPositionsMetadata_1.companyPositionMetadata.forEach((e) => {
 
 
 /***/ }),
-/* 29 */
+/* 30 */
 /*!******************************************************!*\
   !*** ./utils/uiHelpers/removeChildrenFromElement.ts ***!
   \******************************************************/
@@ -13118,7 +13173,7 @@ CompanyPositionsMetadata_1.companyPositionMetadata.forEach((e) => {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const isString_1 = __webpack_require__(/*! ../helpers/isString */ 40);
-const getElementById_1 = __webpack_require__(/*! ./getElementById */ 53);
+const getElementById_1 = __webpack_require__(/*! ./getElementById */ 54);
 /**
  * Clears out all children from the provided element.
  * If a string is passed in, it will treat it as an ID and search for the element to delete all children from.
@@ -13146,7 +13201,7 @@ exports.removeChildrenFromElement = removeChildrenFromElement;
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /*!***********************!*\
   !*** ./src/Script.js ***!
   \***********************/
@@ -13170,10 +13225,10 @@ exports.removeChildrenFromElement = removeChildrenFromElement;
 /* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./InteractiveTutorial */ 34);
 /* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptEvaluator */ 6);
 /* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
-/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./NetscriptWorker */ 25);
+/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./NetscriptWorker */ 26);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Settings */ 19);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Settings */ 18);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ui/postToTerminal */ 7);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_10__);
@@ -14296,7 +14351,7 @@ _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__["Reviver"].constructors.AllServ
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 64)))
 
 /***/ }),
-/* 31 */
+/* 32 */
 /*!****************************!*\
   !*** ./src/Bladeburner.js ***!
   \****************************/
@@ -14306,13 +14361,13 @@ _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__["Reviver"].constructors.AllServ
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Bladeburner; });
-/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentations */ 20);
+/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentations */ 21);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BitNodeMultipliers */ 10);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./engine */ 9);
-/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Faction/Faction */ 56);
+/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Faction/Faction */ 57);
 /* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_Faction_Faction__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Faction/Factions */ 14);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_5__);
@@ -14320,26 +14375,26 @@ _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__["Reviver"].constructors.AllServ
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Locations */ 5);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./RedPill */ 58);
+/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./RedPill */ 59);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 33);
+/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 25);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/createProgressBarText */ 85);
 /* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 29);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 30);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_14__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
 /* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 66);
 /* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/uiHelpers/appendLineBreaks */ 57);
+/* harmony import */ var _utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/uiHelpers/appendLineBreaks */ 52);
 /* harmony import */ var _utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/helpers/clearObject */ 79);
+/* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/helpers/clearObject */ 80);
 /* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_18__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 37);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 36);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_20__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./ui/navigationTracking */ 12);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_21__);
@@ -14352,7 +14407,7 @@ _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__["Reviver"].constructors.AllServ
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_25__);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 61);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_26__);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 21);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_27__);
 
 
@@ -18561,7 +18616,7 @@ function initBladeburner() {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 64)))
 
 /***/ }),
-/* 32 */
+/* 33 */
 /*!*********************************!*\
   !*** ./src/SpecialServerIps.js ***!
   \*********************************/
@@ -18628,50 +18683,6 @@ function initSpecialServerIps() {
 
 
 /***/ }),
-/* 33 */
-/*!***********************************!*\
-  !*** ./utils/helpers/keyCodes.ts ***!
-  \***********************************/
-/*! no static exports found */
-/*! exports used: KEY */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * Keyboard key codes
- */
-exports.KEY = {
-    A: 65,
-    B: 66,
-    C: 67,
-    CTRL: 17,
-    D: 68,
-    DOWNARROW: 40,
-    E: 69,
-    ENTER: 13,
-    F: 70,
-    H: 72,
-    J: 74,
-    K: 75,
-    L: 76,
-    M: 77,
-    N: 78,
-    O: 79,
-    P: 80,
-    R: 82,
-    S: 83,
-    TAB: 9,
-    U: 85,
-    UPARROW: 38,
-    W: 87,
-    "1": 49,
-    "2": 50,
-};
-
-
-/***/ }),
 /* 34 */
 /*!************************************!*\
   !*** ./src/InteractiveTutorial.js ***!
@@ -18688,15 +18699,15 @@ exports.KEY = {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ITutorial; });
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./engine */ 9);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Settings */ 19);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Settings */ 18);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 37);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 36);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 21);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_6__);
 
 
@@ -19212,6 +19223,49 @@ function iTutorialSetText(txt) {
 /***/ }),
 /* 35 */,
 /* 36 */
+/*!****************************************!*\
+  !*** ./utils/uiHelpers/createPopup.ts ***!
+  \****************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const createElement_1 = __webpack_require__(/*! ./createElement */ 2);
+const getElementById_1 = __webpack_require__(/*! ./getElementById */ 54);
+/**
+ * Creates the necessary DOM elements to present an in-game popup to the player.
+ * @param id The (hopefully) unique identifier for the popup container.
+ * @param elems The collection of HTML Elements to show within the popup.
+ */
+function createPopup(id, elems, options = {}) {
+    const container = createElement_1.createElement("div", {
+        class: "popup-box-container",
+        display: "flex",
+        id: id,
+    });
+    const content = createElement_1.createElement("div", {
+        class: "popup-box-content",
+        id: `${id}-content`,
+    });
+    for (const elem of elems) {
+        content.appendChild(elem);
+    }
+    // Configurable Options
+    if (options.backgroundColor) {
+        content.style.backgroundColor = options.backgroundColor;
+    }
+    container.appendChild(content);
+    getElementById_1.getElementById("entire-game-container").appendChild(container);
+    return container;
+}
+exports.createPopup = createPopup;
+
+
+/***/ }),
+/* 37 */
 /*!**************************************************!*\
   !*** ./src/Company/data/CompanyPositionNames.ts ***!
   \**************************************************/
@@ -19283,49 +19337,6 @@ exports.PartTimeCompanyPositions = [
     "Part-time Waiter",
     "Part-time Employee"
 ];
-
-
-/***/ }),
-/* 37 */
-/*!****************************************!*\
-  !*** ./utils/uiHelpers/createPopup.ts ***!
-  \****************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const createElement_1 = __webpack_require__(/*! ./createElement */ 2);
-const getElementById_1 = __webpack_require__(/*! ./getElementById */ 53);
-/**
- * Creates the necessary DOM elements to present an in-game popup to the player.
- * @param id The (hopefully) unique identifier for the popup container.
- * @param elems The collection of HTML Elements to show within the popup.
- */
-function createPopup(id, elems, options = {}) {
-    const container = createElement_1.createElement("div", {
-        class: "popup-box-container",
-        display: "flex",
-        id: id,
-    });
-    const content = createElement_1.createElement("div", {
-        class: "popup-box-content",
-        id: `${id}-content`,
-    });
-    for (const elem of elems) {
-        content.appendChild(elem);
-    }
-    // Configurable Options
-    if (options.backgroundColor) {
-        content.style.backgroundColor = options.backgroundColor;
-    }
-    container.appendChild(content);
-    getElementById_1.getElementById("entire-game-container").appendChild(container);
-    return container;
-}
-exports.createPopup = createPopup;
 
 
 /***/ }),
@@ -19693,14 +19704,14 @@ exports.isString = isString;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return loadMessages; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return initMessages; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Message; });
-/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentations */ 20);
+/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentations */ 21);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Programs/Programs */ 24);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Missions */ 55);
+/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Missions */ 56);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./RedPill */ 58);
+/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./RedPill */ 59);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Settings */ 19);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Settings */ 18);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
@@ -19919,8 +19930,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const JSONReviver_1 = __webpack_require__(/*! ../utils/JSONReviver */ 13);
 const createElement_1 = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
-const createPopup_1 = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 37);
-const removeElementById_1 = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 21);
+const createPopup_1 = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 36);
+const removeElementById_1 = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
 const codingcontracttypes_1 = __webpack_require__(/*! ./data/codingcontracttypes */ 205);
 /* tslint:disable:no-magic-numbers completed-docs max-classes-per-file no-console */
 /* Represents different types of problems that a Coding Contract can have */
@@ -20091,18 +20102,18 @@ JSONReviver_1.Reviver.constructors.CodingContract = CodingContract;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return hasAISF; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return hasBladeburnerSF; });
 /* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActiveScriptsUI */ 68);
-/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Augmentations */ 20);
+/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Augmentations */ 21);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BitNodeMultipliers */ 10);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Crimes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Crimes */ 38);
-/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Bladeburner */ 31);
-/* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Company/Company */ 75);
+/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Bladeburner */ 32);
+/* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Company/Company */ 76);
 /* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Company_Company__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Company/Companies */ 18);
+/* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Company/Companies */ 17);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Company/CompanyPosition */ 87);
 /* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Company/CompanyPositions */ 28);
+/* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Company/CompanyPositions */ 29);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_9__);
@@ -20110,7 +20121,7 @@ JSONReviver_1.Reviver.constructors.CodingContract = CodingContract;
 /* harmony import */ var _DarkWeb_DarkWebItems__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_DarkWeb_DarkWebItems__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _Hacking__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Hacking */ 48);
 /* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Gang */ 50);
-/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Faction/Faction */ 56);
+/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Faction/Faction */ 57);
 /* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_Faction_Faction__WEBPACK_IMPORTED_MODULE_13__);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Faction/Factions */ 14);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_14__);
@@ -20119,25 +20130,25 @@ JSONReviver_1.Reviver.constructors.CodingContract = CodingContract;
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Locations */ 5);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_17__);
 /* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Message */ 41);
-/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Missions */ 55);
+/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Missions */ 56);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./Programs/Programs */ 24);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./Script */ 30);
+/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./Script */ 31);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./Settings */ 19);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./Settings */ 18);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_24__);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
-/* harmony import */ var _StockMarket_Stock__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./StockMarket/Stock */ 27);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./SpecialServerIps */ 33);
+/* harmony import */ var _StockMarket_Stock__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./StockMarket/Stock */ 28);
 /* harmony import */ var _StockMarket_Stock__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_StockMarket_Stock__WEBPACK_IMPORTED_MODULE_26__);
 /* harmony import */ var _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./StockMarket/StockMarket */ 22);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./ui/postToTerminal */ 7);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_28__);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./TextFile */ 65);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_29___default = /*#__PURE__*/__webpack_require__.n(_TextFile__WEBPACK_IMPORTED_MODULE_29__);
-/* harmony import */ var _NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./NetscriptBladeburner */ 52);
+/* harmony import */ var _NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./NetscriptBladeburner */ 53);
 /* harmony import */ var _NetscriptGang__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./NetscriptGang */ 39);
-/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./NetscriptWorker */ 25);
+/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./NetscriptWorker */ 26);
 /* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./NetscriptEvaluator */ 6);
 /* harmony import */ var _NetscriptPort__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./NetscriptPort */ 72);
 /* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! decimal.js */ 35);
@@ -20146,14 +20157,14 @@ JSONReviver_1.Reviver.constructors.CodingContract = CodingContract;
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
 /* harmony import */ var _utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ../utils/helpers/isPowerOfTwo */ 133);
 /* harmony import */ var _utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_38___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_38__);
-/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 54);
+/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 55);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_39___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_39__);
 /* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ../utils/IPAddress */ 62);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_41___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_41__);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ../utils/helpers/isString */ 40);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_42___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_42__);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ../utils/YesNoBox */ 19);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_43___default = /*#__PURE__*/__webpack_require__.n(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_43__);
 var sprintf = __webpack_require__(/*! sprintf-js */ 150).sprintf,
     vsprintf = __webpack_require__(/*! sprintf-js */ 150).vsprintf
@@ -25034,24 +25045,24 @@ function substituteAliases(origCommand) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return displayFactionContent; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return processPassiveFactionRepGain; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return purchaseAugmentation; });
-/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Augmentations */ 20);
+/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Augmentations */ 21);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../BitNodeMultipliers */ 10);
 /* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../engine */ 9);
-/* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Faction */ 56);
+/* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Faction */ 57);
 /* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_Faction__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _Factions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Factions */ 14);
 /* harmony import */ var _Factions__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Factions__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _FactionInfo__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./FactionInfo */ 115);
 /* harmony import */ var _FactionInfo__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_FactionInfo__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Location */ 92);
-/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Missions */ 55);
+/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Missions */ 56);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../Player */ 0);
 /* harmony import */ var _SettingEnums__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../SettingEnums */ 73);
 /* harmony import */ var _SettingEnums__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_SettingEnums__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../Settings */ 19);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../Settings */ 18);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../ui/navigationTracking */ 12);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_12__);
@@ -25059,14 +25070,14 @@ function substituteAliases(origCommand) {
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_13__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../utils/DialogBox */ 8);
 /* harmony import */ var _utils_FactionInvitationBox__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../utils/FactionInvitationBox */ 136);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 29);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 30);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_16__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_17__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../../utils/YesNoBox */ 17);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../../utils/YesNoBox */ 19);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_20__);
 
 
@@ -29791,7 +29802,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 /* harmony import */ var _data_gangmemberupgrades__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data/gangmemberupgrades */ 134);
 /* harmony import */ var _data_gangmemberupgrades__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_data_gangmemberupgrades__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 9);
-/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Faction/Faction */ 56);
+/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Faction/Faction */ 57);
 /* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Faction_Faction__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Faction/Factions */ 14);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_4__);
@@ -29800,13 +29811,13 @@ Object.defineProperty(exports, '__esModule', { value: true });
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
-/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 33);
+/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 25);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 78);
+/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 79);
 /* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 37);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 36);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./ui/navigationTracking */ 12);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_13__);
@@ -29815,11 +29826,11 @@ Object.defineProperty(exports, '__esModule', { value: true });
 /* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 44);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 15);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 29);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 30);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_17__);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 61);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 21);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_19__);
 /*
 Also add police clashes
@@ -31778,14 +31789,14 @@ Gang.prototype.clearUI = function() {
 /* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./InteractiveTutorial */ 34);
 /* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Literature */ 84);
 /* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Message */ 41);
-/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./NetscriptWorker */ 25);
+/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./NetscriptWorker */ 26);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./RedPill */ 58);
-/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Script */ 30);
+/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./RedPill */ 59);
+/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Script */ 31);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Settings */ 19);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Settings */ 18);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./SpecialServerIps */ 33);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./TextFile */ 65);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_TextFile__WEBPACK_IMPORTED_MODULE_20__);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
@@ -31794,18 +31805,18 @@ Gang.prototype.clearUI = function() {
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_22__);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__);
-/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 33);
+/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 25);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_24__);
 /* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 66);
 /* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_25__);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/helpers/isString */ 40);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_26__);
-/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 54);
+/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 55);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_27__);
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 89);
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_28__);
-/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../utils/LogBox */ 80);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
+/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../utils/LogBox */ 81);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ../utils/YesNoBox */ 19);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30__);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./ui/postToTerminal */ 7);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31___default = /*#__PURE__*/__webpack_require__.n(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__);
@@ -33976,6 +33987,32 @@ let Terminal = {
 
 /***/ }),
 /* 52 */
+/*!*********************************************!*\
+  !*** ./utils/uiHelpers/appendLineBreaks.ts ***!
+  \*********************************************/
+/*! no static exports found */
+/*! exports used: appendLineBreaks */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const createElement_1 = __webpack_require__(/*! ./createElement */ 2);
+/**
+ * Appends the specified number of breaks (as children) to the specified element
+ * @param el The element to add child break elements to.
+ * @param n The number of breaks to add.
+ */
+function appendLineBreaks(el, n) {
+    for (let i = 0; i < n; ++i) {
+        el.appendChild(createElement_1.createElement("br"));
+    }
+}
+exports.appendLineBreaks = appendLineBreaks;
+
+
+/***/ }),
+/* 53 */
 /*!*************************************!*\
   !*** ./src/NetscriptBladeburner.js ***!
   \*************************************/
@@ -33988,7 +34025,7 @@ let Terminal = {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return unknownBladeburnerExceptionMessage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return checkBladeburnerAccess; });
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Bladeburner */ 31);
+/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Bladeburner */ 32);
 /* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NetscriptEvaluator */ 6);
 
 
@@ -34019,7 +34056,7 @@ function checkBladeburnerAccess(workerScript, functionName) {
 
 
 /***/ }),
-/* 53 */
+/* 54 */
 /*!*******************************************!*\
   !*** ./utils/uiHelpers/getElementById.ts ***!
   \*******************************************/
@@ -34047,7 +34084,7 @@ exports.getElementById = getElementById;
 
 
 /***/ }),
-/* 54 */
+/* 55 */
 /*!****************************************!*\
   !*** ./utils/helpers/arrayToString.ts ***!
   \****************************************/
@@ -34068,7 +34105,7 @@ exports.arrayToString = arrayToString;
 
 
 /***/ }),
-/* 55 */
+/* 56 */
 /*!*************************!*\
   !*** ./src/Missions.js ***!
   \*************************/
@@ -35640,7 +35677,7 @@ HackingMission.prototype.finishMission = function(win) {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 64)))
 
 /***/ }),
-/* 56 */
+/* 57 */
 /*!********************************!*\
   !*** ./src/Faction/Faction.ts ***!
   \********************************/
@@ -35764,793 +35801,19 @@ JSONReviver_1.Reviver.constructors.Faction = Faction;
 
 
 /***/ }),
-/* 57 */
-/*!*********************************************!*\
-  !*** ./utils/uiHelpers/appendLineBreaks.ts ***!
-  \*********************************************/
-/*! no static exports found */
-/*! exports used: appendLineBreaks */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const createElement_1 = __webpack_require__(/*! ./createElement */ 2);
-/**
- * Appends the specified number of breaks (as children) to the specified element
- * @param el The element to add child break elements to.
- * @param n The number of breaks to add.
- */
-function appendLineBreaks(el, n) {
-    for (let i = 0; i < n; ++i) {
-        el.appendChild(createElement_1.createElement("br"));
-    }
-}
-exports.appendLineBreaks = appendLineBreaks;
-
-
-/***/ }),
 /* 58 */
-/*!************************!*\
-  !*** ./src/RedPill.js ***!
-  \************************/
-/*! exports provided: redPillFlag, hackWorldDaemon */
-/*! exports used: hackWorldDaemon, redPillFlag */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return redPillFlag; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return hackWorldDaemon; });
-/* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNode */ 59);
-/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./engine */ 9);
-/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Prestige */ 88);
-/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SourceFile */ 70);
-/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Terminal */ 51);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 29);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__);
-
-
-
-
-
-
-
-
-
-
-
-
-/* RedPill.js
- *  Implements what happens when you have Red Pill augmentation and then hack the world daemon */
-
-//Returns promise
-function writeRedPillLine(line) {
-    return new Promise(function(resolve, reject) {
-        var container = document.getElementById("red-pill-content");
-        var pElem = document.createElement("p");
-        container.appendChild(pElem);
-
-        var promise = writeRedPillLetter(pElem, line, 0);
-        promise.then(function(res) {
-            resolve(res);
-        }, function(e) {
-            reject(e);
-        });
-    });
-}
-
-function writeRedPillLetter(pElem, line, i=0) {
-    return new Promise(function(resolve, reject) {
-        setTimeout(function() {
-            if (i >= line.length) {
-                var textToShow = line.substring(0, i);
-                pElem.innerHTML = "> " + textToShow;
-                return resolve(true);
-            }
-            var textToShow = line.substring(0, i);
-            pElem.innerHTML = "> " + textToShow + "<span class='typed-cursor'> &#9608; </span>";
-            var promise = writeRedPillLetter(pElem, line, i+1);
-            promise.then(function(res) {
-                resolve(res);
-            }, function(e) {
-                reject(e);
-            });
-        }, 30);
-    });
-}
-
-let redPillFlag = false;
-function hackWorldDaemon(currentNodeNumber, flume=false) {
-    // Clear Red Pill screen first
-    var container = document.getElementById("red-pill-content");
-    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8__["removeChildrenFromElement"])(container);
-    
-    redPillFlag = true;
-    _engine__WEBPACK_IMPORTED_MODULE_1__["Engine"].loadRedPillContent();
-    return writeRedPillLine("[ERROR] SEMPOOL INVALID").then(function() {
-        return writeRedPillLine("[ERROR] Segmentation Fault");
-    }).then(function() {
-        return writeRedPillLine("[ERROR] SIGKILL RECVD");
-    }).then(function() {
-        return writeRedPillLine("Dumping core...");
-    }).then(function() {
-        return writeRedPillLine("0000 000016FA 174FEE40 29AC8239 384FEA88");
-    }).then(function() {
-        return writeRedPillLine("0010 745F696E 2BBBE394 390E3940 248BEC23");
-    }).then(function() {
-        return writeRedPillLine("0020 7124696B 0000FF69 74652E6F FFFF1111");
-    }).then(function() {
-        return writeRedPillLine("----------------------------------------");
-    }).then(function() {
-        return writeRedPillLine("Failsafe initiated...");
-    }).then(function() {
-        return writeRedPillLine("Restarting BitNode-" + currentNodeNumber + "...");
-    }).then(function() {
-        return writeRedPillLine("...........");
-    }).then(function() {
-        return writeRedPillLine("...........");
-    }).then(function() {
-        return writeRedPillLine("[ERROR] FAILED TO AUTOMATICALLY REBOOT BITNODE");
-    }).then(function() {
-        return writeRedPillLine("..............................................")
-    }).then(function() {
-        return writeRedPillLine("..............................................")
-    }).then(function() {
-        return loadBitVerse(currentNodeNumber, flume);
-    }).catch(function(e){
-        console.log("ERROR: " + e.toString());
-    });
-}
-
-//The bitNode name passed in will have a hyphen between number (e.g. BitNode-1)
-//This needs to be removed
-function giveSourceFile(bitNodeNumber) {
-    var sourceFileKey = "SourceFile"+ bitNodeNumber.toString();
-    var sourceFile = _SourceFile__WEBPACK_IMPORTED_MODULE_4__[/* SourceFiles */ "b"][sourceFileKey];
-    if (sourceFile == null) {
-        console.log("ERROR: could not find source file for Bit node: " + bitNodeNumber);
-        return;
-    }
-
-    //Check if player already has this source file
-    var alreadyOwned = false;
-    var ownedSourceFile = null;
-    for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].sourceFiles.length; ++i) {
-        if (_Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].sourceFiles[i].n === bitNodeNumber) {
-            alreadyOwned = true;
-            ownedSourceFile = _Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].sourceFiles[i];
-            break;
-        }
-    }
-
-    if (alreadyOwned && ownedSourceFile) {
-        if (ownedSourceFile.lvl >= 3 && ownedSourceFile.n !== 12) {
-            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("The Source-File for the BitNode you just destroyed, " + sourceFile.name + ", " +
-                            "is already at max level!");
-        } else {
-            ++ownedSourceFile.lvl;
-            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])(sourceFile.name + " was upgraded to level " + ownedSourceFile.lvl + " for " +
-                            "destroying its corresponding BitNode!");
-        }
-    } else {
-        var playerSrcFile = new _SourceFile__WEBPACK_IMPORTED_MODULE_4__[/* PlayerOwnedSourceFile */ "a"](bitNodeNumber, 1);
-        _Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].sourceFiles.push(playerSrcFile);
-        if (bitNodeNumber === 5) { //Artificial Intelligence
-            _Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].intelligence = 1;
-        }
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("You received a Source-File for destroying a Bit Node!<br><br>" +
-                        sourceFile.name + "<br><br>" + sourceFile.info);
-    }
-}
-
-function loadBitVerse(destroyedBitNodeNum, flume=false) {
-    //Clear the screen
-    var container = document.getElementById("red-pill-content");
-    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8__["removeChildrenFromElement"])(container);
-
-    //Create the Bit Verse
-    var bitVerseImage = document.createElement("pre");
-    var bitNodes = [];
-    for (var i = 1; i <= 12; ++i) {
-        bitNodes.push(createBitNode(i));
-    }
-
-    bitVerseImage.innerHTML =
-    "                          O                          <br>" +
-    "             |  O  O      |      O  O  |             <br>" +
-    "        O    |  | /     __|       \\ |  |    O        <br>" +
-    "      O |    O  | |  O /  |  O    | |  O    | O      <br>" +
-    "    | | |    |  |_/  |/   |   \\_  \\_|  |    | | |    <br>" +
-    "  O | | | O  |  | O__/    |   / \\__ |  |  O | | | O  <br>" +
-    "  | | | | |  |  |   /    /|  O  /  \\|  |  | | | | |  <br>" +
-    "O | | |  \\|  |  O  /   _/ |    /    O  |  |/  | | | O<br>" +
-    "| | | |O  /  |  | O   /   |   O   O |  |  \\  O| | | |<br>" +
-    "| | |/  \\/  / __| | |/ \\  |   \\   | |__ \\  \\/  \\| | |<br>" +
-    " \\| O   |  |_/    |\\|   \\ O    \\__|    \\_|  |   O |/ <br>" +
-    "  | |   |_/       | |    \\|    /  |       \\_|   | |  <br>" +
-    "   \\|   /          \\|     |   /  /          \\   |/   <br>" +
-    "    |  "+bitNodes[9]+"            |     |  /  |            "+bitNodes[10]+"  |    <br>" +
-    "  "+bitNodes[8]+" |  |            |     |     |            |  | "+bitNodes[11]+"  <br>" +
-    "  | |  |            /    / \\    \\            |  | |  <br>" +
-    "   \\|  |           /  "+bitNodes[6]+" /   \\ "+bitNodes[7]+"  \\           |  |/   <br>" +
-    "    \\  |          /  / |     | \\  \\          |  /    <br>" +
-    "     \\ \\JUMP "+bitNodes[4]+"3R |  |  |     |  |  | R3"+bitNodes[5]+" PMUJ/ /     <br>" +
-    "      \\||    |   |  |  |     |  |  |   |    ||/      <br>" +
-    "       \\|     \\_ |  |  |     |  |  | _/     |/       <br>" +
-    "        \\       \\| /    \\   /    \\ |/       /        <br>" +
-    "         "+bitNodes[0]+"       |/   "+bitNodes[1]+"  | |  "+bitNodes[2]+"   \\|       "+bitNodes[3]+"         <br>" +
-    "         |       |    |  | |  |    |       |         <br>" +
-    "          \\JUMP3R|JUMP|3R| |R3|PMUJ|R3PMUJ/          <br><br><br><br>";
-
-
-    /*
-    "                          O                          <br>" +
-    "             |  O  O      |      O  O  |             <br>" +
-    "        O    |  | /     __|       \ |  |    O        <br>" +
-    "      O |    O  | |  O /  |  O    | |  O    | O      <br>" +
-    "    | | |    |  |_/  |/   |   \_  \_|  |    | | |    <br>" +
-    "  O | | | O  |  | O__/    |   / \__ |  |  O | | | O  <br>" +
-    "  | | | | |  |  |   /    /|  O  /  \|  |  | | | | |  <br>" +
-    "O | | |  \|  |  O  /   _/ |    /    O  |  |/  | | | O<br>" +
-    "| | | |O  /  |  | O   /   |   O   O |  |  \  O| | | |<br>" +
-    "| | |/  \/  / __| | |/ \  |   \   | |__ \  \/  \| | |<br>" +
-    " \| O   |  |_/    |\|   \ O    \__|    \_|  |   O |/ <br>" +
-    "  | |   |_/       | |    \|    /  |       \_|   | |  <br>" +
-    "   \|   /          \|     |   /  /          \   |/   <br>" +
-    "    |  O            |     |  /  |            O  |    <br>" +
-    "  O |  |            |     |     |            |  | O  <br>" +
-    "  | |  |            /    / \    \            |  | |  <br>" +
-    "   \|  |           /  O /   \ O  \           |  |/   <br>" +
-    "    \  |          /  / |     | \  \          |  /    <br>" +
-    "     \ \JUMP O3R |  |  |     |  |  | R3O PMUJ/ /     <br>" +
-    "      \||    |   |  |  |     |  |  |   |    ||/      <br>" +
-    "       \|     \_ |  |  |     |  |  | _/     |/       <br>" +
-    "        \       \| /    \   /    \ |/       /        <br>" +
-    "         O       |/   O  | |  O   \|       O         <br>" +
-    "         |       |    |  | |  |    |       |         <br>" +
-    "          \JUMP3R|JUMP|3R| |R3|PMUJ|R3PMUJ/          <br>";
-    */
-
-    container.appendChild(bitVerseImage);
-
-    //Bit node event listeners
-    for (var i = 1; i <= 12; ++i) {
-        (function(i) {
-            var elemId = "bitnode-" + i.toString();
-            var elem = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__["clearEventListeners"])(elemId);
-            if (elem == null) {return;}
-            if (i === 1 || i === 2 || i === 3 || i === 4 || i === 5 ||
-                i === 6 || i === 7 || i === 8 || i === 11 || i === 12) {
-                elem.addEventListener("click", function() {
-                    var bitNodeKey = "BitNode" + i;
-                    var bitNode = _BitNode__WEBPACK_IMPORTED_MODULE_0__[/* BitNodes */ "a"][bitNodeKey];
-                    if (bitNode == null) {
-                        console.log("ERROR: Could not find BitNode object for number: " + i);
-                        return;
-                    }
-                    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__["yesNoBoxCreate"])("BitNode-" + i + ": " + bitNode.name + "<br><br>" + bitNode.info);
-                    createBitNodeYesNoEventListeners(i, destroyedBitNodeNum, flume);
-                });
-            } else {
-                elem.addEventListener("click", function() {
-                    Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("Not yet implemented! Coming soon!")
-                });
-            }
-        }(i)); //Immediate invocation closure
-    }
-
-    //Create lore text
-    return writeRedPillLine("Many decades ago, a humanoid extraterrestial species which we call the Enders descended on the Earth...violently").then(function() {
-        return writeRedPillLine("Our species fought back, but it was futile. The Enders had technology far beyond our own...");
-    }).then(function() {
-        return writeRedPillLine("Instead of killing every last one of us, the human race was enslaved...");
-    }).then(function() {
-        return writeRedPillLine("We were shackled in a digital world, chained into a prison for our minds...");
-    }).then(function() {
-        return writeRedPillLine("Using their advanced technology, the Enders created complex simulations of a virtual reality...");
-    }).then(function() {
-        return writeRedPillLine("Simulations designed to keep us content...ignorant of the truth.");
-    }).then(function() {
-        return writeRedPillLine("Simulations used to trap and suppress our consciousness, to keep us under control...");
-    }).then(function() {
-        return writeRedPillLine("Why did they do this? Why didn't they just end our entire race? We don't know, not yet.");
-    }).then(function() {
-        return writeRedPillLine("Humanity's only hope is to destroy these simulations, destroy the only realities we've ever known...");
-    }).then(function() {
-        return writeRedPillLine("Only then can we begin to fight back...");
-    }).then(function() {
-        return writeRedPillLine("By hacking the daemon that generated your reality, you've just destroyed one simulation, called a BitNode...");
-    }).then(function() {
-        return writeRedPillLine("But there is still a long way to go...");
-    }).then(function() {
-        return writeRedPillLine("The technology the Enders used to enslave the human race wasn't just a single complex simulation...");
-    }).then(function() {
-        return writeRedPillLine("There are tens if not hundreds of BitNodes out there...");
-    }).then(function() {
-        return writeRedPillLine("Each with their own simulations of a reality...");
-    }).then(function() {
-        return writeRedPillLine("Each creating their own universes...a universe of universes");
-    }).then(function() {
-        return writeRedPillLine("And all of which must be destroyed...");
-    }).then(function() {
-        return writeRedPillLine(".......................................");
-    }).then(function() {
-        return writeRedPillLine("Welcome to the Bitverse...");
-    }).then(function() {
-        return writeRedPillLine(" ");
-    }).then(function() {
-        return writeRedPillLine("(Enter a new BitNode using the image above)");
-    }).then(function() {
-        return Promise.resolve(true);
-    }).catch(function(e){
-        console.log("ERROR: " + e.toString());
-    });
-}
-
-
-//Returns string with DOM element for Bit Node
-function createBitNode(n) {
-    var bitNodeStr = "BitNode" + n.toString();
-    var bitNode = _BitNode__WEBPACK_IMPORTED_MODULE_0__[/* BitNodes */ "a"][bitNodeStr];
-    if (bitNode == null) {return "O";}
-    return  "<a class='bitnode tooltip' id='bitnode-" + bitNode.number.toString() + "'><strong>O</strong>" +
-             "<span class='tooltiptext'>" +
-             "<strong>BitNode-" + bitNode.number.toString() + "<br>" + bitNode.name+ "</strong><br>" +
-             bitNode.desc + "<br>" +
-             "</span></a>";
-}
-
-function createBitNodeYesNoEventListeners(newBitNode, destroyedBitNode, flume=false) {
-    var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__["yesNoBoxGetYesButton"])();
-    yesBtn.innerHTML = "Enter BitNode-" + newBitNode;
-    yesBtn.addEventListener("click", function() {
-        if (!flume) {
-            giveSourceFile(destroyedBitNode);
-        } else {
-            //If player used flume, subtract 5 int exp. The prestigeSourceFile()
-            //function below grants 5 int exp, so this allows sets net gain to 0
-            _Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].gainIntelligenceExp(-5);
-        }
-        redPillFlag = false;
-        var container = document.getElementById("red-pill-content");
-        Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8__["removeChildrenFromElement"])(container);
-
-        //Set new Bit Node
-        _Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].bitNodeN = newBitNode;
-        console.log("Entering Bit Node " + _Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].bitNodeN);
-
-        //Reenable terminal
-        $("#hack-progress-bar").attr('id', "old-hack-progress-bar");
-        $("#hack-progress").attr('id', "old-hack-progress");
-        document.getElementById("terminal-input-td").innerHTML = '$ <input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
-        $('input[class=terminal-input]').prop('disabled', false);
-
-        _Terminal__WEBPACK_IMPORTED_MODULE_5__[/* Terminal */ "a"].hackFlag = false;
-
-        Object(_Prestige__WEBPACK_IMPORTED_MODULE_3__[/* prestigeSourceFile */ "b"])();
-        Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__["yesNoBoxClose"])();
-    });
-    var noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__["yesNoBoxGetNoButton"])();
-    noBtn.innerHTML = "Back";
-    noBtn.addEventListener("click", function() {
-        Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__["yesNoBoxClose"])();
-    });
-
-}
-
-
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 64)))
-
-/***/ }),
-/* 59 */
-/*!************************!*\
-  !*** ./src/BitNode.js ***!
-  \************************/
-/*! exports provided: initBitNodes, BitNodes, initBitNodeMultipliers */
-/*! exports used: BitNodes, initBitNodeMultipliers, initBitNodes */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return initBitNodes; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BitNodes; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return initBitNodeMultipliers; });
-/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNodeMultipliers */ 10);
-/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ 0);
-
-
-
-function BitNode(n, name, desc="", info="") {
-    this.number = n;
-    this.name = name;
-    this.desc = desc;
-    this.info = info;
-}
-
-let BitNodes = {};
-function initBitNodes() {
-    BitNodes = {};
-    BitNodes["BitNode1"] = new BitNode(1, "Source Genesis", "The original BitNode",
-                            "The first BitNode created by the Enders to imprison the minds of humans. It became " +
-                            "the prototype and testing-grounds for all of the BitNodes that followed.<br><br>" +
-                            "This is the first BitNode that you play through. It has no special " +
-                            "modifications or mechanics.<br><br>" +
-                            "Destroying this BitNode will give you Source-File 1, or if you already have " +
-                            "this Source-File it will upgrade its level up to a maximum of 3. This Source-File " +
-                            "lets the player start with 32GB of RAM on his/her home computer when entering a " +
-                            "new BitNode, and also increases all of the player's multipliers by:<br><br>" +
-                            "Level 1: 16%<br>" +
-                            "Level 2: 24%<br>" +
-                            "Level 3: 28%");
-    BitNodes["BitNode2"] = new BitNode(2, "Rise of the Underworld", "From the shadows, they rose",    //Gangs
-                            "From the shadows, they rose.<br><br>Organized crime groups quickly filled the void of power " +
-                            "left behind from the collapse of Western government in the 2050s. As society and civlization broke down, " +
-                            "people quickly succumbed to the innate human impulse of evil and savagery. The organized crime " +
-                            "factions quickly rose to the top of the modern world.<br><br>" +
-                            "In this BitNode:<br><br>" +
-                            "Your hacking level is reduced by 20%<br>"  +
-                            "The growth rate and maximum amount of money available on servers are significantly decreased<br>" +
-                            "The amount of money gained from crimes and Infiltration is tripled<br>" +
-                            "Certain Factions (Slum Snakes, Tetrads, The Syndicate, The Dark Army, Speakers for the Dead, " +
-                            "NiteSec, The Black Hand) give the player the ability to form and manage their own gangs. These gangs " +
-                            "will earn the player money and reputation with the corresponding Faction<br>" +
-                            "Every Augmentation in the game will be available through the Factions listed above<br>" +
-                            "For every Faction NOT listed above, reputation gains are halved<br>" +
-                            "You will no longer gain passive reputation with Factions<br><br>" +
-                            "Destroying this BitNode will give you Source-File 2, or if you already have this Source-File it will " +
-                            "upgrade its level up to a maximum of 3. This Source-File increases the player's crime success rate, " +
-                            "crime money, and charisma multipliers by:<br><br>" +
-                            "Level 1: 24%<br>" +
-                            "Level 2: 36%<br>" +
-                            "Level 3: 42%");
-    BitNodes["BitNode3"] = new BitNode(3, "Corporatocracy", "The Price of Civilization",
-                                          "Our greatest illusion is that a healthy society can revolve around a " +
-                                          "single-minded pursuit of wealth.<br><br>" +
-                                          "Sometime in the early 21st century economic and political globalization turned " +
-                                          "the world into a corporatocracy, and it never looked back. Now, the privileged " +
-                                          "elite will happily bankrupt their own countrymen, decimate their own community, " +
-                                          "and evict their neighbors from houses in their desperate bid to increase their wealth.<br><br>" +
-                                          "In this BitNode you can create and manage your own corporation. Running a successful corporation " +
-                                          "has the potential of generating massive profits. All other forms of income are reduced by 75%. Furthermore: <br><br>" +
-                                          "The price and reputation cost of all Augmentations is tripled<br>" +
-                                          "The starting and maximum amount of money on servers is reduced by 75%<br>" +
-                                          "Server growth rate is reduced by 80%<br>" +
-                                          "You will start out with $150b so that you can start your corporation<br>" +
-                                          "You now only need 75 favour with a faction in order to donate to it, rather than 150<br><br>" +
-                                          "Destroying this BitNode will give you Source-File 3, or if you already have this Source-File it will " +
-                                          "upgrade its level up to a maximum of 3. This Source-File lets you create corporations on other BitNodes (although " +
-                                          "some BitNodes will disable this mechanic). This Source-File also increases your charisma and company salary multipliers by:<br>" +
-                                          "Level 1: 8%<br>" +
-                                          "Level 2: 12%<br>" +
-                                          "Level 3: 14%");
-    BitNodes["BitNode4"] = new BitNode(4, "The Singularity", "The Man and the Machine",  "The Singularity has arrived. The human race is gone, replaced " +
-                                          "by artificially superintelligent beings that are more machine than man. <br><br>" +
-                                          "In this BitNode, progressing is significantly harder. Experience gain rates " +
-                                          "for all stats are reduced. Most methods of earning money will now give significantly less.<br><br>" +
-                                          "In this BitNode you will gain access to a new set of Netscript Functions known as Singularity Functions. " +
-                                          "These functions allow you to control most aspects of the game through scripts, including working for factions/companies, " +
-                                          "purchasing/installing Augmentations, and creating programs.<br><br>" +
-                                          "Destroying this BitNode will give you Source-File 4, or if you already have this Source-File it will " +
-                                          "upgrade its level up to a maximum of 3. This Source-File lets you access and use the Singularity  " +
-                                          "Functions in other BitNodes. Each level of this Source-File will open up more Singularity Functions " +
-                                          "that you can use.");
-    BitNodes["BitNode5"] = new BitNode(5, "Artificial Intelligence", "Posthuman", "They said it couldn't be done. They said the human brain, " +
-                                          "along with its consciousness and intelligence, couldn't be replicated. They said the complexity " +
-                                          "of the brain results from unpredictable, nonlinear interactions that couldn't be modeled " +
-                                          "by 1's and 0's. They were wrong.<br><br>" +
-                                          "In this BitNode:<br><br>" +
-                                          "The base security level of servers is doubled<br>" +
-                                          "The starting money on servers is halved, but the maximum money remains the same<br>" +
-                                          "Most methods of earning money now give significantly less<br>" +
-                                          "Infiltration gives 50% more reputation and money<br>" +
-                                          "Corporations have 50% lower valuations and are therefore less profitable<br>" +
-                                          "Augmentations are more expensive<br>" +
-                                          "Hacking experience gain rates are reduced<br><br>" +
-                                          "Destroying this BitNode will give you Source-File 5, or if you already have this Source-File it will " +
-                                          "upgrade its level up to a maximum of 3. This Source-File grants you a special new stat called Intelligence. " +
-                                          "Intelligence is unique because it is permanent and persistent (it never gets reset back to 1). However " +
-                                          "gaining Intelligence experience is much slower than other stats, and it is also hidden (you won't know " +
-                                          "when you gain experience and how much). Higher Intelligence levels will boost your production for many actions " +
-                                          "in the game. <br><br>" +
-                                          "In addition, this Source-File will unlock the getBitNodeMultipliers() Netscript function, " +
-                                          "and will also raise all of your hacking-related multipliers by:<br><br>" +
-                                          "Level 1: 8%<br>" +
-                                          "Level 2: 12%<br>" +
-                                          "Level 3: 14%");
-    BitNodes["BitNode6"] = new BitNode(6, "Bladeburners", "Like Tears in Rain",
-                                          "In the middle of the 21st century, OmniTek Incorporated began designing and manufacturing advanced synthetic " +
-                                          "androids, or Synthoids for short. They achieved a major technological breakthrough in the sixth generation " +
-                                          "of their Synthoid design, called MK-VI, by developing a hyperintelligent AI. Many argue that this was " +
-                                          "the first sentient AI ever created. This resulted in Synthoid models that were stronger, faster, and more intelligent " +
-                                          "than the humans that had created them.<br><br>" +
-                                          "In this BitNode you will be able to access the Bladeburner Division at the NSA, which provides a new mechanic " +
-                                          "for progression. Furthermore:<br><br>" +
-                                          "Hacking and Hacknet Nodes will be significantly less profitable<br>" +
-                                          "Your hacking level is reduced by 50%<br>" +
-                                          "Hacking experience gain from scripts is reduced by 75%<br>" +
-                                          "Corporations have 80% lower valuations and are therefore less profitable<br>" +
-                                          "Working for companies is 50% less profitable<br>" +
-                                          "Crimes and Infiltration are 50% less profitable<br><br>" +
-                                          "Destroying this BitNode will give you Source-File 6, or if you already have this Source-File it will upgrade " +
-                                          "its level up to a maximum of 3. This Source-File allows you to access the NSA's Bladeburner Division in other " +
-                                          "BitNodes. In addition, this Source-File will raise both the level and experience gain rate of all your combat stats by:<br><br>" +
-                                          "Level 1: 8%<br>" +
-                                          "Level 2: 12%<br>" +
-                                          "Level 3: 14%");
-    BitNodes["BitNode7"] = new BitNode(7, "Bladeburners 2079", "More human than humans",
-                                          "In the middle of the 21st century, you were doing cutting-edge work at OmniTek Incorporated as part of the AI design team " +
-                                          "for advanced synthetic androids, or Synthoids for short. You helped achieve a major technological " +
-                                          "breakthrough in the sixth generation of the company's Synthoid design, called MK-VI, by developing a hyperintelligent AI. " +
-                                          "Many argue that this was the first sentient AI ever created. This resulted in Synthoid models that were stronger, faster, " +
-                                          "and more intelligent than the humans that had created them.<br><br>" +
-                                          "In this BitNode you will be able to access the Bladeburner API, which allows you to access Bladeburner " +
-                                          "functionality through Netscript. Furthermore: <br><br>" +
-                                          "The rank you gain from Bladeburner contracts/operations is reduced by 40%<br>" +
-                                          "Bladeburner skills cost twice as many skill points<br>" +
-                                          "Augmentations are 3x more expensive<br>" +
-                                          "Hacking and Hacknet Nodes will be significantly less profitable<br>" +
-                                          "Your hacking level is reduced by 50%<br>" +
-                                          "Hacking experience gain from scripts is reduced by 75%<br>" +
-                                          "Corporations have 80% lower valuations and are therefore less profitable<br>" +
-                                          "Working for companies is 50% less profitable<br>" +
-                                          "Crimes and Infiltration are 50% less profitable<br><br>" +
-                                          "Destroying this BitNode will give you Source-File 7, or if you already have this Source-File it will upgrade " +
-                                          "its level up to a maximum of 3. This Source-File allows you to access the Bladeburner Netscript API in other " +
-                                          "BitNodes. In addition, this Source-File will increase all of your Bladeburner multipliers by:<br><br>" +
-                                          "Level 1: 8%<br>" +
-                                          "Level 2: 12%<br>" +
-                                          "Level 3: 14%");
-    BitNodes["BitNode8"] = new BitNode(8, "Ghost of Wall Street", "Money never sleeps",
-                                          "You are trying to make a name for yourself as an up-and-coming hedge fund manager on Wall Street.<br><br>" +
-                                          "In this BitNode:<br><br>" +
-                                          "You start with $250 million<br>" +
-                                          "The only way to earn money is by trading on the stock market<br>" +
-                                          "You start with a WSE membership and access to the TIX API<br>" +
-                                          "You are able to short stocks and place different types of orders (limit/stop)<br>" +
-                                          "You can immediately donate to factions to gain reputation<br><br>" +
-                                          "Destroying this BitNode will give you Source-File 8, or if you already have this Source-File it will " +
-                                          "upgrade its level up to a maximum of 3. This Source-File grants the following benefits:<br><br>" +
-                                          "Level 1: Permanent access to WSE and TIX API<br>" +
-                                          "Level 2: Ability to short stocks in other BitNodes<br>" +
-                                          "Level 3: Ability to use limit/stop orders in other BitNodes<br><br>" +
-                                          "This Source-File also increases your hacking growth multipliers by: " +
-                                          "<br>Level 1: 12%<br>Level 2: 18%<br>Level 3: 21%");
-    BitNodes["BitNode9"] = new BitNode(9, "Do Androids Dream?", "COMING SOON");
-    BitNodes["BitNode10"] = new BitNode(10, "MegaCorp", "COMING SOON");                //Not sure yet
-    BitNodes["BitNode11"] = new BitNode(11, "The Big Crash", "Okay. Sell it all.",
-                                            "The 2050s was defined by the massive amounts of violent civil unrest and anarchic rebellion that rose all around the world. It was this period " +
-                                            "of disorder that eventually lead to the governmental reformation of many global superpowers, most notably " +
-                                            "the USA and China. But just as the world was slowly beginning to recover from these dark times, financial catastrophe hit.<br><br>" +
-                                            "In many countries, the high cost of trying to deal with the civil disorder bankrupted the governments. In all of this chaos and confusion, hackers " +
-                                            "were able to steal billions of dollars from the world's largest electronic banks, prompting an international banking crisis as " +
-                                            "governments were unable to bail out insolvent banks. Now, the world is slowly crumbling in the middle of the biggest economic crisis of all time.<br><br>" +
-                                            "In this BitNode:<br><br>" +
-                                            "The starting and maximum amount of money available on servers is significantly decreased<br>" +
-                                            "The growth rate of servers is halved<br>" +
-                                            "Weakening a server is twice as effective<br>" +
-                                            "Company wages are decreased by 50%<br>" +
-                                            "Corporation valuations are 99% lower and are therefore significantly less profitable<br>" +
-                                            "Hacknet Node production is significantly decreased<br>" +
-                                            "Crime and Infiltration are more lucrative<br>" +
-                                            "Augmentations are twice as expensive<br><br>" +
-                                            "Destroying this BitNode will give you Source-File 11, or if you already have this Source-File it will " +
-                                            "upgrade its level up to a maximum of 3. This Source-File makes it so that company favor increases BOTH " +
-                                            "the player's salary and reputation gain rate at that company by 1% per favor (rather than just the reputation gain). " +
-                                            "This Source-File also increases the player's company salary and reputation gain multipliers by:<br><br>" +
-                                            "Level 1: 24%<br>" +
-                                            "Level 2: 36%<br>" +
-                                            "Level 3: 42%");
-    BitNodes["BitNode12"] = new BitNode(12, "The Recursion", "Repeat.",
-                                            "To iterate is human, to recurse divine.<br><br>" +
-                                            "Every time this BitNode is destroyed, it becomes slightly harder. Destroying this BitNode will give your Souce-File 12, or " +
-                                            "if you already have this Source-File it will upgrade its level. There is no maximum level for Source-File 12. Each level " +
-                                            "of Source-File 12 will increase all of your multipliers by 1%. This effect is multiplicative with itself. " +
-                                            "In other words, level N of this Source-File will result in a multiplier of 1.01^N (or 0.99^N for multipliers that decrease)");
-    //Books: Frontera, Shiner
-    BitNodes["BitNode13"] = new BitNode(13, "fOS", "COMING SOON"); //Unlocks the new game mode and the rest of the BitNodes
-    BitNodes["BitNode14"] = new BitNode(14, "", "COMING SOON");
-    BitNodes["BitNode15"] = new BitNode(15, "", "COMING SOON");
-    BitNodes["BitNode16"] = new BitNode(16, "", "COMING SOON");
-    BitNodes["BitNode17"] = new BitNode(17, "", "COMING SOON");
-    BitNodes["BitNode18"] = new BitNode(18, "", "COMING SOON");
-    BitNodes["BitNode19"] = new BitNode(19, "", "COMING SOON");
-    BitNodes["BitNode20"] = new BitNode(20, "", "COMING SOON");
-    BitNodes["BitNode21"] = new BitNode(21, "", "COMING SOON");
-    BitNodes["BitNode22"] = new BitNode(22, "", "COMING SOON");
-    BitNodes["BitNode23"] = new BitNode(23, "", "COMING SOON");
-    BitNodes["BitNode24"] = new BitNode(24, "", "COMING SOON");
-}
-
-function initBitNodeMultipliers() {
-    if (_Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].bitNodeN == null) {
-        _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].bitNodeN = 1;
-    }
-    for (var mult in _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"]) {
-        if (_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].hasOwnProperty(mult)) {
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"][mult] = 1;
-        }
-    }
-
-    switch (_Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].bitNodeN) {
-        case 1: //Source Genesis (every multiplier is 1)
-            break;
-        case 2: //Rise of the Underworld
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].HackingLevelMultiplier   = 0.8;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerGrowthRate         = 0.8;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerMaxMoney           = 0.2;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerStartingMoney      = 0.4;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CrimeMoney               = 3;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].InfiltrationMoney        = 3;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].FactionWorkRepGain       = 0.5;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].FactionPassiveRepGain    = 0;
-            break;
-        case 3: //Corporatocracy
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].RepToDonateToFaction     = 0.5;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].AugmentationRepCost      = 3;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].AugmentationMoneyCost    = 3;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerMaxMoney           = 0.2;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerStartingMoney      = 0.2;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerGrowthRate         = 0.2;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ScriptHackMoney          = 0.2;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CompanyWorkMoney         = 0.25;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CrimeMoney               = 0.25;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].HacknetNodeMoney         = 0.25;
-            break;
-        case 4: //The Singularity
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerMaxMoney           = 0.15;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerStartingMoney      = 0.75;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ScriptHackMoney          = 0.2;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CompanyWorkMoney         = 0.1;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CrimeMoney               = 0.2;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].HacknetNodeMoney         = 0.05;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CompanyWorkExpGain       = 0.5;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ClassGymExpGain          = 0.5;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].FactionWorkExpGain       = 0.5;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].HackExpGain              = 0.4;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CrimeExpGain             = 0.5;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].FactionWorkRepGain       = 0.75;
-            break;
-        case 5: //Artificial intelligence
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerMaxMoney           = 2;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerStartingSecurity   = 2;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerStartingMoney      = 0.5;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ScriptHackMoney          = 0.15;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].HacknetNodeMoney         = 0.2;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CrimeMoney               = 0.5;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].InfiltrationRep          = 1.5;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].InfiltrationMoney        = 1.5;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].AugmentationMoneyCost    = 2;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].HackExpGain              = 0.5;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CorporationValuation     = 0.5;
-            break;
-        case 6: //Bladeburner
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].HackingLevelMultiplier   = 0.4;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerMaxMoney           = 0.5;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerStartingMoney      = 0.5;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerStartingSecurity   = 1.5;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ScriptHackMoney          = 0.5;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CompanyWorkMoney         = 0.5;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CrimeMoney               = 0.5;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].InfiltrationMoney        = 0.5;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CorporationValuation     = 0.2;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].HacknetNodeMoney         = 0.2;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].FactionPassiveRepGain    = 0;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].HackExpGain              = 0.25;
-            break;
-        case 7: //Bladeburner 2079
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].BladeburnerRank          = 0.6;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].BladeburnerSkillCost     = 2;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].AugmentationMoneyCost    = 3;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].HackingLevelMultiplier   = 0.4;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerMaxMoney           = 0.5;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerStartingMoney      = 0.5;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerStartingSecurity   = 1.5;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ScriptHackMoney          = 0.5;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CompanyWorkMoney         = 0.5;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CrimeMoney               = 0.5;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].InfiltrationMoney        = 0.5;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CorporationValuation     = 0.2;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].HacknetNodeMoney         = 0.2;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].FactionPassiveRepGain    = 0;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].HackExpGain              = 0.25;
-            break;
-        case 8: //Ghost of Wall Street
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ScriptHackMoney          = 0;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ManualHackMoney          = 0;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CompanyWorkMoney         = 0;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CrimeMoney               = 0;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].HacknetNodeMoney         = 0;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].InfiltrationMoney        = 0;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].RepToDonateToFaction     = 0;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CorporationValuation     = 0;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CodingContractMoney      = 0;
-            break;
-        case 11: //The Big Crash
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerMaxMoney           = 0.1;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerStartingMoney      = 0.1;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerGrowthRate         = 0.5;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerWeakenRate         = 2;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CrimeMoney               = 3;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CompanyWorkMoney         = 0.5;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].HacknetNodeMoney         = 0.1;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].AugmentationMoneyCost    = 2;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].InfiltrationMoney        = 2.5;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].InfiltrationRep          = 2.5;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CorporationValuation     = 0.01;
-            break;
-        case 12: //The Recursion
-            var sf12Lvl = 0;
-            for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].sourceFiles.length; i++) {
-                if (_Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].sourceFiles[i].n === 12) {
-                    sf12Lvl = _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].sourceFiles[i].lvl;
-                }
-            }
-            var inc = Math.pow(1.02, sf12Lvl);
-            var dec = 1/inc;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].HackingLevelMultiplier = dec;
-
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerMaxMoney         = dec;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerStartingMoney    = dec;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerGrowthRate       = dec;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerWeakenRate       = dec;
-
-            //Does not scale, otherwise security might start at 300+
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerStartingSecurity = 1.5;
-
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ManualHackMoney  = dec;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ScriptHackMoney  = dec;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CompanyWorkMoney = dec;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CrimeMoney       = dec;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].HacknetNodeMoney = dec;
-
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CompanyWorkExpGain = dec;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ClassGymExpGain    = dec;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].FactionWorkExpGain = dec;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].HackExpGain        = dec;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CrimeExpGain       = dec;
-
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].FactionWorkRepGain    = dec;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].FactionPassiveRepGain = dec;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].RepToDonateToFaction  = inc;
-
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].AugmentationRepCost   = inc;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].AugmentationMoneyCost = inc;
-
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].InfiltrationMoney = dec;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].InfiltrationRep   = dec;
-
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CorporationValuation = dec;
-
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].BladeburnerRank      = dec;
-            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].BladeburnerSkillCost = inc;
-            break;
-        default:
-            console.log("WARNING: Player.bitNodeN invalid");
-            break;
-    }
-}
-
-
-
-
-/***/ }),
-/* 60 */
 /*!****************************************!*\
   !*** ./src/Corporation/Corporation.js ***!
   \****************************************/
-/*! exports provided: TOTALSHARES, CyclesPerMarketCycle, CyclesPerIndustryStateCycle, SecsPerMarketCycle, Cities, WarehouseInitialCost, WarehouseInitialSize, WarehouseUpgradeBaseCost, OfficeInitialCost, OfficeInitialSize, OfficeUpgradeBaseCost, BribeThreshold, BribeToRepRatio, ProductProductionCostRatio, DividendMaxPercentage, CyclesPerEmployeeRaise, EmployeeRaiseAmount, Corporation */
+/*! exports provided: INITIALSHARES, SHARESPERPRICEUPDATE, IssueNewSharesCooldown, SellSharesCooldown, CyclesPerMarketCycle, CyclesPerIndustryStateCycle, SecsPerMarketCycle, Cities, WarehouseInitialCost, WarehouseInitialSize, WarehouseUpgradeBaseCost, OfficeInitialCost, OfficeInitialSize, OfficeUpgradeBaseCost, BribeThreshold, BribeToRepRatio, ProductProductionCostRatio, DividendMaxPercentage, CyclesPerEmployeeRaise, EmployeeRaiseAmount, Corporation */
 /*! exports used: Corporation */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* unused harmony export TOTALSHARES */
+/* WEBPACK VAR INJECTION */(function($) {/* unused harmony export INITIALSHARES */
+/* unused harmony export SHARESPERPRICEUPDATE */
+/* unused harmony export IssueNewSharesCooldown */
+/* unused harmony export SellSharesCooldown */
 /* unused harmony export CyclesPerMarketCycle */
 /* unused harmony export CyclesPerIndustryStateCycle */
 /* unused harmony export SecsPerMarketCycle */
@@ -36574,7 +35837,7 @@ function initBitNodeMultipliers() {
 /* harmony import */ var _data_CorporationUnlockUpgrades__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_data_CorporationUnlockUpgrades__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _data_CorporationUpgrades__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./data/CorporationUpgrades */ 106);
 /* harmony import */ var _data_CorporationUpgrades__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_data_CorporationUpgrades__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./EmployeePositions */ 26);
+/* harmony import */ var _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./EmployeePositions */ 27);
 /* harmony import */ var _EmployeePositions__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _IndustryData__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./IndustryData */ 23);
 /* harmony import */ var _IndustryData__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_IndustryData__WEBPACK_IMPORTED_MODULE_4__);
@@ -36582,7 +35845,7 @@ function initBitNodeMultipliers() {
 /* harmony import */ var _IndustryUpgrades__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_IndustryUpgrades__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _Material__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Material */ 63);
 /* harmony import */ var _Material__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Material__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _MaterialSizes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./MaterialSizes */ 76);
+/* harmony import */ var _MaterialSizes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./MaterialSizes */ 77);
 /* harmony import */ var _MaterialSizes__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_MaterialSizes__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _Product__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Product */ 104);
 /* harmony import */ var _Product__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_Product__WEBPACK_IMPORTED_MODULE_8__);
@@ -36606,13 +35869,13 @@ function initBitNodeMultipliers() {
 /* harmony import */ var _utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../../utils/uiHelpers/clearSelector */ 140);
 /* harmony import */ var _utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_19__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
-/* harmony import */ var _utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../../utils/uiHelpers/appendLineBreaks */ 57);
+/* harmony import */ var _utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../../utils/uiHelpers/appendLineBreaks */ 52);
 /* harmony import */ var _utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_21__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../../utils/uiHelpers/createPopup */ 37);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../../utils/uiHelpers/createPopup */ 36);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23__);
-/* harmony import */ var _utils_uiHelpers_createPopupCloseButton__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../../utils/uiHelpers/createPopupCloseButton */ 81);
+/* harmony import */ var _utils_uiHelpers_createPopupCloseButton__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../../utils/uiHelpers/createPopupCloseButton */ 75);
 /* harmony import */ var _utils_uiHelpers_createPopupCloseButton__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopupCloseButton__WEBPACK_IMPORTED_MODULE_24__);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_25__);
@@ -36620,15 +35883,18 @@ function initBitNodeMultipliers() {
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_26__);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../../utils/helpers/isString */ 40);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_27__);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 29);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_28__);
-/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../../utils/uiHelpers/removeElement */ 61);
-/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_29___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_29__);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ../../utils/uiHelpers/removeElementById */ 21);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ../../utils/YesNoBox */ 17);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_31___default = /*#__PURE__*/__webpack_require__.n(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_31__);
-/* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! decimal.js */ 35);
+/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../../utils/helpers/keyCodes */ 25);
+/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_28__);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 30);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_29___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_29__);
+/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ../../utils/uiHelpers/removeElement */ 61);
+/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_30__);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ../../utils/uiHelpers/removeElementById */ 20);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ../../utils/YesNoBox */ 19);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_32___default = /*#__PURE__*/__webpack_require__.n(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_32__);
+/* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! decimal.js */ 35);
+
 
 
 
@@ -36668,11 +35934,17 @@ function initBitNodeMultipliers() {
 
 
 /* Constants */
-const TOTALSHARES                    = 1e9; //Total number of shares you have at your company
+const INITIALSHARES                  = 1e9; //Total number of shares you have at your company
+const SHARESPERPRICEUPDATE           = 1e6; //When selling large number of shares, price is dynamically updated for every batch of this amount
+const IssueNewSharesCooldown         = 216e3; // 12 Hour in terms of game cycles
+const SellSharesCooldown             = 18e3; // 1 Hour in terms of game cycles
+
 const CyclesPerMarketCycle           = 75;
 const CyclesPerIndustryStateCycle    = CyclesPerMarketCycle / _CorporationState__WEBPACK_IMPORTED_MODULE_0__["AllCorporationStates"].length;
 const SecsPerMarketCycle             = CyclesPerMarketCycle / 5;
+
 const Cities = ["Aevum", "Chongqing", "Sector-12", "New Tokyo", "Ishima", "Volhaven"];
+
 const WarehouseInitialCost           = 5e9; //Initial purchase cost of warehouse
 const WarehouseInitialSize           = 100;
 const WarehouseUpgradeBaseCost       = 1e9;
@@ -36698,7 +35970,7 @@ $(document).mousedown(function(event) {
     if (researchTreeBoxOpened) {
         if ( $(event.target).closest("#" + contentId).get(0) == null ) {
             // Delete the box
-            Object(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_29__["removeElement"])(researchTreeBox);
+            Object(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_30__["removeElement"])(researchTreeBox);
             researchTreeBox = null;
             researchTreeBoxOpened = false;
         }
@@ -36766,10 +36038,10 @@ function Industry(params={}) {
     this.prodMult   = 0; //Production multiplier
 
     //Financials
-    this.lastCycleRevenue   = new decimal_js__WEBPACK_IMPORTED_MODULE_32__[/* default */ "a"](0);
-    this.lastCycleExpenses  = new decimal_js__WEBPACK_IMPORTED_MODULE_32__[/* default */ "a"](0);
-    this.thisCycleRevenue   = new decimal_js__WEBPACK_IMPORTED_MODULE_32__[/* default */ "a"](0);
-    this.thisCycleExpenses  = new decimal_js__WEBPACK_IMPORTED_MODULE_32__[/* default */ "a"](0);
+    this.lastCycleRevenue   = new decimal_js__WEBPACK_IMPORTED_MODULE_33__[/* default */ "a"](0);
+    this.lastCycleExpenses  = new decimal_js__WEBPACK_IMPORTED_MODULE_33__[/* default */ "a"](0);
+    this.thisCycleRevenue   = new decimal_js__WEBPACK_IMPORTED_MODULE_33__[/* default */ "a"](0);
+    this.thisCycleExpenses  = new decimal_js__WEBPACK_IMPORTED_MODULE_33__[/* default */ "a"](0);
 
     //Upgrades
     var numUpgrades = Object.keys(_IndustryUpgrades__WEBPACK_IMPORTED_MODULE_5__["IndustryUpgrades"]).length;
@@ -36936,7 +36208,7 @@ Industry.prototype.init = function() {
             this.advFac = 0.16;
             this.hwFac  = 0.25;
             this.reFac  = 0.1;
-            this.aiFac  = 0.1;
+            this.aiFac  = 0.15;
             this.robFac = 0.05;
             this.reqMats = {
                 "Hardware":     0.5,
@@ -37067,13 +36339,13 @@ Industry.prototype.process = function(marketCycles=1, state, company) {
             console.log(this.thisCycleRevenue.toString());
             console.log(this.thisCycleExpenses.toString());
             Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("Something went wrong when compting Corporation's revenue/expenses. This is a bug. Please report to game developer");
-            this.thisCycleRevenue = new decimal_js__WEBPACK_IMPORTED_MODULE_32__[/* default */ "a"](0);
-            this.thisCycleExpenses = new decimal_js__WEBPACK_IMPORTED_MODULE_32__[/* default */ "a"](0);
+            this.thisCycleRevenue = new decimal_js__WEBPACK_IMPORTED_MODULE_33__[/* default */ "a"](0);
+            this.thisCycleExpenses = new decimal_js__WEBPACK_IMPORTED_MODULE_33__[/* default */ "a"](0);
         }
         this.lastCycleRevenue = this.thisCycleRevenue.dividedBy(marketCycles * SecsPerMarketCycle);
         this.lastCycleExpenses = this.thisCycleExpenses.dividedBy(marketCycles * SecsPerMarketCycle);
-        this.thisCycleRevenue = new decimal_js__WEBPACK_IMPORTED_MODULE_32__[/* default */ "a"](0);
-        this.thisCycleExpenses = new decimal_js__WEBPACK_IMPORTED_MODULE_32__[/* default */ "a"](0);
+        this.thisCycleRevenue = new decimal_js__WEBPACK_IMPORTED_MODULE_33__[/* default */ "a"](0);
+        this.thisCycleExpenses = new decimal_js__WEBPACK_IMPORTED_MODULE_33__[/* default */ "a"](0);
 
         //Once you start making revenue, the player should no longer be
         //considered new, and therefore no longer needs the 'tutorial' UI elements
@@ -37747,7 +37019,7 @@ Industry.prototype.getOfficeProductivity = function(office, params) {
         ratio = Math.max(0.01, ratio); //Minimum ratio value if you have employees
     }
     if (params && params.forProduct) {
-        return ratio * Math.pow(total, 0.2);
+        return ratio * Math.pow(total, 0.22);
     } else {
         return 2 * ratio * Math.pow(total, 0.3);
     }
@@ -37848,7 +37120,7 @@ Industry.prototype.createResearchBox = function() {
 
     if (researchTreeBoxOpened) {
         // It's already opened, so delete it to refresh content
-        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__["removeElementById"])(boxId);
+        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__["removeElementById"])(boxId);
         researchTreeBox = null;
     }
 
@@ -38323,7 +37595,7 @@ OfficeSpace.prototype.findEmployees = function(parentRefs) {
                         "Salary: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(employee.sal, '$0.000a') + " \ s<br>",
             clickListener:()=>{
                 office.hireEmployee(employee, parentRefs);
-                Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__["removeElementById"])("cmpy-mgmt-hire-employee-popup");
+                Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__["removeElementById"])("cmpy-mgmt-hire-employee-popup");
                 return false;
             }
         });
@@ -38335,7 +37607,7 @@ OfficeSpace.prototype.findEmployees = function(parentRefs) {
         innerText:"Cancel",
         float:"right",
         clickListener:()=>{
-            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__["removeElementById"])("cmpy-mgmt-hire-employee-popup");
+            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__["removeElementById"])("cmpy-mgmt-hire-employee-popup");
             return false;
         }
     });
@@ -38351,12 +37623,12 @@ OfficeSpace.prototype.findEmployees = function(parentRefs) {
 
 OfficeSpace.prototype.hireEmployee = function(employee, parentRefs) {
     var company = parentRefs.corporation, division = parentRefs.industry;
-    var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_31__["yesNoTxtInpBoxGetYesButton"])(),
-        noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_31__["yesNoTxtInpBoxGetNoButton"])();
+    var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_32__["yesNoTxtInpBoxGetYesButton"])(),
+        noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_32__["yesNoTxtInpBoxGetNoButton"])();
     yesBtn.innerHTML = "Hire";
     noBtn.innerHTML = "Cancel";
     yesBtn.addEventListener("click", ()=>{
-        var name = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_31__["yesNoTxtInpBoxGetInput"])();
+        var name = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_32__["yesNoTxtInpBoxGetInput"])();
         for (var i = 0; i < this.employees.length; ++i) {
             if (this.employees[i].name === name) {
                 Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("You already have an employee with this nickname! Please give every employee a unique nickname.");
@@ -38366,12 +37638,12 @@ OfficeSpace.prototype.hireEmployee = function(employee, parentRefs) {
         employee.name = name;
         this.employees.push(employee);
         company.displayDivisionContent(division, currentCityUi);
-        return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_31__["yesNoTxtInpBoxClose"])();
+        return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_32__["yesNoTxtInpBoxClose"])();
     });
     noBtn.addEventListener("click", ()=>{
-        return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_31__["yesNoTxtInpBoxClose"])();
+        return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_32__["yesNoTxtInpBoxClose"])();
     });
-    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_31__["yesNoTxtInpBoxCreate"])("Give your employee a nickname!");
+    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_32__["yesNoTxtInpBoxCreate"])("Give your employee a nickname!");
 }
 
 OfficeSpace.prototype.hireRandomEmployee = function(parentRefs) {
@@ -38504,7 +37776,7 @@ Warehouse.prototype.createUI = function(parentRefs) {
         return;
     }
     var company = parentRefs.company, industry = parentRefs.industry;
-    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_28__["removeChildrenFromElement"])(industryWarehousePanel);
+    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_29__["removeChildrenFromElement"])(industryWarehousePanel);
     industryWarehouseStorageText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("p", {
         display:"inline-block", class:"tooltip",
         color: this.sizeUsed >= this.size ? "red" : "white",
@@ -38659,7 +37931,7 @@ Warehouse.prototype.updateUI = function(parentRefs) {
     industryWarehouseStateText.innerText = stateText;
 
     //Materials
-    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_28__["removeChildrenFromElement"])(industryWarehouseMaterials);
+    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_29__["removeChildrenFromElement"])(industryWarehouseMaterials);
     for (var matName in this.materials) {
         if (this.materials.hasOwnProperty(matName) && this.materials[matName] instanceof _Material__WEBPACK_IMPORTED_MODULE_6__["Material"]) {
             if (Object.keys(industry.reqMats).includes(matName) || industry.prodMats.includes(matName) ||
@@ -38671,7 +37943,7 @@ Warehouse.prototype.updateUI = function(parentRefs) {
     }
 
     //Products
-    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_28__["removeChildrenFromElement"])(industryWarehouseProducts);
+    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_29__["removeChildrenFromElement"])(industryWarehouseProducts);
     if (industry.makesProducts && Object.keys(industry.products).length > 0) {
         for (var productName in industry.products) {
             if (industry.products.hasOwnProperty(productName) && industry.products[productName] instanceof _Product__WEBPACK_IMPORTED_MODULE_8__["Product"]) {
@@ -38745,7 +38017,7 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                 value: mat.buy ? mat.buy : null,
                 onkeyup:(e)=>{
                     e.preventDefault();
-                    if (e.keyCode === 13) {confirmBtn.click();}
+                    if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_28__["KEY"].ENTER) {confirmBtn.click();}
                 }
             });
             confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("button", {
@@ -38756,7 +38028,7 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                     } else {
                         mat.buy = parseFloat(input.value);
                         if (isNaN(mat.buy)) {mat.buy = 0;}
-                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__["removeElementById"])(purchasePopupId);
+                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__["removeElementById"])(purchasePopupId);
                         this.createUI(parentRefs);
                         return false;
                     }
@@ -38766,7 +38038,7 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                 innerText:"Clear Purchase", class:"std-button",
                 clickListener:()=>{
                     mat.buy = 0;
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__["removeElementById"])(purchasePopupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__["removeElementById"])(purchasePopupId);
                     this.createUI(parentRefs);
                     return false;
                 }
@@ -38868,7 +38140,7 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                     }
                     var exportObj = {ind:industryName, city:cityName, amt:sanitizedAmt};
                     mat.exp.push(exportObj);
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__["removeElementById"])(popupId);
                     return false;
                 }
             });
@@ -38876,7 +38148,7 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
             var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("a", {
                 class:"a-link-button", display:"inline-block", innerText:"Cancel",
                 clickListener:()=>{
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__["removeElementById"])(popupId);
                     return false;
                 }
             });
@@ -38895,7 +38167,7 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                                "Amount/s: " + mat.exp[i].amt,
                     clickListener:()=>{
                         mat.exp.splice(i, 1); //Remove export object
-                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__["removeElementById"])(popupId);
+                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__["removeElementById"])(popupId);
                         createExportPopup();
                     }
                 }));
@@ -38954,7 +38226,7 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                 value: mat.sllman[1] ? mat.sllman[1] : null, placeholder: "Sell amount",
                 onkeyup:(e)=>{
                     e.preventDefault();
-                    if (e.keyCode === 13) {confirmBtn.click();}
+                    if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_28__["KEY"].ENTER) {confirmBtn.click();}
                 }
             });
             var inputPx = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("input", {
@@ -38962,7 +38234,7 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                 value: mat.sCost ? mat.sCost : null, placeholder: "Sell price",
                 onkeyup: (e) => {
                     e.preventDefault();
-                    if (e.keyCode === 13) {confirmBtn.click();}
+                    if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_28__["KEY"].ENTER) {confirmBtn.click();}
                 }
             });
             confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("button", {
@@ -39027,7 +38299,7 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                     }
 
                     this.createUI(parentRefs);
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__["removeElementById"])(sellPopupid);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__["removeElementById"])(sellPopupid);
                     return false;
                 }
             });
@@ -39200,14 +38472,14 @@ Warehouse.prototype.createProductUI = function(product, parentRefs) {
                 type:"text", value:product.sllman[city][1] ? product.sllman[city][1] : null, placeholder: "Sell amount",
                 onkeyup:(e)=>{
                     e.preventDefault();
-                    if (e.keyCode === 13) {confirmBtn.click();}
+                    if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_28__["KEY"].ENTER) {confirmBtn.click();}
                 }
             });
             var inputPx = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("input", {
                 type:"text", value: product.sCost ? product.sCost : null, placeholder: "Sell price",
                 onkeyup:(e)=>{
                     e.preventDefault();
-                    if (e.keyCode === 13) {confirmBtn.click();}
+                    if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_28__["KEY"].ENTER) {confirmBtn.click();}
                 }
             });
             confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("a", {
@@ -39274,14 +38546,14 @@ Warehouse.prototype.createProductUI = function(product, parentRefs) {
                         }
                     }
                     this.createUI(parentRefs);
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__["removeElementById"])(popupId);
                     return false;
                 }
             });
             var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("a", {
                 class:"a-link-button", innerText:"Cancel",
                 clickListener:()=>{
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__["removeElementById"])(popupId);
                     return false;
                 }
             });
@@ -39309,7 +38581,7 @@ Warehouse.prototype.createProductUI = function(product, parentRefs) {
                 type:"number", placeholder:"Limit",
                 onkeyup:(e)=>{
                     e.preventDefault();
-                    if (e.keyCode === 13) {confirmBtn.click();}
+                    if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_28__["KEY"].ENTER) {confirmBtn.click();}
                 }
             });
             confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("a", {
@@ -39317,7 +38589,7 @@ Warehouse.prototype.createProductUI = function(product, parentRefs) {
                 clickListener:()=>{
                     if (input.value === "") {
                         product.prdman[city][0] = false;
-                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__["removeElementById"])(popupId);
+                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__["removeElementById"])(popupId);
                         return false;
                     }
                     var qty = parseFloat(input.value);
@@ -39331,14 +38603,14 @@ Warehouse.prototype.createProductUI = function(product, parentRefs) {
                         product.prdman[city][0] = true;
                         product.prdman[city][1] = qty;
                     }
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__["removeElementById"])(popupId);
                     return false;
                 }
             });
             var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("a", {
                 class:"a-link-button", display:"inline-block", innerText:"Cancel", margin:"6px",
                 clickListener:()=>{
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__["removeElementById"])(popupId);
                     return false;
                 }
             });
@@ -39361,14 +38633,14 @@ Warehouse.prototype.createProductUI = function(product, parentRefs) {
                 class:"a-link-button",innerText:"Discontinue",
                 clickListener:()=>{
                     industry.discontinueProduct(product, parentRefs);
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__["removeElementById"])(popupId);
                     return false;
                 }
             });
             var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("a", {
                 class:"a-link-button", innerText:"Cancel",
                 clickListener:()=>{
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__["removeElementById"])(popupId);
                     return false;
                 }
             });
@@ -39395,12 +38667,16 @@ function Corporation(params={}) {
     this.divisions = [];
 
     //Financial stats
-    this.funds      = new decimal_js__WEBPACK_IMPORTED_MODULE_32__[/* default */ "a"](150e9);
-    this.revenue    = new decimal_js__WEBPACK_IMPORTED_MODULE_32__[/* default */ "a"](0);
-    this.expenses   = new decimal_js__WEBPACK_IMPORTED_MODULE_32__[/* default */ "a"](0);
+    this.funds      = new decimal_js__WEBPACK_IMPORTED_MODULE_33__[/* default */ "a"](150e9);
+    this.revenue    = new decimal_js__WEBPACK_IMPORTED_MODULE_33__[/* default */ "a"](0);
+    this.expenses   = new decimal_js__WEBPACK_IMPORTED_MODULE_33__[/* default */ "a"](0);
     this.fundingRound = 0;
     this.public     = false; //Publicly traded
-    this.numShares  = TOTALSHARES;
+    this.totalShares = INITIALSHARES; // Total existing shares
+    this.numShares  = INITIALSHARES; // Total shares owned by player
+    this.shareSalesUntilPriceUpdate = SHARESPERPRICEUPDATE;
+    this.shareSaleCooldown = 0; // Game cycles until player can sell shares again
+    this.issueNewSharesCooldown = 0; // Game cycles until player can issue shares again
     this.dividendPercentage = 0;
     this.dividendTaxPercentage = 50;
     this.issuedShares = 0;
@@ -39430,16 +38706,25 @@ Corporation.prototype.process = function() {
     if (this.storedCycles >= CyclesPerIndustryStateCycle) {
         const state = this.getState();
         const marketCycles = 1;
-        this.storedCycles -= (marketCycles * CyclesPerIndustryStateCycle);
+        const gameCycles = (marketCycles * CyclesPerIndustryStateCycle);
+        this.storedCycles -= gameCycles;
 
         this.divisions.forEach(function(ind) {
             ind.process(marketCycles, state, corp);
         });
 
+        // Process cooldowns
+        if (this.shareSaleCooldown > 0) {
+            this.shareSaleCooldown -= gameCycles;
+        }
+        if (this.issueNewSharesCooldown > 0) {
+            this.issueNewSharesCooldown -= gameCycles;
+        }
+
         //At the start of a new cycle, calculate profits from previous cycle
         if (state === "START") {
-            this.revenue = new decimal_js__WEBPACK_IMPORTED_MODULE_32__[/* default */ "a"](0);
-            this.expenses = new decimal_js__WEBPACK_IMPORTED_MODULE_32__[/* default */ "a"](0);
+            this.revenue = new decimal_js__WEBPACK_IMPORTED_MODULE_33__[/* default */ "a"](0);
+            this.expenses = new decimal_js__WEBPACK_IMPORTED_MODULE_33__[/* default */ "a"](0);
             this.divisions.forEach((ind) => {
                 if (ind.lastCycleRevenue === -Infinity || ind.lastCycleRevenue === Infinity) { return; }
                 if (ind.lastCycleExpenses === -Infinity || ind.lastCycleExpenses === Infinity) { return; }
@@ -39452,7 +38737,7 @@ Corporation.prototype.process = function() {
                 Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("There was an error calculating your Corporations funds and they got reset to 0. " +
                                 "This is a bug. Please report to game developer.<br><br>" +
                                 "(Your funds have been set to $150b for the inconvenience)");
-                this.funds = new decimal_js__WEBPACK_IMPORTED_MODULE_32__[/* default */ "a"](150e9);
+                this.funds = new decimal_js__WEBPACK_IMPORTED_MODULE_33__[/* default */ "a"](150e9);
             }
 
             // Process dividends
@@ -39463,7 +38748,7 @@ Corporation.prototype.process = function() {
                 } else {
                     const totalDividends = (this.dividendPercentage / 100) * cycleProfit;
                     const retainedEarnings = cycleProfit - totalDividends;
-                    const dividendsPerShare = totalDividends / TOTALSHARES;
+                    const dividendsPerShare = totalDividends / this.totalShares;
                     _Player__WEBPACK_IMPORTED_MODULE_15__[/* Player */ "a"].gainMoney(this.numShares * dividendsPerShare * (this.dividendTaxPercentage / 100));
                     this.funds = this.funds.plus(retainedEarnings);
                 }
@@ -39494,7 +38779,7 @@ Corporation.prototype.determineValuation = function() {
     } else {
         val = 10e9 + Math.max(this.funds.toNumber(), 0) / 3; //Base valuation
         if (profit > 0) {
-            val += (profit * 300e3);
+            val += (profit * 315e3);
             val *= (Math.pow(1.1, this.divisions.length));
         } else {
             val = 10e9 * Math.pow(1.1, this.divisions.length);
@@ -39506,26 +38791,31 @@ Corporation.prototype.determineValuation = function() {
 
 Corporation.prototype.getInvestment = function() {
     var val = this.determineValuation(), percShares;
+    let roundMultiplier = 4;
     switch (this.fundingRound) {
         case 0: //Seed
             percShares = 0.10;
+            roundMultiplier = 5;
             break;
         case 1: //Series A
             percShares = 0.35;
+            roundMultiplier = 4;
             break;
         case 2: //Series B
             percShares = 0.25;
+            roundMultiplier = 4;
             break;
         case 3: //Series C
             percShares = 0.20;
+            roundMultiplier = 3.5;
             break;
         case 4:
             return;
     }
-    var funding = val * percShares * 4,
-        investShares = Math.floor(TOTALSHARES * percShares),
-        yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_31__["yesNoBoxGetYesButton"])(),
-        noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_31__["yesNoBoxGetNoButton"])();
+    var funding = val * percShares * roundMultiplier,
+        investShares = Math.floor(INITIALSHARES * percShares),
+        yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_32__["yesNoBoxGetYesButton"])(),
+        noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_32__["yesNoBoxGetNoButton"])();
     yesBtn.innerHTML = "Accept";
     noBtn.innerHML = "Reject";
     yesBtn.addEventListener("click", ()=>{
@@ -39533,12 +38823,12 @@ Corporation.prototype.getInvestment = function() {
         this.funds = this.funds.plus(funding);
         this.numShares -= investShares;
         this.displayCorporationOverviewContent();
-        return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_31__["yesNoBoxClose"])();
+        return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_32__["yesNoBoxClose"])();
     });
     noBtn.addEventListener("click", ()=>{
-        return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_31__["yesNoBoxClose"])();
+        return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_32__["yesNoBoxClose"])();
     });
-    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_31__["yesNoBoxCreate"])("An investment firm has offered you " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(funding, '$0.000a') +
+    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_32__["yesNoBoxCreate"])("An investment firm has offered you " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(funding, '$0.000a') +
                    " in funding in exchange for a " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(percShares*100, "0.000a") +
                    "% stake in the company (" + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(investShares, '0.000a') + " shares).<br><br>" +
                    "Do you accept or reject this offer?<br><br>" +
@@ -39547,7 +38837,7 @@ Corporation.prototype.getInvestment = function() {
 
 Corporation.prototype.goPublic = function() {
     var goPublicPopupId = "cmpy-mgmt-go-public-popup";
-    var initialSharePrice = this.determineValuation() / (TOTALSHARES);
+    var initialSharePrice = this.determineValuation() / (this.totalShares);
     var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("p", {
         innerHTML: "Enter the number of shares you would like to issue " +
                    "for your IPO. These shares will be publicly sold " +
@@ -39562,7 +38852,7 @@ Corporation.prototype.goPublic = function() {
         placeholder: "Shares to issue",
         onkeyup:(e)=>{
             e.preventDefault();
-            if (e.keyCode === 13) {yesBtn.click();}
+            if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_28__["KEY"].ENTER) {yesBtn.click();}
         }
     });
     var br = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("br", {});
@@ -39571,7 +38861,7 @@ Corporation.prototype.goPublic = function() {
         innerText:"Go Public",
         clickListener:()=>{
             var numShares = Math.round(input.value);
-            var initialSharePrice = this.determineValuation() / (TOTALSHARES);
+            var initialSharePrice = this.determineValuation() / (this.totalShares);
             if (isNaN(numShares)) {
                 Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("Invalid value for number of issued shares");
                 return false;
@@ -39586,7 +38876,9 @@ Corporation.prototype.goPublic = function() {
             this.numShares -= numShares;
             this.funds = this.funds.plus(numShares * initialSharePrice);
             this.displayCorporationOverviewContent();
-            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__["removeElementById"])(goPublicPopupId);
+            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__["removeElementById"])(goPublicPopupId);
+            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])(`You took your ${this.name} public and earned ` +
+                            `${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].formatMoney(numShares * initialSharePrice)} in your IPO`);
             return false;
         }
     });
@@ -39594,21 +38886,83 @@ Corporation.prototype.goPublic = function() {
         class:"a-link-button",
         innerText:"Cancel",
         clickListener:()=>{
-            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__["removeElementById"])(goPublicPopupId);
+            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__["removeElementById"])(goPublicPopupId);
             return false;
         }
     });
     Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23__["createPopup"])(goPublicPopupId, [txt, br, input, yesBtn, noBtn]);
 }
 
+Corporation.prototype.getTargetSharePrice = function() {
+    // Note: totalShares - numShares is not the same as issuedShares because
+    // issuedShares does not account for private investors
+    return this.determineValuation() / (2 * (this.totalShares - this.numShares) + 1);
+}
+
 Corporation.prototype.updateSharePrice = function() {
-    var targetPrice = this.determineValuation() / (1.5 * TOTALSHARES - this.numShares);
+    const targetPrice = this.getTargetSharePrice();
     if (this.sharePrice <= targetPrice) {
         this.sharePrice *= (1 + (Math.random() * 0.01));
     } else {
         this.sharePrice *= (1 - (Math.random() * 0.01));
     }
     if (this.sharePrice <= 0.01) {this.sharePrice = 0.01;}
+}
+
+Corporation.prototype.immediatelyUpdateSharePrice = function() {
+    this.sharePrice = this.getTargetSharePrice();
+}
+
+// Calculates how much money will be made and what the resulting stock price
+// will be when the player sells his/her shares
+// @return - [Player profit, final stock price, end shareSalesUntilPriceUpdate property]
+Corporation.prototype.calculateShareSale = function(numShares) {
+    let sharesTracker = numShares;
+    let sharesUntilUpdate = this.shareSalesUntilPriceUpdate;
+    let sharePrice = this.sharePrice;
+    let sharesSold = 0;
+    let profit = 0;
+
+    const maxIterations = Math.ceil(numShares / SHARESPERPRICEUPDATE);
+    if (isNaN(maxIterations) || maxIterations > 10e6) {
+        console.error(`Something went wrong or unexpected when calculating share sale. Maxiterations calculated to be ${maxIterations}`);
+        return;
+    }
+
+    for (let i = 0; i < maxIterations; ++i) {
+        if (sharesTracker < sharesUntilUpdate) {
+            profit += (sharePrice * sharesTracker);
+            sharesUntilUpdate -= sharesTracker;
+            break;
+        } else {
+            profit += (sharePrice * sharesUntilUpdate);
+            sharesUntilUpdate = SHARESPERPRICEUPDATE;
+            sharesTracker -= sharesUntilUpdate;
+            sharesSold += sharesUntilUpdate;
+
+            // Calculate what new share price would be
+            sharePrice = this.determineValuation() / (2 * (this.totalShares + sharesSold - this.numShares));
+        }
+    }
+
+    return [profit, sharePrice, sharesUntilUpdate];
+}
+
+Corporation.prototype.convertCooldownToString = function(cd) {
+    // The cooldown value is based on game cycles. Convert to a simple string
+    const CyclesPerSecond = 1000 / _Constants__WEBPACK_IMPORTED_MODULE_11__["CONSTANTS"].MilliPerCycle;
+    const seconds = cd / 5;
+
+    const SecondsPerMinute = 60;
+    const SecondsPerHour = 3600;
+
+    if (seconds > SecondsPerHour) {
+        return `${Math.floor(seconds / SecondsPerHour)} hour(s)`;
+    } else if (seconds > SecondsPerMinute) {
+        return `${Math.floor(seconds / SecondsPerMinute)} minute(s)`;
+    } else {
+        return `${Math.floor(seconds)} second(s)`;
+    }
 }
 
 //One time upgrades that unlock new features
@@ -39720,6 +39074,9 @@ var companyManagementDiv, companyManagementHeaderTabs, companyManagementPanel,
     currentCityUi,
     corporationUnlockUpgrades, corporationUpgrades,
 
+    sellSharesButton, sellSharesButtonTooltip,
+    issueNewSharesButton, issueNewSharesButtonTooltip,
+
     //Industry Overview Panel
     industryOverviewPanel, industryOverviewText,
 
@@ -39761,7 +39118,7 @@ Corporation.prototype.createUI = function() {
 
 Corporation.prototype.updateUIHeaderTabs = function() {
     if (companyManagementHeaderTabs) {
-        Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_28__["removeChildrenFromElement"])(companyManagementHeaderTabs);
+        Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_29__["removeChildrenFromElement"])(companyManagementHeaderTabs);
     } else {
         console.log("ERROR: Header tabs div has not yet been created when Corporation.updateUIHeaderTabs() is called");
         return;
@@ -39816,7 +39173,7 @@ Corporation.prototype.updateUIHeaderTabs = function() {
                 pattern:"[a-zA-Z0-9-_]",
                 onkeyup:(e)=>{
                     e.preventDefault();
-                    if (e.keyCode === 13) {yesBtn.click();}
+                    if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_28__["KEY"].ENTER) {yesBtn.click();}
                 }
             });
             var nameLabel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("label", {
@@ -39849,7 +39206,7 @@ Corporation.prototype.updateUIHeaderTabs = function() {
                         this.divisions.push(newInd);
                         this.updateUIHeaderTabs();
                         this.selectHeaderTab(headerTabs[headerTabs.length-2]);
-                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__["removeElementById"])("cmpy-mgmt-expand-industry-popup");
+                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__["removeElementById"])("cmpy-mgmt-expand-industry-popup");
                         this.displayDivisionContent(newInd, _Locations__WEBPACK_IMPORTED_MODULE_14__["Locations"].Sector12);
                     }
                     return false;
@@ -39995,16 +39352,16 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
     if (this.public) {
         //Sell share buttons
         var sellShares = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("a", {
-            class:"a-link-button", innerText:"Sell Shares", display:"inline-block",
-            tooltip: "Sell your shares in the company. The money earned from selling your " +
-                     "shares goes into your personal account, not the Corporation's. " +
-                     "This is one of the only ways to profit from your business venture.",
-            clickListener:()=>{
+            class:"a-link-button tooltip", innerText:"Sell Shares", display:"inline-block",
+            clickListener: () => {
                 var popupId = "cmpy-mgmt-sell-shares-popup";
                 var currentStockPrice = this.sharePrice;
                 var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("p", {
                     innerHTML: "Enter the number of shares you would like to sell. The money from " +
-                               "selling your shares will go directly to you (NOT your Corporation). " +
+                               "selling your shares will go directly to you (NOT your Corporation).<br><br>" +
+                               "Selling your shares will cause your corporation's stock price to fall due to " +
+                               "dilution. Furthermore, selling a large number of shares all at once will have an immediate effect " +
+                               "in reducing your stock price.<br><br>" +
                                "The current price of your " +
                                "company's stock is " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(currentStockPrice, "$0.000a"),
                 });
@@ -40018,8 +39375,12 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                         } else if (numShares > this.numShares) {
                             profitIndicator.innerText = "You don't have this many shares to sell!";
                         } else {
+                            const stockSaleResults = this.calculateShareSale(numShares);
+                            const profit = stockSaleResults[0];
+                            const newSharePrice = stockSaleResults[1];
+                            const newSharesUntilUpdate = stockSaleResults[2];
                             profitIndicator.innerText = "Sell " + numShares + " shares for a total of " +
-                                                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(numShares * currentStockPrice, '$0.000a');
+                                                        _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(profit, '$0.000a');
                         }
                     }
                 });
@@ -40032,6 +39393,11 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                         } else if (shares > this.numShares) {
                             Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("ERROR: You don't have this many shares to sell");
                         } else {
+                            const stockSaleResults = this.calculateShareSale(shares);
+                            const profit = stockSaleResults[0];
+                            const newSharePrice = stockSaleResults[1];
+                            const newSharesUntilUpdate = stockSaleResults[2];
+
                             this.numShares -= shares;
                             if (isNaN(this.issuedShares)) {
                                 console.log("ERROR: Corporation issuedShares is NaN: " + this.issuedShares);
@@ -40044,8 +39410,15 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                                 }
                             }
                             this.issuedShares += shares;
-                            _Player__WEBPACK_IMPORTED_MODULE_15__[/* Player */ "a"].gainMoney(shares * this.sharePrice);
-                            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__["removeElementById"])(popupId);
+                            this.sharePrice = newSharePrice;
+                            this.shareSalesUntilPriceUpdate = newSharesUntilUpdate;
+                            this.shareSaleCooldown = SellSharesCooldown;
+                            _Player__WEBPACK_IMPORTED_MODULE_15__[/* Player */ "a"].gainMoney(profit);
+                            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__["removeElementById"])(popupId);
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])(`Sold ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].formatMoney(shares, "0.000a")} shares for ` +
+                                            `${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].formatMoney(profit, "$0.000a")}. ` +
+                                            `The corporation's stock price fell to ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].formatMoney(this.sharePrice)} ` +
+                                            `as a result of dilution.`);
                             return false;
                         }
 
@@ -40054,7 +39427,7 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                 var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("a", {
                     class:"a-link-button", innerText:"Cancel", display:"inline-block",
                     clickListener:()=>{
-                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__["removeElementById"])(popupId);
+                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__["removeElementById"])(popupId);
                         return false;
                     }
                 });
@@ -40062,18 +39435,29 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
             }
         });
 
+        sellSharesButtonTooltip = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("span", {
+            class: "tooltiptext",
+            innerText: "Sell your shares in the company. The money earned from selling your " +
+                       "shares goes into your personal account, not the Corporation's. " +
+                       "This is one of the only ways to profit from your business venture.",
+        });
+        sellShares.appendChild(sellSharesButtonTooltip);
+
         //Buyback shares button
         var buybackShares = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("a", {
             class:"a-link-button", innerText:"Buyback shares", display:"inline-block",
             tooltip:"Buy back shares you that previously issued or sold at market price.",
             clickListener:()=>{
                 var popupId = "cmpy-mgmt-buyback-shares-popup";
-                var currentStockPrice = this.sharePrice;
+                const currentStockPrice = this.sharePrice;
+                const buybackPrice = currentStockPrice * 1.1;
                 var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("p", {
-                    innerHTML: "Enter the number of shares you would like to buy back at market price. To purchase " +
-                               "these shares, you must use your own money (NOT your Corporation's funds). " +
-                               "The current price of your " +
-                               "company's stock is " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(currentStockPrice, "$0.000a") +
+                    innerHTML: "Enter the number of outstanding shares you would like to buy back. " +
+                               "These shares must be bought at a 10% premium. However, " +
+                               "repurchasing shares from the market tends to lead to an increase in stock price.<br><bR>" +
+                               "To purchase these shares, you must use your own money (NOT your Corporation's funds).<br><br>" +
+                               "The current buyback price of your company's stock is " +
+                               _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(buybackPrice, "$0.000a") +
                                ". Your company currently has " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_25__["formatNumber"])(this.issuedShares, 3) + " outstanding stock shares",
                 });
                 var costIndicator = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("p", {});
@@ -40088,9 +39472,8 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                             costIndicator.innerText = "There are not this many shares available to buy back. " +
                                                       "There are only " + this.issuedShares + " outstanding shares.";
                         } else {
-                            console.log("here");
                             costIndicator.innerText = "Purchase " + numShares + " shares for a total of " +
-                                                      _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(numShares * currentStockPrice, '$0.000a');
+                                                      _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(numShares * buybackPrice, '$0.000a');
                         }
                     }
                 });
@@ -40098,14 +39481,15 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                     class:"a-link-button", innerText:"Buy shares", display:"inline-block",
                     clickListener:()=>{
                         var shares = Math.round(input.value);
-                        var tempStockPrice = this.sharePrice;
+                        const tempStockPrice = this.sharePrice;
+                        const buybackPrice = tempStockPrice * 1.1;
                         if (isNaN(shares) || shares <= 0) {
                             Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("ERROR: Invalid value for number of shares");
                         } else if (shares > this.issuedShares) {
                             Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("ERROR: There are not this many oustanding shares to buy back");
-                        } else if (shares * tempStockPrice > _Player__WEBPACK_IMPORTED_MODULE_15__[/* Player */ "a"].money) {
+                        } else if (shares * buybackPrice > _Player__WEBPACK_IMPORTED_MODULE_15__[/* Player */ "a"].money) {
                             Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("ERROR: You do not have enough money to purchase this many shares (you need " +
-                                            _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(shares * tempStockPrice, "$0.000a") + ")");
+                                            _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(shares * buybackPrice, "$0.000a") + ")");
                         } else {
                             this.numShares += shares;
                             if (isNaN(this.issuedShares)) {
@@ -40119,9 +39503,8 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                                 }
                             }
                             this.issuedShares -= shares;
-                            _Player__WEBPACK_IMPORTED_MODULE_15__[/* Player */ "a"].loseMoney(shares * tempStockPrice);
-                            //TODO REMOVE from Player money
-                            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__["removeElementById"])(popupId);
+                            _Player__WEBPACK_IMPORTED_MODULE_15__[/* Player */ "a"].loseMoney(shares * buybackPrice);
+                            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__["removeElementById"])(popupId);
                         }
                         return false;
 
@@ -40132,7 +39515,7 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                     innerText:"Cancel",
                     display:"inline-block",
                     clickListener:()=>{
-                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__["removeElementById"])(popupId);
+                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__["removeElementById"])(popupId);
                         return false;
                     }
                 });
@@ -40143,121 +39526,142 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
         companyManagementPanel.appendChild(sellShares);
         companyManagementPanel.appendChild(buybackShares);
 
-        //If your Corporation is big enough, buy faction influence through bribes
-        var canBribe = this.determineValuation() >= BribeThreshold;
-        var bribeFactions = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("a", {
-            class: canBribe ? "a-link-button" : "a-link-button-inactive",
-            innerText:"Bribe Factions", display:"inline-block",
-            tooltip:canBribe
-                    ? "Use your Corporations power and influence to bribe Faction leaders in exchange for reputation"
-                    : "Your Corporation is not powerful enough to bribe Faction leaders",
-            clickListener:()=>{
-                var popupId = "cmpy-mgmt-bribe-factions-popup";
-                var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("p", {
-                    innerText:"You can use Corporation funds or stock shares to bribe Faction Leaders in exchange for faction reputation"
-                });
-                var factionSelector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("select", {margin:"3px"});
-                for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_15__[/* Player */ "a"].factions.length; ++i) {
-                    var facName = _Player__WEBPACK_IMPORTED_MODULE_15__[/* Player */ "a"].factions[i];
-                    factionSelector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("option", {
-                        text:facName, value:facName
-                    }));
-                }
-                var repGainText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("p");
-                var stockSharesInput;
-                var moneyInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("input", {
-                    type:"number", placeholder:"Corporation funds", margin:"5px",
-                    inputListener:()=>{
-                        var money = moneyInput.value == null || moneyInput.value == "" ? 0 : parseFloat(moneyInput.value);
-                        var stockPrice = this.sharePrice;
-                        var stockShares = stockSharesInput.value == null || stockSharesInput.value == "" ? 0 : Math.round(parseFloat(stockSharesInput.value));
-                        if (isNaN(money) || isNaN(stockShares) || money < 0 || stockShares < 0) {
-                            repGainText.innerText = "ERROR: Invalid value(s) entered";
-                        } else if (this.funds.lt(money)) {
-                            repGainText.innerText = "ERROR: You do not have this much money to bribe with";
-                        } else if (this.stockShares > this.numShares) {
-                            repGainText.innerText = "ERROR: You do not have this many shares to bribe with";
-                        } else {
+        sellSharesButton = sellShares;
 
-                            var totalAmount = Number(money) + (stockShares * stockPrice);
-                            var repGain = totalAmount / BribeToRepRatio;
-                            repGainText.innerText = "You will gain " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_25__["formatNumber"])(repGain, 0) +
-                                                    " reputation with " +
-                                                    factionSelector.options[factionSelector.selectedIndex].value +
-                                                    " with this bribe";
-                        }
-                    }
+        // Issue new Shares
+        Object(_utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_21__["appendLineBreaks"])(companyManagementPanel, 1);
+        const issueNewShares = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("a", {
+            class: "std-button tooltip",
+            display: "inline-block",
+            innerText: "Issue New Shares",
+            clickListener: () => {
+                const popupId = "cmpy-mgmt-issue-new-shares-popup";
+                const maxNewSharesUnrounded = Math.round(this.totalShares * 0.2);
+                const maxNewShares = maxNewSharesUnrounded - (maxNewSharesUnrounded % 1e6);
+
+                const descText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("p", {
+                    innerHTML:  "You can issue new equity shares (i.e. stocks) in order to raise " +
+                                "capital for your corporation.<br><br>" +
+                                `&nbsp;* You can issue at most ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(maxNewShares, "0.000a")} new shares<br>` +
+                                `&nbsp;* New shares are sold at a 10% discount<br>` +
+                                `&nbsp;* You can only issue new shares once every 12 hours<br>` +
+                                `&nbsp;* Issuing new shares causes dilution, resulting in a decrease in stock price and lower dividends per share<br>` +
+                                `&nbsp;* Number of new shares issued must be a multiple of 10 million<br><br>` +
+                                `When you choose to issue new equity, private shareholders have first priority for up to 50% of the new shares. ` +
+                                `If they choose to exercise this option, these newly issued shares become private, restricted shares, which means ` +
+                                `you cannot buy them back.`,
                 });
-                stockSharesInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("input", {
-                    type:"number", placeholder:"Stock Shares", margin: "5px",
-                    inputListener:()=>{
-                        var money = moneyInput.value == null || moneyInput.value == "" ? 0 : parseFloat(moneyInput.value);
-                        var stockPrice = this.sharePrice;
-                        var stockShares = stockSharesInput.value == null || stockSharesInput.value == "" ? 0 : Math.round(stockSharesInput.value);
-                        if (isNaN(money) || isNaN(stockShares) || money < 0 || stockShares < 0) {
-                            repGainText.innerText = "ERROR: Invalid value(s) entered";
-                        } else if (this.funds.lt(money)) {
-                            repGainText.innerText = "ERROR: You do not have this much money to bribe with";
-                        } else if (this.stockShares > this.numShares) {
-                            repGainText.innerText = "ERROR: You do not have this many shares to bribe with";
+
+                let issueBtn, newSharesInput;
+                const dynamicText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("p", {
+                    display: "block",
+                });
+
+                function updateDynamicText(corp) {
+                    const newSharePrice = Math.round(corp.sharePrice * 0.9);
+                    let newShares = parseInt(newSharesInput.value);
+                    if (isNaN(newShares)) {
+                        dynamicText.innerText = "Invalid input";
+                        return;
+                    }
+
+                    // Round to nearest ten-millionth
+                    newShares /= 10e6;
+                    newShares = Math.round(newShares) * 10e6;
+
+                    if (newShares < 10e6) {
+                        dynamicText.innerText = "Must issue at least 10 million new shares";
+                        return;
+                    }
+
+                    if (newShares > maxNewShares) {
+                        dynamicText.innerText = "You cannot issue that many shares";
+                        return;
+                    }
+
+                    dynamicText.innerText = `Issue ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(newShares, "0.000a")} new shares ` +
+                                            `for ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].formatMoney(newShares * newSharePrice)}?`
+                }
+                newSharesInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("input", {
+                    margin: "5px",
+                    placeholder: "# New Shares",
+                    type: "number",
+                    onkeyup: (e) => {
+                        e.preventDefault();
+                        if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_28__["KEY"].ENTER) {
+                            issueBtn.click();
                         } else {
-                            var totalAmount = money + (stockShares * stockPrice);
-                            var repGain = totalAmount / BribeToRepRatio;
-                            console.log("repGain: " + repGain);
-                            repGainText.innerText = "You will gain " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_25__["formatNumber"])(repGain, 0) +
-                                                    " reputation with " +
-                                                    factionSelector.options[factionSelector.selectedIndex].value +
-                                                    " with this bribe";
+                            updateDynamicText(this);
                         }
                     }
                 });
-                var confirmButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("a", {
-                    class:"a-link-button", innerText:"Bribe", display:"inline-block",
-                    clickListener:()=>{
-                        var money = moneyInput.value == null || moneyInput.value == "" ? 0 : parseFloat(moneyInput.value);
-                        var stockPrice = this.sharePrice;
-                        var stockShares = stockSharesInput.value == null || stockSharesInput.value == ""? 0 : Math.round(parseFloat(stockSharesInput.value));
-                        var fac = _Faction_Factions__WEBPACK_IMPORTED_MODULE_12__["Factions"][factionSelector.options[factionSelector.selectedIndex].value];
-                        if (fac == null) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("ERROR: You must select a faction to bribe");
-                            return false;
+
+                issueBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("a", {
+                    class: "std-button",
+                    display: "inline-block",
+                    innerText: "Issue New Shares",
+                    clickListener: () => {
+                        const newSharePrice = Math.round(this.sharePrice * 0.9);
+                        let newShares = parseInt(newSharesInput.value);
+                        if (isNaN(newShares)) {
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("Invalid input for number of new shares");
+                            return;
                         }
-                        if (isNaN(money) || isNaN(stockShares) || money < 0 || stockShares < 0) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("ERROR: Invalid value(s) entered");
-                        } else if (this.funds.lt(money)) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("ERROR: You do not have this much money to bribe with");
-                        } else if (stockShares > this.numShares) {
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("ERROR: You do not have this many shares to bribe with");
-                        } else {
-                            var totalAmount = money + (stockShares * stockPrice);
-                            var repGain = totalAmount / BribeToRepRatio;
-                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("You gained " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_25__["formatNumber"])(repGain, 0) +
-                                            " reputation with " + fac.name  + " by bribing them.");
-                            fac.playerReputation += repGain;
-                            this.funds = this.funds.minus(money);
-                            this.numShares -= stockShares;
-                            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__["removeElementById"])(popupId);
-                            return false;
+
+                        // Round to nearest ten-millionth
+                        newShares = Math.round(newShares / 10e6) * 10e6;
+
+                        if (newShares < 10e6 || newShares > maxNewShares) {
+                            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("Invalid input for number of new shares");
+                            return;
                         }
-                    }
-                });
-                var cancelButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("a", {
-                    class:"a-link-button", innerText:"Cancel", display:"inline-block",
-                    clickListener:()=>{
-                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__["removeElementById"])(popupId);
+
+                        const profit = newShares * newSharePrice;
+                        this.issueNewSharesCooldown = IssueNewSharesCooldown;
+                        this.totalShares += newShares;
+
+                        // Determine how many are bought by private investors
+                        // Private investors get up to 50% at most
+                        // Round # of private shares to the nearest millionth
+                        let privateShares = Object(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_26__["getRandomInt"])(0, Math.round(newShares / 2));
+                        privateShares = Math.round(privateShares / 1e6) * 1e6;
+
+                        this.issuedShares += (newShares - privateShares);
+                        this.funds = this.funds.plus(profit);
+                        this.immediatelyUpdateSharePrice();
+
+                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__["removeElementById"])(popupId);
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])(`Issued ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(newShares, "0.000a")} and raised ` +
+                                        `${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].formatMoney(profit)}. ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(privateShares, "0.000a")} ` +
+                                        `of these shares were bought by private investors.<br><br>` +
+                                        `Stock price decreased to ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].formatMoney(this.sharePrice)}`);
                         return false;
                     }
                 });
 
-                Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23__["createPopup"])(popupId, [txt, factionSelector, repGainText,
-                                      moneyInput, stockSharesInput, confirmButton, cancelButton]);
+                const cancelBtn = Object(_utils_uiHelpers_createPopupCloseButton__WEBPACK_IMPORTED_MODULE_24__["createPopupCloseButton"])(popupId, {
+                    class: "std-button",
+                    display: "inline-block",
+                    innerText: "Cancel",
+                });
+
+                Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23__["createPopup"])(popupId, [descText, dynamicText, newSharesInput, issueBtn, cancelBtn]);
+                newSharesInput.focus();
             }
         });
-        companyManagementPanel.appendChild(bribeFactions);
+        issueNewSharesButtonTooltip = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("span", {
+            class: "tooltiptext",
+            innerText: "Issue new equity shares to raise capital",
+        });
+        issueNewShares.appendChild(issueNewSharesButtonTooltip);
+
+        companyManagementPanel.appendChild(issueNewShares);
+
+        issueNewSharesButton = issueNewShares;
 
         // Set Stock Dividends
         const issueDividends = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("a", {
-            class: "a-link-button",
+            class: "std-button",
             display: "inline-block",
             innerText: "Issue Dividends",
             tooltip: "Manage the dividends that are paid out to shareholders (including yourself)",
@@ -40286,7 +39690,7 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                     type: "number",
                     onkeyup: (e) => {
                         e.preventDefault();
-                        if (e.keyCode === 13) {allocateBtn.click();}
+                        if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_28__["KEY"].ENTER) {allocateBtn.click();}
                     }
                 });
 
@@ -40302,7 +39706,7 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
 
                         this.dividendPercentage = percentage;
 
-                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__["removeElementById"])(popupId);
+                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__["removeElementById"])(popupId);
                         return false;
                     }
                 });
@@ -40356,6 +39760,120 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
         companyManagementPanel.appendChild(findInvestors);
         companyManagementPanel.appendChild(goPublic);
     }
+
+    Object(_utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_21__["appendLineBreaks"])(companyManagementPanel, 1);
+
+    //If your Corporation is big enough, buy faction influence through bribes
+    var canBribe = this.determineValuation() >= BribeThreshold;
+    var bribeFactions = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("a", {
+        class: canBribe ? "a-link-button" : "a-link-button-inactive",
+        innerText:"Bribe Factions", display:"inline-block",
+        tooltip:canBribe
+                ? "Use your Corporations power and influence to bribe Faction leaders in exchange for reputation"
+                : "Your Corporation is not powerful enough to bribe Faction leaders",
+        clickListener:()=>{
+            var popupId = "cmpy-mgmt-bribe-factions-popup";
+            var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("p", {
+                innerText:"You can use Corporation funds or stock shares to bribe Faction Leaders in exchange for faction reputation"
+            });
+            var factionSelector = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("select", {margin:"3px"});
+            for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_15__[/* Player */ "a"].factions.length; ++i) {
+                var facName = _Player__WEBPACK_IMPORTED_MODULE_15__[/* Player */ "a"].factions[i];
+                factionSelector.add(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("option", {
+                    text:facName, value:facName
+                }));
+            }
+            var repGainText = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("p");
+            var stockSharesInput;
+            var moneyInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("input", {
+                type:"number", placeholder:"Corporation funds", margin:"5px",
+                inputListener:()=>{
+                    var money = moneyInput.value == null || moneyInput.value == "" ? 0 : parseFloat(moneyInput.value);
+                    var stockPrice = this.sharePrice;
+                    var stockShares = stockSharesInput.value == null || stockSharesInput.value == "" ? 0 : Math.round(parseFloat(stockSharesInput.value));
+                    if (isNaN(money) || isNaN(stockShares) || money < 0 || stockShares < 0) {
+                        repGainText.innerText = "ERROR: Invalid value(s) entered";
+                    } else if (this.funds.lt(money)) {
+                        repGainText.innerText = "ERROR: You do not have this much money to bribe with";
+                    } else if (this.stockShares > this.numShares) {
+                        repGainText.innerText = "ERROR: You do not have this many shares to bribe with";
+                    } else {
+
+                        var totalAmount = Number(money) + (stockShares * stockPrice);
+                        var repGain = totalAmount / BribeToRepRatio;
+                        repGainText.innerText = "You will gain " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_25__["formatNumber"])(repGain, 0) +
+                                                " reputation with " +
+                                                factionSelector.options[factionSelector.selectedIndex].value +
+                                                " with this bribe";
+                    }
+                }
+            });
+            stockSharesInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("input", {
+                type:"number", placeholder:"Stock Shares", margin: "5px",
+                inputListener:()=>{
+                    var money = moneyInput.value == null || moneyInput.value == "" ? 0 : parseFloat(moneyInput.value);
+                    var stockPrice = this.sharePrice;
+                    var stockShares = stockSharesInput.value == null || stockSharesInput.value == "" ? 0 : Math.round(stockSharesInput.value);
+                    if (isNaN(money) || isNaN(stockShares) || money < 0 || stockShares < 0) {
+                        repGainText.innerText = "ERROR: Invalid value(s) entered";
+                    } else if (this.funds.lt(money)) {
+                        repGainText.innerText = "ERROR: You do not have this much money to bribe with";
+                    } else if (this.stockShares > this.numShares) {
+                        repGainText.innerText = "ERROR: You do not have this many shares to bribe with";
+                    } else {
+                        var totalAmount = money + (stockShares * stockPrice);
+                        var repGain = totalAmount / BribeToRepRatio;
+                        console.log("repGain: " + repGain);
+                        repGainText.innerText = "You will gain " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_25__["formatNumber"])(repGain, 0) +
+                                                " reputation with " +
+                                                factionSelector.options[factionSelector.selectedIndex].value +
+                                                " with this bribe";
+                    }
+                }
+            });
+            var confirmButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("a", {
+                class:"a-link-button", innerText:"Bribe", display:"inline-block",
+                clickListener:()=>{
+                    var money = moneyInput.value == null || moneyInput.value == "" ? 0 : parseFloat(moneyInput.value);
+                    var stockPrice = this.sharePrice;
+                    var stockShares = stockSharesInput.value == null || stockSharesInput.value == ""? 0 : Math.round(parseFloat(stockSharesInput.value));
+                    var fac = _Faction_Factions__WEBPACK_IMPORTED_MODULE_12__["Factions"][factionSelector.options[factionSelector.selectedIndex].value];
+                    if (fac == null) {
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("ERROR: You must select a faction to bribe");
+                        return false;
+                    }
+                    if (isNaN(money) || isNaN(stockShares) || money < 0 || stockShares < 0) {
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("ERROR: Invalid value(s) entered");
+                    } else if (this.funds.lt(money)) {
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("ERROR: You do not have this much money to bribe with");
+                    } else if (stockShares > this.numShares) {
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("ERROR: You do not have this many shares to bribe with");
+                    } else {
+                        var totalAmount = money + (stockShares * stockPrice);
+                        var repGain = totalAmount / BribeToRepRatio;
+                        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("You gained " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_25__["formatNumber"])(repGain, 0) +
+                                        " reputation with " + fac.name  + " by bribing them.");
+                        fac.playerReputation += repGain;
+                        this.funds = this.funds.minus(money);
+                        this.numShares -= stockShares;
+                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__["removeElementById"])(popupId);
+                        return false;
+                    }
+                }
+            });
+            var cancelButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("a", {
+                class:"a-link-button", innerText:"Cancel", display:"inline-block",
+                clickListener:()=>{
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__["removeElementById"])(popupId);
+                    return false;
+                }
+            });
+
+            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23__["createPopup"])(popupId, [txt, factionSelector, repGainText,
+                                  moneyInput, stockSharesInput, confirmButton, cancelButton]);
+        }
+    });
+    companyManagementPanel.appendChild(bribeFactions);
 
     //Update overview text
     this.updateCorporationOverviewContent();
@@ -40458,15 +39976,15 @@ Corporation.prototype.updateCorporationOverviewContent = function() {
     if (this.dividendPercentage > 0 && profit > 0) {
         const totalDividends = (this.dividendPercentage / 100) * profit;
         const retainedEarnings = profit - totalDividends;
-        const dividendsPerShare = totalDividends / TOTALSHARES;
+        const dividendsPerShare = totalDividends / this.totalShares;
         const playerEarnings = this.numShares * dividendsPerShare;
 
-        dividendStr = `Dividend Percentage: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(this.dividendPercentage / 100, "0%")}<br>` +
-                      `Retained Profits (after dividends): ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(retainedEarnings, "$0.000a")} / s<br>` +
+        dividendStr = `Retained Profits (after dividends): ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(retainedEarnings, "$0.000a")} / s<br><br>` +
+                      `Dividend Percentage: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(this.dividendPercentage / 100, "0%")}<br>` +
                       `Dividends per share: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(dividendsPerShare, "$0.000a")} / s<br>` +
                       `Your earnings as a shareholder (Pre-Tax): ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(playerEarnings, "$0.000a")} / s<br>` +
                       `Dividend Tax Rate: ${this.dividendTaxPercentage}%<br>` +
-                      `Your earnings as a shareholder (Post-Tax): ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(playerEarnings * (this.dividendTaxPercentage / 100), "$0.000a")} / s<br>`;
+                      `Your earnings as a shareholder (Post-Tax): ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(playerEarnings * (this.dividendTaxPercentage / 100), "$0.000a")} / s<br><br>`;
     }
 
     var txt = "Total Funds: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(this.funds.toNumber(), '$0.000a') + "<br>" +
@@ -40476,13 +39994,17 @@ Corporation.prototype.updateCorporationOverviewContent = function() {
               dividendStr +
               "Publicly Traded: " + (this.public ? "Yes" : "No") + "<br>" +
               "Owned Stock Shares: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(this.numShares, '0.000a') + "<br>" +
-              "Stock Price: " + (this.public ? "$" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_25__["formatNumber"])(this.sharePrice, 2) : "N/A") + "<br><br>";
+              "Stock Price: " + (this.public ? "$" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_25__["formatNumber"])(this.sharePrice, 2) : "N/A") + "<br>" +
+              "<p class='tooltip'>Total Stock Shares: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(this.totalShares, "0.000a") +
+              "<span class='tooltiptext'>" +
+                  `Outstanding Shares: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(this.issuedShares, "0.000a")}<br>` +
+                  `Private Shares: ${_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(this.totalShares - this.issuedShares - this.numShares, "0.000a")}` +
+              "</span></p><br><br>";
 
     const storedTime = this.storedCycles * _Constants__WEBPACK_IMPORTED_MODULE_11__["CONSTANTS"].MilliPerCycle / 1000;
     if (storedTime > 15) {
         txt += `Bonus Time: ${storedTime} seconds<br><br>`;
     }
-
 
     var prodMult        = this.getProductionMultiplier(),
         storageMult     = this.getStorageMultiplier(),
@@ -40503,6 +40025,41 @@ Corporation.prototype.updateCorporationOverviewContent = function() {
     if (salesMult > 1)      {txt += "Sales Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_25__["formatNumber"])(salesMult, 3) + "<br>";}
     if (sciResMult > 1)     {txt += "Scientific Research Multiplier: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_25__["formatNumber"])(sciResMult, 3) + "<br>";}
     p.innerHTML = txt;
+
+    // Disable buttons for cooldowns
+    if (sellSharesButton instanceof Element) {
+        if (this.shareSaleCooldown <= 0) {
+            sellSharesButton.className = "std-button tooltip";
+        } else {
+            sellSharesButton.className = "a-link-button-inactive tooltip";
+        }
+    }
+
+    if (sellSharesButtonTooltip instanceof Element) {
+        if (this.shareSaleCooldown <= 0) {
+            sellSharesButtonTooltip.innerText = "Sell your shares in the company. The money earned from selling your " +
+                                                "shares goes into your personal account, not the Corporation's. " +
+                                                "This is one of the only ways to profit from your business venture.";
+        } else {
+            sellSharesButtonTooltip.innerText = "Cannot sell shares for " + this.convertCooldownToString(this.shareSaleCooldown);
+        }
+    }
+
+    if (issueNewSharesButton instanceof Element) {
+        if (this.issueNewSharesCooldown <= 0) {
+            issueNewSharesButton.className = "std-button tooltip";
+        } else {
+            issueNewSharesButton.className = "a-link-button-inactive tooltip";
+        }
+    }
+
+    if (issueNewSharesButtonTooltip instanceof Element) {
+        if (this.issueNewSharesCooldown <= 0) {
+            issueNewSharesButtonTooltip.innerText = "Issue new equity shares to raise capital"
+        } else {
+            issueNewSharesButtonTooltip.innerText = "Cannot issue new shares for " + this.convertCooldownToString(this.issueNewSharesCooldown);
+        }
+    }
 }
 
 Corporation.prototype.displayDivisionContent = function(division, city) {
@@ -40556,7 +40113,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                         });
                         this.displayDivisionContent(division, city);
                     }
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__["removeElementById"])(popupId);
                     return false;
                 }
             });
@@ -40780,7 +40337,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                             });
                             this.funds = this.funds.minus(designInvest + marketingInvest);
                             division.products[product.name] = product;
-                            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__["removeElementById"])(popupId);
+                            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__["removeElementById"])(popupId);
                         }
                         //this.updateUIContent();
                         this.displayDivisionContent(division, city);
@@ -40791,7 +40348,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                     class:"a-link-button",
                     innerText:"Cancel",
                     clickListener:()=>{
-                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__["removeElementById"])(popupId);
+                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__["removeElementById"])(popupId);
                         return false;
                     }
                 })
@@ -40900,7 +40457,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                         Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("Office space increased! It can now hold " + office.size + " employees");
                         this.updateUIContent();
                     }
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__["removeElementById"])(popupId);
                     return false;
                 }
             });
@@ -40917,7 +40474,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                         Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("Office space increased! It can now hold " + office.size + " employees");
                         this.updateUIContent();
                     }
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__["removeElementById"])(popupId);
                     return false;
                 }
             });
@@ -40934,14 +40491,14 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                         Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("Office space increased! It can now hold " + office.size + " employees");
                         this.updateUIContent();
                     }
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__["removeElementById"])(popupId);
                     return false;
                 }
             });
             var cancelBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("a", {
                 class:"a-link-button", innerText:"Cancel", display:"inline-block", margin:"4px",
                 clickListener:()=>{
-                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__["removeElementById"])(popupId);
+                    Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__["removeElementById"])(popupId);
                     return false;
                 }
             })
@@ -40979,7 +40536,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                     },
                     onkeyup:(e)=>{
                         e.preventDefault();
-                        if (e.keyCode === 13) {confirmBtn.click();}
+                        if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_28__["KEY"].ENTER) {confirmBtn.click();}
                     }
                 });
                 confirmBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("a", {
@@ -41001,7 +40558,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                                 }
                                 Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("You threw a party for the office! The morale and happiness " +
                                                 "of each employee increased by " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_25__["formatNumber"])((mult-1) * 100, 2) + "%.");
-                                Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__["removeElementById"])(popupId);
+                                Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__["removeElementById"])(popupId);
                             }
                         }
                         return false;
@@ -41012,7 +40569,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                     display:"inline-block",
                     innerText:"Cancel",
                     clickListener:()=>{
-                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__["removeElementById"])(popupId);
+                        Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__["removeElementById"])(popupId);
                         return false;
                     }
                 });
@@ -41045,7 +40602,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                 var name = selector.options[selector.selectedIndex].text;
                 for (var i = 0; i < office.employees.length; ++i) {
                     if (office.employees[i].name === name) {
-                        Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_28__["removeChildrenFromElement"])(industryIndividualEmployeeInfo);
+                        Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_29__["removeChildrenFromElement"])(industryIndividualEmployeeInfo);
                         office.employees[i].createUI(industryIndividualEmployeeInfo, this, division);
                         return;
                     }
@@ -41207,7 +40764,7 @@ Corporation.prototype.updateDivisionContent = function(division) {
 
     }
 
-    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_28__["removeChildrenFromElement"])(industryOverviewText);
+    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_29__["removeChildrenFromElement"])(industryOverviewText);
     industryOverviewText.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__["createElement"])("p", {
         innerHTML:"Industry: " + division.type + " (Corp Funds: " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__["numeralWrapper"].format(this.funds.toNumber(), "$0.000a") + ")<br><br>" +
                   "Awareness: " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_25__["formatNumber"])(division.awareness, 3) + "<br>" +
@@ -41345,7 +40902,7 @@ Corporation.prototype.selectCityTab = function(activeTab, city) {
 
 Corporation.prototype.clearUI = function() {
     //Delete everything
-    if (companyManagementDiv != null) {Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_30__["removeElementById"])(companyManagementDiv.id);}
+    if (companyManagementDiv != null) {Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__["removeElementById"])(companyManagementDiv.id);}
 
     //Reset global DOM variables
     companyManagementDiv        = null;
@@ -41354,6 +40911,11 @@ Corporation.prototype.clearUI = function() {
 
     corporationUnlockUpgrades   = null;
     corporationUpgrades         = null;
+
+    sellSharesButton            = null;
+    issueNewSharesButton        = null;
+    sellSharesButtonTooltip     = null;
+    issueNewSharesButtonTooltip = null;
 
     industryOverviewPanel       = null;
     industryOverviewText        = null;
@@ -41399,6 +40961,757 @@ _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_20__["Reviver"].constructors.Corpora
 
 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 64)))
+
+/***/ }),
+/* 59 */
+/*!************************!*\
+  !*** ./src/RedPill.js ***!
+  \************************/
+/*! exports provided: redPillFlag, hackWorldDaemon */
+/*! exports used: hackWorldDaemon, redPillFlag */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return redPillFlag; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return hackWorldDaemon; });
+/* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNode */ 60);
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./engine */ 9);
+/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Player */ 0);
+/* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Prestige */ 88);
+/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SourceFile */ 70);
+/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Terminal */ 51);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 16);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 30);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/YesNoBox */ 19);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__);
+
+
+
+
+
+
+
+
+
+
+
+
+/* RedPill.js
+ *  Implements what happens when you have Red Pill augmentation and then hack the world daemon */
+
+//Returns promise
+function writeRedPillLine(line) {
+    return new Promise(function(resolve, reject) {
+        var container = document.getElementById("red-pill-content");
+        var pElem = document.createElement("p");
+        container.appendChild(pElem);
+
+        var promise = writeRedPillLetter(pElem, line, 0);
+        promise.then(function(res) {
+            resolve(res);
+        }, function(e) {
+            reject(e);
+        });
+    });
+}
+
+function writeRedPillLetter(pElem, line, i=0) {
+    return new Promise(function(resolve, reject) {
+        setTimeout(function() {
+            if (i >= line.length) {
+                var textToShow = line.substring(0, i);
+                pElem.innerHTML = "> " + textToShow;
+                return resolve(true);
+            }
+            var textToShow = line.substring(0, i);
+            pElem.innerHTML = "> " + textToShow + "<span class='typed-cursor'> &#9608; </span>";
+            var promise = writeRedPillLetter(pElem, line, i+1);
+            promise.then(function(res) {
+                resolve(res);
+            }, function(e) {
+                reject(e);
+            });
+        }, 30);
+    });
+}
+
+let redPillFlag = false;
+function hackWorldDaemon(currentNodeNumber, flume=false) {
+    // Clear Red Pill screen first
+    var container = document.getElementById("red-pill-content");
+    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8__["removeChildrenFromElement"])(container);
+    
+    redPillFlag = true;
+    _engine__WEBPACK_IMPORTED_MODULE_1__["Engine"].loadRedPillContent();
+    return writeRedPillLine("[ERROR] SEMPOOL INVALID").then(function() {
+        return writeRedPillLine("[ERROR] Segmentation Fault");
+    }).then(function() {
+        return writeRedPillLine("[ERROR] SIGKILL RECVD");
+    }).then(function() {
+        return writeRedPillLine("Dumping core...");
+    }).then(function() {
+        return writeRedPillLine("0000 000016FA 174FEE40 29AC8239 384FEA88");
+    }).then(function() {
+        return writeRedPillLine("0010 745F696E 2BBBE394 390E3940 248BEC23");
+    }).then(function() {
+        return writeRedPillLine("0020 7124696B 0000FF69 74652E6F FFFF1111");
+    }).then(function() {
+        return writeRedPillLine("----------------------------------------");
+    }).then(function() {
+        return writeRedPillLine("Failsafe initiated...");
+    }).then(function() {
+        return writeRedPillLine("Restarting BitNode-" + currentNodeNumber + "...");
+    }).then(function() {
+        return writeRedPillLine("...........");
+    }).then(function() {
+        return writeRedPillLine("...........");
+    }).then(function() {
+        return writeRedPillLine("[ERROR] FAILED TO AUTOMATICALLY REBOOT BITNODE");
+    }).then(function() {
+        return writeRedPillLine("..............................................")
+    }).then(function() {
+        return writeRedPillLine("..............................................")
+    }).then(function() {
+        return loadBitVerse(currentNodeNumber, flume);
+    }).catch(function(e){
+        console.log("ERROR: " + e.toString());
+    });
+}
+
+//The bitNode name passed in will have a hyphen between number (e.g. BitNode-1)
+//This needs to be removed
+function giveSourceFile(bitNodeNumber) {
+    var sourceFileKey = "SourceFile"+ bitNodeNumber.toString();
+    var sourceFile = _SourceFile__WEBPACK_IMPORTED_MODULE_4__[/* SourceFiles */ "b"][sourceFileKey];
+    if (sourceFile == null) {
+        console.log("ERROR: could not find source file for Bit node: " + bitNodeNumber);
+        return;
+    }
+
+    //Check if player already has this source file
+    var alreadyOwned = false;
+    var ownedSourceFile = null;
+    for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].sourceFiles.length; ++i) {
+        if (_Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].sourceFiles[i].n === bitNodeNumber) {
+            alreadyOwned = true;
+            ownedSourceFile = _Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].sourceFiles[i];
+            break;
+        }
+    }
+
+    if (alreadyOwned && ownedSourceFile) {
+        if (ownedSourceFile.lvl >= 3 && ownedSourceFile.n !== 12) {
+            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("The Source-File for the BitNode you just destroyed, " + sourceFile.name + ", " +
+                            "is already at max level!");
+        } else {
+            ++ownedSourceFile.lvl;
+            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])(sourceFile.name + " was upgraded to level " + ownedSourceFile.lvl + " for " +
+                            "destroying its corresponding BitNode!");
+        }
+    } else {
+        var playerSrcFile = new _SourceFile__WEBPACK_IMPORTED_MODULE_4__[/* PlayerOwnedSourceFile */ "a"](bitNodeNumber, 1);
+        _Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].sourceFiles.push(playerSrcFile);
+        if (bitNodeNumber === 5) { //Artificial Intelligence
+            _Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].intelligence = 1;
+        }
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("You received a Source-File for destroying a Bit Node!<br><br>" +
+                        sourceFile.name + "<br><br>" + sourceFile.info);
+    }
+}
+
+function loadBitVerse(destroyedBitNodeNum, flume=false) {
+    //Clear the screen
+    var container = document.getElementById("red-pill-content");
+    Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8__["removeChildrenFromElement"])(container);
+
+    //Create the Bit Verse
+    var bitVerseImage = document.createElement("pre");
+    var bitNodes = [];
+    for (var i = 1; i <= 12; ++i) {
+        bitNodes.push(createBitNode(i));
+    }
+
+    bitVerseImage.innerHTML =
+    "                          O                          <br>" +
+    "             |  O  O      |      O  O  |             <br>" +
+    "        O    |  | /     __|       \\ |  |    O        <br>" +
+    "      O |    O  | |  O /  |  O    | |  O    | O      <br>" +
+    "    | | |    |  |_/  |/   |   \\_  \\_|  |    | | |    <br>" +
+    "  O | | | O  |  | O__/    |   / \\__ |  |  O | | | O  <br>" +
+    "  | | | | |  |  |   /    /|  O  /  \\|  |  | | | | |  <br>" +
+    "O | | |  \\|  |  O  /   _/ |    /    O  |  |/  | | | O<br>" +
+    "| | | |O  /  |  | O   /   |   O   O |  |  \\  O| | | |<br>" +
+    "| | |/  \\/  / __| | |/ \\  |   \\   | |__ \\  \\/  \\| | |<br>" +
+    " \\| O   |  |_/    |\\|   \\ O    \\__|    \\_|  |   O |/ <br>" +
+    "  | |   |_/       | |    \\|    /  |       \\_|   | |  <br>" +
+    "   \\|   /          \\|     |   /  /          \\   |/   <br>" +
+    "    |  "+bitNodes[9]+"            |     |  /  |            "+bitNodes[10]+"  |    <br>" +
+    "  "+bitNodes[8]+" |  |            |     |     |            |  | "+bitNodes[11]+"  <br>" +
+    "  | |  |            /    / \\    \\            |  | |  <br>" +
+    "   \\|  |           /  "+bitNodes[6]+" /   \\ "+bitNodes[7]+"  \\           |  |/   <br>" +
+    "    \\  |          /  / |     | \\  \\          |  /    <br>" +
+    "     \\ \\JUMP "+bitNodes[4]+"3R |  |  |     |  |  | R3"+bitNodes[5]+" PMUJ/ /     <br>" +
+    "      \\||    |   |  |  |     |  |  |   |    ||/      <br>" +
+    "       \\|     \\_ |  |  |     |  |  | _/     |/       <br>" +
+    "        \\       \\| /    \\   /    \\ |/       /        <br>" +
+    "         "+bitNodes[0]+"       |/   "+bitNodes[1]+"  | |  "+bitNodes[2]+"   \\|       "+bitNodes[3]+"         <br>" +
+    "         |       |    |  | |  |    |       |         <br>" +
+    "          \\JUMP3R|JUMP|3R| |R3|PMUJ|R3PMUJ/          <br><br><br><br>";
+
+
+    /*
+    "                          O                          <br>" +
+    "             |  O  O      |      O  O  |             <br>" +
+    "        O    |  | /     __|       \ |  |    O        <br>" +
+    "      O |    O  | |  O /  |  O    | |  O    | O      <br>" +
+    "    | | |    |  |_/  |/   |   \_  \_|  |    | | |    <br>" +
+    "  O | | | O  |  | O__/    |   / \__ |  |  O | | | O  <br>" +
+    "  | | | | |  |  |   /    /|  O  /  \|  |  | | | | |  <br>" +
+    "O | | |  \|  |  O  /   _/ |    /    O  |  |/  | | | O<br>" +
+    "| | | |O  /  |  | O   /   |   O   O |  |  \  O| | | |<br>" +
+    "| | |/  \/  / __| | |/ \  |   \   | |__ \  \/  \| | |<br>" +
+    " \| O   |  |_/    |\|   \ O    \__|    \_|  |   O |/ <br>" +
+    "  | |   |_/       | |    \|    /  |       \_|   | |  <br>" +
+    "   \|   /          \|     |   /  /          \   |/   <br>" +
+    "    |  O            |     |  /  |            O  |    <br>" +
+    "  O |  |            |     |     |            |  | O  <br>" +
+    "  | |  |            /    / \    \            |  | |  <br>" +
+    "   \|  |           /  O /   \ O  \           |  |/   <br>" +
+    "    \  |          /  / |     | \  \          |  /    <br>" +
+    "     \ \JUMP O3R |  |  |     |  |  | R3O PMUJ/ /     <br>" +
+    "      \||    |   |  |  |     |  |  |   |    ||/      <br>" +
+    "       \|     \_ |  |  |     |  |  | _/     |/       <br>" +
+    "        \       \| /    \   /    \ |/       /        <br>" +
+    "         O       |/   O  | |  O   \|       O         <br>" +
+    "         |       |    |  | |  |    |       |         <br>" +
+    "          \JUMP3R|JUMP|3R| |R3|PMUJ|R3PMUJ/          <br>";
+    */
+
+    container.appendChild(bitVerseImage);
+
+    //Bit node event listeners
+    for (var i = 1; i <= 12; ++i) {
+        (function(i) {
+            var elemId = "bitnode-" + i.toString();
+            var elem = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_6__["clearEventListeners"])(elemId);
+            if (elem == null) {return;}
+            if (i === 1 || i === 2 || i === 3 || i === 4 || i === 5 ||
+                i === 6 || i === 7 || i === 8 || i === 11 || i === 12) {
+                elem.addEventListener("click", function() {
+                    var bitNodeKey = "BitNode" + i;
+                    var bitNode = _BitNode__WEBPACK_IMPORTED_MODULE_0__[/* BitNodes */ "a"][bitNodeKey];
+                    if (bitNode == null) {
+                        console.log("ERROR: Could not find BitNode object for number: " + i);
+                        return;
+                    }
+                    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__["yesNoBoxCreate"])("BitNode-" + i + ": " + bitNode.name + "<br><br>" + bitNode.info);
+                    createBitNodeYesNoEventListeners(i, destroyedBitNodeNum, flume);
+                });
+            } else {
+                elem.addEventListener("click", function() {
+                    Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__["dialogBoxCreate"])("Not yet implemented! Coming soon!")
+                });
+            }
+        }(i)); //Immediate invocation closure
+    }
+
+    //Create lore text
+    return writeRedPillLine("Many decades ago, a humanoid extraterrestial species which we call the Enders descended on the Earth...violently").then(function() {
+        return writeRedPillLine("Our species fought back, but it was futile. The Enders had technology far beyond our own...");
+    }).then(function() {
+        return writeRedPillLine("Instead of killing every last one of us, the human race was enslaved...");
+    }).then(function() {
+        return writeRedPillLine("We were shackled in a digital world, chained into a prison for our minds...");
+    }).then(function() {
+        return writeRedPillLine("Using their advanced technology, the Enders created complex simulations of a virtual reality...");
+    }).then(function() {
+        return writeRedPillLine("Simulations designed to keep us content...ignorant of the truth.");
+    }).then(function() {
+        return writeRedPillLine("Simulations used to trap and suppress our consciousness, to keep us under control...");
+    }).then(function() {
+        return writeRedPillLine("Why did they do this? Why didn't they just end our entire race? We don't know, not yet.");
+    }).then(function() {
+        return writeRedPillLine("Humanity's only hope is to destroy these simulations, destroy the only realities we've ever known...");
+    }).then(function() {
+        return writeRedPillLine("Only then can we begin to fight back...");
+    }).then(function() {
+        return writeRedPillLine("By hacking the daemon that generated your reality, you've just destroyed one simulation, called a BitNode...");
+    }).then(function() {
+        return writeRedPillLine("But there is still a long way to go...");
+    }).then(function() {
+        return writeRedPillLine("The technology the Enders used to enslave the human race wasn't just a single complex simulation...");
+    }).then(function() {
+        return writeRedPillLine("There are tens if not hundreds of BitNodes out there...");
+    }).then(function() {
+        return writeRedPillLine("Each with their own simulations of a reality...");
+    }).then(function() {
+        return writeRedPillLine("Each creating their own universes...a universe of universes");
+    }).then(function() {
+        return writeRedPillLine("And all of which must be destroyed...");
+    }).then(function() {
+        return writeRedPillLine(".......................................");
+    }).then(function() {
+        return writeRedPillLine("Welcome to the Bitverse...");
+    }).then(function() {
+        return writeRedPillLine(" ");
+    }).then(function() {
+        return writeRedPillLine("(Enter a new BitNode using the image above)");
+    }).then(function() {
+        return Promise.resolve(true);
+    }).catch(function(e){
+        console.log("ERROR: " + e.toString());
+    });
+}
+
+
+//Returns string with DOM element for Bit Node
+function createBitNode(n) {
+    var bitNodeStr = "BitNode" + n.toString();
+    var bitNode = _BitNode__WEBPACK_IMPORTED_MODULE_0__[/* BitNodes */ "a"][bitNodeStr];
+    if (bitNode == null) {return "O";}
+    return  "<a class='bitnode tooltip' id='bitnode-" + bitNode.number.toString() + "'><strong>O</strong>" +
+             "<span class='tooltiptext'>" +
+             "<strong>BitNode-" + bitNode.number.toString() + "<br>" + bitNode.name+ "</strong><br>" +
+             bitNode.desc + "<br>" +
+             "</span></a>";
+}
+
+function createBitNodeYesNoEventListeners(newBitNode, destroyedBitNode, flume=false) {
+    var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__["yesNoBoxGetYesButton"])();
+    yesBtn.innerHTML = "Enter BitNode-" + newBitNode;
+    yesBtn.addEventListener("click", function() {
+        if (!flume) {
+            giveSourceFile(destroyedBitNode);
+        } else {
+            //If player used flume, subtract 5 int exp. The prestigeSourceFile()
+            //function below grants 5 int exp, so this allows sets net gain to 0
+            _Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].gainIntelligenceExp(-5);
+        }
+        redPillFlag = false;
+        var container = document.getElementById("red-pill-content");
+        Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8__["removeChildrenFromElement"])(container);
+
+        //Set new Bit Node
+        _Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].bitNodeN = newBitNode;
+        console.log("Entering Bit Node " + _Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].bitNodeN);
+
+        //Reenable terminal
+        $("#hack-progress-bar").attr('id', "old-hack-progress-bar");
+        $("#hack-progress").attr('id', "old-hack-progress");
+        document.getElementById("terminal-input-td").innerHTML = '$ <input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
+        $('input[class=terminal-input]').prop('disabled', false);
+
+        _Terminal__WEBPACK_IMPORTED_MODULE_5__[/* Terminal */ "a"].hackFlag = false;
+
+        Object(_Prestige__WEBPACK_IMPORTED_MODULE_3__[/* prestigeSourceFile */ "b"])();
+        Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__["yesNoBoxClose"])();
+    });
+    var noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__["yesNoBoxGetNoButton"])();
+    noBtn.innerHTML = "Back";
+    noBtn.addEventListener("click", function() {
+        Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_9__["yesNoBoxClose"])();
+    });
+
+}
+
+
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 64)))
+
+/***/ }),
+/* 60 */
+/*!************************!*\
+  !*** ./src/BitNode.js ***!
+  \************************/
+/*! exports provided: initBitNodes, BitNodes, initBitNodeMultipliers */
+/*! exports used: BitNodes, initBitNodeMultipliers, initBitNodes */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return initBitNodes; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BitNodes; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return initBitNodeMultipliers; });
+/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNodeMultipliers */ 10);
+/* harmony import */ var _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ 0);
+
+
+
+function BitNode(n, name, desc="", info="") {
+    this.number = n;
+    this.name = name;
+    this.desc = desc;
+    this.info = info;
+}
+
+let BitNodes = {};
+function initBitNodes() {
+    BitNodes = {};
+    BitNodes["BitNode1"] = new BitNode(1, "Source Genesis", "The original BitNode",
+                            "The first BitNode created by the Enders to imprison the minds of humans. It became " +
+                            "the prototype and testing-grounds for all of the BitNodes that followed.<br><br>" +
+                            "This is the first BitNode that you play through. It has no special " +
+                            "modifications or mechanics.<br><br>" +
+                            "Destroying this BitNode will give you Source-File 1, or if you already have " +
+                            "this Source-File it will upgrade its level up to a maximum of 3. This Source-File " +
+                            "lets the player start with 32GB of RAM on his/her home computer when entering a " +
+                            "new BitNode, and also increases all of the player's multipliers by:<br><br>" +
+                            "Level 1: 16%<br>" +
+                            "Level 2: 24%<br>" +
+                            "Level 3: 28%");
+    BitNodes["BitNode2"] = new BitNode(2, "Rise of the Underworld", "From the shadows, they rose",    //Gangs
+                            "From the shadows, they rose.<br><br>Organized crime groups quickly filled the void of power " +
+                            "left behind from the collapse of Western government in the 2050s. As society and civlization broke down, " +
+                            "people quickly succumbed to the innate human impulse of evil and savagery. The organized crime " +
+                            "factions quickly rose to the top of the modern world.<br><br>" +
+                            "In this BitNode:<br><br>" +
+                            "Your hacking level is reduced by 20%<br>"  +
+                            "The growth rate and maximum amount of money available on servers are significantly decreased<br>" +
+                            "The amount of money gained from crimes and Infiltration is tripled<br>" +
+                            "Certain Factions (Slum Snakes, Tetrads, The Syndicate, The Dark Army, Speakers for the Dead, " +
+                            "NiteSec, The Black Hand) give the player the ability to form and manage their own gangs. These gangs " +
+                            "will earn the player money and reputation with the corresponding Faction<br>" +
+                            "Every Augmentation in the game will be available through the Factions listed above<br>" +
+                            "For every Faction NOT listed above, reputation gains are halved<br>" +
+                            "You will no longer gain passive reputation with Factions<br><br>" +
+                            "Destroying this BitNode will give you Source-File 2, or if you already have this Source-File it will " +
+                            "upgrade its level up to a maximum of 3. This Source-File increases the player's crime success rate, " +
+                            "crime money, and charisma multipliers by:<br><br>" +
+                            "Level 1: 24%<br>" +
+                            "Level 2: 36%<br>" +
+                            "Level 3: 42%");
+    BitNodes["BitNode3"] = new BitNode(3, "Corporatocracy", "The Price of Civilization",
+                                          "Our greatest illusion is that a healthy society can revolve around a " +
+                                          "single-minded pursuit of wealth.<br><br>" +
+                                          "Sometime in the early 21st century economic and political globalization turned " +
+                                          "the world into a corporatocracy, and it never looked back. Now, the privileged " +
+                                          "elite will happily bankrupt their own countrymen, decimate their own community, " +
+                                          "and evict their neighbors from houses in their desperate bid to increase their wealth.<br><br>" +
+                                          "In this BitNode you can create and manage your own corporation. Running a successful corporation " +
+                                          "has the potential of generating massive profits. All other forms of income are reduced by 75%. Furthermore: <br><br>" +
+                                          "The price and reputation cost of all Augmentations is tripled<br>" +
+                                          "The starting and maximum amount of money on servers is reduced by 75%<br>" +
+                                          "Server growth rate is reduced by 80%<br>" +
+                                          "You will start out with $150b so that you can start your corporation<br>" +
+                                          "You now only need 75 favour with a faction in order to donate to it, rather than 150<br><br>" +
+                                          "Destroying this BitNode will give you Source-File 3, or if you already have this Source-File it will " +
+                                          "upgrade its level up to a maximum of 3. This Source-File lets you create corporations on other BitNodes (although " +
+                                          "some BitNodes will disable this mechanic). This Source-File also increases your charisma and company salary multipliers by:<br>" +
+                                          "Level 1: 8%<br>" +
+                                          "Level 2: 12%<br>" +
+                                          "Level 3: 14%");
+    BitNodes["BitNode4"] = new BitNode(4, "The Singularity", "The Man and the Machine",  "The Singularity has arrived. The human race is gone, replaced " +
+                                          "by artificially superintelligent beings that are more machine than man. <br><br>" +
+                                          "In this BitNode, progressing is significantly harder. Experience gain rates " +
+                                          "for all stats are reduced. Most methods of earning money will now give significantly less.<br><br>" +
+                                          "In this BitNode you will gain access to a new set of Netscript Functions known as Singularity Functions. " +
+                                          "These functions allow you to control most aspects of the game through scripts, including working for factions/companies, " +
+                                          "purchasing/installing Augmentations, and creating programs.<br><br>" +
+                                          "Destroying this BitNode will give you Source-File 4, or if you already have this Source-File it will " +
+                                          "upgrade its level up to a maximum of 3. This Source-File lets you access and use the Singularity  " +
+                                          "Functions in other BitNodes. Each level of this Source-File will open up more Singularity Functions " +
+                                          "that you can use.");
+    BitNodes["BitNode5"] = new BitNode(5, "Artificial Intelligence", "Posthuman", "They said it couldn't be done. They said the human brain, " +
+                                          "along with its consciousness and intelligence, couldn't be replicated. They said the complexity " +
+                                          "of the brain results from unpredictable, nonlinear interactions that couldn't be modeled " +
+                                          "by 1's and 0's. They were wrong.<br><br>" +
+                                          "In this BitNode:<br><br>" +
+                                          "The base security level of servers is doubled<br>" +
+                                          "The starting money on servers is halved, but the maximum money remains the same<br>" +
+                                          "Most methods of earning money now give significantly less<br>" +
+                                          "Infiltration gives 50% more reputation and money<br>" +
+                                          "Corporations have 50% lower valuations and are therefore less profitable<br>" +
+                                          "Augmentations are more expensive<br>" +
+                                          "Hacking experience gain rates are reduced<br><br>" +
+                                          "Destroying this BitNode will give you Source-File 5, or if you already have this Source-File it will " +
+                                          "upgrade its level up to a maximum of 3. This Source-File grants you a special new stat called Intelligence. " +
+                                          "Intelligence is unique because it is permanent and persistent (it never gets reset back to 1). However " +
+                                          "gaining Intelligence experience is much slower than other stats, and it is also hidden (you won't know " +
+                                          "when you gain experience and how much). Higher Intelligence levels will boost your production for many actions " +
+                                          "in the game. <br><br>" +
+                                          "In addition, this Source-File will unlock the getBitNodeMultipliers() Netscript function, " +
+                                          "and will also raise all of your hacking-related multipliers by:<br><br>" +
+                                          "Level 1: 8%<br>" +
+                                          "Level 2: 12%<br>" +
+                                          "Level 3: 14%");
+    BitNodes["BitNode6"] = new BitNode(6, "Bladeburners", "Like Tears in Rain",
+                                          "In the middle of the 21st century, OmniTek Incorporated began designing and manufacturing advanced synthetic " +
+                                          "androids, or Synthoids for short. They achieved a major technological breakthrough in the sixth generation " +
+                                          "of their Synthoid design, called MK-VI, by developing a hyperintelligent AI. Many argue that this was " +
+                                          "the first sentient AI ever created. This resulted in Synthoid models that were stronger, faster, and more intelligent " +
+                                          "than the humans that had created them.<br><br>" +
+                                          "In this BitNode you will be able to access the Bladeburner Division at the NSA, which provides a new mechanic " +
+                                          "for progression. Furthermore:<br><br>" +
+                                          "Hacking and Hacknet Nodes will be significantly less profitable<br>" +
+                                          "Your hacking level is reduced by 50%<br>" +
+                                          "Hacking experience gain from scripts is reduced by 75%<br>" +
+                                          "Corporations have 80% lower valuations and are therefore less profitable<br>" +
+                                          "Working for companies is 50% less profitable<br>" +
+                                          "Crimes and Infiltration are 50% less profitable<br><br>" +
+                                          "Destroying this BitNode will give you Source-File 6, or if you already have this Source-File it will upgrade " +
+                                          "its level up to a maximum of 3. This Source-File allows you to access the NSA's Bladeburner Division in other " +
+                                          "BitNodes. In addition, this Source-File will raise both the level and experience gain rate of all your combat stats by:<br><br>" +
+                                          "Level 1: 8%<br>" +
+                                          "Level 2: 12%<br>" +
+                                          "Level 3: 14%");
+    BitNodes["BitNode7"] = new BitNode(7, "Bladeburners 2079", "More human than humans",
+                                          "In the middle of the 21st century, you were doing cutting-edge work at OmniTek Incorporated as part of the AI design team " +
+                                          "for advanced synthetic androids, or Synthoids for short. You helped achieve a major technological " +
+                                          "breakthrough in the sixth generation of the company's Synthoid design, called MK-VI, by developing a hyperintelligent AI. " +
+                                          "Many argue that this was the first sentient AI ever created. This resulted in Synthoid models that were stronger, faster, " +
+                                          "and more intelligent than the humans that had created them.<br><br>" +
+                                          "In this BitNode you will be able to access the Bladeburner API, which allows you to access Bladeburner " +
+                                          "functionality through Netscript. Furthermore: <br><br>" +
+                                          "The rank you gain from Bladeburner contracts/operations is reduced by 40%<br>" +
+                                          "Bladeburner skills cost twice as many skill points<br>" +
+                                          "Augmentations are 3x more expensive<br>" +
+                                          "Hacking and Hacknet Nodes will be significantly less profitable<br>" +
+                                          "Your hacking level is reduced by 50%<br>" +
+                                          "Hacking experience gain from scripts is reduced by 75%<br>" +
+                                          "Corporations have 80% lower valuations and are therefore less profitable<br>" +
+                                          "Working for companies is 50% less profitable<br>" +
+                                          "Crimes and Infiltration are 50% less profitable<br><br>" +
+                                          "Destroying this BitNode will give you Source-File 7, or if you already have this Source-File it will upgrade " +
+                                          "its level up to a maximum of 3. This Source-File allows you to access the Bladeburner Netscript API in other " +
+                                          "BitNodes. In addition, this Source-File will increase all of your Bladeburner multipliers by:<br><br>" +
+                                          "Level 1: 8%<br>" +
+                                          "Level 2: 12%<br>" +
+                                          "Level 3: 14%");
+    BitNodes["BitNode8"] = new BitNode(8, "Ghost of Wall Street", "Money never sleeps",
+                                          "You are trying to make a name for yourself as an up-and-coming hedge fund manager on Wall Street.<br><br>" +
+                                          "In this BitNode:<br><br>" +
+                                          "You start with $250 million<br>" +
+                                          "The only way to earn money is by trading on the stock market<br>" +
+                                          "You start with a WSE membership and access to the TIX API<br>" +
+                                          "You are able to short stocks and place different types of orders (limit/stop)<br>" +
+                                          "You can immediately donate to factions to gain reputation<br><br>" +
+                                          "Destroying this BitNode will give you Source-File 8, or if you already have this Source-File it will " +
+                                          "upgrade its level up to a maximum of 3. This Source-File grants the following benefits:<br><br>" +
+                                          "Level 1: Permanent access to WSE and TIX API<br>" +
+                                          "Level 2: Ability to short stocks in other BitNodes<br>" +
+                                          "Level 3: Ability to use limit/stop orders in other BitNodes<br><br>" +
+                                          "This Source-File also increases your hacking growth multipliers by: " +
+                                          "<br>Level 1: 12%<br>Level 2: 18%<br>Level 3: 21%");
+    BitNodes["BitNode9"] = new BitNode(9, "Do Androids Dream?", "COMING SOON");
+    BitNodes["BitNode10"] = new BitNode(10, "MegaCorp", "COMING SOON");                //Not sure yet
+    BitNodes["BitNode11"] = new BitNode(11, "The Big Crash", "Okay. Sell it all.",
+                                            "The 2050s was defined by the massive amounts of violent civil unrest and anarchic rebellion that rose all around the world. It was this period " +
+                                            "of disorder that eventually lead to the governmental reformation of many global superpowers, most notably " +
+                                            "the USA and China. But just as the world was slowly beginning to recover from these dark times, financial catastrophe hit.<br><br>" +
+                                            "In many countries, the high cost of trying to deal with the civil disorder bankrupted the governments. In all of this chaos and confusion, hackers " +
+                                            "were able to steal billions of dollars from the world's largest electronic banks, prompting an international banking crisis as " +
+                                            "governments were unable to bail out insolvent banks. Now, the world is slowly crumbling in the middle of the biggest economic crisis of all time.<br><br>" +
+                                            "In this BitNode:<br><br>" +
+                                            "The starting and maximum amount of money available on servers is significantly decreased<br>" +
+                                            "The growth rate of servers is halved<br>" +
+                                            "Weakening a server is twice as effective<br>" +
+                                            "Company wages are decreased by 50%<br>" +
+                                            "Corporation valuations are 99% lower and are therefore significantly less profitable<br>" +
+                                            "Hacknet Node production is significantly decreased<br>" +
+                                            "Crime and Infiltration are more lucrative<br>" +
+                                            "Augmentations are twice as expensive<br><br>" +
+                                            "Destroying this BitNode will give you Source-File 11, or if you already have this Source-File it will " +
+                                            "upgrade its level up to a maximum of 3. This Source-File makes it so that company favor increases BOTH " +
+                                            "the player's salary and reputation gain rate at that company by 1% per favor (rather than just the reputation gain). " +
+                                            "This Source-File also increases the player's company salary and reputation gain multipliers by:<br><br>" +
+                                            "Level 1: 24%<br>" +
+                                            "Level 2: 36%<br>" +
+                                            "Level 3: 42%");
+    BitNodes["BitNode12"] = new BitNode(12, "The Recursion", "Repeat.",
+                                            "To iterate is human, to recurse divine.<br><br>" +
+                                            "Every time this BitNode is destroyed, it becomes slightly harder. Destroying this BitNode will give your Souce-File 12, or " +
+                                            "if you already have this Source-File it will upgrade its level. There is no maximum level for Source-File 12. Each level " +
+                                            "of Source-File 12 will increase all of your multipliers by 1%. This effect is multiplicative with itself. " +
+                                            "In other words, level N of this Source-File will result in a multiplier of 1.01^N (or 0.99^N for multipliers that decrease)");
+    //Books: Frontera, Shiner
+    BitNodes["BitNode13"] = new BitNode(13, "fOS", "COMING SOON"); //Unlocks the new game mode and the rest of the BitNodes
+    BitNodes["BitNode14"] = new BitNode(14, "", "COMING SOON");
+    BitNodes["BitNode15"] = new BitNode(15, "", "COMING SOON");
+    BitNodes["BitNode16"] = new BitNode(16, "", "COMING SOON");
+    BitNodes["BitNode17"] = new BitNode(17, "", "COMING SOON");
+    BitNodes["BitNode18"] = new BitNode(18, "", "COMING SOON");
+    BitNodes["BitNode19"] = new BitNode(19, "", "COMING SOON");
+    BitNodes["BitNode20"] = new BitNode(20, "", "COMING SOON");
+    BitNodes["BitNode21"] = new BitNode(21, "", "COMING SOON");
+    BitNodes["BitNode22"] = new BitNode(22, "", "COMING SOON");
+    BitNodes["BitNode23"] = new BitNode(23, "", "COMING SOON");
+    BitNodes["BitNode24"] = new BitNode(24, "", "COMING SOON");
+}
+
+function initBitNodeMultipliers() {
+    if (_Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].bitNodeN == null) {
+        _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].bitNodeN = 1;
+    }
+    for (var mult in _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"]) {
+        if (_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].hasOwnProperty(mult)) {
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"][mult] = 1;
+        }
+    }
+
+    switch (_Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].bitNodeN) {
+        case 1: //Source Genesis (every multiplier is 1)
+            break;
+        case 2: //Rise of the Underworld
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].HackingLevelMultiplier   = 0.8;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerGrowthRate         = 0.8;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerMaxMoney           = 0.2;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerStartingMoney      = 0.4;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CrimeMoney               = 3;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].InfiltrationMoney        = 3;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].FactionWorkRepGain       = 0.5;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].FactionPassiveRepGain    = 0;
+            break;
+        case 3: //Corporatocracy
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].RepToDonateToFaction     = 0.5;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].AugmentationRepCost      = 3;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].AugmentationMoneyCost    = 3;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerMaxMoney           = 0.2;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerStartingMoney      = 0.2;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerGrowthRate         = 0.2;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ScriptHackMoney          = 0.2;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CompanyWorkMoney         = 0.25;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CrimeMoney               = 0.25;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].HacknetNodeMoney         = 0.25;
+            break;
+        case 4: //The Singularity
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerMaxMoney           = 0.15;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerStartingMoney      = 0.75;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ScriptHackMoney          = 0.2;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CompanyWorkMoney         = 0.1;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CrimeMoney               = 0.2;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].HacknetNodeMoney         = 0.05;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CompanyWorkExpGain       = 0.5;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ClassGymExpGain          = 0.5;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].FactionWorkExpGain       = 0.5;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].HackExpGain              = 0.4;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CrimeExpGain             = 0.5;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].FactionWorkRepGain       = 0.75;
+            break;
+        case 5: //Artificial intelligence
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerMaxMoney           = 2;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerStartingSecurity   = 2;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerStartingMoney      = 0.5;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ScriptHackMoney          = 0.15;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].HacknetNodeMoney         = 0.2;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CrimeMoney               = 0.5;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].InfiltrationRep          = 1.5;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].InfiltrationMoney        = 1.5;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].AugmentationMoneyCost    = 2;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].HackExpGain              = 0.5;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CorporationValuation     = 0.5;
+            break;
+        case 6: //Bladeburner
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].HackingLevelMultiplier   = 0.4;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerMaxMoney           = 0.5;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerStartingMoney      = 0.5;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerStartingSecurity   = 1.5;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ScriptHackMoney          = 0.5;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CompanyWorkMoney         = 0.5;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CrimeMoney               = 0.5;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].InfiltrationMoney        = 0.5;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CorporationValuation     = 0.2;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].HacknetNodeMoney         = 0.2;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].FactionPassiveRepGain    = 0;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].HackExpGain              = 0.25;
+            break;
+        case 7: //Bladeburner 2079
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].BladeburnerRank          = 0.6;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].BladeburnerSkillCost     = 2;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].AugmentationMoneyCost    = 3;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].HackingLevelMultiplier   = 0.4;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerMaxMoney           = 0.5;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerStartingMoney      = 0.5;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerStartingSecurity   = 1.5;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ScriptHackMoney          = 0.5;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CompanyWorkMoney         = 0.5;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CrimeMoney               = 0.5;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].InfiltrationMoney        = 0.5;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CorporationValuation     = 0.2;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].HacknetNodeMoney         = 0.2;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].FactionPassiveRepGain    = 0;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].HackExpGain              = 0.25;
+            break;
+        case 8: //Ghost of Wall Street
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ScriptHackMoney          = 0;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ManualHackMoney          = 0;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CompanyWorkMoney         = 0;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CrimeMoney               = 0;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].HacknetNodeMoney         = 0;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].InfiltrationMoney        = 0;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].RepToDonateToFaction     = 0;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CorporationValuation     = 0;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CodingContractMoney      = 0;
+            break;
+        case 11: //The Big Crash
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerMaxMoney           = 0.1;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerStartingMoney      = 0.1;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerGrowthRate         = 0.5;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerWeakenRate         = 2;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CrimeMoney               = 3;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CompanyWorkMoney         = 0.5;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].HacknetNodeMoney         = 0.1;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].AugmentationMoneyCost    = 2;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].InfiltrationMoney        = 2.5;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].InfiltrationRep          = 2.5;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CorporationValuation     = 0.01;
+            break;
+        case 12: //The Recursion
+            var sf12Lvl = 0;
+            for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].sourceFiles.length; i++) {
+                if (_Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].sourceFiles[i].n === 12) {
+                    sf12Lvl = _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].sourceFiles[i].lvl;
+                }
+            }
+            var inc = Math.pow(1.02, sf12Lvl);
+            var dec = 1/inc;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].HackingLevelMultiplier = dec;
+
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerMaxMoney         = dec;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerStartingMoney    = dec;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerGrowthRate       = dec;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerWeakenRate       = dec;
+
+            //Does not scale, otherwise security might start at 300+
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerStartingSecurity = 1.5;
+
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ManualHackMoney  = dec;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ScriptHackMoney  = dec;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CompanyWorkMoney = dec;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CrimeMoney       = dec;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].HacknetNodeMoney = dec;
+
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CompanyWorkExpGain = dec;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ClassGymExpGain    = dec;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].FactionWorkExpGain = dec;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].HackExpGain        = dec;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CrimeExpGain       = dec;
+
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].FactionWorkRepGain    = dec;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].FactionPassiveRepGain = dec;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].RepToDonateToFaction  = inc;
+
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].AugmentationRepCost   = inc;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].AugmentationMoneyCost = inc;
+
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].InfiltrationMoney = dec;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].InfiltrationRep   = dec;
+
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CorporationValuation = dec;
+
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].BladeburnerRank      = dec;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].BladeburnerSkillCost = inc;
+            break;
+        default:
+            console.log("WARNING: Player.bitNodeN invalid");
+            break;
+    }
+}
+
+
+
 
 /***/ }),
 /* 61 */
@@ -41922,7 +42235,7 @@ exports.addOffset = addOffset;
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/uiHelpers/getElementById */ 53);
+/* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/uiHelpers/getElementById */ 54);
 /* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_11__);
 
 
@@ -42613,27 +42926,27 @@ function getHacknetNode(name) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return addActiveScriptsItem; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return deleteActiveScriptsItem; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return updateActiveScriptsItems; });
-/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NetscriptWorker */ 25);
+/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NetscriptWorker */ 26);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Server */ 11);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
-/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 78);
+/* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 79);
 /* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 54);
+/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 55);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/helpers/createProgressBarText */ 85);
 /* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 44);
-/* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/uiHelpers/getElementById */ 53);
+/* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/uiHelpers/getElementById */ 54);
 /* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/LogBox */ 80);
+/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/LogBox */ 81);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 29);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 30);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13__);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 61);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_14__);
@@ -42982,7 +43295,7 @@ function updateActiveScriptsText(workerscript, item, itemName) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return applySourceFile; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return initSourceFiles; });
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BitNode */ 59);
+/* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BitNode */ 60);
 
 
 
@@ -43272,7 +43585,7 @@ exports.DarkWebItems = {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NetscriptPort; });
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Settings */ 19);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Settings */ 18);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_0__);
 
 
@@ -43371,7 +43684,7 @@ var PurchaseAugmentationsOrderSetting;
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return saveObject; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return loadGame; });
 /* harmony import */ var _Alias__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Alias */ 45);
-/* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Company/Companies */ 18);
+/* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Company/Companies */ 17);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Company/CompanyPosition */ 87);
 /* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_2__);
@@ -43386,11 +43699,11 @@ var PurchaseAugmentationsOrderSetting;
 /* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./HacknetNode */ 67);
 /* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Message */ 41);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Script */ 30);
+/* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Script */ 31);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Settings */ 19);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Settings */ 18);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./SpecialServerIps */ 33);
 /* harmony import */ var _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./StockMarket/StockMarket */ 22);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
 /* harmony import */ var _utils_GameOptions__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/GameOptions */ 86);
@@ -43399,13 +43712,13 @@ var PurchaseAugmentationsOrderSetting;
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/JSONReviver */ 13);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 37);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 36);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__);
-/* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./ui/createStatusText */ 77);
+/* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./ui/createStatusText */ 78);
 /* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_ui_createStatusText__WEBPACK_IMPORTED_MODULE_23__);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_24__);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 21);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_25__);
 /* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! decimal.js */ 35);
 
@@ -44024,6 +44337,59 @@ function openImportFileHandler(evt) {
 
 /***/ }),
 /* 75 */
+/*!***************************************************!*\
+  !*** ./utils/uiHelpers/createPopupCloseButton.ts ***!
+  \***************************************************/
+/*! no static exports found */
+/*! exports used: createPopupCloseButton */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/* Creates a Close/Cancel button that is used for removing popups */
+Object.defineProperty(exports, "__esModule", { value: true });
+const createElement_1 = __webpack_require__(/*! ./createElement */ 2);
+const removeElement_1 = __webpack_require__(/*! ./removeElement */ 61);
+function createPopupCloseButton(popup, options) {
+    let button;
+    // TODO event listener works with escape. Add and remove event listener
+    // from document
+    function closePopupWithEscFn(e) {
+        if (e.keyCode === 27) {
+            button.click();
+        }
+    }
+    button = createElement_1.createElement("button", {
+        class: options.class ? options.class : "popup-box-button",
+        display: options.display ? options.display : "inline-block",
+        innerText: options.innerText == null ? "Cancel" : options.innerText,
+        clickListener: () => {
+            if (popup instanceof Element) {
+                removeElement_1.removeElement(popup);
+            }
+            else {
+                try {
+                    const popupEl = document.getElementById(popup);
+                    if (popupEl instanceof Element) {
+                        removeElement_1.removeElement(popupEl);
+                    }
+                }
+                catch (e) {
+                    console.error(`createPopupCloseButton() threw: ${e}`);
+                }
+            }
+            document.removeEventListener("keydown", closePopupWithEscFn);
+            return false;
+        },
+    });
+    document.addEventListener("keydown", closePopupWithEscFn);
+    return button;
+}
+exports.createPopupCloseButton = createPopupCloseButton;
+
+
+/***/ }),
+/* 76 */
 /*!********************************!*\
   !*** ./src/Company/Company.ts ***!
   \********************************/
@@ -44121,7 +44487,7 @@ JSONReviver_1.Reviver.constructors.Company = Company;
 
 
 /***/ }),
-/* 76 */
+/* 77 */
 /*!******************************************!*\
   !*** ./src/Corporation/MaterialSizes.ts ***!
   \******************************************/
@@ -44149,7 +44515,7 @@ exports.MaterialSizes = {
 
 
 /***/ }),
-/* 77 */
+/* 78 */
 /*!************************************!*\
   !*** ./src/ui/createStatusText.ts ***!
   \************************************/
@@ -44160,7 +44526,7 @@ exports.MaterialSizes = {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const getElementById_1 = __webpack_require__(/*! ../../utils/uiHelpers/getElementById */ 53);
+const getElementById_1 = __webpack_require__(/*! ../../utils/uiHelpers/getElementById */ 54);
 const threeSeconds = 3000;
 let x;
 /**
@@ -44186,7 +44552,7 @@ exports.createStatusText = createStatusText;
 
 
 /***/ }),
-/* 78 */
+/* 79 */
 /*!***************************************************!*\
   !*** ./utils/uiHelpers/createAccordionElement.ts ***!
   \***************************************************/
@@ -44231,7 +44597,7 @@ exports.createAccordionElement = createAccordionElement;
 
 
 /***/ }),
-/* 79 */
+/* 80 */
 /*!**************************************!*\
   !*** ./utils/helpers/clearObject.ts ***!
   \**************************************/
@@ -44260,7 +44626,7 @@ exports.clearObject = clearObject;
 
 
 /***/ }),
-/* 80 */
+/* 81 */
 /*!*************************!*\
   !*** ./utils/LogBox.js ***!
   \*************************/
@@ -44273,10 +44639,10 @@ exports.clearObject = clearObject;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return logBoxUpdateText; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return logBoxOpened; });
 /* unused harmony export logBoxCurrentScript */
-/* harmony import */ var _src_NetscriptWorker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/NetscriptWorker */ 25);
+/* harmony import */ var _src_NetscriptWorker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/NetscriptWorker */ 26);
 /* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./uiHelpers/clearEventListeners */ 16);
 /* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _helpers_arrayToString__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers/arrayToString */ 54);
+/* harmony import */ var _helpers_arrayToString__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers/arrayToString */ 55);
 /* harmony import */ var _helpers_arrayToString__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_2__);
 
 
@@ -44348,59 +44714,6 @@ function logBoxUpdateText() {
 
 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 64)))
-
-/***/ }),
-/* 81 */
-/*!***************************************************!*\
-  !*** ./utils/uiHelpers/createPopupCloseButton.ts ***!
-  \***************************************************/
-/*! no static exports found */
-/*! exports used: createPopupCloseButton */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-/* Creates a Close/Cancel button that is used for removing popups */
-Object.defineProperty(exports, "__esModule", { value: true });
-const createElement_1 = __webpack_require__(/*! ./createElement */ 2);
-const removeElement_1 = __webpack_require__(/*! ./removeElement */ 61);
-function createPopupCloseButton(popup, options) {
-    let button;
-    // TODO event listener works with escape. Add and remove event listener
-    // from document
-    function closePopupWithEscFn(e) {
-        if (e.keyCode === 27) {
-            button.click();
-        }
-    }
-    button = createElement_1.createElement("button", {
-        class: options.class ? options.class : "popup-box-button",
-        display: options.display ? options.display : "inline-block",
-        innerText: options.innerText == null ? "Cancel" : options.innerText,
-        clickListener: () => {
-            if (popup instanceof Element) {
-                removeElement_1.removeElement(popup);
-            }
-            else {
-                try {
-                    const popupEl = document.getElementById(popup);
-                    if (popupEl instanceof Element) {
-                        removeElement_1.removeElement(popupEl);
-                    }
-                }
-                catch (e) {
-                    console.error(`createPopupCloseButton() threw: ${e}`);
-                }
-            }
-            document.removeEventListener("keydown", closePopupWithEscFn);
-            return false;
-        },
-    });
-    document.addEventListener("keydown", closePopupWithEscFn);
-    return button;
-}
-exports.createPopupCloseButton = createPopupCloseButton;
-
 
 /***/ }),
 /* 82 */,
@@ -44987,7 +45300,7 @@ function gameOptionsBoxOpen() {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const Constants_1 = __webpack_require__(/*! ../Constants */ 1);
-const names = __webpack_require__(/*! ./data/CompanyPositionNames */ 36);
+const names = __webpack_require__(/*! ./data/CompanyPositionNames */ 37);
 class CompanyPosition {
     constructor(p) {
         this.name = p.name;
@@ -45079,18 +45392,18 @@ exports.CompanyPosition = CompanyPosition;
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return prestigeAugmentation; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return prestigeSourceFile; });
 /* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActiveScriptsUI */ 68);
-/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Augmentations */ 20);
-/* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BitNode */ 59);
-/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Bladeburner */ 31);
+/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Augmentations */ 21);
+/* harmony import */ var _BitNode__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BitNode */ 60);
+/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Bladeburner */ 32);
 /* harmony import */ var _CinematicText__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./CinematicText */ 101);
-/* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Company/Companies */ 18);
+/* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Company/Companies */ 17);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _Corporation_IndustryData__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Corporation/IndustryData */ 23);
 /* harmony import */ var _Corporation_IndustryData__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Corporation_IndustryData__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Programs/Programs */ 24);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./engine */ 9);
-/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Faction/Faction */ 56);
+/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Faction/Faction */ 57);
 /* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_Faction_Faction__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Faction/Factions */ 14);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_10__);
@@ -45099,19 +45412,19 @@ exports.CompanyPosition = CompanyPosition;
 /* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Location */ 92);
 /* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Message */ 41);
 /* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./NetscriptFunctions */ 43);
-/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./NetscriptWorker */ 25);
+/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./NetscriptWorker */ 26);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./SpecialServerIps */ 33);
 /* harmony import */ var _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./StockMarket/StockMarket */ 22);
 /* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./Terminal */ 51);
 /* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! decimal.js */ 35);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 21);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_24__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_25__);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 37);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 36);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_26__);
 /* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 44);
 
@@ -45357,7 +45670,6 @@ function prestigeSourceFile() {
 
     //BitNode 3: Corporatocracy
     if (_Player__WEBPACK_IMPORTED_MODULE_17__[/* Player */ "a"].bitNodeN === 3) {
-        _Player__WEBPACK_IMPORTED_MODULE_17__[/* Player */ "a"].money = new decimal_js__WEBPACK_IMPORTED_MODULE_22__[/* default */ "a"](150e9);
         homeComp.messages.push("corporation-management-handbook.lit");
         Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_23__["dialogBoxCreate"])("You received a copy of the Corporation Management Handbook on your home computer. " +
                         "Read it if you need help getting started with Corporations!");
@@ -45507,16 +45819,16 @@ exports.isValidIPAddress = isValidIPAddress;
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return displayLocationContent; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return initLocationButtons; });
-/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Bladeburner */ 31);
-/* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Company/CompanyPositions */ 28);
+/* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Bladeburner */ 32);
+/* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Company/CompanyPositions */ 29);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Company/Companies */ 18);
+/* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Company/Companies */ 17);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Company/GetJobRequirementText */ 94);
 /* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Company/data/CompanyPositionNames */ 36);
+/* harmony import */ var _Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Company/data/CompanyPositionNames */ 37);
 /* harmony import */ var _Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Corporation/Corporation */ 60);
+/* harmony import */ var _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Corporation/Corporation */ 58);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _Crimes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Crimes */ 38);
@@ -45528,9 +45840,9 @@ exports.isValidIPAddress = isValidIPAddress;
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Server */ 11);
 /* harmony import */ var _ServerPurchases__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./ServerPurchases */ 120);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Settings */ 19);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Settings */ 18);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./SpecialServerIps */ 32);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./SpecialServerIps */ 33);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_17__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
@@ -45539,8 +45851,22 @@ exports.isValidIPAddress = isValidIPAddress;
 /* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/IPAddress */ 62);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/YesNoBox */ 19);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_23__);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 36);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_24__);
+/* harmony import */ var _utils_uiHelpers_createPopupCloseButton__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/uiHelpers/createPopupCloseButton */ 75);
+/* harmony import */ var _utils_uiHelpers_createPopupCloseButton__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopupCloseButton__WEBPACK_IMPORTED_MODULE_25__);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_26__);
+
+
+
+
+
+
 
 
 
@@ -47477,40 +47803,80 @@ function initLocationButtons() {
     });
 
     cityHallCreateCorporation.addEventListener("click", function() {
-        var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__["yesNoTxtInpBoxGetYesButton"])(),
-            noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__["yesNoTxtInpBoxGetNoButton"])();
-        yesBtn.innerText = "Create Corporation";
-        noBtn.innerText = "Cancel";
-        yesBtn.addEventListener("click", function() {
-            if (_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].money.lt(150e9)) {
-                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("You don't have enough money to create a corporation! You need $150b");
-                return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__["yesNoTxtInpBoxClose"])();
-            }
-            _Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].loseMoney(150e9);
-            var companyName = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__["yesNoTxtInpBoxGetInput"])();
-            if (companyName == null || companyName == "") {
-                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("Invalid company name!");
+        const popupId = "create-corporation-popup";
+        const txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_23__["createElement"])("p", {
+            innerHTML: "Would you like to start a corporation? This will require $150b for registration " +
+                       "and initial funding. This $150b can either be self-funded, or you can obtain " +
+                       "the seed money from the government in exchange for 500 million shares<br><br>" +
+                       "If you would like to start one, please enter a name for your corporation below:",
+        });
+
+        const nameInput = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_23__["createElement"])("input", {
+            placeholder: "Corporation Name",
+        });
+
+        const selfFundedButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_23__["createElement"])("button", {
+            class: "popup-box-button",
+            innerText: "Self-Fund",
+            clickListener: () => {
+                if (_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].money.lt(150e9)) {
+                    Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("You don't have enough money to create a corporation! You need $150b");
+                    return false;
+                }
+                _Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].loseMoney(150e9);
+
+                const companyName = nameInput.value;
+                if (companyName == null || companyName == "") {
+                    Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("Invalid company name!");
+                    return false;
+                }
+
+                _Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].corporation = new _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_5__[/* Corporation */ "a"]({
+                    name: companyName,
+                });
+
+                displayLocationContent();
+                document.getElementById("world-menu-header").click();
+                document.getElementById("world-menu-header").click();
+                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("Congratulations! You just self-funded your own corporation. You can visit " +
+                                "and manage your company in the City");
+                Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_26__["removeElementById"])(popupId);
                 return false;
             }
-            _Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].corporation = new _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_5__[/* Corporation */ "a"]({
-                name:companyName,
-            });
-            displayLocationContent();
-            document.getElementById("world-menu-header").click();
-            document.getElementById("world-menu-header").click();
-            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("Congratulations! You just started your own corporation. You can visit " +
-                            "and manage your company in the City");
-            return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__["yesNoTxtInpBoxClose"])();
         });
-        noBtn.addEventListener("click", function() {
-            return Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__["yesNoTxtInpBoxClose"])();
-        });
+
+        const seedMoneyButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_23__["createElement"])("button", {
+            class: "popup-box-button",
+            innerText: "Use Seed Money",
+            clickListener: () => {
+                const companyName = nameInput.value;
+                if (companyName == null || companyName == "") {
+                    Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("Invalid company name!");
+                    return false;
+                }
+
+                _Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].corporation = new _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_5__[/* Corporation */ "a"]({
+                    name: companyName,
+                });
+                _Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].corporation.totalShares += 500e6;
+
+                displayLocationContent();
+                document.getElementById("world-menu-header").click();
+                document.getElementById("world-menu-header").click();
+                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("Congratulations! You just started your own corporation with government seed money. " +
+                                "You can visit and manage your company in the City");
+                Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_26__["removeElementById"])(popupId);
+                return false;
+            }
+        })
+
+        const cancelBtn = Object(_utils_uiHelpers_createPopupCloseButton__WEBPACK_IMPORTED_MODULE_25__["createPopupCloseButton"])(popupId, { class: "popup-box-button" });
+
         if (_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_5__[/* Corporation */ "a"]) {
             return;
         } else {
-            Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_22__["yesNoTxtInpBoxCreate"])("Would you like to start a corporation? This will require $150b " +
-                                 "for registration and initial funding.<br><br>If so, please enter " +
-                                 "a name for your corporation below:");
+            Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_24__["createPopup"])(popupId, [txt, nameInput, cancelBtn, selfFundedButton, seedMoneyButton]);
+            nameInput.focus();
         }
     });
 
@@ -48202,7 +48568,7 @@ function getRandomFilename(server, reward) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return cinematicTextFlag; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return writeCinematicText; });
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./engine */ 9);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 29);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 30);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2__);
@@ -48322,7 +48688,7 @@ function cinematicTextEnd() {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const CompanyPositions_1 = __webpack_require__(/*! ./CompanyPositions */ 28);
+const CompanyPositions_1 = __webpack_require__(/*! ./CompanyPositions */ 29);
 function getNextCompanyPosition(currPos) {
     if (currPos == null) {
         return null;
@@ -48589,8 +48955,8 @@ exports.HelpTexts = {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const EmployeePositions_1 = __webpack_require__(/*! ./EmployeePositions */ 26);
-const MaterialSizes_1 = __webpack_require__(/*! ./MaterialSizes */ 76);
+const EmployeePositions_1 = __webpack_require__(/*! ./EmployeePositions */ 27);
+const MaterialSizes_1 = __webpack_require__(/*! ./MaterialSizes */ 77);
 const ProductRatingWeights_1 = __webpack_require__(/*! ./ProductRatingWeights */ 207);
 const Cities_1 = __webpack_require__(/*! ../Locations/Cities */ 206);
 const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 13);
@@ -48837,7 +49203,7 @@ exports.CorporationUpgrades = {
         "Smart Storage", "Advanced AI automatically optimizes your warehouse storage methods. " +
             "Each level of this upgrade increases your global warehouse storage size by 10% (additive)."],
     //Advertise through dreams, passive popularity/ awareness gain
-    "2": [2, 8e9, 1.09, .001,
+    "2": [2, 4e9, 1.1, .001,
         "DreamSense", "Use DreamSense LCC Technologies to advertise your corporation " +
             "to consumers through their dreams. Each level of this upgrade provides a passive " +
             "increase in awareness of all of your companies (divisions) by 0.004 / market cycle," +
@@ -48867,7 +49233,7 @@ exports.CorporationUpgrades = {
         "FocusWires", "Purchase the FocusWire augmentation for your employees. Each level " +
             "of this upgrade globally increases the efficiency of your employees by 10% (additive)."],
     //Improves sales of materials/products
-    "8": [8, 1e9, 1.08, 0.01,
+    "8": [8, 1e9, 1.07, 0.01,
         "ABC SalesBots", "Always Be Closing. Purchase these robotic salesmen to increase the amount of " +
             "materials and products you sell. Each level of this upgrade globally increases your sales " +
             "by 1% (additive)."],
@@ -49355,7 +49721,7 @@ function _getScriptUrls(script, scripts, seen) {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return createDevMenu; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return closeDevMenu; });
-/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentations */ 20);
+/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentations */ 21);
 /* harmony import */ var _CodingContractGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CodingContractGenerator */ 100);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Programs/Programs */ 24);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_2__);
@@ -49363,9 +49729,9 @@ function _getScriptUrls(script, scripts, seen) {
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Server */ 11);
-/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./RedPill */ 58);
+/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./RedPill */ 59);
 /* harmony import */ var _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./StockMarket/StockMarket */ 22);
-/* harmony import */ var _StockMarket_Stock__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./StockMarket/Stock */ 27);
+/* harmony import */ var _StockMarket_Stock__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./StockMarket/Stock */ 28);
 /* harmony import */ var _StockMarket_Stock__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_StockMarket_Stock__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Terminal */ 51);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
@@ -49374,7 +49740,7 @@ function _getScriptUrls(script, scripts, seen) {
 /* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 44);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 21);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 20);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_14__);
 
 
@@ -49939,7 +50305,7 @@ function closeDevMenu() {
 /* harmony import */ var _DarkWebItems__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DarkWebItems */ 71);
 /* harmony import */ var _DarkWebItems__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_DarkWebItems__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Player */ 0);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../SpecialServerIps */ 32);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../SpecialServerIps */ 33);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../ui/postToTerminal */ 7);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utils/helpers/isValidIPAddress */ 90);
@@ -50056,7 +50422,7 @@ function buyDarkwebItem(itemName) {
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Server */ 11);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/DialogBox */ 8);
 /* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/IPAddress */ 62);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/YesNoBox */ 17);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/YesNoBox */ 19);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_5__);
 
 
@@ -50191,8 +50557,8 @@ JSONReviver_1.Reviver.constructors.CorporationState = CorporationState;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const getElementById_1 = __webpack_require__(/*! ./getElementById */ 53);
-const removeElementById_1 = __webpack_require__(/*! ./removeElementById */ 21);
+const getElementById_1 = __webpack_require__(/*! ./getElementById */ 54);
+const removeElementById_1 = __webpack_require__(/*! ./removeElementById */ 20);
 /**
  * Routes the player from the Loading screen to the main game content.
  */
@@ -50223,7 +50589,7 @@ exports.removeLoadingScreen = removeLoadingScreen;
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return setSettingsLabels; });
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../engine */ 9);
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Settings */ 19);
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Settings */ 18);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _numeralFormat__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./numeralFormat */ 4);
 /* harmony import */ var _numeralFormat__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_numeralFormat__WEBPACK_IMPORTED_MODULE_2__);
@@ -56294,7 +56660,7 @@ exports.serverMetadata = [
 /* harmony import */ var _src_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_src_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _src_Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../src/Constants */ 1);
 /* harmony import */ var _src_Constants__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_src_Constants__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _src_Faction_Faction__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../src/Faction/Faction */ 56);
+/* harmony import */ var _src_Faction_Faction__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../src/Faction/Faction */ 57);
 /* harmony import */ var _src_Faction_Faction__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_src_Faction_Faction__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _src_Faction_Factions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../src/Faction/Factions */ 14);
 /* harmony import */ var _src_Faction_Factions__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_src_Faction_Factions__WEBPACK_IMPORTED_MODULE_3__);
@@ -59693,7 +60059,7 @@ exports.getBaseResearchTreeCopy = getBaseResearchTreeCopy;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const Locations_1 = __webpack_require__(/*! ../../Locations */ 5);
-const posNames = __webpack_require__(/*! ./CompanyPositionNames */ 36);
+const posNames = __webpack_require__(/*! ./CompanyPositionNames */ 37);
 // Create Objects containing Company Positions by category
 // Will help in metadata construction later
 const AllSoftwarePositions = {};
@@ -60084,7 +60450,7 @@ exports.companiesMetadata = [
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const posNames = __webpack_require__(/*! ./CompanyPositionNames */ 36);
+const posNames = __webpack_require__(/*! ./CompanyPositionNames */ 37);
 exports.companyPositionMetadata = [
     {
         name: posNames.SoftwareCompanyPositions[0],

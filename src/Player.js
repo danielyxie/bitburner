@@ -389,7 +389,6 @@ PlayerObject.prototype.prestigeSourceFile = function() {
     this.has4SDataTixApi = false;
 
     //BitNode 3: Corporatocracy
-    if (this.bitNodeN === 3) {this.money = new Decimal(150e9);}
     this.corporation = 0;
 
     this.playtimeSinceLastAug = 0;

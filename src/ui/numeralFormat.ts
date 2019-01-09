@@ -39,6 +39,10 @@ class NumeralFormatter {
         if (Math.abs(n) < 1e-6) { n = 0; }
         return numeral(n).format(format);
     }
+
+    formatMoney(n: number): string {
+        return this.format(n, "$0.000a");
+    }
 }
 
 export const numeralWrapper = new NumeralFormatter();

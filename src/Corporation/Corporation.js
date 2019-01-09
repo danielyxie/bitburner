@@ -35,6 +35,7 @@ import { createPopupCloseButton }                       from "../../utils/uiHelp
 import { formatNumber, generateRandomString }           from "../../utils/StringHelperFunctions";
 import { getRandomInt }                                 from "../../utils/helpers/getRandomInt";
 import { isString }                                     from "../../utils/helpers/isString";
+import { KEY }                                          from "../../utils/helpers/keyCodes";
 import { removeChildrenFromElement }                    from "../../utils/uiHelpers/removeChildrenFromElement";
 import { removeElement }                                from "../../utils/uiHelpers/removeElement";
 import { removeElementById }                            from "../../utils/uiHelpers/removeElementById";
@@ -52,11 +53,17 @@ import { yesNoBoxCreate,
 import Decimal                                          from "decimal.js";
 
 /* Constants */
-export const TOTALSHARES                    = 1e9; //Total number of shares you have at your company
+export const INITIALSHARES                  = 1e9; //Total number of shares you have at your company
+export const SHARESPERPRICEUPDATE           = 1e6; //When selling large number of shares, price is dynamically updated for every batch of this amount
+export const IssueNewSharesCooldown         = 216e3; // 12 Hour in terms of game cycles
+export const SellSharesCooldown             = 18e3; // 1 Hour in terms of game cycles
+
 export const CyclesPerMarketCycle           = 75;
 export const CyclesPerIndustryStateCycle    = CyclesPerMarketCycle / AllCorporationStates.length;
 export const SecsPerMarketCycle             = CyclesPerMarketCycle / 5;
+
 export const Cities = ["Aevum", "Chongqing", "Sector-12", "New Tokyo", "Ishima", "Volhaven"];
+
 export const WarehouseInitialCost           = 5e9; //Initial purchase cost of warehouse
 export const WarehouseInitialSize           = 100;
 export const WarehouseUpgradeBaseCost       = 1e9;
@@ -320,7 +327,7 @@ Industry.prototype.init = function() {
             this.advFac = 0.16;
             this.hwFac  = 0.25;
             this.reFac  = 0.1;
-            this.aiFac  = 0.1;
+            this.aiFac  = 0.15;
             this.robFac = 0.05;
             this.reqMats = {
                 "Hardware":     0.5,
@@ -1131,7 +1138,7 @@ Industry.prototype.getOfficeProductivity = function(office, params) {
         ratio = Math.max(0.01, ratio); //Minimum ratio value if you have employees
     }
     if (params && params.forProduct) {
-        return ratio * Math.pow(total, 0.2);
+        return ratio * Math.pow(total, 0.22);
     } else {
         return 2 * ratio * Math.pow(total, 0.3);
     }
@@ -2129,7 +2136,7 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                 value: mat.buy ? mat.buy : null,
                 onkeyup:(e)=>{
                     e.preventDefault();
-                    if (e.keyCode === 13) {confirmBtn.click();}
+                    if (e.keyCode === KEY.ENTER) {confirmBtn.click();}
                 }
             });
             confirmBtn = createElement("button", {
@@ -2338,7 +2345,7 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                 value: mat.sllman[1] ? mat.sllman[1] : null, placeholder: "Sell amount",
                 onkeyup:(e)=>{
                     e.preventDefault();
-                    if (e.keyCode === 13) {confirmBtn.click();}
+                    if (e.keyCode === KEY.ENTER) {confirmBtn.click();}
                 }
             });
             var inputPx = createElement("input", {
@@ -2346,7 +2353,7 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                 value: mat.sCost ? mat.sCost : null, placeholder: "Sell price",
                 onkeyup: (e) => {
                     e.preventDefault();
-                    if (e.keyCode === 13) {confirmBtn.click();}
+                    if (e.keyCode === KEY.ENTER) {confirmBtn.click();}
                 }
             });
             confirmBtn = createElement("button", {
@@ -2584,14 +2591,14 @@ Warehouse.prototype.createProductUI = function(product, parentRefs) {
                 type:"text", value:product.sllman[city][1] ? product.sllman[city][1] : null, placeholder: "Sell amount",
                 onkeyup:(e)=>{
                     e.preventDefault();
-                    if (e.keyCode === 13) {confirmBtn.click();}
+                    if (e.keyCode === KEY.ENTER) {confirmBtn.click();}
                 }
             });
             var inputPx = createElement("input", {
                 type:"text", value: product.sCost ? product.sCost : null, placeholder: "Sell price",
                 onkeyup:(e)=>{
                     e.preventDefault();
-                    if (e.keyCode === 13) {confirmBtn.click();}
+                    if (e.keyCode === KEY.ENTER) {confirmBtn.click();}
                 }
             });
             confirmBtn = createElement("a", {
@@ -2693,7 +2700,7 @@ Warehouse.prototype.createProductUI = function(product, parentRefs) {
                 type:"number", placeholder:"Limit",
                 onkeyup:(e)=>{
                     e.preventDefault();
-                    if (e.keyCode === 13) {confirmBtn.click();}
+                    if (e.keyCode === KEY.ENTER) {confirmBtn.click();}
                 }
             });
             confirmBtn = createElement("a", {
@@ -2784,7 +2791,11 @@ function Corporation(params={}) {
     this.expenses   = new Decimal(0);
     this.fundingRound = 0;
     this.public     = false; //Publicly traded
-    this.numShares  = TOTALSHARES;
+    this.totalShares = INITIALSHARES; // Total existing shares
+    this.numShares  = INITIALSHARES; // Total shares owned by player
+    this.shareSalesUntilPriceUpdate = SHARESPERPRICEUPDATE;
+    this.shareSaleCooldown = 0; // Game cycles until player can sell shares again
+    this.issueNewSharesCooldown = 0; // Game cycles until player can issue shares again
     this.dividendPercentage = 0;
     this.dividendTaxPercentage = 50;
     this.issuedShares = 0;
@@ -2814,11 +2825,20 @@ Corporation.prototype.process = function() {
     if (this.storedCycles >= CyclesPerIndustryStateCycle) {
         const state = this.getState();
         const marketCycles = 1;
-        this.storedCycles -= (marketCycles * CyclesPerIndustryStateCycle);
+        const gameCycles = (marketCycles * CyclesPerIndustryStateCycle);
+        this.storedCycles -= gameCycles;
 
         this.divisions.forEach(function(ind) {
             ind.process(marketCycles, state, corp);
         });
+
+        // Process cooldowns
+        if (this.shareSaleCooldown > 0) {
+            this.shareSaleCooldown -= gameCycles;
+        }
+        if (this.issueNewSharesCooldown > 0) {
+            this.issueNewSharesCooldown -= gameCycles;
+        }
 
         //At the start of a new cycle, calculate profits from previous cycle
         if (state === "START") {
@@ -2847,7 +2867,7 @@ Corporation.prototype.process = function() {
                 } else {
                     const totalDividends = (this.dividendPercentage / 100) * cycleProfit;
                     const retainedEarnings = cycleProfit - totalDividends;
-                    const dividendsPerShare = totalDividends / TOTALSHARES;
+                    const dividendsPerShare = totalDividends / this.totalShares;
                     Player.gainMoney(this.numShares * dividendsPerShare * (this.dividendTaxPercentage / 100));
                     this.funds = this.funds.plus(retainedEarnings);
                 }
@@ -2878,7 +2898,7 @@ Corporation.prototype.determineValuation = function() {
     } else {
         val = 10e9 + Math.max(this.funds.toNumber(), 0) / 3; //Base valuation
         if (profit > 0) {
-            val += (profit * 300e3);
+            val += (profit * 315e3);
             val *= (Math.pow(1.1, this.divisions.length));
         } else {
             val = 10e9 * Math.pow(1.1, this.divisions.length);
@@ -2890,24 +2910,29 @@ Corporation.prototype.determineValuation = function() {
 
 Corporation.prototype.getInvestment = function() {
     var val = this.determineValuation(), percShares;
+    let roundMultiplier = 4;
     switch (this.fundingRound) {
         case 0: //Seed
             percShares = 0.10;
+            roundMultiplier = 5;
             break;
         case 1: //Series A
             percShares = 0.35;
+            roundMultiplier = 4;
             break;
         case 2: //Series B
             percShares = 0.25;
+            roundMultiplier = 4;
             break;
         case 3: //Series C
             percShares = 0.20;
+            roundMultiplier = 3.5;
             break;
         case 4:
             return;
     }
-    var funding = val * percShares * 4,
-        investShares = Math.floor(TOTALSHARES * percShares),
+    var funding = val * percShares * roundMultiplier,
+        investShares = Math.floor(INITIALSHARES * percShares),
         yesBtn = yesNoBoxGetYesButton(),
         noBtn = yesNoBoxGetNoButton();
     yesBtn.innerHTML = "Accept";
@@ -2931,7 +2956,7 @@ Corporation.prototype.getInvestment = function() {
 
 Corporation.prototype.goPublic = function() {
     var goPublicPopupId = "cmpy-mgmt-go-public-popup";
-    var initialSharePrice = this.determineValuation() / (TOTALSHARES);
+    var initialSharePrice = this.determineValuation() / (this.totalShares);
     var txt = createElement("p", {
         innerHTML: "Enter the number of shares you would like to issue " +
                    "for your IPO. These shares will be publicly sold " +
@@ -2946,7 +2971,7 @@ Corporation.prototype.goPublic = function() {
         placeholder: "Shares to issue",
         onkeyup:(e)=>{
             e.preventDefault();
-            if (e.keyCode === 13) {yesBtn.click();}
+            if (e.keyCode === KEY.ENTER) {yesBtn.click();}
         }
     });
     var br = createElement("br", {});
@@ -2955,7 +2980,7 @@ Corporation.prototype.goPublic = function() {
         innerText:"Go Public",
         clickListener:()=>{
             var numShares = Math.round(input.value);
-            var initialSharePrice = this.determineValuation() / (TOTALSHARES);
+            var initialSharePrice = this.determineValuation() / (this.totalShares);
             if (isNaN(numShares)) {
                 dialogBoxCreate("Invalid value for number of issued shares");
                 return false;
@@ -2971,6 +2996,8 @@ Corporation.prototype.goPublic = function() {
             this.funds = this.funds.plus(numShares * initialSharePrice);
             this.displayCorporationOverviewContent();
             removeElementById(goPublicPopupId);
+            dialogBoxCreate(`You took your ${this.name} public and earned ` +
+                            `${numeralWrapper.formatMoney(numShares * initialSharePrice)} in your IPO`);
             return false;
         }
     });
@@ -2985,14 +3012,76 @@ Corporation.prototype.goPublic = function() {
     createPopup(goPublicPopupId, [txt, br, input, yesBtn, noBtn]);
 }
 
+Corporation.prototype.getTargetSharePrice = function() {
+    // Note: totalShares - numShares is not the same as issuedShares because
+    // issuedShares does not account for private investors
+    return this.determineValuation() / (2 * (this.totalShares - this.numShares) + 1);
+}
+
 Corporation.prototype.updateSharePrice = function() {
-    var targetPrice = this.determineValuation() / (1.5 * TOTALSHARES - this.numShares);
+    const targetPrice = this.getTargetSharePrice();
     if (this.sharePrice <= targetPrice) {
         this.sharePrice *= (1 + (Math.random() * 0.01));
     } else {
         this.sharePrice *= (1 - (Math.random() * 0.01));
     }
     if (this.sharePrice <= 0.01) {this.sharePrice = 0.01;}
+}
+
+Corporation.prototype.immediatelyUpdateSharePrice = function() {
+    this.sharePrice = this.getTargetSharePrice();
+}
+
+// Calculates how much money will be made and what the resulting stock price
+// will be when the player sells his/her shares
+// @return - [Player profit, final stock price, end shareSalesUntilPriceUpdate property]
+Corporation.prototype.calculateShareSale = function(numShares) {
+    let sharesTracker = numShares;
+    let sharesUntilUpdate = this.shareSalesUntilPriceUpdate;
+    let sharePrice = this.sharePrice;
+    let sharesSold = 0;
+    let profit = 0;
+
+    const maxIterations = Math.ceil(numShares / SHARESPERPRICEUPDATE);
+    if (isNaN(maxIterations) || maxIterations > 10e6) {
+        console.error(`Something went wrong or unexpected when calculating share sale. Maxiterations calculated to be ${maxIterations}`);
+        return;
+    }
+
+    for (let i = 0; i < maxIterations; ++i) {
+        if (sharesTracker < sharesUntilUpdate) {
+            profit += (sharePrice * sharesTracker);
+            sharesUntilUpdate -= sharesTracker;
+            break;
+        } else {
+            profit += (sharePrice * sharesUntilUpdate);
+            sharesUntilUpdate = SHARESPERPRICEUPDATE;
+            sharesTracker -= sharesUntilUpdate;
+            sharesSold += sharesUntilUpdate;
+
+            // Calculate what new share price would be
+            sharePrice = this.determineValuation() / (2 * (this.totalShares + sharesSold - this.numShares));
+        }
+    }
+
+    return [profit, sharePrice, sharesUntilUpdate];
+}
+
+Corporation.prototype.convertCooldownToString = function(cd) {
+    // The cooldown value is based on game cycles. Convert to a simple string
+    const CyclesPerSecond = 1000 / CONSTANTS.MilliPerCycle;
+    const seconds = cd / 5;
+
+    const SecondsPerMinute = 60;
+    const SecondsPerHour = 3600;
+
+    if (seconds > SecondsPerHour) {
+        return `${Math.floor(seconds / SecondsPerHour)} hour(s)`;
+    } else if (seconds > SecondsPerMinute) {
+        return `${Math.floor(seconds / SecondsPerMinute)} minute(s)`;
+    } else {
+        return `${Math.floor(seconds)} second(s)`;
+    }
 }
 
 //One time upgrades that unlock new features
@@ -3104,6 +3193,9 @@ var companyManagementDiv, companyManagementHeaderTabs, companyManagementPanel,
     currentCityUi,
     corporationUnlockUpgrades, corporationUpgrades,
 
+    sellSharesButton, sellSharesButtonTooltip,
+    issueNewSharesButton, issueNewSharesButtonTooltip,
+
     //Industry Overview Panel
     industryOverviewPanel, industryOverviewText,
 
@@ -3200,7 +3292,7 @@ Corporation.prototype.updateUIHeaderTabs = function() {
                 pattern:"[a-zA-Z0-9-_]",
                 onkeyup:(e)=>{
                     e.preventDefault();
-                    if (e.keyCode === 13) {yesBtn.click();}
+                    if (e.keyCode === KEY.ENTER) {yesBtn.click();}
                 }
             });
             var nameLabel = createElement("label", {
@@ -3379,16 +3471,16 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
     if (this.public) {
         //Sell share buttons
         var sellShares = createElement("a", {
-            class:"a-link-button", innerText:"Sell Shares", display:"inline-block",
-            tooltip: "Sell your shares in the company. The money earned from selling your " +
-                     "shares goes into your personal account, not the Corporation's. " +
-                     "This is one of the only ways to profit from your business venture.",
-            clickListener:()=>{
+            class:"a-link-button tooltip", innerText:"Sell Shares", display:"inline-block",
+            clickListener: () => {
                 var popupId = "cmpy-mgmt-sell-shares-popup";
                 var currentStockPrice = this.sharePrice;
                 var txt = createElement("p", {
                     innerHTML: "Enter the number of shares you would like to sell. The money from " +
-                               "selling your shares will go directly to you (NOT your Corporation). " +
+                               "selling your shares will go directly to you (NOT your Corporation).<br><br>" +
+                               "Selling your shares will cause your corporation's stock price to fall due to " +
+                               "dilution. Furthermore, selling a large number of shares all at once will have an immediate effect " +
+                               "in reducing your stock price.<br><br>" +
                                "The current price of your " +
                                "company's stock is " + numeralWrapper.format(currentStockPrice, "$0.000a"),
                 });
@@ -3402,8 +3494,12 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                         } else if (numShares > this.numShares) {
                             profitIndicator.innerText = "You don't have this many shares to sell!";
                         } else {
+                            const stockSaleResults = this.calculateShareSale(numShares);
+                            const profit = stockSaleResults[0];
+                            const newSharePrice = stockSaleResults[1];
+                            const newSharesUntilUpdate = stockSaleResults[2];
                             profitIndicator.innerText = "Sell " + numShares + " shares for a total of " +
-                                                        numeralWrapper.format(numShares * currentStockPrice, '$0.000a');
+                                                        numeralWrapper.format(profit, '$0.000a');
                         }
                     }
                 });
@@ -3416,6 +3512,11 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                         } else if (shares > this.numShares) {
                             dialogBoxCreate("ERROR: You don't have this many shares to sell");
                         } else {
+                            const stockSaleResults = this.calculateShareSale(shares);
+                            const profit = stockSaleResults[0];
+                            const newSharePrice = stockSaleResults[1];
+                            const newSharesUntilUpdate = stockSaleResults[2];
+
                             this.numShares -= shares;
                             if (isNaN(this.issuedShares)) {
                                 console.log("ERROR: Corporation issuedShares is NaN: " + this.issuedShares);
@@ -3428,8 +3529,15 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                                 }
                             }
                             this.issuedShares += shares;
-                            Player.gainMoney(shares * this.sharePrice);
+                            this.sharePrice = newSharePrice;
+                            this.shareSalesUntilPriceUpdate = newSharesUntilUpdate;
+                            this.shareSaleCooldown = SellSharesCooldown;
+                            Player.gainMoney(profit);
                             removeElementById(popupId);
+                            dialogBoxCreate(`Sold ${numeralWrapper.formatMoney(shares, "0.000a")} shares for ` +
+                                            `${numeralWrapper.formatMoney(profit, "$0.000a")}. ` +
+                                            `The corporation's stock price fell to ${numeralWrapper.formatMoney(this.sharePrice)} ` +
+                                            `as a result of dilution.`);
                             return false;
                         }
 
@@ -3446,18 +3554,29 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
             }
         });
 
+        sellSharesButtonTooltip = createElement("span", {
+            class: "tooltiptext",
+            innerText: "Sell your shares in the company. The money earned from selling your " +
+                       "shares goes into your personal account, not the Corporation's. " +
+                       "This is one of the only ways to profit from your business venture.",
+        });
+        sellShares.appendChild(sellSharesButtonTooltip);
+
         //Buyback shares button
         var buybackShares = createElement("a", {
             class:"a-link-button", innerText:"Buyback shares", display:"inline-block",
             tooltip:"Buy back shares you that previously issued or sold at market price.",
             clickListener:()=>{
                 var popupId = "cmpy-mgmt-buyback-shares-popup";
-                var currentStockPrice = this.sharePrice;
+                const currentStockPrice = this.sharePrice;
+                const buybackPrice = currentStockPrice * 1.1;
                 var txt = createElement("p", {
-                    innerHTML: "Enter the number of shares you would like to buy back at market price. To purchase " +
-                               "these shares, you must use your own money (NOT your Corporation's funds). " +
-                               "The current price of your " +
-                               "company's stock is " + numeralWrapper.format(currentStockPrice, "$0.000a") +
+                    innerHTML: "Enter the number of outstanding shares you would like to buy back. " +
+                               "These shares must be bought at a 10% premium. However, " +
+                               "repurchasing shares from the market tends to lead to an increase in stock price.<br><bR>" +
+                               "To purchase these shares, you must use your own money (NOT your Corporation's funds).<br><br>" +
+                               "The current buyback price of your company's stock is " +
+                               numeralWrapper.format(buybackPrice, "$0.000a") +
                                ". Your company currently has " + formatNumber(this.issuedShares, 3) + " outstanding stock shares",
                 });
                 var costIndicator = createElement("p", {});
@@ -3472,9 +3591,8 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                             costIndicator.innerText = "There are not this many shares available to buy back. " +
                                                       "There are only " + this.issuedShares + " outstanding shares.";
                         } else {
-                            console.log("here");
                             costIndicator.innerText = "Purchase " + numShares + " shares for a total of " +
-                                                      numeralWrapper.format(numShares * currentStockPrice, '$0.000a');
+                                                      numeralWrapper.format(numShares * buybackPrice, '$0.000a');
                         }
                     }
                 });
@@ -3482,14 +3600,15 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                     class:"a-link-button", innerText:"Buy shares", display:"inline-block",
                     clickListener:()=>{
                         var shares = Math.round(input.value);
-                        var tempStockPrice = this.sharePrice;
+                        const tempStockPrice = this.sharePrice;
+                        const buybackPrice = tempStockPrice * 1.1;
                         if (isNaN(shares) || shares <= 0) {
                             dialogBoxCreate("ERROR: Invalid value for number of shares");
                         } else if (shares > this.issuedShares) {
                             dialogBoxCreate("ERROR: There are not this many oustanding shares to buy back");
-                        } else if (shares * tempStockPrice > Player.money) {
+                        } else if (shares * buybackPrice > Player.money) {
                             dialogBoxCreate("ERROR: You do not have enough money to purchase this many shares (you need " +
-                                            numeralWrapper.format(shares * tempStockPrice, "$0.000a") + ")");
+                                            numeralWrapper.format(shares * buybackPrice, "$0.000a") + ")");
                         } else {
                             this.numShares += shares;
                             if (isNaN(this.issuedShares)) {
@@ -3503,8 +3622,7 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                                 }
                             }
                             this.issuedShares -= shares;
-                            Player.loseMoney(shares * tempStockPrice);
-                            //TODO REMOVE from Player money
+                            Player.loseMoney(shares * buybackPrice);
                             removeElementById(popupId);
                         }
                         return false;
@@ -3527,121 +3645,142 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
         companyManagementPanel.appendChild(sellShares);
         companyManagementPanel.appendChild(buybackShares);
 
-        //If your Corporation is big enough, buy faction influence through bribes
-        var canBribe = this.determineValuation() >= BribeThreshold;
-        var bribeFactions = createElement("a", {
-            class: canBribe ? "a-link-button" : "a-link-button-inactive",
-            innerText:"Bribe Factions", display:"inline-block",
-            tooltip:canBribe
-                    ? "Use your Corporations power and influence to bribe Faction leaders in exchange for reputation"
-                    : "Your Corporation is not powerful enough to bribe Faction leaders",
-            clickListener:()=>{
-                var popupId = "cmpy-mgmt-bribe-factions-popup";
-                var txt = createElement("p", {
-                    innerText:"You can use Corporation funds or stock shares to bribe Faction Leaders in exchange for faction reputation"
-                });
-                var factionSelector = createElement("select", {margin:"3px"});
-                for (var i = 0; i < Player.factions.length; ++i) {
-                    var facName = Player.factions[i];
-                    factionSelector.add(createElement("option", {
-                        text:facName, value:facName
-                    }));
-                }
-                var repGainText = createElement("p");
-                var stockSharesInput;
-                var moneyInput = createElement("input", {
-                    type:"number", placeholder:"Corporation funds", margin:"5px",
-                    inputListener:()=>{
-                        var money = moneyInput.value == null || moneyInput.value == "" ? 0 : parseFloat(moneyInput.value);
-                        var stockPrice = this.sharePrice;
-                        var stockShares = stockSharesInput.value == null || stockSharesInput.value == "" ? 0 : Math.round(parseFloat(stockSharesInput.value));
-                        if (isNaN(money) || isNaN(stockShares) || money < 0 || stockShares < 0) {
-                            repGainText.innerText = "ERROR: Invalid value(s) entered";
-                        } else if (this.funds.lt(money)) {
-                            repGainText.innerText = "ERROR: You do not have this much money to bribe with";
-                        } else if (this.stockShares > this.numShares) {
-                            repGainText.innerText = "ERROR: You do not have this many shares to bribe with";
-                        } else {
+        sellSharesButton = sellShares;
 
-                            var totalAmount = Number(money) + (stockShares * stockPrice);
-                            var repGain = totalAmount / BribeToRepRatio;
-                            repGainText.innerText = "You will gain " + formatNumber(repGain, 0) +
-                                                    " reputation with " +
-                                                    factionSelector.options[factionSelector.selectedIndex].value +
-                                                    " with this bribe";
-                        }
-                    }
+        // Issue new Shares
+        appendLineBreaks(companyManagementPanel, 1);
+        const issueNewShares = createElement("a", {
+            class: "std-button tooltip",
+            display: "inline-block",
+            innerText: "Issue New Shares",
+            clickListener: () => {
+                const popupId = "cmpy-mgmt-issue-new-shares-popup";
+                const maxNewSharesUnrounded = Math.round(this.totalShares * 0.2);
+                const maxNewShares = maxNewSharesUnrounded - (maxNewSharesUnrounded % 1e6);
+
+                const descText = createElement("p", {
+                    innerHTML:  "You can issue new equity shares (i.e. stocks) in order to raise " +
+                                "capital for your corporation.<br><br>" +
+                                `&nbsp;* You can issue at most ${numeralWrapper.format(maxNewShares, "0.000a")} new shares<br>` +
+                                `&nbsp;* New shares are sold at a 10% discount<br>` +
+                                `&nbsp;* You can only issue new shares once every 12 hours<br>` +
+                                `&nbsp;* Issuing new shares causes dilution, resulting in a decrease in stock price and lower dividends per share<br>` +
+                                `&nbsp;* Number of new shares issued must be a multiple of 10 million<br><br>` +
+                                `When you choose to issue new equity, private shareholders have first priority for up to 50% of the new shares. ` +
+                                `If they choose to exercise this option, these newly issued shares become private, restricted shares, which means ` +
+                                `you cannot buy them back.`,
                 });
-                stockSharesInput = createElement("input", {
-                    type:"number", placeholder:"Stock Shares", margin: "5px",
-                    inputListener:()=>{
-                        var money = moneyInput.value == null || moneyInput.value == "" ? 0 : parseFloat(moneyInput.value);
-                        var stockPrice = this.sharePrice;
-                        var stockShares = stockSharesInput.value == null || stockSharesInput.value == "" ? 0 : Math.round(stockSharesInput.value);
-                        if (isNaN(money) || isNaN(stockShares) || money < 0 || stockShares < 0) {
-                            repGainText.innerText = "ERROR: Invalid value(s) entered";
-                        } else if (this.funds.lt(money)) {
-                            repGainText.innerText = "ERROR: You do not have this much money to bribe with";
-                        } else if (this.stockShares > this.numShares) {
-                            repGainText.innerText = "ERROR: You do not have this many shares to bribe with";
+
+                let issueBtn, newSharesInput;
+                const dynamicText = createElement("p", {
+                    display: "block",
+                });
+
+                function updateDynamicText(corp) {
+                    const newSharePrice = Math.round(corp.sharePrice * 0.9);
+                    let newShares = parseInt(newSharesInput.value);
+                    if (isNaN(newShares)) {
+                        dynamicText.innerText = "Invalid input";
+                        return;
+                    }
+
+                    // Round to nearest ten-millionth
+                    newShares /= 10e6;
+                    newShares = Math.round(newShares) * 10e6;
+
+                    if (newShares < 10e6) {
+                        dynamicText.innerText = "Must issue at least 10 million new shares";
+                        return;
+                    }
+
+                    if (newShares > maxNewShares) {
+                        dynamicText.innerText = "You cannot issue that many shares";
+                        return;
+                    }
+
+                    dynamicText.innerText = `Issue ${numeralWrapper.format(newShares, "0.000a")} new shares ` +
+                                            `for ${numeralWrapper.formatMoney(newShares * newSharePrice)}?`
+                }
+                newSharesInput = createElement("input", {
+                    margin: "5px",
+                    placeholder: "# New Shares",
+                    type: "number",
+                    onkeyup: (e) => {
+                        e.preventDefault();
+                        if (e.keyCode === KEY.ENTER) {
+                            issueBtn.click();
                         } else {
-                            var totalAmount = money + (stockShares * stockPrice);
-                            var repGain = totalAmount / BribeToRepRatio;
-                            console.log("repGain: " + repGain);
-                            repGainText.innerText = "You will gain " + formatNumber(repGain, 0) +
-                                                    " reputation with " +
-                                                    factionSelector.options[factionSelector.selectedIndex].value +
-                                                    " with this bribe";
+                            updateDynamicText(this);
                         }
                     }
                 });
-                var confirmButton = createElement("a", {
-                    class:"a-link-button", innerText:"Bribe", display:"inline-block",
-                    clickListener:()=>{
-                        var money = moneyInput.value == null || moneyInput.value == "" ? 0 : parseFloat(moneyInput.value);
-                        var stockPrice = this.sharePrice;
-                        var stockShares = stockSharesInput.value == null || stockSharesInput.value == ""? 0 : Math.round(parseFloat(stockSharesInput.value));
-                        var fac = Factions[factionSelector.options[factionSelector.selectedIndex].value];
-                        if (fac == null) {
-                            dialogBoxCreate("ERROR: You must select a faction to bribe");
-                            return false;
+
+                issueBtn = createElement("a", {
+                    class: "std-button",
+                    display: "inline-block",
+                    innerText: "Issue New Shares",
+                    clickListener: () => {
+                        const newSharePrice = Math.round(this.sharePrice * 0.9);
+                        let newShares = parseInt(newSharesInput.value);
+                        if (isNaN(newShares)) {
+                            dialogBoxCreate("Invalid input for number of new shares");
+                            return;
                         }
-                        if (isNaN(money) || isNaN(stockShares) || money < 0 || stockShares < 0) {
-                            dialogBoxCreate("ERROR: Invalid value(s) entered");
-                        } else if (this.funds.lt(money)) {
-                            dialogBoxCreate("ERROR: You do not have this much money to bribe with");
-                        } else if (stockShares > this.numShares) {
-                            dialogBoxCreate("ERROR: You do not have this many shares to bribe with");
-                        } else {
-                            var totalAmount = money + (stockShares * stockPrice);
-                            var repGain = totalAmount / BribeToRepRatio;
-                            dialogBoxCreate("You gained " + formatNumber(repGain, 0) +
-                                            " reputation with " + fac.name  + " by bribing them.");
-                            fac.playerReputation += repGain;
-                            this.funds = this.funds.minus(money);
-                            this.numShares -= stockShares;
-                            removeElementById(popupId);
-                            return false;
+
+                        // Round to nearest ten-millionth
+                        newShares = Math.round(newShares / 10e6) * 10e6;
+
+                        if (newShares < 10e6 || newShares > maxNewShares) {
+                            dialogBoxCreate("Invalid input for number of new shares");
+                            return;
                         }
-                    }
-                });
-                var cancelButton = createElement("a", {
-                    class:"a-link-button", innerText:"Cancel", display:"inline-block",
-                    clickListener:()=>{
+
+                        const profit = newShares * newSharePrice;
+                        this.issueNewSharesCooldown = IssueNewSharesCooldown;
+                        this.totalShares += newShares;
+
+                        // Determine how many are bought by private investors
+                        // Private investors get up to 50% at most
+                        // Round # of private shares to the nearest millionth
+                        let privateShares = getRandomInt(0, Math.round(newShares / 2));
+                        privateShares = Math.round(privateShares / 1e6) * 1e6;
+
+                        this.issuedShares += (newShares - privateShares);
+                        this.funds = this.funds.plus(profit);
+                        this.immediatelyUpdateSharePrice();
+
                         removeElementById(popupId);
+                        dialogBoxCreate(`Issued ${numeralWrapper.format(newShares, "0.000a")} and raised ` +
+                                        `${numeralWrapper.formatMoney(profit)}. ${numeralWrapper.format(privateShares, "0.000a")} ` +
+                                        `of these shares were bought by private investors.<br><br>` +
+                                        `Stock price decreased to ${numeralWrapper.formatMoney(this.sharePrice)}`);
                         return false;
                     }
                 });
 
-                createPopup(popupId, [txt, factionSelector, repGainText,
-                                      moneyInput, stockSharesInput, confirmButton, cancelButton]);
+                const cancelBtn = createPopupCloseButton(popupId, {
+                    class: "std-button",
+                    display: "inline-block",
+                    innerText: "Cancel",
+                });
+
+                createPopup(popupId, [descText, dynamicText, newSharesInput, issueBtn, cancelBtn]);
+                newSharesInput.focus();
             }
         });
-        companyManagementPanel.appendChild(bribeFactions);
+        issueNewSharesButtonTooltip = createElement("span", {
+            class: "tooltiptext",
+            innerText: "Issue new equity shares to raise capital",
+        });
+        issueNewShares.appendChild(issueNewSharesButtonTooltip);
+
+        companyManagementPanel.appendChild(issueNewShares);
+
+        issueNewSharesButton = issueNewShares;
 
         // Set Stock Dividends
         const issueDividends = createElement("a", {
-            class: "a-link-button",
+            class: "std-button",
             display: "inline-block",
             innerText: "Issue Dividends",
             tooltip: "Manage the dividends that are paid out to shareholders (including yourself)",
@@ -3670,7 +3809,7 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                     type: "number",
                     onkeyup: (e) => {
                         e.preventDefault();
-                        if (e.keyCode === 13) {allocateBtn.click();}
+                        if (e.keyCode === KEY.ENTER) {allocateBtn.click();}
                     }
                 });
 
@@ -3740,6 +3879,120 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
         companyManagementPanel.appendChild(findInvestors);
         companyManagementPanel.appendChild(goPublic);
     }
+
+    appendLineBreaks(companyManagementPanel, 1);
+
+    //If your Corporation is big enough, buy faction influence through bribes
+    var canBribe = this.determineValuation() >= BribeThreshold;
+    var bribeFactions = createElement("a", {
+        class: canBribe ? "a-link-button" : "a-link-button-inactive",
+        innerText:"Bribe Factions", display:"inline-block",
+        tooltip:canBribe
+                ? "Use your Corporations power and influence to bribe Faction leaders in exchange for reputation"
+                : "Your Corporation is not powerful enough to bribe Faction leaders",
+        clickListener:()=>{
+            var popupId = "cmpy-mgmt-bribe-factions-popup";
+            var txt = createElement("p", {
+                innerText:"You can use Corporation funds or stock shares to bribe Faction Leaders in exchange for faction reputation"
+            });
+            var factionSelector = createElement("select", {margin:"3px"});
+            for (var i = 0; i < Player.factions.length; ++i) {
+                var facName = Player.factions[i];
+                factionSelector.add(createElement("option", {
+                    text:facName, value:facName
+                }));
+            }
+            var repGainText = createElement("p");
+            var stockSharesInput;
+            var moneyInput = createElement("input", {
+                type:"number", placeholder:"Corporation funds", margin:"5px",
+                inputListener:()=>{
+                    var money = moneyInput.value == null || moneyInput.value == "" ? 0 : parseFloat(moneyInput.value);
+                    var stockPrice = this.sharePrice;
+                    var stockShares = stockSharesInput.value == null || stockSharesInput.value == "" ? 0 : Math.round(parseFloat(stockSharesInput.value));
+                    if (isNaN(money) || isNaN(stockShares) || money < 0 || stockShares < 0) {
+                        repGainText.innerText = "ERROR: Invalid value(s) entered";
+                    } else if (this.funds.lt(money)) {
+                        repGainText.innerText = "ERROR: You do not have this much money to bribe with";
+                    } else if (this.stockShares > this.numShares) {
+                        repGainText.innerText = "ERROR: You do not have this many shares to bribe with";
+                    } else {
+
+                        var totalAmount = Number(money) + (stockShares * stockPrice);
+                        var repGain = totalAmount / BribeToRepRatio;
+                        repGainText.innerText = "You will gain " + formatNumber(repGain, 0) +
+                                                " reputation with " +
+                                                factionSelector.options[factionSelector.selectedIndex].value +
+                                                " with this bribe";
+                    }
+                }
+            });
+            stockSharesInput = createElement("input", {
+                type:"number", placeholder:"Stock Shares", margin: "5px",
+                inputListener:()=>{
+                    var money = moneyInput.value == null || moneyInput.value == "" ? 0 : parseFloat(moneyInput.value);
+                    var stockPrice = this.sharePrice;
+                    var stockShares = stockSharesInput.value == null || stockSharesInput.value == "" ? 0 : Math.round(stockSharesInput.value);
+                    if (isNaN(money) || isNaN(stockShares) || money < 0 || stockShares < 0) {
+                        repGainText.innerText = "ERROR: Invalid value(s) entered";
+                    } else if (this.funds.lt(money)) {
+                        repGainText.innerText = "ERROR: You do not have this much money to bribe with";
+                    } else if (this.stockShares > this.numShares) {
+                        repGainText.innerText = "ERROR: You do not have this many shares to bribe with";
+                    } else {
+                        var totalAmount = money + (stockShares * stockPrice);
+                        var repGain = totalAmount / BribeToRepRatio;
+                        console.log("repGain: " + repGain);
+                        repGainText.innerText = "You will gain " + formatNumber(repGain, 0) +
+                                                " reputation with " +
+                                                factionSelector.options[factionSelector.selectedIndex].value +
+                                                " with this bribe";
+                    }
+                }
+            });
+            var confirmButton = createElement("a", {
+                class:"a-link-button", innerText:"Bribe", display:"inline-block",
+                clickListener:()=>{
+                    var money = moneyInput.value == null || moneyInput.value == "" ? 0 : parseFloat(moneyInput.value);
+                    var stockPrice = this.sharePrice;
+                    var stockShares = stockSharesInput.value == null || stockSharesInput.value == ""? 0 : Math.round(parseFloat(stockSharesInput.value));
+                    var fac = Factions[factionSelector.options[factionSelector.selectedIndex].value];
+                    if (fac == null) {
+                        dialogBoxCreate("ERROR: You must select a faction to bribe");
+                        return false;
+                    }
+                    if (isNaN(money) || isNaN(stockShares) || money < 0 || stockShares < 0) {
+                        dialogBoxCreate("ERROR: Invalid value(s) entered");
+                    } else if (this.funds.lt(money)) {
+                        dialogBoxCreate("ERROR: You do not have this much money to bribe with");
+                    } else if (stockShares > this.numShares) {
+                        dialogBoxCreate("ERROR: You do not have this many shares to bribe with");
+                    } else {
+                        var totalAmount = money + (stockShares * stockPrice);
+                        var repGain = totalAmount / BribeToRepRatio;
+                        dialogBoxCreate("You gained " + formatNumber(repGain, 0) +
+                                        " reputation with " + fac.name  + " by bribing them.");
+                        fac.playerReputation += repGain;
+                        this.funds = this.funds.minus(money);
+                        this.numShares -= stockShares;
+                        removeElementById(popupId);
+                        return false;
+                    }
+                }
+            });
+            var cancelButton = createElement("a", {
+                class:"a-link-button", innerText:"Cancel", display:"inline-block",
+                clickListener:()=>{
+                    removeElementById(popupId);
+                    return false;
+                }
+            });
+
+            createPopup(popupId, [txt, factionSelector, repGainText,
+                                  moneyInput, stockSharesInput, confirmButton, cancelButton]);
+        }
+    });
+    companyManagementPanel.appendChild(bribeFactions);
 
     //Update overview text
     this.updateCorporationOverviewContent();
@@ -3842,15 +4095,15 @@ Corporation.prototype.updateCorporationOverviewContent = function() {
     if (this.dividendPercentage > 0 && profit > 0) {
         const totalDividends = (this.dividendPercentage / 100) * profit;
         const retainedEarnings = profit - totalDividends;
-        const dividendsPerShare = totalDividends / TOTALSHARES;
+        const dividendsPerShare = totalDividends / this.totalShares;
         const playerEarnings = this.numShares * dividendsPerShare;
 
-        dividendStr = `Dividend Percentage: ${numeralWrapper.format(this.dividendPercentage / 100, "0%")}<br>` +
-                      `Retained Profits (after dividends): ${numeralWrapper.format(retainedEarnings, "$0.000a")} / s<br>` +
+        dividendStr = `Retained Profits (after dividends): ${numeralWrapper.format(retainedEarnings, "$0.000a")} / s<br><br>` +
+                      `Dividend Percentage: ${numeralWrapper.format(this.dividendPercentage / 100, "0%")}<br>` +
                       `Dividends per share: ${numeralWrapper.format(dividendsPerShare, "$0.000a")} / s<br>` +
                       `Your earnings as a shareholder (Pre-Tax): ${numeralWrapper.format(playerEarnings, "$0.000a")} / s<br>` +
                       `Dividend Tax Rate: ${this.dividendTaxPercentage}%<br>` +
-                      `Your earnings as a shareholder (Post-Tax): ${numeralWrapper.format(playerEarnings * (this.dividendTaxPercentage / 100), "$0.000a")} / s<br>`;
+                      `Your earnings as a shareholder (Post-Tax): ${numeralWrapper.format(playerEarnings * (this.dividendTaxPercentage / 100), "$0.000a")} / s<br><br>`;
     }
 
     var txt = "Total Funds: " + numeralWrapper.format(this.funds.toNumber(), '$0.000a') + "<br>" +
@@ -3860,13 +4113,17 @@ Corporation.prototype.updateCorporationOverviewContent = function() {
               dividendStr +
               "Publicly Traded: " + (this.public ? "Yes" : "No") + "<br>" +
               "Owned Stock Shares: " + numeralWrapper.format(this.numShares, '0.000a') + "<br>" +
-              "Stock Price: " + (this.public ? "$" + formatNumber(this.sharePrice, 2) : "N/A") + "<br><br>";
+              "Stock Price: " + (this.public ? "$" + formatNumber(this.sharePrice, 2) : "N/A") + "<br>" +
+              "<p class='tooltip'>Total Stock Shares: " + numeralWrapper.format(this.totalShares, "0.000a") +
+              "<span class='tooltiptext'>" +
+                  `Outstanding Shares: ${numeralWrapper.format(this.issuedShares, "0.000a")}<br>` +
+                  `Private Shares: ${numeralWrapper.format(this.totalShares - this.issuedShares - this.numShares, "0.000a")}` +
+              "</span></p><br><br>";
 
     const storedTime = this.storedCycles * CONSTANTS.MilliPerCycle / 1000;
     if (storedTime > 15) {
         txt += `Bonus Time: ${storedTime} seconds<br><br>`;
     }
-
 
     var prodMult        = this.getProductionMultiplier(),
         storageMult     = this.getStorageMultiplier(),
@@ -3887,6 +4144,41 @@ Corporation.prototype.updateCorporationOverviewContent = function() {
     if (salesMult > 1)      {txt += "Sales Multiplier: " + formatNumber(salesMult, 3) + "<br>";}
     if (sciResMult > 1)     {txt += "Scientific Research Multiplier: " + formatNumber(sciResMult, 3) + "<br>";}
     p.innerHTML = txt;
+
+    // Disable buttons for cooldowns
+    if (sellSharesButton instanceof Element) {
+        if (this.shareSaleCooldown <= 0) {
+            sellSharesButton.className = "std-button tooltip";
+        } else {
+            sellSharesButton.className = "a-link-button-inactive tooltip";
+        }
+    }
+
+    if (sellSharesButtonTooltip instanceof Element) {
+        if (this.shareSaleCooldown <= 0) {
+            sellSharesButtonTooltip.innerText = "Sell your shares in the company. The money earned from selling your " +
+                                                "shares goes into your personal account, not the Corporation's. " +
+                                                "This is one of the only ways to profit from your business venture.";
+        } else {
+            sellSharesButtonTooltip.innerText = "Cannot sell shares for " + this.convertCooldownToString(this.shareSaleCooldown);
+        }
+    }
+
+    if (issueNewSharesButton instanceof Element) {
+        if (this.issueNewSharesCooldown <= 0) {
+            issueNewSharesButton.className = "std-button tooltip";
+        } else {
+            issueNewSharesButton.className = "a-link-button-inactive tooltip";
+        }
+    }
+
+    if (issueNewSharesButtonTooltip instanceof Element) {
+        if (this.issueNewSharesCooldown <= 0) {
+            issueNewSharesButtonTooltip.innerText = "Issue new equity shares to raise capital"
+        } else {
+            issueNewSharesButtonTooltip.innerText = "Cannot issue new shares for " + this.convertCooldownToString(this.issueNewSharesCooldown);
+        }
+    }
 }
 
 Corporation.prototype.displayDivisionContent = function(division, city) {
@@ -4363,7 +4655,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                     },
                     onkeyup:(e)=>{
                         e.preventDefault();
-                        if (e.keyCode === 13) {confirmBtn.click();}
+                        if (e.keyCode === KEY.ENTER) {confirmBtn.click();}
                     }
                 });
                 confirmBtn = createElement("a", {
@@ -4738,6 +5030,11 @@ Corporation.prototype.clearUI = function() {
 
     corporationUnlockUpgrades   = null;
     corporationUpgrades         = null;
+
+    sellSharesButton            = null;
+    issueNewSharesButton        = null;
+    sellSharesButtonTooltip     = null;
+    issueNewSharesButtonTooltip = null;
 
     industryOverviewPanel       = null;
     industryOverviewText        = null;
