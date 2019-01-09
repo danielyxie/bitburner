@@ -251,7 +251,6 @@ function prestigeSourceFile() {
 
     //BitNode 3: Corporatocracy
     if (Player.bitNodeN === 3) {
-        Player.money = new Decimal(150e9);
         homeComp.messages.push("corporation-management-handbook.lit");
         dialogBoxCreate("You received a copy of the Corporation Management Handbook on your home computer. " +
                         "Read it if you need help getting started with Corporations!");
