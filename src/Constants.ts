@@ -1,7 +1,7 @@
 import {IMap} from "./types";
 
 export let CONSTANTS: IMap<any> = {
-    Version:                "0.41.2",
+    Version:                "0.42.0",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then

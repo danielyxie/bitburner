@@ -5,7 +5,7 @@ Changelog
 
 v0.42.0 - 1/8/2019
 ------------------
-v0.42.0
+
 * Corporation Changes:
     * Corporation can now be self-funded with $150b or using seed money in exchange for 500m newly-issued shares
     * In BitNode-3, you no longer start with $150b
