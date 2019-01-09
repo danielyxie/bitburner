@@ -73,7 +73,7 @@ import {StockMarket, StockSymbols,
         SymbolToStockMap, initStockSymbols,
         initSymbolToStockMap, stockMarketCycle,
         processStockPrices,
-        displayStockMarketContent}                      from "./StockMarket";
+        displayStockMarketContent}                      from "./StockMarket/StockMarket";
 import {Terminal, postNetburnerText}                    from "./Terminal";
 import {KEY}                                            from "../utils/helpers/keyCodes";
 import {Page, routing}                                  from "./ui/navigationTracking";
