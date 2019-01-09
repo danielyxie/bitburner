@@ -58,9 +58,14 @@ function purchaseRamForHomeComputer(cost) {
         return;
     }
 
-    var homeComputer = Player.getHomeComputer();
-    homeComputer.maxRam *= 2;
+    const homeComputer = Player.getHomeComputer();
+    if (homeComputer.maxRam >= CONSTANTS.HomeComputerMaxRam) {
+        dialogBoxCreate(`You cannot upgrade your home computer RAM because it is at its maximum possible value`);
+        return;
+    }
 
+
+    homeComputer.maxRam *= 2;
     Player.loseMoney(cost);
 
     dialogBoxCreate("Purchased additional RAM for home computer! It now has " + homeComputer.maxRam + "GB of RAM.");

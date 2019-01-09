@@ -2992,16 +2992,20 @@ function NetscriptFunctions(workerScript) {
                 }
             }
 
-            const cost = Player.getUpgradeHomeRamCost();
+            // Check if we're at max RAM
+            const homeComputer = Player.getHomeComputer();
+            if (homeComputer.maxRam >= CONSTANTS.HomeComputerMaxRam) {
+                workerScript.log(`ERROR: upgradeHomeRam() failed because your home computer is at max RAM`);
+                return false;
+            }
 
+            const cost = Player.getUpgradeHomeRamCost();
             if (Player.money.lt(cost)) {
                 workerScript.scriptRef.log("ERROR: upgradeHomeRam() failed because you don't have enough money");
                 return false;
             }
 
-            var homeComputer = Player.getHomeComputer();
             homeComputer.maxRam *= 2;
-
             Player.loseMoney(cost);
 
             Player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
