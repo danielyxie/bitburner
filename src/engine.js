@@ -73,7 +73,7 @@ import {StockMarket, StockSymbols,
         SymbolToStockMap, initStockSymbols,
         initSymbolToStockMap, stockMarketCycle,
         processStockPrices,
-        displayStockMarketContent}                      from "./StockMarket";
+        displayStockMarketContent}                      from "./StockMarket/StockMarket";
 import {Terminal, postNetburnerText}                    from "./Terminal";
 import {KEY}                                            from "../utils/helpers/keyCodes";
 import {Page, routing}                                  from "./ui/navigationTracking";
@@ -88,6 +88,7 @@ import "../css/mainmenu.scss";
 import "../css/characteroverview.scss";
 import "../css/terminal.scss";
 import "../css/menupages.scss";
+import "../css/stockmarket.scss";
 import "../css/workinprogress.scss";
 import "../css/popupboxes.scss";
 import "../css/gameoptions.scss";

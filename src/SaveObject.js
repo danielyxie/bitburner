@@ -16,7 +16,7 @@ import {loadAllRunningScripts}                  from "./Script";
 import {AllServers, loadAllServers}             from "./Server";
 import {Settings}                               from "./Settings";
 import {loadSpecialServerIps, SpecialServerIps} from "./SpecialServerIps";
-import {loadStockMarket, StockMarket}           from "./StockMarket";
+import {loadStockMarket, StockMarket}           from "./StockMarket/StockMarket";
 import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {gameOptionsBoxClose}                    from "../utils/GameOptions";
 import {clearEventListeners}                    from "../utils/uiHelpers/clearEventListeners";

@@ -1222,7 +1222,8 @@ button {
   display: inline;
   width: 25%; }
 
-/* Stock market */
+/* COLORS */
+/* Attributes */
 #stock-market-container {
   position: fixed;
   padding: 6px; }
@@ -1235,13 +1236,12 @@ button {
     margin-left: 10px;
     display: block; }
 
-/* Change font size of Stock TIcker headers */
 #stock-market-list li button {
   font-size: 16px; }
 
 #stock-market-container p {
-  padding: 10px;
-  margin: 10px;
+  padding: 6px;
+  margin: 6px;
   width: 70%; }
 
 #stock-market-container a {

@@ -29,7 +29,7 @@ import {SpecialServerIps, SpecialServerIpsMap,
         SpecialServerNames}                     from "./SpecialServerIps";
 import {initStockMarket, initSymbolToStockMap,
         stockMarketContentCreated,
-        setStockMarketContentCreated}           from "./StockMarket";
+        setStockMarketContentCreated}           from "./StockMarket/StockMarket";
 import {Terminal, postNetburnerText}            from "./Terminal";
 import Decimal                                  from "decimal.js";
 import {dialogBoxCreate}                        from "../utils/DialogBox";

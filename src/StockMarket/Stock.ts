@@ -1,5 +1,5 @@
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
-import { getRandomInt } from "../utils/helpers/getRandomInt";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
+import { getRandomInt } from "../../utils/helpers/getRandomInt";
 
 /**
  * Represents the valuation of a company in the World Stock Exchange.
@@ -21,6 +21,11 @@ export class Stock {
      * Maximum price of a stock (per share)
      */
     readonly cap: number;
+
+    /**
+     * Maximum number of shares that player can own (both long and short combined)
+     */
+    readonly maxShares: number;
 
     /**
      * Maximum volatility
@@ -78,7 +83,8 @@ export class Stock {
                 mv: number = 1,
                 b: boolean = true,
                 otlkMag: number = 0,
-                initPrice: number = 10e3) {
+                initPrice: number = 10e3,
+                marketCap: number = 1e12) {
         this.name               = name;
         this.symbol             = symbol;
         this.price              = initPrice;
@@ -90,6 +96,10 @@ export class Stock {
         this.b                  = b;
         this.otlkMag            = otlkMag;
         this.cap                = getRandomInt(initPrice * 1e3, initPrice * 25e3);
+
+        // Maximum shares is determined by market cap, and is rounded to nearest millions
+        let maxSharesUnrounded: number = (marketCap / initPrice);
+        this.maxShares = Math.round(maxSharesUnrounded / 1e6) * 1e6;
 
         this.posTxtEl           = null;
     }

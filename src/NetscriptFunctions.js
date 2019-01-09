@@ -40,12 +40,12 @@ import {Server, getServer, AddToAllServers,
         GetServerByHostname, numCycleForGrowth}     from "./Server";
 import {Settings}                                   from "./Settings";
 import {SpecialServerIps}                           from "./SpecialServerIps";
-import {Stock}                                      from "./Stock";
+import {Stock}                                      from "./StockMarket/Stock";
 import {StockMarket, StockSymbols, SymbolToStockMap,
         initStockMarket, initSymbolToStockMap, buyStock,
         sellStock, updateStockPlayerPosition,
         shortStock, sellShort, OrderTypes,
-        PositionTypes, placeOrder, cancelOrder}     from "./StockMarket";
+        PositionTypes, placeOrder, cancelOrder}     from "./StockMarket/StockMarket";
 import {post}                                       from "./ui/postToTerminal";
 import {TextFile, getTextFile, createTextFile}      from "./TextFile";
 
@@ -1537,6 +1537,22 @@ function NetscriptFunctions(workerScript) {
             }
             return [stock.playerShares, stock.playerAvgPx, stock.playerShortShares, stock.playerAvgShortPx];
         },
+        getStockMaxShares : function(symbol) {
+            if (workerScript.checkingRam) {
+                return updateStaticRam("getStockMaxShares", CONSTANTS.ScriptGetStockRamCost);
+            }
+            updateDynamicRam("getStockMaxShares", CONSTANTS.ScriptGetStockRamCost);
+
+            if (!Player.hasTixApiAccess) {
+                throw makeRuntimeRejectMsg(workerScript, "You don't have TIX API Access! Cannot use getStockMaxShares()");
+            }
+            const stock = SymbolToStockMap[symbol];
+            if (stock == null) {
+                throw makeRuntimeRejectMsg(workerScript, "Invalid stock symbol passed into getStockMaxShares()");
+            }
+
+            return stock.maxShares;
+        },
         buyStock : function(symbol, shares) {
             if (workerScript.checkingRam) {
                 return updateStaticRam("buyStock", CONSTANTS.ScriptBuySellStockRamCost);
@@ -1556,11 +1572,19 @@ function NetscriptFunctions(workerScript) {
             shares = Math.round(shares);
             if (shares === 0) {return 0;}
 
+            // Does player have enough money?
             var totalPrice = stock.price * shares;
             if (Player.money.lt(totalPrice + CONSTANTS.StockMarketCommission)) {
                 workerScript.scriptRef.log("Not enough money to purchase " + formatNumber(shares, 0) + " shares of " +
                                            symbol + ". Need $" +
                                            formatNumber(totalPrice + CONSTANTS.StockMarketCommission, 2).toString());
+                return 0;
+            }
+
+            // Would this purchase exceed the maximum number of shares?
+            if (shares + stock.playerShares + stock.playerShortShares > stock.maxShares) {
+                workerScript.scriptRef.log(`You cannot purchase this many shares. ${stock.symbol} has a maximum of ` +
+                                           `${stock.maxShares} shares.`);
                 return 0;
             }
 
