@@ -112,6 +112,11 @@ export enum Page {
      * Manage special Bladeburner activities.
      */
     Bladeburner = "Bladeburner",
+
+    /**
+     * Manage your Sleeves
+     */
+    Sleeves = "Sleeves",
 }
 
 /**

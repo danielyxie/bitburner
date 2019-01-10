@@ -51,14 +51,6 @@ export interface ICrime {
     kills: number;
 }
 
-// Interface for Faction object
-// Used because at the time of implementation, the Faction object has not been
-// converted to TypeScript
-export interface IFaction {
-    name: string;
-    playerReputation: number;
-}
-
 // Interface that defines a generic object used to track experience/money
 // earnings for tasks
 export interface ITaskTracker {
@@ -128,6 +120,12 @@ export abstract class Person {
     crime_success_mult: number;
 
     work_money_mult: number;
+
+    /**
+     * Augmentations
+     */
+    this.augmentations = [];
+    this.queuedAugmentations = [];
 
     /**
      * City that the person is in

@@ -1,6 +1,6 @@
 /**
- * Sleeves are clones of the player that can be used to perform
- * different tasks synchronously.
+ * Sleeves are bodies that contain the player's cloned consciousness.
+ * The player can use these bodies to perform different tasks synchronously.
  *
  * Each sleeve is its own individual, meaning it has its own stats/exp
  *
@@ -11,7 +11,6 @@ import { SleeveTaskType } from "./SleeveTaskTypesEnum";
 import { Person,
          IPlayer,
          ICrime,
-         IFaction,
          ITaskTracker,
          createTaskTracker } from "../Person";
 
@@ -101,6 +100,8 @@ export class Sleeve extends Person {
      * Sleeve shock. Number between 1 and 100
      * Trauma/shock that comes with being in a sleeve. Experience earned
      * is multipled by shock%. This gets applied before synchronization
+     *
+     * Reputation earned is also multiplied by shock%
      */
     shock: number = 1;
 
@@ -251,6 +252,7 @@ export class Sleeve extends Person {
      * Earn money for player
      */
     gainMoney(p: IPlayer, task: ITaskTracker, numCycles: number=1): void {
+        this.earningsForPlayer.money += (task.money * numCycles);
         p.gainMoney(task.money * numCycles);
     }
 
@@ -262,17 +264,17 @@ export class Sleeve extends Person {
         if (this.currentTask === SleeveTaskType.Faction) {
             switch (this.factionWorkType) {
                 case FactionWorkType.Hacking:
-                    return this.getFactionHackingWorkRepGain();
+                    return this.getFactionHackingWorkRepGain() * (this.shock / 100);
                 case FactionWorkType.Field:
-                    return this.getFactionFieldWorkRepGain();
+                    return this.getFactionFieldWorkRepGain() * (this.shock / 100);
                 case FactionWorkType.Security:
-                    return this.getFactionSecurityWorkRepGain();
+                    return this.getFactionSecurityWorkRepGain() * (this.shock / 100);
                 default:
                     console.warn(`Invalid Sleeve.factionWorkType property in Sleeve.getRepGain(): ${this.factionWorkType}`);
                     return 0;
             }
         } else if (this.currentTask === SleeveTaskType.Company) {
-            return 0;
+            return 0; // TODO
         } else {
             console.warn(`Sleeve.getRepGain() called for invalid task type: ${this.currentTask}`);
             return 0;
@@ -327,16 +329,21 @@ export class Sleeve extends Person {
                 retValue = this.gainExperience(p, this.gainRatesForTask, cyclesUsed);
                 this.gainMoney(p, this.gainRatesForTask, cyclesUsed);
 
-                // TODO REP for both this and company
-                const fac = Factions[this.currentTaskLocation];
+                // Gain faction reputation
+                const fac: Faction = Factions[this.currentTaskLocation];
                 if (!(fac instanceof Faction)) {
                     console.error(`Invalid faction for Sleeve task: ${this.currentTaskLocation}`);
                     break;
                 }
+
+                const repGainPerCycle: number = this.getRepGain();
+                fac.playerReputation += (repGainPerCycle * cyclesUsed);
                 break;
             case SleeveTaskType.Company:
                 retValue = this.gainExperience(p, this.gainRatesForTask, cyclesUsed);
                 this.gainMoney(p, this.gainRatesForTask, cyclesUsed);
+
+                // TODO Rep gain for this
                 break;
             case SleeveTaskType.Recovery:
                 this.shock = Math.max(100, this.shock + (0.001 * this.storedCycles));
