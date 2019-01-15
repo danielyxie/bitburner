@@ -1,5 +1,5 @@
-import {BitNodeMultipliers} from "./BitNodeMultipliers";
-import {Player}             from "./Player";
+import { BitNodeMultipliers } from "./BitNodeMultipliers";
+import { Player }             from "../Player";
 
 function BitNode(n, name, desc="", info="") {
     this.number = n;

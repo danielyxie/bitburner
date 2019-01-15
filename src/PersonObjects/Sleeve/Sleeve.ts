@@ -13,7 +13,7 @@ import { Person,
          ITaskTracker,
          createTaskTracker } from "../Person";
 
-import { BitNodeMultipliers } from "../../BitNodeMultipliers";
+import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 
 import { Crime } from "../../Crime/Crime";
 

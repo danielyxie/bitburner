@@ -1,8 +1,8 @@
-import { Augmentations,
-         applyAugmentation,
-         AugmentationNames,
-         PlayerOwnedAugmentation }              from "./Augmentations";
-import { BitNodeMultipliers }                   from "./BitNodeMultipliers";
+import { Augmentations }                        from "./Augmentation/Augmentations";
+import { applyAugmentation }                    from "./Augmentation/AugmentationHelpers";
+import { PlayerOwnedAugmentation }              from "./Augmentation/PlayerOwnedAugmentation";
+import { AugmentationNames }                    from "./Augmentation/data/AugmentationNames";
+import { BitNodeMultipliers }                   from "./BitNode/BitNodeMultipliers";
 import { CodingContractRewardType }             from "./CodingContracts";
 import { Company }                              from "./Company/Company";
 import { Companies }                            from "./Company/Companies";

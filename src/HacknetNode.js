@@ -1,6 +1,6 @@
-import {BitNodeMultipliers}                     from "./BitNodeMultipliers";
-import {CONSTANTS}                              from "./Constants";
-import {Engine}                                 from "./engine";
+import { BitNodeMultipliers }                   from "./BitNode/BitNodeMultipliers";
+import { CONSTANTS }                            from "./Constants";
+import { Engine }                               from "./engine";
 import {iTutorialSteps, iTutorialNextStep,
         ITutorial}                              from "./InteractiveTutorial";
 import {Player}                                 from "./Player";

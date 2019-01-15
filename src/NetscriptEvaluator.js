@@ -1,12 +1,12 @@
-import {BitNodeMultipliers}                 from "./BitNodeMultipliers";
-import {CONSTANTS}                          from "./Constants";
-import {Player}                             from "./Player";
-import {Environment}                        from "./NetscriptEnvironment";
-import {WorkerScript, addWorkerScript}      from "./NetscriptWorker";
-import {Server, getServer}                  from "./Server";
-import {Settings}                           from "./Settings";
-import {Script, findRunningScript,
-        RunningScript}                      from "./Script";
+import { BitNodeMultipliers }               from "./BitNode/BitNodeMultipliers";
+import { CONSTANTS }                        from "./Constants";
+import { Player }                           from "./Player";
+import { Environment }                      from "./NetscriptEnvironment";
+import { WorkerScript, addWorkerScript}     from "./NetscriptWorker";
+import { Server, getServer}                 from "./Server";
+import { Settings }                         from "./Settings";
+import { Script, findRunningScript,
+         RunningScript }                    from "./Script";
 
 import {parse, Node}                        from "../utils/acorn";
 import {arrayToString}                      from "../utils/helpers/arrayToString";

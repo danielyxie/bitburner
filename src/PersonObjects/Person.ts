@@ -1,5 +1,6 @@
 // Base class representing a person-like object
-import { BitNodeMultipliers } from "../BitNodeMultipliers";
+import { IPlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentation";
+import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { Cities } from "../Locations/Cities";
 import { CONSTANTS } from "../Constants";
 import { IMap } from "../types";
@@ -10,10 +11,12 @@ import { IMap } from "../types";
 //
 // Only contains the needed properties for Sleeve implementation
 export interface IPlayer {
+    augmentations: IPlayerOwnedAugmentation[];
     companyName: string;
     factions: string[];
     jobs: IMap<string>;
     money: any;
+    queuedAugmentations: IPlayerOwnedAugmentation[];
 
     hacking_skill: number;
     strength: number;
@@ -22,6 +25,13 @@ export interface IPlayer {
     agility: number;
     charisma: number;
     intelligence: number;
+
+    hacking_exp: number;
+    strength_exp: number;
+    defense_exp: number;
+    dexterity_exp: number;
+    agility_exp: number;
+    charisma_exp: number;
 
     crime_success_mult: number;
 
@@ -33,6 +43,7 @@ export interface IPlayer {
     gainCharismaExp(exp: number): void;
     gainMoney(money: number): void;
     loseMoney(money: number): void;
+    reapplyAllAugmentations(resetMultipliers: boolean): void;
     startCrime(crimeType: string,
                hackExp: number,
                strExp: number,
@@ -83,7 +94,7 @@ export abstract class Person {
     max_hp: number = 10;
 
     /**
-     * Multipliers
+     * Experience
      */
     hacking_exp: number = 0;
     strength_exp: number = 0;
@@ -93,6 +104,9 @@ export abstract class Person {
     charisma_exp: number = 0;
     intelligence_exp: number = 0;
 
+    /**
+     * Multipliers
+     */
     hacking_mult: number = 1;
     strength_mult: number = 1;
     defense_mult: number = 1;
@@ -106,6 +120,11 @@ export abstract class Person {
     dexterity_exp_mult: number = 1;
     agility_exp_mult: number = 1;
     charisma_exp_mult: number = 1;
+
+    hacking_chance_mult: number = 1;
+    hacking_speed_mult: number = 1;
+    hacking_money_mult: number = 1;
+    hacking_grow_mult: number = 1;
 
     company_rep_mult: number = 1;
     faction_rep_mult: number = 1;

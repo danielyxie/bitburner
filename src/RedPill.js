@@ -1,10 +1,11 @@
-import {BitNodes}                               from "./BitNode";
-import {Engine}                                 from "./engine";
-import {Player}                                 from "./Player";
-import {prestigeSourceFile}                     from "./Prestige";
-import {SourceFiles, SourceFile,
-        PlayerOwnedSourceFile}                  from "./SourceFile";
-import {Terminal}                               from "./Terminal";
+import { BitNodes }                             from "./BitNode/BitNode";
+import { Engine }                               from "./engine";
+import { Player }                               from "./Player";
+import { prestigeSourceFile }                   from "./Prestige";
+import { SourceFiles,
+         SourceFile,
+         PlayerOwnedSourceFile }                from "./SourceFile";
+import { Terminal }                             from "./Terminal";
 
 import {clearEventListeners}                    from "../utils/uiHelpers/clearEventListeners";
 import {dialogBoxCreate}                        from "../utils/DialogBox";
@@ -56,7 +57,7 @@ function hackWorldDaemon(currentNodeNumber, flume=false) {
     // Clear Red Pill screen first
     var container = document.getElementById("red-pill-content");
     removeChildrenFromElement(container);
-    
+
     redPillFlag = true;
     Engine.loadRedPillContent();
     return writeRedPillLine("[ERROR] SEMPOOL INVALID").then(function() {

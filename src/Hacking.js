@@ -1,4 +1,4 @@
-import { BitNodeMultipliers } from "./BitNodeMultipliers";
+import { BitNodeMultipliers } from "./BitNode/BitNodeMultipliers";
 import { Player } from "./Player";
 import { Server } from "./Server";
 

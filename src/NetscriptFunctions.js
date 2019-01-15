@@ -2,10 +2,12 @@ var sprintf = require('sprintf-js').sprintf,
     vsprintf = require('sprintf-js').vsprintf
 
 import {updateActiveScriptsItems}                   from "./ActiveScriptsUI";
-import {Augmentations, Augmentation,
-        augmentationExists, installAugmentations,
-        AugmentationNames}                          from "./Augmentations";
-import {BitNodeMultipliers}                         from "./BitNodeMultipliers";
+import { Augmentation }                             from "./Augmentation/Augmentation";
+import { Augmentations }                            from "./Augmentation/Augmentations";
+import { augmentationExists,
+         installAugmentations }                     from "./Augmentation/AugmentationHelpers";
+import { AugmentationNames }                        from "./Augmentation/data/AugmentationNames";
+import { BitNodeMultipliers }                       from "./BitNode/BitNodeMultipliers";
 import { determineCrimeSuccess, findCrime }         from "./Crime/CrimeHelpers";
 import {Bladeburner}                                from "./Bladeburner";
 import {Company}                                    from "./Company/Company";

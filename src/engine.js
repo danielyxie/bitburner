@@ -1,6 +1,6 @@
-import { dialogBoxCreate}                                from "../utils/DialogBox";
+import { dialogBoxCreate}                               from "../utils/DialogBox";
 import { gameOptionsBoxClose,
-         gameOptionsBoxOpen}                            from "../utils/GameOptions";
+         gameOptionsBoxOpen }                           from "../utils/GameOptions";
 import { getRandomInt }                                 from "../utils/helpers/getRandomInt";
 import { removeChildrenFromElement }                    from "../utils/uiHelpers/removeChildrenFromElement";
 import { clearEventListeners }                          from "../utils/uiHelpers/clearEventListeners";
@@ -17,12 +17,15 @@ import {formatNumber,
 import {loxBoxCreate, logBoxUpdateText,
         logBoxOpened}                                   from "../utils/LogBox";
 import {updateActiveScriptsItems}                       from "./ActiveScriptsUI";
-import {Augmentations, installAugmentations,
-        initAugmentations, AugmentationNames,
-        displayAugmentationsContent,
-        PlayerOwnedAugmentation}                        from "./Augmentations";
+import { Augmentations }                                from "./Augmentation/Augmentations";
+import { installAugmentations,
+         initAugmentations,
+         displayAugmentationsContent,
+         PlayerOwnedAugmentation }                      from "./Augmentation/AugmentationHelpers";
+import { AugmentationNames }                            from "./Augmentation/data/AugmentationNames";
+
 import {BitNodes, initBitNodes,
-        initBitNodeMultipliers}                         from "./BitNode";
+        initBitNodeMultipliers}                         from "./BitNode/BitNode";
 import {Bladeburner}                                    from "./Bladeburner";
 import {CharacterOverview}                              from "./CharacterOverview";
 import {cinematicTextFlag}                              from "./CinematicText";

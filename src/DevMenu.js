@@ -1,4 +1,4 @@
-import { AugmentationNames }        from "./Augmentations";
+import { AugmentationNames }        from "./Augmentation/data/AugmentationNames";
 import { generateRandomContract }   from "./CodingContractGenerator";
 import { Programs }                 from "./Programs/Programs";
 import { Factions }                 from "./Faction/Factions";

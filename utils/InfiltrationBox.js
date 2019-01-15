@@ -1,11 +1,12 @@
-import { BitNodeMultipliers }       from "../src/BitNodeMultipliers";
+import { dialogBoxCreate }          from "./DialogBox";
+import { clearEventListeners }      from "./uiHelpers/clearEventListeners";
+import { formatNumber }             from "./StringHelperFunctions";
+
+import { BitNodeMultipliers }       from "../src/BitNode/BitNodeMultipliers";
 import { CONSTANTS }                from "../src/Constants";
 import { Faction }                  from "../src/Faction/Faction";
 import { Factions }                 from "../src/Faction/Factions";
 import { Player }                   from "../src/Player";
-import { dialogBoxCreate }          from "./DialogBox";
-import { clearEventListeners }      from "./uiHelpers/clearEventListeners";
-import { formatNumber }             from "./StringHelperFunctions";
 
 //Keep track of last faction
 var lastFac = "";

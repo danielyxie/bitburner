@@ -1,12 +1,12 @@
-import {BitNodeMultipliers}                     from "./BitNodeMultipliers";
-import {CONSTANTS}                              from "./Constants";
-import {Engine}                                 from "./engine";
-import {Player}                                 from "./Player";
-import {dialogBoxCreate}                        from "../utils/DialogBox";
-import {clearEventListeners}                    from "../utils/uiHelpers/clearEventListeners";
-import {getRandomInt}                           from "../utils/helpers/getRandomInt";
-import {infiltrationBoxCreate}                  from "../utils/InfiltrationBox";
-import {formatNumber}                           from "../utils/StringHelperFunctions";
+import { BitNodeMultipliers }                   from "./BitNode/BitNodeMultipliers";
+import { CONSTANTS }                            from "./Constants";
+import { Engine }                               from "./engine";
+import { Player }                               from "./Player";
+import { dialogBoxCreate }                      from "../utils/DialogBox";
+import { clearEventListeners }                  from "../utils/uiHelpers/clearEventListeners";
+import { getRandomInt }                         from "../utils/helpers/getRandomInt";
+import { infiltrationBoxCreate }                from "../utils/InfiltrationBox";
+import { formatNumber }                         from "../utils/StringHelperFunctions";
 
 /* Infiltration.js
  *

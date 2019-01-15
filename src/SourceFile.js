@@ -1,5 +1,5 @@
-import {Player} from "./Player";
-import {BitNodes} from "./BitNode";
+import { Player } from "./Player";
+import { BitNodes } from "./BitNode/BitNode";
 
 /* SourceFile.js */
 //Each SourceFile corresponds to a BitNode with the same number

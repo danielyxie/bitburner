@@ -1,6 +1,7 @@
-import { Augmentations, AugmentationNames,
-         PlayerOwnedAugmentation }              from "../Augmentations";
-import { BitNodeMultipliers }                   from "../BitNodeMultipliers";
+import { Augmentations }                        from "../Augmentation/Augmentations";
+import { PlayerOwnedAugmentation }              from "../Augmentation/PlayerOwnedAugmentation";
+import { AugmentationNames }                    from "../Augmentation/data/AugmentationNames";
+import { BitNodeMultipliers }                   from "../BitNode/BitNodeMultipliers";
 import { CONSTANTS }                            from "../Constants";
 import { Engine }                               from "../engine";
 import { Faction }                              from "./Faction";

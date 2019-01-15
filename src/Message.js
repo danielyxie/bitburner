@@ -1,6 +1,6 @@
-import { Augmentations,
-         Augmentation,
-         AugmentationNames }                    from "./Augmentations";
+import { Augmentatation }                       from "./Augmentation/Augmentation";
+import { Augmentations }                        from "./Augmentation/Augmentations";
+import { AugmentationNames }                    from "./Augmentation/data/AugmentationNames";
 import { Programs }                             from "./Programs/Programs";
 import { inMission }                            from "./Missions";
 import { Player }                               from "./Player";
