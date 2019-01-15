@@ -511,7 +511,10 @@ export let CONSTANTS: IMap<any> = {
     * Stock Market Changes:
     ** Each stock now has a maximum number of shares you can purchase (both Long and Short positions combined)
     ** Added getStockMaxShares() Netscript function to the TIX API
-    
+
+    * Job Changes:
+    ** You can now hold multiple jobs at once. This means you no longer lose reputation when leaving a company
+    ** Because of this change, the getCharacterInformation() Netscript function returns a slightly different value
     * Home Computer RAM is now capped at 2 ^ 30 GB (1073741824 GB)
     `
 

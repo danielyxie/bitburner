@@ -84,7 +84,7 @@ function sanitizeRewardType(rewardType) {
     if (type === CodingContractRewardType.FactionReputationAll && factionsThatAllowHacking.length === 0) {
         type = CodingContractRewardType.CompanyReputation;
     }
-    if (type === CodingContractRewardType.CompanyReputation && Player.companyName === "") {
+    if (type === CodingContractRewardType.CompanyReputation && Object.keys(Player.jobs).length === 0) {
         type = CodingContractRewardType.Money;
     }
 
@@ -115,8 +115,9 @@ function getRandomReward() {
             reward.name = randFaction;
             break;
         case CodingContractRewardType.CompanyReputation:
-            if (Player.companyName !== "") {
-                reward.name = Player.companyName;
+            const allJobs = Object.keys(Player.jobs);
+            if (allJobs.length > 0) {
+                reward.name = allJobs[getRandomInt(0, allJobs.length - 1)];
             } else {
                 reward.type = CodingContractRewardType.Money;
             }

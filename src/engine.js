@@ -557,9 +557,9 @@ const Engine = {
     displayCharacterInfo: function() {
         removeChildrenFromElement(Engine.Display.characterInfo);
 
-        var companyPosition = "";
-        if (Player.companyPosition !== "") {
-            companyPosition = Player.companyPosition;
+        let companyPosition = "";
+        if (Player.companyName !== "") {
+            companyPosition = Player.jobs[Player.companyName];
         }
 
         var intText = "";
@@ -576,8 +576,9 @@ const Engine = {
             innerHTML:
             '<b>General</b><br><br>' +
             'Current City: ' + Player.city + '<br><br>' +
-            'Employer: ' + Player.companyName + '<br>' +
-            'Job Title: ' + companyPosition + '<br><br>' +
+            `Employer at which you last worked: ${Player.companyName}<br>` +
+            `Job you last worked: ${companyPosition}<br>` +
+            `All Employers: ${Object.keys(Player.jobs).join(", ")}<br><br>` +
             'Money: $' + formatNumber(Player.money.toNumber(), 2) + '<br><br><br>' +
             '<b>Stats</b><br><br>' +
             'Hacking Level: ' + (Player.hacking_skill).toLocaleString() +
@@ -1306,7 +1307,7 @@ const Engine = {
             else {factions.style.display = "none";}
             if (Player.firstAugPurchased) {visibleMenuTabs.push(augmentations);}
             else {augmentations.style.display = "none";}
-            if (Player.companyPosition !== "") {visibleMenuTabs.push(job);}
+            if (Player.companyName !== "") {visibleMenuTabs.push(job);}
             else {job.style.display = "none";}
             if (Player.firstTimeTraveled) {visibleMenuTabs.push(travel);}
             else {travel.style.display = "none";}
@@ -1589,7 +1590,7 @@ const Engine = {
             var gangLink            = document.getElementById("gang-menu-link");
 
             // Determine whether certain links should show up
-            job.style.display           = Player.companyPosition !== ""             ? "list-item" : "none";
+            job.style.display           = Player.companyName !== ""                 ? "list-item" : "none";
             stockmarket.style.display   = Player.hasWseAccount                      ? "list-item" : "none";
             bladeburner.style.display   = Player.bladeburner instanceof Bladeburner ? "list-item" : "none";
             corporation.style.display   = Player.corporation instanceof Corporation ? "list-item" : "none";

@@ -6,7 +6,7 @@ import {Augmentations, Augmentation,
         augmentationExists, installAugmentations,
         AugmentationNames}                          from "./Augmentations";
 import {BitNodeMultipliers}                         from "./BitNodeMultipliers";
-import {determineCrimeSuccess, findCrime}           from "./Crimes";
+import { determineCrimeSuccess, findCrime }         from "./Crime/CrimeHelpers";
 import {Bladeburner}                                from "./Bladeburner";
 import {Company}                                    from "./Company/Company";
 import {Companies, companyExists}                   from "./Company/Companies";
@@ -2902,16 +2902,12 @@ function NetscriptFunctions(workerScript) {
                 }
             }
 
-            var companyPositionTitle = "";
-            if (CompanyPositions[Player.companyPosition] instanceof CompanyPosition) {
-                companyPositionTitle = Player.companyPosition;
-            }
             return {
                 bitnode:            Player.bitNodeN,
                 city:               Player.city,
-                company:            Player.companyName,
                 factions:           Player.factions.slice(),
-                jobTitle:           companyPositionTitle,
+                jobs:               Object.keys(Player.jobs),
+                jobTitles:          Object.values(Player.jobs),
                 mult: {
                     agility:        Player.agility_mult,
                     agilityExp:     Player.agility_exp_mult,
@@ -3030,7 +3026,7 @@ function NetscriptFunctions(workerScript) {
 
             return Player.getUpgradeHomeRamCost();
         },
-        workForCompany : function() {
+        workForCompany : function(companyName) {
             var ramCost = CONSTANTS.ScriptSingularityFn2RamCost;
             if (Player.bitNodeN !== 4) {ramCost *= CONSTANTS.ScriptSingularityFnRamMult;}
             if (workerScript.checkingRam) {
@@ -3044,13 +3040,33 @@ function NetscriptFunctions(workerScript) {
                 }
             }
 
-            if (inMission) {
-                workerScript.scriptRef.log("ERROR: workForCompany() failed because you are in the middle of a mission.");
-                return;
+            // Sanitize input
+            if (companyName == null) {
+                companyName = Player.companyName;
             }
 
-            const companyPosition = CompanyPositions[Player.companyPosition];
-            if (Player.companyPosition === "" || !(companyPosition instanceof CompanyPosition)) {
+            // Make sure its a valid company
+            if (companyName == null || companyName === "" || !(Companies[companyName] instanceof Company)) {
+                workerScript.scriptRef.log(`ERROR: workForCompany() failed because of an invalid company specified: ${companyName}`);
+                return false;
+            }
+
+            // Make sure player is actually employed at the comapny
+            if (!Object.keys(Player.jobs).includes(companyName)) {
+                workerScript.scriptRef.log(`ERROR: workForCompany() failed because you do not have a job at ${companyName}`);
+                return false;
+            }
+
+            // Cant work while in a mission
+            if (inMission) {
+                workerScript.scriptRef.log("ERROR: workForCompany() failed because you are in the middle of a mission.");
+                return false;
+            }
+
+            // Check to make sure company position data is valid
+            const companyPositionName = Player.jobs[companyName];
+            const companyPosition = CompanyPositions[companyPositionName];
+            if (companyPositionName === "" || !(companyPosition instanceof CompanyPosition)) {
                 workerScript.scriptRef.log("ERROR: workForCompany() failed because you do not have a job");
                 return false;
             }
@@ -3062,13 +3078,14 @@ function NetscriptFunctions(workerScript) {
                 }
             }
 
+            Player.companyName = companyName;
             if (companyPosition.isPartTimeJob()) {
                 Player.startWorkPartTime();
             } else {
                 Player.startWork();
             }
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.workForCompany == null) {
-                workerScript.log(`Began working at ${Player.companyName} as a ${Player.companyPosition}`);
+                workerScript.log(`Began working at ${Player.companyName} as a ${companyPositionName}`);
             }
             return true;
         },
@@ -3144,7 +3161,7 @@ function NetscriptFunctions(workerScript) {
             }
             if (res) {
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.applyToCompany == null) {
-                    workerScript.log(`You were offered a new job at ${companyName} as a ${Player.companyPosition}`);
+                    workerScript.log(`You were offered a new job at ${companyName} as a ${Player.jobs[companyName]}`);
                 }
             } else {
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.applyToCompany == null) {
@@ -3582,7 +3599,7 @@ function NetscriptFunctions(workerScript) {
             if(workerScript.disableLogs.ALL == null && workerScript.disableLogs.commitCrime == null) {
                 workerScript.scriptRef.log("Attempting to commit crime: "+crime.name+"...");
             }
-            return crime.commit(1, {workerscript: workerScript});
+            return crime.commit(Player, 1, {workerscript: workerScript});
         },
         getCrimeChance : function(crimeRoughName) {
             var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;

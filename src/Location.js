@@ -5,7 +5,7 @@ import {getJobRequirementText}                  from "./Company/GetJobRequiremen
 import * as posNames                            from "./Company/data/CompanyPositionNames";
 import { Corporation }                          from "./Corporation/Corporation";
 import {CONSTANTS}                              from "./Constants";
-import {Crimes}                                 from "./Crimes";
+import { Crimes }                               from "./Crime/Crimes";
 import {Engine}                                 from "./engine";
 import {beginInfiltration}                      from "./Infiltration";
 import {hasBladeburnerSF}                       from "./NetscriptFunctions";
@@ -240,7 +240,7 @@ function displayLocationContent() {
 
     //Check if the player is employed at this Location. If he is, display the "Work" button,
     //update the job title, etc.
-    if (loc != "" && loc === Player.companyName) {
+    if (loc != "" && Object.keys(Player.jobs).includes(loc)) {
         let company = Companies[loc];
 
         jobTitle.style.display = "block";
@@ -249,7 +249,7 @@ function displayLocationContent() {
         locationTxtDiv1.style.display = "block";
         locationTxtDiv2.style.display = "block";
         locationTxtDiv3.style.display = "block";
-        jobTitle.innerHTML = "Job Title: " + Player.companyPosition;
+        jobTitle.innerHTML = `Job Title: ${Player.jobs[loc]}`;
         let repGain = company.getFavorGain();
         if (repGain.length != 2) {repGain = 0;}
         repGain = repGain[0];
@@ -264,7 +264,7 @@ function displayLocationContent() {
                                  "favor you gain depends on how much reputation you have with the company</span>";
         work.style.display = "block";
 
-        let currPos = CompanyPositions[Player.companyPosition];
+        let currPos = CompanyPositions[Player.jobs[loc]];
         if (currPos == null) {
             throw new Error("Player's companyPosition property has an invalid value");
         }
@@ -1043,8 +1043,8 @@ function displayLocationContent() {
 
     // Make the "Apply to be Employee and Waiter" texts disappear if you already hold the job
     // Includes part-time stuff
-    if (loc == Player.companyName) {
-        var currPos = Player.companyPosition;
+    if (Object.keys(Player.jobs).includes(loc)) {
+        var currPos = Player.jobs[loc];
 
         if (currPos == "Employee") {
             employeeJob.style.display = "none";
@@ -1874,73 +1874,73 @@ function initLocationButtons() {
 
     slumsShoplift.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        Crimes.Shoplift.commit();
+        Crimes.Shoplift.commit(Player);
         return false;
     });
 
     slumsRobStore.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        Crimes.RobStore.commit();
+        Crimes.RobStore.commit(Player);
         return false;
     });
 
     slumsMug.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        Crimes.Mug.commit();
+        Crimes.Mug.commit(Player);
         return false;
     });
 
     slumsLarceny.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        Crimes.Larceny.commit();
+        Crimes.Larceny.commit(Player);
         return false;
     });
 
     slumsDealDrugs.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        Crimes.DealDrugs.commit();
+        Crimes.DealDrugs.commit(Player);
         return false;
     });
 
     slumsBondForgery.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        Crimes.BondForgery.commit();
+        Crimes.BondForgery.commit(Player);
         return false;
     });
 
     slumsTrafficArms.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        Crimes.TraffickArms.commit();
+        Crimes.TraffickArms.commit(Player);
         return false;
     });
 
     slumsHomicide.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        Crimes.Homicide.commit();
+        Crimes.Homicide.commit(Player);
         return false;
     });
 
     slumsGta.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        Crimes.GrandTheftAuto.commit();
+        Crimes.GrandTheftAuto.commit(Player);
         return false;
     });
 
     slumsKidnap.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        Crimes.Kidnap.commit();
+        Crimes.Kidnap.commit(Player);
         return false;
     });
 
     slumsAssassinate.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        Crimes.Assassination.commit();
+        Crimes.Assassination.commit(Player);
         return false;
     });
 
     slumsHeist.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        Crimes.Heist.commit();
+        Crimes.Heist.commit(Player);
         return false;
     });
 

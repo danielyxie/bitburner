@@ -2,6 +2,7 @@
 import { BitNodeMultipliers } from "../BitNodeMultipliers";
 import { Cities } from "../Locations/Cities";
 import { CONSTANTS } from "../Constants";
+import { IMap } from "../types";
 
 // Interface for an object that represents the player (PlayerObject)
 // Used because at the time of implementation, the PlayerObject
@@ -11,7 +12,19 @@ import { CONSTANTS } from "../Constants";
 export interface IPlayer {
     companyName: string;
     factions: string[];
+    jobs: IMap<string>;
     money: any;
+
+    hacking_skill: number;
+    strength: number;
+    defense: number;
+    dexterity: number;
+    agility: number;
+    charisma: number;
+    intelligence: number;
+
+    crime_success_mult: number;
+
     gainHackingExp(exp: number): void;
     gainStrengthExp(exp: number): void;
     gainDefenseExp(exp: number): void;
@@ -20,35 +33,16 @@ export interface IPlayer {
     gainCharismaExp(exp: number): void;
     gainMoney(money: number): void;
     loseMoney(money: number): void;
-}
-
-// Interface for a Crime object
-// Used because at the time of implementation, the Crime object has not been converted
-// to Typescript
-export interface ICrime {
-    name: string;
-    type: string;
-    time: number;
-    money: number;
-    difficulty: number;
-    karma: number;
-
-    hacking_success_weight: number;
-    strength_success_weight: number;
-    defense_success_weight: number;
-    dexterity_success_weight: number;
-    agility_success_weight: number;
-    charisma_success_weight: number;
-
-    hacking_exp: number;
-    strength_exp: number;
-    defense_exp: number;
-    dexterity_exp: number;
-    agility_exp: number;
-    charisma_exp: number;
-    intelligence_exp: number;
-
-    kills: number;
+    startCrime(crimeType: string,
+               hackExp: number,
+               strExp: number,
+               defExp: number,
+               dexExp: number,
+               agiExp: number,
+               chaExp: number,
+               money: number,
+               time: number,
+               singParams: any): void;
 }
 
 // Interface that defines a generic object used to track experience/money
@@ -79,102 +73,60 @@ export abstract class Person {
     /**
      * Stats
      */
-    hacking_skill: number;
-    strength: number;
-    defense: number;
-    dexterity: number;
-    agility: number;
-    charisma: number;
-    hp: number;
-    max_hp: number;
+    hacking_skill: number = 1;
+    strength: number = 1;
+    defense: number = 1;
+    dexterity: number = 1;
+    agility: number = 1;
+    charisma: number = 1;
+    hp: number = 10;
+    max_hp: number = 10;
 
     /**
      * Multipliers
      */
-    hacking_exp: number;
-    strength_exp: number;
-    defense_exp: number;
-    dexterity_exp: number;
-    agility_exp: number;
-    charisma_exp: number;
-    intelligence_exp: number;
+    hacking_exp: number = 0;
+    strength_exp: number = 0;
+    defense_exp: number = 0;
+    dexterity_exp: number = 0;
+    agility_exp: number = 0;
+    charisma_exp: number = 0;
+    intelligence_exp: number = 0;
 
-    hacking_mult: number;
-    strength_mult: number;
-    defense_mult: number;
-    dexterity_mult: number;
-    agility_mult: number;
-    charisma_mult: number;
+    hacking_mult: number = 1;
+    strength_mult: number = 1;
+    defense_mult: number = 1;
+    dexterity_mult: number = 1;
+    agility_mult: number = 1;
+    charisma_mult: number = 1;
 
-    hacking_exp_mult: number;
-    strength_exp_mult: number;
-    defense_exp_mult: number;
-    dexterity_exp_mult: number;
-    agility_exp_mult: number;
-    charisma_exp_mult: number;
+    hacking_exp_mult: number = 1;
+    strength_exp_mult: number = 1;
+    defense_exp_mult: number = 1;
+    dexterity_exp_mult: number = 1;
+    agility_exp_mult: number = 1;
+    charisma_exp_mult: number = 1;
 
-    company_rep_mult: number;
-    faction_rep_mult: number;
+    company_rep_mult: number = 1;
+    faction_rep_mult: number = 1;
 
-    crime_money_mult: number;
-    crime_success_mult: number;
+    crime_money_mult: number = 1;
+    crime_success_mult: number = 1;
 
-    work_money_mult: number;
+    work_money_mult: number = 1;
 
     /**
      * Augmentations
      */
-    this.augmentations = [];
-    this.queuedAugmentations = [];
+    augmentations: string[] = [];
+    queuedAugmentations: string[] = [];
 
     /**
      * City that the person is in
      */
-    city: string;
+    city: string = Cities.Sector12;
 
-    constructor() {
-        this.hacking_skill = 1;
-        this.strength = 1;
-        this.defense = 1;
-        this.dexterity = 1;
-        this.agility = 1;
-        this.charisma = 1;
-        this.hp = 10;
-        this.max_hp = 10;
-
-        // Multipliers
-        this.hacking_exp = 0;
-        this.strength_exp = 0;
-        this.defense_exp = 0;
-        this.dexterity_exp = 0;
-        this.agility_exp = 0;
-        this.charisma_exp = 0;
-        this.intelligence_exp = 0;
-
-        this.hacking_mult = 1;
-        this.strength_mult = 1;
-        this.defense_mult = 1;
-        this.dexterity_mult = 1;
-        this.agility_mult = 1;
-        this.charisma_mult = 1;
-
-        this.hacking_exp_mult = 1;
-        this.strength_exp_mult = 1;
-        this.defense_exp_mult = 1;
-        this.dexterity_exp_mult = 1;
-        this.agility_exp_mult = 1;
-        this.charisma_exp_mult = 1;
-
-        this.company_rep_mult = 1;
-        this.faction_rep_mult = 1;
-
-        this.crime_money_mult = 1;
-        this.crime_success_mult = 1;
-
-        this.work_money_mult = 1;
-
-        this.city = Cities.Sector12;
-    }
+    constructor() {}
 
     /**
      * Given an experience amount and stat multiplier, calculates the

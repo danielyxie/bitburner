@@ -13,7 +13,8 @@ import * as posNames                            from "./Company/data/CompanyPosi
 import {CONSTANTS}                              from "./Constants";
 import { Corporation }                          from "./Corporation/Corporation";
 import { Programs }                             from "./Programs/Programs";
-import {determineCrimeSuccess, Crimes}          from "./Crimes";
+import { determineCrimeSuccess }                from "./Crime/CrimeHelpers";
+import { Crimes }                               from "./Crime/Crimes";
 import {Engine}                                 from "./engine";
 import { Faction }                              from "./Faction/Faction";
 import { Factions }                             from "./Faction/Factions";
@@ -98,9 +99,13 @@ function PlayerObject() {
 	this.city 			= Locations.Sector12;
 	this.location 		= "";
 
-    //Company Information
+    // Jobs that the player holds
+    // Map of company name (key) -> name of company position (value. Just the name, not the CompanyPosition object)
+    // The CompanyPosition name must match a key value in CompanyPositions
+    this.jobs = {};
+
+    // Company at which player is CURRENTLY working (only valid when the player is actively working)
     this.companyName = "";      // Name of Company. Must match a key value in Companies map
-    this.companyPosition = "";  // Name of Company Position. Must match a key value in CompanyPositions map
 
     //Servers
     this.currentServer          = ""; //IP address of Server currently being accessed through terminal
@@ -259,7 +264,7 @@ PlayerObject.prototype.prestigeAugmentation = function() {
     this.location = "";
 
     this.companyName = "";
-    this.companyPosition = "";
+    this.jobs = {};
 
     this.purchasedServers = [];
 
@@ -339,7 +344,7 @@ PlayerObject.prototype.prestigeSourceFile = function() {
     this.location = "";
 
     this.companyName = "";
-    this.companyPosition = "";
+    this.jobs = {};
 
     this.purchasedServers = [];
 
@@ -721,8 +726,10 @@ PlayerObject.prototype.work = function(numCycles) {
         companyRep = comp.playerReputation;
     }
 
+    const position = this.jobs[this.companyName];
+
     var txt = document.getElementById("work-in-progress-text");
-    txt.innerHTML = "You are currently working as a " + this.companyPosition +
+    txt.innerHTML = "You are currently working as a " + position +
                     " at " + this.companyName + " (Current Company Reputation: " +
                     numeralWrapper.format(companyRep, '0,0') + ")<br><br>" +
                     "You have been working for " + convertTimeMsToTimeElapsedString(this.timeWorked) + "<br><br>" +
@@ -841,9 +848,11 @@ PlayerObject.prototype.workPartTime = function(numCycles) {
         companyRep = comp.playerReputation;
     }
 
+    const position = this.jobs[this.companyName];
+
     var txt = document.getElementById("work-in-progress-text");
-    txt.innerHTML = "You are currently working as a " + this.companyPosition +
-                    " at " + Player.companyName + " (Current Company Reputation: "  +
+    txt.innerHTML = "You are currently working as a " + position +
+                    " at " + this.companyName + " (Current Company Reputation: "  +
                     numeralWrapper.format(companyRep, '0,0') + ")<br><br>" +
                     "You have been working for " + convertTimeMsToTimeElapsedString(this.timeWorked) + "<br><br>" +
                     "You have earned: <br><br>" +
@@ -1076,9 +1085,10 @@ PlayerObject.prototype.getWorkMoneyGain = function() {
     if (hasBn11SF) { bn11Mult = 1 + (company.favor / 100); }
 
     // Get base salary
-    const companyPosition = CompanyPositions[this.companyPosition];
+    const companyPositionName = this.jobs[this.companyName];
+    const companyPosition = CompanyPositions[companyPositionName];
     if (companyPosition == null) {
-        console.error(`Could not find CompanyPosition object for ${this.companyPosition}. Work salary will be 0`);
+        console.error(`Could not find CompanyPosition object for ${companyPositionName}. Work salary will be 0`);
         return 0;
     }
 
@@ -1088,10 +1098,11 @@ PlayerObject.prototype.getWorkMoneyGain = function() {
 //Hack exp gained per game cycle
 PlayerObject.prototype.getWorkHackExpGain = function() {
     const company = Companies[this.companyName];
-    const companyPosition = CompanyPositions[this.companyPosition];
+    const companyPositionName = this.jobs[this.companyName];
+    const companyPosition = CompanyPositions[companyPositionName];
     if (company == null || companyPosition == null) {
         console.error([`Could not find Company object for ${this.companyName}`,
-                       `or CompanyPosition object for ${this.companyPosition}.`,
+                       `or CompanyPosition object for ${companyPositionName}.`,
                        `Work hack exp gain will be 0`].join(" "));
         return 0;
     }
@@ -1102,10 +1113,11 @@ PlayerObject.prototype.getWorkHackExpGain = function() {
 //Str exp gained per game cycle
 PlayerObject.prototype.getWorkStrExpGain = function() {
     const company = Companies[this.companyName];
-    const companyPosition = CompanyPositions[this.companyPosition];
+    const companyPositionName = this.jobs[this.companyName];
+    const companyPosition = CompanyPositions[companyPositionName];
     if (company == null || companyPosition == null) {
         console.error([`Could not find Company object for ${this.companyName}`,
-                       `or CompanyPosition object for ${this.companyPosition}.`,
+                       `or CompanyPosition object for ${companyPositionName}.`,
                        `Work str exp gain will be 0`].join(" "));
         return 0;
     }
@@ -1116,10 +1128,11 @@ PlayerObject.prototype.getWorkStrExpGain = function() {
 //Def exp gained per game cycle
 PlayerObject.prototype.getWorkDefExpGain = function() {
     const company = Companies[this.companyName];
-    const companyPosition = CompanyPositions[this.companyPosition];
+    const companyPositionName = this.jobs[this.companyName];
+    const companyPosition = CompanyPositions[companyPositionName];
     if (company == null || companyPosition == null) {
         console.error([`Could not find Company object for ${this.companyName}`,
-                       `or CompanyPosition object for ${this.companyPosition}.`,
+                       `or CompanyPosition object for ${companyPositionName}.`,
                        `Work def exp gain will be 0`].join(" "));
         return 0;
     }
@@ -1130,10 +1143,11 @@ PlayerObject.prototype.getWorkDefExpGain = function() {
 //Dex exp gained per game cycle
 PlayerObject.prototype.getWorkDexExpGain = function() {
     const company = Companies[this.companyName];
-    const companyPosition = CompanyPositions[this.companyPosition];
+    const companyPositionName = this.jobs[this.companyName];
+    const companyPosition = CompanyPositions[companyPositionName];
     if (company == null || companyPosition == null) {
         console.error([`Could not find Company object for ${this.companyName}`,
-                       `or CompanyPosition object for ${this.companyPosition}.`,
+                       `or CompanyPosition object for ${companyPositionName}.`,
                        `Work dex exp gain will be 0`].join(" "));
         return 0;
     }
@@ -1144,10 +1158,11 @@ PlayerObject.prototype.getWorkDexExpGain = function() {
 //Agi exp gained per game cycle
 PlayerObject.prototype.getWorkAgiExpGain = function() {
     const company = Companies[this.companyName];
-    const companyPosition = CompanyPositions[this.companyPosition];
+    const companyPositionName = this.jobs[this.companyName];
+    const companyPosition = CompanyPositions[companyPositionName];
     if (company == null || companyPosition == null) {
         console.error([`Could not find Company object for ${this.companyName}`,
-                       `or CompanyPosition object for ${this.companyPosition}.`,
+                       `or CompanyPosition object for ${companyPositionName}.`,
                        `Work agi exp gain will be 0`].join(" "));
         return 0;
     }
@@ -1158,10 +1173,11 @@ PlayerObject.prototype.getWorkAgiExpGain = function() {
 //Charisma exp gained per game cycle
 PlayerObject.prototype.getWorkChaExpGain = function() {
     const company = Companies[this.companyName];
-    const companyPosition = CompanyPositions[this.companyPosition];
+    const companyPositionName = this.jobs[this.companyName];
+    const companyPosition = CompanyPositions[companyPositionName];
     if (company == null || companyPosition == null) {
         console.error([`Could not find Company object for ${this.companyName}`,
-                       `or CompanyPosition object for ${this.companyPosition}.`,
+                       `or CompanyPosition object for ${companyPositionName}.`,
                        `Work cha exp gain will be 0`].join(" "));
         return 0;
     }
@@ -1172,10 +1188,11 @@ PlayerObject.prototype.getWorkChaExpGain = function() {
 //Reputation gained per game cycle
 PlayerObject.prototype.getWorkRepGain = function() {
     const company = Companies[this.companyName];
-    const companyPosition = CompanyPositions[this.companyPosition];
+    const companyPositionName = this.jobs[this.companyName];
+    const companyPosition = CompanyPositions[companyPositionName];
     if (company == null || companyPosition == null) {
         console.error([`Could not find Company object for ${this.companyName}`,
-                       `or CompanyPosition object for ${this.companyPosition}.`,
+                       `or CompanyPosition object for ${companyPositionName}.`,
                        `Work rep gain will be 0`].join(" "));
         return 0;
     }
@@ -1458,7 +1475,9 @@ PlayerObject.prototype.finishClass = function(sing=false) {
 }
 
 //The EXP and $ gains are hardcoded. Time is in ms
-PlayerObject.prototype.startCrime = function(hackExp, strExp, defExp, dexExp, agiExp, chaExp, money, time, singParams=null) {
+PlayerObject.prototype.startCrime = function(crimeType, hackExp, strExp, defExp, dexExp, agiExp, chaExp, money, time, singParams=null) {
+    this.crimeType = crimeType;
+
     this.resetWorkStatus();
     this.isWorking = true;
     this.workType = CONSTANTS.WorkTypeCrime;
@@ -1672,7 +1691,7 @@ PlayerObject.prototype.applyForJob = function(entryPosType, sing=false) {
     if (this.companyName !== "") {
         currCompany = Companies[this.companyName];
     }
-    const currPositionName = this.companyPosition;
+    const currPositionName = this.jobs[this.companyName];
 
     // Get company that's being applied to
 	const company = Companies[this.location]; //Company being applied to
@@ -1729,33 +1748,14 @@ PlayerObject.prototype.applyForJob = function(entryPosType, sing=false) {
         }
     }
 
-
-    //Lose reputation from a Company if you are leaving it for another job
-    let leaveCompany = false;
-    let oldCompanyName = "";
-    if (currCompany != null) {
-        if (currCompany.name != company.name) {
-            leaveCompany = true;
-            oldCompanyName = currCompany.name;
-            currCompany.playerReputation -= 1000;
-            if (currCompany.playerReputation < 0) { currCompany.playerReputation = 0; }
-        }
-    }
-
     this.companyName = company.name;
-    this.companyPosition = pos.name;
+    this.jobs[company.name] = pos.name;
 
     document.getElementById("world-menu-header").click();
     document.getElementById("world-menu-header").click();
 
-    if (leaveCompany) {
-        if (sing) { return true; }
-        dialogBoxCreate([`Congratulations! You were offered a new job at ${this.companyName} as a ${pos.name}!`,
-                         `You lost 1000 reputation at your old company ${oldCompanyName} because you left.`].join("<br>"));
-    } else {
-        if (sing) { return true; }
-        dialogBoxCreate("Congratulations! You were offered a new job at " + this.companyName + " as a " + pos.name + "!");
-    }
+    if (sing) { return true; }
+    dialogBoxCreate("Congratulations! You were offered a new job at " + this.companyName + " as a " + pos.name + "!");
 
     Engine.loadLocationContent();
 }
@@ -1775,7 +1775,8 @@ PlayerObject.prototype.getNextCompanyPosition = function(company, entryPosType) 
     //If the entry pos type and the player's current position have the same type,
     //return the player's "nextCompanyPosition". Otherwise return the entryposType
     //Employed at this company, so just return the next position if it exists.
-    const currentPosition = CompanyPositions[this.companyPosition];
+    const currentPositionName = this.jobs[this.companyName];
+    const currentPosition = CompanyPositions[currentPositionName];
     if ((currentPosition.isSoftwareJob() && entryPosType.isSoftwareJob()) ||
         (currentPosition.isITJob() && entryPosType.isITJob()) ||
         (currentPosition.isBusinessJob() && entryPosType.isBusinessJob()) ||
@@ -1852,7 +1853,7 @@ PlayerObject.prototype.applyForEmployeeJob = function(sing=false) {
 	var company = Companies[this.location]; //Company being applied to
     if (this.isQualified(company, CompanyPositions[posNames.MiscCompanyPositions[1]])) {
         this.companyName = company.name;
-        this.companyPosition = posNames.MiscCompanyPositions[1];
+        this.jobs[company.name] = posNames.MiscCompanyPositions[1];
         document.getElementById("world-menu-header").click();
         document.getElementById("world-menu-header").click();
         if (sing) {return true;}
@@ -1868,7 +1869,7 @@ PlayerObject.prototype.applyForPartTimeEmployeeJob = function(sing=false) {
 	var company = Companies[this.location]; //Company being applied to
     if (this.isQualified(company, CompanyPositions[posNames.PartTimeCompanyPositions[1]])) {
         this.companyName = company.name;
-        this.companyPosition = posNames.PartTimeCompanyPositions[1];
+        this.jobs[company.name] = posNames.PartTimeCompanyPositions[1];
         document.getElementById("world-menu-header").click();
         document.getElementById("world-menu-header").click();
         if (sing) {return true;}
@@ -1884,7 +1885,7 @@ PlayerObject.prototype.applyForWaiterJob = function(sing=false) {
 	var company = Companies[this.location]; //Company being applied to
     if (this.isQualified(company, CompanyPositions[posNames.MiscCompanyPositions[0]])) {
         this.companyName = company.name;
-        this.companyPosition = posNames.MiscCompanyPositions[0];
+        this.jobs[company.name] = posNames.MiscCompanyPositions[0];
         document.getElementById("world-menu-header").click();
         document.getElementById("world-menu-header").click();
         if (sing) {return true;}
@@ -1900,7 +1901,7 @@ PlayerObject.prototype.applyForPartTimeWaiterJob = function(sing=false) {
 	var company = Companies[this.location]; //Company being applied to
     if (this.isQualified(company, CompanyPositions[posNames.PartTimeCompanyPositions[0]])) {
         this.companyName = company.name;
-        this.companyPosition = posNames.PartTimeCompanyPositions[0];
+        this.jobs[company.name] = posNames.PartTimeCompanyPositions[0];
         document.getElementById("world-menu-header").click();
         document.getElementById("world-menu-header").click();
         if (sing) {return true;}
@@ -1995,6 +1996,9 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
         companyRep = company.playerReputation;
     }
 
+    const allCompanies = Object.keys(this.jobs);
+    const allPositions = Object.values(this.jobs);
+
     //Illuminati
     var illuminatiFac = Factions["Illuminati"];
     if (!illuminatiFac.isBanned && !illuminatiFac.isMember && !illuminatiFac.alreadyInvited &&
@@ -2033,14 +2037,14 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     //ECorp
     var ecorpFac = Factions["ECorp"];
     if (!ecorpFac.isBanned && !ecorpFac.isMember && !ecorpFac.alreadyInvited &&
-        this.companyName == Locations.AevumECorp && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
+        allCompanies.includes(Locations.AevumECorp) && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
         invitedFactions.push(ecorpFac);
     }
 
     //MegaCorp
     var megacorpFac = Factions["MegaCorp"];
     if (!megacorpFac.isBanned && !megacorpFac.isMember && !megacorpFac.alreadyInvited &&
-        this.companyName == Locations.Sector12MegaCorp && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
+        allCompanies.includes(Locations.Sector12MegaCorp) && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
         invitedFactions.push(megacorpFac);
     }
 
@@ -2048,42 +2052,42 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     var bachmanandassociatesFac = Factions["Bachman & Associates"];
     if (!bachmanandassociatesFac.isBanned && !bachmanandassociatesFac.isMember &&
         !bachmanandassociatesFac.alreadyInvited &&
-        this.companyName == Locations.AevumBachmanAndAssociates && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
+        allCompanies.includes(Locations.AevumBachmanAndAssociates) && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
         invitedFactions.push(bachmanandassociatesFac);
     }
 
     //Blade Industries
     var bladeindustriesFac = Factions["Blade Industries"];
     if (!bladeindustriesFac.isBanned && !bladeindustriesFac.isMember && !bladeindustriesFac.alreadyInvited &&
-        this.companyName == Locations.Sector12BladeIndustries && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
+        allCompanies.includes(Locations.Sector12BladeIndustries) && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
         invitedFactions.push(bladeindustriesFac);
     }
 
     //NWO
     var nwoFac = Factions["NWO"];
     if (!nwoFac.isBanned && !nwoFac.isMember && !nwoFac.alreadyInvited &&
-        this.companyName == Locations.VolhavenNWO && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
+        allCompanies.includes(Locations.VolhavenNWO) && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
         invitedFactions.push(nwoFac);
     }
 
     //Clarke Incorporated
     var clarkeincorporatedFac = Factions["Clarke Incorporated"];
     if (!clarkeincorporatedFac.isBanned && !clarkeincorporatedFac.isMember && !clarkeincorporatedFac.alreadyInvited &&
-        this.companyName == Locations.AevumClarkeIncorporated && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
+        allCompanies.includes(Locations.AevumClarkeIncorporated) && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
         invitedFactions.push(clarkeincorporatedFac);
     }
 
     //OmniTek Incorporated
     var omnitekincorporatedFac = Factions["OmniTek Incorporated"];
     if (!omnitekincorporatedFac.isBanned && !omnitekincorporatedFac.isMember && !omnitekincorporatedFac.alreadyInvited &&
-        this.companyName == Locations.VolhavenOmniTekIncorporated && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
+        allCompanies.includes(Locations.VolhavenOmniTekIncorporated) && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
         invitedFactions.push(omnitekincorporatedFac);
     }
 
     //Four Sigma
     var foursigmaFac = Factions["Four Sigma"];
     if (!foursigmaFac.isBanned && !foursigmaFac.isMember && !foursigmaFac.alreadyInvited &&
-        this.companyName == Locations.Sector12FourSigma && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
+        allCompanies.includes(Locations.Sector12FourSigma) && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
         invitedFactions.push(foursigmaFac);
     }
 
@@ -2091,7 +2095,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     var kuaigonginternationalFac = Factions["KuaiGong International"];
     if (!kuaigonginternationalFac.isBanned && !kuaigonginternationalFac.isMember &&
         !kuaigonginternationalFac.alreadyInvited &&
-        this.companyName == Locations.ChongqingKuaiGongInternational && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
+        allCompanies.includes(Locations.ChongqingKuaiGongInternational) && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
         invitedFactions.push(kuaigonginternationalFac);
     }
 
@@ -2104,7 +2108,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
         if (!fulcrumsecrettechonologiesFac.isBanned && !fulcrumsecrettechonologiesFac.isMember &&
             !fulcrumsecrettechonologiesFac.alreadyInvited &&
             fulcrumSecretServer.manuallyHacked &&
-            this.companyName == Locations.AevumFulcrumTechnologies && companyRep >= 250000) {
+            allCompanies.includes(Locations.AevumFulcrumTechnologies) && companyRep >= 250000) {
             invitedFactions.push(fulcrumsecrettechonologiesFac);
         }
     }
@@ -2187,8 +2191,8 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     if (!speakersforthedeadFac.isBanned && !speakersforthedeadFac.isMember && !speakersforthedeadFac.alreadyInvited &&
         this.hacking_skill >= 100 && this.strength >= 300 && this.defense >= 300 &&
         this.dexterity >= 300 && this.agility >= 300 && this.numPeopleKilled >= 30 &&
-        this.karma <= -45 && this.companyName != Locations.Sector12CIA &&
-        this.companyName != Locations.Sector12NSA) {
+        this.karma <= -45 && !allCompanies.includes(Locations.Sector12CIA) &&
+        !allCompanies.includes(Locations.Sector12NSA)) {
         invitedFactions.push(speakersforthedeadFac);
     }
 
@@ -2197,8 +2201,8 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     if (!thedarkarmyFac.isBanned && !thedarkarmyFac.isMember && !thedarkarmyFac.alreadyInvited &&
         this.hacking_skill >= 300 && this.strength >= 300 && this.defense >= 300 &&
         this.dexterity >= 300 && this.agility >= 300 && this.city == Locations.Chongqing &&
-        this.numPeopleKilled >= 5 && this.karma <= -45 && this.companyName != Locations.Sector12CIA &&
-        this.companyName != Locations.Sector12NSA) {
+        this.numPeopleKilled >= 5 && this.karma <= -45 && !allCompanies.includes(Locations.Sector12CIA) &&
+        !allCompanies.includes(Locations.Sector12NSA)) {
         invitedFactions.push(thedarkarmyFac);
     }
 
@@ -2209,18 +2213,16 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
         this.dexterity >= 200 && this.agility >= 200 &&
         (this.city == Locations.Aevum || this.city == Locations.Sector12) &&
         this.money.gte(10000000) && this.karma <= -90 &&
-        this.companyName != Locations.Sector12CIA && this.companyName != Locations.Sector12NSA) {
+        !allCompanies.includes(Locations.Sector12CIA) && !allCompanies.includes(Locations.Sector12NSA)) {
         invitedFactions.push(thesyndicateFac);
     }
 
     //Silhouette
     var silhouetteFac = Factions["Silhouette"];
-    const companyPosition = CompanyPositions[this.companyPosition];
     if (!silhouetteFac.isBanned && !silhouetteFac.isMember && !silhouetteFac.alreadyInvited &&
-        companyPosition != null &&
-        (companyPosition.name == "Chief Technology Officer" ||
-         companyPosition.name == "Chief Financial Officer" ||
-         companyPosition.name == "Chief Executive Officer") &&
+        (allPositions.includes("Chief Technology Officer") ||
+         allPositions.includes("Chief Financial Officer") ||
+         allPositions.includes("Chief Executive Officer")) &&
          this.money.gte(15000000) && this.karma <= -22) {
         invitedFactions.push(silhouetteFac);
     }

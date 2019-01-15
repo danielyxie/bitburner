@@ -164,9 +164,9 @@ getCharacterInformation
         {
             bitnode:                Current BitNode number
             city:                   Name of city you are currently in
-            company:                Name of company
             factions:               Array of factions you are currently a member of
-            jobTitle:               Name of job
+            jobs:                   Array of all companies at which you have jobs
+            jobTitle:               Array of job positions for all companies you are employed at. Same order as 'jobs'
             tor:                    Boolean indicating whether or not you have a tor router
 
             // The following is an object with many of the player's multipliers from Augmentations/Source Files
