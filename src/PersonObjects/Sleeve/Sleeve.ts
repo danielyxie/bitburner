@@ -8,8 +8,8 @@
  */
 import { SleeveTaskType } from "./SleeveTaskTypesEnum";
 
+import { IPlayer } from "../IPlayer";
 import { Person,
-         IPlayer,
          ITaskTracker,
          createTaskTracker } from "../Person";
 

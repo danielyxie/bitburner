@@ -11,17 +11,19 @@
  * As of right now, this feature is only available in BitNode 10
  */
 import { Resleeve } from "./Resleeve";
-import { IPlayer } from "../Person";
+import { IPlayer } from "../IPlayer";
 
 import { Augmentation } from "../../Augmentation/Augmentation";
 import { Augmentations } from "../../Augmentation/Augmentations";
-import { PlayerOwnedAugmentation } from "../../Augmentation/PlayerOwnedAugmentation";
+import { IPlayerOwnedAugmentation,
+         PlayerOwnedAugmentation } from "../../Augmentation/PlayerOwnedAugmentation";
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 
 import { getRandomInt } from "../../../utils/helpers/getRandomInt";
 
 
 // Executes the actual re-sleeve when one is purchased
-export function resleeve(r: Resleeve, p: IPlayer):void {
+export function purchaseResleeve(r: Resleeve, p: IPlayer):void {
     // Set the player's exp
     p.hacking_exp = r.hacking_exp;
     p.strength_exp = r.strength_exp;
@@ -30,13 +32,26 @@ export function resleeve(r: Resleeve, p: IPlayer):void {
     p.agility_exp = r.agility_exp;
     p.charisma_exp = r.charisma_exp;
 
-    // Clear all of the player's augmentations, including those that are
-    // purchased but not installed
-    p.queuedAugmentations.length = 0;
-    p.augmentations.length = 0;
+    // Clear all of the player's augmentations, except the NeuroFlux Governor
+    // which is kept
+    for (let i = p.augmentations.length - 1; i >= 0; --i) {
+        if (p.augmentations[i].name !== AugmentationNames.NeuroFluxGovernor) {
+            p.augmentations.splice(i, 1);
+        }
+    }
 
     for (let i = 0; i < r.augmentations.length; ++i) {
         p.augmentations.push(new PlayerOwnedAugmentation(r.augmentations[i].name));
+    }
+
+    // The player's purchased Augmentations should remain the same, but any purchased
+    // Augmentations that are given by the resleeve should be removed so there are no duplicates
+    for (let i = p.queuedAugmentations.length - 1; i >= 0; --i) {
+        const name: string = p.queuedAugmentations[i].name;
+
+        if (p.augmentations.filter((e: IPlayerOwnedAugmentation) => {e.name !== AugmentationNames.NeuroFluxGovernor && e.name === name}).length >= 1) {
+            p.queuedAugmentations.splice(i, 1);
+        }
     }
 
     p.reapplyAllAugmentations(true);

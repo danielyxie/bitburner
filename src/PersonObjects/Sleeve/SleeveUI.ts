@@ -4,7 +4,7 @@
 import { Sleeve } from "./Sleeve";
 import { SleeveTaskType } from "./SleeveTaskTypesEnum";
 
-import { IPlayer } from "../Person";
+import { IPlayer } from "../IPlayer";
 
 import { Locations } from "../../Locations";
 
@@ -47,9 +47,9 @@ interface ISleeveUIElems {
 
 // Object that keeps track of all DOM elements for the entire Sleeve UI
 interface IPageUIElems {
-    container:      Element | null;
-    info:           Element | null,
-    sleeveList:     Element | null,
+    container:      HTMLElement | null;
+    info:           HTMLElement | null,
+    sleeveList:     HTMLElement | null,
     sleeves:        ISleeveUIElems[] | null,
 }
 
@@ -60,14 +60,9 @@ const UIElems: IPageUIElems = {
     sleeves: null,
 }
 
-// Interface for Player object
-interface ISleeveUiPlayer extends IPlayer {
-    sleeves: Sleeve[];
-}
-
 // Creates the UI for the entire Sleeves page
-let playerRef: ISleeveUiPlayer | null;
-export function createSleevesPage(p: ISleeveUiPlayer) {
+let playerRef: IPlayer | null;
+export function createSleevesPage(p: IPlayer) {
     if (!routing.isOn(Page.Sleeves)) { return; }
 
     try {
@@ -147,7 +142,7 @@ function createSleeveUi(sleeve: Sleeve, allSleeves: Sleeve[]): ISleeveUIElems {
     });
 
     elems.statsPanel = createElement("div", { class: "sleeve-panel" });
-    elems.stats = createElement("p", { class: "sleeve-stats-text tooltip" });
+    elems.stats = createElement("p", { class: "sleeve-stats-text" });
     elems.moreStatsButton = createElement("button", {
         class: "std-button",
         innerText: "More Stats",

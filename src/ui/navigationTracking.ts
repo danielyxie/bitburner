@@ -117,6 +117,11 @@ export enum Page {
      * Manage your Sleeves
      */
     Sleeves = "Sleeves",
+
+    /**
+     * Purchase Resleeves
+     */
+    Resleeves = "Re-sleeving",
 }
 
 /**

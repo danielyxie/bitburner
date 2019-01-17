@@ -477,6 +477,10 @@ const Engine = {
         }
     },
 
+    loadSleevesContent: function() {
+
+    },
+
     //Helper function that hides all content
     hideAllContent: function() {
         Engine.Display.terminalContent.style.display = "none";

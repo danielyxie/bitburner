@@ -8,7 +8,16 @@ import { Augmentation } from "../../Augmentation/Augmentation";
 import { Augmentations } from "../../Augmentation/Augmentations";
 import { CONSTANTS } from "../../Constants";
 
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../../utils/JSONReviver";
+
 export class Resleeve extends Person {
+    /**
+     * Initiatizes a Resleeve object from a JSON save state.
+     */
+    static fromJSON(value: any): Resleeve {
+        return Generic_fromJSON(Resleeve, value.data);
+    }
+
     constructor() {
         super();
     }
@@ -42,4 +51,12 @@ export class Resleeve extends Person {
         return (totalExp * CostPerExp) + (totalAugmentationCost * Math.pow(this.augmentations.length, NumAugsExponent));
     }
 
+    /**
+     * Serialize the current object to a JSON save state.
+     */
+    toJSON(): any {
+        return Generic_toJSON("Resleeve", this);
+    }
 }
+
+Reviver.constructors.Resleeve = Resleeve;

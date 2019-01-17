@@ -7,4 +7,4 @@ the user to use it in other BitNodes (provided that they purchase the required
 cortical stack Augmentation)
 
 While they are based on the same concept, this feature is different than the
-"Sleeve" mechanic.
+"Duplicate Sleeve" mechanic (which is referred to as just "Sleeve" in the source code).
