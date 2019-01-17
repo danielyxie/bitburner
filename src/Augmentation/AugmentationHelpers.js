@@ -1991,12 +1991,14 @@ function resetAugmentation(newAugObject) {
 function applyAugmentation(aug, reapply=false) {
     Augmentations[aug.name].owned = true;
 
+    const augObj = Augmentations[aug.name];
+
     // Apply multipliers
-    for (const mult in aug.mults) {
+    for (const mult in augObj.mults) {
         if (Player[mult] == null) {
             console.warn(`Augmentation has unrecognized multiplier property: ${mult}`);
         } else {
-            Player[mult] *= aug.mults[mult];
+            Player[mult] *= augObj.mults[mult];
         }
     }
 

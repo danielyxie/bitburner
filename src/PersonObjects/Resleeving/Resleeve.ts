@@ -31,9 +31,9 @@ export class Resleeve extends Person {
         // Get total base Augmentation cost for this re-sleeve
         let totalAugmentationCost: number = 0;
         for (let i = 0; i < this.augmentations.length; ++i) {
-            const aug: Augmentation | null = Augmentations[this.augmentations[i]];
+            const aug: Augmentation | null = Augmentations[this.augmentations[i].name];
             if (aug == null) {
-                console.error(`Could not find Augmentation ${this.augmentations[i]}`);
+                console.error(`Could not find Augmentation ${this.augmentations[i].name}`);
                 continue;
             }
             totalAugmentationCost += aug!.baseCost;

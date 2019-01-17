@@ -21,7 +21,7 @@ import { getRandomInt } from "../../../utils/helpers/getRandomInt";
 
 
 // Executes the actual re-sleeve when one is purchased
-export function resleeve(r: Resleeve, p: IPlayer) {
+export function resleeve(r: Resleeve, p: IPlayer):void {
     // Set the player's exp
     p.hacking_exp = r.hacking_exp;
     p.strength_exp = r.strength_exp;
@@ -36,7 +36,7 @@ export function resleeve(r: Resleeve, p: IPlayer) {
     p.augmentations.length = 0;
 
     for (let i = 0; i < r.augmentations.length; ++i) {
-        p.augmentations.push(new PlayerOwnedAugmentation(r.augmentations[i]));
+        p.augmentations.push(new PlayerOwnedAugmentation(r.augmentations[i].name));
     }
 
     p.reapplyAllAugmentations(true);
@@ -64,10 +64,14 @@ export function generateResleeves(): Resleeve[] {
         const baseNumAugs: number = Math.ceil((i + 1) / 2);
         const numAugs: number = getRandomInt(baseNumAugs, baseNumAugs + 2);
         for (let a = 0; a < numAugs; ++a) {
+            // We'll ignore Aug prerequisites for this
             const augKeys: string[] = Object.keys(Augmentations);
-
-            r.augmentations.push(TODO);
+            const randKey: string = augKeys[getRandomInt(0, augKeys.length - 1)];
+            const randAug: Augmentation | null = Augmentations[randKey];
+            r.augmentations.push({name: randAug!.name, level: 1});
         }
+
+        ret.push(r);
     }
 
     return ret;

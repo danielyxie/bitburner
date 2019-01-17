@@ -195,8 +195,9 @@ function PlayerObject() {
     this.bladeburner_analysis_mult                  = 1; //Field Analysis Only
     this.bladeburner_success_chance_mult            = 1;
 
-    // Sleeves
+    // Sleeves & Re-sleeving
     this.sleeves = [];
+    this.resleeves = [];
 
     //bitnode
     this.bitNodeN = 1;

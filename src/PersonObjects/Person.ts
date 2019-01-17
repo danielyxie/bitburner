@@ -137,8 +137,8 @@ export abstract class Person {
     /**
      * Augmentations
      */
-    augmentations: string[] = [];
-    queuedAugmentations: string[] = [];
+    augmentations: IPlayerOwnedAugmentation[] = [];
+    queuedAugmentations: IPlayerOwnedAugmentation[] = [];
 
     /**
      * City that the person is in
