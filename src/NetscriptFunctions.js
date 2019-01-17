@@ -3488,7 +3488,7 @@ function NetscriptFunctions(workerScript) {
                 return false;
             }
 
-            if (!p.create.req()) {
+            if (!p.create.req(Player)) {
                 workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create " + p.name + " (level " + p.create.level + " req)");
                 return false
             }
