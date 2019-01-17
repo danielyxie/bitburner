@@ -3,8 +3,8 @@ import { Engine }                               from "./engine";
 import { Player }                               from "./Player";
 import { prestigeSourceFile }                   from "./Prestige";
 import { SourceFiles,
-         SourceFile,
-         PlayerOwnedSourceFile }                from "./SourceFile";
+         SourceFile }                           from "./SourceFile";
+import { PlayerOwnedSourceFile }                from "./SourceFile/PlayerOwnedSourceFile";
 import { Terminal }                             from "./Terminal";
 
 import {clearEventListeners}                    from "../utils/uiHelpers/clearEventListeners";

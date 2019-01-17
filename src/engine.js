@@ -69,8 +69,9 @@ import {loadAllRunningScripts, scriptEditorInit,
 import {AllServers, Server, initForeignServers}         from "./Server";
 import {Settings}                                       from "./Settings";
 import {setSettingsLabels}                              from "./ui/setSettingsLabels";
-import {initSourceFiles, SourceFiles,
-        PlayerOwnedSourceFile}                          from "./SourceFile";
+import { initSourceFiles, SourceFiles }                 from "./SourceFile";
+import { updateSourceFileFlags }                        from "./SourceFile/SourceFileFlags";
+
 import {SpecialServerIps, initSpecialServerIps}         from "./SpecialServerIps";
 import {StockMarket, StockSymbols,
         SymbolToStockMap, initStockSymbols,
@@ -1239,8 +1240,7 @@ const Engine = {
             }
             initLiterature();
             initSingularitySFFlags();
-
-            console.log(Player.intelligence_exp);
+            updateSourceFileFlags(Player);
 
             //Calculate the number of cycles have elapsed while offline
             Engine._lastUpdate = new Date().getTime();

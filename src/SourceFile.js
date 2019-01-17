@@ -74,11 +74,6 @@ function initSourceFiles() {
                                                      "In other words, level N of this Source-File will result in a multiplier of 1.01^N (or 0.99^N for multipliers that decrease)");
 }
 
-function PlayerOwnedSourceFile(number, level) {
-    this.n = number;
-    this.lvl = level;
-}
-
 //Takes in a PlayerOwnedSourceFile as the "srcFile" argument
 function applySourceFile(srcFile) {
     var srcFileKey = "SourceFile" + srcFile.n;
@@ -246,4 +241,4 @@ function applySourceFile(srcFile) {
     sourceFileObject.owned = true;
 }
 
-export {SourceFiles, PlayerOwnedSourceFile, applySourceFile, initSourceFiles};
+export {SourceFiles, applySourceFile, initSourceFiles};

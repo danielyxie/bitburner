@@ -9,6 +9,7 @@ import { Sleeve } from "./Sleeve/Sleeve";
 import { IMap } from "../types";
 
 import { IPlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentation";
+import { IPlayerOwnedSourceFile } from "../SourceFile/PlayerOwnedSourceFile";
 
 export interface IPlayer {
     augmentations: IPlayerOwnedAugmentation[];
@@ -19,6 +20,7 @@ export interface IPlayer {
     queuedAugmentations: IPlayerOwnedAugmentation[];
     resleeves: Resleeve[];
     sleeves: Sleeve[];
+    sourceFiles: IPlayerOwnedSourceFile[];
 
     hacking_skill: number;
     strength: number;

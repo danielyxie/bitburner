@@ -157,7 +157,20 @@ function initBitNodes() {
                                           "This Source-File also increases your hacking growth multipliers by: " +
                                           "<br>Level 1: 12%<br>Level 2: 18%<br>Level 3: 21%");
     BitNodes["BitNode9"] = new BitNode(9, "Do Androids Dream?", "COMING SOON");
-    BitNodes["BitNode10"] = new BitNode(10, "MegaCorp", "COMING SOON");                //Not sure yet
+    BitNodes["BitNode10"] = new BitNode(10, "Digital Carbon", "Your body is not who you are",
+                                            "In 2084, VitaLife unveiled to the world the Persona Core, an Augmentation that allowed people " +
+                                            "to digitize their consciousness. Their consciousness could then be transferred into Synthoids " +
+                                            "or other bodies by trasmitting the digitized data. Human bodies became nothing more than 'sleeves' for the " +
+                                            "human consciousness. Mankind had finally achieved immortality - at least for those that could afford it.<br><br>" +
+                                            "This BitNode unlocks Sleeve technology. Sleeve technology allows you to:<br><br>" +
+                                            "1. Re-sleeve: Purchase and transfer your consciousness into a new body<br>" +
+                                            "2. Duplicate Sleeves: Duplicate your consciousness into Synthoids, allowing you to perform different tasks synchronously<br><br>" +
+                                            "In this BitNode:<br><br>" +
+                                            "Your stats are significantly decreased.<br>" +
+                                            "All methods of gaining money are half as profitable (except Stock Market)<br>" +
+                                            "Augmentations are 5x as expensive and require twice as much reputation<br><br>" +
+                                            "Destroying this BitNode will give you Source-File 10, or if you already have this Source-File it will " +
+                                            "upgrade its level up to a maximum of 3. Each level of this Source-File grants you a Duplicate Sleeve.");
     BitNodes["BitNode11"] = new BitNode(11, "The Big Crash", "Okay. Sell it all.",
                                             "The 2050s was defined by the massive amounts of violent civil unrest and anarchic rebellion that rose all around the world. It was this period " +
                                             "of disorder that eventually lead to the governmental reformation of many global superpowers, most notably " +
@@ -306,6 +319,23 @@ function initBitNodeMultipliers() {
             BitNodeMultipliers.CorporationValuation     = 0;
             BitNodeMultipliers.CodingContractMoney      = 0;
             break;
+        case 10: // Digital Carbon
+            BitNodeMultipliers.HackingLevelMultiplier = 0.2;
+            BitNodeMultipliers.StrengthLevelMultiplier = 0.4;
+            BitNodeMultipliers.DefenseLevelMultiplier = 0.4;
+            BitNodeMultipliers.DexterityLevelMultiplier = 0.4;
+            BitNodeMultipliers.AgilityLevelMultiplier = 0.4;
+            BitNodeMultipliers.CharismaLevelMultiplier = 0.4;
+            BitNodeMultipliers.CompanyWorkMoney = 0.5;
+            BitNodeMultipliers.CrimeMoney = 0.5;
+            BitNodeMultipliers.HacknetNodeMoney = 0.5;
+            BitNodeMultipliers.ManualHackMoney = 0.5;
+            BitNodeMultipliers.ScriptHackMoney = 0.5;
+            BitNodeMultipliers.CodingContractMoney = 0.5;
+            BitNodeMultipliers.InfiltrationMoney = 0.5;
+            BitNodeMultipliers.CorporationValuation = 0.5;
+            BitNodeMultipliers.AugmentationMoneyCost = 5;
+            BitNodeMultipliers.AugmentationRepCost = 2;
         case 11: //The Big Crash
             BitNodeMultipliers.ServerMaxMoney           = 0.1;
             BitNodeMultipliers.ServerStartingMoney      = 0.1;

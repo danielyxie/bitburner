@@ -22,10 +22,12 @@ import { displayFactionContent }                from "./Faction/FactionHelpers";
 import {Gang, resetGangs}                       from "./Gang";
 import {Locations}                              from "./Locations";
 import {hasBn11SF, hasWallStreetSF,hasAISF}     from "./NetscriptFunctions";
+import { Sleeve }                               from "./PersonObjects/Sleeve/Sleeve";
 import {AllServers, Server, AddToAllServers}    from "./Server";
 import {Settings}                               from "./Settings";
 import {SpecialServerIps, SpecialServerNames}   from "./SpecialServerIps";
 import {SourceFiles, applySourceFile}           from "./SourceFile";
+import { SourceFileFlags }                      from "./SourceFile/SourceFileFlags";
 import Decimal                                  from "decimal.js";
 import {numeralWrapper}                         from "./ui/numeralFormat";
 import {dialogBoxCreate}                        from "../utils/DialogBox";
@@ -274,6 +276,8 @@ PlayerObject.prototype.prestigeAugmentation = function() {
 
     this.queuedAugmentations = [];
 
+    this.resleeves = [];
+
     this.isWorking = false;
     this.currentWorkFactionName = "";
     this.currentWorkFactionDescription = "";
@@ -354,6 +358,16 @@ PlayerObject.prototype.prestigeSourceFile = function() {
 
     this.queuedAugmentations = [];
     this.augmentations = [];
+
+    this.resleeves = [];
+
+    // Duplicate sleeves are reset to level 1 every Bit Node (but the number of sleeves you have persists)
+    if (this.sleeves.length < SourceFileFlags[10]) {
+        this.sleeves.length = SourceFileFlags[10];
+    }
+    for (let i = 0; i < this.sleeves.length; ++i) {
+        this.sleeves[i] = new Sleeve();
+    }
 
     this.isWorking = false;
     this.currentWorkFactionName = "";
@@ -443,11 +457,11 @@ PlayerObject.prototype.calculateSkill = function(exp, mult=1) {
 
 PlayerObject.prototype.updateSkillLevels = function() {
 	this.hacking_skill = Math.max(1, Math.floor(this.calculateSkill(this.hacking_exp, this.hacking_mult * BitNodeMultipliers.HackingLevelMultiplier)));
-	this.strength      = this.calculateSkill(this.strength_exp, this.strength_mult);
-    this.defense       = this.calculateSkill(this.defense_exp, this.defense_mult);
-    this.dexterity     = this.calculateSkill(this.dexterity_exp, this.dexterity_mult);
-    this.agility       = this.calculateSkill(this.agility_exp, this.agility_mult);
-    this.charisma      = this.calculateSkill(this.charisma_exp, this.charisma_mult);
+	this.strength      = Math.max(1, Math.floor(this.calculateSkill(this.strength_exp, this.strength_mult * BitNodeMultipliers.StrengthLevelMultiplier)));
+    this.defense       = Math.max(1, Math.floor(this.calculateSkill(this.defense_exp, this.defense_mult * BitNodeMultipliers.DefenseLevelMultiplier)));
+    this.dexterity     = Math.max(1, Math.floor(this.calculateSkill(this.dexterity_exp, this.dexterity_mult * BitNodeMultipliers.DexterityLevelMultiplier)));
+    this.agility       = Math.max(1, Math.floor(this.calculateSkill(this.agility_exp, this.agility_mult * BitNodeMultipliers.AgilityLevelMultiplier)));
+    this.charisma      = Math.max(1, Math.floor(this.calculateSkill(this.charisma_exp, this.charisma_mult * BitNodeMultipliers.CharismaLevelMultiplier)));
 
     if (this.intelligence > 0) {
         this.intelligence = Math.floor(this.calculateSkill(this.intelligence_exp));

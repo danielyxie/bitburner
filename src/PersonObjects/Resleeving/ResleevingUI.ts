@@ -194,5 +194,5 @@ function updateAugDescription(elems: IResleeveUIElems) {
         return;
     }
 
-    elems.augDescription.innerHTML = aug!.info;
+    elems.augDescription!.innerHTML = aug!.info;
 }

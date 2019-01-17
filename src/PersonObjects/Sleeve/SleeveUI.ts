@@ -76,7 +76,7 @@ export function createSleevesPage(p: IPlayer) {
 
         UIElems.info = createElement("p", {
             display: "inline-block",
-            innerText: "Sleeves are MK-V Synthoids (synthetic androids) into which your " +
+            innerText: "Duplicate Sleeves are MK-V Synthoids (synthetic androids) into which your " +
                        "consciousness has copied. In other words, these Synthoids contain " +
                        "a perfect duplicate of your mind.<br><br>" +
                        "Sleeves can be used to perform different tasks synchronously.",

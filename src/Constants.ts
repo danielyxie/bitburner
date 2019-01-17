@@ -276,6 +276,9 @@ export let CONSTANTS: IMap<any> = {
     CodingContractBaseCompanyRepGain:   4000,
     CodingContractBaseMoneyGain:        50e6,
 
+    // BitNode/Source-File related stuff
+    TotalNumBitNodes: 24,
+
     /* Tutorial related things */
     TutorialNetworkingText: "Servers are a central part of the game. You start with a single personal server (your home computer) " +
                             "and you can purchase additional servers as you progress through the game. Connecting to other servers " +

@@ -26,6 +26,7 @@ import {AllServers, AddToAllServers,
         initForeignServers, Server,
         prestigeAllServers,
         prestigeHomeComputer}                   from "./Server";
+import { updateSourceFileFlags }                from "./SourceFile/SourceFileFlags";
 import {SpecialServerIps, SpecialServerIpsMap,
         prestigeSpecialServerIps,
         SpecialServerNames}                     from "./SpecialServerIps";
@@ -171,6 +172,7 @@ function prestigeAugmentation() {
 //Prestige by destroying Bit Node and gaining a Source File
 function prestigeSourceFile() {
     initBitNodeMultipliers();
+    updateSourceFileFlags(Player);
 
     Player.prestigeSourceFile();
     prestigeWorkerScripts(); //Delete all Worker Scripts objects
