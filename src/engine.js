@@ -100,6 +100,7 @@ import "../css/mainmenu.scss";
 import "../css/characteroverview.scss";
 import "../css/terminal.scss";
 import "../css/menupages.scss";
+import "../css/redpill.scss";
 import "../css/stockmarket.scss";
 import "../css/workinprogress.scss";
 import "../css/popupboxes.scss";

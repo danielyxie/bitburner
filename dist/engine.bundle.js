@@ -21169,7 +21169,7 @@ function NetscriptFunctions(workerScript) {
                 return false;
             }
 
-            if (!p.create.req()) {
+            if (!p.create.req(_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"])) {
                 workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create " + p.name + " (level " + p.create.level + " req)");
                 return false
             }
@@ -46798,18 +46798,18 @@ function displayLocationContent() {
         case _Locations__WEBPACK_IMPORTED_MODULE_11__["Locations"].NewTokyoSlums:
         case _Locations__WEBPACK_IMPORTED_MODULE_11__["Locations"].IshimaSlums:
         case _Locations__WEBPACK_IMPORTED_MODULE_11__["Locations"].VolhavenSlums:
-            var shopliftChance = _Crime_Crimes__WEBPACK_IMPORTED_MODULE_7__["Crimes"].Shoplift.successRate();
-            var robStoreChance = _Crime_Crimes__WEBPACK_IMPORTED_MODULE_7__["Crimes"].RobStore.successRate();
-            var mugChance = _Crime_Crimes__WEBPACK_IMPORTED_MODULE_7__["Crimes"].Mug.successRate();
-            var larcenyChance = _Crime_Crimes__WEBPACK_IMPORTED_MODULE_7__["Crimes"].Larceny.successRate();
-            var drugsChance = _Crime_Crimes__WEBPACK_IMPORTED_MODULE_7__["Crimes"].DealDrugs.successRate();
-            var bondChance = _Crime_Crimes__WEBPACK_IMPORTED_MODULE_7__["Crimes"].BondForgery.successRate();
-            var armsChance = _Crime_Crimes__WEBPACK_IMPORTED_MODULE_7__["Crimes"].TraffickArms.successRate();
-            var homicideChance = _Crime_Crimes__WEBPACK_IMPORTED_MODULE_7__["Crimes"].Homicide.successRate();
-            var gtaChance = _Crime_Crimes__WEBPACK_IMPORTED_MODULE_7__["Crimes"].GrandTheftAuto.successRate();
-            var kidnapChance = _Crime_Crimes__WEBPACK_IMPORTED_MODULE_7__["Crimes"].Kidnap.successRate();
-            var assassinateChance = _Crime_Crimes__WEBPACK_IMPORTED_MODULE_7__["Crimes"].Assassination.successRate();
-            var heistChance = _Crime_Crimes__WEBPACK_IMPORTED_MODULE_7__["Crimes"].Heist.successRate();
+            var shopliftChance = _Crime_Crimes__WEBPACK_IMPORTED_MODULE_7__["Crimes"].Shoplift.successRate(_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"]);
+            var robStoreChance = _Crime_Crimes__WEBPACK_IMPORTED_MODULE_7__["Crimes"].RobStore.successRate(_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"]);
+            var mugChance = _Crime_Crimes__WEBPACK_IMPORTED_MODULE_7__["Crimes"].Mug.successRate(_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"]);
+            var larcenyChance = _Crime_Crimes__WEBPACK_IMPORTED_MODULE_7__["Crimes"].Larceny.successRate(_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"]);
+            var drugsChance = _Crime_Crimes__WEBPACK_IMPORTED_MODULE_7__["Crimes"].DealDrugs.successRate(_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"]);
+            var bondChance = _Crime_Crimes__WEBPACK_IMPORTED_MODULE_7__["Crimes"].BondForgery.successRate(_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"]);
+            var armsChance = _Crime_Crimes__WEBPACK_IMPORTED_MODULE_7__["Crimes"].TraffickArms.successRate(_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"]);
+            var homicideChance = _Crime_Crimes__WEBPACK_IMPORTED_MODULE_7__["Crimes"].Homicide.successRate(_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"]);
+            var gtaChance = _Crime_Crimes__WEBPACK_IMPORTED_MODULE_7__["Crimes"].GrandTheftAuto.successRate(_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"]);
+            var kidnapChance = _Crime_Crimes__WEBPACK_IMPORTED_MODULE_7__["Crimes"].Kidnap.successRate(_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"]);
+            var assassinateChance = _Crime_Crimes__WEBPACK_IMPORTED_MODULE_7__["Crimes"].Assassination.successRate(_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"]);
+            var heistChance = _Crime_Crimes__WEBPACK_IMPORTED_MODULE_7__["Crimes"].Heist.successRate(_Player__WEBPACK_IMPORTED_MODULE_12__[/* Player */ "a"]);
 
             slumsDescText.style.display = "block";
             slumsShoplift.style.display = "block";
@@ -48229,6 +48229,9 @@ exports.getJobRequirementText = getJobRequirementText;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return findCrime; });
 /* harmony import */ var _Crimes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Crimes */ 37);
 /* harmony import */ var _Crimes__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Crimes__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/DialogBox */ 9);
+
+
 
 
 function determineCrimeSuccess(type, moneyGained) {
@@ -48245,7 +48248,7 @@ function determineCrimeSuccess(type, moneyGained) {
 
     if(!found) {
       console.log(crime);
-      dialogBoxCreate("ERR: Unrecognized crime type. This is probably a bug please contact the developer");
+      Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_1__["dialogBoxCreate"])("ERR: Unrecognized crime type. This is probably a bug please contact the developer");
       return;
     }
 

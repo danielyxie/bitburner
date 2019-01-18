@@ -987,18 +987,18 @@ function displayLocationContent() {
         case Locations.NewTokyoSlums:
         case Locations.IshimaSlums:
         case Locations.VolhavenSlums:
-            var shopliftChance = Crimes.Shoplift.successRate();
-            var robStoreChance = Crimes.RobStore.successRate();
-            var mugChance = Crimes.Mug.successRate();
-            var larcenyChance = Crimes.Larceny.successRate();
-            var drugsChance = Crimes.DealDrugs.successRate();
-            var bondChance = Crimes.BondForgery.successRate();
-            var armsChance = Crimes.TraffickArms.successRate();
-            var homicideChance = Crimes.Homicide.successRate();
-            var gtaChance = Crimes.GrandTheftAuto.successRate();
-            var kidnapChance = Crimes.Kidnap.successRate();
-            var assassinateChance = Crimes.Assassination.successRate();
-            var heistChance = Crimes.Heist.successRate();
+            var shopliftChance = Crimes.Shoplift.successRate(Player);
+            var robStoreChance = Crimes.RobStore.successRate(Player);
+            var mugChance = Crimes.Mug.successRate(Player);
+            var larcenyChance = Crimes.Larceny.successRate(Player);
+            var drugsChance = Crimes.DealDrugs.successRate(Player);
+            var bondChance = Crimes.BondForgery.successRate(Player);
+            var armsChance = Crimes.TraffickArms.successRate(Player);
+            var homicideChance = Crimes.Homicide.successRate(Player);
+            var gtaChance = Crimes.GrandTheftAuto.successRate(Player);
+            var kidnapChance = Crimes.Kidnap.successRate(Player);
+            var assassinateChance = Crimes.Assassination.successRate(Player);
+            var heistChance = Crimes.Heist.successRate(Player);
 
             slumsDescText.style.display = "block";
             slumsShoplift.style.display = "block";
