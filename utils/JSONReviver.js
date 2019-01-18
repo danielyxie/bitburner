@@ -11,6 +11,7 @@ function Reviver(key, value) {
         console.log("Reviver WRONGLY called with key: " + key + ", and value: " + value);
         return 0;
     }
+
 	if (typeof value === "object" &&
 		typeof value.ctor === "string" &&
 		typeof value.data !== "undefined") {

@@ -1,3 +1,7 @@
+import { Crimes } from "./Crimes";
+
+import { dialogBoxCreate } from "../../utils/DialogBox";
+
 export function determineCrimeSuccess(type, moneyGained) {
     var chance = 0;
     var found = false;

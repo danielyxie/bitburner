@@ -419,7 +419,7 @@ function NetscriptFunctions(workerScript) {
             // Check argument validity
             const server = safeGetServer(ip, 'hackAnalyzeThreads');
             if (isNaN(hackAmount)) {
-                throw makeRuntimeRejectMsg(workerScript, `Invalid growth argument passed into growthAnalyze: ${hackAmount}. Must be numeric`);
+                throw makeRuntimeRejectMsg(workerScript, `Invalid growth argument passed into hackAnalyzeThreads: ${hackAmount}. Must be numeric`);
             }
 
             if (hackAmount < 0 || hackAmount > server.moneyAvailable) {
@@ -3080,11 +3080,10 @@ function NetscriptFunctions(workerScript) {
                 }
             }
 
-            Player.companyName = companyName;
             if (companyPosition.isPartTimeJob()) {
-                Player.startWorkPartTime();
+                Player.startWorkPartTime(companyName);
             } else {
-                Player.startWork();
+                Player.startWork(companyName);
             }
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.workForCompany == null) {
                 workerScript.log(`Began working at ${Player.companyName} as a ${companyPositionName}`);

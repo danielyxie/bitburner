@@ -12,9 +12,13 @@ import { IPlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentatio
 import { IPlayerOwnedSourceFile } from "../SourceFile/PlayerOwnedSourceFile";
 
 export interface IPlayer {
+    // Class members
     augmentations: IPlayerOwnedAugmentation[];
+    bladeburner: any;
     companyName: string;
+    corporation: any;
     factions: string[];
+    hasWseAccount: boolean;
     jobs: IMap<string>;
     money: any;
     queuedAugmentations: IPlayerOwnedAugmentation[];
@@ -22,6 +26,7 @@ export interface IPlayer {
     sleeves: Sleeve[];
     sourceFiles: IPlayerOwnedSourceFile[];
 
+    // Stats
     hacking_skill: number;
     strength: number;
     defense: number;
@@ -30,6 +35,7 @@ export interface IPlayer {
     charisma: number;
     intelligence: number;
 
+    // Experience
     hacking_exp: number;
     strength_exp: number;
     defense_exp: number;
@@ -37,8 +43,10 @@ export interface IPlayer {
     agility_exp: number;
     charisma_exp: number;
 
+    // Multipliers
     crime_success_mult: number;
 
+    // Methods
     gainHackingExp(exp: number): void;
     gainStrengthExp(exp: number): void;
     gainDefenseExp(exp: number): void;
@@ -46,6 +54,9 @@ export interface IPlayer {
     gainAgilityExp(exp: number): void;
     gainCharismaExp(exp: number): void;
     gainMoney(money: number): void;
+    hasCorporation(): boolean;
+    inBladeburner(): boolean;
+    inGang(): boolean;
     loseMoney(money: number): void;
     reapplyAllAugmentations(resetMultipliers: boolean): void;
     startCrime(crimeType: string,

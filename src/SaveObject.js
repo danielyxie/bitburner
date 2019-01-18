@@ -153,8 +153,8 @@ function evaluateVersionCompatibility(ver) {
     }
 
     // This version allowed players to hold multiple jobs
-    if (ver <= "0.43.0") {
-        if (Player.companyName !== "" && Player.companyPosition !== "") {
+    if (ver < "0.43.0") {
+        if (Player.companyName !== "" && Player.companyPosition != null && Player.companyPosition !== "") {
             console.log("Copied player's companyName and companyPosition properties to the Player.jobs map for v0.43.0");
             Player.jobs[Player.companyName] = Player.companyPosition;
         }

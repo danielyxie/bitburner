@@ -3,6 +3,7 @@ import { applyAugmentation }                    from "./Augmentation/Augmentatio
 import { PlayerOwnedAugmentation }              from "./Augmentation/PlayerOwnedAugmentation";
 import { AugmentationNames }                    from "./Augmentation/data/AugmentationNames";
 import { BitNodeMultipliers }                   from "./BitNode/BitNodeMultipliers";
+import { Bladeburner }                          from "./Bladeburner";
 import { CodingContractRewardType }             from "./CodingContracts";
 import { Company }                              from "./Company/Company";
 import { Companies }                            from "./Company/Companies";
@@ -688,9 +689,10 @@ PlayerObject.prototype.processWorkEarnings = function(numCycles=1) {
 }
 
 /* Working for Company */
-PlayerObject.prototype.startWork = function() {
+PlayerObject.prototype.startWork = function(companyName) {
     this.resetWorkStatus();
     this.isWorking = true;
+    this.companyName = companyName;
     this.workType = CONSTANTS.WorkTypeCompany;
 
     this.workHackExpGainRate    = this.getWorkHackExpGain();
@@ -811,9 +813,10 @@ PlayerObject.prototype.finishWork = function(cancelled, sing=false) {
     this.resetWorkStatus();
 }
 
-PlayerObject.prototype.startWorkPartTime = function() {
+PlayerObject.prototype.startWorkPartTime = function(companyName) {
     this.resetWorkStatus();
     this.isWorking = true;
+    this.companyName = companyName;
     this.workType = CONSTANTS.WorkTypeCompanyPartTime;
 
     this.workHackExpGainRate    = this.getWorkHackExpGain();
@@ -2307,6 +2310,18 @@ PlayerObject.prototype.inGang = function() {
 
 PlayerObject.prototype.startGang = function(factionName, hacking) {
     this.gang = new Gang(factionName, hacking);
+}
+
+/*************** Corporation ****************/
+PlayerObject.prototype.hasCorporation = function() {
+    if (this.corporation == null) { return false; }
+    return (this.corporation instanceof Corporation);
+}
+
+/*************** Bladeburner ****************/
+PlayerObject.prototype.inBladeburner = function() {
+    if (this.bladeburner == null) { return false; }
+    return (this.bladeburner instanceof Bladeburner);
 }
 
 /************* BitNodes **************/

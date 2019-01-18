@@ -15,6 +15,7 @@ import {Server, AllServers, AddToAllServers}    from "./Server";
 import {purchaseServer,
         purchaseRamForHomeComputer}             from "./ServerPurchases";
 import {Settings}                               from "./Settings";
+import { SourceFileFlags }                      from "./SourceFile/SourceFileFlags";
 import {SpecialServerNames, SpecialServerIps}   from "./SpecialServerIps";
 
 import {numeralWrapper}                         from "./ui/numeralFormat";
@@ -120,6 +121,8 @@ function displayLocationContent() {
     var cityHallCreateCorporation   = document.getElementById("location-cityhall-create-corporation");
 
     var nsaBladeburner = document.getElementById("location-nsa-bladeburner");
+
+    const vitalifeResleeve = document.getElementById("location-vitalife-resleeve");
 
     var loc = Player.location;
 
@@ -237,6 +240,7 @@ function displayLocationContent() {
 
     cityHallCreateCorporation.style.display = "none";
     nsaBladeburner.style.display = "none";
+    vitalifeResleeve.style.display = "none";
 
     //Check if the player is employed at this Location. If he is, display the "Work" button,
     //update the job title, etc.
@@ -271,9 +275,9 @@ function displayLocationContent() {
 
         work.addEventListener("click", function() {
             if (currPos.isPartTimeJob() || currPos.isSoftwareConsultantJob() || currPos.isBusinessConsultantJob()) {
-                Player.startWorkPartTime();
+                Player.startWorkPartTime(loc);
             } else {
-                Player.startWork();
+                Player.startWork(loc);
             }
             return false;
         });
@@ -761,6 +765,10 @@ function displayLocationContent() {
             businessJob.style.display = "block";
             setInfiltrateButton(infiltrate, Locations.NewTokyoVitaLife,
                                 605, 22, 100, 3.5);
+            if (Player.bitNodeN === 10 || SourceFileFlags[10]) {
+                vitalifeResleeve.style.display = "block";
+            }
+
             break;
 
         case Locations.NewTokyoGlobalPharmaceuticals:
@@ -1634,6 +1642,8 @@ function initLocationButtons() {
 
     var nsaBladeburner = document.getElementById("location-nsa-bladeburner");
 
+    const vitalifeResleeve = document.getElementById("location-vitalife-resleeve");
+
     var hospitalTreatment   = document.getElementById("location-hospital-treatment");
 
     softwareJob.addEventListener("click", function(e) {
@@ -2039,6 +2049,10 @@ function initLocationButtons() {
                 dialogBoxCreate("Rejected! Please apply again when you have 100 of each combat stat (str, def, dex, agi)");
             }
         }
+    });
+
+    vitalifeResleeve.addEventListener("click", function() {
+        Engine.loadResleevingContent();
     });
 
     hospitalTreatment.addEventListener("click", function(e) {

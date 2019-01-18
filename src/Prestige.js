@@ -311,6 +311,11 @@ function prestigeSourceFile() {
         Player.hasTixApiAccess = true;
     }
 
+    // Bit Node 10: Digital Carbon
+    if (Player.bitNodeN === 10) {
+        dialogBoxCreate("Visit VitaLife in New Tokyo if you'd like to purchase a new sleeve!");
+    }
+
     //Reset Stock market, gang, and corporation
     if (Player.hasWseAccount) {
         initStockMarket();
