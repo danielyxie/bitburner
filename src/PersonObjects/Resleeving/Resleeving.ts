@@ -23,7 +23,13 @@ import { getRandomInt } from "../../../utils/helpers/getRandomInt";
 
 
 // Executes the actual re-sleeve when one is purchased
-export function purchaseResleeve(r: Resleeve, p: IPlayer):void {
+export function purchaseResleeve(r: Resleeve, p: IPlayer): boolean {
+    const cost: number = r.getCost();
+    if (!p.canAfford(cost)) {
+        return false;
+    }
+    p.loseMoney(cost);
+
     // Set the player's exp
     p.hacking_exp = r.hacking_exp;
     p.strength_exp = r.strength_exp;
@@ -32,16 +38,25 @@ export function purchaseResleeve(r: Resleeve, p: IPlayer):void {
     p.agility_exp = r.agility_exp;
     p.charisma_exp = r.charisma_exp;
 
+    // Reset Augmentation "owned" data
+    for (const augKey in Augmentations) {
+        Augmentations[augKey].owned = false;
+    }
+
     // Clear all of the player's augmentations, except the NeuroFlux Governor
     // which is kept
     for (let i = p.augmentations.length - 1; i >= 0; --i) {
         if (p.augmentations[i].name !== AugmentationNames.NeuroFluxGovernor) {
             p.augmentations.splice(i, 1);
+        } else {
+            // NeuroFlux Governor
+            Augmentations[AugmentationNames.NeuroFluxGovernor].owned = true;
         }
     }
 
     for (let i = 0; i < r.augmentations.length; ++i) {
         p.augmentations.push(new PlayerOwnedAugmentation(r.augmentations[i].name));
+        Augmentations[r.augmentations[i].name].owned = true;
     }
 
     // The player's purchased Augmentations should remain the same, but any purchased
@@ -55,6 +70,8 @@ export function purchaseResleeve(r: Resleeve, p: IPlayer):void {
     }
 
     p.reapplyAllAugmentations(true);
+    p.reapplyAllSourceFiles(); //Multipliers get reset, so have to re-process source files too
+    return true;
 }
 
 // Creates all of the Re-sleeves that will be available for purchase at VitaLife
@@ -67,23 +84,33 @@ export function generateResleeves(): Resleeve[] {
         let r: Resleeve = new Resleeve();
 
         // Generate experience
-        const expMult: number = i + 1;
-        r.hacking_exp = expMult * getRandomInt(500, 1500);
-        r.strength_exp = expMult * getRandomInt(500, 1500);
-        r.defense_exp = expMult * getRandomInt(500, 1500);
-        r.dexterity_exp = expMult * getRandomInt(500, 1500);
-        r.agility_exp = expMult * getRandomInt(500, 1500);
-        r.charisma_exp = expMult * getRandomInt(500, 1500);
+        const expMult: number = (5 * i) + 1;
+        r.hacking_exp = expMult * getRandomInt(1000, 5000);
+        r.strength_exp = expMult * getRandomInt(1000, 5000);
+        r.defense_exp = expMult * getRandomInt(1000, 5000);
+        r.dexterity_exp = expMult * getRandomInt(1000, 5000);
+        r.agility_exp = expMult * getRandomInt(1000, 5000);
+        r.charisma_exp = expMult * getRandomInt(1000, 5000);
 
         // Generate Augs
-        const baseNumAugs: number = Math.ceil((i + 1) / 2);
+        // Augmentation prequisites will be ignored for this
+        const baseNumAugs: number = Math.max(2, Math.ceil((i + 3) / 2));
         const numAugs: number = getRandomInt(baseNumAugs, baseNumAugs + 2);
+        const augKeys: string[] = Object.keys(Augmentations);
         for (let a = 0; a < numAugs; ++a) {
-            // We'll ignore Aug prerequisites for this
-            const augKeys: string[] = Object.keys(Augmentations);
-            const randKey: string = augKeys[getRandomInt(0, augKeys.length - 1)];
+            // Get a random aug
+            const randIndex: number = getRandomInt(0, augKeys.length - 1)
+            const randKey: string = augKeys[randIndex];
+            if (randKey === AugmentationNames.TheRedPill) {
+                continue; // A sleeve can't have The Red Pill
+            }
             const randAug: Augmentation | null = Augmentations[randKey];
             r.augmentations.push({name: randAug!.name, level: 1});
+            r.applyAugmentation(Augmentations[randKey]);
+            r.updateStatLevels();
+
+            // Remove Augmentation so that there are no duplicates
+            augKeys.splice(randIndex, 1);
         }
 
         ret.push(r);

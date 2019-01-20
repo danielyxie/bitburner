@@ -4,7 +4,7 @@ Crimes
 ======
 Commiting crimes is an active gameplay mechanic that allows the player to train
 their stats and potentially earn money. The player can attempt to commit crimes
-by visiting 'The Slums' through the 'City' tab (:ref:`Keyboard shortcut <_shortcuts>` Alt + w).
+by visiting 'The Slums' through the 'City' tab (:ref:`Keyboard shortcut <shortcuts>` Alt + w).
 'The Slums' is available in every city.
 
 

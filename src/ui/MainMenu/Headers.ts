@@ -84,11 +84,14 @@ export function initializeMainMenuHeaders(p: IPlayer, dev: boolean=false): boole
             const factions: HTMLElement         = safeGetElement("factions-tab");
             const augmentations: HTMLElement    = safeGetElement("augmentations-tab");
             const hacknetnodes: HTMLElement     = safeGetElement("hacknet-nodes-tab");
+            const sleeves: HTMLElement          = safeGetElement("sleeves-tab");
 
+            sleeves.style.display = p.sleeves.length > 0 ? "list-item" : "none";
+            
             this.classList.toggle("opened");
 
-            const elems: HTMLElement[] = [stats, factions, augmentations, hacknetnodes];
-            const links: HTMLElement[] = [MainMenuLinks.Stats!, MainMenuLinks.Factions!, MainMenuLinks.Augmentations!, MainMenuLinks.HacknetNodes!];
+            const elems: HTMLElement[] = [stats, factions, augmentations, hacknetnodes, sleeves];
+            const links: HTMLElement[] = [MainMenuLinks.Stats!, MainMenuLinks.Factions!, MainMenuLinks.Augmentations!, MainMenuLinks.HacknetNodes!, MainMenuLinks.Sleeves!];
             if (stats.style.maxHeight) {
                 toggleHeader(false, elems, links);
             } else {

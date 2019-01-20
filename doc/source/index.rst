@@ -21,6 +21,7 @@ secrets that you've been searching for.
 
     Netscript <netscript>
     Basic Gameplay <basicgameplay>
+    Advanced Gameplay <advancedgameplay>
     Keyboard Shortcuts <shortcuts>
     Game Frozen or Stuck? <gamefrozen>
     Changelog <changelog>

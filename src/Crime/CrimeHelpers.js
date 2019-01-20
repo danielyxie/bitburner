@@ -1,5 +1,7 @@
 import { Crimes } from "./Crimes";
 
+import { Player } from "../Player";
+
 import { dialogBoxCreate } from "../../utils/DialogBox";
 
 export function determineCrimeSuccess(type, moneyGained) {

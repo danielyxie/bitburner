@@ -47,6 +47,7 @@ export interface IPlayer {
     crime_success_mult: number;
 
     // Methods
+    canAfford(cost: number): boolean;
     gainHackingExp(exp: number): void;
     gainStrengthExp(exp: number): void;
     gainDefenseExp(exp: number): void;
@@ -59,6 +60,7 @@ export interface IPlayer {
     inGang(): boolean;
     loseMoney(money: number): void;
     reapplyAllAugmentations(resetMultipliers: boolean): void;
+    reapplyAllSourceFiles(): void;
     startCrime(crimeType: string,
                hackExp: number,
                strExp: number,

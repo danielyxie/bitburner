@@ -85,6 +85,17 @@ export abstract class Person {
 
     work_money_mult: number = 1;
 
+    hacknet_node_money_mult: number = 1;
+    hacknet_node_purchase_cost_mult: number = 1;
+    hacknet_node_ram_cost_mult: number = 1;
+    hacknet_node_core_cost_mult: number = 1;
+    hacknet_node_level_cost_mult: number = 1;
+
+    bladeburner_max_stamina_mult: number = 1;
+    bladeburner_stamina_gain_mult: number = 1;
+    bladeburner_analysis_mult: number = 1;
+    bladeburner_success_chance_mult : number = 1;
+
     /**
      * Augmentations
      */
@@ -101,7 +112,7 @@ export abstract class Person {
     /**
      * Updates this object's multipliers for the given augmentation
      */
-    applyAugmentation(aug: Augmentation, reapply=false) {
+    applyAugmentation(aug: Augmentation) {
         for (const mult in aug.mults) {
             if ((<any>this)[mult] == null) {
                 console.warn(`Augmentation has unrecognized multiplier property: ${mult}`);
@@ -188,11 +199,11 @@ export abstract class Person {
      */
     updateStatLevels(): void {
         this.hacking_skill = Math.max(1, Math.floor(this.calculateStat(this.hacking_exp, this.hacking_mult * BitNodeMultipliers.HackingLevelMultiplier)));
-    	this.strength      = Math.max(1, Math.floor(this.calculateStat(this.strength_exp, this.strength_mult)));
-        this.defense       = Math.max(1, Math.floor(this.calculateStat(this.defense_exp, this.defense_mult)));
-        this.dexterity     = Math.max(1, Math.floor(this.calculateStat(this.dexterity_exp, this.dexterity_mult)));
-        this.agility       = Math.max(1, Math.floor(this.calculateStat(this.agility_exp, this.agility_mult)));
-        this.charisma      = Math.max(1, Math.floor(this.calculateStat(this.charisma_exp, this.charisma_mult)));
+    	this.strength      = Math.max(1, Math.floor(this.calculateStat(this.strength_exp, this.strength_mult * BitNodeMultipliers.StrengthLevelMultiplier)));
+        this.defense       = Math.max(1, Math.floor(this.calculateStat(this.defense_exp, this.defense_mult * BitNodeMultipliers.DefenseLevelMultiplier)));
+        this.dexterity     = Math.max(1, Math.floor(this.calculateStat(this.dexterity_exp, this.dexterity_mult * BitNodeMultipliers.DexterityLevelMultiplier)));
+        this.agility       = Math.max(1, Math.floor(this.calculateStat(this.agility_exp, this.agility_mult * BitNodeMultipliers.AgilityLevelMultiplier)));
+        this.charisma      = Math.max(1, Math.floor(this.calculateStat(this.charisma_exp, this.charisma_mult * BitNodeMultipliers.CharismaLevelMultiplier)));
 
         const ratio: number = this.hp / this.max_hp;
         this.max_hp = Math.floor(10 + this.defense / 10);

@@ -11,6 +11,7 @@ interface IMainMenuLinks {
     Factions:       HTMLElement | null;
     Augmentations:  HTMLElement | null;
     HacknetNodes:   HTMLElement | null;
+    Sleeves:        HTMLElement | null;
     City:           HTMLElement | null;
     Travel:         HTMLElement | null;
     Job:            HTMLElement | null;
@@ -32,6 +33,7 @@ export const MainMenuLinks: IMainMenuLinks = {
     Factions: null,
     Augmentations: null,
     HacknetNodes: null,
+    Sleeves: null,
     City: null,
     Travel: null,
     Job: null,
@@ -63,6 +65,7 @@ export function initializeMainMenuLinks(): boolean {
         MainMenuLinks.Factions = safeGetLink("factions-menu-link");
         MainMenuLinks.Augmentations = safeGetLink("augmentations-menu-link");
         MainMenuLinks.HacknetNodes = safeGetLink("hacknet-nodes-menu-link");
+        MainMenuLinks.Sleeves = safeGetLink("sleeves-menu-link");        
         MainMenuLinks.City = safeGetLink("city-menu-link");
         MainMenuLinks.Travel = safeGetLink("travel-menu-link");
         MainMenuLinks.Job = safeGetLink("job-menu-link");

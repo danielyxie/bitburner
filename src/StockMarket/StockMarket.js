@@ -230,35 +230,35 @@ function initStockMarket() {
     const randInt = getRandomInt;
 
     var ecorp = Locations.AevumECorp;
-    var ecorpStk = new Stock(ecorp, StockSymbols[ecorp], randInt(40, 50) / 100, true, 19, randInt(17e3, 28e3), 3e12);
+    var ecorpStk = new Stock(ecorp, StockSymbols[ecorp], randInt(40, 50) / 100, true, 19, randInt(17e3, 28e3), 2.4e12);
     StockMarket[ecorp] = ecorpStk;
 
     var megacorp = Locations.Sector12MegaCorp;
-    var megacorpStk = new Stock(megacorp, StockSymbols[megacorp], randInt(40,50)/100, true, 19, randInt(24e3, 34e3), 3e12);
+    var megacorpStk = new Stock(megacorp, StockSymbols[megacorp], randInt(40,50)/100, true, 19, randInt(24e3, 34e3), 2.4e12);
     StockMarket[megacorp] = megacorpStk;
 
     var blade = Locations.Sector12BladeIndustries;
-    var bladeStk = new Stock(blade, StockSymbols[blade], randInt(70, 80)/100, true, 13, randInt(12e3, 25e3), 1.9e12);
+    var bladeStk = new Stock(blade, StockSymbols[blade], randInt(70, 80)/100, true, 13, randInt(12e3, 25e3), 1.6e12);
     StockMarket[blade] = bladeStk;
 
     var clarke = Locations.AevumClarkeIncorporated;
-    var clarkeStk = new Stock(clarke, StockSymbols[clarke], randInt(65, 75)/100, true, 12, randInt(10e3, 25e3), 1.8e12);
+    var clarkeStk = new Stock(clarke, StockSymbols[clarke], randInt(65, 75)/100, true, 12, randInt(10e3, 25e3), 1.5e12);
     StockMarket[clarke] = clarkeStk;
 
     var omnitek = Locations.VolhavenOmniTekIncorporated;
-    var omnitekStk = new Stock(omnitek, StockSymbols[omnitek], randInt(60, 70)/100, true, 12, randInt(32e3, 43e3), 2.1e12);
+    var omnitekStk = new Stock(omnitek, StockSymbols[omnitek], randInt(60, 70)/100, true, 12, randInt(32e3, 43e3), 1.8e12);
     StockMarket[omnitek] = omnitekStk;
 
     var foursigma = Locations.Sector12FourSigma;
-    var foursigmaStk = new Stock(foursigma, StockSymbols[foursigma], randInt(100, 110)/100, true, 17, randInt(50e3, 80e3), 2.4e12);
+    var foursigmaStk = new Stock(foursigma, StockSymbols[foursigma], randInt(100, 110)/100, true, 17, randInt(50e3, 80e3), 2e12);
     StockMarket[foursigma] = foursigmaStk;
 
     var kuaigong = Locations.ChongqingKuaiGongInternational;
-    var kuaigongStk = new Stock(kuaigong, StockSymbols[kuaigong], randInt(75, 85)/100, true, 10, randInt(16e3, 28e3), 2.3e12);
+    var kuaigongStk = new Stock(kuaigong, StockSymbols[kuaigong], randInt(75, 85)/100, true, 10, randInt(16e3, 28e3), 1.9e12);
     StockMarket[kuaigong] = kuaigongStk;
 
     var fulcrum = Locations.AevumFulcrumTechnologies;
-    var fulcrumStk = new Stock(fulcrum, StockSymbols[fulcrum], randInt(120, 130)/100, true, 16, randInt(29e3, 36e3), 2.4e12);
+    var fulcrumStk = new Stock(fulcrum, StockSymbols[fulcrum], randInt(120, 130)/100, true, 16, randInt(29e3, 36e3), 2e12);
     StockMarket[fulcrum] = fulcrumStk;
 
     var storm = Locations.IshimaStormTechnologies;

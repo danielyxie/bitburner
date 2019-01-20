@@ -66,6 +66,10 @@ import {StockMarket, StockSymbols,
         displayStockMarketContent}                      from "./StockMarket/StockMarket";
 import {Terminal, postNetburnerText}                    from "./Terminal";
 
+import { Sleeve }                                       from "./PersonObjects/Sleeve/Sleeve";
+import { clearSleevesPage,
+         createSleevesPage,
+         updateSleevesPage }                            from "./PersonObjects/Sleeve/SleeveUI";
 import { clearResleevesPage,
          createResleevesPage }                          from "./PersonObjects/Resleeving/ResleevingUI";
 
@@ -111,6 +115,8 @@ import "../css/missions.scss";
 import "../css/companymanagement.scss";
 import "../css/bladeburner.scss";
 import "../css/gang.scss";
+import "../css/sleeves.scss";
+import "../css/resleeving.scss";
 import "../css/treant.css";
 
 
@@ -472,6 +478,13 @@ const Engine = {
 
     loadSleevesContent: function() {
         // This is for Duplicate Sleeves page, not Re-sleeving @ Vita Life
+        try {
+            Engine.hideAllContent();
+            routing.navigateTo(Page.Sleeves);
+            createSleevesPage(Player);
+        } catch(e) {
+            exceptionAlert(e);
+        }
     },
 
     loadResleevingContent: function() {
@@ -519,6 +532,9 @@ const Engine = {
         if (Player.bladeburner instanceof Bladeburner) {
             Player.bladeburner.clearContent();
         }
+
+        clearResleevesPage();
+        clearSleevesPage();
 
         //Location lists
         Engine.aevumLocationsList.style.display = "none";
@@ -944,6 +960,20 @@ const Engine = {
             Player.bladeburner.storeCycles(numCycles);
         }
 
+        // Sleeves
+        for (let i = 0; i < Player.sleeves.length; ++i) {
+            if (Player.sleeves[i] instanceof Sleeve) {
+                const expForOtherSleeves = Player.sleeves[i].process(Player, numCycles);
+
+                // This sleeve earns experience for other sleeves
+                if (expForOtherSleeves == null) { continue; }
+                for (let j = 0; j < Player.sleeves.length; ++j) {
+                    if (j === i) { continue; }
+                    Player.sleeves[j].gainExperience(Player, expForOtherSleeves, numCycles);
+                }
+            }
+        }
+
         //Counters
         Engine.decrementAllCounters(numCycles);
         Engine.checkCounters();
@@ -1024,6 +1054,8 @@ const Engine = {
                 updateHacknetNodesContent();
             } else if (routing.isOn(Page.CreateProgram)) {
                 displayCreateProgramContent();
+            } else if (routing.isOn(Page.Sleeves)) {
+                updateSleevesPage();
             }
 
             if (logBoxOpened) {
@@ -1293,6 +1325,20 @@ const Engine = {
             // Bladeburner offline progress
             if (Player.bladeburner instanceof Bladeburner) {
                 Player.bladeburner.storeCycles(numCyclesOffline);
+            }
+
+            // Sleeves offline progress
+            for (let i = 0; i < Player.sleeves.length; ++i) {
+                if (Player.sleeves[i] instanceof Sleeve) {
+                    const expForOtherSleeves = Player.sleeves[i].process(Player, numCyclesOffline);
+
+                    // This sleeve earns experience for other sleeves
+                    if (expForOtherSleeves == null) { continue; }
+                    for (let j = 0; j < Player.sleeves.length; ++j) {
+                        if (j === i) { continue; }
+                        Player.sleeves[j].gainExperience(Player, expForOtherSleeves, numCyclesOffline);
+                    }
+                }
             }
 
             //Update total playtime
@@ -1579,6 +1625,11 @@ const Engine = {
 
         MainMenuLinks.HacknetNodes.addEventListener("click", function() {
             Engine.loadHacknetNodesContent();
+            return false;
+        });
+
+        MainMenuLinks.Sleeves.addEventListener("click", function() {
+            Engine.loadSleevesContent();
             return false;
         });
 

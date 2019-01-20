@@ -3,6 +3,7 @@
  */
 import { Sleeve } from "./Sleeve";
 import { SleeveTaskType } from "./SleeveTaskTypesEnum";
+import { SleeveFaq } from "./data/SleeveFaq";
 
 import { IPlayer } from "../IPlayer";
 
@@ -11,14 +12,13 @@ import { Locations } from "../../Locations";
 import { Cities } from "../../Locations/Cities";
 import { Crimes } from "../../Crime/Crimes";
 
-import { IMap } from "../../types";
-
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Page,
          routing } from "../../ui/navigationTracking";
 
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 
+import { createProgressBarText } from "../../../utils/helpers/createProgressBarText";
 import { exceptionAlert } from "../../../utils/helpers/exceptionAlert";
 
 import { createElement } from "../../../utils/uiHelpers/createElement";
@@ -26,35 +26,39 @@ import { createOptionElement } from "../../../utils/uiHelpers/createOptionElemen
 import { getSelectValue } from "../../../utils/uiHelpers/getSelectData";
 import { removeChildrenFromElement } from "../../../utils/uiHelpers/removeChildrenFromElement";
 import { removeElement } from "../../../utils/uiHelpers/removeElement";
-import { removeElementById } from "../../../utils/uiHelpers/removeElementById";
 
 // Object that keeps track of all DOM elements for the UI for a single Sleeve
 interface ISleeveUIElems {
-    container:              HTMLElement | null,
-    statsPanel:             HTMLElement | null,
-    stats:                  HTMLElement | null,
-    moreStatsButton:        HTMLElement | null,
-    taskPanel:              HTMLElement | null,
-    taskSelector:           HTMLSelectElement | null,
-    taskDetailsSelector:    HTMLSelectElement | null,
-    taskDetailsSelector2:   HTMLSelectElement | null,
-    taskDescription:        HTMLElement | null,
-    taskSetButton:          HTMLElement | null,
-    earningsPanel:          HTMLElement | null,
-    currentEarningsInfo:    HTMLElement | null,
-    totalEarningsButton:    HTMLElement | null,
+    container:              HTMLElement | null;
+    statsPanel:             HTMLElement | null;
+    stats:                  HTMLElement | null;
+    moreStatsButton:        HTMLElement | null;
+    taskPanel:              HTMLElement | null;
+    taskSelector:           HTMLSelectElement | null;
+    taskDetailsSelector:    HTMLSelectElement | null;
+    taskDetailsSelector2:   HTMLSelectElement | null;
+    taskDescription:        HTMLElement | null;
+    taskSetButton:          HTMLElement | null;
+    taskProgressBar:        HTMLElement | null;
+    earningsPanel:          HTMLElement | null;
+    currentEarningsInfo:    HTMLElement | null;
+    totalEarningsButton:    HTMLElement | null;
 }
 
 // Object that keeps track of all DOM elements for the entire Sleeve UI
 interface IPageUIElems {
     container:      HTMLElement | null;
-    info:           HTMLElement | null,
-    sleeveList:     HTMLElement | null,
-    sleeves:        ISleeveUIElems[] | null,
+    docButton:      HTMLElement | null;
+    faqButton:      HTMLElement | null;
+    info:           HTMLElement | null;
+    sleeveList:     HTMLElement | null;
+    sleeves:        ISleeveUIElems[] | null;
 }
 
 const UIElems: IPageUIElems = {
     container: null,
+    docButton: null,
+    faqButton: null,
     info: null,
     sleeveList: null,
     sleeves: null,
@@ -75,11 +79,26 @@ export function createSleevesPage(p: IPlayer) {
         });
 
         UIElems.info = createElement("p", {
-            display: "inline-block",
-            innerText: "Duplicate Sleeves are MK-V Synthoids (synthetic androids) into which your " +
-                       "consciousness has copied. In other words, these Synthoids contain " +
+            class: "sleeves-page-info",
+            innerHTML: "Duplicate Sleeves are MK-V Synthoids (synthetic androids) into which your " +
+                       "consciousness has been copied. In other words, these Synthoids contain " +
                        "a perfect duplicate of your mind.<br><br>" +
-                       "Sleeves can be used to perform different tasks synchronously.",
+                       "Sleeves can be used to perform different tasks synchronously.<br><br>",
+        });
+
+        UIElems.faqButton = createElement("button", {
+            class: "std-button",
+            display: "inline-block",
+            innerText: "FAQ",
+            clickListener: () => {
+                dialogBoxCreate(SleeveFaq, false);
+            }
+        });
+
+        UIElems.docButton = createElement("button", {
+            class: "std-button",
+            display: "inline-block",
+            innerText: "Documentation",
         });
 
         UIElems.sleeveList = createElement("ul");
@@ -93,6 +112,7 @@ export function createSleevesPage(p: IPlayer) {
         }
 
         UIElems.container.appendChild(UIElems.info);
+        UIElems.container.appendChild(UIElems.faqButton);
         UIElems.container.appendChild(UIElems.sleeveList);
 
         document.getElementById("entire-game-container")!.appendChild(UIElems.container);
@@ -104,10 +124,23 @@ export function createSleevesPage(p: IPlayer) {
 // Updates the UI for the entire Sleeves page
 export function updateSleevesPage() {
     if (!routing.isOn(Page.Sleeves)) { return; }
+
+     try {
+         for (let i = 0; i < playerRef!.sleeves.length; ++i) {
+            const sleeve: Sleeve = playerRef!.sleeves[i];
+            const elems: ISleeveUIElems = UIElems.sleeves![i];
+            updateSleeveUi(sleeve!, elems!);
+         }
+     } catch(e) {
+         exceptionAlert(e);
+     }
 }
 
 export function clearSleevesPage() {
-    removeElement(UIElems.container);
+    if (UIElems.container instanceof HTMLElement) {
+        removeElement(UIElems.container);
+    }
+
     for (const prop in UIElems) {
         (<any>UIElems)[prop] = null;
     }
@@ -129,6 +162,7 @@ function createSleeveUi(sleeve: Sleeve, allSleeves: Sleeve[]): ISleeveUIElems {
         taskDetailsSelector2:   null,
         taskDescription:        null,
         taskSetButton:          null,
+        taskProgressBar:        null,
         earningsPanel:          null,
         currentEarningsInfo:    null,
         totalEarningsButton:    null,
@@ -141,7 +175,7 @@ function createSleeveUi(sleeve: Sleeve, allSleeves: Sleeve[]): ISleeveUIElems {
         display: "block",
     });
 
-    elems.statsPanel = createElement("div", { class: "sleeve-panel" });
+    elems.statsPanel = createElement("div", { class: "sleeve-panel", width: "25%" });
     elems.stats = createElement("p", { class: "sleeve-stats-text" });
     elems.moreStatsButton = createElement("button", {
         class: "std-button",
@@ -181,7 +215,7 @@ function createSleeveUi(sleeve: Sleeve, allSleeves: Sleeve[]): ISleeveUIElems {
     elems.statsPanel.appendChild(elems.stats);
     elems.statsPanel.appendChild(elems.moreStatsButton);
 
-    elems.taskPanel = createElement("div", { class: "sleeve-panel" });
+    elems.taskPanel = createElement("div", { class: "sleeve-panel", width: "40%" });
     elems.taskSelector = createElement("select") as HTMLSelectElement;
     elems.taskSelector.add(createOptionElement("------"));
     elems.taskSelector.add(createOptionElement("Work for Company"));
@@ -194,10 +228,13 @@ function createSleeveUi(sleeve: Sleeve, allSleeves: Sleeve[]): ISleeveUIElems {
     elems.taskSelector.addEventListener("change", () => {
         updateSleeveTaskSelector(sleeve, elems, allSleeves);
     });
-    // TODO Set initial value for task selector
     elems.taskDetailsSelector = createElement("select") as HTMLSelectElement;
     elems.taskDetailsSelector2 = createElement("select") as HTMLSelectElement;
     elems.taskDescription = createElement("p");
+    elems.taskProgressBar = createElement("p");
+    elems.taskSelector.selectedIndex = sleeve.currentTask; // Set initial value for Task Selector
+    elems.taskSelector.dispatchEvent(new Event('change'));
+    updateSleeveTaskDescription(sleeve, elems);
     elems.taskSetButton = createElement("button", {
         class: "std-button",
         innerText: "Set Task",
@@ -207,10 +244,12 @@ function createSleeveUi(sleeve: Sleeve, allSleeves: Sleeve[]): ISleeveUIElems {
     });
     elems.taskPanel.appendChild(elems.taskSelector);
     elems.taskPanel.appendChild(elems.taskDetailsSelector);
+    elems.taskPanel.appendChild(elems.taskDetailsSelector2);
     elems.taskPanel.appendChild(elems.taskSetButton);
     elems.taskPanel.appendChild(elems.taskDescription);
+    elems.taskPanel.appendChild(elems.taskProgressBar);
 
-    elems.earningsPanel = createElement("div", { class: "sleeve-panel" });
+    elems.earningsPanel = createElement("div", { class: "sleeve-panel", width: "35%" });
     elems.currentEarningsInfo = createElement("p");
     elems.totalEarningsButton = createElement("button", {
         class: "std-button",
@@ -218,23 +257,23 @@ function createSleeveUi(sleeve: Sleeve, allSleeves: Sleeve[]): ISleeveUIElems {
         clickListener: () => {
             dialogBoxCreate(
                 [
-                    "<h2><u>Total Earnings for Current Task:</u></h2>",
+                    "<h2><u>Earnings for Current Task:</u></h2>",
                     `Money: ${numeralWrapper.formatMoney(sleeve.earningsForTask.money)}`,
                     `Hacking Exp: ${numeralWrapper.formatBigNumber(sleeve.earningsForTask.hack)}`,
                     `Strength Exp: ${numeralWrapper.formatBigNumber(sleeve.earningsForTask.str)}`,
                     `Defense Exp: ${numeralWrapper.formatBigNumber(sleeve.earningsForTask.def)}`,
                     `Dexterity Exp: ${numeralWrapper.formatBigNumber(sleeve.earningsForTask.dex)}`,
                     `Agility Exp: ${numeralWrapper.formatBigNumber(sleeve.earningsForTask.agi)}`,
-                    `Charisma Exp: ${numeralWrapper.formatBigNumber(sleeve.earningsForTask.cha)}`,
-                    "<h2><u>Earnings for Host Consciousness:</u></h2>",
+                    `Charisma Exp: ${numeralWrapper.formatBigNumber(sleeve.earningsForTask.cha)}<br>`,
+                    "<h2><u>Total Earnings for Host Consciousness:</u></h2>",
                     `Money: ${numeralWrapper.formatMoney(sleeve.earningsForPlayer.money)}`,
                     `Hacking Exp: ${numeralWrapper.formatBigNumber(sleeve.earningsForPlayer.hack)}`,
                     `Strength Exp: ${numeralWrapper.formatBigNumber(sleeve.earningsForPlayer.str)}`,
                     `Defense Exp: ${numeralWrapper.formatBigNumber(sleeve.earningsForPlayer.def)}`,
                     `Dexterity Exp: ${numeralWrapper.formatBigNumber(sleeve.earningsForPlayer.dex)}`,
                     `Agility Exp: ${numeralWrapper.formatBigNumber(sleeve.earningsForPlayer.agi)}`,
-                    `Charisma Exp: ${numeralWrapper.formatBigNumber(sleeve.earningsForPlayer.cha)}`,
-                    "<h2><u>Earnings for Other Sleeves:</u></h2>",
+                    `Charisma Exp: ${numeralWrapper.formatBigNumber(sleeve.earningsForPlayer.cha)}<br>`,
+                    "<h2><u>Total Earnings for Other Sleeves:</u></h2>",
                     `Money: ${numeralWrapper.formatMoney(sleeve.earningsForSleeves.money)}`,
                     `Hacking Exp: ${numeralWrapper.formatBigNumber(sleeve.earningsForSleeves.hack)}`,
                     `Strength Exp: ${numeralWrapper.formatBigNumber(sleeve.earningsForSleeves.str)}`,
@@ -246,6 +285,15 @@ function createSleeveUi(sleeve: Sleeve, allSleeves: Sleeve[]): ISleeveUIElems {
             );
         }
     });
+
+    elems.earningsPanel.appendChild(elems.currentEarningsInfo);
+    elems.earningsPanel.appendChild(elems.totalEarningsButton);
+
+    updateSleeveUi(sleeve, elems);
+
+    elems.container.appendChild(elems.statsPanel);
+    elems.container.appendChild(elems.taskPanel);
+    elems.container.appendChild(elems.earningsPanel);
 
     return elems;
 }
@@ -261,12 +309,19 @@ function updateSleeveUi(sleeve: Sleeve, elems: ISleeveUIElems) {
                               `Agility: ${numeralWrapper.format(sleeve.agility, "0,0")}`,
                               `Charisma: ${numeralWrapper.format(sleeve.charisma, "0,0")}`,
                               `HP: ${numeralWrapper.format(sleeve.hp, "0,0")} / ${numeralWrapper.format(sleeve.max_hp, "0,0")}<br>`,
-                              `Shock: ${numeralWrapper.format(100 - sleeve.shock, "0,0")}`,
-                              `Synchronization: ${numeralWrapper.format(sleeve.sync, "0,0")}`].join("<br>");
+                              `Shock: ${numeralWrapper.format(100 - sleeve.shock, "0,0.000")}`,
+                              `Sync: ${numeralWrapper.format(sleeve.sync, "0,0.000")}`].join("<br>");
+
+    let repGainText: string = "";
+    if (sleeve.currentTask === SleeveTaskType.Company || sleeve.currentTask === SleeveTaskType.Faction) {
+        const repGain: number = sleeve.getRepGain(playerRef!);
+        repGainText = `Reputation: ${numeralWrapper.format(5 * repGain, "0.00")} / s`
+    }
 
     if (sleeve.currentTask === SleeveTaskType.Crime) {
         elems.currentEarningsInfo!.innerHTML = [
-            `Money: ${numeralWrapper.formatMoney(sleeve.gainRatesForTask.money)} if successful`,
+            `Earnings (Pre-Synchronization):`,
+            `Money: ${numeralWrapper.formatMoney(parseFloat(sleeve.currentTaskLocation))} if successful`,
             `Hacking Exp: ${numeralWrapper.format(sleeve.gainRatesForTask.hack, "0.00")} (2x if successful)`,
             `Strength Exp: ${numeralWrapper.format(sleeve.gainRatesForTask.str, "0.00")} (2x if successful)`,
             `Defense Exp: ${numeralWrapper.format(sleeve.gainRatesForTask.def, "0.00")} (2x if successful)`,
@@ -274,16 +329,26 @@ function updateSleeveUi(sleeve: Sleeve, elems: ISleeveUIElems) {
             `Agility Exp: ${numeralWrapper.format(sleeve.gainRatesForTask.agi, "0.00")} (2x if successful)`,
             `Charisma Exp: ${numeralWrapper.format(sleeve.gainRatesForTask.cha, "0.00")} (2x if successful)`
         ].join("<br>");
+
+        elems.taskProgressBar!.innerText = createProgressBarText({
+            progress: sleeve.currentTaskTime / sleeve.currentTaskMaxTime,
+            totalTicks: 25,
+        });
     } else {
-        elems.currentEarningsInfo!.innerHTML = [
-            `Money: ${numeralWrapper.formatMoney(sleeve.gainRatesForTask.money)} / s`,
-            `Hacking Exp: ${numeralWrapper.format(sleeve.gainRatesForTask.hack, "0.00")} / s`,
-            `Strength Exp: ${numeralWrapper.format(sleeve.gainRatesForTask.str, "0.00")} / s`,
-            `Defense Exp: ${numeralWrapper.format(sleeve.gainRatesForTask.def, "0.00")} / s`,
-            `Dexterity Exp: ${numeralWrapper.format(sleeve.gainRatesForTask.dex, "0.00")} / s`,
-            `Agility Exp: ${numeralWrapper.format(sleeve.gainRatesForTask.agi, "0.00")} / s`,
-            `Charisma Exp: ${numeralWrapper.format(sleeve.gainRatesForTask.cha, "0.00")} / s`
-        ].join("<br>");
+        const lines = [
+            `Earnings (Pre-Synchronization):`,
+            `Money: ${numeralWrapper.formatMoney(5 * sleeve.gainRatesForTask.money)} / s`,
+            `Hacking Exp: ${numeralWrapper.format(5 * sleeve.gainRatesForTask.hack, "0.00")} / s`,
+            `Strength Exp: ${numeralWrapper.format(5 * sleeve.gainRatesForTask.str, "0.00")} / s`,
+            `Defense Exp: ${numeralWrapper.format(5 * sleeve.gainRatesForTask.def, "0.00")} / s`,
+            `Dexterity Exp: ${numeralWrapper.format(5 * sleeve.gainRatesForTask.dex, "0.00")} / s`,
+            `Agility Exp: ${numeralWrapper.format(5 * sleeve.gainRatesForTask.agi, "0.00")} / s`,
+            `Charisma Exp: ${numeralWrapper.format(5 * sleeve.gainRatesForTask.cha, "0.00")} / s`
+        ];
+        if (repGainText !== "") { lines.push(repGainText); }
+        elems.currentEarningsInfo!.innerHTML = lines.join("<br>");
+
+        elems.taskProgressBar!.innerText = "";
     }
 }
 
@@ -333,7 +398,9 @@ function updateSleeveTaskSelector(sleeve: Sleeve, elems: ISleeveUIElems, allSlee
         }
     }
 
+    // Reset Selectors
     removeChildrenFromElement(elems.taskDetailsSelector);
+    removeChildrenFromElement(elems.taskDetailsSelector2);
 
     const value: string = getSelectValue(elems.taskSelector);
     switch(value) {
@@ -342,7 +409,14 @@ function updateSleeveTaskSelector(sleeve: Sleeve, elems: ISleeveUIElems, allSlee
             for (let i = 0; i < allJobs.length; ++i) {
                 if (!forbiddenCompanies.includes(allJobs[i])) {
                     elems.taskDetailsSelector!.add(createOptionElement(allJobs[i]));
+
+                    // Set initial value of the 'Details' selector
+                    if (sleeve.currentTaskLocation === allJobs[i]) {
+                        elems.taskDetailsSelector!.selectedIndex = i;
+                    }
                 }
+
+                elems.taskDetailsSelector2!.add(createOptionElement("------"));
             }
             break;
         case "Work for Faction":
@@ -350,6 +424,11 @@ function updateSleeveTaskSelector(sleeve: Sleeve, elems: ISleeveUIElems, allSlee
                 const fac: string = playerRef!.factions[i]!;
                 if (!forbiddenFactions.includes(fac)) {
                     elems.taskDetailsSelector!.add(createOptionElement(fac));
+
+                    // Set initial value of the 'Details' Selector
+                    if (sleeve.currentTaskLocation === fac) {
+                        elems.taskDetailsSelector!.selectedIndex = i;
+                    }
                 }
             }
             for (let i = 0; i < factionWorkTypeSelectorOptions.length; ++i) {
@@ -361,6 +440,8 @@ function updateSleeveTaskSelector(sleeve: Sleeve, elems: ISleeveUIElems, allSlee
                 const name: string = Crimes[crimeLabel].name;
                 elems.taskDetailsSelector!.add(createOptionElement(name, crimeLabel));
             }
+
+            elems.taskDetailsSelector2!.add(createOptionElement("------"));
             break;
         case "Take University Course":
             // First selector has class type
@@ -410,17 +491,18 @@ function updateSleeveTaskSelector(sleeve: Sleeve, elems: ISleeveUIElems, allSlee
 
             break;
         case "Shock Recovery":
-            // No options in "Details" selector
-            return;
         case "Synchronize":
+        case "------":
             // No options in "Details" selector
+            elems.taskDetailsSelector!.add(createOptionElement("------"));
+            elems.taskDetailsSelector2!.add(createOptionElement("------"));
             return;
         default:
             break;
     }
 }
 
-function setSleeveTask(sleeve: Sleeve, elems: ISleeveUIElems): void {
+function setSleeveTask(sleeve: Sleeve, elems: ISleeveUIElems): boolean {
     try {
         if (playerRef == null) {
             throw new Error("playerRef is null in Sleeve UI's setSleeveTask()");
@@ -428,32 +510,21 @@ function setSleeveTask(sleeve: Sleeve, elems: ISleeveUIElems): void {
 
         const taskValue: string = getSelectValue(elems.taskSelector);
         const detailValue: string = getSelectValue(elems.taskDetailsSelector);
-        const detailValue2: string = getSelectValue(elems.taskDetailsSelector);
+        const detailValue2: string = getSelectValue(elems.taskDetailsSelector2);
 
         let res: boolean = false;
         switch(taskValue) {
+            case "------":
+                elems.taskDescription!.innerText = "This sleeve is currently idle";
+                break;
             case "Work for Company":
                 res = sleeve.workForCompany(playerRef!, detailValue);
-                if (res) {
-                    elems.taskDescription!.innerText = `This sleeve is currently working your ` +
-                                                      `job at ${sleeve.currentTaskLocation}.`;
-                } else {
-                    elems.taskDescription!.innerText = "Failed to assign sleeve to task. Invalid choice(s).";
-                }
                 break;
             case "Work for Faction":
                 res = sleeve.workForFaction(playerRef!, detailValue, detailValue2);
-                if (res) {
-                    elems.taskDescription!.innerText = `This sleeve is currently doing ${detailValue2} for ` +
-                                                      `${sleeve.currentTaskLocation}.`;
-                } else {
-                    elems.taskDescription!.innerText = "Failed to assign sleeve to task. Invalid choice(s).";
-                }
                 break;
             case "Commit Crime":
-                sleeve.commitCrime(playerRef!, Crimes[detailValue]);
-                elems.taskDescription!.innerText = `This sleeve is currently attempting to ` +
-                                                  `${Crimes[detailValue]}.`;
+                res = sleeve.commitCrime(playerRef!, Crimes[detailValue]);
                 break;
             case "Take University Course":
                 res = sleeve.takeUniversityCourse(playerRef!, detailValue2, detailValue);
@@ -463,22 +534,79 @@ function setSleeveTask(sleeve: Sleeve, elems: ISleeveUIElems): void {
                 break;
             case "Shock Recovery":
                 sleeve.currentTask = SleeveTaskType.Recovery;
-                elems.taskDescription!.innerText = "This sleeve is currently set to focus on shock recovery. This causes " +
-                                                  "the Sleeve's shock to decrease at a faster rate.";
+                res = true;
                 break;
             case "Synchronize":
                 sleeve.currentTask = SleeveTaskType.Sync;
-                elems.taskDescription!.innerText = "This sleeve is currently set to synchronize with the original consciousness. " +
-                                                  "This causes the Sleeve's synchronization to increase."
+                res = true;
                 break;
             default:
                 console.error(`Invalid/Unrecognized taskValue in setSleeveTask(): ${taskValue}`);
         }
 
+        if (res) {
+            updateSleeveTaskDescription(sleeve, elems);
+        } else {
+            elems.taskDescription!.innerText = "Failed to assign sleeve to task. Invalid choice(s).";
+        }
+
         if (routing.isOn(Page.Sleeves)) {
             updateSleevesPage();
         }
+
+        return res;
     } catch(e) {
+        console.error(`Exception caught in setSleeveTask(): ${e}`);
+        exceptionAlert(e);
+        return false;
+    }
+}
+
+function updateSleeveTaskDescription(sleeve: Sleeve, elems: ISleeveUIElems): void {
+    try {
+        if (playerRef == null) {
+            throw new Error("playerRef is null in Sleeve UI's setSleeveTask()");
+        }
+
+        const taskValue: string = getSelectValue(elems.taskSelector);
+        const detailValue: string = getSelectValue(elems.taskDetailsSelector);
+        const detailValue2: string = getSelectValue(elems.taskDetailsSelector2);
+
+        switch(taskValue) {
+            case "------":
+                elems.taskDescription!.innerText = "This sleeve is currently idle";
+                break;
+            case "Work for Company":
+                elems.taskDescription!.innerText = `This sleeve is currently working your ` +
+                                                   `job at ${sleeve.currentTaskLocation}.`;
+                break;
+            case "Work for Faction":
+                elems.taskDescription!.innerText = `This sleeve is currently doing ${detailValue2} for ` +
+                                                   `${sleeve.currentTaskLocation}.`;
+                break;
+            case "Commit Crime":
+                elems.taskDescription!.innerText = `This sleeve is currently attempting to ` +
+                                                   `${Crimes[detailValue].type}.`;
+                break;
+            case "Take University Course":
+                elems.taskDescription!.innerText = `This sleeve is currently studying/taking a course at ${sleeve.currentTaskLocation}.`;
+                break;
+            case "Workout at Gym":
+                elems.taskDescription!.innerText = `This sleeve is currently working out at ${sleeve.currentTaskLocation}.`;
+                break;
+            case "Shock Recovery":
+                elems.taskDescription!.innerText = "This sleeve is currently set to focus on shock recovery. This causes " +
+                                                  "the Sleeve's shock to decrease at a faster rate.";
+                break;
+            case "Synchronize":
+                elems.taskDescription!.innerText = "This sleeve is currently set to synchronize with the original consciousness. " +
+                                                  "This causes the Sleeve's synchronization to increase."
+                break;
+            default:
+                console.error(`Invalid/Unrecognized taskValue in updateSleeveTaskDescription(): ${taskValue}`);
+        }
+    } catch(e) {
+        console.error(`Exception caught in updateSleeveTaskDescription(): ${e}`);
         exceptionAlert(e);
     }
 }

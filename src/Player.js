@@ -548,6 +548,14 @@ PlayerObject.prototype.loseMoney = function(money) {
     this.money = this.money.minus(money);
 }
 
+PlayerObject.prototype.canAfford = function(cost) {
+    if (isNaN(cost)) {
+        console.error(`NaN passed into Player.canAfford()`);
+        return false;
+    }
+    return this.money.gte(cost);
+}
+
 PlayerObject.prototype.gainHackingExp = function(exp) {
     if (isNaN(exp)) {
         console.log("ERR: NaN passed into Player.gainHackingExp()"); return;

@@ -1,3 +1,5 @@
+.. _netscript_tixapi:
+
 Netscript Trade Information eXchange (TIX) API
 ==============================================
 

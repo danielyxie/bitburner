@@ -7,8 +7,6 @@ import { generateResleeves,
 
 import { IPlayer } from "../IPlayer";
 
-import { IMap } from "../../types";
-
 import { Augmentation } from "../../Augmentation/Augmentation";
 import { Augmentations } from "../../Augmentation/Augmentations";
 
@@ -23,9 +21,7 @@ import { exceptionAlert } from "../../../utils/helpers/exceptionAlert";
 import { createElement } from "../../../utils/uiHelpers/createElement";
 import { createOptionElement } from "../../../utils/uiHelpers/createOptionElement";
 import { getSelectValue } from "../../../utils/uiHelpers/getSelectData";
-import { removeChildrenFromElement } from "../../../utils/uiHelpers/removeChildrenFromElement";
 import { removeElement } from "../../../utils/uiHelpers/removeElement";
-import { removeElementById } from "../../../utils/uiHelpers/removeElementById";
 
 interface IResleeveUIElems {
     container:          HTMLElement | null;
@@ -70,7 +66,19 @@ export function createResleevesPage(p: IPlayer) {
 
         UIElems.info = createElement("p", {
             display: "inline-block",
-            innerText: "TOODOOO",
+            innerHTML: "Re-sleeving is the process of digitizing and transferring your consciousness " +
+                       "into a new human body, or 'sleeve'. Here at VitaLife, you can purchase new " +
+                       "specially-engineered bodies for the re-sleeve process. Many of these bodies " +
+                       "even come with genetic and cybernetic Augmentations!<br><br>" +
+                       "Re-sleeving will chance your experience for every stat. It will also REMOVE " +
+                       "all of your currently-installed Augmentations, and replace " +
+                       "them with the ones provided by the purchased sleeve. However, Augmentations that you have " +
+                       "purchased but not installed will NOT be removed. If you have purchased an " +
+                       "Augmentation and then re-sleeve into a body which already has that Augmentation, " +
+                       "it will be removed (since you cannot have duplicate Augmentations).<br><br>" +
+                       "NOTE: The stats and multipliers displayed on this page do NOT include your bonuses from " +
+                       "Source-File.",
+            width: "75%",
         });
 
         UIElems.resleeveList = createElement("ul");
@@ -96,7 +104,10 @@ export function createResleevesPage(p: IPlayer) {
 }
 
 export function clearResleevesPage() {
-    removeElement(UIElems.container);
+    if (UIElems.container instanceof HTMLElement) {
+        removeElement(UIElems.container);
+    }
+
     for (const prop in UIElems) {
         (<any>UIElems)[prop] = null;
     }
@@ -125,8 +136,17 @@ function createResleeveUi(resleeve: Resleeve): IResleeveUIElems {
         display: "block",
     });
 
-    elems.statsPanel = createElement("div", { class: "resleeve-panel" });
-    elems.stats = createElement("p", { class: "resleeve-stats-text" });
+    elems.statsPanel = createElement("div", { class: "resleeve-panel", width: "30%" });
+    elems.stats = createElement("p", {
+        class: "resleeve-stats-text",
+        innerHTML:
+            `Hacking: ${numeralWrapper.format(resleeve.hacking_skill, "0,0")} (${numeralWrapper.formatBigNumber(resleeve.hacking_exp)} exp)<br>` +
+            `Strength: ${numeralWrapper.format(resleeve.strength, "0,0")} (${numeralWrapper.formatBigNumber(resleeve.strength_exp)} exp)<br>` +
+            `Defense: ${numeralWrapper.format(resleeve.defense, "0,0")} (${numeralWrapper.formatBigNumber(resleeve.defense_exp)} exp)<br>` +
+            `Dexterity: ${numeralWrapper.format(resleeve.dexterity, "0,0")} (${numeralWrapper.formatBigNumber(resleeve.dexterity_exp)} exp)<br>` +
+            `Agility: ${numeralWrapper.format(resleeve.agility, "0,0")} (${numeralWrapper.formatBigNumber(resleeve.agility_exp)} exp)<br>` +
+            `Charisma: ${numeralWrapper.format(resleeve.charisma, "0,0")} (${numeralWrapper.formatBigNumber(resleeve.charisma_exp)} exp)`,
+    });
     elems.multipliersButton = createElement("button", {
         class: "std-button",
         innerText: "Multipliers",
@@ -155,33 +175,58 @@ function createResleeveUi(resleeve: Resleeve): IResleeveUIElems {
                     `Faction Reputation Gain multiplier: ${numeralWrapper.formatPercentage(resleeve.faction_rep_mult)}`,
                     `Crime Money multiplier: ${numeralWrapper.formatPercentage(resleeve.crime_money_mult)}`,
                     `Crime Success multiplier: ${numeralWrapper.formatPercentage(resleeve.crime_success_mult)}`,
+                    `Hacknet Income multiplier: ${numeralWrapper.formatPercentage(resleeve.hacknet_node_money_mult)}`,
+                    `Hacknet Purchase Cost multiplier: ${numeralWrapper.formatPercentage(resleeve.hacknet_node_purchase_cost_mult)}`,
+                    `Hacknet Level Upgrade Cost multiplier: ${numeralWrapper.formatPercentage(resleeve.hacknet_node_level_cost_mult)}`,
+                    `Hacknet Ram Upgrade Cost multiplier: ${numeralWrapper.formatPercentage(resleeve.hacknet_node_ram_cost_mult)}`,
+                    `Hacknet Core Upgrade Cost multiplier: ${numeralWrapper.formatPercentage(resleeve.hacknet_node_core_cost_mult)}`,
+                    `Bladeburner Max Stamina multiplier: ${numeralWrapper.formatPercentage(resleeve.bladeburner_max_stamina_mult)}`,
+                    `Bladeburner Stamina Gain multiplier: ${numeralWrapper.formatPercentage(resleeve.bladeburner_stamina_gain_mult)}`,
+                    `Bladeburner Field Analysis multiplier: ${numeralWrapper.formatPercentage(resleeve.bladeburner_analysis_mult)}`,
+                    `Bladeburner Success Chance multiplier: ${numeralWrapper.formatPercentage(resleeve.bladeburner_success_chance_mult)}`
                 ].join("<br>"), false
             )
         }
     });
+    elems.statsPanel.appendChild(elems.stats);
+    elems.statsPanel.appendChild(elems.multipliersButton);
 
-    elems.augPanel = createElement("div", { class: "resleeve-panel" });
-    elems.augSelector = createElement("select") as HTMLSelectElement;
+    elems.augPanel = createElement("div", { class: "resleeve-panel", width: "50%" });
+    elems.augSelector = createElement("select", { class: "resleeve-aug-selector" }) as HTMLSelectElement;
+    elems.augDescription = createElement("p");
     for (let i = 0; i < resleeve.augmentations.length; ++i) {
         elems.augSelector.add(createOptionElement(resleeve.augmentations[i].name));
     };
     elems.augSelector.addEventListener("change", () => {
         updateAugDescription(elems);
     });
-    elems.augDescription = createElement("p");
+    elems.augSelector.dispatchEvent(new Event('change')); // Set inital description by manually triggering change event
+    elems.augPanel.appendChild(elems.augSelector);
+    elems.augPanel.appendChild(elems.augDescription);
 
-    elems.costPanel = createElement("div", { class: "resleeve-panel" });
+    const cost: number = resleeve.getCost();
+    elems.costPanel = createElement("div", { class: "resleeve-panel", width: "20%" });
     elems.costText = createElement("p", {
-        innerText: `It costs ${numeralWrapper.formatMoney(resleeve.getCost())} ` +
+        innerText: `It costs ${numeralWrapper.formatMoney(cost)} ` +
                    `to purchase this Sleeve.`,
     });
     elems.buyButton = createElement("button", {
         class: "std-button",
         innerText: "Purchase",
         clickListener: () => {
-            purchaseResleeve(resleeve, playerRef!);
+            if (purchaseResleeve(resleeve, playerRef!)) {
+                dialogBoxCreate(`You re-sleeved for ${numeralWrapper.formatMoney(cost)}!`, false);
+            } else {
+                dialogBoxCreate(`You cannot afford to re-sleeve into this body`, false);
+            }
         }
     });
+    elems.costPanel.appendChild(elems.costText);
+    elems.costPanel.appendChild(elems.buyButton);
+
+    elems.container.appendChild(elems.statsPanel);
+    elems.container.appendChild(elems.augPanel);
+    elems.container.appendChild(elems.costPanel);
 
     return elems;
 }

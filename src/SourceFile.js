@@ -63,7 +63,8 @@ function initSourceFiles() {
                                                    "This Source-File also increases your hacking growth multipliers by: " +
                                                    "<br>Level 1: 12%<br>Level 2: 18%<br>Level 3: 21%");
     SourceFiles["SourceFile9"] = new SourceFile(9);
-    SourceFiles["SourceFile10"] = new SourceFile(10);
+    SourceFiles["SourceFile10"] = new SourceFile(10, "This Source-File unlocks Sleeve technology in other BitNodes. Each level of this " +
+                                                     "Source-File also grants you a Duplicate Sleeve");
     SourceFiles["SourceFile11"] = new SourceFile(11, "This Source-File makes it so that company favor increases BOTH the player's salary and reputation gain rate " +
                                                      "at that company by 1% per favor (rather than just the reputation gain). This Source-File also " +
                                                      " increases the player's company salary and reputation gain multipliers by:<br><br>" +
@@ -186,6 +187,9 @@ function applySourceFile(srcFile) {
             }
             var incMult = 1 + (mult / 100);
             Player.hacking_grow_mult    *= incMult;
+            break;
+        case 10: // Digital Carbon
+            // No effects, just grants sleeves
             break;
         case 11: //The Big Crash
             var mult = 0;

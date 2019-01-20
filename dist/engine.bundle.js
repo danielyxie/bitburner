@@ -164,7 +164,7 @@
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Player; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return loadPlayer; });
-/* harmony import */ var _Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentation/Augmentations */ 13);
+/* harmony import */ var _Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentation/Augmentations */ 14);
 /* harmony import */ var _Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Augmentation_AugmentationHelpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Augmentation/AugmentationHelpers */ 61);
 /* harmony import */ var _Augmentation_PlayerOwnedAugmentation__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Augmentation/PlayerOwnedAugmentation */ 98);
@@ -180,9 +180,9 @@
 /* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_Company_Company__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Company/Companies */ 19);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _Company_GetNextCompanyPosition__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Company/GetNextCompanyPosition */ 109);
+/* harmony import */ var _Company_GetNextCompanyPosition__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Company/GetNextCompanyPosition */ 112);
 /* harmony import */ var _Company_GetNextCompanyPosition__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_Company_GetNextCompanyPosition__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Company/GetJobRequirementText */ 100);
+/* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Company/GetJobRequirementText */ 101);
 /* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Company/CompanyPositions */ 33);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_11__);
@@ -190,11 +190,11 @@
 /* harmony import */ var _Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Corporation/Corporation */ 62);
+/* harmony import */ var _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Corporation/Corporation */ 63);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Programs/Programs */ 26);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _Crime_CrimeHelpers__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Crime/CrimeHelpers */ 101);
-/* harmony import */ var _Crime_Crimes__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Crime/Crimes */ 37);
+/* harmony import */ var _Crime_CrimeHelpers__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Crime/CrimeHelpers */ 102);
+/* harmony import */ var _Crime_Crimes__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Crime/Crimes */ 36);
 /* harmony import */ var _Crime_Crimes__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_Crime_Crimes__WEBPACK_IMPORTED_MODULE_17__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./engine */ 11);
 /* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Faction/Faction */ 58);
@@ -206,12 +206,12 @@
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./Locations */ 5);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_23__);
 /* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./NetscriptFunctions */ 47);
-/* harmony import */ var _PersonObjects_Sleeve_Sleeve__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./PersonObjects/Sleeve/Sleeve */ 144);
+/* harmony import */ var _PersonObjects_Sleeve_Sleeve__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./PersonObjects/Sleeve/Sleeve */ 99);
 /* harmony import */ var _PersonObjects_Sleeve_Sleeve__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_PersonObjects_Sleeve_Sleeve__WEBPACK_IMPORTED_MODULE_25__);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./Server */ 12);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./Settings */ 20);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_27__);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./SpecialServerIps */ 36);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./SpecialServerIps */ 37);
 /* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./SourceFile */ 80);
 /* harmony import */ var _SourceFile_SourceFileFlags__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./SourceFile/SourceFileFlags */ 83);
 /* harmony import */ var _SourceFile_SourceFileFlags__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(_SourceFile_SourceFileFlags__WEBPACK_IMPORTED_MODULE_30__);
@@ -772,6 +772,14 @@ PlayerObject.prototype.loseMoney = function(money) {
         console.log("ERR: NaN passed into Player.loseMoney()"); return;
     }
     this.money = this.money.minus(money);
+}
+
+PlayerObject.prototype.canAfford = function(cost) {
+    if (isNaN(cost)) {
+        console.error(`NaN passed into Player.canAfford()`);
+        return false;
+    }
+    return this.money.gte(cost);
 }
 
 PlayerObject.prototype.gainHackingExp = function(exp) {
@@ -3156,7 +3164,9 @@ exports.CONSTANTS = {
     * Job Changes:
     ** You can now hold multiple jobs at once. This means you no longer lose reputation when leaving a company
     ** Because of this change, the getCharacterInformation() Netscript function returns a slightly different value
+
     * Home Computer RAM is now capped at 2 ^ 30 GB (1073741824 GB)
+    * Pop-up dialog boxes are a little bit bigger
     `
 };
 
@@ -3356,7 +3366,7 @@ exports.createElement = createElement;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const isString_1 = __webpack_require__(/*! ./helpers/isString */ 43);
+const isString_1 = __webpack_require__(/*! ./helpers/isString */ 44);
 // Netburner String helper functions
 // Replaces the character at an index with a new character
 function replaceAt(base, index, character) {
@@ -3469,21 +3479,21 @@ exports.generateRandomString = generateRandomString;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const numeral = __webpack_require__(/*! numeral */ 87);
-__webpack_require__(/*! numeral/locales/bg */ 307);
-__webpack_require__(/*! numeral/locales/cs */ 306);
-__webpack_require__(/*! numeral/locales/da-dk */ 305);
-__webpack_require__(/*! numeral/locales/de */ 304);
-__webpack_require__(/*! numeral/locales/en-au */ 303);
-__webpack_require__(/*! numeral/locales/en-gb */ 302);
-__webpack_require__(/*! numeral/locales/es */ 301);
-__webpack_require__(/*! numeral/locales/fr */ 300);
-__webpack_require__(/*! numeral/locales/hu */ 299);
-__webpack_require__(/*! numeral/locales/it */ 298);
-__webpack_require__(/*! numeral/locales/lv */ 297);
-__webpack_require__(/*! numeral/locales/no */ 296);
-__webpack_require__(/*! numeral/locales/pl */ 295);
-__webpack_require__(/*! numeral/locales/ru */ 294);
+const numeral = __webpack_require__(/*! numeral */ 88);
+__webpack_require__(/*! numeral/locales/bg */ 315);
+__webpack_require__(/*! numeral/locales/cs */ 314);
+__webpack_require__(/*! numeral/locales/da-dk */ 313);
+__webpack_require__(/*! numeral/locales/de */ 312);
+__webpack_require__(/*! numeral/locales/en-au */ 311);
+__webpack_require__(/*! numeral/locales/en-gb */ 310);
+__webpack_require__(/*! numeral/locales/es */ 309);
+__webpack_require__(/*! numeral/locales/fr */ 308);
+__webpack_require__(/*! numeral/locales/hu */ 307);
+__webpack_require__(/*! numeral/locales/it */ 306);
+__webpack_require__(/*! numeral/locales/lv */ 305);
+__webpack_require__(/*! numeral/locales/no */ 304);
+__webpack_require__(/*! numeral/locales/pl */ 303);
+__webpack_require__(/*! numeral/locales/ru */ 302);
 /* eslint-disable class-methods-use-this */
 class NumeralFormatter {
     constructor() {
@@ -3757,7 +3767,7 @@ exports.AugmentationNames = {
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _NetscriptEnvironment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./NetscriptEnvironment */ 124);
+/* harmony import */ var _NetscriptEnvironment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./NetscriptEnvironment */ 126);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptWorker */ 29);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Server */ 12);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Settings */ 20);
@@ -3769,7 +3779,7 @@ exports.AugmentationNames = {
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/helpers/isValidIPAddress */ 94);
 /* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/helpers/isString */ 43);
+/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/helpers/isString */ 44);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_11__);
 
 
@@ -3785,7 +3795,7 @@ exports.AugmentationNames = {
 
 
 
-var Promise = __webpack_require__(/*! bluebird */ 279);
+var Promise = __webpack_require__(/*! bluebird */ 287);
 
 Promise.config({
     warnings: false,
@@ -4892,26 +4902,26 @@ __webpack_require__.r(__webpack_exports__);
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Engine", function() { return Engine; });
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/LogBox */ 86);
+/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/LogBox */ 87);
 /* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ActiveScriptsUI */ 73);
-/* harmony import */ var _Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Augmentation/Augmentations */ 13);
+/* harmony import */ var _Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Augmentation/Augmentations */ 14);
 /* harmony import */ var _Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _Augmentation_AugmentationHelpers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Augmentation/AugmentationHelpers */ 61);
 /* harmony import */ var _Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Augmentation/data/AugmentationNames */ 6);
 /* harmony import */ var _Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _BitNode_BitNode__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./BitNode/BitNode */ 65);
 /* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Bladeburner */ 34);
-/* harmony import */ var _CharacterOverview__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./CharacterOverview */ 142);
-/* harmony import */ var _CinematicText__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./CinematicText */ 108);
-/* harmony import */ var _CodingContractGenerator__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./CodingContractGenerator */ 107);
+/* harmony import */ var _CharacterOverview__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./CharacterOverview */ 148);
+/* harmony import */ var _CinematicText__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./CinematicText */ 110);
+/* harmony import */ var _CodingContractGenerator__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./CodingContractGenerator */ 109);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Company/CompanyPositions */ 33);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Company/Companies */ 19);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Corporation/Corporation */ 62);
+/* harmony import */ var _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Corporation/Corporation */ 63);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _DevMenu__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./DevMenu */ 127);
+/* harmony import */ var _DevMenu__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./DevMenu */ 130);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Faction/Factions */ 16);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_16__);
 /* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 49);
@@ -4921,8 +4931,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_20__);
 /* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./HacknetNode */ 71);
 /* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./InteractiveTutorial */ 38);
-/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./Literature */ 89);
-/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./Message */ 44);
+/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./Literature */ 90);
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./Message */ 45);
 /* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./Missions */ 60);
 /* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./NetscriptFunctions */ 47);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./NetscriptWorker */ 29);
@@ -4930,7 +4940,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./Prestige */ 92);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./Programs/Programs */ 26);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_30__);
-/* harmony import */ var _Programs_ProgramHelpers__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./Programs/ProgramHelpers */ 102);
+/* harmony import */ var _Programs_ProgramHelpers__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./Programs/ProgramHelpers */ 103);
 /* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./RedPill */ 64);
 /* harmony import */ var _SaveObject__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./SaveObject */ 78);
 /* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./Script */ 35);
@@ -4940,76 +4950,88 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./SourceFile */ 80);
 /* harmony import */ var _SourceFile_SourceFileFlags__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./SourceFile/SourceFileFlags */ 83);
 /* harmony import */ var _SourceFile_SourceFileFlags__WEBPACK_IMPORTED_MODULE_38___default = /*#__PURE__*/__webpack_require__.n(_SourceFile_SourceFileFlags__WEBPACK_IMPORTED_MODULE_38__);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./SpecialServerIps */ 36);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./SpecialServerIps */ 37);
 /* harmony import */ var _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ./StockMarket/StockMarket */ 24);
 /* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ./Terminal */ 54);
-/* harmony import */ var _PersonObjects_Resleeving_ResleevingUI__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ./PersonObjects/Resleeving/ResleevingUI */ 141);
-/* harmony import */ var _PersonObjects_Resleeving_ResleevingUI__WEBPACK_IMPORTED_MODULE_42___default = /*#__PURE__*/__webpack_require__.n(_PersonObjects_Resleeving_ResleevingUI__WEBPACK_IMPORTED_MODULE_42__);
-/* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ./ui/createStatusText */ 81);
-/* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_43___default = /*#__PURE__*/__webpack_require__.n(_ui_createStatusText__WEBPACK_IMPORTED_MODULE_43__);
-/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! ./ui/navigationTracking */ 14);
-/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__);
-/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
-/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_45___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_45__);
-/* harmony import */ var _ui_setSettingsLabels__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(/*! ./ui/setSettingsLabels */ 140);
-/* harmony import */ var _ui_MainMenu_Headers__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(/*! ./ui/MainMenu/Headers */ 139);
-/* harmony import */ var _ui_MainMenu_Headers__WEBPACK_IMPORTED_MODULE_47___default = /*#__PURE__*/__webpack_require__.n(_ui_MainMenu_Headers__WEBPACK_IMPORTED_MODULE_47__);
-/* harmony import */ var _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(/*! ./ui/MainMenu/Links */ 28);
-/* harmony import */ var _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48___default = /*#__PURE__*/__webpack_require__.n(_ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_GameOptions__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(/*! ../utils/GameOptions */ 90);
-/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 17);
-/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_51___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_51__);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 32);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_52___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_52__);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 22);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_53___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_53__);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_54___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_54__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 45);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_55___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_55__);
-/* harmony import */ var _utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(/*! ../utils/uiHelpers/removeLoadingScreen */ 126);
-/* harmony import */ var _utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_56___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_56__);
-/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 27);
-/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_57___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_57__);
-/* harmony import */ var normalize_css__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(/*! normalize.css */ 242);
-/* harmony import */ var normalize_css__WEBPACK_IMPORTED_MODULE_58___default = /*#__PURE__*/__webpack_require__.n(normalize_css__WEBPACK_IMPORTED_MODULE_58__);
-/* harmony import */ var _css_styles_scss__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(/*! ../css/styles.scss */ 203);
-/* harmony import */ var _css_styles_scss__WEBPACK_IMPORTED_MODULE_59___default = /*#__PURE__*/__webpack_require__.n(_css_styles_scss__WEBPACK_IMPORTED_MODULE_59__);
-/* harmony import */ var _css_tooltips_scss__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(/*! ../css/tooltips.scss */ 201);
-/* harmony import */ var _css_tooltips_scss__WEBPACK_IMPORTED_MODULE_60___default = /*#__PURE__*/__webpack_require__.n(_css_tooltips_scss__WEBPACK_IMPORTED_MODULE_60__);
-/* harmony import */ var _css_buttons_scss__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(/*! ../css/buttons.scss */ 199);
-/* harmony import */ var _css_buttons_scss__WEBPACK_IMPORTED_MODULE_61___default = /*#__PURE__*/__webpack_require__.n(_css_buttons_scss__WEBPACK_IMPORTED_MODULE_61__);
-/* harmony import */ var _css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(/*! ../css/mainmenu.scss */ 197);
-/* harmony import */ var _css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_62___default = /*#__PURE__*/__webpack_require__.n(_css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_62__);
-/* harmony import */ var _css_characteroverview_scss__WEBPACK_IMPORTED_MODULE_63__ = __webpack_require__(/*! ../css/characteroverview.scss */ 195);
-/* harmony import */ var _css_characteroverview_scss__WEBPACK_IMPORTED_MODULE_63___default = /*#__PURE__*/__webpack_require__.n(_css_characteroverview_scss__WEBPACK_IMPORTED_MODULE_63__);
-/* harmony import */ var _css_terminal_scss__WEBPACK_IMPORTED_MODULE_64__ = __webpack_require__(/*! ../css/terminal.scss */ 193);
-/* harmony import */ var _css_terminal_scss__WEBPACK_IMPORTED_MODULE_64___default = /*#__PURE__*/__webpack_require__.n(_css_terminal_scss__WEBPACK_IMPORTED_MODULE_64__);
-/* harmony import */ var _css_menupages_scss__WEBPACK_IMPORTED_MODULE_65__ = __webpack_require__(/*! ../css/menupages.scss */ 191);
-/* harmony import */ var _css_menupages_scss__WEBPACK_IMPORTED_MODULE_65___default = /*#__PURE__*/__webpack_require__.n(_css_menupages_scss__WEBPACK_IMPORTED_MODULE_65__);
-/* harmony import */ var _css_stockmarket_scss__WEBPACK_IMPORTED_MODULE_66__ = __webpack_require__(/*! ../css/stockmarket.scss */ 189);
-/* harmony import */ var _css_stockmarket_scss__WEBPACK_IMPORTED_MODULE_66___default = /*#__PURE__*/__webpack_require__.n(_css_stockmarket_scss__WEBPACK_IMPORTED_MODULE_66__);
-/* harmony import */ var _css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_67__ = __webpack_require__(/*! ../css/workinprogress.scss */ 187);
-/* harmony import */ var _css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_67___default = /*#__PURE__*/__webpack_require__.n(_css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_67__);
-/* harmony import */ var _css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_68__ = __webpack_require__(/*! ../css/popupboxes.scss */ 185);
-/* harmony import */ var _css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_68___default = /*#__PURE__*/__webpack_require__.n(_css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_68__);
-/* harmony import */ var _css_gameoptions_scss__WEBPACK_IMPORTED_MODULE_69__ = __webpack_require__(/*! ../css/gameoptions.scss */ 183);
-/* harmony import */ var _css_gameoptions_scss__WEBPACK_IMPORTED_MODULE_69___default = /*#__PURE__*/__webpack_require__.n(_css_gameoptions_scss__WEBPACK_IMPORTED_MODULE_69__);
-/* harmony import */ var _css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_70__ = __webpack_require__(/*! ../css/interactivetutorial.scss */ 181);
-/* harmony import */ var _css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_70___default = /*#__PURE__*/__webpack_require__.n(_css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_70__);
-/* harmony import */ var _css_loader_scss__WEBPACK_IMPORTED_MODULE_71__ = __webpack_require__(/*! ../css/loader.scss */ 179);
-/* harmony import */ var _css_loader_scss__WEBPACK_IMPORTED_MODULE_71___default = /*#__PURE__*/__webpack_require__.n(_css_loader_scss__WEBPACK_IMPORTED_MODULE_71__);
-/* harmony import */ var _css_missions_scss__WEBPACK_IMPORTED_MODULE_72__ = __webpack_require__(/*! ../css/missions.scss */ 177);
-/* harmony import */ var _css_missions_scss__WEBPACK_IMPORTED_MODULE_72___default = /*#__PURE__*/__webpack_require__.n(_css_missions_scss__WEBPACK_IMPORTED_MODULE_72__);
-/* harmony import */ var _css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_73__ = __webpack_require__(/*! ../css/companymanagement.scss */ 175);
-/* harmony import */ var _css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_73___default = /*#__PURE__*/__webpack_require__.n(_css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_73__);
-/* harmony import */ var _css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_74__ = __webpack_require__(/*! ../css/bladeburner.scss */ 173);
-/* harmony import */ var _css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_74___default = /*#__PURE__*/__webpack_require__.n(_css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_74__);
-/* harmony import */ var _css_gang_scss__WEBPACK_IMPORTED_MODULE_75__ = __webpack_require__(/*! ../css/gang.scss */ 171);
-/* harmony import */ var _css_gang_scss__WEBPACK_IMPORTED_MODULE_75___default = /*#__PURE__*/__webpack_require__.n(_css_gang_scss__WEBPACK_IMPORTED_MODULE_75__);
-/* harmony import */ var _css_treant_css__WEBPACK_IMPORTED_MODULE_76__ = __webpack_require__(/*! ../css/treant.css */ 169);
-/* harmony import */ var _css_treant_css__WEBPACK_IMPORTED_MODULE_76___default = /*#__PURE__*/__webpack_require__.n(_css_treant_css__WEBPACK_IMPORTED_MODULE_76__);
+/* harmony import */ var _PersonObjects_Sleeve_Sleeve__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ./PersonObjects/Sleeve/Sleeve */ 99);
+/* harmony import */ var _PersonObjects_Sleeve_Sleeve__WEBPACK_IMPORTED_MODULE_42___default = /*#__PURE__*/__webpack_require__.n(_PersonObjects_Sleeve_Sleeve__WEBPACK_IMPORTED_MODULE_42__);
+/* harmony import */ var _PersonObjects_Sleeve_SleeveUI__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ./PersonObjects/Sleeve/SleeveUI */ 111);
+/* harmony import */ var _PersonObjects_Sleeve_SleeveUI__WEBPACK_IMPORTED_MODULE_43___default = /*#__PURE__*/__webpack_require__.n(_PersonObjects_Sleeve_SleeveUI__WEBPACK_IMPORTED_MODULE_43__);
+/* harmony import */ var _PersonObjects_Resleeving_ResleevingUI__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! ./PersonObjects/Resleeving/ResleevingUI */ 129);
+/* harmony import */ var _PersonObjects_Resleeving_ResleevingUI__WEBPACK_IMPORTED_MODULE_44___default = /*#__PURE__*/__webpack_require__.n(_PersonObjects_Resleeving_ResleevingUI__WEBPACK_IMPORTED_MODULE_44__);
+/* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(/*! ./ui/createStatusText */ 81);
+/* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_45___default = /*#__PURE__*/__webpack_require__.n(_ui_createStatusText__WEBPACK_IMPORTED_MODULE_45__);
+/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(/*! ./ui/navigationTracking */ 13);
+/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
+/* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_47___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_47__);
+/* harmony import */ var _ui_setSettingsLabels__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(/*! ./ui/setSettingsLabels */ 147);
+/* harmony import */ var _ui_MainMenu_Headers__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(/*! ./ui/MainMenu/Headers */ 146);
+/* harmony import */ var _ui_MainMenu_Headers__WEBPACK_IMPORTED_MODULE_49___default = /*#__PURE__*/__webpack_require__.n(_ui_MainMenu_Headers__WEBPACK_IMPORTED_MODULE_49__);
+/* harmony import */ var _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(/*! ./ui/MainMenu/Links */ 28);
+/* harmony import */ var _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50___default = /*#__PURE__*/__webpack_require__.n(_ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
+/* harmony import */ var _utils_GameOptions__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! ../utils/GameOptions */ 91);
+/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 17);
+/* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_53___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_53__);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 32);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_54___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_54__);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 22);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_55___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_55__);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_56___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_56__);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 42);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_57___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_57__);
+/* harmony import */ var _utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(/*! ../utils/uiHelpers/removeLoadingScreen */ 128);
+/* harmony import */ var _utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_58___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_58__);
+/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 27);
+/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_59___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_59__);
+/* harmony import */ var normalize_css__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(/*! normalize.css */ 250);
+/* harmony import */ var normalize_css__WEBPACK_IMPORTED_MODULE_60___default = /*#__PURE__*/__webpack_require__.n(normalize_css__WEBPACK_IMPORTED_MODULE_60__);
+/* harmony import */ var _css_styles_scss__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(/*! ../css/styles.scss */ 214);
+/* harmony import */ var _css_styles_scss__WEBPACK_IMPORTED_MODULE_61___default = /*#__PURE__*/__webpack_require__.n(_css_styles_scss__WEBPACK_IMPORTED_MODULE_61__);
+/* harmony import */ var _css_tooltips_scss__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(/*! ../css/tooltips.scss */ 212);
+/* harmony import */ var _css_tooltips_scss__WEBPACK_IMPORTED_MODULE_62___default = /*#__PURE__*/__webpack_require__.n(_css_tooltips_scss__WEBPACK_IMPORTED_MODULE_62__);
+/* harmony import */ var _css_buttons_scss__WEBPACK_IMPORTED_MODULE_63__ = __webpack_require__(/*! ../css/buttons.scss */ 210);
+/* harmony import */ var _css_buttons_scss__WEBPACK_IMPORTED_MODULE_63___default = /*#__PURE__*/__webpack_require__.n(_css_buttons_scss__WEBPACK_IMPORTED_MODULE_63__);
+/* harmony import */ var _css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_64__ = __webpack_require__(/*! ../css/mainmenu.scss */ 208);
+/* harmony import */ var _css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_64___default = /*#__PURE__*/__webpack_require__.n(_css_mainmenu_scss__WEBPACK_IMPORTED_MODULE_64__);
+/* harmony import */ var _css_characteroverview_scss__WEBPACK_IMPORTED_MODULE_65__ = __webpack_require__(/*! ../css/characteroverview.scss */ 206);
+/* harmony import */ var _css_characteroverview_scss__WEBPACK_IMPORTED_MODULE_65___default = /*#__PURE__*/__webpack_require__.n(_css_characteroverview_scss__WEBPACK_IMPORTED_MODULE_65__);
+/* harmony import */ var _css_terminal_scss__WEBPACK_IMPORTED_MODULE_66__ = __webpack_require__(/*! ../css/terminal.scss */ 204);
+/* harmony import */ var _css_terminal_scss__WEBPACK_IMPORTED_MODULE_66___default = /*#__PURE__*/__webpack_require__.n(_css_terminal_scss__WEBPACK_IMPORTED_MODULE_66__);
+/* harmony import */ var _css_menupages_scss__WEBPACK_IMPORTED_MODULE_67__ = __webpack_require__(/*! ../css/menupages.scss */ 202);
+/* harmony import */ var _css_menupages_scss__WEBPACK_IMPORTED_MODULE_67___default = /*#__PURE__*/__webpack_require__.n(_css_menupages_scss__WEBPACK_IMPORTED_MODULE_67__);
+/* harmony import */ var _css_redpill_scss__WEBPACK_IMPORTED_MODULE_68__ = __webpack_require__(/*! ../css/redpill.scss */ 200);
+/* harmony import */ var _css_redpill_scss__WEBPACK_IMPORTED_MODULE_68___default = /*#__PURE__*/__webpack_require__.n(_css_redpill_scss__WEBPACK_IMPORTED_MODULE_68__);
+/* harmony import */ var _css_stockmarket_scss__WEBPACK_IMPORTED_MODULE_69__ = __webpack_require__(/*! ../css/stockmarket.scss */ 198);
+/* harmony import */ var _css_stockmarket_scss__WEBPACK_IMPORTED_MODULE_69___default = /*#__PURE__*/__webpack_require__.n(_css_stockmarket_scss__WEBPACK_IMPORTED_MODULE_69__);
+/* harmony import */ var _css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_70__ = __webpack_require__(/*! ../css/workinprogress.scss */ 196);
+/* harmony import */ var _css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_70___default = /*#__PURE__*/__webpack_require__.n(_css_workinprogress_scss__WEBPACK_IMPORTED_MODULE_70__);
+/* harmony import */ var _css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_71__ = __webpack_require__(/*! ../css/popupboxes.scss */ 194);
+/* harmony import */ var _css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_71___default = /*#__PURE__*/__webpack_require__.n(_css_popupboxes_scss__WEBPACK_IMPORTED_MODULE_71__);
+/* harmony import */ var _css_gameoptions_scss__WEBPACK_IMPORTED_MODULE_72__ = __webpack_require__(/*! ../css/gameoptions.scss */ 192);
+/* harmony import */ var _css_gameoptions_scss__WEBPACK_IMPORTED_MODULE_72___default = /*#__PURE__*/__webpack_require__.n(_css_gameoptions_scss__WEBPACK_IMPORTED_MODULE_72__);
+/* harmony import */ var _css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_73__ = __webpack_require__(/*! ../css/interactivetutorial.scss */ 190);
+/* harmony import */ var _css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_73___default = /*#__PURE__*/__webpack_require__.n(_css_interactivetutorial_scss__WEBPACK_IMPORTED_MODULE_73__);
+/* harmony import */ var _css_loader_scss__WEBPACK_IMPORTED_MODULE_74__ = __webpack_require__(/*! ../css/loader.scss */ 188);
+/* harmony import */ var _css_loader_scss__WEBPACK_IMPORTED_MODULE_74___default = /*#__PURE__*/__webpack_require__.n(_css_loader_scss__WEBPACK_IMPORTED_MODULE_74__);
+/* harmony import */ var _css_missions_scss__WEBPACK_IMPORTED_MODULE_75__ = __webpack_require__(/*! ../css/missions.scss */ 186);
+/* harmony import */ var _css_missions_scss__WEBPACK_IMPORTED_MODULE_75___default = /*#__PURE__*/__webpack_require__.n(_css_missions_scss__WEBPACK_IMPORTED_MODULE_75__);
+/* harmony import */ var _css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_76__ = __webpack_require__(/*! ../css/companymanagement.scss */ 184);
+/* harmony import */ var _css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_76___default = /*#__PURE__*/__webpack_require__.n(_css_companymanagement_scss__WEBPACK_IMPORTED_MODULE_76__);
+/* harmony import */ var _css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_77__ = __webpack_require__(/*! ../css/bladeburner.scss */ 182);
+/* harmony import */ var _css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_77___default = /*#__PURE__*/__webpack_require__.n(_css_bladeburner_scss__WEBPACK_IMPORTED_MODULE_77__);
+/* harmony import */ var _css_gang_scss__WEBPACK_IMPORTED_MODULE_78__ = __webpack_require__(/*! ../css/gang.scss */ 180);
+/* harmony import */ var _css_gang_scss__WEBPACK_IMPORTED_MODULE_78___default = /*#__PURE__*/__webpack_require__.n(_css_gang_scss__WEBPACK_IMPORTED_MODULE_78__);
+/* harmony import */ var _css_sleeves_scss__WEBPACK_IMPORTED_MODULE_79__ = __webpack_require__(/*! ../css/sleeves.scss */ 178);
+/* harmony import */ var _css_sleeves_scss__WEBPACK_IMPORTED_MODULE_79___default = /*#__PURE__*/__webpack_require__.n(_css_sleeves_scss__WEBPACK_IMPORTED_MODULE_79__);
+/* harmony import */ var _css_resleeving_scss__WEBPACK_IMPORTED_MODULE_80__ = __webpack_require__(/*! ../css/resleeving.scss */ 176);
+/* harmony import */ var _css_resleeving_scss__WEBPACK_IMPORTED_MODULE_80___default = /*#__PURE__*/__webpack_require__.n(_css_resleeving_scss__WEBPACK_IMPORTED_MODULE_80__);
+/* harmony import */ var _css_treant_css__WEBPACK_IMPORTED_MODULE_81__ = __webpack_require__(/*! ../css/treant.css */ 174);
+/* harmony import */ var _css_treant_css__WEBPACK_IMPORTED_MODULE_81___default = /*#__PURE__*/__webpack_require__.n(_css_treant_css__WEBPACK_IMPORTED_MODULE_81__);
+
+
 
 
 
@@ -5101,6 +5123,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
 /* Shortcuts to navigate through the game
  *  Alt-t - Terminal
  *  Alt-c - Character
@@ -5122,49 +5147,49 @@ $(document).keydown(function(e) {
         if (e.keyCode == 84 && e.altKey) {
             e.preventDefault();
             Engine.loadTerminalContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_57__["KEY"].C && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_59__["KEY"].C && e.altKey) {
             e.preventDefault();
             Engine.loadCharacterContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_57__["KEY"].E && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_59__["KEY"].E && e.altKey) {
             e.preventDefault();
             Engine.loadScriptEditorContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_57__["KEY"].S && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_59__["KEY"].S && e.altKey) {
             e.preventDefault();
             Engine.loadActiveScriptsContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_57__["KEY"].H && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_59__["KEY"].H && e.altKey) {
             e.preventDefault();
             Engine.loadHacknetNodesContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_57__["KEY"].W && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_59__["KEY"].W && e.altKey) {
             e.preventDefault();
             Engine.loadWorldContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_57__["KEY"].J && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_59__["KEY"].J && e.altKey) {
             e.preventDefault();
             Engine.loadJobContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_57__["KEY"].R && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_59__["KEY"].R && e.altKey) {
             e.preventDefault();
             Engine.loadTravelContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_57__["KEY"].P && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_59__["KEY"].P && e.altKey) {
             e.preventDefault();
             Engine.loadCreateProgramContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_57__["KEY"].F && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_59__["KEY"].F && e.altKey) {
             //Overriden by Fconf
-            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["Page"].Terminal) && _Fconf__WEBPACK_IMPORTED_MODULE_18__[/* FconfSettings */ "a"].ENABLE_BASH_HOTKEYS) {
+            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["Page"].Terminal) && _Fconf__WEBPACK_IMPORTED_MODULE_18__[/* FconfSettings */ "a"].ENABLE_BASH_HOTKEYS) {
                 return;
             }
             e.preventDefault();
             Engine.loadFactionsContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_57__["KEY"].A && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_59__["KEY"].A && e.altKey) {
             e.preventDefault();
             Engine.loadAugmentationsContent();
-        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_57__["KEY"].U && e.altKey) {
+        } else if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_59__["KEY"].U && e.altKey) {
             e.preventDefault();
             Engine.loadTutorialContent();
         }
     }
 
-    if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_57__["KEY"].O && e.altKey) {
+    if (e.keyCode === _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_59__["KEY"].O && e.altKey) {
         e.preventDefault();
-        Object(_utils_GameOptions__WEBPACK_IMPORTED_MODULE_50__[/* gameOptionsBoxOpen */ "b"])();
+        Object(_utils_GameOptions__WEBPACK_IMPORTED_MODULE_52__[/* gameOptionsBoxOpen */ "b"])();
     }
 });
 
@@ -5234,16 +5259,16 @@ const Engine = {
     loadTerminalContent: function() {
         Engine.hideAllContent();
         Engine.Display.terminalContent.style.display = "block";
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["Page"].Terminal);
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].Terminal.classList.add("active");
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["Page"].Terminal);
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].Terminal.classList.add("active");
     },
 
     loadCharacterContent: function() {
         Engine.hideAllContent();
         Engine.Display.characterContent.style.display = "block";
         Engine.displayCharacterInfo();
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["Page"].CharacterInfo);
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].Stats.classList.add("active");
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["Page"].CharacterInfo);
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].Stats.classList.add("active");
     },
 
     loadScriptEditorContent: function(filename = "", code = "") {
@@ -5256,77 +5281,77 @@ const Engine = {
         }
         editor.focus();
         Object(_Script__WEBPACK_IMPORTED_MODULE_34__[/* updateScriptEditorContent */ "h"])();
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["Page"].ScriptEditor);
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].ScriptEditor.classList.add("active");
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["Page"].ScriptEditor);
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].ScriptEditor.classList.add("active");
     },
 
     loadActiveScriptsContent: function() {
         Engine.hideAllContent();
         Engine.Display.activeScriptsContent.style.display = "block";
         Object(_ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_2__[/* updateActiveScriptsItems */ "c"])();
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["Page"].ActiveScripts);
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].ActiveScripts.classList.add("active");
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["Page"].ActiveScripts);
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].ActiveScripts.classList.add("active");
     },
 
     loadHacknetNodesContent: function() {
         Engine.hideAllContent();
         Engine.Display.hacknetNodesContent.style.display = "block";
         Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_21__[/* displayHacknetNodesContent */ "b"])();
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["Page"].HacknetNodes);
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].HacknetNodes.classList.add("active");
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["Page"].HacknetNodes);
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].HacknetNodes.classList.add("active");
     },
 
     loadWorldContent: function() {
         Engine.hideAllContent();
         Engine.Display.worldContent.style.display = "block";
         Engine.displayWorldInfo();
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["Page"].World);
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].City.classList.add("active");
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["Page"].World);
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].City.classList.add("active");
     },
 
     loadCreateProgramContent: function() {
         Engine.hideAllContent();
         Engine.Display.createProgramContent.style.display = "block";
         Object(_Programs_ProgramHelpers__WEBPACK_IMPORTED_MODULE_31__[/* displayCreateProgramContent */ "a"])();
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["Page"].CreateProgram);
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].CreateProgram.classList.add("active");
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["Page"].CreateProgram);
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].CreateProgram.classList.add("active");
     },
 
     loadFactionsContent: function() {
         Engine.hideAllContent();
         Engine.Display.factionsContent.style.display = "block";
         Engine.displayFactionsInfo();
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["Page"].Factions);
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].Factions.classList.add("active");
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["Page"].Factions);
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].Factions.classList.add("active");
     },
 
     loadFactionContent: function() {
         Engine.hideAllContent();
         Engine.Display.factionContent.style.display = "block";
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["Page"].Faction);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["Page"].Faction);
     },
 
     loadAugmentationsContent: function() {
         Engine.hideAllContent();
         Engine.Display.augmentationsContent.style.display = "block";
         Object(_Augmentation_AugmentationHelpers__WEBPACK_IMPORTED_MODULE_4__[/* displayAugmentationsContent */ "c"])(Engine.Display.augmentationsContent);
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["Page"].Augmentations);
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].Augmentations.classList.add("active");
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["Page"].Augmentations);
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].Augmentations.classList.add("active");
     },
 
     loadTutorialContent: function() {
         Engine.hideAllContent();
         Engine.Display.tutorialContent.style.display = "block";
         Engine.displayTutorialContent();
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["Page"].Tutorial);
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].Tutorial.classList.add("active");
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["Page"].Tutorial);
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].Tutorial.classList.add("active");
     },
 
     loadDevMenuContent: function() {
         Engine.hideAllContent();
         Object(_DevMenu__WEBPACK_IMPORTED_MODULE_15__[/* createDevMenu */ "b"])();
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["Page"].DevMenu);
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].DevMenu.classList.add("active");
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["Page"].DevMenu);
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].DevMenu.classList.add("active");
     },
 
     loadLocationContent: function() {
@@ -5335,11 +5360,11 @@ const Engine = {
         try {
             Object(_Location__WEBPACK_IMPORTED_MODULE_19__[/* displayLocationContent */ "a"])();
         } catch(e) {
-            Object(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_55__["exceptionAlert"])(e);
+            Object(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_57__["exceptionAlert"])(e);
             console.error(e);
         }
 
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["Page"].Location);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["Page"].Location);
     },
 
     loadTravelContent: function() {
@@ -5363,7 +5388,7 @@ const Engine = {
                 _Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_20__["Locations"].VolhavenTravelAgency;
                 break;
             default:
-                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_49__["dialogBoxCreate"])("ERROR: Invalid city. This is a bug please contact game dev");
+                Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_51__["dialogBoxCreate"])("ERROR: Invalid city. This is a bug please contact game dev");
                 break;
         }
         Engine.loadLocationContent();
@@ -5371,7 +5396,7 @@ const Engine = {
 
     loadJobContent: function() {
         if (_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].companyName == "") {
-            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_49__["dialogBoxCreate"])("You do not currently have a job! You can visit various companies " +
+            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_51__["dialogBoxCreate"])("You do not currently have a job! You can visit various companies " +
                             "in the city and try to find a job.");
             return;
         }
@@ -5385,7 +5410,7 @@ const Engine = {
         //mainMenu.style.visibility = "hidden";
         mainMenu.style.visibility = "hidden";
         Engine.Display.workInProgressContent.style.display = "block";
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["Page"].WorkInProgress);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["Page"].WorkInProgress);
     },
 
     loadRedPillContent: function() {
@@ -5393,7 +5418,7 @@ const Engine = {
         var mainMenu = document.getElementById("mainmenu-container");
         mainMenu.style.visibility = "hidden";
         Engine.Display.redPillContent.style.display = "block";
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["Page"].RedPill);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["Page"].RedPill);
     },
 
     loadCinematicTextContent: function() {
@@ -5401,19 +5426,19 @@ const Engine = {
         var mainMenu = document.getElementById("mainmenu-container");
         mainMenu.style.visibility = "hidden";
         Engine.Display.cinematicTextContent.style.display = "block";
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["Page"].CinematicText);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["Page"].CinematicText);
     },
 
     loadInfiltrationContent: function() {
         Engine.hideAllContent();
         Engine.Display.infiltrationContent.style.display = "block";
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["Page"].Infiltration);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["Page"].Infiltration);
     },
 
     loadStockMarketContent: function() {
         Engine.hideAllContent();
         Engine.Display.stockMarketContent.style.display = "block";
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["Page"].StockMarket);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["Page"].StockMarket);
         Object(_StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_40__[/* displayStockMarketContent */ "g"])();
     },
 
@@ -5421,10 +5446,10 @@ const Engine = {
         Engine.hideAllContent();
         if (document.getElementById("gang-container") || _Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].inGang()) {
             _Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].gang.displayGangContent(_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"]);
-            _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["Page"].Gang);
+            _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["Page"].Gang);
         } else {
             Engine.loadTerminalContent();
-            _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["Page"].Terminal);
+            _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["Page"].Terminal);
         }
     },
 
@@ -5433,7 +5458,7 @@ const Engine = {
         document.getElementById("mainmenu-container").style.visibility = "hidden";
         document.getElementById("character-overview-wrapper").style.visibility = "hidden";
         Engine.Display.missionContent.style.display = "block";
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["Page"].Mission);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["Page"].Mission);
     },
 
     loadCorporationContent: function() {
@@ -5441,7 +5466,7 @@ const Engine = {
             Engine.hideAllContent();
             document.getElementById("character-overview-wrapper").style.visibility = "hidden";
             _Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].corporation.createUI();
-            _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["Page"].Corporation);
+            _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["Page"].Corporation);
         }
     },
 
@@ -5449,25 +5474,32 @@ const Engine = {
         if (_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_7__[/* Bladeburner */ "a"]) {
             try {
                 Engine.hideAllContent();
-                _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["Page"].Bladeburner);
+                _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["Page"].Bladeburner);
                 _Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].bladeburner.createContent();
             } catch(e) {
-                Object(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_55__["exceptionAlert"])(e);
+                Object(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_57__["exceptionAlert"])(e);
             }
         }
     },
 
     loadSleevesContent: function() {
         // This is for Duplicate Sleeves page, not Re-sleeving @ Vita Life
+        try {
+            Engine.hideAllContent();
+            _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["Page"].Sleeves);
+            Object(_PersonObjects_Sleeve_SleeveUI__WEBPACK_IMPORTED_MODULE_43__["createSleevesPage"])(_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"]);
+        } catch(e) {
+            Object(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_57__["exceptionAlert"])(e);
+        }
     },
 
     loadResleevingContent: function() {
         try {
             Engine.hideAllContent();
-            _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["Page"].Resleeves);
-            Object(_PersonObjects_Resleeving_ResleevingUI__WEBPACK_IMPORTED_MODULE_42__["createResleevesPage"])(_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"]);
+            _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["Page"].Resleeves);
+            Object(_PersonObjects_Resleeving_ResleevingUI__WEBPACK_IMPORTED_MODULE_44__["createResleevesPage"])(_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"]);
         } catch(e) {
-            Object(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_55__["exceptionAlert"])(e);
+            Object(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_57__["exceptionAlert"])(e);
         }
     },
 
@@ -5507,6 +5539,9 @@ const Engine = {
             _Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].bladeburner.clearContent();
         }
 
+        Object(_PersonObjects_Resleeving_ResleevingUI__WEBPACK_IMPORTED_MODULE_44__["clearResleevesPage"])();
+        Object(_PersonObjects_Sleeve_SleeveUI__WEBPACK_IMPORTED_MODULE_43__["clearSleevesPage"])();
+
         //Location lists
         Engine.aevumLocationsList.style.display = "none";
         Engine.chongqingLocationsList.style.display = "none";
@@ -5516,24 +5551,24 @@ const Engine = {
         Engine.volhavenLocationsList.style.display = "none";
 
         //Make nav menu tabs inactive
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].Terminal.classList.remove("active");
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].ScriptEditor.classList.remove("active");
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].ActiveScripts.classList.remove("active");
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].CreateProgram.classList.remove("active");
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].Stats.classList.remove("active");
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].Factions.classList.remove("active");
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].Augmentations.classList.remove("active");
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].HacknetNodes.classList.remove("active");
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].City.classList.remove("active");
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].Travel.classList.remove("active");
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].Job.classList.remove("active");
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].StockMarket.classList.remove("active");
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].Bladeburner.classList.remove("active");
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].Corporation.classList.remove("active");
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].Gang.classList.remove("active");
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].Tutorial.classList.remove("active");
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].Options.classList.remove("active");
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].DevMenu.classList.remove("active");
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].Terminal.classList.remove("active");
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].ScriptEditor.classList.remove("active");
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].ActiveScripts.classList.remove("active");
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].CreateProgram.classList.remove("active");
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].Stats.classList.remove("active");
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].Factions.classList.remove("active");
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].Augmentations.classList.remove("active");
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].HacknetNodes.classList.remove("active");
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].City.classList.remove("active");
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].Travel.classList.remove("active");
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].Job.classList.remove("active");
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].StockMarket.classList.remove("active");
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].Bladeburner.classList.remove("active");
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].Corporation.classList.remove("active");
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].Gang.classList.remove("active");
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].Tutorial.classList.remove("active");
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].Options.classList.remove("active");
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].DevMenu.classList.remove("active");
 
         // Close dev menu
         Object(_DevMenu__WEBPACK_IMPORTED_MODULE_15__[/* closeDevMenu */ "a"])();
@@ -5553,7 +5588,7 @@ const Engine = {
 
     /* Display character info */
     displayCharacterInfo: function() {
-        Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_52__["removeChildrenFromElement"])(Engine.Display.characterInfo);
+        Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_54__["removeChildrenFromElement"])(Engine.Display.characterInfo);
 
         let companyPosition = "";
         if (_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].companyName !== "") {
@@ -5570,7 +5605,7 @@ const Engine = {
             bitNodeTimeText = 'Time played since last Bitnode destroyed: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_0__["convertTimeMsToTimeElapsedString"])(_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].playtimeSinceLastBitnode) + '<br>';
         }
 
-        Engine.Display.characterInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_54__["createElement"])("pre", {
+        Engine.Display.characterInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_56__["createElement"])("pre", {
             innerHTML:
             '<b>General</b><br><br>' +
             'Current City: ' + _Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].city + '<br><br>' +
@@ -5580,17 +5615,17 @@ const Engine = {
             'Money: $' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_0__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].money.toNumber(), 2) + '<br><br><br>' +
             '<b>Stats</b><br><br>' +
             'Hacking Level: ' + (_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].hacking_skill).toLocaleString() +
-                            ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_45__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].hacking_exp, '(0.000a)') + ' experience)<br>' +
+                            ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_47__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].hacking_exp, '(0.000a)') + ' experience)<br>' +
             'Strength:      ' + (_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].strength).toLocaleString() +
-                       ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_45__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].strength_exp, '(0.000a)') + ' experience)<br>' +
+                       ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_47__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].strength_exp, '(0.000a)') + ' experience)<br>' +
             'Defense:       ' + (_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].defense).toLocaleString() +
-                      ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_45__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].defense_exp, '(0.000a)') + ' experience)<br>' +
+                      ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_47__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].defense_exp, '(0.000a)') + ' experience)<br>' +
             'Dexterity:     ' + (_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].dexterity).toLocaleString() +
-                       ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_45__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].dexterity_exp, '(0.000a)') + ' experience)<br>' +
+                       ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_47__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].dexterity_exp, '(0.000a)') + ' experience)<br>' +
             'Agility:       ' + (_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].agility).toLocaleString() +
-                      ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_45__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].agility_exp, '(0.000a)') + ' experience)<br>' +
+                      ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_47__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].agility_exp, '(0.000a)') + ' experience)<br>' +
             'Charisma:      ' + (_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].charisma).toLocaleString() +
-                       ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_45__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].charisma_exp, '(0.000a)') + ' experience)<br>' +
+                       ' (' + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_47__["numeralWrapper"].format(_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].charisma_exp, '(0.000a)') + ' experience)<br>' +
             intText + '<br><br>' +
             '<b>Multipliers</b><br><br>' +
             'Hacking Chance multiplier: ' + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_0__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].hacking_chance_mult * 100, 2) + '%<br>' +
@@ -5631,13 +5666,13 @@ const Engine = {
         if (_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].sourceFiles.length !== 0) {
             var index = "BitNode" + _Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].bitNodeN;
 
-            Engine.Display.characterInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_54__["createElement"])("p", {
+            Engine.Display.characterInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_56__["createElement"])("p", {
                 width:"60%",
                 innerHTML:
                     "<br>Current BitNode: " + _Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].bitNodeN + " (" + _BitNode_BitNode__WEBPACK_IMPORTED_MODULE_6__[/* BitNodes */ "a"][index].name + ")<br><br>",
             }));
 
-            Engine.Display.characterInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_54__["createElement"])("p", {
+            Engine.Display.characterInfo.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_56__["createElement"])("p", {
                 width:"60%", fontSize: "13px", marginLeft:"4%",
                 innerHTML:_BitNode_BitNode__WEBPACK_IMPORTED_MODULE_6__[/* BitNodes */ "a"][index].info,
             }))
@@ -5699,9 +5734,9 @@ const Engine = {
         //  Bladeburner HQ (if applicable);
         var genericLocationsList = document.getElementById("generic-locations-list");
         genericLocationsList.style.display = "inline";
-        Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_52__["removeChildrenFromElement"])(genericLocationsList);
-        var li = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_54__["createElement"])("li");
-        li.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_54__["createElement"])("a", {
+        Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_54__["removeChildrenFromElement"])(genericLocationsList);
+        var li = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_56__["createElement"])("li");
+        li.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_56__["createElement"])("a", {
             innerText:"World Stock Exchange", class:"a-link-button",
             clickListener:()=>{
                 _Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].location = _Locations__WEBPACK_IMPORTED_MODULE_20__["Locations"].WorldStockExchange;
@@ -5712,8 +5747,8 @@ const Engine = {
         genericLocationsList.appendChild(li);
 
         if (_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].corporation instanceof _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_13__[/* Corporation */ "a"] && document.getElementById("location-corporation-button") == null) {
-            var li = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_54__["createElement"])("li");
-            li.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_54__["createElement"])("a", {
+            var li = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_56__["createElement"])("li");
+            li.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_56__["createElement"])("a", {
                 innerText:_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].corporation.name, id:"location-corporation-button",
                 class:"a-link-button",
                 clickListener:()=>{
@@ -5725,8 +5760,8 @@ const Engine = {
         }
 
         if (_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_7__[/* Bladeburner */ "a"]) {
-            var li = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_54__["createElement"])("li");
-            li.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_54__["createElement"])("a", {
+            var li = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_56__["createElement"])("li");
+            li.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_56__["createElement"])("a", {
                 innerText:"Bladeburner Headquarters", class:"a-link-button",
                 clickListener:()=>{
                     Engine.loadBladeburnerContent();
@@ -5738,24 +5773,24 @@ const Engine = {
     },
 
     displayFactionsInfo: function() {
-        Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_52__["removeChildrenFromElement"])(Engine.Display.factionsContent);
+        Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_54__["removeChildrenFromElement"])(Engine.Display.factionsContent);
 
         //Factions
-        Engine.Display.factionsContent.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_54__["createElement"])("h1", {
+        Engine.Display.factionsContent.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_56__["createElement"])("h1", {
             innerText:"Factions"
         }));
-        Engine.Display.factionsContent.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_54__["createElement"])("p", {
+        Engine.Display.factionsContent.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_56__["createElement"])("p", {
             innerText:"Lists all factions you have joined"
         }));
-        var factionsList = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_54__["createElement"])("ul");
-        Engine.Display.factionsContent.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_54__["createElement"])("br"));
+        var factionsList = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_56__["createElement"])("ul");
+        Engine.Display.factionsContent.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_56__["createElement"])("br"));
 
         //Add a button for each faction you are a member of
         for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].factions.length; ++i) {
             (function () {
                 var factionName = _Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].factions[i];
 
-                factionsList.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_54__["createElement"])("a", {
+                factionsList.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_56__["createElement"])("a", {
                     class:"a-link-button", innerText:factionName, padding:"4px", margin:"4px",
                     display:"inline-block",
                     clickListener:()=>{
@@ -5764,34 +5799,34 @@ const Engine = {
                         return false;
                     }
                 }));
-                factionsList.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_54__["createElement"])("br"));
+                factionsList.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_56__["createElement"])("br"));
             }()); //Immediate invocation
         }
         Engine.Display.factionsContent.appendChild(factionsList);
-        Engine.Display.factionsContent.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_54__["createElement"])("br"));
+        Engine.Display.factionsContent.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_56__["createElement"])("br"));
 
         //Invited Factions
-        Engine.Display.factionsContent.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_54__["createElement"])("h1", {
+        Engine.Display.factionsContent.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_56__["createElement"])("h1", {
             innerText:"Outstanding Faction Invitations"
         }));
-        Engine.Display.factionsContent.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_54__["createElement"])("p", {
+        Engine.Display.factionsContent.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_56__["createElement"])("p", {
             width:"70%",
             innerText:"Lists factions you have been invited to, as well as " +
                       "factions you have previously rejected. You can accept " +
                       "these faction invitations at any time."
         }));
-        var invitationsList = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_54__["createElement"])("ul");
+        var invitationsList = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_56__["createElement"])("ul");
 
         //Add a button to accept for each faction you have invitiations for
         for (var i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].factionInvitations.length; ++i) {
             (function () {
                 var factionName = _Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].factionInvitations[i];
 
-                var item = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_54__["createElement"])("li", {padding:"6px", margin:"6px"});
-                item.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_54__["createElement"])("p", {
+                var item = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_56__["createElement"])("li", {padding:"6px", margin:"6px"});
+                item.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_56__["createElement"])("p", {
                     innerText:factionName, display:"inline", margin:"4px", padding:"4px"
                 }));
-                item.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_54__["createElement"])("a", {
+                item.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_56__["createElement"])("a", {
                     innerText:"Accept Faction Invitation",
                     class:"a-link-button", display:"inline", margin:"4px", padding:"4px",
                     clickListener:()=>{
@@ -5931,6 +5966,20 @@ const Engine = {
             _Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].bladeburner.storeCycles(numCycles);
         }
 
+        // Sleeves
+        for (let i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].sleeves.length; ++i) {
+            if (_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].sleeves[i] instanceof _PersonObjects_Sleeve_Sleeve__WEBPACK_IMPORTED_MODULE_42__["Sleeve"]) {
+                const expForOtherSleeves = _Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].sleeves[i].process(_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"], numCycles);
+
+                // This sleeve earns experience for other sleeves
+                if (expForOtherSleeves == null) { continue; }
+                for (let j = 0; j < _Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].sleeves.length; ++j) {
+                    if (j === i) { continue; }
+                    _Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].sleeves[j].gainExperience(_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"], expForOtherSleeves, numCycles);
+                }
+            }
+        }
+
         //Counters
         Engine.decrementAllCounters(numCycles);
         Engine.checkCounters();
@@ -5996,7 +6045,7 @@ const Engine = {
         if (Engine.Counters.updateActiveScriptsDisplay <= 0) {
             //Always update, but make the interval longer if the page isn't active
             Object(_ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_2__[/* updateActiveScriptsItems */ "c"])();
-            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["Page"].ActiveScripts)) {
+            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["Page"].ActiveScripts)) {
                 Engine.Counters.updateActiveScriptsDisplay = 5;
             } else {
                 Engine.Counters.updateActiveScriptsDisplay = 10;
@@ -6005,12 +6054,14 @@ const Engine = {
 
         if (Engine.Counters.updateDisplays <= 0) {
             Engine.displayCharacterOverviewInfo();
-            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["Page"].CharacterInfo)) {
+            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["Page"].CharacterInfo)) {
                 Engine.displayCharacterInfo();
-            }  else if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["Page"].HacknetNodes)) {
+            }  else if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["Page"].HacknetNodes)) {
                 Object(_HacknetNode__WEBPACK_IMPORTED_MODULE_21__[/* updateHacknetNodesContent */ "f"])();
-            } else if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["Page"].CreateProgram)) {
+            } else if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["Page"].CreateProgram)) {
                 Object(_Programs_ProgramHelpers__WEBPACK_IMPORTED_MODULE_31__[/* displayCreateProgramContent */ "a"])();
+            } else if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["Page"].Sleeves)) {
+                Object(_PersonObjects_Sleeve_SleeveUI__WEBPACK_IMPORTED_MODULE_43__["updateSleevesPage"])();
             }
 
             if (_utils_LogBox__WEBPACK_IMPORTED_MODULE_1__[/* logBoxOpened */ "b"]) {
@@ -6021,16 +6072,16 @@ const Engine = {
         }
 
         if (Engine.Counters.updateDisplaysMed <= 0) {
-            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["Page"].Corporation)) {
+            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["Page"].Corporation)) {
                 _Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].corporation.updateUIContent();
             }
             Engine.Counters.updateDisplaysMed = 9;
         }
 
         if (Engine.Counters.updateDisplaysLong <= 0) {
-            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["Page"].Gang) && _Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].inGang()) {
+            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["Page"].Gang) && _Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].inGang()) {
                 _Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].gang.updateGangContent();
-            } else if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["Page"].ScriptEditor)) {
+            } else if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["Page"].ScriptEditor)) {
                 Object(_Script__WEBPACK_IMPORTED_MODULE_34__[/* updateScriptEditorContent */ "h"])();
             }
             Engine.Counters.updateDisplaysLong = 15;
@@ -6095,7 +6146,7 @@ const Engine = {
                 try {
                     _Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].bladeburner.process();
                 } catch(e) {
-                    Object(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_55__["exceptionAlert"])("Exception caught in Bladeburner.process(): " + e);
+                    Object(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_57__["exceptionAlert"])("Exception caught in Bladeburner.process(): " + e);
                 }
 
             }
@@ -6282,6 +6333,20 @@ const Engine = {
                 _Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].bladeburner.storeCycles(numCyclesOffline);
             }
 
+            // Sleeves offline progress
+            for (let i = 0; i < _Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].sleeves.length; ++i) {
+                if (_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].sleeves[i] instanceof _PersonObjects_Sleeve_Sleeve__WEBPACK_IMPORTED_MODULE_42__["Sleeve"]) {
+                    const expForOtherSleeves = _Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].sleeves[i].process(_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"], numCyclesOffline);
+
+                    // This sleeve earns experience for other sleeves
+                    if (expForOtherSleeves == null) { continue; }
+                    for (let j = 0; j < _Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].sleeves.length; ++j) {
+                        if (j === i) { continue; }
+                        _Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].sleeves[j].gainExperience(_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"], expForOtherSleeves, numCyclesOffline);
+                    }
+                }
+            }
+
             //Update total playtime
             var time = numCyclesOffline * Engine._idleSpeed;
             if (_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].totalPlaytime == null) {_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].totalPlaytime = 0;}
@@ -6293,8 +6358,8 @@ const Engine = {
 
             _Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].lastUpdate = Engine._lastUpdate;
             Engine.start();                 //Run main game loop and Scripts loop
-            Object(_utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_56__["removeLoadingScreen"])();
-            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_49__["dialogBoxCreate"])("While you were offline, your scripts generated <span class='money-gold'>$" +
+            Object(_utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_58__["removeLoadingScreen"])();
+            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_51__["dialogBoxCreate"])("While you were offline, your scripts generated <span class='money-gold'>$" +
                             Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_0__["formatNumber"])(offlineProductionFromScripts, 2) + "</span> and your Hacknet Nodes generated <span class='money-gold'>$" +
                             Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_0__["formatNumber"])(offlineProductionFromHacknetNodes, 2) + "</span>");
             //Close main menu accordions for loaded game
@@ -6370,10 +6435,10 @@ const Engine = {
 
             //Start interactive tutorial
             Object(_InteractiveTutorial__WEBPACK_IMPORTED_MODULE_22__[/* iTutorialStart */ "c"])();
-            Object(_utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_56__["removeLoadingScreen"])();
+            Object(_utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_58__["removeLoadingScreen"])();
         }
         //Initialize labels on game settings
-        Object(_ui_setSettingsLabels__WEBPACK_IMPORTED_MODULE_46__[/* setSettingsLabels */ "a"])();
+        Object(_ui_setSettingsLabels__WEBPACK_IMPORTED_MODULE_48__[/* setSettingsLabels */ "a"])();
         Object(_Script__WEBPACK_IMPORTED_MODULE_34__[/* scriptEditorInit */ "g"])();
         _Terminal__WEBPACK_IMPORTED_MODULE_41__[/* Terminal */ "a"].resetTerminalInput();
     },
@@ -6381,7 +6446,7 @@ const Engine = {
     setDisplayElements: function() {
         //Content elements
         Engine.Display.terminalContent = document.getElementById("terminal-container");
-        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_44__["Page"].Terminal);
+        _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["routing"].navigateTo(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__["Page"].Terminal);
 
         Engine.Display.characterContent = document.getElementById("character-container");
         Engine.Display.characterContent.style.display = "none";
@@ -6506,10 +6571,10 @@ const Engine = {
         });
 
         // Initialize references to main menu links
-        if (!Object(_ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["initializeMainMenuLinks"])()) {
+        if (!Object(_ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["initializeMainMenuLinks"])()) {
             const errorMsg = "Failed to initialize Main Menu Links. Please try refreshing the page. " +
                              "If that doesn't work, report the issue to the developer";
-            Object(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_55__["exceptionAlert"])(new Error(errorMsg));
+            Object(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_57__["exceptionAlert"])(new Error(errorMsg));
             return;
         }
     },
@@ -6522,98 +6587,103 @@ const Engine = {
         };
 
         // Initialize Main Menu Headers (this must be done after initializing the links)
-        if (!Object(_ui_MainMenu_Headers__WEBPACK_IMPORTED_MODULE_47__["initializeMainMenuHeaders"])(_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"], "development" === "development")) {
+        if (!Object(_ui_MainMenu_Headers__WEBPACK_IMPORTED_MODULE_49__["initializeMainMenuHeaders"])(_Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"], "development" === "development")) {
             const errorMsg = "Failed to initialize Main Menu Headers. Please try refreshing the page. " +
                              "If that doesn't work, report the issue to the developer";
-            Object(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_55__["exceptionAlert"])(new Error(errorMsg));
+            Object(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_57__["exceptionAlert"])(new Error(errorMsg));
             return;
         }
 
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].Terminal.addEventListener("click", function() {
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].Terminal.addEventListener("click", function() {
             Engine.loadTerminalContent();
             return false;
         });
 
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].ScriptEditor.addEventListener("click", function() {
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].ScriptEditor.addEventListener("click", function() {
             Engine.loadScriptEditorContent();
             return false;
         });
 
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].ActiveScripts.addEventListener("click", function() {
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].ActiveScripts.addEventListener("click", function() {
             Engine.loadActiveScriptsContent();
             return false;
         });
 
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].CreateProgram.addEventListener("click", function() {
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].CreateProgram.addEventListener("click", function() {
             Engine.loadCreateProgramContent();
             return false;
         });
 
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].Stats.addEventListener("click", function() {
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].Stats.addEventListener("click", function() {
             Engine.loadCharacterContent();
             return false;
         });
 
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].Factions.addEventListener("click", function() {
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].Factions.addEventListener("click", function() {
             Engine.loadFactionsContent();
             return false;
         });
 
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].Augmentations.addEventListener("click", function() {
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].Augmentations.addEventListener("click", function() {
             Engine.loadAugmentationsContent();
             return false;
         });
 
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].HacknetNodes.addEventListener("click", function() {
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].HacknetNodes.addEventListener("click", function() {
             Engine.loadHacknetNodesContent();
             return false;
         });
 
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].City.addEventListener("click", function() {
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].Sleeves.addEventListener("click", function() {
+            Engine.loadSleevesContent();
+            return false;
+        });
+
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].City.addEventListener("click", function() {
             Engine.loadWorldContent();
             return false;
         });
 
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].Travel.addEventListener("click", function() {
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].Travel.addEventListener("click", function() {
             Engine.loadTravelContent();
-            _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].Travel.classList.add("active");
+            _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].Travel.classList.add("active");
             return false;
         });
 
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].Job.addEventListener("click", function() {
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].Job.addEventListener("click", function() {
             Engine.loadJobContent();
-            _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].Job.classList.add("active");
+            _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].Job.classList.add("active");
             return false;
         });
 
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].StockMarket.addEventListener("click", function() {
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].StockMarket.addEventListener("click", function() {
             Engine.loadStockMarketContent();
-            _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].StockMarket.classList.add("active");
+            _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].StockMarket.classList.add("active");
             return false;
         });
 
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].Bladeburner.addEventListener("click", function() {
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].Bladeburner.addEventListener("click", function() {
             Engine.loadBladeburnerContent();
             return false;
         });
 
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].Corporation.addEventListener("click", function() {
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].Corporation.addEventListener("click", function() {
             Engine.loadCorporationContent();
-            _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].Corporation.classList.add("active");
+            _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].Corporation.classList.add("active");
             return false;
         });
 
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].Gang.addEventListener("click", function() {
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].Gang.addEventListener("click", function() {
             Engine.loadGangContent();
             return false;
         });
 
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].Tutorial.addEventListener("click", function() {
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].Tutorial.addEventListener("click", function() {
             Engine.loadTutorialContent();
             return false;
         });
 
-        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_48__["MainMenuLinks"].DevMenu.addEventListener("click", function() {
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].DevMenu.addEventListener("click", function() {
             if (true) {
                 Engine.loadDevMenuContent();
             }
@@ -6648,7 +6718,7 @@ const Engine = {
         });
 
         document.getElementById("character-overview-options-button").addEventListener("click", function() {
-            Object(_utils_GameOptions__WEBPACK_IMPORTED_MODULE_50__[/* gameOptionsBoxOpen */ "b"])();
+            Object(_utils_GameOptions__WEBPACK_IMPORTED_MODULE_52__[/* gameOptionsBoxOpen */ "b"])();
             return false;
         });
 
@@ -6709,22 +6779,22 @@ const Engine = {
                 try {
                     const successful = document.execCommand("copy");
                     if (successful) {
-                        Object(_ui_createStatusText__WEBPACK_IMPORTED_MODULE_43__["createStatusText"])("Copied save to clipboard");
+                        Object(_ui_createStatusText__WEBPACK_IMPORTED_MODULE_45__["createStatusText"])("Copied save to clipboard");
                     } else {
-                        Object(_ui_createStatusText__WEBPACK_IMPORTED_MODULE_43__["createStatusText"])("Failed to copy save");
+                        Object(_ui_createStatusText__WEBPACK_IMPORTED_MODULE_45__["createStatusText"])("Failed to copy save");
                     }
                 } catch(e) {
                     console.error("Unable to copy save data to clipboard using document.execCommand('copy')");
-                    Object(_ui_createStatusText__WEBPACK_IMPORTED_MODULE_43__["createStatusText"])("Failed to copy save");
+                    Object(_ui_createStatusText__WEBPACK_IMPORTED_MODULE_45__["createStatusText"])("Failed to copy save");
                 }
                 document.body.removeChild(textArea);
             } else {
                 // Use the Async Clipboard API
                 navigator.clipboard.writeText(saveString).then(function() {
-                    Object(_ui_createStatusText__WEBPACK_IMPORTED_MODULE_43__["createStatusText"])("Copied save to clipboard");
+                    Object(_ui_createStatusText__WEBPACK_IMPORTED_MODULE_45__["createStatusText"])("Copied save to clipboard");
                 }, function(e) {
                     console.error("Unable to copy save data to clipboard using Async API");
-                    Object(_ui_createStatusText__WEBPACK_IMPORTED_MODULE_43__["createStatusText"])("Failed to copy save");
+                    Object(_ui_createStatusText__WEBPACK_IMPORTED_MODULE_45__["createStatusText"])("Failed to copy save");
                 })
             }
         });
@@ -6733,16 +6803,16 @@ const Engine = {
         document.getElementById("debug-delete-scripts-link").addEventListener("click", function() {
             console.log("Deleting running scripts on home computer");
             _Player__WEBPACK_IMPORTED_MODULE_28__[/* Player */ "a"].getHomeComputer().runningScripts = [];
-            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_49__["dialogBoxCreate"])("Forcefully deleted all running scripts on home computer. Please save and refresh page");
-            Object(_utils_GameOptions__WEBPACK_IMPORTED_MODULE_50__[/* gameOptionsBoxClose */ "a"])();
+            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_51__["dialogBoxCreate"])("Forcefully deleted all running scripts on home computer. Please save and refresh page");
+            Object(_utils_GameOptions__WEBPACK_IMPORTED_MODULE_52__[/* gameOptionsBoxClose */ "a"])();
             return false;
         });
 
         //DEBUG Soft Reset
         document.getElementById("debug-soft-reset").addEventListener("click", function() {
-            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_49__["dialogBoxCreate"])("Soft Reset!");
+            Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_51__["dialogBoxCreate"])("Soft Reset!");
             Object(_Prestige__WEBPACK_IMPORTED_MODULE_29__[/* prestigeAugmentation */ "a"])();
-            Object(_utils_GameOptions__WEBPACK_IMPORTED_MODULE_50__[/* gameOptionsBoxClose */ "a"])();
+            Object(_utils_GameOptions__WEBPACK_IMPORTED_MODULE_52__[/* gameOptionsBoxClose */ "a"])();
             return false;
         });
     },
@@ -6830,13 +6900,13 @@ window.onload = function() {
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Programs/Programs */ 26);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./SpecialServerIps */ 36);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./SpecialServerIps */ 37);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./TextFile */ 69);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_TextFile__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 17);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/IPAddress */ 66);
-/* harmony import */ var _data_servers__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./data/servers */ 150);
+/* harmony import */ var _data_servers__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./data/servers */ 155);
 /* harmony import */ var _data_servers__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_data_servers__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/JSONReviver */ 15);
 /* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/isValidIPAddress */ 94);
@@ -7308,21 +7378,6 @@ Directory.prototype.getPath = function(name) {
 
 /***/ }),
 /* 13 */
-/*!*******************************************!*\
-  !*** ./src/Augmentation/Augmentations.ts ***!
-  \*******************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Augmentations = {};
-
-
-/***/ }),
-/* 14 */
 /*!**************************************!*\
   !*** ./src/ui/navigationTracking.ts ***!
   \**************************************/
@@ -7468,6 +7523,21 @@ exports.routing = new Routing();
 
 
 /***/ }),
+/* 14 */
+/*!*******************************************!*\
+  !*** ./src/Augmentation/Augmentations.ts ***!
+  \*******************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Augmentations = {};
+
+
+/***/ }),
 /* 15 */
 /*!******************************!*\
   !*** ./utils/JSONReviver.js ***!
@@ -7572,7 +7642,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * about all Factions in the game
  */
 const Faction_1 = __webpack_require__(/*! ./Faction */ 58);
-const FactionInfo_1 = __webpack_require__(/*! ./FactionInfo */ 123);
+const FactionInfo_1 = __webpack_require__(/*! ./FactionInfo */ 125);
 const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 15);
 exports.Factions = {};
 function loadFactions(saveString) {
@@ -7820,7 +7890,7 @@ JSONReviver_1.Reviver.constructors.Augmentation = Augmentation;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 // Constructs all CompanyPosition objects using the metadata in data/companypositions.ts
-const CompaniesMetadata_1 = __webpack_require__(/*! ./data/CompaniesMetadata */ 232);
+const CompaniesMetadata_1 = __webpack_require__(/*! ./data/CompaniesMetadata */ 241);
 const Company_1 = __webpack_require__(/*! ./Company */ 72);
 const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 15);
 exports.Companies = {};
@@ -8127,7 +8197,7 @@ exports.clearEventListeners = clearEventListeners;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const getElementById_1 = __webpack_require__(/*! ./getElementById */ 57);
-const removeElement_1 = __webpack_require__(/*! ./removeElement */ 63);
+const removeElement_1 = __webpack_require__(/*! ./removeElement */ 62);
 /**
  * Given its id, this function removes an element AND its children
  * @param id The HTML identifier to search for and remove.
@@ -8185,7 +8255,7 @@ exports.removeElementById = removeElementById;
 /* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../NetscriptFunctions */ 47);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../NetscriptWorker */ 29);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Player */ 0);
-/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! .././ui/navigationTracking */ 14);
+/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! .././ui/navigationTracking */ 13);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! .././ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_7__);
@@ -8193,7 +8263,7 @@ exports.removeElementById = removeElementById;
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../utils/uiHelpers/clearEventListeners */ 22);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../utils/JSONReviver */ 15);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../utils/helpers/exceptionAlert */ 45);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../utils/helpers/exceptionAlert */ 42);
 /* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../utils/helpers/getRandomInt */ 17);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_12__);
@@ -8434,35 +8504,35 @@ function initStockMarket() {
     const randInt = _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_12__["getRandomInt"];
 
     var ecorp = _Locations__WEBPACK_IMPORTED_MODULE_2__["Locations"].AevumECorp;
-    var ecorpStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](ecorp, StockSymbols[ecorp], randInt(40, 50) / 100, true, 19, randInt(17e3, 28e3), 3e12);
+    var ecorpStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](ecorp, StockSymbols[ecorp], randInt(40, 50) / 100, true, 19, randInt(17e3, 28e3), 2.4e12);
     StockMarket[ecorp] = ecorpStk;
 
     var megacorp = _Locations__WEBPACK_IMPORTED_MODULE_2__["Locations"].Sector12MegaCorp;
-    var megacorpStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](megacorp, StockSymbols[megacorp], randInt(40,50)/100, true, 19, randInt(24e3, 34e3), 3e12);
+    var megacorpStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](megacorp, StockSymbols[megacorp], randInt(40,50)/100, true, 19, randInt(24e3, 34e3), 2.4e12);
     StockMarket[megacorp] = megacorpStk;
 
     var blade = _Locations__WEBPACK_IMPORTED_MODULE_2__["Locations"].Sector12BladeIndustries;
-    var bladeStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](blade, StockSymbols[blade], randInt(70, 80)/100, true, 13, randInt(12e3, 25e3), 1.9e12);
+    var bladeStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](blade, StockSymbols[blade], randInt(70, 80)/100, true, 13, randInt(12e3, 25e3), 1.6e12);
     StockMarket[blade] = bladeStk;
 
     var clarke = _Locations__WEBPACK_IMPORTED_MODULE_2__["Locations"].AevumClarkeIncorporated;
-    var clarkeStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](clarke, StockSymbols[clarke], randInt(65, 75)/100, true, 12, randInt(10e3, 25e3), 1.8e12);
+    var clarkeStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](clarke, StockSymbols[clarke], randInt(65, 75)/100, true, 12, randInt(10e3, 25e3), 1.5e12);
     StockMarket[clarke] = clarkeStk;
 
     var omnitek = _Locations__WEBPACK_IMPORTED_MODULE_2__["Locations"].VolhavenOmniTekIncorporated;
-    var omnitekStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](omnitek, StockSymbols[omnitek], randInt(60, 70)/100, true, 12, randInt(32e3, 43e3), 2.1e12);
+    var omnitekStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](omnitek, StockSymbols[omnitek], randInt(60, 70)/100, true, 12, randInt(32e3, 43e3), 1.8e12);
     StockMarket[omnitek] = omnitekStk;
 
     var foursigma = _Locations__WEBPACK_IMPORTED_MODULE_2__["Locations"].Sector12FourSigma;
-    var foursigmaStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](foursigma, StockSymbols[foursigma], randInt(100, 110)/100, true, 17, randInt(50e3, 80e3), 2.4e12);
+    var foursigmaStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](foursigma, StockSymbols[foursigma], randInt(100, 110)/100, true, 17, randInt(50e3, 80e3), 2e12);
     StockMarket[foursigma] = foursigmaStk;
 
     var kuaigong = _Locations__WEBPACK_IMPORTED_MODULE_2__["Locations"].ChongqingKuaiGongInternational;
-    var kuaigongStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](kuaigong, StockSymbols[kuaigong], randInt(75, 85)/100, true, 10, randInt(16e3, 28e3), 2.3e12);
+    var kuaigongStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](kuaigong, StockSymbols[kuaigong], randInt(75, 85)/100, true, 10, randInt(16e3, 28e3), 1.9e12);
     StockMarket[kuaigong] = kuaigongStk;
 
     var fulcrum = _Locations__WEBPACK_IMPORTED_MODULE_2__["Locations"].AevumFulcrumTechnologies;
-    var fulcrumStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](fulcrum, StockSymbols[fulcrum], randInt(120, 130)/100, true, 16, randInt(29e3, 36e3), 2.4e12);
+    var fulcrumStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](fulcrum, StockSymbols[fulcrum], randInt(120, 130)/100, true, 16, randInt(29e3, 36e3), 2e12);
     StockMarket[fulcrum] = fulcrumStk;
 
     var storm = _Locations__WEBPACK_IMPORTED_MODULE_2__["Locations"].IshimaStormTechnologies;
@@ -9727,7 +9797,7 @@ function updateStockOrderList(stock) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const BaseResearchTree_1 = __webpack_require__(/*! ./data/BaseResearchTree */ 231);
+const BaseResearchTree_1 = __webpack_require__(/*! ./data/BaseResearchTree */ 240);
 const numeralFormat_1 = __webpack_require__(/*! ../ui/numeralFormat */ 4);
 // Map of official names for each Industry
 exports.Industries = {
@@ -9857,8 +9927,8 @@ exports.resetIndustryResearchTrees = resetIndustryResearchTrees;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const Program_1 = __webpack_require__(/*! ./Program */ 220);
-const programsMetadata_1 = __webpack_require__(/*! ./data/programsMetadata */ 219);
+const Program_1 = __webpack_require__(/*! ./Program */ 229);
+const programsMetadata_1 = __webpack_require__(/*! ./data/programsMetadata */ 228);
 exports.Programs = {};
 for (const params of programsMetadata_1.programsMetadata) {
     exports.Programs[params.key] = new Program_1.Program(params.name, params.create);
@@ -9933,6 +10003,7 @@ exports.MainMenuLinks = {
     Factions: null,
     Augmentations: null,
     HacknetNodes: null,
+    Sleeves: null,
     City: null,
     Travel: null,
     Job: null,
@@ -9961,6 +10032,7 @@ function initializeMainMenuLinks() {
         exports.MainMenuLinks.Factions = safeGetLink("factions-menu-link");
         exports.MainMenuLinks.Augmentations = safeGetLink("augmentations-menu-link");
         exports.MainMenuLinks.HacknetNodes = safeGetLink("hacknet-nodes-menu-link");
+        exports.MainMenuLinks.Sleeves = safeGetLink("sleeves-menu-link");
         exports.MainMenuLinks.City = safeGetLink("city-menu-link");
         exports.MainMenuLinks.Travel = safeGetLink("travel-menu-link");
         exports.MainMenuLinks.Job = safeGetLink("job-menu-link");
@@ -10003,25 +10075,25 @@ exports.initializeMainMenuLinks = initializeMainMenuLinks;
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 11);
-/* harmony import */ var _JSInterpreter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./JSInterpreter */ 143);
-/* harmony import */ var _NetscriptEnvironment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptEnvironment */ 124);
+/* harmony import */ var _JSInterpreter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./JSInterpreter */ 149);
+/* harmony import */ var _NetscriptEnvironment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptEnvironment */ 126);
 /* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./NetscriptEvaluator */ 7);
 /* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./NetscriptFunctions */ 47);
-/* harmony import */ var _NetscriptJSEvaluator__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./NetscriptJSEvaluator */ 125);
+/* harmony import */ var _NetscriptJSEvaluator__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./NetscriptJSEvaluator */ 127);
 /* harmony import */ var _NetscriptPort__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./NetscriptPort */ 76);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Server */ 12);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Settings */ 20);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var escodegen__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! escodegen */ 117);
+/* harmony import */ var escodegen__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! escodegen */ 120);
 /* harmony import */ var escodegen__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(escodegen__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/acorn */ 52);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/helpers/compareArrays */ 99);
+/* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/helpers/compareArrays */ 100);
 /* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_14__);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 59);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 88);
+/* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 89);
 /* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_16__);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_17__);
@@ -10046,7 +10118,7 @@ exports.initializeMainMenuLinks = initializeMainMenuLinks;
 
 
 
-const walk  = __webpack_require__(/*! acorn/dist/walk */ 162);
+const walk  = __webpack_require__(/*! acorn/dist/walk */ 167);
 
 function WorkerScript(runningScriptObj) {
 	this.name 			= runningScriptObj.filename;
@@ -10737,13 +10809,13 @@ JSONReviver_1.Reviver.constructors.Stock = Stock;
   !*** ./utils/uiHelpers/removeChildrenFromElement.ts ***!
   \******************************************************/
 /*! no static exports found */
-/*! exports used: removeChildrenFromElement */
+/*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const isString_1 = __webpack_require__(/*! ../helpers/isString */ 43);
+const isString_1 = __webpack_require__(/*! ../helpers/isString */ 44);
 const getElementById_1 = __webpack_require__(/*! ./getElementById */ 57);
 /**
  * Clears out all children from the provided element.
@@ -10784,7 +10856,7 @@ exports.removeChildrenFromElement = removeChildrenFromElement;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 // Constructs all CompanyPosition objects using the metadata in data/companypositions.ts
-const CompanyPositionsMetadata_1 = __webpack_require__(/*! ./data/CompanyPositionsMetadata */ 233);
+const CompanyPositionsMetadata_1 = __webpack_require__(/*! ./data/CompanyPositionsMetadata */ 242);
 const CompanyPosition_1 = __webpack_require__(/*! ./CompanyPosition */ 96);
 exports.CompanyPositions = {};
 function addCompanyPosition(params) {
@@ -10809,7 +10881,7 @@ CompanyPositionsMetadata_1.companyPositionMetadata.forEach((e) => {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Bladeburner; });
-/* harmony import */ var _Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentation/Augmentations */ 13);
+/* harmony import */ var _Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentation/Augmentations */ 14);
 /* harmony import */ var _Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Augmentation/data/AugmentationNames */ 6);
 /* harmony import */ var _Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_1__);
@@ -10831,7 +10903,7 @@ CompanyPositionsMetadata_1.companyPositionMetadata.forEach((e) => {
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 27);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/helpers/createProgressBarText */ 91);
+/* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/helpers/createProgressBarText */ 86);
 /* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_13__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 32);
@@ -10847,9 +10919,9 @@ CompanyPositionsMetadata_1.companyPositionMetadata.forEach((e) => {
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_20__);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 40);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./ui/navigationTracking */ 14);
+/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./ui/navigationTracking */ 13);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_22__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 45);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 42);
 /* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_23__);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_24__);
@@ -10857,7 +10929,7 @@ CompanyPositionsMetadata_1.companyPositionMetadata.forEach((e) => {
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_25__);
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 93);
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_26__);
-/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 63);
+/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 62);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_27__);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 23);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__);
@@ -15104,38 +15176,38 @@ function initBladeburner() {
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_TextFile__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/acorn */ 52);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./ui/navigationTracking */ 14);
+/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./ui/navigationTracking */ 13);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_13__);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_14__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/JSONReviver */ 15);
-/* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/helpers/compareArrays */ 99);
+/* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/helpers/compareArrays */ 100);
 /* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_17__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_18__);
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 93);
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 88);
+/* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 89);
 /* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_20__);
-var ace = __webpack_require__(/*! brace */ 293);
-var beautify = __webpack_require__(/*! js-beautify */ 292).js_beautify;
-__webpack_require__(/*! brace/mode/javascript */ 291);
-__webpack_require__(/*! ../netscript */ 221);
-__webpack_require__(/*! brace/theme/chaos */ 290);
-__webpack_require__(/*! brace/theme/chrome */ 289);
-__webpack_require__(/*! brace/theme/monokai */ 288);
-__webpack_require__(/*! brace/theme/solarized_dark */ 287);
-__webpack_require__(/*! brace/theme/solarized_light */ 286);
-__webpack_require__(/*! brace/theme/terminal */ 285);
-__webpack_require__(/*! brace/theme/twilight */ 284);
-__webpack_require__(/*! brace/theme/xcode */ 283);
-__webpack_require__(/*! brace/keybinding/vim */ 282);
-__webpack_require__(/*! brace/keybinding/emacs */ 281);
-__webpack_require__(/*! brace/ext/language_tools */ 280);
+var ace = __webpack_require__(/*! brace */ 301);
+var beautify = __webpack_require__(/*! js-beautify */ 300).js_beautify;
+__webpack_require__(/*! brace/mode/javascript */ 299);
+__webpack_require__(/*! ../netscript */ 230);
+__webpack_require__(/*! brace/theme/chaos */ 298);
+__webpack_require__(/*! brace/theme/chrome */ 297);
+__webpack_require__(/*! brace/theme/monokai */ 296);
+__webpack_require__(/*! brace/theme/solarized_dark */ 295);
+__webpack_require__(/*! brace/theme/solarized_light */ 294);
+__webpack_require__(/*! brace/theme/terminal */ 293);
+__webpack_require__(/*! brace/theme/twilight */ 292);
+__webpack_require__(/*! brace/theme/xcode */ 291);
+__webpack_require__(/*! brace/keybinding/vim */ 290);
+__webpack_require__(/*! brace/keybinding/emacs */ 289);
+__webpack_require__(/*! brace/ext/language_tools */ 288);
 
 // Importing this doesn't work for some reason.
-const walk = __webpack_require__(/*! acorn/dist/walk */ 162);
+const walk = __webpack_require__(/*! acorn/dist/walk */ 167);
 
 
 
@@ -16220,84 +16292,17 @@ _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__["Reviver"].constructors.AllServ
 
 /***/ }),
 /* 36 */
-/*!*********************************!*\
-  !*** ./src/SpecialServerIps.js ***!
-  \*********************************/
-/*! exports provided: SpecialServerNames, SpecialServerIps, SpecialServerIpsMap, loadSpecialServerIps, prestigeSpecialServerIps, initSpecialServerIps */
-/*! exports used: SpecialServerIps, SpecialServerNames, initSpecialServerIps, loadSpecialServerIps, prestigeSpecialServerIps */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return SpecialServerNames; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SpecialServerIps; });
-/* unused harmony export SpecialServerIpsMap */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return loadSpecialServerIps; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return prestigeSpecialServerIps; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return initSpecialServerIps; });
-/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/JSONReviver */ 15);
-
-
-/* Holds IP of Special Servers */
-let SpecialServerNames = {
-    FulcrumSecretTechnologies:  "Fulcrum Secret Technologies Server",
-    CyberSecServer:             "CyberSec Server",
-    NiteSecServer:              "NiteSec Server",
-    TheBlackHandServer:         "The Black Hand Server",
-    BitRunnersServer:           "BitRunners Server",
-    TheDarkArmyServer:          "The Dark Army Server",
-    DaedalusServer:             "Daedalus Server",
-    WorldDaemon:                "w0r1d_d43m0n",
-}
-function SpecialServerIpsMap() {}
-
-SpecialServerIpsMap.prototype.addIp = function(name, ip) {
-    this[name] = ip;
-}
-
-SpecialServerIpsMap.prototype.toJSON = function() {
-    return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_0__["Generic_toJSON"])("SpecialServerIpsMap", this);
-}
-
-SpecialServerIpsMap.fromJSON = function(value) {
-    return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_0__["Generic_fromJSON"])(SpecialServerIpsMap, value.data);
-}
-
-_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_0__["Reviver"].constructors.SpecialServerIpsMap = SpecialServerIpsMap;
-
-let SpecialServerIps = new SpecialServerIpsMap();
-
-function prestigeSpecialServerIps() {
-    for (var member in SpecialServerIps) {
-        delete SpecialServerIps[member];
-    }
-    SpecialServerIps = null;
-    SpecialServerIps = new SpecialServerIpsMap();
-}
-
-function loadSpecialServerIps(saveString) {
-    SpecialServerIps = JSON.parse(saveString, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_0__["Reviver"]);
-}
-
-function initSpecialServerIps() {
-    SpecialServerIps = new SpecialServerIpsMap();
-}
-
-
-
-
-/***/ }),
-/* 37 */
 /*!*****************************!*\
   !*** ./src/Crime/Crimes.ts ***!
   \*****************************/
 /*! no static exports found */
-/*! exports used: Crimes */
+/*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const Crime_1 = __webpack_require__(/*! ./Crime */ 234);
+const Crime_1 = __webpack_require__(/*! ./Crime */ 145);
 const Constants_1 = __webpack_require__(/*! ../Constants */ 1);
 exports.Crimes = {
     Shoplift: new Crime_1.Crime("Shoplift", Constants_1.CONSTANTS.CrimeShoplift, 2e3, 15e3, 1 / 20, 0.1, {
@@ -16425,6 +16430,73 @@ exports.Crimes = {
         intelligence_exp: 10 * Constants_1.CONSTANTS.IntelligenceCrimeBaseExpGain,
     }),
 };
+
+
+/***/ }),
+/* 37 */
+/*!*********************************!*\
+  !*** ./src/SpecialServerIps.js ***!
+  \*********************************/
+/*! exports provided: SpecialServerNames, SpecialServerIps, SpecialServerIpsMap, loadSpecialServerIps, prestigeSpecialServerIps, initSpecialServerIps */
+/*! exports used: SpecialServerIps, SpecialServerNames, initSpecialServerIps, loadSpecialServerIps, prestigeSpecialServerIps */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return SpecialServerNames; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SpecialServerIps; });
+/* unused harmony export SpecialServerIpsMap */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return loadSpecialServerIps; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return prestigeSpecialServerIps; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return initSpecialServerIps; });
+/* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/JSONReviver */ 15);
+
+
+/* Holds IP of Special Servers */
+let SpecialServerNames = {
+    FulcrumSecretTechnologies:  "Fulcrum Secret Technologies Server",
+    CyberSecServer:             "CyberSec Server",
+    NiteSecServer:              "NiteSec Server",
+    TheBlackHandServer:         "The Black Hand Server",
+    BitRunnersServer:           "BitRunners Server",
+    TheDarkArmyServer:          "The Dark Army Server",
+    DaedalusServer:             "Daedalus Server",
+    WorldDaemon:                "w0r1d_d43m0n",
+}
+function SpecialServerIpsMap() {}
+
+SpecialServerIpsMap.prototype.addIp = function(name, ip) {
+    this[name] = ip;
+}
+
+SpecialServerIpsMap.prototype.toJSON = function() {
+    return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_0__["Generic_toJSON"])("SpecialServerIpsMap", this);
+}
+
+SpecialServerIpsMap.fromJSON = function(value) {
+    return Object(_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_0__["Generic_fromJSON"])(SpecialServerIpsMap, value.data);
+}
+
+_utils_JSONReviver__WEBPACK_IMPORTED_MODULE_0__["Reviver"].constructors.SpecialServerIpsMap = SpecialServerIpsMap;
+
+let SpecialServerIps = new SpecialServerIpsMap();
+
+function prestigeSpecialServerIps() {
+    for (var member in SpecialServerIps) {
+        delete SpecialServerIps[member];
+    }
+    SpecialServerIps = null;
+    SpecialServerIps = new SpecialServerIpsMap();
+}
+
+function loadSpecialServerIps(saveString) {
+    SpecialServerIps = JSON.parse(saveString, _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_0__["Reviver"]);
+}
+
+function initSpecialServerIps() {
+    SpecialServerIps = new SpecialServerIpsMap();
+}
+
+
 
 
 /***/ }),
@@ -17086,6 +17158,31 @@ exports.PartTimeCompanyPositions = [
 
 /***/ }),
 /* 42 */
+/*!*****************************************!*\
+  !*** ./utils/helpers/exceptionAlert.ts ***!
+  \*****************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const DialogBox_1 = __webpack_require__(/*! ../DialogBox */ 9);
+function exceptionAlert(e) {
+    DialogBox_1.dialogBoxCreate("Caught an exception: " + e + "<br><br>" +
+        "Filename: " + (e.fileName || "UNKNOWN FILE NAME") + "<br><br>" +
+        "Line Number: " + (e.lineNumber || "UNKNOWN LINE NUMBER") + "<br><br>" +
+        "This is a bug, please report to game developer with this " +
+        "message as well as details about how to reproduce the bug.<br><br>" +
+        "If you want to be safe, I suggest refreshing the game WITHOUT saving so that your " +
+        "safe doesn't get corrupted", false);
+}
+exports.exceptionAlert = exceptionAlert;
+
+
+/***/ }),
+/* 43 */
 /*!******************************!*\
   !*** ./src/NetscriptGang.js ***!
   \******************************/
@@ -17117,7 +17214,7 @@ function checkGangApiAccess(workerScript, functionName) {
 
 
 /***/ }),
-/* 43 */
+/* 44 */
 /*!***********************************!*\
   !*** ./utils/helpers/isString.ts ***!
   \***********************************/
@@ -17139,7 +17236,7 @@ exports.isString = isString;
 
 
 /***/ }),
-/* 44 */
+/* 45 */
 /*!************************!*\
   !*** ./src/Message.js ***!
   \************************/
@@ -17157,7 +17254,7 @@ exports.isString = isString;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Message; });
 /* harmony import */ var _Augmentation_Augmentation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentation/Augmentation */ 18);
 /* harmony import */ var _Augmentation_Augmentation__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Augmentation_Augmentation__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Augmentation/Augmentations */ 13);
+/* harmony import */ var _Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Augmentation/Augmentations */ 14);
 /* harmony import */ var _Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Augmentation/data/AugmentationNames */ 6);
 /* harmony import */ var _Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_2__);
@@ -17367,31 +17464,6 @@ function initMessages()  {
 
 
 /***/ }),
-/* 45 */
-/*!*****************************************!*\
-  !*** ./utils/helpers/exceptionAlert.ts ***!
-  \*****************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const DialogBox_1 = __webpack_require__(/*! ../DialogBox */ 9);
-function exceptionAlert(e) {
-    DialogBox_1.dialogBoxCreate("Caught an exception: " + e + "<br><br>" +
-        "Filename: " + (e.fileName || "UNKNOWN FILE NAME") + "<br><br>" +
-        "Line Number: " + (e.lineNumber || "UNKNOWN LINE NUMBER") + "<br><br>" +
-        "This is a bug, please report to game developer with this " +
-        "message as well as details about how to reproduce the bug.<br><br>" +
-        "If you want to be safe, I suggest refreshing the game WITHOUT saving so that your " +
-        "safe doesn't get corrupted", false);
-}
-exports.exceptionAlert = exceptionAlert;
-
-
-/***/ }),
 /* 46 */
 /*!********************************!*\
   !*** ./src/CodingContracts.ts ***!
@@ -17415,7 +17487,7 @@ const JSONReviver_1 = __webpack_require__(/*! ../utils/JSONReviver */ 15);
 const createElement_1 = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 const createPopup_1 = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 40);
 const removeElementById_1 = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 23);
-const codingcontracttypes_1 = __webpack_require__(/*! ./data/codingcontracttypes */ 226);
+const codingcontracttypes_1 = __webpack_require__(/*! ./data/codingcontracttypes */ 235);
 /* tslint:disable:no-magic-numbers completed-docs max-classes-per-file no-console */
 /* Represents different types of problems that a Coding Contract can have */
 class CodingContractType {
@@ -17587,14 +17659,14 @@ JSONReviver_1.Reviver.constructors.CodingContract = CodingContract;
 /* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActiveScriptsUI */ 73);
 /* harmony import */ var _Augmentation_Augmentation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Augmentation/Augmentation */ 18);
 /* harmony import */ var _Augmentation_Augmentation__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Augmentation_Augmentation__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Augmentation/Augmentations */ 13);
+/* harmony import */ var _Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Augmentation/Augmentations */ 14);
 /* harmony import */ var _Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Augmentation_AugmentationHelpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Augmentation/AugmentationHelpers */ 61);
 /* harmony import */ var _Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Augmentation/data/AugmentationNames */ 6);
 /* harmony import */ var _Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _BitNode_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./BitNode/BitNodeMultipliers */ 10);
 /* harmony import */ var _BitNode_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_BitNode_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _Crime_CrimeHelpers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Crime/CrimeHelpers */ 101);
+/* harmony import */ var _Crime_CrimeHelpers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Crime/CrimeHelpers */ 102);
 /* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Bladeburner */ 34);
 /* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Company/Company */ 72);
 /* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_Company_Company__WEBPACK_IMPORTED_MODULE_8__);
@@ -17618,7 +17690,7 @@ JSONReviver_1.Reviver.constructors.CodingContract = CodingContract;
 /* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./HacknetNode */ 71);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Locations */ 5);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_20__);
-/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./Message */ 44);
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./Message */ 45);
 /* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./Missions */ 60);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./Programs/Programs */ 26);
@@ -17627,7 +17699,7 @@ JSONReviver_1.Reviver.constructors.CodingContract = CodingContract;
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./Server */ 12);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./Settings */ 20);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_27__);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./SpecialServerIps */ 36);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./SpecialServerIps */ 37);
 /* harmony import */ var _StockMarket_Stock__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./StockMarket/Stock */ 31);
 /* harmony import */ var _StockMarket_Stock__WEBPACK_IMPORTED_MODULE_29___default = /*#__PURE__*/__webpack_require__.n(_StockMarket_Stock__WEBPACK_IMPORTED_MODULE_29__);
 /* harmony import */ var _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./StockMarket/StockMarket */ 24);
@@ -17636,27 +17708,27 @@ JSONReviver_1.Reviver.constructors.CodingContract = CodingContract;
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./TextFile */ 69);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_32___default = /*#__PURE__*/__webpack_require__.n(_TextFile__WEBPACK_IMPORTED_MODULE_32__);
 /* harmony import */ var _NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./NetscriptBladeburner */ 56);
-/* harmony import */ var _NetscriptGang__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./NetscriptGang */ 42);
+/* harmony import */ var _NetscriptGang__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./NetscriptGang */ 43);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./NetscriptWorker */ 29);
 /* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./NetscriptEvaluator */ 7);
 /* harmony import */ var _NetscriptPort__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./NetscriptPort */ 76);
 /* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! decimal.js */ 39);
-/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./ui/navigationTracking */ 14);
+/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./ui/navigationTracking */ 13);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_39___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_39__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ../utils/helpers/isPowerOfTwo */ 145);
+/* harmony import */ var _utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ../utils/helpers/isPowerOfTwo */ 150);
 /* harmony import */ var _utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_41___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_41__);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 59);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_42___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_42__);
 /* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ../utils/IPAddress */ 66);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_44___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_44__);
-/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(/*! ../utils/helpers/isString */ 43);
+/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(/*! ../utils/helpers/isString */ 44);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_45___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_45__);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(/*! ../utils/YesNoBox */ 21);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_46___default = /*#__PURE__*/__webpack_require__.n(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_46__);
-var sprintf = __webpack_require__(/*! sprintf-js */ 163).sprintf,
-    vsprintf = __webpack_require__(/*! sprintf-js */ 163).vsprintf
+var sprintf = __webpack_require__(/*! sprintf-js */ 168).sprintf,
+    vsprintf = __webpack_require__(/*! sprintf-js */ 168).vsprintf
 
 
 
@@ -22546,7 +22618,7 @@ function substituteAliases(origCommand) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return displayFactionContent; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return processPassiveFactionRepGain; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return purchaseAugmentation; });
-/* harmony import */ var _Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Augmentation/Augmentations */ 13);
+/* harmony import */ var _Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Augmentation/Augmentations */ 14);
 /* harmony import */ var _Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Augmentation_PlayerOwnedAugmentation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Augmentation/PlayerOwnedAugmentation */ 98);
 /* harmony import */ var _Augmentation_PlayerOwnedAugmentation__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Augmentation_PlayerOwnedAugmentation__WEBPACK_IMPORTED_MODULE_1__);
@@ -22561,7 +22633,7 @@ function substituteAliases(origCommand) {
 /* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Faction__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _Factions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Factions */ 16);
 /* harmony import */ var _Factions__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_Factions__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _FactionInfo__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./FactionInfo */ 123);
+/* harmony import */ var _FactionInfo__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./FactionInfo */ 125);
 /* harmony import */ var _FactionInfo__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_FactionInfo__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../Location */ 97);
 /* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../Missions */ 60);
@@ -22570,12 +22642,12 @@ function substituteAliases(origCommand) {
 /* harmony import */ var _SettingEnums__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_SettingEnums__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../Settings */ 20);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../ui/navigationTracking */ 14);
+/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../ui/navigationTracking */ 13);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_14__);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../utils/DialogBox */ 9);
-/* harmony import */ var _utils_FactionInvitationBox__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../utils/FactionInvitationBox */ 149);
+/* harmony import */ var _utils_FactionInvitationBox__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../utils/FactionInvitationBox */ 154);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 32);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_18__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../../utils/uiHelpers/createElement */ 2);
@@ -27305,9 +27377,9 @@ Object.defineProperty(exports, '__esModule', { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return resetGangs; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return loadAllGangs; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Gang; });
-/* harmony import */ var _data_gangmembertasks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./data/gangmembertasks */ 148);
+/* harmony import */ var _data_gangmembertasks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./data/gangmembertasks */ 153);
 /* harmony import */ var _data_gangmembertasks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_data_gangmembertasks__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _data_gangmemberupgrades__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data/gangmemberupgrades */ 147);
+/* harmony import */ var _data_gangmemberupgrades__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data/gangmemberupgrades */ 152);
 /* harmony import */ var _data_gangmemberupgrades__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_data_gangmemberupgrades__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 11);
 /* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Faction/Faction */ 58);
@@ -27327,17 +27399,17 @@ Object.defineProperty(exports, '__esModule', { value: true });
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 40);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./ui/navigationTracking */ 14);
+/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./ui/navigationTracking */ 13);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_13__);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 45);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 42);
 /* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 17);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_16__);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 32);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 63);
+/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 62);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_18__);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 23);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_19__);
@@ -29287,17 +29359,17 @@ Gang.prototype.clearUI = function() {
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Programs/Programs */ 26);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _DarkWeb_DarkWeb__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./DarkWeb/DarkWeb */ 128);
+/* harmony import */ var _DarkWeb_DarkWeb__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./DarkWeb/DarkWeb */ 131);
 /* harmony import */ var _DarkWeb_DarkWebItems__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./DarkWeb/DarkWebItems */ 75);
 /* harmony import */ var _DarkWeb_DarkWebItems__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_DarkWeb_DarkWebItems__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./engine */ 11);
 /* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Fconf */ 50);
 /* harmony import */ var _Hacking__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Hacking */ 51);
-/* harmony import */ var _HelpText__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./HelpText */ 110);
+/* harmony import */ var _HelpText__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./HelpText */ 113);
 /* harmony import */ var _HelpText__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_HelpText__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./InteractiveTutorial */ 38);
-/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Literature */ 89);
-/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Message */ 44);
+/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Literature */ 90);
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Message */ 45);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./NetscriptWorker */ 29);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./RedPill */ 64);
@@ -29305,12 +29377,12 @@ Gang.prototype.clearUI = function() {
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Server */ 12);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Settings */ 20);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./SpecialServerIps */ 36);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./SpecialServerIps */ 37);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./TextFile */ 69);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_TextFile__WEBPACK_IMPORTED_MODULE_20__);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./ui/navigationTracking */ 14);
+/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./ui/navigationTracking */ 13);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_22__);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__);
@@ -29318,22 +29390,22 @@ Gang.prototype.clearUI = function() {
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_24__);
 /* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 70);
 /* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_25__);
-/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/helpers/isString */ 43);
+/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/helpers/isString */ 44);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_26__);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 59);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_27__);
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 93);
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_28__);
-/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../utils/LogBox */ 86);
+/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../utils/LogBox */ 87);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ../utils/YesNoBox */ 21);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30__);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./ui/postToTerminal */ 8);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31___default = /*#__PURE__*/__webpack_require__.n(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__);
-/* harmony import */ var autosize__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! autosize */ 166);
+/* harmony import */ var autosize__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! autosize */ 171);
 /* harmony import */ var autosize__WEBPACK_IMPORTED_MODULE_32___default = /*#__PURE__*/__webpack_require__.n(autosize__WEBPACK_IMPORTED_MODULE_32__);
-/* harmony import */ var jszip__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! jszip */ 165);
+/* harmony import */ var jszip__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! jszip */ 170);
 /* harmony import */ var jszip__WEBPACK_IMPORTED_MODULE_33___default = /*#__PURE__*/__webpack_require__.n(jszip__WEBPACK_IMPORTED_MODULE_33__);
-/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! file-saver */ 164);
+/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! file-saver */ 169);
 /* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_34___default = /*#__PURE__*/__webpack_require__.n(file_saver__WEBPACK_IMPORTED_MODULE_34__);
 
 
@@ -31605,7 +31677,7 @@ exports.getElementById = getElementById;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const Constants_1 = __webpack_require__(/*! ../Constants */ 1);
-const FactionInfo_1 = __webpack_require__(/*! ./FactionInfo */ 123);
+const FactionInfo_1 = __webpack_require__(/*! ./FactionInfo */ 125);
 const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 15);
 class Faction {
     constructor(name = "") {
@@ -31765,9 +31837,9 @@ exports.arrayToString = arrayToString;
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 17);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/isString */ 43);
+/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/isString */ 44);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var jsplumb__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! jsplumb */ 277);
+/* harmony import */ var jsplumb__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! jsplumb */ 285);
 /* harmony import */ var jsplumb__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(jsplumb__WEBPACK_IMPORTED_MODULE_10__);
 
 
@@ -33326,7 +33398,7 @@ HackingMission.prototype.finishMission = function(win) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return displayAugmentationsContent; });
 /* harmony import */ var _Augmentation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentation */ 18);
 /* harmony import */ var _Augmentation__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Augmentation__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Augmentations */ 13);
+/* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Augmentations */ 14);
 /* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Augmentations__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _data_AugmentationNames__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./data/AugmentationNames */ 6);
 /* harmony import */ var _data_AugmentationNames__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_2__);
@@ -33358,7 +33430,7 @@ HackingMission.prototype.finishMission = function(win) {
 /* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_20__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../../utils/helpers/isString */ 43);
+/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../../utils/helpers/isString */ 44);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_22__);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 32);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_23__);
@@ -35669,6 +35741,43 @@ function displaySourceFiles(listElement, sourceFiles) {
 
 /***/ }),
 /* 62 */
+/*!******************************************!*\
+  !*** ./utils/uiHelpers/removeElement.ts ***!
+  \******************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * For a given element, this function removes it AND its children
+ * @param elem The element to remove.
+ */
+function removeElement(elem) {
+    if (elem === null) {
+        // tslint:disable-next-line:no-console
+        console.debug("The element passed into 'removeElement' was null.");
+        return;
+    }
+    if (!(elem instanceof Element)) {
+        // tslint:disable-next-line:no-console
+        console.debug("The element passed into 'removeElement' was not an instance of an Element.");
+        return;
+    }
+    while (elem.firstChild !== null) {
+        elem.removeChild(elem.firstChild);
+    }
+    if (elem.parentNode !== null) {
+        elem.parentNode.removeChild(elem);
+    }
+}
+exports.removeElement = removeElement;
+
+
+/***/ }),
+/* 63 */
 /*!****************************************!*\
   !*** ./src/Corporation/Corporation.js ***!
   \****************************************/
@@ -35698,25 +35807,25 @@ function displaySourceFiles(listElement, sourceFiles) {
 /* unused harmony export CyclesPerEmployeeRaise */
 /* unused harmony export EmployeeRaiseAmount */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Corporation; });
-/* harmony import */ var _CorporationState__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CorporationState */ 130);
+/* harmony import */ var _CorporationState__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CorporationState */ 133);
 /* harmony import */ var _CorporationState__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_CorporationState__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _data_CorporationUnlockUpgrades__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data/CorporationUnlockUpgrades */ 114);
+/* harmony import */ var _data_CorporationUnlockUpgrades__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data/CorporationUnlockUpgrades */ 117);
 /* harmony import */ var _data_CorporationUnlockUpgrades__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_data_CorporationUnlockUpgrades__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _data_CorporationUpgrades__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./data/CorporationUpgrades */ 113);
+/* harmony import */ var _data_CorporationUpgrades__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./data/CorporationUpgrades */ 116);
 /* harmony import */ var _data_CorporationUpgrades__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_data_CorporationUpgrades__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./EmployeePositions */ 30);
 /* harmony import */ var _EmployeePositions__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _IndustryData__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./IndustryData */ 25);
 /* harmony import */ var _IndustryData__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_IndustryData__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _IndustryUpgrades__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./IndustryUpgrades */ 112);
+/* harmony import */ var _IndustryUpgrades__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./IndustryUpgrades */ 115);
 /* harmony import */ var _IndustryUpgrades__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_IndustryUpgrades__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _Material__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Material */ 67);
 /* harmony import */ var _Material__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Material__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _MaterialSizes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./MaterialSizes */ 82);
 /* harmony import */ var _MaterialSizes__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_MaterialSizes__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _Product__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Product */ 111);
+/* harmony import */ var _Product__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Product */ 114);
 /* harmony import */ var _Product__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_Product__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _ResearchMap__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./ResearchMap */ 106);
+/* harmony import */ var _ResearchMap__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./ResearchMap */ 108);
 /* harmony import */ var _ResearchMap__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_ResearchMap__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _BitNode_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../BitNode/BitNodeMultipliers */ 10);
 /* harmony import */ var _BitNode_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_BitNode_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_10__);
@@ -35724,16 +35833,16 @@ function displaySourceFiles(listElement, sourceFiles) {
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../Faction/Factions */ 16);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../Literature */ 89);
+/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../Literature */ 90);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../Locations */ 5);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_14__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../Player */ 0);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../ui/navigationTracking */ 14);
+/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../ui/navigationTracking */ 13);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_17__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../../utils/DialogBox */ 9);
-/* harmony import */ var _utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../../utils/uiHelpers/clearSelector */ 153);
+/* harmony import */ var _utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../../utils/uiHelpers/clearSelector */ 158);
 /* harmony import */ var _utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_19__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../../utils/JSONReviver */ 15);
 /* harmony import */ var _utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../../utils/uiHelpers/appendLineBreaks */ 55);
@@ -35748,13 +35857,13 @@ function displaySourceFiles(listElement, sourceFiles) {
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_25__);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../../utils/helpers/getRandomInt */ 17);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_26__);
-/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../../utils/helpers/isString */ 43);
+/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../../utils/helpers/isString */ 44);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_27__);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../../utils/helpers/keyCodes */ 27);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_28__);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 32);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_29___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_29__);
-/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ../../utils/uiHelpers/removeElement */ 63);
+/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ../../utils/uiHelpers/removeElement */ 62);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_30__);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ../../utils/uiHelpers/removeElementById */ 23);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__);
@@ -40830,43 +40939,6 @@ _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_20__["Reviver"].constructors.Corpora
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 68)))
 
 /***/ }),
-/* 63 */
-/*!******************************************!*\
-  !*** ./utils/uiHelpers/removeElement.ts ***!
-  \******************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * For a given element, this function removes it AND its children
- * @param elem The element to remove.
- */
-function removeElement(elem) {
-    if (elem === null) {
-        // tslint:disable-next-line:no-console
-        console.debug("The element passed into 'removeElement' was null.");
-        return;
-    }
-    if (!(elem instanceof Element)) {
-        // tslint:disable-next-line:no-console
-        console.debug("The element passed into 'removeElement' was not an instance of an Element.");
-        return;
-    }
-    while (elem.firstChild !== null) {
-        elem.removeChild(elem.firstChild);
-    }
-    if (elem.parentNode !== null) {
-        elem.parentNode.removeChild(elem);
-    }
-}
-exports.removeElement = removeElement;
-
-
-/***/ }),
 /* 64 */
 /*!************************!*\
   !*** ./src/RedPill.js ***!
@@ -40883,7 +40955,7 @@ exports.removeElement = removeElement;
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Prestige */ 92);
 /* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SourceFile */ 80);
-/* harmony import */ var _SourceFile_PlayerOwnedSourceFile__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./SourceFile/PlayerOwnedSourceFile */ 146);
+/* harmony import */ var _SourceFile_PlayerOwnedSourceFile__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./SourceFile/PlayerOwnedSourceFile */ 151);
 /* harmony import */ var _SourceFile_PlayerOwnedSourceFile__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_SourceFile_PlayerOwnedSourceFile__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Terminal */ 54);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 22);
@@ -41664,7 +41736,7 @@ function initBitNodeMultipliers() {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return createRandomIp; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return ipExists; });
 /* harmony import */ var _src_Server__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/Server */ 12);
-/* harmony import */ var _helpers_getRandomByte__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers/getRandomByte */ 103);
+/* harmony import */ var _helpers_getRandomByte__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers/getRandomByte */ 104);
 /* harmony import */ var _helpers_getRandomByte__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_helpers_getRandomByte__WEBPACK_IMPORTED_MODULE_1__);
 
 
@@ -42132,7 +42204,7 @@ exports.addOffset = addOffset;
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/JSONReviver */ 15);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./ui/navigationTracking */ 14);
+/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./ui/navigationTracking */ 13);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__);
@@ -42937,22 +43009,22 @@ JSONReviver_1.Reviver.constructors.Company = Company;
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/helpers/createProgressBarText */ 91);
+/* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/helpers/createProgressBarText */ 86);
 /* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 45);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 42);
 /* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/uiHelpers/getElementById */ 57);
 /* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/LogBox */ 86);
+/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/LogBox */ 87);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 32);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 63);
+/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 62);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 88);
+/* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 89);
 /* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./ui/navigationTracking */ 14);
+/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./ui/navigationTracking */ 13);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_16__);
 
 
@@ -43292,7 +43364,7 @@ function updateActiveScriptsText(workerscript, item, itemName) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const DarkWebItem_1 = __webpack_require__(/*! ./DarkWebItem */ 218);
+const DarkWebItem_1 = __webpack_require__(/*! ./DarkWebItem */ 227);
 const Programs_1 = __webpack_require__(/*! ../Programs/Programs */ 26);
 exports.DarkWebItems = {
     BruteSSHProgram: new DarkWebItem_1.DarkWebItem(Programs_1.Programs.BruteSSHProgram.name, 500e3, "Opens up SSH Ports"),
@@ -43430,16 +43502,16 @@ var PurchaseAugmentationsOrderSetting;
 /* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Fconf */ 50);
 /* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Gang */ 53);
 /* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./HacknetNode */ 71);
-/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Message */ 44);
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Message */ 45);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Script */ 35);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Server */ 12);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Settings */ 20);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./SpecialServerIps */ 36);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./SpecialServerIps */ 37);
 /* harmony import */ var _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./StockMarket/StockMarket */ 24);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_GameOptions__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/GameOptions */ 90);
+/* harmony import */ var _utils_GameOptions__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/GameOptions */ 91);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 22);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_19__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/JSONReviver */ 15);
@@ -44092,7 +44164,7 @@ function openImportFileHandler(evt) {
 /* Creates a Close/Cancel button that is used for removing popups */
 Object.defineProperty(exports, "__esModule", { value: true });
 const createElement_1 = __webpack_require__(/*! ./createElement */ 2);
-const removeElement_1 = __webpack_require__(/*! ./removeElement */ 63);
+const removeElement_1 = __webpack_require__(/*! ./removeElement */ 62);
 function createPopupCloseButton(popup, options) {
     let button;
     // TODO event listener works with escape. Add and remove event listener
@@ -44211,7 +44283,7 @@ function initSourceFiles() {
                                                    "This Source-File also increases your hacking growth multipliers by: " +
                                                    "<br>Level 1: 12%<br>Level 2: 18%<br>Level 3: 21%");
     SourceFiles["SourceFile9"] = new SourceFile(9);
-    SourceFiles["SourceFile10"] = new SourceFile(10);
+    SourceFiles["SourceFile10"] = new SourceFile(10, "Each level of this Source-File grants you a Duplicate Sleeve");
     SourceFiles["SourceFile11"] = new SourceFile(11, "This Source-File makes it so that company favor increases BOTH the player's salary and reputation gain rate " +
                                                      "at that company by 1% per favor (rather than just the reputation gain). This Source-File also " +
                                                      " increases the player's company salary and reputation gain multipliers by:<br><br>" +
@@ -44334,6 +44406,9 @@ function applySourceFile(srcFile) {
             }
             var incMult = 1 + (mult / 100);
             _Player__WEBPACK_IMPORTED_MODULE_0__[/* Player */ "a"].hacking_grow_mult    *= incMult;
+            break;
+        case 10: // Digital Carbon
+            // No effects, just grants sleeves
             break;
         case 11: //The Big Crash
             var mult = 0;
@@ -44561,6 +44636,42 @@ exports.clearObject = clearObject;
 
 /***/ }),
 /* 86 */
+/*!************************************************!*\
+  !*** ./utils/helpers/createProgressBarText.ts ***!
+  \************************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Creates a graphical "progress bar"
+ * e.g.:  [||||---------------]
+ * @param params The configuration parameters for the progress bar
+ */
+function createProgressBarText(params) {
+    // Default values
+    const defaultParams = {
+        progress: 0,
+        totalTicks: 20,
+    };
+    // tslint:disable-next-line:prefer-object-spread
+    const derived = Object.assign({}, defaultParams, params);
+    // Ensure it is 0..1
+    derived.progress = Math.max(Math.min(derived.progress, 1), 0);
+    // This way there is always at least one bar filled in...
+    const bars = Math.max(Math.floor(derived.progress / (1 / derived.totalTicks)), 1);
+    const dashes = Math.max(derived.totalTicks - bars, 0);
+    // String.prototype.repeat isn't completley supported, but good enough for our purposes
+    return `[${"|".repeat(bars)}${"-".repeat(dashes)}]`;
+}
+exports.createProgressBarText = createProgressBarText;
+
+
+/***/ }),
+/* 87 */
 /*!*************************!*\
   !*** ./utils/LogBox.js ***!
   \*************************/
@@ -44650,8 +44761,8 @@ function logBoxUpdateText() {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 68)))
 
 /***/ }),
-/* 87 */,
-/* 88 */
+/* 88 */,
+/* 89 */
 /*!*************************************!*\
   !*** ./utils/helpers/roundToTwo.ts ***!
   \*************************************/
@@ -44674,7 +44785,7 @@ exports.roundToTwo = roundToTwo;
 
 
 /***/ }),
-/* 89 */
+/* 90 */
 /*!***************************!*\
   !*** ./src/Literature.js ***!
   \***************************/
@@ -45126,7 +45237,7 @@ function initLiterature() {
 
 
 /***/ }),
-/* 90 */
+/* 91 */
 /*!******************************!*\
   !*** ./utils/GameOptions.js ***!
   \******************************/
@@ -45186,42 +45297,6 @@ function gameOptionsBoxOpen() {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 68)))
 
 /***/ }),
-/* 91 */
-/*!************************************************!*\
-  !*** ./utils/helpers/createProgressBarText.ts ***!
-  \************************************************/
-/*! no static exports found */
-/*! exports used: createProgressBarText */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * Creates a graphical "progress bar"
- * e.g.:  [||||---------------]
- * @param params The configuration parameters for the progress bar
- */
-function createProgressBarText(params) {
-    // Default values
-    const defaultParams = {
-        progress: 0,
-        totalTicks: 20,
-    };
-    // tslint:disable-next-line:prefer-object-spread
-    const derived = Object.assign({}, defaultParams, params);
-    // Ensure it is 0..1
-    derived.progress = Math.max(Math.min(derived.progress, 1), 0);
-    // This way there is always at least one bar filled in...
-    const bars = Math.max(Math.floor(derived.progress / (1 / derived.totalTicks)), 1);
-    const dashes = Math.max(derived.totalTicks - bars, 0);
-    // String.prototype.repeat isn't completley supported, but good enough for our purposes
-    return `[${"|".repeat(bars)}${"-".repeat(dashes)}]`;
-}
-exports.createProgressBarText = createProgressBarText;
-
-
-/***/ }),
 /* 92 */
 /*!*************************!*\
   !*** ./src/Prestige.js ***!
@@ -45234,14 +45309,14 @@ exports.createProgressBarText = createProgressBarText;
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return prestigeAugmentation; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return prestigeSourceFile; });
 /* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActiveScriptsUI */ 73);
-/* harmony import */ var _Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Augmentation/Augmentations */ 13);
+/* harmony import */ var _Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Augmentation/Augmentations */ 14);
 /* harmony import */ var _Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Augmentation_AugmentationHelpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Augmentation/AugmentationHelpers */ 61);
 /* harmony import */ var _Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Augmentation/data/AugmentationNames */ 6);
 /* harmony import */ var _Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _BitNode_BitNode__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./BitNode/BitNode */ 65);
 /* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Bladeburner */ 34);
-/* harmony import */ var _CinematicText__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./CinematicText */ 108);
+/* harmony import */ var _CinematicText__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./CinematicText */ 110);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Company/Companies */ 19);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _Corporation_IndustryData__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Corporation/IndustryData */ 25);
@@ -45256,14 +45331,14 @@ exports.createProgressBarText = createProgressBarText;
 /* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 49);
 /* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Gang */ 53);
 /* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Location */ 97);
-/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Message */ 44);
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Message */ 45);
 /* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./NetscriptFunctions */ 47);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./NetscriptWorker */ 29);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Server */ 12);
 /* harmony import */ var _SourceFile_SourceFileFlags__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./SourceFile/SourceFileFlags */ 83);
 /* harmony import */ var _SourceFile_SourceFileFlags__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_SourceFile_SourceFileFlags__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./SpecialServerIps */ 36);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./SpecialServerIps */ 37);
 /* harmony import */ var _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./StockMarket/StockMarket */ 24);
 /* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./Terminal */ 54);
 /* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! decimal.js */ 39);
@@ -45274,7 +45349,7 @@ exports.createProgressBarText = createProgressBarText;
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_28__);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 40);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_29___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_29__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 45);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 42);
 /* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_30__);
 
 
@@ -45774,28 +45849,28 @@ exports.CompanyPosition = CompanyPosition;
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Company/Companies */ 19);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Company/GetJobRequirementText */ 100);
+/* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Company/GetJobRequirementText */ 101);
 /* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Company/data/CompanyPositionNames */ 41);
 /* harmony import */ var _Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Corporation/Corporation */ 62);
+/* harmony import */ var _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Corporation/Corporation */ 63);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _Crime_Crimes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Crime/Crimes */ 37);
+/* harmony import */ var _Crime_Crimes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Crime/Crimes */ 36);
 /* harmony import */ var _Crime_Crimes__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_Crime_Crimes__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./engine */ 11);
-/* harmony import */ var _Infiltration__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Infiltration */ 152);
+/* harmony import */ var _Infiltration__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Infiltration */ 157);
 /* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./NetscriptFunctions */ 47);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Locations */ 5);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Server */ 12);
-/* harmony import */ var _ServerPurchases__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./ServerPurchases */ 129);
+/* harmony import */ var _ServerPurchases__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./ServerPurchases */ 132);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Settings */ 20);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_Settings__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var _SourceFile_SourceFileFlags__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./SourceFile/SourceFileFlags */ 83);
 /* harmony import */ var _SourceFile_SourceFileFlags__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_SourceFile_SourceFileFlags__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./SpecialServerIps */ 36);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./SpecialServerIps */ 37);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
@@ -48120,6 +48195,679 @@ exports.PlayerOwnedAugmentation = PlayerOwnedAugmentation;
 
 /***/ }),
 /* 99 */
+/*!********************************************!*\
+  !*** ./src/PersonObjects/Sleeve/Sleeve.ts ***!
+  \********************************************/
+/*! no static exports found */
+/*! exports used: Sleeve */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Sleeves are bodies that contain the player's cloned consciousness.
+ * The player can use these bodies to perform different tasks synchronously.
+ *
+ * Each sleeve is its own individual, meaning it has its own stats/exp
+ *
+ * Sleeves are unlocked in BitNode-10.
+ */
+const SleeveTaskTypesEnum_1 = __webpack_require__(/*! ./SleeveTaskTypesEnum */ 140);
+const Person_1 = __webpack_require__(/*! ../Person */ 139);
+const BitNodeMultipliers_1 = __webpack_require__(/*! ../../BitNode/BitNodeMultipliers */ 10);
+const Crime_1 = __webpack_require__(/*! ../../Crime/Crime */ 145);
+const Cities_1 = __webpack_require__(/*! ../../Locations/Cities */ 107);
+const Companies_1 = __webpack_require__(/*! ../../Company/Companies */ 19);
+const Company_1 = __webpack_require__(/*! ../../Company/Company */ 72);
+const CompanyPositions_1 = __webpack_require__(/*! ../../Company/CompanyPositions */ 33);
+const Constants_1 = __webpack_require__(/*! ../../Constants */ 1);
+const Faction_1 = __webpack_require__(/*! ../../Faction/Faction */ 58);
+const Factions_1 = __webpack_require__(/*! ../../Faction/Factions */ 16);
+const FactionWorkTypeEnum_1 = __webpack_require__(/*! ../../Faction/FactionWorkTypeEnum */ 218);
+const Locations_1 = __webpack_require__(/*! ../../Locations */ 5);
+const JSONReviver_1 = __webpack_require__(/*! ../../../utils/JSONReviver */ 15);
+class Sleeve extends Person_1.Person {
+    constructor() {
+        super();
+        /**
+         * Enum value for current task
+         */
+        this.currentTask = SleeveTaskTypesEnum_1.SleeveTaskType.Idle;
+        /**
+         * Contains details about the sleeve's current task. The info stored
+         * in this depends on the task type
+         *
+         * Faction/Company Work: Name of Faction/Company
+         * Crime: Money earned if successful
+         * Class/Gym: Name of university/gym
+         */
+        this.currentTaskLocation = "";
+        /**
+         * Maximum amount of time (in milliseconds) that can  be spent on current task.
+         */
+        this.currentTaskMaxTime = 0;
+        /**
+         * Milliseconds spent on current task
+         */
+        this.currentTaskTime = 0;
+        /**
+         * Keeps track of experience earned for other sleeves
+         */
+        this.earningsForSleeves = Person_1.createTaskTracker();
+        /**
+         * Keeps track of experience + money earned for player
+         */
+        this.earningsForPlayer = Person_1.createTaskTracker();
+        /**
+         * Keeps track of experienced earned in the current task/action
+         */
+        this.earningsForTask = Person_1.createTaskTracker();
+        /**
+         * Keeps track of what type of work sleeve is doing for faction, if applicable
+         */
+        this.factionWorkType = FactionWorkTypeEnum_1.FactionWorkType.None;
+        /**
+         * Records experience gain rate for the current task
+         */
+        this.gainRatesForTask = Person_1.createTaskTracker();
+        /**
+         * Keeps track of events/notifications for this sleeve
+         */
+        this.logs = [];
+        /**
+         * Clone retains memory% of exp upon prestige. If exp would be lower than previously
+         * kept exp, nothing happens
+         */
+        this.memory = 0;
+        /**
+         * Sleeve shock. Number between 1 and 100
+         * Trauma/shock that comes with being in a sleeve. Experience earned
+         * is multipled by shock%. This gets applied before synchronization
+         *
+         * Reputation earned is also multiplied by shock%
+         */
+        this.shock = 1;
+        /**
+         * Stored number of game "loop" cycles
+         */
+        this.storedCycles = 0;
+        /**
+         * Synchronization. Number between 0 and 100
+         * When experience is earned  by sleeve, both the player and the sleeve get
+         * sync% of the experience earned. Other sleeves get sync^2% of exp
+         */
+        this.sync = 1;
+    }
+    /**
+     * Initiatizes a Sleeve object from a JSON save state.
+     */
+    static fromJSON(value) {
+        return JSONReviver_1.Generic_fromJSON(Sleeve, value.data);
+    }
+    /**
+     * Commit crimes
+     */
+    commitCrime(p, crime) {
+        if (!(crime instanceof Crime_1.Crime)) {
+            return false;
+        }
+        if (this.currentTask !== SleeveTaskTypesEnum_1.SleeveTaskType.Idle) {
+            this.finishTask(p);
+        }
+        else {
+            this.resetTaskStatus();
+        }
+        this.gainRatesForTask.hack = crime.hacking_exp * this.hacking_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.CrimeExpGain;
+        this.gainRatesForTask.str = crime.strength_exp * this.strength_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.CrimeExpGain;
+        this.gainRatesForTask.def = crime.defense_exp * this.defense_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.CrimeExpGain;
+        this.gainRatesForTask.dex = crime.dexterity_exp * this.dexterity_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.CrimeExpGain;
+        this.gainRatesForTask.agi = crime.agility_exp * this.agility_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.CrimeExpGain;
+        this.gainRatesForTask.cha = crime.charisma_exp * this.charisma_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.CrimeExpGain;
+        this.gainRatesForTask.money = crime.money * this.crime_money_mult * BitNodeMultipliers_1.BitNodeMultipliers.CrimeMoney;
+        this.currentTaskLocation = String(this.gainRatesForTask.money);
+        // We'll determine success now and adjust the earnings accordingly
+        if (Math.random() < crime.successRate(p)) {
+            this.gainRatesForTask.hack *= 2;
+            this.gainRatesForTask.str *= 2;
+            this.gainRatesForTask.def *= 2;
+            this.gainRatesForTask.dex *= 2;
+            this.gainRatesForTask.agi *= 2;
+            this.gainRatesForTask.cha *= 2;
+        }
+        else {
+            this.gainRatesForTask.money = 0;
+        }
+        this.currentTaskMaxTime = crime.time;
+        this.currentTask = SleeveTaskTypesEnum_1.SleeveTaskType.Crime;
+        return true;
+    }
+    /**
+     * Called to stop the current task
+     */
+    finishTask(p) {
+        let retValue = Person_1.createTaskTracker(); // Amount of exp to be gained by other sleeves
+        if (this.currentTask === SleeveTaskTypesEnum_1.SleeveTaskType.Crime) {
+            // For crimes, all experience and money is gained at the end
+            if (this.currentTaskTime >= this.currentTaskMaxTime) {
+                retValue = this.gainExperience(p, this.gainRatesForTask);
+                this.gainMoney(p, this.gainRatesForTask);
+                // Do not reset task to IDLE
+                this.currentTaskTime = 0;
+                return retValue;
+            }
+        }
+        else {
+            // For other crimes... I dont think anything else needs to be done
+        }
+        this.resetTaskStatus();
+        return retValue;
+    }
+    /**
+     * Earn experience for any stats (supports multiple)
+     * This function also handles experience propogating to Player and other sleeves
+     */
+    gainExperience(p, exp, numCycles = 1) {
+        // Experience is first multiplied by shock. Then 'synchronization'
+        // is accounted for
+        const multFac = (this.shock / 100) * (this.sync / 100) * numCycles;
+        const pHackExp = exp.hack * multFac;
+        const pStrExp = exp.str * multFac;
+        const pDefExp = exp.def * multFac;
+        const pDexExp = exp.dex * multFac;
+        const pAgiExp = exp.agi * multFac;
+        const pChaExp = exp.cha * multFac;
+        // Experience is gained by both this sleeve and player
+        if (pHackExp > 0) {
+            this.hacking_exp += pHackExp;
+            p.gainHackingExp(pHackExp);
+            this.earningsForPlayer.hack += pHackExp;
+            this.earningsForTask.hack += pHackExp;
+        }
+        if (pStrExp > 0) {
+            this.strength_exp += pStrExp;
+            p.gainStrengthExp(pStrExp);
+            this.earningsForPlayer.str += pStrExp;
+            this.earningsForTask.str += pStrExp;
+        }
+        if (pDefExp > 0) {
+            this.defense_exp += pDefExp;
+            p.gainDefenseExp(pDefExp);
+            this.earningsForPlayer.def += pDefExp;
+            this.earningsForTask.dex += pDefExp;
+        }
+        if (pDexExp > 0) {
+            this.dexterity_exp += pDexExp;
+            p.gainDexterityExp(pDexExp);
+            this.earningsForPlayer.dex += pDexExp;
+            this.earningsForTask.dex += pDexExp;
+        }
+        if (pAgiExp > 0) {
+            this.agility_exp += pAgiExp;
+            p.gainAgilityExp(pAgiExp);
+            this.earningsForPlayer.agi += pAgiExp;
+            this.earningsForTask.agi += pAgiExp;
+        }
+        if (pChaExp > 0) {
+            this.charisma_exp += pChaExp;
+            p.gainCharismaExp(pChaExp);
+            this.earningsForPlayer.cha += pChaExp;
+            this.earningsForTask.cha += pChaExp;
+        }
+        // Record earnings for other sleeves
+        this.earningsForSleeves.hack += (pHackExp * (this.sync / 100));
+        this.earningsForSleeves.str += (pStrExp * (this.sync / 100));
+        this.earningsForSleeves.def += (pDefExp * (this.sync / 100));
+        this.earningsForSleeves.dex += (pDexExp * (this.sync / 100));
+        this.earningsForSleeves.agi += (pAgiExp * (this.sync / 100));
+        this.earningsForSleeves.cha += (pChaExp * (this.sync / 100));
+        // Return the experience to be gained by other sleeves
+        return {
+            hack: pHackExp * (this.sync / 100),
+            str: pStrExp * (this.sync / 100),
+            def: pDefExp * (this.sync / 100),
+            dex: pDexExp * (this.sync / 100),
+            agi: pAgiExp * (this.sync / 100),
+            cha: pChaExp * (this.sync / 100),
+            money: 0,
+        };
+    }
+    /**
+     * Earn money for player
+     */
+    gainMoney(p, task, numCycles = 1) {
+        const gain = (task.money * numCycles);
+        this.earningsForTask.money += gain;
+        this.earningsForPlayer.money += gain;
+        p.gainMoney(gain);
+    }
+    /**
+     * Gets reputation gain for the current task
+     * Only applicable when working for company or faction
+     */
+    getRepGain(p) {
+        if (this.currentTask === SleeveTaskTypesEnum_1.SleeveTaskType.Faction) {
+            switch (this.factionWorkType) {
+                case FactionWorkTypeEnum_1.FactionWorkType.Hacking:
+                    return this.getFactionHackingWorkRepGain() * (this.shock / 100);
+                case FactionWorkTypeEnum_1.FactionWorkType.Field:
+                    return this.getFactionFieldWorkRepGain() * (this.shock / 100);
+                case FactionWorkTypeEnum_1.FactionWorkType.Security:
+                    return this.getFactionSecurityWorkRepGain() * (this.shock / 100);
+                default:
+                    console.warn(`Invalid Sleeve.factionWorkType property in Sleeve.getRepGain(): ${this.factionWorkType}`);
+                    return 0;
+            }
+        }
+        else if (this.currentTask === SleeveTaskTypesEnum_1.SleeveTaskType.Company) {
+            const companyName = this.currentTaskLocation;
+            const company = Companies_1.Companies[companyName];
+            if (company == null) {
+                console.error(`Invalid company found when trying to calculate rep gain: ${companyName}`);
+                return 0;
+            }
+            const companyPosition = CompanyPositions_1.CompanyPositions[p.jobs[companyName]];
+            if (companyPosition == null) {
+                console.error(`Invalid company position name found when trying to calculate rep gain: ${p.jobs[companyName]}`);
+                return 0;
+            }
+            const jobPerformance = companyPosition.calculateJobPerformance(this.hacking_skill, this.strength, this.defense, this.dexterity, this.agility, this.charisma);
+            const favorMult = 1 + (company.favor / 100);
+            return jobPerformance * this.company_rep_mult * favorMult;
+        }
+        else {
+            console.warn(`Sleeve.getRepGain() called for invalid task type: ${this.currentTask}`);
+            return 0;
+        }
+    }
+    log(entry) {
+        const MaxLogSize = 50;
+        this.logs.push(entry);
+        if (this.logs.length > MaxLogSize) {
+            this.logs.shift();
+        }
+    }
+    /**
+     * Process loop
+     * Returns an object containing the amount of experience that should be
+     * transferred to all other sleeves
+     */
+    process(p, numCycles = 1) {
+        // Only process once every second (5 cycles)
+        const CyclesPerSecond = 1000 / Constants_1.CONSTANTS.MilliPerCycle;
+        this.storedCycles += numCycles;
+        if (this.storedCycles < CyclesPerSecond) {
+            return null;
+        }
+        let time = this.storedCycles * Constants_1.CONSTANTS.MilliPerCycle;
+        let cyclesUsed = this.storedCycles;
+        if (this.currentTaskMaxTime !== 0 && this.currentTaskTime + time > this.currentTaskMaxTime) {
+            time = this.currentTaskMaxTime - this.currentTaskTime;
+            cyclesUsed = Math.floor(time / Constants_1.CONSTANTS.MilliPerCycle);
+            if (time < 0 || cyclesUsed < 0) {
+                console.warn(`Sleeve.process() calculated negative cycle usage`);
+                time = 0;
+                cyclesUsed = 0;
+            }
+        }
+        this.currentTaskTime += time;
+        // Shock gradually goes towards 100
+        this.shock = Math.min(100, this.shock + (0.0001 * this.storedCycles));
+        let retValue = Person_1.createTaskTracker();
+        switch (this.currentTask) {
+            case SleeveTaskTypesEnum_1.SleeveTaskType.Idle:
+                break;
+            case SleeveTaskTypesEnum_1.SleeveTaskType.Class:
+            case SleeveTaskTypesEnum_1.SleeveTaskType.Gym:
+                retValue = this.gainExperience(p, this.gainRatesForTask, cyclesUsed);
+                this.gainMoney(p, this.gainRatesForTask, cyclesUsed);
+                break;
+            case SleeveTaskTypesEnum_1.SleeveTaskType.Faction:
+                retValue = this.gainExperience(p, this.gainRatesForTask, cyclesUsed);
+                this.gainMoney(p, this.gainRatesForTask, cyclesUsed);
+                // Gain faction reputation
+                const fac = Factions_1.Factions[this.currentTaskLocation];
+                if (!(fac instanceof Faction_1.Faction)) {
+                    console.error(`Invalid faction for Sleeve task: ${this.currentTaskLocation}`);
+                    break;
+                }
+                fac.playerReputation += (this.getRepGain(p) * cyclesUsed);
+                break;
+            case SleeveTaskTypesEnum_1.SleeveTaskType.Company:
+                retValue = this.gainExperience(p, this.gainRatesForTask, cyclesUsed);
+                this.gainMoney(p, this.gainRatesForTask, cyclesUsed);
+                const company = Companies_1.Companies[this.currentTaskLocation];
+                if (!(company instanceof Company_1.Company)) {
+                    console.error(`Invalid company for Sleeve task: ${this.currentTaskLocation}`);
+                    break;
+                }
+                company.playerReputation += (this.getRepGain(p) * cyclesUsed);
+                break;
+            case SleeveTaskTypesEnum_1.SleeveTaskType.Recovery:
+                this.shock = Math.min(100, this.shock + (0.0001 * cyclesUsed));
+                break;
+            case SleeveTaskTypesEnum_1.SleeveTaskType.Sync:
+                this.sync = Math.min(100, this.sync + (0.0001 * cyclesUsed));
+                break;
+            default:
+                break;
+        }
+        if (this.currentTaskMaxTime !== 0 && this.currentTaskTime >= this.currentTaskMaxTime) {
+            if (this.currentTask === SleeveTaskTypesEnum_1.SleeveTaskType.Crime) {
+                retValue = this.finishTask(p);
+            }
+            else {
+                this.finishTask(p);
+            }
+        }
+        this.updateStatLevels();
+        this.storedCycles -= cyclesUsed;
+        return retValue;
+    }
+    /**
+     * Resets all parameters used to keep information about the current task
+     */
+    resetTaskStatus() {
+        this.earningsForTask = Person_1.createTaskTracker();
+        this.gainRatesForTask = Person_1.createTaskTracker();
+        this.currentTask = SleeveTaskTypesEnum_1.SleeveTaskType.Idle;
+        this.currentTaskTime = 0;
+        this.currentTaskMaxTime = 0;
+        this.factionWorkType = FactionWorkTypeEnum_1.FactionWorkType.None;
+    }
+    /**
+     * Take a course at a university
+     */
+    takeUniversityCourse(p, universityName, className) {
+        if (this.currentTask !== SleeveTaskTypesEnum_1.SleeveTaskType.Idle) {
+            this.finishTask(p);
+        }
+        else {
+            this.resetTaskStatus();
+        }
+        // Set exp/money multipliers based on which university.
+        // Also check that the sleeve is in the right city
+        let costMult = 1;
+        let expMult = 1;
+        switch (universityName.toLowerCase()) {
+            case Locations_1.Locations.AevumSummitUniversity.toLowerCase():
+                if (this.city !== Cities_1.Cities.Aevum) {
+                    return false;
+                }
+                this.currentTaskLocation = Locations_1.Locations.AevumSummitUniversity;
+                costMult = 4;
+                expMult = 3;
+                break;
+            case Locations_1.Locations.Sector12RothmanUniversity.toLowerCase():
+                if (this.city !== Cities_1.Cities.Sector12) {
+                    return false;
+                }
+                this.currentTaskLocation = Locations_1.Locations.Sector12RothmanUniversity;
+                costMult = 3;
+                expMult = 2;
+                break;
+            case Locations_1.Locations.VolhavenZBInstituteOfTechnology.toLowerCase():
+                if (this.city !== Cities_1.Cities.Volhaven) {
+                    return false;
+                }
+                this.currentTaskLocation = Locations_1.Locations.VolhavenZBInstituteOfTechnology;
+                costMult = 5;
+                expMult = 4;
+                break;
+            default:
+                return false;
+        }
+        // Number of game cycles in a second
+        const cps = 1000 / Constants_1.CONSTANTS.MilliPerCycle;
+        // Set experience/money gains based on class
+        // TODO Refactor University Courses into its own class or something
+        const baseStudyComputerScienceExp = 0.5;
+        const baseDataStructuresExp = 1;
+        const baseNetworksExp = 2;
+        const baseAlgorithmsExp = 4;
+        const baseManagementExp = 2;
+        const baseLeadershipExp = 4;
+        switch (className.toLowerCase()) {
+            case "study computer science":
+                this.gainRatesForTask.hack = (baseStudyComputerScienceExp * expMult * this.hacking_exp_mult);
+                break;
+            case "data structures":
+                this.gainRatesForTask.hack = (baseDataStructuresExp * expMult * this.hacking_exp_mult);
+                this.gainRatesForTask.money = -1 * (Constants_1.CONSTANTS.ClassDataStructuresBaseCost * costMult);
+                break;
+            case "networks":
+                this.gainRatesForTask.hack = (baseNetworksExp * expMult * this.hacking_exp_mult);
+                this.gainRatesForTask.money = -1 * (Constants_1.CONSTANTS.ClassNetworksBaseCost * costMult);
+                break;
+            case "algorithms":
+                this.gainRatesForTask.hack = (baseAlgorithmsExp * expMult * this.hacking_exp_mult);
+                this.gainRatesForTask.money = -1 * (Constants_1.CONSTANTS.ClassAlgorithmsBaseCost * costMult);
+                break;
+            case "management":
+                this.gainRatesForTask.cha = (baseManagementExp * expMult * this.charisma_exp_mult);
+                this.gainRatesForTask.money = -1 * (Constants_1.CONSTANTS.ClassManagementBaseCost * costMult);
+                break;
+            case "leadership":
+                this.gainRatesForTask.cha = (baseLeadershipExp * expMult * this.charisma_exp_mult);
+                this.gainRatesForTask.money = -1 * (Constants_1.CONSTANTS.ClassLeadershipBaseCost * costMult);
+                break;
+            default:
+                return false;
+        }
+        this.currentTask = SleeveTaskTypesEnum_1.SleeveTaskType.Class;
+        return true;
+    }
+    /**
+     * Travel to another City. Costs money from player
+     */
+    travel(p, newCity) {
+        if (Cities_1.Cities[newCity] == null) {
+            console.error(`Invalid city ${newCity} passed into Sleeve.travel()`);
+            return false;
+        }
+        p.loseMoney(Constants_1.CONSTANTS.TravelCost);
+        this.city = newCity;
+        return true;
+    }
+    /**
+     * Start work for one of the player's companies
+     * Returns boolean indicating success
+     */
+    workForCompany(p, companyName) {
+        if (!(Companies_1.Companies[companyName] instanceof Company_1.Company) || p.jobs[companyName] == null) {
+            return false;
+        }
+        if (this.currentTask !== SleeveTaskTypesEnum_1.SleeveTaskType.Idle) {
+            this.finishTask(p);
+        }
+        else {
+            this.resetTaskStatus();
+        }
+        const company = Companies_1.Companies[companyName];
+        const companyPosition = CompanyPositions_1.CompanyPositions[p.jobs[companyName]];
+        if (company == null) {
+            throw new Error(`Invalid company name specified in Sleeve.workForCompany(): ${companyName}`);
+        }
+        if (companyPosition == null) {
+            throw new Error(`Invalid CompanyPosition data in Sleeve.workForCompany(): ${companyName}`);
+        }
+        this.gainRatesForTask.money = companyPosition.baseSalary *
+            company.salaryMultiplier *
+            this.work_money_mult *
+            BitNodeMultipliers_1.BitNodeMultipliers.CompanyWorkMoney;
+        this.gainRatesForTask.hack = companyPosition.hackingExpGain *
+            company.expMultiplier *
+            this.hacking_exp_mult *
+            BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
+        this.gainRatesForTask.str = companyPosition.strengthExpGain *
+            company.expMultiplier *
+            this.strength_exp_mult *
+            BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
+        this.gainRatesForTask.def = companyPosition.defenseExpGain *
+            company.expMultiplier *
+            this.defense_exp_mult *
+            BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
+        this.gainRatesForTask.dex = companyPosition.dexterityExpGain *
+            company.expMultiplier *
+            this.dexterity_exp_mult *
+            BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
+        this.gainRatesForTask.agi = companyPosition.agilityExpGain *
+            company.expMultiplier *
+            this.agility_exp_mult *
+            BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
+        this.gainRatesForTask.cha = companyPosition.charismaExpGain *
+            company.expMultiplier *
+            this.charisma_exp_mult *
+            BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
+        this.currentTaskLocation = companyName;
+        this.currentTask = SleeveTaskTypesEnum_1.SleeveTaskType.Company;
+        this.currentTaskMaxTime = Constants_1.CONSTANTS.MillisecondsPer8Hours;
+        return true;
+    }
+    /**
+     * Start work for one of the player's factions
+     * Returns boolean indicating success
+     */
+    workForFaction(p, factionName, workType) {
+        if (!(Factions_1.Factions[factionName] instanceof Faction_1.Faction) || !p.factions.includes(factionName)) {
+            throw new Error(`Invalid Faction specified for Sleeve.workForFaction(): ${factionName}`);
+            return false;
+        }
+        if (this.currentTask !== SleeveTaskTypesEnum_1.SleeveTaskType.Idle) {
+            this.finishTask(p);
+        }
+        else {
+            this.resetTaskStatus();
+        }
+        // Set type of work (hacking/field/security), and the experience gains
+        const sanitizedWorkType = workType.toLowerCase();
+        if (sanitizedWorkType.includes("hack")) {
+            this.factionWorkType = FactionWorkTypeEnum_1.FactionWorkType.Hacking;
+            this.gainRatesForTask.hack = .15 * this.hacking_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
+        }
+        else if (sanitizedWorkType.includes("field")) {
+            this.factionWorkType = FactionWorkTypeEnum_1.FactionWorkType.Field;
+            this.gainRatesForTask.hack = .1 * this.hacking_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
+            this.gainRatesForTask.str = .1 * this.strength_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
+            this.gainRatesForTask.def = .1 * this.defense_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
+            this.gainRatesForTask.dex = .1 * this.dexterity_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
+            this.gainRatesForTask.agi = .1 * this.agility_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
+            this.gainRatesForTask.cha = .1 * this.charisma_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
+        }
+        else if (sanitizedWorkType.includes("security")) {
+            this.factionWorkType = FactionWorkTypeEnum_1.FactionWorkType.Security;
+            this.gainRatesForTask.hack = .1 * this.hacking_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
+            this.gainRatesForTask.str = .15 * this.strength_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
+            this.gainRatesForTask.def = .15 * this.defense_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
+            this.gainRatesForTask.dex = .15 * this.dexterity_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
+            this.gainRatesForTask.agi = .15 * this.agility_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
+        }
+        else {
+            return false;
+        }
+        this.currentTaskLocation = factionName;
+        this.currentTask = SleeveTaskTypesEnum_1.SleeveTaskType.Faction;
+        this.currentTaskMaxTime = Constants_1.CONSTANTS.MillisecondsPer20Hours;
+        return true;
+    }
+    /**
+     * Begin a gym workout task
+     */
+    workoutAtGym(p, gymName, stat) {
+        if (this.currentTask !== SleeveTaskTypesEnum_1.SleeveTaskType.Idle) {
+            this.finishTask(p);
+        }
+        else {
+            this.resetTaskStatus();
+        }
+        // Set exp/money multipliers based on which university.
+        // Also check that the sleeve is in the right city
+        let costMult = 1;
+        let expMult = 1;
+        switch (gymName.toLowerCase()) {
+            case Locations_1.Locations.AevumCrushFitnessGym.toLowerCase():
+                if (this.city != Cities_1.Cities.Aevum) {
+                    return false;
+                }
+                this.currentTaskLocation = Locations_1.Locations.AevumCrushFitnessGym;
+                costMult = 3;
+                expMult = 2;
+                break;
+            case Locations_1.Locations.AevumSnapFitnessGym.toLowerCase():
+                if (this.city != Cities_1.Cities.Aevum) {
+                    return false;
+                }
+                this.currentTaskLocation = Locations_1.Locations.AevumSnapFitnessGym;
+                costMult = 10;
+                expMult = 5;
+                break;
+            case Locations_1.Locations.Sector12IronGym.toLowerCase():
+                if (this.city != Cities_1.Cities.Sector12) {
+                    return false;
+                }
+                this.currentTaskLocation = Locations_1.Locations.Sector12IronGym;
+                costMult = 1;
+                expMult = 1;
+                break;
+            case Locations_1.Locations.Sector12PowerhouseGym.toLowerCase():
+                if (this.city != Cities_1.Cities.Sector12) {
+                    return false;
+                }
+                this.currentTaskLocation = Locations_1.Locations.Sector12PowerhouseGym;
+                costMult = 20;
+                expMult = 10;
+                break;
+            case Locations_1.Locations.VolhavenMilleniumFitnessGym:
+                if (this.city != Cities_1.Cities.Volhaven) {
+                    return false;
+                }
+                this.currentTaskLocation = Locations_1.Locations.VolhavenMilleniumFitnessGym;
+                costMult = 7;
+                expMult = 4;
+                break;
+            default:
+                return false;
+        }
+        // Number of game cycles in a second
+        const cps = 1000 / Constants_1.CONSTANTS.MilliPerCycle;
+        // Set experience/money gains based on class
+        // TODO Refactor University Courses into its own class or something
+        const baseGymExp = 1;
+        const sanitizedStat = stat.toLowerCase();
+        // Set cost
+        this.gainRatesForTask.money = -1 * (Constants_1.CONSTANTS.ClassGymBaseCost * costMult);
+        // Set stat gain rate
+        if (sanitizedStat.includes("str")) {
+            this.gainRatesForTask.str = (baseGymExp * expMult);
+        }
+        else if (sanitizedStat.includes("def")) {
+            this.gainRatesForTask.def = (baseGymExp * expMult);
+        }
+        else if (sanitizedStat.includes("dex")) {
+            this.gainRatesForTask.dex = (baseGymExp * expMult);
+        }
+        else if (sanitizedStat.includes("agi")) {
+            this.gainRatesForTask.agi = (baseGymExp * expMult);
+        }
+        else {
+            return false;
+        }
+        this.currentTask = SleeveTaskTypesEnum_1.SleeveTaskType.Gym;
+        return true;
+    }
+    /**
+     * Serialize the current object to a JSON save state.
+     */
+    toJSON() {
+        return JSONReviver_1.Generic_toJSON("Sleeve", this);
+    }
+}
+exports.Sleeve = Sleeve;
+JSONReviver_1.Reviver.constructors.Sleeve = Sleeve;
+
+
+/***/ }),
+/* 100 */
 /*!****************************************!*\
   !*** ./utils/helpers/compareArrays.ts ***!
   \****************************************/
@@ -48150,7 +48898,7 @@ exports.compareArrays = compareArrays;
 
 
 /***/ }),
-/* 100 */
+/* 101 */
 /*!**********************************************!*\
   !*** ./src/Company/GetJobRequirementText.ts ***!
   \**********************************************/
@@ -48216,7 +48964,7 @@ exports.getJobRequirementText = getJobRequirementText;
 
 
 /***/ }),
-/* 101 */
+/* 102 */
 /*!***********************************!*\
   !*** ./src/Crime/CrimeHelpers.js ***!
   \***********************************/
@@ -48227,9 +48975,12 @@ exports.getJobRequirementText = getJobRequirementText;
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return determineCrimeSuccess; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return findCrime; });
-/* harmony import */ var _Crimes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Crimes */ 37);
+/* harmony import */ var _Crimes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Crimes */ 36);
 /* harmony import */ var _Crimes__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Crimes__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/DialogBox */ 9);
+/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Player */ 0);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/DialogBox */ 9);
+
+
 
 
 
@@ -48240,7 +48991,7 @@ function determineCrimeSuccess(type, moneyGained) {
     for(const i in _Crimes__WEBPACK_IMPORTED_MODULE_0__["Crimes"]) {
       const crime = _Crimes__WEBPACK_IMPORTED_MODULE_0__["Crimes"][i];
       if(crime.type == type) {
-        chance = crime.successRate(Player);
+        chance = crime.successRate(_Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"]);
         found = true;
         break;
       }
@@ -48248,13 +48999,13 @@ function determineCrimeSuccess(type, moneyGained) {
 
     if(!found) {
       console.log(crime);
-      Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_1__["dialogBoxCreate"])("ERR: Unrecognized crime type. This is probably a bug please contact the developer");
+      Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_2__["dialogBoxCreate"])("ERR: Unrecognized crime type. This is probably a bug please contact the developer");
       return;
     }
 
     if (Math.random() <= chance) {
         //Success
-        Player.gainMoney(moneyGained);
+        _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].gainMoney(moneyGained);
         return true;
     } else {
         //Failure
@@ -48294,7 +49045,7 @@ function findCrime(roughName) {
 
 
 /***/ }),
-/* 102 */
+/* 103 */
 /*!****************************************!*\
   !*** ./src/Programs/ProgramHelpers.js ***!
   \****************************************/
@@ -48390,7 +49141,7 @@ function initCreateProgramButtons() {
 
 
 /***/ }),
-/* 103 */
+/* 104 */
 /*!****************************************!*\
   !*** ./utils/helpers/getRandomByte.ts ***!
   \****************************************/
@@ -48416,9 +49167,35 @@ exports.getRandomByte = getRandomByte;
 
 
 /***/ }),
-/* 104 */,
 /* 105 */,
-/* 106 */
+/* 106 */,
+/* 107 */
+/*!*********************************!*\
+  !*** ./src/Locations/Cities.ts ***!
+  \*********************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Display Location Content when visiting somewhere in the World
+ */
+// tslint:disable-next-line:variable-name
+exports.Cities = {
+    Aevum: "Aevum",
+    Chongqing: "Chongqing",
+    Ishima: "Ishima",
+    NewTokyo: "New Tokyo",
+    Sector12: "Sector-12",
+    Volhaven: "Volhaven",
+};
+
+
+/***/ }),
+/* 108 */
 /*!****************************************!*\
   !*** ./src/Corporation/ResearchMap.ts ***!
   \****************************************/
@@ -48431,8 +49208,8 @@ exports.getRandomByte = getRandomByte;
 Object.defineProperty(exports, "__esModule", { value: true });
 // The Research Map is an object that holds all Corporation Research objects
 // as values. They are identified by their names
-const Research_1 = __webpack_require__(/*! ./Research */ 230);
-const ResearchMetadata_1 = __webpack_require__(/*! ./data/ResearchMetadata */ 229);
+const Research_1 = __webpack_require__(/*! ./Research */ 239);
+const ResearchMetadata_1 = __webpack_require__(/*! ./data/ResearchMetadata */ 238);
 exports.ResearchMap = {};
 function addResearch(p) {
     if (exports.ResearchMap[p.name] != null) {
@@ -48446,7 +49223,7 @@ for (const metadata of ResearchMetadata_1.researchMetadata) {
 
 
 /***/ }),
-/* 107 */
+/* 109 */
 /*!****************************************!*\
   !*** ./src/CodingContractGenerator.js ***!
   \****************************************/
@@ -48624,7 +49401,7 @@ function getRandomFilename(server, reward) {
 
 
 /***/ }),
-/* 108 */
+/* 110 */
 /*!******************************!*\
   !*** ./src/CinematicText.js ***!
   \******************************/
@@ -48640,9 +49417,9 @@ function getRandomFilename(server, reward) {
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 45);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 42);
 /* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/helpers/isString */ 43);
+/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/helpers/isString */ 44);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_4__);
 
 
@@ -48746,7 +49523,555 @@ function cinematicTextEnd() {
 
 
 /***/ }),
-/* 109 */
+/* 111 */
+/*!**********************************************!*\
+  !*** ./src/PersonObjects/Sleeve/SleeveUI.ts ***!
+  \**********************************************/
+/*! no static exports found */
+/*! exports used: clearSleevesPage, createSleevesPage, updateSleevesPage */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const SleeveTaskTypesEnum_1 = __webpack_require__(/*! ./SleeveTaskTypesEnum */ 140);
+const SleeveFaq_1 = __webpack_require__(/*! ./data/SleeveFaq */ 217);
+const Locations_1 = __webpack_require__(/*! ../../Locations */ 5);
+const Cities_1 = __webpack_require__(/*! ../../Locations/Cities */ 107);
+const Crimes_1 = __webpack_require__(/*! ../../Crime/Crimes */ 36);
+const numeralFormat_1 = __webpack_require__(/*! ../../ui/numeralFormat */ 4);
+const navigationTracking_1 = __webpack_require__(/*! ../../ui/navigationTracking */ 13);
+const DialogBox_1 = __webpack_require__(/*! ../../../utils/DialogBox */ 9);
+const createProgressBarText_1 = __webpack_require__(/*! ../../../utils/helpers/createProgressBarText */ 86);
+const exceptionAlert_1 = __webpack_require__(/*! ../../../utils/helpers/exceptionAlert */ 42);
+const createElement_1 = __webpack_require__(/*! ../../../utils/uiHelpers/createElement */ 2);
+const createOptionElement_1 = __webpack_require__(/*! ../../../utils/uiHelpers/createOptionElement */ 137);
+const getSelectData_1 = __webpack_require__(/*! ../../../utils/uiHelpers/getSelectData */ 136);
+const removeChildrenFromElement_1 = __webpack_require__(/*! ../../../utils/uiHelpers/removeChildrenFromElement */ 32);
+const removeElement_1 = __webpack_require__(/*! ../../../utils/uiHelpers/removeElement */ 62);
+const UIElems = {
+    container: null,
+    docButton: null,
+    faqButton: null,
+    info: null,
+    sleeveList: null,
+    sleeves: null,
+};
+// Creates the UI for the entire Sleeves page
+let playerRef;
+function createSleevesPage(p) {
+    if (!navigationTracking_1.routing.isOn(navigationTracking_1.Page.Sleeves)) {
+        return;
+    }
+    try {
+        playerRef = p;
+        UIElems.container = createElement_1.createElement("div", {
+            class: "generic-menupage-container",
+            id: "sleeves-container",
+            position: "fixed",
+        });
+        UIElems.info = createElement_1.createElement("p", {
+            class: "sleeves-page-info",
+            innerHTML: "Duplicate Sleeves are MK-V Synthoids (synthetic androids) into which your " +
+                "consciousness has copied. In other words, these Synthoids contain " +
+                "a perfect duplicate of your mind.<br><br>" +
+                "Sleeves can be used to perform different tasks synchronously.<br><br>",
+        });
+        UIElems.faqButton = createElement_1.createElement("button", {
+            class: "std-button",
+            display: "inline-block",
+            innerText: "FAQ",
+            clickListener: () => {
+                DialogBox_1.dialogBoxCreate(SleeveFaq_1.SleeveFaq, false);
+            }
+        });
+        UIElems.docButton = createElement_1.createElement("button", {
+            class: "std-button",
+            display: "inline-block",
+            innerText: "Documentation",
+        });
+        UIElems.sleeveList = createElement_1.createElement("ul");
+        UIElems.sleeves = [];
+        // Create UI modules for all Sleeve
+        for (const sleeve of p.sleeves) {
+            const sleeveUi = createSleeveUi(sleeve, p.sleeves);
+            UIElems.sleeveList.appendChild(sleeveUi.container);
+            UIElems.sleeves.push(sleeveUi);
+        }
+        UIElems.container.appendChild(UIElems.info);
+        UIElems.container.appendChild(UIElems.faqButton);
+        UIElems.container.appendChild(UIElems.sleeveList);
+        document.getElementById("entire-game-container").appendChild(UIElems.container);
+    }
+    catch (e) {
+        exceptionAlert_1.exceptionAlert(e);
+    }
+}
+exports.createSleevesPage = createSleevesPage;
+// Updates the UI for the entire Sleeves page
+function updateSleevesPage() {
+    if (!navigationTracking_1.routing.isOn(navigationTracking_1.Page.Sleeves)) {
+        return;
+    }
+    try {
+        for (let i = 0; i < playerRef.sleeves.length; ++i) {
+            const sleeve = playerRef.sleeves[i];
+            const elems = UIElems.sleeves[i];
+            updateSleeveUi(sleeve, elems);
+        }
+    }
+    catch (e) {
+        exceptionAlert_1.exceptionAlert(e);
+    }
+}
+exports.updateSleevesPage = updateSleevesPage;
+function clearSleevesPage() {
+    if (UIElems.container instanceof HTMLElement) {
+        removeElement_1.removeElement(UIElems.container);
+    }
+    for (const prop in UIElems) {
+        UIElems[prop] = null;
+    }
+    playerRef = null;
+}
+exports.clearSleevesPage = clearSleevesPage;
+// Creates the UI for a single Sleeve
+// Returns an object containing the DOM elements in the UI (ISleeveUIElems)
+function createSleeveUi(sleeve, allSleeves) {
+    const elems = {
+        container: null,
+        statsPanel: null,
+        stats: null,
+        moreStatsButton: null,
+        taskPanel: null,
+        taskSelector: null,
+        taskDetailsSelector: null,
+        taskDetailsSelector2: null,
+        taskDescription: null,
+        taskSetButton: null,
+        taskProgressBar: null,
+        earningsPanel: null,
+        currentEarningsInfo: null,
+        totalEarningsButton: null,
+    };
+    if (!navigationTracking_1.routing.isOn(navigationTracking_1.Page.Sleeves)) {
+        return elems;
+    }
+    elems.container = createElement_1.createElement("div", {
+        class: "sleeve-container",
+        display: "block",
+    });
+    elems.statsPanel = createElement_1.createElement("div", { class: "sleeve-panel", width: "25%" });
+    elems.stats = createElement_1.createElement("p", { class: "sleeve-stats-text" });
+    elems.moreStatsButton = createElement_1.createElement("button", {
+        class: "std-button",
+        innerText: "More Stats",
+        clickListener: () => {
+            DialogBox_1.dialogBoxCreate([
+                "<h2><u>Stats:</u></h2>",
+                `Hacking: ${sleeve.hacking_skill} (${numeralFormat_1.numeralWrapper.formatBigNumber(sleeve.hacking_exp)} exp)`,
+                `Strength: ${sleeve.strength} (${numeralFormat_1.numeralWrapper.formatBigNumber(sleeve.strength_exp)} exp)`,
+                `Defense: ${sleeve.defense} (${numeralFormat_1.numeralWrapper.formatBigNumber(sleeve.defense_exp)} exp)`,
+                `Dexterity: ${sleeve.dexterity} (${numeralFormat_1.numeralWrapper.formatBigNumber(sleeve.dexterity_exp)} exp)`,
+                `Agility: ${sleeve.agility} (${numeralFormat_1.numeralWrapper.formatBigNumber(sleeve.agility_exp)} exp)`,
+                `Charisma: ${sleeve.charisma} (${numeralFormat_1.numeralWrapper.formatBigNumber(sleeve.charisma_exp)} exp)<br>`,
+                "<h2><u>Multipliers:</u></h2>",
+                `Hacking Level multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(sleeve.hacking_mult)}`,
+                `Hacking Experience multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(sleeve.hacking_exp_mult)}`,
+                `Strength Level multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(sleeve.strength_mult)}`,
+                `Strength Experience multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(sleeve.strength_exp_mult)}`,
+                `Defense Level multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(sleeve.defense_mult)}`,
+                `Defense Experience multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(sleeve.defense_exp_mult)}`,
+                `Dexterity Level multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(sleeve.dexterity_mult)}`,
+                `Dexterity Experience multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(sleeve.dexterity_exp_mult)}`,
+                `Agility Level multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(sleeve.agility_mult)}`,
+                `Agility Experience multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(sleeve.agility_exp_mult)}`,
+                `Charisma Level multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(sleeve.charisma_mult)}`,
+                `Charisma Experience multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(sleeve.charisma_exp_mult)}`,
+                `Faction Reputation Gain multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(sleeve.faction_rep_mult)}`,
+                `Company Reputation Gain multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(sleeve.company_rep_mult)}`,
+                `Salary multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(sleeve.work_money_mult)}`,
+                `Crime Money multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(sleeve.crime_money_mult)}`,
+                `Crime Success multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(sleeve.crime_success_mult)}`,
+            ].join("<br>"), false);
+        }
+    });
+    elems.statsPanel.appendChild(elems.stats);
+    elems.statsPanel.appendChild(elems.moreStatsButton);
+    elems.taskPanel = createElement_1.createElement("div", { class: "sleeve-panel", width: "40%" });
+    elems.taskSelector = createElement_1.createElement("select");
+    elems.taskSelector.add(createOptionElement_1.createOptionElement("------"));
+    elems.taskSelector.add(createOptionElement_1.createOptionElement("Work for Company"));
+    elems.taskSelector.add(createOptionElement_1.createOptionElement("Work for Faction"));
+    elems.taskSelector.add(createOptionElement_1.createOptionElement("Commit Crime"));
+    elems.taskSelector.add(createOptionElement_1.createOptionElement("Take University Course"));
+    elems.taskSelector.add(createOptionElement_1.createOptionElement("Workout at Gym"));
+    elems.taskSelector.add(createOptionElement_1.createOptionElement("Shock Recovery"));
+    elems.taskSelector.add(createOptionElement_1.createOptionElement("Synchronize"));
+    elems.taskSelector.addEventListener("change", () => {
+        updateSleeveTaskSelector(sleeve, elems, allSleeves);
+    });
+    elems.taskDetailsSelector = createElement_1.createElement("select");
+    elems.taskDetailsSelector2 = createElement_1.createElement("select");
+    elems.taskDescription = createElement_1.createElement("p");
+    elems.taskProgressBar = createElement_1.createElement("p");
+    elems.taskSelector.selectedIndex = sleeve.currentTask; // Set initial value for Task Selector
+    elems.taskSelector.dispatchEvent(new Event('change'));
+    updateSleeveTaskDescription(sleeve, elems);
+    elems.taskSetButton = createElement_1.createElement("button", {
+        class: "std-button",
+        innerText: "Set Task",
+        clickListener: () => {
+            setSleeveTask(sleeve, elems);
+        }
+    });
+    elems.taskPanel.appendChild(elems.taskSelector);
+    elems.taskPanel.appendChild(elems.taskDetailsSelector);
+    elems.taskPanel.appendChild(elems.taskDetailsSelector2);
+    elems.taskPanel.appendChild(elems.taskSetButton);
+    elems.taskPanel.appendChild(elems.taskDescription);
+    elems.taskPanel.appendChild(elems.taskProgressBar);
+    elems.earningsPanel = createElement_1.createElement("div", { class: "sleeve-panel", width: "35%" });
+    elems.currentEarningsInfo = createElement_1.createElement("p");
+    elems.totalEarningsButton = createElement_1.createElement("button", {
+        class: "std-button",
+        innerText: "More Earnings Info",
+        clickListener: () => {
+            DialogBox_1.dialogBoxCreate([
+                "<h2><u>Earnings for Current Task:</u></h2>",
+                `Money: ${numeralFormat_1.numeralWrapper.formatMoney(sleeve.earningsForTask.money)}`,
+                `Hacking Exp: ${numeralFormat_1.numeralWrapper.formatBigNumber(sleeve.earningsForTask.hack)}`,
+                `Strength Exp: ${numeralFormat_1.numeralWrapper.formatBigNumber(sleeve.earningsForTask.str)}`,
+                `Defense Exp: ${numeralFormat_1.numeralWrapper.formatBigNumber(sleeve.earningsForTask.def)}`,
+                `Dexterity Exp: ${numeralFormat_1.numeralWrapper.formatBigNumber(sleeve.earningsForTask.dex)}`,
+                `Agility Exp: ${numeralFormat_1.numeralWrapper.formatBigNumber(sleeve.earningsForTask.agi)}`,
+                `Charisma Exp: ${numeralFormat_1.numeralWrapper.formatBigNumber(sleeve.earningsForTask.cha)}<br>`,
+                "<h2><u>Total Earnings for Host Consciousness:</u></h2>",
+                `Money: ${numeralFormat_1.numeralWrapper.formatMoney(sleeve.earningsForPlayer.money)}`,
+                `Hacking Exp: ${numeralFormat_1.numeralWrapper.formatBigNumber(sleeve.earningsForPlayer.hack)}`,
+                `Strength Exp: ${numeralFormat_1.numeralWrapper.formatBigNumber(sleeve.earningsForPlayer.str)}`,
+                `Defense Exp: ${numeralFormat_1.numeralWrapper.formatBigNumber(sleeve.earningsForPlayer.def)}`,
+                `Dexterity Exp: ${numeralFormat_1.numeralWrapper.formatBigNumber(sleeve.earningsForPlayer.dex)}`,
+                `Agility Exp: ${numeralFormat_1.numeralWrapper.formatBigNumber(sleeve.earningsForPlayer.agi)}`,
+                `Charisma Exp: ${numeralFormat_1.numeralWrapper.formatBigNumber(sleeve.earningsForPlayer.cha)}<br>`,
+                "<h2><u>Total Earnings for Other Sleeves:</u></h2>",
+                `Money: ${numeralFormat_1.numeralWrapper.formatMoney(sleeve.earningsForSleeves.money)}`,
+                `Hacking Exp: ${numeralFormat_1.numeralWrapper.formatBigNumber(sleeve.earningsForSleeves.hack)}`,
+                `Strength Exp: ${numeralFormat_1.numeralWrapper.formatBigNumber(sleeve.earningsForSleeves.str)}`,
+                `Defense Exp: ${numeralFormat_1.numeralWrapper.formatBigNumber(sleeve.earningsForSleeves.def)}`,
+                `Dexterity Exp: ${numeralFormat_1.numeralWrapper.formatBigNumber(sleeve.earningsForSleeves.dex)}`,
+                `Agility Exp: ${numeralFormat_1.numeralWrapper.formatBigNumber(sleeve.earningsForSleeves.agi)}`,
+                `Charisma Exp: ${numeralFormat_1.numeralWrapper.formatBigNumber(sleeve.earningsForSleeves.cha)}`,
+            ].join("<br>"), false);
+        }
+    });
+    elems.earningsPanel.appendChild(elems.currentEarningsInfo);
+    elems.earningsPanel.appendChild(elems.totalEarningsButton);
+    updateSleeveUi(sleeve, elems);
+    elems.container.appendChild(elems.statsPanel);
+    elems.container.appendChild(elems.taskPanel);
+    elems.container.appendChild(elems.earningsPanel);
+    return elems;
+}
+// Updates the UI for a single Sleeve
+function updateSleeveUi(sleeve, elems) {
+    if (!navigationTracking_1.routing.isOn(navigationTracking_1.Page.Sleeves)) {
+        return;
+    }
+    elems.stats.innerHTML = [`Hacking: ${numeralFormat_1.numeralWrapper.format(sleeve.hacking_skill, "0,0")}`,
+        `Strength: ${numeralFormat_1.numeralWrapper.format(sleeve.strength, "0,0")}`,
+        `Defense: ${numeralFormat_1.numeralWrapper.format(sleeve.defense, "0,0")}`,
+        `Dexterity: ${numeralFormat_1.numeralWrapper.format(sleeve.dexterity, "0,0")}`,
+        `Agility: ${numeralFormat_1.numeralWrapper.format(sleeve.agility, "0,0")}`,
+        `Charisma: ${numeralFormat_1.numeralWrapper.format(sleeve.charisma, "0,0")}`,
+        `HP: ${numeralFormat_1.numeralWrapper.format(sleeve.hp, "0,0")} / ${numeralFormat_1.numeralWrapper.format(sleeve.max_hp, "0,0")}<br>`,
+        `Shock: ${numeralFormat_1.numeralWrapper.format(100 - sleeve.shock, "0,0.000")}`,
+        `Sync: ${numeralFormat_1.numeralWrapper.format(sleeve.sync, "0,0.000")}`].join("<br>");
+    let repGainText = "";
+    if (sleeve.currentTask === SleeveTaskTypesEnum_1.SleeveTaskType.Company || sleeve.currentTask === SleeveTaskTypesEnum_1.SleeveTaskType.Faction) {
+        const repGain = sleeve.getRepGain(playerRef);
+        repGainText = `Reputation: ${numeralFormat_1.numeralWrapper.format(5 * repGain, "0.00")} / s`;
+    }
+    if (sleeve.currentTask === SleeveTaskTypesEnum_1.SleeveTaskType.Crime) {
+        elems.currentEarningsInfo.innerHTML = [
+            `Earnings (Pre-Synchronization):`,
+            `Money: ${numeralFormat_1.numeralWrapper.formatMoney(parseFloat(sleeve.currentTaskLocation))} if successful`,
+            `Hacking Exp: ${numeralFormat_1.numeralWrapper.format(sleeve.gainRatesForTask.hack, "0.00")} (2x if successful)`,
+            `Strength Exp: ${numeralFormat_1.numeralWrapper.format(sleeve.gainRatesForTask.str, "0.00")} (2x if successful)`,
+            `Defense Exp: ${numeralFormat_1.numeralWrapper.format(sleeve.gainRatesForTask.def, "0.00")} (2x if successful)`,
+            `Dexterity Exp: ${numeralFormat_1.numeralWrapper.format(sleeve.gainRatesForTask.dex, "0.00")} (2x if successful)`,
+            `Agility Exp: ${numeralFormat_1.numeralWrapper.format(sleeve.gainRatesForTask.agi, "0.00")} (2x if successful)`,
+            `Charisma Exp: ${numeralFormat_1.numeralWrapper.format(sleeve.gainRatesForTask.cha, "0.00")} (2x if successful)`
+        ].join("<br>");
+        elems.taskProgressBar.innerText = createProgressBarText_1.createProgressBarText({
+            progress: sleeve.currentTaskTime / sleeve.currentTaskMaxTime,
+            totalTicks: 25,
+        });
+    }
+    else {
+        const lines = [
+            `Earnings (Pre-Synchronization):`,
+            `Money: ${numeralFormat_1.numeralWrapper.formatMoney(5 * sleeve.gainRatesForTask.money)} / s`,
+            `Hacking Exp: ${numeralFormat_1.numeralWrapper.format(5 * sleeve.gainRatesForTask.hack, "0.00")} / s`,
+            `Strength Exp: ${numeralFormat_1.numeralWrapper.format(5 * sleeve.gainRatesForTask.str, "0.00")} / s`,
+            `Defense Exp: ${numeralFormat_1.numeralWrapper.format(5 * sleeve.gainRatesForTask.def, "0.00")} / s`,
+            `Dexterity Exp: ${numeralFormat_1.numeralWrapper.format(5 * sleeve.gainRatesForTask.dex, "0.00")} / s`,
+            `Agility Exp: ${numeralFormat_1.numeralWrapper.format(5 * sleeve.gainRatesForTask.agi, "0.00")} / s`,
+            `Charisma Exp: ${numeralFormat_1.numeralWrapper.format(5 * sleeve.gainRatesForTask.cha, "0.00")} / s`
+        ];
+        if (repGainText !== "") {
+            lines.push(repGainText);
+        }
+        elems.currentEarningsInfo.innerHTML = lines.join("<br>");
+        elems.taskProgressBar.innerText = "";
+    }
+}
+const factionWorkTypeSelectorOptions = [
+    "Hacking Contracts",
+    "Security Work",
+    "Field Work"
+];
+const universitySelectorOptions = [
+    "Study Computer Science",
+    "Data Structures",
+    "Networks",
+    "Algorithms",
+    "Management",
+    "Leadership"
+];
+const gymSelectorOptions = [
+    "Train Strength",
+    "Train Defense",
+    "Train Dexterity",
+    "Train Agility"
+];
+// Whenever a new task is selected, the "details" selector must update accordingly
+function updateSleeveTaskSelector(sleeve, elems, allSleeves) {
+    if (playerRef == null) {
+        throw new Error(`playerRef is null in updateSleeveTaskSelector()`);
+    }
+    // Array of all companies that other sleeves are working at
+    const forbiddenCompanies = [];
+    for (const otherSleeve of allSleeves) {
+        if (sleeve === otherSleeve) {
+            continue;
+        }
+        if (otherSleeve.currentTask === SleeveTaskTypesEnum_1.SleeveTaskType.Company) {
+            forbiddenCompanies.push(otherSleeve.currentTaskLocation);
+        }
+    }
+    // Array of all factions that other sleeves are working for
+    const forbiddenFactions = [];
+    for (const otherSleeve of allSleeves) {
+        if (sleeve === otherSleeve) {
+            continue;
+        }
+        if (otherSleeve.currentTask === SleeveTaskTypesEnum_1.SleeveTaskType.Faction) {
+            forbiddenFactions.push(otherSleeve.currentTaskLocation);
+        }
+    }
+    // Reset Selectors
+    removeChildrenFromElement_1.removeChildrenFromElement(elems.taskDetailsSelector);
+    removeChildrenFromElement_1.removeChildrenFromElement(elems.taskDetailsSelector2);
+    const value = getSelectData_1.getSelectValue(elems.taskSelector);
+    switch (value) {
+        case "Work for Company":
+            const allJobs = Object.keys(playerRef.jobs);
+            for (let i = 0; i < allJobs.length; ++i) {
+                if (!forbiddenCompanies.includes(allJobs[i])) {
+                    elems.taskDetailsSelector.add(createOptionElement_1.createOptionElement(allJobs[i]));
+                    // Set initial value of the 'Details' selector
+                    if (sleeve.currentTaskLocation === allJobs[i]) {
+                        elems.taskDetailsSelector.selectedIndex = i;
+                    }
+                }
+                elems.taskDetailsSelector2.add(createOptionElement_1.createOptionElement("------"));
+            }
+            break;
+        case "Work for Faction":
+            for (let i = 0; i < playerRef.factions.length; ++i) {
+                const fac = playerRef.factions[i];
+                if (!forbiddenFactions.includes(fac)) {
+                    elems.taskDetailsSelector.add(createOptionElement_1.createOptionElement(fac));
+                    // Set initial value of the 'Details' Selector
+                    if (sleeve.currentTaskLocation === fac) {
+                        elems.taskDetailsSelector.selectedIndex = i;
+                    }
+                }
+            }
+            for (let i = 0; i < factionWorkTypeSelectorOptions.length; ++i) {
+                elems.taskDetailsSelector2.add(createOptionElement_1.createOptionElement(factionWorkTypeSelectorOptions[i]));
+            }
+            break;
+        case "Commit Crime":
+            for (const crimeLabel in Crimes_1.Crimes) {
+                const name = Crimes_1.Crimes[crimeLabel].name;
+                elems.taskDetailsSelector.add(createOptionElement_1.createOptionElement(name, crimeLabel));
+            }
+            elems.taskDetailsSelector2.add(createOptionElement_1.createOptionElement("------"));
+            break;
+        case "Take University Course":
+            // First selector has class type
+            for (let i = 0; i < universitySelectorOptions.length; ++i) {
+                elems.taskDetailsSelector.add(createOptionElement_1.createOptionElement(universitySelectorOptions[i]));
+            }
+            // Second selector has which university
+            switch (sleeve.city) {
+                case Cities_1.Cities.Aevum:
+                    elems.taskDetailsSelector2.add(createOptionElement_1.createOptionElement(Locations_1.Locations.AevumSummitUniversity));
+                    break;
+                case Cities_1.Cities.Sector12:
+                    elems.taskDetailsSelector2.add(createOptionElement_1.createOptionElement(Locations_1.Locations.Sector12RothmanUniversity));
+                    break;
+                case Cities_1.Cities.Volhaven:
+                    elems.taskDetailsSelector2.add(createOptionElement_1.createOptionElement(Locations_1.Locations.VolhavenZBInstituteOfTechnology));
+                    break;
+                default:
+                    elems.taskDetailsSelector2.add(createOptionElement_1.createOptionElement("No university available in city!"));
+                    break;
+            }
+            break;
+        case "Workout at Gym":
+            // First selector has what stat is being trained
+            for (let i = 0; i < gymSelectorOptions.length; ++i) {
+                elems.taskDetailsSelector.add(createOptionElement_1.createOptionElement(gymSelectorOptions[i]));
+            }
+            // Second selector has gym
+            switch (sleeve.city) {
+                case Cities_1.Cities.Aevum:
+                    elems.taskDetailsSelector2.add(createOptionElement_1.createOptionElement(Locations_1.Locations.AevumCrushFitnessGym));
+                    elems.taskDetailsSelector2.add(createOptionElement_1.createOptionElement(Locations_1.Locations.AevumSnapFitnessGym));
+                    break;
+                case Cities_1.Cities.Sector12:
+                    elems.taskDetailsSelector2.add(createOptionElement_1.createOptionElement(Locations_1.Locations.Sector12IronGym));
+                    elems.taskDetailsSelector2.add(createOptionElement_1.createOptionElement(Locations_1.Locations.Sector12PowerhouseGym));
+                    break;
+                case Cities_1.Cities.Volhaven:
+                    elems.taskDetailsSelector2.add(createOptionElement_1.createOptionElement(Locations_1.Locations.VolhavenMilleniumFitnessGym));
+                    break;
+                default:
+                    elems.taskDetailsSelector2.add(createOptionElement_1.createOptionElement("No gym available in city!"));
+                    break;
+            }
+            break;
+        case "Shock Recovery":
+        case "Synchronize":
+        case "------":
+            // No options in "Details" selector
+            elems.taskDetailsSelector.add(createOptionElement_1.createOptionElement("------"));
+            elems.taskDetailsSelector2.add(createOptionElement_1.createOptionElement("------"));
+            return;
+        default:
+            break;
+    }
+}
+function setSleeveTask(sleeve, elems) {
+    try {
+        if (playerRef == null) {
+            throw new Error("playerRef is null in Sleeve UI's setSleeveTask()");
+        }
+        const taskValue = getSelectData_1.getSelectValue(elems.taskSelector);
+        const detailValue = getSelectData_1.getSelectValue(elems.taskDetailsSelector);
+        const detailValue2 = getSelectData_1.getSelectValue(elems.taskDetailsSelector2);
+        let res = false;
+        switch (taskValue) {
+            case "------":
+                elems.taskDescription.innerText = "This sleeve is currently idle";
+                break;
+            case "Work for Company":
+                res = sleeve.workForCompany(playerRef, detailValue);
+                break;
+            case "Work for Faction":
+                res = sleeve.workForFaction(playerRef, detailValue, detailValue2);
+                break;
+            case "Commit Crime":
+                res = sleeve.commitCrime(playerRef, Crimes_1.Crimes[detailValue]);
+                break;
+            case "Take University Course":
+                res = sleeve.takeUniversityCourse(playerRef, detailValue2, detailValue);
+                break;
+            case "Workout at Gym":
+                res = sleeve.workoutAtGym(playerRef, detailValue2, detailValue);
+                break;
+            case "Shock Recovery":
+                sleeve.currentTask = SleeveTaskTypesEnum_1.SleeveTaskType.Recovery;
+                res = true;
+                break;
+            case "Synchronize":
+                sleeve.currentTask = SleeveTaskTypesEnum_1.SleeveTaskType.Sync;
+                res = true;
+                break;
+            default:
+                console.error(`Invalid/Unrecognized taskValue in setSleeveTask(): ${taskValue}`);
+        }
+        if (res) {
+            updateSleeveTaskDescription(sleeve, elems);
+        }
+        else {
+            elems.taskDescription.innerText = "Failed to assign sleeve to task. Invalid choice(s).";
+        }
+        if (navigationTracking_1.routing.isOn(navigationTracking_1.Page.Sleeves)) {
+            updateSleevesPage();
+        }
+        return res;
+    }
+    catch (e) {
+        console.error(`Exception caught in setSleeveTask(): ${e}`);
+        exceptionAlert_1.exceptionAlert(e);
+        return false;
+    }
+}
+function updateSleeveTaskDescription(sleeve, elems) {
+    try {
+        if (playerRef == null) {
+            throw new Error("playerRef is null in Sleeve UI's setSleeveTask()");
+        }
+        const taskValue = getSelectData_1.getSelectValue(elems.taskSelector);
+        const detailValue = getSelectData_1.getSelectValue(elems.taskDetailsSelector);
+        const detailValue2 = getSelectData_1.getSelectValue(elems.taskDetailsSelector2);
+        switch (taskValue) {
+            case "------":
+                elems.taskDescription.innerText = "This sleeve is currently idle";
+                break;
+            case "Work for Company":
+                elems.taskDescription.innerText = `This sleeve is currently working your ` +
+                    `job at ${sleeve.currentTaskLocation}.`;
+                break;
+            case "Work for Faction":
+                elems.taskDescription.innerText = `This sleeve is currently doing ${detailValue2} for ` +
+                    `${sleeve.currentTaskLocation}.`;
+                break;
+            case "Commit Crime":
+                elems.taskDescription.innerText = `This sleeve is currently attempting to ` +
+                    `${Crimes_1.Crimes[detailValue].type}.`;
+                break;
+            case "Take University Course":
+                elems.taskDescription.innerText = `This sleeve is currently studying/taking a course at ${sleeve.currentTaskLocation}.`;
+                break;
+            case "Workout at Gym":
+                elems.taskDescription.innerText = `This sleeve is currently working out at ${sleeve.currentTaskLocation}.`;
+                break;
+            case "Shock Recovery":
+                elems.taskDescription.innerText = "This sleeve is currently set to focus on shock recovery. This causes " +
+                    "the Sleeve's shock to decrease at a faster rate.";
+                break;
+            case "Synchronize":
+                elems.taskDescription.innerText = "This sleeve is currently set to synchronize with the original consciousness. " +
+                    "This causes the Sleeve's synchronization to increase.";
+                break;
+            default:
+                console.error(`Invalid/Unrecognized taskValue in updateSleeveTaskDescription(): ${taskValue}`);
+        }
+    }
+    catch (e) {
+        console.error(`Exception caught in updateSleeveTaskDescription(): ${e}`);
+        exceptionAlert_1.exceptionAlert(e);
+    }
+}
+
+
+/***/ }),
+/* 112 */
 /*!***********************************************!*\
   !*** ./src/Company/GetNextCompanyPosition.ts ***!
   \***********************************************/
@@ -48772,7 +50097,7 @@ exports.getNextCompanyPosition = getNextCompanyPosition;
 
 
 /***/ }),
-/* 110 */
+/* 113 */
 /*!*************************!*\
   !*** ./src/HelpText.ts ***!
   \*************************/
@@ -49013,7 +50338,7 @@ exports.HelpTexts = {
 
 
 /***/ }),
-/* 111 */
+/* 114 */
 /*!************************************!*\
   !*** ./src/Corporation/Product.ts ***!
   \************************************/
@@ -49026,8 +50351,8 @@ exports.HelpTexts = {
 Object.defineProperty(exports, "__esModule", { value: true });
 const EmployeePositions_1 = __webpack_require__(/*! ./EmployeePositions */ 30);
 const MaterialSizes_1 = __webpack_require__(/*! ./MaterialSizes */ 82);
-const ProductRatingWeights_1 = __webpack_require__(/*! ./ProductRatingWeights */ 227);
-const Cities_1 = __webpack_require__(/*! ../Locations/Cities */ 122);
+const ProductRatingWeights_1 = __webpack_require__(/*! ./ProductRatingWeights */ 236);
+const Cities_1 = __webpack_require__(/*! ../Locations/Cities */ 107);
 const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 15);
 const getRandomInt_1 = __webpack_require__(/*! ../../utils/helpers/getRandomInt */ 17);
 class Product {
@@ -49220,7 +50545,7 @@ JSONReviver_1.Reviver.constructors.Product = Product;
 
 
 /***/ }),
-/* 112 */
+/* 115 */
 /*!*********************************************!*\
   !*** ./src/Corporation/IndustryUpgrades.ts ***!
   \*********************************************/
@@ -49247,7 +50572,7 @@ exports.IndustryUpgrades = {
 
 
 /***/ }),
-/* 113 */
+/* 116 */
 /*!*****************************************************!*\
   !*** ./src/Corporation/data/CorporationUpgrades.ts ***!
   \*****************************************************/
@@ -49315,7 +50640,7 @@ exports.CorporationUpgrades = {
 
 
 /***/ }),
-/* 114 */
+/* 117 */
 /*!***********************************************************!*\
   !*** ./src/Corporation/data/CorporationUnlockUpgrades.ts ***!
   \***********************************************************/
@@ -49361,40 +50686,14 @@ exports.CorporationUnlockUpgrades = {
 
 
 /***/ }),
-/* 115 */,
-/* 116 */,
-/* 117 */,
 /* 118 */,
 /* 119 */,
 /* 120 */,
 /* 121 */,
-/* 122 */
-/*!*********************************!*\
-  !*** ./src/Locations/Cities.ts ***!
-  \*********************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * Display Location Content when visiting somewhere in the World
- */
-// tslint:disable-next-line:variable-name
-exports.Cities = {
-    Aevum: "Aevum",
-    Chongqing: "Chongqing",
-    Ishima: "Ishima",
-    NewTokyo: "New Tokyo",
-    Sector12: "Sector-12",
-    Volhaven: "Volhaven",
-};
-
-
-/***/ }),
-/* 123 */
+/* 122 */,
+/* 123 */,
+/* 124 */,
+/* 125 */
 /*!************************************!*\
   !*** ./src/Faction/FactionInfo.ts ***!
   \************************************/
@@ -49569,7 +50868,7 @@ exports.FactionInfos = {
 
 
 /***/ }),
-/* 124 */
+/* 126 */
 /*!*************************************!*\
   !*** ./src/NetscriptEnvironment.js ***!
   \*************************************/
@@ -49681,7 +50980,7 @@ Environment.prototype = {
 
 
 /***/ }),
-/* 125 */
+/* 127 */
 /*!*************************************!*\
   !*** ./src/NetscriptJSEvaluator.js ***!
   \*************************************/
@@ -49805,7 +51104,7 @@ function _getScriptUrls(script, scripts, seen) {
 
 
 /***/ }),
-/* 126 */
+/* 128 */
 /*!************************************************!*\
   !*** ./utils/uiHelpers/removeLoadingScreen.ts ***!
   \************************************************/
@@ -49830,7 +51129,212 @@ exports.removeLoadingScreen = removeLoadingScreen;
 
 
 /***/ }),
-/* 127 */
+/* 129 */
+/*!******************************************************!*\
+  !*** ./src/PersonObjects/Resleeving/ResleevingUI.ts ***!
+  \******************************************************/
+/*! no static exports found */
+/*! exports used: clearResleevesPage, createResleevesPage */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const Resleeving_1 = __webpack_require__(/*! ./Resleeving */ 216);
+const Augmentations_1 = __webpack_require__(/*! ../../Augmentation/Augmentations */ 14);
+const numeralFormat_1 = __webpack_require__(/*! ../../ui/numeralFormat */ 4);
+const navigationTracking_1 = __webpack_require__(/*! ../../ui/navigationTracking */ 13);
+const DialogBox_1 = __webpack_require__(/*! ../../../utils/DialogBox */ 9);
+const exceptionAlert_1 = __webpack_require__(/*! ../../../utils/helpers/exceptionAlert */ 42);
+const createElement_1 = __webpack_require__(/*! ../../../utils/uiHelpers/createElement */ 2);
+const createOptionElement_1 = __webpack_require__(/*! ../../../utils/uiHelpers/createOptionElement */ 137);
+const getSelectData_1 = __webpack_require__(/*! ../../../utils/uiHelpers/getSelectData */ 136);
+const removeElement_1 = __webpack_require__(/*! ../../../utils/uiHelpers/removeElement */ 62);
+const UIElems = {
+    container: null,
+    info: null,
+    resleeveList: null,
+    resleeves: null,
+};
+let playerRef;
+function createResleevesPage(p) {
+    if (!navigationTracking_1.routing.isOn(navigationTracking_1.Page.Resleeves)) {
+        return;
+    }
+    try {
+        playerRef = p;
+        UIElems.container = createElement_1.createElement("div", {
+            class: "generic-menupage-container",
+            id: "resleeves-container",
+            position: "fixed",
+        });
+        UIElems.info = createElement_1.createElement("p", {
+            display: "inline-block",
+            innerHTML: "Re-sleeving is the process of digitizing and transferring your consciousness " +
+                "into a new human body, or 'sleeve'. Here at VitaLife, you can purchase new " +
+                "specially-engineered bodies for the re-sleeve process. Many of these bodies " +
+                "even come with genetic and cybernetic Augmentations!<br><br>" +
+                "Re-sleeving will chance your experience for every stat. It will also REMOVE " +
+                "all of your currently-installed Augmentations, and replace " +
+                "them with the ones provided by the purchased sleeve. However, Augmentations that you have " +
+                "purchased but not installed will NOT be removed. If you have purchased an " +
+                "Augmentation and then re-sleeve into a body which already has that Augmentation, " +
+                "it will be removed (since you cannot have duplicate Augmentations).<br><br>" +
+                "NOTE: The stats and multipliers displayed on this page do NOT include your bonuses from " +
+                "Source-File.",
+            width: "75%",
+        });
+        UIElems.resleeveList = createElement_1.createElement("ul");
+        UIElems.resleeves = [];
+        if (p.resleeves.length === 0) {
+            p.resleeves = Resleeving_1.generateResleeves();
+        }
+        for (const resleeve of p.resleeves) {
+            const resleeveUi = createResleeveUi(resleeve);
+            UIElems.resleeveList.appendChild(resleeveUi.container);
+            UIElems.resleeves.push(resleeveUi);
+        }
+        UIElems.container.appendChild(UIElems.info);
+        UIElems.container.appendChild(UIElems.resleeveList);
+        document.getElementById("entire-game-container").appendChild(UIElems.container);
+    }
+    catch (e) {
+        exceptionAlert_1.exceptionAlert(e);
+    }
+}
+exports.createResleevesPage = createResleevesPage;
+function clearResleevesPage() {
+    if (UIElems.container instanceof HTMLElement) {
+        removeElement_1.removeElement(UIElems.container);
+    }
+    for (const prop in UIElems) {
+        UIElems[prop] = null;
+    }
+    playerRef = null;
+}
+exports.clearResleevesPage = clearResleevesPage;
+function createResleeveUi(resleeve) {
+    const elems = {
+        container: null,
+        statsPanel: null,
+        stats: null,
+        multipliersButton: null,
+        augPanel: null,
+        augSelector: null,
+        augDescription: null,
+        costPanel: null,
+        costText: null,
+        buyButton: null,
+    };
+    if (!navigationTracking_1.routing.isOn(navigationTracking_1.Page.Resleeves)) {
+        return elems;
+    }
+    elems.container = createElement_1.createElement("div", {
+        class: "resleeve-container",
+        display: "block",
+    });
+    elems.statsPanel = createElement_1.createElement("div", { class: "resleeve-panel", width: "30%" });
+    elems.stats = createElement_1.createElement("p", {
+        class: "resleeve-stats-text",
+        innerHTML: `Hacking: ${numeralFormat_1.numeralWrapper.format(resleeve.hacking_skill, "0,0")} (${numeralFormat_1.numeralWrapper.formatBigNumber(resleeve.hacking_exp)} exp)<br>` +
+            `Strength: ${numeralFormat_1.numeralWrapper.format(resleeve.strength, "0,0")} (${numeralFormat_1.numeralWrapper.formatBigNumber(resleeve.strength_exp)} exp)<br>` +
+            `Defense: ${numeralFormat_1.numeralWrapper.format(resleeve.defense, "0,0")} (${numeralFormat_1.numeralWrapper.formatBigNumber(resleeve.defense_exp)} exp)<br>` +
+            `Dexterity: ${numeralFormat_1.numeralWrapper.format(resleeve.dexterity, "0,0")} (${numeralFormat_1.numeralWrapper.formatBigNumber(resleeve.dexterity_exp)} exp)<br>` +
+            `Agility: ${numeralFormat_1.numeralWrapper.format(resleeve.agility, "0,0")} (${numeralFormat_1.numeralWrapper.formatBigNumber(resleeve.agility_exp)} exp)<br>` +
+            `Charisma: ${numeralFormat_1.numeralWrapper.format(resleeve.charisma, "0,0")} (${numeralFormat_1.numeralWrapper.formatBigNumber(resleeve.charisma_exp)} exp)`,
+    });
+    elems.multipliersButton = createElement_1.createElement("button", {
+        class: "std-button",
+        innerText: "Multipliers",
+        clickListener: () => {
+            DialogBox_1.dialogBoxCreate([
+                "<h2><u>Total Multipliers:</u></h2>",
+                `Hacking Level multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.hacking_mult)}`,
+                `Hacking Experience multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.hacking_exp_mult)}`,
+                `Strength Level multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.strength_mult)}`,
+                `Strength Experience multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.strength_exp_mult)}`,
+                `Defense Level multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.defense_mult)}`,
+                `Defense Experience multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.defense_exp_mult)}`,
+                `Dexterity Level multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.dexterity_mult)}`,
+                `Dexterity Experience multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.dexterity_exp_mult)}`,
+                `Agility Level multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.agility_mult)}`,
+                `Agility Experience multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.agility_exp_mult)}`,
+                `Charisma Level multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.charisma_mult)}`,
+                `Charisma Experience multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.charisma_exp_mult)}`,
+                `Hacking Chance multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.hacking_chance_mult)}`,
+                `Hacking Speed multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.hacking_speed_mult)}`,
+                `Hacking Money multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.hacking_money_mult)}`,
+                `Hacking Growth multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.hacking_grow_mult)}`,
+                `Salary multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.work_money_mult)}`,
+                `Company Reputation Gain multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.company_rep_mult)}`,
+                `Faction Reputation Gain multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.faction_rep_mult)}`,
+                `Crime Money multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.crime_money_mult)}`,
+                `Crime Success multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.crime_success_mult)}`,
+                `Hacknet Income multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.hacknet_node_money_mult)}`,
+                `Hacknet Purchase Cost multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.hacknet_node_purchase_cost_mult)}`,
+                `Hacknet Level Upgrade Cost multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.hacknet_node_level_cost_mult)}`,
+                `Hacknet Ram Upgrade Cost multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.hacknet_node_ram_cost_mult)}`,
+                `Hacknet Core Upgrade Cost multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.hacknet_node_core_cost_mult)}`,
+                `Bladeburner Max Stamina multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.bladeburner_max_stamina_mult)}`,
+                `Bladeburner Stamina Gain multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.bladeburner_stamina_gain_mult)}`,
+                `Bladeburner Field Analysis multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.bladeburner_analysis_mult)}`,
+                `Bladeburner Success Chance multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.bladeburner_success_chance_mult)}`
+            ].join("<br>"), false);
+        }
+    });
+    elems.statsPanel.appendChild(elems.stats);
+    elems.statsPanel.appendChild(elems.multipliersButton);
+    elems.augPanel = createElement_1.createElement("div", { class: "resleeve-panel", width: "50%" });
+    elems.augSelector = createElement_1.createElement("select", { class: "resleeve-aug-selector" });
+    elems.augDescription = createElement_1.createElement("p");
+    for (let i = 0; i < resleeve.augmentations.length; ++i) {
+        elems.augSelector.add(createOptionElement_1.createOptionElement(resleeve.augmentations[i].name));
+    }
+    ;
+    elems.augSelector.addEventListener("change", () => {
+        updateAugDescription(elems);
+    });
+    elems.augSelector.dispatchEvent(new Event('change')); // Set inital description by manually triggering change event
+    elems.augPanel.appendChild(elems.augSelector);
+    elems.augPanel.appendChild(elems.augDescription);
+    const cost = resleeve.getCost();
+    elems.costPanel = createElement_1.createElement("div", { class: "resleeve-panel", width: "20%" });
+    elems.costText = createElement_1.createElement("p", {
+        innerText: `It costs ${numeralFormat_1.numeralWrapper.formatMoney(cost)} ` +
+            `to purchase this Sleeve.`,
+    });
+    elems.buyButton = createElement_1.createElement("button", {
+        class: "std-button",
+        innerText: "Purchase",
+        clickListener: () => {
+            if (Resleeving_1.purchaseResleeve(resleeve, playerRef)) {
+                DialogBox_1.dialogBoxCreate(`You re-sleeved for ${numeralFormat_1.numeralWrapper.formatMoney(cost)}!`, false);
+            }
+            else {
+                DialogBox_1.dialogBoxCreate(`You cannot afford to re-sleeve into this body`, false);
+            }
+        }
+    });
+    elems.costPanel.appendChild(elems.costText);
+    elems.costPanel.appendChild(elems.buyButton);
+    elems.container.appendChild(elems.statsPanel);
+    elems.container.appendChild(elems.augPanel);
+    elems.container.appendChild(elems.costPanel);
+    return elems;
+}
+function updateAugDescription(elems) {
+    const augName = getSelectData_1.getSelectValue(elems.augSelector);
+    const aug = Augmentations_1.Augmentations[augName];
+    if (aug == null) {
+        console.warn(`Could not find Augmentation with name ${augName}`);
+        return;
+    }
+    elems.augDescription.innerHTML = aug.info;
+}
+
+
+/***/ }),
+/* 130 */
 /*!************************!*\
   !*** ./src/DevMenu.js ***!
   \************************/
@@ -49843,7 +51347,7 @@ exports.removeLoadingScreen = removeLoadingScreen;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return closeDevMenu; });
 /* harmony import */ var _Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentation/data/AugmentationNames */ 6);
 /* harmony import */ var _Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _CodingContractGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CodingContractGenerator */ 107);
+/* harmony import */ var _CodingContractGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CodingContractGenerator */ 109);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Programs/Programs */ 26);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Faction/Factions */ 16);
@@ -49858,7 +51362,7 @@ exports.removeLoadingScreen = removeLoadingScreen;
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 45);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 42);
 /* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__);
@@ -50413,7 +51917,7 @@ function closeDevMenu() {
 
 
 /***/ }),
-/* 128 */
+/* 131 */
 /*!********************************!*\
   !*** ./src/DarkWeb/DarkWeb.js ***!
   \********************************/
@@ -50427,7 +51931,7 @@ function closeDevMenu() {
 /* harmony import */ var _DarkWebItems__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DarkWebItems */ 75);
 /* harmony import */ var _DarkWebItems__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_DarkWebItems__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Player */ 0);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../SpecialServerIps */ 36);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../SpecialServerIps */ 37);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../ui/postToTerminal */ 8);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utils/helpers/isValidIPAddress */ 94);
@@ -50527,7 +52031,7 @@ function buyDarkwebItem(itemName) {
 
 
 /***/ }),
-/* 129 */
+/* 132 */
 /*!********************************!*\
   !*** ./src/ServerPurchases.js ***!
   \********************************/
@@ -50623,7 +52127,7 @@ function purchaseRamForHomeComputer(cost) {
 
 
 /***/ }),
-/* 130 */
+/* 133 */
 /*!*********************************************!*\
   !*** ./src/Corporation/CorporationState.ts ***!
   \*********************************************/
@@ -50673,10 +52177,70 @@ JSONReviver_1.Reviver.constructors.CorporationState = CorporationState;
 
 
 /***/ }),
-/* 131 */,
-/* 132 */,
-/* 133 */,
-/* 134 */
+/* 134 */,
+/* 135 */,
+/* 136 */
+/*!******************************************!*\
+  !*** ./utils/uiHelpers/getSelectData.ts ***!
+  \******************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+function getSelectValue(selector) {
+    if (selector == null) {
+        return "";
+    }
+    if (selector.options.length <= 0) {
+        return "";
+    }
+    return selector.options[selector.selectedIndex].value;
+}
+exports.getSelectValue = getSelectValue;
+function getSelectText(selector) {
+    if (selector == null) {
+        return "";
+    }
+    if (selector.options.length <= 0) {
+        return "";
+    }
+    return selector.options[selector.selectedIndex].text;
+}
+exports.getSelectText = getSelectText;
+
+
+/***/ }),
+/* 137 */
+/*!************************************************!*\
+  !*** ./utils/uiHelpers/createOptionElement.ts ***!
+  \************************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const createElement_1 = __webpack_require__(/*! ./createElement */ 2);
+function createOptionElement(text, value = "") {
+    let sanitizedValue = value;
+    if (sanitizedValue === "") {
+        sanitizedValue = text;
+    }
+    return createElement_1.createElement("option", {
+        text: text,
+        value: sanitizedValue,
+    });
+}
+exports.createOptionElement = createOptionElement;
+
+
+/***/ }),
+/* 138 */,
+/* 139 */
 /*!*************************************!*\
   !*** ./src/PersonObjects/Person.ts ***!
   \*************************************/
@@ -50688,7 +52252,7 @@ JSONReviver_1.Reviver.constructors.CorporationState = CorporationState;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const BitNodeMultipliers_1 = __webpack_require__(/*! ../BitNode/BitNodeMultipliers */ 10);
-const Cities_1 = __webpack_require__(/*! ../Locations/Cities */ 122);
+const Cities_1 = __webpack_require__(/*! ../Locations/Cities */ 107);
 const Constants_1 = __webpack_require__(/*! ../Constants */ 1);
 function createTaskTracker() {
     return {
@@ -50749,6 +52313,15 @@ class Person {
         this.crime_money_mult = 1;
         this.crime_success_mult = 1;
         this.work_money_mult = 1;
+        this.hacknet_node_money_mult = 1;
+        this.hacknet_node_purchase_cost_mult = 1;
+        this.hacknet_node_ram_cost_mult = 1;
+        this.hacknet_node_core_cost_mult = 1;
+        this.hacknet_node_level_cost_mult = 1;
+        this.bladeburner_max_stamina_mult = 1;
+        this.bladeburner_stamina_gain_mult = 1;
+        this.bladeburner_analysis_mult = 1;
+        this.bladeburner_success_chance_mult = 1;
         /**
          * Augmentations
          */
@@ -50762,7 +52335,7 @@ class Person {
     /**
      * Updates this object's multipliers for the given augmentation
      */
-    applyAugmentation(aug, reapply = false) {
+    applyAugmentation(aug) {
         for (const mult in aug.mults) {
             if (this[mult] == null) {
                 console.warn(`Augmentation has unrecognized multiplier property: ${mult}`);
@@ -50838,11 +52411,11 @@ class Person {
      */
     updateStatLevels() {
         this.hacking_skill = Math.max(1, Math.floor(this.calculateStat(this.hacking_exp, this.hacking_mult * BitNodeMultipliers_1.BitNodeMultipliers.HackingLevelMultiplier)));
-        this.strength = Math.max(1, Math.floor(this.calculateStat(this.strength_exp, this.strength_mult)));
-        this.defense = Math.max(1, Math.floor(this.calculateStat(this.defense_exp, this.defense_mult)));
-        this.dexterity = Math.max(1, Math.floor(this.calculateStat(this.dexterity_exp, this.dexterity_mult)));
-        this.agility = Math.max(1, Math.floor(this.calculateStat(this.agility_exp, this.agility_mult)));
-        this.charisma = Math.max(1, Math.floor(this.calculateStat(this.charisma_exp, this.charisma_mult)));
+        this.strength = Math.max(1, Math.floor(this.calculateStat(this.strength_exp, this.strength_mult * BitNodeMultipliers_1.BitNodeMultipliers.StrengthLevelMultiplier)));
+        this.defense = Math.max(1, Math.floor(this.calculateStat(this.defense_exp, this.defense_mult * BitNodeMultipliers_1.BitNodeMultipliers.DefenseLevelMultiplier)));
+        this.dexterity = Math.max(1, Math.floor(this.calculateStat(this.dexterity_exp, this.dexterity_mult * BitNodeMultipliers_1.BitNodeMultipliers.DexterityLevelMultiplier)));
+        this.agility = Math.max(1, Math.floor(this.calculateStat(this.agility_exp, this.agility_mult * BitNodeMultipliers_1.BitNodeMultipliers.AgilityLevelMultiplier)));
+        this.charisma = Math.max(1, Math.floor(this.calculateStat(this.charisma_exp, this.charisma_mult * BitNodeMultipliers_1.BitNodeMultipliers.CharismaLevelMultiplier)));
         const ratio = this.hp / this.max_hp;
         this.max_hp = Math.floor(10 + this.defense / 10);
         this.hp = Math.round(this.max_hp * ratio);
@@ -50852,11 +52425,129 @@ exports.Person = Person;
 
 
 /***/ }),
-/* 135 */,
-/* 136 */,
-/* 137 */,
-/* 138 */,
-/* 139 */
+/* 140 */
+/*!*********************************************************!*\
+  !*** ./src/PersonObjects/Sleeve/SleeveTaskTypesEnum.ts ***!
+  \*********************************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Enum for different types of tasks that a Sleeve can perform
+ */
+var SleeveTaskType;
+(function (SleeveTaskType) {
+    // Same Order as selectable order in UI
+    SleeveTaskType[SleeveTaskType["Idle"] = 0] = "Idle";
+    SleeveTaskType[SleeveTaskType["Company"] = 1] = "Company";
+    SleeveTaskType[SleeveTaskType["Faction"] = 2] = "Faction";
+    SleeveTaskType[SleeveTaskType["Crime"] = 3] = "Crime";
+    SleeveTaskType[SleeveTaskType["Class"] = 4] = "Class";
+    SleeveTaskType[SleeveTaskType["Gym"] = 5] = "Gym";
+    SleeveTaskType[SleeveTaskType["Recovery"] = 6] = "Recovery";
+    SleeveTaskType[SleeveTaskType["Sync"] = 7] = "Sync";
+})(SleeveTaskType = exports.SleeveTaskType || (exports.SleeveTaskType = {}));
+
+
+/***/ }),
+/* 141 */,
+/* 142 */,
+/* 143 */,
+/* 144 */,
+/* 145 */
+/*!****************************!*\
+  !*** ./src/Crime/Crime.ts ***!
+  \****************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const Constants_1 = __webpack_require__(/*! ../Constants */ 1);
+class Crime {
+    constructor(name = "", type = "", time = 0, money = 0, difficulty = 0, karma = 0, params = {}) {
+        // Number representing the difficulty of the crime. Used for success chance calculations
+        this.difficulty = 0;
+        // Amount of karma lost for SUCCESSFULLY committing this crime
+        this.karma = 0;
+        // How many people die as a result of this crime
+        this.kills = 0;
+        // How much money is given by the
+        this.money = 0;
+        // Name of crime
+        this.name = "";
+        // Milliseconds it takes to attempt the crime
+        this.time = 0;
+        // Corresponding type in CONSTANTS. Contains a description for the crime activity
+        this.type = "";
+        // Weighting factors that determine how stats affect the success rate of this crime
+        this.hacking_success_weight = 0;
+        this.strength_success_weight = 0;
+        this.defense_success_weight = 0;
+        this.dexterity_success_weight = 0;
+        this.agility_success_weight = 0;
+        this.charisma_success_weight = 0;
+        // How much stat experience is granted by this crime
+        this.hacking_exp = 0;
+        this.strength_exp = 0;
+        this.defense_exp = 0;
+        this.dexterity_exp = 0;
+        this.agility_exp = 0;
+        this.charisma_exp = 0;
+        this.intelligence_exp = 0;
+        this.name = name;
+        this.type = type;
+        this.time = time;
+        this.money = money;
+        this.difficulty = difficulty;
+        this.karma = karma;
+        this.hacking_success_weight = params.hacking_success_weight ? params.hacking_success_weight : 0;
+        this.strength_success_weight = params.strength_success_weight ? params.strength_success_weight : 0;
+        this.defense_success_weight = params.defense_success_weight ? params.defense_success_weight : 0;
+        this.dexterity_success_weight = params.dexterity_success_weight ? params.dexterity_success_weight : 0;
+        this.agility_success_weight = params.agility_success_weight ? params.agility_success_weight : 0;
+        this.charisma_success_weight = params.charisma_success_weight ? params.charisma_success_weight : 0;
+        this.hacking_exp = params.hacking_exp ? params.hacking_exp : 0;
+        this.strength_exp = params.strength_exp ? params.strength_exp : 0;
+        this.defense_exp = params.defense_exp ? params.defense_exp : 0;
+        this.dexterity_exp = params.dexterity_exp ? params.dexterity_exp : 0;
+        this.agility_exp = params.agility_exp ? params.agility_exp : 0;
+        this.charisma_exp = params.charisma_exp ? params.charisma_exp : 0;
+        this.intelligence_exp = params.intelligence_exp ? params.intelligence_exp : 0;
+        this.kills = params.kills ? params.kills : 0;
+    }
+    commit(p, div = 1, singParams = null) {
+        if (div <= 0) {
+            div = 1;
+        }
+        p.startCrime(this.type, this.hacking_exp / div, this.strength_exp / div, this.defense_exp / div, this.dexterity_exp / div, this.agility_exp / div, this.charisma_exp / div, this.money / div, this.time, singParams);
+        return this.time;
+    }
+    successRate(p) {
+        let chance = (this.hacking_success_weight * p.hacking_skill +
+            this.strength_success_weight * p.strength +
+            this.defense_success_weight * p.defense +
+            this.dexterity_success_weight * p.dexterity +
+            this.agility_success_weight * p.agility +
+            this.charisma_success_weight * p.charisma +
+            Constants_1.CONSTANTS.IntelligenceCrimeWeight * p.intelligence);
+        chance /= Constants_1.CONSTANTS.MaxSkillLevel;
+        chance /= this.difficulty;
+        chance *= p.crime_success_mult;
+        return Math.min(chance, 1);
+    }
+}
+exports.Crime = Crime;
+
+
+/***/ }),
+/* 146 */
 /*!************************************!*\
   !*** ./src/ui/MainMenu/Headers.ts ***!
   \************************************/
@@ -50938,9 +52629,11 @@ function initializeMainMenuHeaders(p, dev = false) {
             const factions = safeGetElement("factions-tab");
             const augmentations = safeGetElement("augmentations-tab");
             const hacknetnodes = safeGetElement("hacknet-nodes-tab");
+            const sleeves = safeGetElement("sleeves-tab");
+            sleeves.style.display = p.sleeves.length > 0 ? "list-item" : "none";
             this.classList.toggle("opened");
-            const elems = [stats, factions, augmentations, hacknetnodes];
-            const links = [Links_1.MainMenuLinks.Stats, Links_1.MainMenuLinks.Factions, Links_1.MainMenuLinks.Augmentations, Links_1.MainMenuLinks.HacknetNodes];
+            const elems = [stats, factions, augmentations, hacknetnodes, sleeves];
+            const links = [Links_1.MainMenuLinks.Stats, Links_1.MainMenuLinks.Factions, Links_1.MainMenuLinks.Augmentations, Links_1.MainMenuLinks.HacknetNodes, Links_1.MainMenuLinks.Sleeves];
             if (stats.style.maxHeight) {
                 toggleHeader(false, elems, links);
             }
@@ -51000,7 +52693,7 @@ exports.initializeMainMenuHeaders = initializeMainMenuHeaders;
 
 
 /***/ }),
-/* 140 */
+/* 147 */
 /*!*************************************!*\
   !*** ./src/ui/setSettingsLabels.js ***!
   \*************************************/
@@ -51126,165 +52819,7 @@ function setSettingsLabels() {
 
 
 /***/ }),
-/* 141 */
-/*!******************************************************!*\
-  !*** ./src/PersonObjects/Resleeving/ResleevingUI.ts ***!
-  \******************************************************/
-/*! no static exports found */
-/*! exports used: createResleevesPage */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const Resleeving_1 = __webpack_require__(/*! ./Resleeving */ 207);
-const Augmentations_1 = __webpack_require__(/*! ../../Augmentation/Augmentations */ 13);
-const numeralFormat_1 = __webpack_require__(/*! ../../ui/numeralFormat */ 4);
-const navigationTracking_1 = __webpack_require__(/*! ../../ui/navigationTracking */ 14);
-const DialogBox_1 = __webpack_require__(/*! ../../../utils/DialogBox */ 9);
-const exceptionAlert_1 = __webpack_require__(/*! ../../../utils/helpers/exceptionAlert */ 45);
-const createElement_1 = __webpack_require__(/*! ../../../utils/uiHelpers/createElement */ 2);
-const createOptionElement_1 = __webpack_require__(/*! ../../../utils/uiHelpers/createOptionElement */ 205);
-const getSelectData_1 = __webpack_require__(/*! ../../../utils/uiHelpers/getSelectData */ 204);
-const removeElement_1 = __webpack_require__(/*! ../../../utils/uiHelpers/removeElement */ 63);
-const UIElems = {
-    container: null,
-    info: null,
-    resleeveList: null,
-    resleeves: null,
-};
-let playerRef;
-function createResleevesPage(p) {
-    if (!navigationTracking_1.routing.isOn(navigationTracking_1.Page.Resleeves)) {
-        return;
-    }
-    try {
-        playerRef = p;
-        UIElems.container = createElement_1.createElement("div", {
-            class: "generic-menupage-container",
-            id: "resleeves-container",
-            position: "fixed",
-        });
-        UIElems.info = createElement_1.createElement("p", {
-            display: "inline-block",
-            innerText: "TOODOOO",
-        });
-        UIElems.resleeveList = createElement_1.createElement("ul");
-        UIElems.resleeves = [];
-        if (p.resleeves.length === 0) {
-            p.resleeves = Resleeving_1.generateResleeves();
-        }
-        for (const resleeve of p.resleeves) {
-            const resleeveUi = createResleeveUi(resleeve);
-            UIElems.resleeveList.appendChild(resleeveUi.container);
-            UIElems.resleeves.push(resleeveUi);
-        }
-        UIElems.container.appendChild(UIElems.info);
-        UIElems.container.appendChild(UIElems.resleeveList);
-        document.getElementById("entire-game-container").appendChild(UIElems.container);
-    }
-    catch (e) {
-        exceptionAlert_1.exceptionAlert(e);
-    }
-}
-exports.createResleevesPage = createResleevesPage;
-function clearResleevesPage() {
-    removeElement_1.removeElement(UIElems.container);
-    for (const prop in UIElems) {
-        UIElems[prop] = null;
-    }
-    playerRef = null;
-}
-exports.clearResleevesPage = clearResleevesPage;
-function createResleeveUi(resleeve) {
-    const elems = {
-        container: null,
-        statsPanel: null,
-        stats: null,
-        multipliersButton: null,
-        augPanel: null,
-        augSelector: null,
-        augDescription: null,
-        costPanel: null,
-        costText: null,
-        buyButton: null,
-    };
-    if (!navigationTracking_1.routing.isOn(navigationTracking_1.Page.Resleeves)) {
-        return elems;
-    }
-    elems.container = createElement_1.createElement("div", {
-        class: "resleeve-container",
-        display: "block",
-    });
-    elems.statsPanel = createElement_1.createElement("div", { class: "resleeve-panel" });
-    elems.stats = createElement_1.createElement("p", { class: "resleeve-stats-text" });
-    elems.multipliersButton = createElement_1.createElement("button", {
-        class: "std-button",
-        innerText: "Multipliers",
-        clickListener: () => {
-            DialogBox_1.dialogBoxCreate([
-                "<h2><u>Total Multipliers:</u></h2>",
-                `Hacking Level multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.hacking_mult)}`,
-                `Hacking Experience multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.hacking_exp_mult)}`,
-                `Strength Level multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.strength_mult)}`,
-                `Strength Experience multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.strength_exp_mult)}`,
-                `Defense Level multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.defense_mult)}`,
-                `Defense Experience multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.defense_exp_mult)}`,
-                `Dexterity Level multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.dexterity_mult)}`,
-                `Dexterity Experience multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.dexterity_exp_mult)}`,
-                `Agility Level multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.agility_mult)}`,
-                `Agility Experience multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.agility_exp_mult)}`,
-                `Charisma Level multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.charisma_mult)}`,
-                `Charisma Experience multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.charisma_exp_mult)}`,
-                `Hacking Chance multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.hacking_chance_mult)}`,
-                `Hacking Speed multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.hacking_speed_mult)}`,
-                `Hacking Money multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.hacking_money_mult)}`,
-                `Hacking Growth multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.hacking_grow_mult)}`,
-                `Salary multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.work_money_mult)}`,
-                `Company Reputation Gain multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.company_rep_mult)}`,
-                `Faction Reputation Gain multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.faction_rep_mult)}`,
-                `Crime Money multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.crime_money_mult)}`,
-                `Crime Success multiplier: ${numeralFormat_1.numeralWrapper.formatPercentage(resleeve.crime_success_mult)}`,
-            ].join("<br>"), false);
-        }
-    });
-    elems.augPanel = createElement_1.createElement("div", { class: "resleeve-panel" });
-    elems.augSelector = createElement_1.createElement("select");
-    for (let i = 0; i < resleeve.augmentations.length; ++i) {
-        elems.augSelector.add(createOptionElement_1.createOptionElement(resleeve.augmentations[i].name));
-    }
-    ;
-    elems.augSelector.addEventListener("change", () => {
-        updateAugDescription(elems);
-    });
-    elems.augDescription = createElement_1.createElement("p");
-    elems.costPanel = createElement_1.createElement("div", { class: "resleeve-panel" });
-    elems.costText = createElement_1.createElement("p", {
-        innerText: `It costs ${numeralFormat_1.numeralWrapper.formatMoney(resleeve.getCost())} ` +
-            `to purchase this Sleeve.`,
-    });
-    elems.buyButton = createElement_1.createElement("button", {
-        class: "std-button",
-        innerText: "Purchase",
-        clickListener: () => {
-            Resleeving_1.purchaseResleeve(resleeve, playerRef);
-        }
-    });
-    return elems;
-}
-function updateAugDescription(elems) {
-    const augName = getSelectData_1.getSelectValue(elems.augSelector);
-    const aug = Augmentations_1.Augmentations[augName];
-    if (aug == null) {
-        console.warn(`Could not find Augmentation with name ${augName}`);
-        return;
-    }
-    elems.augDescription.innerHTML = aug.info;
-}
-
-
-/***/ }),
-/* 142 */
+/* 148 */
 /*!**********************************!*\
   !*** ./src/CharacterOverview.js ***!
   \**********************************/
@@ -51359,7 +52894,7 @@ CharacterOverview.prototype.update = function() {
 
 
 /***/ }),
-/* 143 */
+/* 149 */
 /*!******************************!*\
   !*** ./src/JSInterpreter.js ***!
   \******************************/
@@ -55162,640 +56697,7 @@ Interpreter.prototype['createPrimitive'] = function(x) {return x;};
 
 
 /***/ }),
-/* 144 */
-/*!********************************************!*\
-  !*** ./src/PersonObjects/Sleeve/Sleeve.ts ***!
-  \********************************************/
-/*! no static exports found */
-/*! exports used: Sleeve */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * Sleeves are bodies that contain the player's cloned consciousness.
- * The player can use these bodies to perform different tasks synchronously.
- *
- * Each sleeve is its own individual, meaning it has its own stats/exp
- *
- * Sleeves are unlocked in BitNode-10.
- */
-const SleeveTaskTypesEnum_1 = __webpack_require__(/*! ./SleeveTaskTypesEnum */ 209);
-const Person_1 = __webpack_require__(/*! ../Person */ 134);
-const BitNodeMultipliers_1 = __webpack_require__(/*! ../../BitNode/BitNodeMultipliers */ 10);
-const Cities_1 = __webpack_require__(/*! ../../Locations/Cities */ 122);
-const Companies_1 = __webpack_require__(/*! ../../Company/Companies */ 19);
-const Company_1 = __webpack_require__(/*! ../../Company/Company */ 72);
-const CompanyPositions_1 = __webpack_require__(/*! ../../Company/CompanyPositions */ 33);
-const Constants_1 = __webpack_require__(/*! ../../Constants */ 1);
-const Faction_1 = __webpack_require__(/*! ../../Faction/Faction */ 58);
-const Factions_1 = __webpack_require__(/*! ../../Faction/Factions */ 16);
-const FactionWorkTypeEnum_1 = __webpack_require__(/*! ../../Faction/FactionWorkTypeEnum */ 208);
-const Locations_1 = __webpack_require__(/*! ../../Locations */ 5);
-const JSONReviver_1 = __webpack_require__(/*! ../../../utils/JSONReviver */ 15);
-class Sleeve extends Person_1.Person {
-    constructor() {
-        super();
-        /**
-         * Enum value for current task
-         */
-        this.currentTask = SleeveTaskTypesEnum_1.SleeveTaskType.Idle;
-        /**
-         * Description of current task. Used only for logging purposes
-         */
-        this.currentTaskDescription = "";
-        /**
-         * Contains details about the sleeve's current task. The info stored
-         * in this depends on the task type
-         *
-         * Faction/Company Work: Name of Faction/Company
-         * Crime: Success rate of current crime, in decimal form
-         */
-        this.currentTaskLocation = "";
-        /**
-         * Maximum amount of time (in milliseconds) that can  be spent on current task.
-         */
-        this.currentTaskMaxTime = 0;
-        /**
-         * Milliseconds spent on current task
-         */
-        this.currentTaskTime = 0;
-        /**
-         * Keeps track of experience earned for other sleeves
-         */
-        this.earningsForSleeves = Person_1.createTaskTracker();
-        /**
-         * Keeps track of experience + money earned for player
-         */
-        this.earningsForPlayer = Person_1.createTaskTracker();
-        /**
-         * Keeps track of experienced earned in the current task/action
-         */
-        this.earningsForTask = Person_1.createTaskTracker();
-        /**
-         * Keeps track of what type of work sleeve is doing for faction, if applicable
-         */
-        this.factionWorkType = FactionWorkTypeEnum_1.FactionWorkType.None;
-        /**
-         * Records experience gain rate for the current task
-         */
-        this.gainRatesForTask = Person_1.createTaskTracker();
-        /**
-         * Keeps track of events/notifications for this sleeve
-         */
-        this.logs = [];
-        /**
-         * Clone retains memory% of exp upon prestige. If exp would be lower than previously
-         * kept exp, nothing happens
-         */
-        this.memory = 0;
-        /**
-         * Sleeve shock. Number between 1 and 100
-         * Trauma/shock that comes with being in a sleeve. Experience earned
-         * is multipled by shock%. This gets applied before synchronization
-         *
-         * Reputation earned is also multiplied by shock%
-         */
-        this.shock = 1;
-        /**
-         * Stored number of game "loop" cycles
-         */
-        this.storedCycles = 0;
-        /**
-         * Synchronization. Number between 0 and 100
-         * When experience is earned  by sleeve, both the player and the sleeve get
-         * sync% of the experience earned. Other sleeves get sync^2% of exp
-         */
-        this.sync = 1;
-    }
-    /**
-     * Initiatizes a Sleeve object from a JSON save state.
-     */
-    static fromJSON(value) {
-        return JSONReviver_1.Generic_fromJSON(Sleeve, value.data);
-    }
-    /**
-     * Commit crimes
-     */
-    commitCrime(p, crime) {
-        if (this.currentTask !== SleeveTaskTypesEnum_1.SleeveTaskType.Idle) {
-            this.finishTask(p);
-        }
-        else {
-            this.resetTaskStatus();
-        }
-        this.gainRatesForTask.hack = crime.hacking_exp * this.hacking_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.CrimeExpGain;
-        this.gainRatesForTask.str = crime.strength_exp * this.strength_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.CrimeExpGain;
-        this.gainRatesForTask.def = crime.defense_exp * this.defense_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.CrimeExpGain;
-        this.gainRatesForTask.dex = crime.dexterity_exp * this.dexterity_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.CrimeExpGain;
-        this.gainRatesForTask.agi = crime.agility_exp * this.agility_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.CrimeExpGain;
-        this.gainRatesForTask.cha = crime.charisma_exp * this.charisma_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.CrimeExpGain;
-        this.gainRatesForTask.money = crime.money * this.crime_money_mult * BitNodeMultipliers_1.BitNodeMultipliers.CrimeMoney;
-        // We'll determine success now and adjust the earnings accordingly
-        if (Math.random() < crime.successRate(p)) {
-            this.gainRatesForTask.hack *= 2;
-            this.gainRatesForTask.str *= 2;
-            this.gainRatesForTask.def *= 2;
-            this.gainRatesForTask.dex *= 2;
-            this.gainRatesForTask.agi *= 2;
-            this.gainRatesForTask.cha *= 2;
-        }
-        else {
-            this.gainRatesForTask.money = 0;
-        }
-        this.currentTaskMaxTime = crime.time;
-        this.currentTask = SleeveTaskTypesEnum_1.SleeveTaskType.Crime;
-    }
-    /**
-     * Called to stop the current task
-     */
-    finishTask(p) {
-        if (this.currentTask === SleeveTaskTypesEnum_1.SleeveTaskType.Crime) {
-            // For crimes, all experience and money is gained at the end
-            if (this.currentTaskTime >= this.currentTaskMaxTime) {
-                let retValue = Person_1.createTaskTracker(); // Amount of exp to be gained by other sleeves
-                retValue = this.gainExperience(p, this.gainRatesForTask);
-                this.gainMoney(p, this.gainRatesForTask);
-            }
-        }
-        else {
-            // For other crimes... I dont think anything else needs to be done
-        }
-        this.resetTaskStatus();
-    }
-    /**
-     * Earn experience for any stats (supports multiple)
-     * This function also handles experience propogating to Player and other sleeves
-     */
-    gainExperience(p, exp, numCycles = 1) {
-        // Experience is first multiplied by shock. Then 'synchronization'
-        // is accounted for
-        const multFac = (this.shock / 100) * (this.sync / 100) * numCycles;
-        const pHackExp = exp.hack * multFac;
-        const pStrExp = exp.str * multFac;
-        const pDefExp = exp.def * multFac;
-        const pDexExp = exp.dex * multFac;
-        const pAgiExp = exp.agi * multFac;
-        const pChaExp = exp.cha * multFac;
-        // Experience is gained by both this sleeve and player
-        if (pHackExp > 0) {
-            this.hacking_exp += pHackExp;
-            p.gainHackingExp(pHackExp);
-            this.earningsForPlayer.hack += pHackExp;
-            this.earningsForTask.hack += pHackExp;
-        }
-        if (pStrExp > 0) {
-            this.strength_exp += pStrExp;
-            p.gainStrengthExp(pStrExp);
-            this.earningsForPlayer.str += pStrExp;
-            this.earningsForTask.str += pStrExp;
-        }
-        if (pDefExp > 0) {
-            this.defense_exp += pDefExp;
-            p.gainDefenseExp(pDefExp);
-            this.earningsForPlayer.def += pDefExp;
-            this.earningsForTask.dex += pDefExp;
-        }
-        if (pDexExp > 0) {
-            this.dexterity_exp += pDexExp;
-            p.gainDexterityExp(pDexExp);
-            this.earningsForPlayer.dex += pDexExp;
-            this.earningsForTask.dex += pDexExp;
-        }
-        if (pAgiExp > 0) {
-            this.agility_exp += pAgiExp;
-            p.gainAgilityExp(pAgiExp);
-            this.earningsForPlayer.agi += pAgiExp;
-            this.earningsForTask.agi += pAgiExp;
-        }
-        if (pChaExp > 0) {
-            this.charisma_exp += pChaExp;
-            p.gainCharismaExp(pChaExp);
-            this.earningsForPlayer.cha += pChaExp;
-            this.earningsForTask.cha += pChaExp;
-        }
-        // Record earnings for other sleeves
-        this.earningsForSleeves.hack += (pHackExp * (this.sync / 100));
-        this.earningsForSleeves.str += (pStrExp * (this.sync / 100));
-        this.earningsForSleeves.def += (pDefExp * (this.sync / 100));
-        this.earningsForSleeves.dex += (pDexExp * (this.sync / 100));
-        this.earningsForSleeves.agi += (pAgiExp * (this.sync / 100));
-        this.earningsForSleeves.cha += (pChaExp * (this.sync / 100));
-        // Return the experience to be gained by other sleeves
-        return {
-            hack: pHackExp * (this.sync / 100),
-            str: pStrExp * (this.sync / 100),
-            def: pDefExp * (this.sync / 100),
-            dex: pDexExp * (this.sync / 100),
-            agi: pAgiExp * (this.sync / 100),
-            cha: pChaExp * (this.sync / 100),
-            money: 0,
-        };
-    }
-    /**
-     * Earn money for player
-     */
-    gainMoney(p, task, numCycles = 1) {
-        this.earningsForPlayer.money += (task.money * numCycles);
-        p.gainMoney(task.money * numCycles);
-    }
-    /**
-     * Gets reputation gain for the current task
-     * Only applicable when working for company or faction
-     */
-    getRepGain() {
-        if (this.currentTask === SleeveTaskTypesEnum_1.SleeveTaskType.Faction) {
-            switch (this.factionWorkType) {
-                case FactionWorkTypeEnum_1.FactionWorkType.Hacking:
-                    return this.getFactionHackingWorkRepGain() * (this.shock / 100);
-                case FactionWorkTypeEnum_1.FactionWorkType.Field:
-                    return this.getFactionFieldWorkRepGain() * (this.shock / 100);
-                case FactionWorkTypeEnum_1.FactionWorkType.Security:
-                    return this.getFactionSecurityWorkRepGain() * (this.shock / 100);
-                default:
-                    console.warn(`Invalid Sleeve.factionWorkType property in Sleeve.getRepGain(): ${this.factionWorkType}`);
-                    return 0;
-            }
-        }
-        else if (this.currentTask === SleeveTaskTypesEnum_1.SleeveTaskType.Company) {
-            return 0; // TODO
-        }
-        else {
-            console.warn(`Sleeve.getRepGain() called for invalid task type: ${this.currentTask}`);
-            return 0;
-        }
-    }
-    log(entry) {
-        const MaxLogSize = 50;
-        this.logs.push(entry);
-        if (this.logs.length > MaxLogSize) {
-            this.logs.shift();
-        }
-    }
-    /**
-     * Process loop
-     * Returns an object containing the amount of experience that should be
-     * transferred to all other sleeves
-     */
-    process(p, numCycles = 1) {
-        // Only process once every second (5 cycles)
-        const CyclesPerSecond = 1000 / Constants_1.CONSTANTS.MilliPerCycle;
-        this.storedCycles += numCycles;
-        if (this.storedCycles < CyclesPerSecond) {
-            return null;
-        }
-        // Shock gradually goes towards 100
-        this.shock = Math.max(100, this.shock + (0.0001 * this.storedCycles));
-        if (this.currentTask === SleeveTaskTypesEnum_1.SleeveTaskType.Idle) {
-            return null;
-        }
-        let time = this.storedCycles * Constants_1.CONSTANTS.MilliPerCycle;
-        let cyclesUsed = this.storedCycles;
-        if (this.currentTaskTime + time > this.currentTaskMaxTime) {
-            time = this.currentTaskMaxTime - this.currentTaskTime;
-            cyclesUsed = Math.floor(time / Constants_1.CONSTANTS.MilliPerCycle);
-            if (time < 0 || cyclesUsed < 0) {
-                console.warn(`Sleeve.process() calculated negative cycle usage`);
-                time = 0;
-                cyclesUsed = 0;
-            }
-        }
-        this.currentTaskTime += time;
-        let retValue = Person_1.createTaskTracker();
-        switch (this.currentTask) {
-            case SleeveTaskTypesEnum_1.SleeveTaskType.Class:
-                retValue = this.gainExperience(p, this.gainRatesForTask, cyclesUsed);
-                this.gainMoney(p, this.gainRatesForTask, cyclesUsed);
-                break;
-            case SleeveTaskTypesEnum_1.SleeveTaskType.Faction:
-                retValue = this.gainExperience(p, this.gainRatesForTask, cyclesUsed);
-                this.gainMoney(p, this.gainRatesForTask, cyclesUsed);
-                // Gain faction reputation
-                const fac = Factions_1.Factions[this.currentTaskLocation];
-                if (!(fac instanceof Faction_1.Faction)) {
-                    console.error(`Invalid faction for Sleeve task: ${this.currentTaskLocation}`);
-                    break;
-                }
-                fac.playerReputation += (this.getRepGain() * cyclesUsed);
-                break;
-            case SleeveTaskTypesEnum_1.SleeveTaskType.Company:
-                retValue = this.gainExperience(p, this.gainRatesForTask, cyclesUsed);
-                this.gainMoney(p, this.gainRatesForTask, cyclesUsed);
-                const company = Companies_1.Companies[this.currentTaskLocation];
-                if (!(company instanceof Company_1.Company)) {
-                    console.error(`Invalid company for Sleeve task: ${this.currentTaskLocation}`);
-                    break;
-                }
-                company.playerReputation *= (this.getRepGain() * cyclesUsed);
-                break;
-            case SleeveTaskTypesEnum_1.SleeveTaskType.Recovery:
-                this.shock = Math.max(100, this.shock + (0.001 * this.storedCycles));
-                break;
-            case SleeveTaskTypesEnum_1.SleeveTaskType.Sync:
-                this.sync = Math.max(100, this.sync + (0.001 * this.storedCycles));
-                break;
-            default:
-                break;
-        }
-        if (this.currentTaskMaxTime !== 0 && this.currentTaskTime >= this.currentTaskMaxTime) {
-            this.finishTask(p);
-        }
-        this.updateStatLevels();
-        this.storedCycles -= cyclesUsed;
-        // TODO Finish this
-        return retValue;
-    }
-    /**
-     * Resets all parameters used to keep information about the current task
-     */
-    resetTaskStatus() {
-        this.earningsForTask = Person_1.createTaskTracker();
-        this.gainRatesForTask = Person_1.createTaskTracker();
-        this.currentTask = SleeveTaskTypesEnum_1.SleeveTaskType.Idle;
-        this.currentTaskTime = 0;
-        this.currentTaskMaxTime = 0;
-        this.factionWorkType = FactionWorkTypeEnum_1.FactionWorkType.None;
-    }
-    /**
-     * Take a course at a university
-     */
-    takeUniversityCourse(p, universityName, className) {
-        if (this.currentTask !== SleeveTaskTypesEnum_1.SleeveTaskType.Idle) {
-            this.finishTask(p);
-        }
-        else {
-            this.resetTaskStatus();
-        }
-        // Set exp/money multipliers based on which university.
-        // Also check that the sleeve is in the right city
-        let costMult = 1;
-        let expMult = 1;
-        switch (universityName.toLowerCase()) {
-            case Locations_1.Locations.AevumSummitUniversity.toLowerCase():
-                if (this.city !== Cities_1.Cities.Aevum) {
-                    return false;
-                }
-                costMult = 4;
-                expMult = 3;
-                break;
-            case Locations_1.Locations.Sector12RothmanUniversity.toLowerCase():
-                if (this.city !== Cities_1.Cities.Sector12) {
-                    return false;
-                }
-                costMult = 3;
-                expMult = 2;
-                break;
-            case Locations_1.Locations.VolhavenZBInstituteOfTechnology.toLowerCase():
-                if (this.city !== Cities_1.Cities.Volhaven) {
-                    return false;
-                }
-                costMult = 5;
-                expMult = 4;
-                break;
-            default:
-                return false;
-        }
-        // Number of game cycles in a second
-        const cps = 1000 / Constants_1.CONSTANTS.MilliPerCycle;
-        // Set experience/money gains based on class
-        // TODO Refactor University Courses into its own class or something
-        const baseStudyComputerScienceExp = 0.5;
-        const baseDataStructuresExp = 1;
-        const baseNetworksExp = 2;
-        const baseAlgorithmsExp = 4;
-        const baseManagementExp = 2;
-        const baseLeadershipExp = 4;
-        switch (className.toLowerCase()) {
-            case "study computer science":
-                this.gainRatesForTask.hack = (baseStudyComputerScienceExp * expMult * this.hacking_exp_mult);
-                break;
-            case "data structures":
-                this.gainRatesForTask.hack = (baseDataStructuresExp * expMult * this.hacking_exp_mult);
-                this.gainRatesForTask.money = -1 * (Constants_1.CONSTANTS.ClassDataStructuresBaseCost * costMult);
-                break;
-            case "networks":
-                this.gainRatesForTask.hack = (baseNetworksExp * expMult * this.hacking_exp_mult);
-                this.gainRatesForTask.money = -1 * (Constants_1.CONSTANTS.ClassNetworksBaseCost * costMult);
-                break;
-            case "algorithms":
-                this.gainRatesForTask.hack = (baseAlgorithmsExp * expMult * this.hacking_exp_mult);
-                this.gainRatesForTask.money = -1 * (Constants_1.CONSTANTS.ClassAlgorithmsBaseCost * costMult);
-                break;
-            case "management":
-                this.gainRatesForTask.cha = (baseManagementExp * expMult * this.charisma_exp_mult);
-                this.gainRatesForTask.money = -1 * (Constants_1.CONSTANTS.ClassManagementBaseCost * costMult);
-                break;
-            case "leadership":
-                this.gainRatesForTask.cha = (baseLeadershipExp * expMult * this.charisma_exp_mult);
-                this.gainRatesForTask.money = -1 * (Constants_1.CONSTANTS.ClassLeadershipBaseCost * costMult);
-                break;
-            default:
-                return false;
-        }
-        this.currentTask = SleeveTaskTypesEnum_1.SleeveTaskType.Class;
-        return true;
-    }
-    /**
-     * Travel to another City. Costs money from player
-     */
-    travel(p, newCity) {
-        if (Cities_1.Cities[newCity] == null) {
-            console.error(`Invalid city ${newCity} passed into Sleeve.travel()`);
-            return false;
-        }
-        p.loseMoney(Constants_1.CONSTANTS.TravelCost);
-        this.city = newCity;
-        return true;
-    }
-    /**
-     * Start work for one of the player's companies
-     * Returns boolean indicating success
-     */
-    workForCompany(p, companyName) {
-        if (!(Companies_1.Companies[companyName] instanceof Company_1.Company) || p.jobs[companyName] == null) {
-            return false;
-        }
-        if (this.currentTask !== SleeveTaskTypesEnum_1.SleeveTaskType.Idle) {
-            this.finishTask(p);
-        }
-        else {
-            this.resetTaskStatus();
-        }
-        const company = Companies_1.Companies[companyName];
-        const companyPosition = CompanyPositions_1.CompanyPositions[p.jobs[companyName]];
-        if (company == null) {
-            throw new Error(`Invalid company name specified in Sleeve.workForCompany(): ${companyName}`);
-        }
-        if (companyPosition == null) {
-            throw new Error(`Invalid CompanyPosition data in Sleeve.workForCompany(): ${companyName}`);
-        }
-        this.gainRatesForTask.hack = companyPosition.hackingExpGain *
-            company.expMultiplier *
-            this.hacking_exp_mult *
-            BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
-        this.gainRatesForTask.str = companyPosition.strengthExpGain *
-            company.expMultiplier *
-            this.strength_exp_mult *
-            BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
-        this.gainRatesForTask.def = companyPosition.defenseExpGain *
-            company.expMultiplier *
-            this.defense_exp_mult *
-            BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
-        this.gainRatesForTask.dex = companyPosition.dexterityExpGain *
-            company.expMultiplier *
-            this.dexterity_exp_mult *
-            BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
-        this.gainRatesForTask.agi = companyPosition.agilityExpGain *
-            company.expMultiplier *
-            this.agility_exp_mult *
-            BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
-        this.gainRatesForTask.cha = companyPosition.charismaExpGain *
-            company.expMultiplier *
-            this.charisma_exp_mult *
-            BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
-        this.currentTaskLocation = companyName;
-        this.currentTask = SleeveTaskTypesEnum_1.SleeveTaskType.Company;
-        return true;
-    }
-    /**
-     * Start work for one of the player's factions
-     * Returns boolean indicating success
-     */
-    workForFaction(p, factionName, workType) {
-        if (!(Factions_1.Factions[factionName] instanceof Faction_1.Faction) || !p.factions.includes(factionName)) {
-            throw new Error(`Invalid Faction specified for Sleeve.workForFaction(): ${factionName}`);
-            return false;
-        }
-        if (this.currentTask !== SleeveTaskTypesEnum_1.SleeveTaskType.Idle) {
-            this.finishTask(p);
-        }
-        else {
-            this.resetTaskStatus();
-        }
-        // Set type of work (hacking/field/security), and the experience gains
-        const sanitizedWorkType = workType.toLowerCase();
-        if (sanitizedWorkType.includes("hack")) {
-            this.factionWorkType = FactionWorkTypeEnum_1.FactionWorkType.Hacking;
-            this.gainRatesForTask.hack = .15 * this.hacking_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
-        }
-        else if (sanitizedWorkType.includes("field")) {
-            this.factionWorkType = FactionWorkTypeEnum_1.FactionWorkType.Field;
-            this.gainRatesForTask.hack = .1 * this.hacking_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
-            this.gainRatesForTask.str = .1 * this.strength_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
-            this.gainRatesForTask.def = .1 * this.defense_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
-            this.gainRatesForTask.dex = .1 * this.dexterity_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
-            this.gainRatesForTask.agi = .1 * this.agility_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
-            this.gainRatesForTask.cha = .1 * this.charisma_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
-        }
-        else if (sanitizedWorkType.includes("security")) {
-            this.factionWorkType = FactionWorkTypeEnum_1.FactionWorkType.Security;
-            this.gainRatesForTask.hack = .1 * this.hacking_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
-            this.gainRatesForTask.str = .15 * this.strength_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
-            this.gainRatesForTask.def = .15 * this.defense_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
-            this.gainRatesForTask.dex = .15 * this.dexterity_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
-            this.gainRatesForTask.agi = .15 * this.agility_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
-        }
-        else {
-            return false;
-        }
-        this.currentTaskLocation = factionName;
-        this.currentTask = SleeveTaskTypesEnum_1.SleeveTaskType.Faction;
-        return true;
-    }
-    /**
-     * Begin a gym workout task
-     */
-    workoutAtGym(p, gymName, stat) {
-        if (this.currentTask !== SleeveTaskTypesEnum_1.SleeveTaskType.Idle) {
-            this.finishTask(p);
-        }
-        else {
-            this.resetTaskStatus();
-        }
-        // Set exp/money multipliers based on which university.
-        // Also check that the sleeve is in the right city
-        let costMult = 1;
-        let expMult = 1;
-        switch (gymName.toLowerCase()) {
-            case Locations_1.Locations.AevumCrushFitnessGym.toLowerCase():
-                if (this.city != Cities_1.Cities.Aevum) {
-                    return false;
-                }
-                costMult = 3;
-                expMult = 2;
-                break;
-            case Locations_1.Locations.AevumSnapFitnessGym.toLowerCase():
-                if (this.city != Cities_1.Cities.Aevum) {
-                    return false;
-                }
-                costMult = 10;
-                expMult = 5;
-                break;
-            case Locations_1.Locations.Sector12IronGym.toLowerCase():
-                if (this.city != Cities_1.Cities.Sector12) {
-                    return false;
-                }
-                costMult = 1;
-                expMult = 1;
-                break;
-            case Locations_1.Locations.Sector12PowerhouseGym.toLowerCase():
-                if (this.city != Cities_1.Cities.Sector12) {
-                    return false;
-                }
-                costMult = 20;
-                expMult = 10;
-                break;
-            case Locations_1.Locations.VolhavenMilleniumFitnessGym:
-                if (this.city != Cities_1.Cities.Volhaven) {
-                    return false;
-                }
-                costMult = 7;
-                expMult = 4;
-                break;
-            default:
-                return false;
-        }
-        // Number of game cycles in a second
-        const cps = 1000 / Constants_1.CONSTANTS.MilliPerCycle;
-        // Set experience/money gains based on class
-        // TODO Refactor University Courses into its own class or something
-        const baseGymExp = 1;
-        const sanitizedStat = stat.toLowerCase();
-        // Set cost
-        this.gainRatesForTask.money = -1 * (Constants_1.CONSTANTS.ClassGymBaseCost * costMult);
-        // Set stat gain rate
-        if (sanitizedStat.includes("str")) {
-            this.gainRatesForTask.str = (baseGymExp * expMult);
-        }
-        else if (sanitizedStat.includes("def")) {
-            this.gainRatesForTask.def = (baseGymExp * expMult);
-        }
-        else if (sanitizedStat.includes("dex")) {
-            this.gainRatesForTask.dex = (baseGymExp * expMult);
-        }
-        else if (sanitizedStat.includes("agi")) {
-            this.gainRatesForTask.agi = (baseGymExp * expMult);
-        }
-        else {
-            return false;
-        }
-        this.currentTask = SleeveTaskTypesEnum_1.SleeveTaskType.Class;
-        return true;
-    }
-    /**
-     * Serialize the current object to a JSON save state.
-     */
-    toJSON() {
-        return JSONReviver_1.Generic_toJSON("Sleeve", this);
-    }
-}
-exports.Sleeve = Sleeve;
-JSONReviver_1.Reviver.constructors.Sleeve = Sleeve;
-
-
-/***/ }),
-/* 145 */
+/* 150 */
 /*!***************************************!*\
   !*** ./utils/helpers/isPowerOfTwo.ts ***!
   \***************************************/
@@ -55825,7 +56727,7 @@ exports.isPowerOfTwo = isPowerOfTwo;
 
 
 /***/ }),
-/* 146 */
+/* 151 */
 /*!*************************************************!*\
   !*** ./src/SourceFile/PlayerOwnedSourceFile.ts ***!
   \*************************************************/
@@ -55850,7 +56752,7 @@ exports.PlayerOwnedSourceFile = PlayerOwnedSourceFile;
 
 
 /***/ }),
-/* 147 */
+/* 152 */
 /*!****************************************!*\
   !*** ./src/data/gangmemberupgrades.ts ***!
   \****************************************/
@@ -56062,7 +56964,7 @@ exports.gangMemberUpgradesMetadata = [
 
 
 /***/ }),
-/* 148 */
+/* 153 */
 /*!*************************************!*\
   !*** ./src/data/gangmembertasks.ts ***!
   \*************************************/
@@ -56327,7 +57229,7 @@ exports.gangMemberTasksMetadata = [
 
 
 /***/ }),
-/* 149 */
+/* 154 */
 /*!***************************************!*\
   !*** ./utils/FactionInvitationBox.js ***!
   \***************************************/
@@ -56342,7 +57244,7 @@ exports.gangMemberTasksMetadata = [
 /* harmony import */ var _src_Player__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../src/Player */ 0);
 /* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./uiHelpers/clearEventListeners */ 22);
 /* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _src_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../src/ui/navigationTracking */ 14);
+/* harmony import */ var _src_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../src/ui/navigationTracking */ 13);
 /* harmony import */ var _src_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_src_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_4__);
 
 
@@ -56411,7 +57313,7 @@ function factionInvitationBoxCreate(faction) {
 
 
 /***/ }),
-/* 150 */
+/* 155 */
 /*!*****************************!*\
   !*** ./src/data/servers.ts ***!
   \*****************************/
@@ -57884,7 +58786,7 @@ exports.serverMetadata = [
 
 
 /***/ }),
-/* 151 */
+/* 156 */
 /*!**********************************!*\
   !*** ./utils/InfiltrationBox.js ***!
   \**********************************/
@@ -58032,7 +58934,7 @@ function infiltrationBoxCreate(inst) {
 
 
 /***/ }),
-/* 152 */
+/* 157 */
 /*!*****************************!*\
   !*** ./src/Infiltration.js ***!
   \*****************************/
@@ -58053,7 +58955,7 @@ function infiltrationBoxCreate(inst) {
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 17);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _utils_InfiltrationBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/InfiltrationBox */ 151);
+/* harmony import */ var _utils_InfiltrationBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/InfiltrationBox */ 156);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_8__);
 
@@ -58901,7 +59803,7 @@ function getInfiltrationEscapeChance(inst) {
 
 
 /***/ }),
-/* 153 */
+/* 158 */
 /*!******************************************!*\
   !*** ./utils/uiHelpers/clearSelector.ts ***!
   \******************************************/
@@ -58925,11 +59827,6 @@ exports.clearSelector = clearSelector;
 
 
 /***/ }),
-/* 154 */,
-/* 155 */,
-/* 156 */,
-/* 157 */,
-/* 158 */,
 /* 159 */,
 /* 160 */,
 /* 161 */,
@@ -58940,7 +59837,12 @@ exports.clearSelector = clearSelector;
 /* 166 */,
 /* 167 */,
 /* 168 */,
-/* 169 */
+/* 169 */,
+/* 170 */,
+/* 171 */,
+/* 172 */,
+/* 173 */,
+/* 174 */
 /*!************************!*\
   !*** ./css/treant.css ***!
   \************************/
@@ -58950,8 +59852,30 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 170 */,
-/* 171 */
+/* 175 */,
+/* 176 */
+/*!*****************************!*\
+  !*** ./css/resleeving.scss ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+/* 177 */,
+/* 178 */
+/*!**************************!*\
+  !*** ./css/sleeves.scss ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+/* 179 */,
+/* 180 */
 /*!***********************!*\
   !*** ./css/gang.scss ***!
   \***********************/
@@ -58961,8 +59885,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 172 */,
-/* 173 */
+/* 181 */,
+/* 182 */
 /*!******************************!*\
   !*** ./css/bladeburner.scss ***!
   \******************************/
@@ -58972,8 +59896,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 174 */,
-/* 175 */
+/* 183 */,
+/* 184 */
 /*!************************************!*\
   !*** ./css/companymanagement.scss ***!
   \************************************/
@@ -58983,8 +59907,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 176 */,
-/* 177 */
+/* 185 */,
+/* 186 */
 /*!***************************!*\
   !*** ./css/missions.scss ***!
   \***************************/
@@ -58994,8 +59918,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 178 */,
-/* 179 */
+/* 187 */,
+/* 188 */
 /*!*************************!*\
   !*** ./css/loader.scss ***!
   \*************************/
@@ -59005,8 +59929,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 180 */,
-/* 181 */
+/* 189 */,
+/* 190 */
 /*!**************************************!*\
   !*** ./css/interactivetutorial.scss ***!
   \**************************************/
@@ -59016,8 +59940,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 182 */,
-/* 183 */
+/* 191 */,
+/* 192 */
 /*!******************************!*\
   !*** ./css/gameoptions.scss ***!
   \******************************/
@@ -59027,8 +59951,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 184 */,
-/* 185 */
+/* 193 */,
+/* 194 */
 /*!*****************************!*\
   !*** ./css/popupboxes.scss ***!
   \*****************************/
@@ -59038,8 +59962,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 186 */,
-/* 187 */
+/* 195 */,
+/* 196 */
 /*!*********************************!*\
   !*** ./css/workinprogress.scss ***!
   \*********************************/
@@ -59049,8 +59973,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 188 */,
-/* 189 */
+/* 197 */,
+/* 198 */
 /*!******************************!*\
   !*** ./css/stockmarket.scss ***!
   \******************************/
@@ -59060,8 +59984,19 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 190 */,
-/* 191 */
+/* 199 */,
+/* 200 */
+/*!**************************!*\
+  !*** ./css/redpill.scss ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+/* 201 */,
+/* 202 */
 /*!****************************!*\
   !*** ./css/menupages.scss ***!
   \****************************/
@@ -59071,8 +60006,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 192 */,
-/* 193 */
+/* 203 */,
+/* 204 */
 /*!***************************!*\
   !*** ./css/terminal.scss ***!
   \***************************/
@@ -59082,8 +60017,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 194 */,
-/* 195 */
+/* 205 */,
+/* 206 */
 /*!************************************!*\
   !*** ./css/characteroverview.scss ***!
   \************************************/
@@ -59093,8 +60028,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 196 */,
-/* 197 */
+/* 207 */,
+/* 208 */
 /*!***************************!*\
   !*** ./css/mainmenu.scss ***!
   \***************************/
@@ -59104,8 +60039,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 198 */,
-/* 199 */
+/* 209 */,
+/* 210 */
 /*!**************************!*\
   !*** ./css/buttons.scss ***!
   \**************************/
@@ -59115,8 +60050,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 200 */,
-/* 201 */
+/* 211 */,
+/* 212 */
 /*!***************************!*\
   !*** ./css/tooltips.scss ***!
   \***************************/
@@ -59126,8 +60061,8 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 202 */,
-/* 203 */
+/* 213 */,
+/* 214 */
 /*!*************************!*\
   !*** ./css/styles.scss ***!
   \*************************/
@@ -59137,61 +60072,7 @@ exports.clearSelector = clearSelector;
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 204 */
-/*!******************************************!*\
-  !*** ./utils/uiHelpers/getSelectData.ts ***!
-  \******************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-function getSelectValue(selector) {
-    if (selector == null) {
-        return "";
-    }
-    return selector[selector.selectedIndex].value;
-}
-exports.getSelectValue = getSelectValue;
-function getSelectText(selector) {
-    if (selector == null) {
-        return "";
-    }
-    return selector[selector.selectedIndex].text;
-}
-exports.getSelectText = getSelectText;
-
-
-/***/ }),
-/* 205 */
-/*!************************************************!*\
-  !*** ./utils/uiHelpers/createOptionElement.ts ***!
-  \************************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const createElement_1 = __webpack_require__(/*! ./createElement */ 2);
-function createOptionElement(text, value = "") {
-    let sanitizedValue = value;
-    if (sanitizedValue === "") {
-        sanitizedValue = text;
-    }
-    return createElement_1.createElement("option", {
-        text: text,
-        value: sanitizedValue,
-    });
-}
-exports.createOptionElement = createOptionElement;
-
-
-/***/ }),
-/* 206 */
+/* 215 */
 /*!**************************************************!*\
   !*** ./src/PersonObjects/Resleeving/Resleeve.ts ***!
   \**************************************************/
@@ -59206,8 +60087,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * Implements the Resleeve class, which defines a new body
  * that the player can "re-sleeve" into.
  */
-const Person_1 = __webpack_require__(/*! ../Person */ 134);
-const Augmentations_1 = __webpack_require__(/*! ../../Augmentation/Augmentations */ 13);
+const Person_1 = __webpack_require__(/*! ../Person */ 139);
+const Augmentations_1 = __webpack_require__(/*! ../../Augmentation/Augmentations */ 14);
 const JSONReviver_1 = __webpack_require__(/*! ../../../utils/JSONReviver */ 15);
 class Resleeve extends Person_1.Person {
     /**
@@ -59221,7 +60102,7 @@ class Resleeve extends Person_1.Person {
     }
     getCost() {
         // Each experience point adds this to the cost
-        const CostPerExp = 5;
+        const CostPerExp = 4;
         // Final cost is multiplied by # Augs ^ this constant
         const NumAugsExponent = 1.05;
         // Get total exp in this re-sleeve
@@ -59255,7 +60136,7 @@ JSONReviver_1.Reviver.constructors.Resleeve = Resleeve;
 
 
 /***/ }),
-/* 207 */
+/* 216 */
 /*!****************************************************!*\
   !*** ./src/PersonObjects/Resleeving/Resleeving.ts ***!
   \****************************************************/
@@ -59278,13 +60159,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *
  * As of right now, this feature is only available in BitNode 10
  */
-const Resleeve_1 = __webpack_require__(/*! ./Resleeve */ 206);
-const Augmentations_1 = __webpack_require__(/*! ../../Augmentation/Augmentations */ 13);
+const Resleeve_1 = __webpack_require__(/*! ./Resleeve */ 215);
+const Augmentations_1 = __webpack_require__(/*! ../../Augmentation/Augmentations */ 14);
 const PlayerOwnedAugmentation_1 = __webpack_require__(/*! ../../Augmentation/PlayerOwnedAugmentation */ 98);
 const AugmentationNames_1 = __webpack_require__(/*! ../../Augmentation/data/AugmentationNames */ 6);
 const getRandomInt_1 = __webpack_require__(/*! ../../../utils/helpers/getRandomInt */ 17);
 // Executes the actual re-sleeve when one is purchased
 function purchaseResleeve(r, p) {
+    const cost = r.getCost();
+    if (!p.canAfford(cost)) {
+        return false;
+    }
+    p.loseMoney(cost);
     // Set the player's exp
     p.hacking_exp = r.hacking_exp;
     p.strength_exp = r.strength_exp;
@@ -59292,15 +60178,24 @@ function purchaseResleeve(r, p) {
     p.dexterity_exp = r.dexterity_exp;
     p.agility_exp = r.agility_exp;
     p.charisma_exp = r.charisma_exp;
+    // Reset Augmentation "owned" data
+    for (const augKey in Augmentations_1.Augmentations) {
+        Augmentations_1.Augmentations[augKey].owned = false;
+    }
     // Clear all of the player's augmentations, except the NeuroFlux Governor
     // which is kept
     for (let i = p.augmentations.length - 1; i >= 0; --i) {
         if (p.augmentations[i].name !== AugmentationNames_1.AugmentationNames.NeuroFluxGovernor) {
             p.augmentations.splice(i, 1);
         }
+        else {
+            // NeuroFlux Governor
+            Augmentations_1.Augmentations[AugmentationNames_1.AugmentationNames.NeuroFluxGovernor].owned = true;
+        }
     }
     for (let i = 0; i < r.augmentations.length; ++i) {
         p.augmentations.push(new PlayerOwnedAugmentation_1.PlayerOwnedAugmentation(r.augmentations[i].name));
+        Augmentations_1.Augmentations[r.augmentations[i].name].owned = true;
     }
     // The player's purchased Augmentations should remain the same, but any purchased
     // Augmentations that are given by the resleeve should be removed so there are no duplicates
@@ -59311,6 +60206,8 @@ function purchaseResleeve(r, p) {
         }
     }
     p.reapplyAllAugmentations(true);
+    p.reapplyAllSourceFiles(); //Multipliers get reset, so have to re-process source files too
+    return true;
 }
 exports.purchaseResleeve = purchaseResleeve;
 // Creates all of the Re-sleeves that will be available for purchase at VitaLife
@@ -59321,22 +60218,31 @@ function generateResleeves() {
         // i will be a number indicating how "powerful" the Re-sleeve should be
         let r = new Resleeve_1.Resleeve();
         // Generate experience
-        const expMult = i + 1;
-        r.hacking_exp = expMult * getRandomInt_1.getRandomInt(500, 1500);
-        r.strength_exp = expMult * getRandomInt_1.getRandomInt(500, 1500);
-        r.defense_exp = expMult * getRandomInt_1.getRandomInt(500, 1500);
-        r.dexterity_exp = expMult * getRandomInt_1.getRandomInt(500, 1500);
-        r.agility_exp = expMult * getRandomInt_1.getRandomInt(500, 1500);
-        r.charisma_exp = expMult * getRandomInt_1.getRandomInt(500, 1500);
+        const expMult = (5 * i) + 1;
+        r.hacking_exp = expMult * getRandomInt_1.getRandomInt(1000, 5000);
+        r.strength_exp = expMult * getRandomInt_1.getRandomInt(1000, 5000);
+        r.defense_exp = expMult * getRandomInt_1.getRandomInt(1000, 5000);
+        r.dexterity_exp = expMult * getRandomInt_1.getRandomInt(1000, 5000);
+        r.agility_exp = expMult * getRandomInt_1.getRandomInt(1000, 5000);
+        r.charisma_exp = expMult * getRandomInt_1.getRandomInt(1000, 5000);
         // Generate Augs
-        const baseNumAugs = Math.ceil((i + 1) / 2);
+        // Augmentation prequisites will be ignored for this
+        const baseNumAugs = Math.max(2, Math.ceil((i + 3) / 2));
         const numAugs = getRandomInt_1.getRandomInt(baseNumAugs, baseNumAugs + 2);
+        const augKeys = Object.keys(Augmentations_1.Augmentations);
         for (let a = 0; a < numAugs; ++a) {
-            // We'll ignore Aug prerequisites for this
-            const augKeys = Object.keys(Augmentations_1.Augmentations);
-            const randKey = augKeys[getRandomInt_1.getRandomInt(0, augKeys.length - 1)];
+            // Get a random aug
+            const randIndex = getRandomInt_1.getRandomInt(0, augKeys.length - 1);
+            const randKey = augKeys[randIndex];
+            if (randKey === AugmentationNames_1.AugmentationNames.TheRedPill) {
+                continue; // A sleeve can't have The Red Pill
+            }
             const randAug = Augmentations_1.Augmentations[randKey];
             r.augmentations.push({ name: randAug.name, level: 1 });
+            r.applyAugmentation(Augmentations_1.Augmentations[randKey]);
+            r.updateStatLevels();
+            // Remove Augmentation so that there are no duplicates
+            augKeys.splice(randIndex, 1);
         }
         ret.push(r);
     }
@@ -59346,7 +60252,52 @@ exports.generateResleeves = generateResleeves;
 
 
 /***/ }),
-/* 208 */
+/* 217 */
+/*!****************************************************!*\
+  !*** ./src/PersonObjects/Sleeve/data/SleeveFaq.ts ***!
+  \****************************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.SleeveFaq = [
+    "<strong><u>How do sleeves work?</strong></u><br>",
+    "Sleeves are essentially clones. You can use them to perform any work type",
+    "action, such as working for a company/faction or committing a crime.",
+    "Having sleeves perform these tasks earns you money, experience, and reputation.<br><br>",
+    "Sleeves are their own individuals, which means they each have their own",
+    "experience and stats.<br><br>",
+    "When a sleeve earns experience, it earns experience for itself, the player's",
+    "original 'consciousness', as well as all of the player's other sleeves.<br><br>",
+    "<strong><u>What is Synchronization (Sync)?</strong></u><br>",
+    "Synchronization is a measure of how aligned your consciousness is with",
+    "that of your Duplicate Sleeves. It is a numerical value between 1 and 100, and",
+    "it affects how much experience is earned by when the sleeve is performing a task.<br><br>",
+    "Let N be the sleeve's synchronization. When the sleeve earns experience by performing a",
+    "task, both the sleeve and the player's original host consciousness earn N%",
+    "of the amount of experience normally earned by the task. All of the player's",
+    "other sleeves earn N^2% of the experience.<br><br>",
+    "Synchronization can be increased by assigning sleeves to the 'Synchronize' task.<br><br>",
+    "<strong><u>What is Shock?</u></strong><br>",
+    "Sleeve shock is a measure of how much trauma the sleeve has due to being placed in a new",
+    "body. It is a numerival value between 0 and 99, where 100 indicates full shock and 0 indicates",
+    "no shock. Shock affects the amount of experience earned by the sleeve.<br><br>",
+    "Sleeve shock slowly decreases over time. You can further increase the rate at which",
+    "it decreases by assigning sleeves to the 'Shock Recovery' task.<br><br>",
+    "<strong><u>Why can't I work for this company or faction?</u></strong><br>",
+    "Only one of your sleeves can work for a given company/faction a time.",
+    "To clarify further, if you have two sleeves they can work for two different",
+    "companies, but they cannot both work for the same company.<br><br>",
+    "<strong><u>Do sleeves get reset when installing Augmentations or switching BitNodes?</u></strong><br>",
+    "Sleeves are reset when switching BitNodes, but not when installing Augmentations."
+].join(" ");
+
+
+/***/ }),
+/* 218 */
 /*!********************************************!*\
   !*** ./src/Faction/FactionWorkTypeEnum.ts ***!
   \********************************************/
@@ -59367,42 +60318,15 @@ var FactionWorkType;
 
 
 /***/ }),
-/* 209 */
-/*!*********************************************************!*\
-  !*** ./src/PersonObjects/Sleeve/SleeveTaskTypesEnum.ts ***!
-  \*********************************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * Enum for different types of tasks that a Sleeve can perform
- */
-var SleeveTaskType;
-(function (SleeveTaskType) {
-    SleeveTaskType[SleeveTaskType["Class"] = 0] = "Class";
-    SleeveTaskType[SleeveTaskType["Company"] = 1] = "Company";
-    SleeveTaskType[SleeveTaskType["Crime"] = 2] = "Crime";
-    SleeveTaskType[SleeveTaskType["Faction"] = 3] = "Faction";
-    SleeveTaskType[SleeveTaskType["Idle"] = 4] = "Idle";
-    SleeveTaskType[SleeveTaskType["Recovery"] = 5] = "Recovery";
-    SleeveTaskType[SleeveTaskType["Sync"] = 6] = "Sync";
-})(SleeveTaskType = exports.SleeveTaskType || (exports.SleeveTaskType = {}));
-
-
-/***/ }),
-/* 210 */,
-/* 211 */,
-/* 212 */,
-/* 213 */,
-/* 214 */,
-/* 215 */,
-/* 216 */,
-/* 217 */,
-/* 218 */
+/* 219 */,
+/* 220 */,
+/* 221 */,
+/* 222 */,
+/* 223 */,
+/* 224 */,
+/* 225 */,
+/* 226 */,
+/* 227 */
 /*!************************************!*\
   !*** ./src/DarkWeb/DarkWebItem.ts ***!
   \************************************/
@@ -59429,7 +60353,7 @@ exports.DarkWebItem = DarkWebItem;
 
 
 /***/ }),
-/* 219 */
+/* 228 */
 /*!***********************************************!*\
   !*** ./src/Programs/data/programsMetadata.ts ***!
   \***********************************************/
@@ -59571,7 +60495,7 @@ exports.programsMetadata = [
 
 
 /***/ }),
-/* 220 */
+/* 229 */
 /*!*********************************!*\
   !*** ./src/Programs/Program.ts ***!
   \*********************************/
@@ -59597,7 +60521,7 @@ exports.Program = Program;
 
 
 /***/ }),
-/* 221 */
+/* 230 */
 /*!**********************!*\
   !*** ./netscript.js ***!
   \**********************/
@@ -60443,7 +61367,7 @@ oop.inherits(Mode, TextMode);
     };
 
     this.createWorker = function(session) {
-        var worker = new WorkerClient(["ace"], __webpack_require__(/*! brace/worker/javascript */ 222), "JavaScriptWorker");
+        var worker = new WorkerClient(["ace"], __webpack_require__(/*! brace/worker/javascript */ 231), "JavaScriptWorker");
         worker.attachToDocument(session.getDocument());
 
         worker.on("annotate", function(results) {
@@ -60465,11 +61389,11 @@ exports.Mode = Mode;
 
 
 /***/ }),
-/* 222 */,
-/* 223 */,
-/* 224 */,
-/* 225 */,
-/* 226 */
+/* 231 */,
+/* 232 */,
+/* 233 */,
+/* 234 */,
+/* 235 */
 /*!*****************************************!*\
   !*** ./src/data/codingcontracttypes.ts ***!
   \*****************************************/
@@ -60950,7 +61874,7 @@ exports.codingContractTypesMetadata = [
 
 
 /***/ }),
-/* 227 */
+/* 236 */
 /*!*************************************************!*\
   !*** ./src/Corporation/ProductRatingWeights.ts ***!
   \*************************************************/
@@ -61030,7 +61954,7 @@ exports.ProductRatingWeights = {
 
 
 /***/ }),
-/* 228 */
+/* 237 */
 /*!*****************************************!*\
   !*** ./src/Corporation/ResearchTree.ts ***!
   \*****************************************/
@@ -61041,7 +61965,7 @@ exports.ProductRatingWeights = {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const ResearchMap_1 = __webpack_require__(/*! ./ResearchMap */ 106);
+const ResearchMap_1 = __webpack_require__(/*! ./ResearchMap */ 108);
 class Node {
     constructor(p = { cost: 0, text: "" }) {
         // All child Nodes in the tree
@@ -61272,7 +62196,7 @@ exports.ResearchTree = ResearchTree;
 
 
 /***/ }),
-/* 229 */
+/* 238 */
 /*!**************************************************!*\
   !*** ./src/Corporation/data/ResearchMetadata.ts ***!
   \**************************************************/
@@ -61405,7 +62329,7 @@ exports.researchMetadata = [
 
 
 /***/ }),
-/* 230 */
+/* 239 */
 /*!*************************************!*\
   !*** ./src/Corporation/Research.ts ***!
   \*************************************/
@@ -61470,7 +62394,7 @@ exports.Research = Research;
 
 
 /***/ }),
-/* 231 */
+/* 240 */
 /*!**************************************************!*\
   !*** ./src/Corporation/data/BaseResearchTree.ts ***!
   \**************************************************/
@@ -61481,8 +62405,8 @@ exports.Research = Research;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const ResearchMap_1 = __webpack_require__(/*! ../ResearchMap */ 106);
-const ResearchTree_1 = __webpack_require__(/*! ../ResearchTree */ 228);
+const ResearchMap_1 = __webpack_require__(/*! ../ResearchMap */ 108);
+const ResearchTree_1 = __webpack_require__(/*! ../ResearchTree */ 237);
 function makeNode(name) {
     const research = ResearchMap_1.ResearchMap[name];
     if (research == null) {
@@ -61528,7 +62452,7 @@ exports.getBaseResearchTreeCopy = getBaseResearchTreeCopy;
 
 
 /***/ }),
-/* 232 */
+/* 241 */
 /*!***********************************************!*\
   !*** ./src/Company/data/CompaniesMetadata.ts ***!
   \***********************************************/
@@ -61920,7 +62844,7 @@ exports.companiesMetadata = [
 
 
 /***/ }),
-/* 233 */
+/* 242 */
 /*!******************************************************!*\
   !*** ./src/Company/data/CompanyPositionsMetadata.ts ***!
   \******************************************************/
@@ -62533,103 +63457,6 @@ exports.companyPositionMetadata = [
 
 
 /***/ }),
-/* 234 */
-/*!****************************!*\
-  !*** ./src/Crime/Crime.ts ***!
-  \****************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const Constants_1 = __webpack_require__(/*! ../Constants */ 1);
-class Crime {
-    constructor(name = "", type = "", time = 0, money = 0, difficulty = 0, karma = 0, params = {}) {
-        // Number representing the difficulty of the crime. Used for success chance calculations
-        this.difficulty = 0;
-        // Amount of karma lost for SUCCESSFULLY committing this crime
-        this.karma = 0;
-        // How many people die as a result of this crime
-        this.kills = 0;
-        // How much money is given by the
-        this.money = 0;
-        // Name of crime
-        this.name = "";
-        // Milliseconds it takes to attempt the crime
-        this.time = 0;
-        // Corresponding type in CONSTANTS. Contains a description for the crime activity
-        this.type = "";
-        // Weighting factors that determine how stats affect the success rate of this crime
-        this.hacking_success_weight = 0;
-        this.strength_success_weight = 0;
-        this.defense_success_weight = 0;
-        this.dexterity_success_weight = 0;
-        this.agility_success_weight = 0;
-        this.charisma_success_weight = 0;
-        // How much stat experience is granted by this crime
-        this.hacking_exp = 0;
-        this.strength_exp = 0;
-        this.defense_exp = 0;
-        this.dexterity_exp = 0;
-        this.agility_exp = 0;
-        this.charisma_exp = 0;
-        this.intelligence_exp = 0;
-        this.name = name;
-        this.type = type;
-        this.time = time;
-        this.money = money;
-        this.difficulty = difficulty;
-        this.karma = karma;
-        this.hacking_success_weight = params.hacking_success_weight ? params.hacking_success_weight : 0;
-        this.strength_success_weight = params.strength_success_weight ? params.strength_success_weight : 0;
-        this.defense_success_weight = params.defense_success_weight ? params.defense_success_weight : 0;
-        this.dexterity_success_weight = params.dexterity_success_weight ? params.dexterity_success_weight : 0;
-        this.agility_success_weight = params.agility_success_weight ? params.agility_success_weight : 0;
-        this.charisma_success_weight = params.charisma_success_weight ? params.charisma_success_weight : 0;
-        this.hacking_exp = params.hacking_exp ? params.hacking_exp : 0;
-        this.strength_exp = params.strength_exp ? params.strength_exp : 0;
-        this.defense_exp = params.defense_exp ? params.defense_exp : 0;
-        this.dexterity_exp = params.dexterity_exp ? params.dexterity_exp : 0;
-        this.agility_exp = params.agility_exp ? params.agility_exp : 0;
-        this.charisma_exp = params.charisma_exp ? params.charisma_exp : 0;
-        this.intelligence_exp = params.intelligence_exp ? params.intelligence_exp : 0;
-        this.kills = params.kills ? params.kills : 0;
-    }
-    commit(p, div = 1, singParams = null) {
-        if (div <= 0) {
-            div = 1;
-        }
-        p.startCrime(this.type, this.hacking_exp / div, this.strength_exp / div, this.defense_exp / div, this.dexterity_exp / div, this.agility_exp / div, this.charisma_exp / div, this.money / div, this.time, singParams);
-        return this.time;
-    }
-    successRate(p) {
-        let chance = (this.hacking_success_weight * p.hacking_skill +
-            this.strength_success_weight * p.strength +
-            this.defense_success_weight * p.defense +
-            this.dexterity_success_weight * p.dexterity +
-            this.agility_success_weight * p.agility +
-            this.charisma_success_weight * p.charisma +
-            Constants_1.CONSTANTS.IntelligenceCrimeWeight * p.intelligence);
-        chance /= Constants_1.CONSTANTS.MaxSkillLevel;
-        chance /= this.difficulty;
-        chance *= p.crime_success_mult;
-        return Math.min(chance, 1);
-    }
-}
-exports.Crime = Crime;
-
-
-/***/ }),
-/* 235 */,
-/* 236 */,
-/* 237 */,
-/* 238 */,
-/* 239 */,
-/* 240 */,
-/* 241 */,
-/* 242 */,
 /* 243 */,
 /* 244 */,
 /* 245 */,
@@ -62658,7 +63485,15 @@ exports.Crime = Crime;
 /* 268 */,
 /* 269 */,
 /* 270 */,
-/* 271 */
+/* 271 */,
+/* 272 */,
+/* 273 */,
+/* 274 */,
+/* 275 */,
+/* 276 */,
+/* 277 */,
+/* 278 */,
+/* 279 */
 /*!**********************!*\
   !*** util (ignored) ***!
   \**********************/
@@ -62669,7 +63504,7 @@ exports.Crime = Crime;
 /* (ignored) */
 
 /***/ }),
-/* 272 */
+/* 280 */
 /*!**********************!*\
   !*** util (ignored) ***!
   \**********************/

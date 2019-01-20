@@ -1,3 +1,5 @@
+.. _netscript_singularityfunctions:
+
 Netscript Singularity Functions
 ===============================
 

@@ -1224,6 +1224,24 @@ button {
 
 /* COLORS */
 /* Attributes */
+/**
+ * Styling for the Red Pill screen (the BitNode selection UI)
+ */
+#red-pill-container {
+  position: fixed; }
+
+.bitnode {
+  color: #00f; }
+
+.bitnode-destroyed {
+  color: #f00; }
+
+.bitnode:hover,
+.bitnode-destroyed:hover {
+  color: #fff; }
+
+/* COLORS */
+/* Attributes */
 #stock-market-container {
   position: fixed;
   padding: 6px; }
@@ -1318,19 +1336,8 @@ button {
   text-decoration: none;
   cursor: pointer; }
 
-#red-pill-container,
 #cinematic-text-container {
   position: fixed; }
-
-.bitnode {
-  color: #00f; }
-
-.bitnode-destroyed {
-  color: #f00; }
-
-.bitnode:hover,
-.bitnode-destroyed:hover {
-  color: #fff; }
 
 /* COLORS */
 /* Attributes */
@@ -1393,7 +1400,7 @@ button {
   z-index: 10;
   width: 50%;
   height: auto;
-  max-height: 40%;
+  max-height: 50%;
   top: 40%;
   left: 50%;
   margin: -10% 0 0 -25%;
@@ -2135,6 +2142,51 @@ button {
   font-size: 12px;
   margin: 1px;
   padding: 1px; }
+
+/**
+ * Styling for the Sleeves Management page
+ */
+/* COLORS */
+/* Attributes */
+.sleeve-container {
+  border: 1px solid white;
+  margin: 4px;
+  width: 75%; }
+  .sleeve-container p {
+    font-size: 14px; }
+
+.sleeves-page-info {
+  display: "block";
+  width: 75%; }
+
+.sleeve-panel {
+  display: inline-block;
+  margin: 0px;
+  padding: 2px; }
+  .sleeve-panel select {
+    display: block; }
+
+/**
+ * Styling for the Re-Sleeving Page
+ */
+/* COLORS */
+/* Attributes */
+.resleeve-container {
+  border: 1px solid white;
+  margin: 4px;
+  width: 75%; }
+  .resleeve-container p {
+    font-size: 13px; }
+
+.resleeve-panel {
+  display: inline-block;
+  margin: 0px;
+  padding: 2px; }
+
+.resleeve-aug-selector {
+  font-size: 13px; }
+  .resleeve-aug-selector option {
+    font-size: 13px; }
 
 /* required LIB STYLES */
 /* .Treant se automatski dodaje na svaki chart conatiner */
