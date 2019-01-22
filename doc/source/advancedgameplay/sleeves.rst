@@ -52,3 +52,16 @@ it decreases by assigning sleeves to the 'Shock Recovery' task.
 
 Re-sleeving
 ^^^^^^^^^^^
+Re-sleeving is the process of digitizing and transferring your consciousness into a
+new human body, or "sleeve". When you re-sleeve into a new body, your stat experience
+and Augmentations get replaced with those of the new body.
+
+In order to re-sleeve, you must purchase new bodies. This can be done at VitaLife in
+New Tokyo. Once you purchase a body to re-sleeve into, the effects will take
+place immediately.
+
+Note that resleeving **REMOVES** all of your currently-installed Augmentations,
+and replaces them with the ones provided by the purchased sleeve. However,
+Augmentations that are purchased but not installed will **not** be removed. If you have purchased
+an Augmentation and then re-sleeve into a body which already has that Augmentation,
+it will be removed since you cannot have duplicate Augmentations. 

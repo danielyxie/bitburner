@@ -278,7 +278,7 @@ function initStockMarket() {
     StockMarket[vitalife] = vitalifeStk;
 
     var icarus = Locations.Sector12IcarusMicrosystems;
-    var icarusStk = new Stock(icarus, StockSymbols[icarus], randInt(60, 70)/100, true, 7.5, randInt(12e3, 24e3), 800e12);
+    var icarusStk = new Stock(icarus, StockSymbols[icarus], randInt(60, 70)/100, true, 7.5, randInt(12e3, 24e3), 800e9);
     StockMarket[icarus] = icarusStk;
 
     var universalenergy = Locations.Sector12UniversalEnergy;

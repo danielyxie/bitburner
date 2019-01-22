@@ -19,7 +19,7 @@ export let CONSTANTS: IMap<any> = {
     BaseCostFor1GBOfRamServer: 55000, //1 GB of RAM
     BaseCostFor1GBOfRamHacknetNode: 30000,
 
-    TravelCost: 200000,
+    TravelCost: 200e3,
 
     BaseCostForHacknetNode: 1000,
     BaseCostForHacknetNodeCore: 500000,
@@ -130,7 +130,7 @@ export let CONSTANTS: IMap<any> = {
     WSEAccountCost:         200e6,
     TIXAPICost:             5e9,
     MarketData4SCost:       1e9,
-    MarketDataTixApi4SCost: 20e9,
+    MarketDataTixApi4SCost: 25e9,
     StockMarketCommission:  100e3,
 
     //Hospital/Health
@@ -512,10 +512,11 @@ export let CONSTANTS: IMap<any> = {
     `
     v0.43.0
     * Added BitNode-10: Digital Carbon
-    
+
     * Stock Market Changes:
     ** Each stock now has a maximum number of shares you can purchase (both Long and Short positions combined)
     ** Added getStockMaxShares() Netscript function to the TIX API
+    ** The cost of 4S Market Data TIX API Access increased from $20b to $25b
 
     * Job Changes:
     ** You can now hold multiple jobs at once. This means you no longer lose reputation when leaving a company

@@ -93,6 +93,11 @@ export class Sleeve extends Person {
     gainRatesForTask: ITaskTracker = createTaskTracker();
 
     /**
+     * String that stores what stat the sleeve is training at the gym
+     */
+    gymStatType: string = "";
+
+    /**
      * Keeps track of events/notifications for this sleeve
      */
     logs: string[] = [];
@@ -196,7 +201,37 @@ export class Sleeve extends Person {
      * Earn experience for any stats (supports multiple)
      * This function also handles experience propogating to Player and other sleeves
      */
-    gainExperience(p: IPlayer, exp: ITaskTracker, numCycles: number=1): ITaskTracker {
+    gainExperience(p: IPlayer, exp: ITaskTracker, numCycles: number=1, fromOtherSleeve: boolean=false): ITaskTracker {
+        // If the experience is coming from another sleeve, it is not multiplied by anything.
+        // Also the player does not earn anything
+        if (fromOtherSleeve) {
+            if (exp.hack > 0) {
+                this.hacking_exp += exp.hack;
+            }
+
+            if (exp.str > 0) {
+                this.strength_exp += exp.str;
+            }
+
+            if (exp.def > 0) {
+                this.defense_exp += exp.def;
+            }
+
+            if (exp.dex > 0) {
+                this.dexterity_exp += exp.dex;
+            }
+
+            if (exp.agi > 0) {
+                this.agility_exp += exp.agi;
+            }
+
+            if (exp.cha > 0) {
+                this.charisma_exp += exp.cha;
+            }
+
+            return createTaskTracker();
+        }
+
         // Experience is first multiplied by shock. Then 'synchronization'
         // is accounted for
         const multFac = (this.shock / 100) * (this.sync / 100) * numCycles;
@@ -696,6 +731,7 @@ export class Sleeve extends Person {
             return false;
         }
 
+        this.gymStatType = stat;
         this.currentTask = SleeveTaskType.Gym;
 
         return true;

@@ -483,8 +483,11 @@ async function parseOnlyRamCalculate(server, code, workerScript) {
                     return -1;
                 }
             } else {
-                const script = server.getScript(nextModule);
-                if (!script) return -1;  // No such script on the server.
+                const script = server.getScript(nextModule.startsWith("./") ? nextModule.slice(2) : nextModule);
+                if (!script) {
+                    console.warn("Invalid script");
+                    return -1;  // No such script on the server.
+                }
                 code = script.code;
             }
 

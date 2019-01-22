@@ -1,5 +1,6 @@
 import { Augmentation }                     from "./Augmentation";
 import { Augmentations }                    from "./Augmentations";
+import { PlayerOwnedAugmentation }          from "./PlayerOwnedAugmentation";
 import { AugmentationNames }                from "./data/AugmentationNames";
 
 import { BitNodeMultipliers }               from "../BitNode/BitNodeMultipliers";
@@ -11,7 +12,8 @@ import { addWorkerScript }                  from "../NetscriptWorker";
 import { Player }                           from "../Player";
 import { prestigeAugmentation }             from "../Prestige";
 import { saveObject }                       from "../SaveObject";
-import { Script , RunningScript}            from "../Script";
+import { Script,
+         RunningScript}                     from "../Script";
 import { Server }                           from "../Server";
 import { OwnedAugmentationsOrderSetting }   from "../SettingEnums";
 import { Settings }                         from "../Settings";

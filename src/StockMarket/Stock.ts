@@ -78,6 +78,13 @@ export class Stock {
      */
     readonly symbol: string;
 
+    /**
+     * Total number of shares of this stock
+     * This is different than maxShares, as this is like authorized stock while
+     * maxShares is outstanding stock.
+     */
+    readonly totalShares: number;
+
     constructor(name: string = "",
                 symbol: string = "",
                 mv: number = 1,
@@ -97,9 +104,13 @@ export class Stock {
         this.otlkMag            = otlkMag;
         this.cap                = getRandomInt(initPrice * 1e3, initPrice * 25e3);
 
-        // Maximum shares is determined by market cap, and is rounded to nearest millions
-        let maxSharesUnrounded: number = (marketCap / initPrice);
-        this.maxShares = Math.round(maxSharesUnrounded / 1e6) * 1e6;
+        // Total shares is determined by market cap, and is rounded to nearest millions
+        let totalSharesUnrounded: number = (marketCap / initPrice);
+        this.totalShares = Math.round(totalSharesUnrounded / 1e6) * 1e6;
+
+        // Max Shares (Outstanding shares) is a percentage of total shares
+        const outstandingSharePercentage: number = 0.25;
+        this.maxShares = Math.round((this.totalShares * outstandingSharePercentage) / 1e6) * 1e6;
 
         this.posTxtEl           = null;
     }

@@ -279,6 +279,12 @@ PlayerObject.prototype.prestigeAugmentation = function() {
 
     this.resleeves = [];
 
+    for (let i = 0; i < this.sleeves.length; ++i) {
+        if (this.sleeves[i] instanceof Sleeve) {
+            this.sleeves[i].resetTaskStatus();
+        }
+    }
+
     this.isWorking = false;
     this.currentWorkFactionName = "";
     this.currentWorkFactionDescription = "";

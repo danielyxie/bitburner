@@ -70,7 +70,7 @@ export function createResleevesPage(p: IPlayer) {
                        "into a new human body, or 'sleeve'. Here at VitaLife, you can purchase new " +
                        "specially-engineered bodies for the re-sleeve process. Many of these bodies " +
                        "even come with genetic and cybernetic Augmentations!<br><br>" +
-                       "Re-sleeving will chance your experience for every stat. It will also REMOVE " +
+                       "Re-sleeving will change your experience for every stat. It will also REMOVE " +
                        "all of your currently-installed Augmentations, and replace " +
                        "them with the ones provided by the purchased sleeve. However, Augmentations that you have " +
                        "purchased but not installed will NOT be removed. If you have purchased an " +

@@ -26,7 +26,7 @@ List of all Source-Files
 |                                    | * Increases the player's charisma and company salary multipliers by 8%/12%/14%      |
 +------------------------------------+-------------------------------------------------------------------------------------+
 | BitNode-4: The Singularity         | * Lets the player access and use Netscript Singularity Functions in other BitNodes. |
-|                                    |   Each level of this Source-File opens up more of the Singularity Functions to use  |
+|                                    | * Each level of this Source-File opens up more of the Singularity Functions to use  |
 +------------------------------------+-------------------------------------------------------------------------------------+
 | BitNode-5: Artificial Intelligence | * Unlocks :ref:`gameplay_intelligence`                                              |
 |                                    | * Unlocks getBitNodeMultipliers() Netscript function                                |
@@ -56,7 +56,7 @@ List of all Source-Files
 +------------------------------------+-------------------------------------------------------------------------------------+
 | BitNode-12: The Recursion          | * There is no maximum level for this Source-File                                    |
 |                                    | * Each level of this Source-File increases all of the player's multipliers by 1%.   |
-|                                    |   This affect is multiplicative with itself. This means that level N of this        |
+|                                    | * This affect is multiplicative with itself. This means that level N of this        |
 |                                    |   Source-File will result in a multiplier of 1.01^N (or 0.99^N for multipliers      |
 |                                    |   that decrease)                                                                    |
 +------------------------------------+-------------------------------------------------------------------------------------+

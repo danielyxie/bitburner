@@ -7,8 +7,10 @@ import { SleeveFaq } from "./data/SleeveFaq";
 
 import { IPlayer } from "../IPlayer";
 
+import { CONSTANTS } from "../../Constants";
 import { Locations } from "../../Locations";
 
+import { FactionWorkType } from "../../Faction/FactionWorkTypeEnum";
 import { Cities } from "../../Locations/Cities";
 import { Crimes } from "../../Crime/Crimes";
 
@@ -23,9 +25,12 @@ import { exceptionAlert } from "../../../utils/helpers/exceptionAlert";
 
 import { createElement } from "../../../utils/uiHelpers/createElement";
 import { createOptionElement } from "../../../utils/uiHelpers/createOptionElement";
+import { createPopup } from "../../../utils/uiHelpers/createPopup";
+import { createPopupCloseButton } from "../../../utils/uiHelpers/createPopupCloseButton";
 import { getSelectValue } from "../../../utils/uiHelpers/getSelectData";
 import { removeChildrenFromElement } from "../../../utils/uiHelpers/removeChildrenFromElement";
 import { removeElement } from "../../../utils/uiHelpers/removeElement";
+import { removeElementById } from "../../../utils/uiHelpers/removeElementById";
 
 // Object that keeps track of all DOM elements for the UI for a single Sleeve
 interface ISleeveUIElems {
@@ -33,6 +38,7 @@ interface ISleeveUIElems {
     statsPanel:             HTMLElement | null;
     stats:                  HTMLElement | null;
     moreStatsButton:        HTMLElement | null;
+    travelButton:           HTMLElement | null;
     taskPanel:              HTMLElement | null;
     taskSelector:           HTMLSelectElement | null;
     taskDetailsSelector:    HTMLSelectElement | null;
@@ -156,6 +162,7 @@ function createSleeveUi(sleeve: Sleeve, allSleeves: Sleeve[]): ISleeveUIElems {
         statsPanel:             null,
         stats:                  null,
         moreStatsButton:        null,
+        travelButton:           null,
         taskPanel:              null,
         taskSelector:           null,
         taskDetailsSelector:    null,
@@ -212,8 +219,49 @@ function createSleeveUi(sleeve: Sleeve, allSleeves: Sleeve[]): ISleeveUIElems {
             );
         }
     });
+    elems.travelButton = createElement("button", {
+        class: "std-button",
+        innerText: "Travel",
+        clickListener: () => {
+            const popupId: string = "sleeve-travel-popup";
+            const popupArguments: HTMLElement[] = [];
+            popupArguments.push(createPopupCloseButton(popupId, { class: "std-button" }));
+            popupArguments.push(createElement("p", {
+                innerText: "Have this sleeve travel to a different city. This affects " +
+                           "the gyms and universities at which this sleeve can study. " +
+                           `Traveling to a different city costs ${numeralWrapper.formatMoney(CONSTANTS.TravelCost)}.` +
+                           "It will also CANCEL the sleeve's current task (setting it to idle)",
+            }));
+            for (const label in Cities) {
+                if (sleeve.city === Cities[label]) { continue; }
+                (function(sleeve, label) {
+                    popupArguments.push(createElement("div", {
+                        // Reusing this css class. It adds a border and makes it so that
+                        // the background color changes when you hover
+                        class: "cmpy-mgmt-find-employee-option",
+                        innerText: Cities[label],
+                        clickListener: () => {
+                            if (!playerRef!.canAfford(CONSTANTS.TravelCost)) {
+                                dialogBoxCreate("You cannot afford to have this sleeve travel to another city", false);
+                                return false;
+                            }
+                            sleeve.city = Cities[label];
+                            playerRef!.loseMoney(CONSTANTS.TravelCost);
+                            sleeve.resetTaskStatus();
+                            removeElementById(popupId);
+                            updateSleeveUi(sleeve, elems);
+                            return false;
+                        }
+                    }));
+                })(sleeve, label);
+            }
+
+            createPopup(popupId, popupArguments);
+        }
+    })
     elems.statsPanel.appendChild(elems.stats);
     elems.statsPanel.appendChild(elems.moreStatsButton);
+    elems.statsPanel.appendChild(elems.travelButton);
 
     elems.taskPanel = createElement("div", { class: "sleeve-panel", width: "40%" });
     elems.taskSelector = createElement("select") as HTMLSelectElement;
@@ -225,13 +273,13 @@ function createSleeveUi(sleeve: Sleeve, allSleeves: Sleeve[]): ISleeveUIElems {
     elems.taskSelector.add(createOptionElement("Workout at Gym"));
     elems.taskSelector.add(createOptionElement("Shock Recovery"));
     elems.taskSelector.add(createOptionElement("Synchronize"));
-    elems.taskSelector.addEventListener("change", () => {
-        updateSleeveTaskSelector(sleeve, elems, allSleeves);
-    });
     elems.taskDetailsSelector = createElement("select") as HTMLSelectElement;
     elems.taskDetailsSelector2 = createElement("select") as HTMLSelectElement;
     elems.taskDescription = createElement("p");
     elems.taskProgressBar = createElement("p");
+    elems.taskSelector.addEventListener("change", () => {
+        updateSleeveTaskSelector(sleeve, elems, allSleeves);
+    });
     elems.taskSelector.selectedIndex = sleeve.currentTask; // Set initial value for Task Selector
     elems.taskSelector.dispatchEvent(new Event('change'));
     updateSleeveTaskDescription(sleeve, elems);
@@ -308,7 +356,8 @@ function updateSleeveUi(sleeve: Sleeve, elems: ISleeveUIElems) {
                               `Dexterity: ${numeralWrapper.format(sleeve.dexterity, "0,0")}`,
                               `Agility: ${numeralWrapper.format(sleeve.agility, "0,0")}`,
                               `Charisma: ${numeralWrapper.format(sleeve.charisma, "0,0")}`,
-                              `HP: ${numeralWrapper.format(sleeve.hp, "0,0")} / ${numeralWrapper.format(sleeve.max_hp, "0,0")}<br>`,
+                              `HP: ${numeralWrapper.format(sleeve.hp, "0,0")} / ${numeralWrapper.format(sleeve.max_hp, "0,0")}`,
+                              `City: ${sleeve.city}`,
                               `Shock: ${numeralWrapper.format(100 - sleeve.shock, "0,0.000")}`,
                               `Sync: ${numeralWrapper.format(sleeve.sync, "0,0.000")}`].join("<br>");
 
@@ -405,6 +454,7 @@ function updateSleeveTaskSelector(sleeve: Sleeve, elems: ISleeveUIElems, allSlee
     const value: string = getSelectValue(elems.taskSelector);
     switch(value) {
         case "Work for Company":
+            let companyCount: number = 0;
             const allJobs: string[] = Object.keys(playerRef!.jobs!);
             for (let i = 0; i < allJobs.length; ++i) {
                 if (!forbiddenCompanies.includes(allJobs[i])) {
@@ -412,14 +462,17 @@ function updateSleeveTaskSelector(sleeve: Sleeve, elems: ISleeveUIElems, allSlee
 
                     // Set initial value of the 'Details' selector
                     if (sleeve.currentTaskLocation === allJobs[i]) {
-                        elems.taskDetailsSelector!.selectedIndex = i;
+                        elems.taskDetailsSelector!.selectedIndex = companyCount;
                     }
+
+                    ++companyCount;
                 }
 
                 elems.taskDetailsSelector2!.add(createOptionElement("------"));
             }
             break;
         case "Work for Faction":
+            let factionCount: number = 0;
             for (let i = 0; i < playerRef!.factions!.length; ++i) {
                 const fac: string = playerRef!.factions[i]!;
                 if (!forbiddenFactions.includes(fac)) {
@@ -427,12 +480,29 @@ function updateSleeveTaskSelector(sleeve: Sleeve, elems: ISleeveUIElems, allSlee
 
                     // Set initial value of the 'Details' Selector
                     if (sleeve.currentTaskLocation === fac) {
-                        elems.taskDetailsSelector!.selectedIndex = i;
+                        elems.taskDetailsSelector!.selectedIndex = factionCount;
                     }
+
+                    ++factionCount;
                 }
             }
             for (let i = 0; i < factionWorkTypeSelectorOptions.length; ++i) {
                 elems.taskDetailsSelector2!.add(createOptionElement(factionWorkTypeSelectorOptions[i]));
+            }
+
+            // Set initial value for faction work type
+            switch (sleeve.factionWorkType) {
+                case FactionWorkType.Hacking:
+                    elems.taskDetailsSelector2!.selectedIndex = 0;
+                    break;
+                case FactionWorkType.Security:
+                    elems.taskDetailsSelector2!.selectedIndex = 0;
+                    break;
+                case FactionWorkType.Field:
+                    elems.taskDetailsSelector2!.selectedIndex = 0;
+                    break;
+                default:
+                    break;
             }
             break;
         case "Commit Crime":
@@ -469,17 +539,37 @@ function updateSleeveTaskSelector(sleeve: Sleeve, elems: ISleeveUIElems, allSlee
             // First selector has what stat is being trained
             for (let i = 0; i < gymSelectorOptions.length; ++i) {
                 elems.taskDetailsSelector!.add(createOptionElement(gymSelectorOptions[i]));
+
+                // Set initial value
+                if (sleeve.gymStatType === gymSelectorOptions[i]) {
+                    elems.taskDetailsSelector!.selectedIndex = i;
+                }
             }
 
             // Second selector has gym
+            // In this switch statement we also set the initial value of the second selector
             switch (sleeve.city) {
                 case Cities.Aevum:
                     elems.taskDetailsSelector2!.add(createOptionElement(Locations.AevumCrushFitnessGym));
                     elems.taskDetailsSelector2!.add(createOptionElement(Locations.AevumSnapFitnessGym));
+
+                    // Set initial value
+                    if (sleeve.currentTaskLocation === Locations.AevumCrushFitnessGym) {
+                        elems.taskDetailsSelector2!.selectedIndex = 0;
+                    } else if (sleeve.currentTaskLocation === Locations.AevumSnapFitnessGym) {
+                        elems.taskDetailsSelector2!.selectedIndex = 1;
+                    }
                     break;
                 case Cities.Sector12:
                     elems.taskDetailsSelector2!.add(createOptionElement(Locations.Sector12IronGym));
                     elems.taskDetailsSelector2!.add(createOptionElement(Locations.Sector12PowerhouseGym));
+
+                    // Set initial value
+                    if (sleeve.currentTaskLocation === Locations.Sector12IronGym) {
+                        elems.taskDetailsSelector2!.selectedIndex = 0;
+                    } else if (sleeve.currentTaskLocation === Locations.Sector12PowerhouseGym) {
+                        elems.taskDetailsSelector2!.selectedIndex = 1;
+                    }
                     break;
                 case Cities.Volhaven:
                     elems.taskDetailsSelector2!.add(createOptionElement(Locations.VolhavenMilleniumFitnessGym));
@@ -552,6 +642,11 @@ function setSleeveTask(sleeve: Sleeve, elems: ISleeveUIElems): boolean {
 
         if (routing.isOn(Page.Sleeves)) {
             updateSleevesPage();
+
+            // Update the task selector for all sleeves by triggering a change event
+            for (const e of UIElems.sleeves!) {
+                e.taskSelector!.dispatchEvent(new Event('change'));
+            }
         }
 
         return res;

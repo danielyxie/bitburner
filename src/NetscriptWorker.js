@@ -347,6 +347,9 @@ function processNetscript1Imports(code, workerScript) {
         ImportDeclaration: (node) => {
             hasImports = true;
             let scriptName = node.source.value;
+            if (scriptName.startsWith("./")) {
+                scriptName = scriptName.slice(2);
+            }
             let script = getScript(scriptName);
             if (script == null) {
                 throw new Error("'Import' failed due to invalid script: " + scriptName);

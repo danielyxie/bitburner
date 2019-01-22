@@ -64,7 +64,7 @@ export function purchaseResleeve(r: Resleeve, p: IPlayer): boolean {
     for (let i = p.queuedAugmentations.length - 1; i >= 0; --i) {
         const name: string = p.queuedAugmentations[i].name;
 
-        if (p.augmentations.filter((e: IPlayerOwnedAugmentation) => {e.name !== AugmentationNames.NeuroFluxGovernor && e.name === name}).length >= 1) {
+        if (p.augmentations.filter((e: IPlayerOwnedAugmentation) => {return e.name !== AugmentationNames.NeuroFluxGovernor && e.name === name}).length >= 1) {
             p.queuedAugmentations.splice(i, 1);
         }
     }

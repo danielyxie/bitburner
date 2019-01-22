@@ -31,12 +31,11 @@
     border: 1px solid #fff;
     margin: 2px;
     padding: 2px;
+    color: #fff;
 }
 
 .bladeburner-nav-button {
     @extend %bladeburner-nav-button;
-
-    color: #fff;
 
     &:hover {
         background-color: #3d4044;

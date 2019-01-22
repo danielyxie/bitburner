@@ -969,7 +969,7 @@ const Engine = {
                 if (expForOtherSleeves == null) { continue; }
                 for (let j = 0; j < Player.sleeves.length; ++j) {
                     if (j === i) { continue; }
-                    Player.sleeves[j].gainExperience(Player, expForOtherSleeves, numCycles);
+                    Player.sleeves[j].gainExperience(Player, expForOtherSleeves, numCycles, true);
                 }
             }
         }
@@ -1336,7 +1336,7 @@ const Engine = {
                     if (expForOtherSleeves == null) { continue; }
                     for (let j = 0; j < Player.sleeves.length; ++j) {
                         if (j === i) { continue; }
-                        Player.sleeves[j].gainExperience(Player, expForOtherSleeves, numCyclesOffline);
+                        Player.sleeves[j].gainExperience(Player, expForOtherSleeves, numCyclesOffline, true);
                     }
                 }
             }

@@ -2054,12 +2054,11 @@ button {
 .bladeburner-nav-button, .bladeburner-nav-button-inactive {
   border: 1px solid #fff;
   margin: 2px;
-  padding: 2px; }
-
-.bladeburner-nav-button {
+  padding: 2px;
   color: #fff; }
-  .bladeburner-nav-button:hover {
-    background-color: #3d4044; }
+
+.bladeburner-nav-button:hover {
+  background-color: #3d4044; }
 
 .bladeburner-nav-button-inactive {
   text-decoration: none;

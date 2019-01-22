@@ -6,7 +6,6 @@ import { Person } from "../Person";
 
 import { Augmentation } from "../../Augmentation/Augmentation";
 import { Augmentations } from "../../Augmentation/Augmentations";
-import { CONSTANTS } from "../../Constants";
 
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../../utils/JSONReviver";
 
@@ -24,10 +23,10 @@ export class Resleeve extends Person {
 
     getCost(): number {
         // Each experience point adds this to the cost
-        const CostPerExp: number = 4;
+        const CostPerExp: number = 10e3;
 
-        // Final cost is multiplied by # Augs ^ this constant
-        const NumAugsExponent: number = 1.05;
+        // Final cost is multiplied by this constant ^ # Augs
+        const NumAugsExponent: number = 1.12;
 
         // Get total exp in this re-sleeve
         let totalExp: number = this.hacking_exp +
@@ -48,7 +47,7 @@ export class Resleeve extends Person {
             totalAugmentationCost += aug!.baseCost;
         }
 
-        return (totalExp * CostPerExp) + (totalAugmentationCost * Math.pow(this.augmentations.length, NumAugsExponent));
+        return (totalExp * CostPerExp) + (totalAugmentationCost * Math.pow(NumAugsExponent, this.augmentations.length));
     }
 
     /**
