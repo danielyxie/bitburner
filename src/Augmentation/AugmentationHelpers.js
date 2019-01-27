@@ -15,8 +15,8 @@ import { saveObject }                       from "../SaveObject";
 import { Script,
          RunningScript}                     from "../Script";
 import { Server }                           from "../Server";
-import { OwnedAugmentationsOrderSetting }   from "../SettingEnums";
-import { Settings }                         from "../Settings";
+import { OwnedAugmentationsOrderSetting }   from "../Settings/SettingEnums";
+import { Settings }                         from "../Settings/Settings";
 
 import { SourceFiles }                      from "../SourceFile";
 import { dialogBoxCreate }                  from "../../utils/DialogBox";

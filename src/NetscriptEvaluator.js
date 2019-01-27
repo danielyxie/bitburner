@@ -4,7 +4,7 @@ import { Player }                           from "./Player";
 import { Environment }                      from "./NetscriptEnvironment";
 import { WorkerScript, addWorkerScript}     from "./NetscriptWorker";
 import { Server, getServer}                 from "./Server";
-import { Settings }                         from "./Settings";
+import { Settings }                         from "./Settings/Settings";
 import { Script, findRunningScript,
          RunningScript }                    from "./Script";
 

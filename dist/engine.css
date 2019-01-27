@@ -1,5 +1,39 @@
 /* COLORS */
 /* Attributes */
+/**
+ * Customized styling for the Code Mirror editor
+ */
+#codemirror-form-wrapper {
+  height: 80%;
+  margin: 10px 0px 10px 6px; }
+
+.CodeMirror {
+  height: 100%;
+  width: 100%;
+  border: 2px solid var(--my-highlight-color);
+  z-index: 1;
+  font-family: "Lucida Console", "Lucida Sans Unicode", "Fira Mono", "Consolas", "Courier New", Courier, monospace, "Times New Roman";
+  font-size: 16px; }
+
+/**
+ * Highlight matches
+ */
+.cm-matchhighlight {
+  background-color: #8F908A; }
+
+.CodeMirror-selection-highlight-scrollbar {
+  background-color: #8F908A; }
+
+/**
+ * Show Invisibles
+ */
+.cm-whitespace::before {
+  position: absolute;
+  pointer-events: none;
+  color: #404F7D; }
+
+/* COLORS */
+/* Attributes */
 /* COLORS */
 /* Attributes */
 * {
@@ -39,10 +73,6 @@ ul {
 
 li {
   list-style-type: none; }
-
-span {
-  margin: 4px;
-  padding: 4px; }
 
 #entire-game-container {
   background-color: transparent; }
@@ -771,29 +801,18 @@ button {
   white-space: pre; }
 
 #terminal-input-text-box {
+  margin-left: 2px;
   flex: 1 1 auto; }
 
 /* COLORS */
 /* Attributes */
-/* CSS for different main menu pages, such as character info, script editor, etc (but excluding
-    terminal which has its own page) */
-.generic-menupage-container {
-  height: 100%;
-  padding-left: 10px;
-  margin-left: 10%;
-  width: 99%;
-  overflow-y: scroll; }
-
-/* Character Info */
-#character-container {
-  padding-top: 10px;
-  position: fixed; }
-
-/* Script Editor */
+/**
+ * Styling for Script Editor (both Ace and CodeMirror)
+ */
 #script-editor-container {
   background-color: transparent; }
 
-#javascript-editor {
+#ace-editor {
   margin: 10px;
   height: 80%;
   width: 100%;
@@ -804,16 +823,6 @@ button {
   border: 2px solid var(--my-highlight-color);
   z-index: 1;
   font-family: "Lucida Console", "Lucida Sans Unicode", "Fira Mono", "Consolas", "Courier New", Courier, monospace, "Times New Roman"; }
-
-.ace_line,
-.ace_line * {
-  background-color: transparent;
-  margin: 0;
-  padding: 0; }
-
-.ace_text-input {
-  font-size: 16px;
-  background-color: transparent; }
 
 /* This temp element is used for auto adjusting filename field */
 .tmp-element {
@@ -884,6 +893,37 @@ button {
   margin-bottom: 8px;
   padding: 2px;
   font-size: 12px; }
+  #script-editor-options-panel fieldset input {
+    margin: 2px; }
+
+/* Specific overrides for Ace Editor */
+.ace_line,
+.ace_line * {
+  background-color: transparent;
+  margin: 0;
+  padding: 0; }
+
+.ace_text-input {
+  font-size: 16px;
+  background-color: transparent; }
+
+/* Specified overrides for Code mirror Editor are defined in codemirror-override.scss */
+
+/* COLORS */
+/* Attributes */
+/* CSS for different main menu pages, such as character info, script editor, etc (but excluding
+    terminal which has its own page) */
+.generic-menupage-container {
+  height: 100%;
+  padding-left: 10px;
+  margin-left: 10%;
+  width: 99%;
+  overflow-y: scroll; }
+
+/* Character Info */
+#character-container {
+  padding-top: 10px;
+  position: fixed; }
 
 /* Active scripts */
 .active-scripts-list {

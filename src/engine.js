@@ -51,10 +51,12 @@ import { displayCreateProgramContent,
          initCreateProgramButtons }                     from "./Programs/ProgramHelpers";
 import {redPillFlag, hackWorldDaemon}                   from "./RedPill";
 import {saveObject, loadGame}                           from "./SaveObject";
-import {loadAllRunningScripts, scriptEditorInit,
-        updateScriptEditorContent}                      from "./Script";
+import { getCurrentEditor,
+         loadAllRunningScripts,
+         scriptEditorInit,
+         updateScriptEditorContent }                    from "./Script";
 import {AllServers, Server, initForeignServers}         from "./Server";
-import {Settings}                                       from "./Settings";
+import {Settings}                                       from "./Settings/Settings";
 import { initSourceFiles, SourceFiles }                 from "./SourceFile";
 import { updateSourceFileFlags }                        from "./SourceFile/SourceFileFlags";
 
@@ -103,6 +105,7 @@ import "../css/buttons.scss";
 import "../css/mainmenu.scss";
 import "../css/characteroverview.scss";
 import "../css/terminal.scss";
+import "../css/scripteditor.scss";
 import "../css/menupages.scss";
 import "../css/redpill.scss";
 import "../css/stockmarket.scss";
@@ -137,6 +140,14 @@ import "../css/treant.css";
  */
 $(document).keydown(function(e) {
     if (Settings.DisableHotkeys === true) {return;}
+
+    // These hotkeys should be disabled if the player is writing scripts
+    try {
+        if (getCurrentEditor().isFocused()) {
+            return;
+        }
+    } catch(e) {}
+
     if (!Player.isWorking && !redPillFlag && !inMission && !cinematicTextFlag) {
         if (e.keyCode == 84 && e.altKey) {
             e.preventDefault();
@@ -268,12 +279,12 @@ const Engine = {
     loadScriptEditorContent: function(filename = "", code = "") {
         Engine.hideAllContent();
         Engine.Display.scriptEditorContent.style.display = "block";
-        var editor = ace.edit('javascript-editor');
-        if (filename != "") {
-            document.getElementById("script-editor-filename").value = filename;
-            editor.setValue(code);
+        try {
+            getCurrentEditor().openScript(filename, code);
+        } catch(e) {
+            exceptionAlert(e);
         }
-        editor.focus();
+
         updateScriptEditorContent();
         routing.navigateTo(Page.ScriptEditor);
         MainMenuLinks.ScriptEditor.classList.add("active");

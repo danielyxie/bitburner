@@ -1,5 +1,5 @@
 import {Engine} from "../engine";
-import {Settings} from "../Settings";
+import {Settings} from "../Settings/Settings";
 
 import {numeralWrapper} from "./numeralFormat";
 

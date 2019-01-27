@@ -14,7 +14,7 @@ import {loadMessages, initMessages, Messages}   from "./Message";
 import {Player, loadPlayer}                     from "./Player";
 import {loadAllRunningScripts}                  from "./Script";
 import {AllServers, loadAllServers}             from "./Server";
-import {Settings}                               from "./Settings";
+import {Settings}                               from "./Settings/Settings";
 import {loadSpecialServerIps, SpecialServerIps} from "./SpecialServerIps";
 import {loadStockMarket, StockMarket}           from "./StockMarket/StockMarket";
 import {dialogBoxCreate}                        from "../utils/DialogBox";

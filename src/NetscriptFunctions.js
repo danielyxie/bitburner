@@ -40,7 +40,7 @@ import {Script, findRunningScript, RunningScript,
 import {Server, getServer, AddToAllServers,
         AllServers, processSingleServerGrowth,
         GetServerByHostname, numCycleForGrowth}     from "./Server";
-import {Settings}                                   from "./Settings";
+import {Settings}                                   from "./Settings/Settings";
 import {SpecialServerIps}                           from "./SpecialServerIps";
 import {Stock}                                      from "./StockMarket/Stock";
 import {StockMarket, StockSymbols, SymbolToStockMap,

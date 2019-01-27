@@ -12,10 +12,13 @@ interface ICreateElementAnchorOptions {
  */
 interface ICreateElementInputOptions {
     checked?: boolean;
+    max?: string;
     maxLength?: number;
+    min?: string;
     name?: string;
     pattern?: string;
     placeholder?: string;
+    step?: string;
     type?: string;
     value?: string;
 }
@@ -129,6 +132,15 @@ function setElementInput(el: HTMLInputElement, params: ICreateElementInputOption
     }
     if (params.placeholder !== undefined) {
         el.placeholder = params.placeholder;
+    }
+    if (params.max !== undefined) {
+        el.max = params.max;
+    }
+    if (params.min !== undefined) {
+        el.min = params.min;
+    }
+    if (params.step !== undefined) {
+        el.step = params.step;
     }
 }
 

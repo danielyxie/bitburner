@@ -25,7 +25,7 @@ import {Locations}                              from "./Locations";
 import {hasBn11SF, hasWallStreetSF,hasAISF}     from "./NetscriptFunctions";
 import { Sleeve }                               from "./PersonObjects/Sleeve/Sleeve";
 import {AllServers, Server, AddToAllServers}    from "./Server";
-import {Settings}                               from "./Settings";
+import {Settings}                               from "./Settings/Settings";
 import {SpecialServerIps, SpecialServerNames}   from "./SpecialServerIps";
 import {SourceFiles, applySourceFile}           from "./SourceFile";
 import { SourceFileFlags }                      from "./SourceFile/SourceFileFlags";

@@ -14,7 +14,7 @@ import {Player}                                 from "./Player";
 import {Server, AllServers, AddToAllServers}    from "./Server";
 import {purchaseServer,
         purchaseRamForHomeComputer}             from "./ServerPurchases";
-import {Settings}                               from "./Settings";
+import {Settings}                               from "./Settings/Settings";
 import { SourceFileFlags }                      from "./SourceFile/SourceFileFlags";
 import {SpecialServerNames, SpecialServerIps}   from "./SpecialServerIps";
 

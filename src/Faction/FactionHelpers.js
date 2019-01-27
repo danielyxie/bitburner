@@ -10,8 +10,8 @@ import { FactionInfos }                         from "./FactionInfo";
 import { Locations}                             from "../Location";
 import { HackingMission, setInMission }         from "../Missions";
 import { Player }                               from "../Player";
-import { PurchaseAugmentationsOrderSetting }    from "../SettingEnums";
-import { Settings }                             from "../Settings";
+import { PurchaseAugmentationsOrderSetting }    from "../Settings/SettingEnums";
+import { Settings }                             from "../Settings/Settings";
 
 import {Page, routing}                          from "../ui/navigationTracking";
 import {numeralWrapper}                         from "../ui/numeralFormat";

@@ -524,6 +524,7 @@ export let CONSTANTS: IMap<any> = {
 
     * Home Computer RAM is now capped at 2 ^ 30 GB (1073741824 GB)
     * Pop-up dialog boxes are a little bit bigger
+    * Bug Fix: When importing scripts, "./" will now be properly ignored (e.g. import { foo } from "./lib.script" )
     `
 
 }

@@ -120,7 +120,8 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
             <input id="script-editor-filename" type="text" maxlength="30" tabindex="1" />
         </div>
 
-        <div id="javascript-editor"></div>
+        <div id="ace-editor"></div>
+        <form id="codemirror-form-wrapper"><textarea id="codemirror-editor"></textarea></form>
 
         <div id="script-editor-buttons-wrapper"></div> <!-- Buttons below script editor -->
         </div> <!-- End wrapper -->
@@ -128,26 +129,21 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
         <div id="script-editor-options-panel">
             <h1 style="color:white;"> Script Editor Options </h1>
             <fieldset>
-            <label for="script-editor-option-theme">Theme</label>
-            <select id="script-editor-option-theme">
-                <option value="Chaos">Chaos</option>
-                <option value="Chrome">Chrome</option>
-                <option value="Monokai">Monokai</option>
-                <option value="Solarized_Dark">Solarized Dark</option>
-                <option value="Solarized_Light">Solarized Light</option>
-                <option value="Terminal">Terminal</option>
-                <option value="Twilight">Twilight</option>
-                <option value="XCode">XCode</option>
+            <label for="script-editor-option-editor">Editor</label>
+            <select id="script-editor-option-editor">
+                <option value="Ace">Ace</option>
+                <option value="CodeMirror">CodeMirror</option>
             </select>
             </fieldset>
 
             <fieldset>
+            <label for="script-editor-option-theme">Theme</label>
+            <select id="script-editor-option-theme"></select>
+            </fieldset>
+
+            <fieldset>
             <label for="script-editor-option-keybinding">Key Binding</label>
-            <select id="script-editor-option-keybinding">
-                <option value="ace">Ace</option>
-                <option value="vim">Vim</option>
-                <option value="emacs">Emacs</option>
-            </select>
+            <select id="script-editor-option-keybinding"></select>
             </fieldset>
 
             <fieldset>
@@ -165,11 +161,11 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
             <input type="checkbox" name="script-editor-option-usesofttab" id="script-editor-option-usesofttab" checked>
             </fieldset>
 
-            <fieldset>
-            <label for="script-editor-option-maxerr" class="tooltip">Max Error Count</label>
-            <input type="range" max="1000" min="50" value="200" step="1" name="script-editor-option-maxerr" id="script-editor-option-maxerr" />
-            <em id="script-editor-option-maxerror-value-label" style="font-style: normal;"></em>
-            </fieldset>
+            <fieldset id="script-editor-option-flex1-fieldset"></fieldset>
+            <fieldset id="script-editor-option-flex2-fieldset"></fieldset>
+            <fieldset id="script-editor-option-flex3-fieldset"></fieldset>
+            <fieldset id="script-editor-option-flex4-fieldset"></fieldset>
+
         </div> <!-- End script editor options panel -->
 	</div>
 

@@ -12,7 +12,7 @@ import {NetscriptFunctions}                 from "./NetscriptFunctions";
 import {executeJSScript}                    from "./NetscriptJSEvaluator";
 import {NetscriptPort}                      from "./NetscriptPort";
 import {AllServers}                         from "./Server";
-import {Settings}                           from "./Settings";
+import {Settings}                           from "./Settings/Settings";
 
 import {generate}                           from 'escodegen';
 
