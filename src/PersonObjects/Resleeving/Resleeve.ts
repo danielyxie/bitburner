@@ -23,10 +23,10 @@ export class Resleeve extends Person {
 
     getCost(): number {
         // Each experience point adds this to the cost
-        const CostPerExp: number = 10e3;
+        const CostPerExp: number = 25e3;
 
         // Final cost is multiplied by this constant ^ # Augs
-        const NumAugsExponent: number = 1.12;
+        const NumAugsExponent: number = 1.2;
 
         // Get total exp in this re-sleeve
         let totalExp: number = this.hacking_exp +

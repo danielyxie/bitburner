@@ -191,7 +191,7 @@
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_13__);
 /* harmony import */ var _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Corporation/Corporation */ 67);
-/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Programs/Programs */ 26);
+/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Programs/Programs */ 27);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var _Crime_CrimeHelpers__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Crime/CrimeHelpers */ 108);
 /* harmony import */ var _Crime_Crimes__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Crime/Crimes */ 36);
@@ -3174,6 +3174,11 @@ exports.CONSTANTS = {
     ** You can now hold multiple jobs at once. This means you no longer lose reputation when leaving a company
     ** Because of this change, the getCharacterInformation() Netscript function returns a slightly different value
 
+    * Script Editor Changes:
+    ** Added new script editor: CodeMirror. You can choose between the old editor (Ace) or CodeMirror
+    ** Navigation keyboard shortcuts no longer work on the script editor page
+
+    * Trying to programmatically run a script (run(), exec()) with a 'threads' argument of 0 will now cause the function to return false without running the script
     * Home Computer RAM is now capped at 2 ^ 30 GB (1073741824 GB)
     * Pop-up dialog boxes are a little bit bigger
     * Bug Fix: When importing scripts, "./" will now be properly ignored (e.g. import { foo } from "./lib.script" )
@@ -4661,6 +4666,7 @@ function runScriptFromScript(server, scriptname, args, workerScript, threads=1) 
             var script = server.scripts[i];
             var ramUsage = script.ramUsage;
             threads = Math.round(Number(threads)); //Convert to number and round
+            if (threads === 0) { return Promise.resolve(false); }
             ramUsage = ramUsage * threads;
             var ramAvailable = server.maxRam - server.ramUsed;
 
@@ -4957,7 +4963,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./NetscriptWorker */ 30);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./Prestige */ 99);
-/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./Programs/Programs */ 26);
+/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./Programs/Programs */ 27);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_30__);
 /* harmony import */ var _Programs_ProgramHelpers__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./Programs/ProgramHelpers */ 109);
 /* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./RedPill */ 66);
@@ -4993,7 +4999,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_GameOptions__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! ../utils/GameOptions */ 96);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 17);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_53___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_53__);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 27);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 26);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_54___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_54__);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 21);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_55___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_55__);
@@ -6928,7 +6934,7 @@ window.onload = function() {
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Script */ 33);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Programs/Programs */ 26);
+/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Programs/Programs */ 27);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./SpecialServerIps */ 37);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./TextFile */ 72);
@@ -8302,7 +8308,7 @@ exports.removeElementById = removeElementById;
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_13__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 27);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 26);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../utils/uiHelpers/removeElementById */ 23);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_16__);
@@ -8655,7 +8661,7 @@ function initStockMarket() {
     StockMarket[joesguns] = joesgunsStk;
 
     var catalyst = "Catalyst Ventures";
-    var catalystStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](catalyst, StockSymbols[catalyst], randInt(120, 175)/100, true, 13.5, randInt(250, 1.5e3), 120e9);
+    var catalystStk = new _Stock__WEBPACK_IMPORTED_MODULE_0__["Stock"](catalyst, StockSymbols[catalyst], randInt(120, 175)/100, true, 13.5, randInt(250, 1.5e3), 100e9);
     StockMarket[catalyst] = catalystStk;
 
     var microdyne = "Microdyne Technologies";
@@ -9948,26 +9954,6 @@ exports.resetIndustryResearchTrees = resetIndustryResearchTrees;
 
 /***/ }),
 /* 26 */
-/*!**********************************!*\
-  !*** ./src/Programs/Programs.ts ***!
-  \**********************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const Program_1 = __webpack_require__(/*! ./Program */ 237);
-const programsMetadata_1 = __webpack_require__(/*! ./data/programsMetadata */ 236);
-exports.Programs = {};
-for (const params of programsMetadata_1.programsMetadata) {
-    exports.Programs[params.key] = new Program_1.Program(params.name, params.create);
-}
-
-
-/***/ }),
-/* 27 */
 /*!******************************************************!*\
   !*** ./utils/uiHelpers/removeChildrenFromElement.ts ***!
   \******************************************************/
@@ -10004,6 +9990,26 @@ function removeChildrenFromElement(el) {
     }
 }
 exports.removeChildrenFromElement = removeChildrenFromElement;
+
+
+/***/ }),
+/* 27 */
+/*!**********************************!*\
+  !*** ./src/Programs/Programs.ts ***!
+  \**********************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const Program_1 = __webpack_require__(/*! ./Program */ 237);
+const programsMetadata_1 = __webpack_require__(/*! ./data/programsMetadata */ 236);
+exports.Programs = {};
+for (const params of programsMetadata_1.programsMetadata) {
+    exports.Programs[params.key] = new Program_1.Program(params.name, params.create);
+}
 
 
 /***/ }),
@@ -10861,12 +10867,12 @@ class Stock {
         this.b = b;
         this.otlkMag = otlkMag;
         this.cap = getRandomInt_1.getRandomInt(initPrice * 1e3, initPrice * 25e3);
-        // Total shares is determined by market cap, and is rounded to nearest millions
+        // Total shares is determined by market cap, and is rounded to nearest 100k
         let totalSharesUnrounded = (marketCap / initPrice);
-        this.totalShares = Math.round(totalSharesUnrounded / 1e6) * 1e6;
+        this.totalShares = Math.round(totalSharesUnrounded / 1e5) * 1e5;
         // Max Shares (Outstanding shares) is a percentage of total shares
-        const outstandingSharePercentage = 0.25;
-        this.maxShares = Math.round((this.totalShares * outstandingSharePercentage) / 1e6) * 1e6;
+        const outstandingSharePercentage = 0.2;
+        this.maxShares = Math.round((this.totalShares * outstandingSharePercentage) / 1e5) * 1e5;
         this.posTxtEl = null;
     }
     /**
@@ -12034,7 +12040,7 @@ CompanyPositionsMetadata_1.companyPositionMetadata.forEach((e) => {
 /* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/helpers/createProgressBarText */ 89);
 /* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_13__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 27);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 26);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/JSONReviver */ 15);
 /* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 73);
@@ -17236,7 +17242,7 @@ exports.isString = isString;
 /* harmony import */ var _Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Augmentation/data/AugmentationNames */ 6);
 /* harmony import */ var _Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Programs/Programs */ 26);
+/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Programs/Programs */ 27);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Missions */ 63);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Player */ 0);
@@ -17497,7 +17503,7 @@ function initMessages()  {
 /* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./Message */ 45);
 /* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./Missions */ 63);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./Programs/Programs */ 26);
+/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./Programs/Programs */ 27);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_24__);
 /* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./Script */ 33);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./Server */ 12);
@@ -18332,7 +18338,7 @@ function NetscriptFunctions(workerScript) {
             if (scriptname === undefined) {
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "run() call has incorrect number of arguments. Usage: run(scriptname, [numThreads], [arg1], [arg2]...)");
             }
-            if (isNaN(threads) || threads < 1) {
+            if (isNaN(threads) || threads < 0) {
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid argument for thread count passed into run(). Must be numeric and greater than 0");
             }
             var argsForNewScript = [];
@@ -18354,7 +18360,7 @@ function NetscriptFunctions(workerScript) {
             if (scriptname === undefined || ip === undefined) {
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "exec() call has incorrect number of arguments. Usage: exec(scriptname, server, [numThreads], [arg1], [arg2]...)");
             }
-            if (isNaN(threads) || threads < 1) {
+            if (isNaN(threads) || threads < 0) {
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid argument for thread count passed into exec(). Must be numeric and greater than 0");
             }
             var argsForNewScript = [];
@@ -18379,7 +18385,7 @@ function NetscriptFunctions(workerScript) {
                 if (scriptname === undefined) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "spawn() call has incorrect number of arguments. Usage: spawn(scriptname, numThreads, [arg1], [arg2]...)");
                 }
-                if (isNaN(threads) || threads < 1) {
+                if (isNaN(threads) || threads < 0) {
                     throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid argument for thread count passed into run(). Must be numeric and greater than 0");
                 }
                 var argsForNewScript = [];
@@ -22626,7 +22632,7 @@ function substituteAliases(origCommand) {
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../utils/DialogBox */ 9);
 /* harmony import */ var _utils_FactionInvitationBox__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../utils/FactionInvitationBox */ 160);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 27);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 26);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_18__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_19__);
@@ -27412,7 +27418,7 @@ exports.createOptionElement = createOptionElement;
 /* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 17);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 27);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 26);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_17__);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 65);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_18__);
@@ -29460,7 +29466,7 @@ var OwnedAugmentationsOrderSetting;
 /* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_CodingContracts__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Programs/Programs */ 26);
+/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Programs/Programs */ 27);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _DarkWeb_DarkWeb__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./DarkWeb/DarkWeb */ 138);
 /* harmony import */ var _DarkWeb_DarkWebItems__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./DarkWeb/DarkWebItems */ 79);
@@ -33537,7 +33543,7 @@ HackingMission.prototype.finishMission = function(win) {
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../../utils/helpers/isString */ 44);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_23__);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 27);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 26);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_24__);
 
 
@@ -35905,7 +35911,7 @@ exports.removeElement = removeElement;
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 21);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 27);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 26);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/YesNoBox */ 22);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_10__);
@@ -36330,7 +36336,7 @@ function createBitNodeYesNoEventListeners(newBitNode, destroyedBitNode, flume=fa
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_27__);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../../utils/helpers/keyCodes */ 28);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_28__);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 27);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 26);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_29___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_29__);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ../../utils/uiHelpers/removeElement */ 65);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_30__);
@@ -43125,7 +43131,7 @@ JSONReviver_1.Reviver.constructors.Company = Company;
 /* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/LogBox */ 90);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 27);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 26);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13__);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 65);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_14__);
@@ -43525,7 +43531,7 @@ exports.createPopupCloseButton = createPopupCloseButton;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const DarkWebItem_1 = __webpack_require__(/*! ./DarkWebItem */ 235);
-const Programs_1 = __webpack_require__(/*! ../Programs/Programs */ 26);
+const Programs_1 = __webpack_require__(/*! ../Programs/Programs */ 27);
 exports.DarkWebItems = {
     BruteSSHProgram: new DarkWebItem_1.DarkWebItem(Programs_1.Programs.BruteSSHProgram.name, 500e3, "Opens up SSH Ports"),
     FTPCrackProgram: new DarkWebItem_1.DarkWebItem(Programs_1.Programs.FTPCrackProgram.name, 1500e3, "Opens up FTP Ports"),
@@ -45042,7 +45048,7 @@ function logBoxUpdateText() {
 /* harmony import */ var _utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_85___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_85__);
 /* harmony import */ var _utils_uiHelpers_getSelectData__WEBPACK_IMPORTED_MODULE_86__ = __webpack_require__(/*! ../../utils/uiHelpers/getSelectData */ 98);
 /* harmony import */ var _utils_uiHelpers_getSelectData__WEBPACK_IMPORTED_MODULE_86___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_getSelectData__WEBPACK_IMPORTED_MODULE_86__);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_87__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 27);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_87__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 26);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_87___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_87__);
 // Wrapper for CodeMirror editor
 // https://github.com/codemirror/codemirror
@@ -45591,7 +45597,7 @@ const CodeMirrorEditor = new CodeMirrorEditorWrapper();
 /* harmony import */ var _utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _utils_uiHelpers_getSelectData__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../utils/uiHelpers/getSelectData */ 98);
 /* harmony import */ var _utils_uiHelpers_getSelectData__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_getSelectData__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 27);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 26);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_7__);
 
 
@@ -46497,7 +46503,7 @@ exports.getSelectText = getSelectText;
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _Corporation_IndustryData__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Corporation/IndustryData */ 25);
 /* harmony import */ var _Corporation_IndustryData__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_Corporation_IndustryData__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Programs/Programs */ 26);
+/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Programs/Programs */ 27);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./engine */ 11);
 /* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Faction/Faction */ 61);
@@ -50235,7 +50241,7 @@ function findCrime(roughName) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return displayCreateProgramContent; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return getNumAvailableCreateProgram; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return initCreateProgramButtons; });
-/* harmony import */ var _Programs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Programs */ 26);
+/* harmony import */ var _Programs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Programs */ 27);
 /* harmony import */ var _Programs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Programs__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_1__);
@@ -50590,7 +50596,7 @@ function getRandomFilename(server, reward) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return cinematicTextFlag; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return writeCinematicText; });
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./engine */ 11);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 27);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 26);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2__);
@@ -50799,7 +50805,7 @@ const createOptionElement_1 = __webpack_require__(/*! ../../../utils/uiHelpers/c
 const createPopup_1 = __webpack_require__(/*! ../../../utils/uiHelpers/createPopup */ 40);
 const createPopupCloseButton_1 = __webpack_require__(/*! ../../../utils/uiHelpers/createPopupCloseButton */ 77);
 const getSelectData_1 = __webpack_require__(/*! ../../../utils/uiHelpers/getSelectData */ 98);
-const removeChildrenFromElement_1 = __webpack_require__(/*! ../../../utils/uiHelpers/removeChildrenFromElement */ 27);
+const removeChildrenFromElement_1 = __webpack_require__(/*! ../../../utils/uiHelpers/removeChildrenFromElement */ 26);
 const removeElement_1 = __webpack_require__(/*! ../../../utils/uiHelpers/removeElement */ 65);
 const removeElementById_1 = __webpack_require__(/*! ../../../utils/uiHelpers/removeElementById */ 23);
 const UIElems = {
@@ -52488,10 +52494,13 @@ const exceptionAlert_1 = __webpack_require__(/*! ../../../utils/helpers/exceptio
 const createElement_1 = __webpack_require__(/*! ../../../utils/uiHelpers/createElement */ 2);
 const createOptionElement_1 = __webpack_require__(/*! ../../../utils/uiHelpers/createOptionElement */ 53);
 const getSelectData_1 = __webpack_require__(/*! ../../../utils/uiHelpers/getSelectData */ 98);
+const removeChildrenFromElement_1 = __webpack_require__(/*! ../../../utils/uiHelpers/removeChildrenFromElement */ 26);
 const removeElement_1 = __webpack_require__(/*! ../../../utils/uiHelpers/removeElement */ 65);
 const UIElems = {
     container: null,
     info: null,
+    sortTag: null,
+    sortSelector: null,
     resleeveList: null,
     resleeves: null,
 };
@@ -52508,7 +52517,7 @@ function createResleevesPage(p) {
             position: "fixed",
         });
         UIElems.info = createElement_1.createElement("p", {
-            display: "inline-block",
+            display: "block",
             innerHTML: "Re-sleeving is the process of digitizing and transferring your consciousness " +
                 "into a new human body, or 'sleeve'. Here at VitaLife, you can purchase new " +
                 "specially-engineered bodies for the re-sleeve process. Many of these bodies " +
@@ -52523,17 +52532,121 @@ function createResleevesPage(p) {
                 "Source-File.",
             width: "75%",
         });
-        UIElems.resleeveList = createElement_1.createElement("ul");
-        UIElems.resleeves = [];
+        // Randomly create all Resleeves if they dont already exist
         if (p.resleeves.length === 0) {
             p.resleeves = Resleeving_1.generateResleeves();
         }
-        for (const resleeve of p.resleeves) {
-            const resleeveUi = createResleeveUi(resleeve);
-            UIElems.resleeveList.appendChild(resleeveUi.container);
-            UIElems.resleeves.push(resleeveUi);
-        }
+        // Create a selector for sorting the list of Resleeves
+        UIElems.sortTag = createElement_1.createElement("p", {
+            display: "inline-block",
+            innerText: "Sort By: "
+        });
+        UIElems.sortSelector = createElement_1.createElement("select");
+        let SortOption;
+        (function (SortOption) {
+            SortOption["Cost"] = "Cost";
+            SortOption["Hacking"] = "Hacking";
+            SortOption["Strength"] = "Strength";
+            SortOption["Defense"] = "Defense";
+            SortOption["Dexterity"] = "Dexterity";
+            SortOption["Agility"] = "Agility";
+            SortOption["Charisma"] = "Charisma";
+            SortOption["AverageCombatStats"] = "AverageCombat";
+            SortOption["AverageAllStats"] = "AverageAllStats";
+            SortOption["TotalNumAugmentations"] = "TotalNumAugmentations";
+        })(SortOption || (SortOption = {}));
+        UIElems.sortSelector.add(createOptionElement_1.createOptionElement("Cost", SortOption.Cost));
+        UIElems.sortSelector.add(createOptionElement_1.createOptionElement("Hacking Level", SortOption.Hacking));
+        UIElems.sortSelector.add(createOptionElement_1.createOptionElement("Strength Level", SortOption.Strength));
+        UIElems.sortSelector.add(createOptionElement_1.createOptionElement("Defense Level", SortOption.Defense));
+        UIElems.sortSelector.add(createOptionElement_1.createOptionElement("Dexterity Level", SortOption.Dexterity));
+        UIElems.sortSelector.add(createOptionElement_1.createOptionElement("Agility Level", SortOption.Agility));
+        UIElems.sortSelector.add(createOptionElement_1.createOptionElement("Charisma Level", SortOption.Charisma));
+        UIElems.sortSelector.add(createOptionElement_1.createOptionElement("Average Combat Stats", SortOption.AverageCombatStats));
+        UIElems.sortSelector.add(createOptionElement_1.createOptionElement("Average Stats", SortOption.AverageAllStats));
+        UIElems.sortSelector.add(createOptionElement_1.createOptionElement("Number of Augmentations", SortOption.TotalNumAugmentations));
+        UIElems.resleeveList = createElement_1.createElement("ul");
+        UIElems.sortSelector.onchange = () => {
+            removeChildrenFromElement_1.removeChildrenFromElement(UIElems.resleeveList);
+            UIElems.resleeves = [];
+            // Helper function for averaging
+            function getAverage(...values) {
+                let sum = 0;
+                for (let i = 0; i < values.length; ++i) {
+                    sum += values[i];
+                }
+                return sum / values.length;
+            }
+            const sortOpt = getSelectData_1.getSelectValue(UIElems.sortSelector);
+            switch (sortOpt) {
+                case SortOption.Hacking:
+                    p.resleeves.sort((a, b) => {
+                        return a.hacking_skill - b.hacking_skill;
+                    });
+                    break;
+                case SortOption.Strength:
+                    p.resleeves.sort((a, b) => {
+                        return a.strength - b.strength;
+                    });
+                    break;
+                case SortOption.Defense:
+                    p.resleeves.sort((a, b) => {
+                        return a.defense - b.defense;
+                    });
+                    break;
+                case SortOption.Dexterity:
+                    p.resleeves.sort((a, b) => {
+                        return a.dexterity - b.dexterity;
+                    });
+                    break;
+                case SortOption.Agility:
+                    p.resleeves.sort((a, b) => {
+                        return a.agility - b.agility;
+                    });
+                    break;
+                case SortOption.Charisma:
+                    p.resleeves.sort((a, b) => {
+                        return a.charisma - b.charisma;
+                    });
+                    break;
+                case SortOption.AverageCombatStats:
+                    p.resleeves.sort((a, b) => {
+                        let aAvg = getAverage(a.strength, a.defense, a.dexterity, a.agility);
+                        let bAvg = getAverage(b.strength, b.defense, b.dexterity, b.agility);
+                        return aAvg - bAvg;
+                    });
+                    break;
+                case SortOption.AverageAllStats:
+                    p.resleeves.sort((a, b) => {
+                        let aAvg = getAverage(a.hacking_skill, a.strength, a.defense, a.dexterity, a.agility, a.charisma);
+                        let bAvg = getAverage(b.hacking_skill, b.strength, b.defense, b.dexterity, b.agility, b.charisma);
+                        return aAvg - bAvg;
+                    });
+                    break;
+                case SortOption.TotalNumAugmentations:
+                    p.resleeves.sort((a, b) => {
+                        return a.augmentations.length - b.augmentations.length;
+                    });
+                    break;
+                case SortOption.Cost:
+                default:
+                    p.resleeves.sort((a, b) => {
+                        return a.getCost() - b.getCost();
+                    });
+                    break;
+            }
+            // Create UI for all Resleeves
+            for (const resleeve of p.resleeves) {
+                const resleeveUi = createResleeveUi(resleeve);
+                UIElems.resleeveList.appendChild(resleeveUi.container);
+                UIElems.resleeves.push(resleeveUi);
+            }
+        };
+        UIElems.sortSelector.dispatchEvent(new Event('change')); // Force onchange event
         UIElems.container.appendChild(UIElems.info);
+        UIElems.container.appendChild(createElement_1.createElement("br"));
+        UIElems.container.appendChild(UIElems.sortTag);
+        UIElems.container.appendChild(UIElems.sortSelector);
         UIElems.container.appendChild(UIElems.resleeveList);
         document.getElementById("entire-game-container").appendChild(UIElems.container);
     }
@@ -52580,7 +52693,8 @@ function createResleeveUi(resleeve) {
             `Defense: ${numeralFormat_1.numeralWrapper.format(resleeve.defense, "0,0")} (${numeralFormat_1.numeralWrapper.formatBigNumber(resleeve.defense_exp)} exp)<br>` +
             `Dexterity: ${numeralFormat_1.numeralWrapper.format(resleeve.dexterity, "0,0")} (${numeralFormat_1.numeralWrapper.formatBigNumber(resleeve.dexterity_exp)} exp)<br>` +
             `Agility: ${numeralFormat_1.numeralWrapper.format(resleeve.agility, "0,0")} (${numeralFormat_1.numeralWrapper.formatBigNumber(resleeve.agility_exp)} exp)<br>` +
-            `Charisma: ${numeralFormat_1.numeralWrapper.format(resleeve.charisma, "0,0")} (${numeralFormat_1.numeralWrapper.formatBigNumber(resleeve.charisma_exp)} exp)`,
+            `Charisma: ${numeralFormat_1.numeralWrapper.format(resleeve.charisma, "0,0")} (${numeralFormat_1.numeralWrapper.formatBigNumber(resleeve.charisma_exp)} exp)<br>` +
+            `# Augmentations: ${resleeve.augmentations.length}`,
     });
     elems.multipliersButton = createElement_1.createElement("button", {
         class: "std-button",
@@ -52687,7 +52801,7 @@ function updateAugDescription(elems) {
 /* harmony import */ var _Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentation/data/AugmentationNames */ 6);
 /* harmony import */ var _Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _CodingContractGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CodingContractGenerator */ 114);
-/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Programs/Programs */ 26);
+/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Programs/Programs */ 27);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Faction/Factions */ 16);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_3__);
@@ -61452,9 +61566,9 @@ class Resleeve extends Person_1.Person {
     }
     getCost() {
         // Each experience point adds this to the cost
-        const CostPerExp = 10e3;
+        const CostPerExp = 25e3;
         // Final cost is multiplied by this constant ^ # Augs
-        const NumAugsExponent = 1.12;
+        const NumAugsExponent = 1.2;
         // Get total exp in this re-sleeve
         let totalExp = this.hacking_exp +
             this.strength_exp +

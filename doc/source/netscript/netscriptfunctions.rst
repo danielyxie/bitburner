@@ -380,8 +380,10 @@ run
     Run a script as a separate process. This function can only be used to run scripts located on the current server (the server
     running the script that calls this function).
 
-    Returns true if the script is successfully started, and false otherwise. Requires a significant amount of RAM to run this
-    command.
+    Returns true if the script is successfully started, and false otherwise.
+
+    Running this function with a *numThreads* argument of 0 will return false without running the script.
+    However, running this function with a negative *numThreads* argument will cause a runtime error.
 
     The simplest way to use the *run* command is to call it with just the script name. The following example will run
     'foo.script' single-threaded with no arguments::
@@ -414,6 +416,9 @@ exec
     that it can be used to run a script on any server, instead of just the current server.
 
     Returns true if the script is successfully started, and false otherwise.
+
+    Running this function with a *numThreads* argument of 0 will return false without running the script.
+    However, running this function with a negative *numThreads* argument will cause a runtime error.
 
     The simplest way to use the *exec* command is to call it with just the script name and the target server.
     The following example will try to run *generic-hack.script* on the *foodnstuff* server::

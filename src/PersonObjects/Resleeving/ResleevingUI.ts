@@ -21,6 +21,7 @@ import { exceptionAlert } from "../../../utils/helpers/exceptionAlert";
 import { createElement } from "../../../utils/uiHelpers/createElement";
 import { createOptionElement } from "../../../utils/uiHelpers/createOptionElement";
 import { getSelectValue } from "../../../utils/uiHelpers/getSelectData";
+import { removeChildrenFromElement } from "../../../utils/uiHelpers/removeChildrenFromElement";
 import { removeElement } from "../../../utils/uiHelpers/removeElement";
 
 interface IResleeveUIElems {
@@ -39,6 +40,8 @@ interface IResleeveUIElems {
 interface IPageUIElems {
     container:      HTMLElement | null;
     info:           HTMLElement | null;
+    sortTag:        HTMLElement | null;
+    sortSelector:   HTMLSelectElement | null;
     resleeveList:   HTMLElement | null;
     resleeves:      IResleeveUIElems[] | null;
 }
@@ -46,6 +49,8 @@ interface IPageUIElems {
 const UIElems: IPageUIElems = {
     container: null,
     info: null,
+    sortTag: null,
+    sortSelector: null,
     resleeveList: null,
     resleeves: null,
 }
@@ -65,7 +70,7 @@ export function createResleevesPage(p: IPlayer) {
         });
 
         UIElems.info = createElement("p", {
-            display: "inline-block",
+            display: "block",
             innerHTML: "Re-sleeving is the process of digitizing and transferring your consciousness " +
                        "into a new human body, or 'sleeve'. Here at VitaLife, you can purchase new " +
                        "specially-engineered bodies for the re-sleeve process. Many of these bodies " +
@@ -81,20 +86,131 @@ export function createResleevesPage(p: IPlayer) {
             width: "75%",
         });
 
-        UIElems.resleeveList = createElement("ul");
-        UIElems.resleeves = [];
-
+        // Randomly create all Resleeves if they dont already exist
         if (p.resleeves.length === 0) {
             p.resleeves = generateResleeves();
         }
 
-        for (const resleeve of p.resleeves) {
-            const resleeveUi = createResleeveUi(resleeve);
-            UIElems.resleeveList.appendChild(resleeveUi.container!);
-            UIElems.resleeves.push(resleeveUi);
+        // Create a selector for sorting the list of Resleeves
+        UIElems.sortTag = createElement("p", {
+            display: "inline-block",
+            innerText: "Sort By: "
+        });
+        UIElems.sortSelector = createElement("select") as HTMLSelectElement;
+
+        enum SortOption {
+            Cost = "Cost",
+            Hacking = "Hacking",
+            Strength = "Strength",
+            Defense = "Defense",
+            Dexterity = "Dexterity",
+            Agility = "Agility",
+            Charisma = "Charisma",
+            AverageCombatStats = "AverageCombat",
+            AverageAllStats = "AverageAllStats",
+            TotalNumAugmentations = "TotalNumAugmentations",
         }
 
+        UIElems.sortSelector!.add(createOptionElement("Cost", SortOption.Cost));
+        UIElems.sortSelector!.add(createOptionElement("Hacking Level", SortOption.Hacking));
+        UIElems.sortSelector!.add(createOptionElement("Strength Level", SortOption.Strength));
+        UIElems.sortSelector!.add(createOptionElement("Defense Level", SortOption.Defense));
+        UIElems.sortSelector!.add(createOptionElement("Dexterity Level", SortOption.Dexterity));
+        UIElems.sortSelector!.add(createOptionElement("Agility Level", SortOption.Agility));
+        UIElems.sortSelector!.add(createOptionElement("Charisma Level", SortOption.Charisma));
+        UIElems.sortSelector!.add(createOptionElement("Average Combat Stats", SortOption.AverageCombatStats));
+        UIElems.sortSelector!.add(createOptionElement("Average Stats", SortOption.AverageAllStats));
+        UIElems.sortSelector!.add(createOptionElement("Number of Augmentations", SortOption.TotalNumAugmentations));
+
+        UIElems.resleeveList = createElement("ul");
+        UIElems.sortSelector!.onchange = () => {
+            removeChildrenFromElement(UIElems.resleeveList);
+            UIElems.resleeves = [];
+
+            // Helper function for averaging
+            function getAverage(...values: number[]) {
+                let sum: number = 0;
+                for (let i = 0; i < values.length; ++i) {
+                    sum += values[i];
+                }
+
+                return sum / values.length;
+            }
+
+            const sortOpt = getSelectValue(UIElems.sortSelector!);
+            switch (sortOpt) {
+                case SortOption.Hacking:
+                    p.resleeves.sort((a, b) => {
+                        return a.hacking_skill - b.hacking_skill;
+                    });
+                    break;
+                case SortOption.Strength:
+                    p.resleeves.sort((a, b) => {
+                        return a.strength - b.strength;
+                    });
+                    break;
+                case SortOption.Defense:
+                    p.resleeves.sort((a, b) => {
+                        return a.defense - b.defense;
+                    });
+                    break;
+                case SortOption.Dexterity:
+                    p.resleeves.sort((a, b) => {
+                        return a.dexterity - b.dexterity;
+                    });
+                    break;
+                case SortOption.Agility:
+                    p.resleeves.sort((a, b) => {
+                        return a.agility - b.agility;
+                    });
+                    break;
+                case SortOption.Charisma:
+                    p.resleeves.sort((a, b) => {
+                        return a.charisma - b.charisma;
+                    });
+                    break;
+                case SortOption.AverageCombatStats:
+                    p.resleeves.sort((a, b) => {
+                        let aAvg = getAverage(a.strength, a.defense, a.dexterity, a.agility);
+                        let bAvg = getAverage(b.strength, b.defense, b.dexterity, b.agility);
+
+                        return aAvg - bAvg;
+                    });
+                    break;
+                case SortOption.AverageAllStats:
+                    p.resleeves.sort((a, b) => {
+                        let aAvg = getAverage(a.hacking_skill, a.strength, a.defense, a.dexterity, a.agility, a.charisma);
+                        let bAvg = getAverage(b.hacking_skill, b.strength, b.defense, b.dexterity, b.agility, b.charisma);
+
+                        return aAvg - bAvg;
+                    });
+                    break;
+                case SortOption.TotalNumAugmentations:
+                    p.resleeves.sort((a, b) => {
+                        return a.augmentations.length - b.augmentations.length;
+                    });
+                    break;
+                case SortOption.Cost:
+                default:
+                    p.resleeves.sort((a, b) => {
+                        return a.getCost() - b.getCost();
+                    });
+                    break;
+            }
+
+            // Create UI for all Resleeves
+            for (const resleeve of p.resleeves) {
+                const resleeveUi = createResleeveUi(resleeve);
+                UIElems.resleeveList!.appendChild(resleeveUi.container!);
+                UIElems.resleeves!.push(resleeveUi);
+            }
+        }
+        UIElems.sortSelector!.dispatchEvent(new Event('change')); // Force onchange event
+
         UIElems.container.appendChild(UIElems.info);
+        UIElems.container.appendChild(createElement("br"));
+        UIElems.container.appendChild(UIElems.sortTag);
+        UIElems.container.appendChild(UIElems.sortSelector);
         UIElems.container.appendChild(UIElems.resleeveList);
 
         document.getElementById("entire-game-container")!.appendChild(UIElems.container);
@@ -145,7 +261,8 @@ function createResleeveUi(resleeve: Resleeve): IResleeveUIElems {
             `Defense: ${numeralWrapper.format(resleeve.defense, "0,0")} (${numeralWrapper.formatBigNumber(resleeve.defense_exp)} exp)<br>` +
             `Dexterity: ${numeralWrapper.format(resleeve.dexterity, "0,0")} (${numeralWrapper.formatBigNumber(resleeve.dexterity_exp)} exp)<br>` +
             `Agility: ${numeralWrapper.format(resleeve.agility, "0,0")} (${numeralWrapper.formatBigNumber(resleeve.agility_exp)} exp)<br>` +
-            `Charisma: ${numeralWrapper.format(resleeve.charisma, "0,0")} (${numeralWrapper.formatBigNumber(resleeve.charisma_exp)} exp)`,
+            `Charisma: ${numeralWrapper.format(resleeve.charisma, "0,0")} (${numeralWrapper.formatBigNumber(resleeve.charisma_exp)} exp)<br>` +
+            `# Augmentations: ${resleeve.augmentations.length}`,
     });
     elems.multipliersButton = createElement("button", {
         class: "std-button",

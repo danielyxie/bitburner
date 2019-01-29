@@ -821,7 +821,7 @@ function NetscriptFunctions(workerScript) {
             if (scriptname === undefined) {
                 throw makeRuntimeRejectMsg(workerScript, "run() call has incorrect number of arguments. Usage: run(scriptname, [numThreads], [arg1], [arg2]...)");
             }
-            if (isNaN(threads) || threads < 1) {
+            if (isNaN(threads) || threads < 0) {
                 throw makeRuntimeRejectMsg(workerScript, "Invalid argument for thread count passed into run(). Must be numeric and greater than 0");
             }
             var argsForNewScript = [];
@@ -843,7 +843,7 @@ function NetscriptFunctions(workerScript) {
             if (scriptname === undefined || ip === undefined) {
                 throw makeRuntimeRejectMsg(workerScript, "exec() call has incorrect number of arguments. Usage: exec(scriptname, server, [numThreads], [arg1], [arg2]...)");
             }
-            if (isNaN(threads) || threads < 1) {
+            if (isNaN(threads) || threads < 0) {
                 throw makeRuntimeRejectMsg(workerScript, "Invalid argument for thread count passed into exec(). Must be numeric and greater than 0");
             }
             var argsForNewScript = [];
@@ -868,7 +868,7 @@ function NetscriptFunctions(workerScript) {
                 if (scriptname === undefined) {
                     throw makeRuntimeRejectMsg(workerScript, "spawn() call has incorrect number of arguments. Usage: spawn(scriptname, numThreads, [arg1], [arg2]...)");
                 }
-                if (isNaN(threads) || threads < 1) {
+                if (isNaN(threads) || threads < 0) {
                     throw makeRuntimeRejectMsg(workerScript, "Invalid argument for thread count passed into run(). Must be numeric and greater than 0");
                 }
                 var argsForNewScript = [];

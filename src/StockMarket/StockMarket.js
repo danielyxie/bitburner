@@ -350,7 +350,7 @@ function initStockMarket() {
     StockMarket[joesguns] = joesgunsStk;
 
     var catalyst = "Catalyst Ventures";
-    var catalystStk = new Stock(catalyst, StockSymbols[catalyst], randInt(120, 175)/100, true, 13.5, randInt(250, 1.5e3), 120e9);
+    var catalystStk = new Stock(catalyst, StockSymbols[catalyst], randInt(120, 175)/100, true, 13.5, randInt(250, 1.5e3), 100e9);
     StockMarket[catalyst] = catalystStk;
 
     var microdyne = "Microdyne Technologies";

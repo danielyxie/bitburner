@@ -522,6 +522,11 @@ export let CONSTANTS: IMap<any> = {
     ** You can now hold multiple jobs at once. This means you no longer lose reputation when leaving a company
     ** Because of this change, the getCharacterInformation() Netscript function returns a slightly different value
 
+    * Script Editor Changes:
+    ** Added new script editor: CodeMirror. You can choose between the old editor (Ace) or CodeMirror
+    ** Navigation keyboard shortcuts no longer work on the script editor page
+
+    * Trying to programmatically run a script (run(), exec()) with a 'threads' argument of 0 will now cause the function to return false without running the script
     * Home Computer RAM is now capped at 2 ^ 30 GB (1073741824 GB)
     * Pop-up dialog boxes are a little bit bigger
     * Bug Fix: When importing scripts, "./" will now be properly ignored (e.g. import { foo } from "./lib.script" )

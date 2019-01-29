@@ -104,13 +104,13 @@ export class Stock {
         this.otlkMag            = otlkMag;
         this.cap                = getRandomInt(initPrice * 1e3, initPrice * 25e3);
 
-        // Total shares is determined by market cap, and is rounded to nearest millions
+        // Total shares is determined by market cap, and is rounded to nearest 100k
         let totalSharesUnrounded: number = (marketCap / initPrice);
-        this.totalShares = Math.round(totalSharesUnrounded / 1e6) * 1e6;
+        this.totalShares = Math.round(totalSharesUnrounded / 1e5) * 1e5;
 
         // Max Shares (Outstanding shares) is a percentage of total shares
-        const outstandingSharePercentage: number = 0.25;
-        this.maxShares = Math.round((this.totalShares * outstandingSharePercentage) / 1e6) * 1e6;
+        const outstandingSharePercentage: number = 0.2;
+        this.maxShares = Math.round((this.totalShares * outstandingSharePercentage) / 1e5) * 1e5;
 
         this.posTxtEl           = null;
     }
