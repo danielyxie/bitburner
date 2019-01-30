@@ -71,6 +71,8 @@ import 'codemirror/keymap/vim.js';
 import 'codemirror/keymap/emacs.js';
 
 import 'codemirror/addon/comment/continuecomment.js';
+import 'codemirror/addon/dialog/dialog.css';
+import 'codemirror/addon/dialog/dialog.js';
 import 'codemirror/addon/edit/closebrackets.js';
 import 'codemirror/addon/edit/matchbrackets.js';
 import 'codemirror/addon/fold/foldcode.js';
@@ -79,6 +81,7 @@ import 'codemirror/addon/fold/foldgutter.css';
 import 'codemirror/addon/fold/brace-fold.js';
 import 'codemirror/addon/fold/indent-fold.js';
 import 'codemirror/addon/fold/comment-fold.js';
+import 'codemirror/addon/hint/javascript-hint.js';
 import 'codemirror/addon/hint/show-hint.js';
 import 'codemirror/addon/hint/show-hint.css';
 import 'codemirror/addon/lint/lint.js';
@@ -87,10 +90,11 @@ import 'codemirror/addon/search/match-highlighter.js';
 import 'codemirror/addon/selection/active-line.js';
 
 window.JSHINT = require('jshint').JSHINT;
-import './CodeMirrorNetscriptHint.js';
+import './CodeMirrorNetscriptLint.js';
 
 import { NetscriptFunctions } from "../NetscriptFunctions";
-import { CodeMirrorThemeSetting } from "../Settings/SettingEnums";
+import { CodeMirrorKeybindingSetting,
+         CodeMirrorThemeSetting } from "../Settings/SettingEnums";
 import { Settings } from "../Settings/Settings";
 
 import { clearEventListeners } from "../../utils/uiHelpers/clearEventListeners";
@@ -114,6 +118,8 @@ function validateInitializationParamters(params) {
 class CodeMirrorEditorWrapper extends ScriptEditor {
     constructor() {
         super();
+        this.vimCommandDisplay = null;
+        this.vimCommandDisplayWrapper = null;
         this.tabsStyleElement = null;
     }
 
@@ -159,6 +165,10 @@ class CodeMirrorEditorWrapper extends ScriptEditor {
         // Add an element for the "Show Invisible" option for tabs
         this.tabsStyleElement = document.createElement('style');
         document.head.appendChild(this.tabsStyleElement);
+
+        // Store a reference to the VIM command display
+        this.vimCommandDisplay = document.getElementById("codemirror-vim-command-display");
+        this.vimCommandDisplayWrapper = document.getElementById("codemirror-vim-command-display-wrapper");
 
         // Define a "Save" command for CodeMirror so shortcuts like Ctrl + s
         // will save in-game
@@ -206,6 +216,21 @@ class CodeMirrorEditorWrapper extends ScriptEditor {
 
             return result;
         };
+
+        // Configure VIM keybindings
+        var VimApi = CodeMirror.Vim;
+        VimApi.defineEx('write', 'w', function(cm, input) {
+            params.saveAndCloseFn();
+        });
+        VimApi.defineEx('quit', 'q', function(cm, input) {
+            params.quitFn();
+        });
+        VimApi.defineEx('xwritequit', 'x', function(cm, input) {
+            params.saveAndCloseFn();
+        });
+        VimApi.defineEx('wqwritequit', 'wq', function(cm, input) {
+            params.saveAndCloseFn();
+        });
     }
 
     initialized() {
@@ -235,6 +260,11 @@ class CodeMirrorEditorWrapper extends ScriptEditor {
             if (!this.initialized()) {
                 console.warn(`CodeMirrorEditor.create() called when editor was not initialized`);
                 return;
+            }
+
+            // Get and sanitize the keybinding (keymap) setting
+            if (!(Object.values(CodeMirrorKeybindingSetting).includes(Settings.EditorKeybinding))) {
+                Settings.EditorKeybinding = CodeMirrorKeybindingSetting.Default;
             }
 
             // Initialize CodeMirror Editor
@@ -294,10 +324,10 @@ class CodeMirrorEditorWrapper extends ScriptEditor {
                 return false;
             }
             removeChildrenFromElement(keybindingDropdown);
-            keybindingDropdown.add(createOptionElement("Default", "default"));
-            keybindingDropdown.add(createOptionElement("Sublime", "sublime"));
-            keybindingDropdown.add(createOptionElement("Vim", "vim"));
-            keybindingDropdown.add(createOptionElement("Emacs", "emacs"));
+            keybindingDropdown.add(createOptionElement("Default", CodeMirrorKeybindingSetting.Default));
+            keybindingDropdown.add(createOptionElement("Sublime", CodeMirrorKeybindingSetting.Sublime));
+            keybindingDropdown.add(createOptionElement("Vim", CodeMirrorKeybindingSetting.Vim));
+            keybindingDropdown.add(createOptionElement("Emacs", CodeMirrorKeybindingSetting.Emacs));
             if (Settings.EditorKeybinding) {
                 var initialIndex = 0;
                 for (var i = 0; i < keybindingDropdown.options.length; ++i) {
@@ -311,14 +341,39 @@ class CodeMirrorEditorWrapper extends ScriptEditor {
                 keybindingDropdown.selectedIndex = 0;
             }
             keybindingDropdown.onchange = () => {
+                // Set Vim command display to be invisible initially
+                this.vimCommandDisplayWrapper.style.display = "none";
+
                 const val = keybindingDropdown.value;
                 Settings.EditorKeybinding = val;
-                this.editor.removeKeyMap("sublime");
-                this.editor.removeKeyMap("emacs");
-                this.editor.removeKeyMap("vim");
+                this.editor.removeKeyMap(CodeMirror.keyMap.default);
+                this.editor.removeKeyMap(CodeMirror.keyMap.sublime);
+                this.editor.removeKeyMap(CodeMirror.keyMap.emacs);
+                this.editor.removeKeyMap(CodeMirror.keyMap.vim);
+
+                // Setup the VIM command display
+                let keys = '';
+                const handleVimKeyPress = (key) => {
+                    keys = keys + key;
+                    this.vimCommandDisplay.innerHTML = keys;
+                }
+                const handleVimCommandDone = (e) => {
+                    keys = '';
+                    this.vimCommandDisplay.innerHTML = keys;
+                }
+                if (val === CodeMirrorKeybindingSetting.Vim) {
+                    this.vimCommandDisplayWrapper.style.display = "block";
+                    this.editor.on('vim-keypress', handleVimKeyPress);
+                    this.editor.on('vim-command-done', handleVimCommandDone);
+
+                } else {
+                    this.vimCommandDisplayWrapper.style.display = "none";
+                    this.editor.off('vim-keypress', handleVimKeyPress);
+                    this.editor.off('vim-command-done', handleVimCommandDone);
+                }
+
                 this.editor.addKeyMap(val);
                 this.editor.setOption("keyMap", val);
-                console.log(`Set keymap to ${val} for CodeMirror`);
             };
             keybindingDropdown.onchange();
 
@@ -489,9 +544,8 @@ class CodeMirrorEditorWrapper extends ScriptEditor {
             removeFlexibleOption("script-editor-option-flex4-fieldset");
 
             this.editor.refresh();
-            console.log(this.editor.options);
         } catch(e) {
-            console.error(`Exception caught: ${e}`);
+            console.error(`Exception caught: ${e}. ${e.stack}`);
             return false;
         }
     }

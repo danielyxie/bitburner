@@ -41,8 +41,6 @@ function scriptEditorInit() {
         return false;
     }
 
-
-
     // Beautify button
     const beautifyButton = createElement("button", {
         class: "std-button",
@@ -210,8 +208,9 @@ $(document).keydown(function(e) {
 function saveAndCloseScriptEditor() {
     var filename = document.getElementById("script-editor-filename").value;
 
+    let code;
     try {
-        let code = getCurrentEditor().getCode();
+        code = getCurrentEditor().getCode();
     } catch(e) {
         dialogBoxCreate("Something went wrong when trying to save (getCurrentEditor().getCode()). Please report to game developer with details");
         return;

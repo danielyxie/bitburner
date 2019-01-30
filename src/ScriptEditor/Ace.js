@@ -18,6 +18,7 @@ require("brace/ext/language_tools");
 
 import { NetscriptFunctions } from "../NetscriptFunctions";
 import { Settings } from "../Settings/Settings";
+import { AceKeybindingSetting } from "../Settings/SettingEnums";
 
 import { clearEventListeners } from "../../utils/uiHelpers/clearEventListeners";
 import { createElement } from "../../utils/uiHelpers/createElement";
@@ -43,6 +44,7 @@ function validateInitializationParamters(params) {
 class AceEditorWrapper extends ScriptEditor {
     constructor() {
         super();
+        this.vimCommandDisplayWrapper = null;
     }
 
     init(params) {
@@ -73,7 +75,7 @@ class AceEditorWrapper extends ScriptEditor {
         editorElement.style.fontSize = '16px';
         this.editor.setOption("showPrintMargin", false);
 
-        //Configure some of the VIM keybindings
+        // Configure some of the VIM keybindings
         ace.config.loadModule('ace/keyboard/vim', function(module) {
             var VimApi = module.CodeMirror.Vim;
             VimApi.defineEx('write', 'w', function(cm, input) {
@@ -89,6 +91,13 @@ class AceEditorWrapper extends ScriptEditor {
                 params.saveAndCloseFn();
             });
         });
+
+        // Store a reference to the VIM command display
+        this.vimCommandDisplayWrapper = document.getElementById("codemirror-vim-command-display-wrapper");
+        if (this.vimCommandDisplayWrapper == null) {
+            console.error(`Could not get Vim Command Display element (id=codemirror-vim-command-display-wrapper)`);
+            return false;
+        }
 
         //Function autocompleter
         this.editor.setOption("enableBasicAutocompletion", true);
@@ -160,6 +169,11 @@ class AceEditorWrapper extends ScriptEditor {
                 elem.style.display = "block";
             }
 
+            // Make sure the Vim command display from CodeMirror is invisible
+            if (this.vimCommandDisplayWrapper instanceof HTMLElement) {
+                this.vimCommandDisplayWrapper.style.display = "none";
+            }
+
             // Theme
             const themeDropdown = safeClearEventListeners("script-editor-option-theme", "Theme Selector");
             removeChildrenFromElement(themeDropdown);
@@ -195,10 +209,14 @@ class AceEditorWrapper extends ScriptEditor {
             // Keybinding
             const keybindingDropdown = safeClearEventListeners("script-editor-option-keybinding", "Keybinding Selector");
             removeChildrenFromElement(keybindingDropdown);
-            keybindingDropdown.add(createOptionElement("Ace", "ace"));
-            keybindingDropdown.add(createOptionElement("Vim", "vim"));
-            keybindingDropdown.add(createOptionElement("Emacs", "emacs"));
+            keybindingDropdown.add(createOptionElement("Ace", AceKeybindingSetting.Ace));
+            keybindingDropdown.add(createOptionElement("Vim", AceKeybindingSetting.Vim));
+            keybindingDropdown.add(createOptionElement("Emacs", AceKeybindingSetting.Emacs));
             if (Settings.EditorKeybinding) {
+                // Sanitize the Keybinding setting
+                if (!(Object.values(AceKeybindingSetting).includes(Settings.EditorKeybinding))) {
+                    Settings.EditorKeybinding = AceKeybindingSetting.Ace;
+                }
                 var initialIndex = 0;
                 for (var i = 0; i < keybindingDropdown.options.length; ++i) {
                     if (keybindingDropdown.options[i].value === Settings.EditorKeybinding) {

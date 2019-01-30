@@ -481,7 +481,7 @@ function createFactionAugmentationDisplayElements(augmentationsList, augs, facti
             }
 
             var item = createElement("li");
-            var span = createElement("span", {display:"inline-block"});
+            var span = createElement("span", { display:"inline-block", margin: "4px", padding: "4px" });
             var aDiv = createElement("div", {tooltip:aug.info});
             var aElem = createElement("a", {
                 innerText:aug.name, display:"inline",

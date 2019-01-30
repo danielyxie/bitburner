@@ -10,8 +10,12 @@ import { IPlayer } from "../IPlayer";
 import { CONSTANTS } from "../../Constants";
 import { Locations } from "../../Locations";
 
+import { Faction } from "../../Faction/Faction";
+import { Factions } from "../../Faction/Factions";
 import { FactionWorkType } from "../../Faction/FactionWorkTypeEnum";
+
 import { Cities } from "../../Locations/Cities";
+import { Crime } from "../../Crime/Crime";
 import { Crimes } from "../../Crime/Crimes";
 
 import { numeralWrapper } from "../../ui/numeralFormat";
@@ -23,6 +27,7 @@ import { dialogBoxCreate } from "../../../utils/DialogBox";
 import { createProgressBarText } from "../../../utils/helpers/createProgressBarText";
 import { exceptionAlert } from "../../../utils/helpers/exceptionAlert";
 
+import { clearEventListeners } from "../../../utils/uiHelpers/clearEventListeners";
 import { createElement } from "../../../utils/uiHelpers/createElement";
 import { createOptionElement } from "../../../utils/uiHelpers/createOptionElement";
 import { createPopup } from "../../../utils/uiHelpers/createPopup";
@@ -229,7 +234,7 @@ function createSleeveUi(sleeve: Sleeve, allSleeves: Sleeve[]): ISleeveUIElems {
             popupArguments.push(createElement("p", {
                 innerText: "Have this sleeve travel to a different city. This affects " +
                            "the gyms and universities at which this sleeve can study. " +
-                           `Traveling to a different city costs ${numeralWrapper.formatMoney(CONSTANTS.TravelCost)}.` +
+                           `Traveling to a different city costs ${numeralWrapper.formatMoney(CONSTANTS.TravelCost)}. ` +
                            "It will also CANCEL the sleeve's current task (setting it to idle)",
             }));
             for (const label in Cities) {
@@ -250,6 +255,7 @@ function createSleeveUi(sleeve: Sleeve, allSleeves: Sleeve[]): ISleeveUIElems {
                             sleeve.resetTaskStatus();
                             removeElementById(popupId);
                             updateSleeveUi(sleeve, elems);
+                            updateSleeveTaskSelector(sleeve, elems, allSleeves);
                             return false;
                         }
                     }));
@@ -401,12 +407,6 @@ function updateSleeveUi(sleeve: Sleeve, elems: ISleeveUIElems) {
     }
 }
 
-const factionWorkTypeSelectorOptions: string[] = [
-    "Hacking Contracts",
-    "Security Work",
-    "Field Work"
-];
-
 const universitySelectorOptions: string[] = [
     "Study Computer Science",
     "Data Structures",
@@ -450,6 +450,7 @@ function updateSleeveTaskSelector(sleeve: Sleeve, elems: ISleeveUIElems, allSlee
     // Reset Selectors
     removeChildrenFromElement(elems.taskDetailsSelector);
     removeChildrenFromElement(elems.taskDetailsSelector2);
+    elems.taskDetailsSelector2 = clearEventListeners(elems.taskDetailsSelector2!) as HTMLSelectElement;
 
     const value: string = getSelectValue(elems.taskSelector);
     switch(value) {
@@ -486,29 +487,57 @@ function updateSleeveTaskSelector(sleeve: Sleeve, elems: ISleeveUIElems, allSlee
                     ++factionCount;
                 }
             }
-            for (let i = 0; i < factionWorkTypeSelectorOptions.length; ++i) {
-                elems.taskDetailsSelector2!.add(createOptionElement(factionWorkTypeSelectorOptions[i]));
-            }
 
-            // Set initial value for faction work type
-            switch (sleeve.factionWorkType) {
-                case FactionWorkType.Hacking:
-                    elems.taskDetailsSelector2!.selectedIndex = 0;
-                    break;
-                case FactionWorkType.Security:
-                    elems.taskDetailsSelector2!.selectedIndex = 0;
-                    break;
-                case FactionWorkType.Field:
-                    elems.taskDetailsSelector2!.selectedIndex = 0;
-                    break;
-                default:
-                    break;
-            }
+            // The available faction work types depends on the faction
+            elems.taskDetailsSelector!.addEventListener("change", () => {
+                const facName = getSelectValue(elems.taskDetailsSelector!);
+                const faction: Faction | null = Factions[facName];
+                if (faction == null) {
+                    console.warn(`Invalid faction name when trying to update Sleeve Task Selector: ${facName}`);
+                    return;
+                }
+                const facInfo = faction.getInfo();
+                removeChildrenFromElement(elems.taskDetailsSelector2!);
+                let numOptionsAdded = 0;
+                if (facInfo.offerHackingWork) {
+                    elems.taskDetailsSelector2!.add(createOptionElement("Hacking Contracts"));
+                    if (sleeve.factionWorkType === FactionWorkType.Hacking) {
+                        elems.taskDetailsSelector2!.selectedIndex = numOptionsAdded;
+                    }
+                    ++numOptionsAdded;
+                }
+                if (facInfo.offerFieldWork) {
+                    elems.taskDetailsSelector2!.add(createOptionElement("Field Work"));
+                    if (sleeve.factionWorkType === FactionWorkType.Field) {
+                        elems.taskDetailsSelector2!.selectedIndex = numOptionsAdded;
+                    }
+                    ++numOptionsAdded;
+                }
+                if (facInfo.offerSecurityWork) {
+                    elems.taskDetailsSelector2!.add(createOptionElement("Security Work"));
+                    if (sleeve.factionWorkType === FactionWorkType.Security) {
+                        elems.taskDetailsSelector2!.selectedIndex = numOptionsAdded;
+                    }
+                    ++numOptionsAdded;
+                }
+            });
+            elems.taskDetailsSelector!.dispatchEvent(new Event("change"));
             break;
         case "Commit Crime":
+            let i = 0;
             for (const crimeLabel in Crimes) {
                 const name: string = Crimes[crimeLabel].name;
                 elems.taskDetailsSelector!.add(createOptionElement(name, crimeLabel));
+
+                // Set initial value for crime type
+                if (sleeve.crimeType === "") { continue; }
+                const crime: Crime | null = Crimes[sleeve.crimeType];
+                if (crime == null) { continue; }
+                if (name === crime!.name) {
+                    elems.taskDetailsSelector!.selectedIndex = i;
+                }
+
+                ++i;
             }
 
             elems.taskDetailsSelector2!.add(createOptionElement("------"));
@@ -614,7 +643,7 @@ function setSleeveTask(sleeve: Sleeve, elems: ISleeveUIElems): boolean {
                 res = sleeve.workForFaction(playerRef!, detailValue, detailValue2);
                 break;
             case "Commit Crime":
-                res = sleeve.commitCrime(playerRef!, Crimes[detailValue]);
+                res = sleeve.commitCrime(playerRef!, detailValue);
                 break;
             case "Take University Course":
                 res = sleeve.takeUniversityCourse(playerRef!, detailValue2, detailValue);
@@ -637,7 +666,15 @@ function setSleeveTask(sleeve: Sleeve, elems: ISleeveUIElems): boolean {
         if (res) {
             updateSleeveTaskDescription(sleeve, elems);
         } else {
-            elems.taskDescription!.innerText = "Failed to assign sleeve to task. Invalid choice(s).";
+            switch (taskValue) {
+                case "Work for Faction":
+                    elems.taskDescription!.innerText = "Failed to assign sleeve to task. This is most likely because the selected faction does not offer the selected work type.";
+                    break;
+                default:
+                    elems.taskDescription!.innerText = "Failed to assign sleeve to task. Invalid choice(s).";
+                    break;
+            }
+
         }
 
         if (routing.isOn(Page.Sleeves)) {
@@ -672,16 +709,13 @@ function updateSleeveTaskDescription(sleeve: Sleeve, elems: ISleeveUIElems): voi
                 elems.taskDescription!.innerText = "This sleeve is currently idle";
                 break;
             case "Work for Company":
-                elems.taskDescription!.innerText = `This sleeve is currently working your ` +
-                                                   `job at ${sleeve.currentTaskLocation}.`;
+                elems.taskDescription!.innerText = `This sleeve is currently working your job at ${sleeve.currentTaskLocation}.`;
                 break;
             case "Work for Faction":
-                elems.taskDescription!.innerText = `This sleeve is currently doing ${detailValue2} for ` +
-                                                   `${sleeve.currentTaskLocation}.`;
+                elems.taskDescription!.innerText = `This sleeve is currently doing ${detailValue2} for ${sleeve.currentTaskLocation}.`;
                 break;
             case "Commit Crime":
-                elems.taskDescription!.innerText = `This sleeve is currently attempting to ` +
-                                                   `${Crimes[detailValue].type}.`;
+                elems.taskDescription!.innerText = `This sleeve is currently attempting to ${Crimes[detailValue].type} (Success Rate: ${numeralWrapper.formatPercentage(Crimes[detailValue].successRate(playerRef))}).`;
                 break;
             case "Take University Course":
                 elems.taskDescription!.innerText = `This sleeve is currently studying/taking a course at ${sleeve.currentTaskLocation}.`;

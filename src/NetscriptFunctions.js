@@ -40,6 +40,9 @@ import {Script, findRunningScript, RunningScript,
 import {Server, getServer, AddToAllServers,
         AllServers, processSingleServerGrowth,
         GetServerByHostname, numCycleForGrowth}     from "./Server";
+import { getPurchaseServerCost,
+         getPurchaseServerLimit,
+         getPurchaseServerMaxRam }                  from "./ServerPurchases";
 import {Settings}                                   from "./Settings/Settings";
 import {SpecialServerIps}                           from "./SpecialServerIps";
 import {Stock}                                      from "./StockMarket/Stock";
@@ -233,24 +236,6 @@ function NetscriptFunctions(workerScript) {
         var server = safeGetServer(ip, "getCodingContract");
         return server.getContract(fn);
     }
-
-    /**
-     * @param {number} ram The amount of server RAM to calculate cost of.
-     * @exception {Error} If the value passed in is not numeric, out of range, or too large of a value.
-     * @returns {number} The cost of
-     */
-    const getPurchaseServerRamCostGuard = (ram) => {
-        const guardedRam = Math.round(ram);
-        if (isNaN(guardedRam) || !isPowerOfTwo(guardedRam)) {
-            throw Error("failed due to invalid ram argument. Must be numeric and a power of 2");
-        }
-
-        if (guardedRam > CONSTANTS.PurchasedServerMaxRam) {
-            throw Error("failed because specified RAM was too high. Maximum RAM on a purchased server is " + CONSTANTS.PurchasedServerMaxRam + "GB");
-        }
-
-        return guardedRam * CONSTANTS.BaseCostFor1GBOfRamServer;
-    };
 
     return {
         hacknet : {
@@ -1911,7 +1896,7 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("getPurchasedServerLimit", CONSTANTS.ScriptGetPurchasedServerLimit);
 
-            return CONSTANTS.PurchasedServerLimit;
+            return getPurchaseServerLimit();
         },
         getPurchasedServerMaxRam: function() {
             if (workerScript.checkingRam) {
@@ -1919,7 +1904,7 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("getPurchasedServerMaxRam", CONSTANTS.ScriptGetPurchasedServerMaxRam);
 
-            return CONSTANTS.PurchasedServerMaxRam;
+            return getPurchaseServerMaxRam();
         },
         getPurchasedServerCost: function(ram) {
             if (workerScript.checkingRam) {
@@ -1927,11 +1912,9 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("getPurchasedServerCost", CONSTANTS.ScriptGetPurchaseServerRamCost);
 
-            let cost = 0;
-            try {
-                cost = getPurchaseServerRamCostGuard(ram);
-            } catch (e) {
-                workerScript.scriptRef.log("ERROR: 'getPurchasedServerCost()' " + e.message);
+            const cost = getPurchaseServerCost(ram);
+            if (cost === Infinity) {
+                workerScript.scriptRef.log("ERROR: 'getPurchasedServerCost()' failed due to an invalid 'ram' argument");
                 return Infinity;
             }
 
@@ -1945,26 +1928,23 @@ function NetscriptFunctions(workerScript) {
             var hostnameStr = String(hostname);
             hostnameStr = hostnameStr.replace(/\s+/g, '');
             if (hostnameStr == "") {
-                workerScript.scriptRef.log("ERROR: Passed empty string for hostname argument of purchaseServer()");
+                workerScript.log("ERROR: Passed empty string for hostname argument of purchaseServer()");
                 return "";
             }
 
-            if (Player.purchasedServers.length >= CONSTANTS.PurchasedServerLimit) {
-                workerScript.scriptRef.log("ERROR: You have reached the maximum limit of " + CONSTANTS.PurchasedServerLimit +
-                                           " servers. You cannot purchase any more.");
+            if (Player.purchasedServers.length >= getPurchaseServerLimit()) {
+                workerScript.log(`ERROR: You have reached the maximum limit of ${getPurchaseServerLimit()} servers. You cannot purchase any more.`);
                 return "";
             }
 
-            let cost = 0;
-            try {
-                cost = getPurchaseServerRamCostGuard(ram);
-            } catch (e) {
-                workerScript.scriptRef.log("ERROR: 'purchaseServer()' " + e.message);
-                return "";
+            const cost = getPurchaseServerCost(ram);
+            if (cost === Infinity) {
+                workerScript.log("ERROR: 'purchaseServer()' failed due to an invalid 'ram' argument");
+                return Infinity;
             }
 
             if (Player.money.lt(cost)) {
-                workerScript.scriptRef.log("ERROR: Not enough money to purchase server. Need $" + formatNumber(cost, 2));
+                workerScript.log("ERROR: Not enough money to purchase server. Need $" + formatNumber(cost, 2));
                 return "";
             }
             var newServ = new Server({

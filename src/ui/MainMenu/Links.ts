@@ -65,7 +65,7 @@ export function initializeMainMenuLinks(): boolean {
         MainMenuLinks.Factions = safeGetLink("factions-menu-link");
         MainMenuLinks.Augmentations = safeGetLink("augmentations-menu-link");
         MainMenuLinks.HacknetNodes = safeGetLink("hacknet-nodes-menu-link");
-        MainMenuLinks.Sleeves = safeGetLink("sleeves-menu-link");        
+        MainMenuLinks.Sleeves = safeGetLink("sleeves-menu-link");
         MainMenuLinks.City = safeGetLink("city-menu-link");
         MainMenuLinks.Travel = safeGetLink("travel-menu-link");
         MainMenuLinks.Job = safeGetLink("job-menu-link");

@@ -1,5 +1,7 @@
 import { ISelfInitializer, ISelfLoading } from "../types";
-import { CodeMirrorThemeSetting,
+import { AceKeybindingSetting,
+         CodeMirrorKeybindingSetting,
+         CodeMirrorThemeSetting,
          EditorSetting,
          OwnedAugmentationsOrderSetting,
          PurchaseAugmentationsOrderSetting } from "./SettingEnums";
@@ -77,7 +79,7 @@ interface ISettings extends IDefaultSettings {
      * The keybinding to use in the script editor.
      * TODO: This should really be an enum of allowed values.
      */
-    EditorKeybinding: string;
+    EditorKeybinding: AceKeybindingSetting | CodeMirrorKeybindingSetting;
 
     /**
      * The theme used in the script editor.
@@ -119,7 +121,7 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
     CodeInstructionRunTime:              25,
     DisableHotkeys:                      defaultSettings.DisableHotkeys,
     Editor:                              EditorSetting.Ace,
-    EditorKeybinding:                    "ace",
+    EditorKeybinding:                    AceKeybindingSetting.Ace,
     EditorTheme:                         "Monokai",
     Locale:                              "en",
     MaxLogCapacity:                      defaultSettings.MaxLogCapacity,

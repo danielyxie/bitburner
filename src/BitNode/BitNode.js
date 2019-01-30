@@ -168,6 +168,7 @@ function initBitNodes() {
                                             "In this BitNode:<br><br>" +
                                             "Your stats are significantly decreased.<br>" +
                                             "All methods of gaining money are half as profitable (except Stock Market)<br>" +
+                                            "Purchased servers are more expensive, have less max RAM, and a lower maximum limit<br>" + 
                                             "Augmentations are 5x as expensive and require twice as much reputation<br><br>" +
                                             "Destroying this BitNode will give you Source-File 10, or if you already have this Source-File it will " +
                                             "upgrade its level up to a maximum of 3. This Source-File unlocks Sleeve technology in other BitNodes. " +
@@ -337,6 +338,9 @@ function initBitNodeMultipliers() {
             BitNodeMultipliers.CorporationValuation = 0.5;
             BitNodeMultipliers.AugmentationMoneyCost = 5;
             BitNodeMultipliers.AugmentationRepCost = 2;
+            BitNodeMultipliers.PurchasedServerCost = 5;
+            BitNodeMultipliers.PurchasedServerLimit = 0.6;
+            BitNodeMultipliers.PurchasedServerMaxRam = 0.5;
         case 11: //The Big Crash
             BitNodeMultipliers.ServerMaxMoney           = 0.1;
             BitNodeMultipliers.ServerStartingMoney      = 0.1;

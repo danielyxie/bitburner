@@ -564,6 +564,7 @@ const Engine = {
         MainMenuLinks.Factions.classList.remove("active");
         MainMenuLinks.Augmentations.classList.remove("active");
         MainMenuLinks.HacknetNodes.classList.remove("active");
+        MainMenuLinks.Sleeves.classList.remove("active");
         MainMenuLinks.City.classList.remove("active");
         MainMenuLinks.Travel.classList.remove("active");
         MainMenuLinks.Job.classList.remove("active");
@@ -1580,6 +1581,7 @@ const Engine = {
             const errorMsg = "Failed to initialize Main Menu Links. Please try refreshing the page. " +
                              "If that doesn't work, report the issue to the developer";
             exceptionAlert(new Error(errorMsg));
+            console.error(errorMsg);
             return;
         }
     },
@@ -1596,6 +1598,7 @@ const Engine = {
             const errorMsg = "Failed to initialize Main Menu Headers. Please try refreshing the page. " +
                              "If that doesn't work, report the issue to the developer";
             exceptionAlert(new Error(errorMsg));
+            console.error(errorMsg);
             return;
         }
 
@@ -1641,6 +1644,7 @@ const Engine = {
 
         MainMenuLinks.Sleeves.addEventListener("click", function() {
             Engine.loadSleevesContent();
+            MainMenuLinks.Sleeves.classList.add("active");
             return false;
         });
 

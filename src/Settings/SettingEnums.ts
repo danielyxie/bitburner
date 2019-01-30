@@ -1,5 +1,27 @@
 // Enums that defined allowed values for setting configuration
 
+/**
+ * Allowed values for 'Keybinding/Keymap' setting in Ace editor
+ */
+export enum AceKeybindingSetting {
+    Ace = "ace",
+    Emacs = "emacs",
+    Vim = "vim",
+}
+
+/**
+ * Allowed values for 'Keybinding/Keymap' setting in Code Mirror editor
+ */
+export enum CodeMirrorKeybindingSetting {
+    Default = "default",
+    Emacs = "emacs",
+    Sublime = "sublime",
+    Vim = "vim",
+}
+
+/**
+ * Allowed values for 'Theme' setting in Code Mirror editor
+ */
 export enum CodeMirrorThemeSetting {
     Monokai = "monokai",
     Day_3024 = "3024-day",
@@ -57,6 +79,7 @@ export enum CodeMirrorThemeSetting {
     Yeti = "yeti",
     Zenburn = "zenburn",
 }
+
 /**
  * Allowed values for the "Editor" setting
  */

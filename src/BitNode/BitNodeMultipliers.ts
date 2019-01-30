@@ -126,6 +126,20 @@ interface IBitNodeMultipliers {
     ManualHackMoney: number;
 
     /**
+     * Influence how much it costs to purchase a server
+     */
+    PurchasedServerCost: number;
+
+    /**
+     * Influences the maximum number of purchased servers you can have
+     */
+    PurchasedServerLimit: number;
+
+    /**
+     * Influences the maximum allowed RAM for a purchased server
+     */
+    PurchasedServerMaxRam: number;
+    /**
      * Influences the minimum favor the player must have with a faction before they can donate to gain rep.
      */
     RepToDonateToFaction: number;
@@ -183,6 +197,10 @@ export const BitNodeMultipliers: IBitNodeMultipliers = {
     ServerStartingMoney:    1,
     ServerStartingSecurity: 1,
     ServerWeakenRate:       1,
+
+    PurchasedServerCost:    1,
+    PurchasedServerLimit:   1,
+    PurchasedServerMaxRam:  1,
 
     CompanyWorkMoney:       1,
     CrimeMoney:             1,

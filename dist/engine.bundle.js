@@ -166,23 +166,23 @@
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return loadPlayer; });
 /* harmony import */ var _Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentation/Augmentations */ 14);
 /* harmony import */ var _Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Augmentation_AugmentationHelpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Augmentation/AugmentationHelpers */ 64);
-/* harmony import */ var _Augmentation_PlayerOwnedAugmentation__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Augmentation/PlayerOwnedAugmentation */ 88);
+/* harmony import */ var _Augmentation_AugmentationHelpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Augmentation/AugmentationHelpers */ 65);
+/* harmony import */ var _Augmentation_PlayerOwnedAugmentation__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Augmentation/PlayerOwnedAugmentation */ 89);
 /* harmony import */ var _Augmentation_PlayerOwnedAugmentation__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Augmentation_PlayerOwnedAugmentation__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Augmentation/data/AugmentationNames */ 6);
 /* harmony import */ var _Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _BitNode_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./BitNode/BitNodeMultipliers */ 10);
 /* harmony import */ var _BitNode_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_BitNode_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Bladeburner */ 35);
-/* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./CodingContracts */ 47);
+/* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./CodingContracts */ 48);
 /* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_CodingContracts__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Company/Company */ 75);
+/* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Company/Company */ 76);
 /* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_Company_Company__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Company/Companies */ 20);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _Company_GetNextCompanyPosition__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Company/GetNextCompanyPosition */ 118);
+/* harmony import */ var _Company_GetNextCompanyPosition__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Company/GetNextCompanyPosition */ 119);
 /* harmony import */ var _Company_GetNextCompanyPosition__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_Company_GetNextCompanyPosition__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Company/GetJobRequirementText */ 107);
+/* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Company/GetJobRequirementText */ 108);
 /* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Company/CompanyPositions */ 34);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_11__);
@@ -190,30 +190,30 @@
 /* harmony import */ var _Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Corporation/Corporation */ 67);
-/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Programs/Programs */ 27);
+/* harmony import */ var _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Corporation/Corporation */ 68);
+/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Programs/Programs */ 28);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _Crime_CrimeHelpers__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Crime/CrimeHelpers */ 108);
+/* harmony import */ var _Crime_CrimeHelpers__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Crime/CrimeHelpers */ 109);
 /* harmony import */ var _Crime_Crimes__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Crime/Crimes */ 36);
 /* harmony import */ var _Crime_Crimes__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_Crime_Crimes__WEBPACK_IMPORTED_MODULE_17__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./engine */ 11);
-/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Faction/Faction */ 61);
+/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Faction/Faction */ 62);
 /* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_Faction_Faction__WEBPACK_IMPORTED_MODULE_19__);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Faction/Factions */ 16);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_20__);
-/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 49);
-/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./Gang */ 55);
+/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 51);
+/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./Gang */ 57);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./Locations */ 5);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_23__);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./NetscriptFunctions */ 46);
-/* harmony import */ var _PersonObjects_Sleeve_Sleeve__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./PersonObjects/Sleeve/Sleeve */ 102);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./NetscriptFunctions */ 47);
+/* harmony import */ var _PersonObjects_Sleeve_Sleeve__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./PersonObjects/Sleeve/Sleeve */ 103);
 /* harmony import */ var _PersonObjects_Sleeve_Sleeve__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_PersonObjects_Sleeve_Sleeve__WEBPACK_IMPORTED_MODULE_25__);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./Server */ 12);
 /* harmony import */ var _Settings_Settings__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./Settings/Settings */ 19);
 /* harmony import */ var _Settings_Settings__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_Settings_Settings__WEBPACK_IMPORTED_MODULE_27__);
 /* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./SpecialServerIps */ 37);
-/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./SourceFile */ 82);
-/* harmony import */ var _SourceFile_SourceFileFlags__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./SourceFile/SourceFileFlags */ 85);
+/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./SourceFile */ 83);
+/* harmony import */ var _SourceFile_SourceFileFlags__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./SourceFile/SourceFileFlags */ 88);
 /* harmony import */ var _SourceFile_SourceFileFlags__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(_SourceFile_SourceFileFlags__WEBPACK_IMPORTED_MODULE_30__);
 /* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! decimal.js */ 39);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
@@ -221,7 +221,7 @@
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 21);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_34___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_34__);
-/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ../utils/IPAddress */ 69);
+/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ../utils/IPAddress */ 70);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ../utils/JSONReviver */ 15);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_37___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_37__);
@@ -427,6 +427,7 @@ function PlayerObject() {
     // Sleeves & Re-sleeving
     this.sleeves = [];
     this.resleeves = [];
+    this.sleevesFromCovenant = 0; // # of Duplicate sleeves purchased from the covenant
 
     //bitnode
     this.bitNodeN = 1;
@@ -595,9 +596,7 @@ PlayerObject.prototype.prestigeSourceFile = function() {
     this.resleeves = [];
 
     // Duplicate sleeves are reset to level 1 every Bit Node (but the number of sleeves you have persists)
-    if (this.sleeves.length < _SourceFile_SourceFileFlags__WEBPACK_IMPORTED_MODULE_30__["SourceFileFlags"][10]) {
-        this.sleeves.length = _SourceFile_SourceFileFlags__WEBPACK_IMPORTED_MODULE_30__["SourceFileFlags"][10];
-    }
+    this.sleeves.length = _SourceFile_SourceFileFlags__WEBPACK_IMPORTED_MODULE_30__["SourceFileFlags"][10] + this.sleevesFromCovenant;
     for (let i = 0; i < this.sleeves.length; ++i) {
         this.sleeves[i] = new _PersonObjects_Sleeve_Sleeve__WEBPACK_IMPORTED_MODULE_25__["Sleeve"]();
     }
@@ -3176,10 +3175,11 @@ exports.CONSTANTS = {
 
     * Script Editor Changes:
     ** Added new script editor: CodeMirror. You can choose between the old editor (Ace) or CodeMirror
-    ** Navigation keyboard shortcuts no longer work on the script editor page
+    ** Navigation keyboard shortcuts no longer work if the script editor is focused
 
     * Trying to programmatically run a script (run(), exec()) with a 'threads' argument of 0 will now cause the function to return false without running the script
     * Home Computer RAM is now capped at 2 ^ 30 GB (1073741824 GB)
+    * The maximum amount, maximum RAM, and cost of purchasing servers can now vary between different BitNodes (new BitNode multipliers)
     * Pop-up dialog boxes are a little bit bigger
     * Bug Fix: When importing scripts, "./" will now be properly ignored (e.g. import { foo } from "./lib.script" )
     `
@@ -3503,21 +3503,21 @@ exports.generateRandomString = generateRandomString;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const numeral = __webpack_require__(/*! numeral */ 93);
-__webpack_require__(/*! numeral/locales/bg */ 406);
-__webpack_require__(/*! numeral/locales/cs */ 405);
-__webpack_require__(/*! numeral/locales/da-dk */ 404);
-__webpack_require__(/*! numeral/locales/de */ 403);
-__webpack_require__(/*! numeral/locales/en-au */ 402);
-__webpack_require__(/*! numeral/locales/en-gb */ 401);
-__webpack_require__(/*! numeral/locales/es */ 400);
-__webpack_require__(/*! numeral/locales/fr */ 399);
-__webpack_require__(/*! numeral/locales/hu */ 398);
-__webpack_require__(/*! numeral/locales/it */ 397);
-__webpack_require__(/*! numeral/locales/lv */ 396);
-__webpack_require__(/*! numeral/locales/no */ 395);
-__webpack_require__(/*! numeral/locales/pl */ 394);
-__webpack_require__(/*! numeral/locales/ru */ 393);
+const numeral = __webpack_require__(/*! numeral */ 94);
+__webpack_require__(/*! numeral/locales/bg */ 409);
+__webpack_require__(/*! numeral/locales/cs */ 408);
+__webpack_require__(/*! numeral/locales/da-dk */ 407);
+__webpack_require__(/*! numeral/locales/de */ 406);
+__webpack_require__(/*! numeral/locales/en-au */ 405);
+__webpack_require__(/*! numeral/locales/en-gb */ 404);
+__webpack_require__(/*! numeral/locales/es */ 403);
+__webpack_require__(/*! numeral/locales/fr */ 402);
+__webpack_require__(/*! numeral/locales/hu */ 401);
+__webpack_require__(/*! numeral/locales/it */ 400);
+__webpack_require__(/*! numeral/locales/lv */ 399);
+__webpack_require__(/*! numeral/locales/no */ 398);
+__webpack_require__(/*! numeral/locales/pl */ 397);
+__webpack_require__(/*! numeral/locales/ru */ 396);
 /* eslint-disable class-methods-use-this */
 class NumeralFormatter {
     constructor() {
@@ -3791,17 +3791,17 @@ exports.AugmentationNames = {
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _NetscriptEnvironment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./NetscriptEnvironment */ 133);
+/* harmony import */ var _NetscriptEnvironment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./NetscriptEnvironment */ 135);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptWorker */ 30);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Server */ 12);
 /* harmony import */ var _Settings_Settings__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Settings/Settings */ 19);
 /* harmony import */ var _Settings_Settings__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Settings_Settings__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Script */ 33);
-/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/acorn */ 52);
+/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/acorn */ 54);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 62);
+/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 63);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/helpers/isValidIPAddress */ 101);
+/* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/helpers/isValidIPAddress */ 102);
 /* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/helpers/isString */ 44);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_11__);
@@ -3819,7 +3819,7 @@ exports.AugmentationNames = {
 
 
 
-var Promise = __webpack_require__(/*! bluebird */ 392);
+var Promise = __webpack_require__(/*! bluebird */ 395);
 
 Promise.config({
     warnings: false,
@@ -4733,7 +4733,7 @@ function isScriptErrorMessage(msg) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const getElementById_1 = __webpack_require__(/*! ../../utils/uiHelpers/getElementById */ 60);
+const getElementById_1 = __webpack_require__(/*! ../../utils/uiHelpers/getElementById */ 61);
 /**
  * Adds some output to the terminal.
  * @param input Text or HTML to output to the terminal
@@ -4859,7 +4859,7 @@ function dialogBoxCreate(txt, preformatted=false) {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 71)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 72)))
 
 /***/ }),
 /* 10 */
@@ -4889,6 +4889,9 @@ exports.BitNodeMultipliers = {
     ServerStartingMoney: 1,
     ServerStartingSecurity: 1,
     ServerWeakenRate: 1,
+    PurchasedServerCost: 1,
+    PurchasedServerLimit: 1,
+    PurchasedServerMaxRam: 1,
     CompanyWorkMoney: 1,
     CrimeMoney: 1,
     HacknetNodeMoney: 1,
@@ -4927,79 +4930,79 @@ __webpack_require__.r(__webpack_exports__);
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Engine", function() { return Engine; });
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/LogBox */ 90);
-/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ActiveScriptsUI */ 76);
+/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/LogBox */ 91);
+/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ActiveScriptsUI */ 77);
 /* harmony import */ var _Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Augmentation/Augmentations */ 14);
 /* harmony import */ var _Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _Augmentation_AugmentationHelpers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Augmentation/AugmentationHelpers */ 64);
+/* harmony import */ var _Augmentation_AugmentationHelpers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Augmentation/AugmentationHelpers */ 65);
 /* harmony import */ var _Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Augmentation/data/AugmentationNames */ 6);
 /* harmony import */ var _Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _BitNode_BitNode__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./BitNode/BitNode */ 68);
+/* harmony import */ var _BitNode_BitNode__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./BitNode/BitNode */ 69);
 /* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Bladeburner */ 35);
-/* harmony import */ var _CharacterOverview__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./CharacterOverview */ 154);
-/* harmony import */ var _CinematicText__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./CinematicText */ 115);
-/* harmony import */ var _CodingContractGenerator__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./CodingContractGenerator */ 114);
+/* harmony import */ var _CharacterOverview__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./CharacterOverview */ 155);
+/* harmony import */ var _CinematicText__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./CinematicText */ 116);
+/* harmony import */ var _CodingContractGenerator__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./CodingContractGenerator */ 115);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Company/CompanyPositions */ 34);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Company/Companies */ 20);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Corporation/Corporation */ 67);
+/* harmony import */ var _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Corporation/Corporation */ 68);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _DevMenu__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./DevMenu */ 137);
+/* harmony import */ var _DevMenu__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./DevMenu */ 139);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Faction/Factions */ 16);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 49);
-/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Fconf */ 50);
-/* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Location */ 105);
+/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 51);
+/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Fconf */ 52);
+/* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Location */ 106);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Locations */ 5);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_20__);
-/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./HacknetNode */ 74);
+/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./HacknetNode */ 75);
 /* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./InteractiveTutorial */ 38);
-/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./Literature */ 95);
-/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./Message */ 45);
-/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./Missions */ 63);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./NetscriptFunctions */ 46);
+/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./Literature */ 96);
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./Message */ 46);
+/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./Missions */ 64);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./NetscriptFunctions */ 47);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./NetscriptWorker */ 30);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./Prestige */ 99);
-/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./Programs/Programs */ 27);
+/* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./Prestige */ 100);
+/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./Programs/Programs */ 28);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_30__);
-/* harmony import */ var _Programs_ProgramHelpers__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./Programs/ProgramHelpers */ 109);
-/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./RedPill */ 66);
-/* harmony import */ var _SaveObject__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./SaveObject */ 81);
+/* harmony import */ var _Programs_ProgramHelpers__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./Programs/ProgramHelpers */ 110);
+/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./RedPill */ 67);
+/* harmony import */ var _SaveObject__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./SaveObject */ 82);
 /* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./Script */ 33);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./Server */ 12);
 /* harmony import */ var _Settings_Settings__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./Settings/Settings */ 19);
 /* harmony import */ var _Settings_Settings__WEBPACK_IMPORTED_MODULE_36___default = /*#__PURE__*/__webpack_require__.n(_Settings_Settings__WEBPACK_IMPORTED_MODULE_36__);
-/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./SourceFile */ 82);
-/* harmony import */ var _SourceFile_SourceFileFlags__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./SourceFile/SourceFileFlags */ 85);
+/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./SourceFile */ 83);
+/* harmony import */ var _SourceFile_SourceFileFlags__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./SourceFile/SourceFileFlags */ 88);
 /* harmony import */ var _SourceFile_SourceFileFlags__WEBPACK_IMPORTED_MODULE_38___default = /*#__PURE__*/__webpack_require__.n(_SourceFile_SourceFileFlags__WEBPACK_IMPORTED_MODULE_38__);
 /* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./SpecialServerIps */ 37);
 /* harmony import */ var _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ./StockMarket/StockMarket */ 24);
-/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ./Terminal */ 57);
-/* harmony import */ var _PersonObjects_Sleeve_Sleeve__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ./PersonObjects/Sleeve/Sleeve */ 102);
+/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ./Terminal */ 58);
+/* harmony import */ var _PersonObjects_Sleeve_Sleeve__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ./PersonObjects/Sleeve/Sleeve */ 103);
 /* harmony import */ var _PersonObjects_Sleeve_Sleeve__WEBPACK_IMPORTED_MODULE_42___default = /*#__PURE__*/__webpack_require__.n(_PersonObjects_Sleeve_Sleeve__WEBPACK_IMPORTED_MODULE_42__);
-/* harmony import */ var _PersonObjects_Sleeve_SleeveUI__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ./PersonObjects/Sleeve/SleeveUI */ 117);
+/* harmony import */ var _PersonObjects_Sleeve_SleeveUI__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ./PersonObjects/Sleeve/SleeveUI */ 118);
 /* harmony import */ var _PersonObjects_Sleeve_SleeveUI__WEBPACK_IMPORTED_MODULE_43___default = /*#__PURE__*/__webpack_require__.n(_PersonObjects_Sleeve_SleeveUI__WEBPACK_IMPORTED_MODULE_43__);
-/* harmony import */ var _PersonObjects_Resleeving_ResleevingUI__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! ./PersonObjects/Resleeving/ResleevingUI */ 136);
+/* harmony import */ var _PersonObjects_Resleeving_ResleevingUI__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! ./PersonObjects/Resleeving/ResleevingUI */ 138);
 /* harmony import */ var _PersonObjects_Resleeving_ResleevingUI__WEBPACK_IMPORTED_MODULE_44___default = /*#__PURE__*/__webpack_require__.n(_PersonObjects_Resleeving_ResleevingUI__WEBPACK_IMPORTED_MODULE_44__);
-/* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(/*! ./ui/createStatusText */ 83);
+/* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(/*! ./ui/createStatusText */ 84);
 /* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_45___default = /*#__PURE__*/__webpack_require__.n(_ui_createStatusText__WEBPACK_IMPORTED_MODULE_45__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(/*! ./ui/navigationTracking */ 13);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_46__);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_47___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_47__);
-/* harmony import */ var _ui_setSettingsLabels__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(/*! ./ui/setSettingsLabels */ 153);
-/* harmony import */ var _ui_MainMenu_Headers__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(/*! ./ui/MainMenu/Headers */ 152);
+/* harmony import */ var _ui_setSettingsLabels__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(/*! ./ui/setSettingsLabels */ 154);
+/* harmony import */ var _ui_MainMenu_Headers__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(/*! ./ui/MainMenu/Headers */ 153);
 /* harmony import */ var _ui_MainMenu_Headers__WEBPACK_IMPORTED_MODULE_49___default = /*#__PURE__*/__webpack_require__.n(_ui_MainMenu_Headers__WEBPACK_IMPORTED_MODULE_49__);
-/* harmony import */ var _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(/*! ./ui/MainMenu/Links */ 29);
+/* harmony import */ var _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(/*! ./ui/MainMenu/Links */ 26);
 /* harmony import */ var _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50___default = /*#__PURE__*/__webpack_require__.n(_ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_GameOptions__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! ../utils/GameOptions */ 96);
+/* harmony import */ var _utils_GameOptions__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! ../utils/GameOptions */ 97);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 17);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_53___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_53__);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 26);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 27);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_54___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_54__);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 21);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_55___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_55__);
@@ -5007,11 +5010,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_56___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_56__);
 /* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 42);
 /* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_57___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_57__);
-/* harmony import */ var _utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(/*! ../utils/uiHelpers/removeLoadingScreen */ 135);
+/* harmony import */ var _utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(/*! ../utils/uiHelpers/removeLoadingScreen */ 137);
 /* harmony import */ var _utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_58___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeLoadingScreen__WEBPACK_IMPORTED_MODULE_58__);
-/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 28);
+/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 29);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_59___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_59__);
-/* harmony import */ var normalize_css__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(/*! normalize.css */ 264);
+/* harmony import */ var normalize_css__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(/*! normalize.css */ 265);
 /* harmony import */ var normalize_css__WEBPACK_IMPORTED_MODULE_60___default = /*#__PURE__*/__webpack_require__.n(normalize_css__WEBPACK_IMPORTED_MODULE_60__);
 /* harmony import */ var _css_styles_scss__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(/*! ../css/styles.scss */ 224);
 /* harmony import */ var _css_styles_scss__WEBPACK_IMPORTED_MODULE_61___default = /*#__PURE__*/__webpack_require__.n(_css_styles_scss__WEBPACK_IMPORTED_MODULE_61__);
@@ -5595,6 +5598,7 @@ const Engine = {
         _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].Factions.classList.remove("active");
         _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].Augmentations.classList.remove("active");
         _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].HacknetNodes.classList.remove("active");
+        _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].Sleeves.classList.remove("active");
         _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].City.classList.remove("active");
         _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].Travel.classList.remove("active");
         _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].Job.classList.remove("active");
@@ -6611,6 +6615,7 @@ const Engine = {
             const errorMsg = "Failed to initialize Main Menu Links. Please try refreshing the page. " +
                              "If that doesn't work, report the issue to the developer";
             Object(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_57__["exceptionAlert"])(new Error(errorMsg));
+            console.error(errorMsg);
             return;
         }
     },
@@ -6627,6 +6632,7 @@ const Engine = {
             const errorMsg = "Failed to initialize Main Menu Headers. Please try refreshing the page. " +
                              "If that doesn't work, report the issue to the developer";
             Object(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_57__["exceptionAlert"])(new Error(errorMsg));
+            console.error(errorMsg);
             return;
         }
 
@@ -6672,6 +6678,7 @@ const Engine = {
 
         _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].Sleeves.addEventListener("click", function() {
             Engine.loadSleevesContent();
+            _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_50__["MainMenuLinks"].Sleeves.classList.add("active");
             return false;
         });
 
@@ -6903,7 +6910,7 @@ window.onload = function() {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 71)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 72)))
 
 /***/ }),
 /* 12 */
@@ -6928,24 +6935,24 @@ window.onload = function() {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return AllServers; });
 /* harmony import */ var _BitNode_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNode/BitNodeMultipliers */ 10);
 /* harmony import */ var _BitNode_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_BitNode_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CodingContracts */ 47);
+/* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CodingContracts */ 48);
 /* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_CodingContracts__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Script */ 33);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Programs/Programs */ 27);
+/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Programs/Programs */ 28);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./SpecialServerIps */ 37);
-/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./TextFile */ 72);
+/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./TextFile */ 73);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_TextFile__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 17);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/IPAddress */ 69);
+/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/IPAddress */ 70);
 /* harmony import */ var _data_servers__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./data/servers */ 161);
 /* harmony import */ var _data_servers__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_data_servers__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/JSONReviver */ 15);
-/* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/isValidIPAddress */ 101);
+/* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/isValidIPAddress */ 102);
 /* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_12__);
 
 
@@ -7677,8 +7684,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * Initialization and manipulation of the Factions object, which stores data
  * about all Factions in the game
  */
-const Faction_1 = __webpack_require__(/*! ./Faction */ 61);
-const FactionInfo_1 = __webpack_require__(/*! ./FactionInfo */ 132);
+const Faction_1 = __webpack_require__(/*! ./Faction */ 62);
+const FactionInfo_1 = __webpack_require__(/*! ./FactionInfo */ 133);
 const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 15);
 exports.Factions = {};
 function loadFactions(saveString) {
@@ -7925,7 +7932,7 @@ JSONReviver_1.Reviver.constructors.Augmentation = Augmentation;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const SettingEnums_1 = __webpack_require__(/*! ./SettingEnums */ 56);
+const SettingEnums_1 = __webpack_require__(/*! ./SettingEnums */ 45);
 const defaultSettings = {
     AutosaveInterval: 60,
     CodeInstructionRunTime: 50,
@@ -7948,7 +7955,7 @@ exports.Settings = {
     CodeInstructionRunTime: 25,
     DisableHotkeys: defaultSettings.DisableHotkeys,
     Editor: SettingEnums_1.EditorSetting.Ace,
-    EditorKeybinding: "ace",
+    EditorKeybinding: SettingEnums_1.AceKeybindingSetting.Ace,
     EditorTheme: "Monokai",
     Locale: "en",
     MaxLogCapacity: defaultSettings.MaxLogCapacity,
@@ -7982,8 +7989,8 @@ exports.Settings = {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 // Constructs all CompanyPosition objects using the metadata in data/companypositions.ts
-const CompaniesMetadata_1 = __webpack_require__(/*! ./data/CompaniesMetadata */ 255);
-const Company_1 = __webpack_require__(/*! ./Company */ 75);
+const CompaniesMetadata_1 = __webpack_require__(/*! ./data/CompaniesMetadata */ 256);
+const Company_1 = __webpack_require__(/*! ./Company */ 76);
 const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 15);
 exports.Companies = {};
 function addCompany(params) {
@@ -8043,7 +8050,7 @@ exports.companyExists = companyExists;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const getElementById_1 = __webpack_require__(/*! ./getElementById */ 60);
+const getElementById_1 = __webpack_require__(/*! ./getElementById */ 61);
 /**
  * Given an element by its ID, removes all event listeners from that element by cloning and
  * replacing. Then returns the new cloned element.
@@ -8051,7 +8058,13 @@ const getElementById_1 = __webpack_require__(/*! ./getElementById */ 60);
  */
 function clearEventListeners(elemId) {
     try {
-        const elem = getElementById_1.getElementById(elemId);
+        let elem;
+        if (typeof elemId === "string") {
+            elem = getElementById_1.getElementById(elemId);
+        }
+        else {
+            elem = elemId;
+        }
         const newElem = elem.cloneNode(true);
         if (elem.parentNode !== null) {
             elem.parentNode.replaceChild(newElem, elem);
@@ -8233,8 +8246,8 @@ exports.yesNoTxtInpBoxCreate = yesNoTxtInpBoxCreate;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const getElementById_1 = __webpack_require__(/*! ./getElementById */ 60);
-const removeElement_1 = __webpack_require__(/*! ./removeElement */ 65);
+const getElementById_1 = __webpack_require__(/*! ./getElementById */ 61);
+const removeElement_1 = __webpack_require__(/*! ./removeElement */ 66);
 /**
  * Given its id, this function removes an element AND its children
  * @param id The HTML identifier to search for and remove.
@@ -8289,7 +8302,7 @@ exports.removeElementById = removeElementById;
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Locations */ 5);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../NetscriptFunctions */ 46);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../NetscriptFunctions */ 47);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../NetscriptWorker */ 30);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Player */ 0);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! .././ui/navigationTracking */ 13);
@@ -8304,11 +8317,11 @@ exports.removeElementById = removeElementById;
 /* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../utils/helpers/getRandomInt */ 17);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../utils/helpers/keyCodes */ 28);
+/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../utils/helpers/keyCodes */ 29);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_13__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 26);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 27);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../utils/uiHelpers/removeElementById */ 23);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_16__);
@@ -9834,7 +9847,7 @@ function updateStockOrderList(stock) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const BaseResearchTree_1 = __webpack_require__(/*! ./data/BaseResearchTree */ 254);
+const BaseResearchTree_1 = __webpack_require__(/*! ./data/BaseResearchTree */ 255);
 const numeralFormat_1 = __webpack_require__(/*! ../ui/numeralFormat */ 4);
 // Map of official names for each Industry
 exports.Industries = {
@@ -9954,110 +9967,6 @@ exports.resetIndustryResearchTrees = resetIndustryResearchTrees;
 
 /***/ }),
 /* 26 */
-/*!******************************************************!*\
-  !*** ./utils/uiHelpers/removeChildrenFromElement.ts ***!
-  \******************************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const isString_1 = __webpack_require__(/*! ../helpers/isString */ 44);
-const getElementById_1 = __webpack_require__(/*! ./getElementById */ 60);
-/**
- * Clears out all children from the provided element.
- * If a string is passed in, it will treat it as an ID and search for the element to delete all children from.
- * @param el The element or ID of an element to remove all children from.
- */
-function removeChildrenFromElement(el) {
-    if (el === null) {
-        return;
-    }
-    try {
-        const elem = (isString_1.isString(el) ? getElementById_1.getElementById(el) : el);
-        if (elem instanceof Element) {
-            while (elem.firstChild !== null) {
-                elem.removeChild(elem.firstChild);
-            }
-        }
-    }
-    catch (e) {
-        // tslint:disable-next-line:no-console
-        console.debug(e);
-        return;
-    }
-}
-exports.removeChildrenFromElement = removeChildrenFromElement;
-
-
-/***/ }),
-/* 27 */
-/*!**********************************!*\
-  !*** ./src/Programs/Programs.ts ***!
-  \**********************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const Program_1 = __webpack_require__(/*! ./Program */ 237);
-const programsMetadata_1 = __webpack_require__(/*! ./data/programsMetadata */ 236);
-exports.Programs = {};
-for (const params of programsMetadata_1.programsMetadata) {
-    exports.Programs[params.key] = new Program_1.Program(params.name, params.create);
-}
-
-
-/***/ }),
-/* 28 */
-/*!***********************************!*\
-  !*** ./utils/helpers/keyCodes.ts ***!
-  \***********************************/
-/*! no static exports found */
-/*! exports used: KEY */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * Keyboard key codes
- */
-exports.KEY = {
-    A: 65,
-    B: 66,
-    C: 67,
-    CTRL: 17,
-    D: 68,
-    DOWNARROW: 40,
-    E: 69,
-    ENTER: 13,
-    F: 70,
-    H: 72,
-    J: 74,
-    K: 75,
-    L: 76,
-    M: 77,
-    N: 78,
-    O: 79,
-    P: 80,
-    R: 82,
-    S: 83,
-    TAB: 9,
-    U: 85,
-    UPARROW: 38,
-    W: 87,
-    "1": 49,
-    "2": 50,
-};
-
-
-/***/ }),
-/* 29 */
 /*!**********************************!*\
   !*** ./src/ui/MainMenu/Links.ts ***!
   \**********************************/
@@ -10131,6 +10040,110 @@ exports.initializeMainMenuLinks = initializeMainMenuLinks;
 
 
 /***/ }),
+/* 27 */
+/*!******************************************************!*\
+  !*** ./utils/uiHelpers/removeChildrenFromElement.ts ***!
+  \******************************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const isString_1 = __webpack_require__(/*! ../helpers/isString */ 44);
+const getElementById_1 = __webpack_require__(/*! ./getElementById */ 61);
+/**
+ * Clears out all children from the provided element.
+ * If a string is passed in, it will treat it as an ID and search for the element to delete all children from.
+ * @param el The element or ID of an element to remove all children from.
+ */
+function removeChildrenFromElement(el) {
+    if (el === null) {
+        return;
+    }
+    try {
+        const elem = (isString_1.isString(el) ? getElementById_1.getElementById(el) : el);
+        if (elem instanceof Element) {
+            while (elem.firstChild !== null) {
+                elem.removeChild(elem.firstChild);
+            }
+        }
+    }
+    catch (e) {
+        // tslint:disable-next-line:no-console
+        console.debug(e);
+        return;
+    }
+}
+exports.removeChildrenFromElement = removeChildrenFromElement;
+
+
+/***/ }),
+/* 28 */
+/*!**********************************!*\
+  !*** ./src/Programs/Programs.ts ***!
+  \**********************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const Program_1 = __webpack_require__(/*! ./Program */ 237);
+const programsMetadata_1 = __webpack_require__(/*! ./data/programsMetadata */ 236);
+exports.Programs = {};
+for (const params of programsMetadata_1.programsMetadata) {
+    exports.Programs[params.key] = new Program_1.Program(params.name, params.create);
+}
+
+
+/***/ }),
+/* 29 */
+/*!***********************************!*\
+  !*** ./utils/helpers/keyCodes.ts ***!
+  \***********************************/
+/*! no static exports found */
+/*! exports used: KEY */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Keyboard key codes
+ */
+exports.KEY = {
+    A: 65,
+    B: 66,
+    C: 67,
+    CTRL: 17,
+    D: 68,
+    DOWNARROW: 40,
+    E: 69,
+    ENTER: 13,
+    F: 70,
+    H: 72,
+    J: 74,
+    K: 75,
+    L: 76,
+    M: 77,
+    N: 78,
+    O: 79,
+    P: 80,
+    R: 82,
+    S: 83,
+    TAB: 9,
+    U: 85,
+    UPARROW: 38,
+    W: 87,
+    "1": 49,
+    "2": 50,
+};
+
+
+/***/ }),
 /* 30 */
 /*!********************************!*\
   !*** ./src/NetscriptWorker.js ***!
@@ -10148,29 +10161,29 @@ exports.initializeMainMenuLinks = initializeMainMenuLinks;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return addWorkerScript; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return updateOnlineScriptTimes; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return prestigeWorkerScripts; });
-/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActiveScriptsUI */ 76);
+/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActiveScriptsUI */ 77);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 11);
-/* harmony import */ var _JSInterpreter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./JSInterpreter */ 155);
-/* harmony import */ var _NetscriptEnvironment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptEnvironment */ 133);
+/* harmony import */ var _JSInterpreter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./JSInterpreter */ 156);
+/* harmony import */ var _NetscriptEnvironment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptEnvironment */ 135);
 /* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./NetscriptEvaluator */ 7);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./NetscriptFunctions */ 46);
-/* harmony import */ var _NetscriptJSEvaluator__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./NetscriptJSEvaluator */ 134);
-/* harmony import */ var _NetscriptPort__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./NetscriptPort */ 80);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./NetscriptFunctions */ 47);
+/* harmony import */ var _NetscriptJSEvaluator__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./NetscriptJSEvaluator */ 136);
+/* harmony import */ var _NetscriptPort__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./NetscriptPort */ 81);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Server */ 12);
 /* harmony import */ var _Settings_Settings__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Settings/Settings */ 19);
 /* harmony import */ var _Settings_Settings__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_Settings_Settings__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var escodegen__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! escodegen */ 126);
+/* harmony import */ var escodegen__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! escodegen */ 127);
 /* harmony import */ var escodegen__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(escodegen__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/acorn */ 52);
+/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/acorn */ 54);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/helpers/compareArrays */ 106);
+/* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/helpers/compareArrays */ 107);
 /* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 62);
+/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 63);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 94);
+/* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 95);
 /* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_16__);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_17__);
@@ -10908,24 +10921,24 @@ JSONReviver_1.Reviver.constructors.Stock = Stock;
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./engine */ 11);
-/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Fconf */ 50);
+/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Fconf */ 52);
 /* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./InteractiveTutorial */ 38);
 /* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptEvaluator */ 7);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./NetscriptFunctions */ 46);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./NetscriptFunctions */ 47);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./NetscriptWorker */ 30);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _ScriptEditor_Ace__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./ScriptEditor/Ace */ 92);
-/* harmony import */ var _ScriptEditor_CodeMirror__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./ScriptEditor/CodeMirror */ 91);
+/* harmony import */ var _ScriptEditor_Ace__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./ScriptEditor/Ace */ 93);
+/* harmony import */ var _ScriptEditor_CodeMirror__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./ScriptEditor/CodeMirror */ 92);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Server */ 12);
 /* harmony import */ var _Settings_Settings__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Settings/Settings */ 19);
 /* harmony import */ var _Settings_Settings__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_Settings_Settings__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _Settings_SettingEnums__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Settings/SettingEnums */ 56);
+/* harmony import */ var _Settings_SettingEnums__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Settings/SettingEnums */ 45);
 /* harmony import */ var _Settings_SettingEnums__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_Settings_SettingEnums__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./ui/postToTerminal */ 8);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./TextFile */ 72);
+/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./TextFile */ 73);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_TextFile__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/acorn */ 52);
+/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/acorn */ 54);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./ui/navigationTracking */ 13);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_16__);
@@ -10933,13 +10946,13 @@ JSONReviver_1.Reviver.constructors.Stock = Stock;
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_17__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/JSONReviver */ 15);
-/* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/helpers/compareArrays */ 106);
+/* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/helpers/compareArrays */ 107);
 /* harmony import */ var _utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_compareArrays__WEBPACK_IMPORTED_MODULE_20__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 100);
+/* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 101);
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_22__);
-/* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 94);
+/* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 95);
 /* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_23__);
 // Importing this doesn't work for some reason.
 const walk = __webpack_require__(/*! acorn/dist/walk */ 175);
@@ -10981,8 +10994,6 @@ function scriptEditorInit() {
         console.error("Could not find 'script-editor-buttons-wrapper'");
         return false;
     }
-
-
 
     // Beautify button
     const beautifyButton = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__["createElement"])("button", {
@@ -11151,8 +11162,9 @@ $(document).keydown(function(e) {
 function saveAndCloseScriptEditor() {
     var filename = document.getElementById("script-editor-filename").value;
 
+    let code;
     try {
-        let code = getCurrentEditor().getCode();
+        code = getCurrentEditor().getCode();
     } catch(e) {
         Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_18__["dialogBoxCreate"])("Something went wrong when trying to save (getCurrentEditor().getCode()). Please report to game developer with details");
         return;
@@ -11975,7 +11987,7 @@ _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_19__["Reviver"].constructors.AllServ
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 71)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 72)))
 
 /***/ }),
 /* 34 */
@@ -11990,8 +12002,8 @@ _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_19__["Reviver"].constructors.AllServ
 
 Object.defineProperty(exports, "__esModule", { value: true });
 // Constructs all CompanyPosition objects using the metadata in data/companypositions.ts
-const CompanyPositionsMetadata_1 = __webpack_require__(/*! ./data/CompanyPositionsMetadata */ 256);
-const CompanyPosition_1 = __webpack_require__(/*! ./CompanyPosition */ 104);
+const CompanyPositionsMetadata_1 = __webpack_require__(/*! ./data/CompanyPositionsMetadata */ 257);
+const CompanyPosition_1 = __webpack_require__(/*! ./CompanyPosition */ 105);
 exports.CompanyPositions = {};
 function addCompanyPosition(params) {
     if (exports.CompanyPositions[params.name] != null) {
@@ -12024,28 +12036,28 @@ CompanyPositionsMetadata_1.companyPositionMetadata.forEach((e) => {
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./engine */ 11);
-/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Faction/Faction */ 61);
+/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Faction/Faction */ 62);
 /* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Faction_Faction__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Faction/Factions */ 16);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 49);
+/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 51);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Locations */ 5);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./RedPill */ 66);
+/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./RedPill */ 67);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 28);
+/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 29);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/helpers/createProgressBarText */ 89);
+/* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/helpers/createProgressBarText */ 90);
 /* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_13__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 26);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 27);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/JSONReviver */ 15);
-/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 73);
+/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 74);
 /* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/uiHelpers/appendLineBreaks */ 58);
+/* harmony import */ var _utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/uiHelpers/appendLineBreaks */ 59);
 /* harmony import */ var _utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_18__);
 /* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/helpers/clearObject */ 87);
 /* harmony import */ var _utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_clearObject__WEBPACK_IMPORTED_MODULE_19__);
@@ -12061,9 +12073,9 @@ CompanyPositionsMetadata_1.companyPositionMetadata.forEach((e) => {
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_24__);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 17);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_25__);
-/* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 100);
+/* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 101);
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_26__);
-/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 65);
+/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 66);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_27__);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 23);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_28__);
@@ -16272,7 +16284,7 @@ function initBladeburner() {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 71)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 72)))
 
 /***/ }),
 /* 36 */
@@ -16286,7 +16298,7 @@ function initBladeburner() {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const Crime_1 = __webpack_require__(/*! ./Crime */ 151);
+const Crime_1 = __webpack_require__(/*! ./Crime */ 152);
 const Constants_1 = __webpack_require__(/*! ../Constants */ 1);
 exports.Crimes = {
     Shoplift: new Crime_1.Crime("Shoplift", Constants_1.CONSTANTS.CrimeShoplift, 2e3, 15e3, 1 / 20, 0.1, {
@@ -16502,14 +16514,20 @@ function initSpecialServerIps() {
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Settings_Settings__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Settings/Settings */ 19);
 /* harmony import */ var _Settings_Settings__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Settings_Settings__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 21);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 40);
-/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 23);
-/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ui/MainMenu/Links */ 26);
+/* harmony import */ var _ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 42);
+/* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 21);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 40);
+/* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 23);
+/* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_8__);
+
+
 
 
 
@@ -16583,21 +16601,21 @@ function iTutorialStart() {
     document.getElementById("interactive-tutorial-container").style.display = "block";
 
     //Exit tutorial button
-    var exitButton = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__["clearEventListeners"])("interactive-tutorial-exit");
+    var exitButton = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__["clearEventListeners"])("interactive-tutorial-exit");
     exitButton.addEventListener("click", function() {
         iTutorialEnd();
         return false;
     });
 
     //Back button
-    var backButton = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__["clearEventListeners"])("interactive-tutorial-back");
+    var backButton = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__["clearEventListeners"])("interactive-tutorial-back");
     backButton.addEventListener("click", function() {
         iTutorialPrevStep();
         return false;
     });
 
     //Next button
-    var nextButton = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__["clearEventListeners"])("interactive-tutorial-next");
+    var nextButton = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__["clearEventListeners"])("interactive-tutorial-next");
     nextButton.addEventListener("click", function() {
         iTutorialNextStep();
         return false;
@@ -16610,12 +16628,12 @@ function iTutorialEvaluateStep() {
     if (!ITutorial.isRunning) {console.log("Interactive Tutorial not running"); return;}
 
     //Disable and clear main menu
-    var terminalMainMenu        = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__["clearEventListeners"])("terminal-menu-link");
-    var statsMainMenu           = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__["clearEventListeners"])("stats-menu-link");
-    var activeScriptsMainMenu   = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__["clearEventListeners"])("active-scripts-menu-link");
-    var hacknetMainMenu         = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__["clearEventListeners"])("hacknet-nodes-menu-link");
-    var cityMainMenu            = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__["clearEventListeners"])("city-menu-link");
-    var tutorialMainMenu        = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__["clearEventListeners"])("tutorial-menu-link");
+    var terminalMainMenu        = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__["clearEventListeners"])("terminal-menu-link");
+    var statsMainMenu           = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__["clearEventListeners"])("stats-menu-link");
+    var activeScriptsMainMenu   = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__["clearEventListeners"])("active-scripts-menu-link");
+    var hacknetMainMenu         = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__["clearEventListeners"])("hacknet-nodes-menu-link");
+    var cityMainMenu            = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__["clearEventListeners"])("city-menu-link");
+    var tutorialMainMenu        = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__["clearEventListeners"])("tutorial-menu-link");
     terminalMainMenu.removeAttribute("class");
     statsMainMenu.removeAttribute("class");
     activeScriptsMainMenu.removeAttribute("class");
@@ -16984,14 +17002,26 @@ function iTutorialEnd() {
     }
 
     console.log("Ending interactive tutorial");
+
+    // Initialize references to main menu links
+    // We have to call initializeMainMenuLinks() again because the Interactive Tutorial
+    // re-creates Main menu links with clearEventListeners()
+    if (!Object(_ui_MainMenu_Links__WEBPACK_IMPORTED_MODULE_3__["initializeMainMenuLinks"])()) {
+        const errorMsg = "Failed to initialize Main Menu Links. Please try refreshing the page. " +
+                         "If that doesn't work, report the issue to the developer";
+        Object(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_4__["exceptionAlert"])(new Error(errorMsg));
+        console.error(errorMsg);
+        return;
+    }
     _engine__WEBPACK_IMPORTED_MODULE_0__["Engine"].init();
+
     ITutorial.currStep = iTutorialSteps.End;
     ITutorial.isRunning = false;
     document.getElementById("interactive-tutorial-container").style.display = "none";
 
     //Create a popup with final introductory stuff
     var popupId = "interactive-tutorial-ending-popup";
-    var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_4__["createElement"])("p", {
+    var txt = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_6__["createElement"])("p", {
         innerHTML:
         "If you are new to the game, the following links may be useful for you!<br><br>" +
         "<a class='a-link-button' href='http://bitburner.wikia.com/wiki/Chapt3rs_Guide_to_Getting_Started_with_Bitburner' target='_blank'>Getting Started Guide</a>" +
@@ -17000,13 +17030,13 @@ function iTutorialEnd() {
         "The Beginner's Guide to Hacking was added to your home computer! It contains some tips/pointers for starting out with the game. " +
         "To read it, go to Terminal and enter<br><br>cat hackers-starting-handbook.lit"
     });
-    var gotitBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_4__["createElement"])("a", {
+    var gotitBtn = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_6__["createElement"])("a", {
         class:"a-link-button", float:"right", padding:"6px", innerText:"Got it!",
         clickListener:()=>{
-            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_6__["removeElementById"])(popupId);
+            Object(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_8__["removeElementById"])(popupId);
         }
     });
-    Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_5__["createPopup"])(popupId, [txt, gotitBtn]);
+    Object(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_7__["createPopup"])(popupId, [txt, gotitBtn]);
 
     _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].getHomeComputer().messages.push("hackers-starting-handbook.lit");
 }
@@ -17035,7 +17065,7 @@ function iTutorialSetText(txt) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const createElement_1 = __webpack_require__(/*! ./createElement */ 2);
-const getElementById_1 = __webpack_require__(/*! ./getElementById */ 60);
+const getElementById_1 = __webpack_require__(/*! ./getElementById */ 61);
 /**
  * Creates the necessary DOM elements to present an in-game popup to the player.
  * @param id The (hopefully) unique identifier for the popup container.
@@ -17178,7 +17208,7 @@ exports.exceptionAlert = exceptionAlert;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return unknownGangApiExceptionMessage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return checkGangApiAccess; });
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Gang */ 55);
+/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Gang */ 57);
 /* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NetscriptEvaluator */ 7);
 
 
@@ -17221,6 +17251,126 @@ exports.isString = isString;
 
 /***/ }),
 /* 45 */
+/*!**************************************!*\
+  !*** ./src/Settings/SettingEnums.ts ***!
+  \**************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+// Enums that defined allowed values for setting configuration
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Allowed values for 'Keybinding/Keymap' setting in Ace editor
+ */
+var AceKeybindingSetting;
+(function (AceKeybindingSetting) {
+    AceKeybindingSetting["Ace"] = "ace";
+    AceKeybindingSetting["Emacs"] = "emacs";
+    AceKeybindingSetting["Vim"] = "vim";
+})(AceKeybindingSetting = exports.AceKeybindingSetting || (exports.AceKeybindingSetting = {}));
+/**
+ * Allowed values for 'Keybinding/Keymap' setting in Code Mirror editor
+ */
+var CodeMirrorKeybindingSetting;
+(function (CodeMirrorKeybindingSetting) {
+    CodeMirrorKeybindingSetting["Default"] = "default";
+    CodeMirrorKeybindingSetting["Emacs"] = "emacs";
+    CodeMirrorKeybindingSetting["Sublime"] = "sublime";
+    CodeMirrorKeybindingSetting["Vim"] = "vim";
+})(CodeMirrorKeybindingSetting = exports.CodeMirrorKeybindingSetting || (exports.CodeMirrorKeybindingSetting = {}));
+/**
+ * Allowed values for 'Theme' setting in Code Mirror editor
+ */
+var CodeMirrorThemeSetting;
+(function (CodeMirrorThemeSetting) {
+    CodeMirrorThemeSetting["Monokai"] = "monokai";
+    CodeMirrorThemeSetting["Day_3024"] = "3024-day";
+    CodeMirrorThemeSetting["Night_3024"] = "3024-night";
+    CodeMirrorThemeSetting["abcdef"] = "abcdef";
+    CodeMirrorThemeSetting["Ambiance_mobile"] = "ambiance-mobile";
+    CodeMirrorThemeSetting["Ambiance"] = "ambiance";
+    CodeMirrorThemeSetting["Base16_dark"] = "base16-dark";
+    CodeMirrorThemeSetting["Base16_light"] = "base16-light";
+    CodeMirrorThemeSetting["Bespin"] = "bespin";
+    CodeMirrorThemeSetting["Blackboard"] = "blackboard";
+    CodeMirrorThemeSetting["Cobalt"] = "cobalt";
+    CodeMirrorThemeSetting["Colorforth"] = "colorforth";
+    CodeMirrorThemeSetting["Darcula"] = "darcula";
+    CodeMirrorThemeSetting["Dracula"] = "dracula";
+    CodeMirrorThemeSetting["Duotone_dark"] = "duotone-dark";
+    CodeMirrorThemeSetting["Duotone_light"] = "duotone-light";
+    CodeMirrorThemeSetting["Eclipse"] = "eclipse";
+    CodeMirrorThemeSetting["Elegant"] = "elegant";
+    CodeMirrorThemeSetting["Erlang_dark"] = "erlang-dark";
+    CodeMirrorThemeSetting["Gruvbox_dark"] = "gruvbox-dark";
+    CodeMirrorThemeSetting["Hopscotch"] = "hopscotch";
+    CodeMirrorThemeSetting["Icecoder"] = "icecoder";
+    CodeMirrorThemeSetting["Idea"] = "idea";
+    CodeMirrorThemeSetting["Isotope"] = "isotope";
+    CodeMirrorThemeSetting["Lesser_dark"] = "lesser-dark";
+    CodeMirrorThemeSetting["Liquibyte"] = "liquibyte";
+    CodeMirrorThemeSetting["Lucario"] = "lucario";
+    CodeMirrorThemeSetting["Material"] = "material";
+    CodeMirrorThemeSetting["Mbo"] = "mbo";
+    CodeMirrorThemeSetting["Mdn_like"] = "mdn-like";
+    CodeMirrorThemeSetting["Midnight"] = "midnight";
+    CodeMirrorThemeSetting["Neat"] = "neat";
+    CodeMirrorThemeSetting["Neo"] = "neo";
+    CodeMirrorThemeSetting["Night"] = "night";
+    CodeMirrorThemeSetting["Oceanic_next"] = "oceanic-next";
+    CodeMirrorThemeSetting["Panda_syntax"] = "panda-syntax";
+    CodeMirrorThemeSetting["Paraiso_dark"] = "paraiso-dark";
+    CodeMirrorThemeSetting["Paraiso_light"] = "paraiso-light";
+    CodeMirrorThemeSetting["Pastel_on_dark"] = "pastel-on-dark";
+    CodeMirrorThemeSetting["Railscasts"] = "railscasts";
+    CodeMirrorThemeSetting["Rubyblue"] = "rubyblue";
+    CodeMirrorThemeSetting["Seti"] = "seti";
+    CodeMirrorThemeSetting["Shadowfox"] = "shadowfox";
+    CodeMirrorThemeSetting["Solarized"] = "solarized";
+    CodeMirrorThemeSetting["ssms"] = "ssms";
+    CodeMirrorThemeSetting["The_matrix"] = "the-matrix";
+    CodeMirrorThemeSetting["Tomorrow_night_bright"] = "tomorrow-night-bright";
+    CodeMirrorThemeSetting["Tomorrow_night_eighties"] = "tomorrow-night-eighties";
+    CodeMirrorThemeSetting["Ttcn"] = "ttcn";
+    CodeMirrorThemeSetting["Twilight"] = "twilight";
+    CodeMirrorThemeSetting["Vibrant_ink"] = "vibrant-ink";
+    CodeMirrorThemeSetting["xq_dark"] = "xq-dark";
+    CodeMirrorThemeSetting["xq_light"] = "xq-light";
+    CodeMirrorThemeSetting["Yeti"] = "yeti";
+    CodeMirrorThemeSetting["Zenburn"] = "zenburn";
+})(CodeMirrorThemeSetting = exports.CodeMirrorThemeSetting || (exports.CodeMirrorThemeSetting = {}));
+/**
+ * Allowed values for the "Editor" setting
+ */
+var EditorSetting;
+(function (EditorSetting) {
+    EditorSetting["Ace"] = "Ace";
+    EditorSetting["CodeMirror"] = "CodeMirror";
+})(EditorSetting = exports.EditorSetting || (exports.EditorSetting = {}));
+/**
+ * Allowed values for the 'OwnedAugmentationsOrder' setting
+ */
+var PurchaseAugmentationsOrderSetting;
+(function (PurchaseAugmentationsOrderSetting) {
+    PurchaseAugmentationsOrderSetting[PurchaseAugmentationsOrderSetting["Cost"] = 0] = "Cost";
+    PurchaseAugmentationsOrderSetting[PurchaseAugmentationsOrderSetting["Default"] = 1] = "Default";
+    PurchaseAugmentationsOrderSetting[PurchaseAugmentationsOrderSetting["Reputation"] = 2] = "Reputation";
+})(PurchaseAugmentationsOrderSetting = exports.PurchaseAugmentationsOrderSetting || (exports.PurchaseAugmentationsOrderSetting = {}));
+/**
+ * Allowed values for the 'OwnedAugmentationsOrder' setting
+ */
+var OwnedAugmentationsOrderSetting;
+(function (OwnedAugmentationsOrderSetting) {
+    OwnedAugmentationsOrderSetting[OwnedAugmentationsOrderSetting["Alphabetically"] = 0] = "Alphabetically";
+    OwnedAugmentationsOrderSetting[OwnedAugmentationsOrderSetting["AcquirementTime"] = 1] = "AcquirementTime";
+})(OwnedAugmentationsOrderSetting = exports.OwnedAugmentationsOrderSetting || (exports.OwnedAugmentationsOrderSetting = {}));
+
+
+/***/ }),
+/* 46 */
 /*!************************!*\
   !*** ./src/Message.js ***!
   \************************/
@@ -17242,11 +17392,11 @@ exports.isString = isString;
 /* harmony import */ var _Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Augmentation/data/AugmentationNames */ 6);
 /* harmony import */ var _Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Programs/Programs */ 27);
+/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Programs/Programs */ 28);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Missions */ 63);
+/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Missions */ 64);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./RedPill */ 66);
+/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./RedPill */ 67);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Server */ 12);
 /* harmony import */ var _Settings_Settings__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Settings/Settings */ 19);
 /* harmony import */ var _Settings_Settings__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_Settings_Settings__WEBPACK_IMPORTED_MODULE_8__);
@@ -17448,7 +17598,7 @@ function initMessages()  {
 
 
 /***/ }),
-/* 46 */
+/* 47 */
 /*!***********************************!*\
   !*** ./src/NetscriptFunctions.js ***!
   \***********************************/
@@ -17466,79 +17616,81 @@ function initMessages()  {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return hasCorporationSF; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return hasAISF; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return hasBladeburnerSF; });
-/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActiveScriptsUI */ 76);
+/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActiveScriptsUI */ 77);
 /* harmony import */ var _Augmentation_Augmentation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Augmentation/Augmentation */ 18);
 /* harmony import */ var _Augmentation_Augmentation__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Augmentation_Augmentation__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Augmentation/Augmentations */ 14);
 /* harmony import */ var _Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _Augmentation_AugmentationHelpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Augmentation/AugmentationHelpers */ 64);
+/* harmony import */ var _Augmentation_AugmentationHelpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Augmentation/AugmentationHelpers */ 65);
 /* harmony import */ var _Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Augmentation/data/AugmentationNames */ 6);
 /* harmony import */ var _Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _BitNode_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./BitNode/BitNodeMultipliers */ 10);
 /* harmony import */ var _BitNode_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_BitNode_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _Crime_CrimeHelpers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Crime/CrimeHelpers */ 108);
+/* harmony import */ var _Crime_CrimeHelpers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Crime/CrimeHelpers */ 109);
 /* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Bladeburner */ 35);
-/* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Company/Company */ 75);
+/* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Company/Company */ 76);
 /* harmony import */ var _Company_Company__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_Company_Company__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Company/Companies */ 20);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Company/CompanyPosition */ 104);
+/* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Company/CompanyPosition */ 105);
 /* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Company/CompanyPositions */ 34);
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _DarkWeb_DarkWebItems__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./DarkWeb/DarkWebItems */ 79);
+/* harmony import */ var _DarkWeb_DarkWebItems__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./DarkWeb/DarkWebItems */ 80);
 /* harmony import */ var _DarkWeb_DarkWebItems__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_DarkWeb_DarkWebItems__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _Hacking__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Hacking */ 51);
-/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Gang */ 55);
-/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Faction/Faction */ 61);
+/* harmony import */ var _Hacking__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Hacking */ 53);
+/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Gang */ 57);
+/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Faction/Faction */ 62);
 /* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_Faction_Faction__WEBPACK_IMPORTED_MODULE_16__);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Faction/Factions */ 16);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 49);
-/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./HacknetNode */ 74);
+/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 51);
+/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./HacknetNode */ 75);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Locations */ 5);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_20__);
-/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./Message */ 45);
-/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./Missions */ 63);
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./Message */ 46);
+/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./Missions */ 64);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./Programs/Programs */ 27);
+/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./Programs/Programs */ 28);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_24__);
 /* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./Script */ 33);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./Server */ 12);
-/* harmony import */ var _Settings_Settings__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./Settings/Settings */ 19);
-/* harmony import */ var _Settings_Settings__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_Settings_Settings__WEBPACK_IMPORTED_MODULE_27__);
-/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./SpecialServerIps */ 37);
-/* harmony import */ var _StockMarket_Stock__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./StockMarket/Stock */ 32);
-/* harmony import */ var _StockMarket_Stock__WEBPACK_IMPORTED_MODULE_29___default = /*#__PURE__*/__webpack_require__.n(_StockMarket_Stock__WEBPACK_IMPORTED_MODULE_29__);
-/* harmony import */ var _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./StockMarket/StockMarket */ 24);
-/* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./ui/postToTerminal */ 8);
-/* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31___default = /*#__PURE__*/__webpack_require__.n(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__);
-/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./TextFile */ 72);
-/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_32___default = /*#__PURE__*/__webpack_require__.n(_TextFile__WEBPACK_IMPORTED_MODULE_32__);
-/* harmony import */ var _NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./NetscriptBladeburner */ 59);
-/* harmony import */ var _NetscriptGang__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./NetscriptGang */ 43);
-/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./NetscriptWorker */ 30);
-/* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./NetscriptEvaluator */ 7);
-/* harmony import */ var _NetscriptPort__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./NetscriptPort */ 80);
-/* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! decimal.js */ 39);
-/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./ui/navigationTracking */ 13);
-/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_39___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_39__);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ../utils/helpers/isPowerOfTwo */ 156);
-/* harmony import */ var _utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_41___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_41__);
-/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 62);
-/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_42___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_42__);
-/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ../utils/IPAddress */ 69);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
-/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_44___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_44__);
-/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(/*! ../utils/helpers/isString */ 44);
-/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_45___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_45__);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(/*! ../utils/YesNoBox */ 22);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_46___default = /*#__PURE__*/__webpack_require__.n(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_46__);
+/* harmony import */ var _ServerPurchases__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./ServerPurchases */ 56);
+/* harmony import */ var _Settings_Settings__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./Settings/Settings */ 19);
+/* harmony import */ var _Settings_Settings__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(_Settings_Settings__WEBPACK_IMPORTED_MODULE_28__);
+/* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./SpecialServerIps */ 37);
+/* harmony import */ var _StockMarket_Stock__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./StockMarket/Stock */ 32);
+/* harmony import */ var _StockMarket_Stock__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(_StockMarket_Stock__WEBPACK_IMPORTED_MODULE_30__);
+/* harmony import */ var _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./StockMarket/StockMarket */ 24);
+/* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./ui/postToTerminal */ 8);
+/* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_32___default = /*#__PURE__*/__webpack_require__.n(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_32__);
+/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./TextFile */ 73);
+/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_33___default = /*#__PURE__*/__webpack_require__.n(_TextFile__WEBPACK_IMPORTED_MODULE_33__);
+/* harmony import */ var _NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./NetscriptBladeburner */ 60);
+/* harmony import */ var _NetscriptGang__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./NetscriptGang */ 43);
+/* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./NetscriptWorker */ 30);
+/* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./NetscriptEvaluator */ 7);
+/* harmony import */ var _NetscriptPort__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./NetscriptPort */ 81);
+/* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! decimal.js */ 39);
+/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ./ui/navigationTracking */ 13);
+/* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_40___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_40__);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
+/* harmony import */ var _utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ../utils/helpers/isPowerOfTwo */ 134);
+/* harmony import */ var _utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_42___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_42__);
+/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 63);
+/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_43___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_43__);
+/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! ../utils/IPAddress */ 70);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
+/* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_45___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_45__);
+/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(/*! ../utils/helpers/isString */ 44);
+/* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_46___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_46__);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(/*! ../utils/YesNoBox */ 22);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_47___default = /*#__PURE__*/__webpack_require__.n(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_47__);
 var sprintf = __webpack_require__(/*! sprintf-js */ 176).sprintf,
     vsprintf = __webpack_require__(/*! sprintf-js */ 176).vsprintf
+
 
 
 
@@ -17703,7 +17855,7 @@ function NetscriptFunctions(workerScript) {
 
         workerScript.dynamicRamUsage += (ramCost * threads);
         if (workerScript.dynamicRamUsage > 1.01 * workerScript.ramUsage) {
-            throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript,
+            throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript,
                                        "Dynamic RAM usage calculated to be greater than initial RAM usage on fn: " + fnName +
                                        ". This is probably because you somehow circumvented the static RAM "  +
                                        "calculation.<br><br>Please don't do that :(<br><br>" +
@@ -17730,7 +17882,7 @@ function NetscriptFunctions(workerScript) {
     var safeGetServer = function(ip, callingFnName="") {
         var server = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip);
         if (server == null) {
-            throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, `Invalid IP or hostname passed into ${callingFnName}() function`);
+            throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, `Invalid IP or hostname passed into ${callingFnName}() function`);
         }
         return server;
     }
@@ -17738,10 +17890,10 @@ function NetscriptFunctions(workerScript) {
     // Utility function to get Hacknet Node object
     var getHacknetNode = function(i) {
         if (isNaN(i)) {
-            throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid index specified for Hacknet Node: " + i);
+            throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid index specified for Hacknet Node: " + i);
         }
         if (i < 0 || i >= _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].hacknetNodes.length) {
-            throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Index specified for Hacknet Node is out-of-bounds: " + i);
+            throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Index specified for Hacknet Node is out-of-bounds: " + i);
         }
         return _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].hacknetNodes[i];
     };
@@ -17750,24 +17902,6 @@ function NetscriptFunctions(workerScript) {
         var server = safeGetServer(ip, "getCodingContract");
         return server.getContract(fn);
     }
-
-    /**
-     * @param {number} ram The amount of server RAM to calculate cost of.
-     * @exception {Error} If the value passed in is not numeric, out of range, or too large of a value.
-     * @returns {number} The cost of
-     */
-    const getPurchaseServerRamCostGuard = (ram) => {
-        const guardedRam = Math.round(ram);
-        if (isNaN(guardedRam) || !Object(_utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_41__["isPowerOfTwo"])(guardedRam)) {
-            throw Error("failed due to invalid ram argument. Must be numeric and a power of 2");
-        }
-
-        if (guardedRam > _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].PurchasedServerMaxRam) {
-            throw Error("failed because specified RAM was too high. Maximum RAM on a purchased server is " + _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].PurchasedServerMaxRam + "GB");
-        }
-
-        return guardedRam * _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].BaseCostFor1GBOfRamServer;
-    };
 
     return {
         hacknet : {
@@ -17826,7 +17960,7 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("scan", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptScanRamCost);
             var server = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip);
             if (server == null) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, 'Invalid IP or hostname passed into scan() command');
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, 'Invalid IP or hostname passed into scan() command');
             }
             var out = [];
             for (var i = 0; i < server.serversOnNetwork.length; i++) {
@@ -17852,14 +17986,14 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("hack", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptHackRamCost);
             if (ip === undefined) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Hack() call has incorrect number of arguments. Takes 1 argument");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Hack() call has incorrect number of arguments. Takes 1 argument");
             }
             var threads = workerScript.scriptRef.threads;
             if (isNaN(threads) || threads < 1) {threads = 1;}
             var server = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip);
             if (server == null) {
                 workerScript.scriptRef.log("hack() error. Invalid IP or hostname passed in: " + ip + ". Stopping...");
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "hack() error. Invalid IP or hostname passed in: " + ip + ". Stopping...");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "hack() error. Invalid IP or hostname passed in: " + ip + ". Stopping...");
             }
 
             //Calculate the hacking time
@@ -17868,18 +18002,18 @@ function NetscriptFunctions(workerScript) {
             //No root access or skill level too low
             if (server.hasAdminRights == false) {
                 workerScript.scriptRef.log("Cannot hack this server (" + server.hostname + ") because user does not have root access");
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot hack this server (" + server.hostname + ") because user does not have root access");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot hack this server (" + server.hostname + ") because user does not have root access");
             }
 
             if (server.requiredHackingSkill > _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].hacking_skill) {
                 workerScript.scriptRef.log("Cannot hack this server (" + server.hostname + ") because user's hacking skill is not high enough");
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot hack this server (" + server.hostname + ") because user's hacking skill is not high enough");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot hack this server (" + server.hostname + ") because user's hacking skill is not high enough");
             }
 
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.hack == null) {
                 workerScript.scriptRef.log("Attempting to hack " + ip + " in " + hackingTime.toFixed(3) + " seconds (t=" + threads + ")");
             }
-            return Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* netscriptDelay */ "e"])(hackingTime * 1000, workerScript).then(function() {
+            return Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* netscriptDelay */ "e"])(hackingTime * 1000, workerScript).then(function() {
                 if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
                 var hackChance = Object(_Hacking__WEBPACK_IMPORTED_MODULE_14__[/* calculateHackingChance */ "b"])(server);
                 var rand = Math.random();
@@ -17912,7 +18046,7 @@ function NetscriptFunctions(workerScript) {
                     _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].gainHackingExp(expGainedOnSuccess);
                     workerScript.scriptRef.onlineExpGained += expGainedOnSuccess;
                     if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.hack == null) {
-                        workerScript.scriptRef.log("Script SUCCESSFULLY hacked " + server.hostname + " for $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_44__["formatNumber"])(moneyGained, 2) + " and " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_44__["formatNumber"])(expGainedOnSuccess, 4) +  " exp (t=" + threads + ")");
+                        workerScript.scriptRef.log("Script SUCCESSFULLY hacked " + server.hostname + " for $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_45__["formatNumber"])(moneyGained, 2) + " and " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_45__["formatNumber"])(expGainedOnSuccess, 4) +  " exp (t=" + threads + ")");
                     }
                     server.fortify(_Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ServerFortifyAmount * Math.min(threads, maxThreadNeeded));
                     return Promise.resolve(moneyGained);
@@ -17921,7 +18055,7 @@ function NetscriptFunctions(workerScript) {
                     _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].gainHackingExp(expGainedOnFailure);
                     workerScript.scriptRef.onlineExpGained += expGainedOnFailure;
                     if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.hack == null) {
-                        workerScript.scriptRef.log("Script FAILED to hack " + server.hostname + ". Gained " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_44__["formatNumber"])(expGainedOnFailure, 4) + " exp (t=" + threads + ")");
+                        workerScript.scriptRef.log("Script FAILED to hack " + server.hostname + ". Gained " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_45__["formatNumber"])(expGainedOnFailure, 4) + " exp (t=" + threads + ")");
                     }
                     return Promise.resolve(0);
                 }
@@ -17936,7 +18070,7 @@ function NetscriptFunctions(workerScript) {
             // Check argument validity
             const server = safeGetServer(ip, 'hackAnalyzeThreads');
             if (isNaN(hackAmount)) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, `Invalid growth argument passed into hackAnalyzeThreads: ${hackAmount}. Must be numeric`);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, `Invalid growth argument passed into hackAnalyzeThreads: ${hackAmount}. Must be numeric`);
             }
 
             if (hackAmount < 0 || hackAmount > server.moneyAvailable) {
@@ -17970,12 +18104,12 @@ function NetscriptFunctions(workerScript) {
         sleep : function(time){
             if (workerScript.checkingRam) {return 0;}
             if (time === undefined) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "sleep() call has incorrect number of arguments. Takes 1 argument");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "sleep() call has incorrect number of arguments. Takes 1 argument");
             }
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.sleep == null) {
                 workerScript.scriptRef.log("Sleeping for " + time + " milliseconds");
             }
-            return Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* netscriptDelay */ "e"])(time, workerScript).then(function() {
+            return Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* netscriptDelay */ "e"])(time, workerScript).then(function() {
                 return Promise.resolve(true);
             });
         },
@@ -17987,25 +18121,25 @@ function NetscriptFunctions(workerScript) {
             var threads = workerScript.scriptRef.threads;
             if (isNaN(threads) || threads < 1) {threads = 1;}
             if (ip === undefined) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "grow() call has incorrect number of arguments. Takes 1 argument");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "grow() call has incorrect number of arguments. Takes 1 argument");
             }
             var server = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip);
             if (server == null) {
                 workerScript.scriptRef.log("Cannot grow(). Invalid IP or hostname passed in: " + ip);
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot grow(). Invalid IP or hostname passed in: " + ip);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot grow(). Invalid IP or hostname passed in: " + ip);
             }
 
             //No root access or skill level too low
             if (server.hasAdminRights == false) {
                 workerScript.scriptRef.log("Cannot grow this server (" + server.hostname + ") because user does not have root access");
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot grow this server (" + server.hostname + ") because user does not have root access");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot grow this server (" + server.hostname + ") because user does not have root access");
             }
 
             var growTime = Object(_Hacking__WEBPACK_IMPORTED_MODULE_14__[/* calculateGrowTime */ "a"])(server);
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.grow == null) {
-                workerScript.scriptRef.log("Executing grow() on server " + server.hostname + " in " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_44__["formatNumber"])(growTime, 3) + " seconds (t=" + threads + ")");
+                workerScript.scriptRef.log("Executing grow() on server " + server.hostname + " in " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_45__["formatNumber"])(growTime, 3) + " seconds (t=" + threads + ")");
             }
-            return Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* netscriptDelay */ "e"])(growTime * 1000, workerScript).then(function() {
+            return Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* netscriptDelay */ "e"])(growTime * 1000, workerScript).then(function() {
                 if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
                 const moneyBefore = server.moneyAvailable <= 0 ? 1 : server.moneyAvailable;
                 server.moneyAvailable += (1 * threads); //It can be grown even if it has no money
@@ -18018,8 +18152,8 @@ function NetscriptFunctions(workerScript) {
                 }
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.grow == null) {
                     workerScript.scriptRef.log("Available money on " + server.hostname + " grown by " +
-                                                Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_44__["formatNumber"])((moneyAfter/moneyBefore)*100 - 100, 6) + "%. Gained " +
-                                                Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_44__["formatNumber"])(expGain, 4) + " hacking exp (t=" + threads +")");
+                                                Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_45__["formatNumber"])((moneyAfter/moneyBefore)*100 - 100, 6) + "%. Gained " +
+                                                Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_45__["formatNumber"])(expGain, 4) + " hacking exp (t=" + threads +")");
                 }
                 workerScript.scriptRef.onlineExpGained += expGain;
                 _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].gainHackingExp(expGain);
@@ -18035,7 +18169,7 @@ function NetscriptFunctions(workerScript) {
             // Check argument validity
             const server = safeGetServer(ip, 'growthAnalyze');
             if (isNaN(growth)) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, `Invalid growth argument passed into growthAnalyze: ${growth}. Must be numeric`);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, `Invalid growth argument passed into growthAnalyze: ${growth}. Must be numeric`);
             }
 
             return Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* numCycleForGrowth */ "h"])(server, Number(growth));
@@ -18048,33 +18182,33 @@ function NetscriptFunctions(workerScript) {
             var threads = workerScript.scriptRef.threads;
             if (isNaN(threads) || threads < 1) {threads = 1;}
             if (ip === undefined) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "weaken() call has incorrect number of arguments. Takes 1 argument");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "weaken() call has incorrect number of arguments. Takes 1 argument");
             }
             var server = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip);
             if (server == null) {
                 workerScript.scriptRef.log("Cannot weaken(). Invalid IP or hostname passed in: " + ip);
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot weaken(). Invalid IP or hostname passed in: " + ip);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot weaken(). Invalid IP or hostname passed in: " + ip);
             }
 
             //No root access or skill level too low
             if (server.hasAdminRights == false) {
                 workerScript.scriptRef.log("Cannot weaken this server (" + server.hostname + ") because user does not have root access");
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot weaken this server (" + server.hostname + ") because user does not have root access");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot weaken this server (" + server.hostname + ") because user does not have root access");
             }
 
             var weakenTime = Object(_Hacking__WEBPACK_IMPORTED_MODULE_14__[/* calculateWeakenTime */ "f"])(server);
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.weaken == null) {
                 workerScript.scriptRef.log("Executing weaken() on server " + server.hostname + " in " +
-                                           Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_44__["formatNumber"])(weakenTime, 3) + " seconds (t=" + threads + ")");
+                                           Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_45__["formatNumber"])(weakenTime, 3) + " seconds (t=" + threads + ")");
             }
-            return Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* netscriptDelay */ "e"])(weakenTime * 1000, workerScript).then(function() {
+            return Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* netscriptDelay */ "e"])(weakenTime * 1000, workerScript).then(function() {
                 if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
                 server.weaken(_Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ServerWeakenAmount * threads);
                 workerScript.scriptRef.recordWeaken(server.ip, threads);
                 var expGain = Object(_Hacking__WEBPACK_IMPORTED_MODULE_14__[/* calculateHackingExpGain */ "c"])(server) * threads;
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.weaken == null) {
                     workerScript.scriptRef.log("Server security level on " + server.hostname + " weakened to " + server.hackDifficulty +
-                                               ". Gained " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_44__["formatNumber"])(expGain, 4) + " hacking exp (t=" + threads + ")");
+                                               ". Gained " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_45__["formatNumber"])(expGain, 4) + " hacking exp (t=" + threads + ")");
                 }
                 workerScript.scriptRef.onlineExpGained += expGain;
                 _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].gainHackingExp(expGain);
@@ -18084,17 +18218,17 @@ function NetscriptFunctions(workerScript) {
         print : function(args){
             if (workerScript.checkingRam) {return 0;}
             if (args === undefined) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "print() call has incorrect number of arguments. Takes 1 argument");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "print() call has incorrect number of arguments. Takes 1 argument");
             }
             workerScript.scriptRef.log(args.toString());
         },
         tprint : function(args) {
             if (workerScript.checkingRam) {return 0;}
             if (args === undefined || args == null) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "tprint() call has incorrect number of arguments. Takes 1 argument");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "tprint() call has incorrect number of arguments. Takes 1 argument");
             }
             var x = args.toString();
-            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__["post"])(workerScript.scriptRef.filename + ": " + args.toString());
+            Object(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_32__["post"])(workerScript.scriptRef.filename + ": " + args.toString());
         },
         clearLog : function() {
             if (workerScript.checkingRam) {return 0;}
@@ -18103,7 +18237,7 @@ function NetscriptFunctions(workerScript) {
         disableLog : function(fn) {
             if (workerScript.checkingRam) {return 0;}
             if(possibleLogs[fn]===undefined) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid argument to disableLog: "+fn);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid argument to disableLog: "+fn);
             }
             workerScript.disableLogs[fn] = true;
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.disableLog == null) {
@@ -18113,7 +18247,7 @@ function NetscriptFunctions(workerScript) {
         enableLog : function(fn) {
             if (workerScript.checkingRam) {return 0;}
             if(possibleLogs[fn]===undefined) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid argument to enableLog: "+fn);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid argument to enableLog: "+fn);
             }
             delete workerScript.disableLogs[fn];
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.enableLog == null) {
@@ -18123,7 +18257,7 @@ function NetscriptFunctions(workerScript) {
         isLogEnabled : function(fn) {
             if (workerScript.checkingRam) {return 0;}
             if (possibleLogs[fn] === undefined) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid argument to isLogEnabled: " + fn);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid argument to isLogEnabled: " + fn);
             }
             return workerScript.disableLogs[fn] ? false : true;
         },
@@ -18136,7 +18270,7 @@ function NetscriptFunctions(workerScript) {
                 const server = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip);
                 if (server == null) {
                     workerScript.log(`getScriptLogs() failed. Invalid IP or hostname passed in: ${ip}`);
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, `getScriptLogs() failed. Invalid IP or hostname passed in: ${ip}`);
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, `getScriptLogs() failed. Invalid IP or hostname passed in: ${ip}`);
                 }
 
                 let argsForTarget = [];
@@ -18145,7 +18279,7 @@ function NetscriptFunctions(workerScript) {
                 }
                 const runningScriptObj = Object(_Script__WEBPACK_IMPORTED_MODULE_25__[/* findRunningScript */ "d"])(fn, argsForTarget, server);
                 if (runningScriptObj == null) {
-                    workerScript.scriptRef.log(`getScriptLogs() failed. No such script ${fn} on ${server.hostname} with args: ${Object(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_42__["arrayToString"])(argsForTarget)}`);
+                    workerScript.scriptRef.log(`getScriptLogs() failed. No such script ${fn} on ${server.hostname} with args: ${Object(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_43__["arrayToString"])(argsForTarget)}`);
                     return "";
                 }
                 return runningScriptObj.logs.slice();
@@ -18159,18 +18293,18 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("nuke", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptPortProgramRamCost);
             if (ip === undefined) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Program call has incorrect number of arguments. Takes 1 argument");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Program call has incorrect number of arguments. Takes 1 argument");
             }
             var server = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip);
             if (server == null) {
                 workerScript.scriptRef.log("Cannot call nuke(). Invalid IP or hostname passed in: " + ip);
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot call nuke(). Invalid IP or hostname passed in: " + ip);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot call nuke(). Invalid IP or hostname passed in: " + ip);
             }
             if (!_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].hasProgram(_Programs_Programs__WEBPACK_IMPORTED_MODULE_24__["Programs"].NukeProgram.name)) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You do not have the NUKE.exe virus!");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You do not have the NUKE.exe virus!");
             }
             if (server.openPortCount < server.numOpenPortsRequired) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Not enough ports opened to use NUKE.exe virus");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Not enough ports opened to use NUKE.exe virus");
             }
             if (server.hasAdminRights) {
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.nuke == null) {
@@ -18190,16 +18324,16 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("brutessh", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptPortProgramRamCost);
             if (ip === undefined) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Program call has incorrect number of arguments. Takes 1 argument");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Program call has incorrect number of arguments. Takes 1 argument");
             }
             var server = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip);
             if (server == null) {
                 workerScript.scriptRef.log("Cannot call brutessh(). Invalid IP or hostname passed in: " + ip);
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot call brutessh(). Invalid IP or hostname passed in: " + ip);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot call brutessh(). Invalid IP or hostname passed in: " + ip);
             }
             if (!_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].hasProgram(_Programs_Programs__WEBPACK_IMPORTED_MODULE_24__["Programs"].BruteSSHProgram.name)) {
                 workerScript.scriptRef.log("You do not have the BruteSSH.exe program!");
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You do not have the BruteSSH.exe program!");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You do not have the BruteSSH.exe program!");
             }
             if (!server.sshPortOpen) {
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.brutessh == null) {
@@ -18220,15 +18354,15 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("ftpcrack", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptPortProgramRamCost);
             if (ip === undefined) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Program call has incorrect number of arguments. Takes 1 argument");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Program call has incorrect number of arguments. Takes 1 argument");
             }
             var server = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip);
             if (server == null) {
                 workerScript.scriptRef.log("Cannot call ftpcrack(). Invalid IP or hostname passed in: " + ip);
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot call ftpcrack(). Invalid IP or hostname passed in: " + ip);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot call ftpcrack(). Invalid IP or hostname passed in: " + ip);
             }
             if (!_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].hasProgram(_Programs_Programs__WEBPACK_IMPORTED_MODULE_24__["Programs"].FTPCrackProgram.name)) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You do not have the FTPCrack.exe program!");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You do not have the FTPCrack.exe program!");
             }
             if (!server.ftpPortOpen) {
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.ftpcrack == null) {
@@ -18249,15 +18383,15 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("relaysmtp", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptPortProgramRamCost);
             if (ip === undefined) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Program call has incorrect number of arguments. Takes 1 argument");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Program call has incorrect number of arguments. Takes 1 argument");
             }
             var server = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip);
             if (server == null) {
                 workerScript.scriptRef.log("Cannot call relaysmtp(). Invalid IP or hostname passed in: " + ip);
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot call relaysmtp(). Invalid IP or hostname passed in: " + ip);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot call relaysmtp(). Invalid IP or hostname passed in: " + ip);
             }
             if (!_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].hasProgram(_Programs_Programs__WEBPACK_IMPORTED_MODULE_24__["Programs"].RelaySMTPProgram.name)) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You do not have the relaySMTP.exe program!");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You do not have the relaySMTP.exe program!");
             }
             if (!server.smtpPortOpen) {
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.relaysmtp == null) {
@@ -18278,15 +18412,15 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("httpworm", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptPortProgramRamCost);
             if (ip === undefined) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Program call has incorrect number of arguments. Takes 1 argument");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Program call has incorrect number of arguments. Takes 1 argument");
             }
             var server = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip);
             if (server == null) {
                 workerScript.scriptRef.log("Cannot call httpworm(). Invalid IP or hostname passed in: " + ip);
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot call httpworm(). Invalid IP or hostname passed in: " + ip);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot call httpworm(). Invalid IP or hostname passed in: " + ip);
             }
             if (!_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].hasProgram(_Programs_Programs__WEBPACK_IMPORTED_MODULE_24__["Programs"].HTTPWormProgram.name)) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You do not have the HTTPWorm.exe program!");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You do not have the HTTPWorm.exe program!");
             }
             if (!server.httpPortOpen) {
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.httpworm == null) {
@@ -18307,15 +18441,15 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("sqlinject", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptPortProgramRamCost);
             if (ip === undefined) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Program call has incorrect number of arguments. Takes 1 argument");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Program call has incorrect number of arguments. Takes 1 argument");
             }
             var server = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip);
             if (server == null) {
                 workerScript.scriptRef.log("Cannot call sqlinject(). Invalid IP or hostname passed in: " + ip);
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot call sqlinject(). Invalid IP or hostname passed in: " + ip);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot call sqlinject(). Invalid IP or hostname passed in: " + ip);
             }
             if (!_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].hasProgram(_Programs_Programs__WEBPACK_IMPORTED_MODULE_24__["Programs"].SQLInjectProgram.name)) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You do not have the SQLInject.exe program!");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You do not have the SQLInject.exe program!");
             }
             if (!server.sqlPortOpen) {
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.sqlinject == null) {
@@ -18336,10 +18470,10 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("run", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptRunRamCost);
             if (scriptname === undefined) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "run() call has incorrect number of arguments. Usage: run(scriptname, [numThreads], [arg1], [arg2]...)");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "run() call has incorrect number of arguments. Usage: run(scriptname, [numThreads], [arg1], [arg2]...)");
             }
             if (isNaN(threads) || threads < 0) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid argument for thread count passed into run(). Must be numeric and greater than 0");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid argument for thread count passed into run(). Must be numeric and greater than 0");
             }
             var argsForNewScript = [];
             for (var i = 2; i < arguments.length; ++i) {
@@ -18347,10 +18481,10 @@ function NetscriptFunctions(workerScript) {
             }
             var scriptServer = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(workerScript.serverIp);
             if (scriptServer == null) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Could not find server. This is a bug in the game. Report to game dev");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Could not find server. This is a bug in the game. Report to game dev");
             }
 
-            return Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* runScriptFromScript */ "f"])(scriptServer, scriptname, argsForNewScript, workerScript, threads);
+            return Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* runScriptFromScript */ "f"])(scriptServer, scriptname, argsForNewScript, workerScript, threads);
         },
         exec : function(scriptname,ip,threads = 1) {
             if (workerScript.checkingRam) {
@@ -18358,10 +18492,10 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("exec", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptExecRamCost);
             if (scriptname === undefined || ip === undefined) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "exec() call has incorrect number of arguments. Usage: exec(scriptname, server, [numThreads], [arg1], [arg2]...)");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "exec() call has incorrect number of arguments. Usage: exec(scriptname, server, [numThreads], [arg1], [arg2]...)");
             }
             if (isNaN(threads) || threads < 0) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid argument for thread count passed into exec(). Must be numeric and greater than 0");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid argument for thread count passed into exec(). Must be numeric and greater than 0");
             }
             var argsForNewScript = [];
             for (var i = 3; i < arguments.length; ++i) {
@@ -18369,9 +18503,9 @@ function NetscriptFunctions(workerScript) {
             }
             var server = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip);
             if (server == null) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid hostname/ip passed into exec() command: " + ip);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid hostname/ip passed into exec() command: " + ip);
             }
-            return Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* runScriptFromScript */ "f"])(server, scriptname, argsForNewScript, workerScript, threads);
+            return Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* runScriptFromScript */ "f"])(server, scriptname, argsForNewScript, workerScript, threads);
         },
         spawn : function(scriptname, threads) {
             if (workerScript.checkingRam) {
@@ -18379,14 +18513,14 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("spawn", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptSpawnRamCost);
             if (scriptname == null || threads == null) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid scriptname or numThreads argument passed to spawn()");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid scriptname or numThreads argument passed to spawn()");
             }
             setTimeout(()=>{
                 if (scriptname === undefined) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "spawn() call has incorrect number of arguments. Usage: spawn(scriptname, numThreads, [arg1], [arg2]...)");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "spawn() call has incorrect number of arguments. Usage: spawn(scriptname, numThreads, [arg1], [arg2]...)");
                 }
                 if (isNaN(threads) || threads < 0) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid argument for thread count passed into run(). Must be numeric and greater than 0");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid argument for thread count passed into run(). Must be numeric and greater than 0");
                 }
                 var argsForNewScript = [];
                 for (var i = 2; i < arguments.length; ++i) {
@@ -18394,10 +18528,10 @@ function NetscriptFunctions(workerScript) {
                 }
                 var scriptServer = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(workerScript.serverIp);
                 if (scriptServer == null) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Could not find server. This is a bug in the game. Report to game dev");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Could not find server. This is a bug in the game. Report to game dev");
                 }
 
-                return Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* runScriptFromScript */ "f"])(scriptServer, scriptname, argsForNewScript, workerScript, threads);
+                return Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* runScriptFromScript */ "f"])(scriptServer, scriptname, argsForNewScript, workerScript, threads);
             }, 20000);
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.spawn == null) {
                 workerScript.scriptRef.log("spawn() will execute " + scriptname + " in 20 seconds");
@@ -18410,12 +18544,12 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("kill", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptKillRamCost);
             if (filename === undefined || ip === undefined) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "kill() call has incorrect number of arguments. Usage: kill(scriptname, server, [arg1], [arg2]...)");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "kill() call has incorrect number of arguments. Usage: kill(scriptname, server, [arg1], [arg2]...)");
             }
             var server = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip);
             if (server == null) {
                 workerScript.scriptRef.log("kill() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "kill() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "kill() failed. Invalid IP or hostname passed in: " + ip);
             }
             var argsForKillTarget = [];
             for (var i = 2; i < arguments.length; ++i) {
@@ -18423,18 +18557,18 @@ function NetscriptFunctions(workerScript) {
             }
             var runningScriptObj = Object(_Script__WEBPACK_IMPORTED_MODULE_25__[/* findRunningScript */ "d"])(filename, argsForKillTarget, server);
             if (runningScriptObj == null) {
-                workerScript.scriptRef.log("kill() failed. No such script "+ filename + " on " + server.hostname + " with args: " + Object(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_42__["arrayToString"])(argsForKillTarget));
+                workerScript.scriptRef.log("kill() failed. No such script "+ filename + " on " + server.hostname + " with args: " + Object(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_43__["arrayToString"])(argsForKillTarget));
                 return false;
             }
-            var res = Object(_NetscriptWorker__WEBPACK_IMPORTED_MODULE_35__[/* killWorkerScript */ "d"])(runningScriptObj, server.ip);
+            var res = Object(_NetscriptWorker__WEBPACK_IMPORTED_MODULE_36__[/* killWorkerScript */ "d"])(runningScriptObj, server.ip);
             if (res) {
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.kill == null) {
-                    workerScript.scriptRef.log("Killing " + filename + " on " + server.hostname + " with args: " + Object(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_42__["arrayToString"])(argsForKillTarget) +  ". May take up to a few minutes for the scripts to die...");
+                    workerScript.scriptRef.log("Killing " + filename + " on " + server.hostname + " with args: " + Object(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_43__["arrayToString"])(argsForKillTarget) +  ". May take up to a few minutes for the scripts to die...");
                 }
                 return true;
             } else {
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.kill == null) {
-                    workerScript.scriptRef.log("kill() failed. No such script "+ filename + " on " + server.hostname + " with args: " + Object(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_42__["arrayToString"])(argsForKillTarget));
+                    workerScript.scriptRef.log("kill() failed. No such script "+ filename + " on " + server.hostname + " with args: " + Object(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_43__["arrayToString"])(argsForKillTarget));
                 }
                 return false;
             }
@@ -18445,16 +18579,16 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("killall", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptKillRamCost);
             if (ip === undefined) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "killall() call has incorrect number of arguments. Takes 1 argument");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "killall() call has incorrect number of arguments. Takes 1 argument");
             }
             var server = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip);
             if (server == null) {
                 workerScript.scriptRef.log("killall() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "killall() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "killall() failed. Invalid IP or hostname passed in: " + ip);
             }
             var scriptsRunning = (server.runningScripts.length > 0);
             for (var i = server.runningScripts.length-1; i >= 0; --i) {
-                Object(_NetscriptWorker__WEBPACK_IMPORTED_MODULE_35__[/* killWorkerScript */ "d"])(server.runningScripts[i], server.ip);
+                Object(_NetscriptWorker__WEBPACK_IMPORTED_MODULE_36__[/* killWorkerScript */ "d"])(server.runningScripts[i], server.ip);
             }
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.killall == null) {
                 workerScript.scriptRef.log("killall(): Killing all scripts on " + server.hostname + ". May take a few minutes for the scripts to die");
@@ -18465,9 +18599,9 @@ function NetscriptFunctions(workerScript) {
             if (workerScript.checkingRam) {return 0;}
             var server = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(workerScript.serverIp);
             if (server == null) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Error getting Server for this script in exit(). This is a bug please contact game dev");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Error getting Server for this script in exit(). This is a bug please contact game dev");
             }
-            if (Object(_NetscriptWorker__WEBPACK_IMPORTED_MODULE_35__[/* killWorkerScript */ "d"])(workerScript.scriptRef, server.ip)) {
+            if (Object(_NetscriptWorker__WEBPACK_IMPORTED_MODULE_36__[/* killWorkerScript */ "d"])(workerScript.scriptRef, server.ip)) {
                 workerScript.scriptRef.log("Exiting...");
             } else {
                 workerScript.scriptRef.log("Exit failed(). This is a bug please contact game developer");
@@ -18479,7 +18613,7 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("scp", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptScpRamCost);
             if (arguments.length !== 2 && arguments.length !== 3) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: scp() call has incorrect number of arguments. Takes 2 or 3 arguments");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: scp() call has incorrect number of arguments. Takes 2 or 3 arguments");
             }
             if (scriptname && scriptname.constructor === Array) {
                 //Recursively call scp on all elements of array
@@ -18493,39 +18627,39 @@ function NetscriptFunctions(workerScript) {
             }
             if (!scriptname.endsWith(".lit") && !Object(_Script__WEBPACK_IMPORTED_MODULE_25__[/* isScriptFilename */ "f"])(scriptname) &&
                 !scriptname.endsWith("txt")) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: scp() does not work with this file type. It only works for .script, .lit, and .txt files");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: scp() does not work with this file type. It only works for .script, .lit, and .txt files");
             }
 
             var destServer, currServ;
 
             if (ip2 != null) { // 3 Argument version: scriptname, source, destination
                 if (scriptname === undefined || ip1 === undefined || ip2 === undefined) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: scp() call has incorrect number of arguments. Takes 2 or 3 arguments");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: scp() call has incorrect number of arguments. Takes 2 or 3 arguments");
                 }
                 destServer = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip2);
                 if (destServer == null) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, `ERROR: Invalid hostname/ip passed into scp() command: ${ip2}`);
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, `ERROR: Invalid hostname/ip passed into scp() command: ${ip2}`);
                 }
 
                 currServ = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip1);
                 if (currServ == null) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, `ERROR: Invalid hostname/ip passed into scp() command: ${ip1}`);
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, `ERROR: Invalid hostname/ip passed into scp() command: ${ip1}`);
                 }
             } else if (ip1 != null) { // 2 Argument version: scriptname, destination
                 if (scriptname === undefined || ip1 === undefined) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: scp() call has incorrect number of arguments. Takes 2 or 3 arguments");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: scp() call has incorrect number of arguments. Takes 2 or 3 arguments");
                 }
                 destServer = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip1);
                 if (destServer == null) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, `ERROR: Invalid hostname/ip passed into scp() command: ${ip1}`);
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, `ERROR: Invalid hostname/ip passed into scp() command: ${ip1}`);
                 }
 
                 currServ = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(workerScript.serverIp);
                 if (currServ == null) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Could not find server ip for this script. This is a bug please contact game developer");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Could not find server ip for this script. This is a bug please contact game developer");
                 }
             } else {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: scp() call has incorrect number of arguments. Takes 2 or 3 arguments");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: scp() call has incorrect number of arguments. Takes 2 or 3 arguments");
             }
 
             //Scp for lit files
@@ -18584,7 +18718,7 @@ function NetscriptFunctions(workerScript) {
                         return true;
                     }
                 }
-                var newFile = new _TextFile__WEBPACK_IMPORTED_MODULE_32__["TextFile"](txtFile.fn, txtFile.text);
+                var newFile = new _TextFile__WEBPACK_IMPORTED_MODULE_33__["TextFile"](txtFile.fn, txtFile.text);
                 destServer.textFiles.push(newFile);
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.scp == null) {
                     workerScript.scriptRef.log(scriptname + " copied over to " + destServer.hostname);
@@ -18638,12 +18772,12 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("ls", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptScanRamCost);
             if (ip === undefined) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ls() failed because of invalid arguments. Usage: ls(ip/hostname, [grep filter])");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ls() failed because of invalid arguments. Usage: ls(ip/hostname, [grep filter])");
             }
             var server = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip);
             if (server == null) {
                 workerScript.scriptRef.log("ls() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ls() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ls() failed. Invalid IP or hostname passed in: " + ip);
             }
 
             //Get the grep filter, if one exists
@@ -18722,7 +18856,7 @@ function NetscriptFunctions(workerScript) {
             var server = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip);
             if (server == null){
                 workerScript.scriptRef.log("ps() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ps() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ps() failed. Invalid IP or hostname passed in: " + ip);
             }
             const processes = [];
             for (const i in server.runningScripts) {
@@ -18737,12 +18871,12 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("hasRootAccess", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptHasRootAccessRamCost);
             if (ip===undefined){
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "hasRootAccess() call has incorrect number of arguments. Takes 1 argument");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "hasRootAccess() call has incorrect number of arguments. Takes 1 argument");
             }
             var server = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip);
             if (server == null){
                 workerScript.scriptRef.log("hasRootAccess() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "hasRootAccess() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "hasRootAccess() failed. Invalid IP or hostname passed in: " + ip);
             }
             return server.hasAdminRights;
         },
@@ -18753,7 +18887,7 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("getIp", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptGetHostnameRamCost);
             var scriptServer = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(workerScript.serverIp);
             if (scriptServer == null) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Could not find server. This is a bug in the game. Report to game dev");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Could not find server. This is a bug in the game. Report to game dev");
             }
             return scriptServer.ip;
         },
@@ -18764,7 +18898,7 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("getHostname", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptGetHostnameRamCost);
             var scriptServer = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(workerScript.serverIp);
             if (scriptServer == null) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Could not find server. This is a bug in the game. Report to game dev");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Could not find server. This is a bug in the game. Report to game dev");
             }
             return scriptServer.hostname;
         },
@@ -18810,7 +18944,7 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("getBitNodeMultipliers", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptGetMultipliersRamCost);
             if (!hasAISF) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getBitNodeMultipliers(). It requires Source-File 5 to run.");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getBitNodeMultipliers(). It requires Source-File 5 to run.");
             }
             let copy = Object.assign({}, _BitNode_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_5__["BitNodeMultipliers"]);
             return copy;
@@ -18823,17 +18957,17 @@ function NetscriptFunctions(workerScript) {
             var server = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip);
             if (server == null) {
                 workerScript.scriptRef.log("getServerMoneyAvailable() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getServerMoneyAvailable() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getServerMoneyAvailable() failed. Invalid IP or hostname passed in: " + ip);
             }
             if (server.hostname == "home") {
                 //Return player's money
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerMoneyAvailable == null) {
-                    workerScript.scriptRef.log("getServerMoneyAvailable('home') returned player's money: $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_44__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].money.toNumber(), 2));
+                    workerScript.scriptRef.log("getServerMoneyAvailable('home') returned player's money: $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_45__["formatNumber"])(_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].money.toNumber(), 2));
                 }
                 return _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].money.toNumber();
             }
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerMoneyAvailable == null) {
-                workerScript.scriptRef.log("getServerMoneyAvailable() returned " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_44__["formatNumber"])(server.moneyAvailable, 2) + " for " + server.hostname);
+                workerScript.scriptRef.log("getServerMoneyAvailable() returned " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_45__["formatNumber"])(server.moneyAvailable, 2) + " for " + server.hostname);
             }
             return server.moneyAvailable;
         },
@@ -18845,10 +18979,10 @@ function NetscriptFunctions(workerScript) {
             var server = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip);
             if (server == null) {
                 workerScript.scriptRef.log("getServerSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getServerSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getServerSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
             }
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerSecurityLevel == null) {
-                workerScript.scriptRef.log("getServerSecurityLevel() returned " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_44__["formatNumber"])(server.hackDifficulty, 3) + " for " + server.hostname);
+                workerScript.scriptRef.log("getServerSecurityLevel() returned " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_45__["formatNumber"])(server.hackDifficulty, 3) + " for " + server.hostname);
             }
             return server.hackDifficulty;
         },
@@ -18860,10 +18994,10 @@ function NetscriptFunctions(workerScript) {
             var server = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip);
             if (server == null) {
                 workerScript.scriptRef.log("getServerBaseSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getServerBaseSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getServerBaseSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
             }
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerBaseSecurityLevel == null) {
-                workerScript.scriptRef.log("getServerBaseSecurityLevel() returned " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_44__["formatNumber"])(server.baseDifficulty, 3) + " for " + server.hostname);
+                workerScript.scriptRef.log("getServerBaseSecurityLevel() returned " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_45__["formatNumber"])(server.baseDifficulty, 3) + " for " + server.hostname);
             }
             return server.baseDifficulty;
         },
@@ -18875,10 +19009,10 @@ function NetscriptFunctions(workerScript) {
             var server = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip);
             if (server == null) {
                 workerScript.scriptRef.log("getServerMinSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getServerMinSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getServerMinSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
             }
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerMinSecurityLevel == null) {
-                workerScript.scriptRef.log("getServerMinSecurityLevel() returned " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_44__["formatNumber"])(server.minDifficulty, 3) + " for " + server.hostname);
+                workerScript.scriptRef.log("getServerMinSecurityLevel() returned " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_45__["formatNumber"])(server.minDifficulty, 3) + " for " + server.hostname);
             }
             return server.minDifficulty;
         },
@@ -18890,10 +19024,10 @@ function NetscriptFunctions(workerScript) {
             var server = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip);
             if (server == null) {
                 workerScript.scriptRef.log("getServerRequiredHackingLevel() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getServerRequiredHackingLevel() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getServerRequiredHackingLevel() failed. Invalid IP or hostname passed in: " + ip);
             }
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerRequiredHackingLevel == null) {
-                workerScript.scriptRef.log("getServerRequiredHackingLevel returned " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_44__["formatNumber"])(server.requiredHackingSkill, 0) + " for " + server.hostname);
+                workerScript.scriptRef.log("getServerRequiredHackingLevel returned " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_45__["formatNumber"])(server.requiredHackingSkill, 0) + " for " + server.hostname);
             }
             return server.requiredHackingSkill;
         },
@@ -18905,10 +19039,10 @@ function NetscriptFunctions(workerScript) {
             var server = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip);
             if (server == null) {
                 workerScript.scriptRef.log("getServerMaxMoney() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getServerMaxMoney() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getServerMaxMoney() failed. Invalid IP or hostname passed in: " + ip);
             }
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerMaxMoney == null) {
-                workerScript.scriptRef.log("getServerMaxMoney() returned " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_44__["formatNumber"])(server.moneyMax, 0) + " for " + server.hostname);
+                workerScript.scriptRef.log("getServerMaxMoney() returned " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_45__["formatNumber"])(server.moneyMax, 0) + " for " + server.hostname);
             }
             return server.moneyMax;
         },
@@ -18920,10 +19054,10 @@ function NetscriptFunctions(workerScript) {
             var server = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip);
             if (server == null) {
                 workerScript.scriptRef.log("getServerGrowth() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getServerGrowth() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getServerGrowth() failed. Invalid IP or hostname passed in: " + ip);
             }
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerGrowth == null) {
-                workerScript.scriptRef.log("getServerGrowth() returned " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_44__["formatNumber"])(server.serverGrowth, 0) + " for " + server.hostname);
+                workerScript.scriptRef.log("getServerGrowth() returned " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_45__["formatNumber"])(server.serverGrowth, 0) + " for " + server.hostname);
             }
             return server.serverGrowth;
         },
@@ -18935,10 +19069,10 @@ function NetscriptFunctions(workerScript) {
             var server = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip);
             if (server == null) {
                 workerScript.scriptRef.log("getServerNumPortsRequired() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getServerNumPortsRequired() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getServerNumPortsRequired() failed. Invalid IP or hostname passed in: " + ip);
             }
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerNumPortsRequired == null) {
-                workerScript.scriptRef.log("getServerNumPortsRequired() returned " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_44__["formatNumber"])(server.numOpenPortsRequired, 0) + " for " + server.hostname);
+                workerScript.scriptRef.log("getServerNumPortsRequired() returned " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_45__["formatNumber"])(server.numOpenPortsRequired, 0) + " for " + server.hostname);
             }
             return server.numOpenPortsRequired;
         },
@@ -18950,10 +19084,10 @@ function NetscriptFunctions(workerScript) {
             var server = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip);
             if (server == null) {
                 workerScript.scriptRef.log("getServerRam() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getServerRam() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getServerRam() failed. Invalid IP or hostname passed in: " + ip);
             }
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerRam == null) {
-                workerScript.scriptRef.log("getServerRam() returned [" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_44__["formatNumber"])(server.maxRam, 2) + "GB, " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_44__["formatNumber"])(server.ramUsed, 2) + "GB]");
+                workerScript.scriptRef.log("getServerRam() returned [" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_45__["formatNumber"])(server.maxRam, 2) + "GB, " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_45__["formatNumber"])(server.ramUsed, 2) + "GB]");
             }
             return [server.maxRam, server.ramUsed];
         },
@@ -18970,12 +19104,12 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("fileExists", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptFileExistsRamCost);
             if (filename === undefined) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "fileExists() call has incorrect number of arguments. Usage: fileExists(scriptname, [server])");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "fileExists() call has incorrect number of arguments. Usage: fileExists(scriptname, [server])");
             }
             var server = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip);
             if (server == null) {
                 workerScript.scriptRef.log("fileExists() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "fileExists() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "fileExists() failed. Invalid IP or hostname passed in: " + ip);
             }
             for (var i = 0; i < server.scripts.length; ++i) {
                 if (filename == server.scripts[i].filename) {
@@ -18993,7 +19127,7 @@ function NetscriptFunctions(workerScript) {
                     return true;
                 }
             }
-            var txtFile = Object(_TextFile__WEBPACK_IMPORTED_MODULE_32__["getTextFile"])(filename, server);
+            var txtFile = Object(_TextFile__WEBPACK_IMPORTED_MODULE_33__["getTextFile"])(filename, server);
             if (txtFile != null) {
               return true;
             }
@@ -19005,12 +19139,12 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("isRunning", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptIsRunningRamCost);
             if (filename === undefined || ip === undefined) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "isRunning() call has incorrect number of arguments. Usage: isRunning(scriptname, server, [arg1], [arg2]...)");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "isRunning() call has incorrect number of arguments. Usage: isRunning(scriptname, server, [arg1], [arg2]...)");
             }
             var server = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip);
             if (server == null) {
                 workerScript.scriptRef.log("isRunning() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "isRunning() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "isRunning() failed. Invalid IP or hostname passed in: " + ip);
             }
             var argsForTargetScript = [];
             for (var i = 2; i < arguments.length; ++i) {
@@ -19024,9 +19158,9 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("getStockSymbols", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptGetStockRamCost);
             if (!_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].hasTixApiAccess) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have TIX API Access! Cannot use getStockSymbols()");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have TIX API Access! Cannot use getStockSymbols()");
             }
-            return Object.values(_StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_30__[/* StockSymbols */ "d"]);
+            return Object.values(_StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_31__[/* StockSymbols */ "d"]);
         },
         getStockPrice : function(symbol) {
             if (workerScript.checkingRam) {
@@ -19034,11 +19168,11 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("getStockPrice", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptGetStockRamCost);
             if (!_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].hasTixApiAccess) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have TIX API Access! Cannot use getStockPrice()");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have TIX API Access! Cannot use getStockPrice()");
             }
-            var stock = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_30__[/* SymbolToStockMap */ "e"][symbol];
+            var stock = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_31__[/* SymbolToStockMap */ "e"][symbol];
             if (stock == null) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid stock symbol passed into getStockPrice()");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid stock symbol passed into getStockPrice()");
             }
             return parseFloat(stock.price.toFixed(3));
         },
@@ -19048,11 +19182,11 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("getStockPosition", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptGetStockRamCost);
             if (!_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].hasTixApiAccess) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have TIX API Access! Cannot use getStockPosition()");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have TIX API Access! Cannot use getStockPosition()");
             }
-            var stock = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_30__[/* SymbolToStockMap */ "e"][symbol];
+            var stock = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_31__[/* SymbolToStockMap */ "e"][symbol];
             if (stock == null) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid stock symbol passed into getStockPosition()");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid stock symbol passed into getStockPosition()");
             }
             return [stock.playerShares, stock.playerAvgPx, stock.playerShortShares, stock.playerAvgShortPx];
         },
@@ -19063,11 +19197,11 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("getStockMaxShares", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptGetStockRamCost);
 
             if (!_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].hasTixApiAccess) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have TIX API Access! Cannot use getStockMaxShares()");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have TIX API Access! Cannot use getStockMaxShares()");
             }
-            const stock = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_30__[/* SymbolToStockMap */ "e"][symbol];
+            const stock = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_31__[/* SymbolToStockMap */ "e"][symbol];
             if (stock == null) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid stock symbol passed into getStockMaxShares()");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid stock symbol passed into getStockMaxShares()");
             }
 
             return stock.maxShares;
@@ -19078,11 +19212,11 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("buyStock", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptBuySellStockRamCost);
             if (!_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].hasTixApiAccess) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have TIX API Access! Cannot use buyStock()");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have TIX API Access! Cannot use buyStock()");
             }
-            var stock = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_30__[/* SymbolToStockMap */ "e"][symbol];
+            var stock = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_31__[/* SymbolToStockMap */ "e"][symbol];
             if (stock == null) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid stock symbol passed into buyStock()");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid stock symbol passed into buyStock()");
             }
             if (shares < 0 || isNaN(shares)) {
                 workerScript.scriptRef.log("ERROR: Invalid 'shares' argument passed to buyStock()");
@@ -19094,9 +19228,9 @@ function NetscriptFunctions(workerScript) {
             // Does player have enough money?
             var totalPrice = stock.price * shares;
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].money.lt(totalPrice + _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].StockMarketCommission)) {
-                workerScript.scriptRef.log("Not enough money to purchase " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_44__["formatNumber"])(shares, 0) + " shares of " +
+                workerScript.scriptRef.log("Not enough money to purchase " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_45__["formatNumber"])(shares, 0) + " shares of " +
                                            symbol + ". Need $" +
-                                           Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_44__["formatNumber"])(totalPrice + _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].StockMarketCommission, 2).toString());
+                                           Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_45__["formatNumber"])(totalPrice + _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].StockMarketCommission, 2).toString());
                 return 0;
             }
 
@@ -19112,12 +19246,12 @@ function NetscriptFunctions(workerScript) {
             var newTotal = origTotal + totalPrice;
             stock.playerShares += shares;
             stock.playerAvgPx = newTotal / stock.playerShares;
-            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_39__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_39__["Page"].StockMarket)) {
-                Object(_StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_30__[/* updateStockPlayerPosition */ "r"])(stock);
+            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_40__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_40__["Page"].StockMarket)) {
+                Object(_StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_31__[/* updateStockPlayerPosition */ "r"])(stock);
             }
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.buyStock == null) {
-                workerScript.scriptRef.log("Bought " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_44__["formatNumber"])(shares, 0) + " shares of " + stock.symbol + " at $" +
-                                           Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_44__["formatNumber"])(stock.price, 2) + " per share");
+                workerScript.scriptRef.log("Bought " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_45__["formatNumber"])(shares, 0) + " shares of " + stock.symbol + " at $" +
+                                           Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_45__["formatNumber"])(stock.price, 2) + " per share");
             }
             return stock.price;
         },
@@ -19127,11 +19261,11 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("sellStock", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptBuySellStockRamCost);
             if (!_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].hasTixApiAccess) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have TIX API Access! Cannot use sellStock()");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have TIX API Access! Cannot use sellStock()");
             }
-            var stock = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_30__[/* SymbolToStockMap */ "e"][symbol];
+            var stock = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_31__[/* SymbolToStockMap */ "e"][symbol];
             if (stock == null) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid stock symbol passed into sellStock()");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid stock symbol passed into sellStock()");
             }
             if (shares < 0 || isNaN(shares)) {
                 workerScript.scriptRef.log("ERROR: Invalid 'shares' argument passed to sellStock()");
@@ -19153,13 +19287,13 @@ function NetscriptFunctions(workerScript) {
             if (stock.playerShares == 0) {
                 stock.playerAvgPx = 0;
             }
-            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_39__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_39__["Page"].StockMarket)) {
-                Object(_StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_30__[/* updateStockPlayerPosition */ "r"])(stock);
+            if (_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_40__["routing"].isOn(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_40__["Page"].StockMarket)) {
+                Object(_StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_31__[/* updateStockPlayerPosition */ "r"])(stock);
             }
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.sellStock == null) {
-                workerScript.scriptRef.log("Sold " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_44__["formatNumber"])(shares, 0) + " shares of " + stock.symbol + " at $" +
-                                           Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_44__["formatNumber"])(stock.price, 2) + " per share. Gained " +
-                                           "$" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_44__["formatNumber"])(gains, 2));
+                workerScript.scriptRef.log("Sold " + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_45__["formatNumber"])(shares, 0) + " shares of " + stock.symbol + " at $" +
+                                           Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_45__["formatNumber"])(stock.price, 2) + " per share. Gained " +
+                                           "$" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_45__["formatNumber"])(gains, 2));
             }
             return stock.price;
         },
@@ -19169,18 +19303,18 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("shortStock", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptBuySellStockRamCost);
             if (!_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].hasTixApiAccess) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have TIX API Access! Cannot use shortStock()");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have TIX API Access! Cannot use shortStock()");
             }
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN !== 8) {
                 if (!(hasWallStreetSF && wallStreetSFLvl >= 2)) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Cannot use shortStock(). You must either be in BitNode-8 or you must have Level 2 of Source-File 8");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Cannot use shortStock(). You must either be in BitNode-8 or you must have Level 2 of Source-File 8");
                 }
             }
-            var stock = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_30__[/* SymbolToStockMap */ "e"][symbol];
+            var stock = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_31__[/* SymbolToStockMap */ "e"][symbol];
             if (stock == null) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Invalid stock symbol passed into shortStock()");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Invalid stock symbol passed into shortStock()");
             }
-            var res = Object(_StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_30__[/* shortStock */ "p"])(stock, shares, workerScript);
+            var res = Object(_StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_31__[/* shortStock */ "p"])(stock, shares, workerScript);
             return res ? stock.price : 0;
         },
         sellShort(symbol, shares) {
@@ -19189,18 +19323,18 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("sellShort", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptBuySellStockRamCost);
             if (!_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].hasTixApiAccess) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have TIX API Access! Cannot use sellShort()");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have TIX API Access! Cannot use sellShort()");
             }
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN !== 8) {
                 if (!(hasWallStreetSF && wallStreetSFLvl >= 2)) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Cannot use sellShort(). You must either be in BitNode-8 or you must have Level 2 of Source-File 8");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Cannot use sellShort(). You must either be in BitNode-8 or you must have Level 2 of Source-File 8");
                 }
             }
-            var stock = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_30__[/* SymbolToStockMap */ "e"][symbol];
+            var stock = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_31__[/* SymbolToStockMap */ "e"][symbol];
             if (stock == null) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Invalid stock symbol passed into sellShort()");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Invalid stock symbol passed into sellShort()");
             }
-            var res = Object(_StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_30__[/* sellShort */ "n"])(stock, shares, workerScript);
+            var res = Object(_StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_31__[/* sellShort */ "n"])(stock, shares, workerScript);
             return res ? stock.price : 0;
         },
         placeOrder(symbol, shares, price, type, pos) {
@@ -19209,41 +19343,41 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("placeOrder", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptBuySellStockRamCost);
             if (!_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].hasTixApiAccess) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have TIX API Access! Cannot use placeOrder()");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have TIX API Access! Cannot use placeOrder()");
             }
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN !== 8) {
                 if (!(hasWallStreetSF && wallStreetSFLvl >= 3)) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Cannot use placeOrder(). You must either be in BitNode-8 or have Level 3 of Source-File 8");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Cannot use placeOrder(). You must either be in BitNode-8 or have Level 3 of Source-File 8");
                 }
             }
-            var stock = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_30__[/* SymbolToStockMap */ "e"][symbol];
+            var stock = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_31__[/* SymbolToStockMap */ "e"][symbol];
             if (stock == null) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Invalid stock symbol passed into placeOrder()");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Invalid stock symbol passed into placeOrder()");
             }
             var orderType, orderPos;
             type = type.toLowerCase();
             if (type.includes("limit") && type.includes("buy")) {
-                orderType = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_30__[/* OrderTypes */ "a"].LimitBuy;
+                orderType = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_31__[/* OrderTypes */ "a"].LimitBuy;
             } else if (type.includes("limit") && type.includes("sell")) {
-                orderType = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_30__[/* OrderTypes */ "a"].LimitSell;
+                orderType = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_31__[/* OrderTypes */ "a"].LimitSell;
             } else if (type.includes("stop") && type.includes("buy")) {
-                orderType = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_30__[/* OrderTypes */ "a"].StopBuy;
+                orderType = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_31__[/* OrderTypes */ "a"].StopBuy;
             } else if (type.includes("stop") && type.includes("sell")) {
-                orderType = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_30__[/* OrderTypes */ "a"].StopSell;
+                orderType = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_31__[/* OrderTypes */ "a"].StopSell;
             } else {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Invalid Order Type passed into placeOrder()");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Invalid Order Type passed into placeOrder()");
             }
 
             pos = pos.toLowerCase();
             if (pos.includes("l")) {
-                orderPos = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_30__[/* PositionTypes */ "b"].Long;
+                orderPos = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_31__[/* PositionTypes */ "b"].Long;
             } else if (pos.includes('s')) {
-                orderPos = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_30__[/* PositionTypes */ "b"].Short;
+                orderPos = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_31__[/* PositionTypes */ "b"].Short;
             } else {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Invalid Position Type passed into placeOrder()");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Invalid Position Type passed into placeOrder()");
             }
 
-            return Object(_StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_30__[/* placeOrder */ "l"])(stock, shares, price, orderType, orderPos, workerScript);
+            return Object(_StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_31__[/* placeOrder */ "l"])(stock, shares, price, orderType, orderPos, workerScript);
         },
         cancelOrder(symbol, shares, price, type, pos) {
             if (workerScript.checkingRam) {
@@ -19251,41 +19385,41 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("cancelOrder", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptBuySellStockRamCost);
             if (!_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].hasTixApiAccess) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have TIX API Access! Cannot use cancelOrder()");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have TIX API Access! Cannot use cancelOrder()");
             }
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN !== 8) {
                 if (!(hasWallStreetSF && wallStreetSFLvl >= 3)) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Cannot use cancelOrder(). You must either be in BitNode-8 or have Level 3 of Source-File 8");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Cannot use cancelOrder(). You must either be in BitNode-8 or have Level 3 of Source-File 8");
                 }
             }
-            var stock = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_30__[/* SymbolToStockMap */ "e"][symbol];
+            var stock = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_31__[/* SymbolToStockMap */ "e"][symbol];
             if (stock == null) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Invalid stock symbol passed into cancelOrder()");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Invalid stock symbol passed into cancelOrder()");
             }
             if (isNaN(shares) || isNaN(price)) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Invalid shares or price argument passed into cancelOrder(). Must be numeric");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Invalid shares or price argument passed into cancelOrder(). Must be numeric");
             }
             var orderType, orderPos;
             type = type.toLowerCase();
             if (type.includes("limit") && type.includes("buy")) {
-                orderType = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_30__[/* OrderTypes */ "a"].LimitBuy;
+                orderType = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_31__[/* OrderTypes */ "a"].LimitBuy;
             } else if (type.includes("limit") && type.includes("sell")) {
-                orderType = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_30__[/* OrderTypes */ "a"].LimitSell;
+                orderType = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_31__[/* OrderTypes */ "a"].LimitSell;
             } else if (type.includes("stop") && type.includes("buy")) {
-                orderType = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_30__[/* OrderTypes */ "a"].StopBuy;
+                orderType = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_31__[/* OrderTypes */ "a"].StopBuy;
             } else if (type.includes("stop") && type.includes("sell")) {
-                orderType = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_30__[/* OrderTypes */ "a"].StopSell;
+                orderType = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_31__[/* OrderTypes */ "a"].StopSell;
             } else {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Invalid Order Type passed into placeOrder()");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Invalid Order Type passed into placeOrder()");
             }
 
             pos = pos.toLowerCase();
             if (pos.includes("l")) {
-                orderPos = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_30__[/* PositionTypes */ "b"].Long;
+                orderPos = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_31__[/* PositionTypes */ "b"].Long;
             } else if (pos.includes('s')) {
-                orderPos = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_30__[/* PositionTypes */ "b"].Short;
+                orderPos = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_31__[/* PositionTypes */ "b"].Short;
             } else {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Invalid Position Type passed into placeOrder()");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Invalid Position Type passed into placeOrder()");
             }
             var params = {
                 stock: stock,
@@ -19294,7 +19428,7 @@ function NetscriptFunctions(workerScript) {
                 type: orderType,
                 pos: orderPos
             };
-            return Object(_StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_30__[/* cancelOrder */ "f"])(params, workerScript);
+            return Object(_StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_31__[/* cancelOrder */ "f"])(params, workerScript);
         },
         getOrders : function() {
             if (workerScript.checkingRam) {
@@ -19302,17 +19436,17 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("getOrders", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptBuySellStockRamCost);
             if (!_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].hasTixApiAccess) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have TIX API Access! Cannot use getOrders()");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have TIX API Access! Cannot use getOrders()");
             }
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN !== 8) {
                 if (!(hasWallStreetSF && wallStreetSFLvl >= 3)) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Cannot use getOrders(). You must either be in BitNode-8 or have Level 3 of Source-File 8");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Cannot use getOrders(). You must either be in BitNode-8 or have Level 3 of Source-File 8");
                 }
             }
 
             const orders = {};
 
-            const stockMarketOrders = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_30__[/* StockMarket */ "c"]["Orders"];
+            const stockMarketOrders = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_31__[/* StockMarket */ "c"]["Orders"];
             for (let symbol in stockMarketOrders) {
                 const orderBook = stockMarketOrders[symbol];
                 if (orderBook.constructor === Array && orderBook.length > 0) {
@@ -19336,11 +19470,11 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("getStockVolatility", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptBuySellStockRamCost);
             if (!_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].has4SDataTixApi) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have 4S Market Data TIX API Access! Cannot use getStockVolatility()");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have 4S Market Data TIX API Access! Cannot use getStockVolatility()");
             }
-            var stock = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_30__[/* SymbolToStockMap */ "e"][symbol];
+            var stock = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_31__[/* SymbolToStockMap */ "e"][symbol];
             if (stock == null) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Invalid stock symbol passed into getStockVolatility()");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Invalid stock symbol passed into getStockVolatility()");
             }
             return stock.mv / 100; //Convert from percentage to decimal
         },
@@ -19350,11 +19484,11 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("getStockForecast", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptBuySellStockRamCost);
             if (!_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].has4SDataTixApi) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have 4S Market Data TIX API Access! Cannot use getStockForecast()");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have 4S Market Data TIX API Access! Cannot use getStockForecast()");
             }
-            var stock = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_30__[/* SymbolToStockMap */ "e"][symbol];
+            var stock = _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_31__[/* SymbolToStockMap */ "e"][symbol];
             if (stock == null) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Invalid stock symbol passed into getStockForecast()");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Invalid stock symbol passed into getStockForecast()");
             }
             var forecast = 50;
             stock.b ? forecast += stock.otlkMag : forecast -= stock.otlkMag;
@@ -19367,7 +19501,7 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("purchase4SMarketData", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptBuySellStockRamCost);
 
             if (!_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].hasTixApiAccess) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have TIX API Access! Cannot use purchase4SMarketData()");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have TIX API Access! Cannot use purchase4SMarketData()");
             }
 
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].has4SData) {
@@ -19398,7 +19532,7 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("purchase4SMarketDataTixApi", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptBuySellStockRamCost);
 
             if (!_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].hasTixApiAccess) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have TIX API Access! Cannot use purchase4SMarketDataTixApi()");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "You don't have TIX API Access! Cannot use purchase4SMarketDataTixApi()");
             }
 
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].has4SDataTixApi) {
@@ -19428,7 +19562,7 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("getPurchasedServerLimit", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptGetPurchasedServerLimit);
 
-            return _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].PurchasedServerLimit;
+            return Object(_ServerPurchases__WEBPACK_IMPORTED_MODULE_27__[/* getPurchaseServerLimit */ "b"])();
         },
         getPurchasedServerMaxRam: function() {
             if (workerScript.checkingRam) {
@@ -19436,7 +19570,7 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("getPurchasedServerMaxRam", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptGetPurchasedServerMaxRam);
 
-            return _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].PurchasedServerMaxRam;
+            return Object(_ServerPurchases__WEBPACK_IMPORTED_MODULE_27__[/* getPurchaseServerMaxRam */ "c"])();
         },
         getPurchasedServerCost: function(ram) {
             if (workerScript.checkingRam) {
@@ -19444,11 +19578,9 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("getPurchasedServerCost", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptGetPurchaseServerRamCost);
 
-            let cost = 0;
-            try {
-                cost = getPurchaseServerRamCostGuard(ram);
-            } catch (e) {
-                workerScript.scriptRef.log("ERROR: 'getPurchasedServerCost()' " + e.message);
+            const cost = Object(_ServerPurchases__WEBPACK_IMPORTED_MODULE_27__[/* getPurchaseServerCost */ "a"])(ram);
+            if (cost === Infinity) {
+                workerScript.scriptRef.log("ERROR: 'getPurchasedServerCost()' failed due to an invalid 'ram' argument");
                 return Infinity;
             }
 
@@ -19462,30 +19594,27 @@ function NetscriptFunctions(workerScript) {
             var hostnameStr = String(hostname);
             hostnameStr = hostnameStr.replace(/\s+/g, '');
             if (hostnameStr == "") {
-                workerScript.scriptRef.log("ERROR: Passed empty string for hostname argument of purchaseServer()");
+                workerScript.log("ERROR: Passed empty string for hostname argument of purchaseServer()");
                 return "";
             }
 
-            if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].purchasedServers.length >= _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].PurchasedServerLimit) {
-                workerScript.scriptRef.log("ERROR: You have reached the maximum limit of " + _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].PurchasedServerLimit +
-                                           " servers. You cannot purchase any more.");
+            if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].purchasedServers.length >= Object(_ServerPurchases__WEBPACK_IMPORTED_MODULE_27__[/* getPurchaseServerLimit */ "b"])()) {
+                workerScript.log(`ERROR: You have reached the maximum limit of ${Object(_ServerPurchases__WEBPACK_IMPORTED_MODULE_27__[/* getPurchaseServerLimit */ "b"])()} servers. You cannot purchase any more.`);
                 return "";
             }
 
-            let cost = 0;
-            try {
-                cost = getPurchaseServerRamCostGuard(ram);
-            } catch (e) {
-                workerScript.scriptRef.log("ERROR: 'purchaseServer()' " + e.message);
-                return "";
+            const cost = Object(_ServerPurchases__WEBPACK_IMPORTED_MODULE_27__[/* getPurchaseServerCost */ "a"])(ram);
+            if (cost === Infinity) {
+                workerScript.log("ERROR: 'purchaseServer()' failed due to an invalid 'ram' argument");
+                return Infinity;
             }
 
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].money.lt(cost)) {
-                workerScript.scriptRef.log("ERROR: Not enough money to purchase server. Need $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_44__["formatNumber"])(cost, 2));
+                workerScript.log("ERROR: Not enough money to purchase server. Need $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_45__["formatNumber"])(cost, 2));
                 return "";
             }
             var newServ = new _Server__WEBPACK_IMPORTED_MODULE_26__[/* Server */ "d"]({
-                ip: Object(_utils_IPAddress__WEBPACK_IMPORTED_MODULE_43__[/* createRandomIp */ "a"])(),
+                ip: Object(_utils_IPAddress__WEBPACK_IMPORTED_MODULE_44__[/* createRandomIp */ "a"])(),
                 hostname: hostnameStr,
                 organizationName: "",
                 isConnectedTo: false,
@@ -19501,7 +19630,7 @@ function NetscriptFunctions(workerScript) {
             newServ.serversOnNetwork.push(homeComputer.ip);
             _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].loseMoney(cost);
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.purchaseServer == null) {
-                workerScript.scriptRef.log("Purchased new server with hostname " + newServ.hostname + " for $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_44__["formatNumber"])(cost, 2));
+                workerScript.scriptRef.log("Purchased new server with hostname " + newServ.hostname + " for $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_45__["formatNumber"])(cost, 2));
             }
             return newServ.hostname;
         },
@@ -19590,7 +19719,7 @@ function NetscriptFunctions(workerScript) {
                 if (hostname) {
                     var server = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip);
                     if (server == null) {
-                        throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Could not find server in getPurchasedServers(). This is a bug please report to game dev");
+                        throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Could not find server in getPurchasedServers(). This is a bug please report to game dev");
                     }
                     res.push(server.hostname);
                 } else {
@@ -19608,18 +19737,18 @@ function NetscriptFunctions(workerScript) {
                 //Port 1-10
                 port = Math.round(port);
                 if (port < 1 || port > _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].NumNetscriptPorts) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Trying to write to invalid port: " + port + ". Only ports 1-" + _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].NumNetscriptPorts + " are valid.");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Trying to write to invalid port: " + port + ". Only ports 1-" + _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].NumNetscriptPorts + " are valid.");
                 }
-                var port = _NetscriptWorker__WEBPACK_IMPORTED_MODULE_35__[/* NetscriptPorts */ "a"][port-1];
-                if (port == null || !(port instanceof _NetscriptPort__WEBPACK_IMPORTED_MODULE_37__[/* NetscriptPort */ "a"])) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Could not find port: " + port + ". This is a bug contact the game developer");
+                var port = _NetscriptWorker__WEBPACK_IMPORTED_MODULE_36__[/* NetscriptPorts */ "a"][port-1];
+                if (port == null || !(port instanceof _NetscriptPort__WEBPACK_IMPORTED_MODULE_38__[/* NetscriptPort */ "a"])) {
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Could not find port: " + port + ". This is a bug contact the game developer");
                 }
                 return port.write(data);
-            } else if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_45__["isString"])(port)) { //Write to script or text file
+            } else if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_46__["isString"])(port)) { //Write to script or text file
                 var fn = port;
                 var server = workerScript.getServer();
                 if (server == null) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Error getting Server for this script in write(). This is a bug please contact game dev");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Error getting Server for this script in write(). This is a bug please contact game dev");
                 }
                 if (Object(_Script__WEBPACK_IMPORTED_MODULE_25__[/* isScriptFilename */ "f"])(fn)) {
                     //Write to script
@@ -19634,9 +19763,9 @@ function NetscriptFunctions(workerScript) {
                     script.updateRamUsage();
                 } else {
                     //Write to text file
-                    let txtFile = Object(_TextFile__WEBPACK_IMPORTED_MODULE_32__["getTextFile"])(fn, server);
+                    let txtFile = Object(_TextFile__WEBPACK_IMPORTED_MODULE_33__["getTextFile"])(fn, server);
                     if (txtFile == null) {
-                        txtFile = Object(_TextFile__WEBPACK_IMPORTED_MODULE_32__["createTextFile"])(fn, data, server);
+                        txtFile = Object(_TextFile__WEBPACK_IMPORTED_MODULE_33__["createTextFile"])(fn, data, server);
                         return true;
                     }
                     if (mode === "w") {
@@ -19647,7 +19776,7 @@ function NetscriptFunctions(workerScript) {
                 }
                 return true;
             } else {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid argument passed in for write: " + port);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid argument passed in for write: " + port);
             }
         },
         tryWrite : function(port, data="") {
@@ -19658,15 +19787,15 @@ function NetscriptFunctions(workerScript) {
             if (!isNaN(port)) {
                 port = Math.round(port);
                 if (port < 1 || port > _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].NumNetscriptPorts) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: tryWrite() called on invalid port: " + port + ". Only ports 1-" + _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].NumNetscriptPorts + " are valid.");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: tryWrite() called on invalid port: " + port + ". Only ports 1-" + _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].NumNetscriptPorts + " are valid.");
                 }
-                var port = _NetscriptWorker__WEBPACK_IMPORTED_MODULE_35__[/* NetscriptPorts */ "a"][port-1];
-                if (port == null || !(port instanceof _NetscriptPort__WEBPACK_IMPORTED_MODULE_37__[/* NetscriptPort */ "a"])) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Could not find port: " + port + ". This is a bug contact the game developer");
+                var port = _NetscriptWorker__WEBPACK_IMPORTED_MODULE_36__[/* NetscriptPorts */ "a"][port-1];
+                if (port == null || !(port instanceof _NetscriptPort__WEBPACK_IMPORTED_MODULE_38__[/* NetscriptPort */ "a"])) {
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Could not find port: " + port + ". This is a bug contact the game developer");
                 }
                 return port.tryWrite(data);
             } else {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid argument passed in for tryWrite: " + port);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid argument passed in for tryWrite: " + port);
             }
         },
         read : function(port) {
@@ -19678,18 +19807,18 @@ function NetscriptFunctions(workerScript) {
                 //Port 1-10
                 port = Math.round(port);
                 if (port < 1 || port > _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].NumNetscriptPorts) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Trying to read from invalid port: " + port + ". Only ports 1-" + _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].NumNetscriptPorts + " are valid.");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Trying to read from invalid port: " + port + ". Only ports 1-" + _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].NumNetscriptPorts + " are valid.");
                 }
-                var port = _NetscriptWorker__WEBPACK_IMPORTED_MODULE_35__[/* NetscriptPorts */ "a"][port-1];
-                if (port == null || !(port instanceof _NetscriptPort__WEBPACK_IMPORTED_MODULE_37__[/* NetscriptPort */ "a"])) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Could not find port: " + port + ". This is a bug contact the game developer");
+                var port = _NetscriptWorker__WEBPACK_IMPORTED_MODULE_36__[/* NetscriptPorts */ "a"][port-1];
+                if (port == null || !(port instanceof _NetscriptPort__WEBPACK_IMPORTED_MODULE_38__[/* NetscriptPort */ "a"])) {
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Could not find port: " + port + ". This is a bug contact the game developer");
                 }
                 return port.read();
-            } else if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_45__["isString"])(port)) { //Read from script or text file
+            } else if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_46__["isString"])(port)) { //Read from script or text file
                 let fn = port;
                 let server = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(workerScript.serverIp);
                 if (server == null) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Error getting Server for this script in read(). This is a bug please contact game dev");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Error getting Server for this script in read(). This is a bug please contact game dev");
                 }
                 if (Object(_Script__WEBPACK_IMPORTED_MODULE_25__[/* isScriptFilename */ "f"])(fn)) {
                     //Read from script
@@ -19700,7 +19829,7 @@ function NetscriptFunctions(workerScript) {
                     return script.code;
                 } else {
                     //Read from text file
-                    let txtFile = Object(_TextFile__WEBPACK_IMPORTED_MODULE_32__["getTextFile"])(fn, server);
+                    let txtFile = Object(_TextFile__WEBPACK_IMPORTED_MODULE_33__["getTextFile"])(fn, server);
                     if (txtFile !== null) {
                         return txtFile.text;
                     } else {
@@ -19708,7 +19837,7 @@ function NetscriptFunctions(workerScript) {
                     }
                 }
             } else {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid argument passed in for read(): " + port);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid argument passed in for read(): " + port);
             }
         },
         peek : function(port) {
@@ -19717,15 +19846,15 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("peek", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptReadWriteRamCost);
             if (isNaN(port)) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: peek() called with invalid argument. Must be a port number between 1 and " + _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].NumNetscriptPorts);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: peek() called with invalid argument. Must be a port number between 1 and " + _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].NumNetscriptPorts);
             }
             port = Math.round(port);
             if (port < 1 || port > _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].NumNetscriptPorts) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: peek() called with invalid argument. Must be a port number between 1 and " + _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].NumNetscriptPorts);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: peek() called with invalid argument. Must be a port number between 1 and " + _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].NumNetscriptPorts);
             }
-            var port = _NetscriptWorker__WEBPACK_IMPORTED_MODULE_35__[/* NetscriptPorts */ "a"][port-1];
-            if (port == null || !(port instanceof _NetscriptPort__WEBPACK_IMPORTED_MODULE_37__[/* NetscriptPort */ "a"])) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Could not find port: " + port + ". This is a bug contact the game developer");
+            var port = _NetscriptWorker__WEBPACK_IMPORTED_MODULE_36__[/* NetscriptPorts */ "a"][port-1];
+            if (port == null || !(port instanceof _NetscriptPort__WEBPACK_IMPORTED_MODULE_38__[/* NetscriptPort */ "a"])) {
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Could not find port: " + port + ". This is a bug contact the game developer");
             }
             return port.peek();
         },
@@ -19737,25 +19866,25 @@ function NetscriptFunctions(workerScript) {
             if (!isNaN(port)) { //Clear port
                 port = Math.round(port);
                 if (port < 1 || port > _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].NumNetscriptPorts) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Trying to clear invalid port: " + port + ". Only ports 1-" + _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].NumNetscriptPorts + " are valid");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Trying to clear invalid port: " + port + ". Only ports 1-" + _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].NumNetscriptPorts + " are valid");
                 }
-                var port = _NetscriptWorker__WEBPACK_IMPORTED_MODULE_35__[/* NetscriptPorts */ "a"][port-1];
-                if (port == null || !(port instanceof _NetscriptPort__WEBPACK_IMPORTED_MODULE_37__[/* NetscriptPort */ "a"])) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Could not find port: " + port + ". This is a bug contact the game developer");
+                var port = _NetscriptWorker__WEBPACK_IMPORTED_MODULE_36__[/* NetscriptPorts */ "a"][port-1];
+                if (port == null || !(port instanceof _NetscriptPort__WEBPACK_IMPORTED_MODULE_38__[/* NetscriptPort */ "a"])) {
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Could not find port: " + port + ". This is a bug contact the game developer");
                 }
                 return port.clear();
-            } else if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_45__["isString"])(port)) { //Clear text file
+            } else if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_46__["isString"])(port)) { //Clear text file
                 var fn = port;
                 var server = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(workerScript.serverIp);
                 if (server == null) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Error getting Server for this script in clear(). This is a bug please contact game dev");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Error getting Server for this script in clear(). This is a bug please contact game dev");
                 }
-                var txtFile = Object(_TextFile__WEBPACK_IMPORTED_MODULE_32__["getTextFile"])(fn, server);
+                var txtFile = Object(_TextFile__WEBPACK_IMPORTED_MODULE_33__["getTextFile"])(fn, server);
                 if (txtFile != null) {
                     txtFile.write("");
                 }
             } else {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid argument passed in for clear(): " + port);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid argument passed in for clear(): " + port);
             }
             return 0;
         },
@@ -19765,15 +19894,15 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("getPortHandle", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptReadWriteRamCost * 10);
             if (isNaN(port)) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Invalid argument passed into getPortHandle(). Must be an integer between 1 and " + _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].NumNetscriptPorts);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Invalid argument passed into getPortHandle(). Must be an integer between 1 and " + _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].NumNetscriptPorts);
             }
             port = Math.round(port);
             if (port < 1 || port > _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].NumNetscriptPorts) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: getPortHandle() called with invalid port number: " + port + ". Only ports 1-" + _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].NumNetscriptPorts + " are valid");
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: getPortHandle() called with invalid port number: " + port + ". Only ports 1-" + _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].NumNetscriptPorts + " are valid");
             }
-            var port = _NetscriptWorker__WEBPACK_IMPORTED_MODULE_35__[/* NetscriptPorts */ "a"][port-1];
-            if (port == null || !(port instanceof _NetscriptPort__WEBPACK_IMPORTED_MODULE_37__[/* NetscriptPort */ "a"])) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Could not find port: " + port + ". This is a bug contact the game developer");
+            var port = _NetscriptWorker__WEBPACK_IMPORTED_MODULE_36__[/* NetscriptPorts */ "a"][port-1];
+            if (port == null || !(port instanceof _NetscriptPort__WEBPACK_IMPORTED_MODULE_38__[/* NetscriptPort */ "a"])) {
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: Could not find port: " + port + ". This is a bug contact the game developer");
             }
             return port;
         },
@@ -19788,7 +19917,7 @@ function NetscriptFunctions(workerScript) {
             }
             var s = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip);
             if (s == null) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, `Invalid server specified for rm(): ${ip}`);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, `Invalid server specified for rm(): ${ip}`);
             }
 
             if (fn.includes(".exe")) {
@@ -19815,7 +19944,7 @@ function NetscriptFunctions(workerScript) {
             } else if (fn.endsWith(".lit")) {
                 for (var i = 0; i < s.messages.length; ++i) {
                     var f = s.messages[i];
-                    if (!(f instanceof _Message__WEBPACK_IMPORTED_MODULE_21__[/* Message */ "a"]) && Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_45__["isString"])(f) && f === fn) {
+                    if (!(f instanceof _Message__WEBPACK_IMPORTED_MODULE_21__[/* Message */ "a"]) && Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_46__["isString"])(f) && f === fn) {
                         s.messages.splice(i, 1);
                         return true;
                     }
@@ -19845,7 +19974,7 @@ function NetscriptFunctions(workerScript) {
             var server = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip);
             if (server == null) {
                 workerScript.scriptRef.log("scriptRunning() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "scriptRunning() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "scriptRunning() failed. Invalid IP or hostname passed in: " + ip);
             }
             for (var i = 0; i < server.runningScripts.length; ++i) {
                 if (server.runningScripts[i].filename == scriptname) {
@@ -19862,12 +19991,12 @@ function NetscriptFunctions(workerScript) {
             var server = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip);
             if (server == null) {
                 workerScript.scriptRef.log("scriptKill() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "scriptKill() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "scriptKill() failed. Invalid IP or hostname passed in: " + ip);
             }
             var suc = false;
             for (var i = 0; i < server.runningScripts.length; ++i) {
                 if (server.runningScripts[i].filename == scriptname) {
-                    Object(_NetscriptWorker__WEBPACK_IMPORTED_MODULE_35__[/* killWorkerScript */ "d"])(server.runningScripts[i], server.ip);
+                    Object(_NetscriptWorker__WEBPACK_IMPORTED_MODULE_36__[/* killWorkerScript */ "d"])(server.runningScripts[i], server.ip);
                     suc = true;
                 }
             }
@@ -19885,7 +20014,7 @@ function NetscriptFunctions(workerScript) {
             var server = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip);
             if (server == null) {
                 workerScript.scriptRef.log("getScriptRam() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getScriptRam() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getScriptRam() failed. Invalid IP or hostname passed in: " + ip);
             }
             for (var i = 0; i < server.scripts.length; ++i) {
                 if (server.scripts[i].filename == scriptname) {
@@ -19902,7 +20031,7 @@ function NetscriptFunctions(workerScript) {
             var server = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip);
             if (server == null) {
                 workerScript.scriptRef.log("getHackTime() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getHackTime() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getHackTime() failed. Invalid IP or hostname passed in: " + ip);
             }
             return Object(_Hacking__WEBPACK_IMPORTED_MODULE_14__[/* calculateHackingTime */ "d"])(server, hack, int); //Returns seconds
         },
@@ -19914,7 +20043,7 @@ function NetscriptFunctions(workerScript) {
             var server = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip);
             if (server == null) {
                 workerScript.scriptRef.log("getGrowTime() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getGrowTime() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getGrowTime() failed. Invalid IP or hostname passed in: " + ip);
             }
             return Object(_Hacking__WEBPACK_IMPORTED_MODULE_14__[/* calculateGrowTime */ "a"])(server, hack, int); //Returns seconds
         },
@@ -19926,7 +20055,7 @@ function NetscriptFunctions(workerScript) {
             var server = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip);
             if (server == null) {
                 workerScript.scriptRef.log("getWeakenTime() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getWeakenTime() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getWeakenTime() failed. Invalid IP or hostname passed in: " + ip);
             }
             return Object(_Hacking__WEBPACK_IMPORTED_MODULE_14__[/* calculateWeakenTime */ "f"])(server, hack, int); //Returns seconds
         },
@@ -19946,7 +20075,7 @@ function NetscriptFunctions(workerScript) {
                 var server = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip);
                 if (server == null) {
                     workerScript.scriptRef.log("getScriptIncome() failed. Invalid IP or hostnamed passed in: " + ip);
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getScriptIncome() failed. Invalid IP or hostnamed passed in: " + ip);
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getScriptIncome() failed. Invalid IP or hostnamed passed in: " + ip);
                 }
                 var argsForScript = [];
                 for (var i = 2; i < arguments.length; ++i) {
@@ -19954,7 +20083,7 @@ function NetscriptFunctions(workerScript) {
                 }
                 var runningScriptObj = Object(_Script__WEBPACK_IMPORTED_MODULE_25__[/* findRunningScript */ "d"])(scriptname, argsForScript, server);
                 if (runningScriptObj == null) {
-                    workerScript.scriptRef.log("getScriptIncome() failed. No such script "+ scriptname + " on " + server.hostname + " with args: " + Object(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_42__["arrayToString"])(argsForScript));
+                    workerScript.scriptRef.log("getScriptIncome() failed. No such script "+ scriptname + " on " + server.hostname + " with args: " + Object(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_43__["arrayToString"])(argsForScript));
                     return -1;
                 }
                 return runningScriptObj.onlineMoneyMade / runningScriptObj.onlineRunningTime;
@@ -19967,8 +20096,8 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("getScriptExpGain", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptGetScriptRamCost);
             if (arguments.length === 0) {
                 var total = 0;
-                for (var i = 0; i < _NetscriptWorker__WEBPACK_IMPORTED_MODULE_35__[/* workerScripts */ "h"].length; ++i) {
-                    total += (_NetscriptWorker__WEBPACK_IMPORTED_MODULE_35__[/* workerScripts */ "h"][i].scriptRef.onlineExpGained / _NetscriptWorker__WEBPACK_IMPORTED_MODULE_35__[/* workerScripts */ "h"][i].scriptRef.onlineRunningTime);
+                for (var i = 0; i < _NetscriptWorker__WEBPACK_IMPORTED_MODULE_36__[/* workerScripts */ "h"].length; ++i) {
+                    total += (_NetscriptWorker__WEBPACK_IMPORTED_MODULE_36__[/* workerScripts */ "h"][i].scriptRef.onlineExpGained / _NetscriptWorker__WEBPACK_IMPORTED_MODULE_36__[/* workerScripts */ "h"][i].scriptRef.onlineRunningTime);
                 }
                 return total;
             } else {
@@ -19976,7 +20105,7 @@ function NetscriptFunctions(workerScript) {
                 var server = Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* getServer */ "e"])(ip);
                 if (server == null) {
                     workerScript.scriptRef.log("getScriptExpGain() failed. Invalid IP or hostnamed passed in: " + ip);
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getScriptExpGain() failed. Invalid IP or hostnamed passed in: " + ip);
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getScriptExpGain() failed. Invalid IP or hostnamed passed in: " + ip);
                 }
                 var argsForScript = [];
                 for (var i = 2; i < arguments.length; ++i) {
@@ -19984,7 +20113,7 @@ function NetscriptFunctions(workerScript) {
                 }
                 var runningScriptObj = Object(_Script__WEBPACK_IMPORTED_MODULE_25__[/* findRunningScript */ "d"])(scriptname, argsForScript, server);
                 if (runningScriptObj == null) {
-                    workerScript.scriptRef.log("getScriptExpGain() failed. No such script "+ scriptname + " on " + server.hostname + " with args: " + Object(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_42__["arrayToString"])(argsForScript));
+                    workerScript.scriptRef.log("getScriptExpGain() failed. No such script "+ scriptname + " on " + server.hostname + " with args: " + Object(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_43__["arrayToString"])(argsForScript));
                     return -1;
                 }
                 return runningScriptObj.onlineExpGained / runningScriptObj.onlineRunningTime;
@@ -19999,24 +20128,24 @@ function NetscriptFunctions(workerScript) {
         },
         prompt : function(txt) {
             if (workerScript.checkingRam) {return 0;}
-            if (_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_46__["yesNoBoxOpen"]) {
+            if (_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_47__["yesNoBoxOpen"]) {
                 workerScript.scriptRef.log("ERROR: confirm() failed because a pop-up dialog box is already open");
                 return false;
             }
-            if (!Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_45__["isString"])(txt)) {txt = String(txt);}
-            var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_46__["yesNoBoxGetYesButton"])(), noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_46__["yesNoBoxGetNoButton"])();
+            if (!Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_46__["isString"])(txt)) {txt = String(txt);}
+            var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_47__["yesNoBoxGetYesButton"])(), noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_47__["yesNoBoxGetNoButton"])();
             yesBtn.innerHTML = "Yes";
             noBtn.innerHTML = "No";
             return new Promise(function(resolve, reject) {
                 yesBtn.addEventListener("click", ()=>{
-                    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_46__["yesNoBoxClose"])();
+                    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_47__["yesNoBoxClose"])();
                     resolve(true);
                 });
                 noBtn.addEventListener("click", ()=>{
-                    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_46__["yesNoBoxClose"])();
+                    Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_47__["yesNoBoxClose"])();
                     resolve(false);
                 });
-                Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_46__["yesNoBoxCreate"])(txt);
+                Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_47__["yesNoBoxCreate"])(txt);
             });
         },
         wget : async function(url, target, ip=workerScript.serverIp) {
@@ -20068,7 +20197,7 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("universityCourse", ramCost);
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 1)) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run universityCourse(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run universityCourse(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
                     return false;
                 }
             }
@@ -20157,7 +20286,7 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("gymWorkout", ramCost);
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 1)) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run gymWorkout(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run gymWorkout(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
                     return false;
                 }
             }
@@ -20259,7 +20388,7 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("travelToCity", ramCost);
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 1)) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run travelToCity(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run travelToCity(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
                     return false;
                 }
             }
@@ -20273,7 +20402,7 @@ function NetscriptFunctions(workerScript) {
                 case _Locations__WEBPACK_IMPORTED_MODULE_20__["Locations"].Volhaven:
                     if(_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].money.lt(_Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].TravelCost)) {
                         workerScript.scriptRef.log("ERROR: not enough money to travel with travelToCity().");
-                        throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: not enough money to travel with travelToCity().");
+                        throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "ERROR: not enough money to travel with travelToCity().");
                     }
                     _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].loseMoney(_Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].TravelCost);
                     _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].city = cityname;
@@ -20296,12 +20425,12 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("purchaseTor", ramCost);
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 1)) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run purchaseTor(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run purchaseTor(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
                     return false;
                 }
             }
 
-            if (_SpecialServerIps__WEBPACK_IMPORTED_MODULE_28__[/* SpecialServerIps */ "a"]["Darkweb Server"] != null) {
+            if (_SpecialServerIps__WEBPACK_IMPORTED_MODULE_29__[/* SpecialServerIps */ "a"]["Darkweb Server"] != null) {
                 workerScript.scriptRef.log("You already have a TOR router! purchaseTor() failed");
                 return false;
             }
@@ -20313,11 +20442,11 @@ function NetscriptFunctions(workerScript) {
             _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].loseMoney(_Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].TorRouterCost);
 
             var darkweb = new _Server__WEBPACK_IMPORTED_MODULE_26__[/* Server */ "d"]({
-                ip:Object(_utils_IPAddress__WEBPACK_IMPORTED_MODULE_43__[/* createRandomIp */ "a"])(), hostname:"darkweb", organizationName:"",
+                ip:Object(_utils_IPAddress__WEBPACK_IMPORTED_MODULE_44__[/* createRandomIp */ "a"])(), hostname:"darkweb", organizationName:"",
                 isConnectedTo:false, adminRights:false, purchasedByPlayer:false, maxRam:1
             });
             Object(_Server__WEBPACK_IMPORTED_MODULE_26__[/* AddToAllServers */ "a"])(darkweb);
-            _SpecialServerIps__WEBPACK_IMPORTED_MODULE_28__[/* SpecialServerIps */ "a"].addIp("Darkweb Server", darkweb.ip);
+            _SpecialServerIps__WEBPACK_IMPORTED_MODULE_29__[/* SpecialServerIps */ "a"].addIp("Darkweb Server", darkweb.ip);
 
             const purchaseTor = document.getElementById("location-purchase-tor");
             purchaseTor.setAttribute("class", "a-link-button-bought");
@@ -20340,12 +20469,12 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("purchaseProgram", ramCost);
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 1)) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run purchaseProgram(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run purchaseProgram(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
                     return false;
                 }
             }
 
-            if (_SpecialServerIps__WEBPACK_IMPORTED_MODULE_28__[/* SpecialServerIps */ "a"]["Darkweb Server"] == null) {
+            if (_SpecialServerIps__WEBPACK_IMPORTED_MODULE_29__[/* SpecialServerIps */ "a"]["Darkweb Server"] == null) {
                 workerScript.scriptRef.log("ERROR: You do not have the TOR router. purchaseProgram() failed.");
                 return false;
             }
@@ -20392,7 +20521,7 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("getStats", ramCost);
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 1)) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getStats(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getStats(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
                     return {};
                 }
             }
@@ -20416,7 +20545,7 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("getCharacterInformation", ramCost);
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 1)) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getCharacterInformation(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getCharacterInformation(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
                     return {};
                 }
             }
@@ -20445,7 +20574,7 @@ function NetscriptFunctions(workerScript) {
                     workMoney:      _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].work_money_mult,
                 },
                 timeWorked:         _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].timeWorked,
-                tor:                _SpecialServerIps__WEBPACK_IMPORTED_MODULE_28__[/* SpecialServerIps */ "a"].hasOwnProperty("Darkweb Server"),
+                tor:                _SpecialServerIps__WEBPACK_IMPORTED_MODULE_29__[/* SpecialServerIps */ "a"].hasOwnProperty("Darkweb Server"),
                 workHackExpGain:    _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].workHackExpGained,
                 workStrExpGain:     _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].workStrExpGained,
                 workDefExpGain:     _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].workDefExpGained,
@@ -20465,7 +20594,7 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("isBusy", ramCost);
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 1)) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run isBusy(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run isBusy(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
                     return;
                 }
             }
@@ -20480,7 +20609,7 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("stopAction", ramCost);
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 1)) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run stopAction(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run stopAction(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
                     return false;
                 }
             }
@@ -20502,7 +20631,7 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("upgradeHomeRam", ramCost);
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 2)) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run upgradeHomeRam(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run upgradeHomeRam(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
                     return false;
                 }
             }
@@ -20538,7 +20667,7 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("getUpgradeHomeRamCost", ramCost);
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 2)) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getUpgradeHomeRamCost(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getUpgradeHomeRamCost(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
                     return false;
                 }
             }
@@ -20554,7 +20683,7 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("workForCompany", ramCost);
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 2)) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run workForCompany(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run workForCompany(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
                     return false;
                 }
             }
@@ -20616,7 +20745,7 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("applyToCompany", ramCost);
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 2)) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run applyToCompany(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run applyToCompany(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
                     return false;
                 }
             }
@@ -20673,7 +20802,7 @@ function NetscriptFunctions(workerScript) {
                     return false;
             }
             //The Player object's applyForJob function can return string with special error messages
-            if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_45__["isString"])(res)) {
+            if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_46__["isString"])(res)) {
                 workerScript.scriptRef.log(res);
                 return false;
             }
@@ -20697,7 +20826,7 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("getCompanyRep", ramCost);
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 2)) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getCompanyRep(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getCompanyRep(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
                     return false;
                 }
             }
@@ -20718,7 +20847,7 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("getCompanyFavor", ramCost);
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 2)) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getCompanyFavor(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getCompanyFavor(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
                     return false;
                 }
             }
@@ -20739,7 +20868,7 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("getCompanyFavorGain", ramCost);
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 2)) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getCompanyFavorGain(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getCompanyFavorGain(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
                     return -1;
                 }
             }
@@ -20760,7 +20889,7 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("checkFactionInvitations", ramCost);
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 2)) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run checkFactionInvitations(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run checkFactionInvitations(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
                     return false;
                 }
             }
@@ -20776,7 +20905,7 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("joinFaction", ramCost);
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 2)) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run joinFaction(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run joinFaction(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
                     return false;
                 }
             }
@@ -20815,7 +20944,7 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("workForFaction", ramCost);
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 2)) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run workForFaction(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run workForFaction(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
                     return false;
                 }
             }
@@ -20915,7 +21044,7 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("getFactionRep", ramCost);
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 2)) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getFactionRep(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getFactionRep(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
                     return -1;
                 }
             }
@@ -20936,7 +21065,7 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("getFactionFavor", ramCost);
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 2)) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getFactionFavor(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getFactionFavor(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
                     return -1;
                 }
             }
@@ -20957,7 +21086,7 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("getFactionFavorGain", ramCost);
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 2)) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getFactionFavorGain(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getFactionFavorGain(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
                     return -1;
                 }
             }
@@ -20978,7 +21107,7 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("donateToFaction", ramCost);
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 3)) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run donateToFaction(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run donateToFaction(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
                     return;
                 }
             }
@@ -21017,7 +21146,7 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("createProgram", ramCost);
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 3)) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run createProgram(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run createProgram(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
                     return false;
                 }
             }
@@ -21071,7 +21200,7 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("commitCrime", ramCost);
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 3)) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run commitCrime(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run commitCrime(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
                     return;
                 }
             }
@@ -21112,7 +21241,7 @@ function NetscriptFunctions(workerScript) {
 
             const crime = Object(_Crime_CrimeHelpers__WEBPACK_IMPORTED_MODULE_6__[/* findCrime */ "b"])(crimeRoughName.toLowerCase());
             if(crime == null) { // couldn't find crime
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid crime passed into commitCrime(): " + crimeRoughName);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid crime passed into commitCrime(): " + crimeRoughName);
             }
             if(workerScript.disableLogs.ALL == null && workerScript.disableLogs.commitCrime == null) {
                 workerScript.scriptRef.log("Attempting to commit crime: "+crime.name+"...");
@@ -21128,14 +21257,14 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("getCrimeChance", ramCost);
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 3)) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getCrimeChance(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getCrimeChance(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
                     return;
                 }
             }
 
             const crime = Object(_Crime_CrimeHelpers__WEBPACK_IMPORTED_MODULE_6__[/* findCrime */ "b"])(crimeRoughName.toLowerCase());
             if(crime == null) {
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid crime passed into getCrimeChance(): " + crime);
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Invalid crime passed into getCrimeChance(): " + crime);
             }
 
             return crime.successRate();
@@ -21149,7 +21278,7 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("getOwnedAugmentations", ramCost);
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 3)) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getOwnedAugmentations(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getOwnedAugmentations(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
                     return [];
                 }
             }
@@ -21173,7 +21302,7 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("getOwnedSourceFiles", ramCost);
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 3)) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getOwnedSourceFiles(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getOwnedSourceFiles(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
                     return [];
                 }
             }
@@ -21192,7 +21321,7 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("getAugmentationsFromFaction", ramCost);
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 3)) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getAugmentationsFromFaction(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getAugmentationsFromFaction(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
                     return [];
                 }
             }
@@ -21218,7 +21347,7 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("getAugmentationPrereq", ramCost);
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 3)) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getAugmentationPrereq(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getAugmentationPrereq(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
                     return false;
                 }
             }
@@ -21240,7 +21369,7 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("getAugmentationCost", ramCost);
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 3)) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getAugmentationCost(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run getAugmentationCost(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
                     return false;
                 }
             }
@@ -21262,7 +21391,7 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("purchaseAugmentation", ramCost);
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 3)) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run purchaseAugmentation(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run purchaseAugmentation(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
                     return false;
                 }
             }
@@ -21311,7 +21440,7 @@ function NetscriptFunctions(workerScript) {
 
             var res = Object(_Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_18__[/* purchaseAugmentation */ "e"])(aug, fac, true);
             workerScript.scriptRef.log(res);
-            if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_45__["isString"])(res) && res.startsWith("You purchased")) {
+            if (Object(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_46__["isString"])(res) && res.startsWith("You purchased")) {
                 _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].gainIntelligenceExp(_Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].IntelligenceSingFnBaseExpGain);
                 return true;
             } else {
@@ -21327,7 +21456,7 @@ function NetscriptFunctions(workerScript) {
             updateDynamicRam("installAugmentations", ramCost);
             if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 3)) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run installAugmentations(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Cannot run installAugmentations(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
                     return false;
                 }
             }
@@ -21349,7 +21478,7 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("getMemberNames", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptGangApiBaseRamCost / 4);
                 }
                 updateDynamicRam("getMemberNames", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptGangApiBaseRamCost / 4);
-                _NetscriptGang__WEBPACK_IMPORTED_MODULE_34__[/* checkGangApiAccess */ "a"](workerScript, "getMemberNames");
+                _NetscriptGang__WEBPACK_IMPORTED_MODULE_35__[/* checkGangApiAccess */ "a"](workerScript, "getMemberNames");
 
                 try {
                     const names = [];
@@ -21358,7 +21487,7 @@ function NetscriptFunctions(workerScript) {
                     }
                     return names;
                 } catch(e) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_34__[/* unknownGangApiExceptionMessage */ "b"]("getMemberNames", e));
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_35__[/* unknownGangApiExceptionMessage */ "b"]("getMemberNames", e));
                 }
             },
             getGangInformation : function() {
@@ -21366,7 +21495,7 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("getGangInformation", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptGangApiBaseRamCost / 2);
                 }
                 updateDynamicRam("getGangInformation", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptGangApiBaseRamCost / 2);
-                _NetscriptGang__WEBPACK_IMPORTED_MODULE_34__[/* checkGangApiAccess */ "a"](workerScript, "getGangInformation");
+                _NetscriptGang__WEBPACK_IMPORTED_MODULE_35__[/* checkGangApiAccess */ "a"](workerScript, "getGangInformation");
 
                 try {
                     return {
@@ -21383,7 +21512,7 @@ function NetscriptFunctions(workerScript) {
                         wantedLevelGainRate:        _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].gang.wantedGainRate,
                     }
                 } catch(e) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_34__[/* unknownGangApiExceptionMessage */ "b"]("getGangInformation", e));
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_35__[/* unknownGangApiExceptionMessage */ "b"]("getGangInformation", e));
                 }
             },
             getOtherGangInformation : function() {
@@ -21391,12 +21520,12 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("getOtherGangInformation", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptGangApiBaseRamCost / 2);
                 }
                 updateDynamicRam("getOtherGangInformation", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptGangApiBaseRamCost / 2);
-                _NetscriptGang__WEBPACK_IMPORTED_MODULE_34__[/* checkGangApiAccess */ "a"](workerScript, "getOtherGangInformation");
+                _NetscriptGang__WEBPACK_IMPORTED_MODULE_35__[/* checkGangApiAccess */ "a"](workerScript, "getOtherGangInformation");
 
                 try {
                     return Object.assign(_Gang__WEBPACK_IMPORTED_MODULE_15__[/* AllGangs */ "a"]);
                 } catch(e) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_34__[/* unknownGangApiExceptionMessage */ "b"]("getOtherGangInformation", e));
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_35__[/* unknownGangApiExceptionMessage */ "b"]("getOtherGangInformation", e));
                 }
             },
             getMemberInformation : function(name) {
@@ -21404,7 +21533,7 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("getMemberInformation", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptGangApiBaseRamCost / 2);
                 }
                 updateDynamicRam("getMemberInformation", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptGangApiBaseRamCost / 2);
-                _NetscriptGang__WEBPACK_IMPORTED_MODULE_34__[/* checkGangApiAccess */ "a"](workerScript, "getMemberInformation");
+                _NetscriptGang__WEBPACK_IMPORTED_MODULE_35__[/* checkGangApiAccess */ "a"](workerScript, "getMemberInformation");
 
                 try {
                     for (const member of _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].gang.members) {
@@ -21438,7 +21567,7 @@ function NetscriptFunctions(workerScript) {
                     workerScript.log(`Invalid argument passed to gang.getMemberInformation(). No gang member could be found with name ${name}`);
                     return {}; // Member could not be found
                 } catch(e) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_34__[/* unknownGangApiExceptionMessage */ "b"]("getMemberInformation", e));
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_35__[/* unknownGangApiExceptionMessage */ "b"]("getMemberInformation", e));
                 }
             },
             canRecruitMember : function() {
@@ -21446,12 +21575,12 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("canRecruitMember", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptGangApiBaseRamCost / 4);
                 }
                 updateDynamicRam("canRecruitMember", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptGangApiBaseRamCost / 4);
-                _NetscriptGang__WEBPACK_IMPORTED_MODULE_34__[/* checkGangApiAccess */ "a"](workerScript, "canRecruitMember");
+                _NetscriptGang__WEBPACK_IMPORTED_MODULE_35__[/* checkGangApiAccess */ "a"](workerScript, "canRecruitMember");
 
                 try {
                     return _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].gang.canRecruitMember();
                 } catch(e) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_34__[/* unknownGangApiExceptionMessage */ "b"]("canRecruitMember", e));
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_35__[/* unknownGangApiExceptionMessage */ "b"]("canRecruitMember", e));
                 }
             },
             recruitMember : function(name) {
@@ -21459,7 +21588,7 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("recruitMember", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptGangApiBaseRamCost / 2);
                 }
                 updateDynamicRam("recruitMember", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptGangApiBaseRamCost / 2);
-                _NetscriptGang__WEBPACK_IMPORTED_MODULE_34__[/* checkGangApiAccess */ "a"](workerScript, "recruitMember");
+                _NetscriptGang__WEBPACK_IMPORTED_MODULE_35__[/* checkGangApiAccess */ "a"](workerScript, "recruitMember");
 
                 try {
                     const res = _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].gang.recruitMember(name);
@@ -21473,7 +21602,7 @@ function NetscriptFunctions(workerScript) {
 
                     return res;
                 } catch(e) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_34__[/* unknownGangApiExceptionMessage */ "b"]("recruitMember", e));
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_35__[/* unknownGangApiExceptionMessage */ "b"]("recruitMember", e));
                 }
             },
             getTaskNames : function() {
@@ -21481,14 +21610,14 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("getTaskNames", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptGangApiBaseRamCost / 4);
                 }
                 updateDynamicRam("getTaskNames", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptGangApiBaseRamCost / 4);
-                _NetscriptGang__WEBPACK_IMPORTED_MODULE_34__[/* checkGangApiAccess */ "a"](workerScript, "getTaskNames");
+                _NetscriptGang__WEBPACK_IMPORTED_MODULE_35__[/* checkGangApiAccess */ "a"](workerScript, "getTaskNames");
 
                 try {
                     const tasks = _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].gang.getAllTaskNames();
                     tasks.unshift("Unassigned");
                     return tasks;
                 } catch(e) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_34__[/* unknownGangApiExceptionMessage */ "b"]("getTaskNames", e));
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_35__[/* unknownGangApiExceptionMessage */ "b"]("getTaskNames", e));
                 }
             },
             setMemberTask : function(memberName, taskName) {
@@ -21496,7 +21625,7 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("setMemberTask", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptGangApiBaseRamCost / 2);
                 }
                 updateDynamicRam("setMemberTask", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptGangApiBaseRamCost / 2);
-                _NetscriptGang__WEBPACK_IMPORTED_MODULE_34__[/* checkGangApiAccess */ "a"](workerScript, "setMemberTask");
+                _NetscriptGang__WEBPACK_IMPORTED_MODULE_35__[/* checkGangApiAccess */ "a"](workerScript, "setMemberTask");
 
                 try {
                     for (const member of _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].gang.members) {
@@ -21517,7 +21646,7 @@ function NetscriptFunctions(workerScript) {
                     workerScript.log(`Invalid argument passed to gang.setMemberTask(). No gang member could be found with name ${memberName}`);
                     return false;
                 } catch(e) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_34__[/* unknownGangApiExceptionMessage */ "b"]("setMemberTask", e));
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_35__[/* unknownGangApiExceptionMessage */ "b"]("setMemberTask", e));
                 }
             },
             getEquipmentNames : function() {
@@ -21525,12 +21654,12 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("getEquipmentNames", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptGangApiBaseRamCost / 4);
                 }
                 updateDynamicRam("getEquipmentNames", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptGangApiBaseRamCost / 4);
-                _NetscriptGang__WEBPACK_IMPORTED_MODULE_34__[/* checkGangApiAccess */ "a"](workerScript, "getEquipmentNames");
+                _NetscriptGang__WEBPACK_IMPORTED_MODULE_35__[/* checkGangApiAccess */ "a"](workerScript, "getEquipmentNames");
 
                 try {
                     return _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].gang.getAllUpgradeNames();
                 } catch(e) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_34__[/* unknownGangApiExceptionMessage */ "b"]("getEquipmentNames", e));
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_35__[/* unknownGangApiExceptionMessage */ "b"]("getEquipmentNames", e));
                 }
             },
             getEquipmentCost : function(equipName) {
@@ -21538,12 +21667,12 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("getEquipmentCost", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptGangApiBaseRamCost / 2);
                 }
                 updateDynamicRam("getEquipmentCost", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptGangApiBaseRamCost / 2);
-                _NetscriptGang__WEBPACK_IMPORTED_MODULE_34__[/* checkGangApiAccess */ "a"](workerScript, "getEquipmentCost");
+                _NetscriptGang__WEBPACK_IMPORTED_MODULE_35__[/* checkGangApiAccess */ "a"](workerScript, "getEquipmentCost");
 
                 try {
                     return _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].gang.getUpgradeCost(equipName);
                 } catch(e) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_34__[/* unknownGangApiExceptionMessage */ "b"]("getEquipmentCost", e));
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_35__[/* unknownGangApiExceptionMessage */ "b"]("getEquipmentCost", e));
                 }
             },
             getEquipmentType : function(equipName) {
@@ -21551,12 +21680,12 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("getEquipmentType", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptGangApiBaseRamCost / 2);
                 }
                 updateDynamicRam("getEquipmentType", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptGangApiBaseRamCost / 2);
-                _NetscriptGang__WEBPACK_IMPORTED_MODULE_34__[/* checkGangApiAccess */ "a"](workerScript, "getEquipmentType");
+                _NetscriptGang__WEBPACK_IMPORTED_MODULE_35__[/* checkGangApiAccess */ "a"](workerScript, "getEquipmentType");
 
                 try {
                     return _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].gang.getUpgradeType(equipName);
                 } catch(e) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_34__[/* unknownGangApiExceptionMessage */ "b"]("getEquipmentType", e));
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_35__[/* unknownGangApiExceptionMessage */ "b"]("getEquipmentType", e));
                 }
             },
             purchaseEquipment : function(memberName, equipName) {
@@ -21564,7 +21693,7 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("purchaseEquipment", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptGangApiBaseRamCost);
                 }
                 updateDynamicRam("purchaseEquipment", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptGangApiBaseRamCost);
-                _NetscriptGang__WEBPACK_IMPORTED_MODULE_34__[/* checkGangApiAccess */ "a"](workerScript, "purchaseEquipment");
+                _NetscriptGang__WEBPACK_IMPORTED_MODULE_35__[/* checkGangApiAccess */ "a"](workerScript, "purchaseEquipment");
 
                 try {
                     for (const member of _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].gang.members) {
@@ -21585,7 +21714,7 @@ function NetscriptFunctions(workerScript) {
                     workerScript.log(`Invalid argument passed to gang.purchaseEquipment(). No gang member could be found with name ${memberName}`);
                     return false;
                 } catch(e) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_34__[/* unknownGangApiExceptionMessage */ "b"]("purchaseEquipment", e));
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_35__[/* unknownGangApiExceptionMessage */ "b"]("purchaseEquipment", e));
                 }
             },
             ascendMember : function(name) {
@@ -21593,7 +21722,7 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("ascendMember", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptGangApiBaseRamCost);
                 }
                 updateDynamicRam("ascendMember", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptGangApiBaseRamCost);
-                _NetscriptGang__WEBPACK_IMPORTED_MODULE_34__[/* checkGangApiAccess */ "a"](workerScript, "ascendMember");
+                _NetscriptGang__WEBPACK_IMPORTED_MODULE_35__[/* checkGangApiAccess */ "a"](workerScript, "ascendMember");
 
                 try {
                     for (const member of _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].gang.members) {
@@ -21605,7 +21734,7 @@ function NetscriptFunctions(workerScript) {
                     workerScript.log(`Invalid argument passed to gang.ascendMember(). No gang member could be found with name ${name}`);
                     return false;
                 } catch(e) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_34__[/* unknownGangApiExceptionMessage */ "b"]("ascendMember", e));
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_35__[/* unknownGangApiExceptionMessage */ "b"]("ascendMember", e));
                 }
             },
             setTerritoryWarfare : function(engage) {
@@ -21613,7 +21742,7 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("setTerritoryWarfare", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptGangApiBaseRamCost / 2);
                 }
                 updateDynamicRam("setTerritoryWarfare", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptGangApiBaseRamCost / 2);
-                _NetscriptGang__WEBPACK_IMPORTED_MODULE_34__[/* checkGangApiAccess */ "a"](workerScript, "setTerritoryWarfare");
+                _NetscriptGang__WEBPACK_IMPORTED_MODULE_35__[/* checkGangApiAccess */ "a"](workerScript, "setTerritoryWarfare");
 
                 try {
                     if (engage) {
@@ -21628,7 +21757,7 @@ function NetscriptFunctions(workerScript) {
                         }
                     }
                 } catch(e) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_34__[/* unknownGangApiExceptionMessage */ "b"]("setTerritoryWarfare", e));
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_35__[/* unknownGangApiExceptionMessage */ "b"]("setTerritoryWarfare", e));
                 }
             },
             getChanceToWinClash : function(otherGang) {
@@ -21636,7 +21765,7 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("getChanceToWinClash", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptGangApiBaseRamCost);
                 }
                 updateDynamicRam("getChanceToWinClash", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptGangApiBaseRamCost);
-                _NetscriptGang__WEBPACK_IMPORTED_MODULE_34__[/* checkGangApiAccess */ "a"](workerScript, "getChanceToWinClash");
+                _NetscriptGang__WEBPACK_IMPORTED_MODULE_35__[/* checkGangApiAccess */ "a"](workerScript, "getChanceToWinClash");
 
                 try {
                     if (_Gang__WEBPACK_IMPORTED_MODULE_15__[/* AllGangs */ "a"][otherGang] == null) {
@@ -21649,17 +21778,17 @@ function NetscriptFunctions(workerScript) {
 
                     return playerPower / (otherPower + playerPower);
                 } catch(e) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_34__[/* unknownGangApiExceptionMessage */ "b"]("getChanceToWinClash", e));
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_35__[/* unknownGangApiExceptionMessage */ "b"]("getChanceToWinClash", e));
                 }
             },
             getBonusTime : function() {
                 if (workerScript.checkingRam) { return 0; }
-                _NetscriptGang__WEBPACK_IMPORTED_MODULE_34__[/* checkGangApiAccess */ "a"](workerScript, "getBonusTime");
+                _NetscriptGang__WEBPACK_IMPORTED_MODULE_35__[/* checkGangApiAccess */ "a"](workerScript, "getBonusTime");
 
                 try {
                     return Math.round(_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].gang.storedCycles / 5);
                 } catch(e) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_34__[/* unknownGangApiExceptionMessage */ "b"]("getBonusTime", e));
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, _NetscriptGang__WEBPACK_IMPORTED_MODULE_35__[/* unknownGangApiExceptionMessage */ "b"]("getBonusTime", e));
                 }
             },
         }, // end gang namespace
@@ -21674,7 +21803,7 @@ function NetscriptFunctions(workerScript) {
                 if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_7__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
                     return _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner.getContractNamesNetscriptFn();
                 }
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getContractNames() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getContractNames() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             getOperationNames : function() {
@@ -21685,7 +21814,7 @@ function NetscriptFunctions(workerScript) {
                 if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_7__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
                     return _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner.getOperationNamesNetscriptFn();
                 }
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getOperationNames() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getOperationNames() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             getBlackOpNames : function() {
@@ -21696,7 +21825,7 @@ function NetscriptFunctions(workerScript) {
                 if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_7__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
                     return _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner.getBlackOpNamesNetscriptFn();
                 }
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getBlackOpNames() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getBlackOpNames() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             getGeneralActionNames : function() {
@@ -21707,7 +21836,7 @@ function NetscriptFunctions(workerScript) {
                 if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_7__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
                     return _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner.getGeneralActionNamesNetscriptFn();
                 }
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getGeneralActionNames() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getGeneralActionNames() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             getSkillNames : function() {
@@ -21718,7 +21847,7 @@ function NetscriptFunctions(workerScript) {
                 if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_7__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
                     return _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner.getSkillNamesNetscriptFn();
                 }
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getSkillNames() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getSkillNames() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             startAction : function(type="", name="") {
@@ -21730,10 +21859,10 @@ function NetscriptFunctions(workerScript) {
                     try {
                         return _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner.startActionNetscriptFn(type, name, workerScript);
                     } catch(e) {
-                        throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.startAction() failed with exception: " + e);
+                        throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.startAction() failed with exception: " + e);
                     }
                 }
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "startAction() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "startAction() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             stopBladeburnerAction : function() {
@@ -21744,7 +21873,7 @@ function NetscriptFunctions(workerScript) {
                 if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_7__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
                     return _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner.resetAction();
                 }
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "stopBladeburnerAction() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "stopBladeburnerAction() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             getCurrentAction : function() {
@@ -21755,7 +21884,7 @@ function NetscriptFunctions(workerScript) {
                 if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_7__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
                     return _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner.getTypeAndNameFromActionId(_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner.action);
                 }
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getCurrentAction() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getCurrentAction() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             getActionTime : function(type="", name="") {
@@ -21767,10 +21896,10 @@ function NetscriptFunctions(workerScript) {
                     try {
                         return _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner.getActionTimeNetscriptFn(type, name, workerScript);
                     } catch(e) {
-                        throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.getActionTime() failed with exception: " + e);
+                        throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.getActionTime() failed with exception: " + e);
                     }
                 }
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getActionTime() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getActionTime() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             getActionEstimatedSuccessChance : function(type="", name="") {
@@ -21782,10 +21911,10 @@ function NetscriptFunctions(workerScript) {
                     try {
                         return _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner.getActionEstimatedSuccessChanceNetscriptFn(type, name, workerScript);
                     } catch(e) {
-                        throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.getActionEstimatedSuccessChance() failed with exception: " + e);
+                        throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.getActionEstimatedSuccessChance() failed with exception: " + e);
                     }
                 }
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getActionEstimatedSuccessChance() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getActionEstimatedSuccessChance() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             getActionRepGain: function(type="", name="", level) {
@@ -21793,10 +21922,10 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("getActionRepGain", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
                 }
                 updateDynamicRam("getActionRepGain", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
-                Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_33__[/* checkBladeburnerAccess */ "a"])(workerScript, "getActionRepGain");
+                Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_34__[/* checkBladeburnerAccess */ "a"])(workerScript, "getActionRepGain");
 
                 try {
-                    var errorLogText = Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_33__[/* unknownBladeburnerActionErrorMessage */ "b"])("getActionAutolevel", type, name);
+                    var errorLogText = Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_34__[/* unknownBladeburnerActionErrorMessage */ "b"])("getActionAutolevel", type, name);
                     const actionId = _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner.getActionIdFromTypeAndName(type, name);
                     if (actionId == null) {
                         workerScript.log(errorLogText);
@@ -21816,7 +21945,7 @@ function NetscriptFunctions(workerScript) {
 
                     return actionObj.rankGain * rewardMultiplier * _BitNode_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_5__["BitNodeMultipliers"].BladeburnerRank;
                 } catch(err) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_33__[/* unknownBladeburnerExceptionMessage */ "c"])("getActionAutolevel", err));
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_34__[/* unknownBladeburnerExceptionMessage */ "c"])("getActionAutolevel", err));
                 }
             },
             getActionCountRemaining : function(type="", name="") {
@@ -21828,10 +21957,10 @@ function NetscriptFunctions(workerScript) {
                     try {
                         return _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner.getActionCountRemainingNetscriptFn(type, name, workerScript);
                     } catch(e) {
-                        throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.getActionCountRemaining() failed with exception: " + e);
+                        throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.getActionCountRemaining() failed with exception: " + e);
                     }
                 }
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getActionCountRemaining() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getActionCountRemaining() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             getActionMaxLevel: function(type="", name="") {
@@ -21839,10 +21968,10 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("getActionMaxLevel", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
                 }
                 updateDynamicRam("getActionMaxLevel", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
-                Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_33__[/* checkBladeburnerAccess */ "a"])(workerScript, "getActionMaxLevel");
+                Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_34__[/* checkBladeburnerAccess */ "a"])(workerScript, "getActionMaxLevel");
 
                 try {
-                    var errorLogText = Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_33__[/* unknownBladeburnerActionErrorMessage */ "b"])("getActionMaxLevel", type, name);
+                    var errorLogText = Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_34__[/* unknownBladeburnerActionErrorMessage */ "b"])("getActionMaxLevel", type, name);
                     const actionId = _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner.getActionIdFromTypeAndName(type, name);
                     if (actionId == null) {
                         workerScript.log(errorLogText);
@@ -21855,7 +21984,7 @@ function NetscriptFunctions(workerScript) {
                     }
                     return actionObj.maxLevel;
                 } catch(err) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_33__[/* unknownBladeburnerExceptionMessage */ "c"])("getActionMaxLevel", err));
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_34__[/* unknownBladeburnerExceptionMessage */ "c"])("getActionMaxLevel", err));
                 }
             },
             getActionCurrentLevel: function(type="", name="") {
@@ -21863,10 +21992,10 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("getActionCurrentLevel", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
                 }
                 updateDynamicRam("getActionCurrentLevel", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
-                Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_33__[/* checkBladeburnerAccess */ "a"])(workerScript, "getActionCurrentLevel");
+                Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_34__[/* checkBladeburnerAccess */ "a"])(workerScript, "getActionCurrentLevel");
 
                 try {
-                    var errorLogText = Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_33__[/* unknownBladeburnerActionErrorMessage */ "b"])("getActionCurrentLevel", type, name);
+                    var errorLogText = Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_34__[/* unknownBladeburnerActionErrorMessage */ "b"])("getActionCurrentLevel", type, name);
                     const actionId = _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner.getActionIdFromTypeAndName(type, name);
                     if (actionId == null) {
                         workerScript.log(errorLogText);
@@ -21879,7 +22008,7 @@ function NetscriptFunctions(workerScript) {
                     }
                     return actionObj.level;
                 } catch(err) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_33__[/* unknownBladeburnerExceptionMessage */ "c"])("getActionCurrentLevel", err));
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_34__[/* unknownBladeburnerExceptionMessage */ "c"])("getActionCurrentLevel", err));
                 }
             },
             getActionAutolevel: function(type="", name="") {
@@ -21887,10 +22016,10 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("getActionAutolevel", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
                 }
                 updateDynamicRam("getActionAutolevel", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
-                Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_33__[/* checkBladeburnerAccess */ "a"])(workerScript, "getActionAutolevel");
+                Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_34__[/* checkBladeburnerAccess */ "a"])(workerScript, "getActionAutolevel");
 
                 try {
-                    var errorLogText = Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_33__[/* unknownBladeburnerActionErrorMessage */ "b"])("getActionAutolevel", type, name);
+                    var errorLogText = Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_34__[/* unknownBladeburnerActionErrorMessage */ "b"])("getActionAutolevel", type, name);
                     const actionId = _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner.getActionIdFromTypeAndName(type, name);
                     if (actionId == null) {
                         workerScript.log(errorLogText);
@@ -21903,7 +22032,7 @@ function NetscriptFunctions(workerScript) {
                     }
                     return actionObj.autoLevel;
                 } catch(err) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_33__[/* unknownBladeburnerExceptionMessage */ "c"])("getActionAutolevel", err));
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_34__[/* unknownBladeburnerExceptionMessage */ "c"])("getActionAutolevel", err));
                 }
             },
             setActionAutolevel: function(type="", name="", autoLevel=true) {
@@ -21911,10 +22040,10 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("setActionAutolevel", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
                 }
                 updateDynamicRam("setActionAutolevel", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
-                Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_33__[/* checkBladeburnerAccess */ "a"])(workerScript, "setActionAutolevel");
+                Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_34__[/* checkBladeburnerAccess */ "a"])(workerScript, "setActionAutolevel");
 
                 try {
-                    var errorLogText = Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_33__[/* unknownBladeburnerActionErrorMessage */ "b"])("setActionAutolevel", type, name);
+                    var errorLogText = Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_34__[/* unknownBladeburnerActionErrorMessage */ "b"])("setActionAutolevel", type, name);
                     const actionId = _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner.getActionIdFromTypeAndName(type, name);
                     if (actionId == null) {
                         workerScript.log(errorLogText);
@@ -21927,7 +22056,7 @@ function NetscriptFunctions(workerScript) {
                     }
                     actionObj.autoLevel = autoLevel;
                 } catch(err) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_33__[/* unknownBladeburnerExceptionMessage */ "c"])("setActionAutolevel", err));
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_34__[/* unknownBladeburnerExceptionMessage */ "c"])("setActionAutolevel", err));
                 }
             },
             setActionLevel: function(type="", name="", level=1) {
@@ -21935,10 +22064,10 @@ function NetscriptFunctions(workerScript) {
                     return updateStaticRam("setActionLevel", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
                 }
                 updateDynamicRam("setActionLevel", _Constants__WEBPACK_IMPORTED_MODULE_12__["CONSTANTS"].ScriptBladeburnerApiBaseRamCost);
-                Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_33__[/* checkBladeburnerAccess */ "a"])(workerScript, "setActionLevel");
+                Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_34__[/* checkBladeburnerAccess */ "a"])(workerScript, "setActionLevel");
 
                 try {
-                    var errorLogText = Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_33__[/* unknownBladeburnerActionErrorMessage */ "b"])("setActionLevel", type, name);
+                    var errorLogText = Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_34__[/* unknownBladeburnerActionErrorMessage */ "b"])("setActionLevel", type, name);
                     const actionId = _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner.getActionIdFromTypeAndName(type, name);
                     if (actionId == null) {
                         workerScript.log(errorLogText);
@@ -21959,7 +22088,7 @@ function NetscriptFunctions(workerScript) {
                     }
                     actionObj.level = level;
                 } catch(err) {
-                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_33__[/* unknownBladeburnerExceptionMessage */ "c"])("setActionLevel", err));
+                    throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, Object(_NetscriptBladeburner__WEBPACK_IMPORTED_MODULE_34__[/* unknownBladeburnerExceptionMessage */ "c"])("setActionLevel", err));
                 }
             },
             getRank : function() {
@@ -21970,7 +22099,7 @@ function NetscriptFunctions(workerScript) {
                 if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_7__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
                     return _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner.rank;
                 }
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getRank() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getRank() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             getSkillPoints : function() {
@@ -21981,7 +22110,7 @@ function NetscriptFunctions(workerScript) {
                 if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_7__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
                     return _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner.skillPoints;
                 }
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getSkillPoints() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getSkillPoints() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             getSkillLevel : function(skillName="") {
@@ -21993,10 +22122,10 @@ function NetscriptFunctions(workerScript) {
                     try {
                         return _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner.getSkillLevelNetscriptFn(skillName, workerScript);
                     } catch(e) {
-                        throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.getSkillLevel() failed with exception: " + e);
+                        throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.getSkillLevel() failed with exception: " + e);
                     }
                 }
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getSkillLevel() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getSkillLevel() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             getSkillUpgradeCost : function(skillName="") {
@@ -22008,10 +22137,10 @@ function NetscriptFunctions(workerScript) {
                     try {
                         return _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner.getSkillUpgradeCostNetscriptFn(skillName, workerScript);
                     } catch(e) {
-                        throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.getSkillUpgradeCost() failed with exception: " + e);
+                        throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.getSkillUpgradeCost() failed with exception: " + e);
                     }
                 }
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getSkillUpgradeCost() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getSkillUpgradeCost() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             upgradeSkill : function(skillName) {
@@ -22023,10 +22152,10 @@ function NetscriptFunctions(workerScript) {
                     try {
                         return _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner.upgradeSkillNetscriptFn(skillName, workerScript);
                     } catch(e) {
-                        throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.upgradeSkill() failed with exception: " + e);
+                        throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.upgradeSkill() failed with exception: " + e);
                     }
                 }
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "upgradeSkill() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "upgradeSkill() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             getTeamSize : function(type="", name="") {
@@ -22038,10 +22167,10 @@ function NetscriptFunctions(workerScript) {
                     try {
                         return _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner.getTeamSizeNetscriptFn(type, name, workerScript);
                     } catch(e) {
-                        throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.getTeamSize() failed with exception: " + e);
+                        throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.getTeamSize() failed with exception: " + e);
                     }
                 }
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getTeamSize() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getTeamSize() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             setTeamSize : function(type="", name="", size) {
@@ -22053,10 +22182,10 @@ function NetscriptFunctions(workerScript) {
                     try {
                         return _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner.setTeamSizeNetscriptFn(type, name, size, workerScript);
                     } catch(e) {
-                        throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.setTeamSize() failed with exception: " + e);
+                        throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.setTeamSize() failed with exception: " + e);
                     }
                 }
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "setTeamSize() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "setTeamSize() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             getCityEstimatedPopulation : function(cityName) {
@@ -22068,10 +22197,10 @@ function NetscriptFunctions(workerScript) {
                     try {
                         return _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner.getCityEstimatedPopulationNetscriptFn(cityName, workerScript);
                     } catch(e) {
-                        throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.getCityEstimatedPopulation() failed with exception: " + e);
+                        throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.getCityEstimatedPopulation() failed with exception: " + e);
                     }
                 }
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getCityEstimatedPopulation() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getCityEstimatedPopulation() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             getCityEstimatedCommunities : function(cityName) {
@@ -22083,10 +22212,10 @@ function NetscriptFunctions(workerScript) {
                     try {
                         return _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner.getCityEstimatedCommunitiesNetscriptFn(cityName, workerScript);
                     } catch(e) {
-                        throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.getCityEstimatedCommunities() failed with exception: " + e);
+                        throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.getCityEstimatedCommunities() failed with exception: " + e);
                     }
                 }
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getCityEstimatedCommunities() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getCityEstimatedCommunities() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             getCityChaos : function(cityName) {
@@ -22098,10 +22227,10 @@ function NetscriptFunctions(workerScript) {
                     try {
                         return _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner.getCityChaosNetscriptFn(cityName, workerScript);
                     } catch(e) {
-                        throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.getCityChaos() failed with exception: " + e);
+                        throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.getCityChaos() failed with exception: " + e);
                     }
                 }
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getCityChaos() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getCityChaos() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             getCity : function() {
@@ -22113,10 +22242,10 @@ function NetscriptFunctions(workerScript) {
                     try {
                         return _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner.city;
                     } catch(e) {
-                        throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.getCity() failed with exception: " + e);
+                        throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.getCity() failed with exception: " + e);
                     }
                 }
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getCity() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getCity() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             switchCity : function(cityName) {
@@ -22128,10 +22257,10 @@ function NetscriptFunctions(workerScript) {
                     try {
                         return _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner.switchCityNetscriptFn(cityName, workerScript);
                     } catch(e) {
-                        throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.switchCity() failed with exception: " + e);
+                        throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "Bladeburner.switchCity() failed with exception: " + e);
                     }
                 }
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "switchCity() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "switchCity() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             getStamina : function() {
@@ -22142,7 +22271,7 @@ function NetscriptFunctions(workerScript) {
                 if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_7__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
                     return [_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner.stamina, _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner.maxStamina];
                 }
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getStamina() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getStamina() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             joinBladeburnerFaction : function() {
@@ -22153,7 +22282,7 @@ function NetscriptFunctions(workerScript) {
                 if (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_7__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
                     return _Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner.joinBladeburnerFactionNetscriptFn(workerScript);
                 }
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "joinBladeburnerFaction() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "joinBladeburnerFaction() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             joinBladeburnerDivision : function() {
@@ -22174,7 +22303,7 @@ function NetscriptFunctions(workerScript) {
                         return false;
                     }
                 }
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "joinBladeburnerDivision() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "joinBladeburnerDivision() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             getBonusTime : function() {
@@ -22182,7 +22311,7 @@ function NetscriptFunctions(workerScript) {
                 if ((_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
                     return Math.round(_Player__WEBPACK_IMPORTED_MODULE_23__[/* Player */ "a"].bladeburner.storedCycles / 5);
                 }
-                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_36__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getBonusTime() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_37__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getBonusTime() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             }
         }, // End Bladeburner
@@ -22275,10 +22404,10 @@ function NetscriptFunctions(workerScript) {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 71)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 72)))
 
 /***/ }),
-/* 47 */
+/* 48 */
 /*!********************************!*\
   !*** ./src/CodingContracts.ts ***!
   \********************************/
@@ -22301,7 +22430,7 @@ const JSONReviver_1 = __webpack_require__(/*! ../utils/JSONReviver */ 15);
 const createElement_1 = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 const createPopup_1 = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 40);
 const removeElementById_1 = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 23);
-const codingcontracttypes_1 = __webpack_require__(/*! ./data/codingcontracttypes */ 249);
+const codingcontracttypes_1 = __webpack_require__(/*! ./data/codingcontracttypes */ 250);
 /* tslint:disable:no-magic-numbers completed-docs max-classes-per-file no-console */
 /* Represents different types of problems that a Coding Contract can have */
 class CodingContractType {
@@ -22452,7 +22581,7 @@ JSONReviver_1.Reviver.constructors.CodingContract = CodingContract;
 
 
 /***/ }),
-/* 48 */
+/* 49 */
 /*!**********************!*\
   !*** ./src/Alias.js ***!
   \**********************/
@@ -22587,7 +22716,8 @@ function substituteAliases(origCommand) {
 
 
 /***/ }),
-/* 49 */
+/* 50 */,
+/* 51 */
 /*!***************************************!*\
   !*** ./src/Faction/FactionHelpers.js ***!
   \***************************************/
@@ -22604,7 +22734,7 @@ function substituteAliases(origCommand) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return purchaseAugmentation; });
 /* harmony import */ var _Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Augmentation/Augmentations */ 14);
 /* harmony import */ var _Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Augmentation_PlayerOwnedAugmentation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Augmentation/PlayerOwnedAugmentation */ 88);
+/* harmony import */ var _Augmentation_PlayerOwnedAugmentation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Augmentation/PlayerOwnedAugmentation */ 89);
 /* harmony import */ var _Augmentation_PlayerOwnedAugmentation__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Augmentation_PlayerOwnedAugmentation__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Augmentation/data/AugmentationNames */ 6);
 /* harmony import */ var _Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_2__);
@@ -22613,16 +22743,16 @@ function substituteAliases(origCommand) {
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../engine */ 11);
-/* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Faction */ 61);
+/* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Faction */ 62);
 /* harmony import */ var _Faction__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Faction__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _Factions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Factions */ 16);
 /* harmony import */ var _Factions__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_Factions__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _FactionInfo__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./FactionInfo */ 132);
+/* harmony import */ var _FactionInfo__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./FactionInfo */ 133);
 /* harmony import */ var _FactionInfo__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_FactionInfo__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../Location */ 105);
-/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../Missions */ 63);
+/* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../Location */ 106);
+/* harmony import */ var _Missions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../Missions */ 64);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../Player */ 0);
-/* harmony import */ var _Settings_SettingEnums__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../Settings/SettingEnums */ 56);
+/* harmony import */ var _Settings_SettingEnums__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../Settings/SettingEnums */ 45);
 /* harmony import */ var _Settings_SettingEnums__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_Settings_SettingEnums__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _Settings_Settings__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../Settings/Settings */ 19);
 /* harmony import */ var _Settings_Settings__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_Settings_Settings__WEBPACK_IMPORTED_MODULE_13__);
@@ -22632,7 +22762,7 @@ function substituteAliases(origCommand) {
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../utils/DialogBox */ 9);
 /* harmony import */ var _utils_FactionInvitationBox__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../utils/FactionInvitationBox */ 160);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 26);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 27);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_18__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_19__);
@@ -23122,7 +23252,7 @@ function createFactionAugmentationDisplayElements(augmentationsList, augs, facti
             }
 
             var item = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_19__["createElement"])("li");
-            var span = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_19__["createElement"])("span", {display:"inline-block"});
+            var span = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_19__["createElement"])("span", { display:"inline-block", margin: "4px", padding: "4px" });
             var aDiv = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_19__["createElement"])("div", {tooltip:aug.info});
             var aElem = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_19__["createElement"])("a", {
                 innerText:aug.name, display:"inline",
@@ -23318,7 +23448,7 @@ function processPassiveFactionRepGain(numCycles) {
 
 
 /***/ }),
-/* 50 */
+/* 52 */
 /*!**********************!*\
   !*** ./src/Fconf.js ***!
   \**********************/
@@ -23331,7 +23461,7 @@ function processPassiveFactionRepGain(numCycles) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return createFconf; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return parseFconfSettings; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return loadFconf; });
-/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/acorn */ 52);
+/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/acorn */ 54);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 
@@ -23594,7 +23724,7 @@ function setMainMenuStyle() {
 
 
 /***/ }),
-/* 51 */
+/* 53 */
 /*!************************!*\
   !*** ./src/Hacking.js ***!
   \************************/
@@ -23708,7 +23838,7 @@ function calculateWeakenTime(server, hack, int) {
 
 
 /***/ }),
-/* 52 */
+/* 54 */
 /*!************************!*\
   !*** ./utils/acorn.js ***!
   \************************/
@@ -27348,7 +27478,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 })));
 
 /***/ }),
-/* 53 */
+/* 55 */
 /*!************************************************!*\
   !*** ./utils/uiHelpers/createOptionElement.ts ***!
   \************************************************/
@@ -27374,8 +27504,136 @@ exports.createOptionElement = createOptionElement;
 
 
 /***/ }),
-/* 54 */,
-/* 55 */
+/* 56 */
+/*!********************************!*\
+  !*** ./src/ServerPurchases.js ***!
+  \********************************/
+/*! exports provided: getPurchaseServerCost, getPurchaseServerLimit, getPurchaseServerMaxRam, purchaseServer, purchaseRamForHomeComputer */
+/*! exports used: getPurchaseServerCost, getPurchaseServerLimit, getPurchaseServerMaxRam, purchaseRamForHomeComputer, purchaseServer */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return getPurchaseServerCost; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return getPurchaseServerLimit; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return getPurchaseServerMaxRam; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return purchaseServer; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return purchaseRamForHomeComputer; });
+/* harmony import */ var _BitNode_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNode/BitNodeMultipliers */ 10);
+/* harmony import */ var _BitNode_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_BitNode_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Constants */ 1);
+/* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Player */ 0);
+/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Server */ 12);
+/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
+/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/IPAddress */ 70);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/YesNoBox */ 22);
+/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/helpers/isPowerOfTwo */ 134);
+/* harmony import */ var _utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_7__);
+/**
+ * Implements functions for purchasing servers or purchasing more RAM for
+ * the home computer
+ */
+
+
+
+
+
+
+
+
+
+// Returns the cost of purchasing a server with the given RAM
+// Returns Infinity for invalid 'ram' arguments
+function getPurchaseServerCost(ram) {
+    const sanitizedRam = Math.round(ram);
+    if (isNaN(sanitizedRam) || !Object(_utils_helpers_isPowerOfTwo__WEBPACK_IMPORTED_MODULE_7__["isPowerOfTwo"])(sanitizedRam)) {
+        return Infinity;
+    }
+
+    if (sanitizedRam > getPurchaseServerMaxRam()) {
+        return Infinity;
+    }
+
+    return sanitizedRam * _Constants__WEBPACK_IMPORTED_MODULE_1__["CONSTANTS"].BaseCostFor1GBOfRamServer * _BitNode_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].PurchasedServerCost;
+}
+
+function getPurchaseServerLimit() {
+    return Math.round(_Constants__WEBPACK_IMPORTED_MODULE_1__["CONSTANTS"].PurchasedServerLimit * _BitNode_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].PurchasedServerLimit);
+}
+
+function getPurchaseServerMaxRam() {
+    // TODO ensure this is a power of 2?
+    return Math.round(_Constants__WEBPACK_IMPORTED_MODULE_1__["CONSTANTS"].PurchasedServerMaxRam * _BitNode_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].PurchasedServerMaxRam);
+}
+
+// Manually purchase a server (NOT through Netscript)
+function purchaseServer(ram) {
+    const cost = getPurchaseServerCost(ram);
+
+    //Check if player has enough money
+    if (_Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].money.lt(cost)) {
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__["dialogBoxCreate"])("You don't have enough money to purchase this server!");
+        return;
+    }
+
+    //Maximum server limit
+    if (_Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].purchasedServers.length >= getPurchaseServerLimit()) {
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__["dialogBoxCreate"])("You have reached the maximum limit of " + getPurchaseServerLimit() + " servers. " +
+                        "You cannot purchase any more. You can " +
+                        "delete some of your purchased servers using the deleteServer() Netscript function in a script");
+        return;
+    }
+
+    var hostname = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_6__["yesNoTxtInpBoxGetInput"])();
+    if (hostname == "") {
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__["dialogBoxCreate"])("You must enter a hostname for your new server!");
+        return;
+    }
+
+    //Create server
+    var newServ = new _Server__WEBPACK_IMPORTED_MODULE_3__[/* Server */ "d"]({
+        ip:Object(_utils_IPAddress__WEBPACK_IMPORTED_MODULE_5__[/* createRandomIp */ "a"])(), hostname:hostname, organizationName:"",
+        isConnectedTo:false, adminRights:true, purchasedByPlayer:true, maxRam:ram
+    });
+    Object(_Server__WEBPACK_IMPORTED_MODULE_3__[/* AddToAllServers */ "a"])(newServ);
+
+    //Add to Player's purchasedServers array
+    _Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].purchasedServers.push(newServ.ip);
+
+    //Connect new server to home computer
+    var homeComputer = _Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].getHomeComputer();
+    homeComputer.serversOnNetwork.push(newServ.ip);
+    newServ.serversOnNetwork.push(homeComputer.ip);
+
+    _Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].loseMoney(cost);
+
+    Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__["dialogBoxCreate"])("Server successfully purchased with hostname " + hostname);
+}
+
+// Manually upgrade RAM on home computer (NOT through Netscript)
+function purchaseRamForHomeComputer(cost) {
+    if (_Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].money.lt(cost)) {
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__["dialogBoxCreate"])("You do not have enough money to purchase additional RAM for your home computer");
+        return;
+    }
+
+    const homeComputer = _Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].getHomeComputer();
+    if (homeComputer.maxRam >= _Constants__WEBPACK_IMPORTED_MODULE_1__["CONSTANTS"].HomeComputerMaxRam) {
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__["dialogBoxCreate"])(`You cannot upgrade your home computer RAM because it is at its maximum possible value`);
+        return;
+    }
+
+
+    homeComputer.maxRam *= 2;
+    _Player__WEBPACK_IMPORTED_MODULE_2__[/* Player */ "a"].loseMoney(cost);
+
+    Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__["dialogBoxCreate"])("Purchased additional RAM for home computer! It now has " + homeComputer.maxRam + "GB of RAM.");
+}
+
+
+/***/ }),
+/* 57 */
 /*!*********************!*\
   !*** ./src/Gang.js ***!
   \*********************/
@@ -27393,16 +27651,16 @@ exports.createOptionElement = createOptionElement;
 /* harmony import */ var _data_gangmemberupgrades__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data/gangmemberupgrades */ 158);
 /* harmony import */ var _data_gangmemberupgrades__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_data_gangmemberupgrades__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 11);
-/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Faction/Faction */ 61);
+/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Faction/Faction */ 62);
 /* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Faction_Faction__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Faction/Factions */ 16);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 49);
+/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 51);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/JSONReviver */ 15);
-/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 28);
+/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 29);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 86);
 /* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_10__);
@@ -27418,9 +27676,9 @@ exports.createOptionElement = createOptionElement;
 /* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/helpers/getRandomInt */ 17);
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 26);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 27);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 65);
+/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 66);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_18__);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 23);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_19__);
@@ -29349,108 +29607,10 @@ Gang.prototype.clearUI = function() {
     UIElems.gangMemberPanels = {};
 }
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 71)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 72)))
 
 /***/ }),
-/* 56 */
-/*!**************************************!*\
-  !*** ./src/Settings/SettingEnums.ts ***!
-  \**************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-// Enums that defined allowed values for setting configuration
-Object.defineProperty(exports, "__esModule", { value: true });
-var CodeMirrorThemeSetting;
-(function (CodeMirrorThemeSetting) {
-    CodeMirrorThemeSetting["Monokai"] = "monokai";
-    CodeMirrorThemeSetting["Day_3024"] = "3024-day";
-    CodeMirrorThemeSetting["Night_3024"] = "3024-night";
-    CodeMirrorThemeSetting["abcdef"] = "abcdef";
-    CodeMirrorThemeSetting["Ambiance_mobile"] = "ambiance-mobile";
-    CodeMirrorThemeSetting["Ambiance"] = "ambiance";
-    CodeMirrorThemeSetting["Base16_dark"] = "base16-dark";
-    CodeMirrorThemeSetting["Base16_light"] = "base16-light";
-    CodeMirrorThemeSetting["Bespin"] = "bespin";
-    CodeMirrorThemeSetting["Blackboard"] = "blackboard";
-    CodeMirrorThemeSetting["Cobalt"] = "cobalt";
-    CodeMirrorThemeSetting["Colorforth"] = "colorforth";
-    CodeMirrorThemeSetting["Darcula"] = "darcula";
-    CodeMirrorThemeSetting["Dracula"] = "dracula";
-    CodeMirrorThemeSetting["Duotone_dark"] = "duotone-dark";
-    CodeMirrorThemeSetting["Duotone_light"] = "duotone-light";
-    CodeMirrorThemeSetting["Eclipse"] = "eclipse";
-    CodeMirrorThemeSetting["Elegant"] = "elegant";
-    CodeMirrorThemeSetting["Erlang_dark"] = "erlang-dark";
-    CodeMirrorThemeSetting["Gruvbox_dark"] = "gruvbox-dark";
-    CodeMirrorThemeSetting["Hopscotch"] = "hopscotch";
-    CodeMirrorThemeSetting["Icecoder"] = "icecoder";
-    CodeMirrorThemeSetting["Idea"] = "idea";
-    CodeMirrorThemeSetting["Isotope"] = "isotope";
-    CodeMirrorThemeSetting["Lesser_dark"] = "lesser-dark";
-    CodeMirrorThemeSetting["Liquibyte"] = "liquibyte";
-    CodeMirrorThemeSetting["Lucario"] = "lucario";
-    CodeMirrorThemeSetting["Material"] = "material";
-    CodeMirrorThemeSetting["Mbo"] = "mbo";
-    CodeMirrorThemeSetting["Mdn_like"] = "mdn-like";
-    CodeMirrorThemeSetting["Midnight"] = "midnight";
-    CodeMirrorThemeSetting["Neat"] = "neat";
-    CodeMirrorThemeSetting["Neo"] = "neo";
-    CodeMirrorThemeSetting["Night"] = "night";
-    CodeMirrorThemeSetting["Oceanic_next"] = "oceanic-next";
-    CodeMirrorThemeSetting["Panda_syntax"] = "panda-syntax";
-    CodeMirrorThemeSetting["Paraiso_dark"] = "paraiso-dark";
-    CodeMirrorThemeSetting["Paraiso_light"] = "paraiso-light";
-    CodeMirrorThemeSetting["Pastel_on_dark"] = "pastel-on-dark";
-    CodeMirrorThemeSetting["Railscasts"] = "railscasts";
-    CodeMirrorThemeSetting["Rubyblue"] = "rubyblue";
-    CodeMirrorThemeSetting["Seti"] = "seti";
-    CodeMirrorThemeSetting["Shadowfox"] = "shadowfox";
-    CodeMirrorThemeSetting["Solarized"] = "solarized";
-    CodeMirrorThemeSetting["ssms"] = "ssms";
-    CodeMirrorThemeSetting["The_matrix"] = "the-matrix";
-    CodeMirrorThemeSetting["Tomorrow_night_bright"] = "tomorrow-night-bright";
-    CodeMirrorThemeSetting["Tomorrow_night_eighties"] = "tomorrow-night-eighties";
-    CodeMirrorThemeSetting["Ttcn"] = "ttcn";
-    CodeMirrorThemeSetting["Twilight"] = "twilight";
-    CodeMirrorThemeSetting["Vibrant_ink"] = "vibrant-ink";
-    CodeMirrorThemeSetting["xq_dark"] = "xq-dark";
-    CodeMirrorThemeSetting["xq_light"] = "xq-light";
-    CodeMirrorThemeSetting["Yeti"] = "yeti";
-    CodeMirrorThemeSetting["Zenburn"] = "zenburn";
-})(CodeMirrorThemeSetting = exports.CodeMirrorThemeSetting || (exports.CodeMirrorThemeSetting = {}));
-/**
- * Allowed values for the "Editor" setting
- */
-var EditorSetting;
-(function (EditorSetting) {
-    EditorSetting["Ace"] = "Ace";
-    EditorSetting["CodeMirror"] = "CodeMirror";
-})(EditorSetting = exports.EditorSetting || (exports.EditorSetting = {}));
-/**
- * Allowed values for the 'OwnedAugmentationsOrder' setting
- */
-var PurchaseAugmentationsOrderSetting;
-(function (PurchaseAugmentationsOrderSetting) {
-    PurchaseAugmentationsOrderSetting[PurchaseAugmentationsOrderSetting["Cost"] = 0] = "Cost";
-    PurchaseAugmentationsOrderSetting[PurchaseAugmentationsOrderSetting["Default"] = 1] = "Default";
-    PurchaseAugmentationsOrderSetting[PurchaseAugmentationsOrderSetting["Reputation"] = 2] = "Reputation";
-})(PurchaseAugmentationsOrderSetting = exports.PurchaseAugmentationsOrderSetting || (exports.PurchaseAugmentationsOrderSetting = {}));
-/**
- * Allowed values for the 'OwnedAugmentationsOrder' setting
- */
-var OwnedAugmentationsOrderSetting;
-(function (OwnedAugmentationsOrderSetting) {
-    OwnedAugmentationsOrderSetting[OwnedAugmentationsOrderSetting["Alphabetically"] = 0] = "Alphabetically";
-    OwnedAugmentationsOrderSetting[OwnedAugmentationsOrderSetting["AcquirementTime"] = 1] = "AcquirementTime";
-})(OwnedAugmentationsOrderSetting = exports.OwnedAugmentationsOrderSetting || (exports.OwnedAugmentationsOrderSetting = {}));
-
-
-/***/ }),
-/* 57 */
+/* 58 */
 /*!*************************!*\
   !*** ./src/Terminal.js ***!
   \*************************/
@@ -29461,33 +29621,33 @@ var OwnedAugmentationsOrderSetting;
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return postNetburnerText; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Terminal; });
-/* harmony import */ var _Alias__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Alias */ 48);
-/* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CodingContracts */ 47);
+/* harmony import */ var _Alias__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Alias */ 49);
+/* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CodingContracts */ 48);
 /* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_CodingContracts__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Programs/Programs */ 27);
+/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Programs/Programs */ 28);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _DarkWeb_DarkWeb__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./DarkWeb/DarkWeb */ 138);
-/* harmony import */ var _DarkWeb_DarkWebItems__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./DarkWeb/DarkWebItems */ 79);
+/* harmony import */ var _DarkWeb_DarkWeb__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./DarkWeb/DarkWeb */ 140);
+/* harmony import */ var _DarkWeb_DarkWebItems__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./DarkWeb/DarkWebItems */ 80);
 /* harmony import */ var _DarkWeb_DarkWebItems__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_DarkWeb_DarkWebItems__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./engine */ 11);
-/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Fconf */ 50);
-/* harmony import */ var _Hacking__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Hacking */ 51);
-/* harmony import */ var _HelpText__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./HelpText */ 119);
+/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Fconf */ 52);
+/* harmony import */ var _Hacking__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Hacking */ 53);
+/* harmony import */ var _HelpText__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./HelpText */ 120);
 /* harmony import */ var _HelpText__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_HelpText__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _InteractiveTutorial__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./InteractiveTutorial */ 38);
-/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Literature */ 95);
-/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Message */ 45);
+/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Literature */ 96);
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Message */ 46);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./NetscriptWorker */ 30);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./RedPill */ 66);
+/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./RedPill */ 67);
 /* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Script */ 33);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Server */ 12);
 /* harmony import */ var _Settings_Settings__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Settings/Settings */ 19);
 /* harmony import */ var _Settings_Settings__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_Settings_Settings__WEBPACK_IMPORTED_MODULE_18__);
 /* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./SpecialServerIps */ 37);
-/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./TextFile */ 72);
+/* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./TextFile */ 73);
 /* harmony import */ var _TextFile__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_TextFile__WEBPACK_IMPORTED_MODULE_20__);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_21__);
@@ -29495,17 +29655,17 @@ var OwnedAugmentationsOrderSetting;
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_22__);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_23__);
-/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 28);
+/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../utils/helpers/keyCodes */ 29);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_24__);
-/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 73);
+/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 74);
 /* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_25__);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/helpers/isString */ 44);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_26__);
-/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 62);
+/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 63);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_27__);
-/* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 100);
+/* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../utils/helpers/getTimestamp */ 101);
 /* harmony import */ var _utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getTimestamp__WEBPACK_IMPORTED_MODULE_28__);
-/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../utils/LogBox */ 90);
+/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../utils/LogBox */ 91);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ../utils/YesNoBox */ 22);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_30__);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./ui/postToTerminal */ 8);
@@ -31673,10 +31833,10 @@ let Terminal = {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 71)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 72)))
 
 /***/ }),
-/* 58 */
+/* 59 */
 /*!*********************************************!*\
   !*** ./utils/uiHelpers/appendLineBreaks.ts ***!
   \*********************************************/
@@ -31702,7 +31862,7 @@ exports.appendLineBreaks = appendLineBreaks;
 
 
 /***/ }),
-/* 59 */
+/* 60 */
 /*!*************************************!*\
   !*** ./src/NetscriptBladeburner.js ***!
   \*************************************/
@@ -31746,7 +31906,7 @@ function checkBladeburnerAccess(workerScript, functionName) {
 
 
 /***/ }),
-/* 60 */
+/* 61 */
 /*!*******************************************!*\
   !*** ./utils/uiHelpers/getElementById.ts ***!
   \*******************************************/
@@ -31774,7 +31934,7 @@ exports.getElementById = getElementById;
 
 
 /***/ }),
-/* 61 */
+/* 62 */
 /*!********************************!*\
   !*** ./src/Faction/Faction.ts ***!
   \********************************/
@@ -31786,7 +31946,7 @@ exports.getElementById = getElementById;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const Constants_1 = __webpack_require__(/*! ../Constants */ 1);
-const FactionInfo_1 = __webpack_require__(/*! ./FactionInfo */ 132);
+const FactionInfo_1 = __webpack_require__(/*! ./FactionInfo */ 133);
 const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 15);
 class Faction {
     constructor(name = "") {
@@ -31898,7 +32058,7 @@ JSONReviver_1.Reviver.constructors.Faction = Faction;
 
 
 /***/ }),
-/* 62 */
+/* 63 */
 /*!****************************************!*\
   !*** ./utils/helpers/arrayToString.ts ***!
   \****************************************/
@@ -31919,7 +32079,7 @@ exports.arrayToString = arrayToString;
 
 
 /***/ }),
-/* 63 */
+/* 64 */
 /*!*************************!*\
   !*** ./src/Missions.js ***!
   \*************************/
@@ -31935,12 +32095,12 @@ exports.arrayToString = arrayToString;
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./engine */ 11);
-/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 49);
+/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 51);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 21);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 73);
+/* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/addOffset */ 74);
 /* harmony import */ var _utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_addOffset__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_7__);
@@ -31948,7 +32108,7 @@ exports.arrayToString = arrayToString;
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/isString */ 44);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var jsplumb__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! jsplumb */ 299);
+/* harmony import */ var jsplumb__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! jsplumb */ 300);
 /* harmony import */ var jsplumb__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(jsplumb__WEBPACK_IMPORTED_MODULE_10__);
 
 
@@ -33488,10 +33648,10 @@ HackingMission.prototype.finishMission = function(win) {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 71)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 72)))
 
 /***/ }),
-/* 64 */
+/* 65 */
 /*!*************************************************!*\
   !*** ./src/Augmentation/AugmentationHelpers.js ***!
   \*************************************************/
@@ -33509,7 +33669,7 @@ HackingMission.prototype.finishMission = function(win) {
 /* harmony import */ var _Augmentation__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Augmentation__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Augmentations */ 14);
 /* harmony import */ var _Augmentations__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Augmentations__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _PlayerOwnedAugmentation__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PlayerOwnedAugmentation */ 88);
+/* harmony import */ var _PlayerOwnedAugmentation__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PlayerOwnedAugmentation */ 89);
 /* harmony import */ var _PlayerOwnedAugmentation__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_PlayerOwnedAugmentation__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _data_AugmentationNames__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./data/AugmentationNames */ 6);
 /* harmony import */ var _data_AugmentationNames__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_3__);
@@ -33519,18 +33679,18 @@ HackingMission.prototype.finishMission = function(win) {
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../Faction/Factions */ 16);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../NetscriptFunctions */ 46);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../NetscriptFunctions */ 47);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../NetscriptWorker */ 30);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../Player */ 0);
-/* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../Prestige */ 99);
-/* harmony import */ var _SaveObject__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../SaveObject */ 81);
+/* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../Prestige */ 100);
+/* harmony import */ var _SaveObject__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../SaveObject */ 82);
 /* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../Script */ 33);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../Server */ 12);
-/* harmony import */ var _Settings_SettingEnums__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../Settings/SettingEnums */ 56);
+/* harmony import */ var _Settings_SettingEnums__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../Settings/SettingEnums */ 45);
 /* harmony import */ var _Settings_SettingEnums__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_Settings_SettingEnums__WEBPACK_IMPORTED_MODULE_14__);
 /* harmony import */ var _Settings_Settings__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../Settings/Settings */ 19);
 /* harmony import */ var _Settings_Settings__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_Settings_Settings__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../SourceFile */ 82);
+/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../SourceFile */ 83);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../utils/DialogBox */ 9);
 /* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../../utils/uiHelpers/createAccordionElement */ 86);
 /* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_18__);
@@ -33543,7 +33703,7 @@ HackingMission.prototype.finishMission = function(win) {
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../../utils/helpers/isString */ 44);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_23__);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 26);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 27);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_24__);
 
 
@@ -35852,7 +36012,7 @@ function displaySourceFiles(listElement, sourceFiles) {
 
 
 /***/ }),
-/* 65 */
+/* 66 */
 /*!******************************************!*\
   !*** ./utils/uiHelpers/removeElement.ts ***!
   \******************************************/
@@ -35889,7 +36049,7 @@ exports.removeElement = removeElement;
 
 
 /***/ }),
-/* 66 */
+/* 67 */
 /*!************************!*\
   !*** ./src/RedPill.js ***!
   \************************/
@@ -35900,18 +36060,18 @@ exports.removeElement = removeElement;
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return redPillFlag; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return hackWorldDaemon; });
-/* harmony import */ var _BitNode_BitNode__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNode/BitNode */ 68);
+/* harmony import */ var _BitNode_BitNode__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BitNode/BitNode */ 69);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./engine */ 11);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Prestige */ 99);
-/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SourceFile */ 82);
+/* harmony import */ var _Prestige__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Prestige */ 100);
+/* harmony import */ var _SourceFile__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SourceFile */ 83);
 /* harmony import */ var _SourceFile_PlayerOwnedSourceFile__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./SourceFile/PlayerOwnedSourceFile */ 157);
 /* harmony import */ var _SourceFile_PlayerOwnedSourceFile__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_SourceFile_PlayerOwnedSourceFile__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Terminal */ 57);
+/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Terminal */ 58);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 21);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 26);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 27);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/YesNoBox */ 22);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_10__);
@@ -36249,10 +36409,10 @@ function createBitNodeYesNoEventListeners(newBitNode, destroyedBitNode, flume=fa
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 71)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 72)))
 
 /***/ }),
-/* 67 */
+/* 68 */
 /*!****************************************!*\
   !*** ./src/Corporation/Corporation.js ***!
   \****************************************/
@@ -36282,25 +36442,25 @@ function createBitNodeYesNoEventListeners(newBitNode, destroyedBitNode, flume=fa
 /* unused harmony export CyclesPerEmployeeRaise */
 /* unused harmony export EmployeeRaiseAmount */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Corporation; });
-/* harmony import */ var _CorporationState__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CorporationState */ 140);
+/* harmony import */ var _CorporationState__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CorporationState */ 141);
 /* harmony import */ var _CorporationState__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_CorporationState__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _data_CorporationUnlockUpgrades__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data/CorporationUnlockUpgrades */ 123);
+/* harmony import */ var _data_CorporationUnlockUpgrades__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data/CorporationUnlockUpgrades */ 124);
 /* harmony import */ var _data_CorporationUnlockUpgrades__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_data_CorporationUnlockUpgrades__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _data_CorporationUpgrades__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./data/CorporationUpgrades */ 122);
+/* harmony import */ var _data_CorporationUpgrades__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./data/CorporationUpgrades */ 123);
 /* harmony import */ var _data_CorporationUpgrades__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_data_CorporationUpgrades__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _EmployeePositions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./EmployeePositions */ 31);
 /* harmony import */ var _EmployeePositions__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_EmployeePositions__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _IndustryData__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./IndustryData */ 25);
 /* harmony import */ var _IndustryData__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_IndustryData__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _IndustryUpgrades__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./IndustryUpgrades */ 121);
+/* harmony import */ var _IndustryUpgrades__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./IndustryUpgrades */ 122);
 /* harmony import */ var _IndustryUpgrades__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_IndustryUpgrades__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _Material__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Material */ 70);
+/* harmony import */ var _Material__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Material */ 71);
 /* harmony import */ var _Material__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Material__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _MaterialSizes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./MaterialSizes */ 84);
+/* harmony import */ var _MaterialSizes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./MaterialSizes */ 85);
 /* harmony import */ var _MaterialSizes__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_MaterialSizes__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _Product__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Product */ 120);
+/* harmony import */ var _Product__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Product */ 121);
 /* harmony import */ var _Product__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_Product__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _ResearchMap__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./ResearchMap */ 113);
+/* harmony import */ var _ResearchMap__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./ResearchMap */ 114);
 /* harmony import */ var _ResearchMap__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_ResearchMap__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _BitNode_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../BitNode/BitNodeMultipliers */ 10);
 /* harmony import */ var _BitNode_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_BitNode_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_10__);
@@ -36308,7 +36468,7 @@ function createBitNodeYesNoEventListeners(newBitNode, destroyedBitNode, flume=fa
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../Faction/Factions */ 16);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../Literature */ 95);
+/* harmony import */ var _Literature__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../Literature */ 96);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../Locations */ 5);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_14__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../Player */ 0);
@@ -36320,13 +36480,13 @@ function createBitNodeYesNoEventListeners(newBitNode, destroyedBitNode, flume=fa
 /* harmony import */ var _utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../../utils/uiHelpers/clearSelector */ 164);
 /* harmony import */ var _utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearSelector__WEBPACK_IMPORTED_MODULE_19__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../../utils/JSONReviver */ 15);
-/* harmony import */ var _utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../../utils/uiHelpers/appendLineBreaks */ 58);
+/* harmony import */ var _utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../../utils/uiHelpers/appendLineBreaks */ 59);
 /* harmony import */ var _utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_appendLineBreaks__WEBPACK_IMPORTED_MODULE_21__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_22__);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../../utils/uiHelpers/createPopup */ 40);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_23__);
-/* harmony import */ var _utils_uiHelpers_createPopupCloseButton__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../../utils/uiHelpers/createPopupCloseButton */ 77);
+/* harmony import */ var _utils_uiHelpers_createPopupCloseButton__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../../utils/uiHelpers/createPopupCloseButton */ 78);
 /* harmony import */ var _utils_uiHelpers_createPopupCloseButton__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopupCloseButton__WEBPACK_IMPORTED_MODULE_24__);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_25__);
@@ -36334,11 +36494,11 @@ function createBitNodeYesNoEventListeners(newBitNode, destroyedBitNode, flume=fa
 /* harmony import */ var _utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_getRandomInt__WEBPACK_IMPORTED_MODULE_26__);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../../utils/helpers/isString */ 44);
 /* harmony import */ var _utils_helpers_isString__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isString__WEBPACK_IMPORTED_MODULE_27__);
-/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../../utils/helpers/keyCodes */ 28);
+/* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../../utils/helpers/keyCodes */ 29);
 /* harmony import */ var _utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_keyCodes__WEBPACK_IMPORTED_MODULE_28__);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 26);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 27);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_29___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_29__);
-/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ../../utils/uiHelpers/removeElement */ 65);
+/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ../../utils/uiHelpers/removeElement */ 66);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_30__);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ../../utils/uiHelpers/removeElementById */ 23);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_31__);
@@ -41411,10 +41571,10 @@ _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_20__["Reviver"].constructors.Corpora
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 71)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 72)))
 
 /***/ }),
-/* 68 */
+/* 69 */
 /*!********************************!*\
   !*** ./src/BitNode/BitNode.js ***!
   \********************************/
@@ -41599,6 +41759,7 @@ function initBitNodes() {
                                             "In this BitNode:<br><br>" +
                                             "Your stats are significantly decreased.<br>" +
                                             "All methods of gaining money are half as profitable (except Stock Market)<br>" +
+                                            "Purchased servers are more expensive, have less max RAM, and a lower maximum limit<br>" + 
                                             "Augmentations are 5x as expensive and require twice as much reputation<br><br>" +
                                             "Destroying this BitNode will give you Source-File 10, or if you already have this Source-File it will " +
                                             "upgrade its level up to a maximum of 3. This Source-File unlocks Sleeve technology in other BitNodes. " +
@@ -41768,6 +41929,9 @@ function initBitNodeMultipliers() {
             _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].CorporationValuation = 0.5;
             _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].AugmentationMoneyCost = 5;
             _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].AugmentationRepCost = 2;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].PurchasedServerCost = 5;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].PurchasedServerLimit = 0.6;
+            _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].PurchasedServerMaxRam = 0.5;
         case 11: //The Big Crash
             _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerMaxMoney           = 0.1;
             _BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_0__["BitNodeMultipliers"].ServerStartingMoney      = 0.1;
@@ -41837,7 +42001,7 @@ function initBitNodeMultipliers() {
 
 
 /***/ }),
-/* 69 */
+/* 70 */
 /*!****************************!*\
   !*** ./utils/IPAddress.js ***!
   \****************************/
@@ -41849,7 +42013,7 @@ function initBitNodeMultipliers() {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return createRandomIp; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return ipExists; });
 /* harmony import */ var _src_Server__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/Server */ 12);
-/* harmony import */ var _helpers_getRandomByte__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers/getRandomByte */ 110);
+/* harmony import */ var _helpers_getRandomByte__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers/getRandomByte */ 111);
 /* harmony import */ var _helpers_getRandomByte__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_helpers_getRandomByte__WEBPACK_IMPORTED_MODULE_1__);
 
 
@@ -41887,7 +42051,7 @@ function ipExists(ip) {
 
 
 /***/ }),
-/* 70 */
+/* 71 */
 /*!*************************************!*\
   !*** ./src/Corporation/Material.ts ***!
   \*************************************/
@@ -42112,8 +42276,8 @@ JSONReviver_1.Reviver.constructors.Material = Material;
 
 
 /***/ }),
-/* 71 */,
-/* 72 */
+/* 72 */,
+/* 73 */
 /*!*************************!*\
   !*** ./src/TextFile.ts ***!
   \*************************/
@@ -42248,7 +42412,7 @@ function deleteTextFile(fn, server) {
 
 
 /***/ }),
-/* 73 */
+/* 74 */
 /*!************************************!*\
   !*** ./utils/helpers/addOffset.ts ***!
   \************************************/
@@ -42284,7 +42448,7 @@ exports.addOffset = addOffset;
 
 
 /***/ }),
-/* 74 */
+/* 75 */
 /*!****************************!*\
   !*** ./src/HacknetNode.js ***!
   \****************************/
@@ -42321,7 +42485,7 @@ exports.addOffset = addOffset;
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/uiHelpers/getElementById */ 60);
+/* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/uiHelpers/getElementById */ 61);
 /* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_11__);
 
 
@@ -43000,7 +43164,7 @@ function getHacknetNode(name) {
 
 
 /***/ }),
-/* 75 */
+/* 76 */
 /*!********************************!*\
   !*** ./src/Company/Company.ts ***!
   \********************************/
@@ -43012,7 +43176,7 @@ function getHacknetNode(name) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 15);
-const CompanyPosition_1 = __webpack_require__(/*! ./CompanyPosition */ 104);
+const CompanyPosition_1 = __webpack_require__(/*! ./CompanyPosition */ 105);
 const Constants_1 = __webpack_require__(/*! ../Constants */ 1);
 const DefaultConstructorParams = {
     name: "",
@@ -43098,7 +43262,7 @@ JSONReviver_1.Reviver.constructors.Company = Company;
 
 
 /***/ }),
-/* 76 */
+/* 77 */
 /*!********************************!*\
   !*** ./src/ActiveScriptsUI.js ***!
   \********************************/
@@ -43118,24 +43282,24 @@ JSONReviver_1.Reviver.constructors.Company = Company;
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/uiHelpers/createAccordionElement */ 86);
 /* harmony import */ var _utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createAccordionElement__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 62);
+/* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/helpers/arrayToString */ 63);
 /* harmony import */ var _utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/helpers/createProgressBarText */ 89);
+/* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/helpers/createProgressBarText */ 90);
 /* harmony import */ var _utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_createProgressBarText__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/helpers/exceptionAlert */ 42);
 /* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/uiHelpers/getElementById */ 60);
+/* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/uiHelpers/getElementById */ 61);
 /* harmony import */ var _utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_getElementById__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/LogBox */ 90);
+/* harmony import */ var _utils_LogBox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/LogBox */ 91);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 26);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 27);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 65);
+/* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/removeElement */ 66);
 /* harmony import */ var _utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElement__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 94);
+/* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/helpers/roundToTwo */ 95);
 /* harmony import */ var _utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_roundToTwo__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./ui/navigationTracking */ 13);
 /* harmony import */ var _ui_navigationTracking__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_ui_navigationTracking__WEBPACK_IMPORTED_MODULE_16__);
@@ -43465,7 +43629,7 @@ function updateActiveScriptsText(workerscript, item, itemName) {
 
 
 /***/ }),
-/* 77 */
+/* 78 */
 /*!***************************************************!*\
   !*** ./utils/uiHelpers/createPopupCloseButton.ts ***!
   \***************************************************/
@@ -43478,7 +43642,7 @@ function updateActiveScriptsText(workerscript, item, itemName) {
 /* Creates a Close/Cancel button that is used for removing popups */
 Object.defineProperty(exports, "__esModule", { value: true });
 const createElement_1 = __webpack_require__(/*! ./createElement */ 2);
-const removeElement_1 = __webpack_require__(/*! ./removeElement */ 65);
+const removeElement_1 = __webpack_require__(/*! ./removeElement */ 66);
 function createPopupCloseButton(popup, options) {
     let button;
     // TODO event listener works with escape. Add and remove event listener
@@ -43518,8 +43682,8 @@ exports.createPopupCloseButton = createPopupCloseButton;
 
 
 /***/ }),
-/* 78 */,
-/* 79 */
+/* 79 */,
+/* 80 */
 /*!*************************************!*\
   !*** ./src/DarkWeb/DarkWebItems.ts ***!
   \*************************************/
@@ -43531,7 +43695,7 @@ exports.createPopupCloseButton = createPopupCloseButton;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const DarkWebItem_1 = __webpack_require__(/*! ./DarkWebItem */ 235);
-const Programs_1 = __webpack_require__(/*! ../Programs/Programs */ 27);
+const Programs_1 = __webpack_require__(/*! ../Programs/Programs */ 28);
 exports.DarkWebItems = {
     BruteSSHProgram: new DarkWebItem_1.DarkWebItem(Programs_1.Programs.BruteSSHProgram.name, 500e3, "Opens up SSH Ports"),
     FTPCrackProgram: new DarkWebItem_1.DarkWebItem(Programs_1.Programs.FTPCrackProgram.name, 1500e3, "Opens up FTP Ports"),
@@ -43546,7 +43710,7 @@ exports.DarkWebItems = {
 
 
 /***/ }),
-/* 80 */
+/* 81 */
 /*!******************************!*\
   !*** ./src/NetscriptPort.js ***!
   \******************************/
@@ -43612,7 +43776,7 @@ NetscriptPort.prototype.clear = function() {
 
 
 /***/ }),
-/* 81 */
+/* 82 */
 /*!***************************!*\
   !*** ./src/SaveObject.js ***!
   \***************************/
@@ -43623,21 +43787,21 @@ NetscriptPort.prototype.clear = function() {
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return saveObject; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return loadGame; });
-/* harmony import */ var _Alias__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Alias */ 48);
+/* harmony import */ var _Alias__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Alias */ 49);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Company/Companies */ 20);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Company/CompanyPosition */ 104);
+/* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Company/CompanyPosition */ 105);
 /* harmony import */ var _Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPosition__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./engine */ 11);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Faction/Factions */ 16);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 49);
-/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Fconf */ 50);
-/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Gang */ 55);
-/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./HacknetNode */ 74);
-/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Message */ 45);
+/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 51);
+/* harmony import */ var _Fconf__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Fconf */ 52);
+/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Gang */ 57);
+/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./HacknetNode */ 75);
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Message */ 46);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Script__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Script */ 33);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Server */ 12);
@@ -43646,7 +43810,7 @@ NetscriptPort.prototype.clear = function() {
 /* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./SpecialServerIps */ 37);
 /* harmony import */ var _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./StockMarket/StockMarket */ 24);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_GameOptions__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/GameOptions */ 96);
+/* harmony import */ var _utils_GameOptions__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../utils/GameOptions */ 97);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 21);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_19__);
 /* harmony import */ var _utils_JSONReviver__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/JSONReviver */ 15);
@@ -43654,7 +43818,7 @@ NetscriptPort.prototype.clear = function() {
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_21__);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 40);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_22__);
-/* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./ui/createStatusText */ 83);
+/* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./ui/createStatusText */ 84);
 /* harmony import */ var _ui_createStatusText__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_ui_createStatusText__WEBPACK_IMPORTED_MODULE_23__);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_24__);
@@ -44283,10 +44447,10 @@ function openImportFileHandler(evt) {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 71)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 72)))
 
 /***/ }),
-/* 82 */
+/* 83 */
 /*!***************************!*\
   !*** ./src/SourceFile.js ***!
   \***************************/
@@ -44299,7 +44463,7 @@ function openImportFileHandler(evt) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return applySourceFile; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return initSourceFiles; });
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _BitNode_BitNode__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BitNode/BitNode */ 68);
+/* harmony import */ var _BitNode_BitNode__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BitNode/BitNode */ 69);
 
 
 
@@ -44551,7 +44715,7 @@ function applySourceFile(srcFile) {
 
 
 /***/ }),
-/* 83 */
+/* 84 */
 /*!************************************!*\
   !*** ./src/ui/createStatusText.ts ***!
   \************************************/
@@ -44562,7 +44726,7 @@ function applySourceFile(srcFile) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const getElementById_1 = __webpack_require__(/*! ../../utils/uiHelpers/getElementById */ 60);
+const getElementById_1 = __webpack_require__(/*! ../../utils/uiHelpers/getElementById */ 61);
 const threeSeconds = 3000;
 let x;
 /**
@@ -44588,7 +44752,7 @@ exports.createStatusText = createStatusText;
 
 
 /***/ }),
-/* 84 */
+/* 85 */
 /*!******************************************!*\
   !*** ./src/Corporation/MaterialSizes.ts ***!
   \******************************************/
@@ -44613,34 +44777,6 @@ exports.MaterialSizes = {
     AICores: 0.1,
     RealEstate: 0,
 };
-
-
-/***/ }),
-/* 85 */
-/*!*******************************************!*\
-  !*** ./src/SourceFile/SourceFileFlags.ts ***!
-  \*******************************************/
-/*! no static exports found */
-/*! exports used: SourceFileFlags, updateSourceFileFlags */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-// Contains an array containing information about the player's source files
-// Array[n] returns what level the player has of Source-File N.
-Object.defineProperty(exports, "__esModule", { value: true });
-const Constants_1 = __webpack_require__(/*! ../Constants */ 1);
-exports.SourceFileFlags = Array(Constants_1.CONSTANTS.TotalNumBitNodes + 1); // Skip 0
-function updateSourceFileFlags(p) {
-    for (let i = 0; i < exports.SourceFileFlags.length; ++i) {
-        exports.SourceFileFlags[i] = 0;
-    }
-    for (let i = 0; i < p.sourceFiles.length; ++i) {
-        const sf = p.sourceFiles[i];
-        exports.SourceFileFlags[sf.n] = sf.lvl;
-    }
-}
-exports.updateSourceFileFlags = updateSourceFileFlags;
 
 
 /***/ }),
@@ -44719,6 +44855,34 @@ exports.clearObject = clearObject;
 
 /***/ }),
 /* 88 */
+/*!*******************************************!*\
+  !*** ./src/SourceFile/SourceFileFlags.ts ***!
+  \*******************************************/
+/*! no static exports found */
+/*! exports used: SourceFileFlags, updateSourceFileFlags */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+// Contains an array containing information about the player's source files
+// Array[n] returns what level the player has of Source-File N.
+Object.defineProperty(exports, "__esModule", { value: true });
+const Constants_1 = __webpack_require__(/*! ../Constants */ 1);
+exports.SourceFileFlags = Array(Constants_1.CONSTANTS.TotalNumBitNodes + 1); // Skip 0
+function updateSourceFileFlags(p) {
+    for (let i = 0; i < exports.SourceFileFlags.length; ++i) {
+        exports.SourceFileFlags[i] = 0;
+    }
+    for (let i = 0; i < p.sourceFiles.length; ++i) {
+        const sf = p.sourceFiles[i];
+        exports.SourceFileFlags[sf.n] = sf.lvl;
+    }
+}
+exports.updateSourceFileFlags = updateSourceFileFlags;
+
+
+/***/ }),
+/* 89 */
 /*!*****************************************************!*\
   !*** ./src/Augmentation/PlayerOwnedAugmentation.ts ***!
   \*****************************************************/
@@ -44740,7 +44904,7 @@ exports.PlayerOwnedAugmentation = PlayerOwnedAugmentation;
 
 
 /***/ }),
-/* 89 */
+/* 90 */
 /*!************************************************!*\
   !*** ./utils/helpers/createProgressBarText.ts ***!
   \************************************************/
@@ -44776,7 +44940,7 @@ exports.createProgressBarText = createProgressBarText;
 
 
 /***/ }),
-/* 90 */
+/* 91 */
 /*!*************************!*\
   !*** ./utils/LogBox.js ***!
   \*************************/
@@ -44792,7 +44956,7 @@ exports.createProgressBarText = createProgressBarText;
 /* harmony import */ var _src_NetscriptWorker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/NetscriptWorker */ 30);
 /* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./uiHelpers/clearEventListeners */ 21);
 /* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _helpers_arrayToString__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers/arrayToString */ 62);
+/* harmony import */ var _helpers_arrayToString__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers/arrayToString */ 63);
 /* harmony import */ var _helpers_arrayToString__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_helpers_arrayToString__WEBPACK_IMPORTED_MODULE_2__);
 
 
@@ -44863,10 +45027,10 @@ function logBoxUpdateText() {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 71)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 72)))
 
 /***/ }),
-/* 91 */
+/* 92 */
 /*!****************************************!*\
   !*** ./src/ScriptEditor/CodeMirror.js ***!
   \****************************************/
@@ -44876,180 +45040,186 @@ function logBoxUpdateText() {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CodeMirrorEditor; });
-/* harmony import */ var _ScriptEditor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ScriptEditor */ 116);
-/* harmony import */ var codemirror_lib_codemirror_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! codemirror/lib/codemirror.css */ 376);
+/* harmony import */ var _ScriptEditor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ScriptEditor */ 117);
+/* harmony import */ var codemirror_lib_codemirror_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! codemirror/lib/codemirror.css */ 379);
 /* harmony import */ var codemirror_lib_codemirror_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(codemirror_lib_codemirror_css__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var codemirror_theme_monokai_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! codemirror/theme/monokai.css */ 375);
+/* harmony import */ var codemirror_theme_monokai_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! codemirror/theme/monokai.css */ 378);
 /* harmony import */ var codemirror_theme_monokai_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_monokai_css__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var codemirror_theme_3024_day_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! codemirror/theme/3024-day.css */ 374);
+/* harmony import */ var codemirror_theme_3024_day_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! codemirror/theme/3024-day.css */ 377);
 /* harmony import */ var codemirror_theme_3024_day_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_3024_day_css__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var codemirror_theme_3024_night_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! codemirror/theme/3024-night.css */ 373);
+/* harmony import */ var codemirror_theme_3024_night_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! codemirror/theme/3024-night.css */ 376);
 /* harmony import */ var codemirror_theme_3024_night_css__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_3024_night_css__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var codemirror_theme_abcdef_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! codemirror/theme/abcdef.css */ 372);
+/* harmony import */ var codemirror_theme_abcdef_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! codemirror/theme/abcdef.css */ 375);
 /* harmony import */ var codemirror_theme_abcdef_css__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_abcdef_css__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var codemirror_theme_ambiance_mobile_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! codemirror/theme/ambiance-mobile.css */ 371);
+/* harmony import */ var codemirror_theme_ambiance_mobile_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! codemirror/theme/ambiance-mobile.css */ 374);
 /* harmony import */ var codemirror_theme_ambiance_mobile_css__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_ambiance_mobile_css__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var codemirror_theme_ambiance_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! codemirror/theme/ambiance.css */ 370);
+/* harmony import */ var codemirror_theme_ambiance_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! codemirror/theme/ambiance.css */ 373);
 /* harmony import */ var codemirror_theme_ambiance_css__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_ambiance_css__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var codemirror_theme_base16_dark_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! codemirror/theme/base16-dark.css */ 369);
+/* harmony import */ var codemirror_theme_base16_dark_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! codemirror/theme/base16-dark.css */ 372);
 /* harmony import */ var codemirror_theme_base16_dark_css__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_base16_dark_css__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var codemirror_theme_base16_light_css__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! codemirror/theme/base16-light.css */ 368);
+/* harmony import */ var codemirror_theme_base16_light_css__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! codemirror/theme/base16-light.css */ 371);
 /* harmony import */ var codemirror_theme_base16_light_css__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_base16_light_css__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var codemirror_theme_bespin_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! codemirror/theme/bespin.css */ 367);
+/* harmony import */ var codemirror_theme_bespin_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! codemirror/theme/bespin.css */ 370);
 /* harmony import */ var codemirror_theme_bespin_css__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_bespin_css__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var codemirror_theme_blackboard_css__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! codemirror/theme/blackboard.css */ 366);
+/* harmony import */ var codemirror_theme_blackboard_css__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! codemirror/theme/blackboard.css */ 369);
 /* harmony import */ var codemirror_theme_blackboard_css__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_blackboard_css__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var codemirror_theme_cobalt_css__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! codemirror/theme/cobalt.css */ 365);
+/* harmony import */ var codemirror_theme_cobalt_css__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! codemirror/theme/cobalt.css */ 368);
 /* harmony import */ var codemirror_theme_cobalt_css__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_cobalt_css__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var codemirror_theme_colorforth_css__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! codemirror/theme/colorforth.css */ 364);
+/* harmony import */ var codemirror_theme_colorforth_css__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! codemirror/theme/colorforth.css */ 367);
 /* harmony import */ var codemirror_theme_colorforth_css__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_colorforth_css__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var codemirror_theme_darcula_css__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! codemirror/theme/darcula.css */ 363);
+/* harmony import */ var codemirror_theme_darcula_css__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! codemirror/theme/darcula.css */ 366);
 /* harmony import */ var codemirror_theme_darcula_css__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_darcula_css__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var codemirror_theme_dracula_css__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! codemirror/theme/dracula.css */ 362);
+/* harmony import */ var codemirror_theme_dracula_css__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! codemirror/theme/dracula.css */ 365);
 /* harmony import */ var codemirror_theme_dracula_css__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_dracula_css__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var codemirror_theme_duotone_dark_css__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! codemirror/theme/duotone-dark.css */ 361);
+/* harmony import */ var codemirror_theme_duotone_dark_css__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! codemirror/theme/duotone-dark.css */ 364);
 /* harmony import */ var codemirror_theme_duotone_dark_css__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_duotone_dark_css__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var codemirror_theme_duotone_light_css__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! codemirror/theme/duotone-light.css */ 360);
+/* harmony import */ var codemirror_theme_duotone_light_css__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! codemirror/theme/duotone-light.css */ 363);
 /* harmony import */ var codemirror_theme_duotone_light_css__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_duotone_light_css__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var codemirror_theme_eclipse_css__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! codemirror/theme/eclipse.css */ 359);
+/* harmony import */ var codemirror_theme_eclipse_css__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! codemirror/theme/eclipse.css */ 362);
 /* harmony import */ var codemirror_theme_eclipse_css__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_eclipse_css__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var codemirror_theme_elegant_css__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! codemirror/theme/elegant.css */ 358);
+/* harmony import */ var codemirror_theme_elegant_css__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! codemirror/theme/elegant.css */ 361);
 /* harmony import */ var codemirror_theme_elegant_css__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_elegant_css__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var codemirror_theme_erlang_dark_css__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! codemirror/theme/erlang-dark.css */ 357);
+/* harmony import */ var codemirror_theme_erlang_dark_css__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! codemirror/theme/erlang-dark.css */ 360);
 /* harmony import */ var codemirror_theme_erlang_dark_css__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_erlang_dark_css__WEBPACK_IMPORTED_MODULE_20__);
-/* harmony import */ var codemirror_theme_gruvbox_dark_css__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! codemirror/theme/gruvbox-dark.css */ 356);
+/* harmony import */ var codemirror_theme_gruvbox_dark_css__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! codemirror/theme/gruvbox-dark.css */ 359);
 /* harmony import */ var codemirror_theme_gruvbox_dark_css__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_gruvbox_dark_css__WEBPACK_IMPORTED_MODULE_21__);
-/* harmony import */ var codemirror_theme_hopscotch_css__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! codemirror/theme/hopscotch.css */ 355);
+/* harmony import */ var codemirror_theme_hopscotch_css__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! codemirror/theme/hopscotch.css */ 358);
 /* harmony import */ var codemirror_theme_hopscotch_css__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_hopscotch_css__WEBPACK_IMPORTED_MODULE_22__);
-/* harmony import */ var codemirror_theme_icecoder_css__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! codemirror/theme/icecoder.css */ 354);
+/* harmony import */ var codemirror_theme_icecoder_css__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! codemirror/theme/icecoder.css */ 357);
 /* harmony import */ var codemirror_theme_icecoder_css__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_icecoder_css__WEBPACK_IMPORTED_MODULE_23__);
-/* harmony import */ var codemirror_theme_idea_css__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! codemirror/theme/idea.css */ 353);
+/* harmony import */ var codemirror_theme_idea_css__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! codemirror/theme/idea.css */ 356);
 /* harmony import */ var codemirror_theme_idea_css__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_idea_css__WEBPACK_IMPORTED_MODULE_24__);
-/* harmony import */ var codemirror_theme_isotope_css__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! codemirror/theme/isotope.css */ 352);
+/* harmony import */ var codemirror_theme_isotope_css__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! codemirror/theme/isotope.css */ 355);
 /* harmony import */ var codemirror_theme_isotope_css__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_isotope_css__WEBPACK_IMPORTED_MODULE_25__);
-/* harmony import */ var codemirror_theme_lesser_dark_css__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! codemirror/theme/lesser-dark.css */ 351);
+/* harmony import */ var codemirror_theme_lesser_dark_css__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! codemirror/theme/lesser-dark.css */ 354);
 /* harmony import */ var codemirror_theme_lesser_dark_css__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_lesser_dark_css__WEBPACK_IMPORTED_MODULE_26__);
-/* harmony import */ var codemirror_theme_liquibyte_css__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! codemirror/theme/liquibyte.css */ 350);
+/* harmony import */ var codemirror_theme_liquibyte_css__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! codemirror/theme/liquibyte.css */ 353);
 /* harmony import */ var codemirror_theme_liquibyte_css__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_liquibyte_css__WEBPACK_IMPORTED_MODULE_27__);
-/* harmony import */ var codemirror_theme_lucario_css__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! codemirror/theme/lucario.css */ 349);
+/* harmony import */ var codemirror_theme_lucario_css__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! codemirror/theme/lucario.css */ 352);
 /* harmony import */ var codemirror_theme_lucario_css__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_lucario_css__WEBPACK_IMPORTED_MODULE_28__);
-/* harmony import */ var codemirror_theme_material_css__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! codemirror/theme/material.css */ 348);
+/* harmony import */ var codemirror_theme_material_css__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! codemirror/theme/material.css */ 351);
 /* harmony import */ var codemirror_theme_material_css__WEBPACK_IMPORTED_MODULE_29___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_material_css__WEBPACK_IMPORTED_MODULE_29__);
-/* harmony import */ var codemirror_theme_mbo_css__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! codemirror/theme/mbo.css */ 347);
+/* harmony import */ var codemirror_theme_mbo_css__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! codemirror/theme/mbo.css */ 350);
 /* harmony import */ var codemirror_theme_mbo_css__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_mbo_css__WEBPACK_IMPORTED_MODULE_30__);
-/* harmony import */ var codemirror_theme_mdn_like_css__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! codemirror/theme/mdn-like.css */ 346);
+/* harmony import */ var codemirror_theme_mdn_like_css__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! codemirror/theme/mdn-like.css */ 349);
 /* harmony import */ var codemirror_theme_mdn_like_css__WEBPACK_IMPORTED_MODULE_31___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_mdn_like_css__WEBPACK_IMPORTED_MODULE_31__);
-/* harmony import */ var codemirror_theme_midnight_css__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! codemirror/theme/midnight.css */ 345);
+/* harmony import */ var codemirror_theme_midnight_css__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! codemirror/theme/midnight.css */ 348);
 /* harmony import */ var codemirror_theme_midnight_css__WEBPACK_IMPORTED_MODULE_32___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_midnight_css__WEBPACK_IMPORTED_MODULE_32__);
-/* harmony import */ var codemirror_theme_neat_css__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! codemirror/theme/neat.css */ 344);
+/* harmony import */ var codemirror_theme_neat_css__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! codemirror/theme/neat.css */ 347);
 /* harmony import */ var codemirror_theme_neat_css__WEBPACK_IMPORTED_MODULE_33___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_neat_css__WEBPACK_IMPORTED_MODULE_33__);
-/* harmony import */ var codemirror_theme_neo_css__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! codemirror/theme/neo.css */ 343);
+/* harmony import */ var codemirror_theme_neo_css__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! codemirror/theme/neo.css */ 346);
 /* harmony import */ var codemirror_theme_neo_css__WEBPACK_IMPORTED_MODULE_34___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_neo_css__WEBPACK_IMPORTED_MODULE_34__);
-/* harmony import */ var codemirror_theme_night_css__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! codemirror/theme/night.css */ 342);
+/* harmony import */ var codemirror_theme_night_css__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! codemirror/theme/night.css */ 345);
 /* harmony import */ var codemirror_theme_night_css__WEBPACK_IMPORTED_MODULE_35___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_night_css__WEBPACK_IMPORTED_MODULE_35__);
-/* harmony import */ var codemirror_theme_oceanic_next_css__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! codemirror/theme/oceanic-next.css */ 341);
+/* harmony import */ var codemirror_theme_oceanic_next_css__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! codemirror/theme/oceanic-next.css */ 344);
 /* harmony import */ var codemirror_theme_oceanic_next_css__WEBPACK_IMPORTED_MODULE_36___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_oceanic_next_css__WEBPACK_IMPORTED_MODULE_36__);
-/* harmony import */ var codemirror_theme_panda_syntax_css__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! codemirror/theme/panda-syntax.css */ 340);
+/* harmony import */ var codemirror_theme_panda_syntax_css__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! codemirror/theme/panda-syntax.css */ 343);
 /* harmony import */ var codemirror_theme_panda_syntax_css__WEBPACK_IMPORTED_MODULE_37___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_panda_syntax_css__WEBPACK_IMPORTED_MODULE_37__);
-/* harmony import */ var codemirror_theme_paraiso_dark_css__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! codemirror/theme/paraiso-dark.css */ 339);
+/* harmony import */ var codemirror_theme_paraiso_dark_css__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! codemirror/theme/paraiso-dark.css */ 342);
 /* harmony import */ var codemirror_theme_paraiso_dark_css__WEBPACK_IMPORTED_MODULE_38___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_paraiso_dark_css__WEBPACK_IMPORTED_MODULE_38__);
-/* harmony import */ var codemirror_theme_paraiso_light_css__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! codemirror/theme/paraiso-light.css */ 338);
+/* harmony import */ var codemirror_theme_paraiso_light_css__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! codemirror/theme/paraiso-light.css */ 341);
 /* harmony import */ var codemirror_theme_paraiso_light_css__WEBPACK_IMPORTED_MODULE_39___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_paraiso_light_css__WEBPACK_IMPORTED_MODULE_39__);
-/* harmony import */ var codemirror_theme_pastel_on_dark_css__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! codemirror/theme/pastel-on-dark.css */ 337);
+/* harmony import */ var codemirror_theme_pastel_on_dark_css__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! codemirror/theme/pastel-on-dark.css */ 340);
 /* harmony import */ var codemirror_theme_pastel_on_dark_css__WEBPACK_IMPORTED_MODULE_40___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_pastel_on_dark_css__WEBPACK_IMPORTED_MODULE_40__);
-/* harmony import */ var codemirror_theme_railscasts_css__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! codemirror/theme/railscasts.css */ 336);
+/* harmony import */ var codemirror_theme_railscasts_css__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! codemirror/theme/railscasts.css */ 339);
 /* harmony import */ var codemirror_theme_railscasts_css__WEBPACK_IMPORTED_MODULE_41___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_railscasts_css__WEBPACK_IMPORTED_MODULE_41__);
-/* harmony import */ var codemirror_theme_rubyblue_css__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! codemirror/theme/rubyblue.css */ 335);
+/* harmony import */ var codemirror_theme_rubyblue_css__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! codemirror/theme/rubyblue.css */ 338);
 /* harmony import */ var codemirror_theme_rubyblue_css__WEBPACK_IMPORTED_MODULE_42___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_rubyblue_css__WEBPACK_IMPORTED_MODULE_42__);
-/* harmony import */ var codemirror_theme_seti_css__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! codemirror/theme/seti.css */ 334);
+/* harmony import */ var codemirror_theme_seti_css__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! codemirror/theme/seti.css */ 337);
 /* harmony import */ var codemirror_theme_seti_css__WEBPACK_IMPORTED_MODULE_43___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_seti_css__WEBPACK_IMPORTED_MODULE_43__);
-/* harmony import */ var codemirror_theme_shadowfox_css__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! codemirror/theme/shadowfox.css */ 333);
+/* harmony import */ var codemirror_theme_shadowfox_css__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! codemirror/theme/shadowfox.css */ 336);
 /* harmony import */ var codemirror_theme_shadowfox_css__WEBPACK_IMPORTED_MODULE_44___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_shadowfox_css__WEBPACK_IMPORTED_MODULE_44__);
-/* harmony import */ var codemirror_theme_solarized_css__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(/*! codemirror/theme/solarized.css */ 332);
+/* harmony import */ var codemirror_theme_solarized_css__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(/*! codemirror/theme/solarized.css */ 335);
 /* harmony import */ var codemirror_theme_solarized_css__WEBPACK_IMPORTED_MODULE_45___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_solarized_css__WEBPACK_IMPORTED_MODULE_45__);
-/* harmony import */ var codemirror_theme_ssms_css__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(/*! codemirror/theme/ssms.css */ 331);
+/* harmony import */ var codemirror_theme_ssms_css__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(/*! codemirror/theme/ssms.css */ 334);
 /* harmony import */ var codemirror_theme_ssms_css__WEBPACK_IMPORTED_MODULE_46___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_ssms_css__WEBPACK_IMPORTED_MODULE_46__);
-/* harmony import */ var codemirror_theme_the_matrix_css__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(/*! codemirror/theme/the-matrix.css */ 330);
+/* harmony import */ var codemirror_theme_the_matrix_css__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(/*! codemirror/theme/the-matrix.css */ 333);
 /* harmony import */ var codemirror_theme_the_matrix_css__WEBPACK_IMPORTED_MODULE_47___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_the_matrix_css__WEBPACK_IMPORTED_MODULE_47__);
-/* harmony import */ var codemirror_theme_tomorrow_night_bright_css__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(/*! codemirror/theme/tomorrow-night-bright.css */ 329);
+/* harmony import */ var codemirror_theme_tomorrow_night_bright_css__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(/*! codemirror/theme/tomorrow-night-bright.css */ 332);
 /* harmony import */ var codemirror_theme_tomorrow_night_bright_css__WEBPACK_IMPORTED_MODULE_48___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_tomorrow_night_bright_css__WEBPACK_IMPORTED_MODULE_48__);
-/* harmony import */ var codemirror_theme_tomorrow_night_eighties_css__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(/*! codemirror/theme/tomorrow-night-eighties.css */ 328);
+/* harmony import */ var codemirror_theme_tomorrow_night_eighties_css__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(/*! codemirror/theme/tomorrow-night-eighties.css */ 331);
 /* harmony import */ var codemirror_theme_tomorrow_night_eighties_css__WEBPACK_IMPORTED_MODULE_49___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_tomorrow_night_eighties_css__WEBPACK_IMPORTED_MODULE_49__);
-/* harmony import */ var codemirror_theme_ttcn_css__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(/*! codemirror/theme/ttcn.css */ 327);
+/* harmony import */ var codemirror_theme_ttcn_css__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(/*! codemirror/theme/ttcn.css */ 330);
 /* harmony import */ var codemirror_theme_ttcn_css__WEBPACK_IMPORTED_MODULE_50___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_ttcn_css__WEBPACK_IMPORTED_MODULE_50__);
-/* harmony import */ var codemirror_theme_twilight_css__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! codemirror/theme/twilight.css */ 326);
+/* harmony import */ var codemirror_theme_twilight_css__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! codemirror/theme/twilight.css */ 329);
 /* harmony import */ var codemirror_theme_twilight_css__WEBPACK_IMPORTED_MODULE_51___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_twilight_css__WEBPACK_IMPORTED_MODULE_51__);
-/* harmony import */ var codemirror_theme_vibrant_ink_css__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! codemirror/theme/vibrant-ink.css */ 325);
+/* harmony import */ var codemirror_theme_vibrant_ink_css__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! codemirror/theme/vibrant-ink.css */ 328);
 /* harmony import */ var codemirror_theme_vibrant_ink_css__WEBPACK_IMPORTED_MODULE_52___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_vibrant_ink_css__WEBPACK_IMPORTED_MODULE_52__);
-/* harmony import */ var codemirror_theme_xq_dark_css__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(/*! codemirror/theme/xq-dark.css */ 324);
+/* harmony import */ var codemirror_theme_xq_dark_css__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(/*! codemirror/theme/xq-dark.css */ 327);
 /* harmony import */ var codemirror_theme_xq_dark_css__WEBPACK_IMPORTED_MODULE_53___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_xq_dark_css__WEBPACK_IMPORTED_MODULE_53__);
-/* harmony import */ var codemirror_theme_xq_light_css__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(/*! codemirror/theme/xq-light.css */ 323);
+/* harmony import */ var codemirror_theme_xq_light_css__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(/*! codemirror/theme/xq-light.css */ 326);
 /* harmony import */ var codemirror_theme_xq_light_css__WEBPACK_IMPORTED_MODULE_54___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_xq_light_css__WEBPACK_IMPORTED_MODULE_54__);
-/* harmony import */ var codemirror_theme_yeti_css__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(/*! codemirror/theme/yeti.css */ 322);
+/* harmony import */ var codemirror_theme_yeti_css__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(/*! codemirror/theme/yeti.css */ 325);
 /* harmony import */ var codemirror_theme_yeti_css__WEBPACK_IMPORTED_MODULE_55___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_yeti_css__WEBPACK_IMPORTED_MODULE_55__);
-/* harmony import */ var codemirror_theme_zenburn_css__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(/*! codemirror/theme/zenburn.css */ 321);
+/* harmony import */ var codemirror_theme_zenburn_css__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(/*! codemirror/theme/zenburn.css */ 324);
 /* harmony import */ var codemirror_theme_zenburn_css__WEBPACK_IMPORTED_MODULE_56___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_zenburn_css__WEBPACK_IMPORTED_MODULE_56__);
-/* harmony import */ var _css_codemirror_overrides_scss__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(/*! ../../css/codemirror-overrides.scss */ 243);
+/* harmony import */ var _css_codemirror_overrides_scss__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(/*! ../../css/codemirror-overrides.scss */ 244);
 /* harmony import */ var _css_codemirror_overrides_scss__WEBPACK_IMPORTED_MODULE_57___default = /*#__PURE__*/__webpack_require__.n(_css_codemirror_overrides_scss__WEBPACK_IMPORTED_MODULE_57__);
-/* harmony import */ var codemirror_lib_codemirror_js__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(/*! codemirror/lib/codemirror.js */ 54);
+/* harmony import */ var codemirror_lib_codemirror_js__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(/*! codemirror/lib/codemirror.js */ 50);
 /* harmony import */ var codemirror_lib_codemirror_js__WEBPACK_IMPORTED_MODULE_58___default = /*#__PURE__*/__webpack_require__.n(codemirror_lib_codemirror_js__WEBPACK_IMPORTED_MODULE_58__);
-/* harmony import */ var codemirror_mode_javascript_javascript_js__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(/*! codemirror/mode/javascript/javascript.js */ 320);
+/* harmony import */ var codemirror_mode_javascript_javascript_js__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(/*! codemirror/mode/javascript/javascript.js */ 323);
 /* harmony import */ var codemirror_mode_javascript_javascript_js__WEBPACK_IMPORTED_MODULE_59___default = /*#__PURE__*/__webpack_require__.n(codemirror_mode_javascript_javascript_js__WEBPACK_IMPORTED_MODULE_59__);
-/* harmony import */ var _CodeMirrorNetscriptMode__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(/*! ./CodeMirrorNetscriptMode */ 241);
+/* harmony import */ var _CodeMirrorNetscriptMode__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(/*! ./CodeMirrorNetscriptMode */ 242);
 /* harmony import */ var _CodeMirrorNetscriptMode__WEBPACK_IMPORTED_MODULE_60___default = /*#__PURE__*/__webpack_require__.n(_CodeMirrorNetscriptMode__WEBPACK_IMPORTED_MODULE_60__);
-/* harmony import */ var codemirror_keymap_sublime_js__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(/*! codemirror/keymap/sublime.js */ 319);
+/* harmony import */ var codemirror_keymap_sublime_js__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(/*! codemirror/keymap/sublime.js */ 322);
 /* harmony import */ var codemirror_keymap_sublime_js__WEBPACK_IMPORTED_MODULE_61___default = /*#__PURE__*/__webpack_require__.n(codemirror_keymap_sublime_js__WEBPACK_IMPORTED_MODULE_61__);
-/* harmony import */ var codemirror_keymap_vim_js__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(/*! codemirror/keymap/vim.js */ 318);
+/* harmony import */ var codemirror_keymap_vim_js__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(/*! codemirror/keymap/vim.js */ 321);
 /* harmony import */ var codemirror_keymap_vim_js__WEBPACK_IMPORTED_MODULE_62___default = /*#__PURE__*/__webpack_require__.n(codemirror_keymap_vim_js__WEBPACK_IMPORTED_MODULE_62__);
-/* harmony import */ var codemirror_keymap_emacs_js__WEBPACK_IMPORTED_MODULE_63__ = __webpack_require__(/*! codemirror/keymap/emacs.js */ 317);
+/* harmony import */ var codemirror_keymap_emacs_js__WEBPACK_IMPORTED_MODULE_63__ = __webpack_require__(/*! codemirror/keymap/emacs.js */ 320);
 /* harmony import */ var codemirror_keymap_emacs_js__WEBPACK_IMPORTED_MODULE_63___default = /*#__PURE__*/__webpack_require__.n(codemirror_keymap_emacs_js__WEBPACK_IMPORTED_MODULE_63__);
-/* harmony import */ var codemirror_addon_comment_continuecomment_js__WEBPACK_IMPORTED_MODULE_64__ = __webpack_require__(/*! codemirror/addon/comment/continuecomment.js */ 316);
+/* harmony import */ var codemirror_addon_comment_continuecomment_js__WEBPACK_IMPORTED_MODULE_64__ = __webpack_require__(/*! codemirror/addon/comment/continuecomment.js */ 319);
 /* harmony import */ var codemirror_addon_comment_continuecomment_js__WEBPACK_IMPORTED_MODULE_64___default = /*#__PURE__*/__webpack_require__.n(codemirror_addon_comment_continuecomment_js__WEBPACK_IMPORTED_MODULE_64__);
-/* harmony import */ var codemirror_addon_edit_closebrackets_js__WEBPACK_IMPORTED_MODULE_65__ = __webpack_require__(/*! codemirror/addon/edit/closebrackets.js */ 315);
-/* harmony import */ var codemirror_addon_edit_closebrackets_js__WEBPACK_IMPORTED_MODULE_65___default = /*#__PURE__*/__webpack_require__.n(codemirror_addon_edit_closebrackets_js__WEBPACK_IMPORTED_MODULE_65__);
-/* harmony import */ var codemirror_addon_edit_matchbrackets_js__WEBPACK_IMPORTED_MODULE_66__ = __webpack_require__(/*! codemirror/addon/edit/matchbrackets.js */ 174);
-/* harmony import */ var codemirror_addon_edit_matchbrackets_js__WEBPACK_IMPORTED_MODULE_66___default = /*#__PURE__*/__webpack_require__.n(codemirror_addon_edit_matchbrackets_js__WEBPACK_IMPORTED_MODULE_66__);
-/* harmony import */ var codemirror_addon_fold_foldcode_js__WEBPACK_IMPORTED_MODULE_67__ = __webpack_require__(/*! codemirror/addon/fold/foldcode.js */ 239);
-/* harmony import */ var codemirror_addon_fold_foldcode_js__WEBPACK_IMPORTED_MODULE_67___default = /*#__PURE__*/__webpack_require__.n(codemirror_addon_fold_foldcode_js__WEBPACK_IMPORTED_MODULE_67__);
-/* harmony import */ var codemirror_addon_fold_foldgutter_js__WEBPACK_IMPORTED_MODULE_68__ = __webpack_require__(/*! codemirror/addon/fold/foldgutter.js */ 314);
-/* harmony import */ var codemirror_addon_fold_foldgutter_js__WEBPACK_IMPORTED_MODULE_68___default = /*#__PURE__*/__webpack_require__.n(codemirror_addon_fold_foldgutter_js__WEBPACK_IMPORTED_MODULE_68__);
-/* harmony import */ var codemirror_addon_fold_foldgutter_css__WEBPACK_IMPORTED_MODULE_69__ = __webpack_require__(/*! codemirror/addon/fold/foldgutter.css */ 313);
-/* harmony import */ var codemirror_addon_fold_foldgutter_css__WEBPACK_IMPORTED_MODULE_69___default = /*#__PURE__*/__webpack_require__.n(codemirror_addon_fold_foldgutter_css__WEBPACK_IMPORTED_MODULE_69__);
-/* harmony import */ var codemirror_addon_fold_brace_fold_js__WEBPACK_IMPORTED_MODULE_70__ = __webpack_require__(/*! codemirror/addon/fold/brace-fold.js */ 312);
-/* harmony import */ var codemirror_addon_fold_brace_fold_js__WEBPACK_IMPORTED_MODULE_70___default = /*#__PURE__*/__webpack_require__.n(codemirror_addon_fold_brace_fold_js__WEBPACK_IMPORTED_MODULE_70__);
-/* harmony import */ var codemirror_addon_fold_indent_fold_js__WEBPACK_IMPORTED_MODULE_71__ = __webpack_require__(/*! codemirror/addon/fold/indent-fold.js */ 311);
-/* harmony import */ var codemirror_addon_fold_indent_fold_js__WEBPACK_IMPORTED_MODULE_71___default = /*#__PURE__*/__webpack_require__.n(codemirror_addon_fold_indent_fold_js__WEBPACK_IMPORTED_MODULE_71__);
-/* harmony import */ var codemirror_addon_fold_comment_fold_js__WEBPACK_IMPORTED_MODULE_72__ = __webpack_require__(/*! codemirror/addon/fold/comment-fold.js */ 310);
-/* harmony import */ var codemirror_addon_fold_comment_fold_js__WEBPACK_IMPORTED_MODULE_72___default = /*#__PURE__*/__webpack_require__.n(codemirror_addon_fold_comment_fold_js__WEBPACK_IMPORTED_MODULE_72__);
-/* harmony import */ var codemirror_addon_hint_show_hint_js__WEBPACK_IMPORTED_MODULE_73__ = __webpack_require__(/*! codemirror/addon/hint/show-hint.js */ 309);
-/* harmony import */ var codemirror_addon_hint_show_hint_js__WEBPACK_IMPORTED_MODULE_73___default = /*#__PURE__*/__webpack_require__.n(codemirror_addon_hint_show_hint_js__WEBPACK_IMPORTED_MODULE_73__);
-/* harmony import */ var codemirror_addon_hint_show_hint_css__WEBPACK_IMPORTED_MODULE_74__ = __webpack_require__(/*! codemirror/addon/hint/show-hint.css */ 308);
-/* harmony import */ var codemirror_addon_hint_show_hint_css__WEBPACK_IMPORTED_MODULE_74___default = /*#__PURE__*/__webpack_require__.n(codemirror_addon_hint_show_hint_css__WEBPACK_IMPORTED_MODULE_74__);
-/* harmony import */ var codemirror_addon_lint_lint_js__WEBPACK_IMPORTED_MODULE_75__ = __webpack_require__(/*! codemirror/addon/lint/lint.js */ 307);
-/* harmony import */ var codemirror_addon_lint_lint_js__WEBPACK_IMPORTED_MODULE_75___default = /*#__PURE__*/__webpack_require__.n(codemirror_addon_lint_lint_js__WEBPACK_IMPORTED_MODULE_75__);
-/* harmony import */ var codemirror_addon_lint_lint_css__WEBPACK_IMPORTED_MODULE_76__ = __webpack_require__(/*! codemirror/addon/lint/lint.css */ 306);
-/* harmony import */ var codemirror_addon_lint_lint_css__WEBPACK_IMPORTED_MODULE_76___default = /*#__PURE__*/__webpack_require__.n(codemirror_addon_lint_lint_css__WEBPACK_IMPORTED_MODULE_76__);
-/* harmony import */ var codemirror_addon_search_match_highlighter_js__WEBPACK_IMPORTED_MODULE_77__ = __webpack_require__(/*! codemirror/addon/search/match-highlighter.js */ 305);
-/* harmony import */ var codemirror_addon_search_match_highlighter_js__WEBPACK_IMPORTED_MODULE_77___default = /*#__PURE__*/__webpack_require__.n(codemirror_addon_search_match_highlighter_js__WEBPACK_IMPORTED_MODULE_77__);
-/* harmony import */ var codemirror_addon_selection_active_line_js__WEBPACK_IMPORTED_MODULE_78__ = __webpack_require__(/*! codemirror/addon/selection/active-line.js */ 304);
-/* harmony import */ var codemirror_addon_selection_active_line_js__WEBPACK_IMPORTED_MODULE_78___default = /*#__PURE__*/__webpack_require__.n(codemirror_addon_selection_active_line_js__WEBPACK_IMPORTED_MODULE_78__);
-/* harmony import */ var _CodeMirrorNetscriptHint_js__WEBPACK_IMPORTED_MODULE_79__ = __webpack_require__(/*! ./CodeMirrorNetscriptHint.js */ 238);
-/* harmony import */ var _CodeMirrorNetscriptHint_js__WEBPACK_IMPORTED_MODULE_79___default = /*#__PURE__*/__webpack_require__.n(_CodeMirrorNetscriptHint_js__WEBPACK_IMPORTED_MODULE_79__);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_80__ = __webpack_require__(/*! ../NetscriptFunctions */ 46);
-/* harmony import */ var _Settings_SettingEnums__WEBPACK_IMPORTED_MODULE_81__ = __webpack_require__(/*! ../Settings/SettingEnums */ 56);
-/* harmony import */ var _Settings_SettingEnums__WEBPACK_IMPORTED_MODULE_81___default = /*#__PURE__*/__webpack_require__.n(_Settings_SettingEnums__WEBPACK_IMPORTED_MODULE_81__);
-/* harmony import */ var _Settings_Settings__WEBPACK_IMPORTED_MODULE_82__ = __webpack_require__(/*! ../Settings/Settings */ 19);
-/* harmony import */ var _Settings_Settings__WEBPACK_IMPORTED_MODULE_82___default = /*#__PURE__*/__webpack_require__.n(_Settings_Settings__WEBPACK_IMPORTED_MODULE_82__);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_83__ = __webpack_require__(/*! ../../utils/uiHelpers/clearEventListeners */ 21);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_83___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_83__);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_84__ = __webpack_require__(/*! ../../utils/uiHelpers/createElement */ 2);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_84___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_84__);
-/* harmony import */ var _utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_85__ = __webpack_require__(/*! ../../utils/uiHelpers/createOptionElement */ 53);
-/* harmony import */ var _utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_85___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_85__);
-/* harmony import */ var _utils_uiHelpers_getSelectData__WEBPACK_IMPORTED_MODULE_86__ = __webpack_require__(/*! ../../utils/uiHelpers/getSelectData */ 98);
-/* harmony import */ var _utils_uiHelpers_getSelectData__WEBPACK_IMPORTED_MODULE_86___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_getSelectData__WEBPACK_IMPORTED_MODULE_86__);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_87__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 26);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_87___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_87__);
+/* harmony import */ var codemirror_addon_dialog_dialog_css__WEBPACK_IMPORTED_MODULE_65__ = __webpack_require__(/*! codemirror/addon/dialog/dialog.css */ 318);
+/* harmony import */ var codemirror_addon_dialog_dialog_css__WEBPACK_IMPORTED_MODULE_65___default = /*#__PURE__*/__webpack_require__.n(codemirror_addon_dialog_dialog_css__WEBPACK_IMPORTED_MODULE_65__);
+/* harmony import */ var codemirror_addon_dialog_dialog_js__WEBPACK_IMPORTED_MODULE_66__ = __webpack_require__(/*! codemirror/addon/dialog/dialog.js */ 240);
+/* harmony import */ var codemirror_addon_dialog_dialog_js__WEBPACK_IMPORTED_MODULE_66___default = /*#__PURE__*/__webpack_require__.n(codemirror_addon_dialog_dialog_js__WEBPACK_IMPORTED_MODULE_66__);
+/* harmony import */ var codemirror_addon_edit_closebrackets_js__WEBPACK_IMPORTED_MODULE_67__ = __webpack_require__(/*! codemirror/addon/edit/closebrackets.js */ 317);
+/* harmony import */ var codemirror_addon_edit_closebrackets_js__WEBPACK_IMPORTED_MODULE_67___default = /*#__PURE__*/__webpack_require__.n(codemirror_addon_edit_closebrackets_js__WEBPACK_IMPORTED_MODULE_67__);
+/* harmony import */ var codemirror_addon_edit_matchbrackets_js__WEBPACK_IMPORTED_MODULE_68__ = __webpack_require__(/*! codemirror/addon/edit/matchbrackets.js */ 174);
+/* harmony import */ var codemirror_addon_edit_matchbrackets_js__WEBPACK_IMPORTED_MODULE_68___default = /*#__PURE__*/__webpack_require__.n(codemirror_addon_edit_matchbrackets_js__WEBPACK_IMPORTED_MODULE_68__);
+/* harmony import */ var codemirror_addon_fold_foldcode_js__WEBPACK_IMPORTED_MODULE_69__ = __webpack_require__(/*! codemirror/addon/fold/foldcode.js */ 239);
+/* harmony import */ var codemirror_addon_fold_foldcode_js__WEBPACK_IMPORTED_MODULE_69___default = /*#__PURE__*/__webpack_require__.n(codemirror_addon_fold_foldcode_js__WEBPACK_IMPORTED_MODULE_69__);
+/* harmony import */ var codemirror_addon_fold_foldgutter_js__WEBPACK_IMPORTED_MODULE_70__ = __webpack_require__(/*! codemirror/addon/fold/foldgutter.js */ 316);
+/* harmony import */ var codemirror_addon_fold_foldgutter_js__WEBPACK_IMPORTED_MODULE_70___default = /*#__PURE__*/__webpack_require__.n(codemirror_addon_fold_foldgutter_js__WEBPACK_IMPORTED_MODULE_70__);
+/* harmony import */ var codemirror_addon_fold_foldgutter_css__WEBPACK_IMPORTED_MODULE_71__ = __webpack_require__(/*! codemirror/addon/fold/foldgutter.css */ 315);
+/* harmony import */ var codemirror_addon_fold_foldgutter_css__WEBPACK_IMPORTED_MODULE_71___default = /*#__PURE__*/__webpack_require__.n(codemirror_addon_fold_foldgutter_css__WEBPACK_IMPORTED_MODULE_71__);
+/* harmony import */ var codemirror_addon_fold_brace_fold_js__WEBPACK_IMPORTED_MODULE_72__ = __webpack_require__(/*! codemirror/addon/fold/brace-fold.js */ 314);
+/* harmony import */ var codemirror_addon_fold_brace_fold_js__WEBPACK_IMPORTED_MODULE_72___default = /*#__PURE__*/__webpack_require__.n(codemirror_addon_fold_brace_fold_js__WEBPACK_IMPORTED_MODULE_72__);
+/* harmony import */ var codemirror_addon_fold_indent_fold_js__WEBPACK_IMPORTED_MODULE_73__ = __webpack_require__(/*! codemirror/addon/fold/indent-fold.js */ 313);
+/* harmony import */ var codemirror_addon_fold_indent_fold_js__WEBPACK_IMPORTED_MODULE_73___default = /*#__PURE__*/__webpack_require__.n(codemirror_addon_fold_indent_fold_js__WEBPACK_IMPORTED_MODULE_73__);
+/* harmony import */ var codemirror_addon_fold_comment_fold_js__WEBPACK_IMPORTED_MODULE_74__ = __webpack_require__(/*! codemirror/addon/fold/comment-fold.js */ 312);
+/* harmony import */ var codemirror_addon_fold_comment_fold_js__WEBPACK_IMPORTED_MODULE_74___default = /*#__PURE__*/__webpack_require__.n(codemirror_addon_fold_comment_fold_js__WEBPACK_IMPORTED_MODULE_74__);
+/* harmony import */ var codemirror_addon_hint_javascript_hint_js__WEBPACK_IMPORTED_MODULE_75__ = __webpack_require__(/*! codemirror/addon/hint/javascript-hint.js */ 311);
+/* harmony import */ var codemirror_addon_hint_javascript_hint_js__WEBPACK_IMPORTED_MODULE_75___default = /*#__PURE__*/__webpack_require__.n(codemirror_addon_hint_javascript_hint_js__WEBPACK_IMPORTED_MODULE_75__);
+/* harmony import */ var codemirror_addon_hint_show_hint_js__WEBPACK_IMPORTED_MODULE_76__ = __webpack_require__(/*! codemirror/addon/hint/show-hint.js */ 310);
+/* harmony import */ var codemirror_addon_hint_show_hint_js__WEBPACK_IMPORTED_MODULE_76___default = /*#__PURE__*/__webpack_require__.n(codemirror_addon_hint_show_hint_js__WEBPACK_IMPORTED_MODULE_76__);
+/* harmony import */ var codemirror_addon_hint_show_hint_css__WEBPACK_IMPORTED_MODULE_77__ = __webpack_require__(/*! codemirror/addon/hint/show-hint.css */ 309);
+/* harmony import */ var codemirror_addon_hint_show_hint_css__WEBPACK_IMPORTED_MODULE_77___default = /*#__PURE__*/__webpack_require__.n(codemirror_addon_hint_show_hint_css__WEBPACK_IMPORTED_MODULE_77__);
+/* harmony import */ var codemirror_addon_lint_lint_js__WEBPACK_IMPORTED_MODULE_78__ = __webpack_require__(/*! codemirror/addon/lint/lint.js */ 308);
+/* harmony import */ var codemirror_addon_lint_lint_js__WEBPACK_IMPORTED_MODULE_78___default = /*#__PURE__*/__webpack_require__.n(codemirror_addon_lint_lint_js__WEBPACK_IMPORTED_MODULE_78__);
+/* harmony import */ var codemirror_addon_lint_lint_css__WEBPACK_IMPORTED_MODULE_79__ = __webpack_require__(/*! codemirror/addon/lint/lint.css */ 307);
+/* harmony import */ var codemirror_addon_lint_lint_css__WEBPACK_IMPORTED_MODULE_79___default = /*#__PURE__*/__webpack_require__.n(codemirror_addon_lint_lint_css__WEBPACK_IMPORTED_MODULE_79__);
+/* harmony import */ var codemirror_addon_search_match_highlighter_js__WEBPACK_IMPORTED_MODULE_80__ = __webpack_require__(/*! codemirror/addon/search/match-highlighter.js */ 306);
+/* harmony import */ var codemirror_addon_search_match_highlighter_js__WEBPACK_IMPORTED_MODULE_80___default = /*#__PURE__*/__webpack_require__.n(codemirror_addon_search_match_highlighter_js__WEBPACK_IMPORTED_MODULE_80__);
+/* harmony import */ var codemirror_addon_selection_active_line_js__WEBPACK_IMPORTED_MODULE_81__ = __webpack_require__(/*! codemirror/addon/selection/active-line.js */ 305);
+/* harmony import */ var codemirror_addon_selection_active_line_js__WEBPACK_IMPORTED_MODULE_81___default = /*#__PURE__*/__webpack_require__.n(codemirror_addon_selection_active_line_js__WEBPACK_IMPORTED_MODULE_81__);
+/* harmony import */ var _CodeMirrorNetscriptLint_js__WEBPACK_IMPORTED_MODULE_82__ = __webpack_require__(/*! ./CodeMirrorNetscriptLint.js */ 238);
+/* harmony import */ var _CodeMirrorNetscriptLint_js__WEBPACK_IMPORTED_MODULE_82___default = /*#__PURE__*/__webpack_require__.n(_CodeMirrorNetscriptLint_js__WEBPACK_IMPORTED_MODULE_82__);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_83__ = __webpack_require__(/*! ../NetscriptFunctions */ 47);
+/* harmony import */ var _Settings_SettingEnums__WEBPACK_IMPORTED_MODULE_84__ = __webpack_require__(/*! ../Settings/SettingEnums */ 45);
+/* harmony import */ var _Settings_SettingEnums__WEBPACK_IMPORTED_MODULE_84___default = /*#__PURE__*/__webpack_require__.n(_Settings_SettingEnums__WEBPACK_IMPORTED_MODULE_84__);
+/* harmony import */ var _Settings_Settings__WEBPACK_IMPORTED_MODULE_85__ = __webpack_require__(/*! ../Settings/Settings */ 19);
+/* harmony import */ var _Settings_Settings__WEBPACK_IMPORTED_MODULE_85___default = /*#__PURE__*/__webpack_require__.n(_Settings_Settings__WEBPACK_IMPORTED_MODULE_85__);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_86__ = __webpack_require__(/*! ../../utils/uiHelpers/clearEventListeners */ 21);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_86___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_86__);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_87__ = __webpack_require__(/*! ../../utils/uiHelpers/createElement */ 2);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_87___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_87__);
+/* harmony import */ var _utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_88__ = __webpack_require__(/*! ../../utils/uiHelpers/createOptionElement */ 55);
+/* harmony import */ var _utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_88___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_88__);
+/* harmony import */ var _utils_uiHelpers_getSelectData__WEBPACK_IMPORTED_MODULE_89__ = __webpack_require__(/*! ../../utils/uiHelpers/getSelectData */ 99);
+/* harmony import */ var _utils_uiHelpers_getSelectData__WEBPACK_IMPORTED_MODULE_89___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_getSelectData__WEBPACK_IMPORTED_MODULE_89__);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_90__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 27);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_90___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_90__);
 // Wrapper for CodeMirror editor
 // https://github.com/codemirror/codemirror
 
@@ -45138,7 +45308,10 @@ function logBoxUpdateText() {
 
 
 
-window.JSHINT = __webpack_require__(/*! jshint */ 303).JSHINT;
+
+
+
+window.JSHINT = __webpack_require__(/*! jshint */ 304).JSHINT;
 
 
 
@@ -45165,6 +45338,8 @@ function validateInitializationParamters(params) {
 class CodeMirrorEditorWrapper extends _ScriptEditor__WEBPACK_IMPORTED_MODULE_0__[/* ScriptEditor */ "a"] {
     constructor() {
         super();
+        this.vimCommandDisplay = null;
+        this.vimCommandDisplayWrapper = null;
         this.tabsStyleElement = null;
     }
 
@@ -45211,13 +45386,17 @@ class CodeMirrorEditorWrapper extends _ScriptEditor__WEBPACK_IMPORTED_MODULE_0__
         this.tabsStyleElement = document.createElement('style');
         document.head.appendChild(this.tabsStyleElement);
 
+        // Store a reference to the VIM command display
+        this.vimCommandDisplay = document.getElementById("codemirror-vim-command-display");
+        this.vimCommandDisplayWrapper = document.getElementById("codemirror-vim-command-display-wrapper");
+
         // Define a "Save" command for CodeMirror so shortcuts like Ctrl + s
         // will save in-game
         codemirror_lib_codemirror_js__WEBPACK_IMPORTED_MODULE_58___default.a.commands.save = function() { params.saveAndCloseFn(); }
 
         // Add Netscript Functions to the autocompleter
         const netscriptFns = [];
-        var fnsObj = Object(_NetscriptFunctions__WEBPACK_IMPORTED_MODULE_80__[/* NetscriptFunctions */ "a"])(null);
+        var fnsObj = Object(_NetscriptFunctions__WEBPACK_IMPORTED_MODULE_83__[/* NetscriptFunctions */ "a"])(null);
         for (let name in fnsObj) {
             if (fnsObj.hasOwnProperty(name)) {
                 netscriptFns.push(name);
@@ -45257,6 +45436,21 @@ class CodeMirrorEditorWrapper extends _ScriptEditor__WEBPACK_IMPORTED_MODULE_0__
 
             return result;
         };
+
+        // Configure VIM keybindings
+        var VimApi = codemirror_lib_codemirror_js__WEBPACK_IMPORTED_MODULE_58___default.a.Vim;
+        VimApi.defineEx('write', 'w', function(cm, input) {
+            params.saveAndCloseFn();
+        });
+        VimApi.defineEx('quit', 'q', function(cm, input) {
+            params.quitFn();
+        });
+        VimApi.defineEx('xwritequit', 'x', function(cm, input) {
+            params.saveAndCloseFn();
+        });
+        VimApi.defineEx('wqwritequit', 'wq', function(cm, input) {
+            params.saveAndCloseFn();
+        });
     }
 
     initialized() {
@@ -45274,7 +45468,7 @@ class CodeMirrorEditorWrapper extends _ScriptEditor__WEBPACK_IMPORTED_MODULE_0__
         }
 
         function safeClearEventListeners(id, whatFor="") {
-            const elem = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_83__["clearEventListeners"])(id);
+            const elem = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_86__["clearEventListeners"])(id);
             if (elem == null) {
                 throw new Error(`Could not find ${whatFor} DOM element(id=${id})`);
             }
@@ -45286,6 +45480,11 @@ class CodeMirrorEditorWrapper extends _ScriptEditor__WEBPACK_IMPORTED_MODULE_0__
             if (!this.initialized()) {
                 console.warn(`CodeMirrorEditor.create() called when editor was not initialized`);
                 return;
+            }
+
+            // Get and sanitize the keybinding (keymap) setting
+            if (!(Object.values(_Settings_SettingEnums__WEBPACK_IMPORTED_MODULE_84__["CodeMirrorKeybindingSetting"]).includes(_Settings_Settings__WEBPACK_IMPORTED_MODULE_85__["Settings"].EditorKeybinding))) {
+                _Settings_Settings__WEBPACK_IMPORTED_MODULE_85__["Settings"].EditorKeybinding = _Settings_SettingEnums__WEBPACK_IMPORTED_MODULE_84__["CodeMirrorKeybindingSetting"].Default;
             }
 
             // Initialize CodeMirror Editor
@@ -45306,22 +45505,22 @@ class CodeMirrorEditorWrapper extends _ScriptEditor__WEBPACK_IMPORTED_MODULE_0__
                 matchBrackets: true,
                 maxInvisibles: 32,
                 mode: "netscript",
-                theme: _Settings_Settings__WEBPACK_IMPORTED_MODULE_82__["Settings"].EditorTheme,
+                theme: _Settings_Settings__WEBPACK_IMPORTED_MODULE_85__["Settings"].EditorTheme,
             });
 
             // Setup Theme Option
             const themeDropdown = safeClearEventListeners("script-editor-option-theme", "Theme Selector");
-            Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_87__["removeChildrenFromElement"])(themeDropdown);
-            const themeOptions = Object.keys(_Settings_SettingEnums__WEBPACK_IMPORTED_MODULE_81__["CodeMirrorThemeSetting"]);
+            Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_90__["removeChildrenFromElement"])(themeDropdown);
+            const themeOptions = Object.keys(_Settings_SettingEnums__WEBPACK_IMPORTED_MODULE_84__["CodeMirrorThemeSetting"]);
             for (let i = 0; i < themeOptions.length; ++i) {
                 const themeKey = themeOptions[i];
-                const themeValue = _Settings_SettingEnums__WEBPACK_IMPORTED_MODULE_81__["CodeMirrorThemeSetting"][themeKey];
-                themeDropdown.add(Object(_utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_85__["createOptionElement"])(themeKey, themeValue));
+                const themeValue = _Settings_SettingEnums__WEBPACK_IMPORTED_MODULE_84__["CodeMirrorThemeSetting"][themeKey];
+                themeDropdown.add(Object(_utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_88__["createOptionElement"])(themeKey, themeValue));
             }
-            if (_Settings_Settings__WEBPACK_IMPORTED_MODULE_82__["Settings"].EditorTheme) {
+            if (_Settings_Settings__WEBPACK_IMPORTED_MODULE_85__["Settings"].EditorTheme) {
                 var initialIndex = 0;
                 for (var i = 0; i < themeDropdown.options.length; ++i) {
-                    if (themeDropdown.options[i].value === _Settings_Settings__WEBPACK_IMPORTED_MODULE_82__["Settings"].EditorTheme) {
+                    if (themeDropdown.options[i].value === _Settings_Settings__WEBPACK_IMPORTED_MODULE_85__["Settings"].EditorTheme) {
                         initialIndex = i;
                         break;
                     }
@@ -45333,7 +45532,7 @@ class CodeMirrorEditorWrapper extends _ScriptEditor__WEBPACK_IMPORTED_MODULE_0__
 
             themeDropdown.onchange = () => {
                 const val = themeDropdown.value;
-                _Settings_Settings__WEBPACK_IMPORTED_MODULE_82__["Settings"].EditorTheme = val;
+                _Settings_Settings__WEBPACK_IMPORTED_MODULE_85__["Settings"].EditorTheme = val;
                 this.editor.setOption("theme", val);
             };
             themeDropdown.onchange();
@@ -45344,15 +45543,15 @@ class CodeMirrorEditorWrapper extends _ScriptEditor__WEBPACK_IMPORTED_MODULE_0__
                 console.error(`Could not find Script Editor's keybinding selector element (id="script-editor-option-keybinding")`);
                 return false;
             }
-            Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_87__["removeChildrenFromElement"])(keybindingDropdown);
-            keybindingDropdown.add(Object(_utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_85__["createOptionElement"])("Default", "default"));
-            keybindingDropdown.add(Object(_utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_85__["createOptionElement"])("Sublime", "sublime"));
-            keybindingDropdown.add(Object(_utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_85__["createOptionElement"])("Vim", "vim"));
-            keybindingDropdown.add(Object(_utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_85__["createOptionElement"])("Emacs", "emacs"));
-            if (_Settings_Settings__WEBPACK_IMPORTED_MODULE_82__["Settings"].EditorKeybinding) {
+            Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_90__["removeChildrenFromElement"])(keybindingDropdown);
+            keybindingDropdown.add(Object(_utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_88__["createOptionElement"])("Default", _Settings_SettingEnums__WEBPACK_IMPORTED_MODULE_84__["CodeMirrorKeybindingSetting"].Default));
+            keybindingDropdown.add(Object(_utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_88__["createOptionElement"])("Sublime", _Settings_SettingEnums__WEBPACK_IMPORTED_MODULE_84__["CodeMirrorKeybindingSetting"].Sublime));
+            keybindingDropdown.add(Object(_utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_88__["createOptionElement"])("Vim", _Settings_SettingEnums__WEBPACK_IMPORTED_MODULE_84__["CodeMirrorKeybindingSetting"].Vim));
+            keybindingDropdown.add(Object(_utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_88__["createOptionElement"])("Emacs", _Settings_SettingEnums__WEBPACK_IMPORTED_MODULE_84__["CodeMirrorKeybindingSetting"].Emacs));
+            if (_Settings_Settings__WEBPACK_IMPORTED_MODULE_85__["Settings"].EditorKeybinding) {
                 var initialIndex = 0;
                 for (var i = 0; i < keybindingDropdown.options.length; ++i) {
-                    if (keybindingDropdown.options[i].value === _Settings_Settings__WEBPACK_IMPORTED_MODULE_82__["Settings"].EditorKeybinding) {
+                    if (keybindingDropdown.options[i].value === _Settings_Settings__WEBPACK_IMPORTED_MODULE_85__["Settings"].EditorKeybinding) {
                         initialIndex = i;
                         break;
                     }
@@ -45362,14 +45561,39 @@ class CodeMirrorEditorWrapper extends _ScriptEditor__WEBPACK_IMPORTED_MODULE_0__
                 keybindingDropdown.selectedIndex = 0;
             }
             keybindingDropdown.onchange = () => {
+                // Set Vim command display to be invisible initially
+                this.vimCommandDisplayWrapper.style.display = "none";
+
                 const val = keybindingDropdown.value;
-                _Settings_Settings__WEBPACK_IMPORTED_MODULE_82__["Settings"].EditorKeybinding = val;
-                this.editor.removeKeyMap("sublime");
-                this.editor.removeKeyMap("emacs");
-                this.editor.removeKeyMap("vim");
+                _Settings_Settings__WEBPACK_IMPORTED_MODULE_85__["Settings"].EditorKeybinding = val;
+                this.editor.removeKeyMap(codemirror_lib_codemirror_js__WEBPACK_IMPORTED_MODULE_58___default.a.keyMap.default);
+                this.editor.removeKeyMap(codemirror_lib_codemirror_js__WEBPACK_IMPORTED_MODULE_58___default.a.keyMap.sublime);
+                this.editor.removeKeyMap(codemirror_lib_codemirror_js__WEBPACK_IMPORTED_MODULE_58___default.a.keyMap.emacs);
+                this.editor.removeKeyMap(codemirror_lib_codemirror_js__WEBPACK_IMPORTED_MODULE_58___default.a.keyMap.vim);
+
+                // Setup the VIM command display
+                let keys = '';
+                const handleVimKeyPress = (key) => {
+                    keys = keys + key;
+                    this.vimCommandDisplay.innerHTML = keys;
+                }
+                const handleVimCommandDone = (e) => {
+                    keys = '';
+                    this.vimCommandDisplay.innerHTML = keys;
+                }
+                if (val === _Settings_SettingEnums__WEBPACK_IMPORTED_MODULE_84__["CodeMirrorKeybindingSetting"].Vim) {
+                    this.vimCommandDisplayWrapper.style.display = "block";
+                    this.editor.on('vim-keypress', handleVimKeyPress);
+                    this.editor.on('vim-command-done', handleVimCommandDone);
+
+                } else {
+                    this.vimCommandDisplayWrapper.style.display = "none";
+                    this.editor.off('vim-keypress', handleVimKeyPress);
+                    this.editor.off('vim-command-done', handleVimCommandDone);
+                }
+
                 this.editor.addKeyMap(val);
                 this.editor.setOption("keyMap", val);
-                console.log(`Set keymap to ${val} for CodeMirror`);
             };
             keybindingDropdown.onchange();
 
@@ -45461,7 +45685,7 @@ class CodeMirrorEditorWrapper extends _ScriptEditor__WEBPACK_IMPORTED_MODULE_0__
             // Some helper functions for dealing with flexible options
             function resetFlexibleOption(id) {
                 const fieldset = safeGetElementById(id);
-                Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_87__["removeChildrenFromElement"])(fieldset);
+                Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_90__["removeChildrenFromElement"])(fieldset);
                 fieldset.style.display = "block";
                 return fieldset;
             }
@@ -45476,12 +45700,12 @@ class CodeMirrorEditorWrapper extends _ScriptEditor__WEBPACK_IMPORTED_MODULE_0__
             // Flex 1: Automatically Close Brackets and Quotes
             const flex1Fieldset = resetFlexibleOption("script-editor-option-flex1-fieldset");
             const flex1Id = "script-editor-option-flex1";
-            flex1Fieldset.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_84__["createElement"])("label", {
+            flex1Fieldset.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_87__["createElement"])("label", {
                 for: flex1Id,
                 innerText: "Auto-Close Brackets/Quotes",
             }));
 
-            const flex1Checkbox = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_84__["createElement"])("input", {
+            const flex1Checkbox = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_87__["createElement"])("input", {
                 checked: true,
                 id: flex1Id,
                 name: flex1Id,
@@ -45496,12 +45720,12 @@ class CodeMirrorEditorWrapper extends _ScriptEditor__WEBPACK_IMPORTED_MODULE_0__
             // Flex 2: Disable/Enable Linting
             const flex2Fieldset = resetFlexibleOption("script-editor-option-flex2-fieldset");
             const flex2Id = "script-editor-option-flex2";
-            flex2Fieldset.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_84__["createElement"])("label", {
+            flex2Fieldset.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_87__["createElement"])("label", {
                 for: flex2Id,
                 innerText: "Enable Linting",
             }));
 
-            const flex2Checkbox = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_84__["createElement"])("input", {
+            const flex2Checkbox = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_87__["createElement"])("input", {
                 checked: true,
                 id: flex2Id,
                 name: flex2Id,
@@ -45520,12 +45744,12 @@ class CodeMirrorEditorWrapper extends _ScriptEditor__WEBPACK_IMPORTED_MODULE_0__
             // Flex 3: Continue Comments
             const flex3Fieldset = resetFlexibleOption("script-editor-option-flex3-fieldset");
             const flex3Id = "script-editor-option-flex3";
-            flex3Fieldset.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_84__["createElement"])("label", {
+            flex3Fieldset.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_87__["createElement"])("label", {
                 for: flex3Id,
                 innerText: "Continue Comments",
             }));
 
-            const flex3Checkbox = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_84__["createElement"])("input", {
+            const flex3Checkbox = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_87__["createElement"])("input", {
                 checked: true,
                 id: flex3Id,
                 name: flex3Id,
@@ -45540,9 +45764,8 @@ class CodeMirrorEditorWrapper extends _ScriptEditor__WEBPACK_IMPORTED_MODULE_0__
             removeFlexibleOption("script-editor-option-flex4-fieldset");
 
             this.editor.refresh();
-            console.log(this.editor.options);
         } catch(e) {
-            console.error(`Exception caught: ${e}`);
+            console.error(`Exception caught: ${e}. ${e.stack}`);
             return false;
         }
     }
@@ -45575,7 +45798,7 @@ const CodeMirrorEditor = new CodeMirrorEditorWrapper();
 
 
 /***/ }),
-/* 92 */
+/* 93 */
 /*!*********************************!*\
   !*** ./src/ScriptEditor/Ace.js ***!
   \*********************************/
@@ -45585,37 +45808,40 @@ const CodeMirrorEditor = new CodeMirrorEditorWrapper();
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AceEditor; });
-/* harmony import */ var _ScriptEditor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ScriptEditor */ 116);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../NetscriptFunctions */ 46);
+/* harmony import */ var _ScriptEditor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ScriptEditor */ 117);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../NetscriptFunctions */ 47);
 /* harmony import */ var _Settings_Settings__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Settings/Settings */ 19);
 /* harmony import */ var _Settings_Settings__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Settings_Settings__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utils/uiHelpers/clearEventListeners */ 21);
-/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utils/uiHelpers/createElement */ 2);
-/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utils/uiHelpers/createOptionElement */ 53);
-/* harmony import */ var _utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _utils_uiHelpers_getSelectData__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../utils/uiHelpers/getSelectData */ 98);
-/* harmony import */ var _utils_uiHelpers_getSelectData__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_getSelectData__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 26);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _Settings_SettingEnums__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Settings/SettingEnums */ 45);
+/* harmony import */ var _Settings_SettingEnums__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Settings_SettingEnums__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utils/uiHelpers/clearEventListeners */ 21);
+/* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utils/uiHelpers/createElement */ 2);
+/* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../utils/uiHelpers/createOptionElement */ 55);
+/* harmony import */ var _utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _utils_uiHelpers_getSelectData__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../utils/uiHelpers/getSelectData */ 99);
+/* harmony import */ var _utils_uiHelpers_getSelectData__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_getSelectData__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../utils/uiHelpers/removeChildrenFromElement */ 27);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8__);
 
 
-const ace = __webpack_require__(/*! brace */ 389);
+const ace = __webpack_require__(/*! brace */ 392);
 
-__webpack_require__(/*! brace/mode/javascript */ 388);
-__webpack_require__(/*! ./AceNetscriptMode */ 244);
-__webpack_require__(/*! brace/theme/chaos */ 387);
-__webpack_require__(/*! brace/theme/chrome */ 386);
-__webpack_require__(/*! brace/theme/monokai */ 385);
-__webpack_require__(/*! brace/theme/solarized_dark */ 384);
-__webpack_require__(/*! brace/theme/solarized_light */ 383);
-__webpack_require__(/*! brace/theme/terminal */ 382);
-__webpack_require__(/*! brace/theme/twilight */ 381);
-__webpack_require__(/*! brace/theme/xcode */ 380);
-__webpack_require__(/*! brace/keybinding/vim */ 379);
-__webpack_require__(/*! brace/keybinding/emacs */ 378);
-__webpack_require__(/*! brace/ext/language_tools */ 377);
+__webpack_require__(/*! brace/mode/javascript */ 391);
+__webpack_require__(/*! ./AceNetscriptMode */ 245);
+__webpack_require__(/*! brace/theme/chaos */ 390);
+__webpack_require__(/*! brace/theme/chrome */ 389);
+__webpack_require__(/*! brace/theme/monokai */ 388);
+__webpack_require__(/*! brace/theme/solarized_dark */ 387);
+__webpack_require__(/*! brace/theme/solarized_light */ 386);
+__webpack_require__(/*! brace/theme/terminal */ 385);
+__webpack_require__(/*! brace/theme/twilight */ 384);
+__webpack_require__(/*! brace/theme/xcode */ 383);
+__webpack_require__(/*! brace/keybinding/vim */ 382);
+__webpack_require__(/*! brace/keybinding/emacs */ 381);
+__webpack_require__(/*! brace/ext/language_tools */ 380);
+
 
 
 
@@ -45643,6 +45869,7 @@ function validateInitializationParamters(params) {
 class AceEditorWrapper extends _ScriptEditor__WEBPACK_IMPORTED_MODULE_0__[/* ScriptEditor */ "a"] {
     constructor() {
         super();
+        this.vimCommandDisplayWrapper = null;
     }
 
     init(params) {
@@ -45673,7 +45900,7 @@ class AceEditorWrapper extends _ScriptEditor__WEBPACK_IMPORTED_MODULE_0__[/* Scr
         editorElement.style.fontSize = '16px';
         this.editor.setOption("showPrintMargin", false);
 
-        //Configure some of the VIM keybindings
+        // Configure some of the VIM keybindings
         ace.config.loadModule('ace/keyboard/vim', function(module) {
             var VimApi = module.CodeMirror.Vim;
             VimApi.defineEx('write', 'w', function(cm, input) {
@@ -45689,6 +45916,13 @@ class AceEditorWrapper extends _ScriptEditor__WEBPACK_IMPORTED_MODULE_0__[/* Scr
                 params.saveAndCloseFn();
             });
         });
+
+        // Store a reference to the VIM command display
+        this.vimCommandDisplayWrapper = document.getElementById("codemirror-vim-command-display-wrapper");
+        if (this.vimCommandDisplayWrapper == null) {
+            console.error(`Could not get Vim Command Display element (id=codemirror-vim-command-display-wrapper)`);
+            return false;
+        }
 
         //Function autocompleter
         this.editor.setOption("enableBasicAutocompletion", true);
@@ -45743,7 +45977,7 @@ class AceEditorWrapper extends _ScriptEditor__WEBPACK_IMPORTED_MODULE_0__[/* Scr
         }
 
         function safeClearEventListeners(id, whatFor="") {
-            const elem = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__["clearEventListeners"])(id);
+            const elem = Object(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_4__["clearEventListeners"])(id);
             if (elem == null) {
                 throw new Error(`Could not find ${whatFor} DOM element(id=${id})`);
             }
@@ -45760,17 +45994,22 @@ class AceEditorWrapper extends _ScriptEditor__WEBPACK_IMPORTED_MODULE_0__[/* Scr
                 elem.style.display = "block";
             }
 
+            // Make sure the Vim command display from CodeMirror is invisible
+            if (this.vimCommandDisplayWrapper instanceof HTMLElement) {
+                this.vimCommandDisplayWrapper.style.display = "none";
+            }
+
             // Theme
             const themeDropdown = safeClearEventListeners("script-editor-option-theme", "Theme Selector");
-            Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_7__["removeChildrenFromElement"])(themeDropdown);
-            themeDropdown.add(Object(_utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_5__["createOptionElement"])("Chaos"));
-            themeDropdown.add(Object(_utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_5__["createOptionElement"])("Chrome"));
-            themeDropdown.add(Object(_utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_5__["createOptionElement"])("Monokai"));
-            themeDropdown.add(Object(_utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_5__["createOptionElement"])("Solarized Dark", "Solarized_Dark"));
-            themeDropdown.add(Object(_utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_5__["createOptionElement"])("Solarized Light", "Solarized_Light"));
-            themeDropdown.add(Object(_utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_5__["createOptionElement"])("Terminal"));
-            themeDropdown.add(Object(_utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_5__["createOptionElement"])("Twilight"));
-            themeDropdown.add(Object(_utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_5__["createOptionElement"])("XCode"));
+            Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8__["removeChildrenFromElement"])(themeDropdown);
+            themeDropdown.add(Object(_utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_6__["createOptionElement"])("Chaos"));
+            themeDropdown.add(Object(_utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_6__["createOptionElement"])("Chrome"));
+            themeDropdown.add(Object(_utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_6__["createOptionElement"])("Monokai"));
+            themeDropdown.add(Object(_utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_6__["createOptionElement"])("Solarized Dark", "Solarized_Dark"));
+            themeDropdown.add(Object(_utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_6__["createOptionElement"])("Solarized Light", "Solarized_Light"));
+            themeDropdown.add(Object(_utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_6__["createOptionElement"])("Terminal"));
+            themeDropdown.add(Object(_utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_6__["createOptionElement"])("Twilight"));
+            themeDropdown.add(Object(_utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_6__["createOptionElement"])("XCode"));
             if (_Settings_Settings__WEBPACK_IMPORTED_MODULE_2__["Settings"].EditorTheme) {
                 var initialIndex = 2;
                 for (var i = 0; i < themeDropdown.options.length; ++i) {
@@ -45794,11 +46033,15 @@ class AceEditorWrapper extends _ScriptEditor__WEBPACK_IMPORTED_MODULE_0__[/* Scr
 
             // Keybinding
             const keybindingDropdown = safeClearEventListeners("script-editor-option-keybinding", "Keybinding Selector");
-            Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_7__["removeChildrenFromElement"])(keybindingDropdown);
-            keybindingDropdown.add(Object(_utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_5__["createOptionElement"])("Ace", "ace"));
-            keybindingDropdown.add(Object(_utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_5__["createOptionElement"])("Vim", "vim"));
-            keybindingDropdown.add(Object(_utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_5__["createOptionElement"])("Emacs", "emacs"));
+            Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8__["removeChildrenFromElement"])(keybindingDropdown);
+            keybindingDropdown.add(Object(_utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_6__["createOptionElement"])("Ace", _Settings_SettingEnums__WEBPACK_IMPORTED_MODULE_3__["AceKeybindingSetting"].Ace));
+            keybindingDropdown.add(Object(_utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_6__["createOptionElement"])("Vim", _Settings_SettingEnums__WEBPACK_IMPORTED_MODULE_3__["AceKeybindingSetting"].Vim));
+            keybindingDropdown.add(Object(_utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_6__["createOptionElement"])("Emacs", _Settings_SettingEnums__WEBPACK_IMPORTED_MODULE_3__["AceKeybindingSetting"].Emacs));
             if (_Settings_Settings__WEBPACK_IMPORTED_MODULE_2__["Settings"].EditorKeybinding) {
+                // Sanitize the Keybinding setting
+                if (!(Object.values(_Settings_SettingEnums__WEBPACK_IMPORTED_MODULE_3__["AceKeybindingSetting"]).includes(_Settings_Settings__WEBPACK_IMPORTED_MODULE_2__["Settings"].EditorKeybinding))) {
+                    _Settings_Settings__WEBPACK_IMPORTED_MODULE_2__["Settings"].EditorKeybinding = _Settings_SettingEnums__WEBPACK_IMPORTED_MODULE_3__["AceKeybindingSetting"].Ace;
+                }
                 var initialIndex = 0;
                 for (var i = 0; i < keybindingDropdown.options.length; ++i) {
                     if (keybindingDropdown.options[i].value === _Settings_Settings__WEBPACK_IMPORTED_MODULE_2__["Settings"].EditorKeybinding) {
@@ -45838,7 +46081,7 @@ class AceEditorWrapper extends _ScriptEditor__WEBPACK_IMPORTED_MODULE_0__[/* Scr
             // Some helper functions for dealing with flexible options
             function resetFlexibleOption(id) {
                 const fieldset = safeGetElementById(id);
-                Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_7__["removeChildrenFromElement"])(fieldset);
+                Object(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_8__["removeChildrenFromElement"])(fieldset);
                 fieldset.style.display = "block";
                 return fieldset;
             }
@@ -45853,12 +46096,12 @@ class AceEditorWrapper extends _ScriptEditor__WEBPACK_IMPORTED_MODULE_0__[/* Scr
             // Jshint Maxerr (Flex 1)
             const flex1Fieldset = resetFlexibleOption("script-editor-option-flex1-fieldset");
             const flex1Id = "script-editor-option-maxerr";
-            const flex1ValueLabel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_4__["createElement"])("em", { innerText: "200" });
-            flex1Fieldset.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_4__["createElement"])("label", {
+            const flex1ValueLabel = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("em", { innerText: "200" });
+            flex1Fieldset.appendChild(Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("label", {
                 for: flex1Id,
                 innerText: "Max Error Count",
             }));
-            const flex1Input = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_4__["createElement"])("input", {
+            const flex1Input = Object(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_5__["createElement"])("input", {
                 id: flex1Id,
                 max: "1000",
                 min: "50",
@@ -45902,8 +46145,8 @@ const AceEditor = new AceEditorWrapper();
 
 
 /***/ }),
-/* 93 */,
-/* 94 */
+/* 94 */,
+/* 95 */
 /*!*************************************!*\
   !*** ./utils/helpers/roundToTwo.ts ***!
   \*************************************/
@@ -45926,7 +46169,7 @@ exports.roundToTwo = roundToTwo;
 
 
 /***/ }),
-/* 95 */
+/* 96 */
 /*!***************************!*\
   !*** ./src/Literature.js ***!
   \***************************/
@@ -46378,7 +46621,7 @@ function initLiterature() {
 
 
 /***/ }),
-/* 96 */
+/* 97 */
 /*!******************************!*\
   !*** ./utils/GameOptions.js ***!
   \******************************/
@@ -46435,11 +46678,11 @@ function gameOptionsBoxOpen() {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 71)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 72)))
 
 /***/ }),
-/* 97 */,
-/* 98 */
+/* 98 */,
+/* 99 */
 /*!******************************************!*\
   !*** ./utils/uiHelpers/getSelectData.ts ***!
   \******************************************/
@@ -46479,7 +46722,7 @@ exports.getSelectText = getSelectText;
 
 
 /***/ }),
-/* 99 */
+/* 100 */
 /*!*************************!*\
   !*** ./src/Prestige.js ***!
   \*************************/
@@ -46490,39 +46733,39 @@ exports.getSelectText = getSelectText;
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return prestigeAugmentation; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return prestigeSourceFile; });
-/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActiveScriptsUI */ 76);
+/* harmony import */ var _ActiveScriptsUI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActiveScriptsUI */ 77);
 /* harmony import */ var _Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Augmentation/Augmentations */ 14);
 /* harmony import */ var _Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Augmentation_Augmentations__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _Augmentation_AugmentationHelpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Augmentation/AugmentationHelpers */ 64);
+/* harmony import */ var _Augmentation_AugmentationHelpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Augmentation/AugmentationHelpers */ 65);
 /* harmony import */ var _Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Augmentation/data/AugmentationNames */ 6);
 /* harmony import */ var _Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _BitNode_BitNode__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./BitNode/BitNode */ 68);
+/* harmony import */ var _BitNode_BitNode__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./BitNode/BitNode */ 69);
 /* harmony import */ var _Bladeburner__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Bladeburner */ 35);
-/* harmony import */ var _CinematicText__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./CinematicText */ 115);
+/* harmony import */ var _CinematicText__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./CinematicText */ 116);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Company/Companies */ 20);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _Corporation_IndustryData__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Corporation/IndustryData */ 25);
 /* harmony import */ var _Corporation_IndustryData__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_Corporation_IndustryData__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Programs/Programs */ 27);
+/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Programs/Programs */ 28);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./engine */ 11);
-/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Faction/Faction */ 61);
+/* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Faction/Faction */ 62);
 /* harmony import */ var _Faction_Faction__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_Faction_Faction__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Faction/Factions */ 16);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 49);
-/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Gang */ 55);
-/* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Location */ 105);
-/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Message */ 45);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./NetscriptFunctions */ 46);
+/* harmony import */ var _Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Faction/FactionHelpers */ 51);
+/* harmony import */ var _Gang__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Gang */ 57);
+/* harmony import */ var _Location__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Location */ 106);
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Message */ 46);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./NetscriptFunctions */ 47);
 /* harmony import */ var _NetscriptWorker__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./NetscriptWorker */ 30);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Server */ 12);
-/* harmony import */ var _SourceFile_SourceFileFlags__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./SourceFile/SourceFileFlags */ 85);
+/* harmony import */ var _SourceFile_SourceFileFlags__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./SourceFile/SourceFileFlags */ 88);
 /* harmony import */ var _SourceFile_SourceFileFlags__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(_SourceFile_SourceFileFlags__WEBPACK_IMPORTED_MODULE_21__);
 /* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./SpecialServerIps */ 37);
 /* harmony import */ var _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./StockMarket/StockMarket */ 24);
-/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./Terminal */ 57);
+/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./Terminal */ 58);
 /* harmony import */ var decimal_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! decimal.js */ 39);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 23);
@@ -46868,10 +47111,10 @@ function prestigeSourceFile() {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 71)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ 72)))
 
 /***/ }),
-/* 100 */
+/* 101 */
 /*!***************************************!*\
   !*** ./utils/helpers/getTimestamp.ts ***!
   \***************************************/
@@ -46897,7 +47140,7 @@ exports.getTimestamp = getTimestamp;
 
 
 /***/ }),
-/* 101 */
+/* 102 */
 /*!*******************************************!*\
   !*** ./utils/helpers/isValidIPAddress.ts ***!
   \*******************************************/
@@ -46922,7 +47165,7 @@ exports.isValidIPAddress = isValidIPAddress;
 
 
 /***/ }),
-/* 102 */
+/* 103 */
 /*!********************************************!*\
   !*** ./src/PersonObjects/Sleeve/Sleeve.ts ***!
   \********************************************/
@@ -46941,23 +47184,29 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *
  * Sleeves are unlocked in BitNode-10.
  */
-const SleeveTaskTypesEnum_1 = __webpack_require__(/*! ./SleeveTaskTypesEnum */ 147);
-const Person_1 = __webpack_require__(/*! ../Person */ 146);
+const SleeveTaskTypesEnum_1 = __webpack_require__(/*! ./SleeveTaskTypesEnum */ 148);
+const Person_1 = __webpack_require__(/*! ../Person */ 147);
 const BitNodeMultipliers_1 = __webpack_require__(/*! ../../BitNode/BitNodeMultipliers */ 10);
-const Crime_1 = __webpack_require__(/*! ../../Crime/Crime */ 151);
-const Cities_1 = __webpack_require__(/*! ../../Locations/Cities */ 112);
+const Crime_1 = __webpack_require__(/*! ../../Crime/Crime */ 152);
+const Crimes_1 = __webpack_require__(/*! ../../Crime/Crimes */ 36);
+const Cities_1 = __webpack_require__(/*! ../../Locations/Cities */ 113);
 const Companies_1 = __webpack_require__(/*! ../../Company/Companies */ 20);
-const Company_1 = __webpack_require__(/*! ../../Company/Company */ 75);
+const Company_1 = __webpack_require__(/*! ../../Company/Company */ 76);
 const CompanyPositions_1 = __webpack_require__(/*! ../../Company/CompanyPositions */ 34);
 const Constants_1 = __webpack_require__(/*! ../../Constants */ 1);
-const Faction_1 = __webpack_require__(/*! ../../Faction/Faction */ 61);
+const Faction_1 = __webpack_require__(/*! ../../Faction/Faction */ 62);
 const Factions_1 = __webpack_require__(/*! ../../Faction/Factions */ 16);
-const FactionWorkTypeEnum_1 = __webpack_require__(/*! ../../Faction/FactionWorkTypeEnum */ 145);
+const FactionWorkTypeEnum_1 = __webpack_require__(/*! ../../Faction/FactionWorkTypeEnum */ 146);
 const Locations_1 = __webpack_require__(/*! ../../Locations */ 5);
 const JSONReviver_1 = __webpack_require__(/*! ../../../utils/JSONReviver */ 15);
 class Sleeve extends Person_1.Person {
     constructor() {
         super();
+        /**
+         * Stores the type of crime the sleeve is currently attempting
+         * Must match the name of a Crime object
+         */
+        this.crimeType = "";
         /**
          * Enum value for current task
          */
@@ -47040,7 +47289,8 @@ class Sleeve extends Person_1.Person {
     /**
      * Commit crimes
      */
-    commitCrime(p, crime) {
+    commitCrime(p, crimeKey) {
+        const crime = Crimes_1.Crimes[crimeKey];
         if (!(crime instanceof Crime_1.Crime)) {
             return false;
         }
@@ -47058,18 +47308,7 @@ class Sleeve extends Person_1.Person {
         this.gainRatesForTask.cha = crime.charisma_exp * this.charisma_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.CrimeExpGain;
         this.gainRatesForTask.money = crime.money * this.crime_money_mult * BitNodeMultipliers_1.BitNodeMultipliers.CrimeMoney;
         this.currentTaskLocation = String(this.gainRatesForTask.money);
-        // We'll determine success now and adjust the earnings accordingly
-        if (Math.random() < crime.successRate(p)) {
-            this.gainRatesForTask.hack *= 2;
-            this.gainRatesForTask.str *= 2;
-            this.gainRatesForTask.def *= 2;
-            this.gainRatesForTask.dex *= 2;
-            this.gainRatesForTask.agi *= 2;
-            this.gainRatesForTask.cha *= 2;
-        }
-        else {
-            this.gainRatesForTask.money = 0;
-        }
+        this.crimeType = crimeKey;
         this.currentTaskMaxTime = crime.time;
         this.currentTask = SleeveTaskTypesEnum_1.SleeveTaskType.Crime;
         return true;
@@ -47082,8 +47321,26 @@ class Sleeve extends Person_1.Person {
         if (this.currentTask === SleeveTaskTypesEnum_1.SleeveTaskType.Crime) {
             // For crimes, all experience and money is gained at the end
             if (this.currentTaskTime >= this.currentTaskMaxTime) {
-                retValue = this.gainExperience(p, this.gainRatesForTask);
-                this.gainMoney(p, this.gainRatesForTask);
+                const crime = Crimes_1.Crimes[this.crimeType];
+                if (!(crime instanceof Crime_1.Crime)) {
+                    console.error(`Invalid data stored in sleeve.crimeType: ${this.crimeType}`);
+                    this.resetTaskStatus();
+                    return retValue;
+                }
+                if (Math.random() < crime.successRate(p)) {
+                    // Success
+                    const successGainRates = Person_1.createTaskTracker();
+                    const keysForIteration = Object.keys(successGainRates);
+                    for (let i = 0; i < keysForIteration.length; ++i) {
+                        const key = keysForIteration[i];
+                        successGainRates[key] = this.gainRatesForTask[key] * 2;
+                    }
+                    retValue = this.gainExperience(p, successGainRates);
+                    this.gainMoney(p, this.gainRatesForTask);
+                }
+                else {
+                    retValue = this.gainExperience(p, this.gainRatesForTask);
+                }
                 // Do not reset task to IDLE
                 this.currentTaskTime = 0;
                 return retValue;
@@ -47149,7 +47406,7 @@ class Sleeve extends Person_1.Person {
             this.defense_exp += pDefExp;
             p.gainDefenseExp(pDefExp);
             this.earningsForPlayer.def += pDefExp;
-            this.earningsForTask.dex += pDefExp;
+            this.earningsForTask.def += pDefExp;
         }
         if (pDexExp > 0) {
             this.dexterity_exp += pDexExp;
@@ -47329,6 +47586,9 @@ class Sleeve extends Person_1.Person {
         this.currentTaskTime = 0;
         this.currentTaskMaxTime = 0;
         this.factionWorkType = FactionWorkTypeEnum_1.FactionWorkType.None;
+        this.crimeType = "";
+        this.currentTaskLocation = "";
+        this.gymStatType = "";
     }
     /**
      * Take a course at a university
@@ -47492,13 +47752,20 @@ class Sleeve extends Person_1.Person {
         else {
             this.resetTaskStatus();
         }
+        const factionInfo = Factions_1.Factions[factionName].getInfo();
         // Set type of work (hacking/field/security), and the experience gains
         const sanitizedWorkType = workType.toLowerCase();
         if (sanitizedWorkType.includes("hack")) {
+            if (!factionInfo.offerHackingWork) {
+                return false;
+            }
             this.factionWorkType = FactionWorkTypeEnum_1.FactionWorkType.Hacking;
             this.gainRatesForTask.hack = .15 * this.hacking_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
         }
         else if (sanitizedWorkType.includes("field")) {
+            if (!factionInfo.offerFieldWork) {
+                return false;
+            }
             this.factionWorkType = FactionWorkTypeEnum_1.FactionWorkType.Field;
             this.gainRatesForTask.hack = .1 * this.hacking_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
             this.gainRatesForTask.str = .1 * this.strength_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
@@ -47508,6 +47775,9 @@ class Sleeve extends Person_1.Person {
             this.gainRatesForTask.cha = .1 * this.charisma_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
         }
         else if (sanitizedWorkType.includes("security")) {
+            if (!factionInfo.offerSecurityWork) {
+                return false;
+            }
             this.factionWorkType = FactionWorkTypeEnum_1.FactionWorkType.Security;
             this.gainRatesForTask.hack = .1 * this.hacking_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
             this.gainRatesForTask.str = .15 * this.strength_exp_mult * BitNodeMultipliers_1.BitNodeMultipliers.FactionWorkExpGain;
@@ -47619,8 +47889,8 @@ JSONReviver_1.Reviver.constructors.Sleeve = Sleeve;
 
 
 /***/ }),
-/* 103 */,
-/* 104 */
+/* 104 */,
+/* 105 */
 /*!****************************************!*\
   !*** ./src/Company/CompanyPosition.ts ***!
   \****************************************/
@@ -47712,7 +47982,7 @@ exports.CompanyPosition = CompanyPosition;
 
 
 /***/ }),
-/* 105 */
+/* 106 */
 /*!*************************!*\
   !*** ./src/Location.js ***!
   \*************************/
@@ -47728,26 +47998,26 @@ exports.CompanyPosition = CompanyPosition;
 /* harmony import */ var _Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Company_CompanyPositions__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Company/Companies */ 20);
 /* harmony import */ var _Company_Companies__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Company_Companies__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Company/GetJobRequirementText */ 107);
+/* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Company/GetJobRequirementText */ 108);
 /* harmony import */ var _Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Company_GetJobRequirementText__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Company/data/CompanyPositionNames */ 41);
 /* harmony import */ var _Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_Company_data_CompanyPositionNames__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Corporation/Corporation */ 67);
+/* harmony import */ var _Corporation_Corporation__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Corporation/Corporation */ 68);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _Crime_Crimes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Crime/Crimes */ 36);
 /* harmony import */ var _Crime_Crimes__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_Crime_Crimes__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./engine */ 11);
 /* harmony import */ var _Infiltration__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Infiltration */ 163);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./NetscriptFunctions */ 46);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./NetscriptFunctions */ 47);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Locations */ 5);
 /* harmony import */ var _Locations__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_Locations__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Server */ 12);
-/* harmony import */ var _ServerPurchases__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./ServerPurchases */ 139);
+/* harmony import */ var _ServerPurchases__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./ServerPurchases */ 56);
 /* harmony import */ var _Settings_Settings__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Settings/Settings */ 19);
 /* harmony import */ var _Settings_Settings__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_Settings_Settings__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _SourceFile_SourceFileFlags__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./SourceFile/SourceFileFlags */ 85);
+/* harmony import */ var _SourceFile_SourceFileFlags__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./SourceFile/SourceFileFlags */ 88);
 /* harmony import */ var _SourceFile_SourceFileFlags__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_SourceFile_SourceFileFlags__WEBPACK_IMPORTED_MODULE_16__);
 /* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./SpecialServerIps */ 37);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
@@ -47755,7 +48025,7 @@ exports.CompanyPosition = CompanyPosition;
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/uiHelpers/clearEventListeners */ 21);
 /* harmony import */ var _utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_20__);
-/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../utils/IPAddress */ 69);
+/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../utils/IPAddress */ 70);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_22__);
 /* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../utils/YesNoBox */ 22);
@@ -47764,7 +48034,7 @@ exports.CompanyPosition = CompanyPosition;
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_24__);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../utils/uiHelpers/createPopup */ 40);
 /* harmony import */ var _utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopup__WEBPACK_IMPORTED_MODULE_25__);
-/* harmony import */ var _utils_uiHelpers_createPopupCloseButton__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/uiHelpers/createPopupCloseButton */ 77);
+/* harmony import */ var _utils_uiHelpers_createPopupCloseButton__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../utils/uiHelpers/createPopupCloseButton */ 78);
 /* harmony import */ var _utils_uiHelpers_createPopupCloseButton__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createPopupCloseButton__WEBPACK_IMPORTED_MODULE_26__);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 23);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_27__);
@@ -47956,16 +48226,16 @@ function displayLocationContent() {
     purchaseHomeRam.style.display = "none";
     purchaseHomeCores.style.display = "none";
 
-    purchase2gb.innerHTML = "Purchase 2GB Server - $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_22__["formatNumber"])(2*_Constants__WEBPACK_IMPORTED_MODULE_6__["CONSTANTS"].BaseCostFor1GBOfRamServer, 2);
-    purchase4gb.innerHTML = "Purchase 4GB Server - $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_22__["formatNumber"])(4*_Constants__WEBPACK_IMPORTED_MODULE_6__["CONSTANTS"].BaseCostFor1GBOfRamServer, 2);
-    purchase8gb.innerHTML = "Purchase 8GB Server - $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_22__["formatNumber"])(8*_Constants__WEBPACK_IMPORTED_MODULE_6__["CONSTANTS"].BaseCostFor1GBOfRamServer, 2);
-    purchase16gb.innerHTML = "Purchase 16GB Server - $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_22__["formatNumber"])(16*_Constants__WEBPACK_IMPORTED_MODULE_6__["CONSTANTS"].BaseCostFor1GBOfRamServer, 2);
-    purchase32gb.innerHTML = "Purchase 32GB Server - $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_22__["formatNumber"])(32*_Constants__WEBPACK_IMPORTED_MODULE_6__["CONSTANTS"].BaseCostFor1GBOfRamServer, 2);
-    purchase64gb.innerHTML = "Purchase 64GB Server - $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_22__["formatNumber"])(64*_Constants__WEBPACK_IMPORTED_MODULE_6__["CONSTANTS"].BaseCostFor1GBOfRamServer, 2);
-    purchase128gb.innerHTML = "Purchase 128GB Server - $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_22__["formatNumber"])(128*_Constants__WEBPACK_IMPORTED_MODULE_6__["CONSTANTS"].BaseCostFor1GBOfRamServer, 2);
-    purchase256gb.innerHTML = "Purchase 256GB Server - $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_22__["formatNumber"])(256*_Constants__WEBPACK_IMPORTED_MODULE_6__["CONSTANTS"].BaseCostFor1GBOfRamServer, 2);
-    purchase512gb.innerHTML = "Purchase 512GB Server - $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_22__["formatNumber"])(512*_Constants__WEBPACK_IMPORTED_MODULE_6__["CONSTANTS"].BaseCostFor1GBOfRamServer, 2);
-    purchase1tb.innerHTML = "Purchase 1TB Server - $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_22__["formatNumber"])(1024*_Constants__WEBPACK_IMPORTED_MODULE_6__["CONSTANTS"].BaseCostFor1GBOfRamServer, 2);
+    purchase2gb.innerHTML = "Purchase 2GB Server - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__["numeralWrapper"].formatMoney(Object(_ServerPurchases__WEBPACK_IMPORTED_MODULE_14__[/* getPurchaseServerCost */ "a"])(2));
+    purchase4gb.innerHTML = "Purchase 4GB Server - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__["numeralWrapper"].formatMoney(Object(_ServerPurchases__WEBPACK_IMPORTED_MODULE_14__[/* getPurchaseServerCost */ "a"])(4));
+    purchase8gb.innerHTML = "Purchase 8GB Server - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__["numeralWrapper"].formatMoney(Object(_ServerPurchases__WEBPACK_IMPORTED_MODULE_14__[/* getPurchaseServerCost */ "a"])(8));
+    purchase16gb.innerHTML = "Purchase 16GB Server - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__["numeralWrapper"].formatMoney(Object(_ServerPurchases__WEBPACK_IMPORTED_MODULE_14__[/* getPurchaseServerCost */ "a"])(16));
+    purchase32gb.innerHTML = "Purchase 32GB Server - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__["numeralWrapper"].formatMoney(Object(_ServerPurchases__WEBPACK_IMPORTED_MODULE_14__[/* getPurchaseServerCost */ "a"])(32));
+    purchase64gb.innerHTML = "Purchase 64GB Server - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__["numeralWrapper"].formatMoney(Object(_ServerPurchases__WEBPACK_IMPORTED_MODULE_14__[/* getPurchaseServerCost */ "a"])(64));
+    purchase128gb.innerHTML = "Purchase 128GB Server - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__["numeralWrapper"].formatMoney(Object(_ServerPurchases__WEBPACK_IMPORTED_MODULE_14__[/* getPurchaseServerCost */ "a"])(128));
+    purchase256gb.innerHTML = "Purchase 256GB Server - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__["numeralWrapper"].formatMoney(Object(_ServerPurchases__WEBPACK_IMPORTED_MODULE_14__[/* getPurchaseServerCost */ "a"])(256));
+    purchase512gb.innerHTML = "Purchase 512GB Server - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__["numeralWrapper"].formatMoney(Object(_ServerPurchases__WEBPACK_IMPORTED_MODULE_14__[/* getPurchaseServerCost */ "a"])(512));
+    purchase1tb.innerHTML = "Purchase 1TB Server - " + _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_18__["numeralWrapper"].formatMoney(Object(_ServerPurchases__WEBPACK_IMPORTED_MODULE_14__[/* getPurchaseServerCost */ "a"])(1024));
     if (!_SpecialServerIps__WEBPACK_IMPORTED_MODULE_17__[/* SpecialServerIps */ "a"].hasOwnProperty("Darkweb Server")) {
         purchaseTor.classList.add("a-link-button");
         purchaseTor.classList.remove("a-link-button-bought");
@@ -49491,61 +49761,61 @@ function initLocationButtons() {
 
     purchase2gb.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        purchaseServerBoxCreate(2, 2 * _Constants__WEBPACK_IMPORTED_MODULE_6__["CONSTANTS"].BaseCostFor1GBOfRamServer);
+        purchaseServerBoxCreate(2);
         return false;
     });
 
     purchase4gb.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        purchaseServerBoxCreate(4, 4 * _Constants__WEBPACK_IMPORTED_MODULE_6__["CONSTANTS"].BaseCostFor1GBOfRamServer);
+        purchaseServerBoxCreate(4);
         return false;
     });
 
     purchase8gb.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        purchaseServerBoxCreate(8, 8 * _Constants__WEBPACK_IMPORTED_MODULE_6__["CONSTANTS"].BaseCostFor1GBOfRamServer);
+        purchaseServerBoxCreate(8);
         return false;
     });
 
     purchase16gb.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        purchaseServerBoxCreate(16, 16 * _Constants__WEBPACK_IMPORTED_MODULE_6__["CONSTANTS"].BaseCostFor1GBOfRamServer);
+        purchaseServerBoxCreate(16);
         return false;
     });
 
     purchase32gb.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        purchaseServerBoxCreate(32, 32 * _Constants__WEBPACK_IMPORTED_MODULE_6__["CONSTANTS"].BaseCostFor1GBOfRamServer);
+        purchaseServerBoxCreate(32);
         return false;
     });
 
     purchase64gb.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        purchaseServerBoxCreate(64, 64 * _Constants__WEBPACK_IMPORTED_MODULE_6__["CONSTANTS"].BaseCostFor1GBOfRamServer);
+        purchaseServerBoxCreate(64);
         return false;
     });
 
     purchase128gb.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        purchaseServerBoxCreate(128, 128 * _Constants__WEBPACK_IMPORTED_MODULE_6__["CONSTANTS"].BaseCostFor1GBOfRamServer);
+        purchaseServerBoxCreate(128);
         return false;
     });
 
     purchase256gb.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        purchaseServerBoxCreate(256, 256 * _Constants__WEBPACK_IMPORTED_MODULE_6__["CONSTANTS"].BaseCostFor1GBOfRamServer);
+        purchaseServerBoxCreate(256);
         return false;
     });
 
     purchase512gb.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        purchaseServerBoxCreate(512, 512 * _Constants__WEBPACK_IMPORTED_MODULE_6__["CONSTANTS"].BaseCostFor1GBOfRamServer);
+        purchaseServerBoxCreate(512);
         return false;
     });
 
     purchase1tb.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        purchaseServerBoxCreate(1024, 1024 * _Constants__WEBPACK_IMPORTED_MODULE_6__["CONSTANTS"].BaseCostFor1GBOfRamServer);
+        purchaseServerBoxCreate(1024);
         return false;
     });
 
@@ -49563,7 +49833,7 @@ function initLocationButtons() {
         var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_23__["yesNoBoxGetYesButton"])(), noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_23__["yesNoBoxGetNoButton"])();
         yesBtn.innerHTML = "Purchase"; noBtn.innerHTML = "Cancel";
         yesBtn.addEventListener("click", ()=>{
-            Object(_ServerPurchases__WEBPACK_IMPORTED_MODULE_14__[/* purchaseRamForHomeComputer */ "a"])(cost);
+            Object(_ServerPurchases__WEBPACK_IMPORTED_MODULE_14__[/* purchaseRamForHomeComputer */ "d"])(cost);
             Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_23__["yesNoBoxClose"])();
         });
         noBtn.addEventListener("click", ()=>{
@@ -50029,13 +50299,19 @@ function travelBoxCreate(destCityName, cost) {
     Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_23__["yesNoBoxCreate"])("Would you like to travel to " + destCityName + "? The trip will cost $" + Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_22__["formatNumber"])(cost, 2) + ".");
 }
 
-function purchaseServerBoxCreate(ram, cost) {
+function purchaseServerBoxCreate(ram) {
+    const cost = Object(_ServerPurchases__WEBPACK_IMPORTED_MODULE_14__[/* getPurchaseServerCost */ "a"])(ram);
+    if (cost === Infinity) {
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_19__["dialogBoxCreate"])("Something went wrong when trying to purchase this server. Please contact developer");
+        return;
+    }
+
     var yesBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_23__["yesNoTxtInpBoxGetYesButton"])();
     var noBtn = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_23__["yesNoTxtInpBoxGetNoButton"])();
     yesBtn.innerHTML = "Purchase Server";
     noBtn.innerHTML = "Cancel";
     yesBtn.addEventListener("click", function() {
-        Object(_ServerPurchases__WEBPACK_IMPORTED_MODULE_14__[/* purchaseServer */ "b"])(ram, cost);
+        Object(_ServerPurchases__WEBPACK_IMPORTED_MODULE_14__[/* purchaseServer */ "e"])(ram);
         Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_23__["yesNoTxtInpBoxClose"])();
     });
     noBtn.addEventListener("click", function() {
@@ -50051,7 +50327,7 @@ function purchaseServerBoxCreate(ram, cost) {
 
 
 /***/ }),
-/* 106 */
+/* 107 */
 /*!****************************************!*\
   !*** ./utils/helpers/compareArrays.ts ***!
   \****************************************/
@@ -50082,7 +50358,7 @@ exports.compareArrays = compareArrays;
 
 
 /***/ }),
-/* 107 */
+/* 108 */
 /*!**********************************************!*\
   !*** ./src/Company/GetJobRequirementText.ts ***!
   \**********************************************/
@@ -50148,7 +50424,7 @@ exports.getJobRequirementText = getJobRequirementText;
 
 
 /***/ }),
-/* 108 */
+/* 109 */
 /*!***********************************!*\
   !*** ./src/Crime/CrimeHelpers.js ***!
   \***********************************/
@@ -50229,7 +50505,7 @@ function findCrime(roughName) {
 
 
 /***/ }),
-/* 109 */
+/* 110 */
 /*!****************************************!*\
   !*** ./src/Programs/ProgramHelpers.js ***!
   \****************************************/
@@ -50241,7 +50517,7 @@ function findCrime(roughName) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return displayCreateProgramContent; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return getNumAvailableCreateProgram; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return initCreateProgramButtons; });
-/* harmony import */ var _Programs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Programs */ 27);
+/* harmony import */ var _Programs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Programs */ 28);
 /* harmony import */ var _Programs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Programs__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Constants */ 1);
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_1__);
@@ -50325,7 +50601,7 @@ function initCreateProgramButtons() {
 
 
 /***/ }),
-/* 110 */
+/* 111 */
 /*!****************************************!*\
   !*** ./utils/helpers/getRandomByte.ts ***!
   \****************************************/
@@ -50351,8 +50627,8 @@ exports.getRandomByte = getRandomByte;
 
 
 /***/ }),
-/* 111 */,
-/* 112 */
+/* 112 */,
+/* 113 */
 /*!*********************************!*\
   !*** ./src/Locations/Cities.ts ***!
   \*********************************/
@@ -50378,7 +50654,7 @@ exports.Cities = {
 
 
 /***/ }),
-/* 113 */
+/* 114 */
 /*!****************************************!*\
   !*** ./src/Corporation/ResearchMap.ts ***!
   \****************************************/
@@ -50391,8 +50667,8 @@ exports.Cities = {
 Object.defineProperty(exports, "__esModule", { value: true });
 // The Research Map is an object that holds all Corporation Research objects
 // as values. They are identified by their names
-const Research_1 = __webpack_require__(/*! ./Research */ 253);
-const ResearchMetadata_1 = __webpack_require__(/*! ./data/ResearchMetadata */ 252);
+const Research_1 = __webpack_require__(/*! ./Research */ 254);
+const ResearchMetadata_1 = __webpack_require__(/*! ./data/ResearchMetadata */ 253);
 exports.ResearchMap = {};
 function addResearch(p) {
     if (exports.ResearchMap[p.name] != null) {
@@ -50406,7 +50682,7 @@ for (const metadata of ResearchMetadata_1.researchMetadata) {
 
 
 /***/ }),
-/* 114 */
+/* 115 */
 /*!****************************************!*\
   !*** ./src/CodingContractGenerator.js ***!
   \****************************************/
@@ -50417,7 +50693,7 @@ for (const metadata of ResearchMetadata_1.researchMetadata) {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return generateRandomContract; });
 /* unused harmony export generateContract */
-/* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CodingContracts */ 47);
+/* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CodingContracts */ 48);
 /* harmony import */ var _CodingContracts__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_CodingContracts__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Faction/Factions */ 16);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_1__);
@@ -50584,7 +50860,7 @@ function getRandomFilename(server, reward) {
 
 
 /***/ }),
-/* 115 */
+/* 116 */
 /*!******************************!*\
   !*** ./src/CinematicText.js ***!
   \******************************/
@@ -50596,7 +50872,7 @@ function getRandomFilename(server, reward) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return cinematicTextFlag; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return writeCinematicText; });
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./engine */ 11);
-/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 26);
+/* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/uiHelpers/removeChildrenFromElement */ 27);
 /* harmony import */ var _utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeChildrenFromElement__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_2__);
@@ -50706,7 +50982,7 @@ function cinematicTextEnd() {
 
 
 /***/ }),
-/* 116 */
+/* 117 */
 /*!******************************************!*\
   !*** ./src/ScriptEditor/ScriptEditor.js ***!
   \******************************************/
@@ -50717,7 +50993,7 @@ function cinematicTextEnd() {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ScriptEditor; });
 // Base Script Editor class for the Ace/CodeMirror/etc. wrappers
-const beautify = __webpack_require__(/*! js-beautify */ 390).js_beautify;
+const beautify = __webpack_require__(/*! js-beautify */ 393).js_beautify;
 
 class ScriptEditor {
     constructor() {
@@ -50777,7 +51053,7 @@ class ScriptEditor {
 
 
 /***/ }),
-/* 117 */
+/* 118 */
 /*!**********************************************!*\
   !*** ./src/PersonObjects/Sleeve/SleeveUI.ts ***!
   \**********************************************/
@@ -50788,25 +51064,27 @@ class ScriptEditor {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const SleeveTaskTypesEnum_1 = __webpack_require__(/*! ./SleeveTaskTypesEnum */ 147);
+const SleeveTaskTypesEnum_1 = __webpack_require__(/*! ./SleeveTaskTypesEnum */ 148);
 const SleeveFaq_1 = __webpack_require__(/*! ./data/SleeveFaq */ 227);
 const Constants_1 = __webpack_require__(/*! ../../Constants */ 1);
 const Locations_1 = __webpack_require__(/*! ../../Locations */ 5);
-const FactionWorkTypeEnum_1 = __webpack_require__(/*! ../../Faction/FactionWorkTypeEnum */ 145);
-const Cities_1 = __webpack_require__(/*! ../../Locations/Cities */ 112);
+const Factions_1 = __webpack_require__(/*! ../../Faction/Factions */ 16);
+const FactionWorkTypeEnum_1 = __webpack_require__(/*! ../../Faction/FactionWorkTypeEnum */ 146);
+const Cities_1 = __webpack_require__(/*! ../../Locations/Cities */ 113);
 const Crimes_1 = __webpack_require__(/*! ../../Crime/Crimes */ 36);
 const numeralFormat_1 = __webpack_require__(/*! ../../ui/numeralFormat */ 4);
 const navigationTracking_1 = __webpack_require__(/*! ../../ui/navigationTracking */ 13);
 const DialogBox_1 = __webpack_require__(/*! ../../../utils/DialogBox */ 9);
-const createProgressBarText_1 = __webpack_require__(/*! ../../../utils/helpers/createProgressBarText */ 89);
+const createProgressBarText_1 = __webpack_require__(/*! ../../../utils/helpers/createProgressBarText */ 90);
 const exceptionAlert_1 = __webpack_require__(/*! ../../../utils/helpers/exceptionAlert */ 42);
+const clearEventListeners_1 = __webpack_require__(/*! ../../../utils/uiHelpers/clearEventListeners */ 21);
 const createElement_1 = __webpack_require__(/*! ../../../utils/uiHelpers/createElement */ 2);
-const createOptionElement_1 = __webpack_require__(/*! ../../../utils/uiHelpers/createOptionElement */ 53);
+const createOptionElement_1 = __webpack_require__(/*! ../../../utils/uiHelpers/createOptionElement */ 55);
 const createPopup_1 = __webpack_require__(/*! ../../../utils/uiHelpers/createPopup */ 40);
-const createPopupCloseButton_1 = __webpack_require__(/*! ../../../utils/uiHelpers/createPopupCloseButton */ 77);
-const getSelectData_1 = __webpack_require__(/*! ../../../utils/uiHelpers/getSelectData */ 98);
-const removeChildrenFromElement_1 = __webpack_require__(/*! ../../../utils/uiHelpers/removeChildrenFromElement */ 26);
-const removeElement_1 = __webpack_require__(/*! ../../../utils/uiHelpers/removeElement */ 65);
+const createPopupCloseButton_1 = __webpack_require__(/*! ../../../utils/uiHelpers/createPopupCloseButton */ 78);
+const getSelectData_1 = __webpack_require__(/*! ../../../utils/uiHelpers/getSelectData */ 99);
+const removeChildrenFromElement_1 = __webpack_require__(/*! ../../../utils/uiHelpers/removeChildrenFromElement */ 27);
+const removeElement_1 = __webpack_require__(/*! ../../../utils/uiHelpers/removeElement */ 66);
 const removeElementById_1 = __webpack_require__(/*! ../../../utils/uiHelpers/removeElementById */ 23);
 const UIElems = {
     container: null,
@@ -50966,7 +51244,7 @@ function createSleeveUi(sleeve, allSleeves) {
             popupArguments.push(createElement_1.createElement("p", {
                 innerText: "Have this sleeve travel to a different city. This affects " +
                     "the gyms and universities at which this sleeve can study. " +
-                    `Traveling to a different city costs ${numeralFormat_1.numeralWrapper.formatMoney(Constants_1.CONSTANTS.TravelCost)}.` +
+                    `Traveling to a different city costs ${numeralFormat_1.numeralWrapper.formatMoney(Constants_1.CONSTANTS.TravelCost)}. ` +
                     "It will also CANCEL the sleeve's current task (setting it to idle)",
             }));
             for (const label in Cities_1.Cities) {
@@ -50989,6 +51267,7 @@ function createSleeveUi(sleeve, allSleeves) {
                             sleeve.resetTaskStatus();
                             removeElementById_1.removeElementById(popupId);
                             updateSleeveUi(sleeve, elems);
+                            updateSleeveTaskSelector(sleeve, elems, allSleeves);
                             return false;
                         }
                     }));
@@ -51129,11 +51408,6 @@ function updateSleeveUi(sleeve, elems) {
         elems.taskProgressBar.innerText = "";
     }
 }
-const factionWorkTypeSelectorOptions = [
-    "Hacking Contracts",
-    "Security Work",
-    "Field Work"
-];
 const universitySelectorOptions = [
     "Study Computer Science",
     "Data Structures",
@@ -51176,6 +51450,7 @@ function updateSleeveTaskSelector(sleeve, elems, allSleeves) {
     // Reset Selectors
     removeChildrenFromElement_1.removeChildrenFromElement(elems.taskDetailsSelector);
     removeChildrenFromElement_1.removeChildrenFromElement(elems.taskDetailsSelector2);
+    elems.taskDetailsSelector2 = clearEventListeners_1.clearEventListeners(elems.taskDetailsSelector2);
     const value = getSelectData_1.getSelectValue(elems.taskSelector);
     switch (value) {
         case "Work for Company":
@@ -51206,28 +51481,58 @@ function updateSleeveTaskSelector(sleeve, elems, allSleeves) {
                     ++factionCount;
                 }
             }
-            for (let i = 0; i < factionWorkTypeSelectorOptions.length; ++i) {
-                elems.taskDetailsSelector2.add(createOptionElement_1.createOptionElement(factionWorkTypeSelectorOptions[i]));
-            }
-            // Set initial value for faction work type
-            switch (sleeve.factionWorkType) {
-                case FactionWorkTypeEnum_1.FactionWorkType.Hacking:
-                    elems.taskDetailsSelector2.selectedIndex = 0;
-                    break;
-                case FactionWorkTypeEnum_1.FactionWorkType.Security:
-                    elems.taskDetailsSelector2.selectedIndex = 0;
-                    break;
-                case FactionWorkTypeEnum_1.FactionWorkType.Field:
-                    elems.taskDetailsSelector2.selectedIndex = 0;
-                    break;
-                default:
-                    break;
-            }
+            // The available faction work types depends on the faction
+            elems.taskDetailsSelector.addEventListener("change", () => {
+                const facName = getSelectData_1.getSelectValue(elems.taskDetailsSelector);
+                const faction = Factions_1.Factions[facName];
+                if (faction == null) {
+                    console.warn(`Invalid faction name when trying to update Sleeve Task Selector: ${facName}`);
+                    return;
+                }
+                const facInfo = faction.getInfo();
+                removeChildrenFromElement_1.removeChildrenFromElement(elems.taskDetailsSelector2);
+                let numOptionsAdded = 0;
+                if (facInfo.offerHackingWork) {
+                    elems.taskDetailsSelector2.add(createOptionElement_1.createOptionElement("Hacking Contracts"));
+                    if (sleeve.factionWorkType === FactionWorkTypeEnum_1.FactionWorkType.Hacking) {
+                        elems.taskDetailsSelector2.selectedIndex = numOptionsAdded;
+                    }
+                    ++numOptionsAdded;
+                }
+                if (facInfo.offerFieldWork) {
+                    elems.taskDetailsSelector2.add(createOptionElement_1.createOptionElement("Field Work"));
+                    if (sleeve.factionWorkType === FactionWorkTypeEnum_1.FactionWorkType.Field) {
+                        elems.taskDetailsSelector2.selectedIndex = numOptionsAdded;
+                    }
+                    ++numOptionsAdded;
+                }
+                if (facInfo.offerSecurityWork) {
+                    elems.taskDetailsSelector2.add(createOptionElement_1.createOptionElement("Security Work"));
+                    if (sleeve.factionWorkType === FactionWorkTypeEnum_1.FactionWorkType.Security) {
+                        elems.taskDetailsSelector2.selectedIndex = numOptionsAdded;
+                    }
+                    ++numOptionsAdded;
+                }
+            });
+            elems.taskDetailsSelector.dispatchEvent(new Event("change"));
             break;
         case "Commit Crime":
+            let i = 0;
             for (const crimeLabel in Crimes_1.Crimes) {
                 const name = Crimes_1.Crimes[crimeLabel].name;
                 elems.taskDetailsSelector.add(createOptionElement_1.createOptionElement(name, crimeLabel));
+                // Set initial value for crime type
+                if (sleeve.crimeType === "") {
+                    continue;
+                }
+                const crime = Crimes_1.Crimes[sleeve.crimeType];
+                if (crime == null) {
+                    continue;
+                }
+                if (name === crime.name) {
+                    elems.taskDetailsSelector.selectedIndex = i;
+                }
+                ++i;
             }
             elems.taskDetailsSelector2.add(createOptionElement_1.createOptionElement("------"));
             break;
@@ -51325,7 +51630,7 @@ function setSleeveTask(sleeve, elems) {
                 res = sleeve.workForFaction(playerRef, detailValue, detailValue2);
                 break;
             case "Commit Crime":
-                res = sleeve.commitCrime(playerRef, Crimes_1.Crimes[detailValue]);
+                res = sleeve.commitCrime(playerRef, detailValue);
                 break;
             case "Take University Course":
                 res = sleeve.takeUniversityCourse(playerRef, detailValue2, detailValue);
@@ -51348,7 +51653,14 @@ function setSleeveTask(sleeve, elems) {
             updateSleeveTaskDescription(sleeve, elems);
         }
         else {
-            elems.taskDescription.innerText = "Failed to assign sleeve to task. Invalid choice(s).";
+            switch (taskValue) {
+                case "Work for Faction":
+                    elems.taskDescription.innerText = "Failed to assign sleeve to task. This is most likely because the selected faction does not offer the selected work type.";
+                    break;
+                default:
+                    elems.taskDescription.innerText = "Failed to assign sleeve to task. Invalid choice(s).";
+                    break;
+            }
         }
         if (navigationTracking_1.routing.isOn(navigationTracking_1.Page.Sleeves)) {
             updateSleevesPage();
@@ -51378,16 +51690,13 @@ function updateSleeveTaskDescription(sleeve, elems) {
                 elems.taskDescription.innerText = "This sleeve is currently idle";
                 break;
             case "Work for Company":
-                elems.taskDescription.innerText = `This sleeve is currently working your ` +
-                    `job at ${sleeve.currentTaskLocation}.`;
+                elems.taskDescription.innerText = `This sleeve is currently working your job at ${sleeve.currentTaskLocation}.`;
                 break;
             case "Work for Faction":
-                elems.taskDescription.innerText = `This sleeve is currently doing ${detailValue2} for ` +
-                    `${sleeve.currentTaskLocation}.`;
+                elems.taskDescription.innerText = `This sleeve is currently doing ${detailValue2} for ${sleeve.currentTaskLocation}.`;
                 break;
             case "Commit Crime":
-                elems.taskDescription.innerText = `This sleeve is currently attempting to ` +
-                    `${Crimes_1.Crimes[detailValue].type}.`;
+                elems.taskDescription.innerText = `This sleeve is currently attempting to ${Crimes_1.Crimes[detailValue].type} (Success Rate: ${numeralFormat_1.numeralWrapper.formatPercentage(Crimes_1.Crimes[detailValue].successRate(playerRef))}).`;
                 break;
             case "Take University Course":
                 elems.taskDescription.innerText = `This sleeve is currently studying/taking a course at ${sleeve.currentTaskLocation}.`;
@@ -51415,7 +51724,7 @@ function updateSleeveTaskDescription(sleeve, elems) {
 
 
 /***/ }),
-/* 118 */
+/* 119 */
 /*!***********************************************!*\
   !*** ./src/Company/GetNextCompanyPosition.ts ***!
   \***********************************************/
@@ -51441,7 +51750,7 @@ exports.getNextCompanyPosition = getNextCompanyPosition;
 
 
 /***/ }),
-/* 119 */
+/* 120 */
 /*!*************************!*\
   !*** ./src/HelpText.ts ***!
   \*************************/
@@ -51682,7 +51991,7 @@ exports.HelpTexts = {
 
 
 /***/ }),
-/* 120 */
+/* 121 */
 /*!************************************!*\
   !*** ./src/Corporation/Product.ts ***!
   \************************************/
@@ -51694,9 +52003,9 @@ exports.HelpTexts = {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const EmployeePositions_1 = __webpack_require__(/*! ./EmployeePositions */ 31);
-const MaterialSizes_1 = __webpack_require__(/*! ./MaterialSizes */ 84);
-const ProductRatingWeights_1 = __webpack_require__(/*! ./ProductRatingWeights */ 250);
-const Cities_1 = __webpack_require__(/*! ../Locations/Cities */ 112);
+const MaterialSizes_1 = __webpack_require__(/*! ./MaterialSizes */ 85);
+const ProductRatingWeights_1 = __webpack_require__(/*! ./ProductRatingWeights */ 251);
+const Cities_1 = __webpack_require__(/*! ../Locations/Cities */ 113);
 const JSONReviver_1 = __webpack_require__(/*! ../../utils/JSONReviver */ 15);
 const getRandomInt_1 = __webpack_require__(/*! ../../utils/helpers/getRandomInt */ 17);
 class Product {
@@ -51889,7 +52198,7 @@ JSONReviver_1.Reviver.constructors.Product = Product;
 
 
 /***/ }),
-/* 121 */
+/* 122 */
 /*!*********************************************!*\
   !*** ./src/Corporation/IndustryUpgrades.ts ***!
   \*********************************************/
@@ -51916,7 +52225,7 @@ exports.IndustryUpgrades = {
 
 
 /***/ }),
-/* 122 */
+/* 123 */
 /*!*****************************************************!*\
   !*** ./src/Corporation/data/CorporationUpgrades.ts ***!
   \*****************************************************/
@@ -51984,7 +52293,7 @@ exports.CorporationUpgrades = {
 
 
 /***/ }),
-/* 123 */
+/* 124 */
 /*!***********************************************************!*\
   !*** ./src/Corporation/data/CorporationUnlockUpgrades.ts ***!
   \***********************************************************/
@@ -52030,7 +52339,6 @@ exports.CorporationUnlockUpgrades = {
 
 
 /***/ }),
-/* 124 */,
 /* 125 */,
 /* 126 */,
 /* 127 */,
@@ -52038,7 +52346,8 @@ exports.CorporationUnlockUpgrades = {
 /* 129 */,
 /* 130 */,
 /* 131 */,
-/* 132 */
+/* 132 */,
+/* 133 */
 /*!************************************!*\
   !*** ./src/Faction/FactionInfo.ts ***!
   \************************************/
@@ -52213,7 +52522,37 @@ exports.FactionInfos = {
 
 
 /***/ }),
-/* 133 */
+/* 134 */
+/*!***************************************!*\
+  !*** ./utils/helpers/isPowerOfTwo.ts ***!
+  \***************************************/
+/*! no static exports found */
+/*! exports used: isPowerOfTwo */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Determines if the number is a power of 2
+ * @param n The number to check.
+ */
+function isPowerOfTwo(n) {
+    if (isNaN(n)) {
+        return false;
+    }
+    if (n === 0) {
+        return false;
+    }
+    // Disabiling the bitwise rule because it's honestly the most effecient way to check for this.
+    // tslint:disable-next-line:no-bitwise
+    return (n & (n - 1)) === 0;
+}
+exports.isPowerOfTwo = isPowerOfTwo;
+
+
+/***/ }),
+/* 135 */
 /*!*************************************!*\
   !*** ./src/NetscriptEnvironment.js ***!
   \*************************************/
@@ -52223,9 +52562,9 @@ exports.FactionInfos = {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Environment; });
-/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HacknetNode */ 74);
-/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NetscriptFunctions */ 46);
-/* harmony import */ var _NetscriptPort__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NetscriptPort */ 80);
+/* harmony import */ var _HacknetNode__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HacknetNode */ 75);
+/* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NetscriptFunctions */ 47);
+/* harmony import */ var _NetscriptPort__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NetscriptPort */ 81);
 
 
 
@@ -52325,7 +52664,7 @@ Environment.prototype = {
 
 
 /***/ }),
-/* 134 */
+/* 136 */
 /*!*************************************!*\
   !*** ./src/NetscriptJSEvaluator.js ***!
   \*************************************/
@@ -52449,7 +52788,7 @@ function _getScriptUrls(script, scripts, seen) {
 
 
 /***/ }),
-/* 135 */
+/* 137 */
 /*!************************************************!*\
   !*** ./utils/uiHelpers/removeLoadingScreen.ts ***!
   \************************************************/
@@ -52460,7 +52799,7 @@ function _getScriptUrls(script, scripts, seen) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const getElementById_1 = __webpack_require__(/*! ./getElementById */ 60);
+const getElementById_1 = __webpack_require__(/*! ./getElementById */ 61);
 const removeElementById_1 = __webpack_require__(/*! ./removeElementById */ 23);
 /**
  * Routes the player from the Loading screen to the main game content.
@@ -52474,7 +52813,7 @@ exports.removeLoadingScreen = removeLoadingScreen;
 
 
 /***/ }),
-/* 136 */
+/* 138 */
 /*!******************************************************!*\
   !*** ./src/PersonObjects/Resleeving/ResleevingUI.ts ***!
   \******************************************************/
@@ -52492,10 +52831,10 @@ const navigationTracking_1 = __webpack_require__(/*! ../../ui/navigationTracking
 const DialogBox_1 = __webpack_require__(/*! ../../../utils/DialogBox */ 9);
 const exceptionAlert_1 = __webpack_require__(/*! ../../../utils/helpers/exceptionAlert */ 42);
 const createElement_1 = __webpack_require__(/*! ../../../utils/uiHelpers/createElement */ 2);
-const createOptionElement_1 = __webpack_require__(/*! ../../../utils/uiHelpers/createOptionElement */ 53);
-const getSelectData_1 = __webpack_require__(/*! ../../../utils/uiHelpers/getSelectData */ 98);
-const removeChildrenFromElement_1 = __webpack_require__(/*! ../../../utils/uiHelpers/removeChildrenFromElement */ 26);
-const removeElement_1 = __webpack_require__(/*! ../../../utils/uiHelpers/removeElement */ 65);
+const createOptionElement_1 = __webpack_require__(/*! ../../../utils/uiHelpers/createOptionElement */ 55);
+const getSelectData_1 = __webpack_require__(/*! ../../../utils/uiHelpers/getSelectData */ 99);
+const removeChildrenFromElement_1 = __webpack_require__(/*! ../../../utils/uiHelpers/removeChildrenFromElement */ 27);
+const removeElement_1 = __webpack_require__(/*! ../../../utils/uiHelpers/removeElement */ 66);
 const UIElems = {
     container: null,
     info: null,
@@ -52787,7 +53126,7 @@ function updateAugDescription(elems) {
 
 
 /***/ }),
-/* 137 */
+/* 139 */
 /*!************************!*\
   !*** ./src/DevMenu.js ***!
   \************************/
@@ -52800,18 +53139,18 @@ function updateAugDescription(elems) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return closeDevMenu; });
 /* harmony import */ var _Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Augmentation/data/AugmentationNames */ 6);
 /* harmony import */ var _Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Augmentation_data_AugmentationNames__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _CodingContractGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CodingContractGenerator */ 114);
-/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Programs/Programs */ 27);
+/* harmony import */ var _CodingContractGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CodingContractGenerator */ 115);
+/* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Programs/Programs */ 28);
 /* harmony import */ var _Programs_Programs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Programs_Programs__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Faction/Factions */ 16);
 /* harmony import */ var _Faction_Factions__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Faction_Factions__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Player */ 0);
 /* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Server */ 12);
-/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./RedPill */ 66);
+/* harmony import */ var _RedPill__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./RedPill */ 67);
 /* harmony import */ var _StockMarket_StockMarket__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./StockMarket/StockMarket */ 24);
 /* harmony import */ var _StockMarket_Stock__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./StockMarket/Stock */ 32);
 /* harmony import */ var _StockMarket_Stock__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_StockMarket_Stock__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Terminal */ 57);
+/* harmony import */ var _Terminal__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Terminal */ 58);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ui/numeralFormat */ 4);
 /* harmony import */ var _ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_ui_numeralFormat__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
@@ -52819,9 +53158,9 @@ function updateAugDescription(elems) {
 /* harmony import */ var _utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_exceptionAlert__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/uiHelpers/createElement */ 2);
 /* harmony import */ var _utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createElement__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/createOptionElement */ 53);
+/* harmony import */ var _utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/uiHelpers/createOptionElement */ 55);
 /* harmony import */ var _utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_createOptionElement__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _utils_uiHelpers_getSelectData__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/uiHelpers/getSelectData */ 98);
+/* harmony import */ var _utils_uiHelpers_getSelectData__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/uiHelpers/getSelectData */ 99);
 /* harmony import */ var _utils_uiHelpers_getSelectData__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_getSelectData__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/uiHelpers/removeElementById */ 23);
 /* harmony import */ var _utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_utils_uiHelpers_removeElementById__WEBPACK_IMPORTED_MODULE_16__);
@@ -53407,7 +53746,7 @@ function closeDevMenu() {
 
 
 /***/ }),
-/* 138 */
+/* 140 */
 /*!********************************!*\
   !*** ./src/DarkWeb/DarkWeb.js ***!
   \********************************/
@@ -53418,13 +53757,13 @@ function closeDevMenu() {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return checkIfConnectedToDarkweb; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return executeDarkwebTerminalCommand; });
-/* harmony import */ var _DarkWebItems__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DarkWebItems */ 79);
+/* harmony import */ var _DarkWebItems__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DarkWebItems */ 80);
 /* harmony import */ var _DarkWebItems__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_DarkWebItems__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Player */ 0);
 /* harmony import */ var _SpecialServerIps__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../SpecialServerIps */ 37);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../ui/postToTerminal */ 8);
 /* harmony import */ var _ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_ui_postToTerminal__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utils/helpers/isValidIPAddress */ 101);
+/* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utils/helpers/isValidIPAddress */ 102);
 /* harmony import */ var _utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_utils_helpers_isValidIPAddress__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utils/StringHelperFunctions */ 3);
 /* harmony import */ var _utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_5__);
@@ -53521,103 +53860,7 @@ function buyDarkwebItem(itemName) {
 
 
 /***/ }),
-/* 139 */
-/*!********************************!*\
-  !*** ./src/ServerPurchases.js ***!
-  \********************************/
-/*! exports provided: purchaseServer, purchaseRamForHomeComputer */
-/*! exports used: purchaseRamForHomeComputer, purchaseServer */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return purchaseServer; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return purchaseRamForHomeComputer; });
-/* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Constants */ 1);
-/* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Constants__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ 0);
-/* harmony import */ var _Server__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Server */ 12);
-/* harmony import */ var _utils_DialogBox__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/DialogBox */ 9);
-/* harmony import */ var _utils_IPAddress__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/IPAddress */ 69);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/YesNoBox */ 22);
-/* harmony import */ var _utils_YesNoBox__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_5__);
-
-
-
-
-
-
-
-
-/* Functions to handle any server-related purchasing:
- *  Purchasing new servers
- *  Purchasing more RAM for home computer
- */
-function purchaseServer(ram, cost) {
-    //Check if player has enough money
-    if (_Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].money.lt(cost)) {
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_3__["dialogBoxCreate"])("You don't have enough money to purchase this server!");
-        return;
-    }
-
-    //Maximum server limit
-    if (_Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].purchasedServers.length >= _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].PurchasedServerLimit) {
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_3__["dialogBoxCreate"])("You have reached the maximum limit of " + _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].PurchasedServerLimit + " servers. " +
-                        "You cannot purchase any more. You can " +
-                        "delete some of your purchased servers using the deleteServer() Netscript function in a script");
-        return;
-    }
-
-    var hostname = Object(_utils_YesNoBox__WEBPACK_IMPORTED_MODULE_5__["yesNoTxtInpBoxGetInput"])();
-    if (hostname == "") {
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_3__["dialogBoxCreate"])("You must enter a hostname for your new server!");
-        return;
-    }
-
-    //Create server
-    var newServ = new _Server__WEBPACK_IMPORTED_MODULE_2__[/* Server */ "d"]({
-        ip:Object(_utils_IPAddress__WEBPACK_IMPORTED_MODULE_4__[/* createRandomIp */ "a"])(), hostname:hostname, organizationName:"",
-        isConnectedTo:false, adminRights:true, purchasedByPlayer:true, maxRam:ram
-    });
-    Object(_Server__WEBPACK_IMPORTED_MODULE_2__[/* AddToAllServers */ "a"])(newServ);
-
-    //Add to Player's purchasedServers array
-    _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].purchasedServers.push(newServ.ip);
-
-    //Connect new server to home computer
-    var homeComputer = _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].getHomeComputer();
-    homeComputer.serversOnNetwork.push(newServ.ip);
-    newServ.serversOnNetwork.push(homeComputer.ip);
-
-    _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].loseMoney(cost);
-
-    Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_3__["dialogBoxCreate"])("Server successfully purchased with hostname " + hostname);
-}
-
-
-function purchaseRamForHomeComputer(cost) {
-    if (_Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].money.lt(cost)) {
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_3__["dialogBoxCreate"])("You do not have enough money to purchase additional RAM for your home computer");
-        return;
-    }
-
-    const homeComputer = _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].getHomeComputer();
-    if (homeComputer.maxRam >= _Constants__WEBPACK_IMPORTED_MODULE_0__["CONSTANTS"].HomeComputerMaxRam) {
-        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_3__["dialogBoxCreate"])(`You cannot upgrade your home computer RAM because it is at its maximum possible value`);
-        return;
-    }
-
-
-    homeComputer.maxRam *= 2;
-    _Player__WEBPACK_IMPORTED_MODULE_1__[/* Player */ "a"].loseMoney(cost);
-
-    Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_3__["dialogBoxCreate"])("Purchased additional RAM for home computer! It now has " + homeComputer.maxRam + "GB of RAM.");
-}
-
-
-
-
-/***/ }),
-/* 140 */
+/* 141 */
 /*!*********************************************!*\
   !*** ./src/Corporation/CorporationState.ts ***!
   \*********************************************/
@@ -53667,11 +53910,11 @@ JSONReviver_1.Reviver.constructors.CorporationState = CorporationState;
 
 
 /***/ }),
-/* 141 */,
 /* 142 */,
 /* 143 */,
 /* 144 */,
-/* 145 */
+/* 145 */,
+/* 146 */
 /*!********************************************!*\
   !*** ./src/Faction/FactionWorkTypeEnum.ts ***!
   \********************************************/
@@ -53692,7 +53935,7 @@ var FactionWorkType;
 
 
 /***/ }),
-/* 146 */
+/* 147 */
 /*!*************************************!*\
   !*** ./src/PersonObjects/Person.ts ***!
   \*************************************/
@@ -53704,7 +53947,7 @@ var FactionWorkType;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const BitNodeMultipliers_1 = __webpack_require__(/*! ../BitNode/BitNodeMultipliers */ 10);
-const Cities_1 = __webpack_require__(/*! ../Locations/Cities */ 112);
+const Cities_1 = __webpack_require__(/*! ../Locations/Cities */ 113);
 const Constants_1 = __webpack_require__(/*! ../Constants */ 1);
 function createTaskTracker() {
     return {
@@ -53877,7 +54120,7 @@ exports.Person = Person;
 
 
 /***/ }),
-/* 147 */
+/* 148 */
 /*!*********************************************************!*\
   !*** ./src/PersonObjects/Sleeve/SleeveTaskTypesEnum.ts ***!
   \*********************************************************/
@@ -53906,10 +54149,10 @@ var SleeveTaskType;
 
 
 /***/ }),
-/* 148 */,
 /* 149 */,
 /* 150 */,
-/* 151 */
+/* 151 */,
+/* 152 */
 /*!****************************!*\
   !*** ./src/Crime/Crime.ts ***!
   \****************************/
@@ -53998,7 +54241,7 @@ exports.Crime = Crime;
 
 
 /***/ }),
-/* 152 */
+/* 153 */
 /*!************************************!*\
   !*** ./src/ui/MainMenu/Headers.ts ***!
   \************************************/
@@ -54010,7 +54253,7 @@ exports.Crime = Crime;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 // Implement the collapsible main menu headers
-const Links_1 = __webpack_require__(/*! ./Links */ 29);
+const Links_1 = __webpack_require__(/*! ./Links */ 26);
 exports.MainMenuHeaders = {
     Hacking: null,
     Character: null,
@@ -54144,7 +54387,7 @@ exports.initializeMainMenuHeaders = initializeMainMenuHeaders;
 
 
 /***/ }),
-/* 153 */
+/* 154 */
 /*!*************************************!*\
   !*** ./src/ui/setSettingsLabels.js ***!
   \*************************************/
@@ -54270,7 +54513,7 @@ function setSettingsLabels() {
 
 
 /***/ }),
-/* 154 */
+/* 155 */
 /*!**********************************!*\
   !*** ./src/CharacterOverview.js ***!
   \**********************************/
@@ -54345,7 +54588,7 @@ CharacterOverview.prototype.update = function() {
 
 
 /***/ }),
-/* 155 */
+/* 156 */
 /*!******************************!*\
   !*** ./src/JSInterpreter.js ***!
   \******************************/
@@ -54355,7 +54598,7 @@ CharacterOverview.prototype.update = function() {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Interpreter; });
-/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/acorn */ 52);
+/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/acorn */ 54);
 /* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_0__);
 
 /**
@@ -58148,36 +58391,6 @@ Interpreter.prototype['createPrimitive'] = function(x) {return x;};
 
 
 /***/ }),
-/* 156 */
-/*!***************************************!*\
-  !*** ./utils/helpers/isPowerOfTwo.ts ***!
-  \***************************************/
-/*! no static exports found */
-/*! exports used: isPowerOfTwo */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * Determines if the number is a power of 2
- * @param n The number to check.
- */
-function isPowerOfTwo(n) {
-    if (isNaN(n)) {
-        return false;
-    }
-    if (n === 0) {
-        return false;
-    }
-    // Disabiling the bitwise rule because it's honestly the most effecient way to check for this.
-    // tslint:disable-next-line:no-bitwise
-    return (n & (n - 1)) === 0;
-}
-exports.isPowerOfTwo = isPowerOfTwo;
-
-
-/***/ }),
 /* 157 */
 /*!*************************************************!*\
   !*** ./src/SourceFile/PlayerOwnedSourceFile.ts ***!
@@ -58690,7 +58903,7 @@ exports.gangMemberTasksMetadata = [
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return factionInvitationBoxCreate; });
-/* harmony import */ var _src_Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/Faction/FactionHelpers */ 49);
+/* harmony import */ var _src_Faction_FactionHelpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/Faction/FactionHelpers */ 51);
 /* harmony import */ var _src_engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../src/engine */ 11);
 /* harmony import */ var _src_Player__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../src/Player */ 0);
 /* harmony import */ var _uiHelpers_clearEventListeners__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./uiHelpers/clearEventListeners */ 21);
@@ -60256,7 +60469,7 @@ exports.serverMetadata = [
 /* harmony import */ var _src_BitNode_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_src_BitNode_BitNodeMultipliers__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _src_Constants__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../src/Constants */ 1);
 /* harmony import */ var _src_Constants__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_src_Constants__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _src_Faction_Faction__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../src/Faction/Faction */ 61);
+/* harmony import */ var _src_Faction_Faction__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../src/Faction/Faction */ 62);
 /* harmony import */ var _src_Faction_Faction__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_src_Faction_Faction__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _src_Faction_Factions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../src/Faction/Factions */ 16);
 /* harmony import */ var _src_Faction_Factions__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_src_Faction_Factions__WEBPACK_IMPORTED_MODULE_6__);
@@ -61551,7 +61764,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * Implements the Resleeve class, which defines a new body
  * that the player can "re-sleeve" into.
  */
-const Person_1 = __webpack_require__(/*! ../Person */ 146);
+const Person_1 = __webpack_require__(/*! ../Person */ 147);
 const Augmentations_1 = __webpack_require__(/*! ../../Augmentation/Augmentations */ 14);
 const JSONReviver_1 = __webpack_require__(/*! ../../../utils/JSONReviver */ 15);
 class Resleeve extends Person_1.Person {
@@ -61625,7 +61838,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 const Resleeve_1 = __webpack_require__(/*! ./Resleeve */ 225);
 const Augmentations_1 = __webpack_require__(/*! ../../Augmentation/Augmentations */ 14);
-const PlayerOwnedAugmentation_1 = __webpack_require__(/*! ../../Augmentation/PlayerOwnedAugmentation */ 88);
+const PlayerOwnedAugmentation_1 = __webpack_require__(/*! ../../Augmentation/PlayerOwnedAugmentation */ 89);
 const AugmentationNames_1 = __webpack_require__(/*! ../../Augmentation/data/AugmentationNames */ 6);
 const getRandomInt_1 = __webpack_require__(/*! ../../../utils/helpers/getRandomInt */ 17);
 // Executes the actual re-sleeve when one is purchased
@@ -61965,7 +62178,7 @@ exports.Program = Program;
 /***/ }),
 /* 238 */
 /*!*****************************************************!*\
-  !*** ./src/ScriptEditor/CodeMirrorNetscriptHint.js ***!
+  !*** ./src/ScriptEditor/CodeMirrorNetscriptLint.js ***!
   \*****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -61975,7 +62188,7 @@ exports.Program = Program;
 
 (function(mod) {
   if (true) // CommonJS
-    mod(__webpack_require__(/*! codemirror/lib/codemirror */ 54));
+    mod(__webpack_require__(/*! codemirror/lib/codemirror */ 50));
   else {}
 })(function(CodeMirror) {
   "use strict";
@@ -62002,8 +62215,12 @@ exports.Program = Program;
     }
     const sanitizedText = splitText.join("\n");
 
+    // Configure JSHINT options
     if (!options.indent) // JSHint error.character actually is a column index, this fixes underlining on lines using tabs for indentation
       options.indent = 1; // JSHint default value is 4
+
+    options.esversion = 6;
+
     JSHINT(sanitizedText, options, options.globals);
     var errors = JSHINT.data().errors, result = [];
     if (errors) parseErrors(errors, result);
@@ -62050,7 +62267,8 @@ exports.Program = Program;
 /***/ }),
 /* 239 */,
 /* 240 */,
-/* 241 */
+/* 241 */,
+/* 242 */
 /*!*****************************************************!*\
   !*** ./src/ScriptEditor/CodeMirrorNetscriptMode.js ***!
   \*****************************************************/
@@ -62062,7 +62280,7 @@ exports.Program = Program;
 
 (function(mod) {
   if (true) // CommonJS
-    mod(__webpack_require__(/*! codemirror/lib/codemirror.js */ 54));
+    mod(__webpack_require__(/*! codemirror/lib/codemirror.js */ 50));
   else {}
 })(function(CodeMirror) {
 "use strict";
@@ -63185,8 +63403,8 @@ CodeMirror.defineMIME("application/typescript", { name: "netscript", typescript:
 
 
 /***/ }),
-/* 242 */,
-/* 243 */
+/* 243 */,
+/* 244 */
 /*!***************************************!*\
   !*** ./css/codemirror-overrides.scss ***!
   \***************************************/
@@ -63196,7 +63414,7 @@ CodeMirror.defineMIME("application/typescript", { name: "netscript", typescript:
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 244 */
+/* 245 */
 /*!**********************************************!*\
   !*** ./src/ScriptEditor/AceNetscriptMode.js ***!
   \**********************************************/
@@ -64042,7 +64260,7 @@ oop.inherits(Mode, TextMode);
     };
 
     this.createWorker = function(session) {
-        var worker = new WorkerClient(["ace"], __webpack_require__(/*! brace/worker/javascript */ 245), "JavaScriptWorker");
+        var worker = new WorkerClient(["ace"], __webpack_require__(/*! brace/worker/javascript */ 246), "JavaScriptWorker");
         worker.attachToDocument(session.getDocument());
 
         worker.on("annotate", function(results) {
@@ -64064,11 +64282,11 @@ exports.Mode = Mode;
 
 
 /***/ }),
-/* 245 */,
 /* 246 */,
 /* 247 */,
 /* 248 */,
-/* 249 */
+/* 249 */,
+/* 250 */
 /*!*****************************************!*\
   !*** ./src/data/codingcontracttypes.ts ***!
   \*****************************************/
@@ -64549,7 +64767,7 @@ exports.codingContractTypesMetadata = [
 
 
 /***/ }),
-/* 250 */
+/* 251 */
 /*!*************************************************!*\
   !*** ./src/Corporation/ProductRatingWeights.ts ***!
   \*************************************************/
@@ -64629,7 +64847,7 @@ exports.ProductRatingWeights = {
 
 
 /***/ }),
-/* 251 */
+/* 252 */
 /*!*****************************************!*\
   !*** ./src/Corporation/ResearchTree.ts ***!
   \*****************************************/
@@ -64640,7 +64858,7 @@ exports.ProductRatingWeights = {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const ResearchMap_1 = __webpack_require__(/*! ./ResearchMap */ 113);
+const ResearchMap_1 = __webpack_require__(/*! ./ResearchMap */ 114);
 class Node {
     constructor(p = { cost: 0, text: "" }) {
         // All child Nodes in the tree
@@ -64871,7 +65089,7 @@ exports.ResearchTree = ResearchTree;
 
 
 /***/ }),
-/* 252 */
+/* 253 */
 /*!**************************************************!*\
   !*** ./src/Corporation/data/ResearchMetadata.ts ***!
   \**************************************************/
@@ -65004,7 +65222,7 @@ exports.researchMetadata = [
 
 
 /***/ }),
-/* 253 */
+/* 254 */
 /*!*************************************!*\
   !*** ./src/Corporation/Research.ts ***!
   \*************************************/
@@ -65069,7 +65287,7 @@ exports.Research = Research;
 
 
 /***/ }),
-/* 254 */
+/* 255 */
 /*!**************************************************!*\
   !*** ./src/Corporation/data/BaseResearchTree.ts ***!
   \**************************************************/
@@ -65080,8 +65298,8 @@ exports.Research = Research;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const ResearchMap_1 = __webpack_require__(/*! ../ResearchMap */ 113);
-const ResearchTree_1 = __webpack_require__(/*! ../ResearchTree */ 251);
+const ResearchMap_1 = __webpack_require__(/*! ../ResearchMap */ 114);
+const ResearchTree_1 = __webpack_require__(/*! ../ResearchTree */ 252);
 function makeNode(name) {
     const research = ResearchMap_1.ResearchMap[name];
     if (research == null) {
@@ -65127,7 +65345,7 @@ exports.getBaseResearchTreeCopy = getBaseResearchTreeCopy;
 
 
 /***/ }),
-/* 255 */
+/* 256 */
 /*!***********************************************!*\
   !*** ./src/Company/data/CompaniesMetadata.ts ***!
   \***********************************************/
@@ -65519,7 +65737,7 @@ exports.companiesMetadata = [
 
 
 /***/ }),
-/* 256 */
+/* 257 */
 /*!******************************************************!*\
   !*** ./src/Company/data/CompanyPositionsMetadata.ts ***!
   \******************************************************/
@@ -66132,7 +66350,6 @@ exports.companyPositionMetadata = [
 
 
 /***/ }),
-/* 257 */,
 /* 258 */,
 /* 259 */,
 /* 260 */,
@@ -66168,7 +66385,8 @@ exports.companyPositionMetadata = [
 /* 290 */,
 /* 291 */,
 /* 292 */,
-/* 293 */
+/* 293 */,
+/* 294 */
 /*!**********************!*\
   !*** util (ignored) ***!
   \**********************/
@@ -66179,7 +66397,7 @@ exports.companyPositionMetadata = [
 /* (ignored) */
 
 /***/ }),
-/* 294 */
+/* 295 */
 /*!**********************!*\
   !*** util (ignored) ***!
   \**********************/

@@ -35,20 +35,7 @@ Alt + o    Switch to 'Options' page
 
 Script Editor
 -------------
-These shortcuts are available only in the Script Editor
-
-============= ===========================================================================
-Shortcut      Action
-============= ===========================================================================
-Ctrl + b      Save script and return to :ref:`terminal`
-Ctrl + space  Function autocompletion
-============= ===========================================================================
-
-In the Script Editor you can configure your key binding mode to three preset options:
-
-* `Ace <https://github.com/ajaxorg/ace/wiki/Default-Keyboard-Shortcuts>`_
-* Vim
-* Emacs
+See the :ref:`Script Editor <scripteditors>` documentation for more details.
 
 Terminal Shortcuts
 ------------------
@@ -92,10 +79,13 @@ Alt + f       Move cursor to next word
 Ctrl + h/d    Delete previous character ('Backspace')
 ============= ===========================================================================
 
-Misc Shortcuts
---------------
+Popup/Dialog Box Shortcuts
+--------------------------
+The following shortcuts work if there are any popup or dialog boxes on the screen.
+
 ============= ===========================================================================
 Shortcut      Action
 ============= ===========================================================================
-Esc           Close a script's log window
+Esc           Close the current popup, cancelling any prompts on a dialog box
+Enter         Clicks the "Yes/Confirm" option for every dialog box
 ============= ===========================================================================

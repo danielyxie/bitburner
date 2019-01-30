@@ -6,7 +6,7 @@
 
 #codemirror-form-wrapper {
     height: 80%;
-    margin: 10px 0px 10px 6px;
+    margin: 10px 0px 0px 6px;
 }
 
 .CodeMirror {
@@ -29,7 +29,6 @@
     background-color: #8F908A;
 }
 
-
 /**
  * Show Invisibles
  */
@@ -37,4 +36,14 @@
     position: absolute;
     pointer-events: none;
     color: #404F7D;
+}
+
+/**
+ * Vim command display
+ */
+#codemirror-vim-command-display-wrapper {
+    background-color: white;
+    font-size: 13px;
+    height: 30px;
+    margin-left: 6px;
 }

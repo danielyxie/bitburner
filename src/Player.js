@@ -201,6 +201,7 @@ function PlayerObject() {
     // Sleeves & Re-sleeving
     this.sleeves = [];
     this.resleeves = [];
+    this.sleevesFromCovenant = 0; // # of Duplicate sleeves purchased from the covenant
 
     //bitnode
     this.bitNodeN = 1;
@@ -369,9 +370,7 @@ PlayerObject.prototype.prestigeSourceFile = function() {
     this.resleeves = [];
 
     // Duplicate sleeves are reset to level 1 every Bit Node (but the number of sleeves you have persists)
-    if (this.sleeves.length < SourceFileFlags[10]) {
-        this.sleeves.length = SourceFileFlags[10];
-    }
+    this.sleeves.length = SourceFileFlags[10] + this.sleevesFromCovenant;
     for (let i = 0; i < this.sleeves.length; ++i) {
         this.sleeves[i] = new Sleeve();
     }

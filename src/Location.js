@@ -12,8 +12,9 @@ import {hasBladeburnerSF}                       from "./NetscriptFunctions";
 import {Locations}                              from "./Locations";
 import {Player}                                 from "./Player";
 import {Server, AllServers, AddToAllServers}    from "./Server";
-import {purchaseServer,
-        purchaseRamForHomeComputer}             from "./ServerPurchases";
+import { getPurchaseServerCost,
+         purchaseServer,
+         purchaseRamForHomeComputer}            from "./ServerPurchases";
 import {Settings}                               from "./Settings/Settings";
 import { SourceFileFlags }                      from "./SourceFile/SourceFileFlags";
 import {SpecialServerNames, SpecialServerIps}   from "./SpecialServerIps";
@@ -191,16 +192,16 @@ function displayLocationContent() {
     purchaseHomeRam.style.display = "none";
     purchaseHomeCores.style.display = "none";
 
-    purchase2gb.innerHTML = "Purchase 2GB Server - $" + formatNumber(2*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
-    purchase4gb.innerHTML = "Purchase 4GB Server - $" + formatNumber(4*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
-    purchase8gb.innerHTML = "Purchase 8GB Server - $" + formatNumber(8*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
-    purchase16gb.innerHTML = "Purchase 16GB Server - $" + formatNumber(16*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
-    purchase32gb.innerHTML = "Purchase 32GB Server - $" + formatNumber(32*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
-    purchase64gb.innerHTML = "Purchase 64GB Server - $" + formatNumber(64*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
-    purchase128gb.innerHTML = "Purchase 128GB Server - $" + formatNumber(128*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
-    purchase256gb.innerHTML = "Purchase 256GB Server - $" + formatNumber(256*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
-    purchase512gb.innerHTML = "Purchase 512GB Server - $" + formatNumber(512*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
-    purchase1tb.innerHTML = "Purchase 1TB Server - $" + formatNumber(1024*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
+    purchase2gb.innerHTML = "Purchase 2GB Server - " + numeralWrapper.formatMoney(getPurchaseServerCost(2));
+    purchase4gb.innerHTML = "Purchase 4GB Server - " + numeralWrapper.formatMoney(getPurchaseServerCost(4));
+    purchase8gb.innerHTML = "Purchase 8GB Server - " + numeralWrapper.formatMoney(getPurchaseServerCost(8));
+    purchase16gb.innerHTML = "Purchase 16GB Server - " + numeralWrapper.formatMoney(getPurchaseServerCost(16));
+    purchase32gb.innerHTML = "Purchase 32GB Server - " + numeralWrapper.formatMoney(getPurchaseServerCost(32));
+    purchase64gb.innerHTML = "Purchase 64GB Server - " + numeralWrapper.formatMoney(getPurchaseServerCost(64));
+    purchase128gb.innerHTML = "Purchase 128GB Server - " + numeralWrapper.formatMoney(getPurchaseServerCost(128));
+    purchase256gb.innerHTML = "Purchase 256GB Server - " + numeralWrapper.formatMoney(getPurchaseServerCost(256));
+    purchase512gb.innerHTML = "Purchase 512GB Server - " + numeralWrapper.formatMoney(getPurchaseServerCost(512));
+    purchase1tb.innerHTML = "Purchase 1TB Server - " + numeralWrapper.formatMoney(getPurchaseServerCost(1024));
     if (!SpecialServerIps.hasOwnProperty("Darkweb Server")) {
         purchaseTor.classList.add("a-link-button");
         purchaseTor.classList.remove("a-link-button-bought");
@@ -1726,61 +1727,61 @@ function initLocationButtons() {
 
     purchase2gb.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        purchaseServerBoxCreate(2, 2 * CONSTANTS.BaseCostFor1GBOfRamServer);
+        purchaseServerBoxCreate(2);
         return false;
     });
 
     purchase4gb.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        purchaseServerBoxCreate(4, 4 * CONSTANTS.BaseCostFor1GBOfRamServer);
+        purchaseServerBoxCreate(4);
         return false;
     });
 
     purchase8gb.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        purchaseServerBoxCreate(8, 8 * CONSTANTS.BaseCostFor1GBOfRamServer);
+        purchaseServerBoxCreate(8);
         return false;
     });
 
     purchase16gb.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        purchaseServerBoxCreate(16, 16 * CONSTANTS.BaseCostFor1GBOfRamServer);
+        purchaseServerBoxCreate(16);
         return false;
     });
 
     purchase32gb.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        purchaseServerBoxCreate(32, 32 * CONSTANTS.BaseCostFor1GBOfRamServer);
+        purchaseServerBoxCreate(32);
         return false;
     });
 
     purchase64gb.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        purchaseServerBoxCreate(64, 64 * CONSTANTS.BaseCostFor1GBOfRamServer);
+        purchaseServerBoxCreate(64);
         return false;
     });
 
     purchase128gb.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        purchaseServerBoxCreate(128, 128 * CONSTANTS.BaseCostFor1GBOfRamServer);
+        purchaseServerBoxCreate(128);
         return false;
     });
 
     purchase256gb.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        purchaseServerBoxCreate(256, 256 * CONSTANTS.BaseCostFor1GBOfRamServer);
+        purchaseServerBoxCreate(256);
         return false;
     });
 
     purchase512gb.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        purchaseServerBoxCreate(512, 512 * CONSTANTS.BaseCostFor1GBOfRamServer);
+        purchaseServerBoxCreate(512);
         return false;
     });
 
     purchase1tb.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        purchaseServerBoxCreate(1024, 1024 * CONSTANTS.BaseCostFor1GBOfRamServer);
+        purchaseServerBoxCreate(1024);
         return false;
     });
 
@@ -2264,13 +2265,19 @@ function travelBoxCreate(destCityName, cost) {
     yesNoBoxCreate("Would you like to travel to " + destCityName + "? The trip will cost $" + formatNumber(cost, 2) + ".");
 }
 
-function purchaseServerBoxCreate(ram, cost) {
+function purchaseServerBoxCreate(ram) {
+    const cost = getPurchaseServerCost(ram);
+    if (cost === Infinity) {
+        dialogBoxCreate("Something went wrong when trying to purchase this server. Please contact developer");
+        return;
+    }
+
     var yesBtn = yesNoTxtInpBoxGetYesButton();
     var noBtn = yesNoTxtInpBoxGetNoButton();
     yesBtn.innerHTML = "Purchase Server";
     noBtn.innerHTML = "Cancel";
     yesBtn.addEventListener("click", function() {
-        purchaseServer(ram, cost);
+        purchaseServer(ram);
         yesNoTxtInpBoxClose();
     });
     noBtn.addEventListener("click", function() {
