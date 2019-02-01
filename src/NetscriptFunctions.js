@@ -4702,8 +4702,17 @@ function NetscriptFunctions(workerScript) {
                 }
                 let data = contract.getData();
                 if (data.constructor === Array) {
-                    // Pass a copy
-                    return data.slice();
+                    // For two dimensional arrays, we have to copy the internal arrays using
+                    // slice() as well. As of right now, no contract has arrays that have
+                    // more than two dimensions
+                    const copy = data.slice();
+                    for (let i = 0; i < copy.length; ++i) {
+                        if (data[i].constructor === Array) {
+                            copy[i] = data[i].slice();
+                        }
+                    }
+
+                    return copy;
                 } else {
                     return data;
                 }
