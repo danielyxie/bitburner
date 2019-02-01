@@ -10,9 +10,7 @@ import { getRandomInt }                 from "../utils/helpers/getRandomInt";
 
 export function generateRandomContract() {
     // First select a random problem type
-    const problemTypes = Object.keys(CodingContractTypes);
-    let randIndex = getRandomInt(0, problemTypes.length - 1);
-    let problemType = problemTypes[randIndex];
+    let problemType = getRandomProblemType();
 
     // Then select a random reward type. 'Money' will always be the last reward type
     const reward = getRandomReward();
@@ -26,6 +24,22 @@ export function generateRandomContract() {
     randServer.addContract(contract);
 }
 
+export function generateRandomContractOnHome() {
+    // First select a random problem type
+    let problemType = getRandomProblemType();
+
+    // Then select a random reward type. 'Money' will always be the last reward type
+    const reward = getRandomReward();
+
+    // Choose random server
+    const serv = Player.getHomeComputer();
+
+    let contractFn = getRandomFilename(serv, reward);
+    let contract = new CodingContract(contractFn, problemType, reward);
+
+    serv.addContract(contract);
+}
+
 export function generateContract(params) {
     // Problem Type
     let problemType;
@@ -33,8 +47,7 @@ export function generateContract(params) {
     if (params.problemType != null && problemTypes.includes(params.problemType)) {
         problemType = params.problemType;
     } else {
-        let randIndex = getRandomInt(0, problemTypes.length - 1);
-        problemType = problemTypes[randIndex];
+        problemType = getRandomProblemType();
     }
 
     // Reward Type - This is always random for now
@@ -89,6 +102,13 @@ function sanitizeRewardType(rewardType) {
     }
 
     return type;
+}
+
+function getRandomProblemType() {
+    const problemTypes = Object.keys(CodingContractTypes);
+    let randIndex = getRandomInt(0, problemTypes.length - 1);
+
+    return problemTypes[randIndex];
 }
 
 function getRandomReward() {

@@ -13,8 +13,6 @@ interface ICreatePopupCloseButtonOptions {
 export function createPopupCloseButton(popup: Element | string, options: ICreatePopupCloseButtonOptions) {
     let button: HTMLButtonElement;
 
-    // TODO event listener works with escape. Add and remove event listener
-    // from document
     function closePopupWithEscFn(e: any): void {
         if (e.keyCode === 27) {
             button.click();
