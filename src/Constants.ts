@@ -510,27 +510,12 @@ export let CONSTANTS: IMap<any> = {
 
     LatestUpdate:
     `
-    v0.43.0
-    * Added BitNode-10: Digital Carbon
-
-    * Stock Market Changes:
-    ** Each stock now has a maximum number of shares you can purchase (both Long and Short positions combined)
-    ** Added getStockMaxShares() Netscript function to the TIX API
-    ** The cost of 4S Market Data TIX API Access increased from $20b to $25b
-
-    * Job Changes:
-    ** You can now hold multiple jobs at once. This means you no longer lose reputation when leaving a company
-    ** Because of this change, the getCharacterInformation() Netscript function returns a slightly different value
-
-    * Script Editor Changes:
-    ** Added new script editor: CodeMirror. You can choose between the old editor (Ace) or CodeMirror
-    ** Navigation keyboard shortcuts no longer work if the script editor is focused
-
-    * Trying to programmatically run a script (run(), exec()) with a 'threads' argument of 0 will now cause the function to return false without running the script
-    * Home Computer RAM is now capped at 2 ^ 30 GB (1073741824 GB)
-    * The maximum amount, maximum RAM, and cost of purchasing servers can now vary between different BitNodes (new BitNode multipliers)
-    * Pop-up dialog boxes are a little bit bigger
-    * Bug Fix: When importing scripts, "./" will now be properly ignored (e.g. import { foo } from "./lib.script" )
+    v0.43.1
+    * Added two new Bladeburner skills for increasing money and experience gain
+    * Made some minor adjustments to Bladeburner UI
+    * Corporation "Smart Factories" and "Smart Storage" upgrades have slightly lower price multipliers
+    * Added 6 new Coding Contract problems
+    * Updated documentation with list of all Coding Contract problems
     `
 
 }

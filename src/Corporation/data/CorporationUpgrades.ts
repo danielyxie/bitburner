@@ -6,12 +6,12 @@ import { IMap } from "../../types";
 //  [index in Corporation upgrades array, base price, price mult, benefit mult (additive), name, desc]
 export const CorporationUpgrades: IMap<any[]> = {
     //Smart factories, increases production
-    "0":    [0, 2e9, 1.07, 0.03,
+    "0":    [0, 2e9, 1.06, 0.03,
             "Smart Factories", "Advanced AI automatically optimizes the operation and productivity " +
             "of factories. Each level of this upgrade increases your global production by 3% (additive)."],
 
     //Smart warehouses, increases storage size
-    "1":    [1, 2e9, 1.07, .1,
+    "1":    [1, 2e9, 1.06, .1,
              "Smart Storage", "Advanced AI automatically optimizes your warehouse storage methods. " +
              "Each level of this upgrade increases your global warehouse storage size by 10% (additive)."],
 
