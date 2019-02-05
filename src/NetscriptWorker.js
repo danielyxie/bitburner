@@ -499,19 +499,6 @@ function runScriptsLoop() {
             } else {
                 p = startNetscript1Script(workerScripts[i]);
                 if (!(p instanceof Promise)) {continue;}
-                /*
-                try {
-                    var ast = parse(workerScripts[i].code, {sourceType:"module"});
-                    //console.log(ast);
-                } catch (e) {
-                    console.log("Error parsing script: " + workerScripts[i].name);
-                    dialogBoxCreate("Syntax ERROR in " + workerScripts[i].name + ":<br>" +  e);
-                    workerScripts[i].env.stopFlag = true;
-                    continue;
-                }
-                workerScripts[i].running = true;
-                p = evaluate(ast, workerScripts[i]);
-                */
             }
 
 			//Once the code finishes (either resolved or rejected, doesnt matter), set its
@@ -524,7 +511,7 @@ function runScriptsLoop() {
 			}).catch(function(w) {
 				if (w instanceof Error) {
                     dialogBoxCreate("Script runtime unknown error. This is a bug please contact game developer");
-					console.log("ERROR: Evaluating workerscript returns an Error. THIS SHOULDN'T HAPPEN: " + w.toString());
+					console.error("Evaluating workerscript returns an Error. THIS SHOULDN'T HAPPEN: " + w.toString());
                     return;
                 } else if (w.constructor === Array && w.length === 2 && w[0] === "RETURNSTATEMENT") {
                     //Script ends with a return statement
