@@ -312,6 +312,9 @@ getStockForecast
     that the stock's price has a 30% chance of increasing and a 70% chance of
     decreasing during the next tick.
 
+    In order to use this function, you must first purchase access to the Four Sigma (4S)
+    Market Data TIX API.
+
 purchase4SMarketData
 --------------------
 
