@@ -19,7 +19,7 @@ export let CONSTANTS: IMap<any> = {
     BaseCostFor1GBOfRamServer: 55000, //1 GB of RAM
     BaseCostFor1GBOfRamHacknetNode: 30000,
 
-    TravelCost: 200000,
+    TravelCost: 200e3,
 
     BaseCostForHacknetNode: 1000,
     BaseCostForHacknetNodeCore: 500000,
@@ -104,10 +104,11 @@ export let CONSTANTS: IMap<any> = {
     NumNetscriptPorts:              20,
 
     //Server constants
-    ServerBaseGrowthRate: 1.03,     //Unadjusted Growth rate
-    ServerMaxGrowthRate: 1.0035,    //Maximum possible growth rate (max rate accounting for server security)
-    ServerFortifyAmount: 0.002,     //Amount by which server's security increases when its hacked/grown
-    ServerWeakenAmount: 0.05,       //Amount by which server's security decreases when weakened
+    HomeComputerMaxRam: 1073741824, // 2 ^ 30
+    ServerBaseGrowthRate: 1.03,     // Unadjusted Growth rate
+    ServerMaxGrowthRate: 1.0035,    // Maximum possible growth rate (max rate accounting for server security)
+    ServerFortifyAmount: 0.002,     // Amount by which server's security increases when its hacked/grown
+    ServerWeakenAmount: 0.05,       // Amount by which server's security decreases when weakened
 
     PurchasedServerLimit: 25,
     PurchasedServerMaxRam: 1048576, //2^20
@@ -129,7 +130,7 @@ export let CONSTANTS: IMap<any> = {
     WSEAccountCost:         200e6,
     TIXAPICost:             5e9,
     MarketData4SCost:       1e9,
-    MarketDataTixApi4SCost: 20e9,
+    MarketDataTixApi4SCost: 25e9,
     StockMarketCommission:  100e3,
 
     //Hospital/Health
@@ -274,6 +275,9 @@ export let CONSTANTS: IMap<any> = {
     CodingContractBaseFactionRepGain:   2500,
     CodingContractBaseCompanyRepGain:   4000,
     CodingContractBaseMoneyGain:        50e6,
+
+    // BitNode/Source-File related stuff
+    TotalNumBitNodes: 24,
 
     /* Tutorial related things */
     TutorialNetworkingText: "Servers are a central part of the game. You start with a single personal server (your home computer) " +
@@ -506,40 +510,27 @@ export let CONSTANTS: IMap<any> = {
 
     LatestUpdate:
     `
-     v0.42.0
-     * Corporation Changes:
-     ** Corporation can now be self-funded with $150b or using seed money in exchange for 500m newly-issued shares
-     ** In BitNode-3, you no longer start with $150b
-     ** Changed initial market prices for many materials
-     ** Changed the way a material's demand, competition, and market price change over time
-     ** The sale price of materials can no longer be marked-up as high
-     ** Added a Research Tree mechanic. Spend Scientific Research on permanent upgrades for each industry
-     ** You can now redistribute earnings to shareholders (including yourself) as dividends
-     ** Cost of "Smart Supply" upgraded reduced from $50b to $25b
-     ** Now has offline progress, which works similarly to the Gang/Bladeburner mechanics
-     ** Slightly reduced the amount of money offered to you by investment firms
-     ** Employee salaries now slowly increase over time
-     ** Slightly reduced the effect "Real Estate" has on the Production Multiplier for the Agriculture industry
-     ** Changed the way your Corporation's value is calculated (this is what determines stock price)
-     ** After taking your corporation public, it is now possible to issue new shares to raise capital
-     ** Issuing new shares can only be done once every 12 hours
-     ** Buying back shares must now be done at a premium
-     ** Selling shares can now only be done once per hour
-     ** Selling large amounts of shares now immediately impacts stock price (during the transaction)
-     ** Reduced the initial cost of the DreamSense upgrade from $8b to $4b, but increased its price multiplier
-     ** Reduced the price multiplier for ABC SalesBots upgrade
+    v0.43.0
+    * Added BitNode-10: Digital Carbon
 
-     * Added getOrders() Netscript function to the TIX API
-     * Added getAugmentationPrereq() Singularity function (by havocmayhem)
-     * Added hackAnalyzePercent() and hackAnalyzeThreads() Netscript functions
-     * Stock Market, Travel, and Corporation main menu links are now properly styled
-     * Many pop-up/dialog boxes now support the 'Enter' and 'Esc' hotkeys. If you find a pop-up/dialog box that doesnt support this, let me know specifically which one ('Enter' for the default option, 'Esc' for cancelling and closing the pop-up box)
-     * Added "brace_style = preserve_inline" configuration to Script Editor Beautifier
-     * ServerProfiler.exe can now be purchased from the Dark Web
-     * Added an option to copy save data to clipboard
-     * Added total multiplier information on the "Augmentations" page
-     * Bug Fix: gymWorkout() Singularity function should now work properly with Millenium Fitness Gym
-     * Began migrating gameplay information to the ReadTheDocs documentation
-     `
+    * Stock Market Changes:
+    ** Each stock now has a maximum number of shares you can purchase (both Long and Short positions combined)
+    ** Added getStockMaxShares() Netscript function to the TIX API
+    ** The cost of 4S Market Data TIX API Access increased from $20b to $25b
+
+    * Job Changes:
+    ** You can now hold multiple jobs at once. This means you no longer lose reputation when leaving a company
+    ** Because of this change, the getCharacterInformation() Netscript function returns a slightly different value
+
+    * Script Editor Changes:
+    ** Added new script editor: CodeMirror. You can choose between the old editor (Ace) or CodeMirror
+    ** Navigation keyboard shortcuts no longer work if the script editor is focused
+
+    * Trying to programmatically run a script (run(), exec()) with a 'threads' argument of 0 will now cause the function to return false without running the script
+    * Home Computer RAM is now capped at 2 ^ 30 GB (1073741824 GB)
+    * The maximum amount, maximum RAM, and cost of purchasing servers can now vary between different BitNodes (new BitNode multipliers)
+    * Pop-up dialog boxes are a little bit bigger
+    * Bug Fix: When importing scripts, "./" will now be properly ignored (e.g. import { foo } from "./lib.script" )
+    `
 
 }

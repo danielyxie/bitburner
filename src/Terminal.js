@@ -30,7 +30,7 @@ import {findRunningScript, RunningScript,
         AllServersMap, isScriptFilename}    from "./Script";
 import {AllServers, GetServerByHostname,
         getServer, Server}                  from "./Server";
-import {Settings}                           from "./Settings";
+import {Settings}                           from "./Settings/Settings";
 import {SpecialServerIps,
         SpecialServerNames}                 from "./SpecialServerIps";
 import {getTextFile}                        from "./TextFile";

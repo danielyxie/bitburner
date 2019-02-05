@@ -5,6 +5,11 @@
  */
 interface IBitNodeMultipliers {
     /**
+     * Influences how quickly the player's agility level (not exp) scales
+     */
+    AgilityLevelMultiplier: number;
+
+    /**
      * Influences the base cost to purchase an augmentation.
      */
     AugmentationMoneyCost: number;
@@ -23,6 +28,11 @@ interface IBitNodeMultipliers {
      * Influences the cost of skill levels from Bladeburner.
      */
     BladeburnerSkillCost: number;
+
+    /**
+     * Influences how quickly the player's charisma level (not exp) scales
+     */
+    CharismaLevelMultiplier: number;
 
     /**
      * Influences the experience gained for each ability when a player completes a class.
@@ -58,6 +68,16 @@ interface IBitNodeMultipliers {
      * Influences the base money gained when the player commits a crime.
      */
     CrimeMoney: number;
+
+    /**
+     * Influences how quickly the player's defense level (not exp) scales
+     */
+    DefenseLevelMultiplier: number;
+
+    /**
+     * Influences how quickly the player's dexterity level (not exp) scales
+     */
+    DexterityLevelMultiplier: number;
 
     /**
      * Influences how much rep the player gains in each faction simply by being a member.
@@ -106,6 +126,20 @@ interface IBitNodeMultipliers {
     ManualHackMoney: number;
 
     /**
+     * Influence how much it costs to purchase a server
+     */
+    PurchasedServerCost: number;
+
+    /**
+     * Influences the maximum number of purchased servers you can have
+     */
+    PurchasedServerLimit: number;
+
+    /**
+     * Influences the maximum allowed RAM for a purchased server
+     */
+    PurchasedServerMaxRam: number;
+    /**
      * Influences the minimum favor the player must have with a faction before they can donate to gain rep.
      */
     RepToDonateToFaction: number;
@@ -139,6 +173,11 @@ interface IBitNodeMultipliers {
      * Influences the weaken amount per invocation against a server.
      */
     ServerWeakenRate: number;
+
+    /**
+     * Influences how quickly the player's strength level (not exp) scales
+     */
+    StrengthLevelMultiplier: number;
 }
 
 /**
@@ -147,12 +186,21 @@ interface IBitNodeMultipliers {
 // tslint:disable-next-line:variable-name
 export const BitNodeMultipliers: IBitNodeMultipliers = {
     HackingLevelMultiplier: 1,
+    StrengthLevelMultiplier: 1,
+    DefenseLevelMultiplier: 1,
+    DexterityLevelMultiplier: 1,
+    AgilityLevelMultiplier: 1,
+    CharismaLevelMultiplier: 1,
 
     ServerGrowthRate:       1,
     ServerMaxMoney:         1,
     ServerStartingMoney:    1,
     ServerStartingSecurity: 1,
     ServerWeakenRate:       1,
+
+    PurchasedServerCost:    1,
+    PurchasedServerLimit:   1,
+    PurchasedServerMaxRam:  1,
 
     CompanyWorkMoney:       1,
     CrimeMoney:             1,

@@ -5,9 +5,15 @@ import { getElementById } from "./getElementById";
  * replacing. Then returns the new cloned element.
  * @param elemId The HTML ID to retrieve the element by.
  */
-export function clearEventListeners(elemId: string): HTMLElement | null {
+export function clearEventListeners(elemId: string | HTMLElement): HTMLElement | null {
     try {
-        const elem: HTMLElement = getElementById(elemId);
+        let elem: HTMLElement;
+        if (typeof elemId === "string") {
+            elem = getElementById(elemId);
+        } else {
+            elem = elemId;
+        }
+
         const newElem: HTMLElement = elem.cloneNode(true) as HTMLElement;
         if (elem.parentNode !== null) {
             elem.parentNode.replaceChild(newElem, elem);

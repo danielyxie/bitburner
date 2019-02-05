@@ -1,4 +1,4 @@
-import { AugmentationNames }        from "./Augmentations";
+import { AugmentationNames }        from "./Augmentation/data/AugmentationNames";
 import { generateRandomContract }   from "./CodingContractGenerator";
 import { Programs }                 from "./Programs/Programs";
 import { Factions }                 from "./Faction/Factions";
@@ -6,13 +6,17 @@ import { Player }                   from "./Player";
 import { AllServers }               from "./Server";
 import { hackWorldDaemon }          from "./RedPill";
 import { StockMarket,
-         SymbolToStockMap }         from "./StockMarket";
-import { Stock }                    from "./Stock";
+         SymbolToStockMap }         from "./StockMarket/StockMarket";
+import { Stock }                    from "./StockMarket/Stock";
 import { Terminal }                 from "./Terminal";
+
 import { numeralWrapper }           from "./ui/numeralFormat";
+
 import { dialogBoxCreate }          from "../utils/DialogBox";
 import { exceptionAlert }           from "../utils/helpers/exceptionAlert";
 import { createElement }            from "../utils/uiHelpers/createElement";
+import { createOptionElement }      from "../utils/uiHelpers/createOptionElement";
+import { getSelectText }            from "../utils/uiHelpers/getSelectData";
 import { removeElementById }        from "../utils/uiHelpers/removeElementById";
 
 const devMenuContainerId = "dev-menu-container";
@@ -222,7 +226,7 @@ export function createDevMenu() {
         innerText: "Receive Invite to Faction",
     });
 
-    // Augmentations / Source Files
+    // Augmentations
     const augmentationsHeader = createElement("h2", {innerText: "Augmentations"});
 
     const augmentationsDropdown = createElement("select", {
@@ -241,6 +245,32 @@ export function createDevMenu() {
         },
         innerText: "Queue Augmentation",
     })
+
+    // Source Files
+    const sourceFilesHeader = createElement("h2", { innerText: "Source-Files" });
+
+    const removeSourceFileDropdown = createElement("select", {
+        class: "dropdown",
+        margin: "5px",
+    });
+    for (let i = 0; i < 24; ++i) {
+        removeSourceFileDropdown.add(createOptionElement(String(i)));
+    }
+
+    const removeSourceFileButton = createElement("button", {
+        class: "std-button",
+        clickListener: () => {
+            const numToRemove = parseInt(getSelectText(removeSourceFileDropdown));
+            for (let i = 0; i < Player.sourceFiles.length; ++i) {
+                if (Player.sourceFiles[i].n === numToRemove) {
+                    Player.sourceFiles.splice(i, 1);
+                    hackWorldDaemon(Player.bitNodeN, true);
+                    return;
+                }
+            }
+        },
+        innerText: "Remove Source File and Trigger Bitflume",
+    });
 
     // Programs
     const programsHeader = createElement("h2", {innerText: "Programs"});
@@ -508,6 +538,9 @@ export function createDevMenu() {
     devMenuContainer.appendChild(augmentationsHeader);
     devMenuContainer.appendChild(augmentationsDropdown);
     devMenuContainer.appendChild(augmentationsQueueButton);
+    devMenuContainer.appendChild(sourceFilesHeader);
+    devMenuContainer.appendChild(removeSourceFileDropdown);
+    devMenuContainer.appendChild(removeSourceFileButton);
     devMenuContainer.appendChild(programsHeader);
     devMenuContainer.appendChild(programsAddDropdown);
     devMenuContainer.appendChild(programsAddButton);

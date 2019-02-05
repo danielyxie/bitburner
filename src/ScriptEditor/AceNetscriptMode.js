@@ -94,8 +94,8 @@ let NetscriptFunctions =
     "installAugmentations|"                                                    +
 
     // TIX API
-    "getStockPrice|getStockPosition|getStockSymbols|buyStock|sellStock|"       +
-    "shortStock|sellShort|"                                                    +
+    "getStockPrice|getStockPosition|getStockSymbols|getStockMaxShares|"        +
+    "buyStock|sellStock|shortStock|sellShort|"                                 +
     "placeOrder|cancelOrder|getOrders|getStockVolatility|getStockForecast|"    +
     "purchase4SMarketData|purchase4SMarketDataTixApi|"                         +
 

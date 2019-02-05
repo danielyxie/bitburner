@@ -1,12 +1,12 @@
-import { Augmentations,
-         Augmentation,
-         AugmentationNames }                    from "./Augmentations";
+import { Augmentatation }                       from "./Augmentation/Augmentation";
+import { Augmentations }                        from "./Augmentation/Augmentations";
+import { AugmentationNames }                    from "./Augmentation/data/AugmentationNames";
 import { Programs }                             from "./Programs/Programs";
 import { inMission }                            from "./Missions";
 import { Player }                               from "./Player";
 import { redPillFlag }                          from "./RedPill";
 import { GetServerByHostname }                  from "./Server";
-import { Settings }                             from "./Settings";
+import { Settings }                             from "./Settings/Settings";
 import { dialogBoxCreate,
          dialogBoxOpened}                       from "../utils/DialogBox";
 import {Reviver, Generic_toJSON,

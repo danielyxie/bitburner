@@ -13,7 +13,7 @@ import { MaterialSizes }                                from "./MaterialSizes";
 import { Product }                                      from "./Product";
 import { ResearchMap }                                  from "./ResearchMap";
 
-import { BitNodeMultipliers }                           from "../BitNodeMultipliers";
+import { BitNodeMultipliers }                           from "../BitNode/BitNodeMultipliers";
 import { CONSTANTS }                                    from "../Constants";
 import { Factions }                                     from "../Faction/Factions";
 import { showLiterature }                               from "../Literature";

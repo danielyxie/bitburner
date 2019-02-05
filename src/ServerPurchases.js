@@ -1,16 +1,46 @@
-import {CONSTANTS}                              from "./Constants";
-import {Player}                                 from "./Player";
-import {Server, AllServers, AddToAllServers}    from "./Server";
-import {dialogBoxCreate}                        from "../utils/DialogBox";
-import {createRandomIp}                         from "../utils/IPAddress";
-import {yesNoTxtInpBoxGetInput}                 from "../utils/YesNoBox";
-
-
-/* Functions to handle any server-related purchasing:
- *  Purchasing new servers
- *  Purchasing more RAM for home computer
+/**
+ * Implements functions for purchasing servers or purchasing more RAM for
+ * the home computer
  */
-function purchaseServer(ram, cost) {
+import { BitNodeMultipliers }               from "./BitNode/BitNodeMultipliers";
+import { CONSTANTS }                        from "./Constants";
+import { Player }                           from "./Player";
+import { Server,
+         AllServers,
+         AddToAllServers}                   from "./Server";
+import { dialogBoxCreate }                  from "../utils/DialogBox";
+import { createRandomIp }                   from "../utils/IPAddress";
+import { yesNoTxtInpBoxGetInput }           from "../utils/YesNoBox";
+import { isPowerOfTwo }                     from "../utils/helpers/isPowerOfTwo";
+
+// Returns the cost of purchasing a server with the given RAM
+// Returns Infinity for invalid 'ram' arguments
+export function getPurchaseServerCost(ram) {
+    const sanitizedRam = Math.round(ram);
+    if (isNaN(sanitizedRam) || !isPowerOfTwo(sanitizedRam)) {
+        return Infinity;
+    }
+
+    if (sanitizedRam > getPurchaseServerMaxRam()) {
+        return Infinity;
+    }
+
+    return sanitizedRam * CONSTANTS.BaseCostFor1GBOfRamServer * BitNodeMultipliers.PurchasedServerCost;
+}
+
+export function getPurchaseServerLimit() {
+    return Math.round(CONSTANTS.PurchasedServerLimit * BitNodeMultipliers.PurchasedServerLimit);
+}
+
+export function getPurchaseServerMaxRam() {
+    // TODO ensure this is a power of 2?
+    return Math.round(CONSTANTS.PurchasedServerMaxRam * BitNodeMultipliers.PurchasedServerMaxRam);
+}
+
+// Manually purchase a server (NOT through Netscript)
+export function purchaseServer(ram) {
+    const cost = getPurchaseServerCost(ram);
+
     //Check if player has enough money
     if (Player.money.lt(cost)) {
         dialogBoxCreate("You don't have enough money to purchase this server!");
@@ -18,8 +48,8 @@ function purchaseServer(ram, cost) {
     }
 
     //Maximum server limit
-    if (Player.purchasedServers.length >= CONSTANTS.PurchasedServerLimit) {
-        dialogBoxCreate("You have reached the maximum limit of " + CONSTANTS.PurchasedServerLimit + " servers. " +
+    if (Player.purchasedServers.length >= getPurchaseServerLimit()) {
+        dialogBoxCreate("You have reached the maximum limit of " + getPurchaseServerLimit() + " servers. " +
                         "You cannot purchase any more. You can " +
                         "delete some of your purchased servers using the deleteServer() Netscript function in a script");
         return;
@@ -51,19 +81,22 @@ function purchaseServer(ram, cost) {
     dialogBoxCreate("Server successfully purchased with hostname " + hostname);
 }
 
-
-function purchaseRamForHomeComputer(cost) {
+// Manually upgrade RAM on home computer (NOT through Netscript)
+export function purchaseRamForHomeComputer(cost) {
     if (Player.money.lt(cost)) {
         dialogBoxCreate("You do not have enough money to purchase additional RAM for your home computer");
         return;
     }
 
-    var homeComputer = Player.getHomeComputer();
-    homeComputer.maxRam *= 2;
+    const homeComputer = Player.getHomeComputer();
+    if (homeComputer.maxRam >= CONSTANTS.HomeComputerMaxRam) {
+        dialogBoxCreate(`You cannot upgrade your home computer RAM because it is at its maximum possible value`);
+        return;
+    }
 
+
+    homeComputer.maxRam *= 2;
     Player.loseMoney(cost);
 
     dialogBoxCreate("Purchased additional RAM for home computer! It now has " + homeComputer.maxRam + "GB of RAM.");
 }
-
-export {purchaseServer, purchaseRamForHomeComputer};

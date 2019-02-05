@@ -1,19 +1,3 @@
-var ace = require('brace');
-var beautify = require('js-beautify').js_beautify;
-require('brace/mode/javascript');
-require('../netscript');
-require('brace/theme/chaos');
-require('brace/theme/chrome');
-require('brace/theme/monokai');
-require('brace/theme/solarized_dark');
-require('brace/theme/solarized_light');
-require('brace/theme/terminal');
-require('brace/theme/twilight');
-require('brace/theme/xcode');
-require("brace/keybinding/vim");
-require("brace/keybinding/emacs");
-require("brace/ext/language_tools");
-
 // Importing this doesn't work for some reason.
 const walk = require("acorn/dist/walk");
 
@@ -26,8 +10,11 @@ import {evaluateImport}                         from "./NetscriptEvaluator";
 import {NetscriptFunctions}                     from "./NetscriptFunctions";
 import {addWorkerScript, WorkerScript}          from "./NetscriptWorker";
 import {Player}                                 from "./Player";
+import { AceEditor }                            from "./ScriptEditor/Ace";
+import { CodeMirrorEditor }                     from "./ScriptEditor/CodeMirror";
 import {AllServers, processSingleServerGrowth}  from "./Server";
-import {Settings}                               from "./Settings";
+import { Settings }                             from "./Settings/Settings";
+import { EditorSetting }                        from "./Settings/SettingEnums";
 import {post}                                   from "./ui/postToTerminal";
 import {TextFile}                               from "./TextFile";
 import {parse, Node}                            from "../utils/acorn";
@@ -41,47 +28,40 @@ import {createElement}                          from "../utils/uiHelpers/createE
 import {getTimestamp}                           from "../utils/helpers/getTimestamp";
 import {roundToTwo}                             from "../utils/helpers/roundToTwo";
 
-var keybindings = {
-    ace: null,
-    vim: "ace/keyboard/vim",
-    emacs: "ace/keyboard/emacs",
-};
-
 function isScriptFilename(f) {
     return f.endsWith(".js") || f.endsWith(".script") || f.endsWith(".ns");
 }
 
 var scriptEditorRamCheck = null, scriptEditorRamText = null;
 function scriptEditorInit() {
-    //Create buttons at the bottom of script editor
-    var wrapper = document.getElementById("script-editor-buttons-wrapper");
+    // Wrapper container that holds all the buttons below the script editor
+    const wrapper = document.getElementById("script-editor-buttons-wrapper");
     if (wrapper == null) {
-        console.log("Error finding 'script-editor-buttons-wrapper'");
-        return;
+        console.error("Could not find 'script-editor-buttons-wrapper'");
+        return false;
     }
-    var beautifyButton = createElement("a", {
-        class:"a-link-button", display:"inline-block",
-        innerText:"Beautify",
+
+    // Beautify button
+    const beautifyButton = createElement("button", {
+        class: "std-button",
+        display: "inline-block",
+        innerText: "Beautify",
         clickListener:()=>{
-            beautifyScript();
+            let editor = getCurrentEditor();
+            if (editor != null) {
+                editor.beautifyScript();
+            }
             return false;
         }
     });
 
-    var closeButton = createElement("a", {
-        class:"a-link-button", display:"inline-block",
-        innerText:"Save & Close (Ctrl/Cmd + b)",
-        clickListener:()=>{
-            saveAndCloseScriptEditor();
-            return false;
-        }
-    });
-
+    // Text that displays RAM calculation
     scriptEditorRamText = createElement("p", {
         display:"inline-block", margin:"10px", id:"script-editor-status-text"
     });
 
-    var checkboxLabel = createElement("label", {
+    // Label for checkbox (defined below)
+    const checkboxLabel = createElement("label", {
         for:"script-editor-ram-check", margin:"4px", marginTop: "8px",
         innerText:"Dynamic RAM Usage Checker", color:"white",
         tooltip:"Enable/Disable the dynamic RAM Usage display. You may " +
@@ -89,18 +69,34 @@ function scriptEditorInit() {
                 "performance issues"
     });
 
+    // Checkbox for enabling/disabling dynamic RAM calculation
     scriptEditorRamCheck = createElement("input", {
         type:"checkbox", name:"script-editor-ram-check", id:"script-editor-ram-check",
         margin:"4px", marginTop: "8px",
     });
     scriptEditorRamCheck.checked = true;
 
-    var documentationButton = createElement("a", {
-        display:"inline-block", class:"a-link-button", innerText:"Netscript Documentation",
+    // Link to Netscript documentation
+    const documentationButton = createElement("a", {
+        class: "std-button",
+        display: "inline-block",
         href:"https://bitburner.readthedocs.io/en/latest/index.html",
-        target:"_blank"
+        innerText:"Netscript Documentation",
+        target:"_blank",
     });
 
+    // Save and Close button
+    const closeButton = createElement("button", {
+        class: "std-button",
+        display: "inline-block",
+        innerText: "Save & Close (Ctrl/Cmd + b)",
+        clickListener:()=>{
+            saveAndCloseScriptEditor();
+            return false;
+        }
+    });
+
+    // Add all buttons to the UI
     wrapper.appendChild(beautifyButton);
     wrapper.appendChild(closeButton);
     wrapper.appendChild(scriptEditorRamText);
@@ -108,146 +104,86 @@ function scriptEditorInit() {
     wrapper.appendChild(checkboxLabel);
     wrapper.appendChild(documentationButton);
 
-    //Initialize ACE Script editor
-    var editor = ace.edit('javascript-editor');
-    editor.getSession().setMode('ace/mode/netscript');
-    editor.setTheme('ace/theme/monokai');
-    document.getElementById('javascript-editor').style.fontSize='16px';
-    editor.setOption("showPrintMargin", false);
+    // Initialize editors
+    const initParams = {
+        saveAndCloseFn: saveAndCloseScriptEditor,
+        quitFn: Engine.loadTerminalContent,
+    }
 
-    /* Script editor options */
-    //Theme
-    var themeDropdown = document.getElementById("script-editor-option-theme");
-    if (Settings.EditorTheme) {
-        var initialIndex = 2;
-        for (var i = 0; i < themeDropdown.options.length; ++i) {
-            if (themeDropdown.options[i].value === Settings.EditorTheme) {
-                initialIndex = i;
-                break;
-            }
+    AceEditor.init(initParams);
+    CodeMirrorEditor.init(initParams);
+
+    // Setup the selector for which Editor to use
+    const editorSelector = document.getElementById("script-editor-option-editor");
+    if (editorSelector == null) {
+        console.error(`Could not find DOM Element for editor selector (id=script-editor-option-editor)`);
+        return false;
+    }
+
+    for (let i = 0; i < editorSelector.options.length; ++i) {
+        if (editorSelector.options[i].value === Settings.Editor) {
+            editorSelector.selectedIndex = i;
+            break;
         }
-        themeDropdown.selectedIndex = initialIndex;
-    } else {
-        themeDropdown.selectedIndex = 2;
     }
 
-    themeDropdown.onchange = function() {
-        var val = themeDropdown.value;
-        Settings.EditorTheme = val;
-        var themePath = "ace/theme/" + val.toLowerCase();
-        editor.setTheme(themePath);
-    };
-    themeDropdown.onchange();
-
-    //Keybinding
-    var keybindingDropdown = document.getElementById("script-editor-option-keybinding");
-    if (Settings.EditorKeybinding) {
-        var initialIndex = 0;
-        for (var i = 0; i < keybindingDropdown.options.length; ++i) {
-            if (keybindingDropdown.options[i].value === Settings.EditorKeybinding) {
-                initialIndex = i;
+    editorSelector.onchange = () => {
+        const opt = editorSelector.value;
+        switch (opt) {
+            case EditorSetting.Ace:
+                const codeMirrorCode = CodeMirrorEditor.getCode();
+                const codeMirrorFn = CodeMirrorEditor.getFilename();
+                AceEditor.create();
+                CodeMirrorEditor.setInvisible();
+                AceEditor.openScript(codeMirrorFn, codeMirrorCode);
                 break;
-            }
+            case EditorSetting.CodeMirror:
+                const aceCode = AceEditor.getCode();
+                const aceFn = AceEditor.getFilename();
+                CodeMirrorEditor.create();
+                AceEditor.setInvisible();
+                CodeMirrorEditor.openScript(aceFn, aceCode);
+                break;
+            default:
+                console.error(`Unrecognized Editor Setting: ${opt}`);
+                return;
         }
-        keybindingDropdown.selectedIndex = initialIndex;
-    } else {
-        keybindingDropdown.selectedIndex = 0;
-    }
-    keybindingDropdown.onchange = function() {
-        var val = keybindingDropdown.value;
-        Settings.EditorKeybinding = val;
-        editor.setKeyboardHandler(keybindings[val.toLowerCase()]);
-    };
-    keybindingDropdown.onchange();
 
-    //Highlight Active line
-    var highlightActiveChkBox = document.getElementById("script-editor-option-highlightactiveline");
-    highlightActiveChkBox.onchange = function() {
-        editor.setHighlightActiveLine(highlightActiveChkBox.checked);
-    };
-
-    //Show Invisibles
-    var showInvisiblesChkBox = document.getElementById("script-editor-option-showinvisibles");
-    showInvisiblesChkBox.onchange = function() {
-        editor.setShowInvisibles(showInvisiblesChkBox.checked);
-    };
-
-    //Use Soft Tab
-    var softTabChkBox = document.getElementById("script-editor-option-usesofttab");
-    softTabChkBox.onchange = function() {
-        editor.getSession().setUseSoftTabs(softTabChkBox.checked);
-    };
-
-    //Jshint Maxerr
-    var maxerr = document.getElementById("script-editor-option-maxerr");
-    var maxerrLabel = document.getElementById("script-editor-option-maxerror-value-label");
-    maxerrLabel.innerHTML = maxerr.value;
-    maxerr.onchange = function() {
-        editor.getSession().$worker.send("changeOptions", [{maxerr:maxerr.value}]);
-        maxerrLabel.innerHTML = maxerr.value;
+        Settings.Editor = opt;
     }
 
-    //Configure some of the VIM keybindings
-    ace.config.loadModule('ace/keyboard/vim', function(module) {
-        var VimApi = module.CodeMirror.Vim;
-        VimApi.defineEx('write', 'w', function(cm, input) {
-            saveAndCloseScriptEditor();
-        });
-        VimApi.defineEx('quit', 'q', function(cm, input) {
-            Engine.loadTerminalContent();
-        });
-        VimApi.defineEx('xwritequit', 'x', function(cm, input) {
-            saveAndCloseScriptEditor();
-        });
-        VimApi.defineEx('wqwritequit', 'wq', function(cm, input) {
-            saveAndCloseScriptEditor();
-        });
-    });
+    editorSelector.onchange(); // Trigger the onchange event handler
+}
 
-    //Function autocompleter
-    editor.setOption("enableBasicAutocompletion", true);
-    var autocompleter = {
-        getCompletions: function(editor, session, pos, prefix, callback) {
-            if (prefix.length === 0) {callback(null, []); return;}
-            var words = [];
-            var fns = NetscriptFunctions(null);
-            for (let name in fns) {
-                if (fns.hasOwnProperty(name)) {
-                    words.push({
-                        name:   name,
-                        value:  name,
-                    });
-
-                    //Get functions from namespaces
-                    const namespaces = ["bladeburner", "hacknet", "codingcontract", "gang"];
-                    if (namespaces.includes(name)) {
-                        let namespace       = fns[name];
-                        if (typeof namespace !== "object") {continue;}
-                        let namespaceFns    = Object.keys(namespace);
-                        for (let i = 0; i < namespaceFns.length; ++i) {
-                            words.push({
-                                name:   namespaceFns[i],
-                                value:  namespaceFns[i],
-                            });
-                        }
-                    }
-                }
-            }
-            callback(null, words);
-        },
+export function getCurrentEditor() {
+    switch (Settings.Editor) {
+        case EditorSetting.Ace:
+            return AceEditor;
+        case EditorSetting.CodeMirror:
+            return CodeMirrorEditor;
+        default:
+            console.log(`Invalid Editor Setting: ${Settings.Editor}`);
+            throw new Error(`Invalid Editor Setting: ${Settings.Editor}`);
+            return null;
     }
-    editor.completers = [autocompleter];
 }
 
 //Updates RAM usage in script
-async function updateScriptEditorContent() {
+export async function updateScriptEditorContent() {
     var filename = document.getElementById("script-editor-filename").value;
     if (scriptEditorRamCheck == null || !scriptEditorRamCheck.checked || !isScriptFilename(filename)) {
         scriptEditorRamText.innerText = "N/A";
         return;
     }
-    var editor = ace.edit('javascript-editor');
-    var code = editor.getValue();
+
+    let code;
+    try {
+        code = getCurrentEditor().getCode();
+    } catch(e) {
+        scriptEditorRamText.innerText = "RAM: ERROR";
+        return;
+    }
+
     var codeCopy = code.repeat(1);
     var ramUsage = await calculateRamUsage(codeCopy);
     if (ramUsage !== -1) {
@@ -269,20 +205,17 @@ $(document).keydown(function(e) {
 	}
 });
 
-function beautifyScript() {
-    var editor = ace.edit('javascript-editor');
-    var code = editor.getValue();
-    code = beautify(code, {
-        indent_size: 4,
-        brace_style: "preserve-inline",
-    });
-    editor.setValue(code);
-}
-
 function saveAndCloseScriptEditor() {
     var filename = document.getElementById("script-editor-filename").value;
-    var editor = ace.edit('javascript-editor');
-    var code = editor.getValue();
+
+    let code;
+    try {
+        code = getCurrentEditor().getCode();
+    } catch(e) {
+        dialogBoxCreate("Something went wrong when trying to save (getCurrentEditor().getCode()). Please report to game developer with details");
+        return;
+    }
+
     if (ITutorial.isRunning && ITutorial.currStep === iTutorialSteps.TerminalTypeScript) {
         //Make sure filename + code properly follow tutorial
         if (filename !== "foodnstuff.script") {
@@ -387,8 +320,7 @@ function Script(fn = "", code = "", server = "") {
 Script.prototype.saveScript = function() {
 	if (routing.isOn(Page.ScriptEditor)) {
 		//Update code and filename
-        var editor = ace.edit('javascript-editor');
-        var code = editor.getValue();
+        const code = getCurrentEditor().getCode();
 		this.code = code.replace(/^\s+|\s+$/g, '');
 
 		var filename = document.getElementById("script-editor-filename").value;
@@ -483,8 +415,11 @@ async function parseOnlyRamCalculate(server, code, workerScript) {
                     return -1;
                 }
             } else {
-                const script = server.getScript(nextModule);
-                if (!script) return -1;  // No such script on the server.
+                const script = server.getScript(nextModule.startsWith("./") ? nextModule.slice(2) : nextModule);
+                if (!script) {
+                    console.warn("Invalid script");
+                    return -1;  // No such script on the server.
+                }
                 code = script.code;
             }
 
@@ -1096,5 +1031,5 @@ AllServersMap.fromJSON = function(value) {
 
 Reviver.constructors.AllServersMap = AllServersMap;
 
-export {updateScriptEditorContent, loadAllRunningScripts, findRunningScript,
+export {loadAllRunningScripts, findRunningScript,
         RunningScript, Script, AllServersMap, scriptEditorInit, isScriptFilename};

@@ -1,4 +1,4 @@
-import { BitNodeMultipliers }                   from "./BitNodeMultipliers";
+import { BitNodeMultipliers }                   from "./BitNode/BitNodeMultipliers";
 import { CodingContract,
          ContractTypes }                        from "./CodingContracts";
 import { CONSTANTS }                            from "./Constants";

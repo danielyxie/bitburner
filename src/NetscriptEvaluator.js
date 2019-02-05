@@ -1,12 +1,12 @@
-import {BitNodeMultipliers}                 from "./BitNodeMultipliers";
-import {CONSTANTS}                          from "./Constants";
-import {Player}                             from "./Player";
-import {Environment}                        from "./NetscriptEnvironment";
-import {WorkerScript, addWorkerScript}      from "./NetscriptWorker";
-import {Server, getServer}                  from "./Server";
-import {Settings}                           from "./Settings";
-import {Script, findRunningScript,
-        RunningScript}                      from "./Script";
+import { BitNodeMultipliers }               from "./BitNode/BitNodeMultipliers";
+import { CONSTANTS }                        from "./Constants";
+import { Player }                           from "./Player";
+import { Environment }                      from "./NetscriptEnvironment";
+import { WorkerScript, addWorkerScript}     from "./NetscriptWorker";
+import { Server, getServer}                 from "./Server";
+import { Settings }                         from "./Settings/Settings";
+import { Script, findRunningScript,
+         RunningScript }                    from "./Script";
 
 import {parse, Node}                        from "../utils/acorn";
 import {arrayToString}                      from "../utils/helpers/arrayToString";
@@ -860,6 +860,7 @@ function runScriptFromScript(server, scriptname, args, workerScript, threads=1) 
             var script = server.scripts[i];
             var ramUsage = script.ramUsage;
             threads = Math.round(Number(threads)); //Convert to number and round
+            if (threads === 0) { return Promise.resolve(false); }
             ramUsage = ramUsage * threads;
             var ramAvailable = server.maxRam - server.ramUsed;
 

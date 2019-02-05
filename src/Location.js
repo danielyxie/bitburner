@@ -5,16 +5,18 @@ import {getJobRequirementText}                  from "./Company/GetJobRequiremen
 import * as posNames                            from "./Company/data/CompanyPositionNames";
 import { Corporation }                          from "./Corporation/Corporation";
 import {CONSTANTS}                              from "./Constants";
-import {Crimes}                                 from "./Crimes";
+import { Crimes }                               from "./Crime/Crimes";
 import {Engine}                                 from "./engine";
 import {beginInfiltration}                      from "./Infiltration";
 import {hasBladeburnerSF}                       from "./NetscriptFunctions";
 import {Locations}                              from "./Locations";
 import {Player}                                 from "./Player";
 import {Server, AllServers, AddToAllServers}    from "./Server";
-import {purchaseServer,
-        purchaseRamForHomeComputer}             from "./ServerPurchases";
-import {Settings}                               from "./Settings";
+import { getPurchaseServerCost,
+         purchaseServer,
+         purchaseRamForHomeComputer}            from "./ServerPurchases";
+import {Settings}                               from "./Settings/Settings";
+import { SourceFileFlags }                      from "./SourceFile/SourceFileFlags";
 import {SpecialServerNames, SpecialServerIps}   from "./SpecialServerIps";
 
 import {numeralWrapper}                         from "./ui/numeralFormat";
@@ -121,6 +123,8 @@ function displayLocationContent() {
 
     var nsaBladeburner = document.getElementById("location-nsa-bladeburner");
 
+    const vitalifeResleeve = document.getElementById("location-vitalife-resleeve");
+
     var loc = Player.location;
 
     returnToWorld.addEventListener("click", function() {
@@ -188,16 +192,16 @@ function displayLocationContent() {
     purchaseHomeRam.style.display = "none";
     purchaseHomeCores.style.display = "none";
 
-    purchase2gb.innerHTML = "Purchase 2GB Server - $" + formatNumber(2*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
-    purchase4gb.innerHTML = "Purchase 4GB Server - $" + formatNumber(4*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
-    purchase8gb.innerHTML = "Purchase 8GB Server - $" + formatNumber(8*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
-    purchase16gb.innerHTML = "Purchase 16GB Server - $" + formatNumber(16*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
-    purchase32gb.innerHTML = "Purchase 32GB Server - $" + formatNumber(32*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
-    purchase64gb.innerHTML = "Purchase 64GB Server - $" + formatNumber(64*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
-    purchase128gb.innerHTML = "Purchase 128GB Server - $" + formatNumber(128*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
-    purchase256gb.innerHTML = "Purchase 256GB Server - $" + formatNumber(256*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
-    purchase512gb.innerHTML = "Purchase 512GB Server - $" + formatNumber(512*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
-    purchase1tb.innerHTML = "Purchase 1TB Server - $" + formatNumber(1024*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
+    purchase2gb.innerHTML = "Purchase 2GB Server - " + numeralWrapper.formatMoney(getPurchaseServerCost(2));
+    purchase4gb.innerHTML = "Purchase 4GB Server - " + numeralWrapper.formatMoney(getPurchaseServerCost(4));
+    purchase8gb.innerHTML = "Purchase 8GB Server - " + numeralWrapper.formatMoney(getPurchaseServerCost(8));
+    purchase16gb.innerHTML = "Purchase 16GB Server - " + numeralWrapper.formatMoney(getPurchaseServerCost(16));
+    purchase32gb.innerHTML = "Purchase 32GB Server - " + numeralWrapper.formatMoney(getPurchaseServerCost(32));
+    purchase64gb.innerHTML = "Purchase 64GB Server - " + numeralWrapper.formatMoney(getPurchaseServerCost(64));
+    purchase128gb.innerHTML = "Purchase 128GB Server - " + numeralWrapper.formatMoney(getPurchaseServerCost(128));
+    purchase256gb.innerHTML = "Purchase 256GB Server - " + numeralWrapper.formatMoney(getPurchaseServerCost(256));
+    purchase512gb.innerHTML = "Purchase 512GB Server - " + numeralWrapper.formatMoney(getPurchaseServerCost(512));
+    purchase1tb.innerHTML = "Purchase 1TB Server - " + numeralWrapper.formatMoney(getPurchaseServerCost(1024));
     if (!SpecialServerIps.hasOwnProperty("Darkweb Server")) {
         purchaseTor.classList.add("a-link-button");
         purchaseTor.classList.remove("a-link-button-bought");
@@ -237,10 +241,11 @@ function displayLocationContent() {
 
     cityHallCreateCorporation.style.display = "none";
     nsaBladeburner.style.display = "none";
+    vitalifeResleeve.style.display = "none";
 
     //Check if the player is employed at this Location. If he is, display the "Work" button,
     //update the job title, etc.
-    if (loc != "" && loc === Player.companyName) {
+    if (loc != "" && Object.keys(Player.jobs).includes(loc)) {
         let company = Companies[loc];
 
         jobTitle.style.display = "block";
@@ -249,7 +254,7 @@ function displayLocationContent() {
         locationTxtDiv1.style.display = "block";
         locationTxtDiv2.style.display = "block";
         locationTxtDiv3.style.display = "block";
-        jobTitle.innerHTML = "Job Title: " + Player.companyPosition;
+        jobTitle.innerHTML = `Job Title: ${Player.jobs[loc]}`;
         let repGain = company.getFavorGain();
         if (repGain.length != 2) {repGain = 0;}
         repGain = repGain[0];
@@ -264,16 +269,16 @@ function displayLocationContent() {
                                  "favor you gain depends on how much reputation you have with the company</span>";
         work.style.display = "block";
 
-        let currPos = CompanyPositions[Player.companyPosition];
+        let currPos = CompanyPositions[Player.jobs[loc]];
         if (currPos == null) {
             throw new Error("Player's companyPosition property has an invalid value");
         }
 
         work.addEventListener("click", function() {
             if (currPos.isPartTimeJob() || currPos.isSoftwareConsultantJob() || currPos.isBusinessConsultantJob()) {
-                Player.startWorkPartTime();
+                Player.startWorkPartTime(loc);
             } else {
-                Player.startWork();
+                Player.startWork(loc);
             }
             return false;
         });
@@ -761,6 +766,10 @@ function displayLocationContent() {
             businessJob.style.display = "block";
             setInfiltrateButton(infiltrate, Locations.NewTokyoVitaLife,
                                 605, 22, 100, 3.5);
+            if (Player.bitNodeN === 10 || SourceFileFlags[10]) {
+                vitalifeResleeve.style.display = "block";
+            }
+
             break;
 
         case Locations.NewTokyoGlobalPharmaceuticals:
@@ -979,18 +988,18 @@ function displayLocationContent() {
         case Locations.NewTokyoSlums:
         case Locations.IshimaSlums:
         case Locations.VolhavenSlums:
-            var shopliftChance = Crimes.Shoplift.successRate();
-            var robStoreChance = Crimes.RobStore.successRate();
-            var mugChance = Crimes.Mug.successRate();
-            var larcenyChance = Crimes.Larceny.successRate();
-            var drugsChance = Crimes.DealDrugs.successRate();
-            var bondChance = Crimes.BondForgery.successRate();
-            var armsChance = Crimes.TraffickArms.successRate();
-            var homicideChance = Crimes.Homicide.successRate();
-            var gtaChance = Crimes.GrandTheftAuto.successRate();
-            var kidnapChance = Crimes.Kidnap.successRate();
-            var assassinateChance = Crimes.Assassination.successRate();
-            var heistChance = Crimes.Heist.successRate();
+            var shopliftChance = Crimes.Shoplift.successRate(Player);
+            var robStoreChance = Crimes.RobStore.successRate(Player);
+            var mugChance = Crimes.Mug.successRate(Player);
+            var larcenyChance = Crimes.Larceny.successRate(Player);
+            var drugsChance = Crimes.DealDrugs.successRate(Player);
+            var bondChance = Crimes.BondForgery.successRate(Player);
+            var armsChance = Crimes.TraffickArms.successRate(Player);
+            var homicideChance = Crimes.Homicide.successRate(Player);
+            var gtaChance = Crimes.GrandTheftAuto.successRate(Player);
+            var kidnapChance = Crimes.Kidnap.successRate(Player);
+            var assassinateChance = Crimes.Assassination.successRate(Player);
+            var heistChance = Crimes.Heist.successRate(Player);
 
             slumsDescText.style.display = "block";
             slumsShoplift.style.display = "block";
@@ -1043,8 +1052,8 @@ function displayLocationContent() {
 
     // Make the "Apply to be Employee and Waiter" texts disappear if you already hold the job
     // Includes part-time stuff
-    if (loc == Player.companyName) {
-        var currPos = Player.companyPosition;
+    if (Object.keys(Player.jobs).includes(loc)) {
+        var currPos = Player.jobs[loc];
 
         if (currPos == "Employee") {
             employeeJob.style.display = "none";
@@ -1634,6 +1643,8 @@ function initLocationButtons() {
 
     var nsaBladeburner = document.getElementById("location-nsa-bladeburner");
 
+    const vitalifeResleeve = document.getElementById("location-vitalife-resleeve");
+
     var hospitalTreatment   = document.getElementById("location-hospital-treatment");
 
     softwareJob.addEventListener("click", function(e) {
@@ -1716,61 +1727,61 @@ function initLocationButtons() {
 
     purchase2gb.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        purchaseServerBoxCreate(2, 2 * CONSTANTS.BaseCostFor1GBOfRamServer);
+        purchaseServerBoxCreate(2);
         return false;
     });
 
     purchase4gb.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        purchaseServerBoxCreate(4, 4 * CONSTANTS.BaseCostFor1GBOfRamServer);
+        purchaseServerBoxCreate(4);
         return false;
     });
 
     purchase8gb.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        purchaseServerBoxCreate(8, 8 * CONSTANTS.BaseCostFor1GBOfRamServer);
+        purchaseServerBoxCreate(8);
         return false;
     });
 
     purchase16gb.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        purchaseServerBoxCreate(16, 16 * CONSTANTS.BaseCostFor1GBOfRamServer);
+        purchaseServerBoxCreate(16);
         return false;
     });
 
     purchase32gb.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        purchaseServerBoxCreate(32, 32 * CONSTANTS.BaseCostFor1GBOfRamServer);
+        purchaseServerBoxCreate(32);
         return false;
     });
 
     purchase64gb.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        purchaseServerBoxCreate(64, 64 * CONSTANTS.BaseCostFor1GBOfRamServer);
+        purchaseServerBoxCreate(64);
         return false;
     });
 
     purchase128gb.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        purchaseServerBoxCreate(128, 128 * CONSTANTS.BaseCostFor1GBOfRamServer);
+        purchaseServerBoxCreate(128);
         return false;
     });
 
     purchase256gb.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        purchaseServerBoxCreate(256, 256 * CONSTANTS.BaseCostFor1GBOfRamServer);
+        purchaseServerBoxCreate(256);
         return false;
     });
 
     purchase512gb.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        purchaseServerBoxCreate(512, 512 * CONSTANTS.BaseCostFor1GBOfRamServer);
+        purchaseServerBoxCreate(512);
         return false;
     });
 
     purchase1tb.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        purchaseServerBoxCreate(1024, 1024 * CONSTANTS.BaseCostFor1GBOfRamServer);
+        purchaseServerBoxCreate(1024);
         return false;
     });
 
@@ -1874,73 +1885,73 @@ function initLocationButtons() {
 
     slumsShoplift.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        Crimes.Shoplift.commit();
+        Crimes.Shoplift.commit(Player);
         return false;
     });
 
     slumsRobStore.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        Crimes.RobStore.commit();
+        Crimes.RobStore.commit(Player);
         return false;
     });
 
     slumsMug.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        Crimes.Mug.commit();
+        Crimes.Mug.commit(Player);
         return false;
     });
 
     slumsLarceny.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        Crimes.Larceny.commit();
+        Crimes.Larceny.commit(Player);
         return false;
     });
 
     slumsDealDrugs.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        Crimes.DealDrugs.commit();
+        Crimes.DealDrugs.commit(Player);
         return false;
     });
 
     slumsBondForgery.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        Crimes.BondForgery.commit();
+        Crimes.BondForgery.commit(Player);
         return false;
     });
 
     slumsTrafficArms.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        Crimes.TraffickArms.commit();
+        Crimes.TraffickArms.commit(Player);
         return false;
     });
 
     slumsHomicide.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        Crimes.Homicide.commit();
+        Crimes.Homicide.commit(Player);
         return false;
     });
 
     slumsGta.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        Crimes.GrandTheftAuto.commit();
+        Crimes.GrandTheftAuto.commit(Player);
         return false;
     });
 
     slumsKidnap.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        Crimes.Kidnap.commit();
+        Crimes.Kidnap.commit(Player);
         return false;
     });
 
     slumsAssassinate.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        Crimes.Assassination.commit();
+        Crimes.Assassination.commit(Player);
         return false;
     });
 
     slumsHeist.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
-        Crimes.Heist.commit();
+        Crimes.Heist.commit(Player);
         return false;
     });
 
@@ -2039,6 +2050,10 @@ function initLocationButtons() {
                 dialogBoxCreate("Rejected! Please apply again when you have 100 of each combat stat (str, def, dex, agi)");
             }
         }
+    });
+
+    vitalifeResleeve.addEventListener("click", function() {
+        Engine.loadResleevingContent();
     });
 
     hospitalTreatment.addEventListener("click", function(e) {
@@ -2250,13 +2265,19 @@ function travelBoxCreate(destCityName, cost) {
     yesNoBoxCreate("Would you like to travel to " + destCityName + "? The trip will cost $" + formatNumber(cost, 2) + ".");
 }
 
-function purchaseServerBoxCreate(ram, cost) {
+function purchaseServerBoxCreate(ram) {
+    const cost = getPurchaseServerCost(ram);
+    if (cost === Infinity) {
+        dialogBoxCreate("Something went wrong when trying to purchase this server. Please contact developer");
+        return;
+    }
+
     var yesBtn = yesNoTxtInpBoxGetYesButton();
     var noBtn = yesNoTxtInpBoxGetNoButton();
     yesBtn.innerHTML = "Purchase Server";
     noBtn.innerHTML = "Cancel";
     yesBtn.addEventListener("click", function() {
-        purchaseServer(ram, cost);
+        purchaseServer(ram);
         yesNoTxtInpBoxClose();
     });
     noBtn.addEventListener("click", function() {

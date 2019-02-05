@@ -1,6 +1,7 @@
-import { Augmentations, AugmentationNames,
-         PlayerOwnedAugmentation }              from "../Augmentations";
-import { BitNodeMultipliers }                   from "../BitNodeMultipliers";
+import { Augmentations }                        from "../Augmentation/Augmentations";
+import { PlayerOwnedAugmentation }              from "../Augmentation/PlayerOwnedAugmentation";
+import { AugmentationNames }                    from "../Augmentation/data/AugmentationNames";
+import { BitNodeMultipliers }                   from "../BitNode/BitNodeMultipliers";
 import { CONSTANTS }                            from "../Constants";
 import { Engine }                               from "../engine";
 import { Faction }                              from "./Faction";
@@ -9,8 +10,8 @@ import { FactionInfos }                         from "./FactionInfo";
 import { Locations}                             from "../Location";
 import { HackingMission, setInMission }         from "../Missions";
 import { Player }                               from "../Player";
-import { PurchaseAugmentationsOrderSetting }    from "../SettingEnums";
-import { Settings }                             from "../Settings";
+import { PurchaseAugmentationsOrderSetting }    from "../Settings/SettingEnums";
+import { Settings }                             from "../Settings/Settings";
 
 import {Page, routing}                          from "../ui/navigationTracking";
 import {numeralWrapper}                         from "../ui/numeralFormat";
@@ -480,7 +481,7 @@ function createFactionAugmentationDisplayElements(augmentationsList, augs, facti
             }
 
             var item = createElement("li");
-            var span = createElement("span", {display:"inline-block"});
+            var span = createElement("span", { display:"inline-block", margin: "4px", padding: "4px" });
             var aDiv = createElement("div", {tooltip:aug.info});
             var aElem = createElement("a", {
                 innerText:aug.name, display:"inline",

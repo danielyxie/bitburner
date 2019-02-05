@@ -110,7 +110,7 @@ List of Factions and their Requirements
 |                     | Clarke         | * Have 200k reputation with             |                               |
 |                     | Incorporated   |   the Corporation                       |                               |
 +                     +----------------+-----------------------------------------+-------------------------------+
-|                     | Fulcrum Secret | * Have 200k reputation with             |                               |
+|                     | Fulcrum Secret | * Have 250k reputation with             |                               |
 |                     | Technologies   |   the Corporation                       |                               |
 |                     |                | * Hack fulcrumassets manually           |                               |
 +---------------------+----------------+-----------------------------------------+-------------------------------+

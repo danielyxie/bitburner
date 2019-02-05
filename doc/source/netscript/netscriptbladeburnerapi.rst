@@ -1,3 +1,5 @@
+.. _netscript_bladeburnerapi:
+
 Netscript Bladeburner API
 =========================
 Netscript provides the following API for interacting with the game's Bladeburner mechanic.

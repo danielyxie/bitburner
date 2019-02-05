@@ -1,10 +1,12 @@
-import {Engine}                         from "./engine";
-import {Player}                         from "./Player";
-import {Settings}                       from "./Settings";
-import {clearEventListeners}            from "../utils/uiHelpers/clearEventListeners";
-import {createElement}                  from "../utils/uiHelpers/createElement";
-import {createPopup}                    from "../utils/uiHelpers/createPopup";
-import {removeElementById}              from "../utils/uiHelpers/removeElementById";
+import { Engine }                       from "./engine";
+import { Player }                       from "./Player";
+import { Settings }                     from "./Settings/Settings";
+import { initializeMainMenuLinks }      from "./ui/MainMenu/Links";
+import { exceptionAlert }               from "../utils/helpers/exceptionAlert";
+import { clearEventListeners }          from "../utils/uiHelpers/clearEventListeners";
+import { createElement }                from "../utils/uiHelpers/createElement";
+import { createPopup }                  from "../utils/uiHelpers/createPopup";
+import { removeElementById }            from "../utils/uiHelpers/removeElementById";
 
 //Ordered array of keys to Interactive Tutorial Steps
 const orderedITutorialSteps = [
@@ -472,7 +474,19 @@ function iTutorialEnd() {
     }
 
     console.log("Ending interactive tutorial");
+
+    // Initialize references to main menu links
+    // We have to call initializeMainMenuLinks() again because the Interactive Tutorial
+    // re-creates Main menu links with clearEventListeners()
+    if (!initializeMainMenuLinks()) {
+        const errorMsg = "Failed to initialize Main Menu Links. Please try refreshing the page. " +
+                         "If that doesn't work, report the issue to the developer";
+        exceptionAlert(new Error(errorMsg));
+        console.error(errorMsg);
+        return;
+    }
     Engine.init();
+
     ITutorial.currStep = iTutorialSteps.End;
     ITutorial.isRunning = false;
     document.getElementById("interactive-tutorial-container").style.display = "none";

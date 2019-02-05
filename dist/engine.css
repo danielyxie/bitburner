@@ -1,5 +1,48 @@
 /* COLORS */
 /* Attributes */
+/**
+ * Customized styling for the Code Mirror editor
+ */
+#codemirror-form-wrapper {
+  height: 80%;
+  margin: 10px 0px 0px 6px; }
+
+.CodeMirror {
+  height: 100%;
+  width: 100%;
+  border: 2px solid var(--my-highlight-color);
+  z-index: 1;
+  font-family: "Lucida Console", "Lucida Sans Unicode", "Fira Mono", "Consolas", "Courier New", Courier, monospace, "Times New Roman";
+  font-size: 16px; }
+
+/**
+ * Highlight matches
+ */
+.cm-matchhighlight {
+  background-color: #8F908A; }
+
+.CodeMirror-selection-highlight-scrollbar {
+  background-color: #8F908A; }
+
+/**
+ * Show Invisibles
+ */
+.cm-whitespace::before {
+  position: absolute;
+  pointer-events: none;
+  color: #404F7D; }
+
+/**
+ * Vim command display
+ */
+#codemirror-vim-command-display-wrapper {
+  background-color: white;
+  font-size: 13px;
+  height: 30px;
+  margin-left: 6px; }
+
+/* COLORS */
+/* Attributes */
 /* COLORS */
 /* Attributes */
 * {
@@ -39,10 +82,6 @@ ul {
 
 li {
   list-style-type: none; }
-
-span {
-  margin: 4px;
-  padding: 4px; }
 
 #entire-game-container {
   background-color: transparent; }
@@ -771,29 +810,18 @@ button {
   white-space: pre; }
 
 #terminal-input-text-box {
+  margin-left: 2px;
   flex: 1 1 auto; }
 
 /* COLORS */
 /* Attributes */
-/* CSS for different main menu pages, such as character info, script editor, etc (but excluding
-    terminal which has its own page) */
-.generic-menupage-container {
-  height: 100%;
-  padding-left: 10px;
-  margin-left: 10%;
-  width: 99%;
-  overflow-y: scroll; }
-
-/* Character Info */
-#character-container {
-  padding-top: 10px;
-  position: fixed; }
-
-/* Script Editor */
+/**
+ * Styling for Script Editor (both Ace and CodeMirror)
+ */
 #script-editor-container {
   background-color: transparent; }
 
-#javascript-editor {
+#ace-editor {
   margin: 10px;
   height: 80%;
   width: 100%;
@@ -804,16 +832,6 @@ button {
   border: 2px solid var(--my-highlight-color);
   z-index: 1;
   font-family: "Lucida Console", "Lucida Sans Unicode", "Fira Mono", "Consolas", "Courier New", Courier, monospace, "Times New Roman"; }
-
-.ace_line,
-.ace_line * {
-  background-color: transparent;
-  margin: 0;
-  padding: 0; }
-
-.ace_text-input {
-  font-size: 16px;
-  background-color: transparent; }
 
 /* This temp element is used for auto adjusting filename field */
 .tmp-element {
@@ -877,13 +895,45 @@ button {
   padding: 2px;
   overflow: auto;
   z-index: 1;
-  color: #fff; }
+  color: #fff;
+  max-height: 50%; }
 
 #script-editor-options-panel fieldset {
   margin-top: 8px;
   margin-bottom: 8px;
   padding: 2px;
   font-size: 12px; }
+  #script-editor-options-panel fieldset input {
+    margin: 2px; }
+
+/* Specific overrides for Ace Editor */
+.ace_line,
+.ace_line * {
+  background-color: transparent;
+  margin: 0;
+  padding: 0; }
+
+.ace_text-input {
+  font-size: 16px;
+  background-color: transparent; }
+
+/* Specified overrides for Code mirror Editor are defined in codemirror-override.scss */
+
+/* COLORS */
+/* Attributes */
+/* CSS for different main menu pages, such as character info, script editor, etc (but excluding
+    terminal which has its own page) */
+.generic-menupage-container {
+  height: 100%;
+  padding-left: 10px;
+  margin-left: 10%;
+  width: 99%;
+  overflow-y: scroll; }
+
+/* Character Info */
+#character-container {
+  padding-top: 10px;
+  position: fixed; }
 
 /* Active scripts */
 .active-scripts-list {
@@ -1222,7 +1272,26 @@ button {
   display: inline;
   width: 25%; }
 
-/* Stock market */
+/* COLORS */
+/* Attributes */
+/**
+ * Styling for the Red Pill screen (the BitNode selection UI)
+ */
+#red-pill-container {
+  position: fixed; }
+
+.bitnode {
+  color: #00f; }
+
+.bitnode-destroyed {
+  color: #f00; }
+
+.bitnode:hover,
+.bitnode-destroyed:hover {
+  color: #fff; }
+
+/* COLORS */
+/* Attributes */
 #stock-market-container {
   position: fixed;
   padding: 6px; }
@@ -1235,13 +1304,12 @@ button {
     margin-left: 10px;
     display: block; }
 
-/* Change font size of Stock TIcker headers */
 #stock-market-list li button {
   font-size: 16px; }
 
 #stock-market-container p {
-  padding: 10px;
-  margin: 10px;
+  padding: 6px;
+  margin: 6px;
   width: 70%; }
 
 #stock-market-container a {
@@ -1318,19 +1386,8 @@ button {
   text-decoration: none;
   cursor: pointer; }
 
-#red-pill-container,
 #cinematic-text-container {
   position: fixed; }
-
-.bitnode {
-  color: #00f; }
-
-.bitnode-destroyed {
-  color: #f00; }
-
-.bitnode:hover,
-.bitnode-destroyed:hover {
-  color: #fff; }
 
 /* COLORS */
 /* Attributes */
@@ -1393,7 +1450,7 @@ button {
   z-index: 10;
   width: 50%;
   height: auto;
-  max-height: 40%;
+  max-height: 50%;
   top: 40%;
   left: 50%;
   margin: -10% 0 0 -25%;
@@ -2047,12 +2104,11 @@ button {
 .bladeburner-nav-button, .bladeburner-nav-button-inactive {
   border: 1px solid #fff;
   margin: 2px;
-  padding: 2px; }
-
-.bladeburner-nav-button {
+  padding: 2px;
   color: #fff; }
-  .bladeburner-nav-button:hover {
-    background-color: #3d4044; }
+
+.bladeburner-nav-button:hover {
+  background-color: #3d4044; }
 
 .bladeburner-nav-button-inactive {
   text-decoration: none;
@@ -2135,6 +2191,51 @@ button {
   font-size: 12px;
   margin: 1px;
   padding: 1px; }
+
+/**
+ * Styling for the Sleeves Management page
+ */
+/* COLORS */
+/* Attributes */
+.sleeve-container {
+  border: 1px solid white;
+  margin: 4px;
+  width: 75%; }
+  .sleeve-container p {
+    font-size: 14px; }
+
+.sleeves-page-info {
+  display: "block";
+  width: 75%; }
+
+.sleeve-panel {
+  display: inline-block;
+  margin: 0px;
+  padding: 2px; }
+  .sleeve-panel select {
+    display: block; }
+
+/**
+ * Styling for the Re-Sleeving Page
+ */
+/* COLORS */
+/* Attributes */
+.resleeve-container {
+  border: 1px solid white;
+  margin: 4px;
+  width: 75%; }
+  .resleeve-container p {
+    font-size: 13px; }
+
+.resleeve-panel {
+  display: inline-block;
+  margin: 0px;
+  padding: 2px; }
+
+.resleeve-aug-selector {
+  font-size: 13px; }
+  .resleeve-aug-selector option {
+    font-size: 13px; }
 
 /* required LIB STYLES */
 /* .Treant se automatski dodaje na svaki chart conatiner */

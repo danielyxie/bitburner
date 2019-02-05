@@ -1,28 +1,18 @@
-import { dialogBoxCreate}                                from "../utils/DialogBox";
-import { gameOptionsBoxClose,
-         gameOptionsBoxOpen}                            from "../utils/GameOptions";
-import { getRandomInt }                                 from "../utils/helpers/getRandomInt";
-import { removeChildrenFromElement }                    from "../utils/uiHelpers/removeChildrenFromElement";
-import { clearEventListeners }                          from "../utils/uiHelpers/clearEventListeners";
-import { createElement }                                from "../utils/uiHelpers/createElement";
-import { exceptionAlert }                               from "../utils/helpers/exceptionAlert";
-import { removeLoadingScreen }                          from "../utils/uiHelpers/removeLoadingScreen";
-
-import {numeralWrapper}                                 from "./ui/numeralFormat";
-import { createStatusText }                             from "./ui/createStatusText";
-
 import {formatNumber,
         convertTimeMsToTimeElapsedString,
         replaceAt}                                      from "../utils/StringHelperFunctions";
 import {loxBoxCreate, logBoxUpdateText,
         logBoxOpened}                                   from "../utils/LogBox";
 import {updateActiveScriptsItems}                       from "./ActiveScriptsUI";
-import {Augmentations, installAugmentations,
-        initAugmentations, AugmentationNames,
-        displayAugmentationsContent,
-        PlayerOwnedAugmentation}                        from "./Augmentations";
+import { Augmentations }                                from "./Augmentation/Augmentations";
+import { installAugmentations,
+         initAugmentations,
+         displayAugmentationsContent,
+         PlayerOwnedAugmentation }                      from "./Augmentation/AugmentationHelpers";
+import { AugmentationNames }                            from "./Augmentation/data/AugmentationNames";
+
 import {BitNodes, initBitNodes,
-        initBitNodeMultipliers}                         from "./BitNode";
+        initBitNodeMultipliers}                         from "./BitNode/BitNode";
 import {Bladeburner}                                    from "./Bladeburner";
 import {CharacterOverview}                              from "./CharacterOverview";
 import {cinematicTextFlag}                              from "./CinematicText";
@@ -61,22 +51,50 @@ import { displayCreateProgramContent,
          initCreateProgramButtons }                     from "./Programs/ProgramHelpers";
 import {redPillFlag, hackWorldDaemon}                   from "./RedPill";
 import {saveObject, loadGame}                           from "./SaveObject";
-import {loadAllRunningScripts, scriptEditorInit,
-        updateScriptEditorContent}                      from "./Script";
+import { getCurrentEditor,
+         loadAllRunningScripts,
+         scriptEditorInit,
+         updateScriptEditorContent }                    from "./Script";
 import {AllServers, Server, initForeignServers}         from "./Server";
-import {Settings}                                       from "./Settings";
-import {setSettingsLabels}                              from "./ui/setSettingsLabels";
-import {initSourceFiles, SourceFiles,
-        PlayerOwnedSourceFile}                          from "./SourceFile";
+import {Settings}                                       from "./Settings/Settings";
+import { initSourceFiles, SourceFiles }                 from "./SourceFile";
+import { updateSourceFileFlags }                        from "./SourceFile/SourceFileFlags";
+
 import {SpecialServerIps, initSpecialServerIps}         from "./SpecialServerIps";
 import {StockMarket, StockSymbols,
         SymbolToStockMap, initStockSymbols,
         initSymbolToStockMap, stockMarketCycle,
         processStockPrices,
-        displayStockMarketContent}                      from "./StockMarket";
+        displayStockMarketContent}                      from "./StockMarket/StockMarket";
 import {Terminal, postNetburnerText}                    from "./Terminal";
-import {KEY}                                            from "../utils/helpers/keyCodes";
+
+import { Sleeve }                                       from "./PersonObjects/Sleeve/Sleeve";
+import { clearSleevesPage,
+         createSleevesPage,
+         updateSleevesPage }                            from "./PersonObjects/Sleeve/SleeveUI";
+import { clearResleevesPage,
+         createResleevesPage }                          from "./PersonObjects/Resleeving/ResleevingUI";
+
+import { createStatusText }                             from "./ui/createStatusText";
 import {Page, routing}                                  from "./ui/navigationTracking";
+import {numeralWrapper}                                 from "./ui/numeralFormat";
+import {setSettingsLabels}                              from "./ui/setSettingsLabels";
+import { initializeMainMenuHeaders }                    from "./ui/MainMenu/Headers";
+import { initializeMainMenuLinks,
+         MainMenuLinks }                                from "./ui/MainMenu/Links";
+
+
+import { dialogBoxCreate}                               from "../utils/DialogBox";
+import { gameOptionsBoxClose,
+         gameOptionsBoxOpen }                           from "../utils/GameOptions";
+import { getRandomInt }                                 from "../utils/helpers/getRandomInt";
+import { removeChildrenFromElement }                    from "../utils/uiHelpers/removeChildrenFromElement";
+import { clearEventListeners }                          from "../utils/uiHelpers/clearEventListeners";
+import { createElement }                                from "../utils/uiHelpers/createElement";
+import { exceptionAlert }                               from "../utils/helpers/exceptionAlert";
+import { removeLoadingScreen }                          from "../utils/uiHelpers/removeLoadingScreen";
+import {KEY}                                            from "../utils/helpers/keyCodes";
+
 
 // These should really be imported with the module that is presenting that UI, but because they very much depend on the
 // cascade order, we'll pull them all in here.
@@ -87,7 +105,10 @@ import "../css/buttons.scss";
 import "../css/mainmenu.scss";
 import "../css/characteroverview.scss";
 import "../css/terminal.scss";
+import "../css/scripteditor.scss";
 import "../css/menupages.scss";
+import "../css/redpill.scss";
+import "../css/stockmarket.scss";
 import "../css/workinprogress.scss";
 import "../css/popupboxes.scss";
 import "../css/gameoptions.scss";
@@ -97,6 +118,8 @@ import "../css/missions.scss";
 import "../css/companymanagement.scss";
 import "../css/bladeburner.scss";
 import "../css/gang.scss";
+import "../css/sleeves.scss";
+import "../css/resleeving.scss";
 import "../css/treant.css";
 
 
@@ -117,6 +140,14 @@ import "../css/treant.css";
  */
 $(document).keydown(function(e) {
     if (Settings.DisableHotkeys === true) {return;}
+
+    // These hotkeys should be disabled if the player is writing scripts
+    try {
+        if (getCurrentEditor().isFocused()) {
+            return;
+        }
+    } catch(e) {}
+
     if (!Player.isWorking && !redPillFlag && !inMission && !cinematicTextFlag) {
         if (e.keyCode == 84 && e.altKey) {
             e.preventDefault();
@@ -175,23 +206,6 @@ const Engine = {
     //Clickable objects
     Clickables: {
         //Main menu buttons
-        terminalMainMenuButton:         null,
-        characterMainMenuButton:        null,
-        scriptEditorMainMenuButton:     null,
-        activeScriptsMainMenuButton:    null,
-        hacknetNodesMainMenuButton:     null,
-        worldMainMenuButton:            null,
-        travelMainMenuButton:           null,
-        jobMainMenuButton:              null,
-        stockmarketMainMenuButton:      null,
-        createProgramMainMenuButton:    null,
-        factionsMainMenuButton:         null,
-        augmentationsMainMenuButton:    null,
-        tutorialMainMenuButton:         null,
-        bladeburnerMenuButton:          null,
-        corporationMenuButton:          null,
-        gangMenuButton:                 null,
-        devMainMenuButton:              null,
         saveMainMenuButton:             null,
         deleteMainMenuButton:           null,
 
@@ -251,7 +265,7 @@ const Engine = {
         Engine.hideAllContent();
         Engine.Display.terminalContent.style.display = "block";
         routing.navigateTo(Page.Terminal);
-        document.getElementById("terminal-menu-link").classList.add("active");
+        MainMenuLinks.Terminal.classList.add("active");
     },
 
     loadCharacterContent: function() {
@@ -259,21 +273,21 @@ const Engine = {
         Engine.Display.characterContent.style.display = "block";
         Engine.displayCharacterInfo();
         routing.navigateTo(Page.CharacterInfo);
-        document.getElementById("stats-menu-link").classList.add("active");
+        MainMenuLinks.Stats.classList.add("active");
     },
 
     loadScriptEditorContent: function(filename = "", code = "") {
         Engine.hideAllContent();
         Engine.Display.scriptEditorContent.style.display = "block";
-        var editor = ace.edit('javascript-editor');
-        if (filename != "") {
-            document.getElementById("script-editor-filename").value = filename;
-            editor.setValue(code);
+        try {
+            getCurrentEditor().openScript(filename, code);
+        } catch(e) {
+            exceptionAlert(e);
         }
-        editor.focus();
+
         updateScriptEditorContent();
         routing.navigateTo(Page.ScriptEditor);
-        document.getElementById("create-script-menu-link").classList.add("active");
+        MainMenuLinks.ScriptEditor.classList.add("active");
     },
 
     loadActiveScriptsContent: function() {
@@ -281,7 +295,7 @@ const Engine = {
         Engine.Display.activeScriptsContent.style.display = "block";
         updateActiveScriptsItems();
         routing.navigateTo(Page.ActiveScripts);
-        document.getElementById("active-scripts-menu-link").classList.add("active");
+        MainMenuLinks.ActiveScripts.classList.add("active");
     },
 
     loadHacknetNodesContent: function() {
@@ -289,7 +303,7 @@ const Engine = {
         Engine.Display.hacknetNodesContent.style.display = "block";
         displayHacknetNodesContent();
         routing.navigateTo(Page.HacknetNodes);
-        document.getElementById("hacknet-nodes-menu-link").classList.add("active");
+        MainMenuLinks.HacknetNodes.classList.add("active");
     },
 
     loadWorldContent: function() {
@@ -297,7 +311,7 @@ const Engine = {
         Engine.Display.worldContent.style.display = "block";
         Engine.displayWorldInfo();
         routing.navigateTo(Page.World);
-        document.getElementById("city-menu-link").classList.add("active");
+        MainMenuLinks.City.classList.add("active");
     },
 
     loadCreateProgramContent: function() {
@@ -305,7 +319,7 @@ const Engine = {
         Engine.Display.createProgramContent.style.display = "block";
         displayCreateProgramContent();
         routing.navigateTo(Page.CreateProgram);
-        document.getElementById("create-program-menu-link").classList.add("active");
+        MainMenuLinks.CreateProgram.classList.add("active");
     },
 
     loadFactionsContent: function() {
@@ -313,7 +327,7 @@ const Engine = {
         Engine.Display.factionsContent.style.display = "block";
         Engine.displayFactionsInfo();
         routing.navigateTo(Page.Factions);
-        document.getElementById("factions-menu-link").classList.add("active");
+        MainMenuLinks.Factions.classList.add("active");
     },
 
     loadFactionContent: function() {
@@ -327,7 +341,7 @@ const Engine = {
         Engine.Display.augmentationsContent.style.display = "block";
         displayAugmentationsContent(Engine.Display.augmentationsContent);
         routing.navigateTo(Page.Augmentations);
-        document.getElementById("augmentations-menu-link").classList.add("active");
+        MainMenuLinks.Augmentations.classList.add("active");
     },
 
     loadTutorialContent: function() {
@@ -335,14 +349,14 @@ const Engine = {
         Engine.Display.tutorialContent.style.display = "block";
         Engine.displayTutorialContent();
         routing.navigateTo(Page.Tutorial);
-        document.getElementById("tutorial-menu-link").classList.add("active");
+        MainMenuLinks.Tutorial.classList.add("active");
     },
 
     loadDevMenuContent: function() {
         Engine.hideAllContent();
         createDevMenu();
         routing.navigateTo(Page.DevMenu);
-        document.getElementById("dev-menu-link").classList.add("active");
+        MainMenuLinks.DevMenu.classList.add("active");
     },
 
     loadLocationContent: function() {
@@ -473,6 +487,27 @@ const Engine = {
         }
     },
 
+    loadSleevesContent: function() {
+        // This is for Duplicate Sleeves page, not Re-sleeving @ Vita Life
+        try {
+            Engine.hideAllContent();
+            routing.navigateTo(Page.Sleeves);
+            createSleevesPage(Player);
+        } catch(e) {
+            exceptionAlert(e);
+        }
+    },
+
+    loadResleevingContent: function() {
+        try {
+            Engine.hideAllContent();
+            routing.navigateTo(Page.Resleeves);
+            createResleevesPage(Player);
+        } catch(e) {
+            exceptionAlert(e);
+        }
+    },
+
     //Helper function that hides all content
     hideAllContent: function() {
         Engine.Display.terminalContent.style.display = "none";
@@ -509,6 +544,9 @@ const Engine = {
             Player.bladeburner.clearContent();
         }
 
+        clearResleevesPage();
+        clearSleevesPage();
+
         //Location lists
         Engine.aevumLocationsList.style.display = "none";
         Engine.chongqingLocationsList.style.display = "none";
@@ -518,23 +556,25 @@ const Engine = {
         Engine.volhavenLocationsList.style.display = "none";
 
         //Make nav menu tabs inactive
-        document.getElementById("terminal-menu-link").classList.remove("active");
-        document.getElementById("create-script-menu-link").classList.remove("active");
-        document.getElementById("active-scripts-menu-link").classList.remove("active");
-        document.getElementById("create-program-menu-link").classList.remove("active");
-        document.getElementById("stats-menu-link").classList.remove("active");
-        document.getElementById("factions-menu-link").classList.remove("active");
-        document.getElementById("augmentations-menu-link").classList.remove("active");
-        document.getElementById("hacknet-nodes-menu-link").classList.remove("active");
-        document.getElementById("city-menu-link").classList.remove("active");
-        document.getElementById("travel-menu-link").classList.remove("active");
-        document.getElementById("stock-market-menu-link").classList.remove("active");
-        document.getElementById("tutorial-menu-link").classList.remove("active");
-        document.getElementById("options-menu-link").classList.remove("active");
-        document.getElementById("dev-menu-link").classList.remove("active");
-        document.getElementById("bladeburner-menu-link").classList.remove("active");
-        document.getElementById("corporation-menu-link").classList.remove("active");
-        document.getElementById("gang-menu-link").classList.remove("active");
+        MainMenuLinks.Terminal.classList.remove("active");
+        MainMenuLinks.ScriptEditor.classList.remove("active");
+        MainMenuLinks.ActiveScripts.classList.remove("active");
+        MainMenuLinks.CreateProgram.classList.remove("active");
+        MainMenuLinks.Stats.classList.remove("active");
+        MainMenuLinks.Factions.classList.remove("active");
+        MainMenuLinks.Augmentations.classList.remove("active");
+        MainMenuLinks.HacknetNodes.classList.remove("active");
+        MainMenuLinks.Sleeves.classList.remove("active");
+        MainMenuLinks.City.classList.remove("active");
+        MainMenuLinks.Travel.classList.remove("active");
+        MainMenuLinks.Job.classList.remove("active");
+        MainMenuLinks.StockMarket.classList.remove("active");
+        MainMenuLinks.Bladeburner.classList.remove("active");
+        MainMenuLinks.Corporation.classList.remove("active");
+        MainMenuLinks.Gang.classList.remove("active");
+        MainMenuLinks.Tutorial.classList.remove("active");
+        MainMenuLinks.Options.classList.remove("active");
+        MainMenuLinks.DevMenu.classList.remove("active");
 
         // Close dev menu
         closeDevMenu();
@@ -556,9 +596,9 @@ const Engine = {
     displayCharacterInfo: function() {
         removeChildrenFromElement(Engine.Display.characterInfo);
 
-        var companyPosition = "";
-        if (Player.companyPosition !== "") {
-            companyPosition = Player.companyPosition;
+        let companyPosition = "";
+        if (Player.companyName !== "") {
+            companyPosition = Player.jobs[Player.companyName];
         }
 
         var intText = "";
@@ -575,8 +615,9 @@ const Engine = {
             innerHTML:
             '<b>General</b><br><br>' +
             'Current City: ' + Player.city + '<br><br>' +
-            'Employer: ' + Player.companyName + '<br>' +
-            'Job Title: ' + companyPosition + '<br><br>' +
+            `Employer at which you last worked: ${Player.companyName}<br>` +
+            `Job you last worked: ${companyPosition}<br>` +
+            `All Employers: ${Object.keys(Player.jobs).join(", ")}<br><br>` +
             'Money: $' + formatNumber(Player.money.toNumber(), 2) + '<br><br><br>' +
             '<b>Stats</b><br><br>' +
             'Hacking Level: ' + (Player.hacking_skill).toLocaleString() +
@@ -931,6 +972,20 @@ const Engine = {
             Player.bladeburner.storeCycles(numCycles);
         }
 
+        // Sleeves
+        for (let i = 0; i < Player.sleeves.length; ++i) {
+            if (Player.sleeves[i] instanceof Sleeve) {
+                const expForOtherSleeves = Player.sleeves[i].process(Player, numCycles);
+
+                // This sleeve earns experience for other sleeves
+                if (expForOtherSleeves == null) { continue; }
+                for (let j = 0; j < Player.sleeves.length; ++j) {
+                    if (j === i) { continue; }
+                    Player.sleeves[j].gainExperience(Player, expForOtherSleeves, numCycles, true);
+                }
+            }
+        }
+
         //Counters
         Engine.decrementAllCounters(numCycles);
         Engine.checkCounters();
@@ -1011,6 +1066,8 @@ const Engine = {
                 updateHacknetNodesContent();
             } else if (routing.isOn(Page.CreateProgram)) {
                 displayCreateProgramContent();
+            } else if (routing.isOn(Page.Sleeves)) {
+                updateSleevesPage();
             }
 
             if (logBoxOpened) {
@@ -1230,8 +1287,7 @@ const Engine = {
             }
             initLiterature();
             initSingularitySFFlags();
-
-            console.log(Player.intelligence_exp);
+            updateSourceFileFlags(Player);
 
             //Calculate the number of cycles have elapsed while offline
             Engine._lastUpdate = new Date().getTime();
@@ -1283,6 +1339,20 @@ const Engine = {
                 Player.bladeburner.storeCycles(numCyclesOffline);
             }
 
+            // Sleeves offline progress
+            for (let i = 0; i < Player.sleeves.length; ++i) {
+                if (Player.sleeves[i] instanceof Sleeve) {
+                    const expForOtherSleeves = Player.sleeves[i].process(Player, numCyclesOffline);
+
+                    // This sleeve earns experience for other sleeves
+                    if (expForOtherSleeves == null) { continue; }
+                    for (let j = 0; j < Player.sleeves.length; ++j) {
+                        if (j === i) { continue; }
+                        Player.sleeves[j].gainExperience(Player, expForOtherSleeves, numCyclesOffline, true);
+                    }
+                }
+            }
+
             //Update total playtime
             var time = numCyclesOffline * Engine._idleSpeed;
             if (Player.totalPlaytime == null) {Player.totalPlaytime = 0;}
@@ -1305,7 +1375,7 @@ const Engine = {
             else {factions.style.display = "none";}
             if (Player.firstAugPurchased) {visibleMenuTabs.push(augmentations);}
             else {augmentations.style.display = "none";}
-            if (Player.companyPosition !== "") {visibleMenuTabs.push(job);}
+            if (Player.companyName !== "") {visibleMenuTabs.push(job);}
             else {job.style.display = "none";}
             if (Player.firstTimeTraveled) {visibleMenuTabs.push(travel);}
             else {travel.style.display = "none";}
@@ -1505,6 +1575,15 @@ const Engine = {
         Engine.Clickables.tutorialBackButton.addEventListener("click", function() {
             Engine.displayTutorialContent();
         });
+
+        // Initialize references to main menu links
+        if (!initializeMainMenuLinks()) {
+            const errorMsg = "Failed to initialize Main Menu Links. Please try refreshing the page. " +
+                             "If that doesn't work, report the issue to the developer";
+            exceptionAlert(new Error(errorMsg));
+            console.error(errorMsg);
+            return;
+        }
     },
 
     /* Initialization */
@@ -1514,222 +1593,107 @@ const Engine = {
             saveObject.importGame();
         };
 
-        //Main menu accordions
-        var hackingHdr      = document.getElementById("hacking-menu-header");
-        var characterHdr    = document.getElementById("character-menu-header");
-        var worldHdr        = document.getElementById("world-menu-header");
-        var helpHdr         = document.getElementById("help-menu-header");
-
-        hackingHdr.onclick = function() {
-            var terminal            = document.getElementById("terminal-tab");
-            var terminalLink        = document.getElementById("terminal-menu-link");
-            var createScript        = document.getElementById("create-script-tab");
-            var createScriptLink    = document.getElementById("create-script-menu-link");
-            var activeScripts       = document.getElementById("active-scripts-tab");
-            var activeScriptsLink   = document.getElementById("active-scripts-menu-link");
-            var createProgram       = document.getElementById("create-program-tab");
-            var createProgramLink   = document.getElementById("create-program-menu-link");
-            var createProgramNot    = document.getElementById("create-program-notification");
-            this.classList.toggle("opened");
-            if (terminal.style.maxHeight) {
-                Engine.toggleMainMenuHeader(false,
-                    [terminal, createScript, activeScripts, createProgram],
-                    [terminalLink, createScriptLink, activeScriptsLink, createProgramLink]
-                );
-
-                createProgramNot.style.display = "none";
-            } else {
-                Engine.toggleMainMenuHeader(true,
-                    [terminal, createScript, activeScripts, createProgram],
-                    [terminalLink, createScriptLink, activeScriptsLink, createProgramLink]
-                );
-
-                createProgramNot.style.display = "block"
-            }
+        // Initialize Main Menu Headers (this must be done after initializing the links)
+        if (!initializeMainMenuHeaders(Player, process.env.NODE_ENV === "development")) {
+            const errorMsg = "Failed to initialize Main Menu Headers. Please try refreshing the page. " +
+                             "If that doesn't work, report the issue to the developer";
+            exceptionAlert(new Error(errorMsg));
+            console.error(errorMsg);
+            return;
         }
 
-        characterHdr.onclick = function() {
-            var stats               = document.getElementById("stats-tab");
-            var statsLink           = document.getElementById("stats-menu-link");
-            var factions            = document.getElementById("factions-tab");
-            var factionsLink        = document.getElementById("factions-menu-link");
-            var augmentations       = document.getElementById("augmentations-tab");
-            var augmentationsLink   = document.getElementById("augmentations-menu-link");
-            var hacknetnodes        = document.getElementById("hacknet-nodes-tab");
-            var hacknetnodesLink    = document.getElementById("hacknet-nodes-menu-link");
-            this.classList.toggle("opened");
-            if (stats.style.maxHeight) {
-                Engine.toggleMainMenuHeader(false,
-                    [stats, factions, augmentations, hacknetnodes],
-                    [statsLink, factionsLink, augmentationsLink, hacknetnodesLink]
-                );
-            } else {
-                Engine.toggleMainMenuHeader(true,
-                    [stats, factions, augmentations, hacknetnodes],
-                    [statsLink, factionsLink, augmentationsLink, hacknetnodesLink]
-                );
-            }
-        }
-
-        worldHdr.onclick = function() {
-            var city                = document.getElementById("city-tab");
-            var cityLink            = document.getElementById("city-menu-link");
-            var travel              = document.getElementById("travel-tab");
-            var travelLink          = document.getElementById("travel-menu-link");
-            var job                 = document.getElementById("job-tab");
-            var jobLink             = document.getElementById("job-menu-link");
-            var stockmarket         = document.getElementById("stock-market-tab");
-            var stockmarketLink     = document.getElementById("stock-market-menu-link");
-            var bladeburner         = document.getElementById("bladeburner-tab");
-            var bladeburnerLink     = document.getElementById("bladeburner-menu-link");
-            var corporation         = document.getElementById("corporation-tab");
-            var corporationLink     = document.getElementById("corporation-menu-link");
-            var gang                = document.getElementById("gang-tab");
-            var gangLink            = document.getElementById("gang-menu-link");
-
-            // Determine whether certain links should show up
-            job.style.display           = Player.companyPosition !== ""             ? "list-item" : "none";
-            stockmarket.style.display   = Player.hasWseAccount                      ? "list-item" : "none";
-            bladeburner.style.display   = Player.bladeburner instanceof Bladeburner ? "list-item" : "none";
-            corporation.style.display   = Player.corporation instanceof Corporation ? "list-item" : "none";
-            gang.style.display          = Player.inGang()                           ? "list-item" : "none";
-
-            this.classList.toggle("opened");
-            if (city.style.maxHeight) {
-                Engine.toggleMainMenuHeader(false,
-                    [city, travel, job, stockmarket, bladeburner, corporation, gang],
-                    [cityLink, travelLink, jobLink, stockmarketLink, bladeburnerLink, corporationLink, gangLink]
-                );
-            } else {
-                Engine.toggleMainMenuHeader(true,
-                    [city, travel, job, stockmarket, bladeburner, corporation, gang],
-                    [cityLink, travelLink, jobLink, stockmarketLink, bladeburnerLink, corporationLink, gangLink]
-                );
-            }
-        }
-
-        helpHdr.onclick = function() {
-            var tutorial        = document.getElementById("tutorial-tab");
-            var tutorialLink    = document.getElementById("tutorial-menu-link");
-            var options         = document.getElementById("options-tab");
-            var optionsLink     = document.getElementById("options-menu-link");
-            this.classList.toggle("opened");
-            const elems = [tutorial, options];
-            const links = [tutorialLink, optionsLink];
-            if (process.env.NODE_ENV === "development") {
-                elems.push(document.getElementById("dev-tab"));
-                links.push(document.getElementById("dev-menu-link"));
-            }
-            if (tutorial.style.maxHeight) {
-                Engine.toggleMainMenuHeader(false, elems, links);
-            } else {
-                Engine.toggleMainMenuHeader(true, elems, links);
-            }
-        }
-
-        //Main menu buttons and content
-        Engine.Clickables.terminalMainMenuButton = clearEventListeners("terminal-menu-link");
-        Engine.Clickables.terminalMainMenuButton.addEventListener("click", function() {
+        MainMenuLinks.Terminal.addEventListener("click", function() {
             Engine.loadTerminalContent();
             return false;
         });
 
-        Engine.Clickables.characterMainMenuButton = clearEventListeners("stats-menu-link");
-        Engine.Clickables.characterMainMenuButton.addEventListener("click", function() {
-            Engine.loadCharacterContent();
-            return false;
-        });
-
-        Engine.Clickables.scriptEditorMainMenuButton = clearEventListeners("create-script-menu-link");
-        Engine.Clickables.scriptEditorMainMenuButton.addEventListener("click", function() {
+        MainMenuLinks.ScriptEditor.addEventListener("click", function() {
             Engine.loadScriptEditorContent();
             return false;
         });
 
-        Engine.Clickables.activeScriptsMainMenuButton = clearEventListeners("active-scripts-menu-link");
-        Engine.Clickables.activeScriptsMainMenuButton.addEventListener("click", function() {
+        MainMenuLinks.ActiveScripts.addEventListener("click", function() {
             Engine.loadActiveScriptsContent();
             return false;
         });
 
-        Engine.Clickables.hacknetNodesMainMenuButton = clearEventListeners("hacknet-nodes-menu-link");
-        Engine.Clickables.hacknetNodesMainMenuButton.addEventListener("click", function() {
-            Engine.loadHacknetNodesContent();
-            return false;
-        });
-
-        Engine.Clickables.worldMainMenuButton = clearEventListeners("city-menu-link");
-        Engine.Clickables.worldMainMenuButton.addEventListener("click", function() {
-            Engine.loadWorldContent();
-            return false;
-        });
-
-        Engine.Clickables.travelMainMenuButton = clearEventListeners("travel-menu-link");
-        Engine.Clickables.travelMainMenuButton.addEventListener("click", function() {
-            Engine.loadTravelContent();
-            Engine.Clickables.travelMainMenuButton.classList.add("active");
-            return false;
-        });
-
-        Engine.Clickables.jobMainMenuButton = clearEventListeners("job-menu-link");
-        Engine.Clickables.jobMainMenuButton.addEventListener("click", function() {
-            Engine.loadJobContent();
-            return false;
-        });
-
-        Engine.Clickables.stockmarketMainMenuButton = clearEventListeners("stock-market-menu-link");
-        Engine.Clickables.stockmarketMainMenuButton.addEventListener("click", function() {
-            Engine.loadStockMarketContent();
-            Engine.Clickables.stockmarketMainMenuButton.classList.add("active");
-            return false;
-        });
-
-
-        Engine.Clickables.createProgramMainMenuButton = clearEventListeners("create-program-menu-link");
-        Engine.Clickables.createProgramMainMenuButton.addEventListener("click", function() {
+        MainMenuLinks.CreateProgram.addEventListener("click", function() {
             Engine.loadCreateProgramContent();
             return false;
         });
 
-        Engine.Clickables.factionsMainMenuButton = clearEventListeners("factions-menu-link");
-        Engine.Clickables.factionsMainMenuButton.addEventListener("click", function() {
+        MainMenuLinks.Stats.addEventListener("click", function() {
+            Engine.loadCharacterContent();
+            return false;
+        });
+
+        MainMenuLinks.Factions.addEventListener("click", function() {
             Engine.loadFactionsContent();
             return false;
         });
 
-        Engine.Clickables.augmentationsMainMenuButton = clearEventListeners("augmentations-menu-link");
-        Engine.Clickables.augmentationsMainMenuButton.addEventListener("click", function() {
+        MainMenuLinks.Augmentations.addEventListener("click", function() {
             Engine.loadAugmentationsContent();
             return false;
         });
 
-        Engine.Clickables.tutorialMainMenuButton = clearEventListeners("tutorial-menu-link");
-        Engine.Clickables.tutorialMainMenuButton.addEventListener("click", function() {
-            Engine.loadTutorialContent();
+        MainMenuLinks.HacknetNodes.addEventListener("click", function() {
+            Engine.loadHacknetNodesContent();
             return false;
         });
 
-        Engine.Clickables.bladeburnerMenuButton = clearEventListeners("bladeburner-menu-link");
-        Engine.Clickables.bladeburnerMenuButton.addEventListener("click", function() {
+        MainMenuLinks.Sleeves.addEventListener("click", function() {
+            Engine.loadSleevesContent();
+            MainMenuLinks.Sleeves.classList.add("active");
+            return false;
+        });
+
+        MainMenuLinks.City.addEventListener("click", function() {
+            Engine.loadWorldContent();
+            return false;
+        });
+
+        MainMenuLinks.Travel.addEventListener("click", function() {
+            Engine.loadTravelContent();
+            MainMenuLinks.Travel.classList.add("active");
+            return false;
+        });
+
+        MainMenuLinks.Job.addEventListener("click", function() {
+            Engine.loadJobContent();
+            MainMenuLinks.Job.classList.add("active");
+            return false;
+        });
+
+        MainMenuLinks.StockMarket.addEventListener("click", function() {
+            Engine.loadStockMarketContent();
+            MainMenuLinks.StockMarket.classList.add("active");
+            return false;
+        });
+
+        MainMenuLinks.Bladeburner.addEventListener("click", function() {
             Engine.loadBladeburnerContent();
             return false;
         });
-        Engine.Clickables.corporationMenuButton = clearEventListeners("corporation-menu-link");
-        Engine.Clickables.corporationMenuButton.addEventListener("click", function() {
+
+        MainMenuLinks.Corporation.addEventListener("click", function() {
             Engine.loadCorporationContent();
-            Engine.Clickables.corporationMenuButton.classList.add("active");
+            MainMenuLinks.Corporation.classList.add("active");
             return false;
         });
-        Engine.Clickables.gangMenuButton = clearEventListeners("gang-menu-link");
-        Engine.Clickables.gangMenuButton.addEventListener("click", function() {
+
+        MainMenuLinks.Gang.addEventListener("click", function() {
             Engine.loadGangContent();
             return false;
         });
 
+        MainMenuLinks.Tutorial.addEventListener("click", function() {
+            Engine.loadTutorialContent();
+            return false;
+        });
 
-        Engine.Clickables.devMainMenuButton = clearEventListeners("dev-menu-link");
-        Engine.Clickables.devMainMenuButton.addEventListener("click", function() {
-            if( process.env.NODE_ENV === "development") {
+        MainMenuLinks.DevMenu.addEventListener("click", function() {
+            if (process.env.NODE_ENV === "development") {
                 Engine.loadDevMenuContent();
             }
             return false;

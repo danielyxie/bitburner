@@ -1,7 +1,9 @@
 import {deleteActiveScriptsItem}                from "./ActiveScriptsUI";
-import {Augmentations, augmentationExists,
-        initAugmentations, AugmentationNames}   from "./Augmentations";
-import {initBitNodeMultipliers}                 from "./BitNode";
+import { Augmentations }                        from "./Augmentation/Augmentations";
+import { augmentationExists,
+         initAugmentations }                    from "./Augmentation/AugmentationHelpers";
+import { AugmentationNames }                    from "./Augmentation/data/AugmentationNames";
+import { initBitNodeMultipliers }               from "./BitNode/BitNode";
 import {Bladeburner}                            from "./Bladeburner";
 import {writeCinematicText}                     from "./CinematicText";
 import {Companies, initCompanies}               from "./Company/Companies";
@@ -24,12 +26,13 @@ import {AllServers, AddToAllServers,
         initForeignServers, Server,
         prestigeAllServers,
         prestigeHomeComputer}                   from "./Server";
+import { updateSourceFileFlags }                from "./SourceFile/SourceFileFlags";
 import {SpecialServerIps, SpecialServerIpsMap,
         prestigeSpecialServerIps,
         SpecialServerNames}                     from "./SpecialServerIps";
 import {initStockMarket, initSymbolToStockMap,
         stockMarketContentCreated,
-        setStockMarketContentCreated}           from "./StockMarket";
+        setStockMarketContentCreated}           from "./StockMarket/StockMarket";
 import {Terminal, postNetburnerText}            from "./Terminal";
 import Decimal                                  from "decimal.js";
 import {dialogBoxCreate}                        from "../utils/DialogBox";
@@ -169,6 +172,7 @@ function prestigeAugmentation() {
 //Prestige by destroying Bit Node and gaining a Source File
 function prestigeSourceFile() {
     initBitNodeMultipliers();
+    updateSourceFileFlags(Player);
 
     Player.prestigeSourceFile();
     prestigeWorkerScripts(); //Delete all Worker Scripts objects
@@ -305,6 +309,11 @@ function prestigeSourceFile() {
     if (Player.bitNodeN === 8 || hasWallStreetSF) {
         Player.hasWseAccount = true;
         Player.hasTixApiAccess = true;
+    }
+
+    // Bit Node 10: Digital Carbon
+    if (Player.bitNodeN === 10) {
+        dialogBoxCreate("Visit VitaLife in New Tokyo if you'd like to purchase a new sleeve!");
     }
 
     //Reset Stock market, gang, and corporation

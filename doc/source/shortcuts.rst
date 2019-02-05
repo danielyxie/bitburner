@@ -18,7 +18,7 @@ These shortcuts are almost always available. Exceptions include:
 ========== ===========================================================================
 Shortcut   Action
 ========== ===========================================================================
-Alt + t    Switch to :doc:`terminal`
+Alt + t    Switch to :ref:`terminal`
 Alt + c    Switch to 'Stats' page
 Alt + e    Switch to Script Editor. Will open up the last-edited file or a new file
 Alt + s    Switch to 'Active Scripts' page
@@ -35,24 +35,11 @@ Alt + o    Switch to 'Options' page
 
 Script Editor
 -------------
-These shortcuts are available only in the Script Editor
-
-============= ===========================================================================
-Shortcut      Action
-============= ===========================================================================
-Ctrl + b      Save script and return to :doc:`terminal`
-Ctrl + space  Function autocompletion
-============= ===========================================================================
-
-In the Script Editor you can configure your key binding mode to three preset options:
-
-* `Ace <https://github.com/ajaxorg/ace/wiki/Default-Keyboard-Shortcuts>`_
-* Vim
-* Emacs
+See the :ref:`Script Editor <scripteditors>` documentation for more details.
 
 Terminal Shortcuts
 ------------------
-These shortcuts are available only in the :doc:`terminal`
+These shortcuts are available only in the :ref:`terminal`
 
 ============= ===========================================================================
 Shortcut      Action
@@ -66,7 +53,7 @@ Tab           Autocomplete command
 Terminal Bash Shortcuts
 -----------------------
 These shortcuts were implemented to better emulate a bash shell. They must be enabled
-in your :doc:`terminal`'s *.fconf* file. This can be done be entering the Terminal command::
+in your :ref:`terminal`'s *.fconf* file. This can be done be entering the Terminal command::
 
     nano .fconf
 
@@ -92,10 +79,13 @@ Alt + f       Move cursor to next word
 Ctrl + h/d    Delete previous character ('Backspace')
 ============= ===========================================================================
 
-Misc Shortcuts
---------------
+Popup/Dialog Box Shortcuts
+--------------------------
+The following shortcuts work if there are any popup or dialog boxes on the screen.
+
 ============= ===========================================================================
 Shortcut      Action
 ============= ===========================================================================
-Esc           Close a script's log window
+Esc           Close the current popup, cancelling any prompts on a dialog box
+Enter         Clicks the "Yes/Confirm" option for every dialog box
 ============= ===========================================================================

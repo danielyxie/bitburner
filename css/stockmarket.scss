@@ -1,0 +1,66 @@
+@import "theme";
+
+#stock-market-container {
+    position: fixed;
+    padding: 6px;
+
+    p {
+        font-size: $defaultFontSize * 0.8125;
+    }
+    a {
+        font-size: $defaultFontSize * 0.875;
+    }
+    h2 {
+        margin-top: 10px;
+        margin-left: 10px;
+        display: block;
+    }
+}
+
+#stock-market-list li {
+    button {
+        font-size: $defaultFontSize;
+    }
+}
+
+#stock-market-container p {
+    padding: 6px;
+    margin: 6px;
+    width: 70%;
+}
+
+#stock-market-container a {
+    margin: 10px;
+}
+
+#stock-market-watchlist-filter {
+    width: 50%;
+    margin-left: 10px;
+}
+
+.stock-market-input {
+    display: inline-block;
+    padding: 4px;
+    margin: 2px;
+    background-color: #000;
+    border: 1px solid #fff;
+    color: var(--my-font-color);
+}
+
+.stock-market-position-text {
+    color: #fff;
+    display: inline-block;
+}
+
+.stock-market-order-list {
+    overflow-y: auto;
+    max-height: 100px;
+}
+
+.stock-market-order-cancel-btn {
+    background-color: #000;
+    border: 1px solid #fff;
+    color: var(--my-font-color);
+    margin: 2px;
+    padding: 0;
+}

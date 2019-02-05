@@ -1,10 +1,11 @@
-import {BitNodes}                               from "./BitNode";
-import {Engine}                                 from "./engine";
-import {Player}                                 from "./Player";
-import {prestigeSourceFile}                     from "./Prestige";
-import {SourceFiles, SourceFile,
-        PlayerOwnedSourceFile}                  from "./SourceFile";
-import {Terminal}                               from "./Terminal";
+import { BitNodes }                             from "./BitNode/BitNode";
+import { Engine }                               from "./engine";
+import { Player }                               from "./Player";
+import { prestigeSourceFile }                   from "./Prestige";
+import { SourceFiles,
+         SourceFile }                           from "./SourceFile";
+import { PlayerOwnedSourceFile }                from "./SourceFile/PlayerOwnedSourceFile";
+import { Terminal }                             from "./Terminal";
 
 import {clearEventListeners}                    from "../utils/uiHelpers/clearEventListeners";
 import {dialogBoxCreate}                        from "../utils/DialogBox";
@@ -56,7 +57,7 @@ function hackWorldDaemon(currentNodeNumber, flume=false) {
     // Clear Red Pill screen first
     var container = document.getElementById("red-pill-content");
     removeChildrenFromElement(container);
-    
+
     redPillFlag = true;
     Engine.loadRedPillContent();
     return writeRedPillLine("[ERROR] SEMPOOL INVALID").then(function() {
@@ -212,7 +213,8 @@ function loadBitVerse(destroyedBitNodeNum, flume=false) {
             var elem = clearEventListeners(elemId);
             if (elem == null) {return;}
             if (i === 1 || i === 2 || i === 3 || i === 4 || i === 5 ||
-                i === 6 || i === 7 || i === 8 || i === 11 || i === 12) {
+                i === 6 || i === 7 || i === 8 || i === 10 || i === 11 ||
+                i === 12) {
                 elem.addEventListener("click", function() {
                     var bitNodeKey = "BitNode" + i;
                     var bitNode = BitNodes[bitNodeKey];
