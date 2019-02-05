@@ -156,7 +156,6 @@ $(document).keydown(function(event) {
         if (!(Player.bladeburner instanceof Bladeburner)) {return;}
         let consoleHistory = Player.bladeburner.consoleHistory;
 
-        //NOTE: Keycodes imported from Terminal.js
         if (event.keyCode === KEY.ENTER) {
             event.preventDefault();
             var command = DomElems.consoleInput.value;
@@ -2862,12 +2861,23 @@ Bladeburner.prototype.parseCommandArguments = function(command) {
     //Returns an array with command and its arguments in each index.
     //e.g. skill "blade's intuition" foo returns [skill, blade's intuition, foo]
     //The input to this fn will be trimmed and will have all whitespace replaced w/ a single space
-    var args = [];
-    var start = 0, i = 0;
+    const args = [];
+    let start = 0, i = 0;
     while (i < command.length) {
-        var c = command.charAt(i);
-        if (c === '"') {
-            var endQuote = command.indexOf('"', i+1);
+        const c = command.charAt(i);
+        if (c === '"') { // Double quotes
+            const endQuote = command.indexOf('"', i+1);
+            if (endQuote !== -1 && (endQuote === command.length-1 || command.charAt(endQuote+1) === " ")) {
+                args.push(command.substr(i+1, (endQuote - i - 1)));
+                if (endQuote === command.length-1) {
+                    start = i = endQuote+1;
+                } else {
+                    start = i = endQuote+2; //Skip the space
+                }
+                continue;
+            }
+        } else if (c === "'") { // Single quotes, same thing as above
+            const endQuote = command.indexOf("'", i+1);
             if (endQuote !== -1 && (endQuote === command.length-1 || command.charAt(endQuote+1) === " ")) {
                 args.push(command.substr(i+1, (endQuote - i - 1)));
                 if (endQuote === command.length-1) {
@@ -2884,7 +2894,7 @@ Bladeburner.prototype.parseCommandArguments = function(command) {
         ++i;
     }
     if (start !== i) {args.push(command.substr(start, i-start));}
-    console.log("Bladeburner.parseCommandArguments returned: " + args);
+    console.log("Bladeburner console command parsing returned: " + args);
     return args;
 }
 

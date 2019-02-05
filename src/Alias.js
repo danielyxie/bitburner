@@ -90,7 +90,10 @@ function removeAlias(name) {
 //Aliases only applied to "whole words", one level deep
 function substituteAliases(origCommand) {
     var commandArray = origCommand.split(" ");
-    if (commandArray.length>0){
+    if (commandArray.length > 0){
+        // For the unalias command, dont substite
+        if (commandArray[0] === "unalias") { return commandArray.join(" "); }
+
         var alias = getAlias(commandArray[0]);
         if (alias != null) {
             commandArray[0] = alias;

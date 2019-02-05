@@ -8,12 +8,16 @@ export function post(input: string) {
     postContent(input);
 }
 
+export function postError(input: string) {
+    postContent(`ERROR: ${input}`, { color: "#ff2929" });
+}
+
 /**
  * Adds some output to the terminal with an identifier of "hack-progress-bar"
  * @param input Text or HTML to output to the terminal
  */
 export function hackProgressBarPost(input: string) {
-    postContent(input, "hack-progress-bar");
+    postContent(input, { id: "hack-progress-bar" });
 }
 
 /**
@@ -21,14 +25,19 @@ export function hackProgressBarPost(input: string) {
  * @param input Text or HTML to output to the terminal
  */
 export function hackProgressPost(input: string) {
-    postContent(input, "hack-progress");
+    postContent(input, { id: "hack-progress" });
 }
 
-function postContent(input: string, id?: string) {
+interface IPostContentConfig {
+    id?: string;    // Replaces class, if specified
+    color?: string; // Additional class for terminal-line. Does NOT replace
+}
+
+function postContent(input: string, config: IPostContentConfig = {}) {
     // tslint:disable-next-line:max-line-length
-    const style: string = `color: var(--my-font-color); background-color:var(--my-background-color);${id === undefined ? " white-space:pre-wrap;" : ""}`;
+    const style: string = `color: ${config.color != null ? config.color : "var(--my-font-color)"}; background-color:var(--my-background-color);${config.id === undefined ? " white-space:pre-wrap;" : ""}`;
     // tslint:disable-next-line:max-line-length
-    const content: string = `<tr class="posted"><td ${id === undefined ? 'class="terminal-line"' : `id="${id}"`} style="${style}">${input}</td></tr>`;
+    const content: string = `<tr class="posted"><td ${config.id === undefined ? `class="terminal-line"` : `id="${config.id}"`} style="${style}">${input}</td></tr>`;
     const inputElement: HTMLElement = getElementById("terminal-input");
     inputElement.insertAdjacentHTML("beforebegin", content);
     scrollTerminalToBottom();
