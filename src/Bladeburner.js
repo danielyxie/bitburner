@@ -3434,12 +3434,12 @@ Bladeburner.prototype.startActionNetscriptFn = function(type, name, workerScript
     try {
         this.startAction(actionId);
         if (workerScript.shouldLog("startAction")) {
-            workerScript.scriptRef.log("Starting bladeburner action with type " + type + " and name " + name);
+            workerScript.log("Starting bladeburner action with type " + type + " and name " + name);
         }
         return true;
     } catch(e) {
         this.resetAction();
-        workerScript.scriptRef.log("ERROR: bladeburner.startAction() failed to start action of type " + type + " due to invalid name: " + name +
+        workerScript.log("ERROR: bladeburner.startAction() failed to start action of type " + type + " due to invalid name: " + name +
                                    "Note that this name is case-sensitive and whitespace-sensitive");
         return false;
     }

@@ -28,8 +28,8 @@ const walk  = require("acorn/dist/walk");
 function WorkerScript(runningScriptObj) {
 	this.name 			= runningScriptObj.filename;
 	this.running 		= false;
-	this.serverIp 		= null;
-	this.code 			= runningScriptObj.scriptRef.code;
+	this.serverIp 		= runningScriptObj.server;
+	this.code 			= runningScriptObj.getCode();
 	this.env 			= new Environment(this);
     this.env.set("args", runningScriptObj.args.slice());
 	this.output			= "";
@@ -588,7 +588,7 @@ function addWorkerScript(runningScriptObj, server) {
     } else {
         runningScriptObj.threads = 1;
     }
-    var ramUsage = roundToTwo(runningScriptObj.scriptRef.ramUsage * threads);
+    var ramUsage = roundToTwo(runningScriptObj.getRamUsage() * threads);
     var ramAvailable = server.maxRam - server.ramUsed;
     if (ramUsage > ramAvailable) {
         dialogBoxCreate("Not enough RAM to run script " + runningScriptObj.filename + " with args " +
@@ -601,7 +601,6 @@ function addWorkerScript(runningScriptObj, server) {
 
 	//Create the WorkerScript
 	var s = new WorkerScript(runningScriptObj);
-	s.serverIp 	= server.ip;
 	s.ramUsage 	= ramUsage;
 
 	//Add the WorkerScript to the Active Scripts list

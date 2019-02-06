@@ -521,6 +521,7 @@ export let CONSTANTS: IMap<any> = {
     * Corporation "Smart Factories" and "Smart Storage" upgrades have slightly lower price multipliers
     * Added 6 new Coding Contract problems
     * Updated documentation with list of all Coding Contract problems
+    * Implemented several optimizations for active scripts. The game should now use less memory and the savefile should be slightly smaller when there are many scripts running
     * Bug Fix: A Stock Forecast should no longer go above 1 (i.e. 100%)
     `
 

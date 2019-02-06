@@ -166,7 +166,7 @@ function addActiveScriptsItem(workerscript) {
             margin: "4px",
             padding: "4px",
             clickListener: () => {
-                killWorkerScript(workerscript.scriptRef, workerscript.scriptRef.scriptRef.server);
+                killWorkerScript(workerscript.scriptRef, workerscript.scriptRef.server);
                 dialogBoxCreate("Killing script, may take a few minutes to complete...");
                 return false;
             }

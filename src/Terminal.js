@@ -26,8 +26,9 @@ import {showMessage, Message}               from "./Message";
 import {killWorkerScript, addWorkerScript}  from "./NetscriptWorker";
 import {Player}                             from "./Player";
 import {hackWorldDaemon}                    from "./RedPill";
-import {findRunningScript, RunningScript,
-        AllServersMap, isScriptFilename}    from "./Script";
+import { findRunningScript,
+         RunningScript,
+         isScriptFilename }                 from "./Script";
 import {AllServers, GetServerByHostname,
         getServer, Server}                  from "./Server";
 import {Settings}                           from "./Settings/Settings";
@@ -779,7 +780,7 @@ let Terminal = {
 		}
         Terminal.analyzeFlag = false;
 
-        //Rename the progress bar so that the next hacks dont trigger it. Re-enable terminal
+        // Rename the progress bar so that the next hacks dont trigger it. Re-enable terminal
         $("#hack-progress-bar").attr('id', "old-hack-progress-bar");
         $("#hack-progress").attr('id', "old-hack-progress");
         Terminal.resetTerminalInput();
@@ -804,7 +805,7 @@ let Terminal = {
         commands = commands.split(";");
         for (let i = 0; i < commands.length; i++) {
             if(commands[i].match(/^\s*$/)) { continue; } // Don't run commands that only have whitespace
-            Terminal.executeCommand(commands[i]);
+            Terminal.executeCommand(commands[i].trim());
         }
     },
 
@@ -1538,7 +1539,7 @@ let Terminal = {
 					let spacesThread = Array(numSpacesThread+1).join(" ");
 
 					//Calculate and transform RAM usage
-					let ramUsage = numeralWrapper.format(script.scriptRef.ramUsage * script.threads, '0.00') + " GB";
+					let ramUsage = numeralWrapper.format(script.getRamUsage() * script.threads, '0.00') + " GB";
 
 					var entry = [script.filename, spacesScript, script.threads, spacesThread, ramUsage];
 					post(entry.join(""));
@@ -1823,11 +1824,15 @@ let Terminal = {
     },
 
     executeScanAnalyzeCommand: function(depth=1, all=false) {
-        //We'll use the AllServersMap as a visited() array
         //TODO Using array as stack for now, can make more efficient
         post("~~~~~~~~~~ Beginning scan-analyze ~~~~~~~~~~");
         post(" ");
-        var visited = new AllServersMap();
+
+        // Map of all servers to keep track of which have been visited
+        var visited = {};
+        for (const ip in AllServers) {
+            visited[ip] = 0;
+        }
 
         var stack = [];
         var depthQueue = [0];

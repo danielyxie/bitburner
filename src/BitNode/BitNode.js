@@ -364,6 +364,11 @@ function initBitNodeMultipliers() {
             var inc = Math.pow(1.02, sf12Lvl);
             var dec = 1/inc;
             BitNodeMultipliers.HackingLevelMultiplier = dec;
+            BitNodeMultipliers.StrengthLevelMultiplier = dec;
+            BitNodeMultipliers.DefenseLevelMultiplier = dec;
+            BitNodeMultipliers.DexterityLevelMultiplier = dec;
+            BitNodeMultipliers.AgilityLevelMultiplier = dec;
+            BitNodeMultipliers.CharismaLevelMultiplier = dec;
 
             BitNodeMultipliers.ServerMaxMoney         = dec;
             BitNodeMultipliers.ServerStartingMoney    = dec;
@@ -372,6 +377,10 @@ function initBitNodeMultipliers() {
 
             //Does not scale, otherwise security might start at 300+
             BitNodeMultipliers.ServerStartingSecurity = 1.5;
+
+            BitNodeMultipliers.PurchasedServerCost      = inc;
+            BitNodeMultipliers.PurchasedServerLimit     = dec;
+            BitNodeMultipliers.PurchasedServerMaxRam    = dec;
 
             BitNodeMultipliers.ManualHackMoney  = dec;
             BitNodeMultipliers.ScriptHackMoney  = dec;

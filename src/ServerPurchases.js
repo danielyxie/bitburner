@@ -33,8 +33,10 @@ export function getPurchaseServerLimit() {
 }
 
 export function getPurchaseServerMaxRam() {
-    // TODO ensure this is a power of 2?
-    return Math.round(CONSTANTS.PurchasedServerMaxRam * BitNodeMultipliers.PurchasedServerMaxRam);
+    const ram = Math.round(CONSTANTS.PurchasedServerMaxRam * BitNodeMultipliers.PurchasedServerMaxRam);
+
+    // Round this to the nearest power of 2
+    return 1 << 31 - Math.clz32(ram);
 }
 
 // Manually purchase a server (NOT through Netscript)
