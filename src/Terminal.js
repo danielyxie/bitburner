@@ -60,6 +60,12 @@ function postNetburnerText() {
 	post("Bitburner v" + CONSTANTS.Version);
 }
 
+// Helper function that checks if an argument (which is a string) is a valid number
+function isNumber(str) {
+    if (typeof str != "string") { return false; } // Only process strings
+    return !isNaN(str) && !isNaN(parseFloat(str));
+}
+
 //Defines key commands in terminal
 $(document).keydown(function(event) {
 	//Terminal
@@ -803,12 +809,6 @@ let Terminal = {
     },
 
     parseCommandArguments : function(command) {
-        // Helper function that checks if an argument (which is a string) is a valid number
-        function isNumber(str) {
-            if (typeof str != "string") { return false; } // Only process strings
-            return !isNaN(str) && !isNaN(parseFloat(str));
-        }
-
         // This will be used to keep track of whether we're in a quote. This is for situations
         // like the alias command:
         //      alias run="run NUKE.exe"
@@ -1370,7 +1370,7 @@ let Terminal = {
 				break;
 			case "run":
 				//Run a program or a script
-				if (commandArray.length !== 2) {
+				if (commandArray.length < 2) {
 					postError("Incorrect number of arguments. Usage: run [program/script] [-t] [num threads] [arg1] [arg2]...");
 				} else {
 					var executableName = commandArray[1];
@@ -1382,9 +1382,8 @@ let Terminal = {
                     }
 
 					//Check if its a script or just a program/executable
-					//Dont use isScriptFilename here because `executableName` includes the args too
-                    if (executableName.includes(".script") || executableName.includes(".js") || executableName.includes(".ns")) {
-						Terminal.runScript(executableName);
+                    if (isScriptFilename(executableName)) {
+						Terminal.runScript(commandArray);
                     } else if (executableName.endsWith(".cct")) {
                         Terminal.runContract(executableName);
 					} else {
@@ -2158,59 +2157,31 @@ let Terminal = {
         programHandlers[programName](s, splitArgs);
 	},
 
-	runScript: function(scriptName) {
-		var server = Player.getCurrentServer();
-
-        var numThreads = 1;
-        var args = [];
-        var results = scriptName.split(" ");
-        if (results.length <= 0) {
-            post("This is a bug. Please contact developer");
+	runScript: function(commandArray) {
+        if (commandArray.length < 2) {
+            dialogBoxCreate(`Bug encountered with Terminal.runScript(). Command array has a length of less than 2: ${commandArray}`);
+            return;
         }
-        scriptName = results[0];
-        if (results.length > 1) {
-            if (results.length >= 3 && results[1] == "-t") {
-                numThreads = Math.round(Number(results[2]));
+
+		const server = Player.getCurrentServer();
+
+        let numThreads = 1;
+        const args = [];
+        const scriptName = commandArray[1];
+
+        if (commandArray.length > 2) {
+            if (commandArray.length >= 4 && commandArray[2] == "-t") {
+                numThreads = Math.round(parseFloat(commandArray[3]));
                 if (isNaN(numThreads) || numThreads < 1) {
-                    post("Invalid number of threads specified. Number of threads must be greater than 0");
+                    postError("Invalid number of threads specified. Number of threads must be greater than 0");
                     return;
                 }
-                for (var i = 3; i < results.length; ++i) {
-                    var arg = results[i];
-
-                    //Forced string
-                    if ((arg.startsWith("'") && arg.endsWith("'")) ||
-                        (arg.startsWith('"') && arg.endsWith('"'))) {
-                        args.push(arg.slice(1, -1));
-                        continue;
-                    }
-                    //Number
-                    var tempNum = Number(arg);
-                    if (!isNaN(tempNum)) {
-                        args.push(tempNum);
-                        continue;
-                    }
-                    //Otherwise string
-                    args.push(arg);
+                for (let i = 4; i < commandArray.length; ++i) {
+                    args.push(commandArray[i]);
                 }
             } else {
-                for (var i = 1; i < results.length; ++i) {
-                    var arg = results[i];
-
-                    //Forced string
-                    if ((arg.startsWith("'") && arg.endsWith("'")) ||
-                        (arg.startsWith('"') && arg.endsWith('"'))) {
-                        args.push(arg.slice(1, -1));
-                        continue;
-                    }
-                    //Number
-                    var tempNum = Number(arg);
-                    if (!isNaN(tempNum)) {
-                        args.push(tempNum);
-                        continue;
-                    }
-                    //Otherwise string
-                    args.push(arg);
+                for (let i = 2; i < commandArray.length; ++i) {
+                    args.push(commandArray[i])
                 }
             }
         }

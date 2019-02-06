@@ -511,11 +511,17 @@ export let CONSTANTS: IMap<any> = {
     LatestUpdate:
     `
     v0.43.1
+    * Terminal changes:
+    ** Quoted arguments are now properly parsed. (e.g. run f.script "this is one argument" will be correctly parsed)
+    ** Errors are now shown in red text
+    ** 'unalias' command now has a different format and no longer needs the quotations
+
     * Added two new Bladeburner skills for increasing money and experience gain
     * Made some minor adjustments to Bladeburner UI
     * Corporation "Smart Factories" and "Smart Storage" upgrades have slightly lower price multipliers
     * Added 6 new Coding Contract problems
     * Updated documentation with list of all Coding Contract problems
+    * Bug Fix: A Stock Forecast should no longer go above 1 (i.e. 100%)
     `
 
 }
