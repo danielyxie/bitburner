@@ -1,6 +1,19 @@
 /**
  * Returns the input array as a comma separated string.
+ *
+ * Does several things that Array.toString() doesn't do
+ *  - Adds brackets around the array
+ *  - Adds quotation marks around strings
  */
 export function arrayToString<T>(a: T[]) {
-    return `[${a.join(", ")}]`;
+    const vals: any[] = [];
+    for (let i = 0; i < a.length; ++i) {
+        let elem: any = a[i];
+        if (typeof elem === "string") {
+            elem = `"${elem}"`;
+        }
+        vals.push(elem);
+    }
+    
+    return `[${vals.join(", ")}]`;
 }

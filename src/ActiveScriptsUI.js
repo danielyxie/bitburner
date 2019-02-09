@@ -1,21 +1,22 @@
 import {workerScripts,
-        killWorkerScript}          from "./NetscriptWorker";
-import {Player}                    from "./Player";
-import {getServer}                 from "./Server";
-import {numeralWrapper}            from "./ui/numeralFormat";
-import {dialogBoxCreate}           from "../utils/DialogBox";
-import {createAccordionElement}    from "../utils/uiHelpers/createAccordionElement";
-import {arrayToString}             from "../utils/helpers/arrayToString";
-import {createElement}             from "../utils/uiHelpers/createElement";
-import {createProgressBarText}     from "../utils/helpers/createProgressBarText";
-import {exceptionAlert}            from "../utils/helpers/exceptionAlert";
-import {getElementById}            from "../utils/uiHelpers/getElementById";
-import {logBoxCreate}              from "../utils/LogBox";
-import {formatNumber}              from "../utils/StringHelperFunctions";
-import {removeChildrenFromElement} from "../utils/uiHelpers/removeChildrenFromElement";
-import {removeElement}             from "../utils/uiHelpers/removeElement";
-import {roundToTwo}                from "../utils/helpers/roundToTwo";
-import {Page, routing}             from "./ui/navigationTracking";
+        killWorkerScript}                   from "./NetscriptWorker";
+import {Player}                             from "./Player";
+import {getServer}                          from "./Server";
+import {numeralWrapper}                     from "./ui/numeralFormat";
+import {dialogBoxCreate}                    from "../utils/DialogBox";
+import {createAccordionElement}             from "../utils/uiHelpers/createAccordionElement";
+import {arrayToString}                      from "../utils/helpers/arrayToString";
+import {createElement}                      from "../utils/uiHelpers/createElement";
+import {createProgressBarText}              from "../utils/helpers/createProgressBarText";
+import {exceptionAlert}                     from "../utils/helpers/exceptionAlert";
+import {getElementById}                     from "../utils/uiHelpers/getElementById";
+import {logBoxCreate}                       from "../utils/LogBox";
+import {formatNumber,
+        convertTimeMsToTimeElapsedString }  from "../utils/StringHelperFunctions";
+import {removeChildrenFromElement}          from "../utils/uiHelpers/removeChildrenFromElement";
+import {removeElement}                      from "../utils/uiHelpers/removeElement";
+import {roundToTwo}                         from "../utils/helpers/roundToTwo";
+import {Page, routing}                      from "./ui/navigationTracking";
 
 /* {
  *     serverName: {
@@ -242,9 +243,9 @@ function updateActiveScriptsItems(maxTasks=150) {
         }
     }
 
-    getElementById("active-scripts-total-production-active").innerText = numeralWrapper.format(total, '$0.000a');
-    getElementById("active-scripts-total-prod-aug-total").innerText = numeralWrapper.format(Player.scriptProdSinceLastAug, '$0.000a');
-    getElementById("active-scripts-total-prod-aug-avg").innerText = numeralWrapper.format(Player.scriptProdSinceLastAug / (Player.playtimeSinceLastAug/1000), '$0.000a');
+    getElementById("active-scripts-total-production-active").innerText = numeralWrapper.formatMoney(total);
+    getElementById("active-scripts-total-prod-aug-total").innerText = numeralWrapper.formatMoney(Player.scriptProdSinceLastAug);
+    getElementById("active-scripts-total-prod-aug-avg").innerText = numeralWrapper.formatMoney(Player.scriptProdSinceLastAug / (Player.playtimeSinceLastAug/1000));
     return total;
 }
 
@@ -252,7 +253,7 @@ function updateActiveScriptsItems(maxTasks=150) {
 function updateActiveScriptsItemContent(workerscript) {
     var server = getServer(workerscript.serverIp);
     if (server == null) {
-        console.log("ERROR: Invalid server IP for workerscript.");
+        console.log("ERROR: Invalid server IP for workerscript in updateActiveScriptsItemContent().");
         return;
     }
     let hostname = server.hostname;
@@ -280,7 +281,7 @@ function updateActiveScriptsItemContent(workerscript) {
 function updateActiveScriptsText(workerscript, item, itemName) {
     var server = getServer(workerscript.serverIp);
     if (server == null) {
-        console.log("ERROR: Invalid server IP for workerscript.");
+        console.log("ERROR: Invalid server IP for workerscript for updateActiveScriptsText()");
         return;
     }
     let hostname = server.hostname;
@@ -298,24 +299,27 @@ function updateActiveScriptsText(workerscript, item, itemName) {
 
     removeChildrenFromElement(item);
 
-    //Online
-    var onlineTotalMoneyMade = "Total online production: $" + formatNumber(workerscript.scriptRef.onlineMoneyMade, 2);
-    var onlineTotalExpEarned = (Array(26).join(" ") + formatNumber(workerscript.scriptRef.onlineExpGained, 2) + " hacking exp").replace( / /g, "&nbsp;");
+    var onlineTime = "Online Time: " + convertTimeMsToTimeElapsedString(workerscript.scriptRef.onlineRunningTime * 1e3);
+    var offlineTime = "Offline Time: " + convertTimeMsToTimeElapsedString(workerscript.scriptRef.offlineRunningTime * 1e3);
 
-    var onlineMpsText = "Online production rate: $" + formatNumber(onlineMps, 2) + "/second";
+    //Online
+    var onlineTotalMoneyMade = "Total online production: " + numeralWrapper.formatMoney(workerscript.scriptRef.onlineMoneyMade);
+    var onlineTotalExpEarned = (Array(26).join(" ") + numeralWrapper.formatBigNumber(workerscript.scriptRef.onlineExpGained) + " hacking exp").replace( / /g, "&nbsp;");
+
+    var onlineMpsText = "Online production rate: " + numeralWrapper.formatMoney(onlineMps) + " / second";
     var onlineEps = workerscript.scriptRef.onlineExpGained / workerscript.scriptRef.onlineRunningTime;
-    var onlineEpsText = (Array(25).join(" ") + formatNumber(onlineEps, 4) + " hacking exp/second").replace( / /g, "&nbsp;");
+    var onlineEpsText = (Array(25).join(" ") + numeralWrapper.formatBigNumber(onlineEps) + " hacking exp / second").replace( / /g, "&nbsp;");
 
     //Offline
-    var offlineTotalMoneyMade = "Total offline production: $" + formatNumber(workerscript.scriptRef.offlineMoneyMade, 2);
-    var offlineTotalExpEarned = (Array(27).join(" ") + formatNumber(workerscript.scriptRef.offlineExpGained, 2) + " hacking exp").replace( / /g, "&nbsp;");
+    var offlineTotalMoneyMade = "Total offline production: " + numeralWrapper.formatMoney(workerscript.scriptRef.offlineMoneyMade);
+    var offlineTotalExpEarned = (Array(27).join(" ") + numeralWrapper.formatBigNumber(workerscript.scriptRef.offlineExpGained) + " hacking exp").replace( / /g, "&nbsp;");
 
     var offlineMps = workerscript.scriptRef.offlineMoneyMade / workerscript.scriptRef.offlineRunningTime;
-    var offlineMpsText = "Offline production rate: $" + formatNumber(offlineMps, 2) + "/second";
+    var offlineMpsText = "Offline production rate: " + numeralWrapper.formatMoney(offlineMps) + " / second";
     var offlineEps = workerscript.scriptRef.offlineExpGained / workerscript.scriptRef.offlineRunningTime;
-    var offlineEpsText = (Array(26).join(" ") + formatNumber(offlineEps, 4) +  " hacking exp/second").replace( / /g, "&nbsp;");
+    var offlineEpsText = (Array(26).join(" ") + numeralWrapper.formatBigNumber(offlineEps) +  " hacking exp / second").replace( / /g, "&nbsp;");
 
-    item.innerHTML = onlineTotalMoneyMade + "<br>" + onlineTotalExpEarned + "<br>" +
+    item.innerHTML = onlineTime + "<br>" + offlineTime + "<br>" + onlineTotalMoneyMade + "<br>" + onlineTotalExpEarned + "<br>" +
                      onlineMpsText + "<br>" + onlineEpsText + "<br>" + offlineTotalMoneyMade + "<br>" + offlineTotalExpEarned + "<br>" +
                      offlineMpsText + "<br>" + offlineEpsText + "<br>";
     return onlineMps;

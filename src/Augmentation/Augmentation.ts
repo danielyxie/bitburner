@@ -78,6 +78,9 @@ export class Augmentation {
     // The Player/Person classes
     mults: IMap<number> = {}
 
+    // Initial cost. Doesn't change when you purchase multiple Augmentation
+    startingCost: number = 0;
+
     constructor(params: IConstructorParams={ info: "", moneyCost: 0, name: "", repCost: 0 }) {
         this.name = params.name;
         this.info = params.info;
@@ -85,6 +88,7 @@ export class Augmentation {
 
         this.baseRepRequirement = params.repCost * CONSTANTS.AugmentationRepMultiplier * BitNodeMultipliers.AugmentationRepCost;
         this.baseCost = params.moneyCost * CONSTANTS.AugmentationCostMultiplier * BitNodeMultipliers.AugmentationMoneyCost;
+        this.startingCost = this.baseCost;
 
         this.level = 0;
 

@@ -219,6 +219,8 @@ function startNetscript1Script(workerScript) {
                         let fnPromise = entry.apply(null, fnArgs);
                         fnPromise.then(function(res) {
                             cb(res);
+                        }).catch(function(e) {
+                            // Do nothing?
                         });
                     }
                     int.setProperty(scope, name, int.createAsyncFunction(tempWrapper));
@@ -278,7 +280,7 @@ function startNetscript1Script(workerScript) {
     return new Promise(function(resolve, reject) {
         function runInterpreter() {
             try {
-                if (workerScript.env.stopFlag) {return reject(workerScript);}
+                if (workerScript.env.stopFlag) { return reject(workerScript); }
 
                 if (interpreter.step()) {
                     window.setTimeout(runInterpreter, Settings.CodeInstructionRunTime);
@@ -498,7 +500,7 @@ function runScriptsLoop() {
                 p = startNetscript2Script(workerScripts[i]);
             } else {
                 p = startNetscript1Script(workerScripts[i]);
-                if (!(p instanceof Promise)) {continue;}
+                if (!(p instanceof Promise)) { continue; }
             }
 
 			//Once the code finishes (either resolved or rejected, doesnt matter), set its
@@ -539,7 +541,6 @@ function runScriptsLoop() {
                     }
 					w.running = false;
 					w.env.stopFlag = true;
-
 				} else if (isScriptErrorMessage(w)) {
                     dialogBoxCreate("Script runtime unknown error. This is a bug please contact game developer");
 					console.log("ERROR: Evaluating workerscript returns only error message rather than WorkerScript object. THIS SHOULDN'T HAPPEN: " + w.toString());

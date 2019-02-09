@@ -454,3 +454,48 @@ do not allow cross-origin origin sharing (CORS). This includes websites such
 as gist and pastebin. One notable site it will work on is rawgithub. Example::
 
     $ wget https://raw.githubusercontent.com/danielyxie/bitburner/master/README.md game_readme.txt
+
+Argument Parsing
+----------------
+When evaluating a terminal command, arguments are initially parsed based on whitespace (usually spaces).
+Each whitespace character signifies the end of an argument, and potentially the start
+of new one. For most terminal commands, this is all you need to know.
+
+When running scripts, however, it is important to know in more detail how arguments are parsed.
+There are two main points:
+
+1. Quotation marks can be used to wrap a single argument and force it to be parsed as
+   a string. Any whitespace inside the quotation marks will not cause a new argument
+   to be parsed.
+2. Anything that can represent a number is automatically cast to a number, unless its
+   surrounded by quotation marks.
+
+Here's an example to show how these rules work. Consider the following script `argType.script`::
+
+    tprint("Number of args: " + args.length);
+    for (var i = 0; i < args.length; ++i) {
+        tprint(typeof args[i]);
+    }
+
+Then if we run the following terminal command::
+
+    $ run argType.script 123 1e3 "5" "this is a single argument"
+
+We'll see the following in the Terminal::
+
+    Running script with 1 thread(s) and args: [123, 1000, "5", "this is a single argument"].
+    May take a few seconds to start up the process...
+    argType.script: Number of args: 4
+    argType.script: number
+    argType.script: number
+    argType.script: string
+    argType.script: string
+
+Chaining Commands
+-----------------
+You can run multiple Terminal commands at once by separating each command
+with a semicolon (;).
+
+Example::
+
+    $ run foo.script; tail foo.script

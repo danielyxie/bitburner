@@ -165,7 +165,7 @@ $(document).keydown(function(event) {
 
             const semiColonIndex = input.lastIndexOf(";");
             if(semiColonIndex !== -1) {
-                input = input.slice(semiColonIndex+1);
+                input = input.slice(semiColonIndex + 1);
             }
 
             input = input.trim();
@@ -310,6 +310,14 @@ function tabCompletion(command, arg, allPossibilities, index=0) {
         }
     }
 
+    const textBox = document.getElementById("terminal-input-text-box");
+    if (textBox == null) {
+        console.warn(`Couldn't find terminal input DOM element (id=terminal-input-text-box) when trying to autocomplete`);
+        return;
+    }
+    const oldValue = textBox.value;
+    const semiColonIndex = oldValue.lastIndexOf(";");
+
     var val = "";
     if (allPossibilities.length == 0) {
         return;
@@ -321,10 +329,7 @@ function tabCompletion(command, arg, allPossibilities, index=0) {
             val = command + " " + allPossibilities[0];
         }
 
-        const textBox = document.getElementById("terminal-input-text-box");
-        const oldValue = textBox.value;
-        const semiColonIndex = oldValue.lastIndexOf(";");
-        if(semiColonIndex === -1) {
+        if (semiColonIndex === -1) {
             // no ; replace the whole thing.
             textBox.value = val;
         } else {
@@ -332,7 +337,7 @@ function tabCompletion(command, arg, allPossibilities, index=0) {
             textBox.value = textBox.value.slice(0, semiColonIndex+1)+" "+val;
         }
 
-        document.getElementById("terminal-input-text-box").focus();
+        textBox.focus();
     } else {
         var longestStartSubstr = longestCommonStart(allPossibilities);
         //If the longest common starting substring of remaining possibilities is the same
@@ -348,8 +353,15 @@ function tabCompletion(command, arg, allPossibilities, index=0) {
                 post("> " + command);
                 post(allOptionsStr);
             } else {
-                document.getElementById("terminal-input-text-box").value = longestStartSubstr;
-                document.getElementById("terminal-input-text-box").focus();
+                if (semiColonIndex === -1) {
+                    // No ; just replace the whole thing
+                    textBox.value = longestStartSubstr;
+                } else {
+                    // Multiple commands, so only replace after the last semicolon
+                    textBox.value = textBox.value.slice(0, semiColonIndex + 1) + " " + longestStartSubstr;
+                }
+
+                textBox.focus();
             }
         } else {
             if (longestStartSubstr == arg) {
@@ -357,8 +369,15 @@ function tabCompletion(command, arg, allPossibilities, index=0) {
                 post("> " + command + " " + arg);
                 post(allOptionsStr);
             } else {
-                document.getElementById("terminal-input-text-box").value = command + " " + longestStartSubstr;
-                document.getElementById("terminal-input-text-box").focus();
+                if (semiColonIndex == -1) {
+                    // No ; so just replace the whole thing
+                    textBox.value = command + " " + longestStartSubstr;
+                } else {
+                    // Multiple commands, so only replace after the last semiclon
+                    textBox.value = textBox.value.slice(0, semiColonIndex + 1) + " " + command + " " + longestStartSubstr;
+                }
+
+                textBox.focus();
             }
         }
 

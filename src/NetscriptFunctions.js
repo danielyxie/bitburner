@@ -51,6 +51,7 @@ import {StockMarket, StockSymbols, SymbolToStockMap,
         sellStock, updateStockPlayerPosition,
         shortStock, sellShort, OrderTypes,
         PositionTypes, placeOrder, cancelOrder}     from "./StockMarket/StockMarket";
+import {numeralWrapper}                             from "./ui/numeralFormat";
 import {post}                                       from "./ui/postToTerminal";
 import {TextFile, getTextFile, createTextFile}      from "./TextFile";
 
@@ -75,6 +76,10 @@ import {isString}                                   from "../utils/helpers/isStr
 import {yesNoBoxClose, yesNoBoxGetYesButton,
         yesNoBoxGetNoButton, yesNoBoxCreate,
         yesNoBoxOpen}                               from "../utils/YesNoBox";
+
+import { createElement }                            from "../utils/uiHelpers/createElement";
+import { createPopup }                              from "../utils/uiHelpers/createPopup";
+import { removeElementById }                        from "../utils/uiHelpers/removeElementById";
 
 var hasCorporationSF            = false, //Source-File 3
     hasSingularitySF            = false, //Source-File 4
@@ -2453,6 +2458,14 @@ function NetscriptFunctions(workerScript) {
                 return runningScriptObj.onlineExpGained / runningScriptObj.onlineRunningTime;
             }
         },
+        nFormat : function(n, format) {
+            if (workerScript.checkingRam) { return 0; }
+            if (isNaN(n) || isNaN(parseFloat(n)) || typeof format !== "string") {
+                return "";
+            }
+
+            return numeralWrapper.format(parseFloat(n), format);
+        },
         getTimeSinceLastAug : function() {
             if (workerScript.checkingRam) {
                 return updateStaticRam("getTimeSinceLastAug", CONSTANTS.ScriptGetHackTimeRamCost);
@@ -2467,19 +2480,32 @@ function NetscriptFunctions(workerScript) {
                 return false;
             }
             if (!isString(txt)) {txt = String(txt);}
-            var yesBtn = yesNoBoxGetYesButton(), noBtn = yesNoBoxGetNoButton();
-            yesBtn.innerHTML = "Yes";
-            noBtn.innerHTML = "No";
+
+            // The id for this popup will consist of the first 20 characters of the prompt string..
+            // Thats hopefully good enough to be unique
+            const popupId = `prompt-popup-${txt.slice(0, 20)}`;
+            const textElement = createElement("p", { innerHTML: txt });
+
             return new Promise(function(resolve, reject) {
-                yesBtn.addEventListener("click", ()=>{
-                    yesNoBoxClose();
-                    resolve(true);
+                const yesBtn = createElement("button", {
+                    class: "popup-box-button",
+                    innerText: "Yes",
+                    clickListener: () => {
+                        removeElementById(popupId);
+                        resolve(true);
+                    },
                 });
-                noBtn.addEventListener("click", ()=>{
-                    yesNoBoxClose();
-                    resolve(false);
+
+                const noBtn = createElement("button", {
+                    class: "popup-box-button",
+                    innerText: "No",
+                    clickListener: () => {
+                        removeElementById(popupId);
+                        resolve(false);
+                    },
                 });
-                yesNoBoxCreate(txt);
+
+                createPopup(popupId, [textElement, yesBtn, noBtn]);
             });
         },
         wget : async function(url, target, ip=workerScript.serverIp) {

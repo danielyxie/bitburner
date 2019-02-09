@@ -209,7 +209,19 @@ to specify a namespace for the import::
         //...
     }
 
-Note that exporting functions is not required.
+.. warning:: For those who are experienced with JavaScript, note that the `export`
+             keyword should **NOT** be used in :ref:`netscript1`, as this will break the script.
+             It can, however, be used in :ref:`netscriptjs` (but it's not required).
+
+Importing in NetscriptJS
+^^^^^^^^^^^^^^^^^^^^^^^^
+There is a minor annoyance when using the `import` feature in :ref:`netscriptjs`.
+If you make a change in a NetscriptJS script, then you have to manually "refresh" all other
+scripts that import from that script.
+
+The easiest way to do this is to simply save and then refresh the game. Alternatively,
+you can open up all the scripts that need to be "refreshed" in the script editor
+and then simply re-save them.
 
 Standard, Built-In JavaScript Objects
 -------------------------------------

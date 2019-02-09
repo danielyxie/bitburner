@@ -34,6 +34,9 @@ import {initStockMarket, initSymbolToStockMap,
         stockMarketContentCreated,
         setStockMarketContentCreated}           from "./StockMarket/StockMarket";
 import {Terminal, postNetburnerText}            from "./Terminal";
+
+import {Page, routing}                          from "./ui/navigationTracking";
+
 import Decimal                                  from "decimal.js";
 import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {removeElementById}                      from "../utils/uiHelpers/removeElementById";
@@ -45,6 +48,13 @@ let BitNode8StartingMoney = 250e6;
 
 //Prestige by purchasing augmentation
 function prestigeAugmentation() {
+    // Load Terminal Screen
+    var mainMenu = document.getElementById("mainmenu-container");
+    mainMenu.style.visibility = "visible";
+    Terminal.resetTerminalInput();
+    Engine.loadTerminalContent();
+    routing.navigateTo(Page.Terminal);
+
     initBitNodeMultipliers();
 
     Player.prestigeAugmentation();
@@ -145,12 +155,6 @@ function prestigeAugmentation() {
     }
     var watchlist = document.getElementById("stock-market-watchlist-filter");
     watchlist.value = ""; //Reset watchlist filter
-
-    //Load Terminal Screen
-    var mainMenu = document.getElementById("mainmenu-container");
-    mainMenu.style.visibility = "visible";
-    Terminal.resetTerminalInput();
-    Engine.loadTerminalContent();
 
     // Refresh Main Menu (the 'World' menu, specifically)
     document.getElementById("world-menu-header").click();
