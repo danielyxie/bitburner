@@ -3601,7 +3601,7 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "Invalid crime passed into getCrimeChance(): " + crime);
             }
 
-            return crime.successRate();
+            return crime.successRate(Player);
         },
         getOwnedAugmentations : function(purchased=false) {
             var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
