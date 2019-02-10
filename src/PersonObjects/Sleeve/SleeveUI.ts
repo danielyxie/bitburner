@@ -652,10 +652,12 @@ function setSleeveTask(sleeve: Sleeve, elems: ISleeveUIElems): boolean {
                 res = sleeve.workoutAtGym(playerRef!, detailValue2, detailValue);
                 break;
             case "Shock Recovery":
+                sleeve.finishTask(playerRef!);
                 sleeve.currentTask = SleeveTaskType.Recovery;
                 res = true;
                 break;
             case "Synchronize":
+                sleeve.finishTask(playerRef!);
                 sleeve.currentTask = SleeveTaskType.Sync;
                 res = true;
                 break;

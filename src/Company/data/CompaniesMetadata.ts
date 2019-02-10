@@ -8,6 +8,7 @@ import { IMap } from "../../types";
 const AllSoftwarePositions: IMap<boolean> = {};
 const AllITPositions: IMap<boolean> = {};
 const AllNetworkEngineerPositions: IMap<boolean> = {};
+const SecurityEngineerPositions: IMap<boolean> = {};
 const AllTechnologyPositions: IMap<boolean> = {};
 const AllBusinessPositions: IMap<boolean> = {};
 const AllAgentPositions: IMap<boolean> = {};
@@ -40,6 +41,7 @@ posNames.NetworkEngineerCompanyPositions.forEach((e) => {
 });
 
 AllTechnologyPositions[posNames.SecurityEngineerCompanyPositions[0]] = true;
+SecurityEngineerPositions[posNames.SecurityEngineerCompanyPositions[0]] = true;
 
 posNames.BusinessCompanyPositions.forEach((e) => {
     AllBusinessPositions[e] = true;
@@ -373,6 +375,7 @@ export const companiesMetadata: IConstructorParams[] = [
         companyPositions: Object.assign({},
             SoftwarePositionsUpToHeadOfEngineering,
             AllNetworkEngineerPositions,
+            SecurityEngineerPositions,
             AllITPositions,
             AllSecurityPositions,
             AllAgentPositions
@@ -387,6 +390,7 @@ export const companiesMetadata: IConstructorParams[] = [
         companyPositions: Object.assign({},
             SoftwarePositionsUpToHeadOfEngineering,
             AllNetworkEngineerPositions,
+            SecurityEngineerPositions,
             AllITPositions,
             AllSecurityPositions,
             AllAgentPositions
@@ -492,8 +496,9 @@ export const companiesMetadata: IConstructorParams[] = [
         info: "",
         companyPositions: Object.assign({},
             AllTechnologyPositions,
+            AllSoftwareConsultantPositions,
             AllAgentPositions,
-            AllSecurityPositions
+            AllSecurityPositions,
         ),
         expMultiplier: 1.2,
         salaryMultiplier: 1.2,

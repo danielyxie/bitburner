@@ -73,9 +73,6 @@ import {arrayToString}                              from "../utils/helpers/array
 import {createRandomIp}                             from "../utils/IPAddress";
 import {formatNumber, isHTML}                       from "../utils/StringHelperFunctions";
 import {isString}                                   from "../utils/helpers/isString";
-import {yesNoBoxClose, yesNoBoxGetYesButton,
-        yesNoBoxGetNoButton, yesNoBoxCreate,
-        yesNoBoxOpen}                               from "../utils/YesNoBox";
 
 import { createElement }                            from "../utils/uiHelpers/createElement";
 import { createPopup }                              from "../utils/uiHelpers/createPopup";
@@ -2475,10 +2472,6 @@ function NetscriptFunctions(workerScript) {
         },
         prompt : function(txt) {
             if (workerScript.checkingRam) {return 0;}
-            if (yesNoBoxOpen) {
-                workerScript.scriptRef.log("ERROR: confirm() failed because a pop-up dialog box is already open");
-                return false;
-            }
             if (!isString(txt)) {txt = String(txt);}
 
             // The id for this popup will consist of the first 20 characters of the prompt string..
