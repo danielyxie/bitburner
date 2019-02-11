@@ -24,6 +24,7 @@ export interface IPlayer {
     queuedAugmentations: IPlayerOwnedAugmentation[];
     resleeves: Resleeve[];
     sleeves: Sleeve[];
+    sleevesFromCovenant: number;
     sourceFiles: IPlayerOwnedSourceFile[];
 
     // Stats

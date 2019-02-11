@@ -229,6 +229,24 @@ export function createDevMenu() {
         innerText: "Receive Invite to Faction",
     });
 
+    const factionsReputationInput = createElement("input", {
+        placeholder: "Rep to add to faction",
+        type: "number",
+    });
+
+    const factionsReputationButton = createElement("button", {
+        class: "std-button",
+        innerText: "Add rep to faction",
+        clickListener: () => {
+            const facName = getSelectText(factionsDropdown);
+            const fac = Factions[facName];
+            const rep = parseFloat(factionsReputationInput.value);
+            if (fac != null && !isNaN(rep)) {
+                fac.playerReputation += rep;
+            }
+        },
+    });
+
     // Augmentations
     const augmentationsHeader = createElement("h2", {innerText: "Augmentations"});
 
@@ -563,6 +581,9 @@ export function createDevMenu() {
     devMenuContainer.appendChild(factionsHeader);
     devMenuContainer.appendChild(factionsDropdown);
     devMenuContainer.appendChild(factionsAddButton);
+    devMenuContainer.appendChild(createElement("br"));
+    devMenuContainer.appendChild(factionsReputationInput);
+    devMenuContainer.appendChild(factionsReputationButton);
     devMenuContainer.appendChild(augmentationsHeader);
     devMenuContainer.appendChild(augmentationsDropdown);
     devMenuContainer.appendChild(augmentationsQueueButton);

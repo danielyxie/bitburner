@@ -2199,6 +2199,12 @@ Bladeburner.prototype.createSkillsContent = function() {
                 case "stamina":
                     DomElems.actionsAndSkillsDesc.innerHTML += "Stamina: x" + mult + "<br>";
                     break;
+                case "money":
+                    DomElems.actionsAndSkillsDesc.innerHTML += "Contract Money: x" + mult + "<br>";
+                    break;
+                case "expGain":
+                    DomElems.actionsAndSkillsDesc.innerHTML += "Exp Gain: x" + mult + "<br>";
+                    break;
                 case "weaponAbility":
                     //DomElems.actionsAndSkillsDesc.innerHTML +=
                     break;
@@ -3852,11 +3858,11 @@ function initBladeburner() {
         name: SkillNames.HandsOfMidas,
         desc: "Each level of this skill increases the amount of money you receive from Contracts by 5%",
         baseCost: 2, costInc: 2.5,
-        money: 2,
+        money: 5,
     });
     Skills[SkillNames.Hyperdrive] = new Skill({
         name: SkillNames.Hyperdrive,
-        esc: "Each level of this skill increases the experience earned from Contracts, Operations, and BlackOps by 4%",
+        desc: "Each level of this skill increases the experience earned from Contracts, Operations, and BlackOps by 4%",
         baseCost: 1, costInc: 3,
         expGain: 4,
     });
