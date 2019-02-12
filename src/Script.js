@@ -812,9 +812,6 @@ function loadAllRunningScripts() {
 }
 
 function scriptCalculateOfflineProduction(runningScriptObj) {
-    console.log("Calculating offline production for: ");
-    console.log(runningScriptObj);
-    
 	//The Player object stores the last update time from when we were online
 	var thisUpdate = new Date().getTime();
 	var lastUpdate = Player.lastUpdate;
