@@ -39,7 +39,7 @@ function convertTimeMsToTimeElapsedString(time: number): string {
     if (days > 0) {res += `${days} days `; }
     if (hours > 0) {res += `${hours} hours `; }
     if (minutes > 0) {res += `${minutes} minutes `; }
-    res += `${seconds} seconds `;
+    res += `${seconds} seconds`;
 
     return res;
 }

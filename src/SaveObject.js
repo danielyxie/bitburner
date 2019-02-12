@@ -22,6 +22,7 @@ import {gameOptionsBoxClose}                    from "../utils/GameOptions";
 import {clearEventListeners}                    from "../utils/uiHelpers/clearEventListeners";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver";
+import { convertTimeMsToTimeElapsedString }     from "../utils/StringHelperFunctions";
 import {createElement}                          from "../utils/uiHelpers/createElement";
 import {createPopup}                            from "../utils/uiHelpers/createPopup";
 import {createStatusText}                       from "./ui/createStatusText";
@@ -509,9 +510,11 @@ function loadImportedGame(saveObj, saveString) {
 
     Player.lastUpdate = Engine._lastUpdate;
     Engine.start();                 //Run main game loop and Scripts loop
-    dialogBoxCreate("While you were offline, your scripts generated <span class='money-gold'>$" +
-                    numeralWrapper.format(offlineProductionFromScripts, '0,0.00') + "</span> and your Hacknet Nodes generated <span class='money-gold'>$" +
-                    numeralWrapper.format(offlineProductionFromHacknetNodes, '0,0.00') + "</span>");
+    const timeOfflineString = convertTimeMsToTimeElapsedString(time);
+    dialogBoxCreate(`Offline for ${timeOfflineString}. While you were offline, your scripts ` +
+                    "generated <span class='money-gold'>" +
+                    numeralWrapper.formatMoney(offlineProductionFromScripts) + "</span> and your Hacknet Nodes generated <span class='money-gold'>" +
+                    numeralWrapper.formatMoney(offlineProductionFromHacknetNodes) + "</span>");
     return true;
 }
 
