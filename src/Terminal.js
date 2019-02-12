@@ -1905,7 +1905,7 @@ let Terminal = {
         }
         const scriptname = commandArray[1];
         if (!scriptname.endsWith(".lit") && !isScriptFilename(scriptname) && !scriptname.endsWith(".txt")) {
-            postError("scp only works for .script, .txt, and .lit files");
+            postError("scp only works for scripts, text files (.txt), and literature files (.lit)");
             return;
         }
         const destServer = getServer(commandArray[2]);
