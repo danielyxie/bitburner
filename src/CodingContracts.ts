@@ -1,9 +1,17 @@
+import { codingContractTypesMetadata,
+         DescriptionFunc,
+         GeneratorFunc,
+         SolverFunc }                       from "./data/codingcontracttypes";
+
+import { IMap }                             from "./types";
+
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import { KEY } from "../utils/helpers/keyCodes";
 import { createElement } from "../utils/uiHelpers/createElement";
 import { createPopup } from "../utils/uiHelpers/createPopup";
 import { removeElementById } from "../utils/uiHelpers/removeElementById";
-import { codingContractTypesMetadata, DescriptionFunc, GeneratorFunc, SolverFunc } from "./data/codingcontracttypes";
-import { IMap } from "./types";
+
+
 
 /* tslint:disable:no-magic-numbers completed-docs max-classes-per-file no-console */
 
@@ -171,18 +179,22 @@ export class CodingContract {
             const contractType: CodingContractType = CodingContractTypes[this.type];
             const popupId: string = `coding-contract-prompt-popup-${this.fn}`;
             const txt: HTMLElement = createElement("p", {
-                innerText: ["You are attempting to solve a Coding Contract. You have",
+                innerHTML: ["You are attempting to solve a Coding Contract. You have",
                             `${this.getMaxNumTries() - this.tries} tries remaining,`,
-                            "after which the contract will self-destruct.\n\n",
-                            `${contractType.desc(this.data)}`].join(" "),
+                            "after which the contract will self-destruct.<br><br>",
+                            `${contractType.desc(this.data).replace(/\n/g, "<br>")}`].join(" "),
             });
             let answerInput: HTMLInputElement;
             let solveBtn: HTMLElement;
+            let cancelBtn: HTMLElement;
             answerInput = createElement("input", {
                 onkeydown: (e: any) => {
-                    if (e.keyCode === 13 && answerInput.value !== "") {
+                    if (e.keyCode === KEY.ENTER && answerInput.value !== "") {
                         e.preventDefault();
                         solveBtn.click();
+                    } else if (e.keyCode === KEY.ESC) {
+                        e.preventDefault();
+                        cancelBtn.click();
                     }
                 },
                 placeholder: "Enter Solution here",
@@ -200,7 +212,7 @@ export class CodingContract {
                 },
                 innerText: "Solve",
             });
-            const cancelBtn: HTMLElement = createElement("a", {
+            cancelBtn = createElement("a", {
                 class: "a-link-button",
                 clickListener: () => {
                     resolve(CodingContractResult.Cancelled);

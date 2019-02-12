@@ -41,6 +41,7 @@ export abstract class Person {
     dexterity: number = 1;
     agility: number = 1;
     charisma: number = 1;
+    intelligence: number = 1;
     hp: number = 10;
     max_hp: number = 10;
 

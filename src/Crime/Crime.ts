@@ -1,4 +1,7 @@
 import { CONSTANTS } from "../Constants";
+import { IPlayer } from "../PersonObjects/IPlayer";
+import { IPlayerOrSleeve } from "../PersonObjects/IPlayerOrSleeve";
+
 export interface IConstructorParams {
     hacking_success_weight?: number;
     strength_success_weight?: number;
@@ -15,29 +18,6 @@ export interface IConstructorParams {
     intelligence_exp?: number;
 
     kills?: number;
-}
-
-interface IPlayer {
-    startCrime(crimeType: string,
-               hackExp: number,
-               strExp: number,
-               defExp: number,
-               dexExp: number,
-               agiExp: number,
-               chaExp: number,
-               money: number,
-               time: number,
-               singParams: any): void;
-
-    hacking_skill: number;
-    strength: number;
-    defense: number;
-    dexterity: number;
-    agility: number;
-    charisma: number;
-    intelligence: number;
-
-    crime_success_mult: number;
 }
 
 export class Crime {
@@ -129,7 +109,7 @@ export class Crime {
         return this.time;
     }
 
-    successRate(p: IPlayer): number {
+    successRate(p: IPlayerOrSleeve): number {
         let chance: number = (this.hacking_success_weight * p.hacking_skill +
                               this.strength_success_weight * p.strength +
                               this.defense_success_weight * p.defense +

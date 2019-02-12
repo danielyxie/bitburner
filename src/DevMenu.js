@@ -1,23 +1,26 @@
-import { AugmentationNames }        from "./Augmentation/data/AugmentationNames";
-import { generateRandomContract }   from "./CodingContractGenerator";
-import { Programs }                 from "./Programs/Programs";
-import { Factions }                 from "./Faction/Factions";
-import { Player }                   from "./Player";
-import { AllServers }               from "./Server";
-import { hackWorldDaemon }          from "./RedPill";
+import { AugmentationNames }            from "./Augmentation/data/AugmentationNames";
+import { CodingContractTypes }          from "./CodingContracts";
+import { generateContract,
+         generateRandomContract,
+         generateRandomContractOnHome } from "./CodingContractGenerator";
+import { Programs }                     from "./Programs/Programs";
+import { Factions }                     from "./Faction/Factions";
+import { Player }                       from "./Player";
+import { AllServers }                   from "./Server";
+import { hackWorldDaemon }              from "./RedPill";
 import { StockMarket,
-         SymbolToStockMap }         from "./StockMarket/StockMarket";
-import { Stock }                    from "./StockMarket/Stock";
-import { Terminal }                 from "./Terminal";
+         SymbolToStockMap }             from "./StockMarket/StockMarket";
+import { Stock }                        from "./StockMarket/Stock";
+import { Terminal }                     from "./Terminal";
 
-import { numeralWrapper }           from "./ui/numeralFormat";
+import { numeralWrapper }               from "./ui/numeralFormat";
 
-import { dialogBoxCreate }          from "../utils/DialogBox";
-import { exceptionAlert }           from "../utils/helpers/exceptionAlert";
-import { createElement }            from "../utils/uiHelpers/createElement";
-import { createOptionElement }      from "../utils/uiHelpers/createOptionElement";
-import { getSelectText }            from "../utils/uiHelpers/getSelectData";
-import { removeElementById }        from "../utils/uiHelpers/removeElementById";
+import { dialogBoxCreate }              from "../utils/DialogBox";
+import { exceptionAlert }               from "../utils/helpers/exceptionAlert";
+import { createElement }                from "../utils/uiHelpers/createElement";
+import { createOptionElement }          from "../utils/uiHelpers/createOptionElement";
+import { getSelectText }                from "../utils/uiHelpers/getSelectData";
+import { removeElementById }            from "../utils/uiHelpers/removeElementById";
 
 const devMenuContainerId = "dev-menu-container";
 
@@ -226,6 +229,24 @@ export function createDevMenu() {
         innerText: "Receive Invite to Faction",
     });
 
+    const factionsReputationInput = createElement("input", {
+        placeholder: "Rep to add to faction",
+        type: "number",
+    });
+
+    const factionsReputationButton = createElement("button", {
+        class: "std-button",
+        innerText: "Add rep to faction",
+        clickListener: () => {
+            const facName = getSelectText(factionsDropdown);
+            const fac = Factions[facName];
+            const rep = parseFloat(factionsReputationInput.value);
+            if (fac != null && !isNaN(rep)) {
+                fac.playerReputation += rep;
+            }
+        },
+    });
+
     // Augmentations
     const augmentationsHeader = createElement("h2", {innerText: "Augmentations"});
 
@@ -429,6 +450,31 @@ export function createDevMenu() {
         innerText: "Generate Random Contract",
     });
 
+    const generateRandomContractOnHomeBtn = createElement("button", {
+        class: "std-button",
+        clickListener: () => {
+            generateRandomContractOnHome();
+        },
+        innerText: "Generate Random Contract on Home Comp",
+    });
+
+    const generateContractWithTypeSelector = createElement("select", { margin: "5px" });
+    const contractTypes = Object.keys(CodingContractTypes);
+    for (let i = 0; i < contractTypes.length; ++i) {
+        generateContractWithTypeSelector.add(createOptionElement(contractTypes[i]));
+    }
+
+    const generateContractWithTypeBtn = createElement("button", {
+        class: "std-button",
+        clickListener: () => {
+            generateContract({
+                problemType: getSelectText(generateContractWithTypeSelector),
+                server: "home",
+            });
+        },
+        innerText: "Generate Specified Contract Type on Home Comp",
+    });
+
     // Stock Market
     const stockmarketHeader = createElement("h2", {innerText: "Stock Market"});
 
@@ -535,6 +581,9 @@ export function createDevMenu() {
     devMenuContainer.appendChild(factionsHeader);
     devMenuContainer.appendChild(factionsDropdown);
     devMenuContainer.appendChild(factionsAddButton);
+    devMenuContainer.appendChild(createElement("br"));
+    devMenuContainer.appendChild(factionsReputationInput);
+    devMenuContainer.appendChild(factionsReputationButton);
     devMenuContainer.appendChild(augmentationsHeader);
     devMenuContainer.appendChild(augmentationsDropdown);
     devMenuContainer.appendChild(augmentationsQueueButton);
@@ -563,6 +612,10 @@ export function createDevMenu() {
     devMenuContainer.appendChild(createElement("br"));
     devMenuContainer.appendChild(contractsHeader);
     devMenuContainer.appendChild(generateRandomContractBtn);
+    devMenuContainer.appendChild(generateRandomContractOnHomeBtn);
+    devMenuContainer.appendChild(createElement("br"));
+    devMenuContainer.appendChild(generateContractWithTypeSelector);
+    devMenuContainer.appendChild(generateContractWithTypeBtn);
     devMenuContainer.appendChild(stockmarketHeader);
     devMenuContainer.appendChild(stockInput);
     devMenuContainer.appendChild(stockPriceChangeInput);

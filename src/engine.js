@@ -1032,7 +1032,6 @@ const Engine = {
     //is necessary and then resets the counter
     checkCounters: function() {
         if (Engine.Counters.autoSaveCounter <= 0) {
-            saveObject.saveGame(indexedDb);
             if (Settings.AutosaveInterval == null) {
                 Settings.AutosaveInterval = 60;
             }
@@ -1040,6 +1039,7 @@ const Engine = {
                 Engine.Counters.autoSaveCounter = Infinity;
             } else {
                 Engine.Counters.autoSaveCounter = Settings.AutosaveInterval * 5;
+                saveObject.saveGame(indexedDb);
             }
         }
 

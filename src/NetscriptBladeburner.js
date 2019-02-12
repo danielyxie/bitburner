@@ -13,10 +13,10 @@ function unknownBladeburnerExceptionMessage(functionName, err) {
 }
 
 function checkBladeburnerAccess(workerScript, functionName) {
-	const accessDenied = `${functionName}() failed because you do not` +
-		" currently have access to the Bladeburner API. This is either" +
-		" because you are not currently employed at the Bladeburner division" +
-		" or because you do not have Source-File 7";
+	const accessDenied = `${functionName}() failed because you do not ` +
+						 "currently have access to the Bladeburner API. To access the Bladeburner API" +
+						 "you must be employed at the Bladeburner division, AND you must either be in " +
+						 "BitNode-7 or have Source-File 7.";
 	const hasAccess = Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || Player.sourceFiles.some(a=>{return a.n === 7}));
 	if(!hasAccess) {
 		throw makeRuntimeRejectMsg(workerScript, accessDenied);

@@ -156,7 +156,6 @@ $(document).keydown(function(event) {
         if (!(Player.bladeburner instanceof Bladeburner)) {return;}
         let consoleHistory = Player.bladeburner.consoleHistory;
 
-        //NOTE: Keycodes imported from Terminal.js
         if (event.keyCode === KEY.ENTER) {
             event.preventDefault();
             var command = DomElems.consoleInput.value;
@@ -355,6 +354,8 @@ function Skill(params={name:"foo", desc:"foo"}) {
     if (params.effCha)                      {this.effCha                    = params.effCha;}
 
     if (params.stamina)                     {this.stamina                   = params.stamina;}
+    if (params.money)                       {this.money                     = params.money;}
+    if (params.expGain)                     {this.expGain                   = params.expGain;}
 
     //Equipment
     if (params.weaponAbility)       {this.weaponAbility     = params.weaponAbility;}
@@ -367,17 +368,19 @@ Skill.prototype.calculateCost = function(currentLevel) {
 var Skills = {};
 var SkillNames = {
     BladesIntuition:    "Blade's Intuition",
-    Reaper:             "Reaper",
     Cloak:              "Cloak",
     Marksman:           "Marksman",
     WeaponProficiency:  "Weapon Proficiency",
-    Overclock:          "Overclock",
-    EvasiveSystem:      "Evasive System",
     ShortCircuit:       "Short-Circuit",
     DigitalObserver:    "Digital Observer",
-    Datamancer:         "Datamancer",
     Tracer:             "Tracer",
-    CybersEdge:         "Cyber's Edge"
+    Overclock:          "Overclock",
+    Reaper:             "Reaper",
+    EvasiveSystem:      "Evasive System",
+    Datamancer:         "Datamancer",
+    CybersEdge:         "Cyber's Edge",
+    HandsOfMidas:       "Hands of Midas",
+    Hyperdrive:         "Hyperdrive",
 }
 
 //Base Class for Contracts, Operations, and BlackOps
@@ -998,23 +1001,25 @@ Bladeburner.prototype.getCurrentCity = function() {
 
 Bladeburner.prototype.resetSkillMultipliers = function() {
     this.skillMultipliers = {
-        successChanceAll:1,
-        successChanceStealth:1,
-        successChanceKill:1,
-        successChanceContract:1,
-        successChanceOperation:1,
-        successChanceEstimate:1,
-        actionTime:1,
-        effHack:1,
-        effStr:1,
-        effDef:1,
-        effDex:1,
-        effAgi:1,
-        effCha:1,
-        effInt:1,
-        stamina:1,
-        weaponAbility:1,
-        gunAbility:1,
+        successChanceAll: 1,
+        successChanceStealth: 1,
+        successChanceKill: 1,
+        successChanceContract: 1,
+        successChanceOperation: 1,
+        successChanceEstimate: 1,
+        actionTime: 1,
+        effHack: 1,
+        effStr: 1,
+        effDef: 1,
+        effDex: 1,
+        effAgi: 1,
+        effCha: 1,
+        effInt: 1,
+        stamina: 1,
+        money: 1,
+        expGain: 1,
+        weaponAbility: 1,
+        gunAbility: 1,
     };
 }
 
@@ -1197,7 +1202,7 @@ Bladeburner.prototype.completeAction = function() {
                     //Earn money for contracts
                     var moneyGain = 0;
                     if (!isOperation) {
-                        moneyGain = ContractBaseMoneyGain * rewardMultiplier;
+                        moneyGain = ContractBaseMoneyGain * rewardMultiplier * this.skillMultipliers.money;
                         Player.gainMoney(moneyGain);
                     }
 
@@ -1526,13 +1531,14 @@ Bladeburner.prototype.gainActionStats = function(action, success) {
 
     var unweightedGain = time * BaseStatGain * successMult * difficultyMult;
     var unweightedIntGain = time * BaseIntGain * successMult * difficultyMult;
-    Player.gainHackingExp(unweightedGain    * action.weights.hack * Player.hacking_exp_mult);
-    Player.gainStrengthExp(unweightedGain   * action.weights.str  * Player.strength_exp_mult);
-    Player.gainDefenseExp(unweightedGain    * action.weights.def  * Player.defense_exp_mult);
-    Player.gainDexterityExp(unweightedGain  * action.weights.dex  * Player.dexterity_exp_mult);
-    Player.gainAgilityExp(unweightedGain    * action.weights.agi  * Player.agility_exp_mult);
-    Player.gainCharismaExp(unweightedGain   * action.weights.cha  * Player.charisma_exp_mult);
-    Player.gainIntelligenceExp(unweightedIntGain * action.weights.int);
+    const skillMult = this.skillMultipliers.expGain;
+    Player.gainHackingExp(unweightedGain    * action.weights.hack * Player.hacking_exp_mult * skillMult);
+    Player.gainStrengthExp(unweightedGain   * action.weights.str  * Player.strength_exp_mult * skillMult);
+    Player.gainDefenseExp(unweightedGain    * action.weights.def  * Player.defense_exp_mult * skillMult);
+    Player.gainDexterityExp(unweightedGain  * action.weights.dex  * Player.dexterity_exp_mult * skillMult);
+    Player.gainAgilityExp(unweightedGain    * action.weights.agi  * Player.agility_exp_mult * skillMult);
+    Player.gainCharismaExp(unweightedGain   * action.weights.cha  * Player.charisma_exp_mult * skillMult);
+    Player.gainIntelligenceExp(unweightedIntGain * action.weights.int * skillMult);
 }
 
 Bladeburner.prototype.randomEvent = function() {
@@ -2192,6 +2198,12 @@ Bladeburner.prototype.createSkillsContent = function() {
                     break;
                 case "stamina":
                     DomElems.actionsAndSkillsDesc.innerHTML += "Stamina: x" + mult + "<br>";
+                    break;
+                case "money":
+                    DomElems.actionsAndSkillsDesc.innerHTML += "Contract Money: x" + mult + "<br>";
+                    break;
+                case "expGain":
+                    DomElems.actionsAndSkillsDesc.innerHTML += "Exp Gain: x" + mult + "<br>";
                     break;
                 case "weaponAbility":
                     //DomElems.actionsAndSkillsDesc.innerHTML +=
@@ -2862,12 +2874,23 @@ Bladeburner.prototype.parseCommandArguments = function(command) {
     //Returns an array with command and its arguments in each index.
     //e.g. skill "blade's intuition" foo returns [skill, blade's intuition, foo]
     //The input to this fn will be trimmed and will have all whitespace replaced w/ a single space
-    var args = [];
-    var start = 0, i = 0;
+    const args = [];
+    let start = 0, i = 0;
     while (i < command.length) {
-        var c = command.charAt(i);
-        if (c === '"') {
-            var endQuote = command.indexOf('"', i+1);
+        const c = command.charAt(i);
+        if (c === '"') { // Double quotes
+            const endQuote = command.indexOf('"', i+1);
+            if (endQuote !== -1 && (endQuote === command.length-1 || command.charAt(endQuote+1) === " ")) {
+                args.push(command.substr(i+1, (endQuote - i - 1)));
+                if (endQuote === command.length-1) {
+                    start = i = endQuote+1;
+                } else {
+                    start = i = endQuote+2; //Skip the space
+                }
+                continue;
+            }
+        } else if (c === "'") { // Single quotes, same thing as above
+            const endQuote = command.indexOf("'", i+1);
             if (endQuote !== -1 && (endQuote === command.length-1 || command.charAt(endQuote+1) === " ")) {
                 args.push(command.substr(i+1, (endQuote - i - 1)));
                 if (endQuote === command.length-1) {
@@ -2884,7 +2907,7 @@ Bladeburner.prototype.parseCommandArguments = function(command) {
         ++i;
     }
     if (start !== i) {args.push(command.substr(start, i-start));}
-    console.log("Bladeburner.parseCommandArguments returned: " + args);
+    console.log("Bladeburner console command parsing returned: " + args);
     return args;
 }
 
@@ -3417,12 +3440,12 @@ Bladeburner.prototype.startActionNetscriptFn = function(type, name, workerScript
     try {
         this.startAction(actionId);
         if (workerScript.shouldLog("startAction")) {
-            workerScript.scriptRef.log("Starting bladeburner action with type " + type + " and name " + name);
+            workerScript.log("Starting bladeburner action with type " + type + " and name " + name);
         }
         return true;
     } catch(e) {
         this.resetAction();
-        workerScript.scriptRef.log("ERROR: bladeburner.startAction() failed to start action of type " + type + " due to invalid name: " + name +
+        workerScript.log("ERROR: bladeburner.startAction() failed to start action of type " + type + " due to invalid name: " + name +
                                    "Note that this name is case-sensitive and whitespace-sensitive");
         return false;
     }
@@ -3764,13 +3787,6 @@ function initBladeburner() {
         baseCost:5, costInc:2,
         successChanceAll:3
     });
-    Skills[SkillNames.Reaper] = new Skill({
-        name:SkillNames.Reaper,
-        desc:"Each level of this skill increases your " +
-             "effective combat stats for Bladeburner actions by 3%",
-        baseCost:3, costInc:2,
-        effStr:3, effDef:3, effDex:3, effAgi:3
-    });
     Skills[SkillNames.Cloak] = new Skill({
         name:SkillNames.Cloak,
         desc:"Each level of this skill increases your " +
@@ -3782,20 +3798,6 @@ function initBladeburner() {
     //TODO Marksman
     //TODO Weapon Proficiency
 
-    Skills[SkillNames.Overclock] = new Skill({
-        name:SkillNames.Overclock,
-        desc:"Each level of this skill decreases the time it takes " +
-             "to attempt a Contract, Operation, and BlackOp by 1% (Max Level: 95)",
-        baseCost:5, costInc:1.1, maxLvl:95,
-        actionTime:1
-    });
-    Skills[SkillNames.EvasiveSystem] = new Skill({
-        name:SkillNames.EvasiveSystem,
-        desc:"Each level of this skill increases your effective " +
-             "dexterity and agility for Bladeburner actions by 5%",
-        baseCost:2, costInc: 1,
-        effDex:5, effAgi:5
-    });
     Skills[SkillNames.ShortCircuit] = new Skill({
         name:SkillNames.ShortCircuit,
         desc:"Each level of this skill increases your success chance " +
@@ -3810,15 +3812,6 @@ function initBladeburner() {
         baseCost:5, costInc:2,
         successChanceOperation:4
     });
-    Skills[SkillNames.Datamancer] = new Skill({
-        name:SkillNames.Datamancer,
-        desc:"Each level of this skill increases your effectiveness in " +
-             "synthoid population analysis and investigation by 5%. " +
-             "This affects all actions that can potentially increase " +
-            "the accuracy of your synthoid population/community estimates.",
-        baseCost:3,costInc:1,
-        successChanceEstimate:5
-    });
     Skills[SkillNames.Tracer] = new Skill({
         name:SkillNames.Tracer,
         desc:"Each level of this skill increases your success chance in " +
@@ -3826,12 +3819,52 @@ function initBladeburner() {
         baseCost:3, costInc:2,
         successChanceContract:4
     });
+    Skills[SkillNames.Overclock] = new Skill({
+        name:SkillNames.Overclock,
+        desc:"Each level of this skill decreases the time it takes " +
+             "to attempt a Contract, Operation, and BlackOp by 1% (Max Level: 95)",
+        baseCost:4, costInc:1.1, maxLvl:95,
+        actionTime:1
+    });
+    Skills[SkillNames.Reaper] = new Skill({
+        name:SkillNames.Reaper,
+        desc:"Each level of this skill increases your effective combat stats for Bladeburner actions by 3%",
+        baseCost:3, costInc:2,
+        effStr:3, effDef:3, effDex:3, effAgi:3
+    });
+    Skills[SkillNames.EvasiveSystem] = new Skill({
+        name:SkillNames.EvasiveSystem,
+        desc:"Each level of this skill increases your effective " +
+             "dexterity and agility for Bladeburner actions by 5%",
+        baseCost:2, costInc: 1,
+        effDex:5, effAgi:5
+    });
+    Skills[SkillNames.Datamancer] = new Skill({
+        name:SkillNames.Datamancer,
+        desc:"Each level of this skill increases your effectiveness in " +
+             "synthoid population analysis and investigation by 5%. " +
+             "This affects all actions that can potentially increase " +
+            "the accuracy of your synthoid population/community estimates.",
+        baseCost:3, costInc:1,
+        successChanceEstimate:5
+    });
     Skills[SkillNames.CybersEdge] = new Skill({
         name:SkillNames.CybersEdge,
-        desc:"Each level of this skill increases your max " +
-             "stamina by 2%",
+        desc:"Each level of this skill increases your max stamina by 2%",
         baseCost:1, costInc:3,
         stamina:2
+    });
+    Skills[SkillNames.HandsOfMidas] = new Skill({
+        name: SkillNames.HandsOfMidas,
+        desc: "Each level of this skill increases the amount of money you receive from Contracts by 5%",
+        baseCost: 2, costInc: 2.5,
+        money: 5,
+    });
+    Skills[SkillNames.Hyperdrive] = new Skill({
+        name: SkillNames.Hyperdrive,
+        desc: "Each level of this skill increases the experience earned from Contracts, Operations, and BlackOps by 4%",
+        baseCost: 1, costInc: 3,
+        expGain: 4,
     });
 
     //General Actions

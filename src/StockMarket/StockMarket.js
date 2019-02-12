@@ -640,6 +640,7 @@ function processStockPrices(numCycles=1) {
             } else {
                 stock.otlkMag -= otlkMagChange;
             }
+            if (stock.otlkMag > 50) { stock.otlkMag = 50; } // Cap so the "forecast" is between 0 and 100
             if (stock.otlkMag < 0) {
                 stock.otlkMag *= -1;
                 stock.b = !stock.b;

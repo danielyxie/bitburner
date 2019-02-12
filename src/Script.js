@@ -650,7 +650,8 @@ async function calculateRamUsage(codeCopy) {
     var workerScript = new WorkerScript({
         filename:"foo",
         scriptRef: {code:""},
-        args:[]
+        args:[],
+        getCode: function() { return ""; }
     });
     workerScript.checkingRam = true; //Netscript functions will return RAM usage
     workerScript.serverIp = currServ.ip;
@@ -778,10 +779,9 @@ Reviver.constructors.Script = Script;
 //Called when the game is loaded. Loads all running scripts (from all servers)
 //into worker scripts so that they will start running
 function loadAllRunningScripts() {
-	var count = 0;
     var total = 0;
     let skipScriptLoad = (window.location.href.toLowerCase().indexOf("?noscripts") !== -1);
-    if (skipScriptLoad) {console.log("Skipping the load of any scripts during startup");}
+    if (skipScriptLoad) { console.info("Skipping the load of any scripts during startup"); }
 	for (var property in AllServers) {
 		if (AllServers.hasOwnProperty(property)) {
 			var server = AllServers[property];
@@ -799,8 +799,6 @@ function loadAllRunningScripts() {
                 server.runningScripts.length = 0;
             } else {
                 for (var j = 0; j < server.runningScripts.length; ++j) {
-    				count++;
-                    server.runningScripts[j].scriptRef.module = "";
     				addWorkerScript(server.runningScripts[j], server);
 
     				//Offline production
@@ -809,8 +807,8 @@ function loadAllRunningScripts() {
             }
 		}
 	}
+
     return total;
-	console.log("Loaded " + count.toString() + " running scripts");
 }
 
 function scriptCalculateOfflineProduction(runningScriptObj) {
@@ -827,7 +825,7 @@ function scriptCalculateOfflineProduction(runningScriptObj) {
 
     //Data map: [MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
 
-    //Grow
+    // Grow
     for (var ip in runningScriptObj.dataMap) {
         if (runningScriptObj.dataMap.hasOwnProperty(ip)) {
             if (runningScriptObj.dataMap[ip][2] == 0 || runningScriptObj.dataMap[ip][2] == null) {continue;}
@@ -841,6 +839,7 @@ function scriptCalculateOfflineProduction(runningScriptObj) {
         }
     }
 
+    // Money from hacking
     var totalOfflineProduction = 0;
     for (var ip in runningScriptObj.dataMap) {
         if (runningScriptObj.dataMap.hasOwnProperty(ip)) {
@@ -862,19 +861,19 @@ function scriptCalculateOfflineProduction(runningScriptObj) {
         }
     }
 
-    //Offline EXP gain
-	//A script's offline production will always be at most half of its online production.
+    // Offline EXP gain
+	// A script's offline production will always be at most half of its online production.
 	var expGain = 0.5 * (runningScriptObj.onlineExpGained / runningScriptObj.onlineRunningTime) * timePassed;
 	expGain *= confidence;
 
 	Player.gainHackingExp(expGain);
 
-	//Update script stats
+	// Update script stats
 	runningScriptObj.offlineMoneyMade += totalOfflineProduction;
 	runningScriptObj.offlineRunningTime += timePassed;
 	runningScriptObj.offlineExpGained += expGain;
 
-    //Fortify a server's security based on how many times it was hacked
+    // Fortify a server's security based on how many times it was hacked
     for (var ip in runningScriptObj.dataMap) {
         if (runningScriptObj.dataMap.hasOwnProperty(ip)) {
             if (runningScriptObj.dataMap[ip][1] == 0 || runningScriptObj.dataMap[ip][1] == null) {continue;}
@@ -887,7 +886,7 @@ function scriptCalculateOfflineProduction(runningScriptObj) {
         }
     }
 
-    //Weaken
+    // Weaken
     for (var ip in runningScriptObj.dataMap) {
         if (runningScriptObj.dataMap.hasOwnProperty(ip)) {
             if (runningScriptObj.dataMap[ip][3] == 0 || runningScriptObj.dataMap[ip][3] == null) {continue;}
@@ -916,11 +915,11 @@ function findRunningScript(filename, args, server) {
 }
 
 function RunningScript(script, args) {
-    if (script == null || script == undefined) {return;}
+    if (script == null || script == undefined) { return; }
     this.filename   = script.filename;
     this.args       = args;
-    this.scriptRef  = script;
     this.server     = script.server;    //IP Address only
+    this.ramUsage   = script.ramUsage;
 
     this.logs       = [];   //Script logging. Array of strings, with each element being a log entry
     this.logUpd     = false;
@@ -935,8 +934,40 @@ function RunningScript(script, args) {
 
     this.threads                = 1;
 
-    //[MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
-    this.dataMap                = new AllServersMap([0, 0, 0, 0], true);
+    // Holds a map of all servers, where server = key and the value for each
+    // server is an array of four numbers. The four numbers represent:
+    //  [MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
+    // This data is used for offline progress
+    this.dataMap                = {};
+}
+
+RunningScript.prototype.getCode = function() {
+    const server = AllServers[this.server];
+    if (server == null) { return ""; }
+    for (let i = 0; i < server.scripts.length; ++i) {
+        if (server.scripts[i].filename === this.filename) {
+            return server.scripts[i].code;
+        }
+    }
+
+    return "";
+}
+
+RunningScript.prototype.getRamUsage = function() {
+    if (this.ramUsage != null && this.ramUsage > 0) { return this.ramUsage; } // Use cached value
+
+    const server = AllServers[this.server];
+    if (server == null) { return 0; }
+    for (let i = 0; i < server.scripts.length; ++i) {
+        if (server.scripts[i].filename === this.filename) {
+            // Cache the ram usage for the next call
+            this.ramUsage = server.scripts[i].ramUsage;
+            return this.ramUsage;
+        }
+    }
+
+
+    return 0;
 }
 
 RunningScript.prototype.log = function(txt) {
@@ -966,9 +997,8 @@ RunningScript.prototype.clearLog = function() {
 
 //Update the moneyStolen and numTimesHack maps when hacking
 RunningScript.prototype.recordHack = function(serverIp, moneyGained, n=1) {
-    if (this.dataMap == null) {
-        //[MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
-        this.dataMap = new AllServersMap([0, 0, 0, 0], true);
+    if (this.dataMap[serverIp] == null || this.dataMap[serverIp].constructor !== Array) {
+        this.dataMap[serverIp] = [0, 0, 0, 0];
     }
     this.dataMap[serverIp][0] += moneyGained;
     this.dataMap[serverIp][1] += n;
@@ -976,18 +1006,16 @@ RunningScript.prototype.recordHack = function(serverIp, moneyGained, n=1) {
 
 //Update the grow map when calling grow()
 RunningScript.prototype.recordGrow = function(serverIp, n=1) {
-    if (this.dataMap == null) {
-        //[MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
-        this.dataMap = new AllServersMap([0, 0, 0, 0], true);
+    if (this.dataMap[serverIp] == null || this.dataMap[serverIp].constructor !== Array) {
+        this.dataMap[serverIp] = [0, 0, 0, 0];
     }
     this.dataMap[serverIp][2] += n;
 }
 
 //Update the weaken map when calling weaken() {
 RunningScript.prototype.recordWeaken = function(serverIp, n=1) {
-    if (this.dataMap == null) {
-        //[MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
-        this.dataMap = new AllServersMap([0, 0, 0, 0], true);
+    if (this.dataMap[serverIp] == null || this.dataMap[serverIp].constructor !== Array) {
+        this.dataMap[serverIp] = [0, 0, 0, 0];
     }
     this.dataMap[serverIp][3] += n;
 }
@@ -1003,33 +1031,5 @@ RunningScript.fromJSON = function(value) {
 
 Reviver.constructors.RunningScript = RunningScript;
 
-//Creates an object that creates a map/dictionary with the IP of each existing server as
-//a key. Initializes every key with a specified value that can either by a number or an array
-function AllServersMap(arr=false, filterOwned=false) {
-    for (var ip in AllServers) {
-        if (AllServers.hasOwnProperty(ip)) {
-            if (filterOwned && (AllServers[ip].purchasedByPlayer || AllServers[ip].hostname === "home")) {
-                continue;
-            }
-            if (arr) {
-                this[ip] = [0, 0, 0, 0];
-            } else {
-                this[ip] = 0;
-            }
-        }
-    }
-}
-
-AllServersMap.prototype.toJSON = function() {
-    return Generic_toJSON("AllServersMap", this);
-}
-
-
-AllServersMap.fromJSON = function(value) {
-    return Generic_fromJSON(AllServersMap, value.data);
-}
-
-Reviver.constructors.AllServersMap = AllServersMap;
-
 export {loadAllRunningScripts, findRunningScript,
-        RunningScript, Script, AllServersMap, scriptEditorInit, isScriptFilename};
+        RunningScript, Script, scriptEditorInit, isScriptFilename};

@@ -33,7 +33,7 @@ export const TerminalHelpText: string =
     "tail [script] [args...]        Displays dynamic logs for the specified script<br>" +
     "theme [preset] | bg txt hlgt   Change the color scheme of the UI<br>" +
     "top                            Displays all running scripts and their RAM usage<br>" +
-    'unalias "[alias name]"         Deletes the specified alias<br>' +
+    'unalias [alias name]           Deletes the specified alias<br>' +
     "wget [url] [target file]       Retrieves code/text from a web server<br>";
 
 interface IMap<T> {
@@ -215,12 +215,12 @@ export const HelpTexts: IMap<string> = {
     top:            "top<br>" +
                     "Prints a list of all scripts running on the current server as well as their thread count and how much " +
                     "RAM they are using in total.",
-    unalias:        'unalias "[alias name]"<br>' +
+    unalias:        'unalias [alias name]<br>' +
                     "Deletes the specified alias. Note that the double quotation marks are required. <br><br>" +
                     "As an example, if an alias was declared using:<br><br>" +
                     'alias r="run"<br><br>' +
                     "Then it could be removed using:<br><br>" +
-                    'unalias "r"<br><br>' +
+                    'unalias r<br><br>' +
                     "It is not necessary to differentiate between global and non-global aliases when using 'unalias'",
     wget:           "wget [url] [target file]<br>" +
                     "Retrieves data from a URL and downloads it to a file on the current server. The data can only " +

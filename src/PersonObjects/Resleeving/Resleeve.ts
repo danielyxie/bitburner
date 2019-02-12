@@ -44,7 +44,7 @@ export class Resleeve extends Person {
                 console.error(`Could not find Augmentation ${this.augmentations[i].name}`);
                 continue;
             }
-            totalAugmentationCost += aug!.baseCost;
+            totalAugmentationCost += aug!.startingCost;
         }
 
         return (totalExp * CostPerExp) + (totalAugmentationCost * Math.pow(NumAugsExponent, this.augmentations.length));

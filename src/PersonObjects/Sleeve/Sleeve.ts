@@ -184,7 +184,7 @@ export class Sleeve extends Person {
                     this.resetTaskStatus();
                     return retValue;
                 }
-                if (Math.random() < crime.successRate(p)) {
+                if (Math.random() < crime.successRate(this)) {
                     // Success
                     const successGainRates: ITaskTracker = createTaskTracker();
 

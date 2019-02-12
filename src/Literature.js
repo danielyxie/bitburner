@@ -24,8 +24,8 @@ function initLiterature() {
     title   = "The Beginner's Guide to Hacking";
     fn      = "hackers-starting-handbook.lit";
     txt     = "Some resources:<br><br>"  +
-              "<a class='a-link-button' href='https://bitburner.readthedocs.io/en/latest/netscriptlearntoprogram.html' target='_blank' style='margin:4px'>Learn to Program</a><br><br>" +
-              "<a class='a-link-button' href='https://bitburner.readthedocs.io/en/latest/netscriptjs.html' target='_blank' style='margin:4px'>For Experienced JavaScript Developers: NetscriptJS</a><br><br>" +
+              "<a class='a-link-button' href='https://bitburner.readthedocs.io/en/latest/netscript/netscriptlearntoprogram.html' target='_blank' style='margin:4px'>Learn to Program</a><br><br>" +
+              "<a class='a-link-button' href='https://bitburner.readthedocs.io/en/latest/netscript/netscriptjs.html' target='_blank' style='margin:4px'>For Experienced JavaScript Developers: NetscriptJS</a><br><br>" +
               "<a class='a-link-button' href='https://bitburner.readthedocs.io/en/latest/netscript.html' target='_blank' style='margin:4px'>Netscript Documentation</a><br><br>" +
               "When starting out, hacking is the most profitable way to earn money and progress. This " +
               "is a brief collection of tips/pointers on how to make the most out of your hacking scripts.<br><br>" +
@@ -78,7 +78,7 @@ function initLiterature() {
                 "find investors. Instead, your Corporation will be publicly traded and its stock price will change based on how well "  +
                 "it's performing financially. You can then sell your stock shares in order to make money.<br><br>" +
                 "<u>Tips/Pointers</u><br>" +
-                "-The 'Smart Supply' upgrade is extremely useful. Consider purchasing it as soon as possible.<br><br>" + 
+                "-The 'Smart Supply' upgrade is extremely useful. Consider purchasing it as soon as possible.<br><br>" +
                 "-Purchasing Hardware, Robots, AI Cores, and Real Estate can potentially increase your production. " +
                 "The effects of these depend on what industry you are in.<br><br>" +
                 "-In order to optimize your production, you will need a good balance of Operators, Managers, and Engineers<br><br>" +
