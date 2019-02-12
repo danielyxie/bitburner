@@ -717,7 +717,7 @@ function updateSleeveTaskDescription(sleeve: Sleeve, elems: ISleeveUIElems): voi
                 elems.taskDescription!.innerText = `This sleeve is currently doing ${detailValue2} for ${sleeve.currentTaskLocation}.`;
                 break;
             case "Commit Crime":
-                elems.taskDescription!.innerText = `This sleeve is currently attempting to ${Crimes[detailValue].type} (Success Rate: ${numeralWrapper.formatPercentage(Crimes[detailValue].successRate(playerRef))}).`;
+                elems.taskDescription!.innerText = `This sleeve is currently attempting to ${Crimes[detailValue].type} (Success Rate: ${numeralWrapper.formatPercentage(Crimes[detailValue].successRate(sleeve))}).`;
                 break;
             case "Take University Course":
                 elems.taskDescription!.innerText = `This sleeve is currently studying/taking a course at ${sleeve.currentTaskLocation}.`;

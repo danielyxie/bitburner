@@ -1,7 +1,7 @@
 import {IMap} from "./types";
 
 export let CONSTANTS: IMap<any> = {
-    Version:                "0.43.0",
+    Version:                "0.43.1",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -527,6 +527,7 @@ export let CONSTANTS: IMap<any> = {
     * Implemented several optimizations for active scripts. The game should now use less memory and the savefile should be slightly smaller when there are many scripts running
     * Bug Fix: A Stock Forecast should no longer go above 1 (i.e. 100%)
     * Bug Fix: The cost of Resleeves should no longer be affected by buying Augs
+    * Bug Fix: Duplicate Sleeves now use their own stats to determine crime success rate, instead of the host consciousness' stats
     * Bug Fix: You can now call the prompt() Netscript function from multiple scripts simultaneously
     `
 

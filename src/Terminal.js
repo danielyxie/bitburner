@@ -613,7 +613,7 @@ let Terminal = {
                     break;
             }
         } catch(e) {
-            console.log("Exception in Terminal.modifyInput: " + e);
+            console.error("Exception in Terminal.modifyInput: " + e);
         }
     },
 
@@ -659,11 +659,11 @@ let Terminal = {
                     terminalInput.setSelectionRange(inputLength, inputLength);
                     break;
                 default:
-                    console.log("WARNING: Invalid loc argument in Terminal.moveTextCursor()");
+                    console.warn("Invalid loc argument in Terminal.moveTextCursor()");
                     break;
             }
         } catch(e) {
-            console.log("Exception in Terminal.moveTextCursor: " + e);
+            console.error("Exception in Terminal.moveTextCursor: " + e);
         }
     },
 
@@ -709,7 +709,6 @@ let Terminal = {
 			//Calculate whether hack was successful
 			var hackChance = calculateHackingChance(server);
 			var rand = Math.random();
-			console.log("Hack success chance: " + hackChance +  ", rand: " + rand);
 			var expGainedOnSuccess = calculateHackingExpGain(server);
 			var expGainedOnFailure = (expGainedOnSuccess / 4);
 			if (rand < hackChance) {	//Success!
@@ -913,8 +912,7 @@ let Terminal = {
                 args.push(arg);
             }
         }
-        console.log("Terminal console command parsing returned:");
-        console.log(args);
+
         return args;
     },
 
@@ -1022,7 +1020,7 @@ let Terminal = {
             case iTutorialSteps.TerminalRunScript:
                 if (commandArray.length == 2 &&
                     commandArray[0] == "run" && commandArray[1] == "foodnstuff.script") {
-                    Terminal.runScript("foodnstuff.script");
+                    Terminal.runScript(commandArray);
                     iTutorialNextStep();
                 } else {post("Bad command. Please follow the tutorial");}
                 break;
@@ -1613,7 +1611,6 @@ let Terminal = {
 	},
 
     connectToServer: function(ip) {
-        console.log("Connect to server called");
         var serv = getServer(ip);
         if (serv == null) {
             post("Invalid server. Connection failed.");
@@ -2161,7 +2158,6 @@ let Terminal = {
             yesBtn.innerHTML = "Travel to BitNode Nexus";
             noBtn.innerHTML = "Cancel";
             yesBtn.addEventListener("click", function() {
-                console.log("yesBtn event listener");
                 hackWorldDaemon(Player.bitNodeN, true);
                 return yesNoBoxClose();
             });
@@ -2286,7 +2282,6 @@ let Terminal = {
                 break;
         }
         Terminal.contractOpen = false;
-        console.log(Terminal.contractOpen);
     },
 };
 
