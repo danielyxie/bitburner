@@ -1275,7 +1275,7 @@ const Engine = {
         if (loadGame(saveString)) {
             console.log("Loaded game from save");
             initBitNodes();
-            initBitNodeMultipliers();
+            initBitNodeMultipliers(Player);
             initSourceFiles();
             Engine.setDisplayElements();    //Sets variables for important DOM elements
             Engine.init();                  //Initialize buttons, work, etc.
@@ -1397,7 +1397,7 @@ const Engine = {
             //No save found, start new game
             console.log("Initializing new game");
             initBitNodes();
-            initBitNodeMultipliers();
+            initBitNodeMultipliers(Player);
             initSourceFiles();
             initSpecialServerIps();
             Engine.setDisplayElements();        //Sets variables for important DOM elements

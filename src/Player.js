@@ -438,13 +438,13 @@ PlayerObject.prototype.getHomeComputer = function() {
 
 PlayerObject.prototype.getUpgradeHomeRamCost = function() {
     //Calculate how many times ram has been upgraded (doubled)
-    const currentRam = Player.getHomeComputer().maxRam;
+    const currentRam = this.getHomeComputer().maxRam;
     const numUpgrades = Math.log2(currentRam);
 
     //Calculate cost
     //Have cost increase by some percentage each time RAM has been upgraded
     const mult = Math.pow(1.58, numUpgrades);
-    var cost = currentRam * CONSTANTS.BaseCostFor1GBOfRamHome * mult;
+    var cost = currentRam * CONSTANTS.BaseCostFor1GBOfRamHome * mult * BitNodeMultipliers.HomeComputerRamCost;
     return cost;
 }
 
@@ -2044,7 +2044,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     //Daedalus
     var daedalusFac = Factions["Daedalus"];
     if (!daedalusFac.isBanned && !daedalusFac.isMember && !daedalusFac.alreadyInvited &&
-        numAugmentations >= 30 &&
+        numAugmentations >= Math.round(30 * BitNodeMultipliers.DaedalusAugsRequirement) &&
         this.money.gte(100000000000) &&
         (this.hacking_skill >= 2500 ||
             (this.strength >= 1500 && this.defense >= 1500 &&
@@ -2055,7 +2055,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     //The Covenant
     var covenantFac = Factions["The Covenant"];
     if (!covenantFac.isBanned && !covenantFac.isMember && !covenantFac.alreadyInvited &&
-        numAugmentations >= 30 &&
+        numAugmentations >= 20 &&
         this.money.gte(75000000000) &&
         this.hacking_skill >= 850 &&
         this.strength >= 850 &&

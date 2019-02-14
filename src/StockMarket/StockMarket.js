@@ -1,4 +1,6 @@
 import {Stock}                                  from "./Stock";
+import { getStockMarket4SDataCost,
+         getStockMarket4STixApiCost }           from "./StockMarketCosts";
 
 import {CONSTANTS}                              from "../Constants";
 import {Locations}                              from "../Locations";
@@ -767,13 +769,13 @@ function displayStockMarketContent() {
 
     //Purchase Four Sigma Market Data Feed
     var marketDataButton = clearEventListeners("stock-market-buy-4s-data");
-    stylePurchaseButton(marketDataButton, CONSTANTS.MarketData4SCost, Player.has4SData,
-                        "Buy 4S Market Data Access - " + numeralWrapper.format(CONSTANTS.MarketData4SCost, '($0.000a)'),
+    stylePurchaseButton(marketDataButton, getStockMarket4SDataCost(), Player.has4SData,
+                        "Buy 4S Market Data Access - " + numeralWrapper.format(getStockMarket4SDataCost(), '($0.000a)'),
                         "4S Market Data - Purchased");
     marketDataButton.addEventListener("click", function() {
-        if (Player.money.lt(CONSTANTS.MarketData4SCost)) { return false; }
+        if (Player.money.lt(getStockMarket4SDataCost())) { return false; }
         Player.has4SData = true;
-        Player.loseMoney(CONSTANTS.MarketData4SCost);
+        Player.loseMoney(getStockMarket4SDataCost());
         displayStockMarketContent();
         return false;
     });
@@ -806,14 +808,14 @@ function displayStockMarketContent() {
 
     //Purchase Four Sigma Market Data TIX API (Requires TIX API Access)
     var marketDataTixButton = clearEventListeners("stock-market-buy-4s-tix-api");
-    stylePurchaseButton(marketDataTixButton, CONSTANTS.MarketDataTixApi4SCost, Player.has4SDataTixApi,
-                        "Buy 4S Market Data TIX API Access - " + numeralWrapper.format(CONSTANTS.MarketDataTixApi4SCost, '($0.000a)'),
+    stylePurchaseButton(marketDataTixButton, getStockMarket4STixApiCost(), Player.has4SDataTixApi,
+                        "Buy 4S Market Data TIX API Access - " + numeralWrapper.format(getStockMarket4STixApiCost(), '($0.000a)'),
                         "4S Market Data TIX API - Purchased");
     if (Player.hasTixApiAccess) {
         marketDataTixButton.addEventListener("click", function() {
-            if (Player.money.lt(CONSTANTS.MarketDataTixApi4SCost)) { return false; }
+            if (Player.money.lt(getStockMarket4STixApiCost())) { return false; }
             Player.has4SDataTixApi = true;
-            Player.loseMoney(CONSTANTS.MarketDataTixApi4SCost);
+            Player.loseMoney(getStockMarket4STixApiCost());
             displayStockMarketContent();
             return false;
         });

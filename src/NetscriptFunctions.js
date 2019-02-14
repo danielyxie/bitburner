@@ -51,6 +51,8 @@ import {StockMarket, StockSymbols, SymbolToStockMap,
         sellStock, updateStockPlayerPosition,
         shortStock, sellShort, OrderTypes,
         PositionTypes, placeOrder, cancelOrder}     from "./StockMarket/StockMarket";
+import { getStockmarket4SDataCost,
+         getStockMarket4STixApiCost }               from "./StockMarket/StockMarketCosts";
 import {numeralWrapper}                             from "./ui/numeralFormat";
 import {post}                                       from "./ui/postToTerminal";
 import {TextFile, getTextFile, createTextFile}      from "./TextFile";
@@ -1847,7 +1849,7 @@ function NetscriptFunctions(workerScript) {
                 return true;
             }
 
-            if (Player.money.lt(CONSTANTS.MarketData4SCost)) {
+            if (Player.money.lt(getStockMarket4SDataCost())) {
                 if (workerScript.shouldLog("purchase4SMarketData")) {
                     workerScript.log("Failed to purchase 4S Market Data - Not enough money");
                 }
@@ -1855,7 +1857,7 @@ function NetscriptFunctions(workerScript) {
             }
 
             Player.has4SData = true;
-            Player.loseMoney(CONSTANTS.MarketData4SCost);
+            Player.loseMoney(getStockMarket4SDataCost());
             if (workerScript.shouldLog("purchase4SMarketData")) {
                 workerScript.log("Purchased 4S Market Data");
             }
@@ -1878,7 +1880,7 @@ function NetscriptFunctions(workerScript) {
                 return true;
             }
 
-            if (Player.money.lt(CONSTANTS.MarketDataTixApi4SCost)) {
+            if (Player.money.lt(getStockMarket4STixApiCost())) {
                 if (workerScript.shouldLog("purchase4SMarketDataTixApi")) {
                     workerScript.log("Failed to purchase 4S Market Data TIX API - Not enough money");
                 }
@@ -1886,7 +1888,7 @@ function NetscriptFunctions(workerScript) {
             }
 
             Player.has4SDataTixApi = true;
-            Player.loseMoney(CONSTANTS.MarketDataTixApi4SCost);
+            Player.loseMoney(getStockMarket4STixApiCost());
             if (workerScript.shouldLog("purchase4SMarketDataTixApi")) {
                 workerScript.log("Purchased 4S Market Data TIX API");
             }

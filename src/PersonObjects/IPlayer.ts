@@ -15,6 +15,7 @@ export interface IPlayer {
     // Class members
     augmentations: IPlayerOwnedAugmentation[];
     bladeburner: any;
+    bitNodeN: number;
     companyName: string;
     corporation: any;
     factions: string[];

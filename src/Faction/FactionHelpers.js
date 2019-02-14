@@ -12,6 +12,9 @@ import { HackingMission, setInMission }         from "../Missions";
 import { Player }                               from "../Player";
 import { PurchaseAugmentationsOrderSetting }    from "../Settings/SettingEnums";
 import { Settings }                             from "../Settings/Settings";
+import { SourceFileFlags }                      from "../SourceFile/SourceFileFlags";
+
+import { createPurchaseSleevesFromCovenantPopup }   from "../PersonObjects/Sleeve/SleeveCovenantPurchases";
 
 import {Page, routing}                          from "../ui/navigationTracking";
 import {numeralWrapper}                         from "../ui/numeralFormat";
@@ -57,6 +60,9 @@ function displayFactionContent(factionName) {
     if (faction == null) {
         throw new Error("Invalid factionName passed into displayFactionContent: " + factionName);
     }
+    if (!faction.isMember) {
+		throw new Error("Not a member of this faction, cannot display faction information");
+	}
     var factionInfo = faction.getInfo();
 
     removeChildrenFromElement(Engine.Display.factionContent);
@@ -108,9 +114,7 @@ function displayFactionContent(factionName) {
     elements.push(createElement("br"));
 
     //Hacking Mission Option
-    var hackMissionDiv = createElement("div", {
-        id:"faction-hack-mission-div", class:"faction-work-div",
-    });
+    var hackMissionDiv = createElement("div", { class:"faction-work-div" });
     var hackMissionDivWrapper = createElement("div", {class:"faction-work-div-wrapper"});
     hackMissionDiv.appendChild(hackMissionDivWrapper);
     hackMissionDivWrapper.appendChild(createElement("a", {
@@ -131,9 +135,7 @@ function displayFactionContent(factionName) {
     elements.push(hackMissionDiv);
 
     //Hacking Contracts Option
-	var hackDiv = createElement("div", {
-        id:"faction-hack-div", class:"faction-work-div",
-    });
+	var hackDiv = createElement("div", { class:"faction-work-div", });
     var hackDivWrapper = createElement("div", {class:"faction-work-div-wrapper"});
     hackDiv.appendChild(hackDivWrapper);
     hackDivWrapper.appendChild(createElement("a", {
@@ -152,9 +154,7 @@ function displayFactionContent(factionName) {
     elements.push(hackDiv);
 
     //Field Work Option
-	var fieldWorkDiv = createElement("div", {
-        id:"faction-fieldwork-div", class:"faction-work-div"
-    });
+	var fieldWorkDiv = createElement("div", { class:"faction-work-div" });
     var fieldWorkDivWrapper = createElement("div", {class:"faction-work-div-wrapper"});
     fieldWorkDiv.appendChild(fieldWorkDivWrapper);
     fieldWorkDivWrapper.appendChild(createElement("a", {
@@ -173,9 +173,7 @@ function displayFactionContent(factionName) {
     elements.push(fieldWorkDiv);
 
     //Security Work Option
-	var securityWorkDiv = createElement("div", {
-        id:"faction-securitywork-div", class:"faction-work-div"
-    });
+	var securityWorkDiv = createElement("div", { class:"faction-work-div" });
     var securityWorkDivWrapper = createElement("div", {class:"faction-work-div-wrapper"});
     securityWorkDiv.appendChild(securityWorkDivWrapper);
     securityWorkDivWrapper.appendChild(createElement("a", {
@@ -194,9 +192,7 @@ function displayFactionContent(factionName) {
     elements.push(securityWorkDiv);
 
     //Donate for reputation
-    var donateDiv = createElement("div", {
-        id:"faction-donate-div", class:"faction-work-div"
-    });
+    var donateDiv = createElement("div", { class:"faction-work-div" });
     var donateDivWrapper = createElement("div", {class:"faction-work-div-wrapper"});
     donateDiv.appendChild(donateDivWrapper);
     var donateRepGain = createElement("p", {
@@ -247,11 +243,12 @@ function displayFactionContent(factionName) {
                    "your abilities.<br><br>"
     }));
     elements.push(createElement("a", {
-        class:"a-link-button", innerText:"Purchase Augmentations",
+        class:"std-button",
+        innerText:"Purchase Augmentations",
+        margin: "5px",
         clickListener:()=>{
             Engine.hideAllContent();
             Engine.Display.factionAugmentationsContent.style.display = "block";
-
 
             displayFactionAugmentations(factionName);
             return false;
@@ -338,10 +335,26 @@ function displayFactionContent(factionName) {
         return;
     }
 
-	if (!faction.isMember) {
-		throw new Error("Not a member of this faction, cannot display faction information");
-	}
+    // Purchase Sleeves from Covenant
+    if (Player.bitNodeN >= 10 && SourceFileFlags[10]) {
+        const covenantPurchaseSleevesDiv = createElement("div", { class: "faction-work-div" });
+        const covenantPurchaseSleevesDivWrapper = createElement("div", { class: "faction-wkro-div-wrapper" });
+        covenantPurchaseSleevesDiv.appendChild(covenantPurchaseSleevesDivWrapper);
+        covenantPurchaseSleevesDivWrapper.appendChild(createElement("button", {
+            class: "std-button",
+            innerText: "Purchase Duplicate Sleeves",
+            clickListener: () => {
+                createPurchaseSleevesFromCovenantPopup(Player);
+            }
+        }));
+        covenantPurchaseSleevesDivWrapper.appendChild(createElement("p", {
+            innerText: "Purchase Duplicate Sleeves. These are permanent! You can purchase up to 5 total.",
+        }));
 
+        elements.push(covenantPurchaseSleevesDiv);
+    }
+
+    // Determine if actions should be possible
     donateDiv.style.display = faction.favor >= Math.floor(CONSTANTS.BaseFavorToDonate * BitNodeMultipliers.RepToDonateToFaction) ? "inline" : "none";
 
     hackMissionDiv.style.display  = factionInfo.offerHackingMission ? "inline": "none";

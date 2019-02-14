@@ -274,7 +274,7 @@ export let CONSTANTS: IMap<any> = {
     /* Coding Contract Constants */
     CodingContractBaseFactionRepGain:   2500,
     CodingContractBaseCompanyRepGain:   4000,
-    CodingContractBaseMoneyGain:        50e6,
+    CodingContractBaseMoneyGain:        75e6,
 
     // BitNode/Source-File related stuff
     TotalNumBitNodes: 24,
@@ -510,25 +510,17 @@ export let CONSTANTS: IMap<any> = {
 
     LatestUpdate:
     `
-    v0.43.1
-    * Terminal changes:
-    ** Quoted arguments are now properly parsed. (e.g. 'run f.script "this is one argument"' will be correctly parsed)
-    ** Errors are now shown in red text
-    ** 'unalias' command now has a different format and no longer needs the quotations
-    ** Bug Fix: Fixed several edge cases where autocomplete wasnt working properly
+    v0.44.0
+    * Added new BitNode multipliers:
+    ** HomeComputerRamCost - Affects how much it costs to upgrade home computer's RAM
+    ** DaedalusAugsRequirement - Affects how many Augmentations you need in order to get invited to Daedalus
+    ** FourSigmaMarketDataCost - Affects how much it costs to unlock the stock market's 4S Market Data
+    ** FourSigmaMarketDataApiCost - Affects how much it costs to unlock the stock market's 4S Market Data API
 
-    * Added two new Bladeburner skills for increasing money and experience gain
-    * Made some minor adjustments to Bladeburner UI
-    * Corporation "Smart Factories" and "Smart Storage" upgrades have slightly lower price multipliers
-    * Added nFormat Netscript function
-    * Added 6 new Coding Contract problems
-    * Updated documentation with list of all Coding Contract problems
-    * Minor improvements for 'Active Scripts' UI
-    * Implemented several optimizations for active scripts. The game should now use less memory and the savefile should be slightly smaller when there are many scripts running
-    * Bug Fix: A Stock Forecast should no longer go above 1 (i.e. 100%)
-    * Bug Fix: The cost of Resleeves should no longer be affected by buying Augs
-    * Bug Fix: Duplicate Sleeves now use their own stats to determine crime success rate, instead of the host consciousness' stats
-    * Bug Fix: You can now call the prompt() Netscript function from multiple scripts simultaneously
+    * A few minor changes to BitNode multipliers across the board (mostly for the new multipliers)
+    * 'The Covenant' now requires 20 total Augmentations to get invited, rather than 30
+    * You can now purchase permanent Duplicate Sleeves from 'The Covenant'. This requires Source-File 10, and you must be in BN-10 or after
+    * Increased the money gained from Coding Contracts by 50%
     `
 
 }

@@ -146,7 +146,7 @@ List of Factions and their Requirements
 |                     |                | * -90 Karma                             |                               |
 |                     |                | * Not working for CIA or NSA            |                               |
 +---------------------+----------------+-----------------------------------------+-------------------------------+
-| Endgame             | The Covenant   | * 30 Augmentations                      |                               |
+| Endgame             | The Covenant   | * 20 Augmentations                      |                               |
 | Factions            |                | * $75b                                  |                               |
 |                     |                | * Hacking Level of 850                  |                               |
 |                     |                | * All Combat Stats of 850               |                               |

@@ -55,7 +55,7 @@ function prestigeAugmentation() {
     Engine.loadTerminalContent();
     routing.navigateTo(Page.Terminal);
 
-    initBitNodeMultipliers();
+    initBitNodeMultipliers(Player);
 
     Player.prestigeAugmentation();
 
@@ -175,7 +175,7 @@ function prestigeAugmentation() {
 
 //Prestige by destroying Bit Node and gaining a Source File
 function prestigeSourceFile() {
-    initBitNodeMultipliers();
+    initBitNodeMultipliers(Player);
     updateSourceFileFlags(Player);
 
     Player.prestigeSourceFile();
