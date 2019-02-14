@@ -36,7 +36,7 @@ var CityNames = ["Aevum", "Chongqing", "Sector-12", "New Tokyo", "Ishima", "Volh
 var CyclesPerSecond             = 5;   //Game cycle is 200 ms
 
 var StaminaGainPerSecond        = 0.0085;
-var BaseStaminaLoss             = 0.285;   //Base stamina loss per action. Increased based on difficulty
+var BaseStaminaLoss             = 0.285; //Base stamina loss per action. Increased based on difficulty
 var MaxStaminaToGainFactor      = 70000; //Max Stamina is divided by this to get bonus stamina gain
 
 var DifficultyToTimeFactor      = 10;  //Action Difficulty divided by this to get base action time
@@ -68,7 +68,7 @@ var RankNeededForFaction        = 25;
 var ContractSuccessesPerLevel   = 3.5; //How many successes you need to level up a contract
 var OperationSuccessesPerLevel  = 3; //How many successes you need to level up an op
 
-var RanksPerSkillPoint          = 4;  //How many ranks needed to get 1 Skill Point
+var RanksPerSkillPoint          = 3.5;  //How many ranks needed to get 1 Skill Point
 
 var ContractBaseMoneyGain       = 50e3; //Base Money Gained per contract
 
@@ -582,7 +582,7 @@ Reviver.constructors.Action = Action;
 var GeneralActions = {}; //Training, Field Analysis, Recruitment, etc.
 
 //Action Identifier
-var ActionTypes = Object.freeze({
+const ActionTypes = Object.freeze({
     "Idle":             1,
     "Contract":         2,
     "Operation":        3,
@@ -591,7 +591,8 @@ var ActionTypes = Object.freeze({
     "Training":         5,
     "Recruitment":      6,
     "FieldAnalysis":    7,
-    "Field Analysis":   7
+    "Field Analysis":   7,
+    "Diplomacy":        8,
 });
 function ActionIdentifier(params={}) {
     if (params.name) {this.name = params.name;}
@@ -981,7 +982,7 @@ Bladeburner.prototype.changeRank = function(change) {
         }
     }
 
-    //Gain skill points. You get 1 every 4 ranks
+    // Gain skill points
     var rankNeededForSp = (this.totalSkillPoints+1) * RanksPerSkillPoint;
     if (this.maxRank >= rankNeededForSp) {
         //Calculate how many skill points to gain
@@ -1378,7 +1379,6 @@ Bladeburner.prototype.completeAction = function() {
             break;
         case ActionTypes["Recruitment"]:
             var successChance = this.getRecruitmentSuccessChance();
-            console.log("Bladeburner recruitment success chance: " + successChance);
             if (Math.random() < successChance) {
                 var expGain = 2 * BaseStatGain * this.actionTimeToComplete;
                 Player.gainCharismaExp(expGain);
@@ -1394,6 +1394,15 @@ Bladeburner.prototype.completeAction = function() {
                 }
             }
             this.startAction(this.action); //Repeat action
+            break;
+        case ActionTypes["Diplomacy"]:
+            var eff = this.getDiplomacyEffectiveness();
+            console.log(`Diplomacy Effectiveness: ${eff}`);
+            this.getCurrentCity().chaos *= eff;
+            if (this.logging.general) {
+                this.log(`Diplomacy completed. Chaos levels in the current city fell by ${numeralWrapper.formatPercentage(1 - eff)}`);
+            }
+            this.startAction(this.action); // Repeat Action
             break;
         default:
             break;
@@ -1514,6 +1523,15 @@ Bladeburner.prototype.getRecruitmentTime = function() {
 
 Bladeburner.prototype.getRecruitmentSuccessChance = function() {
     return Math.pow(Player.charisma, 0.45) / (this.teamSize + 1);
+}
+
+Bladeburner.prototype.getDiplomacyEffectiveness = function() {
+    // Returns a decimal by which the city's chaos level should be multiplied (e.g. 0.98)
+    const CharismaLinearFactor = 10e3;
+    const CharismaExponentialFactor = 0.04;
+
+    const charismaEff = Math.pow(Player.charisma, CharismaExponentialFactor) + Player.charisma / CharismaLinearFactor;
+    return (100 - charismaEff) / 100;
 }
 
 //Process stat gains from Contracts, Operations, and Black Operations
@@ -3784,14 +3802,14 @@ function initBladeburner() {
         name:SkillNames.BladesIntuition,
         desc:"Each level of this skill increases your success chance " +
              "for all Contracts, Operations, and BlackOps by 3%",
-        baseCost:5, costInc:2,
+        baseCost:5, costInc: 2.1,
         successChanceAll:3
     });
     Skills[SkillNames.Cloak] = new Skill({
         name:SkillNames.Cloak,
         desc:"Each level of this skill increases your " +
              "success chance in stealth-related Contracts, Operations, and BlackOps by 5.5%",
-        baseCost:3, costInc:1,
+        baseCost:3, costInc: 1.1,
         successChanceStealth:5.5
     });
 
@@ -3802,42 +3820,42 @@ function initBladeburner() {
         name:SkillNames.ShortCircuit,
         desc:"Each level of this skill increases your success chance " +
              "in Contracts, Operations, and BlackOps that involve retirement by 5.5%",
-        baseCost:3, costInc:2,
+        baseCost:3, costInc: 2.1,
         successChanceKill:5.5
     });
     Skills[SkillNames.DigitalObserver] = new Skill({
         name:SkillNames.DigitalObserver,
         desc:"Each level of this skill increases your success chance in " +
              "all Operations and BlackOps by 4%",
-        baseCost:5, costInc:2,
+        baseCost: 5, costInc: 2.1,
         successChanceOperation:4
     });
     Skills[SkillNames.Tracer] = new Skill({
         name:SkillNames.Tracer,
         desc:"Each level of this skill increases your success chance in " +
              "all Contracts by 4%",
-        baseCost:3, costInc:2,
+        baseCost: 3, costInc: 2.1,
         successChanceContract:4
     });
     Skills[SkillNames.Overclock] = new Skill({
         name:SkillNames.Overclock,
         desc:"Each level of this skill decreases the time it takes " +
              "to attempt a Contract, Operation, and BlackOp by 1% (Max Level: 95)",
-        baseCost:4, costInc:1.1, maxLvl:95,
+        baseCost: 3, costInc: 1.2, maxLvl: 90,
         actionTime:1
     });
     Skills[SkillNames.Reaper] = new Skill({
-        name:SkillNames.Reaper,
-        desc:"Each level of this skill increases your effective combat stats for Bladeburner actions by 3%",
-        baseCost:3, costInc:2,
-        effStr:3, effDef:3, effDex:3, effAgi:3
+        name: SkillNames.Reaper,
+        desc: "Each level of this skill increases your effective combat stats for Bladeburner actions by 3%",
+        baseCost:3, costInc: 2.1,
+        effStr: 2, effDef: 2, effDex: 2, effAgi: 2
     });
     Skills[SkillNames.EvasiveSystem] = new Skill({
         name:SkillNames.EvasiveSystem,
         desc:"Each level of this skill increases your effective " +
-             "dexterity and agility for Bladeburner actions by 5%",
-        baseCost:2, costInc: 1,
-        effDex:5, effAgi:5
+             "dexterity and agility for Bladeburner actions by 4%",
+        baseCost: 2, costInc: 1.1,
+        effDex: 4, effAgi: 4
     });
     Skills[SkillNames.Datamancer] = new Skill({
         name:SkillNames.Datamancer,
@@ -3862,13 +3880,14 @@ function initBladeburner() {
     });
     Skills[SkillNames.Hyperdrive] = new Skill({
         name: SkillNames.Hyperdrive,
-        desc: "Each level of this skill increases the experience earned from Contracts, Operations, and BlackOps by 4%",
+        desc: "Each level of this skill increases the experience earned from Contracts, Operations, and BlackOps by 5%",
         baseCost: 1, costInc: 3,
         expGain: 4,
     });
 
     //General Actions
-    var actionName = "Training";
+    let actionName;
+    actionName = "Training";
     GeneralActions[actionName] = new Action({
         name:actionName,
         desc:"Improve your abilities at the Bladeburner unit's specialized training " +
@@ -3876,7 +3895,7 @@ function initBladeburner() {
              "increases your max stamina."
     });
 
-    var actionName = "Field Analysis";
+    actionName = "Field Analysis";
     GeneralActions[actionName] = new Action({
         name:actionName,
         desc:"Mine and analyze Synthoid-related data. This improve the " +
@@ -3886,13 +3905,21 @@ function initBladeburner() {
              "Does NOT require stamina."
     });
 
-    var actionName = "Recruitment";
+    actionName = "Recruitment";
     GeneralActions[actionName] = new Action({
         name:actionName,
         desc:"Attempt to recruit members for your Bladeburner team. These members " +
              "can help you conduct operations.<br><br>" +
              "Does NOT require stamina."
     });
+
+    actionName = "Diplomacy";
+    GeneralActions[actionName] = new Action({
+        name: actionName,
+        desc: "Improve diplomatic relations with the Synthoid population. " +
+              "Completing this action will reduce the Chaos level in your current city.<br><br>" +
+              "Does NOT require stamina."
+    })
 
     //Black Operations
     BlackOperations["Operation Typhoon"] = new BlackOperation({

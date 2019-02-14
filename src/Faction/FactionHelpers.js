@@ -336,7 +336,7 @@ function displayFactionContent(factionName) {
     }
 
     // Purchase Sleeves from Covenant
-    if (Player.bitNodeN >= 10 && SourceFileFlags[10]) {
+    if (factionName === "The Covenant" && Player.bitNodeN >= 10 && SourceFileFlags[10]) {
         const covenantPurchaseSleevesDiv = createElement("div", { class: "faction-work-div" });
         const covenantPurchaseSleevesDivWrapper = createElement("div", { class: "faction-wkro-div-wrapper" });
         covenantPurchaseSleevesDiv.appendChild(covenantPurchaseSleevesDivWrapper);

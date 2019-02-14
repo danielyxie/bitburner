@@ -511,6 +511,15 @@ export let CONSTANTS: IMap<any> = {
     LatestUpdate:
     `
     v0.44.0
+    * Bladeburner Changes:
+    ** Reduced the amount of rank needed to earn a skill point
+    ** Reduced the effects of the "Reaper" and "Evasive System" skills
+    ** Increased the effect of the "Hyperdrive" skill
+    ** Slightly increased the rate which the skill point cost rises for almost all skills
+    ** The "Overlock" Skill now has a maximum level of 90 instead of 95
+    ** Added a new General Action: Diplomacy
+    ** Lowered the rep cost of the "Blade's Simulacrum" augmentation, but increased the price
+
     * Added new BitNode multipliers:
     ** HomeComputerRamCost - Affects how much it costs to upgrade home computer's RAM
     ** DaedalusAugsRequirement - Affects how many Augmentations you need in order to get invited to Daedalus

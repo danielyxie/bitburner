@@ -1954,7 +1954,7 @@ function initAugmentations() {
         resetAugmentation(BladeArmorIPU);
 
         var BladesSimulacrum = new Augmentation({
-            name:AugmentationNames.BladesSimulacrum, repCost:3e3, moneyCost:80e9,
+            name:AugmentationNames.BladesSimulacrum, repCost: 1e3, moneyCost: 100e9,
             info:"A highly-advanced matter phase-shifter module that is embedded "  +
                  "in the brainstem and cerebellum. This augmentation allows " +
                  "the user to project and control a holographic simulacrum within an " +
