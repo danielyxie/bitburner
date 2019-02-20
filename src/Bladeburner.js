@@ -10,6 +10,7 @@ import { Locations }                                from "./Locations";
 import { Player }                                   from "./Player";
 import { hackWorldDaemon, redPillFlag }             from "./RedPill";
 import { numeralWrapper }                           from "./ui/numeralFormat";
+import { setTimeoutRef }                            from "./utils/SetTimeoutRef";
 import { KEY }                                      from "../utils/helpers/keyCodes";
 
 import { createProgressBarText }                    from "../utils/helpers/createProgressBarText";
@@ -182,7 +183,7 @@ $(document).keydown(function(event) {
 
             var prevCommand = consoleHistory[consoleHistoryIndex];
             DomElems.consoleInput.value = prevCommand;
-            setTimeout(function(){DomElems.consoleInput.selectionStart = DomElems.consoleInput.selectionEnd = 10000; }, 0);
+            setTimeoutRef(function(){DomElems.consoleInput.selectionStart = DomElems.consoleInput.selectionEnd = 10000; }, 0);
         }
 
         if (event.keyCode === KEY.DOWNARROW) {
@@ -583,16 +584,17 @@ var GeneralActions = {}; //Training, Field Analysis, Recruitment, etc.
 
 //Action Identifier
 const ActionTypes = Object.freeze({
-    "Idle":             1,
-    "Contract":         2,
-    "Operation":        3,
-    "BlackOp":          4,
-    "BlackOperation":   4,
-    "Training":         5,
-    "Recruitment":      6,
-    "FieldAnalysis":    7,
-    "Field Analysis":   7,
-    "Diplomacy":        8,
+    "Idle":                             1,
+    "Contract":                         2,
+    "Operation":                        3,
+    "BlackOp":                          4,
+    "BlackOperation":                   4,
+    "Training":                         5,
+    "Recruitment":                      6,
+    "FieldAnalysis":                    7,
+    "Field Analysis":                   7,
+    "Diplomacy":                        8,
+    "Hyperbolic Regeneration Chamber":  9,
 });
 function ActionIdentifier(params={}) {
     if (params.name) {this.name = params.name;}
@@ -1144,15 +1146,17 @@ Bladeburner.prototype.startAction = function(actionId) {
                 exceptionAlert(e);
             }
             break;
-        case ActionTypes["Training"]:
-            this.actionTimeToComplete = 30;
-            break;
         case ActionTypes["Recruitment"]:
             this.actionTimeToComplete = this.getRecruitmentTime();
             break;
+        case ActionTypes["Training"]:
         case ActionTypes["FieldAnalysis"]:
         case ActionTypes["Field Analysis"]:
             this.actionTimeToComplete = 30;
+            break;
+        case ActionTypes["Diplomacy"]:
+        case ActionTypes["Hyperbolic Regeneration Chamber"]:
+            this.actionTimeToComplete = 60;
             break;
         default:
             throw new Error("Invalid Action Type in Bladeburner.startAction(): " + actionId.type);
@@ -1399,12 +1403,19 @@ Bladeburner.prototype.completeAction = function() {
             var eff = this.getDiplomacyEffectiveness();
             console.log(`Diplomacy Effectiveness: ${eff}`);
             this.getCurrentCity().chaos *= eff;
+            if (this.getCurrentCity().chaos < 0) { this.getCurrentCity().chaos = 0; }
             if (this.logging.general) {
                 this.log(`Diplomacy completed. Chaos levels in the current city fell by ${numeralWrapper.formatPercentage(1 - eff)}`);
             }
             this.startAction(this.action); // Repeat Action
             break;
+        case ActionTypes["Hyperbolic Regeneration Chamber"]:
+            Player.regenerateHp(1);
+            this.stamina += 0.05; // TODO Turn this into a const and adjust value
+            this.startAction(this.action);
+            break;
         default:
+            console.error(`Bladeburner.completeAction() called for invalid action: ${this.action.type}`);
             break;
     }
 }
@@ -3840,13 +3851,13 @@ function initBladeburner() {
     Skills[SkillNames.Overclock] = new Skill({
         name:SkillNames.Overclock,
         desc:"Each level of this skill decreases the time it takes " +
-             "to attempt a Contract, Operation, and BlackOp by 1% (Max Level: 95)",
+             "to attempt a Contract, Operation, and BlackOp by 1% (Max Level: 90)",
         baseCost: 3, costInc: 1.2, maxLvl: 90,
         actionTime:1
     });
     Skills[SkillNames.Reaper] = new Skill({
         name: SkillNames.Reaper,
-        desc: "Each level of this skill increases your effective combat stats for Bladeburner actions by 3%",
+        desc: "Each level of this skill increases your effective combat stats for Bladeburner actions by 2%",
         baseCost:3, costInc: 2.1,
         effStr: 2, effDef: 2, effDex: 2, effAgi: 2
     });
@@ -3882,7 +3893,7 @@ function initBladeburner() {
         name: SkillNames.Hyperdrive,
         desc: "Each level of this skill increases the experience earned from Contracts, Operations, and BlackOps by 5%",
         baseCost: 1, costInc: 3,
-        expGain: 4,
+        expGain: 5,
     });
 
     //General Actions
@@ -3919,7 +3930,14 @@ function initBladeburner() {
         desc: "Improve diplomatic relations with the Synthoid population. " +
               "Completing this action will reduce the Chaos level in your current city.<br><br>" +
               "Does NOT require stamina."
-    })
+    });
+
+    actionName = "Hyperbolic Regeneration Chamber";
+    GeneralActions[actionName] = new Action({
+        name: actionName,
+        desc: "Enter cryogenic stasis using the Bladeburner division's hi-tech Regeneration Chamber. " +
+              "This will slowly heal your wounds and slightly increase your stamina gain.<br><br>",
+    });
 
     //Black Operations
     BlackOperations["Operation Typhoon"] = new BlackOperation({

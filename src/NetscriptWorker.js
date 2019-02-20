@@ -13,6 +13,7 @@ import {executeJSScript}                    from "./NetscriptJSEvaluator";
 import {NetscriptPort}                      from "./NetscriptPort";
 import {AllServers}                         from "./Server";
 import {Settings}                           from "./Settings/Settings";
+import { setTimeoutRef }                    from "./utils/SetTimeoutRef";
 
 import {generate}                           from 'escodegen';
 
@@ -283,7 +284,7 @@ function startNetscript1Script(workerScript) {
                 if (workerScript.env.stopFlag) { return reject(workerScript); }
 
                 if (interpreter.step()) {
-                    window.setTimeout(runInterpreter, Settings.CodeInstructionRunTime);
+                    setTimeoutRef(runInterpreter, Settings.CodeInstructionRunTime);
                 } else {
                     resolve(workerScript);
                 }
@@ -553,7 +554,7 @@ function runScriptsLoop() {
 		}
 	}
 
-	setTimeout(runScriptsLoop, 6000);
+	setTimeoutRef(runScriptsLoop, 6000);
 }
 
 //Queues a script to be killed by settings its stop flag to true. Then, the code will reject

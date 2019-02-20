@@ -20,6 +20,7 @@ import {TextFile}                               from "./TextFile";
 import {parse, Node}                            from "../utils/acorn";
 import {Page, routing}                          from "./ui/navigationTracking";
 import {numeralWrapper}                         from "./ui/numeralFormat";
+import { setTimeoutRef }                        from "./utils/SetTimeoutRef";
 import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver";
@@ -758,7 +759,7 @@ Script.prototype.download = function() {
         a.download = filename;
         document.body.appendChild(a);
         a.click();
-        setTimeout(function() {
+        setTimeoutRef(function() {
             document.body.removeChild(a);
             window.URL.revokeObjectURL(url);
         }, 0);

@@ -1,9 +1,10 @@
-import {Engine}                    from "./engine";
+import {Engine}                     from "./engine";
+import { setTimeoutRef }            from "./utils/SetTimeoutRef";
 
-import {removeChildrenFromElement} from "../utils/uiHelpers/removeChildrenFromElement";
-import {createElement}             from "../utils/uiHelpers/createElement";
-import {exceptionAlert}            from "../utils/helpers/exceptionAlert";
-import {isString}                  from "../utils/helpers/isString";
+import {removeChildrenFromElement}  from "../utils/uiHelpers/removeChildrenFromElement";
+import {createElement}              from "../utils/uiHelpers/createElement";
+import {exceptionAlert}             from "../utils/helpers/exceptionAlert";
+import {isString}                   from "../utils/helpers/isString";
 
 var cinematicTextFlag = false;
 
@@ -59,7 +60,7 @@ function writeCinematicTextLine(line) {
 
 function writeCinematicTextLetter(pElem, line, i=0) {
     return new Promise(function(resolve, reject) {
-        setTimeout(function() {
+        setTimeoutRef(function() {
             if (i >= line.length) {
                 var textToShow = line.substring(0, i);
                 pElem.innerHTML = textToShow;

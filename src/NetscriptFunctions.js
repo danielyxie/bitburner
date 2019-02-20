@@ -55,6 +55,7 @@ import { getStockmarket4SDataCost,
          getStockMarket4STixApiCost }               from "./StockMarket/StockMarketCosts";
 import {numeralWrapper}                             from "./ui/numeralFormat";
 import {post}                                       from "./ui/postToTerminal";
+import { setTimeoutRef }                            from "./utils/SetTimeoutRef";
 import {TextFile, getTextFile, createTextFile}      from "./TextFile";
 
 import {unknownBladeburnerActionErrorMessage,
@@ -853,7 +854,7 @@ function NetscriptFunctions(workerScript) {
             if (scriptname == null || threads == null) {
                 throw makeRuntimeRejectMsg(workerScript, "Invalid scriptname or numThreads argument passed to spawn()");
             }
-            setTimeout(()=>{
+            setTimeoutRef(() => {
                 if (scriptname === undefined) {
                     throw makeRuntimeRejectMsg(workerScript, "spawn() call has incorrect number of arguments. Usage: spawn(scriptname, numThreads, [arg1], [arg2]...)");
                 }
@@ -870,7 +871,7 @@ function NetscriptFunctions(workerScript) {
                 }
 
                 return runScriptFromScript(scriptServer, scriptname, argsForNewScript, workerScript, threads);
-            }, 20000);
+            }, 20e3);
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.spawn == null) {
                 workerScript.scriptRef.log("spawn() will execute " + scriptname + " in 20 seconds");
             }
@@ -2909,8 +2910,10 @@ function NetscriptFunctions(workerScript) {
                 bitnode:            Player.bitNodeN,
                 city:               Player.city,
                 factions:           Player.factions.slice(),
+                hp:                 Player.hp,
                 jobs:               Object.keys(Player.jobs),
                 jobTitles:          Object.values(Player.jobs),
+                maxHp:              Player.max_hp,
                 mult: {
                     agility:        Player.agility_mult,
                     agilityExp:     Player.agility_exp_mult,

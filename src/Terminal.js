@@ -35,6 +35,7 @@ import {Settings}                           from "./Settings/Settings";
 import {SpecialServerIps,
         SpecialServerNames}                 from "./SpecialServerIps";
 import {getTextFile}                        from "./TextFile";
+import { setTimeoutRef }                    from "./utils/SetTimeoutRef";
 import {containsAllStrings,
         longestCommonStart}                 from "../utils/StringHelperFunctions";
 import {Page, routing}                      from "./ui/navigationTracking";
@@ -128,7 +129,7 @@ $(document).keydown(function(event) {
             }
             var prevCommand = Terminal.commandHistory[Terminal.commandHistoryIndex];
             terminalInput.value = prevCommand;
-            setTimeout(function(){terminalInput.selectionStart = terminalInput.selectionEnd = 10000; }, 0);
+            setTimeoutRef(function(){terminalInput.selectionStart = terminalInput.selectionEnd = 10000; }, 0);
         }
 
         if (event.keyCode === KEY.DOWNARROW ||
@@ -1405,7 +1406,7 @@ let Terminal = {
                     } else if (executableName.endsWith(".cct")) {
                         Terminal.runContract(executableName);
 					} else {
-                        Terminal.runProgram(executableName);
+                        Terminal.runProgram(commandArray);
 					}
 				}
 				break;
@@ -1993,30 +1994,27 @@ let Terminal = {
 
 	//First called when the "run [program]" command is called. Checks to see if you
 	//have the executable and, if you do, calls the executeProgram() function
-	runProgram: function(programName) {
-		//Check if you have the program on your computer. If you do, execute it, otherwise
-		//display an error message
-        var splitArgs = programName.split(" ");
-        var name = " ";
-        if (splitArgs.length > 1) {
-            name = splitArgs[0];
-        } else {
-            name = programName;
-        }
-        if (Player.hasProgram(name)) {
-            Terminal.executeProgram(programName);
+	runProgram: function(commandArray) {
+        if (commandArray.length < 2) { return; }
+
+		// Check if you have the program on your computer. If you do, execute it, otherwise
+		// display an error message
+        const programName = commandArray[1];
+
+        if (Player.hasProgram(programName)) {
+            Terminal.executeProgram(commandArray);
             return;
         }
 		post("ERROR: No such executable on home computer (Only programs that exist on your home computer can be run)");
 	},
 
 	//Contains the implementations of all possible programs
-	executeProgram: function(programName) {
+	executeProgram: function(commandArray) {
+        if (commandArray.length < 2) { return; }
+
         var s = Player.getCurrentServer();
-        var splitArgs = programName.split(" ");
-        if (splitArgs.length > 1) {
-            programName = splitArgs[0];
-        }
+        const programName = commandArray[1];
+        const splitArgs = commandArray.slice(1);
 
         // TODO: refactor this/these out of Terminal. This logic could reside closer to the Programs themselves.
         /**

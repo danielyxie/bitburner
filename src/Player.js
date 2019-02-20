@@ -1690,6 +1690,11 @@ PlayerObject.prototype.singularityStopWork = function() {
 
 //Returns true if hospitalized, false otherwise
 PlayerObject.prototype.takeDamage = function(amt) {
+    if (typeof amt !== "number") {
+        console.warn(`Player.takeDamage() called without a numeric argument: ${amt}`);
+        return;
+    }
+
     this.hp -= amt;
     if (this.hp <= 0) {
         this.hospitalize();
@@ -1697,6 +1702,15 @@ PlayerObject.prototype.takeDamage = function(amt) {
     } else {
         return false;
     }
+}
+
+PlayerObject.prototype.regenerateHp = function(amt) {
+    if (typeof amt !== "number") {
+        console.warn(`Player.regenerateHp() called without a numeric argument: ${amt}`);
+        return;
+    }
+    this.hp += amt;
+    if (this.hp > this.max_hp) { this.hp = this.max_hp; }
 }
 
 PlayerObject.prototype.hospitalize = function() {

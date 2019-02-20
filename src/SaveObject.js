@@ -17,6 +17,8 @@ import {AllServers, loadAllServers}             from "./Server";
 import {Settings}                               from "./Settings/Settings";
 import {loadSpecialServerIps, SpecialServerIps} from "./SpecialServerIps";
 import {loadStockMarket, StockMarket}           from "./StockMarket/StockMarket";
+import { setTimeoutRef }                        from "./utils/SetTimeoutRef";
+
 import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {gameOptionsBoxClose}                    from "../utils/GameOptions";
 import {clearEventListeners}                    from "../utils/uiHelpers/clearEventListeners";
@@ -546,7 +548,7 @@ BitburnerSaveObject.prototype.exportGame = function() {
         a.download = "bitburnerSave.json";
         document.body.appendChild(a);
         a.click();
-        setTimeout(function() {
+        setTimeoutRef(function() {
             document.body.removeChild(a);
             window.URL.revokeObjectURL(url);
         }, 0);

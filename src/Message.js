@@ -32,7 +32,6 @@ Reviver.constructors.Message = Message;
 
 //Sends message to player, including a pop up
 function sendMessage(msg, forced=false) {
-    console.log("sending message: " + msg.filename);
     msg.recvd = true;
     if (forced || !Settings.SuppressMessages) {
         showMessage(msg);

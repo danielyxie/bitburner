@@ -517,7 +517,7 @@ export let CONSTANTS: IMap<any> = {
     ** Increased the effect of the "Hyperdrive" skill
     ** Slightly increased the rate which the skill point cost rises for almost all skills
     ** The "Overlock" Skill now has a maximum level of 90 instead of 95
-    ** Added a new General Action: Diplomacy
+    ** Added two new General Actions: Diplomacy and Hyperbolic Regeneration Chamber
     ** Lowered the rep cost of the "Blade's Simulacrum" augmentation, but increased the price
 
     * Added new BitNode multipliers:
@@ -530,6 +530,10 @@ export let CONSTANTS: IMap<any> = {
     * 'The Covenant' now requires 20 total Augmentations to get invited, rather than 30
     * You can now purchase permanent Duplicate Sleeves from 'The Covenant'. This requires Source-File 10, and you must be in BN-10 or after
     * Increased the money gained from Coding Contracts by 50%
+    * getCharacterInformation() function now returns the player's HP and max HP
+    * Bug Fix: You can no longer disconnect the enemy's connections in Hacking Missions
+    * Bug Fix: After installing Augmentations, the Terminal display will now correctly show the current server as "home"
+    * Bug Fix: Fixed an exploit where you could change the duration of timed functions (e.g. hack, weaken) in NetscriptJS
     `
 
 }
