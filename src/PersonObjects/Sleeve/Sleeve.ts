@@ -195,6 +195,8 @@ export class Sleeve extends Person {
                     }
                     retValue = this.gainExperience(p, successGainRates);
                     this.gainMoney(p, this.gainRatesForTask);
+
+                    p.karma -= crime.karma;
                 } else {
                     retValue = this.gainExperience(p, this.gainRatesForTask);
                 }

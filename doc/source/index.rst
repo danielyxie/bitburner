@@ -25,7 +25,9 @@ secrets that you've been searching for.
     Keyboard Shortcuts <shortcuts>
     Script Editors <scripteditors>
     Game Frozen or Stuck? <gamefrozen>
+    Guides & Tips <guidesandtips>
     Changelog <changelog>
+    Donate <https://paypal.me/danielyxie>
 
 Indices and tables
 ==================

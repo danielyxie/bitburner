@@ -123,12 +123,12 @@ export function initBitNodes() {
                                           "than the humans that had created them.<br><br>" +
                                           "In this BitNode you will be able to access the Bladeburner Division at the NSA, which provides a new mechanic " +
                                           "for progression. Furthermore:<br><br>" +
-                                          "Hacking and Hacknet Nodes will be significantly less profitable<br>" +
-                                          "Your hacking level is reduced by 50%<br>" +
+                                          "Hacking and Hacknet Nodes will be less profitable<br>" +
+                                          "Your hacking level is reduced by 65%<br>" +
                                           "Hacking experience gain from scripts is reduced by 75%<br>" +
                                           "Corporations have 80% lower valuations and are therefore less profitable<br>" +
                                           "Working for companies is 50% less profitable<br>" +
-                                          "Crimes and Infiltration are 50% less profitable<br><br>" +
+                                          "Crimes and Infiltration are 25% less profitable<br><br>" +
                                           "Destroying this BitNode will give you Source-File 6, or if you already have this Source-File it will upgrade " +
                                           "its level up to a maximum of 3. This Source-File allows you to access the NSA's Bladeburner Division in other " +
                                           "BitNodes. In addition, this Source-File will raise both the level and experience gain rate of all your combat stats by:<br><br>" +
@@ -147,11 +147,11 @@ export function initBitNodes() {
                                           "Bladeburner skills cost twice as many skill points<br>" +
                                           "Augmentations are 3x more expensive<br>" +
                                           "Hacking and Hacknet Nodes will be significantly less profitable<br>" +
-                                          "Your hacking level is reduced by 50%<br>" +
+                                          "Your hacking level is reduced by 65%<br>" +
                                           "Hacking experience gain from scripts is reduced by 75%<br>" +
                                           "Corporations have 80% lower valuations and are therefore less profitable<br>" +
                                           "Working for companies is 50% less profitable<br>" +
-                                          "Crimes and Infiltration are 50% less profitable<br><br>" +
+                                          "Crimes and Infiltration are 25% less profitable<br><br>" +
                                           "Destroying this BitNode will give you Source-File 7, or if you already have this Source-File it will upgrade " +
                                           "its level up to a maximum of 3. This Source-File allows you to access the Bladeburner Netscript API in other " +
                                           "BitNodes. In addition, this Source-File will increase all of your Bladeburner multipliers by:<br><br>" +
@@ -301,10 +301,10 @@ export function initBitNodeMultipliers(p: IPlayer) {
             BitNodeMultipliers.ServerMaxMoney           = 0.4;
             BitNodeMultipliers.ServerStartingMoney      = 0.5;
             BitNodeMultipliers.ServerStartingSecurity   = 1.5;
-            BitNodeMultipliers.ScriptHackMoney          = 0.5;
+            BitNodeMultipliers.ScriptHackMoney          = 0.75;
             BitNodeMultipliers.CompanyWorkMoney         = 0.5;
-            BitNodeMultipliers.CrimeMoney               = 0.5;
-            BitNodeMultipliers.InfiltrationMoney        = 0.5;
+            BitNodeMultipliers.CrimeMoney               = 0.75;
+            BitNodeMultipliers.InfiltrationMoney        = 0.75;
             BitNodeMultipliers.CorporationValuation     = 0.2;
             BitNodeMultipliers.HacknetNodeMoney         = 0.2;
             BitNodeMultipliers.FactionPassiveRepGain    = 0;
@@ -312,22 +312,24 @@ export function initBitNodeMultipliers(p: IPlayer) {
             BitNodeMultipliers.DaedalusAugsRequirement  = 1.166; // Results in 35 Augs needed
             break;
         case 7: //Bladeburner 2079
-            BitNodeMultipliers.BladeburnerRank          = 0.6;
-            BitNodeMultipliers.BladeburnerSkillCost     = 2;
-            BitNodeMultipliers.AugmentationMoneyCost    = 3;
-            BitNodeMultipliers.HackingLevelMultiplier   = 0.35;
-            BitNodeMultipliers.ServerMaxMoney           = 0.4;
-            BitNodeMultipliers.ServerStartingMoney      = 0.5;
-            BitNodeMultipliers.ServerStartingSecurity   = 1.5;
-            BitNodeMultipliers.ScriptHackMoney          = 0.5;
-            BitNodeMultipliers.CompanyWorkMoney         = 0.5;
-            BitNodeMultipliers.CrimeMoney               = 0.5;
-            BitNodeMultipliers.InfiltrationMoney        = 0.5;
-            BitNodeMultipliers.CorporationValuation     = 0.2;
-            BitNodeMultipliers.HacknetNodeMoney         = 0.2;
-            BitNodeMultipliers.FactionPassiveRepGain    = 0;
-            BitNodeMultipliers.HackExpGain              = 0.25;
-            BitNodeMultipliers.DaedalusAugsRequirement  = 1.166; // Results in 35 Augs needed
+            BitNodeMultipliers.BladeburnerRank              = 0.6;
+            BitNodeMultipliers.BladeburnerSkillCost         = 2;
+            BitNodeMultipliers.AugmentationMoneyCost        = 3;
+            BitNodeMultipliers.HackingLevelMultiplier       = 0.35;
+            BitNodeMultipliers.ServerMaxMoney               = 0.4;
+            BitNodeMultipliers.ServerStartingMoney          = 0.5;
+            BitNodeMultipliers.ServerStartingSecurity       = 1.5;
+            BitNodeMultipliers.ScriptHackMoney              = 0.5;
+            BitNodeMultipliers.CompanyWorkMoney             = 0.5;
+            BitNodeMultipliers.CrimeMoney                   = 0.75;
+            BitNodeMultipliers.InfiltrationMoney            = 0.75;
+            BitNodeMultipliers.CorporationValuation         = 0.2;
+            BitNodeMultipliers.HacknetNodeMoney             = 0.2;
+            BitNodeMultipliers.FactionPassiveRepGain        = 0;
+            BitNodeMultipliers.HackExpGain                  = 0.25;
+            BitNodeMultipliers.FourSigmaMarketDataCost      = 2;
+            BitNodeMultipliers.FourSigmaMarketDataApiCost   = 2;
+            BitNodeMultipliers.DaedalusAugsRequirement      = 1.166; // Results in 35 Augs needed
             break;
         case 8: //Ghost of Wall Street
             BitNodeMultipliers.ScriptHackMoney          = 0;
@@ -392,12 +394,12 @@ export function initBitNodeMultipliers(p: IPlayer) {
             // up to a maximum of 1.34, which results in 40 Augs required
             BitNodeMultipliers.DaedalusAugsRequirement = Math.min(inc, 1.34);
 
-            BitNodeMultipliers.HackingLevelMultiplier = dec;
-            BitNodeMultipliers.StrengthLevelMultiplier = dec;
-            BitNodeMultipliers.DefenseLevelMultiplier = dec;
+            BitNodeMultipliers.HackingLevelMultiplier   = dec;
+            BitNodeMultipliers.StrengthLevelMultiplier  = dec;
+            BitNodeMultipliers.DefenseLevelMultiplier   = dec;
             BitNodeMultipliers.DexterityLevelMultiplier = dec;
-            BitNodeMultipliers.AgilityLevelMultiplier = dec;
-            BitNodeMultipliers.CharismaLevelMultiplier = dec;
+            BitNodeMultipliers.AgilityLevelMultiplier   = dec;
+            BitNodeMultipliers.CharismaLevelMultiplier  = dec;
 
             BitNodeMultipliers.ServerMaxMoney         = dec;
             BitNodeMultipliers.ServerStartingMoney    = dec;

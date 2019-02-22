@@ -21,6 +21,7 @@ export interface IPlayer {
     factions: string[];
     hasWseAccount: boolean;
     jobs: IMap<string>;
+    karma: number;
     money: any;
     queuedAugmentations: IPlayerOwnedAugmentation[];
     resleeves: Resleeve[];

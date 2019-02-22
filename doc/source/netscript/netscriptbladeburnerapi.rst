@@ -335,6 +335,13 @@ getCityChaos
 
     Returns the chaos in the specified city, or -1 if an invalid city was specified
 
+getCity
+-------
+
+.. js:function:: getCity()
+
+    Returns the city that the player is currently in (for Bladeburner).
+
 switchCity
 ----------
 
