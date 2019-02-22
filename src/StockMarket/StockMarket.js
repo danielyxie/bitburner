@@ -454,6 +454,7 @@ function sellStock(stock, shares) {
     if (shares === 0) {return false;}
     var gains = stock.price * shares - CONSTANTS.StockMarketCommission;
     Player.gainMoney(gains);
+    Player.recordMoneySource(profit, "stock");
     stock.playerShares = Math.round(stock.playerShares - shares);
     if (stock.playerShares == 0) {
         stock.playerAvgPx = 0;
@@ -550,6 +551,7 @@ function sellShort(stock, shares, workerScript=null) {
     var profit = ((stock.playerAvgShortPx - stock.price) * shares) - CONSTANTS.StockMarketCommission;
     if (isNaN(profit)) {profit = 0;}
     Player.gainMoney(origCost + profit);
+    Player.recordMoneySource(profit, "stock");
     if (tixApi) {
         workerScript.scriptRef.onlineMoneyMade += profit;
         Player.scriptProdSinceLastAug += profit;

@@ -1209,6 +1209,7 @@ Bladeburner.prototype.completeAction = function() {
                     if (!isOperation) {
                         moneyGain = ContractBaseMoneyGain * rewardMultiplier * this.skillMultipliers.money;
                         Player.gainMoney(moneyGain);
+                        Player.recordMoneySource(moneyGain, "bladeburner");
                     }
 
                     if (isOperation) {

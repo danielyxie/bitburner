@@ -2868,7 +2868,9 @@ Corporation.prototype.process = function() {
                     const totalDividends = (this.dividendPercentage / 100) * cycleProfit;
                     const retainedEarnings = cycleProfit - totalDividends;
                     const dividendsPerShare = totalDividends / this.totalShares;
-                    Player.gainMoney(this.numShares * dividendsPerShare * (1 - (this.dividendTaxPercentage / 100)));
+                    const profit = this.numShares * dividendsPerShare * (1 - (this.dividendTaxPercentage / 100));
+                    Player.gainMoney(profit);
+                    Player.recordMoneySource(profit, "corporation");
                     this.funds = this.funds.plus(retainedEarnings);
                 }
             } else {
@@ -3533,6 +3535,7 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                             this.shareSalesUntilPriceUpdate = newSharesUntilUpdate;
                             this.shareSaleCooldown = SellSharesCooldown;
                             Player.gainMoney(profit);
+                            Player.recordMoneySource(profit, "corporation");
                             removeElementById(popupId);
                             dialogBoxCreate(`Sold ${numeralWrapper.formatMoney(shares, "0.000a")} shares for ` +
                                             `${numeralWrapper.formatMoney(profit, "$0.000a")}. ` +

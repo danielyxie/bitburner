@@ -4,14 +4,18 @@ import { Engine }                               from "./engine";
 import {iTutorialSteps, iTutorialNextStep,
         ITutorial}                              from "./InteractiveTutorial";
 import {Player}                                 from "./Player";
+import {Page, routing}                          from "./ui/navigationTracking";
+import { numeralWrapper }                       from "./ui/numeralFormat";
+
 import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {clearEventListeners}                    from "../utils/uiHelpers/clearEventListeners";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver";
 import {createElement}                          from "../utils/uiHelpers/createElement";
-import {Page, routing}                          from "./ui/navigationTracking";
-import {formatNumber}                           from "../utils/StringHelperFunctions";
 import {getElementById}                         from "../utils/uiHelpers/getElementById";
+
+// Stores total money gain rate from all of the player's Hacknet Nodes
+let TotalHacknetNodeProduction = 0;
 
 /**
  * Overwrites the inner text of the specified HTML element if it is different from what currently exists.
@@ -299,7 +303,7 @@ function updateTotalHacknetProduction() {
     for (var i = 0; i < Player.hacknetNodes.length; ++i) {
         total += Player.hacknetNodes[i].moneyGainRatePerSecond;
     }
-    Player.totalHacknetNodeProduction = total;
+    TotalHacknetNodeProduction = total;
 }
 
 function getCostOfNextHacknetNode() {
@@ -446,9 +450,9 @@ function updateHacknetNodesContent() {
     //Set purchase button to inactive if not enough money, and update its price display
     var cost = getCostOfNextHacknetNode();
     var purchaseButton = getElementById("hacknet-nodes-purchase-button");
-    var formattedCost = formatNumber(cost, 2);
+    var formattedCost = numeralWrapper.formatMoney(cost);
 
-    updateText("hacknet-nodes-purchase-button", "Purchase Hacknet Node - $" + formattedCost);
+    updateText("hacknet-nodes-purchase-button", `Purchase Hacknet Node - ${formattedCost}`);
 
     if (Player.money.lt(cost)) {
         purchaseButton.setAttribute("class", "a-link-button-inactive");
@@ -457,8 +461,8 @@ function updateHacknetNodesContent() {
     }
 
     //Update player's money
-    updateText("hacknet-nodes-player-money", "$" + formatNumber(Player.money.toNumber(), 2));
-    updateText("hacknet-nodes-total-production", "$" + formatNumber(Player.totalHacknetNodeProduction, 2) + " / sec");
+    updateText("hacknet-nodes-player-money", numeralWrapper.formatMoney(Player.money.toNumber()));
+    updateText("hacknet-nodes-total-production", numeralWrapper.formatMoney(TotalHacknetNodeProduction) + " / sec");
 
     //Update information in each owned hacknet node
     for (var i = 0; i < Player.hacknetNodes.length; ++i) {
@@ -559,8 +563,8 @@ function updateHacknetNodeDomElement(nodeObj) {
     var nodeName = nodeObj.name;
 
     updateText("hacknet-node-name-" + nodeName, nodeName);
-    updateText("hacknet-node-total-production-" + nodeName, "$" + formatNumber(nodeObj.totalMoneyGenerated, 2));
-    updateText("hacknet-node-production-rate-" + nodeName, "($" + formatNumber(nodeObj.moneyGainRatePerSecond, 2) + " / sec)");
+    updateText("hacknet-node-total-production-" + nodeName, numeralWrapper.formatMoney(nodeObj.totalMoneyGenerated));
+    updateText("hacknet-node-production-rate-" + nodeName, "(" + numeralWrapper.formatMoney(nodeObj.moneyGainRatePerSecond) + " / sec)");
     updateText("hacknet-node-level-" + nodeName, nodeObj.level);
     updateText("hacknet-node-ram-" + nodeName, nodeObj.ram + "GB");
     updateText("hacknet-node-cores-" + nodeName, nodeObj.cores);
@@ -582,7 +586,7 @@ function updateHacknetNodeDomElement(nodeObj) {
         }
 
         var upgradeLevelCost = nodeObj.calculateLevelUpgradeCost(multiplier);
-        updateText("hacknet-node-upgrade-level-" + nodeName, "Upgrade x" + multiplier + " - $" + formatNumber(upgradeLevelCost, 2))
+        updateText("hacknet-node-upgrade-level-" + nodeName, "Upgrade x" + multiplier + " - " + numeralWrapper.formatMoney(upgradeLevelCost))
         if (Player.money.lt(upgradeLevelCost)) {
             upgradeLevelButton.setAttribute("class", "a-link-button-inactive");
         } else {
@@ -606,7 +610,7 @@ function updateHacknetNodeDomElement(nodeObj) {
         }
 
         var upgradeRamCost = nodeObj.calculateRamUpgradeCost(multiplier);
-        updateText("hacknet-node-upgrade-ram-" + nodeName, "Upgrade x" + multiplier + " - $" + formatNumber(upgradeRamCost, 2));
+        updateText("hacknet-node-upgrade-ram-" + nodeName, "Upgrade x" + multiplier + " - " + numeralWrapper.formatMoney(upgradeRamCost));
         if (Player.money.lt(upgradeRamCost)) {
             upgradeRamButton.setAttribute("class", "a-link-button-inactive");
         } else {
@@ -629,7 +633,7 @@ function updateHacknetNodeDomElement(nodeObj) {
             multiplier = Math.min(levelsToMax, hacknetNodePurchaseMultiplier);
         }
         var upgradeCoreCost = nodeObj.calculateCoreUpgradeCost(multiplier);
-        updateText("hacknet-node-upgrade-core-" + nodeName, "Upgrade x" + multiplier + " - $" + formatNumber(upgradeCoreCost, 2));
+        updateText("hacknet-node-upgrade-core-" + nodeName, "Upgrade x" + multiplier + " - " + numeralWrapper.formatMoney(upgradeCoreCost));
         if (Player.money.lt(upgradeCoreCost)) {
             upgradeCoreButton.setAttribute("class", "a-link-button-inactive");
         } else {
@@ -660,6 +664,7 @@ function processSingleHacknetNodeEarnings(numCycles, nodeObj) {
     nodeObj.totalMoneyGenerated += totalEarnings;
     nodeObj.onlineTimeSeconds += (numCycles * (Engine._idleSpeed / 1000));
     Player.gainMoney(totalEarnings);
+    Player.recordMoneySource(totalEarnings, "hacknetnode");
     return totalEarnings;
 }
 
