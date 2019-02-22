@@ -748,7 +748,8 @@ const Engine = {
                 item.appendChild(createElement("a", {
                     innerText:"Accept Faction Invitation",
                     class:"a-link-button", display:"inline", margin:"4px", padding:"4px",
-                    clickListener:()=>{
+                    clickListener: (e) => {
+                        if (!e.isTrusted) { return false; }
                         joinFaction(Factions[factionName]);
                         for (var i = 0; i < Player.factionInvitations.length; ++i) {
                             if (Player.factionInvitations[i] == factionName || Factions[Player.factionInvitations[i]].isBanned) {
