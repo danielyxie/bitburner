@@ -535,12 +535,14 @@ export let CONSTANTS: IMap<any> = {
     * A few minor changes to BitNode multipliers across the board (mostly for the new multipliers)
     * 'The Covenant' now requires 20 total Augmentations to get invited, rather than 30
     * You can now purchase permanent Duplicate Sleeves from 'The Covenant'. This requires Source-File 10, and you must be in BN-10 or after
+    * You can now track where all of your money comes from in the 'Stats' page
     * Increased the money gained from Coding Contracts by 50%
     * getCharacterInformation() function now returns the player's HP and max HP
     * Bug Fix: You can no longer disconnect the enemy's connections in Hacking Missions
     * Bug Fix: After installing Augmentations, the Terminal display will now correctly show the current server as "home"
     * Bug Fix: Fixed an exploit where you could change the duration of timed functions (e.g. hack, weaken) in NetscriptJS
     * Bug Fix: You should now properly be able to use the ServerProfile.exe program
+    * Bug Fix: Prevented exploit that allowed you to accept faction invites programmatically through NetscriptJS
     `
 
 }
