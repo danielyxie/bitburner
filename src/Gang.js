@@ -247,6 +247,7 @@ Gang.prototype.processGains = function(numCycles=1, player) {
     }
     if (typeof moneyGains === "number") {
         player.gainMoney(moneyGains * numCycles);
+        player.recordMoneySource(moneyGains * numCycles, "gang");
     } else {
         console.warn("ERROR: respectGains is NaN");
     }
