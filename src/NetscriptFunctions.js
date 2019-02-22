@@ -8,7 +8,7 @@ import { augmentationExists,
          installAugmentations }                     from "./Augmentation/AugmentationHelpers";
 import { AugmentationNames }                        from "./Augmentation/data/AugmentationNames";
 import { BitNodeMultipliers }                       from "./BitNode/BitNodeMultipliers";
-import { determineCrimeSuccess, findCrime }         from "./Crime/CrimeHelpers";
+import { findCrime }                                from "./Crime/CrimeHelpers";
 import {Bladeburner}                                from "./Bladeburner";
 import {Company}                                    from "./Company/Company";
 import {Companies, companyExists}                   from "./Company/Companies";
@@ -381,6 +381,7 @@ function NetscriptFunctions(workerScript) {
                     Player.gainMoney(moneyGained);
                     workerScript.scriptRef.onlineMoneyMade += moneyGained;
                     Player.scriptProdSinceLastAug += moneyGained;
+                    Player.recordMoneySource(moneyGained, "hacking");
                     workerScript.scriptRef.recordHack(server.ip, moneyGained, threads);
                     Player.gainHackingExp(expGainedOnSuccess);
                     workerScript.scriptRef.onlineExpGained += expGainedOnSuccess;
@@ -1621,6 +1622,7 @@ function NetscriptFunctions(workerScript) {
             if (isNaN(netProfit)) {netProfit = 0;}
             workerScript.scriptRef.onlineMoneyMade += netProfit;
             Player.scriptProdSinceLastAug += netProfit;
+            Player.recordMoneySource(netProfit, "stock");
 
             stock.playerShares -= shares;
             if (stock.playerShares == 0) {

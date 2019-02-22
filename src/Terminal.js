@@ -729,6 +729,7 @@ let Terminal = {
 
 				server.moneyAvailable -= moneyGained;
 				Player.gainMoney(moneyGained);
+                Player.recordMoneySource(moneyGained, "hacking");
                 Player.gainHackingExp(expGainedOnSuccess)
                 Player.gainIntelligenceExp(expGainedOnSuccess / CONSTANTS.IntelligenceTerminalHackBaseExpGain);
 

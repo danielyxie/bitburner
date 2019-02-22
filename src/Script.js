@@ -854,6 +854,7 @@ function scriptCalculateOfflineProduction(runningScriptObj) {
             }
             totalOfflineProduction += production;
             Player.gainMoney(production);
+            Player.recordMoneySource(production, "hacking");
             console.log(runningScriptObj.filename + " generated $" + production + " while offline by hacking " + serv.hostname);
             runningScriptObj.log(runningScriptObj.filename + " generated $" + production + " while offline by hacking " + serv.hostname);
             serv.moneyAvailable -= production;

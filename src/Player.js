@@ -31,6 +31,7 @@ import {SourceFiles, applySourceFile}           from "./SourceFile";
 import { SourceFileFlags }                      from "./SourceFile/SourceFileFlags";
 import Decimal                                  from "decimal.js";
 import {numeralWrapper}                         from "./ui/numeralFormat";
+import { MoneySourceTracker }                   from "./utils/MoneySourceTracker";
 import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {clearEventListeners}                    from "../utils/uiHelpers/clearEventListeners";
 import {createRandomIp}                         from "../utils/IPAddress";
@@ -92,8 +93,6 @@ function PlayerObject() {
 
     //Money
     this.money           = new Decimal(1000);
-    this.total_money     = new Decimal(0);   //Total money ever earned in this "simulation"
-    this.lifetime_money  = new Decimal(0);   //Total money ever earned
 
     //IP Address of Starting (home) computer
     this.homeComputer = "";
@@ -114,7 +113,6 @@ function PlayerObject() {
     this.currentServer          = ""; //IP address of Server currently being accessed through terminal
     this.purchasedServers       = []; //IP Addresses of purchased servers
     this.hacknetNodes           = [];
-    this.totalHacknetNodeProduction = 0;
 
     //Factions
     this.factions = [];             //Names of all factions player has joined
@@ -218,11 +216,12 @@ function PlayerObject() {
     this.playtimeSinceLastAug = 0;
     this.playtimeSinceLastBitnode = 0;
 
-    //Production since last Augmentation installation
+    // Keep track of where money comes from
+    this.moneySourceA = new MoneySourceTracker(); // Where money comes from since last-installed Augmentation
+    this.moneySourceB = new MoneySourceTracker(); // Where money comes from for this entire BitNode run
+
+    // Production since last Augmentation installation
     this.scriptProdSinceLastAug = 0;
-    this.stockProdSinceLastAug = 0;
-    this.crimeProdSinceLastAug = 0;
-    this.jobProdSinceLastAug = 0;
 };
 
 PlayerObject.prototype.init = function() {
@@ -315,11 +314,12 @@ PlayerObject.prototype.prestigeAugmentation = function() {
 
     this.lastUpdate = new Date().getTime();
 
+    // Statistics Trackers
     this.playtimeSinceLastAug = 0;
     this.scriptProdSinceLastAug = 0;
+    this.moneySourceA.reset();
 
     this.hacknetNodes.length = 0;
-    this.totalHacknetNodeProduction = 0;
 
     //Re-calculate skills and reset HP
     this.updateSkillLevels();
@@ -405,7 +405,6 @@ PlayerObject.prototype.prestigeSourceFile = function() {
     this.lastUpdate = new Date().getTime();
 
     this.hacknetNodes.length = 0;
-    this.totalHacknetNodeProduction = 0;
 
     //Gang
     this.gang = null;
@@ -420,9 +419,12 @@ PlayerObject.prototype.prestigeSourceFile = function() {
     //BitNode 3: Corporatocracy
     this.corporation = 0;
 
+    // Statistics trackers
     this.playtimeSinceLastAug = 0;
     this.playtimeSinceLastBitnode = 0;
     this.scriptProdSinceLastAug = 0;
+    this.moneySourceA.reset();
+    this.moneySourceB.reset();
 
     this.updateSkillLevels();
     this.hp = this.max_hp;
@@ -542,8 +544,6 @@ PlayerObject.prototype.gainMoney = function(money) {
         console.log("ERR: NaN passed into Player.gainMoney()"); return;
     }
 	this.money = this.money.plus(money);
-	this.total_money = this.total_money.plus(money);
-	this.lifetime_money = this.lifetime_money.plus(money);
 }
 
 PlayerObject.prototype.loseMoney = function(money) {
@@ -559,6 +559,11 @@ PlayerObject.prototype.canAfford = function(cost) {
         return false;
     }
     return this.money.gte(cost);
+}
+
+PlayerObject.prototype.recordMoneySource = function(amt, source) {
+    this.moneySourceA.record(amt, source);
+    this.moneySourceB.record(amt, source);
 }
 
 PlayerObject.prototype.gainHackingExp = function(exp) {
@@ -690,6 +695,7 @@ PlayerObject.prototype.processWorkEarnings = function(numCycles=1) {
     this.gainAgilityExp(agiExpGain);
     this.gainCharismaExp(chaExpGain);
     this.gainMoney(moneyGain);
+    this.recordMoneySource(moneyGain, "work");
     this.workHackExpGained  += hackExpGain;
     this.workStrExpGained   += strExpGain;
     this.workDefExpGained   += defExpGain;
@@ -1561,7 +1567,7 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
     //Determine crime success/failure
     if (!cancelled) {
         var statusText = ""; //TODO, unique message for each crime when you succeed
-        if (determineCrimeSuccess(this.crimeType, this.workMoneyGained)) {
+        if (determineCrimeSuccess(Player, this.crimeType)) {
             //Handle Karma and crime statistics
             let crime = null;
             for(const i in Crimes) {
@@ -1574,6 +1580,8 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
                 console.log(this.crimeType);
                 dialogBoxCreate("ERR: Unrecognized crime type. This is probably a bug please contact the developer");
             }
+            Player.gainMoney(this.workMoneyGained);
+            Player.recordMoneySource(this.workMoneyGained, "crime");
             this.karma -= crime.karma;
             this.numPeopleKilled += crime.kills;
             if(crime.intelligence_exp > 0) {
@@ -2429,6 +2437,7 @@ PlayerObject.prototype.gainCodingContractReward = function(reward, difficulty=1)
         default:
             var moneyGain = CONSTANTS.CodingContractBaseMoneyGain * difficulty * BitNodeMultipliers.CodingContractMoney;
             this.gainMoney(moneyGain);
+            this.recordMoneySource(moneyGain, "codingcontract");
             return `Gained ${numeralWrapper.format(moneyGain, '$0.000a')}`;
             break;
     }
@@ -2441,8 +2450,6 @@ function loadPlayer(saveString) {
 
     //Parse Decimal.js objects
     Player.money = new Decimal(Player.money);
-    Player.total_money = new Decimal(Player.total_money);
-    Player.lifetime_money = new Decimal(Player.lifetime_money);
 
     if (Player.corporation instanceof Corporation) {
         Player.corporation.funds = new Decimal(Player.corporation.funds);
