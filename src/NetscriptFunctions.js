@@ -2261,7 +2261,7 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, `Invalid server specified for rm(): ${ip}`);
             }
 
-            if (fn.includes(".exe")) {
+            if (fn.endsWith(".exe")) {
                 for (var i = 0; i < s.programs.length; ++i) {
                     if (s.programs[i] === fn) {
                        s.programs.splice(i, 1);
