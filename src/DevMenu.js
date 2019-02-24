@@ -3,6 +3,8 @@ import { CodingContractTypes }          from "./CodingContracts";
 import { generateContract,
          generateRandomContract,
          generateRandomContractOnHome } from "./CodingContractGenerator";
+import { Companies }                    from "./Company/Companies";
+import { Company }                      from "./Company/Company";
 import { Programs }                     from "./Programs/Programs";
 import { Factions }                     from "./Faction/Factions";
 import { Player }                       from "./Player";
@@ -373,6 +375,38 @@ export function createDevMenu() {
         innerText: "Connect to server",
     });
 
+    // Companies
+    const companiesHeader = createElement("h2", { innerText: "Companies" });
+
+    const companiesDropdown = createElement("select", {
+        class: "dropdown",
+        margin: "5px",
+    });
+    for (const c in Companies) {
+        companiesDropdown.add(createOptionElement(Companies[c].name));
+    }
+
+    const companyReputationInput = createElement("input", {
+        margin: "5px",
+        placeholder: "Rep to add to company",
+        type: "number",
+    });
+
+    const companyReputationButton = createElement("button", {
+        class: "std-button",
+        innerText: "Add rep to company",
+        clickListener: () => {
+            const compName = getSelectText(companiesDropdown);
+            const company = Companies[compName];
+            const rep = parseFloat(companyReputationInput.value);
+            if (company != null && !isNaN(rep)) {
+                company.playerReputation += rep;
+            } else {
+                console.warn(`Invalid input for Dev Menu Company Rep. Company Name: ${compName}. Rep: ${rep}`);
+            }
+        }
+    });
+
     // Bladeburner
     const bladeburnerHeader = createElement("h2", {innerText: "Bladeburner"});
 
@@ -599,6 +633,11 @@ export function createDevMenu() {
     devMenuContainer.appendChild(serversMaxMoneyAll);
     devMenuContainer.appendChild(serversConnectToDropdown);
     devMenuContainer.appendChild(serversConnectToButton);
+    devMenuContainer.appendChild(companiesHeader);
+    devMenuContainer.appendChild(companiesDropdown);
+    devMenuContainer.appendChild(createElement("br"));
+    devMenuContainer.appendChild(companyReputationInput);
+    devMenuContainer.appendChild(companyReputationButton);
     devMenuContainer.appendChild(bladeburnerHeader);
     devMenuContainer.appendChild(bladeburnerGainRankInput);
     devMenuContainer.appendChild(bladeburnerGainRankButton);
