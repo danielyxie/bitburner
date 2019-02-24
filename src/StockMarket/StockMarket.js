@@ -454,7 +454,7 @@ function sellStock(stock, shares) {
     if (shares === 0) {return false;}
     var gains = stock.price * shares - CONSTANTS.StockMarketCommission;
     Player.gainMoney(gains);
-    Player.recordMoneySource(profit, "stock");
+    Player.recordMoneySource(gains, "stock");
     stock.playerShares = Math.round(stock.playerShares - shares);
     if (stock.playerShares == 0) {
         stock.playerAvgPx = 0;

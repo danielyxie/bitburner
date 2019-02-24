@@ -517,9 +517,11 @@ export let CONSTANTS: IMap<any> = {
     ** Increased the effect of the "Hyperdrive" and "Hands of Midas" skills
     ** Slightly increased the rate which the skill point cost rises for almost all skills
     ** The "Overlock" Skill now has a maximum level of 90 instead of 95
+    ** Money earned from Contracts increased by 100%
     ** Added two new General Actions: Diplomacy and Hyperbolic Regeneration Chamber
     ** Lowered the rep cost of the "Blade's Simulacrum" augmentation, but increased the price
     ** Significantly decreased the initial  amount of Contracts/Operations (the "Contracts/Operations remaining" value)
+    ** Decreased the rate at which the amount of Contracts/Operations increases over time
     ** Decreased the number of successes you need to increase the max level of a Contract/Operation
     ** Increased the average number of Synthoid communities each city has
     ** Reduced the amount by which a successful raid will decrease the population of a city
