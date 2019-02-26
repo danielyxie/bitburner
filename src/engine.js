@@ -76,6 +76,7 @@ import { clearResleevesPage,
          createResleevesPage }                          from "./PersonObjects/Resleeving/ResleevingUI";
 
 import { createStatusText }                             from "./ui/createStatusText";
+import { displayCharacterInfo }                         from "./ui/displayCharacterInfo";
 import {Page, routing}                                  from "./ui/navigationTracking";
 import {numeralWrapper}                                 from "./ui/numeralFormat";
 import {setSettingsLabels}                              from "./ui/setSettingsLabels";
@@ -271,7 +272,7 @@ const Engine = {
     loadCharacterContent: function() {
         Engine.hideAllContent();
         Engine.Display.characterContent.style.display = "block";
-        Engine.displayCharacterInfo();
+        Engine.updateCharacterInfo();
         routing.navigateTo(Page.CharacterInfo);
         MainMenuLinks.Stats.classList.add("active");
     },
@@ -593,96 +594,8 @@ const Engine = {
     },
 
     /* Display character info */
-    displayCharacterInfo: function() {
-        removeChildrenFromElement(Engine.Display.characterInfo);
-
-        let companyPosition = "";
-        if (Player.companyName !== "") {
-            companyPosition = Player.jobs[Player.companyName];
-        }
-
-        var intText = "";
-        if (Player.intelligence > 0) {
-            intText = 'Intelligence:  ' + (Player.intelligence).toLocaleString() + '<br>';
-        }
-
-        let bitNodeTimeText = "";
-        if(Player.sourceFiles.length > 0) {
-            bitNodeTimeText = 'Time played since last Bitnode destroyed: ' + convertTimeMsToTimeElapsedString(Player.playtimeSinceLastBitnode) + '<br>';
-        }
-
-        Engine.Display.characterInfo.appendChild(createElement("pre", {
-            innerHTML:
-            '<b>General</b><br><br>' +
-            'Current City: ' + Player.city + '<br><br>' +
-            `Employer at which you last worked: ${Player.companyName}<br>` +
-            `Job you last worked: ${companyPosition}<br>` +
-            `All Employers: ${Object.keys(Player.jobs).join(", ")}<br><br>` +
-            'Money: $' + formatNumber(Player.money.toNumber(), 2) + '<br><br><br>' +
-            '<b>Stats</b><br><br>' +
-            'Hacking Level: ' + (Player.hacking_skill).toLocaleString() +
-                            ' (' + numeralWrapper.format(Player.hacking_exp, '(0.000a)') + ' experience)<br>' +
-            'Strength:      ' + (Player.strength).toLocaleString() +
-                       ' (' + numeralWrapper.format(Player.strength_exp, '(0.000a)') + ' experience)<br>' +
-            'Defense:       ' + (Player.defense).toLocaleString() +
-                      ' (' + numeralWrapper.format(Player.defense_exp, '(0.000a)') + ' experience)<br>' +
-            'Dexterity:     ' + (Player.dexterity).toLocaleString() +
-                       ' (' + numeralWrapper.format(Player.dexterity_exp, '(0.000a)') + ' experience)<br>' +
-            'Agility:       ' + (Player.agility).toLocaleString() +
-                      ' (' + numeralWrapper.format(Player.agility_exp, '(0.000a)') + ' experience)<br>' +
-            'Charisma:      ' + (Player.charisma).toLocaleString() +
-                       ' (' + numeralWrapper.format(Player.charisma_exp, '(0.000a)') + ' experience)<br>' +
-            intText + '<br><br>' +
-            '<b>Multipliers</b><br><br>' +
-            'Hacking Chance multiplier: ' + formatNumber(Player.hacking_chance_mult * 100, 2) + '%<br>' +
-            'Hacking Speed multiplier:  ' + formatNumber(Player.hacking_speed_mult * 100, 2) + '%<br>' +
-            'Hacking Money multiplier:  ' + formatNumber(Player.hacking_money_mult * 100, 2) + '%<br>' +
-            'Hacking Growth multiplier: ' + formatNumber(Player.hacking_grow_mult * 100, 2) + '%<br><br>' +
-            'Hacking Level multiplier:      ' + formatNumber(Player.hacking_mult * 100, 2) + '%<br>' +
-            'Hacking Experience multiplier: ' + formatNumber(Player.hacking_exp_mult * 100, 2) + '%<br><br>' +
-            'Strength Level multiplier:      ' + formatNumber(Player.strength_mult * 100, 2) + '%<br>' +
-            'Strength Experience multiplier: ' + formatNumber(Player.strength_exp_mult * 100, 2) + '%<br><br>' +
-            'Defense Level multiplier:      ' + formatNumber(Player.defense_mult * 100, 2) + '%<br>' +
-            'Defense Experience multiplier: ' + formatNumber(Player.defense_exp_mult * 100, 2) + '%<br><br>' +
-            'Dexterity Level multiplier:      ' + formatNumber(Player.dexterity_mult * 100, 2) + '%<br>' +
-            'Dexterity Experience multiplier: ' + formatNumber(Player.dexterity_exp_mult * 100, 2) + '%<br><br>' +
-            'Agility Level multiplier:      ' + formatNumber(Player.agility_mult * 100, 2) + '%<br>' +
-            'Agility Experience multiplier: ' + formatNumber(Player.agility_exp_mult * 100, 2) + '%<br><br>' +
-            'Charisma Level multiplier:      ' + formatNumber(Player.charisma_mult * 100, 2) + '%<br>' +
-            'Charisma Experience multiplier: ' + formatNumber(Player.charisma_exp_mult * 100, 2) + '%<br><br>' +
-            'Hacknet Node production multiplier:         ' + formatNumber(Player.hacknet_node_money_mult * 100, 2) + '%<br>' +
-            'Hacknet Node purchase cost multiplier:      ' + formatNumber(Player.hacknet_node_purchase_cost_mult * 100, 2) + '%<br>' +
-            'Hacknet Node RAM upgrade cost multiplier:   ' + formatNumber(Player.hacknet_node_ram_cost_mult * 100, 2) + '%<br>' +
-            'Hacknet Node Core purchase cost multiplier: ' + formatNumber(Player.hacknet_node_core_cost_mult * 100, 2) + '%<br>' +
-            'Hacknet Node level upgrade cost multiplier: ' + formatNumber(Player.hacknet_node_level_cost_mult * 100, 2) + '%<br><br>' +
-            'Company reputation gain multiplier: ' + formatNumber(Player.company_rep_mult * 100, 2) + '%<br>' +
-            'Faction reputation gain multiplier: ' + formatNumber(Player.faction_rep_mult * 100, 2) + '%<br>' +
-            'Salary multiplier: ' + formatNumber(Player.work_money_mult * 100, 2) + '%<br>' +
-            'Crime success multiplier: ' + formatNumber(Player.crime_success_mult * 100, 2) + '%<br>' +
-            'Crime money multiplier: ' + formatNumber(Player.crime_money_mult * 100, 2) + '%<br><br><br>' +
-            '<b>Misc</b><br><br>' +
-            'Servers owned:       ' + Player.purchasedServers.length + '<br>' +
-            'Hacknet Nodes owned: ' + Player.hacknetNodes.length + '<br>' +
-            'Augmentations installed: ' + Player.augmentations.length + '<br>' +
-            'Time played since last Augmentation: ' + convertTimeMsToTimeElapsedString(Player.playtimeSinceLastAug) + '<br>' +
-            bitNodeTimeText +
-            'Time played: ' + convertTimeMsToTimeElapsedString(Player.totalPlaytime),
-        }));
-
-        if (Player.sourceFiles.length !== 0) {
-            var index = "BitNode" + Player.bitNodeN;
-
-            Engine.Display.characterInfo.appendChild(createElement("p", {
-                width:"60%",
-                innerHTML:
-                    "<br>Current BitNode: " + Player.bitNodeN + " (" + BitNodes[index].name + ")<br><br>",
-            }));
-
-            Engine.Display.characterInfo.appendChild(createElement("p", {
-                width:"60%", fontSize: "13px", marginLeft:"4%",
-                innerHTML:BitNodes[index].info,
-            }))
-        }
+    updateCharacterInfo: function() {
+        displayCharacterInfo(Engine.Display.characterInfo, Player);
     },
 
     /* Display locations in the world*/
@@ -835,7 +748,8 @@ const Engine = {
                 item.appendChild(createElement("a", {
                     innerText:"Accept Faction Invitation",
                     class:"a-link-button", display:"inline", margin:"4px", padding:"4px",
-                    clickListener:()=>{
+                    clickListener: (e) => {
+                        if (!e.isTrusted) { return false; }
                         joinFaction(Factions[factionName]);
                         for (var i = 0; i < Player.factionInvitations.length; ++i) {
                             if (Player.factionInvitations[i] == factionName || Factions[Player.factionInvitations[i]].isBanned) {
@@ -1060,9 +974,7 @@ const Engine = {
 
         if (Engine.Counters.updateDisplays <= 0) {
             Engine.displayCharacterOverviewInfo();
-            if (routing.isOn(Page.CharacterInfo)) {
-                Engine.displayCharacterInfo();
-            }  else if (routing.isOn(Page.HacknetNodes)) {
+            if (routing.isOn(Page.HacknetNodes)) {
                 updateHacknetNodesContent();
             } else if (routing.isOn(Page.CreateProgram)) {
                 displayCreateProgramContent();
@@ -1080,6 +992,8 @@ const Engine = {
         if (Engine.Counters.updateDisplaysMed <= 0) {
             if (routing.isOn(Page.Corporation)) {
                 Player.corporation.updateUIContent();
+            } else if (routing.isOn(Page.CharacterInfo)) {
+                Engine.updateCharacterInfo();
             }
             Engine.Counters.updateDisplaysMed = 9;
         }
@@ -1275,7 +1189,7 @@ const Engine = {
         if (loadGame(saveString)) {
             console.log("Loaded game from save");
             initBitNodes();
-            initBitNodeMultipliers();
+            initBitNodeMultipliers(Player);
             initSourceFiles();
             Engine.setDisplayElements();    //Sets variables for important DOM elements
             Engine.init();                  //Initialize buttons, work, etc.
@@ -1397,7 +1311,7 @@ const Engine = {
             //No save found, start new game
             console.log("Initializing new game");
             initBitNodes();
-            initBitNodeMultipliers();
+            initBitNodeMultipliers(Player);
             initSourceFiles();
             initSpecialServerIps();
             Engine.setDisplayElements();        //Sets variables for important DOM elements

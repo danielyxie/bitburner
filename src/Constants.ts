@@ -1,7 +1,7 @@
 import {IMap} from "./types";
 
 export let CONSTANTS: IMap<any> = {
-    Version:                "0.43.1",
+    Version:                "0.44.0",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -274,7 +274,7 @@ export let CONSTANTS: IMap<any> = {
     /* Coding Contract Constants */
     CodingContractBaseFactionRepGain:   2500,
     CodingContractBaseCompanyRepGain:   4000,
-    CodingContractBaseMoneyGain:        50e6,
+    CodingContractBaseMoneyGain:        75e6,
 
     // BitNode/Source-File related stuff
     TotalNumBitNodes: 24,
@@ -510,25 +510,44 @@ export let CONSTANTS: IMap<any> = {
 
     LatestUpdate:
     `
-    v0.43.1
-    * Terminal changes:
-    ** Quoted arguments are now properly parsed. (e.g. 'run f.script "this is one argument"' will be correctly parsed)
-    ** Errors are now shown in red text
-    ** 'unalias' command now has a different format and no longer needs the quotations
-    ** Bug Fix: Fixed several edge cases where autocomplete wasnt working properly
+    v0.44.0
+    * Bladeburner Changes:
+    ** Reduced the amount of rank needed to earn a skill point
+    ** Reduced the effects of the "Reaper" and "Evasive System" skills
+    ** Increased the effect of the "Hyperdrive" and "Hands of Midas" skills
+    ** Slightly increased the rate which the skill point cost rises for almost all skills
+    ** The "Overlock" Skill now has a maximum level of 90 instead of 95
+    ** Money earned from Contracts increased by 400%
+    ** Changed the way population affects success rate. Extreme populations now have less dramatic effects
+    ** Added two new General Actions: Diplomacy and Hyperbolic Regeneration Chamber
+    ** Lowered the rep and money cost of the "Blade's Simulacrum" augmentation
+    ** Significantly decreased the initial  amount of Contracts/Operations (the "Contracts/Operations remaining" value)
+    ** Decreased the rate at which the amount of Contracts/Operations increases over time
+    ** Decreased the number of successes you need to increase the max level of a Contract/Operation
+    ** Increased the average number of Synthoid communities each city has
+    ** Reduced the amount by which a successful raid will decrease the population of a city
+    ** The "riots" event will now increase the chaos of a city by a greater amount
+    ** Significantly increased the effect that Agility and Dexterity have on action time
 
-    * Added two new Bladeburner skills for increasing money and experience gain
-    * Made some minor adjustments to Bladeburner UI
-    * Corporation "Smart Factories" and "Smart Storage" upgrades have slightly lower price multipliers
-    * Added nFormat Netscript function
-    * Added 6 new Coding Contract problems
-    * Updated documentation with list of all Coding Contract problems
-    * Minor improvements for 'Active Scripts' UI
-    * Implemented several optimizations for active scripts. The game should now use less memory and the savefile should be slightly smaller when there are many scripts running
-    * Bug Fix: A Stock Forecast should no longer go above 1 (i.e. 100%)
-    * Bug Fix: The cost of Resleeves should no longer be affected by buying Augs
-    * Bug Fix: Duplicate Sleeves now use their own stats to determine crime success rate, instead of the host consciousness' stats
-    * Bug Fix: You can now call the prompt() Netscript function from multiple scripts simultaneously
+    * Added new BitNode multipliers:
+    ** HomeComputerRamCost - Affects how much it costs to upgrade home computer's RAM
+    ** DaedalusAugsRequirement - Affects how many Augmentations you need in order to get invited to Daedalus
+    ** FourSigmaMarketDataCost - Affects how much it costs to unlock the stock market's 4S Market Data
+    ** FourSigmaMarketDataApiCost - Affects how much it costs to unlock the stock market's 4S Market Data API
+
+    * A few minor changes to BitNode multipliers across the board (mostly for the new multipliers)
+    * 'The Covenant' now requires 20 total Augmentations to get invited, rather than 30
+    * You can now purchase permanent Duplicate Sleeves from 'The Covenant'. This requires Source-File 10, and you must be in BN-10 or after
+    * You can now track where all of your money comes from in the 'Stats' page
+    * Increased the money gained from Coding Contracts by 50%
+    * getCharacterInformation() function now returns the player's HP and max HP
+    * Bug Fix: You can no longer disconnect the enemy's connections in Hacking Missions
+    * Bug Fix: Duplicate Sleeve faction reputation gain is now properly affected by faction favor
+    * Bug Fix: After installing Augmentations, the Terminal display will now correctly show the current server as "home"
+    * Bug Fix: Fixed an exploit where you could change the duration of timed functions (e.g. hack, weaken) in NetscriptJS
+    * Bug Fix: You should now properly be able to use the ServerProfile.exe program
+    * Bug Fix: Prevented exploit that allowed you to accept faction invites programmatically through NetscriptJS
+    * Bug Fix: Faction invitations for megacorporations should now work properly
     `
 
 }

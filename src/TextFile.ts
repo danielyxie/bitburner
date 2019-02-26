@@ -1,3 +1,4 @@
+import { setTimeoutRef } from "./utils/SetTimeoutRef";
 import { dialogBoxCreate } from "../utils/DialogBox";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
 
@@ -52,12 +53,10 @@ export class TextFile {
             a.download = this.fn;
             document.body.appendChild(a);
             a.click();
-            setTimeout(
-                () => {
-                    document.body.removeChild(a);
-                    window.URL.revokeObjectURL(url);
-                },
-                0);
+            setTimeoutRef(() => {
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+            }, 0);
         }
     }
 

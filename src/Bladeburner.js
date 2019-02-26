@@ -10,6 +10,7 @@ import { Locations }                                from "./Locations";
 import { Player }                                   from "./Player";
 import { hackWorldDaemon, redPillFlag }             from "./RedPill";
 import { numeralWrapper }                           from "./ui/numeralFormat";
+import { setTimeoutRef }                            from "./utils/SetTimeoutRef";
 import { KEY }                                      from "../utils/helpers/keyCodes";
 
 import { createProgressBarText }                    from "../utils/helpers/createProgressBarText";
@@ -31,46 +32,52 @@ import { removeElement }                            from "../utils/uiHelpers/rem
 import { removeElementById }                        from "../utils/uiHelpers/removeElementById";
 
 
-var CityNames = ["Aevum", "Chongqing", "Sector-12", "New Tokyo", "Ishima", "Volhaven"];
+const CityNames = ["Aevum", "Chongqing", "Sector-12", "New Tokyo", "Ishima", "Volhaven"];
 
-var CyclesPerSecond             = 5;   //Game cycle is 200 ms
+const CyclesPerSecond             = 5;   //Game cycle is 200 ms
 
-var StaminaGainPerSecond        = 0.0085;
-var BaseStaminaLoss             = 0.285;   //Base stamina loss per action. Increased based on difficulty
-var MaxStaminaToGainFactor      = 70000; //Max Stamina is divided by this to get bonus stamina gain
+const StaminaGainPerSecond        = 0.0085;
+const BaseStaminaLoss             = 0.285; //Base stamina loss per action. Increased based on difficulty
+const MaxStaminaToGainFactor      = 70000; //Max Stamina is divided by this to get bonus stamina gain
 
-var DifficultyToTimeFactor      = 10;  //Action Difficulty divided by this to get base action time
+const DifficultyToTimeFactor      = 10;  //Action Difficulty divided by this to get base action time
 
 //The difficulty multiplier affects stamina loss and hp loss of an action. Also affects
 //experience gain. Its formula is:
 //difficulty ^ exponentialFactor + difficulty / linearFactor
-var DiffMultExponentialFactor   = 0.28;
-var DiffMultLinearFactor        = 650;
+const DiffMultExponentialFactor     = 0.28;
+const DiffMultLinearFactor          = 650;
 
-var EffAgiLinearFactor          = 40e3;
-var EffDexLinearFactor          = 40e3;
-var EffAgiExponentialFactor     = 0.032;
-var EffDexExponentialFactor     = 0.03;
+// These factors are used to calculate action time.
+// They affect how much action time is reduced based on your agility and dexterity
+const EffAgiLinearFactor            = 10e3;
+const EffDexLinearFactor            = 10e3;
+const EffAgiExponentialFactor       = 0.04;
+const EffDexExponentialFactor       = 0.035;
 
-var BaseRecruitmentTimeNeeded   = 300; //Base time needed (s) to complete a Recruitment action
+const BaseRecruitmentTimeNeeded     = 300; //Base time needed (s) to complete a Recruitment action
 
-var PopulationThreshold         = 1e9; //Population at which success rates start being affected
-var ChaosThreshold              = 50; //City chaos level after which it starts making tasks harder
+const PopulationThreshold           = 1e9; // Population which determines baseline success rate
+const PopulationExponent            = 0.7; // Exponent that influences how different populations affect success rate
+const ChaosThreshold                = 50; //City chaos level after which it starts making tasks harder
 
-var BaseStatGain                = 1;     //Base stat gain per second
-var BaseIntGain                 = 0.001; //Base intelligence stat gain
+const BaseStatGain                  = 1;     //Base stat gain per second
+const BaseIntGain                   = 0.001; //Base intelligence stat gain
 
-var ActionCountGrowthPeriod     = 300; //Time (s) it takes for action count to grow by its specified value
+const ActionCountGrowthPeriod       = 480; //Time (s) it takes for action count to grow by its specified value
 
-var RankToFactionRepFactor      = 2; //Delta Faction Rep = this * Delta Rank
-var RankNeededForFaction        = 25;
+const RankToFactionRepFactor        = 2; //Delta Faction Rep = this * Delta Rank
+const RankNeededForFaction          = 25;
 
-var ContractSuccessesPerLevel   = 3.5; //How many successes you need to level up a contract
-var OperationSuccessesPerLevel  = 3; //How many successes you need to level up an op
+const ContractSuccessesPerLevel     = 3; //How many successes you need to level up a contract
+const OperationSuccessesPerLevel    = 2.5; //How many successes you need to level up an op
 
-var RanksPerSkillPoint          = 4;  //How many ranks needed to get 1 Skill Point
+const RanksPerSkillPoint            = 3;  //How many ranks needed to get 1 Skill Point
 
-var ContractBaseMoneyGain       = 50e3; //Base Money Gained per contract
+const ContractBaseMoneyGain         = 250e3; //Base Money Gained per contract
+
+const HrcHpGain         = 2;    // HP gained from Hyperbolic Regeneration Chamber
+const HrcStaminaGain    = 0.1; // Stamina gained from Hyperbolic Regeneration Chamber
 
 //DOM related variables
 var ActiveActionCssClass        = "bladeburner-active-action";
@@ -182,7 +189,7 @@ $(document).keydown(function(event) {
 
             var prevCommand = consoleHistory[consoleHistoryIndex];
             DomElems.consoleInput.value = prevCommand;
-            setTimeout(function(){DomElems.consoleInput.selectionStart = DomElems.consoleInput.selectionEnd = 10000; }, 0);
+            setTimeoutRef(function(){DomElems.consoleInput.selectionStart = DomElems.consoleInput.selectionEnd = 10000; }, 0);
         }
 
         if (event.keyCode === KEY.DOWNARROW) {
@@ -212,11 +219,11 @@ function City(params={}) {
     this.name = params.name ? params.name : Locations.Sector12;
 
     //Synthoid population and estimate
-    this.pop    = params.pop ? params.pop : getRandomInt(800e6, 1.2*PopulationThreshold);
+    this.pop    = params.pop ? params.pop : getRandomInt(PopulationThreshold, 1.5 * PopulationThreshold);
     this.popEst = this.pop * (Math.random() + 0.5);
 
     //Number of Synthoid communities population and estimate
-    this.comms          = params.comms  ? params.comms  : getRandomInt(5, 100);
+    this.comms          = params.comms  ? params.comms  : getRandomInt(5, 150);
     this.commsEst       = this.comms + getRandomInt(-5, 5);
     if (this.commsEst < 0) {this.commsEst = 0;}
     this.chaos          = 0;
@@ -491,9 +498,9 @@ Action.prototype.getSuccessChance = function(inst, params={}) {
     if (!(this instanceof BlackOperation)) {
         var city = inst.getCurrentCity();
         if (params.est) {
-            competence *= (city.popEst / PopulationThreshold);
+            competence *= Math.pow((city.popEst / PopulationThreshold), PopulationExponent);
         } else {
-            competence *= (city.pop / PopulationThreshold);
+            competence *= Math.pow((city.pop / PopulationThreshold), PopulationExponent);
         }
 
         //Too high of a chaos results in lower chances
@@ -582,16 +589,18 @@ Reviver.constructors.Action = Action;
 var GeneralActions = {}; //Training, Field Analysis, Recruitment, etc.
 
 //Action Identifier
-var ActionTypes = Object.freeze({
-    "Idle":             1,
-    "Contract":         2,
-    "Operation":        3,
-    "BlackOp":          4,
-    "BlackOperation":   4,
-    "Training":         5,
-    "Recruitment":      6,
-    "FieldAnalysis":    7,
-    "Field Analysis":   7
+const ActionTypes = Object.freeze({
+    "Idle":                             1,
+    "Contract":                         2,
+    "Operation":                        3,
+    "BlackOp":                          4,
+    "BlackOperation":                   4,
+    "Training":                         5,
+    "Recruitment":                      6,
+    "FieldAnalysis":                    7,
+    "Field Analysis":                   7,
+    "Diplomacy":                        8,
+    "Hyperbolic Regeneration Chamber":  9,
 });
 function ActionIdentifier(params={}) {
     if (params.name) {this.name = params.name;}
@@ -744,7 +753,7 @@ Bladeburner.prototype.create = function() {
              "whatever city you are currently in.",
         baseDifficulty:125,difficultyFac:1.02,rewardFac:1.041,
         rankGain:0.3, hpLoss:0.5,
-        count:getRandomInt(25, 500), countGrowth:getRandomInt(5, 75)/10,
+        count:getRandomInt(25, 150), countGrowth:getRandomInt(5, 75)/10,
         weights:{hack:0,str:0.05,def:0.05,dex:0.35,agi:0.35,cha:0.1, int:0.05},
         decays:{hack:0,str:0.91,def:0.91,dex:0.91,agi:0.91,cha:0.9, int:1},
         isStealth:true
@@ -756,7 +765,7 @@ Bladeburner.prototype.create = function() {
              "current city, and will also increase its chaos level.",
         baseDifficulty:250, difficultyFac:1.04,rewardFac:1.085,
         rankGain:0.9, hpLoss:1,
-        count:getRandomInt(5, 500), countGrowth:getRandomInt(5, 75)/10,
+        count:getRandomInt(5, 150), countGrowth:getRandomInt(5, 75)/10,
         weights:{hack:0,str:0.15,def:0.15,dex:0.25,agi:0.25,cha:0.1, int:0.1},
         decays:{hack:0,str:0.91,def:0.91,dex:0.91,agi:0.91,cha:0.8, int:0.9},
         isKill:true
@@ -768,7 +777,7 @@ Bladeburner.prototype.create = function() {
              "city, and will also increase its chaos level.",
         baseDifficulty:200, difficultyFac:1.03, rewardFac:1.065,
         rankGain:0.6, hpLoss:1,
-        count:getRandomInt(5, 500), countGrowth:getRandomInt(5,75)/10,
+        count:getRandomInt(5, 150), countGrowth:getRandomInt(5, 75)/10,
         weights:{hack:0,str:0.2,def:0.2,dex:0.2,agi:0.2,cha:0.1, int:0.1},
         decays:{hack:0,str:0.91,def:0.91,dex:0.91,agi:0.91,cha:0.8, int:0.9},
         isKill:true
@@ -783,7 +792,7 @@ Bladeburner.prototype.create = function() {
              "You will NOT lose HP from failed Investigation ops.",
         baseDifficulty:400, difficultyFac:1.03,rewardFac:1.07,reqdRank:25,
         rankGain:2.2, rankLoss:0.2,
-        count:getRandomInt(1, 250), countGrowth:getRandomInt(10, 40)/10,
+        count:getRandomInt(1, 100), countGrowth:getRandomInt(10, 40)/10,
         weights:{hack:0.25,str:0.05,def:0.05,dex:0.2,agi:0.1,cha:0.25, int:0.1},
         decays:{hack:0.85,str:0.9,def:0.9,dex:0.9,agi:0.9,cha:0.7, int:0.9},
         isStealth:true
@@ -796,7 +805,7 @@ Bladeburner.prototype.create = function() {
              "data.",
         baseDifficulty:500, difficultyFac:1.04, rewardFac:1.09, reqdRank:100,
         rankGain:4.4, rankLoss:0.4, hpLoss:2,
-        count:getRandomInt(1, 250), countGrowth:getRandomInt(10, 40)/10,
+        count:getRandomInt(1, 100), countGrowth:getRandomInt(10, 40)/10,
         weights:{hack:0.2,str:0.05,def:0.05,dex:0.2,agi:0.2,cha:0.2, int:0.1},
         decays:{hack:0.8,str:0.9,def:0.9,dex:0.9,agi:0.9,cha:0.7, int:0.9},
         isStealth:true
@@ -807,7 +816,7 @@ Bladeburner.prototype.create = function() {
              "notorious Synthoid criminals.",
         baseDifficulty:650, difficultyFac:1.04, rewardFac:1.095, reqdRank:500,
         rankGain:5.5, rankLoss:0.5, hpLoss:2.5,
-        count:getRandomInt(1, 300), countGrowth:getRandomInt(3, 40)/10,
+        count:getRandomInt(1, 150), countGrowth:getRandomInt(3, 40)/10,
         weights:{hack:0.25,str:0.05,def:0.05,dex:0.25,agi:0.1,cha:0.2, int:0.1},
         decays:{hack:0.8,str:0.85,def:0.85,dex:0.85,agi:0.85,cha:0.7, int:0.9},
         isStealth:true
@@ -819,7 +828,7 @@ Bladeburner.prototype.create = function() {
              "in order for this Operation to be successful",
         baseDifficulty:800, difficultyFac:1.045, rewardFac:1.1, reqdRank:3000,
         rankGain:55,rankLoss:2.5,hpLoss:50,
-        count:getRandomInt(1, 200), countGrowth:getRandomInt(2, 40)/10,
+        count:getRandomInt(1, 150), countGrowth:getRandomInt(2, 40)/10,
         weights:{hack:0.1,str:0.2,def:0.2,dex:0.2,agi:0.2,cha:0, int:0.1},
         decays:{hack:0.7,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.9},
         isKill:true
@@ -831,7 +840,7 @@ Bladeburner.prototype.create = function() {
              "drawing any attention. Stealth and discretion are key.",
         baseDifficulty:1000, difficultyFac:1.05, rewardFac:1.11, reqdRank:20e3,
         rankGain:22, rankLoss:2, hpLoss:10,
-        count:getRandomInt(1, 250), countGrowth:getRandomInt(1, 20)/10,
+        count:getRandomInt(1, 150), countGrowth:getRandomInt(1, 20)/10,
         weights:{hack:0.1,str:0.1,def:0.1,dex:0.3,agi:0.3,cha:0, int:0.1},
         decays:{hack:0.7,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.9},
         isStealth:true, isKill:true
@@ -843,7 +852,7 @@ Bladeburner.prototype.create = function() {
              "in the Synthoid communities.",
         baseDifficulty:1500, difficultyFac:1.06, rewardFac:1.14, reqdRank:50e3,
         rankGain:44, rankLoss:4, hpLoss:5,
-        count:getRandomInt(1, 200), countGrowth:getRandomInt(1, 20)/10,
+        count:getRandomInt(1, 150), countGrowth:getRandomInt(1, 20)/10,
         weights:{hack:0.1,str:0.1,def:0.1,dex:0.3,agi:0.3,cha:0, int:0.1},
         decays:{hack:0.6,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.8},
         isStealth:true, isKill:true
@@ -981,7 +990,7 @@ Bladeburner.prototype.changeRank = function(change) {
         }
     }
 
-    //Gain skill points. You get 1 every 4 ranks
+    // Gain skill points
     var rankNeededForSp = (this.totalSkillPoints+1) * RanksPerSkillPoint;
     if (this.maxRank >= rankNeededForSp) {
         //Calculate how many skill points to gain
@@ -1143,15 +1152,17 @@ Bladeburner.prototype.startAction = function(actionId) {
                 exceptionAlert(e);
             }
             break;
-        case ActionTypes["Training"]:
-            this.actionTimeToComplete = 30;
-            break;
         case ActionTypes["Recruitment"]:
             this.actionTimeToComplete = this.getRecruitmentTime();
             break;
+        case ActionTypes["Training"]:
         case ActionTypes["FieldAnalysis"]:
         case ActionTypes["Field Analysis"]:
             this.actionTimeToComplete = 30;
+            break;
+        case ActionTypes["Diplomacy"]:
+        case ActionTypes["Hyperbolic Regeneration Chamber"]:
+            this.actionTimeToComplete = 60;
             break;
         default:
             throw new Error("Invalid Action Type in Bladeburner.startAction(): " + actionId.type);
@@ -1204,6 +1215,7 @@ Bladeburner.prototype.completeAction = function() {
                     if (!isOperation) {
                         moneyGain = ContractBaseMoneyGain * rewardMultiplier * this.skillMultipliers.money;
                         Player.gainMoney(moneyGain);
+                        Player.recordMoneySource(moneyGain, "bladeburner");
                     }
 
                     if (isOperation) {
@@ -1378,7 +1390,6 @@ Bladeburner.prototype.completeAction = function() {
             break;
         case ActionTypes["Recruitment"]:
             var successChance = this.getRecruitmentSuccessChance();
-            console.log("Bladeburner recruitment success chance: " + successChance);
             if (Math.random() < successChance) {
                 var expGain = 2 * BaseStatGain * this.actionTimeToComplete;
                 Player.gainCharismaExp(expGain);
@@ -1395,7 +1406,25 @@ Bladeburner.prototype.completeAction = function() {
             }
             this.startAction(this.action); //Repeat action
             break;
+        case ActionTypes["Diplomacy"]:
+            var eff = this.getDiplomacyEffectiveness();
+            this.getCurrentCity().chaos *= eff;
+            if (this.getCurrentCity().chaos < 0) { this.getCurrentCity().chaos = 0; }
+            if (this.logging.general) {
+                this.log(`Diplomacy completed. Chaos levels in the current city fell by ${numeralWrapper.formatPercentage(1 - eff)}`);
+            }
+            this.startAction(this.action); // Repeat Action
+            break;
+        case ActionTypes["Hyperbolic Regeneration Chamber"]:
+            Player.regenerateHp(HrcHpGain);
+            this.stamina = Math.max(this.maxStamina, this.stamina + HrcStaminaGain); // TODO Turn this into a const and adjust value
+            this.startAction(this.action);
+            if (this.logging.general) {
+                this.log(`Rested in Hyperbolic Regeneration Chamber. Restored ${HrcHpGain} HP and gained ${HrcStaminaGain} stamina`);
+            }
+            break;
         default:
+            console.error(`Bladeburner.completeAction() called for invalid action: ${this.action.type}`);
             break;
     }
 }
@@ -1484,7 +1513,7 @@ Bladeburner.prototype.completeOperation = function(success) {
                 --city.comms;
                 --city.commsEst;
             } else {
-                var change = getRandomInt(-3, -1);
+                var change = getRandomInt(-10, -5) / 10;
                 city.changePopulationByPercentage(change, {nonZero:true});
             }
             city.changeChaosByPercentage(getRandomInt(1, 5));
@@ -1514,6 +1543,15 @@ Bladeburner.prototype.getRecruitmentTime = function() {
 
 Bladeburner.prototype.getRecruitmentSuccessChance = function() {
     return Math.pow(Player.charisma, 0.45) / (this.teamSize + 1);
+}
+
+Bladeburner.prototype.getDiplomacyEffectiveness = function() {
+    // Returns a decimal by which the city's chaos level should be multiplied (e.g. 0.98)
+    const CharismaLinearFactor = 1e3;
+    const CharismaExponentialFactor = 0.045;
+
+    const charismaEff = Math.pow(Player.charisma, CharismaExponentialFactor) + Player.charisma / CharismaLinearFactor;
+    return (100 - charismaEff) / 100;
 }
 
 //Process stat gains from Contracts, Operations, and Black Operations
@@ -1612,20 +1650,20 @@ Bladeburner.prototype.randomEvent = function() {
     } else if (chance <= 0.7) {
         //Synthoid Riots (+chaos), 20%
         sourceCity.chaos += 1;
-        sourceCity.chaos *= (1 + getRandomInt(5, 10) / 100);
+        sourceCity.chaos *= (1 + getRandomInt(5, 20) / 100);
         if (this.logging.events) {
             this.log("Tensions between Synthoids and humans lead to riots in " + sourceCityName + "! Chaos increased");
         }
     } else if (chance <= 0.9) {
         //Less Synthoids, 20%
-        var percentage = getRandomInt(5, 20) / 100;
+        var percentage = getRandomInt(8, 20) / 100;
         var count = Math.round(sourceCity.pop * percentage);
         sourceCity.pop -= count;
         if (this.logging.events) {
             this.log("Intelligence indicates that the Synthoid population of " + sourceCityName + " just changed significantly");
         }
     }
-    //20% chance of nothing happening
+    // 10% chance of nothing happening
 }
 
 Bladeburner.prototype.triggerPotentialMigration = function(sourceCityName, chance) {
@@ -3347,6 +3385,14 @@ Bladeburner.prototype.getActionIdFromTypeAndName = function(type="", name="") {
                 action.type = ActionTypes["Field Analysis"];
                 action.name = "Field Analysis";
                 break;
+            case "diplomacy":
+                action.type = ActionTypes["Diplomacy"];
+                action.name = "Diplomacy";
+                break;
+            case "hyperbolic regeneration chamber":
+                action.type = ActionTypes["Hyperbolic Regeneration Chamber"];
+                action.name = "Hyperbolic Regeneration Chamber";
+                break;
             default:
                 return null;
         }
@@ -3784,14 +3830,14 @@ function initBladeburner() {
         name:SkillNames.BladesIntuition,
         desc:"Each level of this skill increases your success chance " +
              "for all Contracts, Operations, and BlackOps by 3%",
-        baseCost:5, costInc:2,
+        baseCost: 3, costInc: 2.1,
         successChanceAll:3
     });
     Skills[SkillNames.Cloak] = new Skill({
         name:SkillNames.Cloak,
         desc:"Each level of this skill increases your " +
              "success chance in stealth-related Contracts, Operations, and BlackOps by 5.5%",
-        baseCost:3, costInc:1,
+        baseCost: 2, costInc: 1.1,
         successChanceStealth:5.5
     });
 
@@ -3802,42 +3848,42 @@ function initBladeburner() {
         name:SkillNames.ShortCircuit,
         desc:"Each level of this skill increases your success chance " +
              "in Contracts, Operations, and BlackOps that involve retirement by 5.5%",
-        baseCost:3, costInc:2,
+        baseCost: 2, costInc: 2.1,
         successChanceKill:5.5
     });
     Skills[SkillNames.DigitalObserver] = new Skill({
         name:SkillNames.DigitalObserver,
         desc:"Each level of this skill increases your success chance in " +
              "all Operations and BlackOps by 4%",
-        baseCost:5, costInc:2,
+        baseCost: 2, costInc: 2.1,
         successChanceOperation:4
     });
     Skills[SkillNames.Tracer] = new Skill({
         name:SkillNames.Tracer,
         desc:"Each level of this skill increases your success chance in " +
              "all Contracts by 4%",
-        baseCost:3, costInc:2,
+        baseCost: 2, costInc: 2.1,
         successChanceContract:4
     });
     Skills[SkillNames.Overclock] = new Skill({
         name:SkillNames.Overclock,
         desc:"Each level of this skill decreases the time it takes " +
-             "to attempt a Contract, Operation, and BlackOp by 1% (Max Level: 95)",
-        baseCost:4, costInc:1.1, maxLvl:95,
+             "to attempt a Contract, Operation, and BlackOp by 1% (Max Level: 90)",
+        baseCost: 3, costInc: 1.4, maxLvl: 90,
         actionTime:1
     });
     Skills[SkillNames.Reaper] = new Skill({
-        name:SkillNames.Reaper,
-        desc:"Each level of this skill increases your effective combat stats for Bladeburner actions by 3%",
-        baseCost:3, costInc:2,
-        effStr:3, effDef:3, effDex:3, effAgi:3
+        name: SkillNames.Reaper,
+        desc: "Each level of this skill increases your effective combat stats for Bladeburner actions by 2%",
+        baseCost: 2, costInc: 2.1,
+        effStr: 2, effDef: 2, effDex: 2, effAgi: 2
     });
     Skills[SkillNames.EvasiveSystem] = new Skill({
         name:SkillNames.EvasiveSystem,
         desc:"Each level of this skill increases your effective " +
-             "dexterity and agility for Bladeburner actions by 5%",
-        baseCost:2, costInc: 1,
-        effDex:5, effAgi:5
+             "dexterity and agility for Bladeburner actions by 4%",
+        baseCost: 2, costInc: 2.1,
+        effDex: 4, effAgi: 4
     });
     Skills[SkillNames.Datamancer] = new Skill({
         name:SkillNames.Datamancer,
@@ -3856,19 +3902,20 @@ function initBladeburner() {
     });
     Skills[SkillNames.HandsOfMidas] = new Skill({
         name: SkillNames.HandsOfMidas,
-        desc: "Each level of this skill increases the amount of money you receive from Contracts by 5%",
+        desc: "Each level of this skill increases the amount of money you receive from Contracts by 10%",
         baseCost: 2, costInc: 2.5,
-        money: 5,
+        money: 10,
     });
     Skills[SkillNames.Hyperdrive] = new Skill({
         name: SkillNames.Hyperdrive,
-        desc: "Each level of this skill increases the experience earned from Contracts, Operations, and BlackOps by 4%",
-        baseCost: 1, costInc: 3,
-        expGain: 4,
+        desc: "Each level of this skill increases the experience earned from Contracts, Operations, and BlackOps by 10%",
+        baseCost: 1, costInc: 2.5,
+        expGain: 10,
     });
 
     //General Actions
-    var actionName = "Training";
+    let actionName;
+    actionName = "Training";
     GeneralActions[actionName] = new Action({
         name:actionName,
         desc:"Improve your abilities at the Bladeburner unit's specialized training " +
@@ -3876,7 +3923,7 @@ function initBladeburner() {
              "increases your max stamina."
     });
 
-    var actionName = "Field Analysis";
+    actionName = "Field Analysis";
     GeneralActions[actionName] = new Action({
         name:actionName,
         desc:"Mine and analyze Synthoid-related data. This improve the " +
@@ -3886,12 +3933,27 @@ function initBladeburner() {
              "Does NOT require stamina."
     });
 
-    var actionName = "Recruitment";
+    actionName = "Recruitment";
     GeneralActions[actionName] = new Action({
         name:actionName,
         desc:"Attempt to recruit members for your Bladeburner team. These members " +
              "can help you conduct operations.<br><br>" +
              "Does NOT require stamina."
+    });
+
+    actionName = "Diplomacy";
+    GeneralActions[actionName] = new Action({
+        name: actionName,
+        desc: "Improve diplomatic relations with the Synthoid population. " +
+              "Completing this action will reduce the Chaos level in your current city.<br><br>" +
+              "Does NOT require stamina."
+    });
+
+    actionName = "Hyperbolic Regeneration Chamber";
+    GeneralActions[actionName] = new Action({
+        name: actionName,
+        desc: "Enter cryogenic stasis using the Bladeburner division's hi-tech Regeneration Chamber. " +
+              "This will slowly heal your wounds and slightly increase your stamina gain.<br><br>",
     });
 
     //Black Operations

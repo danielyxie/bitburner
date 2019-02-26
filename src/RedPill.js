@@ -6,6 +6,7 @@ import { SourceFiles,
          SourceFile }                           from "./SourceFile";
 import { PlayerOwnedSourceFile }                from "./SourceFile/PlayerOwnedSourceFile";
 import { Terminal }                             from "./Terminal";
+import { setTimeoutRef }                        from "./utils/SetTimeoutRef";
 
 import {clearEventListeners}                    from "../utils/uiHelpers/clearEventListeners";
 import {dialogBoxCreate}                        from "../utils/DialogBox";
@@ -34,7 +35,7 @@ function writeRedPillLine(line) {
 
 function writeRedPillLetter(pElem, line, i=0) {
     return new Promise(function(resolve, reject) {
-        setTimeout(function() {
+        setTimeoutRef(function() {
             if (i >= line.length) {
                 var textToShow = line.substring(0, i);
                 pElem.innerHTML = "> " + textToShow;

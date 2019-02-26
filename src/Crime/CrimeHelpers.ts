@@ -1,30 +1,27 @@
 import { Crimes } from "./Crimes";
-
-import { Player } from "../Player";
+import { IPlayer } from "../PersonObjects/IPlayer";
 
 import { dialogBoxCreate } from "../../utils/DialogBox";
 
-export function determineCrimeSuccess(type, moneyGained) {
-    var chance = 0;
-    var found = false;
-    for(const i in Crimes) {
-      const crime = Crimes[i];
-      if(crime.type == type) {
-        chance = crime.successRate(Player);
-        found = true;
-        break;
-      }
+export function determineCrimeSuccess(p: IPlayer, type: string) {
+    let chance: number = 0;
+    let found: boolean = false;
+    for (const i in Crimes) {
+        let crime = Crimes[i];
+        if (crime.type == type) {
+            chance = crime.successRate(p);
+            found = true;
+            break;
+        }
     }
 
-    if(!found) {
-      console.log(crime);
-      dialogBoxCreate("ERR: Unrecognized crime type. This is probably a bug please contact the developer");
-      return;
+    if (!found) {
+        dialogBoxCreate(`ERR: Unrecognized crime type: ${type} This is probably a bug please contact the developer`, false);
+        return;
     }
 
     if (Math.random() <= chance) {
         //Success
-        Player.gainMoney(moneyGained);
         return true;
     } else {
         //Failure
@@ -32,7 +29,7 @@ export function determineCrimeSuccess(type, moneyGained) {
     }
 }
 
-export function findCrime(roughName) {
+export function findCrime(roughName: string) {
     if (roughName.includes("shoplift")) {
         return Crimes.Shoplift;
     } else if (roughName.includes("rob") && roughName.includes("store")) {

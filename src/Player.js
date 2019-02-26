@@ -31,6 +31,7 @@ import {SourceFiles, applySourceFile}           from "./SourceFile";
 import { SourceFileFlags }                      from "./SourceFile/SourceFileFlags";
 import Decimal                                  from "decimal.js";
 import {numeralWrapper}                         from "./ui/numeralFormat";
+import { MoneySourceTracker }                   from "./utils/MoneySourceTracker";
 import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {clearEventListeners}                    from "../utils/uiHelpers/clearEventListeners";
 import {createRandomIp}                         from "../utils/IPAddress";
@@ -92,8 +93,6 @@ function PlayerObject() {
 
     //Money
     this.money           = new Decimal(1000);
-    this.total_money     = new Decimal(0);   //Total money ever earned in this "simulation"
-    this.lifetime_money  = new Decimal(0);   //Total money ever earned
 
     //IP Address of Starting (home) computer
     this.homeComputer = "";
@@ -114,7 +113,6 @@ function PlayerObject() {
     this.currentServer          = ""; //IP address of Server currently being accessed through terminal
     this.purchasedServers       = []; //IP Addresses of purchased servers
     this.hacknetNodes           = [];
-    this.totalHacknetNodeProduction = 0;
 
     //Factions
     this.factions = [];             //Names of all factions player has joined
@@ -218,11 +216,12 @@ function PlayerObject() {
     this.playtimeSinceLastAug = 0;
     this.playtimeSinceLastBitnode = 0;
 
-    //Production since last Augmentation installation
+    // Keep track of where money comes from
+    this.moneySourceA = new MoneySourceTracker(); // Where money comes from since last-installed Augmentation
+    this.moneySourceB = new MoneySourceTracker(); // Where money comes from for this entire BitNode run
+
+    // Production since last Augmentation installation
     this.scriptProdSinceLastAug = 0;
-    this.stockProdSinceLastAug = 0;
-    this.crimeProdSinceLastAug = 0;
-    this.jobProdSinceLastAug = 0;
 };
 
 PlayerObject.prototype.init = function() {
@@ -315,11 +314,12 @@ PlayerObject.prototype.prestigeAugmentation = function() {
 
     this.lastUpdate = new Date().getTime();
 
+    // Statistics Trackers
     this.playtimeSinceLastAug = 0;
     this.scriptProdSinceLastAug = 0;
+    this.moneySourceA.reset();
 
     this.hacknetNodes.length = 0;
-    this.totalHacknetNodeProduction = 0;
 
     //Re-calculate skills and reset HP
     this.updateSkillLevels();
@@ -405,7 +405,6 @@ PlayerObject.prototype.prestigeSourceFile = function() {
     this.lastUpdate = new Date().getTime();
 
     this.hacknetNodes.length = 0;
-    this.totalHacknetNodeProduction = 0;
 
     //Gang
     this.gang = null;
@@ -420,9 +419,12 @@ PlayerObject.prototype.prestigeSourceFile = function() {
     //BitNode 3: Corporatocracy
     this.corporation = 0;
 
+    // Statistics trackers
     this.playtimeSinceLastAug = 0;
     this.playtimeSinceLastBitnode = 0;
     this.scriptProdSinceLastAug = 0;
+    this.moneySourceA.reset();
+    this.moneySourceB.reset();
 
     this.updateSkillLevels();
     this.hp = this.max_hp;
@@ -438,13 +440,13 @@ PlayerObject.prototype.getHomeComputer = function() {
 
 PlayerObject.prototype.getUpgradeHomeRamCost = function() {
     //Calculate how many times ram has been upgraded (doubled)
-    const currentRam = Player.getHomeComputer().maxRam;
+    const currentRam = this.getHomeComputer().maxRam;
     const numUpgrades = Math.log2(currentRam);
 
     //Calculate cost
     //Have cost increase by some percentage each time RAM has been upgraded
     const mult = Math.pow(1.58, numUpgrades);
-    var cost = currentRam * CONSTANTS.BaseCostFor1GBOfRamHome * mult;
+    var cost = currentRam * CONSTANTS.BaseCostFor1GBOfRamHome * mult * BitNodeMultipliers.HomeComputerRamCost;
     return cost;
 }
 
@@ -542,8 +544,6 @@ PlayerObject.prototype.gainMoney = function(money) {
         console.log("ERR: NaN passed into Player.gainMoney()"); return;
     }
 	this.money = this.money.plus(money);
-	this.total_money = this.total_money.plus(money);
-	this.lifetime_money = this.lifetime_money.plus(money);
 }
 
 PlayerObject.prototype.loseMoney = function(money) {
@@ -559,6 +559,11 @@ PlayerObject.prototype.canAfford = function(cost) {
         return false;
     }
     return this.money.gte(cost);
+}
+
+PlayerObject.prototype.recordMoneySource = function(amt, source) {
+    this.moneySourceA.record(amt, source);
+    this.moneySourceB.record(amt, source);
 }
 
 PlayerObject.prototype.gainHackingExp = function(exp) {
@@ -690,6 +695,7 @@ PlayerObject.prototype.processWorkEarnings = function(numCycles=1) {
     this.gainAgilityExp(agiExpGain);
     this.gainCharismaExp(chaExpGain);
     this.gainMoney(moneyGain);
+    this.recordMoneySource(moneyGain, "work");
     this.workHackExpGained  += hackExpGain;
     this.workStrExpGained   += strExpGain;
     this.workDefExpGained   += defExpGain;
@@ -1561,7 +1567,7 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
     //Determine crime success/failure
     if (!cancelled) {
         var statusText = ""; //TODO, unique message for each crime when you succeed
-        if (determineCrimeSuccess(this.crimeType, this.workMoneyGained)) {
+        if (determineCrimeSuccess(Player, this.crimeType)) {
             //Handle Karma and crime statistics
             let crime = null;
             for(const i in Crimes) {
@@ -1574,6 +1580,8 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
                 console.log(this.crimeType);
                 dialogBoxCreate("ERR: Unrecognized crime type. This is probably a bug please contact the developer");
             }
+            Player.gainMoney(this.workMoneyGained);
+            Player.recordMoneySource(this.workMoneyGained, "crime");
             this.karma -= crime.karma;
             this.numPeopleKilled += crime.kills;
             if(crime.intelligence_exp > 0) {
@@ -1690,6 +1698,11 @@ PlayerObject.prototype.singularityStopWork = function() {
 
 //Returns true if hospitalized, false otherwise
 PlayerObject.prototype.takeDamage = function(amt) {
+    if (typeof amt !== "number") {
+        console.warn(`Player.takeDamage() called without a numeric argument: ${amt}`);
+        return;
+    }
+
     this.hp -= amt;
     if (this.hp <= 0) {
         this.hospitalize();
@@ -1697,6 +1710,15 @@ PlayerObject.prototype.takeDamage = function(amt) {
     } else {
         return false;
     }
+}
+
+PlayerObject.prototype.regenerateHp = function(amt) {
+    if (typeof amt !== "number") {
+        console.warn(`Player.regenerateHp() called without a numeric argument: ${amt}`);
+        return;
+    }
+    this.hp += amt;
+    if (this.hp > this.max_hp) { this.hp = this.max_hp; }
 }
 
 PlayerObject.prototype.hospitalize = function() {
@@ -2021,14 +2043,26 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
 
     var numAugmentations = this.augmentations.length;
 
-    var company = Companies[this.companyName];
-    var companyRep = 0;
-    if (company != null) {
-        companyRep = company.playerReputation;
-    }
-
     const allCompanies = Object.keys(this.jobs);
     const allPositions = Object.values(this.jobs);
+
+    // Given a company name, safely returns the reputation (returns 0 if invalid company is specified)
+    function getCompanyRep(companyName) {
+        const company = Companies[companyName];
+        if (company == null) {
+            return 0;
+        } else {
+            return company.playerReputation;
+        }
+    }
+
+    // Helper function that returns a boolean indicating whether the Player meets
+    // the requirements for the specified company. There are two requirements:
+    //      1. High enough reputation
+    //      2. Player is employed at the company
+    function checkMegacorpRequirements(companyName, repNeeded=CONSTANTS.CorpFactionRepRequirement) {
+        return allCompanies.includes(companyName) && (getCompanyRep(companyName) > repNeeded);
+    }
 
     //Illuminati
     var illuminatiFac = Factions["Illuminati"];
@@ -2044,7 +2078,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     //Daedalus
     var daedalusFac = Factions["Daedalus"];
     if (!daedalusFac.isBanned && !daedalusFac.isMember && !daedalusFac.alreadyInvited &&
-        numAugmentations >= 30 &&
+        numAugmentations >= Math.round(30 * BitNodeMultipliers.DaedalusAugsRequirement) &&
         this.money.gte(100000000000) &&
         (this.hacking_skill >= 2500 ||
             (this.strength >= 1500 && this.defense >= 1500 &&
@@ -2055,7 +2089,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     //The Covenant
     var covenantFac = Factions["The Covenant"];
     if (!covenantFac.isBanned && !covenantFac.isMember && !covenantFac.alreadyInvited &&
-        numAugmentations >= 30 &&
+        numAugmentations >= 20 &&
         this.money.gte(75000000000) &&
         this.hacking_skill >= 850 &&
         this.strength >= 850 &&
@@ -2068,14 +2102,14 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     //ECorp
     var ecorpFac = Factions["ECorp"];
     if (!ecorpFac.isBanned && !ecorpFac.isMember && !ecorpFac.alreadyInvited &&
-        allCompanies.includes(Locations.AevumECorp) && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
+        checkMegacorpRequirements(Locations.AevumECorp)) {
         invitedFactions.push(ecorpFac);
     }
 
     //MegaCorp
     var megacorpFac = Factions["MegaCorp"];
     if (!megacorpFac.isBanned && !megacorpFac.isMember && !megacorpFac.alreadyInvited &&
-        allCompanies.includes(Locations.Sector12MegaCorp) && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
+        checkMegacorpRequirements(Locations.Sector12MegaCorp)) {
         invitedFactions.push(megacorpFac);
     }
 
@@ -2083,42 +2117,42 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     var bachmanandassociatesFac = Factions["Bachman & Associates"];
     if (!bachmanandassociatesFac.isBanned && !bachmanandassociatesFac.isMember &&
         !bachmanandassociatesFac.alreadyInvited &&
-        allCompanies.includes(Locations.AevumBachmanAndAssociates) && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
+        checkMegacorpRequirements(Locations.AevumBachmanAndAssociates)) {
         invitedFactions.push(bachmanandassociatesFac);
     }
 
     //Blade Industries
     var bladeindustriesFac = Factions["Blade Industries"];
     if (!bladeindustriesFac.isBanned && !bladeindustriesFac.isMember && !bladeindustriesFac.alreadyInvited &&
-        allCompanies.includes(Locations.Sector12BladeIndustries) && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
+        checkMegacorpRequirements(Locations.Sector12BladeIndustries)) {
         invitedFactions.push(bladeindustriesFac);
     }
 
     //NWO
     var nwoFac = Factions["NWO"];
     if (!nwoFac.isBanned && !nwoFac.isMember && !nwoFac.alreadyInvited &&
-        allCompanies.includes(Locations.VolhavenNWO) && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
+        checkMegacorpRequirements(Locations.VolhavenNWO)) {
         invitedFactions.push(nwoFac);
     }
 
     //Clarke Incorporated
     var clarkeincorporatedFac = Factions["Clarke Incorporated"];
     if (!clarkeincorporatedFac.isBanned && !clarkeincorporatedFac.isMember && !clarkeincorporatedFac.alreadyInvited &&
-        allCompanies.includes(Locations.AevumClarkeIncorporated) && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
+        checkMegacorpRequirements(Locations.AevumClarkeIncorporated)) {
         invitedFactions.push(clarkeincorporatedFac);
     }
 
     //OmniTek Incorporated
     var omnitekincorporatedFac = Factions["OmniTek Incorporated"];
     if (!omnitekincorporatedFac.isBanned && !omnitekincorporatedFac.isMember && !omnitekincorporatedFac.alreadyInvited &&
-        allCompanies.includes(Locations.VolhavenOmniTekIncorporated) && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
+        checkMegacorpRequirements(Locations.VolhavenOmniTekIncorporated)) {
         invitedFactions.push(omnitekincorporatedFac);
     }
 
     //Four Sigma
     var foursigmaFac = Factions["Four Sigma"];
     if (!foursigmaFac.isBanned && !foursigmaFac.isMember && !foursigmaFac.alreadyInvited &&
-        allCompanies.includes(Locations.Sector12FourSigma) && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
+        checkMegacorpRequirements(Locations.Sector12FourSigma)) {
         invitedFactions.push(foursigmaFac);
     }
 
@@ -2126,7 +2160,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     var kuaigonginternationalFac = Factions["KuaiGong International"];
     if (!kuaigonginternationalFac.isBanned && !kuaigonginternationalFac.isMember &&
         !kuaigonginternationalFac.alreadyInvited &&
-        allCompanies.includes(Locations.ChongqingKuaiGongInternational) && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
+        checkMegacorpRequirements(Locations.ChongqingKuaiGongInternational)) {
         invitedFactions.push(kuaigonginternationalFac);
     }
 
@@ -2139,7 +2173,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
         if (!fulcrumsecrettechonologiesFac.isBanned && !fulcrumsecrettechonologiesFac.isMember &&
             !fulcrumsecrettechonologiesFac.alreadyInvited &&
             fulcrumSecretServer.manuallyHacked &&
-            allCompanies.includes(Locations.AevumFulcrumTechnologies) && companyRep >= 250000) {
+            checkMegacorpRequirements(Locations.AevumFulcrumTechnologies, 250e3)) {
             invitedFactions.push(fulcrumsecrettechonologiesFac);
         }
     }
@@ -2415,6 +2449,7 @@ PlayerObject.prototype.gainCodingContractReward = function(reward, difficulty=1)
         default:
             var moneyGain = CONSTANTS.CodingContractBaseMoneyGain * difficulty * BitNodeMultipliers.CodingContractMoney;
             this.gainMoney(moneyGain);
+            this.recordMoneySource(moneyGain, "codingcontract");
             return `Gained ${numeralWrapper.format(moneyGain, '$0.000a')}`;
             break;
     }
@@ -2427,8 +2462,6 @@ function loadPlayer(saveString) {
 
     //Parse Decimal.js objects
     Player.money = new Decimal(Player.money);
-    Player.total_money = new Decimal(Player.total_money);
-    Player.lifetime_money = new Decimal(Player.lifetime_money);
 
     if (Player.corporation instanceof Corporation) {
         Player.corporation.funds = new Decimal(Player.corporation.funds);

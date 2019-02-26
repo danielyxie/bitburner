@@ -1,3 +1,4 @@
+import { setTimeoutRef } from "../utils/SetTimeoutRef";
 import { getElementById } from "../../utils/uiHelpers/getElementById";
 import { Action } from "../types";
 
@@ -23,5 +24,5 @@ export function createStatusText(text: string) {
         statusElement.innerText = "";
     };
 
-    x = setTimeout(handler, threeSeconds);
+    x = setTimeoutRef(handler, threeSeconds);
 }

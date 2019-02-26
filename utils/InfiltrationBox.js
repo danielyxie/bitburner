@@ -88,6 +88,7 @@ function infiltrationBoxCreate(inst) {
     sellButton.addEventListener("click", function(e) {
         if (!e.isTrusted) {return false;}
         Player.gainMoney(moneyValue);
+        Player.recordMoneySource(moneyValue, "infiltration");
         dialogBoxCreate("You sold the classified information you stole from " + inst.companyName +
                         " for <span class='money-gold'>$" + formatNumber(moneyValue, 2) + "</span> on the black market!<br><br>" +
                         expGainText);

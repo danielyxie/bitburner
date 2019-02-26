@@ -167,8 +167,10 @@ getCharacterInformation
             bitnode:                Current BitNode number
             city:                   Name of city you are currently in
             factions:               Array of factions you are currently a member of
+            hp:                     Current health points
             jobs:                   Array of all companies at which you have jobs
             jobTitle:               Array of job positions for all companies you are employed at. Same order as 'jobs'
+            maxHp:                  Maximum health points
             tor:                    Boolean indicating whether or not you have a tor router
 
             // The following is an object with many of the player's multipliers from Augmentations/Source Files

@@ -195,6 +195,8 @@ export class Sleeve extends Person {
                     }
                     retValue = this.gainExperience(p, successGainRates);
                     this.gainMoney(p, this.gainRatesForTask);
+
+                    p.karma -= crime.karma;
                 } else {
                     retValue = this.gainExperience(p, this.gainRatesForTask);
                 }
@@ -336,13 +338,19 @@ export class Sleeve extends Person {
      */
     getRepGain(p: IPlayer): number {
         if (this.currentTask === SleeveTaskType.Faction) {
+            let favorMult: number = 1;
+            const fac: Faction | null = Factions[this.currentTaskLocation];
+            if (fac != null) {
+                favorMult = 1 + (fac!.favor / 100);
+            }
+
             switch (this.factionWorkType) {
                 case FactionWorkType.Hacking:
-                    return this.getFactionHackingWorkRepGain() * (this.shock / 100);
+                    return this.getFactionHackingWorkRepGain() * (this.shock / 100) * favorMult;
                 case FactionWorkType.Field:
-                    return this.getFactionFieldWorkRepGain() * (this.shock / 100);
+                    return this.getFactionFieldWorkRepGain() * (this.shock / 100) * favorMult;
                 case FactionWorkType.Security:
-                    return this.getFactionSecurityWorkRepGain() * (this.shock / 100);
+                    return this.getFactionSecurityWorkRepGain() * (this.shock / 100) * favorMult;
                 default:
                     console.warn(`Invalid Sleeve.factionWorkType property in Sleeve.getRepGain(): ${this.factionWorkType}`);
                     return 0;

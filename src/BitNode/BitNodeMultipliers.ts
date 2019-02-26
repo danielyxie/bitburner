@@ -70,6 +70,11 @@ interface IBitNodeMultipliers {
     CrimeMoney: number;
 
     /**
+     * Influences how many Augmentations you need in order to get invited to the Daedalus faction
+     */
+    DaedalusAugsRequirement: number;
+
+    /**
      * Influences how quickly the player's defense level (not exp) scales
      */
     DefenseLevelMultiplier: number;
@@ -95,6 +100,16 @@ interface IBitNodeMultipliers {
     FactionWorkRepGain: number;
 
     /**
+     * Influences how much it costs to unlock the stock market's 4S Market Data API
+     */
+    FourSigmaMarketDataApiCost: number;
+
+    /**
+     * Influences how much it costs to unlock the stock market's 4S Market Data (NOT API)
+     */
+    FourSigmaMarketDataCost: number;
+
+    /**
      * Influences the experienced gained when hacking a server.
      */
     HackExpGain: number;
@@ -108,6 +123,11 @@ interface IBitNodeMultipliers {
      * Influences how much money each Hacknet node can generate.
      */
     HacknetNodeMoney: number;
+
+    /**
+     * Influences how much money it costs to upgrade your home computer's RAM
+     */
+    HomeComputerRamCost: number;
 
     /**
      * Influences how much money is gained when the player infiltrates a company.
@@ -178,6 +198,9 @@ interface IBitNodeMultipliers {
      * Influences how quickly the player's strength level (not exp) scales
      */
     StrengthLevelMultiplier: number;
+
+    // Index signature
+    [key: string]: number;
 }
 
 /**
@@ -185,48 +208,55 @@ interface IBitNodeMultipliers {
  */
 // tslint:disable-next-line:variable-name
 export const BitNodeMultipliers: IBitNodeMultipliers = {
-    HackingLevelMultiplier: 1,
-    StrengthLevelMultiplier: 1,
-    DefenseLevelMultiplier: 1,
-    DexterityLevelMultiplier: 1,
-    AgilityLevelMultiplier: 1,
-    CharismaLevelMultiplier: 1,
+    HackingLevelMultiplier:     1,
+    StrengthLevelMultiplier:    1,
+    DefenseLevelMultiplier:     1,
+    DexterityLevelMultiplier:   1,
+    AgilityLevelMultiplier:     1,
+    CharismaLevelMultiplier:    1,
 
-    ServerGrowthRate:       1,
-    ServerMaxMoney:         1,
-    ServerStartingMoney:    1,
-    ServerStartingSecurity: 1,
-    ServerWeakenRate:       1,
+    ServerGrowthRate:           1,
+    ServerMaxMoney:             1,
+    ServerStartingMoney:        1,
+    ServerStartingSecurity:     1,
+    ServerWeakenRate:           1,
 
-    PurchasedServerCost:    1,
-    PurchasedServerLimit:   1,
-    PurchasedServerMaxRam:  1,
+    HomeComputerRamCost:        1,
 
-    CompanyWorkMoney:       1,
-    CrimeMoney:             1,
-    HacknetNodeMoney:       1,
-    ManualHackMoney:        1,
-    ScriptHackMoney:        1,
-    CodingContractMoney:    1,
+    PurchasedServerCost:        1,
+    PurchasedServerLimit:       1,
+    PurchasedServerMaxRam:      1,
 
-    ClassGymExpGain:        1,
-    CompanyWorkExpGain:     1,
-    CrimeExpGain:           1,
-    FactionWorkExpGain:     1,
-    HackExpGain:            1,
+    CompanyWorkMoney:           1,
+    CrimeMoney:                 1,
+    HacknetNodeMoney:           1,
+    ManualHackMoney:            1,
+    ScriptHackMoney:            1,
+    CodingContractMoney:        1,
 
-    FactionPassiveRepGain:  1,
-    FactionWorkRepGain:     1,
-    RepToDonateToFaction:   1,
+    ClassGymExpGain:            1,
+    CompanyWorkExpGain:         1,
+    CrimeExpGain:               1,
+    FactionWorkExpGain:         1,
+    HackExpGain:                1,
 
-    AugmentationMoneyCost:  1,
-    AugmentationRepCost:    1,
+    FactionPassiveRepGain:      1,
+    FactionWorkRepGain:         1,
+    RepToDonateToFaction:       1,
 
-    InfiltrationMoney:      1,
-    InfiltrationRep:        1,
+    AugmentationMoneyCost:      1,
+    AugmentationRepCost:        1,
 
-    CorporationValuation:   1,
+    InfiltrationMoney:          1,
+    InfiltrationRep:            1,
 
-    BladeburnerRank:        1,
-    BladeburnerSkillCost:   1,
+    FourSigmaMarketDataCost:    1,
+    FourSigmaMarketDataApiCost: 1,
+
+    CorporationValuation:       1,
+
+    BladeburnerRank:            1,
+    BladeburnerSkillCost:       1,
+
+    DaedalusAugsRequirement:    1,
 };

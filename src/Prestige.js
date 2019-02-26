@@ -48,16 +48,20 @@ let BitNode8StartingMoney = 250e6;
 
 //Prestige by purchasing augmentation
 function prestigeAugmentation() {
-    // Load Terminal Screen
+    // Set Navigation to Terminal screen, for any logic that depends on it
+    routing.navigateTo(Page.Terminal);
+
+    initBitNodeMultipliers(Player);
+
+    Player.prestigeAugmentation();
+
+    // Now actually go to the Terminal Screen (and reset it)
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
     Terminal.resetTerminalInput();
     Engine.loadTerminalContent();
-    routing.navigateTo(Page.Terminal);
-
-    initBitNodeMultipliers();
-
-    Player.prestigeAugmentation();
+    $("#terminal tr:not(:last)").remove();
+    postNetburnerText();
 
     //Delete all Worker Scripts objects
     prestigeWorkerScripts();
@@ -116,10 +120,6 @@ function prestigeAugmentation() {
     Player.reapplyAllSourceFiles();
     initCompanies();
 
-    //Clear terminal
-    $("#terminal tr:not(:last)").remove();
-    postNetburnerText();
-
     //Messages
     initMessages();
 
@@ -175,7 +175,7 @@ function prestigeAugmentation() {
 
 //Prestige by destroying Bit Node and gaining a Source File
 function prestigeSourceFile() {
-    initBitNodeMultipliers();
+    initBitNodeMultipliers(Player);
     updateSourceFileFlags(Player);
 
     Player.prestigeSourceFile();

@@ -1021,13 +1021,17 @@ HackingMission.prototype.initJsPlumb = function() {
     }
 
     //Clicking a connection drops it
-    instance.bind("click", function(conn, originalEvent) {
+    instance.bind("click", (conn, originalEvent) => {
+        // Cannot drop enemy's connections
+        const sourceNode = this.getNodeFromElement(conn.source);
+        if (sourceNode.enmyCtrl) { return; }
+
         var endpoints = conn.endpoints;
         endpoints[0].detachFrom(endpoints[1]);
     });
 
     //Connection events
-    instance.bind("connection", (info)=>{
+    instance.bind("connection", (info) => {
         var targetNode = this.getNodeFromElement(info.target);
 
         //Do not detach for enemy nodes

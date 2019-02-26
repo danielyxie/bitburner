@@ -8,7 +8,7 @@ import { augmentationExists,
          installAugmentations }                     from "./Augmentation/AugmentationHelpers";
 import { AugmentationNames }                        from "./Augmentation/data/AugmentationNames";
 import { BitNodeMultipliers }                       from "./BitNode/BitNodeMultipliers";
-import { determineCrimeSuccess, findCrime }         from "./Crime/CrimeHelpers";
+import { findCrime }                                from "./Crime/CrimeHelpers";
 import {Bladeburner}                                from "./Bladeburner";
 import {Company}                                    from "./Company/Company";
 import {Companies, companyExists}                   from "./Company/Companies";
@@ -51,8 +51,11 @@ import {StockMarket, StockSymbols, SymbolToStockMap,
         sellStock, updateStockPlayerPosition,
         shortStock, sellShort, OrderTypes,
         PositionTypes, placeOrder, cancelOrder}     from "./StockMarket/StockMarket";
+import { getStockmarket4SDataCost,
+         getStockMarket4STixApiCost }               from "./StockMarket/StockMarketCosts";
 import {numeralWrapper}                             from "./ui/numeralFormat";
 import {post}                                       from "./ui/postToTerminal";
+import { setTimeoutRef }                            from "./utils/SetTimeoutRef";
 import {TextFile, getTextFile, createTextFile}      from "./TextFile";
 
 import {unknownBladeburnerActionErrorMessage,
@@ -378,6 +381,7 @@ function NetscriptFunctions(workerScript) {
                     Player.gainMoney(moneyGained);
                     workerScript.scriptRef.onlineMoneyMade += moneyGained;
                     Player.scriptProdSinceLastAug += moneyGained;
+                    Player.recordMoneySource(moneyGained, "hacking");
                     workerScript.scriptRef.recordHack(server.ip, moneyGained, threads);
                     Player.gainHackingExp(expGainedOnSuccess);
                     workerScript.scriptRef.onlineExpGained += expGainedOnSuccess;
@@ -851,7 +855,7 @@ function NetscriptFunctions(workerScript) {
             if (scriptname == null || threads == null) {
                 throw makeRuntimeRejectMsg(workerScript, "Invalid scriptname or numThreads argument passed to spawn()");
             }
-            setTimeout(()=>{
+            setTimeoutRef(() => {
                 if (scriptname === undefined) {
                     throw makeRuntimeRejectMsg(workerScript, "spawn() call has incorrect number of arguments. Usage: spawn(scriptname, numThreads, [arg1], [arg2]...)");
                 }
@@ -868,7 +872,7 @@ function NetscriptFunctions(workerScript) {
                 }
 
                 return runScriptFromScript(scriptServer, scriptname, argsForNewScript, workerScript, threads);
-            }, 20000);
+            }, 20e3);
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.spawn == null) {
                 workerScript.scriptRef.log("spawn() will execute " + scriptname + " in 20 seconds");
             }
@@ -1618,6 +1622,7 @@ function NetscriptFunctions(workerScript) {
             if (isNaN(netProfit)) {netProfit = 0;}
             workerScript.scriptRef.onlineMoneyMade += netProfit;
             Player.scriptProdSinceLastAug += netProfit;
+            Player.recordMoneySource(netProfit, "stock");
 
             stock.playerShares -= shares;
             if (stock.playerShares == 0) {
@@ -1847,7 +1852,7 @@ function NetscriptFunctions(workerScript) {
                 return true;
             }
 
-            if (Player.money.lt(CONSTANTS.MarketData4SCost)) {
+            if (Player.money.lt(getStockMarket4SDataCost())) {
                 if (workerScript.shouldLog("purchase4SMarketData")) {
                     workerScript.log("Failed to purchase 4S Market Data - Not enough money");
                 }
@@ -1855,7 +1860,7 @@ function NetscriptFunctions(workerScript) {
             }
 
             Player.has4SData = true;
-            Player.loseMoney(CONSTANTS.MarketData4SCost);
+            Player.loseMoney(getStockMarket4SDataCost());
             if (workerScript.shouldLog("purchase4SMarketData")) {
                 workerScript.log("Purchased 4S Market Data");
             }
@@ -1878,7 +1883,7 @@ function NetscriptFunctions(workerScript) {
                 return true;
             }
 
-            if (Player.money.lt(CONSTANTS.MarketDataTixApi4SCost)) {
+            if (Player.money.lt(getStockMarket4STixApiCost())) {
                 if (workerScript.shouldLog("purchase4SMarketDataTixApi")) {
                     workerScript.log("Failed to purchase 4S Market Data TIX API - Not enough money");
                 }
@@ -1886,7 +1891,7 @@ function NetscriptFunctions(workerScript) {
             }
 
             Player.has4SDataTixApi = true;
-            Player.loseMoney(CONSTANTS.MarketDataTixApi4SCost);
+            Player.loseMoney(getStockMarket4STixApiCost());
             if (workerScript.shouldLog("purchase4SMarketDataTixApi")) {
                 workerScript.log("Purchased 4S Market Data TIX API");
             }
@@ -2907,8 +2912,10 @@ function NetscriptFunctions(workerScript) {
                 bitnode:            Player.bitNodeN,
                 city:               Player.city,
                 factions:           Player.factions.slice(),
+                hp:                 Player.hp,
                 jobs:               Object.keys(Player.jobs),
                 jobTitles:          Object.values(Player.jobs),
+                maxHp:              Player.max_hp,
                 mult: {
                     agility:        Player.agility_mult,
                     agilityExp:     Player.agility_exp_mult,

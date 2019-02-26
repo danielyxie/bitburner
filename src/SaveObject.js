@@ -17,6 +17,8 @@ import {AllServers, loadAllServers}             from "./Server";
 import {Settings}                               from "./Settings/Settings";
 import {loadSpecialServerIps, SpecialServerIps} from "./SpecialServerIps";
 import {loadStockMarket, StockMarket}           from "./StockMarket/StockMarket";
+import { setTimeoutRef }                        from "./utils/SetTimeoutRef";
+
 import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {gameOptionsBoxClose}                    from "../utils/GameOptions";
 import {clearEventListeners}                    from "../utils/uiHelpers/clearEventListeners";
@@ -291,8 +293,6 @@ function loadImportedGame(saveObj, saveString) {
 
         //Parse Decimal.js objects
         tempPlayer.money = new Decimal(tempPlayer.money);
-        tempPlayer.total_money = new Decimal(tempPlayer.total_money);
-        tempPlayer.lifetime_money = new Decimal(tempPlayer.lifetime_money);
 
         tempAllServers          = JSON.parse(tempSaveObj.AllServersSave, Reviver);
         tempCompanies           = JSON.parse(tempSaveObj.CompaniesSave, Reviver);
@@ -546,7 +546,7 @@ BitburnerSaveObject.prototype.exportGame = function() {
         a.download = "bitburnerSave.json";
         document.body.appendChild(a);
         a.click();
-        setTimeout(function() {
+        setTimeoutRef(function() {
             document.body.removeChild(a);
             window.URL.revokeObjectURL(url);
         }, 0);

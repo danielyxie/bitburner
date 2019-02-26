@@ -8,6 +8,8 @@ import { Settings }                         from "./Settings/Settings";
 import { Script, findRunningScript,
          RunningScript }                    from "./Script";
 
+import { setTimeoutRef }                    from "./utils/SetTimeoutRef";
+
 import {parse, Node}                        from "../utils/acorn";
 import {arrayToString}                      from "../utils/helpers/arrayToString";
 import {isValidIPAddress}                   from "../utils/helpers/isValidIPAddress";
@@ -134,7 +136,7 @@ export function killNetscriptDelay(workerScript) {
 
 export function netscriptDelay(time, workerScript) {
     return new Promise(function(resolve, reject) {
-       workerScript.delay = setTimeout(()=>{
+       workerScript.delay = setTimeoutRef(() => {
            workerScript.delay = null;
            resolve();
        }, time);

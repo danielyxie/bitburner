@@ -10,22 +10,33 @@ import { IMap } from "../types";
 
 import { IPlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentation";
 import { IPlayerOwnedSourceFile } from "../SourceFile/PlayerOwnedSourceFile";
+import { MoneySourceTracker } from "../utils/MoneySourceTracker";
 
 export interface IPlayer {
     // Class members
     augmentations: IPlayerOwnedAugmentation[];
     bladeburner: any;
+    bitNodeN: number;
+    city: string;
     companyName: string;
     corporation: any;
     factions: string[];
+    hacknetNodes: any[];
     hasWseAccount: boolean;
     jobs: IMap<string>;
+    karma: number;
     money: any;
+    moneySourceA: MoneySourceTracker;
+    moneySourceB: MoneySourceTracker;
+    playtimeSinceLastAug: number;
+    playtimeSinceLastBitnode: number;
+    purchasedServers: any[];
     queuedAugmentations: IPlayerOwnedAugmentation[];
     resleeves: Resleeve[];
     sleeves: Sleeve[];
     sleevesFromCovenant: number;
     sourceFiles: IPlayerOwnedSourceFile[];
+    totalPlaytime: number;
 
     // Stats
     hacking_skill: number;
@@ -45,7 +56,32 @@ export interface IPlayer {
     charisma_exp: number;
 
     // Multipliers
+    hacking_chance_mult: number;
+    hacking_speed_mult: number;
+    hacking_money_mult: number;
+    hacking_grow_mult: number;
+    hacking_mult: number;
+    hacking_exp_mult: number;
+    strength_mult: number;
+    strength_exp_mult: number;
+    defense_mult: number;
+    defense_exp_mult: number;
+    dexterity_mult: number;
+    dexterity_exp_mult: number;
+    agility_mult: number;
+    agility_exp_mult: number;
+    charisma_mult: number;
+    charisma_exp_mult: number;
+    hacknet_node_money_mult: number;
+    hacknet_node_purchase_cost_mult: number;
+    hacknet_node_ram_cost_mult: number;
+    hacknet_node_core_cost_mult: number;
+    hacknet_node_level_cost_mult: number;
+    company_rep_mult: number;
+    faction_rep_mult: number;
+    work_money_mult: number;
     crime_success_mult: number;
+    crime_money_mult: number;
 
     // Methods
     canAfford(cost: number): boolean;
@@ -62,6 +98,7 @@ export interface IPlayer {
     loseMoney(money: number): void;
     reapplyAllAugmentations(resetMultipliers: boolean): void;
     reapplyAllSourceFiles(): void;
+    recordMoneySource(amt: number, source: string): void;
     startCrime(crimeType: string,
                hackExp: number,
                strExp: number,

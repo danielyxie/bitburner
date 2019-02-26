@@ -106,10 +106,12 @@ export function createSleevesPage(p: IPlayer) {
             }
         });
 
-        UIElems.docButton = createElement("button", {
+        UIElems.docButton = createElement("a", {
             class: "std-button",
             display: "inline-block",
+            href: "https://bitburner.readthedocs.io/en/latest/advancedgameplay/sleeves.html#duplicate-sleeves",
             innerText: "Documentation",
+            target: "_blank",
         });
 
         UIElems.sleeveList = createElement("ul");
@@ -124,6 +126,7 @@ export function createSleevesPage(p: IPlayer) {
 
         UIElems.container.appendChild(UIElems.info);
         UIElems.container.appendChild(UIElems.faqButton);
+        UIElems.container.appendChild(UIElems.docButton);
         UIElems.container.appendChild(UIElems.sleeveList);
 
         document.getElementById("entire-game-container")!.appendChild(UIElems.container);
