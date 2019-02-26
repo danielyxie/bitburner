@@ -29,7 +29,7 @@ export function createPurchaseSleevesFromCovenantPopup(p: IPlayer) {
         if (p.canAfford(cost)) {
             p.loseMoney(cost);
             p.sleevesFromCovenant += 1;
-            p.sleeves.push(new Sleeve());
+            p.sleeves.push(new Sleeve(p));
             yesNoBoxClose();
         } else {
             dialogBoxCreate("You cannot afford to purchase a Duplicate Sleeve", false);
