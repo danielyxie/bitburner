@@ -281,7 +281,7 @@ PlayerObject.prototype.prestigeAugmentation = function() {
 
     for (let i = 0; i < this.sleeves.length; ++i) {
         if (this.sleeves[i] instanceof Sleeve) {
-            this.sleeves[i].resetTaskStatus();
+            this.sleeves[i].shockRecovery(this);
         }
     }
 
@@ -372,7 +372,7 @@ PlayerObject.prototype.prestigeSourceFile = function() {
     // Duplicate sleeves are reset to level 1 every Bit Node (but the number of sleeves you have persists)
     this.sleeves.length = SourceFileFlags[10] + this.sleevesFromCovenant;
     for (let i = 0; i < this.sleeves.length; ++i) {
-        this.sleeves[i] = new Sleeve();
+        this.sleeves[i] = new Sleeve(this);
     }
 
     this.isWorking = false;

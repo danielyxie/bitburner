@@ -13,6 +13,8 @@ import { Person,
          ITaskTracker,
          createTaskTracker } from "../Person";
 
+import { Augmentation } from "../../Augmentation/Augmentation";
+
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 
 import { Crime } from "../../Crime/Crime";
@@ -136,8 +138,11 @@ export class Sleeve extends Person {
      */
     sync: number = 1;
 
-    constructor() {
+    constructor(p: IPlayer | null = null) {
         super();
+        if (p != null) {
+            this.shockRecovery(p);
+        }
     }
 
     /**
@@ -375,6 +380,17 @@ export class Sleeve extends Person {
         }
     }
 
+    installAugmentation(aug: Augmentation): void {
+        this.hacking_exp = 0;
+        this.strength_exp = 0;
+        this.defense_exp = 0;
+        this.dexterity_exp = 0;
+        this.agility_exp = 0;
+        this.charisma_exp = 0;
+        this.applyAugmentation(aug);
+        this.updateStatLevels();
+    }
+
     log(entry: string): void {
         const MaxLogSize: number = 50;
         this.logs.push(entry);
@@ -446,10 +462,10 @@ export class Sleeve extends Person {
                 company!.playerReputation += (this.getRepGain(p) * cyclesUsed);
                 break;
             case SleeveTaskType.Recovery:
-                this.shock = Math.min(100, this.shock + (0.0001 * cyclesUsed));
+                this.shock = Math.min(100, this.shock + (0.0002 * cyclesUsed));
                 break;
             case SleeveTaskType.Sync:
-                this.sync = Math.min(100, this.sync + (0.0001 * cyclesUsed));
+                this.sync = Math.min(100, this.sync + (0.0002 * cyclesUsed));
                 break;
             default:
                 break;
@@ -484,6 +500,28 @@ export class Sleeve extends Person {
         this.crimeType = "";
         this.currentTaskLocation = "";
         this.gymStatType = "";
+    }
+
+    shockRecovery(p: IPlayer): boolean {
+        if (this.currentTask !== SleeveTaskType.Idle) {
+            this.finishTask(p);
+        } else {
+            this.resetTaskStatus();
+        }
+
+        this.currentTask = SleeveTaskType.Recovery;
+        return true;
+    }
+
+    synchronize(p: IPlayer): boolean {
+        if (this.currentTask !== SleeveTaskType.Idle) {
+            this.finishTask(p);
+        } else {
+            this.resetTaskStatus();
+        }
+
+        this.currentTask = SleeveTaskType.Sync;
+        return true;
     }
 
     /**

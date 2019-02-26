@@ -51,6 +51,15 @@ export function createDevMenu() {
         innerText: "Add $1000t",
     });
 
+    const addMoney2 = createElement("button", {
+        class: "std-button",
+        clickListener: () => {
+            Player.gainMoney(1e12);
+        },
+        display: "block",
+        innerText: "Add $1t",
+    })
+
     const addRam = createElement("button", {
         class: "std-button",
         clickListener: () => {
@@ -576,6 +585,20 @@ export function createDevMenu() {
         innerText: "View Stock Price Caps",
     });
 
+    // Sleeves
+    const sleevesHeader = createElement("h2", { innerText: "Sleeves" });
+
+    const sleevesRemoveAllShockRecovery = createElement("button", {
+        class: "std-button",
+        display: "block",
+        innerText: "Set Shock Recovery of All Sleeves to 0",
+        clickListener: () => {
+            for (let i = 0; i < Player.sleeves.length; ++i) {
+                Player.sleeves[i].shock = 100;
+            }
+        }
+    });
+
     // Add everything to container, then append to main menu
     const devMenuContainer = createElement("div", {
         class: "generic-menupage-container",
@@ -585,6 +608,7 @@ export function createDevMenu() {
     devMenuContainer.appendChild(devMenuText);
     devMenuContainer.appendChild(genericHeader);
     devMenuContainer.appendChild(addMoney);
+    devMenuContainer.appendChild(addMoney2);
     devMenuContainer.appendChild(addRam);
     devMenuContainer.appendChild(triggerBitflume);
     devMenuContainer.appendChild(destroyCurrentBitnode);
@@ -661,6 +685,8 @@ export function createDevMenu() {
     devMenuContainer.appendChild(stockPriceChangeBtn);
     devMenuContainer.appendChild(createElement("br"));
     devMenuContainer.appendChild(stockViewPriceCapBtn);
+    devMenuContainer.appendChild(sleevesHeader);
+    devMenuContainer.appendChild(sleevesRemoveAllShockRecovery);
 
    const entireGameContainer = document.getElementById("entire-game-container");
    if (entireGameContainer == null) {
