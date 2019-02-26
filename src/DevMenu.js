@@ -267,7 +267,19 @@ export function createDevMenu() {
             Player.queueAugmentation(augmentationsDropdown.options[augmentationsDropdown.selectedIndex].value);
         },
         innerText: "Queue Augmentation",
-    })
+    });
+
+    const giveAllAugmentationsButton = createElement("button", {
+        class: "std-button",
+        clickListener: () => {
+            for (const i in AugmentationNames) {
+                const augName = AugmentationNames[i];
+                Player.queueAugmentation(augName);
+            }
+        },
+        display: "block",
+        innerText: "Queue All Augmentations",
+    });
 
     // Source Files
     const sourceFilesHeader = createElement("h2", { innerText: "Source-Files" });
@@ -621,6 +633,7 @@ export function createDevMenu() {
     devMenuContainer.appendChild(augmentationsHeader);
     devMenuContainer.appendChild(augmentationsDropdown);
     devMenuContainer.appendChild(augmentationsQueueButton);
+    devMenuContainer.appendChild(giveAllAugmentationsButton);
     devMenuContainer.appendChild(sourceFilesHeader);
     devMenuContainer.appendChild(removeSourceFileDropdown);
     devMenuContainer.appendChild(removeSourceFileButton);

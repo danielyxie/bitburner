@@ -139,7 +139,7 @@ function displayFactionContent(factionName) {
     var hackDivWrapper = createElement("div", {class:"faction-work-div-wrapper"});
     hackDiv.appendChild(hackDivWrapper);
     hackDivWrapper.appendChild(createElement("a", {
-        class:"a-link-button", innerText:"Hacking Contracts",
+        class:"std-button", innerText:"Hacking Contracts",
         clickListener:()=>{
             Player.startFactionHackWork(faction);
             return false;
@@ -158,7 +158,7 @@ function displayFactionContent(factionName) {
     var fieldWorkDivWrapper = createElement("div", {class:"faction-work-div-wrapper"});
     fieldWorkDiv.appendChild(fieldWorkDivWrapper);
     fieldWorkDivWrapper.appendChild(createElement("a", {
-        class:"a-link-button", innerText:"Field Work",
+        class:"std-button", innerText:"Field Work",
         clickListener:()=>{
             Player.startFactionFieldWork(faction);
             return false;
@@ -177,7 +177,7 @@ function displayFactionContent(factionName) {
     var securityWorkDivWrapper = createElement("div", {class:"faction-work-div-wrapper"});
     securityWorkDiv.appendChild(securityWorkDivWrapper);
     securityWorkDivWrapper.appendChild(createElement("a", {
-        class:"a-link-button", innerText:"Security Work",
+        class:"std-button", innerText:"Security Work",
         clickListener:()=>{
             Player.startFactionSecurityWork(faction);
             return false;
@@ -215,7 +215,7 @@ function displayFactionContent(factionName) {
         },
     });
     donateDivWrapper.appendChild(createElement("a", {
-        class:"a-link-button", innerText:"Donate Money",
+        class:"std-button", innerText:"Donate Money",
         clickListener:()=>{
             var amt = parseFloat(donateAmountInput.value);
             if (isNaN(amt) || amt < 0) {
@@ -235,25 +235,6 @@ function displayFactionContent(factionName) {
     donateDivWrapper.appendChild(donateAmountInput);
     donateDivWrapper.appendChild(donateRepGain);
     elements.push(donateDiv);
-
-    //Purchase Augmentations
-    elements.push(createElement("pre", {
-        innerHTML: "<br>As your reputation with this faction rises, you will " +
-                   "unlock Augmentations, which you can purchase to enhance " +
-                   "your abilities.<br><br>"
-    }));
-    elements.push(createElement("a", {
-        class:"std-button",
-        innerText:"Purchase Augmentations",
-        margin: "5px",
-        clickListener:()=>{
-            Engine.hideAllContent();
-            Engine.Display.factionAugmentationsContent.style.display = "block";
-
-            displayFactionAugmentations(factionName);
-            return false;
-        }
-    }));
 
     //Gang (BitNode-2)
     if (Player.bitNodeN == 2 && (factionName == "Slum Snakes" || factionName == "Tetrads" ||
@@ -337,10 +318,10 @@ function displayFactionContent(factionName) {
 
     // Purchase Sleeves from Covenant
     if (factionName === "The Covenant" && Player.bitNodeN >= 10 && SourceFileFlags[10]) {
-        const covenantPurchaseSleevesDiv = createElement("div", { class: "faction-work-div" });
-        const covenantPurchaseSleevesDivWrapper = createElement("div", { class: "faction-wkro-div-wrapper" });
+        const covenantPurchaseSleevesDiv = createElement("div", { class: "faction-work-div", display: "inline" });
+        const covenantPurchaseSleevesDivWrapper = createElement("div", { class: "faction-work-div-wrapper" });
         covenantPurchaseSleevesDiv.appendChild(covenantPurchaseSleevesDivWrapper);
-        covenantPurchaseSleevesDivWrapper.appendChild(createElement("button", {
+        covenantPurchaseSleevesDivWrapper.appendChild(createElement("a", {
             class: "std-button",
             innerText: "Purchase Duplicate Sleeves",
             clickListener: () => {
@@ -353,6 +334,29 @@ function displayFactionContent(factionName) {
 
         elements.push(covenantPurchaseSleevesDiv);
     }
+
+    //Purchase Augmentations
+    const purchaseAugmentationsDiv = createElement("div", { class: "faction-work-div", display: "inline" });
+    const purchaseAugmentationsDivWrapper = createElement("div", { class: "faction-work-div-wrapper" });
+    purchaseAugmentationsDiv.appendChild(purchaseAugmentationsDivWrapper);
+    purchaseAugmentationsDivWrapper.appendChild(createElement("a", {
+        class:"std-button",
+        innerText:"Purchase Augmentations",
+        margin: "5px",
+        clickListener:()=>{
+            Engine.hideAllContent();
+            Engine.Display.factionAugmentationsContent.style.display = "block";
+
+            displayFactionAugmentations(factionName);
+            return false;
+        }
+    }));
+    purchaseAugmentationsDivWrapper.appendChild(createElement("pre", {
+        innerHTML: "<br>As your reputation with this faction rises, you will " +
+                   "unlock Augmentations, which you can purchase to enhance " +
+                   "your abilities.<br><br>"
+    }));
+    elements.push(purchaseAugmentationsDiv);
 
     // Determine if actions should be possible
     donateDiv.style.display = faction.favor >= Math.floor(CONSTANTS.BaseFavorToDonate * BitNodeMultipliers.RepToDonateToFaction) ? "inline" : "none";

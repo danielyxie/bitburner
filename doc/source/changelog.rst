@@ -3,6 +3,44 @@
 Changelog
 =========
 
+v0.44.0 - 2/26/2019
+-------------------
+* Bladeburner Changes:
+    ** Reduced the amount of rank needed to earn a skill point
+    ** Reduced the effects of the "Reaper" and "Evasive System" skills
+    ** Increased the effect of the "Hyperdrive" and "Hands of Midas" skills
+    ** Slightly increased the rate which the skill point cost rises for almost all skills
+    ** The "Overlock" Skill now has a maximum level of 90 instead of 95
+    ** Money earned from Contracts increased by 400%
+    ** Changed the way population affects success rate. Extreme populations now have less dramatic effects
+    ** Added two new General Actions: Diplomacy and Hyperbolic Regeneration Chamber
+    ** Lowered the rep and money cost of the "Blade's Simulacrum" augmentation
+    ** Significantly decreased the initial  amount of Contracts/Operations (the "Contracts/Operations remaining" value)
+    ** Decreased the rate at which the amount of Contracts/Operations increases over time
+    ** Decreased the number of successes you need to increase the max level of a Contract/Operation
+    ** Increased the average number of Synthoid communities each city has
+    ** Reduced the amount by which a successful raid will decrease the population of a city
+    ** The "riots" event will now increase the chaos of a city by a greater amount
+    ** Significantly increased the effect that Agility and Dexterity have on action time
+* Added new BitNode multipliers:
+    * HomeComputerRamCost - Affects how much it costs to upgrade home computer's RAM
+    * DaedalusAugsRequirement - Affects how many Augmentations you need in order to get invited to Daedalus
+    * FourSigmaMarketDataCost - Affects how much it costs to unlock the stock market's 4S Market Data
+    * FourSigmaMarketDataApiCost - Affects how much it costs to unlock the stock market's 4S Market Data API
+* A few minor changes to BitNode multipliers across the board (mostly for the new multipliers)
+* 'The Covenant' now requires 20 total Augmentations to get invited, rather than 30
+* You can now purchase permanent Duplicate Sleeves from 'The Covenant'. This requires Source-File 10, and you must be in BN-10 or after
+* You can now track where all of your money comes from in the 'Stats' page
+* Increased the money gained from Coding Contracts by 50%
+* getCharacterInformation() function now returns the player's HP and max HP
+* Bug Fix: You can no longer disconnect the enemy's connections in Hacking Missions
+* Bug Fix: Duplicate Sleeve faction reputation gain is now properly affected by faction favor
+* Bug Fix: After installing Augmentations, the Terminal display will now correctly show the current server as "home"
+* Bug Fix: Fixed an exploit where you could change the duration of timed functions (e.g. hack, weaken) in NetscriptJS
+* Bug Fix: You should now properly be able to use the ServerProfile.exe program
+* Bug Fix: Prevented exploit that allowed you to accept faction invites programmatically through NetscriptJS
+* Bug Fix: Faction invitations for megacorporations should now work properly
+
 v0.43.1 - 2/11/2019
 -------------------
 * Terminal changes:
