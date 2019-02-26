@@ -236,6 +236,29 @@ function displayFactionContent(factionName) {
     donateDivWrapper.appendChild(donateRepGain);
     elements.push(donateDiv);
 
+    //Purchase Augmentations
+    const purchaseAugmentationsDiv = createElement("div", { class: "faction-work-div", display: "inline" });
+    const purchaseAugmentationsDivWrapper = createElement("div", { class: "faction-work-div-wrapper" });
+    purchaseAugmentationsDiv.appendChild(purchaseAugmentationsDivWrapper);
+    purchaseAugmentationsDivWrapper.appendChild(createElement("a", {
+        class:"std-button",
+        innerText:"Purchase Augmentations",
+        margin: "5px",
+        clickListener:()=>{
+            Engine.hideAllContent();
+            Engine.Display.factionAugmentationsContent.style.display = "block";
+
+            displayFactionAugmentations(factionName);
+            return false;
+        }
+    }));
+    purchaseAugmentationsDivWrapper.appendChild(createElement("pre", {
+        innerHTML: "<br>As your reputation with this faction rises, you will " +
+                   "unlock Augmentations, which you can purchase to enhance " +
+                   "your abilities.<br><br>"
+    }));
+    elements.push(purchaseAugmentationsDiv);
+
     //Gang (BitNode-2)
     if (Player.bitNodeN == 2 && (factionName == "Slum Snakes" || factionName == "Tetrads" ||
         factionName == "The Syndicate" || factionName == "The Dark Army" || factionName == "Speakers for the Dead" ||
@@ -334,29 +357,6 @@ function displayFactionContent(factionName) {
 
         elements.push(covenantPurchaseSleevesDiv);
     }
-
-    //Purchase Augmentations
-    const purchaseAugmentationsDiv = createElement("div", { class: "faction-work-div", display: "inline" });
-    const purchaseAugmentationsDivWrapper = createElement("div", { class: "faction-work-div-wrapper" });
-    purchaseAugmentationsDiv.appendChild(purchaseAugmentationsDivWrapper);
-    purchaseAugmentationsDivWrapper.appendChild(createElement("a", {
-        class:"std-button",
-        innerText:"Purchase Augmentations",
-        margin: "5px",
-        clickListener:()=>{
-            Engine.hideAllContent();
-            Engine.Display.factionAugmentationsContent.style.display = "block";
-
-            displayFactionAugmentations(factionName);
-            return false;
-        }
-    }));
-    purchaseAugmentationsDivWrapper.appendChild(createElement("pre", {
-        innerHTML: "<br>As your reputation with this faction rises, you will " +
-                   "unlock Augmentations, which you can purchase to enhance " +
-                   "your abilities.<br><br>"
-    }));
-    elements.push(purchaseAugmentationsDiv);
 
     // Determine if actions should be possible
     donateDiv.style.display = faction.favor >= Math.floor(CONSTANTS.BaseFavorToDonate * BitNodeMultipliers.RepToDonateToFaction) ? "inline" : "none";
