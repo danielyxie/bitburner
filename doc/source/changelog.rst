@@ -6,22 +6,22 @@ Changelog
 v0.44.0 - 2/26/2019
 -------------------
 * Bladeburner Changes:
-    ** Reduced the amount of rank needed to earn a skill point
-    ** Reduced the effects of the "Reaper" and "Evasive System" skills
-    ** Increased the effect of the "Hyperdrive" and "Hands of Midas" skills
-    ** Slightly increased the rate which the skill point cost rises for almost all skills
-    ** The "Overlock" Skill now has a maximum level of 90 instead of 95
-    ** Money earned from Contracts increased by 400%
-    ** Changed the way population affects success rate. Extreme populations now have less dramatic effects
-    ** Added two new General Actions: Diplomacy and Hyperbolic Regeneration Chamber
-    ** Lowered the rep and money cost of the "Blade's Simulacrum" augmentation
-    ** Significantly decreased the initial  amount of Contracts/Operations (the "Contracts/Operations remaining" value)
-    ** Decreased the rate at which the amount of Contracts/Operations increases over time
-    ** Decreased the number of successes you need to increase the max level of a Contract/Operation
-    ** Increased the average number of Synthoid communities each city has
-    ** Reduced the amount by which a successful raid will decrease the population of a city
-    ** The "riots" event will now increase the chaos of a city by a greater amount
-    ** Significantly increased the effect that Agility and Dexterity have on action time
+    * Reduced the amount of rank needed to earn a skill point
+    * Reduced the effects of the "Reaper" and "Evasive System" skills
+    * Increased the effect of the "Hyperdrive" and "Hands of Midas" skills
+    * Slightly increased the rate which the skill point cost rises for almost all skills
+    * The "Overlock" Skill now has a maximum level of 90 instead of 95
+    * Money earned from Contracts increased by 400%
+    * Changed the way population affects success rate. Extreme populations now have less dramatic effects
+    * Added two new General Actions: Diplomacy and Hyperbolic Regeneration Chamber
+    * Lowered the rep and money cost of the "Blade's Simulacrum" augmentation
+    * Significantly decreased the initial  amount of Contracts/Operations (the "Contracts/Operations remaining" value)
+    * Decreased the rate at which the amount of Contracts/Operations increases over time
+    * Decreased the number of successes you need to increase the max level of a Contract/Operation
+    * Increased the average number of Synthoid communities each city has
+    * Reduced the amount by which a successful raid will decrease the population of a city
+    * The "riots" event will now increase the chaos of a city by a greater amount
+    * Significantly increased the effect that Agility and Dexterity have on action time
 * Added new BitNode multipliers:
     * HomeComputerRamCost - Affects how much it costs to upgrade home computer's RAM
     * DaedalusAugsRequirement - Affects how many Augmentations you need in order to get invited to Daedalus
