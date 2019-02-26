@@ -5,7 +5,6 @@ import { IPlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentatio
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { Cities } from "../Locations/Cities";
 import { CONSTANTS } from "../Constants";
-import { IMap } from "../types";
 
 // Interface that defines a generic object used to track experience/money
 // earnings for tasks
