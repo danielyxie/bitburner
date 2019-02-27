@@ -562,6 +562,14 @@ PlayerObject.prototype.canAfford = function(cost) {
 }
 
 PlayerObject.prototype.recordMoneySource = function(amt, source) {
+    if (!(this.moneySourceA instanceof MoneySourceTracker)) {
+        console.warn(`Player.moneySourceA was not properly initialized. Resetting`);
+        this.moneySourceA = new MoneySourceTracker();
+    }
+    if (!(this.moneySourceB instanceof MoneySourceTracker)) {
+        console.warn(`Player.moneySourceB was not properly initialized. Resetting`);
+        this.moneySourceB = new MoneySourceTracker();
+    }
     this.moneySourceA.record(amt, source);
     this.moneySourceB.record(amt, source);
 }

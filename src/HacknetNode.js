@@ -442,6 +442,7 @@ function displayHacknetNodesContent() {
         createHacknetNodeDomElement(Player.hacknetNodes[i]);
     }
 
+    updateTotalHacknetProduction();
     updateHacknetNodesContent();
 }
 
