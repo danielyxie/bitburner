@@ -898,7 +898,8 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
             const sanitizedPlayerAns: string = removeBracketsFromArrayString(ans);
             const sanitizedPlayerAnsArr: string[] = sanitizedPlayerAns.split(",");
             for (let i = 0; i < sanitizedPlayerAnsArr.length; ++i) {
-                sanitizedPlayerAnsArr[i] = removeQuotesFromString(sanitizedPlayerAnsArr[i]);
+                sanitizedPlayerAnsArr[i] = removeQuotesFromString(sanitizedPlayerAnsArr[i])
+                                           .replace(/\s/g, "");;
             }
 
             if (num == null || num.length === 0) {
