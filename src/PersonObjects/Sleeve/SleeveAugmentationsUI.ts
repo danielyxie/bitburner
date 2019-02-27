@@ -16,14 +16,9 @@ import { numeralWrapper } from "../../ui/numeralFormat";
 
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 
-import { clearEventListeners } from "../../../utils/uiHelpers/clearEventListeners";
 import { createElement } from "../../../utils/uiHelpers/createElement";
 import { createPopup } from "../../../utils/uiHelpers/createPopup";
 import { createPopupCloseButton } from "../../../utils/uiHelpers/createPopupCloseButton";
-import { getSelectValue } from "../../../utils/uiHelpers/getSelectData";
-import { removeChildrenFromElement } from "../../../utils/uiHelpers/removeChildrenFromElement";
-import { removeElement } from "../../../utils/uiHelpers/removeElement";
-import { removeElementById } from "../../../utils/uiHelpers/removeElementById";
 
 export function createSleevePurchaseAugsPopup(sleeve: Sleeve, p: IPlayer) {
     // You can only purchase Augmentations that are actually available from
@@ -44,6 +39,8 @@ export function createSleevePurchaseAugsPopup(sleeve: Sleeve, p: IPlayer) {
         }
     }
 
+    // Create popup
+    const popupId = "purchase-sleeve-augs-popup";
 
     // General info about buying Augmentations
     const info = createElement("p", {
@@ -58,8 +55,10 @@ export function createSleevePurchaseAugsPopup(sleeve: Sleeve, p: IPlayer) {
         ].join(" "),
     });
 
-    const popupId = "purchase-sleeve-augs-popup";
-    const popupElems: HTMLElement[] = [info];
+    // Close popup
+    const closeBtn = createPopupCloseButton(popupId, { innerText: "Cancel" });
+
+    const popupElems: HTMLElement[] = [closeBtn, info];
 
     for (const aug of availableAugs) {
         const div = createElement("div", {

@@ -1,6 +1,7 @@
 /**
  * Module for handling the Sleeve UI
  */
+import { createSleevePurchaseAugsPopup } from "./SleeveAugmentationsUI";
 import { Sleeve } from "./Sleeve";
 import { SleeveTaskType } from "./SleeveTaskTypesEnum";
 import { SleeveFaq } from "./data/SleeveFaq";
@@ -277,7 +278,7 @@ function createSleeveUi(sleeve: Sleeve, allSleeves: Sleeve[]): ISleeveUIElems {
         display: "block",
         innerText: "Purchase Augmentations",
         clickListener: () => {
-
+            createSleevePurchaseAugsPopup(sleeve, playerRef!);
         }
     });
     elems.statsPanel.appendChild(elems.stats);
