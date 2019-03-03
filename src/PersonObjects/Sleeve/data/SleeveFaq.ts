@@ -1,7 +1,7 @@
 export const SleeveFaq: string =
 [
-"<strong><u>How do sleeves work?</strong></u><br>",
-"Sleeves are essentially clones. You can use them to perform any work type",
+"<strong><u>How do Duplicate Sleeves work?</strong></u><br>",
+"Duplicate Sleeves are essentially clones. You can use them to perform any work type",
 "action, such as working for a company/faction or committing a crime.",
 "Having sleeves perform these tasks earns you money, experience, and reputation.<br><br>",
 "Sleeves are their own individuals, which means they each have their own",
@@ -30,6 +30,19 @@ export const SleeveFaq: string =
 "Only one of your sleeves can work for a given company/faction a time.",
 "To clarify further, if you have two sleeves they can work for two different",
 "companies, but they cannot both work for the same company.<br><br>",
+
+"<strong><u>Why did my Sleeve stop working?</u></strong><br>",
+"Sleeves are subject to the same time restrictions as you. This means that",
+"they automatically stop working at a company after 8 hours, and stop working",
+"for a faction after 20 hours.<br><br>",
+
+"<strong><u>How do I buy Augmentations for my Sleeves?</u></strong><br>",
+"Your Sleeve needs to have a Shock of 0 in order for you to buy Augmentations",
+"for it.<br><br>",
+
+"<strong><u>Why can't I buy the X Augmentation for my sleeve?</u></strong><br>",
+"Certain Augmentations, like Bladeburner-specific ones and NeuroFlux Governor,",
+"are not available for sleeves.<br><br>",
 
 "<strong><u>Do sleeves get reset when installing Augmentations or switching BitNodes?</u></strong><br>",
 "Sleeves are reset when switching BitNodes, but not when installing Augmentations."

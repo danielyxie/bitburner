@@ -50,6 +50,16 @@ no shock. Shock affects the amount of experience earned by the sleeve.
 Sleeve shock slowly decreases over time. You can further increase the rate at which
 it decreases by assigning sleeves to the 'Shock Recovery' task.
 
+Obtaining Duplicate Sleeves
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+There are two methods of obtaining Duplicate Sleeves:
+
+1. Destroy BitNode-10. Each completion give you one additional Duplicate Sleeve
+2. Purchase Duplicate Sleeves from :ref:`the faction The Covenant <gameplay_factions>`.
+   This is only available in BitNodes-10 and above, and is only available after defeating
+   BitNode-10 at least once. Sleeves purchased this way are permanent. You can purchase
+   up to 5 Duplicate Sleeves from The Covenant. 
+
 Re-sleeving
 ^^^^^^^^^^^
 Re-sleeving is the process of digitizing and transferring your consciousness into a
@@ -64,4 +74,4 @@ Note that resleeving **REMOVES** all of your currently-installed Augmentations,
 and replaces them with the ones provided by the purchased sleeve. However,
 Augmentations that are purchased but not installed will **not** be removed. If you have purchased
 an Augmentation and then re-sleeve into a body which already has that Augmentation,
-it will be removed since you cannot have duplicate Augmentations. 
+it will be removed since you cannot have duplicate Augmentations.

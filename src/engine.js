@@ -209,17 +209,6 @@ const Engine = {
         //Main menu buttons
         saveMainMenuButton:             null,
         deleteMainMenuButton:           null,
-
-        //Tutorial buttons
-        tutorialNetworkingButton:       null,
-        tutorialHackingButton:          null,
-        tutorialScriptsButton:          null,
-        tutorialNetscriptButton:        null,
-        tutorialTravelingButton:        null,
-        tutorialCompaniesButton:        null,
-        tutorialFactionsButton:         null,
-        tutorialAugmentationsButton:    null,
-        tutorialBackButton:             null,
     },
 
     //Display objects
@@ -348,7 +337,6 @@ const Engine = {
     loadTutorialContent: function() {
         Engine.hideAllContent();
         Engine.Display.tutorialContent.style.display = "block";
-        Engine.displayTutorialContent();
         routing.navigateTo(Page.Tutorial);
         MainMenuLinks.Tutorial.classList.add("active");
     },
@@ -767,40 +755,6 @@ const Engine = {
         }
 
         Engine.Display.factionsContent.appendChild(invitationsList);
-    },
-
-    displayTutorialContent: function() {
-        document.getElementById("tutorial-getting-started-link").style.display = "block";
-        Engine.Clickables.tutorialNetworkingButton.style.display = "block";
-        Engine.Clickables.tutorialHackingButton.style.display = "block";
-        Engine.Clickables.tutorialScriptsButton.style.display = "block";
-        Engine.Clickables.tutorialNetscriptButton.style.display = "block";
-        Engine.Clickables.tutorialTravelingButton.style.display = "block";
-        Engine.Clickables.tutorialCompaniesButton.style.display = "block";
-        Engine.Clickables.tutorialFactionsButton.style.display = "block";
-        Engine.Clickables.tutorialAugmentationsButton.style.display = "block";
-        document.getElementById("tutorial-shortcuts-link").style.display = "block";
-
-        Engine.Clickables.tutorialBackButton.style.display = "none";
-        document.getElementById("tutorial-text").style.display = "none";
-    },
-
-    //Displays the text when a section of the Tutorial is opened
-    displayTutorialPage: function(text) {
-        document.getElementById("tutorial-getting-started-link").style.display = "none";
-        Engine.Clickables.tutorialNetworkingButton.style.display = "none";
-        Engine.Clickables.tutorialHackingButton.style.display = "none";
-        Engine.Clickables.tutorialScriptsButton.style.display = "none";
-        Engine.Clickables.tutorialNetscriptButton.style.display = "none";
-        Engine.Clickables.tutorialTravelingButton.style.display = "none";
-        Engine.Clickables.tutorialCompaniesButton.style.display = "none";
-        Engine.Clickables.tutorialFactionsButton.style.display = "none";
-        Engine.Clickables.tutorialAugmentationsButton.style.display = "none";
-        document.getElementById("tutorial-shortcuts-link").style.display = "none";
-
-        Engine.Clickables.tutorialBackButton.style.display = "inline-block";
-        document.getElementById("tutorial-text").style.display = "block";
-        document.getElementById("tutorial-text").innerHTML = text;
     },
 
     /* Main Event Loop */
@@ -1445,52 +1399,6 @@ const Engine = {
 
 		//Init Location buttons
 		initLocationButtons();
-
-        //Tutorial buttons
-        Engine.Clickables.tutorialNetworkingButton = document.getElementById("tutorial-networking-link");
-        Engine.Clickables.tutorialNetworkingButton.addEventListener("click", function() {
-            Engine.displayTutorialPage(CONSTANTS.TutorialNetworkingText);
-        });
-
-        Engine.Clickables.tutorialHackingButton = document.getElementById("tutorial-hacking-link");
-        Engine.Clickables.tutorialHackingButton.addEventListener("click", function() {
-            Engine.displayTutorialPage(CONSTANTS.TutorialHackingText);
-        });
-
-        Engine.Clickables.tutorialScriptsButton = document.getElementById("tutorial-scripts-link");
-        Engine.Clickables.tutorialScriptsButton.addEventListener("click", function() {
-            Engine.displayTutorialPage(CONSTANTS.TutorialScriptsText);
-        });
-
-        Engine.Clickables.tutorialNetscriptButton = document.getElementById("tutorial-netscript-link");
-        Engine.Clickables.tutorialNetscriptButton.addEventListener("click", function() {
-            Engine.displayTutorialPage(CONSTANTS.TutorialNetscriptText);
-        });
-
-        Engine.Clickables.tutorialTravelingButton = document.getElementById("tutorial-traveling-link");
-        Engine.Clickables.tutorialTravelingButton.addEventListener("click", function() {
-            Engine.displayTutorialPage(CONSTANTS.TutorialTravelingText);
-        });
-
-        Engine.Clickables.tutorialCompaniesButton = document.getElementById("tutorial-jobs-link");
-        Engine.Clickables.tutorialCompaniesButton.addEventListener("click", function() {
-            Engine.displayTutorialPage(CONSTANTS.TutorialCompaniesText);
-        });
-
-        Engine.Clickables.tutorialFactionsButton = document.getElementById("tutorial-factions-link");
-        Engine.Clickables.tutorialFactionsButton.addEventListener("click", function() {
-            Engine.displayTutorialPage(CONSTANTS.TutorialFactionsText);
-        });
-
-        Engine.Clickables.tutorialAugmentationsButton = document.getElementById("tutorial-augmentations-link");
-        Engine.Clickables.tutorialAugmentationsButton.addEventListener("click", function() {
-            Engine.displayTutorialPage(CONSTANTS.TutorialAugmentationsText);
-        });
-
-        Engine.Clickables.tutorialBackButton = document.getElementById("tutorial-back-button");
-        Engine.Clickables.tutorialBackButton.addEventListener("click", function() {
-            Engine.displayTutorialContent();
-        });
 
         // Initialize references to main menu links
         if (!initializeMainMenuLinks()) {

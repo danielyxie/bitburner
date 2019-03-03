@@ -25,6 +25,44 @@ In :ref:`netscriptjs`::
     ns.bladeburner.getContractNames();
     ns.bladeburner.startAction("general", "Training");
 
+.. toctree::
+    :caption: Functions:
+
+    getContractNames() <bladeburnerapi/getContractNames>
+    getOperationNames() <bladeburnerapi/getOperationNames>
+    getBlackOpNames() <bladeburnerapi/getBlackOpNames>
+    getGeneralActionNames() <bladeburnerapi/getGeneralActionNames>
+    getSkillNames() <bladeburnerapi/getSkillNames>
+    startAction() <bladeburnerapi/startAction>
+    stopBladeburnerAction() <bladeburnerapi/stopBladeburnerAction>
+    getCurrentAction() <bladeburnerapi/getCurrentAction>
+    getActionTime() <bladeburnerapi/getActionTime>
+    getActionEstimatedSuccessChance() <bladeburnerapi/getActionEstimatedSuccessChance>
+    getActionRepGain() <bladeburnerapi/getActionRepGain>
+    getActionCountRemaining() <bladeburnerapi/getActionCountRemaining>
+    getActionMaxLevel() <bladeburnerapi/getActionMaxLevel>
+    getActionCurrentLevel() <bladeburnerapi/getActionCurrentLevel>
+    getActionAutolevel() <bladeburnerapi/getActionAutolevel>
+    setActionAutolevel() <bladeburnerapi/setActionAutolevel>
+    setActionLevel() <bladeburnerapi/setActionLevel>
+    getRank() <bladeburnerapi/getRank>
+    getSkillPoints() <bladeburnerapi/getSkillPoints>
+    getSkillLevel() <bladeburnerapi/getSkillLevel>
+    getSkillUpgradeCost() <bladeburnerapi/getSkillUpgradeCost>
+    upgradeSkill() <bladeburnerapi/upgradeSkill>
+    getTeamSize() <bladeburnerapi/getTeamSize>
+    setTeamSize() <bladeburnerapi/setTeamSize>
+    getCityEstimatedPopulation() <bladeburnerapi/getCityEstimatedPopulation>
+    getCityEstimatedCommunities() <bladeburnerapi/getCityEstimatedCommunities>
+    getCityChaos() <bladeburnerapi/getCityChaos>
+    getCity() <bladeburnerapi/getCity>
+    switchCity() <bladeburnerapi/switchCity>
+    getStamina() <bladeburnerapi/getStamina>
+    joinBladeburnerFaction() <bladeburnerapi/joinBladeburnerFaction>
+    joinBladeburnerDivision() <bladeburnerapi/joinBladeburnerDivision>
+    getBonusTime() <bladeburnerapi/getBonusTime>
+
+
 .. _bladeburner_action_types:
 
 Bladeburner Action Types
@@ -57,356 +95,6 @@ its type and name. The following are valid values when specifying the action's t
     * general
     * general action
     * gen
-
-getContractNames
-----------------
-
-.. js:function:: getContractNames()
-
-    Returns an array of strings containing the names of all Bladeburner contracts
-
-getOperationNames
------------------
-
-.. js:function:: getOperationNames()
-
-    Returns an array of strings containing the names of all Bladeburner operations
-
-getBlackOpNames
----------------
-
-.. js:function:: getBlackOpNames()
-
-    Returns an array of strings containing the names of all Bladeburner Black Ops
-
-getGeneralActionNames
----------------------
-
-.. js:function:: getGeneralActionNames()
-
-    Returns an array of strings containing the names of all general Bladeburner actions
-
-getSkillNames
--------------
-
-.. js:function:: getSkillNames()
-
-    Returns an array of strings containing the names of all Bladeburner skills
-
-startAction
------------
-
-.. js:function:: startAction(type, name)
-
-    :param string type: Type of action. See :ref:`bladeburner_action_types`
-    :param string name: Name of action. Must be an exact match
-
-    Attempts to start the specified Bladeburner action. Returns true if the action
-    was started successfully, and false otherwise.
-
-stopBladeburnerAction
----------------------
-
-.. js:function:: stopBladeburnerAction()
-
-    Stops the current Bladeburner action
-
-getCurrentAction
-----------------
-
-.. js:function:: getCurrentAction()
-
-    Returns an object that represents the player's current Bladeburner action::
-
-        {
-            type: Type of Action
-            name: Name of Action
-        }
-
-    If the player is not performing an action, the function will return an object
-    with the 'type' property set to "Idle".
-
-getActionTime
--------------
-
-.. js:function:: getActionTime(type, name)
-
-    :param string type: Type of action. See :ref:`bladeburner_action_types`
-    :param string name: Name of action. Must be an exact match
-
-    Returns the number of seconds it takes to complete the specified action
-
-getActionEstimatedSuccessChance
--------------------------------
-
-.. js:function:: getActionEstimatedSuccessChance(type, name)
-
-    :param string type: Type of action. See :ref:`bladeburner_action_types`
-    :param string name: Name of action. Must be an exact match
-
-    Returns the estimated success chance for the specified action. This chance
-    is returned as a decimal value, NOT a percentage (e.g. if you have an estimated
-    success chance of 80%, then this function will return 0.80, NOT 80).
-
-getActionRepGain
-----------------
-
-.. js:function:: getActionRepGain(type, name[, level=current level])
-
-    :param string type: Type of action. See :ref:`bladeburner_action_types`
-    :param string name: Name of action. Must be an exact match
-    :param number level: Optional action level at which to calculate the gain
-
-    Returns the average Bladeburner reputation gain for successfully completing
-    the specified action. Note that this value is an 'average' and the real
-    reputation gain may vary slightly from this value.
-
-getActionCountRemaining
------------------------
-
-.. js:function:: getActionCountRemaining(type, name)
-
-    :param string type: Type of action. See :ref:`bladeburner_action_types`
-    :param string name: Name of action. Must be an exact match
-
-    Returns the remaining count of the specified action.
-
-    Note that this is meant to be used for Contracts and Operations.
-    This function will return 'Infinity' for actions such as Training and Field Analysis.
-
-getActionMaxLevel
------------------
-
-.. js:function:: getActionMaxLevel(type, name)
-
-    :param string type: Type of action. See :ref:`bladeburner_action_types`
-    :param string name: Name of action. Must be an exact match
-
-    Returns the maximum level for this action.
-
-    Returns -1 if an invalid action is specified.
-
-getActionCurrentLevel
----------------------
-
-.. js:function:: getActionCurrentLevel(type, name)
-
-    :param string type: Type of action. See :ref:`bladeburner_action_types`
-    :param string name: Name of action. Must be an exact match
-
-    Returns the current level of this action.
-
-    Returns -1 if an invalid action is specified.
-
-getActionAutolevel
-------------------
-
-.. js:function:: getActionAutolevel(type, name)
-
-    :param string type: Type of action. See :ref:`bladeburner_action_types`
-    :param string name: Name of action. Must be an exact match
-
-    Return a boolean indicating whether or not this action is currently set to autolevel.
-
-    Returns false if an invalid action is specified.
-
-setActionAutolevel
-------------------
-
-.. js:function:: setActionAutolevel(type, name, autoLevel)
-
-    :param string type: Type of action. See :ref:`bladeburner_action_types`
-    :param string name: Name of action. Must be an exact match
-    :param boolean autoLevel: Whether or not to autolevel this action
-
-    Enable/disable autoleveling for the specified action.
-
-setActionLevel
---------------
-
-.. js:function:: setActionLevel(type, name, level)
-
-    :param string type: Type of action. See :ref:`bladeburner_action_types`
-    :param string name: Name of action. Must be an exact match
-    :param level int: Level to set this action to
-
-    Set the level for the specified action.
-
-getRank
--------
-
-.. js:function:: getRank()
-
-    Returns the player's Bladeburner Rank
-
-getSkillPoints
---------------
-
-.. js:function:: getSkillPoints()
-
-    Returns the number of Bladeburner skill points you have
-
-getSkillLevel
--------------
-
-.. js:function:: getSkillLevel(skillName="")
-
-    :param string skillName: Name of skill. Case-sensitive and must be an exact match
-
-    This function returns your level in the specified skill.
-
-    The function returns -1 if an invalid skill name is passed in
-
-getSkillUpgradeCost
--------------------
-
-.. js:function:: getSkillUpgradeCost(skillName="")
-
-    :param string skillName: Name of skill. Case-sensitive and must be an exact match
-
-    This function returns the number of skill points needed to upgrade the
-    specified skill.
-
-    The function returns -1 if an invalid skill name is passed in.
-
-upgradeSkill
-------------
-
-.. js:function:: upgradeSkill(skillName)
-
-    :param string skillName: Name of Skill to be upgraded. Case-sensitive and must be an exact match
-
-    Attempts to upgrade the specified Bladeburner skill. Returns true if the
-    skill is successfully upgraded, and false otherwise
-
-getTeamSize
------------
-
-.. js:function:: getTeamSize(type, name)
-
-    :param string type: Type of action. See :ref:`bladeburner_action_types`
-    :param string name: Name of action. Must be an exact match
-
-    Returns the number of Bladeburner team members you have assigned to the
-    specified action.
-
-    Setting a team is only applicable for Operations and BlackOps. This function
-    will return 0 for other action types.
-
-setTeamSize
------------
-
-.. js:function:: setTeamSize(type, name, size)
-
-    :param string type: Type of action. See :ref:`bladeburner_action_types`
-    :param string name: Name of action. Must be an exact match
-    :param int size: Number of team members to set. Will be converted using Math.round()
-
-    Set the team size for the specified Bladeburner action.
-
-    Returns the team size that was set, or -1 if the function failed.
-
-getCityEstimatedPopulation
---------------------------
-
-.. js:function:: getCityEstimatedPopulation(cityName)
-
-    :param string cityName: Name of city. Case-sensitive
-
-    Returns the estimated number of Synthoids in the specified city, or -1
-    if an invalid city was specified.
-
-getCityEstimatedCommunities
----------------------------
-
-.. js:function:: getCityEstimatedCommunities(cityName)
-
-    :param string cityName: Name of city. Case-sensitive
-
-    Returns the estimated number of Synthoid communities in the specified city,
-    or -1 if an invalid city was specified.
-
-getCityChaos
-------------
-
-.. js:function:: getCityChaos(cityName)
-
-    :param string cityName: Name of city. Case-sensitive
-
-    Returns the chaos in the specified city, or -1 if an invalid city was specified
-
-getCity
--------
-
-.. js:function:: getCity()
-
-    Returns the city that the player is currently in (for Bladeburner).
-
-switchCity
-----------
-
-.. js:function:: switchCity(cityName)
-
-    :param string cityName: Name of city
-
-    Attempts to switch to the specified city (for Bladeburner only).
-
-    Returns true if successful, and false otherwise
-
-getStamina
-----------
-
-.. js:function:: getStamina()
-
-    Returns an array with two elements:
-
-        [Current stamina, Max stamina]
-
-    Example usage::
-
-        function getStaminaPercentage() {
-            let res = bladeburner.getStamina();
-            return res[0] / res[1];
-        }
-
-joinBladeburnerFaction
-----------------------
-
-.. js:function:: joinBladeburnerFaction()
-
-    Attempts to join the Bladeburner faction.
-
-    Returns true if you successfully join the Bladeburner faction, or if
-    you are already a member.
-
-    Returns false otherwise.
-
-joinBladeburnerDivision
------------------------
-
-.. js:function:: joinBladeburnerDivision()
-
-    Attempts to join the Bladeburner division.
-
-    Returns true if you successfully join the Bladeburner division, or if you
-    are already a member.
-
-    Returns false otherwise
-
-getBonusTime
-------------
-
-.. js:function:: getBonusTime()
-
-    Returns the amount of accumulated "bonus time" (seconds) for the Bladeburner mechanic.
-
-    "Bonus time" is accumulated when the game is offline or if the game is
-    inactive in the browser.
-
-    "Bonus time" makes the game progress faster, up to 5x the normal speed.
-    For example, if an action takes 30 seconds to complete but you've accumulated
-    over 30 seconds in bonus time, then the action will only take 6 seconds
-    in real life to complete.
 
 Examples
 --------

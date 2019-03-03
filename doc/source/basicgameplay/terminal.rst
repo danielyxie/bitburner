@@ -126,6 +126,8 @@ Both 'clear' and 'cls' do the same thing::
     $ clear
     $ cls
 
+.. _connect_terminal_command:
+
 connect
 ^^^^^^^
 
@@ -165,8 +167,6 @@ Examples::
     $ expr 3 ** 3
 
 
-Evalutes a
-
 free
 ^^^^
 
@@ -193,6 +193,7 @@ detailed information about the Terminal command. Examples::
     $ help alias
     $ help scan-analyze
 
+.. _home_terminal_command:
 
 home
 ^^^^
@@ -346,6 +347,9 @@ scan
 Prints all immediately-available network connections. This will print a list
 of all servers that you can currently connect to using the 'connect' Terminal command.
 
+
+.. _scan_analyze_terminal_command:
+
 scan-analyze
 ^^^^^^^^^^^^
 
@@ -363,6 +367,8 @@ execute 'scan-analyze' with a depth up to 5 and 10, respectively.
 The information 'scan-analyze' displays about each server includes whether or
 not you have root access to it, its required hacking level, the number of open
 ports required to run NUKE.exe on it, and how much RAM it has.
+
+.. _scp_terminal_command:
 
 scp
 ^^^
