@@ -11,8 +11,6 @@ import { IPlayer } from "../IPlayer";
 import { CONSTANTS } from "../../Constants";
 import { Locations } from "../../Locations";
 
-import { Augmentations } from "../../Augmentation/Augmentations";
-
 import { Faction } from "../../Faction/Faction";
 import { Factions } from "../../Faction/Factions";
 import { FactionWorkType } from "../../Faction/FactionWorkTypeEnum";
@@ -276,7 +274,7 @@ function createSleeveUi(sleeve: Sleeve, allSleeves: Sleeve[]): ISleeveUIElems {
     elems.purchaseAugsButton = createElement("button", {
         class: "std-button",
         display: "block",
-        innerText: "Purchase Augmentations",
+        innerText: "Manage Augmentations",
         clickListener: () => {
             createSleevePurchaseAugsPopup(sleeve, playerRef!);
         }

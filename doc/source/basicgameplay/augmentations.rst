@@ -23,6 +23,8 @@ enough reputation in it, you will be able to purchase its Augmentations.
 Different Factions offer different Augmentations. Augmentations must be
 purchased in order to be installed, and they are fairly expensive.
 
+.. _gameplay_augmentations_installing:
+
 Installing Augmentations
 ^^^^^^^^^^^^^^^^^^^^^^^^
 You will not gain the benefits of your purchased Augmentations until you
@@ -56,6 +58,8 @@ Here is everything you will KEEP when you install an Augmentation:
 * Scripts on your home computer
 * RAM Upgrades on your home computer
 * World Stock Exchange account and TIX API Access
+
+.. _gameplay_augmentations_purchasingmultiple:
 
 Purchasing Multiple Augmentations
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

@@ -394,6 +394,7 @@ export class Sleeve extends Person {
         this.agility_exp = 0;
         this.charisma_exp = 0;
         this.applyAugmentation(aug);
+        this.augmentations.push({ name: aug.name, level: 1 });
         this.updateStatLevels();
     }
 
