@@ -11,13 +11,16 @@ import {beginInfiltration}                      from "./Infiltration";
 import {hasBladeburnerSF}                       from "./NetscriptFunctions";
 import {Locations}                              from "./Locations";
 import {Player}                                 from "./Player";
-import {Server, AllServers, AddToAllServers}    from "./Server";
+import { AllServers }                           from "./Server/AllServers";
+import { Server }                               from "./Server/Server";
+import { AddToAllServers }                      from "./Server/ServerHelpers";
 import { getPurchaseServerCost,
          purchaseServer,
-         purchaseRamForHomeComputer}            from "./ServerPurchases";
+         purchaseRamForHomeComputer }           from "./Server/ServerPurchases";
 import {Settings}                               from "./Settings/Settings";
 import { SourceFileFlags }                      from "./SourceFile/SourceFileFlags";
-import {SpecialServerNames, SpecialServerIps}   from "./SpecialServerIps";
+import { SpecialServerNames,
+         SpecialServerIps }                     from "./Server/SpecialServerIps";
 
 import {numeralWrapper}                         from "./ui/numeralFormat";
 

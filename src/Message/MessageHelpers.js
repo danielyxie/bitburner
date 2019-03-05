@@ -6,7 +6,7 @@ import { Programs }                     from "../Programs/Programs";
 import { inMission }                    from "../Missions";
 import { Player }                       from "../Player";
 import { redPillFlag }                  from "../RedPill";
-import { GetServerByHostname }          from "../Server";
+import { GetServerByHostname }          from "../Server/ServerHelpers";
 import { Settings }                     from "../Settings/Settings";
 import { dialogBoxCreate,
          dialogBoxOpened}               from "../../utils/DialogBox";

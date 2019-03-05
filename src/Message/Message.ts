@@ -12,7 +12,7 @@ export class Message {
     filename: string = "";
 
     // The text contains in the Message
-    msg: string = "":
+    msg: string = "";
 
     // Flag indicating whether this Message has been received by the player
     recvd: boolean = false;

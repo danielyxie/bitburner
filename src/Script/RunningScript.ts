@@ -1,10 +1,16 @@
 // Class representing a Script instance that is actively running.
 // A Script can have multiple active instances
-import { Script } from "./Script";
-import { IMap } from "../types";
+import { Script }           from "./Script";
+import { FconfSettings }    from "../Fconf/FconfSettings";
+import { AllServers }       from "../Server/AllServers";
+import { Settings }         from "../Settings/Settings";
+import { IMap }             from "../types";
+import { post }             from "../ui/postToTerminal";
+
 import { Generic_fromJSON,
          Generic_toJSON,
-         Reviver } from "../../utils/JSONReviver";
+         Reviver }          from "../../utils/JSONReviver";
+import { getTimestamp }     from "../../utils/helpers/getTimestamp";
 
 export class RunningScript {
     // Initializes a RunningScript Object from a JSON save state
@@ -67,7 +73,7 @@ export class RunningScript {
         this.ramUsage   = script.ramUsage;
     }
 
-    RunningScript.prototype.getCode = function() {
+    getCode(): string {
         const server = AllServers[this.server];
         if (server == null) { return ""; }
         for (let i = 0; i < server.scripts.length; ++i) {
@@ -79,7 +85,7 @@ export class RunningScript {
         return "";
     }
 
-    RunningScript.prototype.getRamUsage = function() {
+    getRamUsage(): number {
         if (this.ramUsage != null && this.ramUsage > 0) { return this.ramUsage; } // Use cached value
 
         const server = AllServers[this.server];
@@ -96,7 +102,7 @@ export class RunningScript {
         return 0;
     }
 
-    RunningScript.prototype.log = function(txt) {
+    log(txt: string): void {
         if (this.logs.length > Settings.MaxLogCapacity) {
             //Delete first element and add new log entry to the end.
             //TODO Eventually it might be better to replace this with circular array
@@ -111,18 +117,18 @@ export class RunningScript {
         this.logUpd = true;
     }
 
-    RunningScript.prototype.displayLog = function() {
+    displayLog(): void {
         for (var i = 0; i < this.logs.length; ++i) {
             post(this.logs[i]);
         }
     }
 
-    RunningScript.prototype.clearLog = function() {
+    clearLog(): void {
         this.logs.length = 0;
     }
 
-    //Update the moneyStolen and numTimesHack maps when hacking
-    RunningScript.prototype.recordHack = function(serverIp, moneyGained, n=1) {
+    // Update the moneyStolen and numTimesHack maps when hacking
+    recordHack(serverIp: string, moneyGained: number, n: number=1) {
         if (this.dataMap[serverIp] == null || this.dataMap[serverIp].constructor !== Array) {
             this.dataMap[serverIp] = [0, 0, 0, 0];
         }
@@ -130,16 +136,16 @@ export class RunningScript {
         this.dataMap[serverIp][1] += n;
     }
 
-    //Update the grow map when calling grow()
-    RunningScript.prototype.recordGrow = function(serverIp, n=1) {
+    // Update the grow map when calling grow()
+    recordGrow(serverIp: string, n: number=1) {
         if (this.dataMap[serverIp] == null || this.dataMap[serverIp].constructor !== Array) {
             this.dataMap[serverIp] = [0, 0, 0, 0];
         }
         this.dataMap[serverIp][2] += n;
     }
 
-    //Update the weaken map when calling weaken() {
-    RunningScript.prototype.recordWeaken = function(serverIp, n=1) {
+    // Update the weaken map when calling weaken() {
+    recordWeaken(serverIp: string, n: number=1) {
         if (this.dataMap[serverIp] == null || this.dataMap[serverIp].constructor !== Array) {
             this.dataMap[serverIp] = [0, 0, 0, 0];
         }

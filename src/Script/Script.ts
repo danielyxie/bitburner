@@ -1,8 +1,11 @@
 // Class representing a script file
 // This does NOT represent a script that is actively running and
 // being evaluated. See RunningScript for that
+import { calculateRamUsage } from "./RamCalculations";
+import { IPlayer } from "../PersonObjects/IPlayer";
 import { Page,
          routing } from "../ui/navigationTracking";
+
 import { setTimeoutRef } from "../utils/SetTimeoutRef";
 import { Generic_fromJSON,
          Generic_toJSON,
@@ -61,10 +64,9 @@ export class Script {
     }
 
     // Save a script FROM THE SCRIPT EDITOR
-    saveScript(): void {
+    saveScript(code: string, p: IPlayer): void {
     	if (routing.isOn(Page.ScriptEditor)) {
     		//Update code and filename
-            const code = getCurrentEditor().getCode();
     		this.code = code.replace(/^\s+|\s+$/g, '');
 
             const filenameElem: HTMLInputElement | null = document.getElementById("script-editor-filename") as HTMLInputElement;
@@ -75,7 +77,7 @@ export class Script {
     		this.filename = filenameElem!.value;
 
     		// Server
-    		this.server = Player.currentServer;
+    		this.server = p.currentServer;
 
     		//Calculate/update ram usage, execution time, etc.
     		this.updateRamUsage();
@@ -85,7 +87,7 @@ export class Script {
     }
 
     // Updates the script's RAM usage based on its code
-    async updateRamUsage(): void {
+    async updateRamUsage() {
         // TODO Commented this out because I think its unnecessary
         // DOuble check/Test
         // var codeCopy = this.code.repeat(1);

@@ -31,20 +31,26 @@ import { joinFaction,
 import { getCostOfNextHacknetNode,
          purchaseHacknet }                          from "./HacknetNode";
 import {Locations}                                  from "./Locations";
-import {Message, Messages}                          from "./Message";
+import { Message }                                  from "./Message/Message";
+import { Messages }                                 from "./Message/MessageHelpers";
 import {inMission}                                  from "./Missions";
 import {Player}                                     from "./Player";
 import { Programs }                                 from "./Programs/Programs";
-import {Script, findRunningScript, RunningScript,
-        isScriptFilename}                           from "./Script";
-import {Server, getServer, AddToAllServers,
-        AllServers, processSingleServerGrowth,
-        GetServerByHostname, numCycleForGrowth}     from "./Server";
+import { Script }                                   from "./Script/Script";
+import { findRunningScript }                        from "./Script/ScriptHelpers";
+import { isScriptFilename }                         from "./Script/ScriptHelpersTS";
+import { AllServers,
+         AddToAllServers }                          from "./Server/AllServers";
+import { Server }                                   from "./Server/Server";
+import { GetServerByHostname,
+         getServer,
+         numCycleForGrowth,
+         processSingleServerGrowth }                from "./Server/ServerHelpers";
 import { getPurchaseServerCost,
          getPurchaseServerLimit,
-         getPurchaseServerMaxRam }                  from "./ServerPurchases";
+         getPurchaseServerMaxRam }                  from "./Server/ServerPurchases";
 import {Settings}                                   from "./Settings/Settings";
-import {SpecialServerIps}                           from "./SpecialServerIps";
+import {SpecialServerIps}                           from "./Server/SpecialServerIps";
 import {Stock}                                      from "./StockMarket/Stock";
 import {StockMarket, StockSymbols, SymbolToStockMap,
         initStockMarket, initSymbolToStockMap, buyStock,
@@ -305,9 +311,9 @@ function NetscriptFunctions(workerScript) {
             for (var i = 0; i < server.serversOnNetwork.length; i++) {
                 var entry;
                 if (hostnames) {
-                    entry = server.getServerOnNetwork(i).hostname;
+                    entry = getServerOnNetwork(server, i).hostname;
                 } else {
-                    entry = server.getServerOnNetwork(i).ip;
+                    entry = getServerOnNetwork(server, i).ip;
                 }
                 if (entry == null) {
                     continue;
@@ -483,7 +489,7 @@ function NetscriptFunctions(workerScript) {
                 if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
                 const moneyBefore = server.moneyAvailable <= 0 ? 1 : server.moneyAvailable;
                 server.moneyAvailable += (1 * threads); //It can be grown even if it has no money
-                var growthPercentage = processSingleServerGrowth(server, 450 * threads);
+                var growthPercentage = processSingleServerGrowth(server, 450 * threads, Player);
                 const moneyAfter = server.moneyAvailable;
                 workerScript.scriptRef.recordGrow(server.ip, threads);
                 var expGain = calculateHackingExpGain(server) * threads;
@@ -512,7 +518,7 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, `Invalid growth argument passed into growthAnalyze: ${growth}. Must be numeric`);
             }
 
-            return numCycleForGrowth(server, Number(growth));
+            return numCycleForGrowth(server, Number(growth), Player);
         },
         weaken : function(ip) {
             if (workerScript.checkingRam) {

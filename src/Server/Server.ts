@@ -1,9 +1,14 @@
 // Class representing a single generic Server
+
+// TODO This import is a circular import. Try to fix it in the future
+import { GetServerByHostname } from "./ServerHelpers";
+
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { CodingContract } from "../CodingContracts";
 import { Message } from "../Message/Message";
 import { RunningScript } from "../Script/RunningScript";
 import { Script } from "../Script/Script";
+import { isScriptFilename } from "../Script/ScriptHelpersTS";
 import { TextFile } from "../TextFile";
 
 import { createRandomIp } from "../../utils/IPAddress";
@@ -27,6 +32,11 @@ interface IConstructorParams {
 }
 
 export class Server {
+    // Initializes a Server Object from a JSON save state
+    static fromJSON(value: any): Server {
+        return Generic_fromJSON(Server, value.data);
+    }
+
     // Initial server security level
     // (i.e. security level when the server was created)
     baseDifficulty: number = 1;
@@ -172,49 +182,43 @@ export class Server {
         this.maxRam = ram;
     }
 
-    //The serverOnNetwork array holds the IP of all the servers. This function
-    //returns the actual Server objects
-    Server.prototype.getServerOnNetwork = function(i) {
-        if (i > this.serversOnNetwork.length) {
-            console.log("Tried to get server on network that was out of range");
-            return;
-        }
-        return AllServers[this.serversOnNetwork[i]];
-    }
-
-    //Given the name of the script, returns the corresponding
-    //script object on the server (if it exists)
-    Server.prototype.getScript = function(scriptName) {
-        for (var i = 0; i < this.scripts.length; i++) {
-            if (this.scripts[i].filename == scriptName) {
+    // Given the name of the script, returns the corresponding
+    // script object on the server (if it exists)
+    getScript(scriptName: string): Script | null {
+        for (let i = 0; i < this.scripts.length; i++) {
+            if (this.scripts[i].filename === scriptName) {
                 return this.scripts[i];
             }
         }
+
         return null;
     }
 
-    Server.prototype.capDifficulty = function() {
+    // Ensures that the server's difficulty (server security) doesn't get too high
+    capDifficulty(): void {
         if (this.hackDifficulty < this.minDifficulty) {this.hackDifficulty = this.minDifficulty;}
         if (this.hackDifficulty < 1) {this.hackDifficulty = 1;}
-        //Place some arbitrarily limit that realistically should never happen unless someone is
-        //screwing around with the game
+
+        // Place some arbitrarily limit that realistically should never happen unless someone is
+        // screwing around with the game
         if (this.hackDifficulty > 1000000) {this.hackDifficulty = 1000000;}
     }
 
-    //Strengthens a server's security level (difficulty) by the specified amount
-    Server.prototype.fortify = function(amt) {
+    // Strengthens a server's security level (difficulty) by the specified amount
+    fortify(amt: number): void {
         this.hackDifficulty += amt;
         this.capDifficulty();
     }
 
-    Server.prototype.weaken = function(amt) {
+    // Lowers the server's security level (difficulty) by the specified amount)
+    weaken(amt: number): void {
         this.hackDifficulty -= (amt * BitNodeMultipliers.ServerWeakenRate);
         this.capDifficulty();
     }
 
     // Write to a script file
     // Overwrites existing files. Creates new files if the script does not eixst
-    Server.prototype.writeToScriptFile = function(fn, code) {
+    writeToScriptFile(fn: string, code: string) {
         var ret = {success: false, overwritten: false};
         if (!isScriptFilename(fn)) { return ret; }
 
@@ -232,7 +236,7 @@ export class Server {
         }
 
         //Otherwise, create a new script
-        var newScript = new Script();
+        const newScript = new Script();
         newScript.filename = fn;
         newScript.code = code;
         newScript.updateRamUsage();
@@ -244,8 +248,8 @@ export class Server {
 
     // Write to a text file
     // Overwrites existing files. Creates new files if the text file does not exist
-    Server.prototype.writeToTextFile = function(fn, txt) {
-        var ret = {success: false, overwritten: false};
+    writeToTextFile(fn: string, txt: string) {
+        var ret = { success: false, overwritten: false };
         if (!fn.endsWith("txt")) { return ret; }
 
         //Check if the text file already exists, and overwrite if it does
@@ -265,11 +269,11 @@ export class Server {
         return ret;
     }
 
-    Server.prototype.addContract = function(contract) {
+    addContract(contract: CodingContract) {
         this.contracts.push(contract);
     }
 
-    Server.prototype.removeContract = function(contract) {
+    removeContract(contract: CodingContract) {
         if (contract instanceof CodingContract) {
             this.contracts = this.contracts.filter((c) => {
                 return c.fn !== contract.fn;
@@ -281,7 +285,7 @@ export class Server {
         }
     }
 
-    Server.prototype.getContract = function(contractName) {
+    getContract(contractName: string) {
         for (const contract of this.contracts) {
             if (contract.fn === contractName) {
                 return contract;
@@ -289,15 +293,11 @@ export class Server {
         }
         return null;
     }
-}
 
-//Functions for loading and saving a Server
-Server.prototype.toJSON = function() {
-    return Generic_toJSON("Server", this);
-}
-
-Server.fromJSON = function(value) {
-    return Generic_fromJSON(Server, value.data);
+    // Serialize the current object to a JSON save state
+    toJSON(): any {
+        return Generic_toJSON("Server", this);
+    }
 }
 
 Reviver.constructors.Server = Server;

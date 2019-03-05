@@ -16,20 +16,25 @@ import { Factions,
 import { joinFaction }                          from "./Faction/FactionHelpers";
 import {deleteGangDisplayContent}               from "./Gang";
 import {Locations}                              from "./Location";
-import {initMessages, Messages, Message}        from "./Message";
+import { initMessages,
+         Messages,
+         Message }                              from "./Message/MessageHelpers";
 import {initSingularitySFFlags, hasWallStreetSF}from "./NetscriptFunctions";
 import {WorkerScript, workerScripts,
         prestigeWorkerScripts}                  from "./NetscriptWorker";
 import {Player}                                 from "./Player";
 
-import {AllServers, AddToAllServers,
-        initForeignServers, Server,
-        prestigeAllServers,
-        prestigeHomeComputer}                   from "./Server";
+import { AllServers }                           from "./Server/AllServers";
+import { Server }                               from "./Server/Server"
+import { AddToAllServers,
+         initForeignServers,
+         prestigeAllServers,
+         prestigeHomeComputer }                 from "./Server/ServerHelpers";
 import { updateSourceFileFlags }                from "./SourceFile/SourceFileFlags";
-import {SpecialServerIps, SpecialServerIpsMap,
-        prestigeSpecialServerIps,
-        SpecialServerNames}                     from "./SpecialServerIps";
+import { SpecialServerIps,
+         SpecialServerIpsMap,
+         prestigeSpecialServerIps,
+         SpecialServerNames}                    from "./Server/SpecialServerIps";
 import {initStockMarket, initSymbolToStockMap,
         stockMarketContentCreated,
         setStockMarketContentCreated}           from "./StockMarket/StockMarket";
@@ -89,7 +94,7 @@ function prestigeAugmentation() {
     }
 
     //Re-create foreign servers
-    initForeignServers();
+    initForeignServers(Player.getHomeComputer());
 
     //Darkweb is purchase-able
     document.getElementById("location-purchase-tor").setAttribute("class", "a-link-button");
@@ -194,7 +199,7 @@ function prestigeSourceFile() {
     prestigeHomeComputer(homeComp);
 
     //Re-create foreign servers
-    initForeignServers();
+    initForeignServers(Player.getHomeComputer());
 
     var srcFile1Owned = false;
     for (var i = 0; i < Player.sourceFiles.length; ++i) {

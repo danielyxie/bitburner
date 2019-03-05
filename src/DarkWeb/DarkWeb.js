@@ -1,7 +1,7 @@
 import { DarkWebItems }                         from "./DarkWebItems";
 
 import { Player }                               from "../Player";
-import { SpecialServerIps }                     from "../SpecialServerIps";
+import { SpecialServerIps }                     from "../Server/SpecialServerIps";
 import { post }                                 from "../ui/postToTerminal";
 
 import { isValidIPAddress }                     from "../../utils/helpers/isValidIPAddress";

@@ -7,15 +7,18 @@ import {Engine}                                 from "./engine";
 import { Factions,
          loadFactions }                         from "./Faction/Factions";
 import { processPassiveFactionRepGain }         from "./Faction/FactionHelpers";
-import {FconfSettings, loadFconf}               from "./Fconf";
+import { loadFconf }                            from "./Fconf/Fconf";
+import { FconfSettings }                        from "./Fconf/FconfSettings";
 import {loadAllGangs, AllGangs}                 from "./Gang";
 import {processAllHacknetNodeEarnings}          from "./HacknetNode";
-import {loadMessages, initMessages, Messages}   from "./Message";
+import { loadMessages, initMessages, Messages } from "./Message/MessageHelpers";
 import {Player, loadPlayer}                     from "./Player";
-import {loadAllRunningScripts}                  from "./Script";
-import {AllServers, loadAllServers}             from "./Server";
-import {Settings}                               from "./Settings/Settings";
-import {loadSpecialServerIps, SpecialServerIps} from "./SpecialServerIps";
+import { loadAllRunningScripts }                from "./Script/ScriptHelpers";
+import { AllServers }                           from "./Server/AllServers";
+import { loadAllServers }                       from "./Server/ServerHelpers";
+import { Settings }                             from "./Settings/Settings";
+import { loadSpecialServerIps,
+         SpecialServerIps }                     from "./Server/SpecialServerIps";
 import {loadStockMarket, StockMarket}           from "./StockMarket/StockMarket";
 import { setTimeoutRef }                        from "./utils/SetTimeoutRef";
 

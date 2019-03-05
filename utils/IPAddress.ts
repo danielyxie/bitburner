@@ -1,5 +1,5 @@
-import {AllServers}                     from "../src/Server";
-import {getRandomByte}                  from "./helpers/getRandomByte";
+import { AllServers }       from "../src/Server/AllServers";
+import { getRandomByte }    from "./helpers/getRandomByte";
 
 /* Functions to deal with manipulating IP addresses*/
 

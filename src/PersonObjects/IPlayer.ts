@@ -20,6 +20,7 @@ export interface IPlayer {
     city: string;
     companyName: string;
     corporation: any;
+    currentServer: string;
     factions: string[];
     hacknetNodes: any[];
     hasWseAccount: boolean;
