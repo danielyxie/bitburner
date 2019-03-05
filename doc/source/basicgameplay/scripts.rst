@@ -37,6 +37,8 @@ name and the arguments that it was run with.**
 The arguments must be an **exact** match. This means that both
 the order and type of the arguments matter.
 
+.. _gameplay_scripts_multithreadingscripts:
+
 Multithreading scripts
 ^^^^^^^^^^^^^^^^^^^^^^
 A script can be run with multiple threads. This is also called multithreading.

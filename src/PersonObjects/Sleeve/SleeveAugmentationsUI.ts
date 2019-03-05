@@ -8,6 +8,7 @@ import { IPlayer } from "../IPlayer";
 
 import { Augmentation } from "../../Augmentation/Augmentation";
 import { Augmentations } from "../../Augmentation/Augmentations";
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 
 import { Faction } from "../../Faction/Faction";
 import { Factions } from "../../Faction/Factions";
@@ -16,26 +17,28 @@ import { numeralWrapper } from "../../ui/numeralFormat";
 
 import { dialogBoxCreate } from "../../../utils/DialogBox";
 
-import { clearEventListeners } from "../../../utils/uiHelpers/clearEventListeners";
 import { createElement } from "../../../utils/uiHelpers/createElement";
 import { createPopup } from "../../../utils/uiHelpers/createPopup";
 import { createPopupCloseButton } from "../../../utils/uiHelpers/createPopupCloseButton";
-import { getSelectValue } from "../../../utils/uiHelpers/getSelectData";
-import { removeChildrenFromElement } from "../../../utils/uiHelpers/removeChildrenFromElement";
-import { removeElement } from "../../../utils/uiHelpers/removeElement";
 import { removeElementById } from "../../../utils/uiHelpers/removeElementById";
 
 export function createSleevePurchaseAugsPopup(sleeve: Sleeve, p: IPlayer) {
+    // Array of all owned Augmentations. Names only
+    const ownedAugNames: string[] = sleeve.augmentations.map((e) => {return e.name});
+
     // You can only purchase Augmentations that are actually available from
     // your factions. I.e. you must be in a faction that has the Augmentation
     // and you must also have enough rep in that faction in order to purchase it.
     const availableAugs: Augmentation[] = [];
 
     for (const facName of p.factions) {
+        if (facName === "Bladeburners") { continue; }
         const fac: Faction | null = Factions[facName];
         if (fac == null) { continue; }
 
         for (const augName of fac.augmentations) {
+            if (augName === AugmentationNames.NeuroFluxGovernor) { continue; }
+            if (ownedAugNames.includes(augName)) { continue; }
             const aug: Augmentation | null = Augmentations[augName];
 
             if (fac.playerReputation > aug.baseRepRequirement && !availableAugs.includes(aug)) {
@@ -44,6 +47,38 @@ export function createSleevePurchaseAugsPopup(sleeve: Sleeve, p: IPlayer) {
         }
     }
 
+    // Create popup
+    const popupId = "purchase-sleeve-augs-popup";
+
+    // Close popup button
+    const closeBtn = createPopupCloseButton(popupId, { innerText: "Cancel" });
+
+    // General info about owned Augmentations
+    const ownedAugsInfo = createElement("p", {
+        display: "block",
+        innerHTML: "Owned Augmentations:",
+    });
+
+    const popupElems: HTMLElement[] = [closeBtn, ownedAugsInfo];
+
+    // Show owned augmentations
+    // First we'll make a div with a reduced width, so the tooltips don't go off
+    // the edge of the popup
+    const ownedAugsDiv = createElement("div", { width: "70%" });
+    for (const ownedAug of ownedAugNames) {
+        const aug: Augmentation | null = Augmentations[ownedAug];
+        if (aug == null) {
+            console.warn(`Invalid Augmentation: ${ownedAug}`);
+            continue;
+        }
+
+        ownedAugsDiv.appendChild(createElement("div", {
+            class: "gang-owned-upgrade", // Reusing a class from the Gang UI
+            innerText: ownedAug,
+            tooltip: aug.info,
+        }))
+    }
+    popupElems.push(ownedAugsDiv);
 
     // General info about buying Augmentations
     const info = createElement("p", {
@@ -58,8 +93,7 @@ export function createSleevePurchaseAugsPopup(sleeve: Sleeve, p: IPlayer) {
         ].join(" "),
     });
 
-    const popupId = "purchase-sleeve-augs-popup";
-    const popupElems: HTMLElement[] = [info];
+    popupElems.push(info);
 
     for (const aug of availableAugs) {
         const div = createElement("div", {
@@ -67,17 +101,21 @@ export function createSleevePurchaseAugsPopup(sleeve: Sleeve, p: IPlayer) {
         });
 
         div.appendChild(createElement("p", {
+            fontSize: "12px",
             innerHTML:
             [
                 `<h2>${aug.name}</h2><br>`,
                 `Cost: ${numeralWrapper.formatMoney(aug.baseCost)}<br><br>`,
                 `${aug.info}`
             ].join(" "),
+            padding: "2px",
             clickListener: () => {
                 if (p.canAfford(aug.baseCost)) {
                     p.loseMoney(aug.baseCost);
                     sleeve.installAugmentation(aug);
                     dialogBoxCreate(`Installed ${aug.name} on Duplicate Sleeve!`, false)
+                    removeElementById(popupId);
+                    createSleevePurchaseAugsPopup(sleeve, p);
                 } else {
                     dialogBoxCreate(`You cannot afford ${aug.name}`, false);
                 }

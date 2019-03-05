@@ -49,6 +49,8 @@ on a server in order to successfully NUKE it:**
 Once you have enough ports opened on a server and have ran the NUKE virus
 to gain root access, you will be able to hack it.
 
+.. _gameplay_hacking_generalhackingmechanics:
+
 General Hacking Mechanics
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 When you execute the hack command, either manually through the terminal
@@ -72,6 +74,8 @@ and deplete its money, then you will encounter diminishing returns
 in your hacking (since you are only hacking a certain percentage).
 You can increase the amount of money on a server using a script and
 the :js:func:`grow` function in Netscript.
+
+.. _gameplay_hacking_serversecurity:
 
 Server Security
 ^^^^^^^^^^^^^^^

@@ -55,7 +55,7 @@ export function displayCharacterInfo(elem: HTMLElement, p: IPlayer) {
         if (src.bladeburner)    { parts.push(`Bladeburner: ${numeralWrapper.formatMoney(src.bladeburner)}`) };
         if (src.codingcontract) { parts.push(`Coding Contracts: ${numeralWrapper.formatMoney(src.codingcontract)}`) };
         if (src.work)           { parts.push(`Company Work: ${numeralWrapper.formatMoney(src.work)}`) };
-        if (src.corporation)    { parts.push(`Corporation: ${numeralWrapper.formatMoney(src.corporation)}}`) };
+        if (src.corporation)    { parts.push(`Corporation: ${numeralWrapper.formatMoney(src.corporation)}`) };
         if (src.crime)          { parts.push(`Crimes: ${numeralWrapper.formatMoney(src.crime)}`) };
         if (src.gang)           { parts.push(`Gang: ${numeralWrapper.formatMoney(src.gang)}`) };
         if (src.hacking)        { parts.push(`Hacking: ${numeralWrapper.formatMoney(src.hacking)}`) };

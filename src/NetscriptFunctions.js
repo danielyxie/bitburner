@@ -59,9 +59,6 @@ import {StockMarket, StockSymbols, SymbolToStockMap,
         PositionTypes, placeOrder, cancelOrder}     from "./StockMarket/StockMarket";
 import { getStockmarket4SDataCost,
          getStockMarket4STixApiCost }               from "./StockMarket/StockMarketCosts";
-import {numeralWrapper}                             from "./ui/numeralFormat";
-import {post}                                       from "./ui/postToTerminal";
-import { setTimeoutRef }                            from "./utils/SetTimeoutRef";
 import {TextFile, getTextFile, createTextFile}      from "./TextFile";
 
 import {unknownBladeburnerActionErrorMessage,
@@ -74,8 +71,12 @@ import {makeRuntimeRejectMsg, netscriptDelay,
         runScriptFromScript}                        from "./NetscriptEvaluator";
 import {NetscriptPort}                              from "./NetscriptPort";
 
-import Decimal                                      from "decimal.js";
 import {Page, routing}                              from "./ui/navigationTracking";
+import {numeralWrapper}                             from "./ui/numeralFormat";
+import {post}                                       from "./ui/postToTerminal";
+import { setTimeoutRef }                            from "./utils/SetTimeoutRef";
+import { is2DArray }                                from "./utils/helpers/is2DArray";
+
 import {dialogBoxCreate}                            from "../utils/DialogBox";
 import {isPowerOfTwo}                               from "../utils/helpers/isPowerOfTwo";
 import {arrayToString}                              from "../utils/helpers/arrayToString";
@@ -4692,7 +4693,20 @@ function NetscriptFunctions(workerScript) {
                     workerScript.log(`ERROR: codingcontract.getData() failed because it could find the specified contract ${fn} on server ${ip}`);
                     return false;
                 }
-                answer = String(answer);
+
+                // Convert answer to string. If the answer is a 2D array, then we have to
+                // manually add brackets for the inner arrays
+                if (is2DArray(answer)) {
+                    let answerComponents = [];
+                    for (let i = 0; i < answer.length; ++i) {
+                        answerComponents.push(["[", answer[i].toString(), "]"].join(""));
+                    }
+
+                    answer = answerComponents.join(",");
+                } else {
+                    answer = String(answer);
+                }
+
                 const serv = safeGetServer(ip, "codingcontract.attempt()");
                 if (contract.isSolution(answer)) {
                     const reward = Player.gainCodingContractReward(contract.reward, contract.getDifficulty());
