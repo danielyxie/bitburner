@@ -12,9 +12,9 @@ import { addWorkerScript }                  from "../NetscriptWorker";
 import { Player }                           from "../Player";
 import { prestigeAugmentation }             from "../Prestige";
 import { saveObject }                       from "../SaveObject";
-import { Script,
-         RunningScript}                     from "../Script";
-import { Server }                           from "../Server";
+import { RunningScript }                    from "../Script/RunningScript";
+import { Script }                           from "../Script/Script";
+import { Server }                           from "../Server/Server";
 import { OwnedAugmentationsOrderSetting }   from "../Settings/SettingEnums";
 import { Settings }                         from "../Settings/Settings";
 

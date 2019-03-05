@@ -2,16 +2,16 @@
  * Implements functions for purchasing servers or purchasing more RAM for
  * the home computer
  */
-import { BitNodeMultipliers }               from "./BitNode/BitNodeMultipliers";
-import { CONSTANTS }                        from "./Constants";
-import { Player }                           from "./Player";
-import { Server,
-         AllServers,
-         AddToAllServers}                   from "./Server";
-import { dialogBoxCreate }                  from "../utils/DialogBox";
-import { createRandomIp }                   from "../utils/IPAddress";
-import { yesNoTxtInpBoxGetInput }           from "../utils/YesNoBox";
-import { isPowerOfTwo }                     from "../utils/helpers/isPowerOfTwo";
+import { BitNodeMultipliers }               from "../BitNode/BitNodeMultipliers";
+import { CONSTANTS }                        from "../Constants";
+import { Player }                           from "../Player";
+import { AllServers,
+         AddToAllServers }                  from "../Server/AllServers";
+import { Server }                           from "../Server/Server";
+import { dialogBoxCreate }                  from "../../utils/DialogBox";
+import { createRandomIp }                   from "../../utils/IPAddress";
+import { yesNoTxtInpBoxGetInput }           from "../../utils/YesNoBox";
+import { isPowerOfTwo }                     from "../../utils/helpers/isPowerOfTwo";
 
 // Returns the cost of purchasing a server with the given RAM
 // Returns Infinity for invalid 'ram' arguments

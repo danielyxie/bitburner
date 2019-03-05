@@ -1,7 +1,7 @@
 import {workerScripts,
         killWorkerScript}                   from "./NetscriptWorker";
-import {Player}                             from "./Player";
-import {getServer}                          from "./Server";
+import { Player }                           from "./Player";
+import { getServer }                        from "./Server/ServerHelpers";
 import {numeralWrapper}                     from "./ui/numeralFormat";
 import {dialogBoxCreate}                    from "../utils/DialogBox";
 import {createAccordionElement}             from "../utils/uiHelpers/createAccordionElement";

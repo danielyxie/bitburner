@@ -3,10 +3,12 @@ import { CONSTANTS }                        from "./Constants";
 import { Player }                           from "./Player";
 import { Environment }                      from "./NetscriptEnvironment";
 import { WorkerScript, addWorkerScript}     from "./NetscriptWorker";
-import { Server, getServer}                 from "./Server";
+import { Server }                           from "./Server/Server";
+import { getServer }                        from "./Server/ServerHelpers";
 import { Settings }                         from "./Settings/Settings";
-import { Script, findRunningScript,
-         RunningScript }                    from "./Script";
+import { RunningScript }                    from "./Script/RunningScript";
+import { Script }                           from "./Script/Script";
+import { findRunningScript }                from "./Script/ScriptHelpers";
 
 import { setTimeoutRef }                    from "./utils/SetTimeoutRef";
 

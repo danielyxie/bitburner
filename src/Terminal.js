@@ -10,8 +10,9 @@ import { executeDarkwebTerminalCommand,
          checkIfConnectedToDarkweb }            from "./DarkWeb/DarkWeb";
 import { DarkWebItems }                         from "./DarkWeb/DarkWebItems";
 import {Engine}                                 from "./engine";
-import {FconfSettings, parseFconfSettings,
-        createFconf}                        from "./Fconf";
+import { parseFconfSettings,
+         createFconf }                          from "./Fconf/Fconf";
+import { FconfSettings }                        from "./Fconf/FconfSettings";
 import {calculateHackingChance,
         calculateHackingExpGain,
         calculatePercentMoneyHacked,
@@ -22,18 +23,22 @@ import {TerminalHelpText, HelpTexts}        from "./HelpText";
 import {iTutorialNextStep, iTutorialSteps,
         ITutorial}                          from "./InteractiveTutorial";
 import {showLiterature}                     from "./Literature";
-import {showMessage, Message}               from "./Message";
+import { Message }                          from "./Message/Message";
+import { showMessage }                      from "./Message/MessageHelpers";
 import {killWorkerScript, addWorkerScript}  from "./NetscriptWorker";
 import {Player}                             from "./Player";
 import {hackWorldDaemon}                    from "./RedPill";
-import { findRunningScript,
-         RunningScript,
-         isScriptFilename }                 from "./Script";
-import {AllServers, GetServerByHostname,
-        getServer, Server}                  from "./Server";
+import { RunningScript }                    from "./Script/RunningScript";
+import { findRunningScript }                from "./Script/ScriptHelpers";
+import { isScriptFilename }                 from "./Script/ScriptHelpersTS";
+import { AllServers }                       from "./Server/AllServers";
+import { Server }                           from "./Server/Server";
+import { GetServerByHostname,
+         getServer,
+         getServerOnNetwork }               from "./Server/ServerHelpers";
 import {Settings}                           from "./Settings/Settings";
-import {SpecialServerIps,
-        SpecialServerNames}                 from "./SpecialServerIps";
+import { SpecialServerIps,
+         SpecialServerNames }               from "./Server/SpecialServerIps";
 import {getTextFile}                        from "./TextFile";
 import { setTimeoutRef }                    from "./utils/SetTimeoutRef";
 import {containsAllStrings,
@@ -1157,8 +1162,8 @@ let Terminal = {
 
                 let ip = commandArray[1];
 
-                for (var i = 0; i < Player.getCurrentServer().serversOnNetwork.length; i++) {
-                    if (Player.getCurrentServer().getServerOnNetwork(i).ip == ip || Player.getCurrentServer().getServerOnNetwork(i).hostname == ip) {
+                for (var i = 0; i < s.serversOnNetwork.length; i++) {
+                    if (getServerOnNetwork(s, i).ip == ip || getServerOnNetwork(s, i).hostname == ip) {
                         Terminal.connectToServer(ip);
                         return;
                     }
@@ -1812,11 +1817,13 @@ let Terminal = {
             postError("Incorrect usage of netstat/scan command. Usage: netstat/scan");
             return;
         }
-        //Displays available network connections using TCP
+
+        // Displays available network connections using TCP
+        const currServ = Player.getCurrentServer();
         post("Hostname             IP                   Root Access");
-        for (let i = 0; i < Player.getCurrentServer().serversOnNetwork.length; i++) {
+        for (let i = 0; i < currServ.serversOnNetwork.length; i++) {
             //Add hostname
-            let entry = Player.getCurrentServer().getServerOnNetwork(i);
+            let entry = getServerOnNetwork(currServ, i);
             if (entry == null) { continue; }
             entry = entry.hostname;
 
@@ -1824,16 +1831,16 @@ let Terminal = {
             let numSpaces = 21 - entry.length;
             let spaces = Array(numSpaces+1).join(" ");
             entry += spaces;
-            entry += Player.getCurrentServer().getServerOnNetwork(i).ip;
+            entry += getServerOnNetwork(currServ, i).ip;
 
             //Calculate padding and add root access info
             let hasRoot;
-            if (Player.getCurrentServer().getServerOnNetwork(i).hasAdminRights) {
+            if (getServerOnNetwork(currServ, i).hasAdminRights) {
                 hasRoot = 'Y';
             } else {
                 hasRoot = 'N';
             }
-            numSpaces = 21 - Player.getCurrentServer().getServerOnNetwork(i).ip.length;
+            numSpaces = 21 - getServerOnNetwork(currServ, i).ip.length;
             spaces = Array(numSpaces+1).join(" ");
             entry += spaces;
             entry += hasRoot;
@@ -1867,7 +1874,7 @@ let Terminal = {
                 visited[s.ip] = 1;
             }
             for (var i = s.serversOnNetwork.length-1; i >= 0; --i) {
-                stack.push(s.getServerOnNetwork(i));
+                stack.push(getServerOnNetwork(s, i));
                 depthQueue.push(d+1);
             }
             if (d == 0) {continue;} //Don't print current server

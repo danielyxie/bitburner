@@ -21,14 +21,12 @@ import {CompanyPositions}                               from "./Company/CompanyP
 import {initCompanies}                                  from "./Company/Companies";
 import { Corporation }                                  from "./Corporation/Corporation";
 import {CONSTANTS}                                      from "./Constants";
-
-
 import {createDevMenu, closeDevMenu}                    from "./DevMenu";
 import { Factions, initFactions }                       from "./Faction/Factions";
 import { displayFactionContent, joinFaction,
          processPassiveFactionRepGain,
          inviteToFaction }                              from "./Faction/FactionHelpers";
-import {FconfSettings}                                  from "./Fconf";
+import { FconfSettings }                                from "./Fconf/FconfSettings";
 import {displayLocationContent,
         initLocationButtons}                            from "./Location";
 import {Locations}                                      from "./Locations";
@@ -36,7 +34,7 @@ import {displayHacknetNodesContent, processAllHacknetNodeEarnings,
         updateHacknetNodesContent}                      from "./HacknetNode";
 import {iTutorialStart}                                 from "./InteractiveTutorial";
 import {initLiterature}                                 from "./Literature";
-import {checkForMessagesToSend, initMessages}           from "./Message";
+import { checkForMessagesToSend, initMessages }         from "./Message/MessageHelpers";
 import {inMission, currMission}                         from "./Missions";
 import {initSingularitySFFlags,
         hasSingularitySF, hasCorporationSF}             from "./NetscriptFunctions";
@@ -54,13 +52,14 @@ import {saveObject, loadGame}                           from "./SaveObject";
 import { getCurrentEditor,
          loadAllRunningScripts,
          scriptEditorInit,
-         updateScriptEditorContent }                    from "./Script";
-import {AllServers, Server, initForeignServers}         from "./Server";
+         updateScriptEditorContent }                    from "./Script/ScriptHelpers";
+import { AllServers }                                   from "./Server/AllServers";
+import { Server }                                       from "./Server/Server";
+import { initForeignServers }                           from "./Server/ServerHelpers";
 import {Settings}                                       from "./Settings/Settings";
 import { initSourceFiles, SourceFiles }                 from "./SourceFile";
 import { updateSourceFileFlags }                        from "./SourceFile/SourceFileFlags";
-
-import {SpecialServerIps, initSpecialServerIps}         from "./SpecialServerIps";
+import {SpecialServerIps, initSpecialServerIps}         from "./Server/SpecialServerIps";
 import {StockMarket, StockSymbols,
         SymbolToStockMap, initStockSymbols,
         initSymbolToStockMap, stockMarketCycle,
@@ -1271,7 +1270,7 @@ const Engine = {
             Engine.setDisplayElements();        //Sets variables for important DOM elements
             Engine.start();                     //Run main game loop and Scripts loop
             Player.init();
-            initForeignServers();
+            initForeignServers(Player.getHomeComputer());
             initCompanies();
             initFactions();
             initAugmentations();

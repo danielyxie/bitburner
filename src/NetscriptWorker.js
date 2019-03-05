@@ -11,7 +11,7 @@ import {evaluate, isScriptErrorMessage,
 import {NetscriptFunctions}                 from "./NetscriptFunctions";
 import {executeJSScript}                    from "./NetscriptJSEvaluator";
 import {NetscriptPort}                      from "./NetscriptPort";
-import {AllServers}                         from "./Server";
+import { AllServers }                       from "./Server/AllServers";
 import {Settings}                           from "./Settings/Settings";
 import { setTimeoutRef }                    from "./utils/SetTimeoutRef";
 

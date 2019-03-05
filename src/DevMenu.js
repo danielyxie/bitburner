@@ -8,7 +8,7 @@ import { Company }                      from "./Company/Company";
 import { Programs }                     from "./Programs/Programs";
 import { Factions }                     from "./Faction/Factions";
 import { Player }                       from "./Player";
-import { AllServers }                   from "./Server";
+import { AllServers }                   from "./Server/AllServers";
 import { hackWorldDaemon }              from "./RedPill";
 import { StockMarket,
          SymbolToStockMap }             from "./StockMarket/StockMarket";
