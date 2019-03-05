@@ -3,6 +3,19 @@
 Changelog
 =========
 
+v0.44.1 - 3/4/2019
+------------------
+* Duplicate Sleeve changes:
+** You can now purchase Augmentations for your Duplicate Sleeves
+** Sleeves are now assigned to Shock Recovery task by default
+** Shock Recovery and Synchronize tasks are now twice as effective
+
+* Changed documentation so that Netscript functions are own their own pages. Sorry if this is annoying, it was necessary for properly cross-referencing
+* Officially deprecated the Wiki (the fandom site). Use the 'readthedocs' Documentation instead
+* Bug Fix: 'rm' Terminal and Netscript commands now work on non-program files that have '.exe' in the name (by Github user MasonD)
+* Bug Fix: The 'Find All Valid Math Expressions' Coding Contract should now properly ignore whitespace in answers
+* Bug Fix: The 'Merge Overlapping Intervals' Coding Contract should now properly accept 2D arrays when being attempted through Netscript
+
 v0.44.0 - 2/26/2019
 -------------------
 * Bladeburner Changes:
