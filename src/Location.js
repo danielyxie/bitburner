@@ -11,9 +11,9 @@ import {beginInfiltration}                      from "./Infiltration";
 import {hasBladeburnerSF}                       from "./NetscriptFunctions";
 import {Locations}                              from "./Locations";
 import {Player}                                 from "./Player";
-import { AllServers }                           from "./Server/AllServers";
+import { AllServers,
+         AddToAllServers }                      from "./Server/AllServers";
 import { Server }                               from "./Server/Server";
-import { AddToAllServers }                      from "./Server/ServerHelpers";
 import { getPurchaseServerCost,
          purchaseServer,
          purchaseRamForHomeComputer }           from "./Server/ServerPurchases";
