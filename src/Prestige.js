@@ -16,19 +16,19 @@ import { Factions,
 import { joinFaction }                          from "./Faction/FactionHelpers";
 import {deleteGangDisplayContent}               from "./Gang";
 import {Locations}                              from "./Location";
+import { Message }                              from "./Message/Message";
 import { initMessages,
-         Messages,
-         Message }                              from "./Message/MessageHelpers";
+         Messages }                             from "./Message/MessageHelpers";
 import {initSingularitySFFlags, hasWallStreetSF}from "./NetscriptFunctions";
 import {WorkerScript, workerScripts,
         prestigeWorkerScripts}                  from "./NetscriptWorker";
 import {Player}                                 from "./Player";
 
-import { AllServers }                           from "./Server/AllServers";
+import { AllServers,
+         AddToAllServers,
+         prestigeAllServers }                   from "./Server/AllServers";
 import { Server }                               from "./Server/Server"
-import { AddToAllServers,
-         initForeignServers,
-         prestigeAllServers,
+import { initForeignServers,
          prestigeHomeComputer }                 from "./Server/ServerHelpers";
 import { updateSourceFileFlags }                from "./SourceFile/SourceFileFlags";
 import { SpecialServerIps,

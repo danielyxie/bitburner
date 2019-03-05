@@ -24,9 +24,9 @@ import {Gang, resetGangs}                       from "./Gang";
 import {Locations}                              from "./Locations";
 import {hasBn11SF, hasWallStreetSF,hasAISF}     from "./NetscriptFunctions";
 import { Sleeve }                               from "./PersonObjects/Sleeve/Sleeve";
-import { AllServers }                           from "./Server/AllServers";
+import { AllServers,
+         AddToAllServers }                      from "./Server/AllServers";
 import { Server }                               from "./Server/Server";
-import { AddToAllServers }                      from "./Server/ServerHelpers";
 import {Settings}                               from "./Settings/Settings";
 import {SpecialServerIps, SpecialServerNames}   from "./Server/SpecialServerIps";
 import {SourceFiles, applySourceFile}           from "./SourceFile";

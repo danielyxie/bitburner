@@ -14,8 +14,8 @@ import {processAllHacknetNodeEarnings}          from "./HacknetNode";
 import { loadMessages, initMessages, Messages } from "./Message/MessageHelpers";
 import {Player, loadPlayer}                     from "./Player";
 import { loadAllRunningScripts }                from "./Script/ScriptHelpers";
-import { AllServers }                           from "./Server/AllServers";
-import { loadAllServers }                       from "./Server/ServerHelpers";
+import { AllServers,
+         loadAllServers }                       from "./Server/AllServers";
 import { Settings }                             from "./Settings/Settings";
 import { loadSpecialServerIps,
          SpecialServerIps }                     from "./Server/SpecialServerIps";

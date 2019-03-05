@@ -3,7 +3,7 @@ import { CodingContract,
          CodingContractTypes }          from "./CodingContracts";
 import { Factions }                     from "./Faction/Factions";
 import { Player }                       from "./Player";
-import { AllServers }                   from "./Server/Server";
+import { AllServers }                   from "./Server/AllServers";
 import { GetServerByHostname }          from "./Server/ServerHelpers";
 
 import { getRandomInt }                 from "../utils/helpers/getRandomInt";

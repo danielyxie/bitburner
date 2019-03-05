@@ -5,9 +5,9 @@
 import { BitNodeMultipliers }               from "../BitNode/BitNodeMultipliers";
 import { CONSTANTS }                        from "../Constants";
 import { Player }                           from "../Player";
-import { AllServers }                       from "../Server/AllServers";
+import { AllServers,
+         AddToAllServers }                  from "../Server/AllServers";
 import { Server }                           from "../Server/Server";
-import { AddToAllServers }                  from "../Server/ServerHelpers";
 import { dialogBoxCreate }                  from "../../utils/DialogBox";
 import { createRandomIp }                   from "../../utils/IPAddress";
 import { yesNoTxtInpBoxGetInput }           from "../../utils/YesNoBox";
