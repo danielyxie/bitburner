@@ -2505,7 +2505,7 @@ Bladeburner.prototype.updateContractsUIElement = function(el, action) {
         display:"inline-block",
         innerHTML:action.desc + "\n\n" +
                   "Estimated success chance: " + formatNumber(estimatedSuccessChance*100, 1) + "%\n" +
-                  "Time Required (s): " + formatNumber(Math.floor(actionTime), 0) + "\n" +
+                  "Time Required (s): " + formatNumber(actionTime, 0) + "\n" +
                   "Contracts remaining: " + Math.floor(action.count) + "\n" +
                   "Successes: " + action.successes + "\n" +
                   "Failures: " + action.failures,
