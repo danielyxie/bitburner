@@ -28,6 +28,7 @@ import { Factions,
          factionExists }                            from "./Faction/Factions";
 import { joinFaction,
          purchaseAugmentation }                     from "./Faction/FactionHelpers";
+import { FactionWorkType }                          from "./Faction/FactionWorkTypeEnum";
 import { getCostOfNextHacknetNode,
          purchaseHacknet }                          from "./HacknetNode";
 import {Locations}                                  from "./Locations";
@@ -71,6 +72,7 @@ import {WorkerScript, workerScripts,
 import {makeRuntimeRejectMsg, netscriptDelay,
         runScriptFromScript}                        from "./NetscriptEvaluator";
 import {NetscriptPort}                              from "./NetscriptPort";
+import {SleeveTaskType}                             from "./PersonObjects/Sleeve/SleeveTaskTypesEnum"
 
 import {Page, routing}                              from "./ui/navigationTracking";
 import {numeralWrapper}                             from "./ui/numeralFormat";
@@ -4809,7 +4811,7 @@ function NetscriptFunctions(workerScript) {
             },
         }, // End coding contracts
         sleeve : {
-            getNumSleeves: function() {
+            getNumSleeves : function() {
                 if (workerScript.checkingRam) {
                     return updateStaticRam("getNumSleeves", CONSTANTS.ScriptSleeveBaseRamCost);
                 }
@@ -4828,18 +4830,6 @@ function NetscriptFunctions(workerScript) {
 
                 return Player.sleeves[sleeveNumber].shockRecovery(Player);
             },
-            getShock : function(sleeveNumber=0) {
-                if (workerScript.checkingRam) {
-                    return updateStaticRam("getShock", CONSTANTS.ScriptSleeveBaseRamCost);
-                }
-                updateDynamicRam("getShock", CONSTANTS.ScriptSleeveBaseRamCost);
-                if (sleeveNumber >= Player.sleeves.length || sleeveNumber < 0) {
-                    workerScript.log(`ERROR: sleeve.getShock(${sleeveNumber}) failed because it is an invalid sleeve number.`);
-                    return false;
-                }
-
-                return Player.sleeves[sleeveNumber].shock;
-            },
             synchronize : function(sleeveNumber=0) {
                 if (workerScript.checkingRam) {
                     return updateStaticRam("synchronize", CONSTANTS.ScriptSleeveBaseRamCost);
@@ -4851,18 +4841,6 @@ function NetscriptFunctions(workerScript) {
                 }
 
                 return Player.sleeves[sleeveNumber].synchronize(Player);
-            },
-            getSync : function(sleeveNumber=0) {
-                if (workerScript.checkingRam) {
-                    return updateStaticRam("getSync", CONSTANTS.ScriptSleeveBaseRamCost);
-                }
-                updateDynamicRam("getSync", CONSTANTS.ScriptSleeveBaseRamCost);
-                if (sleeveNumber >= Player.sleeves.length || sleeveNumber < 0) {
-                    workerScript.log(`ERROR: sleeve.getSync(${sleeveNumber}) failed because it is an invalid sleeve number.`);
-                    return false;
-                }
-
-                return Player.sleeves[sleeveNumber].sync;
             },
             commitCrime : function(sleeveNumber=0, crimeName="") {
                 if (workerScript.checkingRam) {
@@ -4935,6 +4913,115 @@ function NetscriptFunctions(workerScript) {
                 }
 
                 return Player.sleeves[sleeveNumber].workoutAtGym(Player, gymName, stat);
+            },
+            getStats : function(sleeveNumber=0) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("workoutAtGym", CONSTANTS.ScriptSleeveBaseRamCost);
+                }
+                updateDynamicRam("workoutAtGym", CONSTANTS.ScriptSleeveBaseRamCost);
+                if (sleeveNumber >= Player.sleeves.length || sleeveNumber < 0) {
+                    workerScript.log(`ERROR: sleeve.workoutAtGym(${sleeveNumber}) failed because it is an invalid sleeve number.`);
+                    return false;
+                }
+
+                const sl = Player.sleeves[i];
+                return {
+                    shock: sl.shock,
+                    sync: sl.sync,
+                    hacking_skill: sl.hacking_skill,
+                    strength: sl.strength,
+                    defense: sl.defense,
+                    dexterity: sl.dexterity,
+                    agility: sl.agility,
+                    charisma: sl.charisma,
+                };
+            },
+            getTask : function(sleeveNumber=0) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getTask", CONSTANTS.ScriptSleeveBaseRamCost);
+                }
+                updateDynamicRam("getTask", CONSTANTS.ScriptSleeveBaseRamCost);
+                if (sleeveNumber >= Player.sleeves.length || sleeveNumber < 0) {
+                    workerScript.log(`ERROR: sleeve.getTask(${sleeveNumber}) failed because it is an invalid sleeve number.`);
+                    return false;
+                }
+
+                const sl = Player.sleeves[sleeveNumber];
+                return {
+                    task:            SleeveTaskType[sl.currentTask],
+                    crime:           sl.crimeType,
+                    location:        sl.currentTaskLocation,
+                    gymStatType:     sl.gymStatType,
+                    factionWorkType: FactionWorkType[sl.factionWorkType],
+                };
+            },
+            getInformation : function(sleeveNumber=0) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getInformation", CONSTANTS.ScriptSleeveBaseRamCost);
+                }
+                updateDynamicRam("getInformation", CONSTANTS.ScriptSleeveBaseRamCost);
+                if (sleeveNumber >= Player.sleeves.length || sleeveNumber < 0) {
+                    workerScript.log(`ERROR: sleeve.getInformation(${sleeveNumber}) failed because it is an invalid sleeve number.`);
+                    return false;
+                }
+
+                const sl = Player.sleeves[sleeveNumber];
+                return {
+                    city:     sl.city,
+                    hp:       sl.hp,
+                    jobs:     Object.keys(Player.jobs), // technically sleeves have the same jobs as the player.
+                    jobTitle: Object.values(Player.jobs), 
+                    maxHp:    sl.max_hp,
+                    tor:      SpecialServerIps.hasOwnProperty("Darkweb Server"), // There's no reason not to give that infomation here as well. Worst case scenario it isn't used.
+
+                    mult: {
+                        agility:      sl.agility_mult,
+                        agilityExp:   sl.agility_exp_mult,
+                        companyRep:   sl.company_rep_mult,
+                        crimeMoney:   sl.crime_money_mult,
+                        crimeSuccess: sl.crime_success_mult,
+                        defense:      sl.defense_mult,
+                        defenseExp:   sl.defense_exp_mult,
+                        dexterity:    sl.dexterity_mult,
+                        dexterityExp: sl.dexterity_exp_mult,
+                        factionRep:   sl.faction_rep_mult,
+                        hacking:      sl.hacking_mult,
+                        hackingExp:   sl.hacking_exp_mult,
+                        strength:     sl.strength_mult,
+                        strengthExp:  sl.strength_exp_mult,
+                        workMoney:    sl.work_money_mult,
+                    },
+
+                    timeWorked: sl.currentTaskTime,
+                    earningsForSleeves : {
+                            workHackExpGain: sl.earningsForSleeves.hack,
+                            workStrExpGain:  sl.earningsForSleeves.str,
+                            workDefExpGain:  sl.earningsForSleeves.def,
+                            workDexExpGain:  sl.earningsForSleeves.dex,
+                            workAgiExpGain:  sl.earningsForSleeves.agi,
+                            workChaExpGain:  sl.earningsForSleeves.cha,
+                            workMoneyGain:   sl.earningsForSleeves.money,
+                    },
+                    earningsForPlayer : {
+                            workHackExpGain: sl.earningsForPlayer.hack,
+                            workStrExpGain:  sl.earningsForPlayer.str,
+                            workDefExpGain:  sl.earningsForPlayer.def,
+                            workDexExpGain:  sl.earningsForPlayer.dex,
+                            workAgiExpGain:  sl.earningsForPlayer.agi,
+                            workChaExpGain:  sl.earningsForPlayer.cha,
+                            workMoneyGain:   sl.earningsForPlayer.money,
+                    },
+                    earningsForTask : {
+                            workHackExpGain: sl.earningsForTask.hack,
+                            workStrExpGain:  sl.earningsForTask.str,
+                            workDefExpGain:  sl.earningsForTask.def,
+                            workDexExpGain:  sl.earningsForTask.dex,
+                            workAgiExpGain:  sl.earningsForTask.agi,
+                            workChaExpGain:  sl.earningsForTask.cha,
+                            workMoneyGain:   sl.earningsForTask.money,
+                    },
+                    workRepGain:     sl.getRepGain(),
+                }
             },
         } // End sleeve
     } //End return
