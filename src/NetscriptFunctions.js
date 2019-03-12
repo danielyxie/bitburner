@@ -4802,6 +4802,18 @@ function NetscriptFunctions(workerScript) {
 
                 return Player.sleeves[sleeveNumber].shockRecovery(Player);
             },
+            getShock : function(sleeveNumber=0) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getShock", CONSTANTS.ScriptSleeveBaseRamCost);
+                }
+                updateDynamicRam("getShock", CONSTANTS.ScriptSleeveBaseRamCost);
+                if (sleeveNumber >= Player.sleeves.length || sleeveNumber < 0) {
+                    workerScript.log(`ERROR: sleeve.getShock(${sleeveNumber}) failed because it is an invalid sleeve number.`);
+                    return false;
+                }
+
+                return Player.sleeves[sleeveNumber].shock;
+            },
             synchronize : function(sleeveNumber=0) {
                 if (workerScript.checkingRam) {
                     return updateStaticRam("synchronize", CONSTANTS.ScriptSleeveBaseRamCost);
@@ -4813,6 +4825,18 @@ function NetscriptFunctions(workerScript) {
                 }
 
                 return Player.sleeves[sleeveNumber].synchronize(Player);
+            },
+            getSync : function(sleeveNumber=0) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getSync", CONSTANTS.ScriptSleeveBaseRamCost);
+                }
+                updateDynamicRam("getSync", CONSTANTS.ScriptSleeveBaseRamCost);
+                if (sleeveNumber >= Player.sleeves.length || sleeveNumber < 0) {
+                    workerScript.log(`ERROR: sleeve.getSync(${sleeveNumber}) failed because it is an invalid sleeve number.`);
+                    return false;
+                }
+
+                return Player.sleeves[sleeveNumber].sync;
             },
             commitCrime : function(sleeveNumber=0, crimeName="") {
                 if (workerScript.checkingRam) {
