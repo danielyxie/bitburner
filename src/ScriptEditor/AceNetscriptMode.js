@@ -119,7 +119,7 @@ let NetscriptFunctions =
     "getActionMaxLevel|getActionCurrentLevel|getActionAutolevel|"              +
     "getActionRepGain|setActionAutolevel|setActionLevel|"                      +
     "getRank|getSkillPoints|getSkillLevel|getSkillUpgradeCost|"                +
-    "upgradeSkill|getTeamSize|getCity|"                                        +
+    "upgradeSkill|getTeamSize|getCity|getCurrentAction|"                       +
     "setTeamSize|getCityEstimatedPopulation|getCityEstimatedCommunities|"      +
     "getCityChaos|switchCity|getStamina|joinBladeburnerFaction|getBonusTime|"  +
 
