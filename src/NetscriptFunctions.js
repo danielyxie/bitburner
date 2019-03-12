@@ -4781,7 +4781,112 @@ function NetscriptFunctions(workerScript) {
                 }
                 return contract.getMaxNumTries() - contract.tries;
             },
-        }
+        }, // End coding contracts
+        sleeve : {
+            getNumSleeves: function() {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getNumSleeves", CONSTANTS.ScriptSleeveBaseRamCost);
+                }
+                updateDynamicRam("getNumSleeves", CONSTANTS.ScriptSleeveBaseRamCost);
+                return Player.sleeves.length;
+            },
+            shockRecovery : function(sleeveNumber=0) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("shockRecovery", CONSTANTS.ScriptSleeveBaseRamCost);
+                }
+                updateDynamicRam("shockRecovery", CONSTANTS.ScriptSleeveBaseRamCost);
+                if (sleeveNumber >= Player.sleeves.length || sleeveNumber < 0) {
+                    workerScript.log(`ERROR: sleeve.shockRecovery(${sleeveNumber}) failed because it is an invalid sleeve number.`);
+                    return false;
+                }
+
+                return Player.sleeves[sleeveNumber].shockRecovery(Player);
+            },
+            synchronize : function(sleeveNumber=0) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("synchronize", CONSTANTS.ScriptSleeveBaseRamCost);
+                }
+                updateDynamicRam("synchronize", CONSTANTS.ScriptSleeveBaseRamCost);
+                if (sleeveNumber >= Player.sleeves.length || sleeveNumber < 0) {
+                    workerScript.log(`ERROR: sleeve.synchronize(${sleeveNumber}) failed because it is an invalid sleeve number.`);
+                    return false;
+                }
+
+                return Player.sleeves[sleeveNumber].synchronize(Player);
+            },
+            commitCrime : function(sleeveNumber=0, crimeName="") {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("commitCrime", CONSTANTS.ScriptSleeveBaseRamCost);
+                }
+                updateDynamicRam("commitCrime", CONSTANTS.ScriptSleeveBaseRamCost);
+                if (sleeveNumber >= Player.sleeves.length || sleeveNumber < 0) {
+                    workerScript.log(`ERROR: sleeve.commitCrime(${sleeveNumber}) failed because it is an invalid sleeve number.`);
+                    return false;
+                }
+
+                return Player.sleeves[sleeveNumber].commitCrime(Player, crimeName);
+            },
+            takeUniversityCourse : function(sleeveNumber=0, universityName="", className="") {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("takeUniversityCourse", CONSTANTS.ScriptSleeveBaseRamCost);
+                }
+                updateDynamicRam("takeUniversityCourse", CONSTANTS.ScriptSleeveBaseRamCost);
+                if (sleeveNumber >= Player.sleeves.length || sleeveNumber < 0) {
+                    workerScript.log(`ERROR: sleeve.takeUniversityCourse(${sleeveNumber}) failed because it is an invalid sleeve number.`);
+                    return false;
+                }
+
+                return Player.sleeves[sleeveNumber].takeUniversityCourse(Player, universityName, className);
+            },
+            travel : function(sleeveNumber=0, cityName="") {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("travel", CONSTANTS.ScriptSleeveBaseRamCost);
+                }
+                updateDynamicRam("travel", CONSTANTS.ScriptSleeveBaseRamCost);
+                if (sleeveNumber >= Player.sleeves.length || sleeveNumber < 0) {
+                    workerScript.log(`ERROR: sleeve.travel(${sleeveNumber}) failed because it is an invalid sleeve number.`);
+                    return false;
+                }
+
+                return Player.sleeves[sleeveNumber].travel(Player, cityName);
+            },
+            workForCompany : function(sleeveNumber=0, companyName="") {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("workForCompany", CONSTANTS.ScriptSleeveBaseRamCost);
+                }
+                updateDynamicRam("workForCompany", CONSTANTS.ScriptSleeveBaseRamCost);
+                if (sleeveNumber >= Player.sleeves.length || sleeveNumber < 0) {
+                    workerScript.log(`ERROR: sleeve.workForCompany(${sleeveNumber}) failed because it is an invalid sleeve number.`);
+                    return false;
+                }
+
+                return Player.sleeves[sleeveNumber].workForCompany(Player, companyName);
+            },
+            workForFaction : function(sleeveNumber=0, factionName="", workType="") {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("workForFaction", CONSTANTS.ScriptSleeveBaseRamCost);
+                }
+                updateDynamicRam("workForFaction", CONSTANTS.ScriptSleeveBaseRamCost);
+                if (sleeveNumber >= Player.sleeves.length || sleeveNumber < 0) {
+                    workerScript.log(`ERROR: sleeve.workForFaction(${sleeveNumber}) failed because it is an invalid sleeve number.`);
+                    return false;
+                }
+
+                return Player.sleeves[sleeveNumber].workForFaction(Player, factionName, workType);
+            },
+            workoutAtGym : function(sleeveNumber=0, gymName="", stat="") {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("workoutAtGym", CONSTANTS.ScriptSleeveBaseRamCost);
+                }
+                updateDynamicRam("workoutAtGym", CONSTANTS.ScriptSleeveBaseRamCost);
+                if (sleeveNumber >= Player.sleeves.length || sleeveNumber < 0) {
+                    workerScript.log(`ERROR: sleeve.workoutAtGym(${sleeveNumber}) failed because it is an invalid sleeve number.`);
+                    return false;
+                }
+
+                return Player.sleeves[sleeveNumber].workoutAtGym(Player, gymName, stat);
+            },
+        } // End sleeve
     } //End return
 } //End NetscriptFunction()
 
