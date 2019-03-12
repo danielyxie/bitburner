@@ -61,6 +61,7 @@ import {StockMarket, StockSymbols, SymbolToStockMap,
         PositionTypes, placeOrder, cancelOrder}     from "./StockMarket/StockMarket";
 import { getStockmarket4SDataCost,
          getStockMarket4STixApiCost }               from "./StockMarket/StockMarketCosts";
+import { SourceFileFlags }                          from "./SourceFile/SourceFileFlags"
 import {TextFile, getTextFile, createTextFile}      from "./TextFile";
 
 import {unknownBladeburnerActionErrorMessage,
@@ -97,7 +98,6 @@ var hasCorporationSF            = false, //Source-File 3
     hasBladeburnerSF            = false, //Source-File 6
     hasBladeburner2079SF        = false, //Source-File 7
     hasWallStreetSF             = false, //Source-File 8
-    hasSleeveSF                 = false, //Source-File 10
     hasBn11SF                   = false; //Source-File 11
 
 var singularitySFLvl=1, wallStreetSFLvl=1;
@@ -188,7 +188,6 @@ function initSingularitySFFlags() {
             hasWallStreetSF = true;
             wallStreetSFLvl = Player.sourceFiles[i].lvl;
         }
-        if (Player.sourceFiles[i].n === 10) {hasSleeveSF            = true;}
         if (Player.sourceFiles[i].n === 11) {hasBn11SF              = true;}
     }
 }
@@ -4817,7 +4816,7 @@ function NetscriptFunctions(workerScript) {
                 if (workerScript.checkingRam) {
                     return updateStaticRam("getNumSleeves", CONSTANTS.ScriptSleeveBaseRamCost);
                 }
-                if (Player.bitNodeN !== 10 && !hasSleeveSF) {
+                if (Player.bitNodeN !== 10 && !SourceFileFlags[10]) {
                     throw makeRuntimeRejectMsg(workerScript, "getNumSleeves() failed because you do not currently have access to the Sleeve API. This is either because you are not in BitNode-10 or because you do not have Source-File 10");
                 }
                 updateDynamicRam("getNumSleeves", CONSTANTS.ScriptSleeveBaseRamCost);
@@ -4827,7 +4826,7 @@ function NetscriptFunctions(workerScript) {
                 if (workerScript.checkingRam) {
                     return updateStaticRam("shockRecovery", CONSTANTS.ScriptSleeveBaseRamCost);
                 }
-                if (Player.bitNodeN !== 10 && !hasSleeveSF) {
+                if (Player.bitNodeN !== 10 && !SourceFileFlags[10]) {
                     throw makeRuntimeRejectMsg(workerScript, "shockRecovery() failed because you do not currently have access to the Sleeve API. This is either because you are not in BitNode-10 or because you do not have Source-File 10");
                 }
                 updateDynamicRam("shockRecovery", CONSTANTS.ScriptSleeveBaseRamCost);
@@ -4842,7 +4841,7 @@ function NetscriptFunctions(workerScript) {
                 if (workerScript.checkingRam) {
                     return updateStaticRam("synchronize", CONSTANTS.ScriptSleeveBaseRamCost);
                 }
-                if (Player.bitNodeN !== 10 && !hasSleeveSF) {
+                if (Player.bitNodeN !== 10 && !SourceFileFlags[10]) {
                     throw makeRuntimeRejectMsg(workerScript, "synchronize() failed because you do not currently have access to the Sleeve API. This is either because you are not in BitNode-10 or because you do not have Source-File 10");
                 }
                 updateDynamicRam("synchronize", CONSTANTS.ScriptSleeveBaseRamCost);
@@ -4857,7 +4856,7 @@ function NetscriptFunctions(workerScript) {
                 if (workerScript.checkingRam) {
                     return updateStaticRam("commitCrime", CONSTANTS.ScriptSleeveBaseRamCost);
                 }
-                if (Player.bitNodeN !== 10 && !hasSleeveSF) {
+                if (Player.bitNodeN !== 10 && !SourceFileFlags[10]) {
                     throw makeRuntimeRejectMsg(workerScript, "commitCrime() failed because you do not currently have access to the Sleeve API. This is either because you are not in BitNode-10 or because you do not have Source-File 10");
                 }
                 updateDynamicRam("commitCrime", CONSTANTS.ScriptSleeveBaseRamCost);
@@ -4872,7 +4871,7 @@ function NetscriptFunctions(workerScript) {
                 if (workerScript.checkingRam) {
                     return updateStaticRam("takeUniversityCourse", CONSTANTS.ScriptSleeveBaseRamCost);
                 }
-                if (Player.bitNodeN !== 10 && !hasSleeveSF) {
+                if (Player.bitNodeN !== 10 && !SourceFileFlags[10]) {
                     throw makeRuntimeRejectMsg(workerScript, "takeUniversityCourse() failed because you do not currently have access to the Sleeve API. This is either because you are not in BitNode-10 or because you do not have Source-File 10");
                 }
                 updateDynamicRam("takeUniversityCourse", CONSTANTS.ScriptSleeveBaseRamCost);
@@ -4887,7 +4886,7 @@ function NetscriptFunctions(workerScript) {
                 if (workerScript.checkingRam) {
                     return updateStaticRam("travel", CONSTANTS.ScriptSleeveBaseRamCost);
                 }
-                if (Player.bitNodeN !== 10 && !hasSleeveSF) {
+                if (Player.bitNodeN !== 10 && !SourceFileFlags[10]) {
                     throw makeRuntimeRejectMsg(workerScript, "travel() failed because you do not currently have access to the Sleeve API. This is either because you are not in BitNode-10 or because you do not have Source-File 10");
                 }
                 updateDynamicRam("travel", CONSTANTS.ScriptSleeveBaseRamCost);
@@ -4902,7 +4901,7 @@ function NetscriptFunctions(workerScript) {
                 if (workerScript.checkingRam) {
                     return updateStaticRam("workForCompany", CONSTANTS.ScriptSleeveBaseRamCost);
                 }
-                if (Player.bitNodeN !== 10 && !hasSleeveSF) {
+                if (Player.bitNodeN !== 10 && !SourceFileFlags[10]) {
                     throw makeRuntimeRejectMsg(workerScript, "workForCompany() failed because you do not currently have access to the Sleeve API. This is either because you are not in BitNode-10 or because you do not have Source-File 10");
                 }
                 updateDynamicRam("workForCompany", CONSTANTS.ScriptSleeveBaseRamCost);
@@ -4917,7 +4916,7 @@ function NetscriptFunctions(workerScript) {
                 if (workerScript.checkingRam) {
                     return updateStaticRam("workForFaction", CONSTANTS.ScriptSleeveBaseRamCost);
                 }
-                if (Player.bitNodeN !== 10 && !hasSleeveSF) {
+                if (Player.bitNodeN !== 10 && !SourceFileFlags[10]) {
                     throw makeRuntimeRejectMsg(workerScript, "workForFaction() failed because you do not currently have access to the Sleeve API. This is either because you are not in BitNode-10 or because you do not have Source-File 10");
                 }
                 updateDynamicRam("workForFaction", CONSTANTS.ScriptSleeveBaseRamCost);
@@ -4932,7 +4931,7 @@ function NetscriptFunctions(workerScript) {
                 if (workerScript.checkingRam) {
                     return updateStaticRam("workoutAtGym", CONSTANTS.ScriptSleeveBaseRamCost);
                 }
-                if (Player.bitNodeN !== 10 && !hasSleeveSF) {
+                if (Player.bitNodeN !== 10 && !SourceFileFlags[10]) {
                     throw makeRuntimeRejectMsg(workerScript, "workoutAtGym() failed because you do not currently have access to the Sleeve API. This is either because you are not in BitNode-10 or because you do not have Source-File 10");
                 }
                 updateDynamicRam("workoutAtGym", CONSTANTS.ScriptSleeveBaseRamCost);
@@ -4947,7 +4946,7 @@ function NetscriptFunctions(workerScript) {
                 if (workerScript.checkingRam) {
                     return updateStaticRam("workoutAtGym", CONSTANTS.ScriptSleeveBaseRamCost);
                 }
-                if (Player.bitNodeN !== 10 && !hasSleeveSF) {
+                if (Player.bitNodeN !== 10 && !SourceFileFlags[10]) {
                     throw makeRuntimeRejectMsg(workerScript, "getStats() failed because you do not currently have access to the Sleeve API. This is either because you are not in BitNode-10 or because you do not have Source-File 10");
                 }
                 updateDynamicRam("workoutAtGym", CONSTANTS.ScriptSleeveBaseRamCost);
@@ -4972,7 +4971,7 @@ function NetscriptFunctions(workerScript) {
                 if (workerScript.checkingRam) {
                     return updateStaticRam("getTask", CONSTANTS.ScriptSleeveBaseRamCost);
                 }
-                if (Player.bitNodeN !== 10 && !hasSleeveSF) {
+                if (Player.bitNodeN !== 10 && !SourceFileFlags[10]) {
                     throw makeRuntimeRejectMsg(workerScript, "getTask() failed because you do not currently have access to the Sleeve API. This is either because you are not in BitNode-10 or because you do not have Source-File 10");
                 }
                 updateDynamicRam("getTask", CONSTANTS.ScriptSleeveBaseRamCost);
@@ -4994,7 +4993,7 @@ function NetscriptFunctions(workerScript) {
                 if (workerScript.checkingRam) {
                     return updateStaticRam("getInformation", CONSTANTS.ScriptSleeveBaseRamCost);
                 }
-                if (Player.bitNodeN !== 10 && !hasSleeveSF) {
+                if (Player.bitNodeN !== 10 && !SourceFileFlags[10]) {
                     throw makeRuntimeRejectMsg(workerScript, "getInformation() failed because you do not currently have access to the Sleeve API. This is either because you are not in BitNode-10 or because you do not have Source-File 10");
                 }
                 updateDynamicRam("getInformation", CONSTANTS.ScriptSleeveBaseRamCost);
