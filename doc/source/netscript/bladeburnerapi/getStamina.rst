@@ -9,7 +9,7 @@ getStamina() Netscript Function
 
     Example usage::
 
-        function getStaminaPercentage() {
+        function getStamina() {
             let res = bladeburner.getStamina();
             return res[0] / res[1];
         }
