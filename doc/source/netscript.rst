@@ -29,4 +29,5 @@ to reach out to the developer!
     Bladeburner API <netscript/netscriptbladeburnerapi>
     Gang API <netscript/netscriptgangapi>
     Coding Contract API <netscript/netscriptcodingcontractapi>
+    Sleeve API <netscript/netscriptsleeveapi>
     Miscellaneous <netscript/netscriptmisc>
