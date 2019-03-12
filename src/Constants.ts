@@ -90,6 +90,7 @@ export let CONSTANTS: IMap<any> = {
     ScriptGetHackTimeRamCost:       0.05,
     ScriptGetFavorToDonate:         0.10,
     ScriptCodingContractBaseRamCost:10,
+    ScriptSleeveBaseRamCost:        0, // TODO: let big boss figure out balance.
 
     ScriptSingularityFn1RamCost:    1,
     ScriptSingularityFn2RamCost:    2,
