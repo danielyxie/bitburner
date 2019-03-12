@@ -4189,6 +4189,25 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "getBlackOpNames() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
+            getBlackOpRank : function(name="") {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getBlackOpRank", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 2);
+                }
+                updateDynamicRam("getBlackOpRank", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 2);
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+                    const actionId = Player.bladeburner.getActionIdFromTypeAndName('blackops', name)
+                    if (!actionId) {
+                        return -1;
+                    }
+                    const actionObj = Player.bladeburner.getActionObject(actionId);
+                    if (!actionObj) {
+                        return -1;
+                    }
+                    return actionObj.reqdRank;
+                }
+                throw makeRuntimeRejectMsg(workerScript, "getBlackOpRank() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                                                         "at the Bladeburner division or because you do not have Source-File 7");
+            },
             getGeneralActionNames : function() {
                 if (workerScript.checkingRam) {
                     return updateStaticRam("getGeneralActionNames", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
