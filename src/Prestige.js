@@ -26,10 +26,10 @@ import {Player}                                 from "./Player";
 
 import { AllServers,
          AddToAllServers,
-         prestigeAllServers }                   from "./Server/AllServers";
+         prestigeAllServers,
+         initForeignServers }                   from "./Server/AllServers";
 import { Server }                               from "./Server/Server"
-import { initForeignServers,
-         prestigeHomeComputer }                 from "./Server/ServerHelpers";
+import { prestigeHomeComputer }                 from "./Server/ServerHelpers";
 import { updateSourceFileFlags }                from "./SourceFile/SourceFileFlags";
 import { SpecialServerIps,
          SpecialServerIpsMap,
