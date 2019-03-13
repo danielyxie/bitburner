@@ -53,9 +53,8 @@ import { getCurrentEditor,
          loadAllRunningScripts,
          scriptEditorInit,
          updateScriptEditorContent }                    from "./Script/ScriptHelpers";
-import { AllServers }                                   from "./Server/AllServers";
+import { AllServers, initForeignServers }               from "./Server/AllServers";
 import { Server }                                       from "./Server/Server";
-import { initForeignServers }                           from "./Server/ServerHelpers";
 import {Settings}                                       from "./Settings/Settings";
 import { initSourceFiles, SourceFiles }                 from "./SourceFile";
 import { updateSourceFileFlags }                        from "./SourceFile/SourceFileFlags";
