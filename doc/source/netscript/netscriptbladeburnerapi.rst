@@ -46,6 +46,7 @@ In :ref:`netscriptjs`::
     setActionAutolevel() <bladeburnerapi/setActionAutolevel>
     setActionLevel() <bladeburnerapi/setActionLevel>
     getRank() <bladeburnerapi/getRank>
+    getBlackOpRank() <bladeburnerapi/getBlackOpRank>
     getSkillPoints() <bladeburnerapi/getSkillPoints>
     getSkillLevel() <bladeburnerapi/getSkillLevel>
     getSkillUpgradeCost() <bladeburnerapi/getSkillUpgradeCost>
