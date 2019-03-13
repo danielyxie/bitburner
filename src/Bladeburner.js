@@ -2166,12 +2166,14 @@ Bladeburner.prototype.createBlackOpsContent = function() {
         return (a.reqdRank - b.reqdRank);
     });
 
-    for (var i = 0; i < blackops.length; ++i) {
+    console.log(blackops);
+    for (var i = blackops.length-1; i >= 0 ; --i) {
+      console.log(i)
+      if (this.blackops[[blackops[i].name]] == null && i !== 0 && this.blackops[[blackops[i-1].name]] == null) {continue;} // If this one nor the next are completed then this isn't unlocked yet.
         DomElems.blackops[blackops[i].name] = createElement("div", {
             class:"bladeburner-action", name:blackops[i].name
         });
         DomElems.actionsAndSkillsList.appendChild(DomElems.blackops[blackops[i].name]);
-        if (this.blackops[[blackops[i].name]] == null) {break;} //Can't be found in completed blackops
     }
 }
 
