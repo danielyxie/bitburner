@@ -1,5 +1,6 @@
 import { ResearchTree } from "./ResearchTree";
-import { getBaseResearchTreeCopy } from "./data/BaseResearchTree";
+import { getBaseResearchTreeCopy,
+         getProductIndustryResearchTreeCopy } from "./data/BaseResearchTree";
 
 import { numeralWrapper } from "../ui/numeralFormat";
 
@@ -112,15 +113,15 @@ export let IndustryResearchTrees: IIndustryMap<ResearchTree> = {
     Agriculture: getBaseResearchTreeCopy(),
     Fishing: getBaseResearchTreeCopy(),
     Mining: getBaseResearchTreeCopy(),
-    Food: getBaseResearchTreeCopy(),
-    Tobacco: getBaseResearchTreeCopy(),
+    Food: getProductIndustryResearchTreeCopy(),
+    Tobacco: getProductIndustryResearchTreeCopy(),
     Chemical: getBaseResearchTreeCopy(),
-    Pharmaceutical: getBaseResearchTreeCopy(),
-    Computer: getBaseResearchTreeCopy(),
-    Robotics: getBaseResearchTreeCopy(),
-    Software: getBaseResearchTreeCopy(),
-    Healthcare: getBaseResearchTreeCopy(),
-    RealEstate: getBaseResearchTreeCopy(),
+    Pharmaceutical: getProductIndustryResearchTreeCopy(),
+    Computer: getProductIndustryResearchTreeCopy(),
+    Robotics: getProductIndustryResearchTreeCopy(),
+    Software: getProductIndustryResearchTreeCopy(),
+    Healthcare: getProductIndustryResearchTreeCopy(),
+    RealEstate: getProductIndustryResearchTreeCopy(),
 }
 
 export function resetIndustryResearchTrees() {

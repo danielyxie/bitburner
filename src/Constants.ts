@@ -281,17 +281,17 @@ export let CONSTANTS: IMap<any> = {
 
     LatestUpdate:
     `
-    v0.44.1
-    * Duplicate Sleeve changes:
-    ** You can now purchase Augmentations for your Duplicate Sleeves
-    ** Sleeves are now assigned to Shock Recovery task by default
-    ** Shock Recovery and Synchronize tasks are now twice as effective
-
-    * Changed documentation so that Netscript functions are own their own pages. Sorry if this is annoying, it was necessary for properly cross-referencing
-    * Officially deprecated the Wiki (the fandom site). Use the 'readthedocs' Documentation instead
-    * Bug Fix: 'rm' Terminal and Netscript commands now work on non-program files that have '.exe' in the name (by Github user MasonD)
-    * Bug Fix: The 'Find All Valid Math Expressions' Coding Contract should now properly ignore whitespace in answers
-    * Bug Fix: The 'Merge Overlapping Intervals' Coding Contract should now properly accept 2D arrays when being attempted through Netscript
+    v0.45.0
+    * Corporation changes:
+    ** Decreased the time of a full market cycle from 15 seconds to 10 seconds.
+    ** This means that each Corporation 'state' will now only take 2 seconds, rather than 3
+    ** Increased initial salaries for newly-hired employees
+    ** Increased the cost multiplier for upgrading office size (the cost will increase faster)
+    ** The stats of your employees now has a slightly larger effect on production & sales
+    ** Added several new Research upgrades
+    ** Reduced the amount of Scientific Research needed to unlock the Hi-Tech R&D Laboratory from 10k to 5k
+    ** Energy Material requirement of the Software industry reduced from 1 to 0.5
+    ** Industries now have a maximum number of allowed products, starting at 3. This can be increased through research.
     `
 
 }

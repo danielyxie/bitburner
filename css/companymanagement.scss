@@ -56,11 +56,13 @@
 .cmpy-mgmt-industry-left-panel,
 .cmpy-mgmt-industry-right-panel {
     display: inline-block;
-    width: 45%;
     height: 100%;
-    top: 10px;
     overflow-y: auto;
     overflow-x: auto;
+    overflow: visible;
+    padding: 2px;
+    top: 10px;
+    width: 45%;
 }
 
 .cmpy-mgmt-industry-overview-panel {
@@ -115,11 +117,16 @@
     background-color: #333;
 }
 
-/* Upgrades */
+/* Corporation Upgrades */
 .cmpy-mgmt-upgrade-container {
     border: 1px solid #fff;
     width: 60%;
     margin: 4px;
+}
+
+.cmpy-mgmt-upgrade-header {
+    margin: 6px;
+    padding: 6px;
 }
 
 .cmpy-mgmt-upgrade-div {
@@ -136,10 +143,19 @@
     background-color: #333;
 }
 
+/* Industry Upgrades */
+.industry-purchases-and-upgrades-header {
+    font-size: 14px;
+    margin: 2px;
+    padding: 2px;
+}
+
+/* Advertising */
 .cmpy-mgmt-advertising-info {
     font-size: $defaultFontSize * 0.75;
 }
 
+/* Research */
 #corporation-research-popup-box-content {
     overflow-x: visible !important;
 }

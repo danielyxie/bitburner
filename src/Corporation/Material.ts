@@ -12,7 +12,6 @@ export class Material {
         return Generic_fromJSON(Material, value.data);
     }
 
-
     // Name of material
     name: string = "InitName";
 
@@ -63,6 +62,10 @@ export class Material {
     // [Whether production/sale is limited, limit amount]
     prdman: any[] = [false, 0]; // Production
     sllman: any[] = [false, 0]; // Sale
+
+    // Flags that signal whether automatic sale pricing through Market TA is enabled
+    marketTa1: boolean = false;
+    marketTa2: boolean = false;
 
     constructor(params: IConstructorParams = {}) {
         if (params.name) { this.name = params.name; }

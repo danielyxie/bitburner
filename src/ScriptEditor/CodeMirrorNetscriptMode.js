@@ -208,6 +208,7 @@ CodeMirror.defineMode("netscript", function(config, parserConfig) {
       "getSkillNames": atom,
       "startAction": atom,
       "stopBladeburnerAction": atom,
+      "getCurrentAction": atom,
       "getActionTime": atom,
       "getActionEstimatedSuccessChance": atom,
       "getActionCountRemaining": atom,

@@ -25,6 +25,12 @@ export const researchMetadata: IConstructorParams[] = [
               "your employees. This unlocks Drug-related Research.",
     },
     {
+        name: "Bulk Purchasing",
+        cost: 5e3,
+        desc: "Research the art of buying materials in bulk. This allows you to purchase " +
+              "any amount of a material instantly.",
+    },
+    {
         name: "CPH4 Injections",
         cost: 25e3,
         desc: "Develop an advanced and harmless synthetic drug that is administered to " +
@@ -64,7 +70,7 @@ export const researchMetadata: IConstructorParams[] = [
     },
     {
         name: "Hi-Tech R&D Laboratory",
-        cost: 10e3,
+        cost: 5e3,
         desc: "Construct a cutting edge facility dedicated to advanced research and " +
               "and development. This allows you to spend Scientific Research " +
               "on powerful upgrades. It also globally increases Scientific Research " +
@@ -118,7 +124,38 @@ export const researchMetadata: IConstructorParams[] = [
               "control confidence and enthusiasm. This research increases the max " +
               "morale of all employees by 10.",
     },
-
-
-
+    {
+        name: "sudo.Assist",
+        cost: 15e3,
+        desc: "Develop a virtual assistant AI to handle and manage administrative " +
+              "issues for your corporation.",
+    },
+    {
+        name: "uPgrade: Capacity.I",
+        cost: 20e3,
+        desc: "Expand the industry's capacity for designing and manufacturing its " +
+              "various products. This increases the industry's maximum number of products " +
+              "by 1 (from 3 to 4).",
+    },
+    {
+        name: "uPgrade: Capacity.II",
+        cost: 30e3,
+        desc: "Expand the industry's capacity for designing and manufacturing its " +
+              "various products. This increases the industry's maximum number of products " +
+              "by 1 (from 4 to 5).",
+    },
+    {
+        name: "uPgrade: Dashboard",
+        cost: 5e3,
+        desc: "Improve the software used to manage the industry's production line " +
+              "for its various products. This allows you to manage the production and " +
+              "sale of a product before it's finished being designed.",
+    },
+    {
+        name: "uPgrade: Fulcrum",
+        cost: 10e3,
+        desc: "Streamline the manufacturing of this industry's various products. " +
+              "This research increases the production of your products by 5%",
+        productProductionMult: 1.05,
+    },
 ];

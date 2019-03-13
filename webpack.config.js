@@ -85,6 +85,13 @@ module.exports = (env, argv) => {
                     exclude: /node_modules/
                 },
                 {
+                    test: /\.(jsx)$/,
+                    exclude: /node_modules/,
+                    use: {
+                      loader: "babel-loader"
+                    }
+                },
+                {
                     test: /\.s?css$/,
                     use: [
                         MiniCssExtractPlugin.loader,
@@ -125,7 +132,8 @@ module.exports = (env, argv) => {
             extensions: [
                 ".tsx",
                 ".ts",
-                ".js"
+                ".js",
+                ".jsx",
             ]
         }
     };

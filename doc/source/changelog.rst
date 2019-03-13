@@ -6,9 +6,9 @@ Changelog
 v0.44.1 - 3/4/2019
 ------------------
 * Duplicate Sleeve changes:
-** You can now purchase Augmentations for your Duplicate Sleeves
-** Sleeves are now assigned to Shock Recovery task by default
-** Shock Recovery and Synchronize tasks are now twice as effective
+    * You can now purchase Augmentations for your Duplicate Sleeves
+    * Sleeves are now assigned to Shock Recovery task by default
+    * Shock Recovery and Synchronize tasks are now twice as effective
 
 * Changed documentation so that Netscript functions are own their own pages. Sorry if this is annoying, it was necessary for properly cross-referencing
 * Officially deprecated the Wiki (the fandom site). Use the 'readthedocs' Documentation instead

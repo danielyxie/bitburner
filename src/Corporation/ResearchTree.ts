@@ -185,6 +185,10 @@ export class ResearchTree {
         return this.getMultiplierHelper("productionMult");
     }
 
+    getProductProductionMultiplier(): number {
+        return this.getMultiplierHelper("productProductionMult");
+    }
+
     getSalesMultiplier(): number {
         return this.getMultiplierHelper("salesMult");
     }

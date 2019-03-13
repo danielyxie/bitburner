@@ -53,9 +53,9 @@ import { getCurrentEditor,
          loadAllRunningScripts,
          scriptEditorInit,
          updateScriptEditorContent }                    from "./Script/ScriptHelpers";
-import { AllServers }                                   from "./Server/AllServers";
+import { AllServers,
+         initForeignServers }                           from "./Server/AllServers";
 import { Server }                                       from "./Server/Server";
-import { initForeignServers }                           from "./Server/ServerHelpers";
 import {Settings}                                       from "./Settings/Settings";
 import { initSourceFiles, SourceFiles }                 from "./SourceFile";
 import { updateSourceFileFlags }                        from "./SourceFile/SourceFileFlags";
@@ -458,8 +458,8 @@ const Engine = {
         if (Player.corporation instanceof Corporation) {
             Engine.hideAllContent();
             document.getElementById("character-overview-wrapper").style.visibility = "hidden";
-            Player.corporation.createUI();
             routing.navigateTo(Page.Corporation);
+            Player.corporation.createUI();
         }
     },
 
@@ -943,9 +943,7 @@ const Engine = {
         }
 
         if (Engine.Counters.updateDisplaysMed <= 0) {
-            if (routing.isOn(Page.Corporation)) {
-                Player.corporation.updateUIContent();
-            } else if (routing.isOn(Page.CharacterInfo)) {
+            if (routing.isOn(Page.CharacterInfo)) {
                 Engine.updateCharacterInfo();
             }
             Engine.Counters.updateDisplaysMed = 9;
