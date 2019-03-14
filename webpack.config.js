@@ -8,7 +8,7 @@ module.exports = (env, argv) => {
     const isDevelopment = argv.mode === 'development';
     const outputDirectory = isDevServer ? "dist-dev" : "dist";
     const entries = {};
-    entries[`${outputDirectory}/engine`] = "./src/engine.js";
+    entries[`${outputDirectory}/engine`] = "./src/engine.jsx";
     if (!isDevServer) {
         entries["tests/tests"] = "./tests/index.js";
     }
