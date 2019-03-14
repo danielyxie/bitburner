@@ -26,7 +26,7 @@ export class Warehouse {
     breakdown: string = "";
 
     // Warehouse's level, which affects its maximum size
-    level: number = 0;
+    level: number = 1;
 
     // City that this Warehouse is in
     loc: string;

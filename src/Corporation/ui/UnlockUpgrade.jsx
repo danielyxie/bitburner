@@ -11,11 +11,12 @@ export class UnlockUpgrade extends BaseReactComponent {
         const text = `${data[2]} - ${numeralWrapper.formatMoney(data[1])}`;
         const tooltip = data[3];
         const onClick = () => {
-            if (this.corp().funds.lt(data[1])) {
+            const corp = this.corp();
+            if (corp.funds.lt(data[1])) {
                 dialogBoxCreate("Insufficient funds");
             } else {
-                this.corp().unlock(data);
-                //this.corp().displayCorporationOverviewContent();
+                corp.unlock(data);
+                corp.rerender();
             }
         }
 

@@ -9,6 +9,8 @@ import { Industry } from "./Industry";
 import { Overview } from "./Overview";
 import { overviewPage } from "./Routing";
 
+import { OfficeSpace } from "../Corporation";
+
 import { Cities } from "../../Locations/Cities";
 
 export class MainPanel extends BaseReactComponent {
@@ -59,9 +61,11 @@ export class MainPanel extends BaseReactComponent {
         // City tabs
         const onClicks = {};
         for (const cityName in division.offices) {
-            onClicks[cityName] = () => {
-                this.state.city = cityName;
-                this.corp().rerender();
+            if (division.offices[cityName] instanceof OfficeSpace) {
+                onClicks[cityName] = () => {
+                    this.state.city = cityName;
+                    this.corp().rerender();
+                }
             }
         }
         const cityTabs = (

@@ -17,11 +17,12 @@ export class LevelableUpgrade extends BaseReactComponent {
         const text = `${data[4]} - ${numeralWrapper.formatMoney(cost)}`
         const tooltip = data[5];
         const onClick = () => {
-            if (this.corp().funds.lt(cost)) {
+            const corp = this.corp();
+            if (corp.funds.lt(cost)) {
                 dialogBoxCreate("Insufficient funds");
             } else {
-                this.corp().upgrade(data);
-                //this.corp().displayCorporationOverviewContent();
+                corp.upgrade(data);
+                corp.rerender();
             }
         }
 

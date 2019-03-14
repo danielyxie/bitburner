@@ -219,6 +219,7 @@ CodeMirror.defineMode("netscript", function(config, parserConfig) {
       "setActionAutolevel": atom,
       "setActionLevel": atom,
       "getRank": atom,
+      "getBlackOpRank": atom,
       "getSkillPoints": atom,
       "getSkillLevel": atom,
       "getSkillUpgradeCost": atom,

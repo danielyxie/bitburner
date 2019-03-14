@@ -157,6 +157,7 @@ function MaterialComponent(props) {
     const warehouse = props.warehouse;
     const mat = props.mat;
     const eventHandler = props.eventHandler;
+    const markupLimit = mat.getMarkupLimit();
 
     // Numeraljs formatter
     const nf = "0.000";
@@ -192,11 +193,13 @@ function MaterialComponent(props) {
         sellButtonText = (mat.sllman[1] === -1 ? "Sell (" + numeralWrapper.format(mat.sll, nf) + "/MAX)" :
                           "Sell (" + numeralWrapper.format(mat.sll, nf) + "/" + numeralWrapper.format(mat.sllman[1], nf) + ")");
         if (mat.sCost) {
-            if (isString(mat.sCost)) {
+            if (mat.marketTa1) {
+                sellButtonText += " @ " + numeralWrapper.formatMoney(mat.bCost + markupLimit);
+            } else if (isString(mat.sCost)) {
                 var sCost = mat.sCost.replace(/MP/g, mat.bCost);
-                sellButtonText += " @ $" + numeralWrapper.format(eval(sCost), "0.00");
+                sellButtonText += " @ " + numeralWrapper.formatMoney(eval(sCost));
             } else {
-                sellButtonText += " @ $" + numeralWrapper.format(mat.sCost, "0.00");
+                sellButtonText += " @ " + numeralWrapper.formatMoney(mat.sCost);
             }
         }
     } else {
@@ -303,7 +306,7 @@ export class IndustryWarehouse extends BaseReactComponent {
             ++warehouse.level;
             warehouse.updateSize(corp, division);
             corp.funds = corp.funds.minus(sizeUpgradeCost);
-            warehouse.createUI(parentRefs);
+            corp.rerender();
             return;
         }
 
@@ -444,12 +447,13 @@ export class IndustryWarehouse extends BaseReactComponent {
                 {
                     corp.unlockUpgrades[1] &&
                     <div>
-                        <label style={{color: "white"}} for={smartSupplyCheckboxId}>
+                        <label style={{color: "white"}} htmlFor={smartSupplyCheckboxId}>
                             Enable Smart Supply
                         </label>
                         <input  type={"checkbox"}
                                 id={smartSupplyCheckboxId}
                                 onChange={smartSupplyOnChange}
+                                style={{margin: "3px"}}
                                 value={warehouse.smartSupplyEnabled}
                         />
                     </div>

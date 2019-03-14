@@ -239,6 +239,7 @@ export class CorporationEventHandler {
             clickListener:()=>{
                 industry.discontinueProduct(product, parentRefs);
                 removeElementById(popupId);
+                this.corp.rerender();
                 return false;
             }
         });
@@ -669,6 +670,28 @@ export class CorporationEventHandler {
                        ". This means that if you set the sale price higher than this, " +
                        "you will begin to experience a loss in number of sales",
         });
+
+        // Enable using Market-TA1 for automatically setting sale price
+        const useTa1AutoSaleId = "cmpy-mgmt-marketa1-checkbox";
+        const useTa1AutoSaleDiv = createElement("div", { display: "block" });
+        const useTa1AutoSaleLabel = createElement("label", {
+            color: "white",
+            for: useTa1AutoSaleId,
+            innerText: "Use Market-TA.I for Auto-Sale Price",
+            tooltip: "If this is enabled, then this Material will automatically " +
+                     "be sold at the price identified by Market-TA.I (i.e. the price shown above)"
+        })
+        const useTa1AutoSaleCheckbox = createElement("input", {
+            id: useTa1AutoSaleId,
+            type: "checkbox",
+            value: mat.marketTa1,
+            changeListener: (e) => {
+                mat.marketTa1 = e.target.value;
+            }
+        });
+        useTa1AutoSaleDiv.appendChild(useTa1AutoSaleCheckbox);
+        useTa1AutoSaleDiv.appendChild(useTa1AutoSaleCheckbox);
+
         const closeBtn = createPopupCloseButton(popupId, {
             class: "std-button",
             display: "block",
@@ -713,7 +736,7 @@ export class CorporationEventHandler {
             createPopup(popupId, [ta1, ta2Text, ta2Input, closeBtn]);
         } else {
             // Market-TA.I only
-            createPopup(popupId, [ta1, closeBtn]);
+            createPopup(popupId, [ta1, useTa1AutoSaleDiv, closeBtn]);
         }
     }
 
@@ -726,13 +749,11 @@ export class CorporationEventHandler {
         });
         const citySelector = createElement("select", { class: "dropdown", margin:"5px" });
         for (const cityName in division.offices) {
-            if (division.offices.hasOwnProperty(cityName)) {
-                if (!(division.offices[cityName] instanceof OfficeSpace)) {
-                    citySelector.add(createElement("option", {
-                        text: cityName,
-                        value: cityName
-                    }));
-                }
+            if (!(division.offices[cityName] instanceof OfficeSpace)) {
+                citySelector.add(createElement("option", {
+                    text: cityName,
+                    value: cityName
+                }));
             }
         }
 
@@ -740,7 +761,6 @@ export class CorporationEventHandler {
             class:"std-button",
             display:"inline-block",
             innerText: "Confirm",
-            margin:"3px",
             clickListener: () => {
                 let city = citySelector.options[citySelector.selectedIndex].value;
                 if (this.corp.funds.lt(OfficeInitialCost)) {

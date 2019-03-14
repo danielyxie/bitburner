@@ -32,6 +32,8 @@ export class CityTabs extends BaseReactComponent {
     }
 
     render() {
+        const division = this.routing().currentDivision;
+
         const tabs = [];
 
         // Tabs for each city
@@ -44,7 +46,7 @@ export class CityTabs extends BaseReactComponent {
         }
 
         // Tab to "Expand into new City"
-        const newCityOnClick = this.eventHandler().createNewCityPopup.bind(this.eventHandler());
+        const newCityOnClick = this.eventHandler().createNewCityPopup.bind(this.eventHandler(), division);
         tabs.push(this.renderTab({
             current: false,
             key: "Expand into new City",

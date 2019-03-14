@@ -494,6 +494,29 @@ export function createDevMenu() {
         innerText: "Add cycles to Gang mechanic",
     });
 
+    // Corporation
+    const corpHeader = createElement("h2", { innerText: "Corporation" });
+
+    const corpStoredCyclesInput = createElement("input", {
+        class: "text-input",
+        margin: "5px",
+        placeholder: "# Cycles to Add",
+        type: "number",
+    });
+
+    const corpStoredCyclesButton = createElement("button", {
+        class: "std-button",
+        clickListener: () => {
+            try {
+                const cycles = parseInt(bladeburnerStoredCyclesInput.value);
+                Player.corporation.storeCycles(cycles);
+            } catch(e) {
+                exceptionAlert(`Failed to add cycles to Bladeburner in dev menu: ${e}`);
+            }
+        },
+        innerText: "Add Cycles to Corporation mechanic",
+    });
+
     // Coding Contracts
     const contractsHeader = createElement("h2", {innerText: "Coding Contracts"});
 
@@ -685,6 +708,10 @@ export function createDevMenu() {
     devMenuContainer.appendChild(gangHeader);
     devMenuContainer.appendChild(gangStoredCyclesInput);
     devMenuContainer.appendChild(gangAddStoredCycles);
+    devMenuContainer.appendChild(createElement("br"));
+    devMenuContainer.appendChild(corpHeader);
+    devMenuContainer.appendChild(corpStoredCyclesInput);
+    devMenuContainer.appendChild(corpStoredCyclesButton);
     devMenuContainer.appendChild(createElement("br"));
     devMenuContainer.appendChild(contractsHeader);
     devMenuContainer.appendChild(generateRandomContractBtn);

@@ -117,7 +117,7 @@ export class IndustryOffice extends BaseReactComponent {
 
         // Helper functions for (re-)assigning employees to different positions
         const assignEmployee = (to) => {
-            if (this.state.numUnassigned >= 0) {
+            if (this.state.numUnassigned <= 0) {
                 console.warn("Cannot assign employee. No unassigned employees available");
                 return;
             }
@@ -310,7 +310,7 @@ export class IndustryOffice extends BaseReactComponent {
                 }
 
                 <h2 className={"tooltip"} style={positionHeaderStyle}>
-                    {EmployeePositions.Operations}
+                    {EmployeePositions.Operations} ({this.state.numOperations})
                     <span className={"tooltiptext"}>
                         Manages supply chain operations. Improves production.
                     </span>
@@ -320,7 +320,7 @@ export class IndustryOffice extends BaseReactComponent {
                 <br />
 
                 <h2 className={"tooltip"} style={positionHeaderStyle}>
-                    {EmployeePositions.Engineer}
+                    {EmployeePositions.Engineer} ({this.state.numEngineers})
                     <span className={"tooltiptext"}>
                         Develops and maintains products and production systems. Improves production.
                     </span>
@@ -330,7 +330,7 @@ export class IndustryOffice extends BaseReactComponent {
                 <br />
 
                 <h2 className={"tooltip"} style={positionHeaderStyle}>
-                    {EmployeePositions.Business}
+                    {EmployeePositions.Business} ({this.state.numBusiness})
                     <span className={"tooltiptext"}>
                         Handles sales and finances. Improves sales.
                     </span>
@@ -340,7 +340,7 @@ export class IndustryOffice extends BaseReactComponent {
                 <br />
 
                 <h2 className={"tooltip"} style={positionHeaderStyle}>
-                    {EmployeePositions.Management}
+                    {EmployeePositions.Management} ({this.state.numManagement})
                     <span className={"tooltiptext"}>
                         Leads and oversees employees and office operations. Improves production.
                     </span>
@@ -350,7 +350,7 @@ export class IndustryOffice extends BaseReactComponent {
                 <br />
 
                 <h2 className={"tooltip"} style={positionHeaderStyle}>
-                    {EmployeePositions.RandD}
+                    {EmployeePositions.RandD} ({this.state.numResearch})
                     <span className={"tooltiptext"}>
                         Research new innovative ways to improve the company. Generates Scientific Research
                     </span>
@@ -360,7 +360,7 @@ export class IndustryOffice extends BaseReactComponent {
                 <br />
 
                 <h2 className={"tooltip"} style={positionHeaderStyle}>
-                    {EmployeePositions.Training}
+                    {EmployeePositions.Training} ({this.state.numTraining})
                     <span className={"tooltiptext"}>
                         Set employee to training, which will increase some of their stats. Employees in training do not affect any company operations.
                     </span>
@@ -400,13 +400,6 @@ export class IndustryOffice extends BaseReactComponent {
                     this.state.employee = office.employees[i];
                 }
             }
-        }
-
-        const employeeSelectorStyle = {
-            backgroundColor: "black",
-            color: "white",
-            margin: "4px",
-            padding: "4px",
         }
 
         // Employee Positions Selector
@@ -475,7 +468,7 @@ export class IndustryOffice extends BaseReactComponent {
                     }
                 </div>
 
-                <select style={employeeSelectorStyle} onChange={employeeSelectorOnChange}>
+                <select onChange={employeeSelectorOnChange}>
                     {employees}
                 </select>
             </div>
@@ -492,16 +485,30 @@ export class IndustryOffice extends BaseReactComponent {
         }
 
         // Hire Employee button
-        let hireEmployeeButtonClass = "std-button tooltip";
-        if (office.employees.length === 0) {
-            hireEmployeeButtonClass += " flashing-button";
+        let hireEmployeeButtonClass = "tooltip";
+        if (office.atCapacity()) {
+            hireEmployeeButtonClass += " a-link-button-inactive";
+        } else {
+            hireEmployeeButtonClass += " std-button";
+            if (office.employees.length === 0) {
+                hireEmployeeButtonClass += " flashing-button";
+            }
         }
+
+
         const hireEmployeeButtonOnClick = () => {
             office.findEmployees({ corporation: corp, industry: division });
         }
 
         // Autohire employee button
+        let autohireEmployeeButtonClass = "tooltip";
+        if (office.atCapacity()) {
+            autohireEmployeeButtonClass += " a-link-button-inactive";
+        } else {
+            autohireEmployeeButtonClass += " std-button";
+        }
         const autohireEmployeeButtonOnClick = () => {
+            if (office.atCapacity()) { return; }
             office.hireRandomEmployee({ corporation: corp, industry: division });
             this.corp().rerender();
         }
@@ -514,7 +521,7 @@ export class IndustryOffice extends BaseReactComponent {
 
         return (
             <div className={"cmpy-mgmt-employee-panel"}>
-                <h1>Office Space</h1>
+                <h1 style={{ margin: "4px 0px 5px 0px" }}>Office Space</h1>
                 <p>Size: {office.employees.length} / {office.size} employees</p>
                 <button className={hireEmployeeButtonClass} onClick={hireEmployeeButtonOnClick} style={buttonStyle}>
                     Hire Employee
@@ -526,7 +533,7 @@ export class IndustryOffice extends BaseReactComponent {
                         </span>
                     }
                 </button>
-                <button className={"std-button tooltip"} onClick={autohireEmployeeButtonOnClick} style={buttonStyle}>
+                <button className={autohireEmployeeButtonClass} onClick={autohireEmployeeButtonOnClick} style={buttonStyle}>
                     Autohire Employee
                     <span className={"tooltiptext"}>
                         Automatically hires an employee and gives him/her a random name

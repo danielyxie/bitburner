@@ -163,10 +163,9 @@ export class IndustryOverview extends BaseReactComponent {
                         products that you produce.
                     </span>
                 </p>
-                <button className={"help-tip"} onClick={division.createResearchBox}>
+                <button className={"help-tip"} onClick={division.createResearchBox.bind(division)}>
                     Research
                 </button>
-                <div className={"help-tip"} onClick={division.createResearchBox.bind(division)}>?</div>
             </div>
         )
     }

@@ -89,7 +89,8 @@ export const researchMetadata: IConstructorParams[] = [
         desc: "Develop advanced AI software that uses technical analysis to " +
               "help you understand and exploit the market. This research " +
               "allows you to know what price to sell your Materials/Products "  +
-              "at in order to avoid losing sales due to having too high of a mark-up.",
+              "at in order to avoid losing sales due to having too high of a mark-up. " +
+              "It also lets you automatically use that sale price.",
     },
     {
         name: "Market-TA.II",

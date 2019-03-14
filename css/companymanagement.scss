@@ -60,7 +60,6 @@
     overflow-y: auto;
     overflow-x: auto;
     overflow: visible;
-    padding: 2px;
     top: 10px;
     width: 45%;
 }
@@ -69,18 +68,21 @@
     border: 1px solid #fff;
     color: var(--my-font-color);
     display: inline-block;
+    padding: 3px;
     width: 100%;
 }
 
 .cmpy-mgmt-employee-panel {
     border: 1px solid #fff;
     display: block;
+    padding: 3px;
     width: 100%;
 }
 
 .cmpy-mgmt-warehouse-panel {
     border: 1px solid #fff;
     display: inline-block;
+    padding: 3px;
     width: 100%;
 }
 

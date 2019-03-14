@@ -751,16 +751,20 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                     }
                     var mat = warehouse.materials[matName];
 
+                    // Calculate sale cost
+                    const markupLimit = mat.getMarkupLimit();
                     var sCost;
-                    if (isString(mat.sCost)) {
+                    if (mat.marketTa1) {
+                        sCost = mat.bCost + markupLimit;
+                    } else if (isString(mat.sCost)) {
                         sCost = mat.sCost.replace(/MP/g, mat.bCost);
                         sCost = eval(sCost);
                     } else {
                         sCost = mat.sCost;
                     }
 
-                    //Calculate how much of the material sells (per second)
-                    let markup = 1, markupLimit = mat.getMarkupLimit();
+                    // Calculate how much of the material sells (per second)
+                    let markup = 1;
                     if (sCost > mat.bCost) {
                         //Penalty if difference between sCost and bCost is greater than markup limit
                         if ((sCost - mat.bCost) > markupLimit) {
@@ -1111,7 +1115,6 @@ Industry.prototype.discontinueProduct = function(product, parentRefs) {
         if (this.products.hasOwnProperty(productName)) {
             if (product === this.products[productName]) {
                 delete this.products[productName];
-                company.updateUIContent();
             }
         }
     }
@@ -1534,31 +1537,6 @@ Employee.prototype.createUI = function(panel, corporation, industry) {
     panel.appendChild(selector);
 }
 
-Employee.prototype.updateUI = function(panel, corporation, industry) {
-    var effCre = this.cre * corporation.getEmployeeCreMultiplier() * industry.getEmployeeCreMultiplier(),
-        effCha = this.cha * corporation.getEmployeeChaMultiplier() * industry.getEmployeeChaMultiplier(),
-        effInt = this.int * corporation.getEmployeeIntMultiplier() * industry.getEmployeeIntMultiplier(),
-        effEff = this.eff * corporation.getEmployeeEffMultiplier() * industry.getEmployeeEffMultiplier();
-    if (panel == null) {
-        console.log("ERROR: Employee.updateUI() called with null panel");
-        return;
-    }
-    var text = document.getElementById("cmpy-mgmt-employee-" + this.name + "-panel-text");
-    if (text == null) {
-        return this.createUI(panel);
-    }
-    text.innerHTML  = "Morale: " + formatNumber(this.mor, 3) + "<br>" +
-                      "Happiness: " + formatNumber(this.hap, 3) + "<br>" +
-                      "Energy: " + formatNumber(this.ene, 3) + "<br>" +
-                      "Age: " + formatNumber(this.age, 3) + "<br>" +
-                      "Intelligence: " + formatNumber(effInt, 3) + "<br>" +
-                      "Charisma: " + formatNumber(effCha, 3) + "<br>" +
-                      "Experience: " + formatNumber(this.exp, 3) + "<br>" +
-                      "Creativity: " + formatNumber(effCre, 3) + "<br>" +
-                      "Efficiency: " + formatNumber(effEff, 3) + "<br>" +
-                      "Salary: " + numeralWrapper.format(this.sal, "$0.000a") + "/ s<br>";
-}
-
 Employee.prototype.toJSON = function() {
 	return Generic_toJSON("Employee", this);
 }
@@ -1604,6 +1582,10 @@ function OfficeSpace(params={}) {
         [EmployeePositions.RandD]:        0,
         total:                            0,
     };
+}
+
+OfficeSpace.prototype.atCapacity = function() {
+    return (this.employees.length) >= this.size;
 }
 
 OfficeSpace.prototype.process = function(marketCycles=1, parentRefs) {
@@ -1685,6 +1667,7 @@ OfficeSpace.prototype.calculateEmployeeProductivity = function(marketCycles=1, p
 //Takes care of UI as well
 OfficeSpace.prototype.findEmployees = function(parentRefs) {
     var company = parentRefs.corporation, division = parentRefs.industry;
+    if (this.atCapacity()) { return; }
     if (document.getElementById("cmpy-mgmt-hire-employee-popup") != null) {return;}
 
     //Generate three random employees (meh, decent, amazing)
@@ -1782,7 +1765,7 @@ OfficeSpace.prototype.hireEmployee = function(employee, parentRefs) {
         }
         employee.name = name;
         this.employees.push(employee);
-        company.displayDivisionContent(division, currentCityUi);
+        company.rerender();
         return yesNoTxtInpBoxClose();
     });
     noBtn.addEventListener("click", ()=>{
@@ -1793,6 +1776,7 @@ OfficeSpace.prototype.hireEmployee = function(employee, parentRefs) {
 
 OfficeSpace.prototype.hireRandomEmployee = function(parentRefs) {
     var company = parentRefs.corporation, division = parentRefs.industry;
+    if (this.atCapacity()) { return; }
     if (document.getElementById("cmpy-mgmt-hire-employee-popup") != null) {return;}
 
     //Generate three random employees (meh, decent, amazing)
@@ -1822,7 +1806,6 @@ OfficeSpace.prototype.hireRandomEmployee = function(parentRefs) {
     }
     emp.name = name;
     this.employees.push(emp);
-    company.displayDivisionContent(division, currentCityUi);
 }
 
 //Finds the first unassigned employee and assigns its to the specified job
@@ -2021,7 +2004,7 @@ Corporation.prototype.getInvestment = function() {
         ++this.fundingRound;
         this.funds = this.funds.plus(funding);
         this.numShares -= investShares;
-        this.displayCorporationOverviewContent();
+        this.rerender();
         return yesNoBoxClose();
     });
     noBtn.addEventListener("click", ()=>{
@@ -2074,7 +2057,7 @@ Corporation.prototype.goPublic = function() {
             this.issuedShares = numShares;
             this.numShares -= numShares;
             this.funds = this.funds.plus(numShares * initialSharePrice);
-            this.displayCorporationOverviewContent();
+            this.rerender();
             removeElementById(goPublicPopupId);
             dialogBoxCreate(`You took your ${this.name} public and earned ` +
                             `${numeralWrapper.formatMoney(numShares * initialSharePrice)} in your IPO`);
@@ -2213,8 +2196,6 @@ Corporation.prototype.upgrade = function(upgrade) {
             }
         }
     }
-
-    this.updateCorporationOverviewContent();
 }
 
 Corporation.prototype.getProductionMultiplier = function() {
