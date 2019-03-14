@@ -3953,7 +3953,7 @@ function initBladeburner() {
     GeneralActions[actionName] = new Action({
         name: actionName,
         desc: "Enter cryogenic stasis using the Bladeburner division's hi-tech Regeneration Chamber. " +
-              "This will slowly heal your wounds and slightly increase your stamina gain.<br><br>",
+              "This will slowly heal your wounds and slightly increase your stamina.<br><br>",
     });
 
     //Black Operations
