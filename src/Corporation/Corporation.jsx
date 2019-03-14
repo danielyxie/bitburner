@@ -1523,7 +1523,7 @@ Employee.prototype.createUI = function(panel, corporation, industry) {
         }
     }
 
-    selector.addEventListener("change", ()=>{
+    selector.addEventListener("change", () => {
         this.pos = selector.options[selector.selectedIndex].value;
     });
 
