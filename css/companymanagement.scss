@@ -159,5 +159,6 @@
 
 /* Research */
 #corporation-research-popup-box-content {
-    overflow-x: visible !important;
+    overflow-x: auto !important;
+    overflow-y: auto !important;
 }

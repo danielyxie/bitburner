@@ -6,6 +6,7 @@ interface IError {
 }
 
 export function exceptionAlert(e: IError): void {
+    console.error(e);
     dialogBoxCreate("Caught an exception: " + e + "<br><br>" +
                     "Filename: " + (e.fileName || "UNKNOWN FILE NAME") + "<br><br>" +
                     "Line Number: " + (e.lineNumber || "UNKNOWN LINE NUMBER") + "<br><br>" +

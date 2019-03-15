@@ -15,6 +15,8 @@ export class IndustryOffice extends BaseReactComponent {
         super(props);
 
         this.state = {
+            city: "",
+            division: "",
             employeeManualAssignMode: false,
             employee: null, // Reference to employee being referenced if in Manual Mode
             numEmployees: 0,
@@ -30,6 +32,17 @@ export class IndustryOffice extends BaseReactComponent {
         this.updateEmployeeCount(); // This function validates division and office refs
     }
 
+    resetEmployeeCount() {
+        this.state.numEmployees = 0;
+        this.state.numOperations = 0;
+        this.state.numEngineers = 0;
+        this.state.numBusiness = 0;
+        this.state.numManagement = 0;
+        this.state.numResearch = 0;
+        this.state.numUnassigned = 0;
+        this.state.numTraining = 0;
+    }
+
     updateEmployeeCount() {
         const division = this.routing().currentDivision;
         if (division == null) {
@@ -38,6 +51,13 @@ export class IndustryOffice extends BaseReactComponent {
         const office = division.offices[this.props.currentCity];
         if (!(office instanceof OfficeSpace)) {
             throw new Error(`Current City (${this.props.currentCity}) for UI does not have an OfficeSpace object`);
+        }
+
+        // If we're in a new city, we have to reset the state
+        if (division.name !== this.state.division || this.props.currentCity !== this.state.city) {
+            this.resetEmployeeCount();
+            this.state.division = division.name;
+            this.state.city = this.props.currentCity;
         }
 
         // Calculate how many NEW emplyoees we need to account for
@@ -151,6 +171,7 @@ export class IndustryOffice extends BaseReactComponent {
             --this.state.numUnassigned;
 
             office.assignEmployeeToJob(to);
+            office.calculateEmployeeProductivity({ corporation: this.corp(), industry:division });
             this.corp().rerender();
         }
 
@@ -194,6 +215,7 @@ export class IndustryOffice extends BaseReactComponent {
             ++this.state.numUnassigned;
 
             office.unassignEmployeeFromJob(from);
+            office.calculateEmployeeProductivity({ corporation: this.corp(), industry:division });
             this.corp().rerender();
         }
 
@@ -283,36 +305,40 @@ export class IndustryOffice extends BaseReactComponent {
                 <p>Total Employee Salary: {numeralWrapper.formatMoney(totalSalary)}</p>
                 {
                     vechain &&
-                    <div>
-                    <p className={"tooltip"}>
+                    <p className={"tooltip"} style={{display: "block"}}>
                         Material Production: {numeralWrapper.format(division.getOfficeProductivity(office), "0.000")}
                         <span className={"tooltiptext"}>
                             The base amount of material this office can produce. Does not include
                             production multipliers from upgrades and materials. This value is based off
                             the productivity of your Operations, Engineering, and Management employees
                         </span>
-                    </p><br />
-                    <p className={"tooltip"}>
+                    </p>
+                }
+                {
+                    vechain &&
+                    <p className={"tooltip"} style={{display: "block"}}>
                         Product Production: {numeralWrapper.format(division.getOfficeProductivity(office, {forProduct:true}), "0.000")}
                         <span className={"tooltiptext"}>
                             The base amount of any given Product this office can produce. Does not include
                             production multipliers from upgrades and materials. This value is based off
                             the productivity of your Operations, Engineering, and Management employees
                         </span>
-                    </p><br />
-                    <p className={"tooltip"}>
-                        Business Multiplier: x" ${numeralWrapper.format(division.getBusinessFactor(office), "0.000")}
+                    </p>
+                }
+                {
+                    vechain &&
+                    <p className={"tooltip"} style={{display: "block"}}>
+                        Business Multiplier: x{numeralWrapper.format(division.getBusinessFactor(office), "0.000")}
                         <span className={"tooltiptext"}>
                             The effect this office's 'Business' employees has on boosting sales
                         </span>
-                    </p><br />
-                    </div>
+                    </p>
                 }
 
                 <h2 className={"tooltip"} style={positionHeaderStyle}>
                     {EmployeePositions.Operations} ({this.state.numOperations})
                     <span className={"tooltiptext"}>
-                        Manages supply chain operations. Improves production.
+                        Manages supply chain operations. Improves the amount of Materials and Products you produce.
                     </span>
                 </h2>
                 <button className={assignButtonClass} onClick={operationAssignButtonOnClick}>+</button>
@@ -322,7 +348,9 @@ export class IndustryOffice extends BaseReactComponent {
                 <h2 className={"tooltip"} style={positionHeaderStyle}>
                     {EmployeePositions.Engineer} ({this.state.numEngineers})
                     <span className={"tooltiptext"}>
-                        Develops and maintains products and production systems. Improves production.
+                        Develops and maintains products and production systems. Increases the quality of
+                        everything you produce. Also increases the amount you produce (not as much
+                        as Operations, however)
                     </span>
                 </h2>
                 <button className={assignButtonClass} onClick={engineerAssignButtonOnClick}>+</button>
@@ -332,7 +360,7 @@ export class IndustryOffice extends BaseReactComponent {
                 <h2 className={"tooltip"} style={positionHeaderStyle}>
                     {EmployeePositions.Business} ({this.state.numBusiness})
                     <span className={"tooltiptext"}>
-                        Handles sales and finances. Improves sales.
+                        Handles sales and finances. Improves the amount of Materials and Products you can sell.
                     </span>
                 </h2>
                 <button className={assignButtonClass} onClick={businessAssignButtonOnClick}>+</button>
@@ -342,7 +370,8 @@ export class IndustryOffice extends BaseReactComponent {
                 <h2 className={"tooltip"} style={positionHeaderStyle}>
                     {EmployeePositions.Management} ({this.state.numManagement})
                     <span className={"tooltiptext"}>
-                        Leads and oversees employees and office operations. Improves production.
+                        Leads and oversees employees and office operations. Improves the effectiveness of
+                        Engineer and Operations employees
                     </span>
                 </h2>
                 <button className={assignButtonClass} onClick={managementAssignButtonOnClick}>+</button>
@@ -398,27 +427,36 @@ export class IndustryOffice extends BaseReactComponent {
             for (let i = 0; i < office.employees.length; ++i) {
                 if (name === office.employees[i].name) {
                     this.state.employee = office.employees[i];
+                    break;
                 }
             }
+
+            corp.rerender();
         }
 
         // Employee Positions Selector
+        const emp = this.state.employee;
+        let employeePositionSelectorInitialValue = null;
         const employeePositions = [];
         const positionNames = Object.values(EmployeePositions);
         for (let i = 0; i < positionNames.length; ++i) {
-            employeePositions.push(<option key={positionNames[i]}>{positionNames[i]}</option>);
+            employeePositions.push(<option key={positionNames[i]} value={positionNames[i]}>{positionNames[i]}</option>);
+            if (emp != null && emp.pos === positionNames[i]) {
+                employeePositionSelectorInitialValue = positionNames[i];
+            }
         }
 
         const employeePositionSelectorOnChange = (e) => {
             const pos = getSelectText(e.target);
             this.state.employee.pos = pos;
+            this.resetEmployeeCount();
+            corp.rerender();
         }
 
         // Numeraljs formatter
         const nf = "0.000";
 
         // Employee stats (after applying multipliers)
-        const emp = this.state.employee;
         const effCre = emp ? emp.cre * corp.getEmployeeCreMultiplier() * division.getEmployeeCreMultiplier() : 0;
         const effCha = emp ? emp.cha * corp.getEmployeeChaMultiplier() * division.getEmployeeChaMultiplier() : 0;
         const effInt = emp ? emp.int * corp.getEmployeeIntMultiplier() * division.getEmployeeIntMultiplier() : 0;
@@ -436,6 +474,9 @@ export class IndustryOffice extends BaseReactComponent {
                 </button>
 
                 <div style={employeeInfoDivStyle}>
+                    <select onChange={employeeSelectorOnChange}>
+                        {employees}
+                    </select>
                     {
                         this.state.employee != null &&
                         <p>
@@ -462,15 +503,11 @@ export class IndustryOffice extends BaseReactComponent {
                     }
                     {
                         this.state.employee != null &&
-                        <select onChange={employeePositionSelectorOnChange}>
+                        <select onChange={employeePositionSelectorOnChange} value={employeePositionSelectorInitialValue}>
                             {employeePositions}
                         </select>
                     }
                 </div>
-
-                <select onChange={employeeSelectorOnChange}>
-                    {employees}
-                </select>
             </div>
         )
     }
@@ -494,7 +531,6 @@ export class IndustryOffice extends BaseReactComponent {
                 hireEmployeeButtonClass += " flashing-button";
             }
         }
-
 
         const hireEmployeeButtonOnClick = () => {
             office.findEmployees({ corporation: corp, industry: division });

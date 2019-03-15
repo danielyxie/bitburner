@@ -24,6 +24,8 @@ import { Player }                                       from "../Player";
 import { numeralWrapper }                               from "../ui/numeralFormat";
 import { Page, routing }                                from "../ui/navigationTracking";
 
+import { calculateEffectWithFactors }                   from "../utils/calculateEffectWithFactors";
+
 import { dialogBoxCreate }                              from "../../utils/DialogBox";
 import { clearSelector }                                from "../../utils/uiHelpers/clearSelector";
 import { Reviver,
@@ -37,7 +39,6 @@ import { formatNumber, generateRandomString }           from "../../utils/String
 import { getRandomInt }                                 from "../../utils/helpers/getRandomInt";
 import { isString }                                     from "../../utils/helpers/isString";
 import { KEY }                                          from "../../utils/helpers/keyCodes";
-import { removeChildrenFromElement }                    from "../../utils/uiHelpers/removeChildrenFromElement";
 import { removeElement }                                from "../../utils/uiHelpers/removeElement";
 import { removeElementById }                            from "../../utils/uiHelpers/removeElementById";
 import { yesNoBoxCreate,
@@ -48,8 +49,7 @@ import { yesNoBoxCreate,
          yesNoTxtInpBoxGetNoButton,
          yesNoTxtInpBoxGetInput,
          yesNoBoxClose,
-         yesNoTxtInpBoxClose,
-         yesNoBoxOpen }                                 from "../../utils/YesNoBox";
+         yesNoTxtInpBoxClose }                          from "../../utils/YesNoBox";
 
 // UI Related Imports
 import React                                            from "react";
@@ -124,18 +124,6 @@ function Industry(params={}) {
         [Locations.Volhaven]: 0
     };
 
-    this.warehouses = { //Maps locations to warehouses. 0 if no warehouse at that location
-        [Locations.Aevum]: 0,
-        [Locations.Chonqing]: 0,
-        [Locations.Sector12]: new Warehouse({
-            loc:Locations.Sector12,
-            size: WarehouseInitialSize,
-        }),
-        [Locations.NewTokyo]: 0,
-        [Locations.Ishima]: 0,
-        [Locations.Volhaven]: 0
-    };
-
     this.name   = params.name ? params.name : 0;
     this.type   = params.type ? params.type : 0;
 
@@ -182,6 +170,20 @@ function Industry(params={}) {
 
     this.state = "START";
     this.newInd = true;
+
+    this.warehouses = { //Maps locations to warehouses. 0 if no warehouse at that location
+        [Locations.Aevum]: 0,
+        [Locations.Chonqing]: 0,
+        [Locations.Sector12]: new Warehouse({
+            corp: params.corp,
+            industry: this,
+            loc: Locations.Sector12,
+            size: WarehouseInitialSize,
+        }),
+        [Locations.NewTokyo]: 0,
+        [Locations.Ishima]: 0,
+        [Locations.Volhaven]: 0
+    };
 
     this.init();
 }
@@ -340,8 +342,8 @@ Industry.prototype.init = function() {
             this.sciFac = 0.62;
             this.advFac = 0.16;
             this.hwFac  = 0.25;
-            this.reFac  = 0.1;
-            this.aiFac  = 0.15;
+            this.reFac  = 0.15;
+            this.aiFac  = 0.18;
             this.robFac = 0.05;
             this.reqMats = {
                 "Hardware":     0.5,
@@ -711,7 +713,7 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                     for (var j = 0; j < this.prodMats.length; ++j) {
                         warehouse.materials[this.prodMats[j]].qty += (prod * producableFrac);
                         warehouse.materials[this.prodMats[j]].qlt =
-                            (office.employeeProd[EmployeePositions.Engineer] / 100 +
+                            (office.employeeProd[EmployeePositions.Engineer] / 90 +
                              Math.pow(this.sciResearch.qty, this.sciFac) +
                              Math.pow(warehouse.materials["AICores"].qty, this.aiFac) / 10e3);
                     }
@@ -918,27 +920,30 @@ Industry.prototype.processProducts = function(marketCycles=1, corporation) {
 
     //Create products
     if (this.state === "PRODUCTION") {
-        for (var prodName in this.products) {
-            if (this.products.hasOwnProperty(prodName)) {
-                var prod = this.products[prodName];
-                if (!prod.fin) {
-                    var city = prod.createCity, office = this.offices[city];
-                    var total = office.employeeProd[EmployeePositions.Operations] +
-                                office.employeeProd[EmployeePositions.Engineer] +
-                                office.employeeProd[EmployeePositions.Management], ratio;
-                    if (total === 0) {
-                        ratio = 0;
-                    } else {
-                        ratio = office.employeeProd[EmployeePositions.Engineer] / total +
-                                office.employeeProd[EmployeePositions.Operations] / total +
-                                office.employeeProd[EmployeePositions.Management] / total;
-                    }
-                    prod.createProduct(marketCycles, ratio * Math.pow(total, 0.35));
-                    if (prod.prog >= 100) {
-                         prod.finishProduct(office.employeeProd, this);
-                    }
-                    break;
+        for (const prodName in this.products) {
+            const prod = this.products[prodName];
+            if (!prod.fin) {
+                const city = prod.createCity;
+                const office = this.offices[city];
+
+                // Designing/Creating a Product is based mostly off Engineers
+                const engrProd  = office.employeeProd[EmployeePositions.Engineer];
+                const mgmtProd  = office.employeeProd[EmployeePositions.Management];
+                const opProd    = office.employeeProd[EmployeePositions.Operations];
+                const total = engrProd + mgmtProd + opProd;
+
+                if (total <= 0) { break; }
+
+                // Management is a multiplier for the production from Engineers
+                const mgmtFactor = 1 + (mgmtProd / (1.2 * total));
+
+                const progress = (Math.pow(engrProd, 0.34) + Math.pow(opProd, 0.2)) * mgmtFactor;
+
+                prod.createProduct(marketCycles, progress);
+                if (prod.prog >= 100) {
+                     prod.finishProduct(office.employeeProd, this);
                 }
+                break;
             }
         }
     }
@@ -1147,33 +1152,38 @@ Industry.prototype.upgrade = function(upgrade, refs) {
     }
 }
 
-//Returns how much of a material can be produced based of office productivity (employee stats)
+// Returns how much of a material can be produced based of office productivity (employee stats)
 Industry.prototype.getOfficeProductivity = function(office, params) {
-    var total = office.employeeProd[EmployeePositions.Operations] +
-                office.employeeProd[EmployeePositions.Engineer] +
-                office.employeeProd[EmployeePositions.Management], ratio;
-    if (total === 0) {
-        ratio = 0;
-    } else {
-        ratio = (office.employeeProd[EmployeePositions.Operations] / total) *
-                (office.employeeProd[EmployeePositions.Engineer] / total) *
-                (office.employeeProd[EmployeePositions.Management] / total);
-        ratio = Math.max(0.01, ratio); //Minimum ratio value if you have employees
-    }
+    const opProd    = office.employeeProd[EmployeePositions.Operations];
+    const engrProd  = office.employeeProd[EmployeePositions.Engineer];
+    const mgmtProd  = office.employeeProd[EmployeePositions.Management]
+    const total     = opProd + engrProd + mgmtProd;
+
+    if (total <= 0) { return 0; }
+
+    // Management is a multiplier for the production from Operations and Engineers
+    const mgmtFactor = 1 + (mgmtProd / (1.2 * total));
+
+    // For production, Operations is slightly more important than engineering
+    // Both Engineering and Operations have diminishing returns
+    const prod = (Math.pow(opProd, 0.4) + Math.pow(engrProd, 0.3)) * mgmtFactor;
+
+    // Generic multiplier for the production. Used for game-balancing purposes
+    const balancingMult = 0.05;
+
     if (params && params.forProduct) {
-        return ratio * Math.pow(total, 0.25);
+        // Products are harder to create and therefore have less production
+        return 0.5 * balancingMult * prod;
     } else {
-        return 2 * ratio * Math.pow(total, 0.35);
+        return balancingMult * prod;
     }
 }
 
-//Returns a multiplier based on the office' 'Business' employees that affects sales
+// Returns a multiplier based on the office' 'Business' employees that affects sales
 Industry.prototype.getBusinessFactor = function(office) {
-    var ratioMult = 1;
-    if (office.employeeProd["total"] > 0) {
-        ratioMult = 1 + (office.employeeProd[EmployeePositions.Business] / office.employeeProd["total"]);
-    }
-    return ratioMult * Math.pow(1 + office.employeeProd[EmployeePositions.Business], 0.25);
+    const businessProd = 1 + office.employeeProd[EmployeePositions.Business];
+    
+    return calculateEffectWithFactors(businessProd, 0.26, 10e3);
 }
 
 //Returns a set of multipliers based on the Industry's awareness, popularity, and advFac. This
@@ -1399,7 +1409,7 @@ function Employee(params={}) {
 
 //Returns the amount the employee needs to be paid
 Employee.prototype.process = function(marketCycles=1, office) {
-    var gain = 0.001 * marketCycles,
+    var gain = 0.003 * marketCycles,
         det = gain * Math.random();
     this.age += gain;
     this.exp += gain;
@@ -1425,16 +1435,9 @@ Employee.prototype.process = function(marketCycles=1, office) {
         this.eff += trainingEff;
     }
 
-    //Weight based on how full office is
-    //Too many employees = more likely to decrease energy and happiness
-    var officeCapacityWeight = 0.5 * (office.employees.length / office.size - 0.5);
-    if (Math.random() < 0.5 - officeCapacityWeight) {
-        this.ene += det;
-        this.hap += det;
-    } else {
-        this.ene -= det;
-        this.hap -= det;
-    }
+    this.ene -= det;
+    this.hap -= det;
+
     if (this.ene < office.minEne) {this.ene = office.minEne;}
     if (this.hap < office.minHap) {this.hap = office.minHap;}
     var salary = this.sal * marketCycles * SecsPerMarketCycle;
@@ -1640,18 +1643,16 @@ OfficeSpace.prototype.process = function(marketCycles=1, parentRefs) {
         salaryPaid += salary;
     }
 
-    this.calculateEmployeeProductivity(marketCycles, parentRefs);
+    this.calculateEmployeeProductivity(parentRefs);
     return salaryPaid;
 }
 
-OfficeSpace.prototype.calculateEmployeeProductivity = function(marketCycles=1, parentRefs) {
+OfficeSpace.prototype.calculateEmployeeProductivity = function(parentRefs) {
     var company = parentRefs.corporation, industry = parentRefs.industry;
 
     //Reset
     for (const name in this.employeeProd) {
-        if (this.employeeProd.hasOwnProperty(name)) {
-            this.employeeProd[name] = 0;
-        }
+        this.employeeProd[name] = 0;
     }
 
     var total = 0;
@@ -1977,19 +1978,19 @@ Corporation.prototype.getInvestment = function() {
     switch (this.fundingRound) {
         case 0: //Seed
             percShares = 0.10;
-            roundMultiplier = 5;
+            roundMultiplier = 4;
             break;
         case 1: //Series A
             percShares = 0.35;
-            roundMultiplier = 4;
+            roundMultiplier = 3;
             break;
         case 2: //Series B
             percShares = 0.25;
-            roundMultiplier = 4;
+            roundMultiplier = 3;
             break;
         case 3: //Series C
             percShares = 0.20;
-            roundMultiplier = 3.5;
+            roundMultiplier = 2.5;
             break;
         case 4:
             return;

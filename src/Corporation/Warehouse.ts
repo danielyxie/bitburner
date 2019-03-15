@@ -5,14 +5,17 @@ import { numeralWrapper }           from "../ui/numeralFormat";
 import { Generic_fromJSON,
          Generic_toJSON,
          Reviver }                  from "../../utils/JSONReviver";
-
-interface IConstructorParams {
-    loc?: string;
-    size?: number;
-}
+import { exceptionAlert }           from "../../utils/helpers/exceptionAlert";
 
 interface IParent {
     getStorageMultiplier(): number;
+}
+
+interface IConstructorParams {
+    corp?: IParent;
+    industry?: IParent;
+    loc?: string;
+    size?: number;
 }
 
 export class Warehouse {
@@ -65,6 +68,10 @@ export class Warehouse {
             AICores:    new Material({name: "AI Cores"}),
             RealEstate: new Material({name: "Real Estate"})
         }
+
+        if (params.corp && params.industry) {
+            this.updateSize(params.corp, params.industry);
+        }
     }
 
     // Re-calculate how much space is being used by this Warehouse
@@ -76,7 +83,7 @@ export class Warehouse {
             if (MaterialSizes.hasOwnProperty(matName)) {
                 this.sizeUsed += (mat.qty * MaterialSizes[matName]);
                 if (mat.qty > 0) {
-                    this.breakdown += (matName + ": " + numeralWrapper.format(mat.qty * MaterialSizes[matName], "0,0") + "<br>");
+                    this.breakdown += (matName + ": " + numeralWrapper.format(mat.qty * MaterialSizes[matName], "0,0.0") + "<br>");
                 }
             }
         }
@@ -86,9 +93,13 @@ export class Warehouse {
     }
 
     updateSize(corporation: IParent, industry: IParent) {
-        this.size = (this.level * 100)
-                  * corporation.getStorageMultiplier()
-                  * industry.getStorageMultiplier();
+        try {
+            this.size = (this.level * 100)
+                      * corporation.getStorageMultiplier()
+                      * industry.getStorageMultiplier();
+        } catch(e) {
+            exceptionAlert(e);
+        }
     }
 
     // Serialize the current object to a JSON save state.

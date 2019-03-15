@@ -1417,7 +1417,7 @@ Bladeburner.prototype.completeAction = function() {
             break;
         case ActionTypes["Hyperbolic Regeneration Chamber"]:
             Player.regenerateHp(HrcHpGain);
-            this.stamina = Math.max(this.maxStamina, this.stamina + HrcStaminaGain); // TODO Turn this into a const and adjust value
+            this.stamina = Math.min(this.maxStamina, this.stamina + HrcStaminaGain);
             this.startAction(this.action);
             if (this.logging.general) {
                 this.log(`Rested in Hyperbolic Regeneration Chamber. Restored ${HrcHpGain} HP and gained ${HrcStaminaGain} stamina`);

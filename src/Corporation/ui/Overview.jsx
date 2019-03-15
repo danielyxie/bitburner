@@ -64,7 +64,7 @@ export class Overview extends BaseReactComponent {
                   dividendStr +
                   "Publicly Traded: " + (this.corp().public ? "Yes" : "No") + "<br>" +
                   "Owned Stock Shares: " + numeralWrapper.format(this.corp().numShares, '0.000a') + "<br>" +
-                  "Stock Price: " + (this.corp().public ? "$" + numeralWrapper.formatMoney(this.corp().sharePrice) : "N/A") + "<br>" +
+                  "Stock Price: " + (this.corp().public ? numeralWrapper.formatMoney(this.corp().sharePrice) : "N/A") + "<br>" +
                   "<p class='tooltip'>Total Stock Shares: " + numeralWrapper.format(this.corp().totalShares, "0.000a") +
                   "<span class='tooltiptext'>" +
                       `Outstanding Shares: ${numeralWrapper.format(this.corp().issuedShares, "0.000a")}<br>` +

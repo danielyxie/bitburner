@@ -164,11 +164,11 @@ export class Product {
         //Calculate properties
         var progrMult = this.prog / 100;
 
-        var engrRatio   = employeeProd[EmployeePositions.Engineer] / employeeProd["total"],
-            mgmtRatio   = employeeProd[EmployeePositions.Management] / employeeProd["total"],
-            rndRatio    = employeeProd[EmployeePositions.RandD] / employeeProd["total"],
-            opsRatio    = employeeProd[EmployeePositions.Operations] / employeeProd["total"],
-            busRatio    = employeeProd[EmployeePositions.Business] / employeeProd["total"];
+        const engrRatio   = employeeProd[EmployeePositions.Engineer] / employeeProd["total"];
+        const mgmtRatio   = employeeProd[EmployeePositions.Management] / employeeProd["total"];
+        const rndRatio    = employeeProd[EmployeePositions.RandD] / employeeProd["total"];
+        const opsRatio    = employeeProd[EmployeePositions.Operations] / employeeProd["total"];
+        const busRatio    = employeeProd[EmployeePositions.Business] / employeeProd["total"];
         var designMult = 1 + (Math.pow(this.designCost, 0.1) / 100);
         console.log("designMult: " + designMult);
         var balanceMult = (1.2 * engrRatio) + (0.9 * mgmtRatio) + (1.3 * rndRatio) +

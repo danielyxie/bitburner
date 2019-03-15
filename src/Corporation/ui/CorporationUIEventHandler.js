@@ -17,6 +17,8 @@ import { Industries,
          IndustryDescriptions,
          IndustryResearchTrees } from "../IndustryData";
 
+import { Product } from "../Product";
+
 import { Player } from "../../Player";
 
 import { numeralWrapper } from "../../ui/numeralFormat";
@@ -109,7 +111,7 @@ export class CorporationEventHandler {
                 }
             }
         });
-        var confirmButton = createElement("a", {
+        var confirmButton = createElement("button", {
             class:"a-link-button", innerText:"Bribe", display:"inline-block",
             clickListener:()=>{
                 var money = moneyInput.value == null || moneyInput.value == "" ? 0 : parseFloat(moneyInput.value);
@@ -181,7 +183,7 @@ export class CorporationEventHandler {
                 }
             }
         });
-        var confirmBtn = createElement("a", {
+        var confirmBtn = createElement("button", {
             class:"a-link-button", innerText:"Buy shares", display:"inline-block",
             clickListener: () => {
                 var shares = Math.round(input.value);
@@ -234,12 +236,12 @@ export class CorporationEventHandler {
                       "produce this product and all of its existing stock will be " +
                       "removed and left unsold",
         });
-        const confirmBtn = createElement("a", {
+        const confirmBtn = createElement("button", {
             class:"a-link-button",innerText:"Discontinue",
-            clickListener:()=>{
+            clickListener: () => {
                 industry.discontinueProduct(product, parentRefs);
                 removeElementById(popupId);
-                this.corp.rerender();
+                this.rerender();
                 return false;
             }
         });
@@ -294,7 +296,7 @@ export class CorporationEventHandler {
             placeholder:"Export amount / s"
         });
 
-        const exportBtn  = createElement("a", {
+        const exportBtn  = createElement("button", {
             class: "std-button", display:"inline-block", innerText:"Export",
             clickListener: () => {
                 const industryName = getSelectText(industrySelector);
@@ -473,7 +475,7 @@ export class CorporationEventHandler {
             }
         });
 
-        issueBtn = createElement("a", {
+        issueBtn = createElement("button", {
             class: "std-button",
             display: "inline-block",
             innerText: "Issue New Shares",
@@ -529,7 +531,7 @@ export class CorporationEventHandler {
     }
 
     // Create a popup that lets the player limit the production of a product
-    createLimitProductProdutionPopup(product) {
+    createLimitProductProdutionPopup(product, city) {
         const popupId = "cmpy-mgmt-limit-product-production-popup";
         const txt = createElement("p", {
             innerText:"Enter a limit to the amount of this product you would " +
@@ -543,7 +545,7 @@ export class CorporationEventHandler {
                 if (e.keyCode === KEY.ENTER) { confirmBtn.click(); }
             }
         });
-        confirmBtn = createElement("a", {
+        confirmBtn = createElement("button", {
             class: "std-button",
             display:"inline-block",
             innerText:"Limit production",
@@ -585,7 +587,7 @@ export class CorporationEventHandler {
         const txt = createElement("p", {
             innerHTML: popupText,
         });
-        const designCity = createElement("select");
+        const designCity = createElement("select", { margin: "5px" });
         for (const cityName in division.offices) {
             if (division.offices[cityName] instanceof OfficeSpace) {
                 designCity.add(createElement("option", {
@@ -603,18 +605,26 @@ export class CorporationEventHandler {
             productNamePlaceholder = "Property Name";
         }
         var productNameInput = createElement("input", {
+            margin: "5px",
             placeholder: productNamePlaceholder,
         });
         var lineBreak1 = createElement("br");
         var designInvestInput = createElement("input", {
+            margin: "5px",
+            placeholder: "Design investment",
             type: "number",
-            placeholder: "Design investment"
         });
+        let confirmBtn;
         var marketingInvestInput = createElement("input", {
+            margin: "5px",
+            placeholder: "Marketing investment",
             type: "number",
-            placeholder: "Marketing investment"
+            onkeyup: (e) => {
+                e.preventDefault();
+                if (e.keyCode === KEY.ENTER) { confirmBtn.click(); }
+            }
         });
-        const confirmBtn = createElement("a", {
+        confirmBtn = createElement("button", {
             class: "std-button",
             innerText: "Develop Product",
             clickListener: () => {
@@ -637,17 +647,19 @@ export class CorporationEventHandler {
                         designCost: designInvest,
                         advCost: marketingInvest,
                     });
+                    if (division.products[product.name] instanceof Product) {
+                        dialogBoxCreate(`You already have a product with this name!`);
+                        return;
+                    }
                     this.corp.funds = this.corp.funds.minus(designInvest + marketingInvest);
                     division.products[product.name] = product;
                     removeElementById(popupId);
                 }
                 this.rerender();
-                //this.updateUIContent();
-                //this.displayDivisionContent(division, city);
                 return false;
             }
         })
-        const cancelBtn = createPopupCloseButton(popupid, {
+        const cancelBtn = createPopupCloseButton(popupId, {
             class: "std-button",
             innerText: "Cancel",
         });
@@ -741,7 +753,8 @@ export class CorporationEventHandler {
     }
 
     // Create a popup that lets the player expand into a new city (for the current industry)
-    createNewCityPopup(division) {
+    // The 'cityStateSetter' arg is a function that sets the UI's 'city' state property
+    createNewCityPopup(division, cityStateSetter) {
         const popupId = "cmpy-mgmt-expand-city-popup";
         const text = createElement("p", {
             innerText: "Would you like to expand into a new city by opening an office? " +
@@ -757,7 +770,7 @@ export class CorporationEventHandler {
             }
         }
 
-        const confirmBtn = createElement("a", {
+        const confirmBtn = createElement("button", {
             class:"std-button",
             display:"inline-block",
             innerText: "Confirm",
@@ -772,9 +785,11 @@ export class CorporationEventHandler {
                         loc: city,
                         size: OfficeInitialSize,
                     });
-                    this.corp.displayDivisionContent(division, city);
                 }
+
+                cityStateSetter(city);
                 removeElementById(popupId);
+                this.rerender();
                 return false;
             }
         });
@@ -836,15 +851,17 @@ export class CorporationEventHandler {
                 } else {
                     this.corp.funds = this.corp.funds.minus(IndustryStartingCosts[ind]);
                     var newInd = new Industry({
-                        name:newDivisionName,
-                        type:ind,
+                        corp: this.corp,
+                        name: newDivisionName,
+                        type: ind,
                     });
                     this.corp.divisions.push(newInd);
-                    // this.corp.updateUIHeaderTabs();
-                    // this.corp.selectHeaderTab(headerTabs[headerTabs.length-2]);
+
+                    // Set routing to the new division so that the UI automatically switches to it
+                    this.routing.routeTo(newDivisionName);
+
                     removeElementById("cmpy-mgmt-expand-industry-popup");
                     this.rerender();
-                    // this.corp.displayDivisionContent(newInd, Locations.Sector12);
                 }
                 return false;
             }
@@ -855,14 +872,14 @@ export class CorporationEventHandler {
             innerText: "Cancel",
         });
 
-        //Make an object to keep track of what industries you're already in
+        // Make an object to keep track of what industries you're already in
         const ownedIndustries = {};
         for (let i = 0; i < this.corp.divisions.length; ++i) {
             ownedIndustries[this.corp.divisions[i].type] = true;
         }
 
-        //Add industry types to selector
-        //Have Agriculture be first as recommended option
+        // Add industry types to selector
+        // Have Agriculture be first as recommended option
         if (!ownedIndustries["Agriculture"]) {
             selector.add(createElement("option", {
                 text:Industries["Agriculture"], value:"Agriculture"
@@ -933,6 +950,7 @@ export class CorporationEventHandler {
                     mat.buy = parseFloat(input.value);
                     if (isNaN(mat.buy)) {mat.buy = 0;}
                     removeElementById(purchasePopupId);
+                    this.rerender();
                     return false;
                 }
             }
@@ -942,6 +960,7 @@ export class CorporationEventHandler {
             clickListener: () => {
                 mat.buy = 0;
                 removeElementById(purchasePopupId);
+                this.rerender();
                 return false;
             }
         });
@@ -979,7 +998,7 @@ export class CorporationEventHandler {
                 type: "number",
                 onkeyup: (e) => {
                     e.preventDefault();
-                    bulkPurchaseUpdateCostTxt();
+                    updateBulkPurchaseText();
                     if (e.keyCode === KEY.ENTER) {bulkPurchaseConfirmBtn.click();}
                 }
             });
@@ -1010,6 +1029,7 @@ export class CorporationEventHandler {
             elems.push(bulkPurchaseInfo);
             elems.push(bulkPurchaseCostTxt);
             elems.push(bulkPurchaseInput);
+            elems.push(bulkPurchaseConfirmBtn);
         }
 
         createPopup(purchasePopupId, elems);
@@ -1129,7 +1149,7 @@ export class CorporationEventHandler {
     }
 
     // Create a popup that lets the player manage sales of the product
-    createSellProductPopup(product) {
+    createSellProductPopup(product, city) {
         const popupId = "cmpy-mgmt-sell-product-popup";
         const txt = createElement("p", {
             innerHTML:"Enter the maximum amount of " + product.name + " you would like " +
@@ -1150,15 +1170,17 @@ export class CorporationEventHandler {
         });
         let confirmBtn;
         const inputQty = createElement("input", {
+            margin: "5px 0px 5px 0px",
             placeholder: "Sell amount",
             type: "text",
-            value:product.sllman[city][1] ? product.sllman[city][1] : null,
+            value: product.sllman[city][1] ? product.sllman[city][1] : null,
             onkeyup: (e) => {
                 e.preventDefault();
                 if (e.keyCode === KEY.ENTER) {confirmBtn.click();}
             }
         });
         const inputPx = createElement("input", {
+            margin: "5px 0px 5px 0px",
             placeholder: "Sell price",
             type: "text",
             value: product.sCost ? product.sCost : null,
@@ -1167,7 +1189,7 @@ export class CorporationEventHandler {
                 if (e.keyCode === KEY.ENTER) {confirmBtn.click();}
             }
         });
-        confirmBtn = createElement("a", {
+        confirmBtn = createElement("button", {
             class: "std-button",
             innerText: "Confirm",
             clickListener: () => {
@@ -1276,7 +1298,7 @@ export class CorporationEventHandler {
                 }
             }
         });
-        const confirmBtn = createElement("a", {
+        const confirmBtn = createElement("button", {
             class:"a-link-button", innerText:"Sell shares", display:"inline-block",
             clickListener:()=>{
                 var shares = Math.round(input.value);
@@ -1355,7 +1377,7 @@ export class CorporationEventHandler {
                 if (e.keyCode === KEY.ENTER) {confirmBtn.click();}
             }
         });
-        confirmBtn = createElement("a", {
+        confirmBtn = createElement("button", {
             class: "std-button",
             innerText: "Throw Party",
             clickListener:()=>{
@@ -1366,20 +1388,20 @@ export class CorporationEventHandler {
                     if (this.corp.funds.lt(totalCost)) {
                         dialogBoxCreate("You don't have enough company funds to throw this.corp party!");
                     } else {
-                        this.corp.funds = this.funds.minus(totalCost);
+                        this.corp.funds = this.corp.funds.minus(totalCost);
                         var mult;
                         for (let fooit = 0; fooit < office.employees.length; ++fooit) {
                             mult = office.employees[fooit].throwParty(input.value);
                         }
                         dialogBoxCreate("You threw a party for the office! The morale and happiness " +
-                                        "of each employee increased by " + formatNumber((mult-1) * 100, 2) + "%.");
+                                        "of each employee increased by " + numeralWrapper.formatPercentage((mult-1)));
                         removeElementById(popupId);
                     }
                 }
                 return false;
             }
         });
-        const cancelBtn = createPopupCloseButton(popupId, { innerText: "Cancel" });
+        const cancelBtn = createPopupCloseButton(popupId, { class: "std-button", innerText: "Cancel" });
 
         createPopup(popupId, [txt, totalCostTxt, input, confirmBtn, cancelBtn]);
         input.focus();
@@ -1420,7 +1442,7 @@ export class CorporationEventHandler {
         });
         const text2 = createElement("p", { innerText: "Upgrade size: " });
 
-        const confirmBtn = createElement("a", {
+        const confirmBtn = createElement("button", {
             class: this.corp.funds.lt(upgradeCost) ? "a-link-button-inactive" : "a-link-button",
             display:"inline-block", margin:"4px", innerText:"by 3",
             tooltip:numeralWrapper.format(upgradeCost, "$0.000a"),
@@ -1437,7 +1459,7 @@ export class CorporationEventHandler {
                 return false;
             }
         });
-        const confirmBtn15 = createElement("a", {
+        const confirmBtn15 = createElement("button", {
             class: this.corp.funds.lt(upgradeCost15) ? "a-link-button-inactive" : "a-link-button",
             display:"inline-block", margin:"4px", innerText:"by 15",
             tooltip:numeralWrapper.format(upgradeCost15, "$0.000a"),
@@ -1454,7 +1476,7 @@ export class CorporationEventHandler {
                 return false;
             }
         });
-        const confirmBtnMax = createElement("a", {
+        const confirmBtnMax = createElement("button", {
             class:this.corp.funds.lt(upgradeCostMax) ? "a-link-button-inactive" : "a-link-button",
             display:"inline-block", margin:"4px", innerText:"by MAX (" + maxNum*OfficeInitialSize + ")",
             tooltip:numeralWrapper.format(upgradeCostMax, "$0.000a"),
@@ -1484,6 +1506,8 @@ export class CorporationEventHandler {
             dialogBoxCreate("You do not have enough funds to do this!");
         } else {
             division.warehouses[city] = new Warehouse({
+                corp: corp,
+                industry: division,
                 loc: city,
                 size: WarehouseInitialSize,
             });

@@ -8,6 +8,7 @@ import { Industries }               from "../IndustryData";
 import { IndustryUpgrades }         from "../IndustryUpgrades";
 import { numeralWrapper }           from "../../ui/numeralFormat";
 import { dialogBoxCreate }          from "../../../utils/DialogBox";
+import { createProgressBarText }    from "../../../utils/helpers/createProgressBarText";
 
 export class IndustryOverview extends BaseReactComponent {
     renderMakeProductButton() {
@@ -109,6 +110,16 @@ export class IndustryOverview extends BaseReactComponent {
         const profitStr = `Profit: ${numeralWrapper.formatMoney(profit)} / s`;
 
         const productionMultHelpTipOnClick = () => {
+            // Wrapper for createProgressBarText()
+            // Converts the industry's "effectiveness factors"
+            // into a graphic (string) depicting how high that effectiveness is
+            function convertEffectFacToGraphic(fac) {
+                return createProgressBarText({
+                    progress: fac,
+                    totalTicks: 20,
+                });
+            }
+
             dialogBoxCreate("Owning Hardware, Robots, AI Cores, and Real Estate " +
                             "can boost your Industry's production. The effect these " +
                             "materials have on your production varies between Industries. " +
@@ -118,7 +129,13 @@ export class IndustryOverview extends BaseReactComponent {
                             "the individual production multiplier of each of its office locations. " +
                             "This production multiplier is applied to each office. Therefore, it is " +
                             "beneficial to expand into new cities as this can greatly increase the " +
-                            "production multiplier of your entire Division.");
+                            "production multiplier of your entire Division.<br><br>" +
+                            "Below are approximations for how effective each material is at boosting " +
+                            "this industry's production multiplier (Bigger bars = more effective):<br><br>" +
+                            `Hardware:&nbsp;&nbsp;&nbsp; ${convertEffectFacToGraphic(division.hwFac)}<br>` +
+                            `Robots:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${convertEffectFacToGraphic(division.robFac)}<br>` +
+                            `AI Cores:&nbsp;&nbsp;&nbsp; ${convertEffectFacToGraphic(division.aiFac)}<br>` +
+                            `Real Estate: ${convertEffectFacToGraphic(division.reFac)}`);
         }
 
         return (
@@ -129,15 +146,15 @@ export class IndustryOverview extends BaseReactComponent {
                 {popularity} <br />
                 {
                     (advertisingInfo !== false) &&
-                    <p className={"tooltip"}>Advertising Multiplier: {numeralWrapper.format(totalAdvertisingFac, "0.000")}
+                    <p className={"tooltip"}>Advertising Multiplier: x{numeralWrapper.format(totalAdvertisingFac, "0.000")}
                         <span className={"tooltiptext cmpy-mgmt-advertising-info"}>
                             Total multiplier for this industrys sales due to its awareness and popularity
                             <br />
-                            Awareness Bonus: x{formatNumber(Math.pow(awarenessFac, 0.85), 3)}
+                            Awareness Bonus: x{numeralWrapper.format(Math.pow(awarenessFac, 0.85), "0.000")}
                             <br />
-                            Popularity Bonus: x{formatNumber(Math.pow(popularityFac, 0.85), 3)}
+                            Popularity Bonus: x{numeralWrapper.format(Math.pow(popularityFac, 0.85), "0.000")}
                             <br />
-                            Ratio Multiplier: x{formatNumber(Math.pow(ratioFac, 0.85), 3)}
+                            Ratio Multiplier: x{numeralWrapper.format(Math.pow(ratioFac, 0.85), "0.000")}
                         </span>
                     </p>
                 }
@@ -157,7 +174,7 @@ export class IndustryOverview extends BaseReactComponent {
                 <div className={"help-tip"} onClick={productionMultHelpTipOnClick}>?</div>
                 <br /> <br />
                 <p className={"tooltip"}>
-                    Scientific Research: {numeralWrapper.format(division.sciResearch.qty, "0.000")}
+                    Scientific Research: {numeralWrapper.format(division.sciResearch.qty, "0.000a")}
                     <span className={"tooltiptext"}>
                         Scientific Research increases the quality of the materials and
                         products that you produce.
@@ -252,7 +269,7 @@ export class IndustryOverview extends BaseReactComponent {
 
                 {
                     division.makesProducts &&
-                    {makeProductButton}
+                    makeProductButton
                 }
             </div>
         )

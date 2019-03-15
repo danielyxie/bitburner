@@ -14,6 +14,9 @@ export class CityTabs extends BaseReactComponent {
         if (props.city == null) {
             throw new Error(`CityTabs component constructed without 'city' property`)
         }
+        if (props.cityStateSetter == null) {
+            throw new Error(`CityTabs component constructed without 'cityStateSetter' property`)
+        }
 
         super(props);
     }
@@ -46,7 +49,8 @@ export class CityTabs extends BaseReactComponent {
         }
 
         // Tab to "Expand into new City"
-        const newCityOnClick = this.eventHandler().createNewCityPopup.bind(this.eventHandler(), division);
+        const newCityOnClick = this.eventHandler().createNewCityPopup.bind(this.eventHandler(), division, this.props.cityStateSetter);
+
         tabs.push(this.renderTab({
             current: false,
             key: "Expand into new City",

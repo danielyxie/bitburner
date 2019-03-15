@@ -1,38 +1,50 @@
 // React Component for displaying an Industry's warehouse information
 // (right-side panel in the Industry UI)
 import React from "react";
-import { BaseReactComponent }       from "./BaseReactComponent";
+import { BaseReactComponent }           from "./BaseReactComponent";
 
-import { Material }                 from "../Material";
-import { Product }                  from "../Product";
+import { Material }                     from "../Material";
+import { Product }                      from "../Product";
 
 import { Warehouse,
          WarehouseInitialCost,
-         WarehouseUpgradeBaseCost } from "../Corporation";
+         WarehouseUpgradeBaseCost,
+         ProductProductionCostRatio }   from "../Corporation";
 
-import { numeralWrapper }           from "../../ui/numeralFormat";
+import { numeralWrapper }               from "../../ui/numeralFormat";
 
-import { isString }                 from "../../../utils/helpers/isString";
+import { isString }                     from "../../../utils/helpers/isString";
 
 // Creates the UI for a single Product type
 function ProductComponent(props) {
     const corp = props.corp;
     const division = props.division;
     const warehouse = props.warehouse;
+    const city = props.city;
     const product = props.product;
     const eventHandler = props.eventHandler;
 
-    const nf = "0.000"; // Numeraljs formatter
+    // Numeraljs formatters
+    const nf = "0.000";
+    const nfB = "0.000a"; // For numbers that might be big
 
     const hasUpgradeDashboard = division.hasResearch("uPgrade: Dashboard");
 
     // Total product gain = production - sale
-    const totalGain = totalGain = product.data[city][1] - product.data[city][2];
+    const totalGain = product.data[city][1] - product.data[city][2];
 
     // Sell button
-    const sellButtonText = product.sllman[city][1] === -1
-                            ? "Sell (" + numeralWrapper.format(product.data[city][2], nf) + "/MAX)"
-                            : "Sell (" + numeralWrapper.format(product.data[city][2], nf) + "/" + numeralWrapper.format(product.sllman[city][1], nf) + ")";
+    let sellButtonText;
+    if (product.sllman[city][0]) {
+        if (isString(product.sllman[city][1])) {
+            sellButtonText = `Sell (${numeralWrapper.format(product.data[city][2], nfB)}/${product.sllman[city][1]})`;
+        } else {
+            sellButtonText = `Sell (${numeralWrapper.format(product.data[city][2], nfB)}/${numeralWrapper.format(product.sllman[city][1], nfB)})`;
+        }
+    } else {
+        sellButtonText = "Sell (0.000/0.000)";
+    }
+
     if (product.sCost) {
         if (isString(product.sCost)) {
             sellButtonText += (" @ " + product.sCost);
@@ -40,14 +52,14 @@ function ProductComponent(props) {
             sellButtonText += (" @ " + numeralWrapper.format(product.sCost, "$0.000a"));
         }
     }
-    const sellButtonOnClick = eventHandler.createSellProductPopup.bind(eventHandler, product);
+    const sellButtonOnClick = eventHandler.createSellProductPopup.bind(eventHandler, product, city);
 
     // Limit Production button
     const limitProductionButtonText = "Limit Production";
     if (product.prdman[city][0]) {
         limitProductionButtonText += " (" + numeralWrapper.format(product.prdman[city][1], nf) + ")";
     }
-    const limitProductionButtonOnClick = eventHandler.createLimitProductProdutionPopup.bind(eventHandler, product);
+    const limitProductionButtonOnClick = eventHandler.createLimitProductProdutionPopup.bind(eventHandler, product, city);
 
     // Discontinue Button
     const discontinueButtonOnClick = eventHandler.createDiscontinueProductPopup.bind(eventHandler, product);
@@ -56,8 +68,8 @@ function ProductComponent(props) {
     if (!product.fin) {
         if (hasUpgradeDashboard) {
             return (
-                <div className={"cmpy-mgmt-warehouse-product-div"}>
-                    <p>Designing {product.name}...</p>
+                <div className={"cmpy-mgmt-warehouse-product-div"} key={product.name}>
+                    <p>Designing {product.name}...</p><br />
                     <p>{numeralWrapper.format(product.prog, "0.00")}% complete</p>
                     <br />
 
@@ -76,8 +88,8 @@ function ProductComponent(props) {
             )
         } else {
             return (
-                <div className={"cmpy-mgmt-warehouse-product-div"}>
-                    <p>Designing {product.name}...</p>
+                <div className={"cmpy-mgmt-warehouse-product-div"} key={product.name}>
+                    <p>Designing {product.name}...</p><br />
                     <p>{numeralWrapper.format(product.prog, "0.00")}% complete</p>
                 </div>
             );
@@ -87,13 +99,13 @@ function ProductComponent(props) {
     return (
         <div className={"cmpy-mgmt-warehouse-product-div"} key={props.key}>
             <p className={"tooltip"}>
-                {product.name}: {numeralWrapper.format(product.data[city][0], nf)} ({numeralWrapper.format(totalGain, nf)}/s)
+                {product.name}: {numeralWrapper.format(product.data[city][0], nfB)} ({numeralWrapper.format(totalGain, nfB)}/s)
                 <span className={"tooltiptext"}>
-                    Prod: {numeralWrapper.format(product.data[city][1], nf)}/s
+                    Prod: {numeralWrapper.format(product.data[city][1], nfB)}/s
                     <br />
-                    Sell: {numeralWrapper.format(product.data[city][2], nf)} /s
+                    Sell: {numeralWrapper.format(product.data[city][2], nfB)} /s
                 </span>
-            </p>
+            </p><br />
             <p className={"tooltip"}>
                 Rating: {numeralWrapper.format(product.rat, nf)}
                 <span className={"tooltiptext"}>
@@ -119,13 +131,13 @@ function ProductComponent(props) {
                     }
 
                 </span>
-            </p>
+            </p><br />
             <p className={"tooltip"}>
                 Est. Production Cost:  {numeralWrapper.formatMoney(product.pCost / ProductProductionCostRatio)}
                 <span className={"tooltiptext"}>
                 An estimate of the material cost it takes to create this Product.
                 </span>
-            </p>
+            </p><br />
             <p className={"tooltip"}>
                 Est. Market Price: {numeralWrapper.formatMoney(product.pCost + product.rat / product.mku)}
                 <span className={"tooltiptext"}>
@@ -161,6 +173,7 @@ function MaterialComponent(props) {
 
     // Numeraljs formatter
     const nf = "0.000";
+    const nfB = "0.000a"; // For numbers that might be biger
 
     // Total gain or loss of this material (per second)
     const totalGain = mat.buy + mat.prd + mat.imp - mat.sll - mat.totalExp;
@@ -190,8 +203,12 @@ function MaterialComponent(props) {
     // Sell material button
     let sellButtonText;
     if (mat.sllman[0]) {
-        sellButtonText = (mat.sllman[1] === -1 ? "Sell (" + numeralWrapper.format(mat.sll, nf) + "/MAX)" :
-                          "Sell (" + numeralWrapper.format(mat.sll, nf) + "/" + numeralWrapper.format(mat.sllman[1], nf) + ")");
+        if (isString(mat.sllman[1])) {
+            sellButtonText = `Sell (${numeralWrapper.format(mat.sll, nf)}/${mat.sllman[1]})`
+        } else {
+            sellButtonText = `Sell (${numeralWrapper.format(mat.sll, nf)}/${numeralWrapper.format(mat.sllman[1], nf)})`;
+        }
+
         if (mat.sCost) {
             if (mat.marketTa1) {
                 sellButtonText += " @ " + numeralWrapper.formatMoney(mat.bCost + markupLimit);
@@ -214,13 +231,13 @@ function MaterialComponent(props) {
         <div className={"cmpy-mgmt-warehouse-material-div"} key={props.key}>
             <div style={{display: "inline-block"}}>
                 <p className={"tooltip"}>
-                    {mat.name}: {numeralWrapper.format(mat.qty, nf)} ({numeralWrapper.format(totalGain, nf)}/s)
+                    {mat.name}: {numeralWrapper.format(mat.qty, nfB)} ({numeralWrapper.format(totalGain, nfB)}/s)
                     <span className={"tooltiptext"}>
-                        Buy: {numeralWrapper.format(mat.buy, nf)} <br />
-                        Prod: {numeralWrapper.format(mat.prd, nf)} <br />
-                        Sell: {numeralWrapper.format(mat.sll, nf)} <br />
-                        Export: {numeralWrapper.format(mat.totalExp, nf)} <br />
-                        Import: {numeralWrapper.format(mat.imp, nf)}
+                        Buy: {numeralWrapper.format(mat.buy, nfB)} <br />
+                        Prod: {numeralWrapper.format(mat.prd, nfB)} <br />
+                        Sell: {numeralWrapper.format(mat.sll, nfB)} <br />
+                        Export: {numeralWrapper.format(mat.totalExp, nfB)} <br />
+                        Import: {numeralWrapper.format(mat.imp, nfB)}
                         {
                             corp.unlockUpgrades[2] === 1 && <br />
                         }
@@ -244,7 +261,7 @@ function MaterialComponent(props) {
                     </span>
                 </p> <br />
                 <p className={"tooltip"}>
-                    Quality: {numeralWrapper.format(mat.qlt, "0.00")}
+                    Quality: {numeralWrapper.format(mat.qlt, "0.00a")}
                     <span className={"tooltiptext"}>
                         The quality of your material. Higher quality will lead to more sales
                     </span>
@@ -370,7 +387,8 @@ export class IndustryWarehouse extends BaseReactComponent {
         // Smart Supply Checkbox
         const smartSupplyCheckboxId = "cmpy-mgmt-smart-supply-checkbox";
         const smartSupplyOnChange = (e) => {
-            warehouse.smartSupplyEnabled = e.target.value;
+            warehouse.smartSupplyEnabled = e.target.checked;
+            corp.rerender();
         }
 
         // Materials that affect Production multiplier
@@ -409,14 +427,15 @@ export class IndustryWarehouse extends BaseReactComponent {
         if (division.makesProducts && Object.keys(division.products).length > 0) {
             for (const productName in division.products) {
                 if (division.products[productName] instanceof Product) {
-                    products.push({
+                    products.push(ProductComponent({
+                        city: this.props.currentCity,
                         corp: corp,
                         division: division,
                         eventHandler: this.eventHandler(),
                         key: productName,
                         product: division.products[productName],
                         warehouse: warehouse,
-                    })
+                    }));
                 }
             }
         }
@@ -425,9 +444,7 @@ export class IndustryWarehouse extends BaseReactComponent {
             <div className={"cmpy-mgmt-warehouse-panel"}>
                 <p className={"tooltip"} style={sizeUsageStyle}>
                     Storage: {numeralWrapper.format(warehouse.sizeUsed, "0.000")} / {numeralWrapper.format(warehouse.size, "0.000")}
-                    <span className={"tooltiptext"}>
-                        {warehouse.breakdown}
-                    </span>
+                    <span className={"tooltiptext"} dangerouslySetInnerHTML={{__html: warehouse.breakdown}}></span>
                 </p>
 
                 <button className={upgradeWarehouseClass} onClick={upgradeWarehouseOnClick}>
@@ -454,7 +471,7 @@ export class IndustryWarehouse extends BaseReactComponent {
                                 id={smartSupplyCheckboxId}
                                 onChange={smartSupplyOnChange}
                                 style={{margin: "3px"}}
-                                value={warehouse.smartSupplyEnabled}
+                                checked={warehouse.smartSupplyEnabled}
                         />
                     </div>
                 }
@@ -481,9 +498,11 @@ export class IndustryWarehouse extends BaseReactComponent {
             return this.renderWarehouseUI();
         } else {
             return (
-                <button className={"std-button"} onClick={newWarehouseOnClick}>
-                    Purchase Warehouse ({numeralWrapper.formatMoney(WarehouseInitialCost)})
-                </button>
+                <div className={"cmpy-mgmt-warehouse-panel"}>
+                    <button className={"std-button"} onClick={newWarehouseOnClick}>
+                        Purchase Warehouse ({numeralWrapper.formatMoney(WarehouseInitialCost)})
+                    </button>
+                </div>
             )
         }
     }

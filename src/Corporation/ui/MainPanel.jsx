@@ -23,6 +23,15 @@ export class MainPanel extends BaseReactComponent {
         }
     }
 
+    // We can pass this setter to child components
+    changeCityState(newCity) {
+        if (Object.values(Cities).includes(newCity)) {
+            this.state.city = newCity;
+        } else {
+            console.error(`Tried to change MainPanel's city state to an invalid city: ${newCity}`);
+        }
+    }
+
     // Determines what UI content to render based on routing
     renderContent() {
         if (this.routing().isOnOverviewPage()) {
@@ -68,11 +77,13 @@ export class MainPanel extends BaseReactComponent {
                 }
             }
         }
+
         const cityTabs = (
             <CityTabs
                 {...this.props}
                 city={this.state.city}
                 onClicks={onClicks}
+                cityStateSetter={this.changeCityState.bind(this)}
             />
         )
 

@@ -291,7 +291,15 @@ export let CONSTANTS: IMap<any> = {
     ** Added several new Research upgrades
     ** Reduced the amount of Scientific Research needed to unlock the Hi-Tech R&D Laboratory from 10k to 5k
     ** Energy Material requirement of the Software industry reduced from 1 to 0.5
+    ** It is now slightly easier to increase the Software industry's production multiplier
     ** Industries now have a maximum number of allowed products, starting at 3. This can be increased through research.
+    ** You can now see an approximation of how each material affects an industry's production multiplier by clicking the "?" help tip next to it
+    ** Significantly changed the effects of the different employee positions. See updated descriptions
+    ** Reduced the amount of money you gain from private investors
+    ** Training employees is now 3x more effective
+
+    * Rebalanced BitNode-3 to make it slightly harder
+    * Bug Fix: Bladeburner's Hyperbolic Regeneration Chamber should no longer instantly refill all stamina
     `
 
 }
