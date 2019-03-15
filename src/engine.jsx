@@ -14,7 +14,7 @@ import { AugmentationNames }                            from "./Augmentation/dat
 import {BitNodes, initBitNodes,
         initBitNodeMultipliers}                         from "./BitNode/BitNode";
 import {Bladeburner}                                    from "./Bladeburner";
-import {CharacterOverview}                              from "./CharacterOverview";
+import { CharacterOverviewComponent }                   from "./ui/React/CharacterOverview";
 import {cinematicTextFlag}                              from "./CinematicText";
 import {generateRandomContract}                         from "./CodingContractGenerator";
 import {CompanyPositions}                               from "./Company/CompanyPositions";
@@ -96,6 +96,8 @@ import { exceptionAlert }                               from "../utils/helpers/e
 import { removeLoadingScreen }                          from "../utils/uiHelpers/removeLoadingScreen";
 import {KEY}                                            from "../utils/helpers/keyCodes";
 
+import React                                            from "react";
+import ReactDOM                                         from "react-dom";
 
 // These should really be imported with the module that is presenting that UI, but because they very much depend on the
 // cascade order, we'll pull them all in here.
@@ -202,7 +204,6 @@ $(document).keydown(function(e) {
 const Engine = {
     version: "",
     Debug: true,
-    overview: new CharacterOverview(),
 
     //Clickable objects
     Clickables: {
@@ -570,7 +571,7 @@ const Engine = {
     },
 
     displayCharacterOverviewInfo: function() {
-        Engine.overview.update();
+        ReactDOM.render(<CharacterOverviewComponent />, document.getElementById('character-overview-text'));
 
         const save = document.getElementById("character-overview-save-button");
         const flashClass = "flashing-button";
