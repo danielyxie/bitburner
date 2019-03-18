@@ -28,6 +28,7 @@ import { Factions,
          factionExists }                            from "./Faction/Factions";
 import { joinFaction,
          purchaseAugmentation }                     from "./Faction/FactionHelpers";
+import { FactionWorkType }                          from "./Faction/FactionWorkTypeEnum";
 import { getCostOfNextHacknetNode,
          purchaseHacknet }                          from "./HacknetNode";
 import {Locations}                                  from "./Locations";
@@ -60,6 +61,7 @@ import {StockMarket, StockSymbols, SymbolToStockMap,
         PositionTypes, placeOrder, cancelOrder}     from "./StockMarket/StockMarket";
 import { getStockmarket4SDataCost,
          getStockMarket4STixApiCost }               from "./StockMarket/StockMarketCosts";
+import { SourceFileFlags }                          from "./SourceFile/SourceFileFlags"
 import {TextFile, getTextFile, createTextFile}      from "./TextFile";
 
 import {unknownBladeburnerActionErrorMessage,
@@ -71,6 +73,7 @@ import {WorkerScript, workerScripts,
 import {makeRuntimeRejectMsg, netscriptDelay,
         runScriptFromScript}                        from "./NetscriptEvaluator";
 import {NetscriptPort}                              from "./NetscriptPort";
+import {SleeveTaskType}                             from "./PersonObjects/Sleeve/SleeveTaskTypesEnum"
 
 import {Page, routing}                              from "./ui/navigationTracking";
 import {numeralWrapper}                             from "./ui/numeralFormat";
@@ -4807,7 +4810,257 @@ function NetscriptFunctions(workerScript) {
                 }
                 return contract.getMaxNumTries() - contract.tries;
             },
-        }
+        }, // End coding contracts
+        sleeve : {
+            getNumSleeves : function() {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getNumSleeves", CONSTANTS.ScriptSleeveBaseRamCost);
+                }
+                if (Player.bitNodeN !== 10 && !SourceFileFlags[10]) {
+                    throw makeRuntimeRejectMsg(workerScript, "getNumSleeves() failed because you do not currently have access to the Sleeve API. This is either because you are not in BitNode-10 or because you do not have Source-File 10");
+                }
+                updateDynamicRam("getNumSleeves", CONSTANTS.ScriptSleeveBaseRamCost);
+                return Player.sleeves.length;
+            },
+            shockRecovery : function(sleeveNumber=0) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("shockRecovery", CONSTANTS.ScriptSleeveBaseRamCost);
+                }
+                if (Player.bitNodeN !== 10 && !SourceFileFlags[10]) {
+                    throw makeRuntimeRejectMsg(workerScript, "shockRecovery() failed because you do not currently have access to the Sleeve API. This is either because you are not in BitNode-10 or because you do not have Source-File 10");
+                }
+                updateDynamicRam("shockRecovery", CONSTANTS.ScriptSleeveBaseRamCost);
+                if (sleeveNumber >= Player.sleeves.length || sleeveNumber < 0) {
+                    workerScript.log(`ERROR: sleeve.shockRecovery(${sleeveNumber}) failed because it is an invalid sleeve number.`);
+                    return false;
+                }
+
+                return Player.sleeves[sleeveNumber].shockRecovery(Player);
+            },
+            synchronize : function(sleeveNumber=0) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("synchronize", CONSTANTS.ScriptSleeveBaseRamCost);
+                }
+                if (Player.bitNodeN !== 10 && !SourceFileFlags[10]) {
+                    throw makeRuntimeRejectMsg(workerScript, "synchronize() failed because you do not currently have access to the Sleeve API. This is either because you are not in BitNode-10 or because you do not have Source-File 10");
+                }
+                updateDynamicRam("synchronize", CONSTANTS.ScriptSleeveBaseRamCost);
+                if (sleeveNumber >= Player.sleeves.length || sleeveNumber < 0) {
+                    workerScript.log(`ERROR: sleeve.synchronize(${sleeveNumber}) failed because it is an invalid sleeve number.`);
+                    return false;
+                }
+
+                return Player.sleeves[sleeveNumber].synchronize(Player);
+            },
+            commitCrime : function(sleeveNumber=0, crimeName="") {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("commitCrime", CONSTANTS.ScriptSleeveBaseRamCost);
+                }
+                if (Player.bitNodeN !== 10 && !SourceFileFlags[10]) {
+                    throw makeRuntimeRejectMsg(workerScript, "commitCrime() failed because you do not currently have access to the Sleeve API. This is either because you are not in BitNode-10 or because you do not have Source-File 10");
+                }
+                updateDynamicRam("commitCrime", CONSTANTS.ScriptSleeveBaseRamCost);
+                if (sleeveNumber >= Player.sleeves.length || sleeveNumber < 0) {
+                    workerScript.log(`ERROR: sleeve.commitCrime(${sleeveNumber}) failed because it is an invalid sleeve number.`);
+                    return false;
+                }
+
+                return Player.sleeves[sleeveNumber].commitCrime(Player, crimeName);
+            },
+            takeUniversityCourse : function(sleeveNumber=0, universityName="", className="") {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("takeUniversityCourse", CONSTANTS.ScriptSleeveBaseRamCost);
+                }
+                if (Player.bitNodeN !== 10 && !SourceFileFlags[10]) {
+                    throw makeRuntimeRejectMsg(workerScript, "takeUniversityCourse() failed because you do not currently have access to the Sleeve API. This is either because you are not in BitNode-10 or because you do not have Source-File 10");
+                }
+                updateDynamicRam("takeUniversityCourse", CONSTANTS.ScriptSleeveBaseRamCost);
+                if (sleeveNumber >= Player.sleeves.length || sleeveNumber < 0) {
+                    workerScript.log(`ERROR: sleeve.takeUniversityCourse(${sleeveNumber}) failed because it is an invalid sleeve number.`);
+                    return false;
+                }
+
+                return Player.sleeves[sleeveNumber].takeUniversityCourse(Player, universityName, className);
+            },
+            travel : function(sleeveNumber=0, cityName="") {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("travel", CONSTANTS.ScriptSleeveBaseRamCost);
+                }
+                if (Player.bitNodeN !== 10 && !SourceFileFlags[10]) {
+                    throw makeRuntimeRejectMsg(workerScript, "travel() failed because you do not currently have access to the Sleeve API. This is either because you are not in BitNode-10 or because you do not have Source-File 10");
+                }
+                updateDynamicRam("travel", CONSTANTS.ScriptSleeveBaseRamCost);
+                if (sleeveNumber >= Player.sleeves.length || sleeveNumber < 0) {
+                    workerScript.log(`ERROR: sleeve.travel(${sleeveNumber}) failed because it is an invalid sleeve number.`);
+                    return false;
+                }
+
+                return Player.sleeves[sleeveNumber].travel(Player, cityName);
+            },
+            workForCompany : function(sleeveNumber=0, companyName="") {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("workForCompany", CONSTANTS.ScriptSleeveBaseRamCost);
+                }
+                if (Player.bitNodeN !== 10 && !SourceFileFlags[10]) {
+                    throw makeRuntimeRejectMsg(workerScript, "workForCompany() failed because you do not currently have access to the Sleeve API. This is either because you are not in BitNode-10 or because you do not have Source-File 10");
+                }
+                updateDynamicRam("workForCompany", CONSTANTS.ScriptSleeveBaseRamCost);
+                if (sleeveNumber >= Player.sleeves.length || sleeveNumber < 0) {
+                    workerScript.log(`ERROR: sleeve.workForCompany(${sleeveNumber}) failed because it is an invalid sleeve number.`);
+                    return false;
+                }
+
+                return Player.sleeves[sleeveNumber].workForCompany(Player, companyName);
+            },
+            workForFaction : function(sleeveNumber=0, factionName="", workType="") {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("workForFaction", CONSTANTS.ScriptSleeveBaseRamCost);
+                }
+                if (Player.bitNodeN !== 10 && !SourceFileFlags[10]) {
+                    throw makeRuntimeRejectMsg(workerScript, "workForFaction() failed because you do not currently have access to the Sleeve API. This is either because you are not in BitNode-10 or because you do not have Source-File 10");
+                }
+                updateDynamicRam("workForFaction", CONSTANTS.ScriptSleeveBaseRamCost);
+                if (sleeveNumber >= Player.sleeves.length || sleeveNumber < 0) {
+                    workerScript.log(`ERROR: sleeve.workForFaction(${sleeveNumber}) failed because it is an invalid sleeve number.`);
+                    return false;
+                }
+
+                return Player.sleeves[sleeveNumber].workForFaction(Player, factionName, workType);
+            },
+            workoutAtGym : function(sleeveNumber=0, gymName="", stat="") {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("workoutAtGym", CONSTANTS.ScriptSleeveBaseRamCost);
+                }
+                if (Player.bitNodeN !== 10 && !SourceFileFlags[10]) {
+                    throw makeRuntimeRejectMsg(workerScript, "workoutAtGym() failed because you do not currently have access to the Sleeve API. This is either because you are not in BitNode-10 or because you do not have Source-File 10");
+                }
+                updateDynamicRam("workoutAtGym", CONSTANTS.ScriptSleeveBaseRamCost);
+                if (sleeveNumber >= Player.sleeves.length || sleeveNumber < 0) {
+                    workerScript.log(`ERROR: sleeve.workoutAtGym(${sleeveNumber}) failed because it is an invalid sleeve number.`);
+                    return false;
+                }
+
+                return Player.sleeves[sleeveNumber].workoutAtGym(Player, gymName, stat);
+            },
+            getStats : function(sleeveNumber=0) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("workoutAtGym", CONSTANTS.ScriptSleeveBaseRamCost);
+                }
+                if (Player.bitNodeN !== 10 && !SourceFileFlags[10]) {
+                    throw makeRuntimeRejectMsg(workerScript, "getStats() failed because you do not currently have access to the Sleeve API. This is either because you are not in BitNode-10 or because you do not have Source-File 10");
+                }
+                updateDynamicRam("workoutAtGym", CONSTANTS.ScriptSleeveBaseRamCost);
+                if (sleeveNumber >= Player.sleeves.length || sleeveNumber < 0) {
+                    workerScript.log(`ERROR: sleeve.workoutAtGym(${sleeveNumber}) failed because it is an invalid sleeve number.`);
+                    return false;
+                }
+
+                const sl = Player.sleeves[i];
+                return {
+                    shock: sl.shock,
+                    sync: sl.sync,
+                    hacking_skill: sl.hacking_skill,
+                    strength: sl.strength,
+                    defense: sl.defense,
+                    dexterity: sl.dexterity,
+                    agility: sl.agility,
+                    charisma: sl.charisma,
+                };
+            },
+            getTask : function(sleeveNumber=0) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getTask", CONSTANTS.ScriptSleeveBaseRamCost);
+                }
+                if (Player.bitNodeN !== 10 && !SourceFileFlags[10]) {
+                    throw makeRuntimeRejectMsg(workerScript, "getTask() failed because you do not currently have access to the Sleeve API. This is either because you are not in BitNode-10 or because you do not have Source-File 10");
+                }
+                updateDynamicRam("getTask", CONSTANTS.ScriptSleeveBaseRamCost);
+                if (sleeveNumber >= Player.sleeves.length || sleeveNumber < 0) {
+                    workerScript.log(`ERROR: sleeve.getTask(${sleeveNumber}) failed because it is an invalid sleeve number.`);
+                    return false;
+                }
+
+                const sl = Player.sleeves[sleeveNumber];
+                return {
+                    task:            SleeveTaskType[sl.currentTask],
+                    crime:           sl.crimeType,
+                    location:        sl.currentTaskLocation,
+                    gymStatType:     sl.gymStatType,
+                    factionWorkType: FactionWorkType[sl.factionWorkType],
+                };
+            },
+            getInformation : function(sleeveNumber=0) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getInformation", CONSTANTS.ScriptSleeveBaseRamCost);
+                }
+                if (Player.bitNodeN !== 10 && !SourceFileFlags[10]) {
+                    throw makeRuntimeRejectMsg(workerScript, "getInformation() failed because you do not currently have access to the Sleeve API. This is either because you are not in BitNode-10 or because you do not have Source-File 10");
+                }
+                updateDynamicRam("getInformation", CONSTANTS.ScriptSleeveBaseRamCost);
+                if (sleeveNumber >= Player.sleeves.length || sleeveNumber < 0) {
+                    workerScript.log(`ERROR: sleeve.getInformation(${sleeveNumber}) failed because it is an invalid sleeve number.`);
+                    return false;
+                }
+
+                const sl = Player.sleeves[sleeveNumber];
+                return {
+                    city:     sl.city,
+                    hp:       sl.hp,
+                    jobs:     Object.keys(Player.jobs), // technically sleeves have the same jobs as the player.
+                    jobTitle: Object.values(Player.jobs), 
+                    maxHp:    sl.max_hp,
+                    tor:      SpecialServerIps.hasOwnProperty("Darkweb Server"), // There's no reason not to give that infomation here as well. Worst case scenario it isn't used.
+
+                    mult: {
+                        agility:      sl.agility_mult,
+                        agilityExp:   sl.agility_exp_mult,
+                        companyRep:   sl.company_rep_mult,
+                        crimeMoney:   sl.crime_money_mult,
+                        crimeSuccess: sl.crime_success_mult,
+                        defense:      sl.defense_mult,
+                        defenseExp:   sl.defense_exp_mult,
+                        dexterity:    sl.dexterity_mult,
+                        dexterityExp: sl.dexterity_exp_mult,
+                        factionRep:   sl.faction_rep_mult,
+                        hacking:      sl.hacking_mult,
+                        hackingExp:   sl.hacking_exp_mult,
+                        strength:     sl.strength_mult,
+                        strengthExp:  sl.strength_exp_mult,
+                        workMoney:    sl.work_money_mult,
+                    },
+
+                    timeWorked: sl.currentTaskTime,
+                    earningsForSleeves : {
+                            workHackExpGain: sl.earningsForSleeves.hack,
+                            workStrExpGain:  sl.earningsForSleeves.str,
+                            workDefExpGain:  sl.earningsForSleeves.def,
+                            workDexExpGain:  sl.earningsForSleeves.dex,
+                            workAgiExpGain:  sl.earningsForSleeves.agi,
+                            workChaExpGain:  sl.earningsForSleeves.cha,
+                            workMoneyGain:   sl.earningsForSleeves.money,
+                    },
+                    earningsForPlayer : {
+                            workHackExpGain: sl.earningsForPlayer.hack,
+                            workStrExpGain:  sl.earningsForPlayer.str,
+                            workDefExpGain:  sl.earningsForPlayer.def,
+                            workDexExpGain:  sl.earningsForPlayer.dex,
+                            workAgiExpGain:  sl.earningsForPlayer.agi,
+                            workChaExpGain:  sl.earningsForPlayer.cha,
+                            workMoneyGain:   sl.earningsForPlayer.money,
+                    },
+                    earningsForTask : {
+                            workHackExpGain: sl.earningsForTask.hack,
+                            workStrExpGain:  sl.earningsForTask.str,
+                            workDefExpGain:  sl.earningsForTask.def,
+                            workDexExpGain:  sl.earningsForTask.dex,
+                            workAgiExpGain:  sl.earningsForTask.agi,
+                            workChaExpGain:  sl.earningsForTask.cha,
+                            workMoneyGain:   sl.earningsForTask.money,
+                    },
+                    workRepGain:     sl.getRepGain(),
+                }
+            },
+        } // End sleeve
     } //End return
 } //End NetscriptFunction()
 

@@ -125,7 +125,12 @@ let NetscriptFunctions =
 
     // Coding Contract API
     "codingcontract|attempt|getContractType|getData|getDescription|"           +
-    "getNumTriesRemaining";
+    "getNumTriesRemaining|"                                                    +
+
+    // Sleeve API
+    "sleeve|getNumSleeves|shockRecovery|synchronize|commitCrime|"              +
+    "takeUniversityCourse|travel|workForCompany|workForFaction|workoutAtGym|"  +
+    "getStats|getTask|getInformation";
 
 var NetscriptHighlightRules = function(options) {
     var keywordMapper = this.createKeywordMapper({
