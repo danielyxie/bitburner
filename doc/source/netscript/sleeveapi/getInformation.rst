@@ -3,7 +3,7 @@ getInformation() Netscript Function
 
 .. js:function:: getInformation(sleeveNumber)
 
-    :param int sleeveNumber: index of the sleeve to retrieve information.
+    :param int sleeveNumber: Index of the sleeve to retrieve information. See :ref:`here <netscript_sleeveapi_referencingaduplicatesleeve>`
 
     Return a struct containing tons of information about this sleeve
 

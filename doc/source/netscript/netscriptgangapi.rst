@@ -6,7 +6,7 @@ Netscript provides the following API for interacting with the game's Gang mechan
 The Gang API is **not** immediately available to the player and must be unlocked
 later in the game
 
-**WARNING: This page contains spoilers for the game**
+.. warning:: This page contains spoilers for the game
 
 The Gang API is unlocked in BitNode-2. Currently, BitNode-2 is the only location
 where the Gang mechanic is accessible. This may change in the future

@@ -1,9 +1,9 @@
-getStats() Netscript Function
-=======================================
+getSleeveStats() Netscript Function
+===================================
 
 .. js:function:: getStatus(sleeveNumber)
 
-    :param int sleeveNumber: index of the sleeve to get stats of.
+    :param int sleeveNumber: Index of the sleeve to get stats of. See :ref:`here <netscript_sleeveapi_referencingaduplicatesleeve>`
 
     Return a structure containing the stats of the sleeve
 

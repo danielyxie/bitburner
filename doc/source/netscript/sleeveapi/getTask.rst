@@ -3,7 +3,7 @@ getTask() Netscript Function
 
 .. js:function:: getTask(sleeveNumber)
 
-    :param int sleeveNumber: index of the sleeve to retrieve task from.
+    :param int sleeveNumber: Index of the sleeve to retrieve task from. See :ref:`here <netscript_sleeveapi_referencingaduplicatesleeve>`
 
     Return the current task that the sleeve is performing. type is set to "Idle" if the sleeve isn't doing anything
 

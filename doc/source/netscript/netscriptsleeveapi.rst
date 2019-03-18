@@ -2,12 +2,13 @@
 
 Netscript Sleeve API
 =========================
-Netscript provides the following API for interacting with the game's Sleeve mechanic.
+Netscript provides the following API for interacting with the game's
+:ref:`Duplicate Sleeve <gameplay_duplicatesleeves>` mechanic.
 
 The Sleeve API is **not** immediately available to the player and must be unlocked
 later in the game.
 
-**WARNING: This page contains spoilers for the game**
+.. warning:: This page contains spoilers for the game
 
 The Sleeve API is unlocked in BitNode-10. If you are in BitNode-10, you will
 automatically gain access to this API. Otherwise, you must have Source-File 10 in
@@ -26,40 +27,50 @@ In :ref:`netscriptjs`::
     ns.sleeve.commitCrime(0, "shoplift");
 
 .. toctree::
-    :caption: Functions:
+    :caption: API Functions:
 
-    commitCrime() <sleeveapi/commitCrime>
     getNumSleeves() <sleeveapi/getNumSleeves>
-    getTask() <sleeveapi/getTask>
-    synchronize() <sleeveapi/synchronize>
-    travel() <sleeveapi/travel>
-    workForFaction() <sleeveapi/workForFaction>
+    getSleeveStats() <sleeveapi/getSleeveStats>
     getInformation() <sleeveapi/getInformation>
-    getStats() <sleeveapi/getStats>
-    shockRecovery() <sleeveapi/shockRecovery>
-    takeUniversityCourse() <sleeveapi/takeUniversityCourse>
-    workForCompany() <sleeveapi/workForCompany>
-    workoutAtGym() <sleeveapi/workoutAtGym>
+    getTask() <sleeveapi/getTask>
+    setToShockRecovery() <sleeveapi/setToShockRecovery>
+    setToSynchronize() <sleeveapi/setToSynchronize>
+    setToCommitCrime() <sleeveapi/setToCommitCrime>
+    setToFactionWork() <sleeveapi/setToFactionWork>
+    setToCompanyWork() <sleeveapi/setToCompanyWork>
+    setToUniversityCourse() <sleeveapi/setToUniversityCourse>
+    setToGymWorkout() <sleeveapi/setToGymWorkout>
+    travel() <sleeveapi/travel>
 
+.. _netscript_sleeveapi_referencingaduplicatesleeve:
+
+Referencing a Duplicate Sleeve
+------------------------------
+Most of the functions in the Sleeve API perform an operation on a single Duplicate
+Sleeve. In order to specify which Sleeve the operation should be performed on,
+a numeric index is used as an identifier. The index should follow array-notation, such
+that the first Duplicate Sleeve has an index of 0, the second Duplicate Sleeve has
+an index of 1, and so on.
+
+The order of the Duplicate Sleeves matches the order on the UI page.
 
 Examples
 --------
 
 **Basic example usage**::
 
-    for(let i = 0; i < sleeve.getNumSleeves(); i++) {
+    for (var i = 0; i < sleeve.getNumSleeves(); i++) {
         sleeve.shockRecovery(i);
     }
 
-    await sleep(10*60*60); // wait 10h
+    sleep(10*60*60); // wait 10h
 
-    for(let i = 0; i < sleeve.getNumSleeves(); i++) {
+    for (var i = 0; i < sleeve.getNumSleeves(); i++) {
         sleeve.synchronize(i);
     }
 
-    await sleep(10*60*60); // wait 10h
+    sleep(10*60*60); // wait 10h
 
-    for(let i = 0; i < sleeve.getNumSleeves(); i++) {
+    for (var i = 0; i < sleeve.getNumSleeves(); i++) {
         sleeve.commitCrime(i, 'shoplift');
     }
-

@@ -128,9 +128,9 @@ let NetscriptFunctions =
     "getNumTriesRemaining|"                                                    +
 
     // Sleeve API
-    "sleeve|getNumSleeves|shockRecovery|synchronize|commitCrime|"              +
-    "takeUniversityCourse|travel|workForCompany|workForFaction|workoutAtGym|"  +
-    "getStats|getTask|getInformation";
+    "sleeve|getNumSleeves|setToShockRecovery|setToSynchronize|setToCommitCrime|"              +
+    "setToUniversityCourse|travel|setToCompanyWork|setToFactionWork|setToGymWorkout|"  +
+    "getSleeveStats|getTask|getInformation";
 
 var NetscriptHighlightRules = function(options) {
     var keywordMapper = this.createKeywordMapper({

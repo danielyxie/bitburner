@@ -85,12 +85,12 @@ export let CONSTANTS: IMap<any> = {
     ScriptGetPurchasedServerMaxRam: 0.05,
     ScriptRoundRamCost:             0.05,
     ScriptReadWriteRamCost:         1.0,
-    ScriptArbScriptRamCost:         1.0, //Functions that apply to all scripts regardless of args
+    ScriptArbScriptRamCost:         1.0, // Functions that apply to all scripts regardless of args
     ScriptGetScriptRamCost:         0.1,
     ScriptGetHackTimeRamCost:       0.05,
     ScriptGetFavorToDonate:         0.10,
     ScriptCodingContractBaseRamCost:10,
-    ScriptSleeveBaseRamCost:        0, // TODO: let big boss figure out balance.
+    ScriptSleeveBaseRamCost:        4,
 
     ScriptSingularityFn1RamCost:    1,
     ScriptSingularityFn2RamCost:    2,
@@ -303,7 +303,7 @@ export let CONSTANTS: IMap<any> = {
     ** Bug Fix: An industry's products are now properly separated between different cities
 
     * Added a Netscript API for Duplicate Sleeves (by hydroflame)
-    * Rebalanced BitNode-3 to make it slightly harder
+    * Modified BitNode-3's BN multipliers to make it slightly harder
     * Bug Fix: Bladeburner's Hyperbolic Regeneration Chamber should no longer instantly refill all stamina
     * Bug Fix: The cost of purchasing Augmentations for Duplicate Sleeves no longer scales with how many Augs you've purchased for yourself
     `
