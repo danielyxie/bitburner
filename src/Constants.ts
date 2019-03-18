@@ -289,6 +289,8 @@ export let CONSTANTS: IMap<any> = {
     ** Increased the cost multiplier for upgrading office size (the cost will increase faster)
     ** The stats of your employees now has a slightly larger effect on production & sales
     ** Added several new Research upgrades
+    ** Market-TA research now allows you to automatically set sale price at optimal values
+    ** Market-TA research now works for Products (not just Materials)
     ** Reduced the amount of Scientific Research needed to unlock the Hi-Tech R&D Laboratory from 10k to 5k
     ** Energy Material requirement of the Software industry reduced from 1 to 0.5
     ** It is now slightly easier to increase the Software industry's production multiplier
@@ -299,6 +301,7 @@ export let CONSTANTS: IMap<any> = {
     ** Training employees is now 3x more effective
     ** Bug Fix: An industry's products are now properly separated between different cities
 
+    * Added a Netscript API for Duplicate Sleeves (by hydroflame)
     * Rebalanced BitNode-3 to make it slightly harder
     * Bug Fix: Bladeburner's Hyperbolic Regeneration Chamber should no longer instantly refill all stamina
     * Bug Fix: The cost of purchasing Augmentations for Duplicate Sleeves no longer scales with how many Augs you've purchased for yourself

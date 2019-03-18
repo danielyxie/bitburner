@@ -542,7 +542,9 @@ export class CorporationEventHandler {
         });
         let confirmBtn;
         const input = createElement("input", {
-            type:"number", placeholder:"Limit",
+            margin: "5px",
+            placeholder:"Limit",
+            type:"number",
             onkeyup: (e) => {
                 e.preventDefault();
                 if (e.keyCode === KEY.ENTER) { confirmBtn.click(); }
@@ -550,9 +552,9 @@ export class CorporationEventHandler {
         });
         confirmBtn = createElement("button", {
             class: "std-button",
-            display:"inline-block",
-            innerText:"Limit production",
-            margin:'6px',
+            display: "inline-block",
+            innerText: "Limit production",
+            margin: "5px",
             clickListener: () => {
                 if (input.value === "") {
                     product.prdman[city][0] = false;
