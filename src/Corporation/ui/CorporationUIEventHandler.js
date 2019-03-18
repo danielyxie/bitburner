@@ -10,7 +10,8 @@ import { Corporation,
          OfficeInitialSize,
          SellSharesCooldown,
          WarehouseInitialCost,
-         WarehouseInitialSize } from "../Corporation";
+         WarehouseInitialSize,
+         BribeToRepRatio } from "../Corporation";
 
 import { Industries,
          IndustryStartingCosts,
@@ -23,6 +24,7 @@ import { Product } from "../Product";
 
 import { Player } from "../../Player";
 
+import { Factions } from "../../Faction/Factions";
 import { Cities } from "../../Locations/Cities";
 
 import { numeralWrapper } from "../../ui/numeralFormat";
@@ -146,6 +148,7 @@ export class CorporationEventHandler {
             }
         });
         const cancelButton = createPopupCloseButton(popupId, {
+            class: "std-button",
             display: "inline-block",
             innerText: "Cancel",
         })

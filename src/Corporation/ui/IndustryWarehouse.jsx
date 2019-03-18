@@ -76,7 +76,7 @@ function ProductComponent(props) {
     if (!product.fin) {
         if (hasUpgradeDashboard) {
             return (
-                <div className={"cmpy-mgmt-warehouse-product-div"} key={product.name}>
+                <div className={"cmpy-mgmt-warehouse-product-div"}>
                     <p>Designing {product.name}...</p><br />
                     <p>{numeralWrapper.format(product.prog, "0.00")}% complete</p>
                     <br />
@@ -102,7 +102,7 @@ function ProductComponent(props) {
             )
         } else {
             return (
-                <div className={"cmpy-mgmt-warehouse-product-div"} key={product.name}>
+                <div className={"cmpy-mgmt-warehouse-product-div"}>
                     <p>Designing {product.name}...</p><br />
                     <p>{numeralWrapper.format(product.prog, "0.00")}% complete</p>
                 </div>
@@ -111,7 +111,7 @@ function ProductComponent(props) {
     }
 
     return (
-        <div className={"cmpy-mgmt-warehouse-product-div"} key={props.key}>
+        <div className={"cmpy-mgmt-warehouse-product-div"}>
             <p className={"tooltip"}>
                 {product.name}: {numeralWrapper.format(product.data[city][0], nfB)} ({numeralWrapper.format(totalGain, nfB)}/s)
                 <span className={"tooltiptext"}>
@@ -255,7 +255,7 @@ function MaterialComponent(props) {
     const marketTaButtonOnClick = eventHandler.createMaterialMarketTaPopup.bind(eventHandler, mat, division);
 
     return (
-        <div className={"cmpy-mgmt-warehouse-material-div"} key={props.key}>
+        <div className={"cmpy-mgmt-warehouse-material-div"}>
             <div style={{display: "inline-block"}}>
                 <p className={"tooltip"}>
                     {mat.name}: {numeralWrapper.format(mat.qty, nfB)} ({numeralWrapper.format(totalGain, nfB)}/s)
@@ -331,6 +331,19 @@ function MaterialComponent(props) {
 }
 
 export class IndustryWarehouse extends BaseReactComponent {
+    // Returns a boolean indicating whether the given material is relevant for the
+    // current industry.
+    isRelevantMaterial(matName, division) {
+        // Materials that affect Production multiplier
+        const prodMultiplierMats = ["Hardware", "Robots", "AICores", "RealEstate"];
+
+        if (Object.keys(division.reqMats).includes(matName))    { return true; }
+        if (division.prodMats.includes(matName))                { return true; }
+        if (prodMultiplierMats.includes(matName))               { return true; }
+
+        return false;
+    }
+
     renderWarehouseUI() {
         const corp = this.corp();
         const division = this.routing().currentDivision; // Validated in render()
@@ -418,34 +431,20 @@ export class IndustryWarehouse extends BaseReactComponent {
             corp.rerender();
         }
 
-        // Materials that affect Production multiplier
-        const prodMultiplierMats = ["Hardware", "Robots", "AICores", "RealEstate"];
-
-        // Returns a boolean indicating whether the given material is relevant for the
-        // current industry.
-        function isRelevantMaterial(matName) {
-            if (Object.keys(division.reqMats).includes(matName))    { return true; }
-            if (division.prodMats.includes(matName))                { return true; }
-            if (prodMultiplierMats.includes(matName))               { return true; }
-
-            return false;
-        }
-
         // Create React components for materials
         const mats = [];
         for (const matName in warehouse.materials) {
             if (warehouse.materials[matName] instanceof Material) {
                 // Only create UI for materials that are relevant for the industry
-                if (isRelevantMaterial(matName)) {
-                    mats.push(MaterialComponent({
-                        city: this.props.currentCity,
-                        corp: corp,
-                        division: division,
-                        eventHandler: this.eventHandler(),
-                        key: matName,
-                        mat: warehouse.materials[matName],
-                        warehouse: warehouse,
-                    }));
+                if (this.isRelevantMaterial(matName, division)) {
+                    mats.push(<MaterialComponent
+                                city={this.props.currentCity}
+                                corp={corp}
+                                division={division}
+                                eventHandler={this.eventHandler()}
+                                key={matName}
+                                mat={warehouse.materials[matName]}
+                                warehouse={warehouse} />);
                 }
             }
         }
@@ -455,15 +454,14 @@ export class IndustryWarehouse extends BaseReactComponent {
         if (division.makesProducts && Object.keys(division.products).length > 0) {
             for (const productName in division.products) {
                 if (division.products[productName] instanceof Product) {
-                    products.push(ProductComponent({
-                        city: this.props.currentCity,
-                        corp: corp,
-                        division: division,
-                        eventHandler: this.eventHandler(),
-                        key: productName,
-                        product: division.products[productName],
-                        warehouse: warehouse,
-                    }));
+                    products.push(<ProductComponent
+                                    city={this.props.currentCity}
+                                    corp={corp}
+                                    division={division}
+                                    eventHandler={this.eventHandler()}
+                                    key={productName}
+                                    product={division.products[productName]}
+                                    warehouse={warehouse} />);
                 }
             }
         }
