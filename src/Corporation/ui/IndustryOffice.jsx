@@ -305,7 +305,7 @@ export class IndustryOffice extends BaseReactComponent {
                 <p>Total Employee Salary: {numeralWrapper.formatMoney(totalSalary)}</p>
                 {
                     vechain &&
-                    <p className={"tooltip"} style={{display: "block"}}>
+                    <p className={"tooltip"} style={{display: "inline-block"}}>
                         Material Production: {numeralWrapper.format(division.getOfficeProductivity(office), "0.000")}
                         <span className={"tooltiptext"}>
                             The base amount of material this office can produce. Does not include
@@ -315,8 +315,11 @@ export class IndustryOffice extends BaseReactComponent {
                     </p>
                 }
                 {
+                    vechain && <br />
+                }
+                {
                     vechain &&
-                    <p className={"tooltip"} style={{display: "block"}}>
+                    <p className={"tooltip"} style={{display: "inline-block"}}>
                         Product Production: {numeralWrapper.format(division.getOfficeProductivity(office, {forProduct:true}), "0.000")}
                         <span className={"tooltiptext"}>
                             The base amount of any given Product this office can produce. Does not include
@@ -326,13 +329,19 @@ export class IndustryOffice extends BaseReactComponent {
                     </p>
                 }
                 {
+                    vechain && <br />
+                }
+                {
                     vechain &&
-                    <p className={"tooltip"} style={{display: "block"}}>
+                    <p className={"tooltip"} style={{display: "inline-block"}}>
                         Business Multiplier: x{numeralWrapper.format(division.getBusinessFactor(office), "0.000")}
                         <span className={"tooltiptext"}>
                             The effect this office's 'Business' employees has on boosting sales
                         </span>
                     </p>
+                }
+                {
+                    vechain && <br />
                 }
 
                 <h2 className={"tooltip"} style={positionHeaderStyle}>

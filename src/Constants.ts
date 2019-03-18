@@ -297,9 +297,11 @@ export let CONSTANTS: IMap<any> = {
     ** Significantly changed the effects of the different employee positions. See updated descriptions
     ** Reduced the amount of money you gain from private investors
     ** Training employees is now 3x more effective
+    ** Bug Fix: An industry's products are now properly separated between different cities
 
     * Rebalanced BitNode-3 to make it slightly harder
     * Bug Fix: Bladeburner's Hyperbolic Regeneration Chamber should no longer instantly refill all stamina
+    * Bug Fix: The cost of purchasing Augmentations for Duplicate Sleeves no longer scales with how many Augs you've purchased for yourself
     `
 
 }

@@ -94,11 +94,13 @@ export const researchMetadata: IConstructorParams[] = [
     },
     {
         name: "Market-TA.II",
-        cost: 40e3,
+        cost: 50e3,
         desc: "Develop double-advanced AI software that uses technical analysis to " +
               "help you understand and exploit the market. This research " +
               "allows you to know how many sales of a Material/Product you lose or gain " +
-              "from having too high or too low or a sale price.",
+              "from having too high or too low or a sale price. It also lets you automatically " +
+              "set the sale price of your Materials/Products at the optimal price such that " +
+              "the amount sold matches the amount produced.",
     },
     {
         name: "Overclock",

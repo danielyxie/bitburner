@@ -66,6 +66,7 @@ export class Material {
     // Flags that signal whether automatic sale pricing through Market TA is enabled
     marketTa1: boolean = false;
     marketTa2: boolean = false;
+    marketTa2Price: number = 0;
 
     constructor(params: IConstructorParams = {}) {
         if (params.name) { this.name = params.name; }

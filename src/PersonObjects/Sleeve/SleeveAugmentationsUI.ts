@@ -105,13 +105,13 @@ export function createSleevePurchaseAugsPopup(sleeve: Sleeve, p: IPlayer) {
             innerHTML:
             [
                 `<h2>${aug.name}</h2><br>`,
-                `Cost: ${numeralWrapper.formatMoney(aug.baseCost)}<br><br>`,
+                `Cost: ${numeralWrapper.formatMoney(aug.startingCost)}<br><br>`,
                 `${aug.info}`
             ].join(" "),
             padding: "2px",
             clickListener: () => {
-                if (p.canAfford(aug.baseCost)) {
-                    p.loseMoney(aug.baseCost);
+                if (p.canAfford(aug.startingCost)) {
+                    p.loseMoney(aug.startingCost);
                     sleeve.installAugmentation(aug);
                     dialogBoxCreate(`Installed ${aug.name} on Duplicate Sleeve!`, false)
                     removeElementById(popupId);

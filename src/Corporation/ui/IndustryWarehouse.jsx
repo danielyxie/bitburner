@@ -3,13 +3,13 @@
 import React from "react";
 import { BaseReactComponent }           from "./BaseReactComponent";
 
-import { Material }                     from "../Material";
-import { Product }                      from "../Product";
-
-import { Warehouse,
+import { OfficeSpace,
          WarehouseInitialCost,
          WarehouseUpgradeBaseCost,
          ProductProductionCostRatio }   from "../Corporation";
+import { Material }                     from "../Material";
+import { Product }                      from "../Product";
+import { Warehouse }                    from "../Warehouse";
 
 import { numeralWrapper }               from "../../ui/numeralFormat";
 
@@ -45,7 +45,12 @@ function ProductComponent(props) {
         sellButtonText = "Sell (0.000/0.000)";
     }
 
-    if (product.sCost) {
+    if (product.marketTa2) {
+        sellButtonText += (" @ " + numeralWrapper.formatMoney(product.marketTa2Price[city]));
+    } else if (product.marketTa1) {
+        const markupLimit = product.rat / product.mku;
+        sellButtonText += (" @ " + numeralWrapper.formatMoney(product.pCost + markupLimit));
+    } else if (product.sCost) {
         if (isString(product.sCost)) {
             sellButtonText += (" @ " + product.sCost);
         } else {
@@ -55,14 +60,17 @@ function ProductComponent(props) {
     const sellButtonOnClick = eventHandler.createSellProductPopup.bind(eventHandler, product, city);
 
     // Limit Production button
-    const limitProductionButtonText = "Limit Production";
+    let limitProductionButtonText = "Limit Production";
     if (product.prdman[city][0]) {
         limitProductionButtonText += " (" + numeralWrapper.format(product.prdman[city][1], nf) + ")";
     }
     const limitProductionButtonOnClick = eventHandler.createLimitProductProdutionPopup.bind(eventHandler, product, city);
 
     // Discontinue Button
-    const discontinueButtonOnClick = eventHandler.createDiscontinueProductPopup.bind(eventHandler, product);
+    const discontinueButtonOnClick = eventHandler.createDiscontinueProductPopup.bind(eventHandler, product, division);
+
+    // Market TA button
+    const marketTaButtonOnClick = eventHandler.createProductMarketTaPopup.bind(eventHandler, product, division);
 
     // Unfinished Product
     if (!product.fin) {
@@ -83,6 +91,12 @@ function ProductComponent(props) {
                         <button className={"std-button"} onClick={discontinueButtonOnClick}>
                             Discontinue
                         </button>
+                        {
+                            division.hasResearch("Market-TA.I") &&
+                            <button className={"std-button"} onClick={marketTaButtonOnClick}>
+                                Market-TA
+                            </button>
+                        }
                     </div>
                 </div>
             )
@@ -139,7 +153,7 @@ function ProductComponent(props) {
                 </span>
             </p><br />
             <p className={"tooltip"}>
-                Est. Market Price: {numeralWrapper.formatMoney(product.pCost + product.rat / product.mku)}
+                Est. Market Price: {numeralWrapper.formatMoney(product.pCost)}
                 <span className={"tooltiptext"}>
                     An estimate of how much consumers are willing to pay for this product.
                     Setting the sale price above this may result in less sales. Setting the sale price below this may result
@@ -157,6 +171,12 @@ function ProductComponent(props) {
                 <button className={"std-button"} onClick={discontinueButtonOnClick}>
                     Discontinue
                 </button>
+                {
+                    division.hasResearch("Market-TA.I") &&
+                    <button className={"std-button"} onClick={marketTaButtonOnClick}>
+                        Market-TA
+                    </button>
+                }
             </div>
         </div>
     )
@@ -167,9 +187,14 @@ function MaterialComponent(props) {
     const corp = props.corp;
     const division = props.division;
     const warehouse = props.warehouse;
+    const city = props.city;
     const mat = props.mat;
     const eventHandler = props.eventHandler;
     const markupLimit = mat.getMarkupLimit();
+    const office = division.offices[city];
+    if (!(office instanceof OfficeSpace)) {
+        throw new Error(`Could not get OfficeSpace object for this city (${city})`);
+    }
 
     // Numeraljs formatter
     const nf = "0.000";
@@ -195,7 +220,7 @@ function MaterialComponent(props) {
     // Purchase material button
     const purchaseButtonText = `Buy (${numeralWrapper.format(mat.buy, nf)})`;
     const purchaseButtonClass = tutorial ? "std-button flashing-button tooltip" : "std-button";
-    const purchaseButtonOnClick = eventHandler.createPurchaseMaterialPopup.bind(eventHandler, mat, division);
+    const purchaseButtonOnClick = eventHandler.createPurchaseMaterialPopup.bind(eventHandler, mat, division, warehouse);
 
     // Export material button
     const exportButtonOnClick = eventHandler.createExportMaterialPopup.bind(eventHandler, mat);
@@ -209,10 +234,12 @@ function MaterialComponent(props) {
             sellButtonText = `Sell (${numeralWrapper.format(mat.sll, nf)}/${numeralWrapper.format(mat.sllman[1], nf)})`;
         }
 
-        if (mat.sCost) {
-            if (mat.marketTa1) {
-                sellButtonText += " @ " + numeralWrapper.formatMoney(mat.bCost + markupLimit);
-            } else if (isString(mat.sCost)) {
+        if (mat.marketTa2) {
+            sellButtonText += " @ " + numeralWrapper.formatMoney(mat.marketTa2Price);
+        } else if (mat.marketTa1) {
+            sellButtonText += " @ " + numeralWrapper.formatMoney(mat.bCost + markupLimit);
+        } else if (mat.sCost) {
+            if (isString(mat.sCost)) {
                 var sCost = mat.sCost.replace(/MP/g, mat.bCost);
                 sellButtonText += " @ " + numeralWrapper.formatMoney(eval(sCost));
             } else {
@@ -225,7 +252,7 @@ function MaterialComponent(props) {
     const sellButtonOnClick = eventHandler.createSellMaterialPopup.bind(eventHandler, mat);
 
     // Market TA button
-    const marketTaButtonOnClick = eventHandler.createMarketTaPopup.bind(eventHandler, mat, division);
+    const marketTaButtonOnClick = eventHandler.createMaterialMarketTaPopup.bind(eventHandler, mat, division);
 
     return (
         <div className={"cmpy-mgmt-warehouse-material-div"} key={props.key}>
@@ -411,6 +438,7 @@ export class IndustryWarehouse extends BaseReactComponent {
                 // Only create UI for materials that are relevant for the industry
                 if (isRelevantMaterial(matName)) {
                     mats.push(MaterialComponent({
+                        city: this.props.currentCity,
                         corp: corp,
                         division: division,
                         eventHandler: this.eventHandler(),

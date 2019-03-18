@@ -19,6 +19,7 @@ import { CONSTANTS }                                    from "../Constants";
 import { Factions }                                     from "../Faction/Factions";
 import { showLiterature }                               from "../Literature";
 import { Locations }                                    from "../Locations";
+import { createCityMap }                                from "../Locations/Cities";
 import { Player }                                       from "../Player";
 
 import { numeralWrapper }                               from "../ui/numeralFormat";
@@ -590,7 +591,7 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
 
     //At the start of the export state, set the imports of everything to 0
     if (this.state === "EXPORT") {
-        for (var i = 0; i < Cities.length; ++i) {
+        for (let i = 0; i < Cities.length; ++i) {
             var city = Cities[i], office = this.offices[city];
             if (!(this.warehouses[city] instanceof Warehouse)) {
                 continue;
@@ -605,7 +606,7 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
         }
     }
 
-    for (var i = 0; i < Cities.length; ++i) {
+    for (let i = 0; i < Cities.length; ++i) {
         var city = Cities[i], office = this.offices[city];
 
         if (this.warehouses[city] instanceof Warehouse) {
@@ -665,19 +666,17 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                     prod = maxProd;
                 }
                 prod *= (SecsPerMarketCycle * marketCycles); //Convert production from per second to per market cycle
-                //Calculate net change in warehouse storage making
-                //the produced materials will cost
+
+                // Calculate net change in warehouse storage making the produced materials will cost
                 var totalMatSize = 0;
-                for (var tmp = 0; tmp < this.prodMats.length; ++tmp) {
+                for (let tmp = 0; tmp < this.prodMats.length; ++tmp) {
                     totalMatSize += (MaterialSizes[this.prodMats[tmp]]);
                 }
-                for (var reqMatName in this.reqMats) {
-                    if (this.reqMats.hasOwnProperty(reqMatName)) {
-                        var normQty = this.reqMats[reqMatName];
-                        totalMatSize -= (MaterialSizes[reqMatName] * normQty);
-                    }
+                for (const reqMatName in this.reqMats) {
+                    var normQty = this.reqMats[reqMatName];
+                    totalMatSize -= (MaterialSizes[reqMatName] * normQty);
                 }
-                //If not enough space in warehouse, limit the amount of produced materials
+                // If not enough space in warehouse, limit the amount of produced materials
                 if (totalMatSize > 0) {
                     var maxAmt = Math.floor((warehouse.size - warehouse.sizeUsed) / totalMatSize);
                     prod = Math.min(maxAmt, prod);
@@ -685,10 +684,10 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
 
                 if (prod < 0) {prod = 0;}
 
-                //Keep track of production for smart supply (/s)
+                // Keep track of production for smart supply (/s)
                 warehouse.smartSupplyStore += (prod / (SecsPerMarketCycle * marketCycles));
 
-                //Make sure we have enough resource to make our materials
+                // Make sure we have enough resource to make our materials
                 var producableFrac = 1;
                 for (var reqMatName in this.reqMats) {
                     if (this.reqMats.hasOwnProperty(reqMatName)) {
@@ -700,17 +699,15 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                 }
                 if (producableFrac <= 0) {producableFrac = 0; prod = 0;}
 
-                //Make our materials if they are producable
+                // Make our materials if they are producable
                 if (producableFrac > 0 && prod > 0) {
-                    for (var reqMatName in this.reqMats) {
-                        if (this.reqMats.hasOwnProperty(reqMatName)) {
-                            var reqMatQtyNeeded = (this.reqMats[reqMatName] * prod * producableFrac);
-                            warehouse.materials[reqMatName].qty -= reqMatQtyNeeded;
-                            warehouse.materials[reqMatName].prd = 0;
-                            warehouse.materials[reqMatName].prd -= reqMatQtyNeeded / (SecsPerMarketCycle * marketCycles);
-                        }
+                    for (const reqMatName in this.reqMats) {
+                        var reqMatQtyNeeded = (this.reqMats[reqMatName] * prod * producableFrac);
+                        warehouse.materials[reqMatName].qty -= reqMatQtyNeeded;
+                        warehouse.materials[reqMatName].prd = 0;
+                        warehouse.materials[reqMatName].prd -= reqMatQtyNeeded / (SecsPerMarketCycle * marketCycles);
                     }
-                    for (var j = 0; j < this.prodMats.length; ++j) {
+                    for (let j = 0; j < this.prodMats.length; ++j) {
                         warehouse.materials[this.prodMats[j]].qty += (prod * producableFrac);
                         warehouse.materials[this.prodMats[j]].qlt =
                             (office.employeeProd[EmployeePositions.Engineer] / 90 +
@@ -718,7 +715,7 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                              Math.pow(warehouse.materials["AICores"].qty, this.aiFac) / 10e3);
                     }
                 } else {
-                    for (var reqMatName in this.reqMats) {
+                    for (const reqMatName in this.reqMats) {
                         if (this.reqMats.hasOwnProperty(reqMatName)) {
                             warehouse.materials[reqMatName].prd = 0;
                         }
@@ -726,18 +723,16 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                 }
 
                 //Per second
-                var fooProd = prod * producableFrac / (SecsPerMarketCycle * marketCycles);
-                for (var fooI = 0; fooI < this.prodMats.length; ++fooI) {
+                const fooProd = prod * producableFrac / (SecsPerMarketCycle * marketCycles);
+                for (let fooI = 0; fooI < this.prodMats.length; ++fooI) {
                     warehouse.materials[this.prodMats[fooI]].prd = fooProd;
                 }
             } else {
                 //If this doesn't produce any materials, then it only creates
                 //Products. Creating products will consume materials. The
                 //Production of all consumed materials must be set to 0
-                for (var reqMatName in this.reqMats) {
-                    if (this.reqMats.hasOwnProperty(reqMatName)) {
-                        warehouse.materials[reqMatName].prd = 0;
-                    }
+                for (const reqMatName in this.reqMats) {
+                    warehouse.materials[reqMatName].prd = 0;
                 }
             }
             break;
@@ -751,12 +746,39 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                         mat.sll = 0;
                         continue;
                     }
-                    var mat = warehouse.materials[matName];
 
-                    // Calculate sale cost
+                    // Sale multipliers
+                    const businessFactor = this.getBusinessFactor(office);        //Business employee productivity
+                    const advertisingFactor = this.getAdvertisingFactors()[0];    //Awareness + popularity
+                    const marketFactor = this.getMarketFactor(mat);               //Competition + demand
+
+                    // Determine the cost that the material will be sold at
                     const markupLimit = mat.getMarkupLimit();
                     var sCost;
-                    if (mat.marketTa1) {
+                    if (mat.marketTa2) {
+                        const prod = mat.prd;
+
+                        // Reverse engineer the 'maxSell' formula
+                        // 1. Set 'maxSell' = prod
+                        // 2. Substitute formula for 'markup'
+                        // 3. Solve for 'sCost'
+                        const numerator = markupLimit;
+                        const sqrtNumerator = prod;
+                        const sqrtDenominator = ((mat.qlt + .001)
+                                                  * marketFactor
+                                                  * businessFactor
+                                                  * company.getSalesMultiplier()
+                                                  * advertisingFactor
+                                                  * this.getSalesMultiplier());
+                        const denominator = Math.sqrt(sqrtNumerator / sqrtDenominator);
+                        const optimalPrice = (numerator / denominator) + mat.bCost;
+
+                        // We'll store this "Optimal Price" in a property so that we don't have
+                        // to re-calculate it for the UI
+                        mat.marketTa2Price = optimalPrice;
+
+                        sCost = optimalPrice;
+                    } else if (mat.marketTa1) {
                         sCost = mat.bCost + markupLimit;
                     } else if (isString(mat.sCost)) {
                         sCost = mat.sCost.replace(/MP/g, mat.bCost);
@@ -780,9 +802,7 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                             markup = mat.bCost / sCost;
                         }
                     }
-                    var businessFactor = this.getBusinessFactor(office);        //Business employee productivity
-                    var advertisingFactor = this.getAdvertisingFactors()[0];    //Awareness + popularity
-                    var marketFactor = this.getMarketFactor(mat);               //Competition + demand
+
                     var maxSell = (mat.qlt + .001)
                                 * marketFactor
                                 * markup
@@ -905,8 +925,8 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
         //Produce Scientific Research based on R&D employees
         //Scientific Research can be produced without a warehouse
         if (office instanceof OfficeSpace) {
-            this.sciResearch.qty += (.005
-                                     * Math.pow(office.employeeProd[EmployeePositions.RandD], 0.55)
+            this.sciResearch.qty += (.004
+                                     * Math.pow(office.employeeProd[EmployeePositions.RandD], 0.5)
                                      * company.getScientificResearchMultiplier()
                                      * this.getScientificResearchMultiplier());
         }
@@ -962,9 +982,9 @@ Industry.prototype.processProducts = function(marketCycles=1, corporation) {
 
 //Processes FINISHED products
 Industry.prototype.processProduct = function(marketCycles=1, product, corporation) {
-    var totalProfit = 0;
-    for (var i = 0; i < Cities.length; ++i) {
-        var city = Cities[i], office = this.offices[city], warehouse = this.warehouses[city];
+    let totalProfit = 0;
+    for (let i = 0; i < Cities.length; ++i) {
+        let city = Cities[i], office = this.offices[city], warehouse = this.warehouses[city];
         if (warehouse instanceof Warehouse) {
             switch(this.state) {
 
@@ -1040,27 +1060,60 @@ Industry.prototype.processProduct = function(marketCycles=1, product, corporatio
                 }
             }
 
-            //Since its a product, its production cost is increased for labor
+            // Since its a product, its production cost is increased for labor
             product.pCost *= ProductProductionCostRatio;
 
-            //Calculate Sale Cost (sCost), which could be dynamically evaluated
+            // Sale multipliers
+            const businessFactor = this.getBusinessFactor(office);        //Business employee productivity
+            const advertisingFactor = this.getAdvertisingFactors()[0];    //Awareness + popularity
+            const marketFactor = this.getMarketFactor(product);           //Competition + demand
+
+            // Calculate Sale Cost (sCost), which could be dynamically evaluated
+            const markupLimit = product.rat / product.mku;
             var sCost;
-            if (isString(product.sCost)) {
+            if (product.marketTa2) {
+                const prod = product.data[city][1];
+
+                // Reverse engineer the 'maxSell' formula
+                // 1. Set 'maxSell' = prod
+                // 2. Substitute formula for 'markup'
+                // 3. Solve for 'sCost'roduct.pCost = sCost
+                const numerator = markupLimit;
+                const sqrtNumerator = prod;
+                const sqrtDenominator = (0.5
+                                         * Math.pow(product.rat, 0.65)
+                                         * marketFactor
+                                         * corporation.getSalesMultiplier()
+                                         * businessFactor
+                                         * advertisingFactor
+                                         * this.getSalesMultiplier());
+                const denominator = Math.sqrt(sqrtNumerator / sqrtDenominator);
+                let optimalPrice;
+                if (sqrtDenominator === 0 || denominator === 0) {
+                    optimalPrice = 0;
+                } else {
+                    optimalPrice = (numerator / denominator) + product.pCost;
+                }
+
+                // Store this "optimal Price" in a property so we don't have to re-calculate for UI
+                product.marketTa2Price[city] = optimalPrice;
+                sCost = optimalPrice;
+            } else if (product.marketTa1) {
+                sCost = product.pCost + markupLimit;
+            } else if (isString(product.sCost)) {
                 sCost = product.sCost.replace(/MP/g, product.pCost + product.rat / product.mku);
                 sCost = eval(sCost);
             } else {
                 sCost = product.sCost;
             }
 
-            var markup = 1, markupLimit = product.rat / product.mku;
+            var markup = 1;
             if (sCost > product.pCost) {
                 if ((sCost - product.pCost) > markupLimit) {
                     markup = markupLimit / (sCost - product.pCost);
                 }
             }
-            var businessFactor = this.getBusinessFactor(office);        //Business employee productivity
-            var advertisingFactor = this.getAdvertisingFactors()[0];    //Awareness + popularity
-            var marketFactor = this.getMarketFactor(product);        //Competition + demand
+
             var maxSell = 0.5
                         * Math.pow(product.rat, 0.65)
                         * marketFactor
@@ -1085,8 +1138,9 @@ Industry.prototype.processProduct = function(marketCycles=1, product, corporatio
             } else if (product.sllman[city][0] && product.sllman[city][1] > 0) {
                 //Sell amount is manually limited
                 sellAmt = Math.min(maxSell, product.sllman[city][1]);
+            } else if (product.sllman[city][0] === false){
+                sellAmt = 0;
             } else {
-                //Backwards compatibility, -1 = 0
                 sellAmt = maxSell;
             }
             if (sellAmt < 0) { sellAmt = 0; }
@@ -1114,8 +1168,7 @@ Industry.prototype.processProduct = function(marketCycles=1, product, corporatio
     return totalProfit;
 }
 
-Industry.prototype.discontinueProduct = function(product, parentRefs) {
-    var company = parentRefs.company, industry = parentRefs.industry;
+Industry.prototype.discontinueProduct = function(product) {
     for (var productName in this.products) {
         if (this.products.hasOwnProperty(productName)) {
             if (product === this.products[productName]) {
@@ -1182,7 +1235,7 @@ Industry.prototype.getOfficeProductivity = function(office, params) {
 // Returns a multiplier based on the office' 'Business' employees that affects sales
 Industry.prototype.getBusinessFactor = function(office) {
     const businessProd = 1 + office.employeeProd[EmployeePositions.Business];
-    
+
     return calculateEffectWithFactors(businessProd, 0.26, 10e3);
 }
 

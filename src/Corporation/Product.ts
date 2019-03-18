@@ -4,7 +4,9 @@ import { ProductRatingWeights,
          IProductRatingWeight }     from "./ProductRatingWeights";
 
 import { Cities }                   from "../Locations/Cities";
+import { createCityMap }            from "../Locations/createCityMap";
 import { IMap }                     from "../types";
+
 
 import { Generic_fromJSON,
          Generic_toJSON,
@@ -89,14 +91,7 @@ export class Product {
     // Data refers to the production, sale, and quantity of the products
     // These values are specific to a city
     // For each city, the data is [qty, prod, sell]
-    data: IMap<number[]> = {
-        [Cities.Aevum]: [0, 0, 0],
-        [Cities.Chongqing]: [0, 0, 0],
-        [Cities.Sector12]: [0, 0, 0],
-        [Cities.NewTokyo]: [0, 0, 0],
-        [Cities.Ishima]: [0, 0, 0],
-        [Cities.Volhaven]: [0, 0, 0],
-    }
+    data: IMap<number[]> = createCityMap<number[]>([0, 0, 0]);
 
     // Location of this Product
     // Only applies for location-based products like restaurants/hospitals
@@ -113,23 +108,13 @@ export class Product {
     // Data to keep track of whether production/sale of this Product is
     // manually limited. These values are specific to a city
     //  [Whether production/sale is limited, limit amount]
-    prdman: IMap<any[]> = {
-        [Cities.Aevum]: [false, 0],
-        [Cities.Chongqing]: [false, 0],
-        [Cities.Sector12]: [false, 0],
-        [Cities.NewTokyo]: [false, 0],
-        [Cities.Ishima]: [false, 0],
-        [Cities.Volhaven]: [false, 0],
-    }
+    prdman: IMap<any[]> = createCityMap<any[]>([false, 0]);
+    sllman: IMap<any[]> = createCityMap<any[]>([false, 0]);
 
-    sllman: IMap<any[]> = {
-        [Cities.Aevum]: [false, 0],
-        [Cities.Chongqing]: [false, 0],
-        [Cities.Sector12]: [false, 0],
-        [Cities.NewTokyo]: [false, 0],
-        [Cities.Ishima]: [false, 0],
-        [Cities.Volhaven]: [false, 0],
-    }
+    // Flags that signal whether automatic sale pricing through Market TA is enabled
+    marketTa1: boolean = false;
+    marketTa2: boolean = false;
+    marketTa2Price: IMap<number> = createCityMap<number>(0);
 
     constructor(params: IConstructorParams={}) {
         this.name       = params.name           ? params.name           : "";
