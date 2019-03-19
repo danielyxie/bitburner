@@ -73,7 +73,7 @@ import {WorkerScript, workerScripts,
 import {makeRuntimeRejectMsg, netscriptDelay,
         runScriptFromScript}                        from "./NetscriptEvaluator";
 import {NetscriptPort}                              from "./NetscriptPort";
-import {SleeveTaskType}                             from "./PersonObjects/Sleeve/SleeveTaskTypesEnum"
+import { SleeveTaskType }                           from "./PersonObjects/Sleeve/SleeveTaskTypesEnum"
 
 import {Page, routing}                              from "./ui/navigationTracking";
 import {numeralWrapper}                             from "./ui/numeralFormat";
@@ -4910,6 +4910,16 @@ function NetscriptFunctions(workerScript) {
                     return false;
                 }
 
+                // Cannot work at the same company that another sleeve is working at
+                for (let i = 0; i < Player.sleeves.length; ++i) {
+                    if (i === sleeveNumber) { continue; }
+                    const other = Player.sleeves[i];
+                    if (other.currentTask === SleeveTaskType.Company && other.currentTaskLocation === companyName) {
+                        workerScript.log(`ERROR: sleeve.setToCompanyWork() failed for Sleeve ${sleeveNumber} because Sleeve ${i} is doing the same task`);
+                        return false;
+                    }
+                }
+
                 return Player.sleeves[sleeveNumber].workForCompany(Player, companyName);
             },
             setToFactionWork : function(sleeveNumber=0, factionName="", workType="") {
@@ -4923,6 +4933,16 @@ function NetscriptFunctions(workerScript) {
                 if (sleeveNumber >= Player.sleeves.length || sleeveNumber < 0) {
                     workerScript.log(`ERROR: sleeve.setToFactionWork(${sleeveNumber}) failed because it is an invalid sleeve number.`);
                     return false;
+                }
+
+                // Cannot work at the same faction that another sleeve is working at
+                for (let i = 0; i < Player.sleeves.length; ++i) {
+                    if (i === sleeveNumber) { continue; }
+                    const other = Player.sleeves[i];
+                    if (other.currentTask === SleeveTaskType.Faction && other.currentTaskLocation === factionName) {
+                        workerScript.log(`ERROR: sleeve.setToFactionWork() failed for Sleeve ${sleeveNumber} because Sleeve ${i} is doing the same task`);
+                        return false;
+                    }
                 }
 
                 return Player.sleeves[sleeveNumber].workForFaction(Player, factionName, workType);
