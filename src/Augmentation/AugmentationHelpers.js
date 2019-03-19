@@ -1213,7 +1213,7 @@ function initAugmentations() {
 
 	//Illuminati
     var QLink = new Augmentation({
-        name:AugmentationNames.QLink, repCost:750e3, moneyCost:1300e6,
+        name:AugmentationNames.QLink, repCost:750e3, moneyCost:10e12,
         info:"A brain implant that wirelessly connects you to the Illuminati's " +
              "quantum supercomputer, allowing you to access and use its incredible " +
              "computing power.<br><br>" +
