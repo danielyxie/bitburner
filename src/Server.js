@@ -301,7 +301,7 @@ export function numCycleForGrowth(server, growth) {
 
     const serverGrowthPercentage = server.serverGrowth / 100;
 
-    const cycles = Math.log(growth)/(Math.log(ajdGrowthRate)*Player.hacking_grow_mult*serverGrowthPercentage);
+    const cycles = Math.log(growth)/(Math.log(ajdGrowthRate)*Player.hacking_grow_mult*serverGrowthPercentage*BitNodeMultipliers.ServerGrowthRate);
     return cycles;
 }
 
