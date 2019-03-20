@@ -18,7 +18,8 @@ export function numCycleForGrowth(server: Server, growth: number, p: IPlayer) {
 
     const serverGrowthPercentage = server.serverGrowth / 100;
 
-    const cycles = Math.log(growth)/(Math.log(ajdGrowthRate) * p.hacking_grow_mult * serverGrowthPercentage);
+    const cycles = Math.log(growth)/(Math.log(ajdGrowthRate) * p.hacking_grow_mult * serverGrowthPercentage * BitNodeMultipliers.ServerGrowthRate);
+
     return cycles;
 }
 
@@ -96,7 +97,7 @@ export function GetServerByHostname(hostname: string): Server | null {
             }
         }
     }
-    
+
     return null;
 }
 

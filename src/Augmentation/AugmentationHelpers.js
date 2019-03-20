@@ -1213,19 +1213,19 @@ function initAugmentations() {
 
 	//Illuminati
     var QLink = new Augmentation({
-        name:AugmentationNames.QLink, repCost:750e3, moneyCost:10e12,
+        name:AugmentationNames.QLink, repCost:750e3, moneyCost:5e12,
         info:"A brain implant that wirelessly connects you to the Illuminati's " +
              "quantum supercomputer, allowing you to access and use its incredible " +
              "computing power.<br><br>" +
              "This augmentation:<br>" +
-             "Increases the player's hacking skill by 100%.<br>" +
+             "Increases the player's hacking skill by 50%.<br>" +
              "Increases the player's hacking speed by 50%.<br>" +
              "Increases the player's chance of successfully performing a hack by 150%.<br>" +
              "Increases the amount of money the player gains from hacking by 500%.",
         hacking_speed_mult: 1.5,
         hacking_chance_mult: 2.5,
         hacking_money_mult: 6,
-        hacking_mult: 2,
+        hacking_mult: 1.5,
     });
     QLink.addToFactions(["Illuminati"]);
     if (augmentationExists(AugmentationNames.QLink)) {

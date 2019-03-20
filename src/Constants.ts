@@ -302,9 +302,10 @@ export let CONSTANTS: IMap<any> = {
     ** Training employees is now 3x more effective
     ** Bug Fix: An industry's products are now properly separated between different cities
 
+    * The QLink Augemntation is now significantly stronger (by hydroflame)
     * Added a Netscript API for Duplicate Sleeves (by hydroflame)
     * Modified the multipliers of BitNode-3 and BitNode-8 to make them slightly harder
-    * After installing Augmentations, Duplicate Sleeves will now default to Synchronize if their Shock is 0 
+    * After installing Augmentations, Duplicate Sleeves will now default to Synchronize if their Shock is 0
     * Bug Fix: Bladeburner's Hyperbolic Regeneration Chamber should no longer instantly refill all stamina
     * Bug Fix: The cost of purchasing Augmentations for Duplicate Sleeves no longer scales with how many Augs you've purchased for yourself
     `

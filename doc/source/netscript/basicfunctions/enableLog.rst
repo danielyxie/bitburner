@@ -1,5 +1,5 @@
 enableLog() Netscript Function
-=============================
+==============================
 
 .. js:function:: enableLog(fn)
 

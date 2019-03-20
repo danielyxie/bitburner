@@ -1,7 +1,11 @@
 workForCompany() Netscript Function
 ===================================
 
-.. js:function:: workForCompany()
+.. js:function:: workForCompany(companyName=lastCompany)
+
+    :param string companyName: Name of company to work for. Must be an exact match.
+                               Optional. If not specified, this argument defaults to
+                               the last job that you worked
 
     If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function.
 

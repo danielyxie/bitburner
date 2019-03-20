@@ -4,7 +4,7 @@ purchaseServer() Netscript Function
 .. js:function:: purchaseServer(hostname, ram)
 
     :param string hostname: Hostname of the purchased server
-    :param number ram: Amount of RAM of the purchased server. Must be a power of 2 (2, 4, 8, 16, etc.). Maximum value of getPurchasedServerMaxRam()
+    :param number ram: Amount of RAM of the purchased server. Must be a power of 2. Maximum value of :js:func:`getPurchasedServerMaxRam`
     :RAM cost: 2.25 GB
 
     Purchased a server with the specified hostname and amount of RAM.
