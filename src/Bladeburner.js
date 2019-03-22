@@ -2763,7 +2763,7 @@ Bladeburner.prototype.updateBlackOpsUIElement = function(el, action) {
     }));
     el.appendChild(createElement("p", {
         display:"inline-block",
-        innerHTML:`Estimated Success Chance: "${formatNumber(estimatedSuccessChance*100, 1)}% ${action.isStealth?stealthIcon:''}${action.isKill?killIcon:''}\n` +
+        innerHTML:`Estimated Success Chance: ${formatNumber(estimatedSuccessChance*100, 1)}% ${action.isStealth?stealthIcon:''}${action.isKill?killIcon:''}\n` +
                   "Time Required(s): " + formatNumber(actionTime, 0),
     }))
 }
