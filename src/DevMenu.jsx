@@ -33,15 +33,97 @@ const Component = React.Component;
 
 const validSFN = [1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12];
 
+
+class ValueAdjusterComponent extends Component {
+    constructor(props) {
+        super(props);
+        this.state = { value: '' };
+        this.setValue = this.setValue.bind(this);
+    }
+    setValue(event) {
+        this.setState({ value: event.target.value });
+    }
+    render() {
+        const { title, add, subtract, reset } = this.props;
+        const { value } = this.state;
+        return (
+            <>
+            <button className="std-button add-exp-button" onClick={() => add(this.state.value)}>+</button>
+            <input className="text-input exp-input" type="number"
+                placeholder={`+/- ${title}`} value={this.state.value} onChange={this.setValue}></input>
+            <button className="std-button remove-exp-button" onClick={() => subtract(this.state.value)}>-</button>
+            <button className="std-button" onClick={reset}>Reset</button>
+            </>
+        );
+    }
+}
+
 class DevMenuComponent extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            company: 'ECorp',
+            faction: 'Illuminati',
+            program: 'NUKE.exe',
+            server: 'home',
+            augmentation: 'Augmented Targeting I',
+            codingcontract: 'Find Largest Prime Factor',
+        }
+
         this.setSF = this.setSF.bind(this);
         this.setAllSF = this.setAllSF.bind(this);
         this.processStocks = this.processStocks.bind(this);
         this.setStockPrice = this.setStockPrice.bind(this);
         this.viewStockCaps = this.viewStockCaps.bind(this);
+
+        this.setFactionDropdown = this.setFactionDropdown.bind(this);
+        this.setCompanyDropdown = this.setCompanyDropdown.bind(this);
+        this.setProgramDropdown = this.setProgramDropdown.bind(this);
+        this.setServerDropdown = this.setServerDropdown.bind(this);
+        this.setAugmentationDropdown = this.setAugmentationDropdown.bind(this);
+        this.setCodingcontractDropdown = this.setCodingcontractDropdown.bind(this);
+
+        this.receiveInvite = this.receiveInvite.bind(this);
+        this.modifyFactionRep = this.modifyFactionRep.bind(this);
+        this.resetFactionRep = this.resetFactionRep.bind(this);
+        this.modifyFactionFavor = this.modifyFactionFavor.bind(this);
+        this.resetFactionFavor = this.resetFactionFavor.bind(this);
+        this.queueAug = this.queueAug.bind(this);
+        this.addProgram = this.addProgram.bind(this);
+        this.rootServer = this.rootServer.bind(this);
+        this.minSecurity = this.minSecurity.bind(this);
+        this.maxMoney = this.maxMoney.bind(this);
+        this.modifyCompanyRep = this.modifyCompanyRep.bind(this);
+        this.resetCompanyRep = this.resetCompanyRep.bind(this);
+        this.modifyCompanyFavor = this.modifyCompanyFavor.bind(this);
+        this.resetCompanyFavor = this.resetCompanyFavor.bind(this);
+        this.specificContract = this.specificContract.bind(this);
     }
+
+    setFactionDropdown(event) {
+        this.setState({ faction: event.target.value });
+    }
+
+    setCompanyDropdown(event) {
+        this.setState({ company: event.target.value });
+    }
+
+    setProgramDropdown(event) {
+        this.setState({ program: event.target.value });
+    }
+
+    setServerDropdown(event) {
+        this.setState({ server: event.target.value });
+    }
+
+    setAugmentationDropdown(event) {
+        this.setState({ augmentation: event.target.value });
+    }
+
+    setCodingcontractDropdown(event) {
+        this.setState({ codingcontract: event.target.value });
+    }
+
 
     addMoney(n) {
         return function() {
@@ -62,55 +144,39 @@ class DevMenuComponent extends Component {
     }
 
     modifyExp(stat, modifier) {
-        return function() {
-            let field = null;
-            let exp = 0;
+        return function(exp) {
             switch(stat) {
             case "hacking":
-                field = document.getElementById('dev-hacking-exp');
-                exp = parseInt(field.value);
                 if(exp) {
                     Player.gainHackingExp(exp*modifier);
                 }
                 break;
             case "strength":
-                field = document.getElementById('dev-strength-exp');
-                exp = parseInt(field.value);
                 if(exp) {
                     Player.gainStrengthExp(exp*modifier);
                 }
                 break;
             case "defense":
-                field = document.getElementById('dev-defense-exp');
-                exp = parseInt(field.value);
                 if(exp) {
                     Player.gainDefenseExp(exp*modifier);
                 }
                 break;
             case "dexterity":
-                field = document.getElementById('dev-dexterity-exp');
-                exp = parseInt(field.value);
                 if(exp) {
                     Player.gainDexterityExp(exp*modifier);
                 }
                 break;
             case "agility":
-                field = document.getElementById('dev-agility-exp');
-                exp = parseInt(field.value);
                 if(exp) {
                     Player.gainAgilityExp(exp*modifier);
                 }
                 break;
             case "charisma":
-                field = document.getElementById('dev-charisma-exp');
-                exp = parseInt(field.value);
                 if(exp) {
                     Player.gainCharismaExp(exp*modifier);
                 }
                 break;
             case "intelligence":
-                field = document.getElementById('dev-intelligence-exp');
-                exp = parseInt(field.value);
                 if(exp) {
                     Player.gainIntelligenceExp(exp*modifier);
                 }
@@ -184,17 +250,8 @@ class DevMenuComponent extends Component {
         Player.updateSkillLevels();
     }
 
-    factionNames() {
-        for (const i in Factions) {
-            factionsDropdown.options[factionsDropdown.options.length] = new Option(Factions[i].name, Factions[i].name);
-        }
-        return 
-    }
-
     receiveInvite() {
-        const factionsDropdown = document.getElementById('factions-dropdown');
-        const facName = factionsDropdown.options[factionsDropdown.selectedIndex].value;
-        Player.receiveInvite(facName);
+        Player.receiveInvite(this.state.faction);
     }
 
     receiveAllInvites() {
@@ -203,45 +260,35 @@ class DevMenuComponent extends Component {
         }
     }
 
-    modifyRep(modifier) {
-        return function() {
-            const field = document.getElementById('dev-faction-rep');
-            const factionsDropdown = document.getElementById('factions-dropdown');
-            const facName = factionsDropdown.options[factionsDropdown.selectedIndex].value;
-            const fac = Factions[facName];
-            const rep = parseFloat(field.value);
-            if (fac != null && !isNaN(rep)) {
-                fac.playerReputation += rep*modifier;
+    modifyFactionRep(modifier) {
+        const component = this;
+        return function(reputation) {
+            const fac = Factions[component.state.faction];
+            if (fac != null && !isNaN(reputation)) {
+                fac.playerReputation += reputation*modifier;
             }
         }
     }
 
-    resetRep() {
-        const factionsDropdown = document.getElementById('factions-dropdown');
-        const facName = factionsDropdown.options[factionsDropdown.selectedIndex].value;
-        const fac = Factions[facName];
+    resetFactionRep() {
+        const fac = Factions[this.state.faction];
         if (fac != null) {
             fac.playerReputation = 0;
         }
     }
 
     modifyFactionFavor(modifier) {
-        return function() {
-            const field = document.getElementById('dev-faction-favor');
-            const factionsDropdown = document.getElementById('factions-dropdown');
-            const facName = factionsDropdown.options[factionsDropdown.selectedIndex].value;
-            const fac = Factions[facName];
-            const rep = parseFloat(field.value);
-            if (fac != null && !isNaN(rep)) {
-                fac.favor += rep*modifier;
+        const component = this;
+        return function(favor) {
+            const fac = Factions[component.state.faction];
+            if (fac != null && !isNaN(favor)) {
+                fac.favor += favor*modifier;
             }
         }
     }
 
     resetFactionFavor() {
-        const factionsDropdown = document.getElementById('factions-dropdown');
-        const facName = factionsDropdown.options[factionsDropdown.selectedIndex].value;
-        const fac = Factions[facName];
+        const fac = Factions[this.state.faction];
         if (fac != null) {
             fac.favor = 0;
         }
@@ -272,9 +319,7 @@ class DevMenuComponent extends Component {
     }
 
     queueAug() {
-        const augsDropdown = document.getElementById('dev-augs-dropdown');
-        const augName = augsDropdown.options[augsDropdown.selectedIndex].value;
-        Player.queueAugmentation(augName);
+        Player.queueAugmentation(this.state.augmentation);
     }
 
     queueAllAugs() {
@@ -314,8 +359,7 @@ class DevMenuComponent extends Component {
     }
 
     addProgram() {
-        const programDropdown = document.getElementById('dev-programs-dropdown');
-        const program = programDropdown.options[programDropdown.selectedIndex].value;
+        const program = this.state.program;
         if(!Player.hasProgram(program)) {
             Player.getHomeComputer().programs.push(program);
         }
@@ -330,9 +374,7 @@ class DevMenuComponent extends Component {
     }
 
     rootServer() {
-        const serverDropdown = document.getElementById('dev-servers-dropdown');
-        const serverName = serverDropdown.options[serverDropdown.selectedIndex].value;
-
+        const serverName = this.state.server;
         const server = GetServerByHostname(serverName);
 
         server.hasAdminRights = true;
@@ -357,9 +399,7 @@ class DevMenuComponent extends Component {
     }
 
     minSecurity() {
-        const serverDropdown = document.getElementById('dev-servers-dropdown');
-        const serverName = serverDropdown.options[serverDropdown.selectedIndex].value;
-
+        const serverName = this.state.server;
         const server = GetServerByHostname(serverName);
         server.hackDifficulty = server.minDifficulty;
     }
@@ -371,9 +411,7 @@ class DevMenuComponent extends Component {
     }
 
     maxMoney() {
-        const serverDropdown = document.getElementById('dev-servers-dropdown');
-        const serverName = serverDropdown.options[serverDropdown.selectedIndex].value;
-
+        const serverName = this.state.server;
         const server = GetServerByHostname(serverName);
         server.moneyAvailable = server.moneyMax;
     }
@@ -385,43 +423,32 @@ class DevMenuComponent extends Component {
     }
 
     modifyCompanyRep(modifier) {
-        return function() {
-            const field = document.getElementById('dev-company-rep');
-            const companyDropdown = document.getElementById('dev-companies-dropdown');
-            const companyName = companyDropdown.options[companyDropdown.selectedIndex].value;
-            const company = Companies[companyName];
-            const rep = parseFloat(field.value);
-            if (company != null && !isNaN(rep)) {
-                company.playerReputation += rep*modifier;
+        const component = this;
+        return function(reputation) {
+            const company = Companies[component.state.company];
+            if (company != null && !isNaN(reputation)) {
+                company.playerReputation += reputation*modifier;
             }
         }
     }
 
     resetCompanyRep() {
-        const companyDropdown = document.getElementById('dev-companies-dropdown');
-        const companyName = companyDropdown.options[companyDropdown.selectedIndex].value;
-        const company = Companies[companyName];
+        const company = Companies[this.state.company];
         company.playerReputation = 0;
     }
 
     modifyCompanyFavor(modifier) {
-        return function() {
-            const field = document.getElementById('dev-company-favor');
-            const companyDropdown = document.getElementById('dev-companies-dropdown');
-            const companyName = companyDropdown.options[companyDropdown.selectedIndex].value;
-            const company = Companies[companyName];
-            const rep = parseFloat(field.value);
-            if (company != null && !isNaN(rep)) {
-                company.favor += rep*modifier;
-                console.log(company.favor);
+        const component = this;
+        return function(favor) {
+            const company = Companies[component.state.company];
+            if (company != null && !isNaN(favor)) {
+                company.favor += favor*modifier;
             }
         }
     }
 
     resetCompanyFavor() {
-        const companyDropdown = document.getElementById('dev-companies-dropdown');
-        const companyName = companyDropdown.options[companyDropdown.selectedIndex].value;
-        const company = Companies[companyName];
+        const company = Companies[this.state.company];
         company.favor = 0;
     }
 
@@ -450,9 +477,7 @@ class DevMenuComponent extends Component {
     }
 
     modifyBladeburnerRank(modify) {
-        return function() {
-            const field = document.getElementById('dev-bladeburner-rank');
-            const rank = parseInt(field.value);
+        return function(rank) {
             if (!!Player.bladeburner) {
                 Player.bladeburner.changeRank(rank*modify);
             }
@@ -471,10 +496,8 @@ class DevMenuComponent extends Component {
     }
 
     modifyBladeburnerCycles(modify) {
-        return function() {
+        return function(cycles) {
             if (!!Player.bladeburner) {
-                const field = document.getElementById('dev-bladeburner-cycles');
-                const cycles = parseInt(field.value);
                 Player.bladeburner.storedCycles += cycles*modify;
             }
         }
@@ -499,10 +522,8 @@ class DevMenuComponent extends Component {
     }
 
     modifyGangCycles(modify) {
-        return function() {
+        return function(cycles) {
             if (!!Player.gang) {
-                const field = document.getElementById('dev-gang-cycles');
-                const cycles = parseInt(field.value);
                 Player.gang.storedCycles += cycles*modify;
             }
         }
@@ -521,10 +542,8 @@ class DevMenuComponent extends Component {
     }
 
     modifyCorporationCycles(modify) {
-        return function() {
+        return function(cycles) {
             if (!!Player.corporation) {
-                const field = document.getElementById('dev-corporation-cycles');
-                const cycles = parseInt(field.value);
                 Player.corporation.storedCycles += cycles*modify;
             }
         }
@@ -537,10 +556,8 @@ class DevMenuComponent extends Component {
     }
 
     specificContract() {
-        const contractDropdown = document.getElementById('contract-types-dropdown');
-        const contractType = contractDropdown.options[contractDropdown.selectedIndex].value;
         generateContract({
-            problemType: contractType,
+            problemType: this.state.codingcontract,
             server: "home",
         });
     }
@@ -577,10 +594,11 @@ class DevMenuComponent extends Component {
     }
 
     viewStockCaps() {
-        let text = "";
+        let text = "<table><tbody><tr><th>Stock</th><th>Price cap</th></tr>";
         this.processStocks((stock) => {
-            text += `${stock.symbol}: ${numeralWrapper.format(stock.cap, '$0.000a')}<br>`;
+            text += `<tr><td>${stock.symbol}</td><td style="text-align:right;">${numeralWrapper.format(stock.cap, '$0.000a')}</td></tr>`;
         });
+        text += "</tbody></table>";
         dialogBoxCreate(text);
     }
 
@@ -589,16 +607,19 @@ class DevMenuComponent extends Component {
             Player.sleeves[i].shock = 0;
         }
     }
+
     sleeveClearAllShock() {
         for (let i = 0; i < Player.sleeves.length; ++i) {
             Player.sleeves[i].shock = 100;
         }
     }
+
     sleeveMaxAllSync() {
         for (let i = 0; i < Player.sleeves.length; ++i) {
             Player.sleeves[i].sync = 100;
         }
     }
+
     sleeveClearAllSync() {
         for (let i = 0; i < Player.sleeves.length; ++i) {
             Player.sleeves[i].sync = 0;
@@ -682,20 +703,22 @@ class DevMenuComponent extends Component {
                 <tbody>
                     <tr>
                         <td><span className="text text-center">All:</span></td>
-                        <td><button className="std-button tooltip" onClick={this.tonsOfExp}>Tons of exp<span className="tooltiptext">Sometimes you just need a ton of experience in every stat</span></button></td>
-                        <td><button className="std-button tooltip" onClick={this.resetAllExp}>Reset<span className="tooltiptext">Sometimes you just need a ton of experience in every stat</span></button></td>
+                        <td>
+                            <button className="std-button tooltip" onClick={this.tonsOfExp}>Tons of exp<span className="tooltiptext">Sometimes you just need a ton of experience in every stat</span></button>
+                            <button className="std-button tooltip" onClick={this.resetAllExp}>Reset<span className="tooltiptext">Sometimes you just need a ton of experience in every stat</span></button>
+                            </td>
                     </tr>
                     <tr>
                         <td>
                             <span className="text text-center">Hacking:</span>
                         </td>
                         <td>
-                            <button className="std-button add-exp-button" onClick={this.modifyExp('hacking', 1)}>+</button>
-                            <input id="dev-hacking-exp" className="text-input exp-input" type="number" placeholder="+/- hacking exp" />
-                            <button className="std-button remove-exp-button" onClick={this.modifyExp('hacking', -1)}>-</button>
-                        </td>
-                        <td>
-                            <button className="std-button" onClick={this.resetExperience('hacking')}>Reset</button>
+                            <ValueAdjusterComponent 
+                              title="hacking exp" 
+                              add={this.modifyExp('hacking', 1)} 
+                              subtract={this.modifyExp('hacking', -1)} 
+                              reset={this.resetExperience('hacking')} 
+                            />
                         </td>
                     </tr>
                     <tr>
@@ -703,12 +726,12 @@ class DevMenuComponent extends Component {
                             <span className="text text-center">Strength:</span>
                         </td>
                         <td>
-                            <button className="std-button add-exp-button" onClick={this.modifyExp('strength', 1)}>+</button>
-                            <input id="dev-strength-exp" className="text-input exp-input" type="number" placeholder="+/- strength exp" />
-                            <button className="std-button remove-exp-button" onClick={this.modifyExp('strength', -1)}>-</button>
-                        </td>
-                        <td>
-                            <button className="std-button" onClick={this.resetExperience('strength')}>Reset</button>
+                            <ValueAdjusterComponent 
+                              title="strength exp"
+                              add={this.modifyExp('strength', 1)}
+                              subtract={this.modifyExp('strength', -1)}
+                              reset={this.resetExperience('strength')}
+                            />
                         </td>
                     </tr>
                     <tr>
@@ -716,12 +739,12 @@ class DevMenuComponent extends Component {
                             <span className="text text-center">Defense:</span>
                         </td>
                         <td>
-                            <button className="std-button add-exp-button" onClick={this.modifyExp('defense', 1)}>+</button>
-                            <input id="dev-defense-exp" className="text-input exp-input" type="number" placeholder="+/- defense exp" />
-                            <button className="std-button remove-exp-button" onClick={this.modifyExp('defense', -1)}>-</button>
-                        </td>
-                        <td>
-                            <button className="std-button" onClick={this.resetExperience('defense')}>Reset</button>
+                            <ValueAdjusterComponent 
+                              title="defense exp"
+                              add={this.modifyExp('defense', 1)}
+                              subtract={this.modifyExp('defense', -1)}
+                              reset={this.resetExperience('defense')}
+                            />
                         </td>
                     </tr>
                     <tr>
@@ -729,12 +752,12 @@ class DevMenuComponent extends Component {
                             <span className="text text-center">Dexterity:</span>
                         </td>
                         <td>
-                            <button className="std-button add-exp-button" onClick={this.modifyExp('dexterity', 1)}>+</button>
-                            <input id="dev-dexterity-exp" className="text-input exp-input" type="number" placeholder="+/- dexterity exp" />
-                            <button className="std-button remove-exp-button" onClick={this.modifyExp('dexterity', -1)}>-</button>
-                        </td>
-                        <td>
-                            <button className="std-button" onClick={this.resetExperience('dexterity')}>Reset</button>
+                            <ValueAdjusterComponent 
+                              title="dexterity exp"
+                              add={this.modifyExp('dexterity', 1)}
+                              subtract={this.modifyExp('dexterity', -1)}
+                              reset={this.resetExperience('dexterity')}
+                            />
                         </td>
                     </tr>
                     <tr>
@@ -742,12 +765,12 @@ class DevMenuComponent extends Component {
                             <span className="text text-center">Agility:</span>
                         </td>
                         <td>
-                            <button className="std-button add-exp-button" onClick={this.modifyExp('agility', 1)}>+</button>
-                            <input id="dev-agility-exp" className="text-input exp-input" type="number" placeholder="+/- agility exp" />
-                            <button className="std-button remove-exp-button" onClick={this.modifyExp('agility', -1)}>-</button>
-                        </td>
-                        <td>
-                            <button className="std-button" onClick={this.resetExperience('agility')}>Reset</button>
+                            <ValueAdjusterComponent 
+                              title="agility exp"
+                              add={this.modifyExp('agility', 1)}
+                              subtract={this.modifyExp('agility', -1)}
+                              reset={this.resetExperience('agility')}
+                            />
                         </td>
                     </tr>
                     <tr>
@@ -755,12 +778,12 @@ class DevMenuComponent extends Component {
                             <span className="text text-center">Charisma:</span>
                         </td>
                         <td>
-                            <button className="std-button add-exp-button" onClick={this.modifyExp('charisma', 1)}>+</button>
-                            <input id="dev-charisma-exp" className="text-input exp-input" type="number" placeholder="+/- charisma exp" />
-                            <button className="std-button remove-exp-button" onClick={this.modifyExp('charisma', -1)}>-</button>
-                        </td>
-                        <td>
-                            <button className="std-button" onClick={this.resetExperience('charisma')}>Reset</button>
+                            <ValueAdjusterComponent 
+                              title="charisma exp"
+                              add={this.modifyExp('charisma', 1)}
+                              subtract={this.modifyExp('charisma', -1)}
+                              reset={this.resetExperience('charisma')}
+                            />
                         </td>
                     </tr>
                     <tr>
@@ -768,12 +791,12 @@ class DevMenuComponent extends Component {
                             <span className="text text-center">Intelligence:</span>
                         </td>
                         <td>
-                            <button className="std-button add-exp-button" onClick={this.modifyExp('intelligence', 1)}>+</button>
-                            <input id="dev-intelligence-exp" className="text-input exp-input" type="number" placeholder="+/- intelligence exp" />
-                            <button className="std-button remove-exp-button" onClick={this.modifyExp('intelligence', -1)}>-</button>
-                        </td>
-                        <td>
-                            <button className="std-button" onClick={this.resetExperience('intelligence')}>Reset</button>
+                            <ValueAdjusterComponent 
+                              title="intelligence exp"
+                              add={this.modifyExp('intelligence', 1)}
+                              subtract={this.modifyExp('intelligence', -1)}
+                              reset={this.resetExperience('intelligence')}
+                            />
                         </td>
                         <td>
                             <button className="std-button" onClick={this.enableIntelligence}>Enable</button>
@@ -795,7 +818,7 @@ class DevMenuComponent extends Component {
                 <tbody>
                     <tr>
                         <td><span className="text">Faction:</span></td>
-                        <td><select id="factions-dropdown" className="dropdown exp-input">
+                        <td><select id="factions-dropdown" className="dropdown exp-input" onChange={this.setFactionDropdown} value={this.state.faction}>
                             {factions}
                         </select></td>
                     </tr>
@@ -809,12 +832,12 @@ class DevMenuComponent extends Component {
                             <span className="text">Reputation:</span>
                         </td>
                         <td>
-                            <button className="std-button add-exp-button" onClick={this.modifyRep(1)}>+</button>
-                            <input id="dev-faction-rep" className="text-input exp-input" type="number" placeholder="+/- reputation" />
-                            <button className="std-button remove-exp-button" onClick={this.modifyRep(-1)}>-</button>
-                        </td>
-                        <td>
-                        <button className="std-button remove-exp-button" onClick={this.resetRep}>Reset</button>
+                            <ValueAdjusterComponent 
+                              title="reputation"
+                              add={this.modifyFactionRep(1)}
+                              subtract={this.modifyFactionRep(-1)}
+                              reset={this.resetFactionRep}
+                            />
                         </td>
                     </tr>
                     <tr>
@@ -822,12 +845,12 @@ class DevMenuComponent extends Component {
                             <span className="text">Favor:</span>
                         </td>
                         <td>
-                            <button className="std-button add-exp-button" onClick={this.modifyFactionFavor(1)}>+</button>
-                            <input id="dev-faction-favor" className="text-input exp-input" type="number" placeholder="+/- favor" />
-                            <button className="std-button remove-exp-button" onClick={this.modifyFactionFavor(-1)}>-</button>
-                        </td>
-                        <td>
-                        <button className="std-button remove-exp-button" onClick={this.resetFactionFavor}>Reset</button>
+                            <ValueAdjusterComponent 
+                              title="favor"
+                              add={this.modifyFactionFavor(1)}
+                              subtract={this.modifyFactionFavor(-1)}
+                              reset={this.resetFactionFavor}
+                            />
                         </td>
                     </tr>
                     <tr>
@@ -858,7 +881,7 @@ class DevMenuComponent extends Component {
                 <tbody>
                     <tr>
                         <td><span className="text">Aug:</span></td>
-                        <td><select id="dev-augs-dropdown" className="dropdown">{augs}</select></td>
+                        <td><select id="dev-augs-dropdown" className="dropdown" onChange={this.setAugmentationDropdown} value={this.state.augmentation}>{augs}</select></td>
                     </tr>
                     <tr>
                         <td><span className="text">Queue:</span></td>
@@ -899,7 +922,7 @@ class DevMenuComponent extends Component {
                 <tbody>
                     <tr>
                         <td><span className="text">Program:</span></td>
-                        <td><select id="dev-programs-dropdown" className="dropdown">{programs}</select></td>
+                        <td><select id="dev-programs-dropdown" className="dropdown" onChange={this.setProgramDropdown} value={this.state.program}>{programs}</select></td>
                     </tr>
                     <tr>
                         <td><span className="text">Add:</span></td>
@@ -921,7 +944,7 @@ class DevMenuComponent extends Component {
                 <tbody>
                     <tr>
                         <td><span className="text">Server:</span></td>
-                        <td colSpan="2"><select id="dev-servers-dropdown" className="dropdown">{servers}</select></td>
+                        <td colSpan="2"><select id="dev-servers-dropdown" className="dropdown"onChange={this.setServerDropdown} value={this.state.server}>{servers}</select></td>
                     </tr>
                     <tr>
                         <td><span className="text">Root:</span></td>
@@ -949,30 +972,30 @@ class DevMenuComponent extends Component {
             </div>
             <table>
                 <tbody>
-                    <tr>    
+                    <tr>
                         <td><span className="text">Company:</span></td>
-                        <td colSpan="3"><select id="dev-companies-dropdown" className="dropdown">{companies}</select></td>
+                        <td colSpan="3"><select id="dev-companies-dropdown" className="dropdown" onChange={this.setCompanyDropdown} value={this.state.company}>{companies}</select></td>
                     </tr>
                     <tr>
                         <td><span className="text">Reputation:</span></td>
                         <td>
-                            <button className="std-button add-exp-button" onClick={this.modifyCompanyRep(1)}>+</button>
-                            <input id="dev-company-rep" className="text-input exp-input" type="number" placeholder="+/- reputation" />
-                            <button className="std-button remove-exp-button" onClick={this.modifyCompanyRep(-1)}>-</button>
-                        </td>
-                        <td>
-                            <button className="std-button remove-exp-button" onClick={this.resetCompanyRep}>Reset</button>
+                            <ValueAdjusterComponent 
+                              title="reputation"
+                              add={this.modifyCompanyRep(1)}
+                              subtract={this.modifyCompanyRep(-1)}
+                              reset={this.resetCompanyRep}
+                            />
                         </td>
                     </tr>
                     <tr>
                         <td><span className="text">Favor:</span></td>
                         <td>
-                            <button className="std-button add-exp-button" onClick={this.modifyCompanyFavor(1)}>+</button>
-                            <input id="dev-company-favor" className="text-input exp-input" type="number" placeholder="+/- favor" />
-                            <button className="std-button remove-exp-button" onClick={this.modifyCompanyFavor(-1)}>-</button>
-                        </td>
-                        <td>
-                            <button className="std-button remove-exp-button" onClick={this.resetCompanyFavor}>Reset</button>
+                            <ValueAdjusterComponent 
+                              title="favor"
+                              add={this.modifyCompanyFavor(1)}
+                              subtract={this.modifyCompanyFavor(-1)}
+                              reset={this.resetCompanyFavor}
+                            />
                         </td>
                     </tr>
                     <tr>
@@ -1005,21 +1028,25 @@ class DevMenuComponent extends Component {
                         <td><span className="text">Rank:</span></td>
                         <td><button className="std-button" onClick={this.addTonsBladeburnerRank}>Tons</button></td>
                         <td>
-                            <button className="std-button add-exp-button" onClick={this.modifyBladeburnerRank(1)}>+</button>
-                            <input id="dev-bladeburner-rank" className="text-input exp-input" type="number" placeholder="+/- rank" />
-                            <button className="std-button remove-exp-button" onClick={this.modifyBladeburnerRank(-1)}>-</button>
+                            <ValueAdjusterComponent 
+                              title="rank"
+                              add={this.modifyBladeburnerRank(1)}
+                              subtract={this.modifyBladeburnerRank(-1)}
+                              reset={this.resetBladeburnerRank}
+                            />
                         </td>
-                        <td><button className="std-button" onClick={this.resetBladeburnerRank}>Reset</button></td>
                     </tr>
                     <tr>
                         <td><span className="text">Cycles:</span></td>
                         <td><button className="std-button" onClick={this.addTonsBladeburnerCycles}>Tons</button></td>
                         <td>
-                            <button className="std-button add-exp-button" onClick={this.modifyBladeburnerCycles(1)}>+</button>
-                            <input id="dev-bladeburner-cycles" className="text-input exp-input" type="number" placeholder="+/- cycles" />
-                            <button className="std-button remove-exp-button" onClick={this.modifyBladeburnerCycles(-1)}>-</button>
+                            <ValueAdjusterComponent 
+                              title="cycles"
+                              add={this.modifyBladeburnerCycles(1)}
+                              subtract={this.modifyBladeburnerCycles(-1)}
+                              reset={this.resetBladeburnerCycles}
+                            />
                         </td>
-                        <td><button className="std-button" onClick={this.resetBladeburnerCycles}>Reset</button></td>
                     </tr>
                 </tbody>
             </table>
@@ -1037,11 +1064,13 @@ class DevMenuComponent extends Component {
                         <td><span className="text">Cycles:</span></td>
                         <td><button className="std-button" onClick={this.addTonsGangCycles}>Tons</button></td>
                         <td>
-                            <button className="std-button add-exp-button" onClick={this.modifyGangCycles(1)}>+</button>
-                            <input id="dev-gang-cycles" className="text-input exp-input" type="number" placeholder="+/- cycles" />
-                            <button className="std-button remove-exp-button" onClick={this.modifyGangCycles(-1)}>-</button>
+                            <ValueAdjusterComponent 
+                              title="cycles"
+                              add={this.modifyGangCycles(1)}
+                              subtract={this.modifyGangCycles(-1)}
+                              reset={this.resetGangCycles}
+                            />
                         </td>
-                        <td><button className="std-button" onClick={this.resetGangCycles}>Reset</button></td>
                     </tr>
                 </tbody>
             </table>
@@ -1059,11 +1088,13 @@ class DevMenuComponent extends Component {
                         <td><span className="text">Cycles:</span></td>
                         <td><button className="std-button" onClick={this.addTonsCorporationCycles}>Tons</button></td>
                         <td>
-                            <button className="std-button add-exp-button" onClick={this.modifyCorporationCycles(1)}>+</button>
-                            <input id="dev-corporation-cycles" className="text-input exp-input" type="number" placeholder="+/- cycles" />
-                            <button className="std-button remove-exp-button" onClick={this.modifyCorporationCycles(-1)}>-</button>
+                            <ValueAdjusterComponent 
+                              title="cycles"
+                              add={this.modifyCorporationCycles(1)}
+                              subtract={this.modifyCorporationCycles(-1)}
+                              reset={this.resetCorporationCycles}
+                            />
                         </td>
-                        <td><button className="std-button" onClick={this.resetCorporationCycles}>Reset</button></td>
                     </tr>
                 </tbody>
             </table>
@@ -1076,7 +1107,6 @@ class DevMenuComponent extends Component {
             <div className="row">
                 <h2>Coding Contracts</h2>
             </div>
-
             <table>
             <tbody>
                 <tr>
@@ -1087,7 +1117,7 @@ class DevMenuComponent extends Component {
                 </tr>
                 <tr>
                     <td>
-                        <select id="contract-types-dropdown" className="dropdown">
+                        <select id="contract-types-dropdown" className="dropdown" onChange={this.setCodingcontractDropdown} value={this.state.codingcontract}>
                             {contractTypes}
                         </select>
                         <button className="std-button" onClick={this.specificContract}>Generate Specified Contract Type on Home Comp</button>
