@@ -31,6 +31,8 @@ import { getTimestamp }                             from "../utils/helpers/getTi
 import { removeElement }                            from "../utils/uiHelpers/removeElement";
 import { removeElementById }                        from "../utils/uiHelpers/removeElementById";
 
+const stealthIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 461.56 461.56" style="fill:#adff2f;" width="16px" height="16px"><path d="M345.525,229.5c0-45.9-25.5-84.15-63.75-102v56.1l63.75,63.75C345.525,239.7,345.525,234.6,345.525,229.5z M409.275,229.5    c0,22.95-5.1,45.9-12.75,66.3l38.25,38.25c17.85-30.6,25.5-68.85,25.5-107.1c0-109.65-76.5-201.45-178.5-224.4V56.1    C355.725,81.6,409.275,147.9,409.275,229.5z M34.425,0L1.275,33.15L121.125,153H1.275v153h102l127.5,127.5V262.65L340.425,372.3    c-17.851,12.75-35.7,22.95-58.65,30.601v53.55c35.7-7.65,66.3-22.95,94.35-45.9l51,51l33.15-33.149l-229.5-229.5L34.425,0z     M230.775,25.5l-53.55,53.55l53.55,53.55V25.5z" /></svg>&nbsp;`
+const killIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="-22 0 511 511.99561" style="fill:#adff2f;" width="16px" height="16px"><path d="m.496094 466.242188 39.902344-39.902344 45.753906 45.753906-39.898438 39.902344zm0 0"/><path d="m468.421875 89.832031-1.675781-89.832031-300.265625 300.265625 45.753906 45.753906zm0 0"/><path d="m95.210938 316.785156 16.84375 16.847656h.003906l83.65625 83.65625 22.753906-22.753906-100.503906-100.503906zm0 0"/><path d="m101.445312 365.300781-39.902343 39.902344 45.753906 45.753906 39.902344-39.902343-39.90625-39.902344zm0 0"/></svg>`
 
 const CityNames = ["Aevum", "Chongqing", "Sector-12", "New Tokyo", "Ishima", "Volhaven"];
 
@@ -2504,7 +2506,8 @@ Bladeburner.prototype.updateContractsUIElement = function(el, action) {
     el.appendChild(createElement("pre", { //Info
         display:"inline-block",
         innerHTML:action.desc + "\n\n" +
-                  "Estimated success chance: " + formatNumber(estimatedSuccessChance*100, 1) + "%\n" +
+                  `Estimated success chance: ${formatNumber(estimatedSuccessChance*100, 1)}% ${action.isStealth?stealthIcon:''}${action.isKill?killIcon:''}\n` +
+                  
                   "Time Required (s): " + formatNumber(actionTime, 0) + "\n" +
                   "Contracts remaining: " + Math.floor(action.count) + "\n" +
                   "Successes: " + action.successes + "\n" +
@@ -2640,7 +2643,7 @@ Bladeburner.prototype.updateOperationsUIElement = function(el, action) {
     el.appendChild(createElement("pre", {
         display:"inline-block",
         innerHTML:action.desc + "\n\n" +
-                  "Estimated success chance: " + formatNumber(estimatedSuccessChance*100, 1) + "%\n" +
+                  `Estimated success chance: ${formatNumber(estimatedSuccessChance*100, 1)}% ${action.isStealth?stealthIcon:''}${action.isKill?killIcon:''}\n` +
                   "Time Required(s): " + formatNumber(actionTime, 0) + "\n" +
                   "Operations remaining: " + Math.floor(action.count) + "\n" +
                   "Successes: " + action.successes + "\n" +
@@ -2760,7 +2763,7 @@ Bladeburner.prototype.updateBlackOpsUIElement = function(el, action) {
     }));
     el.appendChild(createElement("p", {
         display:"inline-block",
-        innerHTML:"Estimated Success Chance: " + formatNumber(estimatedSuccessChance*100, 1) + "%\n" +
+        innerHTML:`Estimated Success Chance: "${formatNumber(estimatedSuccessChance*100, 1)}% ${action.isStealth?stealthIcon:''}${action.isKill?killIcon:''}\n` +
                   "Time Required(s): " + formatNumber(actionTime, 0),
     }))
 }
