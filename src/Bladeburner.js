@@ -2544,14 +2544,6 @@ Bladeburner.prototype.updateContractsUIElement = function(el, action) {
     el.appendChild(checkboxDiv);
 }
 
-
-/*
-<div class="bbcheckbox">
-  <input type="checkbox" value="None" id="bbcheckbox" name="check" checked />
-  <label for="bbcheckbox"></label>
-</div>
-*/
-
 Bladeburner.prototype.updateOperationsUIElement = function(el, action) {
     removeChildrenFromElement(el);
     var isActive = el.classList.contains(ActiveActionCssClass);
@@ -2678,7 +2670,7 @@ Bladeburner.prototype.updateOperationsUIElement = function(el, action) {
         for:autolevelCheckboxId, innerText:"Autolevel",color:"white",
         tooltip:"Automatically increase operation level when possible"
     }));
-    
+
     const checkboxDiv = createElement("div", { class: "bbcheckbox" });
     const checkboxInput = createElement("input", {
       type:"checkbox",
