@@ -96,7 +96,7 @@ export function createResleevesPage(p: IPlayer) {
             display: "inline-block",
             innerText: "Sort By: "
         });
-        UIElems.sortSelector = createElement("select") as HTMLSelectElement;
+        UIElems.sortSelector = createElement("select",{class:"dropdown"}) as HTMLSelectElement;
 
         enum SortOption {
             Cost = "Cost",
@@ -309,7 +309,7 @@ function createResleeveUi(resleeve: Resleeve): IResleeveUIElems {
     elems.statsPanel.appendChild(elems.multipliersButton);
 
     elems.augPanel = createElement("div", { class: "resleeve-panel", width: "50%" });
-    elems.augSelector = createElement("select", { class: "resleeve-aug-selector" }) as HTMLSelectElement;
+    elems.augSelector = createElement("select", { class: "resleeve-aug-selector dropdown" }) as HTMLSelectElement;
     elems.augDescription = createElement("p");
     for (let i = 0; i < resleeve.augmentations.length; ++i) {
         elems.augSelector.add(createOptionElement(resleeve.augmentations[i].name));

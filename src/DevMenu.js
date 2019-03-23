@@ -536,7 +536,7 @@ export function createDevMenu() {
         innerText: "Generate Random Contract on Home Comp",
     });
 
-    const generateContractWithTypeSelector = createElement("select", { margin: "5px" });
+    const generateContractWithTypeSelector = createElement("select", { margin: "5px", class:"dropdown" });
     const contractTypes = Object.keys(CodingContractTypes);
     for (let i = 0; i < contractTypes.length; ++i) {
         generateContractWithTypeSelector.add(createOptionElement(contractTypes[i]));
