@@ -336,3 +336,43 @@ a:visited {
 .smallfont {
     font-size: $defaultFontSize * 0.8125;
 }
+
+.bbcheckbox {
+  position: relative;
+  display: inline;
+  label {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: black;
+    border-width: 1px;
+    border-color: white;
+    border-style: solid;
+    &:after {
+      content: '';
+      width: 9px;
+      height: 5px;
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      border: 3px solid white;
+      border-top: none;
+      border-right: none;
+      opacity: 0;
+      transform: rotate(-45deg);
+    }
+  }
+  input[type=checkbox] {
+    visibility: hidden;
+    &:checked + label:after {
+      opacity: 1;
+    }    
+  }
+}
+
+
+
+
