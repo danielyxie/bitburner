@@ -230,7 +230,6 @@ function initStockSymbols() {
         formatHelpData.longestName = key.length > formatHelpData.longestName ? key.length : formatHelpData.longestName;
         formatHelpData.longestSymbol = StockSymbols[key].length > formatHelpData.longestSymbol ? StockSymbols[key].length : formatHelpData.longestSymbol;
     }
-    console.log(formatHelpData);
 }
 
 function initStockMarket() {

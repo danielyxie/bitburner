@@ -2346,8 +2346,6 @@ Corporation.prototype.rerender = function() {
     }
     if (!routing.isOn(Page.Corporation)) { return; }
 
-    console.log("Re-rendering...");
-
     ReactDOM.render(<CorporationRoot
                         corp={this}
                         routing={corpRouting}
