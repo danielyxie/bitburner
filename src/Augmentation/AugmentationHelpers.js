@@ -1218,14 +1218,14 @@ function initAugmentations() {
              "quantum supercomputer, allowing you to access and use its incredible " +
              "computing power.<br><br>" +
              "This augmentation:<br>" +
-             "Increases the player's hacking skill by 50%.<br>" +
-             "Increases the player's hacking speed by 50%.<br>" +
+             "Increases the player's hacking skill by 75%.<br>" +
+             "Increases the player's hacking speed by 100%.<br>" +
              "Increases the player's chance of successfully performing a hack by 150%.<br>" +
-             "Increases the amount of money the player gains from hacking by 500%.",
-        hacking_speed_mult: 1.5,
+             "Increases the amount of money the player gains from hacking by 300%.",
+        hacking_mult: 1.75,
+        hacking_speed_mult: 2,
         hacking_chance_mult: 2.5,
-        hacking_money_mult: 6,
-        hacking_mult: 1.5,
+        hacking_money_mult: 4,
     });
     QLink.addToFactions(["Illuminati"]);
     if (augmentationExists(AugmentationNames.QLink)) {
