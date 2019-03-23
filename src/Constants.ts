@@ -126,6 +126,7 @@ export let CONSTANTS: IMap<any> = {
     InfiltrationBribeBaseAmount: 100e3,    //Amount per clearance level
     InfiltrationMoneyValue:   5e3,         //Convert "secret" value to money
     InfiltrationRepValue: 1.4,             //Convert "secret" value to faction reputation
+    InfiltrationExpPow: 0.7,
 
     //Stock market constants
     WSEAccountCost:         200e6,
