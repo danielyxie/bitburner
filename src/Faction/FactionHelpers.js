@@ -199,7 +199,7 @@ function displayFactionContent(factionName) {
         innerText:"This donation will result in 0.000 reputation gain"
     });
     var donateAmountInput = createElement("input", {
-        placeholder:"Donation amount",
+        class: "text-input", placeholder:"Donation amount",
         inputListener:()=>{
             let amt = 0;
             if(donateAmountInput.value !== "") {

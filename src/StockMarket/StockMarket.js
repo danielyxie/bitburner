@@ -175,6 +175,11 @@ let StockMarket = {}        //Full name to stock object
 let StockSymbols = {}       //Full name to symbol
 let SymbolToStockMap = {};  //Symbol to Stock object
 
+let formatHelpData = {
+    longestName: 0,
+    longestSymbol: 0,
+};
+
 function loadStockMarket(saveString) {
     if (saveString === "") {
         StockMarket = {};
@@ -220,6 +225,12 @@ function initStockSymbols() {
     StockSymbols["Catalyst Ventures"]                       = "CTYS";
     StockSymbols["Microdyne Technologies"]                  = "MDYN";
     StockSymbols["Titan Laboratories"]                      = "TITN";
+
+    for (const key in StockSymbols) {
+        formatHelpData.longestName = key.length > formatHelpData.longestName ? key.length : formatHelpData.longestName;
+        formatHelpData.longestSymbol = StockSymbols[key].length > formatHelpData.longestSymbol ? StockSymbols[key].length : formatHelpData.longestSymbol;
+    }
+    console.log(formatHelpData);
 }
 
 function initStockMarket() {
@@ -1070,10 +1081,11 @@ function createStockTicker(stock) {
         return;
     }
     var tickerId = "stock-market-ticker-" + stock.symbol;
-    var li = document.createElement("li"), hdr = document.createElement("button");
+    var li = document.createElement("li"), hdr = document.createElement("button"), hdrpre = document.createElement("pre");;
     hdr.classList.add("accordion-header");
     hdr.setAttribute("id", tickerId + "-hdr");
-    hdr.innerHTML = stock.name + "  -  " + stock.symbol + "  -  " + numeralWrapper.format(stock.price, '($0.000a)');
+    hdrpre.textContent = stock.name + "  -  " + stock.symbol + "  -  " + numeralWrapper.format(stock.price, '($0.000a)');
+    hdr.appendChild(hdrpre);
 
     //Div for entire panel
     var stockDiv = document.createElement("div");
@@ -1354,19 +1366,15 @@ function updateStockTicker(stock, increase) {
         }
         return;
     }
-    let hdrText = stock.name + " (" + stock.symbol + ") - " + numeralWrapper.format(stock.price, '($0.000a)');
+    const stockPriceFormat = numeralWrapper.format(stock.price, '($0.000a)')
+    let hdrText = `${stock.name}${" ".repeat(1 + formatHelpData.longestName - stock.name.length + (formatHelpData.longestSymbol-stock.symbol.length))}${stock.symbol} -${" ".repeat(10 - stockPriceFormat.length)}${stockPriceFormat}`;
     if (Player.has4SData) {
-        hdrText += " - Volatility: " + numeralWrapper.format(stock.mv, '0,0.00') + "%" +
-                   " - Price Forecast: ";
-        if (stock.b) {
-            hdrText += "+".repeat(Math.floor(stock.otlkMag/10) + 1);
-        } else {
-            hdrText += "-".repeat(Math.floor(stock.otlkMag/10) + 1);
-        }
+        hdrText += ` - Volatility: ${numeralWrapper.format(stock.mv, '0,0.00')}% - Price Forecast: `;
+        hdrText += (stock.b?"+":"-").repeat(Math.floor(stock.otlkMag/10) + 1);
     }
-    hdr.innerText = hdrText;
+    hdr.firstChild.textContent = hdrText;
     if (increase != null) {
-        increase ? hdr.style.color = "#66ff33" : hdr.style.color = "red";
+        hdr.firstChild.style.color = increase ? "#66ff33" : "red";
     }
 }
 
