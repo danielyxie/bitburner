@@ -1801,6 +1801,12 @@ Bladeburner.prototype.createContent = function() {
     DomElems.bladeburnerDiv.appendChild(DomElems.overviewConsoleParentDiv);
     DomElems.bladeburnerDiv.appendChild(DomElems.actionAndSkillsDiv);
 
+
+    // legend
+    const legend = createElement("div")
+    legend.innerHTML = `<span class="text">${stealthIcon}= This action requires stealth, ${killIcon} = This action involves retirement</span>`
+    DomElems.bladeburnerDiv.appendChild(legend);
+
     document.getElementById("entire-game-container").appendChild(DomElems.bladeburnerDiv);
 
     if (this.consoleLogs.length === 0) {
