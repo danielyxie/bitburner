@@ -7,6 +7,11 @@ buy and sell stocks in order to make money.
 
 The WSE can be found in the 'City' tab, and is accessible in every city.
 
+Automating the Stock Market
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+You can write scripts to perform automatic and algorithmic trading on the Stock Market.
+See :ref:`netscript_tixapi` for more details. 
+
 Positions: Long vs Short
 ^^^^^^^^^^^^^^^^^^^^^^^^
 When making a transaction on the stock market, there are two types of positions:

@@ -47,6 +47,11 @@ button {
     border: 1px solid #333;
     cursor: default;
 
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+
     &:hover {
         .tooltiptext,
         .tooltiptexthigh,

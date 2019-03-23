@@ -5,7 +5,7 @@ played at https://danielyxie.github.io/bitburner.
 # Documentation
 The game's official documentation can be found on [Read The
 Docs](http://bitburner.readthedocs.io/). Please note that this is still a
-work-in-progress and is in its early stages.
+work-in-progress.
 
 The documentation is created using [Sphinx](http://www.sphinx-doc.org).
 
@@ -13,11 +13,6 @@ Anyone is welcome to contribute to the documentation by editing the [source
 files](/doc/source) and then making a pull request with your contributions.
 For further guidance, please refer to the "As A Documentor" section of
 [CONTRIBUTING](CONTRIBUTING.md).
-
-# Wiki
-The game's wiki can be found on [Wikia](http://bitburner.wikia.com/). Please
-note that the wiki is in the process of being deprecated. Eventually all of
-the wiki content will be moved into the Read The Docs documentation.
 
 # Contribution
 There are many ways to contribute to the game. It can be as simple as fixing

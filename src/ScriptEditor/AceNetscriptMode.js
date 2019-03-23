@@ -117,15 +117,20 @@ let NetscriptFunctions =
     "getGeneralActionNames|getSkillNames|startAction|stopBladeburnerAction|"   +
     "getActionTime|getActionEstimatedSuccessChance|getActionCountRemaining|"   +
     "getActionMaxLevel|getActionCurrentLevel|getActionAutolevel|"              +
-    "getActionRepGain|setActionAutolevel|setActionLevel|"                      +
+    "getActionRepGain|setActionAutolevel|setActionLevel|getBlackOpRank|"       +
     "getRank|getSkillPoints|getSkillLevel|getSkillUpgradeCost|"                +
-    "upgradeSkill|getTeamSize|getCity|"                                        +
+    "upgradeSkill|getTeamSize|getCity|getCurrentAction|"                       +
     "setTeamSize|getCityEstimatedPopulation|getCityEstimatedCommunities|"      +
     "getCityChaos|switchCity|getStamina|joinBladeburnerFaction|getBonusTime|"  +
 
     // Coding Contract API
     "codingcontract|attempt|getContractType|getData|getDescription|"           +
-    "getNumTriesRemaining";
+    "getNumTriesRemaining|"                                                    +
+
+    // Sleeve API
+    "sleeve|getNumSleeves|setToShockRecovery|setToSynchronize|setToCommitCrime|"              +
+    "setToUniversityCourse|travel|setToCompanyWork|setToFactionWork|setToGymWorkout|"  +
+    "getSleeveStats|getTask|getInformation";
 
 var NetscriptHighlightRules = function(options) {
     var keywordMapper = this.createKeywordMapper({

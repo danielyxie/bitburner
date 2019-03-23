@@ -5,7 +5,7 @@ Netscript
 Netscript is the programming language used in the world of Bitburner.
 
 When you write scripts in Bitburner, they are written in the Netscript language.
-Netscript is simply a subset of `JavaScript <https://developer.mozilla.org/en-US/docs/Web/JavaScript>`_,.
+Netscript is simply a subset of `JavaScript <https://developer.mozilla.org/en-US/docs/Web/JavaScript>`_.
 This means that Netscript's syntax is
 identical to that of JavaScript, but it does not implement some of the features
 that JavaScript has.
@@ -29,4 +29,5 @@ to reach out to the developer!
     Bladeburner API <netscript/netscriptbladeburnerapi>
     Gang API <netscript/netscriptgangapi>
     Coding Contract API <netscript/netscriptcodingcontractapi>
+    Sleeve API <netscript/netscriptsleeveapi>
     Miscellaneous <netscript/netscriptmisc>

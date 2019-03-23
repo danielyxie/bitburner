@@ -203,7 +203,6 @@ a:visited {
 
 .status-text {
     display: inline-block;
-    height: 15%;
     position: fixed;
     z-index: 2;
     -webkit-animation: status-text 3s 1;
@@ -215,10 +214,12 @@ a:visited {
 
 #status-text {
     background-color: transparent;
-    font-size: $defaultFontSize * 1.25;
     bottom: 0;
     color: #fff;
+    display: none;
+    font-size: $defaultFontSize * 1.25;
     margin-right: 14px;
+    opacity: 0;
     padding: 4px;
     right: 0;
     top: 0;

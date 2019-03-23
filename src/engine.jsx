@@ -14,21 +14,19 @@ import { AugmentationNames }                            from "./Augmentation/dat
 import {BitNodes, initBitNodes,
         initBitNodeMultipliers}                         from "./BitNode/BitNode";
 import {Bladeburner}                                    from "./Bladeburner";
-import {CharacterOverview}                              from "./CharacterOverview";
+import { CharacterOverviewComponent }                   from "./ui/React/CharacterOverview";
 import {cinematicTextFlag}                              from "./CinematicText";
 import {generateRandomContract}                         from "./CodingContractGenerator";
 import {CompanyPositions}                               from "./Company/CompanyPositions";
 import {initCompanies}                                  from "./Company/Companies";
 import { Corporation }                                  from "./Corporation/Corporation";
 import {CONSTANTS}                                      from "./Constants";
-
-
 import {createDevMenu, closeDevMenu}                    from "./DevMenu";
 import { Factions, initFactions }                       from "./Faction/Factions";
 import { displayFactionContent, joinFaction,
          processPassiveFactionRepGain,
          inviteToFaction }                              from "./Faction/FactionHelpers";
-import {FconfSettings}                                  from "./Fconf";
+import { FconfSettings }                                from "./Fconf/FconfSettings";
 import {displayLocationContent,
         initLocationButtons}                            from "./Location";
 import {Locations}                                      from "./Locations";
@@ -36,7 +34,7 @@ import {displayHacknetNodesContent, processAllHacknetNodeEarnings,
         updateHacknetNodesContent}                      from "./HacknetNode";
 import {iTutorialStart}                                 from "./InteractiveTutorial";
 import {initLiterature}                                 from "./Literature";
-import {checkForMessagesToSend, initMessages}           from "./Message";
+import { checkForMessagesToSend, initMessages }         from "./Message/MessageHelpers";
 import {inMission, currMission}                         from "./Missions";
 import {initSingularitySFFlags,
         hasSingularitySF, hasCorporationSF}             from "./NetscriptFunctions";
@@ -54,13 +52,15 @@ import {saveObject, loadGame}                           from "./SaveObject";
 import { getCurrentEditor,
          loadAllRunningScripts,
          scriptEditorInit,
-         updateScriptEditorContent }                    from "./Script";
-import {AllServers, Server, initForeignServers}         from "./Server";
+         updateScriptEditorContent }                    from "./Script/ScriptHelpers";
+import { AllServers,
+         initForeignServers }                           from "./Server/AllServers";
+
+import { Server }                                       from "./Server/Server";
 import {Settings}                                       from "./Settings/Settings";
 import { initSourceFiles, SourceFiles }                 from "./SourceFile";
 import { updateSourceFileFlags }                        from "./SourceFile/SourceFileFlags";
-
-import {SpecialServerIps, initSpecialServerIps}         from "./SpecialServerIps";
+import {SpecialServerIps, initSpecialServerIps}         from "./Server/SpecialServerIps";
 import {StockMarket, StockSymbols,
         SymbolToStockMap, initStockSymbols,
         initSymbolToStockMap, stockMarketCycle,
@@ -96,6 +96,8 @@ import { exceptionAlert }                               from "../utils/helpers/e
 import { removeLoadingScreen }                          from "../utils/uiHelpers/removeLoadingScreen";
 import {KEY}                                            from "../utils/helpers/keyCodes";
 
+import React                                            from "react";
+import ReactDOM                                         from "react-dom";
 
 // These should really be imported with the module that is presenting that UI, but because they very much depend on the
 // cascade order, we'll pull them all in here.
@@ -202,7 +204,6 @@ $(document).keydown(function(e) {
 const Engine = {
     version: "",
     Debug: true,
-    overview: new CharacterOverview(),
 
     //Clickable objects
     Clickables: {
@@ -459,8 +460,8 @@ const Engine = {
         if (Player.corporation instanceof Corporation) {
             Engine.hideAllContent();
             document.getElementById("character-overview-wrapper").style.visibility = "hidden";
-            Player.corporation.createUI();
             routing.navigateTo(Page.Corporation);
+            Player.corporation.createUI();
         }
     },
 
@@ -570,7 +571,7 @@ const Engine = {
     },
 
     displayCharacterOverviewInfo: function() {
-        Engine.overview.update();
+        ReactDOM.render(<CharacterOverviewComponent />, document.getElementById('character-overview-text'));
 
         const save = document.getElementById("character-overview-save-button");
         const flashClass = "flashing-button";
@@ -944,9 +945,7 @@ const Engine = {
         }
 
         if (Engine.Counters.updateDisplaysMed <= 0) {
-            if (routing.isOn(Page.Corporation)) {
-                Player.corporation.updateUIContent();
-            } else if (routing.isOn(Page.CharacterInfo)) {
+            if (routing.isOn(Page.CharacterInfo)) {
                 Engine.updateCharacterInfo();
             }
             Engine.Counters.updateDisplaysMed = 9;
@@ -1271,7 +1270,7 @@ const Engine = {
             Engine.setDisplayElements();        //Sets variables for important DOM elements
             Engine.start();                     //Run main game loop and Scripts loop
             Player.init();
-            initForeignServers();
+            initForeignServers(Player.getHomeComputer());
             initCompanies();
             initFactions();
             initAugmentations();

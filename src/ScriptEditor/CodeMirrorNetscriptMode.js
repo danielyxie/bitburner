@@ -208,6 +208,7 @@ CodeMirror.defineMode("netscript", function(config, parserConfig) {
       "getSkillNames": atom,
       "startAction": atom,
       "stopBladeburnerAction": atom,
+      "getCurrentAction": atom,
       "getActionTime": atom,
       "getActionEstimatedSuccessChance": atom,
       "getActionCountRemaining": atom,
@@ -218,6 +219,7 @@ CodeMirror.defineMode("netscript", function(config, parserConfig) {
       "setActionAutolevel": atom,
       "setActionLevel": atom,
       "getRank": atom,
+      "getBlackOpRank": atom,
       "getSkillPoints": atom,
       "getSkillLevel": atom,
       "getSkillUpgradeCost": atom,
@@ -231,7 +233,7 @@ CodeMirror.defineMode("netscript", function(config, parserConfig) {
       "switchCity": atom,
       "getStamina": atom,
       "joinBladeburnerFaction": atom,
-      "getBonusTime": atom,
+      // Repeat of above "getBonusTime": atom,
 
       // Netscript Coding Contract API
       "codingcontract": atom,
@@ -240,6 +242,21 @@ CodeMirror.defineMode("netscript", function(config, parserConfig) {
       "getData": atom,
       "getDescription": atom,
       "getNumTriesRemaining": atom,
+
+      // Sleeve API
+      "sleeve": atom,
+      "getNumSleeves": atom,
+      "setToShockRecovery": atom,
+      "setToSynchronize": atom,
+      "setToCommitCrime": atom,
+      "setToUniversityCourse": atom,
+      "travel": atom,
+      "setToCompanyWork": atom,
+      "setToFactionWork": atom,
+      "setToGymWorkout": atom,
+      "getSleeveStats": atom,
+      "getTask": atom,
+      "getInformation": atom,
     };
   }();
 

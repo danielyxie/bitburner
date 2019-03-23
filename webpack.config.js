@@ -8,7 +8,7 @@ module.exports = (env, argv) => {
     const isDevelopment = argv.mode === 'development';
     const outputDirectory = isDevServer ? "dist-dev" : "dist";
     const entries = {};
-    entries[`${outputDirectory}/engine`] = "./src/engine.js";
+    entries[`${outputDirectory}/engine`] = "./src/engine.jsx";
     if (!isDevServer) {
         entries["tests/tests"] = "./tests/index.js";
     }
@@ -85,6 +85,13 @@ module.exports = (env, argv) => {
                     exclude: /node_modules/
                 },
                 {
+                    test: /\.(jsx)$/,
+                    exclude: /node_modules/,
+                    use: {
+                      loader: "babel-loader"
+                    }
+                },
+                {
                     test: /\.s?css$/,
                     use: [
                         MiniCssExtractPlugin.loader,
@@ -125,7 +132,8 @@ module.exports = (env, argv) => {
             extensions: [
                 ".tsx",
                 ".ts",
-                ".js"
+                ".js",
+                ".jsx",
             ]
         }
     };

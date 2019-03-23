@@ -1,16 +1,7 @@
-import {parse, Node}                            from "../utils/acorn";
-import {dialogBoxCreate}                        from "../utils/DialogBox";
+import { FconfSettings }                        from "./FconfSettings";
 
-var FconfSettings = {
-    ENABLE_BASH_HOTKEYS:        false,
-    ENABLE_TIMESTAMPS:          false,
-    MAIN_MENU_STYLE:            "default",
-    THEME_BACKGROUND_COLOR:     "#000000",
-    THEME_FONT_COLOR:           "#66ff33",
-    THEME_HIGHLIGHT_COLOR:      "#ffffff",
-    THEME_PROMPT_COLOR:         "#f92672",
-    WRAP_INPUT:                 false,
-}
+import { parse, Node }                          from "../../utils/acorn";
+import { dialogBoxCreate }                      from "../../utils/DialogBox";
 
 var FconfComments = {
     ENABLE_BASH_HOTKEYS: "Improved Bash emulation mode. Setting this to 1 enables several\n" +

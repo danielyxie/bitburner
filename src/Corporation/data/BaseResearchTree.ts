@@ -14,14 +14,14 @@ function makeNode(name: string): Node {
     return new Node({ text: research.name, cost: research.cost });
 }
 
-
-export function getBaseResearchTreeCopy(): ResearchTree {
-    const baseResearchTree: ResearchTree = new ResearchTree();
-
+// Creates the Nodes for the BaseResearchTree.
+// Return the Root Node
+function createBaseResearchTreeNodes(): Node {
     const rootNode: Node        = makeNode("Hi-Tech R&D Laboratory");
     const autoBrew: Node        = makeNode("AutoBrew");
     const autoParty: Node       = makeNode("AutoPartyManager");
     const autoDrugs: Node       = makeNode("Automatic Drug Administration");
+    const bulkPurchasing: Node  = makeNode("Bulk Purchasing");
     const cph4: Node            = makeNode("CPH4 Injections");
     const drones: Node          = makeNode("Drones");
     const dronesAssembly: Node  = makeNode("Drones - Assembly");
@@ -47,13 +47,39 @@ export function getBaseResearchTreeCopy(): ResearchTree {
     rootNode.addChild(autoBrew);
     rootNode.addChild(autoParty);
     rootNode.addChild(autoDrugs);
+    rootNode.addChild(bulkPurchasing);
     rootNode.addChild(drones);
     rootNode.addChild(joywire);
     rootNode.addChild(marketta1);
     rootNode.addChild(overclock);
     rootNode.addChild(scAssemblers);
 
-    baseResearchTree.setRoot(rootNode);
+    return rootNode;
+}
+
+export function getBaseResearchTreeCopy(): ResearchTree {
+    const baseResearchTree: ResearchTree = new ResearchTree();
+    baseResearchTree.setRoot(createBaseResearchTreeNodes());
 
     return baseResearchTree;
+}
+
+// Base Research Tree for Industry's that make products
+export function getProductIndustryResearchTreeCopy(): ResearchTree {
+    const researchTree: ResearchTree = new ResearchTree();
+    const root = createBaseResearchTreeNodes();
+
+    const upgradeFulcrum        = makeNode("uPgrade: Fulcrum");
+    const upgradeCapacity1      = makeNode("uPgrade: Capacity.I");
+    const upgradeCapacity2      = makeNode("uPgrade: Capacity.II");
+    const upgradeDashboard      = makeNode("uPgrade: Dashboard");
+
+    upgradeCapacity1.addChild(upgradeCapacity2);
+    upgradeFulcrum.addChild(upgradeCapacity1);
+    upgradeFulcrum.addChild(upgradeDashboard);
+    root.addChild(upgradeFulcrum);
+
+    researchTree.setRoot(root);
+
+    return researchTree;
 }

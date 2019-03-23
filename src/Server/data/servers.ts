@@ -81,6 +81,8 @@ interface IServerMetadata {
      * A "unique" server that has special implications when the player manually hacks it.
      */
     specialName?: string;
+
+    [key: string]: any;
 }
 
 /**

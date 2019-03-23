@@ -614,7 +614,6 @@ export class Sleeve extends Person {
      */
     travel(p: IPlayer, newCity: string): boolean {
         if (Cities[newCity] == null) {
-            console.error(`Invalid city ${newCity} passed into Sleeve.travel()`);
             return false;
         }
 
@@ -641,8 +640,8 @@ export class Sleeve extends Person {
 
         const company: Company | null = Companies[companyName];
         const companyPosition: CompanyPosition | null = CompanyPositions[p.jobs[companyName]];
-        if (company == null) { throw new Error(`Invalid company name specified in Sleeve.workForCompany(): ${companyName}`); }
-        if (companyPosition == null) { throw new Error(`Invalid CompanyPosition data in Sleeve.workForCompany(): ${companyName}`); }
+        if (company == null) { return false; }
+        if (companyPosition == null) { return false; }
         this.gainRatesForTask.money = companyPosition.baseSalary *
                                       company.salaryMultiplier *
                                       this.work_money_mult *
@@ -684,8 +683,8 @@ export class Sleeve extends Person {
      * Returns boolean indicating success
      */
     workForFaction(p: IPlayer, factionName: string, workType: string): boolean {
+        if (factionName === "") { return false; }
         if (!(Factions[factionName] instanceof Faction) || !p.factions.includes(factionName)) {
-            throw new Error(`Invalid Faction specified for Sleeve.workForFaction(): ${factionName}`);
             return false;
         }
 

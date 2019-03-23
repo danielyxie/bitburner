@@ -17,11 +17,13 @@ export function createStatusText(text: string) {
     }
 
     const statusElement: HTMLElement = getElementById("status-text");
+    statusElement.style.display = "block";
     statusElement.classList.add("status-text");
     statusElement.innerText = text;
     const handler: Action = () => {
-        statusElement.classList.remove("status-text");
         statusElement.innerText = "";
+        statusElement.style.display = "none";
+        statusElement.classList.remove("status-text");
     };
 
     x = setTimeoutRef(handler, threeSeconds);

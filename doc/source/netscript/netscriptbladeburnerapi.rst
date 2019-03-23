@@ -7,7 +7,7 @@ Netscript provides the following API for interacting with the game's Bladeburner
 The Bladeburner API is **not** immediately available to the player and must be unlocked
 later in the game
 
-**WARNING: This page contains spoilers for the game**
+.. warning:: This page contains spoilers for the game
 
 The Bladeburner API is unlocked in BitNode-7. If you are in BitNode-7, you will
 automatically gain access to this API. Otherwise, you must have Source-File 7 in
@@ -46,6 +46,7 @@ In :ref:`netscriptjs`::
     setActionAutolevel() <bladeburnerapi/setActionAutolevel>
     setActionLevel() <bladeburnerapi/setActionLevel>
     getRank() <bladeburnerapi/getRank>
+    getBlackOpRank() <bladeburnerapi/getBlackOpRank>
     getSkillPoints() <bladeburnerapi/getSkillPoints>
     getSkillLevel() <bladeburnerapi/getSkillLevel>
     getSkillUpgradeCost() <bladeburnerapi/getSkillUpgradeCost>

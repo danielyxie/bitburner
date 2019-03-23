@@ -258,6 +258,7 @@ export function initBitNodeMultipliers(p: IPlayer) {
             BitNodeMultipliers.FactionPassiveRepGain    = 0;
             break;
         case 3: //Corporatocracy
+            BitNodeMultipliers.HackingLevelMultiplier   = 0.8;
             BitNodeMultipliers.RepToDonateToFaction     = 0.5;
             BitNodeMultipliers.AugmentationRepCost      = 3;
             BitNodeMultipliers.AugmentationMoneyCost    = 3;
@@ -268,6 +269,8 @@ export function initBitNodeMultipliers(p: IPlayer) {
             BitNodeMultipliers.CompanyWorkMoney         = 0.25;
             BitNodeMultipliers.CrimeMoney               = 0.25;
             BitNodeMultipliers.HacknetNodeMoney         = 0.25;
+            BitNodeMultipliers.HomeComputerRamCost      = 1.5;
+            BitNodeMultipliers.PurchasedServerCost      = 2;
             break;
         case 4: //The Singularity
             BitNodeMultipliers.ServerMaxMoney           = 0.15;
@@ -363,6 +366,7 @@ export function initBitNodeMultipliers(p: IPlayer) {
             BitNodeMultipliers.PurchasedServerCost      = 5;
             BitNodeMultipliers.PurchasedServerLimit     = 0.6;
             BitNodeMultipliers.PurchasedServerMaxRam    = 0.5;
+            BitNodeMultipliers.BladeburnerRank          = 0.8;
             break;
         case 11: //The Big Crash
             BitNodeMultipliers.ServerMaxMoney               = 0.1;

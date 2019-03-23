@@ -1,6 +1,6 @@
 import { BitNodeMultipliers } from "./BitNode/BitNodeMultipliers";
 import { Player } from "./Player";
-import { Server } from "./Server";
+import { Server } from "./Server/Server";
 
 /**
  * Returns the chance the player has to successfully hack a server

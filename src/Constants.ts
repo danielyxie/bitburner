@@ -1,7 +1,7 @@
 import {IMap} from "./types";
 
 export let CONSTANTS: IMap<any> = {
-    Version:                "0.44.1",
+    Version:                "0.45.0",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -85,11 +85,12 @@ export let CONSTANTS: IMap<any> = {
     ScriptGetPurchasedServerMaxRam: 0.05,
     ScriptRoundRamCost:             0.05,
     ScriptReadWriteRamCost:         1.0,
-    ScriptArbScriptRamCost:         1.0, //Functions that apply to all scripts regardless of args
+    ScriptArbScriptRamCost:         1.0, // Functions that apply to all scripts regardless of args
     ScriptGetScriptRamCost:         0.1,
     ScriptGetHackTimeRamCost:       0.05,
     ScriptGetFavorToDonate:         0.10,
     ScriptCodingContractBaseRamCost:10,
+    ScriptSleeveBaseRamCost:        4,
 
     ScriptSingularityFn1RamCost:    1,
     ScriptSingularityFn2RamCost:    2,
@@ -281,17 +282,33 @@ export let CONSTANTS: IMap<any> = {
 
     LatestUpdate:
     `
-    v0.44.1
-    * Duplicate Sleeve changes:
-    ** You can now purchase Augmentations for your Duplicate Sleeves
-    ** Sleeves are now assigned to Shock Recovery task by default
-    ** Shock Recovery and Synchronize tasks are now twice as effective
+    v0.45.0
+    * Corporation changes:
+    ** Decreased the time of a full market cycle from 15 seconds to 10 seconds.
+    ** This means that each Corporation 'state' will now only take 2 seconds, rather than 3
+    ** Increased initial salaries for newly-hired employees
+    ** Increased the cost multiplier for upgrading office size (the cost will increase faster)
+    ** The stats of your employees now has a slightly larger effect on production & sales
+    ** Added several new Research upgrades
+    ** Market-TA research now allows you to automatically set sale price at optimal values
+    ** Market-TA research now works for Products (not just Materials)
+    ** Reduced the amount of Scientific Research needed to unlock the Hi-Tech R&D Laboratory from 10k to 5k
+    ** Energy Material requirement of the Software industry reduced from 1 to 0.5
+    ** It is now slightly easier to increase the Software industry's production multiplier
+    ** Industries now have a maximum number of allowed products, starting at 3. This can be increased through research.
+    ** You can now see an approximation of how each material affects an industry's production multiplier by clicking the "?" help tip next to it
+    ** Significantly changed the effects of the different employee positions. See updated descriptions
+    ** Reduced the amount of money you gain from private investors
+    ** Training employees is now 3x more effective
+    ** Bug Fix: An industry's products are now properly separated between different cities
 
-    * Changed documentation so that Netscript functions are own their own pages. Sorry if this is annoying, it was necessary for properly cross-referencing
-    * Officially deprecated the Wiki (the fandom site). Use the 'readthedocs' Documentation instead
-    * Bug Fix: 'rm' Terminal and Netscript commands now work on non-program files that have '.exe' in the name (by Github user MasonD)
-    * Bug Fix: The 'Find All Valid Math Expressions' Coding Contract should now properly ignore whitespace in answers
-    * Bug Fix: The 'Merge Overlapping Intervals' Coding Contract should now properly accept 2D arrays when being attempted through Netscript
+    * The QLink Augemntation is now significantly stronger, but also significantly more expensive (by hydroflame)
+    * Added a Netscript API for Duplicate Sleeves (by hydroflame)
+    * Modified the multipliers of BitNode-3 and BitNode-8 to make them slightly harder
+    * After installing Augmentations, Duplicate Sleeves will now default to Synchronize if their Shock is 0
+    * Bug Fix: Bladeburner's Hyperbolic Regeneration Chamber should no longer instantly refill all stamina
+    * Bug Fix: growthAnalyze() function now properly accounts for BitNode multipliers
+    * Bug Fix: The cost of purchasing Augmentations for Duplicate Sleeves no longer scales with how many Augs you've purchased for yourself
     `
 
 }

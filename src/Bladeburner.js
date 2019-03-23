@@ -1417,7 +1417,7 @@ Bladeburner.prototype.completeAction = function() {
             break;
         case ActionTypes["Hyperbolic Regeneration Chamber"]:
             Player.regenerateHp(HrcHpGain);
-            this.stamina = Math.max(this.maxStamina, this.stamina + HrcStaminaGain); // TODO Turn this into a const and adjust value
+            this.stamina = Math.min(this.maxStamina, this.stamina + HrcStaminaGain);
             this.startAction(this.action);
             if (this.logging.general) {
                 this.log(`Rested in Hyperbolic Regeneration Chamber. Restored ${HrcHpGain} HP and gained ${HrcStaminaGain} stamina`);
@@ -2641,7 +2641,7 @@ Bladeburner.prototype.updateOperationsUIElement = function(el, action) {
         display:"inline-block",
         innerHTML:action.desc + "\n\n" +
                   "Estimated success chance: " + formatNumber(estimatedSuccessChance*100, 1) + "%\n" +
-                  "Time Required(s): " + formatNumber(actionTime, 1) + "\n" +
+                  "Time Required(s): " + formatNumber(actionTime, 0) + "\n" +
                   "Operations remaining: " + Math.floor(action.count) + "\n" +
                   "Successes: " + action.successes + "\n" +
                   "Failures: " + action.failures,
@@ -2761,7 +2761,7 @@ Bladeburner.prototype.updateBlackOpsUIElement = function(el, action) {
     el.appendChild(createElement("p", {
         display:"inline-block",
         innerHTML:"Estimated Success Chance: " + formatNumber(estimatedSuccessChance*100, 1) + "%\n" +
-                  "Time Required(s): " + formatNumber(actionTime, 1),
+                  "Time Required(s): " + formatNumber(actionTime, 0),
     }))
 }
 
@@ -3953,7 +3953,7 @@ function initBladeburner() {
     GeneralActions[actionName] = new Action({
         name: actionName,
         desc: "Enter cryogenic stasis using the Bladeburner division's hi-tech Regeneration Chamber. " +
-              "This will slowly heal your wounds and slightly increase your stamina gain.<br><br>",
+              "This will slowly heal your wounds and slightly increase your stamina.<br><br>",
     });
 
     //Black Operations

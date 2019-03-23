@@ -1,34 +1,15 @@
-import { Augmentatation }                       from "./Augmentation/Augmentation";
-import { Augmentations }                        from "./Augmentation/Augmentations";
-import { AugmentationNames }                    from "./Augmentation/data/AugmentationNames";
-import { Programs }                             from "./Programs/Programs";
-import { inMission }                            from "./Missions";
-import { Player }                               from "./Player";
-import { redPillFlag }                          from "./RedPill";
-import { GetServerByHostname }                  from "./Server";
-import { Settings }                             from "./Settings/Settings";
+import { Message }                      from "./Message";
+import { Augmentatation }               from "../Augmentation/Augmentation";
+import { Augmentations }                from "../Augmentation/Augmentations";
+import { AugmentationNames }            from "../Augmentation/data/AugmentationNames";
+import { Programs }                     from "../Programs/Programs";
+import { inMission }                    from "../Missions";
+import { Player }                       from "../Player";
+import { redPillFlag }                  from "../RedPill";
+import { GetServerByHostname }          from "../Server/ServerHelpers";
+import { Settings }                     from "../Settings/Settings";
 import { dialogBoxCreate,
-         dialogBoxOpened}                       from "../utils/DialogBox";
-import {Reviver, Generic_toJSON,
-        Generic_fromJSON}                       from "../utils/JSONReviver";
-
-/* Message.js */
-function Message(filename="", msg="") {
-    this.filename   = filename;
-    this.msg        = msg;
-    this.recvd      = false;
-}
-
-Message.prototype.toJSON = function() {
-    return Generic_toJSON("Message", this);
-}
-
-
-Message.fromJSON = function(value) {
-    return Generic_fromJSON(Message, value.data);
-}
-
-Reviver.constructors.Message = Message;
+         dialogBoxOpened}               from "../../utils/DialogBox";
 
 //Sends message to player, including a pop up
 function sendMessage(msg, forced=false) {
