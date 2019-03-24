@@ -118,7 +118,7 @@ export class Sleeve extends Person {
     memory: number = 0;
 
     /**
-     * Sleeve shock. Number between 1 and 100
+     * Sleeve shock. Number between 0 and 100
      * Trauma/shock that comes with being in a sleeve. Experience earned
      * is multipled by shock%. This gets applied before synchronization
      *

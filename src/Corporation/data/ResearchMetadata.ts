@@ -78,6 +78,21 @@ export const researchMetadata: IConstructorParams[] = [
         sciResearchMult: 1.1,
     },
     {
+        name: "HRBuddy-Recruitment",
+        cost: 15e3,
+        desc: "Use automated software to handle the hiring of employees. With this " +
+              "research, each office will automatically hire one employee per " +
+              "market cycle if there is available space."
+
+    },
+    {
+        name: "HRBuddy-Training",
+        cost: 20e3,
+        desc: "Use automated software to handle the training of employees. With this " +
+              "research, each employee hired with HRBuddy-Recruitment will automatically " +
+              "be assigned to 'Training', rather than being unassigned."
+    },
+    {
         name: "JoyWire",
         cost: 20e3,
         desc: "A brain implant which is installed in employees, increasing their " +

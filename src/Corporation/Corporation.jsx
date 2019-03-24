@@ -61,7 +61,6 @@ import { CorporationRouting }                           from "./ui/Routing";
 
 import Decimal                                          from "decimal.js";
 
-
 /* Constants */
 export const INITIALSHARES                  = 1e9; //Total number of shares you have at your company
 export const SHARESPERPRICEUPDATE           = 1e6; //When selling large number of shares, price is dynamically updated for every batch of this amount
@@ -490,11 +489,11 @@ Industry.prototype.process = function(marketCycles=1, state, company) {
         this.thisCycleRevenue = new Decimal(0);
         this.thisCycleExpenses = new Decimal(0);
 
-        //Once you start making revenue, the player should no longer be
-        //considered new, and therefore no longer needs the 'tutorial' UI elements
+        // Once you start making revenue, the player should no longer be
+        // considered new, and therefore no longer needs the 'tutorial' UI elements
         if (this.lastCycleRevenue.gt(0)) {this.newInd = false;}
 
-        //Process offices (and the employees in them)
+        // Process offices (and the employees in them)
         var employeeSalary = 0;
         for (var officeLoc in this.offices) {
             if (this.offices[officeLoc] instanceof OfficeSpace) {
@@ -503,15 +502,15 @@ Industry.prototype.process = function(marketCycles=1, state, company) {
         }
         this.thisCycleExpenses = this.thisCycleExpenses.plus(employeeSalary);
 
-        //Process change in demand/competition of materials/products
+        // Process change in demand/competition of materials/products
         this.processMaterialMarket(marketCycles);
         this.processProductMarket(marketCycles);
 
-        //Process loss of popularity
+        // Process loss of popularity
         this.popularity -= (marketCycles * .0001);
         this.popularity = Math.max(0, this.popularity);
 
-        //Process Dreamsense gains
+        // Process Dreamsense gains
         var popularityGain = company.getDreamSenseGain(), awarenessGain = popularityGain * 4;
         if (popularityGain > 0) {
             this.popularity += (popularityGain * marketCycles);
@@ -521,19 +520,19 @@ Industry.prototype.process = function(marketCycles=1, state, company) {
         return;
     }
 
-    //Process production, purchase, and import/export of materials
+    // Process production, purchase, and import/export of materials
     var res = this.processMaterials(marketCycles, company);
     this.thisCycleRevenue = this.thisCycleRevenue.plus(res[0]);
     this.thisCycleExpenses = this.thisCycleExpenses.plus(res[1]);
 
-    //Process creation, production & sale of products
+    // Process creation, production & sale of products
     res = this.processProducts(marketCycles, company);
     this.thisCycleRevenue = this.thisCycleRevenue.plus(res[0]);
     this.thisCycleExpenses = this.thisCycleExpenses.plus(res[1]);
 
 }
 
-//Process change in demand and competition for this industry's materials
+// Process change in demand and competition for this industry's materials
 Industry.prototype.processMaterialMarket = function(marketCycles=1) {
     //References to prodMats and reqMats
     var reqMats = this.reqMats, prodMats = this.prodMats;
@@ -1334,9 +1333,7 @@ Industry.prototype.createResearchBox = function() {
         researchTreeBox = null;
     }
 
-    this.updateResearchTree();
     const researchTree = IndustryResearchTrees[this.type];
-
 
     // Create the popup first, so that the tree diagram can be added to it
     // This is handled by Treant
@@ -1386,6 +1383,10 @@ Industry.prototype.createResearchBox = function() {
                 // Get the Node from the Research Tree and set its 'researched' property
                 researchTree.research(allResearch[i]);
                 this.researched[allResearch[i]] = true;
+
+                dialogBoxCreate(`Researched ${allResearch[i]}. It may take a market cycle ` +
+                                `(~${SecsPerMarketCycle} seconds) before the effects of ` +
+                                `the Research apply.`);
 
                 return this.createResearchBox();
             } else {
@@ -1647,6 +1648,14 @@ OfficeSpace.prototype.atCapacity = function() {
 OfficeSpace.prototype.process = function(marketCycles=1, parentRefs) {
     var corporation = parentRefs.corporation, industry = parentRefs.industry;
 
+    // HRBuddy AutoRecruitment and training
+    if (industry.hasResearch("HRBuddy-Recruitment") && !this.atCapacity()) {
+        const emp = this.hireRandomEmployee();
+        if (industry.hasResearch("HRBuddy-Training")) {
+            emp.pos = EmployeePositions.Training;
+        }
+    }
+
     // Process Office properties
     this.maxEne = 100;
     this.maxHap = 100;
@@ -1828,8 +1837,7 @@ OfficeSpace.prototype.hireEmployee = function(employee, parentRefs) {
     yesNoTxtInpBoxCreate("Give your employee a nickname!");
 }
 
-OfficeSpace.prototype.hireRandomEmployee = function(parentRefs) {
-    var company = parentRefs.corporation, division = parentRefs.industry;
+OfficeSpace.prototype.hireRandomEmployee = function() {
     if (this.atCapacity()) { return; }
     if (document.getElementById("cmpy-mgmt-hire-employee-popup") != null) {return;}
 
@@ -1853,13 +1861,15 @@ OfficeSpace.prototype.hireRandomEmployee = function(parentRefs) {
 
     var name = generateRandomString(7);
 
-    for (var i = 0; i < this.employees.length; ++i) {
+    for (let i = 0; i < this.employees.length; ++i) {
         if (this.employees[i].name === name) {
-            return this.hireRandomEmployee(parentRefs);
+            return this.hireRandomEmployee();
         }
     }
     emp.name = name;
     this.employees.push(emp);
+
+    return emp;
 }
 
 //Finds the first unassigned employee and assigns its to the specified job

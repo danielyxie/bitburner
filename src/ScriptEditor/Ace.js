@@ -114,7 +114,7 @@ class AceEditorWrapper extends ScriptEditor {
                         });
 
                         //Get functions from namespaces
-                        const namespaces = ["bladeburner", "hacknet", "codingcontract", "gang"];
+                        const namespaces = ["bladeburner", "hacknet", "codingcontract", "gang", "sleeve"];
                         if (namespaces.includes(name)) {
                             let namespace       = fns[name];
                             if (typeof namespace !== "object") {continue;}
