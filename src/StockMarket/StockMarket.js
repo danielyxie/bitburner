@@ -1093,8 +1093,8 @@ function createStockTicker(stock) {
 
     /* Create panel DOM */
     var qtyInput = document.createElement("input"),
-        longShortSelect = document.createElement("select"),
-        orderTypeSelect = document.createElement("select"),
+        longShortSelect = document.createElement("select", {class: "dropdown"}),
+        orderTypeSelect = document.createElement("select", {class: "dropdown"}),
         buyButton = document.createElement("span"),
         sellButton = document.createElement("span"),
         buyMaxButton = document.createElement("span"),
@@ -1113,6 +1113,7 @@ function createStockTicker(stock) {
                           " || (event.keyCode==46) )");
 
     longShortSelect.classList.add("stock-market-input");
+    longShortSelect.classList.add("dropdown");
     longShortSelect.setAttribute("id", tickerId + "-pos-selector");
     var longOpt = document.createElement("option");
     longOpt.text = "Long";
@@ -1124,6 +1125,7 @@ function createStockTicker(stock) {
     }
 
     orderTypeSelect.classList.add("stock-market-input");
+    orderTypeSelect.classList.add("dropdown");
     orderTypeSelect.setAttribute("id", tickerId + "-order-selector");
     var marketOpt = document.createElement("option");
     marketOpt.text = "Market Order";
