@@ -120,7 +120,8 @@ interface IBitNodeMultipliers {
     HackingLevelMultiplier: number;
 
     /**
-     * Influences how much money each Hacknet node can generate.
+     * Influences how much money is produced by Hacknet Nodes.
+     * Influeces the hash rate of Hacknet Servers (unlocked in BitNode-9)
      */
     HacknetNodeMoney: number;
 

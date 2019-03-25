@@ -30,8 +30,10 @@ import { FconfSettings }                                from "./Fconf/FconfSetti
 import {displayLocationContent,
         initLocationButtons}                            from "./Location";
 import {Locations}                                      from "./Locations";
-import {displayHacknetNodesContent, processAllHacknetNodeEarnings,
-        updateHacknetNodesContent}                      from "./HacknetNode";
+import { hasHacknetServers,
+         renderHacknetNodesUI,
+         clearHacknetNodesUI,
+         processHacknetEarnings }                       from "./Hacknet/HacknetHelpers";
 import {iTutorialStart}                                 from "./InteractiveTutorial";
 import {initLiterature}                                 from "./Literature";
 import { checkForMessagesToSend, initMessages }         from "./Message/MessageHelpers";
@@ -109,6 +111,7 @@ import "../css/mainmenu.scss";
 import "../css/characteroverview.scss";
 import "../css/terminal.scss";
 import "../css/scripteditor.scss";
+import "../css/hacknetnodes.scss";
 import "../css/menupages.scss";
 import "../css/redpill.scss";
 import "../css/stockmarket.scss";
@@ -292,8 +295,8 @@ const Engine = {
     loadHacknetNodesContent: function() {
         Engine.hideAllContent();
         Engine.Display.hacknetNodesContent.style.display = "block";
-        displayHacknetNodesContent();
         routing.navigateTo(Page.HacknetNodes);
+        renderHacknetNodesUI();
         MainMenuLinks.HacknetNodes.classList.add("active");
     },
 
@@ -504,7 +507,7 @@ const Engine = {
         Engine.Display.characterContent.style.display = "none";
         Engine.Display.scriptEditorContent.style.display = "none";
         Engine.Display.activeScriptsContent.style.display = "none";
-        Engine.Display.hacknetNodesContent.style.display = "none";
+        clearHacknetNodesUI();
         Engine.Display.worldContent.style.display = "none";
         Engine.Display.createProgramContent.style.display = "none";
         Engine.Display.factionsContent.style.display = "none";
@@ -868,7 +871,7 @@ const Engine = {
         updateOnlineScriptTimes(numCycles);
 
         //Hacknet Nodes
-        processAllHacknetNodeEarnings(numCycles);
+        processHacknetEarnings(numCycles);
     },
 
     //Counters for the main event loop. Represent the number of game cycles are required
@@ -930,7 +933,7 @@ const Engine = {
         if (Engine.Counters.updateDisplays <= 0) {
             Engine.displayCharacterOverviewInfo();
             if (routing.isOn(Page.HacknetNodes)) {
-                updateHacknetNodesContent();
+                renderHacknetNodesUI();
             } else if (routing.isOn(Page.CreateProgram)) {
                 displayCreateProgramContent();
             } else if (routing.isOn(Page.Sleeves)) {
@@ -1181,7 +1184,10 @@ const Engine = {
             }
 
             //Hacknet Nodes offline progress
-            var offlineProductionFromHacknetNodes = processAllHacknetNodeEarnings(numCyclesOffline);
+            var offlineProductionFromHacknetNodes = processHacknetEarnings(numCyclesOffline);
+            const hacknetProdInfo = hasHacknetServers() ?
+                                    `${numeralWrapper.format(offlineProductionFromHacknetNodes, "0.000a")} hashes` :
+                                    `${numeralWrapper.formatMoney(offlineProductionFromHacknetNodes)}`;
 
             //Passive faction rep gain offline
             processPassiveFactionRepGain(numCyclesOffline);
@@ -1235,8 +1241,8 @@ const Engine = {
             const timeOfflineString = convertTimeMsToTimeElapsedString(time);
             dialogBoxCreate(`Offline for ${timeOfflineString}. While you were offline, your scripts ` +
                             "generated <span class='money-gold'>" +
-                            numeralWrapper.formatMoney(offlineProductionFromScripts) + "</span> and your Hacknet Nodes generated <span class='money-gold'>" +
-                            numeralWrapper.formatMoney(offlineProductionFromHacknetNodes) + "</span>");
+                            numeralWrapper.formatMoney(offlineProductionFromScripts) + "</span> " +
+                            "and your Hacknet Nodes generated <span class='money-gold'>" + hacknetProdInfo + "</span>");
             //Close main menu accordions for loaded game
             var visibleMenuTabs = [terminal, createScript, activeScripts, stats,
                                    hacknetnodes, city, tutorial, options, dev];

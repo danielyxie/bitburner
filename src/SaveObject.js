@@ -10,7 +10,8 @@ import { processPassiveFactionRepGain }         from "./Faction/FactionHelpers";
 import { loadFconf }                            from "./Fconf/Fconf";
 import { FconfSettings }                        from "./Fconf/FconfSettings";
 import {loadAllGangs, AllGangs}                 from "./Gang";
-import {processAllHacknetNodeEarnings}          from "./HacknetNode";
+import { hasHacknetServers,
+         processHacknetEarnings }               from "./Hacknet/HacknetHelpers";
 import { loadMessages, initMessages, Messages } from "./Message/MessageHelpers";
 import {Player, loadPlayer}                     from "./Player";
 import { loadAllRunningScripts }                from "./Script/ScriptHelpers";
@@ -491,7 +492,10 @@ function loadImportedGame(saveObj, saveString) {
     }
 
     //Hacknet Nodes offline progress
-    var offlineProductionFromHacknetNodes = processAllHacknetNodeEarnings(numCyclesOffline);
+    var offlineProductionFromHacknetNodes = processHacknetEarnings(numCyclesOffline);
+    const hacknetProdInfo = hasHacknetServers() ?
+                            `${numeralWrapper.format(offlineProductionFromHacknetNodes, "0.000a")} hashes` :
+                            `${numeralWrapper.formatMoney(offlineProductionFromHacknetNodes)}`;
 
     //Passive faction rep gain offline
     processPassiveFactionRepGain(numCyclesOffline);
@@ -516,8 +520,8 @@ function loadImportedGame(saveObj, saveString) {
     const timeOfflineString = convertTimeMsToTimeElapsedString(time);
     dialogBoxCreate(`Offline for ${timeOfflineString}. While you were offline, your scripts ` +
                     "generated <span class='money-gold'>" +
-                    numeralWrapper.formatMoney(offlineProductionFromScripts) + "</span> and your Hacknet Nodes generated <span class='money-gold'>" +
-                    numeralWrapper.formatMoney(offlineProductionFromHacknetNodes) + "</span>");
+                    numeralWrapper.formatMoney(offlineProductionFromScripts) + "</span> " +
+                    "and your Hacknet Nodes generated <span class='money-gold'>" + hacknetProdInfo + "</span>");
     return true;
 }
 
