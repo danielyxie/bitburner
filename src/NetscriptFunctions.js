@@ -73,7 +73,8 @@ import {WorkerScript, workerScripts,
 import {makeRuntimeRejectMsg, netscriptDelay,
         runScriptFromScript}                        from "./NetscriptEvaluator";
 import {NetscriptPort}                              from "./NetscriptPort";
-import { SleeveTaskType }                           from "./PersonObjects/Sleeve/SleeveTaskTypesEnum"
+import { SleeveTaskType }                           from "./PersonObjects/Sleeve/SleeveTaskTypesEnum";
+import { findSleevePurchasableAugs }                from "./PersonObjects/Sleeve/Sleeve";
 
 import {Page, routing}                              from "./ui/navigationTracking";
 import {numeralWrapper}                             from "./ui/numeralFormat";
@@ -5080,6 +5081,70 @@ function NetscriptFunctions(workerScript) {
                     workRepGain:     sl.getRepGain(),
                 }
             },
+            getSleeveAugmentations : function(sleeveNumber=0) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getSleeveAugmentations", CONSTANTS.ScriptSleeveBaseRamCost);
+                }
+                if (Player.bitNodeN !== 10 && !SourceFileFlags[10]) {
+                    throw makeRuntimeRejectMsg(workerScript, "getSleeveAugmentations() failed because you do not currently have access to the Sleeve API. This is either because you are not in BitNode-10 or because you do not have Source-File 10");
+                }
+                updateDynamicRam("getSleeveAugmentations", CONSTANTS.ScriptSleeveBaseRamCost);
+                if (sleeveNumber >= Player.sleeves.length || sleeveNumber < 0) {
+                    workerScript.log(`ERROR: sleeve.getSleeveAugmentations(${sleeveNumber}) failed because it is an invalid sleeve number.`);
+                    return [];
+                }
+
+                const augs = [];
+                for (let i = 0; i < Player.sleeves[sleeveNumber].augmentations.length; i++) {
+                    augs.push(Player.sleeves[sleeveNumber].augmentations[i].name);
+                }
+                return augs;
+            },
+            getSleevePurchasableAugs : function(sleeveNumber=0) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getSleevePurchasableAugs", CONSTANTS.ScriptSleeveBaseRamCost);
+                }
+                if (Player.bitNodeN !== 10 && !SourceFileFlags[10]) {
+                    throw makeRuntimeRejectMsg(workerScript, "getSleevePurchasableAugs() failed because you do not currently have access to the Sleeve API. This is either because you are not in BitNode-10 or because you do not have Source-File 10");
+                }
+                updateDynamicRam("getSleevePurchasableAugs", CONSTANTS.ScriptSleeveBaseRamCost);
+                if (sleeveNumber >= Player.sleeves.length || sleeveNumber < 0) {
+                    workerScript.log(`ERROR: sleeve.getSleevePurchasableAugs(${sleeveNumber}) failed because it is an invalid sleeve number.`);
+                    return [];
+                }
+
+                const purchasableAugs = findSleevePurchasableAugs(Player.sleeves[sleeveNumber], Player);
+                const augs = [];
+                for (let i = 0; i < purchasableAugs.length; i++) {
+                    const aug = purchasableAugs[i];
+                    augs.push({
+                        name: aug.name,
+                        cost: aug.startingCost,
+                    });
+                }
+
+                return augs;
+            },
+            purchaseSleeveAug : function(sleeveNumber=0, augName="") {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("purchaseSleeveAug", CONSTANTS.ScriptSleeveBaseRamCost);
+                }
+                if (Player.bitNodeN !== 10 && !SourceFileFlags[10]) {
+                    throw makeRuntimeRejectMsg(workerScript, "purchaseSleeveAug() failed because you do not currently have access to the Sleeve API. This is either because you are not in BitNode-10 or because you do not have Source-File 10");
+                }
+                updateDynamicRam("purchaseSleeveAug", CONSTANTS.ScriptSleeveBaseRamCost);
+                if (sleeveNumber >= Player.sleeves.length || sleeveNumber < 0) {
+                    workerScript.log(`ERROR: sleeve.purchaseSleeveAug(${sleeveNumber}) failed because it is an invalid sleeve number.`);
+                    return false;
+                }
+
+                const aug = Augmentations[augName];
+                if (!aug) {
+                    workerScript.log(`ERROR: sleeve.purchaseSleeveAug(${sleeveNumber}) failed because ${augName} is not a valid aug.`);
+                }
+
+                return Player.sleeves[sleeveNumber].tryBuyAugmentation(Player, aug);
+            }
         } // End sleeve
     } //End return
 } //End NetscriptFunction()
