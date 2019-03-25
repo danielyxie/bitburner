@@ -554,7 +554,7 @@ export class IndustryOffice extends BaseReactComponent {
         }
         const autohireEmployeeButtonOnClick = () => {
             if (office.atCapacity()) { return; }
-            office.hireRandomEmployee({ corporation: corp, industry: division });
+            office.hireRandomEmployee();
             this.corp().rerender();
         }
 

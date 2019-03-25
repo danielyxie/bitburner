@@ -3,6 +3,13 @@
 Changelog
 =========
 
+v0.45.1 - 3/23/2019
+-------------------
+* Added two new Corporation Researches
+* General UI improvements (by hydroflame and koriar)
+* Bug Fix: Sleeve Netscript API should no longer cause Dynamic RAM errors
+* Bug Fix: sleeve.getSleeveStats() should now work properly
+
 v0.45.0 - 3/22/2019
 -------------------
 * Corporation changes:

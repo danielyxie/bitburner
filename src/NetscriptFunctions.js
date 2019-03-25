@@ -4975,9 +4975,9 @@ function NetscriptFunctions(workerScript) {
                     return false;
                 }
 
-                const sl = Player.sleeves[i];
+                const sl = Player.sleeves[sleeveNumber];
                 return {
-                    shock: sl.shock,
+                    shock: 100 - sl.shock,
                     sync: sl.sync,
                     hacking_skill: sl.hacking_skill,
                     strength: sl.strength,
