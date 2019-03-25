@@ -196,7 +196,7 @@ export function runScriptFromScript(server, scriptname, args, workerScript, thre
                 }
                 var runningScriptObj = new RunningScript(script, args);
                 runningScriptObj.threads = threads;
-                server.runningScripts.push(runningScriptObj);    //Push onto runningScripts
+                server.runScript(runningScriptObj, Player); // Push onto runningScripts
                 addWorkerScript(runningScriptObj, server);
                 return Promise.resolve(true);
             }

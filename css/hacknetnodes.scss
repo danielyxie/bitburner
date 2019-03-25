@@ -1,0 +1,75 @@
+@import "mixins";
+@import "theme";
+
+/**
+ * Styling for the Hacknet Nodes UI Page
+ */
+
+#hacknet-nodes-container {
+    position: fixed;
+    padding: 10px;
+}
+
+.hacknet-general-info {
+    margin: 10px;
+    width: 70vw;
+}
+
+#hacknet-nodes-container li {
+    float: left;
+    overflow: hidden;
+    white-space: nowrap;
+
+    &.hacknet-node {
+        $boxShadowArgs: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 0 16px rgba(0, 0, 0, 0.1);
+        @include boxShadow($boxShadowArgs);
+
+        margin: 6px;
+        padding: 7px;
+        width: 35vw;
+        border: 2px solid var(--my-highlight-color);
+    }
+}
+
+#hacknet-nodes-list {
+    list-style: none;
+    width: 82vw;
+}
+
+#hacknet-nodes-money {
+    margin: 10px;
+    float: left;
+}
+
+#hacknet-nodes-money-multipliers-div {
+    display: inline-block;
+    width: 70vw;
+}
+
+#hacknet-nodes-multipliers {
+    float: right;
+}
+
+#hacknet-nodes-purchase-button {
+    display: inline-block;
+}
+
+.hacknet-node-container {
+    display: inline-table;
+
+    .row {
+        display: table-row;
+        height: 30px;
+
+        p {
+            display: table-cell;
+        }
+    }
+
+    .upgradable-info {
+        display: inline-block;
+        margin: 0 4px; /* Don't want the vertical margin/padding, just left & right */
+        padding: 0 4px;
+        width: $defaultFontSize * 4;
+    }
+}

@@ -1,7 +1,12 @@
+/**
+ * Generic Game Constants
+ *
+ * Constants for specific mechanics or features will NOT be here.
+ */
 import {IMap} from "./types";
 
 export let CONSTANTS: IMap<any> = {
-    Version:                "0.44.1",
+    Version:                "0.45.1",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -17,23 +22,8 @@ export let CONSTANTS: IMap<any> = {
     /* Base costs */
     BaseCostFor1GBOfRamHome: 32000,
     BaseCostFor1GBOfRamServer: 55000, //1 GB of RAM
-    BaseCostFor1GBOfRamHacknetNode: 30000,
 
     TravelCost: 200e3,
-
-    BaseCostForHacknetNode: 1000,
-    BaseCostForHacknetNodeCore: 500000,
-
-    /* Hacknet Node constants */
-    HacknetNodeMoneyGainPerLevel: 1.6,
-    HacknetNodePurchaseNextMult: 1.85,   //Multiplier when purchasing an additional hacknet node
-    HacknetNodeUpgradeLevelMult: 1.04,  //Multiplier for cost when upgrading level
-    HacknetNodeUpgradeRamMult: 1.28,     //Multiplier for cost when upgrading RAM
-    HacknetNodeUpgradeCoreMult: 1.48,    //Multiplier for cost when buying another core
-
-    HacknetNodeMaxLevel: 200,
-    HacknetNodeMaxRam: 64,
-    HacknetNodeMaxCores: 16,
 
     /* Faction and Company favor */
     BaseFavorToDonate:            150,
@@ -126,6 +116,7 @@ export let CONSTANTS: IMap<any> = {
     InfiltrationBribeBaseAmount: 100e3,    //Amount per clearance level
     InfiltrationMoneyValue:   5e3,         //Convert "secret" value to money
     InfiltrationRepValue: 1.4,             //Convert "secret" value to faction reputation
+    InfiltrationExpPow: 0.7,
 
     //Stock market constants
     WSEAccountCost:         200e6,
@@ -282,6 +273,12 @@ export let CONSTANTS: IMap<any> = {
 
     LatestUpdate:
     `
+    v0.45.1
+    * Added two new Corporation Researches
+    * General UI improvements (by hydroflame and koriar)
+    * Bug Fix: Sleeve Netscript API should no longer cause Dynamic RAM errors
+    * Bug Fix: sleeve.getSleeveStats() should now work properly
+
     v0.45.0
     * Corporation changes:
     ** Decreased the time of a full market cycle from 15 seconds to 10 seconds.
@@ -301,13 +298,12 @@ export let CONSTANTS: IMap<any> = {
     ** Reduced the amount of money you gain from private investors
     ** Training employees is now 3x more effective
     ** Bug Fix: An industry's products are now properly separated between different cities
-
-    * The QLink Augemntation is now significantly stronger (by hydroflame)
+    * The QLink Augemntation is now significantly stronger, but also significantly more expensive (by hydroflame)
     * Added a Netscript API for Duplicate Sleeves (by hydroflame)
     * Modified the multipliers of BitNode-3 and BitNode-8 to make them slightly harder
     * After installing Augmentations, Duplicate Sleeves will now default to Synchronize if their Shock is 0
     * Bug Fix: Bladeburner's Hyperbolic Regeneration Chamber should no longer instantly refill all stamina
+    * Bug Fix: growthAnalyze() function now properly accounts for BitNode multipliers
     * Bug Fix: The cost of purchasing Augmentations for Duplicate Sleeves no longer scales with how many Augs you've purchased for yourself
     `
-
 }

@@ -19,6 +19,7 @@ import {calculateHackingChance,
         calculateHackingTime,
         calculateGrowTime,
         calculateWeakenTime}                from "./Hacking";
+import { HacknetServer }                    from "./Hacknet/HacknetServer";
 import {TerminalHelpText, HelpTexts}        from "./HelpText";
 import {iTutorialNextStep, iTutorialSteps,
         ITutorial}                          from "./InteractiveTutorial";
@@ -760,18 +761,19 @@ let Terminal = {
     finishAnalyze: function(cancelled = false) {
 		if (cancelled == false) {
             let currServ = Player.getCurrentServer();
+            const isHacknet = currServ instanceof HacknetServer;
 			post(currServ.hostname + ": ");
             post("Organization name: " + currServ.organizationName);
             var rootAccess = "";
             if (currServ.hasAdminRights) {rootAccess = "YES";}
             else {rootAccess = "NO";}
             post("Root Access: " + rootAccess);
-			post("Required hacking skill: " + currServ.requiredHackingSkill);
+			if (!isHacknet) { post("Required hacking skill: " + currServ.requiredHackingSkill); }
 			post("Server security level: " + numeralWrapper.format(currServ.hackDifficulty, '0.000a'));
 			post("Chance to hack: " + numeralWrapper.format(calculateHackingChance(currServ), '0.00%'));
 			post("Time to hack: " + numeralWrapper.format(calculateHackingTime(currServ), '0.000') + " seconds");
 			post("Total money available on server: " + numeralWrapper.format(currServ.moneyAvailable, '$0,0.00'));
-			post("Required number of open ports for NUKE: " + currServ.numOpenPortsRequired);
+			if (!isHacknet) { post("Required number of open ports for NUKE: " + currServ.numOpenPortsRequired); }
 
             if (currServ.sshPortOpen) {
 				post("SSH port: Open")
@@ -2240,7 +2242,7 @@ let Terminal = {
                     post("May take a few seconds to start up the process...");
                     var runningScriptObj = new RunningScript(script, args);
                     runningScriptObj.threads = numThreads;
-					server.runningScripts.push(runningScriptObj);
+					server.runScript(runningScriptObj, Player);
 
 					addWorkerScript(runningScriptObj, server);
 					return;

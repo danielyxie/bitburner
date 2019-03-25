@@ -133,7 +133,7 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
             <h1 style="color:white;"> Script Editor Options </h1>
             <fieldset>
             <label for="script-editor-option-editor">Editor</label>
-            <select id="script-editor-option-editor">
+            <select id="script-editor-option-editor" class="dropdown">
                 <option value="Ace">Ace</option>
                 <option value="CodeMirror">CodeMirror</option>
             </select>
@@ -141,12 +141,12 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
 
             <fieldset>
             <label for="script-editor-option-theme">Theme</label>
-            <select id="script-editor-option-theme"></select>
+            <select id="script-editor-option-theme" class="dropdown"></select>
             </fieldset>
 
             <fieldset>
             <label for="script-editor-option-keybinding">Key Binding</label>
-            <select id="script-editor-option-keybinding"></select>
+            <select id="script-editor-option-keybinding" class="dropdown"></select>
             </fieldset>
 
             <fieldset>
@@ -203,35 +203,7 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
 
     <!-- Hacknet Nodes -->
     <div id="hacknet-nodes-container" class="generic-menupage-container">
-        <h1 id="hacknet-nodes-title"> Hacknet Nodes </h1>
-        <p id="hacknet-nodes-text" class="menu-page-text">
-        The Hacknet is a global, decentralized network of machines. It is used by hackers all around
-        the world to anonymously share computing power and perform distributed cyberattacks without the
-        fear of being traced.
-        <br /><br />
-        Here, you can purchase a Hacknet Node, a specialized machine that can connect and contribute its
-        resources to the Hacknet network. This allows you to take a small percentage of profits
-        from hacks performed on the network. Essentially, you are renting out your Node's computing power.
-        <br /><br />
-        Each Hacknet Node you purchase will passively earn you money. Each Hacknet Node can be upgraded
-        in order to increase its computing power and thereby increase the profit you earn from it.
-        </p>
-        <a id="hacknet-nodes-purchase-button" class="a-link-button"> Purchase Hacknet Node </a>
-        <br />
-        <div id="hacknet-nodes-money-multipliers-div">
-            <p id="hacknet-nodes-money">
-                <span>Money:</span><span id="hacknet-nodes-player-money" class="money-gold"></span><br />
-                <span>Total Hacknet Node Production:</span><span id="hacknet-nodes-total-production" class="money-gold"></span>
-            </p>
-            <span id="hacknet-nodes-multipliers">
-                <a id="hacknet-nodes-1x-multiplier" class="a-link-button-inactive"> x1 </a>
-                <a id="hacknet-nodes-5x-multiplier" class="a-link-button"> x5 </a>
-                <a id="hacknet-nodes-10x-multiplier" class="a-link-button"> x10 </a>
-                <a id="hacknet-nodes-max-multiplier" class="a-link-button"> MAX </a>
-            </span>
-        </div>
-        <ul id="hacknet-nodes-list">
-        </ul>
+        <!-- React Component -->
     </div>
 
     <!-- World -->
@@ -702,7 +674,7 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
         <a id="stock-market-expand-tickers" class="a-link-button tooltip">Expand tickers</a>
         <a id="stock-market-collapse-tickers" class="a-link-button tooltip">Collapse tickers</a>
         <br /><br />
-        <input id="stock-market-watchlist-filter" type="text" placeholder="Filter Stocks by symbol (comma-separated list)"/>
+        <input id="stock-market-watchlist-filter" class="text-input" type="text" placeholder="Filter Stocks by symbol (comma-separated list)"/>
         <a id="stock-market-watchlist-filter-update" class="a-link-button"> Update Watchlist </a>
         <ul id="stock-market-list" style="list-style:none;">
 		</ul>
@@ -757,7 +729,7 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
             <p id="infiltration-box-text"> </p>
 
             <button id="infiltration-box-sell" class="a-link-button"> Sell on Black Market </button> <br /><br />
-            <select id="infiltration-faction-select"> </select> <br />
+            <select id="infiltration-faction-select" class="dropdown"> </select> <br />
             <button id="infiltration-box-faction" class="a-link-button"> Give to Faction for Reputation </button>
 
         </div>
@@ -944,7 +916,7 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
                             Sets the locale for displaying numbers. Defaults to 'en'
                         </span>
                     </label>
-                    <select name="settingsLocale" id="settingsLocale">
+                    <select name="settingsLocale" id="settingsLocale" class="dropdown">
                         <option value="en">en</option>
                         <option value="bg">bg</option>
                         <option value="cs">cs</option>

@@ -30,7 +30,7 @@ import { joinFaction,
          purchaseAugmentation }                     from "./Faction/FactionHelpers";
 import { FactionWorkType }                          from "./Faction/FactionWorkTypeEnum";
 import { getCostOfNextHacknetNode,
-         purchaseHacknet }                          from "./HacknetNode";
+         purchaseHacknet }                          from "./Hacknet/HacknetNode";
 import {Locations}                                  from "./Locations";
 import { Message }                                  from "./Message/Message";
 import { Messages }                                 from "./Message/MessageHelpers";
@@ -279,27 +279,27 @@ function NetscriptFunctions(workerScript) {
             },
             upgradeLevel : function(i, n) {
                 var node = getHacknetNode(i);
-                return node.purchaseLevelUpgrade(n);
+                return node.purchaseLevelUpgrade(n, Player);
             },
             upgradeRam : function(i, n) {
                 var node = getHacknetNode(i);
-                return node.purchaseRamUpgrade(n);
+                return node.purchaseRamUpgrade(n, Player);
             },
             upgradeCore : function(i, n) {
                 var node = getHacknetNode(i);
-                return node.purchaseCoreUpgrade(n);
+                return node.purchaseCoreUpgrade(n, Player);
             },
             getLevelUpgradeCost : function(i, n) {
                 var node = getHacknetNode(i);
-                return node.calculateLevelUpgradeCost(n);
+                return node.calculateLevelUpgradeCost(n, Player);
             },
             getRamUpgradeCost : function(i, n) {
                 var node = getHacknetNode(i);
-                return node.calculateRamUpgradeCost(n);
+                return node.calculateRamUpgradeCost(n, Player);
             },
             getCoreUpgradeCost : function(i, n) {
                 var node = getHacknetNode(i);
-                return node.calculateCoreUpgradeCost(n);
+                return node.calculateCoreUpgradeCost(n, Player);
             }
         },
         sprintf : sprintf,
@@ -4976,9 +4976,9 @@ function NetscriptFunctions(workerScript) {
                     return false;
                 }
 
-                const sl = Player.sleeves[i];
+                const sl = Player.sleeves[sleeveNumber];
                 return {
-                    shock: sl.shock,
+                    shock: 100 - sl.shock,
                     sync: sl.sync,
                     hacking_skill: sl.hacking_skill,
                     strength: sl.strength,
