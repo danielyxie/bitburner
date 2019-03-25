@@ -21,6 +21,7 @@ import { Faction }                              from "./Faction/Faction";
 import { Factions }                             from "./Faction/Factions";
 import { displayFactionContent }                from "./Faction/FactionHelpers";
 import {Gang, resetGangs}                       from "./Gang";
+import { HashManager }                          from "./Hacknet/HashManager";
 import {Locations}                              from "./Locations";
 import {hasBn11SF, hasWallStreetSF,hasAISF}     from "./NetscriptFunctions";
 import { Sleeve }                               from "./PersonObjects/Sleeve/Sleeve";
@@ -111,10 +112,13 @@ function PlayerObject() {
     // Company at which player is CURRENTLY working (only valid when the player is actively working)
     this.companyName = "";      // Name of Company. Must match a key value in Companies map
 
-    //Servers
+    // Servers
     this.currentServer          = ""; //IP address of Server currently being accessed through terminal
     this.purchasedServers       = []; //IP Addresses of purchased servers
+
+    // Hacknet Nodes/Servers
     this.hacknetNodes           = [];
+    this.hashManager            = new HashManager();
 
     //Factions
     this.factions = [];             //Names of all factions player has joined
@@ -1391,45 +1395,46 @@ PlayerObject.prototype.startClass = function(costMult, expMult, className) {
     //Find cost and exp gain per game cycle
     var cost = 0;
     var hackExp = 0, strExp = 0, defExp = 0, dexExp = 0, agiExp = 0, chaExp = 0;
+    const hashManager = this.hashManager;
     switch (className) {
         case CONSTANTS.ClassStudyComputerScience:
-            hackExp = baseStudyComputerScienceExp * expMult / gameCPS;
+            hackExp = baseStudyComputerScienceExp * expMult / gameCPS * hashManager.getStudyMult();
             break;
         case CONSTANTS.ClassDataStructures:
             cost = CONSTANTS.ClassDataStructuresBaseCost * costMult / gameCPS;
-            hackExp = baseDataStructuresExp * expMult / gameCPS;
+            hackExp = baseDataStructuresExp * expMult / gameCPS * hashManager.getStudyMult();
             break;
         case CONSTANTS.ClassNetworks:
             cost = CONSTANTS.ClassNetworksBaseCost * costMult / gameCPS;
-            hackExp = baseNetworksExp * expMult / gameCPS;
+            hackExp = baseNetworksExp * expMult / gameCPS  * hashManager.getStudyMult();
             break;
         case CONSTANTS.ClassAlgorithms:
             cost = CONSTANTS.ClassAlgorithmsBaseCost * costMult / gameCPS;
-            hackExp = baseAlgorithmsExp * expMult / gameCPS;
+            hackExp = baseAlgorithmsExp * expMult / gameCPS * hashManager.getStudyMult();
             break;
         case CONSTANTS.ClassManagement:
             cost = CONSTANTS.ClassManagementBaseCost * costMult / gameCPS;
-            chaExp = baseManagementExp * expMult / gameCPS;
+            chaExp = baseManagementExp * expMult / gameCPS * hashManager.getStudyMult();
             break;
         case CONSTANTS.ClassLeadership:
             cost = CONSTANTS.ClassLeadershipBaseCost * costMult / gameCPS;
-            chaExp = baseLeadershipExp * expMult / gameCPS;
+            chaExp = baseLeadershipExp * expMult / gameCPS * hashManager.getStudyMult();
             break;
         case CONSTANTS.ClassGymStrength:
             cost = CONSTANTS.ClassGymBaseCost * costMult / gameCPS;
-            strExp = baseGymExp * expMult / gameCPS;
+            strExp = baseGymExp * expMult / gameCPS * hashManager.getTrainingMult();
             break;
         case CONSTANTS.ClassGymDefense:
             cost = CONSTANTS.ClassGymBaseCost * costMult / gameCPS;
-            defExp = baseGymExp * expMult / gameCPS;
+            defExp = baseGymExp * expMult / gameCPS * hashManager.getTrainingMult();
             break;
         case CONSTANTS.ClassGymDexterity:
             cost = CONSTANTS.ClassGymBaseCost * costMult / gameCPS;
-            dexExp = baseGymExp * expMult / gameCPS;
+            dexExp = baseGymExp * expMult / gameCPS * hashManager.getTrainingMult();
             break;
         case CONSTANTS.ClassGymAgility:
             cost = CONSTANTS.ClassGymBaseCost * costMult / gameCPS;
-            agiExp = baseGymExp * expMult / gameCPS;
+            agiExp = baseGymExp * expMult / gameCPS * hashManager.getTrainingMult();
             break;
         default:
             throw new Error("ERR: Invalid/unrecognized class name");

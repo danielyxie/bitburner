@@ -1,3 +1,8 @@
+/**
+ * Generic Game Constants
+ *
+ * Constants for specific mechanics or features will NOT be here.
+ */
 import {IMap} from "./types";
 
 export let CONSTANTS: IMap<any> = {
@@ -17,23 +22,8 @@ export let CONSTANTS: IMap<any> = {
     /* Base costs */
     BaseCostFor1GBOfRamHome: 32000,
     BaseCostFor1GBOfRamServer: 55000, //1 GB of RAM
-    BaseCostFor1GBOfRamHacknetNode: 30000,
 
     TravelCost: 200e3,
-
-    BaseCostForHacknetNode: 1000,
-    BaseCostForHacknetNodeCore: 500000,
-
-    /* Hacknet Node constants */
-    HacknetNodeMoneyGainPerLevel: 1.6,
-    HacknetNodePurchaseNextMult: 1.85,   //Multiplier when purchasing an additional hacknet node
-    HacknetNodeUpgradeLevelMult: 1.04,  //Multiplier for cost when upgrading level
-    HacknetNodeUpgradeRamMult: 1.28,     //Multiplier for cost when upgrading RAM
-    HacknetNodeUpgradeCoreMult: 1.48,    //Multiplier for cost when buying another core
-
-    HacknetNodeMaxLevel: 200,
-    HacknetNodeMaxRam: 64,
-    HacknetNodeMaxCores: 16,
 
     /* Faction and Company favor */
     BaseFavorToDonate:            150,
