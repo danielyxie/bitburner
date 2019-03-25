@@ -133,7 +133,7 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
             <h1 style="color:white;"> Script Editor Options </h1>
             <fieldset>
             <label for="script-editor-option-editor">Editor</label>
-            <select id="script-editor-option-editor">
+            <select id="script-editor-option-editor" class="dropdown">
                 <option value="Ace">Ace</option>
                 <option value="CodeMirror">CodeMirror</option>
             </select>
@@ -141,12 +141,12 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
 
             <fieldset>
             <label for="script-editor-option-theme">Theme</label>
-            <select id="script-editor-option-theme"></select>
+            <select id="script-editor-option-theme" class="dropdown"></select>
             </fieldset>
 
             <fieldset>
             <label for="script-editor-option-keybinding">Key Binding</label>
-            <select id="script-editor-option-keybinding"></select>
+            <select id="script-editor-option-keybinding" class="dropdown"></select>
             </fieldset>
 
             <fieldset>
@@ -674,7 +674,7 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
         <a id="stock-market-expand-tickers" class="a-link-button tooltip">Expand tickers</a>
         <a id="stock-market-collapse-tickers" class="a-link-button tooltip">Collapse tickers</a>
         <br /><br />
-        <input id="stock-market-watchlist-filter" type="text" placeholder="Filter Stocks by symbol (comma-separated list)"/>
+        <input id="stock-market-watchlist-filter" class="text-input" type="text" placeholder="Filter Stocks by symbol (comma-separated list)"/>
         <a id="stock-market-watchlist-filter-update" class="a-link-button"> Update Watchlist </a>
         <ul id="stock-market-list" style="list-style:none;">
 		</ul>
@@ -729,7 +729,7 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
             <p id="infiltration-box-text"> </p>
 
             <button id="infiltration-box-sell" class="a-link-button"> Sell on Black Market </button> <br /><br />
-            <select id="infiltration-faction-select"> </select> <br />
+            <select id="infiltration-faction-select" class="dropdown"> </select> <br />
             <button id="infiltration-box-faction" class="a-link-button"> Give to Faction for Reputation </button>
 
         </div>
@@ -916,7 +916,7 @@ if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
                             Sets the locale for displaying numbers. Defaults to 'en'
                         </span>
                     </label>
-                    <select name="settingsLocale" id="settingsLocale">
+                    <select name="settingsLocale" id="settingsLocale" class="dropdown">
                         <option value="en">en</option>
                         <option value="bg">bg</option>
                         <option value="cs">cs</option>

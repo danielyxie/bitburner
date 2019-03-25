@@ -348,7 +348,7 @@ export class CorporationEventHandler {
                 clickListener:()=>{
                     mat.exp.splice(i, 1); //Remove export object
                     removeElementById(popupId);
-                    createExportPopup();
+                    createExportMaterialPopup(mat);
                 }
             }));
             })(i, mat, currExports);

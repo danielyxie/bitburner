@@ -127,6 +127,8 @@ import "../css/gang.scss";
 import "../css/sleeves.scss";
 import "../css/resleeving.scss";
 import "../css/treant.css";
+import "../css/grid.min.css";
+import "../css/dev-menu.css";
 
 
 /* Shortcuts to navigate through the game

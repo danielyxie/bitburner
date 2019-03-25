@@ -31,6 +31,8 @@ import { getTimestamp }                             from "../utils/helpers/getTi
 import { removeElement }                            from "../utils/uiHelpers/removeElement";
 import { removeElementById }                        from "../utils/uiHelpers/removeElementById";
 
+const stealthIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 166 132"  style="fill:#adff2f;"><g><path d="M132.658-0.18l-24.321,24.321c-7.915-2.71-16.342-4.392-25.087-4.392c-45.84,0-83,46-83,46   s14.1,17.44,35.635,30.844L12.32,120.158l12.021,12.021L144.68,11.841L132.658-0.18z M52.033,80.445   c-2.104-4.458-3.283-9.438-3.283-14.695c0-19.054,15.446-34.5,34.5-34.5c5.258,0,10.237,1.179,14.695,3.284L52.033,80.445z"/><path d="M134.865,37.656l-18.482,18.482c0.884,3.052,1.367,6.275,1.367,9.612c0,19.055-15.446,34.5-34.5,34.5   c-3.337,0-6.56-0.483-9.611-1.367l-10.124,10.124c6.326,1.725,12.934,2.743,19.735,2.743c45.84,0,83-46,83-46   S153.987,50.575,134.865,37.656z"/></g></svg>&nbsp;`
+const killIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="-22 0 511 511.99561" style="fill:#adff2f;"><path d="m.496094 466.242188 39.902344-39.902344 45.753906 45.753906-39.898438 39.902344zm0 0"/><path d="m468.421875 89.832031-1.675781-89.832031-300.265625 300.265625 45.753906 45.753906zm0 0"/><path d="m95.210938 316.785156 16.84375 16.847656h.003906l83.65625 83.65625 22.753906-22.753906-100.503906-100.503906zm0 0"/><path d="m101.445312 365.300781-39.902343 39.902344 45.753906 45.753906 39.902344-39.902343-39.90625-39.902344zm0 0"/></svg>`
 
 const CityNames = ["Aevum", "Chongqing", "Sector-12", "New Tokyo", "Ishima", "Volhaven"];
 
@@ -1799,6 +1801,12 @@ Bladeburner.prototype.createContent = function() {
     DomElems.bladeburnerDiv.appendChild(DomElems.overviewConsoleParentDiv);
     DomElems.bladeburnerDiv.appendChild(DomElems.actionAndSkillsDiv);
 
+
+    // legend
+    const legend = createElement("div")
+    legend.innerHTML = `<span class="text">${stealthIcon}= This action requires stealth, ${killIcon} = This action involves retirement</span>`
+    DomElems.bladeburnerDiv.appendChild(legend);
+
     document.getElementById("entire-game-container").appendChild(DomElems.bladeburnerDiv);
 
     if (this.consoleLogs.length === 0) {
@@ -2166,12 +2174,12 @@ Bladeburner.prototype.createBlackOpsContent = function() {
         return (a.reqdRank - b.reqdRank);
     });
 
-    for (var i = 0; i < blackops.length; ++i) {
+    for (var i = blackops.length-1; i >= 0 ; --i) {
+      if (this.blackops[[blackops[i].name]] == null && i !== 0 && this.blackops[[blackops[i-1].name]] == null) {continue;} // If this one nor the next are completed then this isn't unlocked yet.
         DomElems.blackops[blackops[i].name] = createElement("div", {
             class:"bladeburner-action", name:blackops[i].name
         });
         DomElems.actionsAndSkillsList.appendChild(DomElems.blackops[blackops[i].name]);
-        if (this.blackops[[blackops[i].name]] == null) {break;} //Can't be found in completed blackops
     }
 }
 
@@ -2504,7 +2512,8 @@ Bladeburner.prototype.updateContractsUIElement = function(el, action) {
     el.appendChild(createElement("pre", { //Info
         display:"inline-block",
         innerHTML:action.desc + "\n\n" +
-                  "Estimated success chance: " + formatNumber(estimatedSuccessChance*100, 1) + "%\n" +
+                  `Estimated success chance: ${formatNumber(estimatedSuccessChance*100, 1)}% ${action.isStealth?stealthIcon:''}${action.isKill?killIcon:''}\n` +
+                  
                   "Time Required (s): " + formatNumber(actionTime, 0) + "\n" +
                   "Contracts remaining: " + Math.floor(action.count) + "\n" +
                   "Successes: " + action.successes + "\n" +
@@ -2518,14 +2527,21 @@ Bladeburner.prototype.updateContractsUIElement = function(el, action) {
         for:autolevelCheckboxId, innerText:"Autolevel",color:"white",
         tooltip:"Automatically increase contract level when possible"
     }));
-    var autolevelCheckbox = createElement("input", {
-        type:"checkbox", id:autolevelCheckboxId, margin:"4px",
-        checked:action.autoLevel,
-        changeListener:()=>{
-            action.autoLevel = autolevelCheckbox.checked;
-        }
+
+    const checkboxDiv = createElement("div", { class: "bbcheckbox" });
+    const checkboxInput = createElement("input", {
+      type:"checkbox",
+      id: autolevelCheckboxId,
+      checked: action.autoLevel,
+      changeListener: () => {
+        action.autoLevel = checkboxInput.checked;
+      },
     });
-    el.appendChild(autolevelCheckbox);
+    const checkmarkLabel = createElement("label", { for: autolevelCheckboxId });
+    checkboxDiv.appendChild(checkboxInput);
+    checkboxDiv.appendChild(checkmarkLabel);
+
+    el.appendChild(checkboxDiv);
 }
 
 Bladeburner.prototype.updateOperationsUIElement = function(el, action) {
@@ -2640,7 +2656,7 @@ Bladeburner.prototype.updateOperationsUIElement = function(el, action) {
     el.appendChild(createElement("pre", {
         display:"inline-block",
         innerHTML:action.desc + "\n\n" +
-                  "Estimated success chance: " + formatNumber(estimatedSuccessChance*100, 1) + "%\n" +
+                  `Estimated success chance: ${formatNumber(estimatedSuccessChance*100, 1)}% ${action.isStealth?stealthIcon:''}${action.isKill?killIcon:''}\n` +
                   "Time Required(s): " + formatNumber(actionTime, 0) + "\n" +
                   "Operations remaining: " + Math.floor(action.count) + "\n" +
                   "Successes: " + action.successes + "\n" +
@@ -2654,14 +2670,21 @@ Bladeburner.prototype.updateOperationsUIElement = function(el, action) {
         for:autolevelCheckboxId, innerText:"Autolevel",color:"white",
         tooltip:"Automatically increase operation level when possible"
     }));
-    var autolevelCheckbox = createElement("input", {
-        type:"checkbox", id:autolevelCheckboxId, margin:"4px",
-        checked:action.autoLevel,
-        changeListener:()=>{
-            action.autoLevel = autolevelCheckbox.checked;
-        }
+
+    const checkboxDiv = createElement("div", { class: "bbcheckbox" });
+    const checkboxInput = createElement("input", {
+      type:"checkbox",
+      id: autolevelCheckboxId,
+      checked: action.autoLevel,
+      changeListener: () => {
+        action.autoLevel = checkboxInput.checked;
+      },
     });
-    el.appendChild(autolevelCheckbox);
+    const checkmarkLabel = createElement("label", { for: autolevelCheckboxId });
+    checkboxDiv.appendChild(checkboxInput);
+    checkboxDiv.appendChild(checkmarkLabel);
+
+    el.appendChild(checkboxDiv);
 }
 
 Bladeburner.prototype.updateBlackOpsUIElement = function(el, action) {
@@ -2760,7 +2783,7 @@ Bladeburner.prototype.updateBlackOpsUIElement = function(el, action) {
     }));
     el.appendChild(createElement("p", {
         display:"inline-block",
-        innerHTML:"Estimated Success Chance: " + formatNumber(estimatedSuccessChance*100, 1) + "%\n" +
+        innerHTML:`Estimated Success Chance: ${formatNumber(estimatedSuccessChance*100, 1)}% ${action.isStealth?stealthIcon:''}${action.isKill?killIcon:''}\n` +
                   "Time Required(s): " + formatNumber(actionTime, 0),
     }))
 }

@@ -382,6 +382,7 @@ export function initBitNodeMultipliers(p: IPlayer) {
             BitNodeMultipliers.PurchasedServerCost      = 5;
             BitNodeMultipliers.PurchasedServerLimit     = 0.6;
             BitNodeMultipliers.PurchasedServerMaxRam    = 0.5;
+            BitNodeMultipliers.BladeburnerRank          = 0.8;
             break;
         case 11: //The Big Crash
             BitNodeMultipliers.ServerMaxMoney               = 0.1;

@@ -287,7 +287,11 @@ PlayerObject.prototype.prestigeAugmentation = function() {
 
     for (let i = 0; i < this.sleeves.length; ++i) {
         if (this.sleeves[i] instanceof Sleeve) {
-            this.sleeves[i].shockRecovery(this);
+            if (this.sleeves[i].shock >= 100) {
+                this.sleeves[i].synchronize(this);    
+            } else {
+                this.sleeves[i].shockRecovery(this);
+            }
         }
     }
 

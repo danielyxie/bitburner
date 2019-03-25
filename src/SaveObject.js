@@ -56,7 +56,6 @@ function BitburnerSaveObject() {
     this.FconfSettingsSave              = "";
     this.VersionSave                    = "";
     this.AllGangsSave                   = "";
-    this.CorporationResearchTreesSave   = "";
 }
 
 BitburnerSaveObject.prototype.getSaveString = function() {
