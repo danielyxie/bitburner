@@ -2069,7 +2069,7 @@ function installAugmentations(cbScript=null) {
                 }
                 var runningScriptObj = new RunningScript(script, []); //No args
                 runningScriptObj.threads = 1; //Only 1 thread
-                home.runningScripts.push(runningScriptObj);
+                home.runScript(runningScriptObj, Player);
                 addWorkerScript(runningScriptObj, home);
             }
         }

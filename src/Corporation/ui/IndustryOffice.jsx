@@ -300,7 +300,7 @@ export class IndustryOffice extends BaseReactComponent {
                 <br />
 
                 <p>Avg Employee Morale: {numeralWrapper.format(avgMorale, "0.000")}</p>
-                <p>Avg Happiness Morale: {numeralWrapper.format(avgHappiness, "0.000")}</p>
+                <p>Avg Employee Happiness: {numeralWrapper.format(avgHappiness, "0.000")}</p>
                 <p>Avg Energy Morale: {numeralWrapper.format(avgEnergy, "0.000")}</p>
                 <p>Total Employee Salary: {numeralWrapper.formatMoney(totalSalary)}</p>
                 {

@@ -173,7 +173,10 @@ export function initBitNodes() {
                                           "Level 3: Ability to use limit/stop orders in other BitNodes<br><br>" +
                                           "This Source-File also increases your hacking growth multipliers by: " +
                                           "<br>Level 1: 12%<br>Level 2: 18%<br>Level 3: 21%");
-    BitNodes["BitNode9"] = new BitNode(9, "Do Androids Dream?", "COMING SOON");
+    BitNodes["BitNode9"] = new BitNode(9, "Hacktocracy", "Hacknet Unleashed",
+                                          "When Fulcrum Technologies released their open-source Linux distro Chapeau, it quickly " +
+                                          "became the OS of choice for the underground hacking community. Chapeau became especially notorious for " +
+                                          "powering the Hacknet, ");
     BitNodes["BitNode10"] = new BitNode(10, "Digital Carbon", "Your body is not who you are",
                                             "In 2084, VitaLife unveiled to the world the Persona Core, a technology that allowed people " +
                                             "to digitize their consciousness. Their consciousness could then be transferred into Synthoids " +
@@ -245,9 +248,9 @@ export function initBitNodeMultipliers(p: IPlayer) {
     }
 
     switch (p.bitNodeN) {
-        case 1: //Source Genesis (every multiplier is 1)
+        case 1: // Source Genesis (every multiplier is 1)
             break;
-        case 2: //Rise of the Underworld
+        case 2: // Rise of the Underworld
             BitNodeMultipliers.HackingLevelMultiplier   = 0.8;
             BitNodeMultipliers.ServerGrowthRate         = 0.8;
             BitNodeMultipliers.ServerMaxMoney           = 0.2;
@@ -257,7 +260,7 @@ export function initBitNodeMultipliers(p: IPlayer) {
             BitNodeMultipliers.FactionWorkRepGain       = 0.5;
             BitNodeMultipliers.FactionPassiveRepGain    = 0;
             break;
-        case 3: //Corporatocracy
+        case 3: // Corporatocracy
             BitNodeMultipliers.HackingLevelMultiplier   = 0.8;
             BitNodeMultipliers.RepToDonateToFaction     = 0.5;
             BitNodeMultipliers.AugmentationRepCost      = 3;
@@ -272,7 +275,7 @@ export function initBitNodeMultipliers(p: IPlayer) {
             BitNodeMultipliers.HomeComputerRamCost      = 1.5;
             BitNodeMultipliers.PurchasedServerCost      = 2;
             break;
-        case 4: //The Singularity
+        case 4: // The Singularity
             BitNodeMultipliers.ServerMaxMoney           = 0.15;
             BitNodeMultipliers.ServerStartingMoney      = 0.75;
             BitNodeMultipliers.ScriptHackMoney          = 0.2;
@@ -286,7 +289,7 @@ export function initBitNodeMultipliers(p: IPlayer) {
             BitNodeMultipliers.CrimeExpGain             = 0.5;
             BitNodeMultipliers.FactionWorkRepGain       = 0.75;
             break;
-        case 5: //Artificial intelligence
+        case 5: // Artificial intelligence
             BitNodeMultipliers.ServerMaxMoney           = 2;
             BitNodeMultipliers.ServerStartingSecurity   = 2;
             BitNodeMultipliers.ServerStartingMoney      = 0.5;
@@ -299,7 +302,7 @@ export function initBitNodeMultipliers(p: IPlayer) {
             BitNodeMultipliers.HackExpGain              = 0.5;
             BitNodeMultipliers.CorporationValuation     = 0.5;
             break;
-        case 6: //Bladeburner
+        case 6: // Bladeburner
             BitNodeMultipliers.HackingLevelMultiplier   = 0.35;
             BitNodeMultipliers.ServerMaxMoney           = 0.4;
             BitNodeMultipliers.ServerStartingMoney      = 0.5;
@@ -314,7 +317,7 @@ export function initBitNodeMultipliers(p: IPlayer) {
             BitNodeMultipliers.HackExpGain              = 0.25;
             BitNodeMultipliers.DaedalusAugsRequirement  = 1.166; // Results in 35 Augs needed
             break;
-        case 7: //Bladeburner 2079
+        case 7: // Bladeburner 2079
             BitNodeMultipliers.BladeburnerRank              = 0.6;
             BitNodeMultipliers.BladeburnerSkillCost         = 2;
             BitNodeMultipliers.AugmentationMoneyCost        = 3;
@@ -334,7 +337,7 @@ export function initBitNodeMultipliers(p: IPlayer) {
             BitNodeMultipliers.FourSigmaMarketDataApiCost   = 2;
             BitNodeMultipliers.DaedalusAugsRequirement      = 1.166; // Results in 35 Augs needed
             break;
-        case 8: //Ghost of Wall Street
+        case 8: // Ghost of Wall Street
             BitNodeMultipliers.ScriptHackMoney          = 0;
             BitNodeMultipliers.ManualHackMoney          = 0;
             BitNodeMultipliers.CompanyWorkMoney         = 0;
@@ -344,6 +347,19 @@ export function initBitNodeMultipliers(p: IPlayer) {
             BitNodeMultipliers.RepToDonateToFaction     = 0;
             BitNodeMultipliers.CorporationValuation     = 0;
             BitNodeMultipliers.CodingContractMoney      = 0;
+            break;
+        case 9: // Hacktocracy
+            BitNodeMultipliers.HackingLevelMultiplier   = 0.3;
+            BitNodeMultipliers.StrengthLevelMultiplier  = 0.45;
+            BitNodeMultipliers.DefenseLevelMultiplier   = 0.45;
+            BitNodeMultipliers.DexterityLevelMultiplier = 0.45;
+            BitNodeMultipliers.AgilityLevelMultiplier   = 0.45;
+            BitNodeMultipliers.CharismaLevelMultiplier  = 0.45;
+            BitNodeMultipliers.PurchasedServerLimit     = 0;
+            BitNodeMultipliers.HomeComputerRamCost      = 3;
+            BitNodeMultipliers.CrimeMoney               = 0.5;
+            BitNodeMultipliers.ScriptHackMoney          = 0.1;
+            BitNodeMultipliers.HackExpGain              = 0.1;
             break;
         case 10: // Digital Carbon
             BitNodeMultipliers.HackingLevelMultiplier   = 0.2;
