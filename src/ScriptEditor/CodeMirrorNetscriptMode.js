@@ -257,6 +257,9 @@ CodeMirror.defineMode("netscript", function(config, parserConfig) {
       "getSleeveStats": atom,
       "getTask": atom,
       "getInformation": atom,
+      "getSleeveAugmentations": atom,
+      "getSleevePurchasableAugs": atom,
+      "purchaseSleeveAug": atom,
     };
   }();
 
