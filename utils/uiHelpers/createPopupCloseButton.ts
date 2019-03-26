@@ -1,4 +1,6 @@
-/* Creates a Close/Cancel button that is used for removing popups */
+/**
+ * Creates a Close/Cancel button that is used for removing popups
+ */
 
 import { createElement } from "./createElement";
 import { removeElement } from "./removeElement";
