@@ -3,7 +3,7 @@ import { Augmentation } from "../Augmentation/Augmentation";
 import { Augmentations } from "../Augmentation/Augmentations";
 import { IPlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentation";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
-import { Cities } from "../Locations/Cities";
+import { CityName } from "../Locations/data/CityNames";
 import { CONSTANTS } from "../Constants";
 
 // Interface that defines a generic object used to track experience/money
@@ -105,7 +105,7 @@ export abstract class Person {
     /**
      * City that the person is in
      */
-    city: string = Cities.Sector12;
+    city: string = CityName.Sector12;
 
     constructor() {}
 

@@ -1,14 +1,7 @@
-import { IMap } from "../types";
-
 /**
- * Display Location Content when visiting somewhere in the World
+ * Map of all Cities in the game
+ * Key = City Name, Value = City object
  */
-// tslint:disable-next-line:variable-name
-export const Cities: IMap<string> = {
-    Aevum: 			"Aevum",
-    Chongqing: 		"Chongqing",
-    Ishima: 		"Ishima",
-    NewTokyo: 		"New Tokyo",
-    Sector12: 		"Sector-12",
-    Volhaven: 		"Volhaven",
-};
+export interface IMetadata = {
+    name: string;
+}

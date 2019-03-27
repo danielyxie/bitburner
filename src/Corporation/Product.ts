@@ -3,7 +3,7 @@ import { MaterialSizes }            from "./MaterialSizes";
 import { ProductRatingWeights,
          IProductRatingWeight }     from "./ProductRatingWeights";
 
-import { Cities }                   from "../Locations/Cities";
+import { CityName }                 from "../Locations/data/CityNames";
 import { IMap }                     from "../types";
 
 import { Generic_fromJSON,

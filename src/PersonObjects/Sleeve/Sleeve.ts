@@ -20,7 +20,7 @@ import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { Crime } from "../../Crime/Crime";
 import { Crimes } from "../../Crime/Crimes";
 
-import { Cities } from "../../Locations/Cities";
+import { CityName } from "../../Locations/data/CityNames";
 
 import { Companies } from "../../Company/Companies";
 import { Company } from "../../Company/Company";
@@ -547,19 +547,19 @@ export class Sleeve extends Person {
         let expMult: number = 1;
         switch (universityName.toLowerCase()) {
             case Locations.AevumSummitUniversity.toLowerCase():
-                if (this.city !== Cities.Aevum) { return false; }
+                if (this.city !== CityName.Aevum) { return false; }
                 this.currentTaskLocation = Locations.AevumSummitUniversity;
                 costMult = 4;
                 expMult = 3;
                 break;
             case Locations.Sector12RothmanUniversity.toLowerCase():
-                if (this.city !== Cities.Sector12) { return false; }
+                if (this.city !== CityName.Sector12) { return false; }
                 this.currentTaskLocation = Locations.Sector12RothmanUniversity;
                 costMult = 3;
                 expMult = 2;
                 break;
             case Locations.VolhavenZBInstituteOfTechnology.toLowerCase():
-                if (this.city !== Cities.Volhaven) { return false; }
+                if (this.city !== CityName.Volhaven) { return false; }
                 this.currentTaskLocation = Locations.VolhavenZBInstituteOfTechnology;
                 costMult = 5;
                 expMult = 4;
@@ -613,7 +613,7 @@ export class Sleeve extends Person {
      * Travel to another City. Costs money from player
      */
     travel(p: IPlayer, newCity: string): boolean {
-        if (Cities[newCity] == null) {
+        if (CityName[newCity] == null) {
             console.error(`Invalid city ${newCity} passed into Sleeve.travel()`);
             return false;
         }
@@ -747,31 +747,31 @@ export class Sleeve extends Person {
         let expMult: number = 1;
         switch (gymName.toLowerCase()) {
             case Locations.AevumCrushFitnessGym.toLowerCase():
-                if (this.city != Cities.Aevum) { return false; }
+                if (this.city != CityName.Aevum) { return false; }
                 this.currentTaskLocation = Locations.AevumCrushFitnessGym;
                 costMult = 3;
                 expMult = 2;
                 break;
             case Locations.AevumSnapFitnessGym.toLowerCase():
-                if (this.city != Cities.Aevum) { return false; }
+                if (this.city != CityName.Aevum) { return false; }
                 this.currentTaskLocation = Locations.AevumSnapFitnessGym;
                 costMult = 10;
                 expMult = 5;
                 break;
             case Locations.Sector12IronGym.toLowerCase():
-                if (this.city != Cities.Sector12) { return false; }
+                if (this.city != CityName.Sector12) { return false; }
                 this.currentTaskLocation = Locations.Sector12IronGym;
                 costMult = 1;
                 expMult = 1;
                 break;
             case Locations.Sector12PowerhouseGym.toLowerCase():
-                if (this.city != Cities.Sector12) { return false; }
+                if (this.city != CityName.Sector12) { return false; }
                 this.currentTaskLocation = Locations.Sector12PowerhouseGym;
                 costMult = 20;
                 expMult = 10;
                 break;
             case Locations.VolhavenMilleniumFitnessGym:
-                if (this.city != Cities.Volhaven) { return false; }
+                if (this.city != CityName.Volhaven) { return false; }
                 this.currentTaskLocation = Locations.VolhavenMilleniumFitnessGym;
                 costMult = 7;
                 expMult = 4;
