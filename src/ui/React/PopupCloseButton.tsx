@@ -9,6 +9,7 @@ import * as React       from "react";
 import *  as ReactDOM   from "react-dom";
 
 import { KEY } from "../../../utils/helpers/keyCodes";
+import { removeElement } from "../../../utils/uiHelpers/removeElement";
 
 export interface IPopupCloseButtonProps {
     class?: string;
@@ -43,7 +44,8 @@ export class PopupCloseButton extends React.Component<IPopupCloseButtonProps, an
 
         // TODO Check if this is okay? This is essentially calling to unmount a parent component
         if (popup instanceof HTMLElement) {
-            ReactDOM.unmountComponentAtNode(popup);
+            ReactDOM.unmountComponentAtNode(popup); // Removes everything inside the wrapper container
+            removeElement(popup); // Removes the wrapper container
         }
     }
 
@@ -58,7 +60,7 @@ export class PopupCloseButton extends React.Component<IPopupCloseButtonProps, an
 
         return (
             <button className={className} onClick={this.closePopup} style={this.props.style}>
-                {this.props.text};
+                {this.props.text}
             </button>
         )
     }

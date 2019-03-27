@@ -1861,17 +1861,20 @@ let Terminal = {
             visited[ip] = 0;
         }
 
-        var stack = [];
-        var depthQueue = [0];
-        var currServ = Player.getCurrentServer();
+        const stack = [];
+        const depthQueue = [0];
+        const currServ = Player.getCurrentServer();
         stack.push(currServ);
         while(stack.length != 0) {
-            var s = stack.pop();
-            var d = depthQueue.pop();
+            const s = stack.pop();
+            const d = depthQueue.pop();
+            const isHacknet = s instanceof HacknetServer;
             if (!all && s.purchasedByPlayer && s.hostname != "home") {
-                continue; //Purchased server
+                continue; // Purchased server
             } else if (visited[s.ip] || d > depth) {
-                continue; //Already visited or out-of-depth
+                continue; // Already visited or out-of-depth
+            } else if (!all && isHacknet) {
+                continue; // Hacknet Server
             } else {
                 visited[s.ip] = 1;
             }
@@ -1891,8 +1894,8 @@ let Terminal = {
             //var dashes = Array(d * 2 + 1).join("-");
             var c = "NO";
             if (s.hasAdminRights) {c = "YES";}
-            post(dashes + "Root Access: " + c + ", Required hacking skill: " + s.requiredHackingSkill);
-            post(dashes + "Number of open ports required to NUKE: " + s.numOpenPortsRequired);
+            post(`${dashes}Root Access: ${c} ${!isHacknet ? ", Required hacking skill: " + s.requiredHackingSkill : ""}`);
+            if (!isHacknet) { post(dashes + "Number of open ports required to NUKE: " + s.numOpenPortsRequired); }
             post(dashes + "RAM: " + s.maxRam);
             post(" ");
         }
@@ -2242,9 +2245,12 @@ let Terminal = {
                     post("May take a few seconds to start up the process...");
                     var runningScriptObj = new RunningScript(script, args);
                     runningScriptObj.threads = numThreads;
-					server.runScript(runningScriptObj, Player);
 
 					addWorkerScript(runningScriptObj, server);
+
+                    // This has to come after addWorkerScript() because that fn
+                    // updates the RAM usage. This kinda sucks, address if possible
+                    server.runScript(runningScriptObj, Player);
 					return;
 				}
 			}

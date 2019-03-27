@@ -20,7 +20,7 @@ import { Generic_fromJSON,
 export const HacknetServerHashesPerLevel: number = 0.001;
 
 // Constants for Hacknet Server purchase/upgrade costs
-export const BaseCostForHacknetServer: number = 10e3;
+export const BaseCostForHacknetServer: number = 50e3;
 export const BaseCostFor1GBHacknetServerRam: number = 200e3;
 export const BaseCostForHacknetServerCore: number = 1e6;
 export const BaseCostForHacknetServerCache: number = 10e6;
@@ -37,7 +37,7 @@ export const MaxNumberHacknetServers: number = 25;          // Max number of Hac
 export const HacknetServerMaxLevel: number = 300;
 export const HacknetServerMaxRam: number = 8192;
 export const HacknetServerMaxCores: number = 128;
-export const HacknetServerMaxCache: number = 15; // Max cache level. So max capacity is 2 ^ 12
+export const HacknetServerMaxCache: number = 15;
 
 interface IConstructorParams {
     adminRights?: boolean;
@@ -306,6 +306,7 @@ export class HacknetServer extends BaseServer implements IHacknetNode {
             this.maxRam *= 2;
         }
         this.maxRam = Math.round(this.maxRam);
+        this.updateHashRate(p);
 
         return true;
     }
@@ -321,7 +322,7 @@ export class HacknetServer extends BaseServer implements IHacknetNode {
     }
 
     updateHashCapacity(): void {
-        this.hashCapacity = 16 * Math.pow(2, this.cache);
+        this.hashCapacity = 32 * Math.pow(2, this.cache);
     }
 
     updateHashRate(p: IPlayer): void {

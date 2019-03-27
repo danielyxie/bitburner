@@ -218,7 +218,7 @@ function MaterialComponent(props) {
                      mat.buy === 0 && mat.imp === 0;
 
     // Purchase material button
-    const purchaseButtonText = `Buy (${numeralWrapper.format(mat.buy, nf)})`;
+    const purchaseButtonText = `Buy (${numeralWrapper.format(mat.buy, nfB)})`;
     const purchaseButtonClass = tutorial ? "std-button flashing-button tooltip" : "std-button";
     const purchaseButtonOnClick = eventHandler.createPurchaseMaterialPopup.bind(eventHandler, mat, division, warehouse);
 
@@ -229,9 +229,9 @@ function MaterialComponent(props) {
     let sellButtonText;
     if (mat.sllman[0]) {
         if (isString(mat.sllman[1])) {
-            sellButtonText = `Sell (${numeralWrapper.format(mat.sll, nf)}/${mat.sllman[1]})`
+            sellButtonText = `Sell (${numeralWrapper.format(mat.sll, nfB)}/${mat.sllman[1]})`
         } else {
-            sellButtonText = `Sell (${numeralWrapper.format(mat.sll, nf)}/${numeralWrapper.format(mat.sllman[1], nf)})`;
+            sellButtonText = `Sell (${numeralWrapper.format(mat.sll, nfB)}/${numeralWrapper.format(mat.sllman[1], nfB)})`;
         }
 
         if (mat.marketTa2) {
@@ -469,7 +469,7 @@ export class IndustryWarehouse extends BaseReactComponent {
         return (
             <div className={"cmpy-mgmt-warehouse-panel"}>
                 <p className={"tooltip"} style={sizeUsageStyle}>
-                    Storage: {numeralWrapper.format(warehouse.sizeUsed, "0.000")} / {numeralWrapper.format(warehouse.size, "0.000")}
+                    Storage: {numeralWrapper.formatBigNumber(warehouse.sizeUsed)} / {numeralWrapper.formatBigNumber(warehouse.size)}
                     <span className={"tooltiptext"} dangerouslySetInnerHTML={{__html: warehouse.breakdown}}></span>
                 </p>
 

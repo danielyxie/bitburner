@@ -19,7 +19,8 @@ import { generateRandomContractOnHome }         from "../CodingContractGenerator
 import { iTutorialSteps, iTutorialNextStep,
          ITutorial}                             from "../InteractiveTutorial";
 import { Player }                               from "../Player";
-import { AddToAllServers }                      from "../Server/AllServers";
+import { AddToAllServers,
+         AllServers }                           from "../Server/AllServers";
 import { GetServerByHostname }                  from "../Server/ServerHelpers";
 import { SourceFileFlags }                      from "../SourceFile/SourceFileFlags";
 import { Page, routing }                        from "../ui/navigationTracking";
@@ -33,9 +34,10 @@ import { HacknetRoot }                          from "./ui/Root";
 let hacknetNodesDiv;
 function hacknetNodesInit() {
     hacknetNodesDiv = document.getElementById("hacknet-nodes-container");
+    document.removeEventListener("DOMContentLoaded", hacknetNodesInit);
 }
 
-document.addEventListener("DOMContentLoaded", hacknetNodesInit, false);
+document.addEventListener("DOMContentLoaded", hacknetNodesInit);
 
 // Returns a boolean indicating whether the player has Hacknet Servers
 // (the upgraded form of Hacknet Nodes)
@@ -73,7 +75,7 @@ export function purchaseHacknet() {
         });
 
         Player.loseMoney(cost);
-        Player.hacknetNodes.push(server);
+        Player.hacknetNodes.push(server.ip);
 
         // Configure the HacknetServer to actually act as a Server
         AddToAllServers(server);
@@ -308,22 +310,13 @@ function processAllHacknetServerEarnings(numCycles) {
 
     let hashes = 0;
     for (let i = 0; i < Player.hacknetNodes.length; ++i) {
-        hashes += Player.hacknetNodes[i].process(numCycles);
+        const hserver = AllServers[Player.hacknetNodes[i]]; // hacknetNodes array only contains the IP addresses
+        hashes += hserver.process(numCycles);
     }
 
     Player.hashManager.storeHashes(hashes);
 
     return hashes;
-}
-
-export function getHacknetNode(name) {
-    for (var i = 0; i < Player.hacknetNodes.length; ++i) {
-        if (Player.hacknetNodes[i].name == name) {
-            return Player.hacknetNodes[i];
-        }
-    }
-
-    return null;
 }
 
 export function purchaseHashUpgrade(upgName, upgTarget) {
@@ -423,7 +416,6 @@ export function purchaseHashUpgrade(upgName, upgTarget) {
                 return false;
         }
 
-        console.log("Hash Upgrade successfully purchased");
         return true;
     }
 

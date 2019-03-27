@@ -80,6 +80,16 @@ when you normally install Augmentations.
 The cost of purchasing an Augmentation for a Duplicate Sleeve is **not** affected
 by how many Augmentations you have purchased for yourself, and vice versa.
 
+Memory
+~~~~~~
+Sleeve memory dictates what a sleeve's synchronization will be when its reset by
+switching BitNodes. For example, if a sleeve has a memory of 10, then when you
+switch BitNodes its synchronization will initially be set to 10, rather than 1.
+
+Memory can only be increased by purchasing upgrades from The Covenant.
+It is a persistent stat, meaning it never gets reset back to 1.
+The maximum possible value for a sleeve's memory is 100.
+
 Re-sleeving
 ^^^^^^^^^^^
 Re-sleeving is the process of digitizing and transferring your consciousness into a

@@ -462,9 +462,10 @@ function sellStock(stock, shares) {
     shares = Math.round(shares);
     if (shares > stock.playerShares) {shares = stock.playerShares;}
     if (shares === 0) {return false;}
-    var gains = stock.price * shares - CONSTANTS.StockMarketCommission;
+    const gains = stock.price * shares - CONSTANTS.StockMarketCommission;
+    const netProfit = ((stock.price - stock.playerAvgPx) * shares) - CONSTANTS.StockMarketCommission;
     Player.gainMoney(gains);
-    Player.recordMoneySource(gains, "stock");
+    Player.recordMoneySource(netProfit, "stock");
     stock.playerShares = Math.round(stock.playerShares - shares);
     if (stock.playerShares == 0) {
         stock.playerAvgPx = 0;
