@@ -17,8 +17,10 @@ import { getCostOfNextHacknetNode,
          purchaseHacknet } from "../HacknetHelpers";
 
 import { Player } from "../../Player";
+import { AllServers } from "../../Server/AllServers";
 
 import { createPopup } from "../../ui/React/createPopup";
+import { PopupCloseButton } from "../../ui/React/PopupCloseButton";
 
 export const PurchaseMultipliers = Object.freeze({
     "x1": 1,
@@ -52,7 +54,12 @@ export class HacknetRoot extends React.Component {
         let total = 0;
         for (let i = 0; i < Player.hacknetNodes.length; ++i) {
             if (hasHacknetServers()) {
-                total += Player.hacknetNodes[i].hashRate;
+                const hserver = AllServers[Player.hacknetNodes[i]];
+                if (hserver) {
+                    total += hserver.hashRate;
+                } else {
+                    console.warn(`Could not find Hacknet Server object in AllServers map (i=${i})`)
+                }
             } else {
                 total += Player.hacknetNodes[i].moneyGainRatePerSecond;
             }
@@ -97,10 +104,14 @@ export class HacknetRoot extends React.Component {
         // HacknetNode components
         const nodes = Player.hacknetNodes.map((node) => {
             if (hasHacknetServers()) {
+                const hserver = AllServers[node];
+                if (hserver == null) {
+                    throw new Error(`Could not find Hacknet Server object in AllServers map for IP: ${node}`);
+                }
                 return (
                     <HacknetServer
-                        key={node.hostname}
-                        node={node}
+                        key={hserver.hostname}
+                        node={hserver}
                         purchaseMultiplier={this.state.purchaseMultiplier}
                         recalculate={this.recalculateTotalProduction.bind(this)}
                     />

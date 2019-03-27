@@ -24,7 +24,7 @@ export interface IPlayer {
     corporation: any;
     currentServer: string;
     factions: string[];
-    hacknetNodes: (HacknetNode | HacknetServer)[];
+    hacknetNodes: (HacknetNode | string)[]; // HacknetNode object or IP of Hacknet Server
     hasWseAccount: boolean;
     jobs: IMap<string>;
     karma: number;

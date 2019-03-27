@@ -21,6 +21,7 @@ import { Faction }                              from "./Faction/Faction";
 import { Factions }                             from "./Faction/Factions";
 import { displayFactionContent }                from "./Faction/FactionHelpers";
 import {Gang, resetGangs}                       from "./Gang";
+import { hasHacknetServers }                    from "./Hacknet/HacknetHelpers";
 import { HashManager }                          from "./Hacknet/HashManager";
 import {Locations}                              from "./Locations";
 import {hasBn11SF, hasWallStreetSF,hasAISF}     from "./NetscriptFunctions";
@@ -117,7 +118,7 @@ function PlayerObject() {
     this.purchasedServers       = []; //IP Addresses of purchased servers
 
     // Hacknet Nodes/Servers
-    this.hacknetNodes           = [];
+    this.hacknetNodes           = []; // Note: For Hacknet Servers, this array holds the IP addresses of the servers
     this.hashManager            = new HashManager();
 
     //Factions
@@ -288,7 +289,7 @@ PlayerObject.prototype.prestigeAugmentation = function() {
     for (let i = 0; i < this.sleeves.length; ++i) {
         if (this.sleeves[i] instanceof Sleeve) {
             if (this.sleeves[i].shock >= 100) {
-                this.sleeves[i].synchronize(this);    
+                this.sleeves[i].synchronize(this);
             } else {
                 this.sleeves[i].shockRecovery(this);
             }
@@ -382,7 +383,11 @@ PlayerObject.prototype.prestigeSourceFile = function() {
     // Duplicate sleeves are reset to level 1 every Bit Node (but the number of sleeves you have persists)
     this.sleeves.length = SourceFileFlags[10] + this.sleevesFromCovenant;
     for (let i = 0; i < this.sleeves.length; ++i) {
-        this.sleeves[i] = new Sleeve(this);
+        if (this.sleeves[i] instanceof Sleeve) {
+            this.sleeves[i].prestige(this);
+        } else {
+            this.sleeves[i] = new Sleeve(this);
+        }
     }
 
     this.isWorking = false;
@@ -2333,10 +2338,19 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     var totalHacknetRam = 0;
     var totalHacknetCores = 0;
     var totalHacknetLevels = 0;
-    for (var i = 0; i < this.hacknetNodes.length; ++i) {
-        totalHacknetLevels += this.hacknetNodes[i].level;
-        totalHacknetRam += this.hacknetNodes[i].ram;
-        totalHacknetCores += this.hacknetNodes[i].cores;
+    for (let i = 0; i < this.hacknetNodes.length; ++i) {
+        if (hasHacknetServers()) {
+            const hserver = AllServers[this.hacknetNodes[i]];
+            if (hserver) {
+                totalHacknetLevels += hserver.level;
+                totalHacknetRam += hserver.maxRam;
+                totalHacknetCores += hserver.cores;
+            }
+        } else {
+            totalHacknetLevels += this.hacknetNodes[i].level;
+            totalHacknetRam += this.hacknetNodes[i].ram;
+            totalHacknetCores += this.hacknetNodes[i].cores;
+        }
     }
     if (!netburnersFac.isBanned && !netburnersFac.isMember && !netburnersFac.alreadyInvited &&
         this.hacking_skill >= 80 && totalHacknetRam >= 8 &&

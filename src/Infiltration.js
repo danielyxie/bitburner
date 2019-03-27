@@ -54,7 +54,7 @@ function InfiltrationInstance(companyName, startLevel, val, maxClearance, diff) 
 
 InfiltrationInstance.prototype.expMultiplier = function() {
     if (!this.clearanceLevel || isNaN(this.clearanceLevel) || !this.maxClearanceLevel ||isNaN(this.maxClearanceLevel)) return 1;
-    return 2 * this.clearanceLevel / this.maxClearanceLevel;
+    return 2.5 * this.clearanceLevel / this.maxClearanceLevel;
 }
 
 InfiltrationInstance.prototype.gainHackingExp = function(amt) {
@@ -64,7 +64,7 @@ InfiltrationInstance.prototype.gainHackingExp = function(amt) {
 
 InfiltrationInstance.prototype.calcGainedHackingExp = function() {
     if(!this.hackingExpGained || isNaN(this.hackingExpGained)) return 0;
-    return Math.pow(this.hackingExpGained*this.expMultiplier(), CONSTANTS.InfiltrationExpPow);
+    return Math.pow(this.hackingExpGained * this.expMultiplier(), CONSTANTS.InfiltrationExpPow);
 }
 
 InfiltrationInstance.prototype.gainStrengthExp = function(amt) {
@@ -73,8 +73,8 @@ InfiltrationInstance.prototype.gainStrengthExp = function(amt) {
 }
 
 InfiltrationInstance.prototype.calcGainedStrengthExp = function() {
-    if(!this.strExpGained || isNaN(this.strExpGained)) return 0;
-    return Math.pow(this.strExpGained*this.expMultiplier(), CONSTANTS.InfiltrationExpPow);
+    if (!this.strExpGained || isNaN(this.strExpGained)) return 0;
+    return Math.pow(this.strExpGained * this.expMultiplier(), CONSTANTS.InfiltrationExpPow);
 }
 
 InfiltrationInstance.prototype.gainDefenseExp = function(amt) {
@@ -83,8 +83,8 @@ InfiltrationInstance.prototype.gainDefenseExp = function(amt) {
 }
 
 InfiltrationInstance.prototype.calcGainedDefenseExp = function() {
-    if(!this.defExpGained || isNaN(this.defExpGained)) return 0;
-    return Math.pow(this.defExpGained*this.expMultiplier(), CONSTANTS.InfiltrationExpPow);
+    if (!this.defExpGained || isNaN(this.defExpGained)) return 0;
+    return Math.pow(this.defExpGained * this.expMultiplier(), CONSTANTS.InfiltrationExpPow);
 }
 
 InfiltrationInstance.prototype.gainDexterityExp = function(amt) {
@@ -93,8 +93,8 @@ InfiltrationInstance.prototype.gainDexterityExp = function(amt) {
 }
 
 InfiltrationInstance.prototype.calcGainedDexterityExp = function() {
-    if(!this.dexExpGained || isNaN(this.dexExpGained)) return 0;
-    return Math.pow(this.dexExpGained*this.expMultiplier(), CONSTANTS.InfiltrationExpPow);
+    if (!this.dexExpGained || isNaN(this.dexExpGained)) return 0;
+    return Math.pow(this.dexExpGained * this.expMultiplier(), CONSTANTS.InfiltrationExpPow);
 }
 
 InfiltrationInstance.prototype.gainAgilityExp = function(amt) {
@@ -103,8 +103,8 @@ InfiltrationInstance.prototype.gainAgilityExp = function(amt) {
 }
 
 InfiltrationInstance.prototype.calcGainedAgilityExp = function() {
-    if(!this.agiExpGained || isNaN(this.agiExpGained)) return 0;
-    return Math.pow(this.agiExpGained*this.expMultiplier(), CONSTANTS.InfiltrationExpPow);
+    if (!this.agiExpGained || isNaN(this.agiExpGained)) return 0;
+    return Math.pow(this.agiExpGained * this.expMultiplier(), CONSTANTS.InfiltrationExpPow);
 }
 
 InfiltrationInstance.prototype.gainCharismaExp = function(amt) {
@@ -113,8 +113,8 @@ InfiltrationInstance.prototype.gainCharismaExp = function(amt) {
 }
 
 InfiltrationInstance.prototype.calcGainedCharismaExp = function() {
-    if(!this.chaExpGained || isNaN(this.chaExpGained)) return 0;
-    return Math.pow(this.chaExpGained*this.expMultiplier(), CONSTANTS.InfiltrationExpPow);
+    if (!this.chaExpGained || isNaN(this.chaExpGained)) return 0;
+    return Math.pow(this.chaExpGained * this.expMultiplier(), CONSTANTS.InfiltrationExpPow);
 }
 
 InfiltrationInstance.prototype.gainIntelligenceExp = function(amt) {

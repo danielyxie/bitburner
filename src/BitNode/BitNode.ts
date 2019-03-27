@@ -201,8 +201,9 @@ export function initBitNodes() {
                                             "were able to steal billions of dollars from the world's largest electronic banks, prompting an international banking crisis as " +
                                             "governments were unable to bail out insolvent banks. Now, the world is slowly crumbling in the middle of the biggest economic crisis of all time.<br><br>" +
                                             "In this BitNode:<br><br>" +
+                                            "Your hacking stat and experience gain are halved<br>" +
                                             "The starting and maximum amount of money available on servers is significantly decreased<br>" +
-                                            "The growth rate of servers is halved<br>" +
+                                            "The growth rate of servers is significantly reduced<br>" +
                                             "Weakening a server is twice as effective<br>" +
                                             "Company wages are decreased by 50%<br>" +
                                             "Corporation valuations are 99% lower and are therefore significantly less profitable<br>" +
@@ -213,9 +214,9 @@ export function initBitNodes() {
                                             "upgrade its level up to a maximum of 3. This Source-File makes it so that company favor increases BOTH " +
                                             "the player's salary and reputation gain rate at that company by 1% per favor (rather than just the reputation gain). " +
                                             "This Source-File also increases the player's company salary and reputation gain multipliers by:<br><br>" +
-                                            "Level 1: 24%<br>" +
-                                            "Level 2: 36%<br>" +
-                                            "Level 3: 42%");
+                                            "Level 1: 32%<br>" +
+                                            "Level 2: 48%<br>" +
+                                            "Level 3: 56%");
     BitNodes["BitNode12"] = new BitNode(12, "The Recursion", "Repeat.",
                                             "To iterate is human, to recurse divine.<br><br>" +
                                             "Every time this BitNode is destroyed, it becomes slightly harder. Destroying this BitNode will give your Souce-File 12, or " +
@@ -349,17 +350,20 @@ export function initBitNodeMultipliers(p: IPlayer) {
             BitNodeMultipliers.CodingContractMoney      = 0;
             break;
         case 9: // Hacktocracy
-            BitNodeMultipliers.HackingLevelMultiplier   = 0.3;
+            BitNodeMultipliers.HackingLevelMultiplier   = 0.4;
             BitNodeMultipliers.StrengthLevelMultiplier  = 0.45;
             BitNodeMultipliers.DefenseLevelMultiplier   = 0.45;
             BitNodeMultipliers.DexterityLevelMultiplier = 0.45;
             BitNodeMultipliers.AgilityLevelMultiplier   = 0.45;
             BitNodeMultipliers.CharismaLevelMultiplier  = 0.45;
             BitNodeMultipliers.PurchasedServerLimit     = 0;
-            BitNodeMultipliers.HomeComputerRamCost      = 3;
+            BitNodeMultipliers.HomeComputerRamCost      = 5;
             BitNodeMultipliers.CrimeMoney               = 0.5;
             BitNodeMultipliers.ScriptHackMoney          = 0.1;
             BitNodeMultipliers.HackExpGain              = 0.1;
+            BitNodeMultipliers.ServerStartingMoney      = 0.1;
+            BitNodeMultipliers.ServerMaxMoney           = 0.1;
+            BitNodeMultipliers.ServerStartingSecurity   = 2.5;
             break;
         case 10: // Digital Carbon
             BitNodeMultipliers.HackingLevelMultiplier   = 0.2;
@@ -385,9 +389,11 @@ export function initBitNodeMultipliers(p: IPlayer) {
             BitNodeMultipliers.BladeburnerRank          = 0.8;
             break;
         case 11: //The Big Crash
+            BitNodeMultipliers.HackingLevelMultiplier       = 0.5;
+            BitNodeMultipliers.HackExpGain                  = 0.5;
             BitNodeMultipliers.ServerMaxMoney               = 0.1;
             BitNodeMultipliers.ServerStartingMoney          = 0.1;
-            BitNodeMultipliers.ServerGrowthRate             = 0.5;
+            BitNodeMultipliers.ServerGrowthRate             = 0.2;
             BitNodeMultipliers.ServerWeakenRate             = 2;
             BitNodeMultipliers.CrimeMoney                   = 3;
             BitNodeMultipliers.CompanyWorkMoney             = 0.5;
@@ -395,8 +401,8 @@ export function initBitNodeMultipliers(p: IPlayer) {
             BitNodeMultipliers.AugmentationMoneyCost        = 2;
             BitNodeMultipliers.InfiltrationMoney            = 2.5;
             BitNodeMultipliers.InfiltrationRep              = 2.5;
-            BitNodeMultipliers.CorporationValuation         = 0.01;
-            BitNodeMultipliers.CodingContractMoney          = 0.5;
+            BitNodeMultipliers.CorporationValuation         = 0.1;
+            BitNodeMultipliers.CodingContractMoney          = 0.25;
             BitNodeMultipliers.FourSigmaMarketDataCost      = 4;
             BitNodeMultipliers.FourSigmaMarketDataApiCost   = 4;
             break;

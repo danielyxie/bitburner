@@ -45,5 +45,13 @@ export const SleeveFaq: string =
 "are not available for sleeves.<br><br>",
 
 "<strong><u>Do sleeves get reset when installing Augmentations or switching BitNodes?</u></strong><br>",
-"Sleeves are reset when switching BitNodes, but not when installing Augmentations."
+"Sleeves are reset when switching BitNodes, but not when installing Augmentations.<br><br>",
+
+"<strong><u>What is Memory?</u></strong><br>",
+"Sleeve memory dictates what a sleeve's synchronization will be",
+"when its reset by switching BitNodes. For example, if a sleeve has a memory of 25,",
+"then when you switch BitNodes its synchronization will initially be set to 25, rather than 1.<br><br>",
+"Memory can only be increased by purchasing upgrades from The Covenant. It is a",
+"persistent stat, meaning it never gets resets back to 1. The maximum possible",
+"value for a sleeve's memory is 100."
 ].join(" ");

@@ -17,7 +17,7 @@ export class StdButton extends React.Component<IStdButtonProps, any> {
 
         return (
             <button className={className} onClick={this.props.onClick} style={this.props.style}>
-                {this.props.text};
+                {this.props.text}
             </button>
         )
     }

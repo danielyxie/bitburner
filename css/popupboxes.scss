@@ -3,7 +3,7 @@
 
 /* Pop-up boxes */
 .popup-box-container {
-    display: none; /* Hidden by default */
+    display: none; /* Initially hidden */
     position: fixed; /* Stay in place */
     z-index: 10; /* Sit on top */
     left: 0;
