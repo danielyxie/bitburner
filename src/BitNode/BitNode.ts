@@ -364,6 +364,7 @@ export function initBitNodeMultipliers(p: IPlayer) {
             BitNodeMultipliers.ServerStartingMoney      = 0.1;
             BitNodeMultipliers.ServerMaxMoney           = 0.1;
             BitNodeMultipliers.ServerStartingSecurity   = 2.5;
+            BitNodeMultipliers.CorporationValuation     = 0.5;
             break;
         case 10: // Digital Carbon
             BitNodeMultipliers.HackingLevelMultiplier   = 0.2;
