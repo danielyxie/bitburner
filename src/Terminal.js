@@ -2,6 +2,7 @@ import {substituteAliases, printAliases,
         parseAliasDeclaration,
         removeAlias, GlobalAliases,
         Aliases}                                from "./Alias";
+import { BitNodeMultipliers }                   from "./BitNode/BitNodeMultipliers";
 import {CodingContract, CodingContractResult,
         CodingContractRewardType}               from "./CodingContracts";
 import {CONSTANTS}                              from "./Constants";
@@ -1643,9 +1644,15 @@ let Terminal = {
             postError("Incorrect usage of free command. Usage: free");
             return;
         }
-        post("Total: " + numeralWrapper.format(Player.getCurrentServer().maxRam, '0.00') + " GB");
-        post("Used: " + numeralWrapper.format(Player.getCurrentServer().ramUsed, '0.00') + " GB");
-        post("Available: " + numeralWrapper.format(Player.getCurrentServer().maxRam - Player.getCurrentServer().ramUsed, '0.00') + " GB");
+        const ram = numeralWrapper.format(Player.getCurrentServer().maxRam, '0.00');
+        const used = numeralWrapper.format(Player.getCurrentServer().ramUsed, '0.00');
+        const avail = numeralWrapper.format(Player.getCurrentServer().maxRam - Player.getCurrentServer().ramUsed, '0.00');
+        const maxLength = Math.max(ram.length, Math.max(used.length, avail.length));
+        const usedPercent = numeralWrapper.format(Player.getCurrentServer().ramUsed/Player.getCurrentServer().maxRam*100, '0.00');
+
+        post(`Total:     ${" ".repeat(maxLength-ram.length)}${ram} GB`);
+        post(`Used:      ${" ".repeat(maxLength-used.length)}${used} GB (${usedPercent}%)`);
+        post(`Available: ${" ".repeat(maxLength-avail.length)}${avail} GB`);
     },
 
     executeKillCommand: function(commandArray) {
@@ -2141,7 +2148,8 @@ let Terminal = {
             post("DeepscanV2.exe lets you run 'scan-analyze' with a depth up to 10.");
         };
         programHandlers[Programs.Flight.name] = () => {
-            const fulfilled = Player.augmentations.length >= 30 &&
+            const numAugReq = Math.round(BitNodeMultipliers.DaedalusAugsRequirement*30)
+            const fulfilled = Player.augmentations.length >= numAugReq &&
                 Player.money.gt(1e11) &&
                 ((Player.hacking_skill >= 2500)||
                 (Player.strength >= 1500 &&
@@ -2149,17 +2157,17 @@ let Terminal = {
                 Player.dexterity >= 1500 &&
                 Player.agility >= 1500));
             if(!fulfilled) {
-                post("Augmentations: " + Player.augmentations.length + " / 30");
+                post(`Augmentations: ${Player.augmentations.length} / ${numAugReq}`);
 
-                post("Money: " + numeralWrapper.format(Player.money.toNumber(), '($0.000a)') + " / " + numeralWrapper.format(1e11, '($0.000a)'));
+                post(`Money: ${numeralWrapper.format(Player.money.toNumber(), '($0.000a)')} / ${numeralWrapper.format(1e11, '($0.000a)')}`);
                 post("One path below must be fulfilled...");
                 post("----------HACKING PATH----------");
-                post("Hacking skill: " + Player.hacking_skill + " / 2500");
+                post(`Hacking skill: ${Player.hacking_skill} / 2500`);
                 post("----------COMBAT PATH----------");
-                post("Strength: " + Player.strength + " / 1500");
-                post("Defense: " + Player.defense + " / 1500");
-                post("Dexterity: " + Player.dexterity + " / 1500");
-                post("Agility: " + Player.agility + " / 1500");
+                post(`Strength: ${Player.strength} / 1500`);
+                post(`Defense: ${Player.defense} / 1500`);
+                post(`Dexterity: ${Player.dexterity} / 1500`);
+                post(`Agility: ${Player.agility} / 1500`);
                 return;
             }
 
