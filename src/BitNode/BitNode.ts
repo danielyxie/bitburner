@@ -350,21 +350,23 @@ export function initBitNodeMultipliers(p: IPlayer) {
             BitNodeMultipliers.CodingContractMoney      = 0;
             break;
         case 9: // Hacktocracy
-            BitNodeMultipliers.HackingLevelMultiplier   = 0.4;
-            BitNodeMultipliers.StrengthLevelMultiplier  = 0.45;
-            BitNodeMultipliers.DefenseLevelMultiplier   = 0.45;
-            BitNodeMultipliers.DexterityLevelMultiplier = 0.45;
-            BitNodeMultipliers.AgilityLevelMultiplier   = 0.45;
-            BitNodeMultipliers.CharismaLevelMultiplier  = 0.45;
-            BitNodeMultipliers.PurchasedServerLimit     = 0;
-            BitNodeMultipliers.HomeComputerRamCost      = 5;
-            BitNodeMultipliers.CrimeMoney               = 0.5;
-            BitNodeMultipliers.ScriptHackMoney          = 0.1;
-            BitNodeMultipliers.HackExpGain              = 0.1;
-            BitNodeMultipliers.ServerStartingMoney      = 0.1;
-            BitNodeMultipliers.ServerMaxMoney           = 0.1;
-            BitNodeMultipliers.ServerStartingSecurity   = 2.5;
-            BitNodeMultipliers.CorporationValuation     = 0.5;
+            BitNodeMultipliers.HackingLevelMultiplier       = 0.4;
+            BitNodeMultipliers.StrengthLevelMultiplier      = 0.45;
+            BitNodeMultipliers.DefenseLevelMultiplier       = 0.45;
+            BitNodeMultipliers.DexterityLevelMultiplier     = 0.45;
+            BitNodeMultipliers.AgilityLevelMultiplier       = 0.45;
+            BitNodeMultipliers.CharismaLevelMultiplier      = 0.45;
+            BitNodeMultipliers.PurchasedServerLimit         = 0;
+            BitNodeMultipliers.HomeComputerRamCost          = 5;
+            BitNodeMultipliers.CrimeMoney                   = 0.5;
+            BitNodeMultipliers.ScriptHackMoney              = 0.1;
+            BitNodeMultipliers.HackExpGain                  = 0.1;
+            BitNodeMultipliers.ServerStartingMoney          = 0.1;
+            BitNodeMultipliers.ServerMaxMoney               = 0.1;
+            BitNodeMultipliers.ServerStartingSecurity       = 2.5;
+            BitNodeMultipliers.CorporationValuation         = 0.5;
+            BitNodeMultipliers.FourSigmaMarketDataCost      = 5;
+            BitNodeMultipliers.FourSigmaMarketDataApiCost   = 4;
             break;
         case 10: // Digital Carbon
             BitNodeMultipliers.HackingLevelMultiplier   = 0.2;

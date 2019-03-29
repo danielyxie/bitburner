@@ -331,6 +331,7 @@ PlayerObject.prototype.prestigeAugmentation = function() {
     this.moneySourceA.reset();
 
     this.hacknetNodes.length = 0;
+    this.hashManager.prestige(this);
 
     //Re-calculate skills and reset HP
     this.updateSkillLevels();
@@ -420,6 +421,7 @@ PlayerObject.prototype.prestigeSourceFile = function() {
     this.lastUpdate = new Date().getTime();
 
     this.hacknetNodes.length = 0;
+    this.hashManager.prestige(this);
 
     //Gang
     this.gang = null;

@@ -1246,23 +1246,26 @@ let Terminal = {
 			case "free":
 				Terminal.executeFreeCommand(commandArray);
 				break;
-			case "hack":
-				if (commandArray.length !== 1) {
+			case "hack": {
+                if (commandArray.length !== 1) {
 					postError("Incorrect usage of hack command. Usage: hack");
                     return;
 				}
 				//Hack the current PC (usually for money)
 				//You can't hack your home pc or servers you purchased
-				if (Player.getCurrentServer().purchasedByPlayer) {
+				if (s.purchasedByPlayer) {
 					postError("Cannot hack your own machines! You are currently connected to your home PC or one of your purchased servers");
-				} else if (Player.getCurrentServer().hasAdminRights == false ) {
+				} else if (s.hasAdminRights == false ) {
 					postError("You do not have admin rights for this machine! Cannot hack");
-				} else if (Player.getCurrentServer().requiredHackingSkill > Player.hacking_skill) {
+				} else if (s.requiredHackingSkill > Player.hacking_skill) {
 					postError("Your hacking skill is not high enough to attempt hacking this machine. Try analyzing the machine to determine the required hacking skill");
-				} else {
+				} else if (s instanceof HacknetServer) {
+                    postError("Cannot hack this type of Server")
+                } else {
                     Terminal.startHack();
 				}
 				break;
+            }
 			case "help":
 				if (commandArray.length !== 1 && commandArray.length !== 2) {
 					postError("Incorrect usage of help command. Usage: help");
@@ -1894,7 +1897,7 @@ let Terminal = {
             //var dashes = Array(d * 2 + 1).join("-");
             var c = "NO";
             if (s.hasAdminRights) {c = "YES";}
-            post(`${dashes}Root Access: ${c} ${!isHacknet ? ", Required hacking skill: " + s.requiredHackingSkill : ""}`);
+            post(`${dashes}Root Access: ${c}${!isHacknet ? ", Required hacking skill: " + s.requiredHackingSkill : ""}`);
             if (!isHacknet) { post(dashes + "Number of open ports required to NUKE: " + s.numOpenPortsRequired); }
             post(dashes + "RAM: " + s.maxRam);
             post(" ");

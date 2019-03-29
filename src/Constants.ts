@@ -285,6 +285,7 @@ export let CONSTANTS: IMap<any> = {
     * Corporation Changes:
     ** 'Demand' value of products decreases more slowly
     ** Bug Fix: Fixed a Corporation issue that broke the Market-TA2 Research
+    ** Bug Fix: Issuing New Shares now works properly
 
     * Bug Fix: Money Statistics tracker was incorrectly recording profits when selling stocks manually
     * Bug Fix: Fixed an issue with the job requirement tooltip for security jobs

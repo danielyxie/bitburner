@@ -29,7 +29,12 @@ import { Factions,
 import { joinFaction,
          purchaseAugmentation }                     from "./Faction/FactionHelpers";
 import { FactionWorkType }                          from "./Faction/FactionWorkTypeEnum";
+import { netscriptCanGrow,
+         netscriptCanHack,
+         netscriptCanWeaken }                       from "./Hacking/netscriptCanHack";
 import { getCostOfNextHacknetNode,
+         getCostOfNextHacknetServer,
+         hasHacknetServers,
          purchaseHacknet }                          from "./Hacknet/HacknetNode";
 import {Locations}                                  from "./Locations";
 import { Message }                                  from "./Message/Message";
@@ -194,11 +199,11 @@ function initSingularitySFFlags() {
 }
 
 function NetscriptFunctions(workerScript) {
-    var updateDynamicRam = function(fnName, ramCost) {
+    const updateDynamicRam = function(fnName, ramCost) {
         if (workerScript.dynamicLoadedFns[fnName]) {return;}
         workerScript.dynamicLoadedFns[fnName] = true;
 
-        const threads = workerScript.scriptRef.threads;
+        let threads = workerScript.scriptRef.threads;
         if (typeof threads !== 'number') {
             console.warn(`WorkerScript detected NaN for threadcount for ${workerScript.name} on ${workerScript.serverIp}`);
             threads = 1;
@@ -215,7 +220,7 @@ function NetscriptFunctions(workerScript) {
         }
     };
 
-    var updateStaticRam = function(fnName, ramCost) {
+    const updateStaticRam = function(fnName, ramCost) {
         if (workerScript.loadedFns[fnName]) {
             return 0;
         } else {
@@ -230,7 +235,7 @@ function NetscriptFunctions(workerScript) {
      * @param {string} Hostname or IP of the server
      * @returns {Server} The specified Server
      */
-    var safeGetServer = function(ip, callingFnName="") {
+    const safeGetServer = function(ip, callingFnName="") {
         var server = getServer(ip);
         if (server == null) {
             throw makeRuntimeRejectMsg(workerScript, `Invalid IP or hostname passed into ${callingFnName}() function`);
@@ -239,17 +244,27 @@ function NetscriptFunctions(workerScript) {
     }
 
     // Utility function to get Hacknet Node object
-    var getHacknetNode = function(i) {
+    const getHacknetNode = function(i) {
         if (isNaN(i)) {
             throw makeRuntimeRejectMsg(workerScript, "Invalid index specified for Hacknet Node: " + i);
         }
         if (i < 0 || i >= Player.hacknetNodes.length) {
             throw makeRuntimeRejectMsg(workerScript, "Index specified for Hacknet Node is out-of-bounds: " + i);
         }
-        return Player.hacknetNodes[i];
+
+        if (hasHacknetServers()) {
+            const hserver = AllServers[Player.hacknetNodes[i]];
+            if (hserver == null) {
+                throw makeRuntimeRejectMsg(workerScript, `Could not get Hacknet Server for index ${i}. This is probably a bug, please report to game dev`);
+            }
+
+            return hserver;
+        } else {
+            return Player.hacknetNodes[i];
+        }
     };
 
-    var getCodingContract = function(fn, ip) {
+    const getCodingContract = function(fn, ip) {
         var server = safeGetServer(ip, "getCodingContract");
         return server.getContract(fn);
     }
@@ -263,43 +278,64 @@ function NetscriptFunctions(workerScript) {
                 return purchaseHacknet();
             },
             getPurchaseNodeCost : function() {
-                return getCostOfNextHacknetNode();
+                if (hasHacknetServers()) {
+                    return getCostOfNextHacknetServer();
+                } else {
+                    return getCostOfNextHacknetNode();
+                }
             },
             getNodeStats : function(i) {
-                var node = getHacknetNode(i);
-                return {
+                const node = getHacknetNode(i);
+                const hasUpgraded = hasHacknetServers();
+                const res = {
                     name:               node.name,
                     level:              node.level,
-                    ram:                node.ram,
+                    ram:                hasUpgraded ? node.maxRam : node.ram,
                     cores:              node.cores,
-                    production:         node.moneyGainRatePerSecond,
+                    production:         hasUpgraded ? node.hashRate : node.moneyGainRatePerSecond,
                     timeOnline:         node.onlineTimeSeconds,
-                    totalProduction:    node.totalMoneyGenerated,
+                    totalProduction:    hasUpgraded ? node.totalHashesGenerated : node.totalMoneyGenerated,
                 };
+
+                if (hasUpgraded) {
+                    res.cache = node.cache;
+                }
+
+                return res;
             },
             upgradeLevel : function(i, n) {
-                var node = getHacknetNode(i);
+                const node = getHacknetNode(i);
                 return node.purchaseLevelUpgrade(n, Player);
             },
             upgradeRam : function(i, n) {
-                var node = getHacknetNode(i);
+                const node = getHacknetNode(i);
                 return node.purchaseRamUpgrade(n, Player);
             },
             upgradeCore : function(i, n) {
-                var node = getHacknetNode(i);
+                const node = getHacknetNode(i);
                 return node.purchaseCoreUpgrade(n, Player);
             },
+            upgradeCache : function(i, n) {
+                if (!hasHacknetServers()) { return false; }
+                const node = getHacknetNode(i);
+                return node.purchaseCacheUpgrade(n, Player);
+            },
             getLevelUpgradeCost : function(i, n) {
-                var node = getHacknetNode(i);
+                const node = getHacknetNode(i);
                 return node.calculateLevelUpgradeCost(n, Player);
             },
             getRamUpgradeCost : function(i, n) {
-                var node = getHacknetNode(i);
+                const node = getHacknetNode(i);
                 return node.calculateRamUpgradeCost(n, Player);
             },
             getCoreUpgradeCost : function(i, n) {
-                var node = getHacknetNode(i);
+                const node = getHacknetNode(i);
                 return node.calculateCoreUpgradeCost(n, Player);
+            },
+            getCacheUpgradeCost : function(i, n) {
+                if (!hasHacknetServers()) { return Infinity; }
+                const node = getHacknetNode(i);
+                return node.calculateCacheUpgradeCost(n);
             }
         },
         sprintf : sprintf,
@@ -351,19 +387,16 @@ function NetscriptFunctions(workerScript) {
             var hackingTime = calculateHackingTime(server); //This is in seconds
 
             //No root access or skill level too low
-            if (server.hasAdminRights == false) {
-                workerScript.scriptRef.log("Cannot hack this server (" + server.hostname + ") because user does not have root access");
-                throw makeRuntimeRejectMsg(workerScript, "Cannot hack this server (" + server.hostname + ") because user does not have root access");
-            }
-
-            if (server.requiredHackingSkill > Player.hacking_skill) {
-                workerScript.scriptRef.log("Cannot hack this server (" + server.hostname + ") because user's hacking skill is not high enough");
-                throw makeRuntimeRejectMsg(workerScript, "Cannot hack this server (" + server.hostname + ") because user's hacking skill is not high enough");
+            const canHack = netscriptCanHack(server, Player);
+            if (!canHack.res) {
+                workerScript.scriptRef.log(`ERROR: ${canHack.msg}`);
+                throw makeRuntimeRejectMsg(workerScript, canHack.msg);
             }
 
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.hack == null) {
                 workerScript.scriptRef.log("Attempting to hack " + ip + " in " + hackingTime.toFixed(3) + " seconds (t=" + threads + ")");
             }
+
             return netscriptDelay(hackingTime * 1000, workerScript).then(function() {
                 if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
                 var hackChance = calculateHackingChance(server);
@@ -482,9 +515,10 @@ function NetscriptFunctions(workerScript) {
             }
 
             //No root access or skill level too low
-            if (server.hasAdminRights == false) {
-                workerScript.scriptRef.log("Cannot grow this server (" + server.hostname + ") because user does not have root access");
-                throw makeRuntimeRejectMsg(workerScript, "Cannot grow this server (" + server.hostname + ") because user does not have root access");
+            const canHack = netscriptCanGrow(server);
+            if (!canHack.res) {
+                workerScript.scriptRef.log(`ERROR: ${canHack.msg}`);
+                throw makeRuntimeRejectMsg(workerScript, canHack.msg);
             }
 
             var growTime = calculateGrowTime(server);
@@ -543,9 +577,10 @@ function NetscriptFunctions(workerScript) {
             }
 
             //No root access or skill level too low
-            if (server.hasAdminRights == false) {
-                workerScript.scriptRef.log("Cannot weaken this server (" + server.hostname + ") because user does not have root access");
-                throw makeRuntimeRejectMsg(workerScript, "Cannot weaken this server (" + server.hostname + ") because user does not have root access");
+            const canHack = netscriptCanWeaken(server);
+            if (!canHack.res) {
+                workerScript.scriptRef.log(`ERROR: ${canHack.msg}`);
+                throw makeRuntimeRejectMsg(workerScript, canHack.msg);
             }
 
             var weakenTime = calculateWeakenTime(server);

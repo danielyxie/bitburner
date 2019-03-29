@@ -54,7 +54,6 @@ export function purchaseHacknet() {
             return;
         }
     }
-
     /* END INTERACTIVE TUTORIAL */
 
     if (hasHacknetServers()) {
@@ -396,11 +395,21 @@ export function purchaseHashUpgrade(upgName, upgTarget) {
                 break;
             }
             case "Exchange for Bladeburner Rank": {
-                // This will throw if player doesn't have a corporation
+                // This will throw if player isnt in Bladeburner
                 try {
-                    for (const division of Player.corporation.divisions) {
-                        division.sciResearch.qty += upg.value;
-                    }
+                    Player.bladeburner.changeRank(upg.value);
+                } catch(e) {
+                    Player.hashManager.refundUpgrade(upgName);
+                    return false;
+                }
+                break;
+            }
+            case "Exchange for Bladeburner SP": {
+                // This will throw if player isn't in Bladeburner
+                try {
+                    // As long as we don't change `Bladeburner.totalSkillPoints`, this
+                    // shouldn't affect anything else
+                    Player.bladeburner.skillPoints += upg.value;
                 } catch(e) {
                     Player.hashManager.refundUpgrade(upgName);
                     return false;
@@ -413,6 +422,7 @@ export function purchaseHashUpgrade(upgName, upgTarget) {
             }
             default:
                 console.warn(`Unrecognized upgrade name ${upgName}. Upgrade has no effect`)
+                Player.hashManager.refundUpgrade(upgName);
                 return false;
         }
 
