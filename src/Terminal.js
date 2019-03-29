@@ -2150,7 +2150,7 @@ let Terminal = {
             if(!fulfilled) {
                 post(`Augmentations: ${Player.augmentations.length} / ${numAugReq}`);
 
-                post(`Money: ${numeralWrapper.format(Player.money.toNumber(), '($0.000a)')} / numeralWrapper.format(1e11, '($0.000a)')`);
+                post(`Money: ${numeralWrapper.format(Player.money.toNumber(), '($0.000a)')} / ${numeralWrapper.format(1e11, '($0.000a)')}`);
                 post("One path below must be fulfilled...");
                 post("----------HACKING PATH----------");
                 post(`Hacking skill: ${Player.hacking_skill} / 2500`);
